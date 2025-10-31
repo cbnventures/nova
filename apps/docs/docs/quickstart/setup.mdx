@@ -1,0 +1,126 @@
+---
+id: setup
+title: Setup and Configure
+description: Setup and configuration for Nova covering installation instructions and TypeScript and ESLint presets setup.
+keywords:
+  - nova setup
+  - nova installation
+  - nova configuration
+  - npx
+  - global install
+  - project install
+  - tsconfig presets
+  - eslint presets
+  - node lts
+  - nova cli
+  - version check
+tags:
+  - setup
+  - installation
+  - configuration
+  - initialization
+  - presets
+  - eslint
+  - typescript
+  - cli
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Setup and Configure
+
+Nova supports three starting paths. Use the runner for a one-off, install into system, or install into project for presets and toolkits you can commit with.
+
+## Requirements
+
+- Node.js <abbr title="Long-Term Support">LTS</abbr>
+- Node Package Manager (npm)
+
+:::tip Quick Check
+Run this command below to check the installed versions of your Node.js, package managers, operating system, installed browsers, and other dev tools directly:
+
+```bash
+npx --yes @cbnventures/nova@latest utility version
+```
+:::
+
+## Choose Your Path
+
+Choose **Run once (npx)** to try Nova or make a one-off change, **Install into system**, or **Install into project** to use preset configs and run commands any time.
+
+:::info
+If you wish, you can install Nova **globally** (into the system) and **locally** (into the project) at the same time. They will not conflict with each other.
+:::
+
+<Tabs groupId="setup-mode">
+  <TabItem value="once" label="Run once (npx)" default>
+
+    View the built-in help from the command below, or see **[CLI](/docs/cli/)**.
+
+    ```bash
+    npx --yes @cbnventures/nova@latest
+    ```
+
+  </TabItem>
+  <TabItem value="global" label="Install into system">
+
+    View the built-in help from the command below, or see **[CLI](/docs/cli/)**.
+
+    ```bash
+    npm i -g @cbnventures/nova@latest
+    ```
+
+    You can use the shorthand command for the **[CLI](/docs/cli/)** after installation:
+
+    ```bash
+    nova
+    ```
+
+  </TabItem>
+  <TabItem value="local" label="Install into project">
+
+    First, Install Nova.
+
+    ```bash
+    npm i -D @cbnventures/nova@latest
+    ```
+
+    Second, configure **TypeScript** though the `tsconfig.json` file. See **[TSConfig best practices](/docs/presets/tsconfig/best-practices)**.
+
+    ```json
+    {
+      "extends": [
+      "@cbnventures/nova/tsconfig/dx-essentials.json",
+      "@cbnventures/nova/tsconfig/dx-strict.json"
+      ]
+    }
+    ```
+
+    Third, configure **ESLint** through the `eslint.config.ts` or `eslint.config.js` file. See **[ESLint best practices](/docs/presets/eslint/best-practices)**.
+
+    ```js
+    import { dxCodeStyle, dxIgnore } from '@cbnventures/nova/eslint';
+
+    export default [
+      ...dxIgnore,
+      ...dxCodeStyle,
+    ];
+    ```
+
+    Optionally, you can use the shorthand command for the **[CLI](/docs/cli/)**:
+
+    ```bash
+    nova
+    ```
+
+  </TabItem>
+</Tabs>
+
+---
+
+## Next Steps
+
+- See **[CLI](/docs/cli/)** for generators and project scaffolding.
+- See **[Presets](/docs/presets/)** to choose ESLint and TSConfig scenarios.
+- See **[Toolkit](/docs/toolkit/)** for batteries-included dev tools.

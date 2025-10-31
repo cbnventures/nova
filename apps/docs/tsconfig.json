@@ -1,0 +1,33 @@
+{
+  "extends": [
+    "@cbnventures/nova/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/tsconfig/dx-strict.json",
+    "@cbnventures/nova/tsconfig/fw-docusaurus.json"
+  ],
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./build",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "rootDir": "./",
+    "types": [
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/types",
+      "@types/node",
+      "@types/react",
+      "@types/react-dom"
+    ]
+  },
+  "include": [
+    "./*",
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./.docusaurus/**",
+    "./build/**",
+    "./node_modules/**"
+  ]
+}

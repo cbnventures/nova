@@ -1,0 +1,64 @@
+---
+id: overview
+title: Overview
+description: Nova is a strict JavaScript and TypeScript toolkit with composable presets, guided generators, and Airbnb style lint rules for consistent, predictable builds.
+sidebar_position: 1
+keywords:
+  - nova
+  - javascript toolkit
+  - typescript toolkit
+  - eslint airbnb style
+  - strict presets
+  - generators
+  - predictable builds
+  - developer experience
+  - esm modules
+  - node lts
+tags:
+  - overview
+  - getting-started
+  - presets
+  - linting
+  - philosophy
+  - basics
+---
+
+# Overview
+
+Nova is a JavaScript and TypeScript monorepo suite (formerly "Foundation Nova"). It provides strict presets and guided tooling so you can build with confidence and predictability.
+
+## Why Nova?
+
+- **Strong defaults** that lower setup overhead and reduce drift.
+- **Strict linting and typing** that catch defects early and keep code dependable.
+- **[Guided generators](/docs/category/generators)** that help scaffold and maintain project files.
+- **Freedom with guardrails** lets you override when needed while sensible restrictions prevent risky patterns.
+- **Consistent developer experience** across projects and repositories.
+
+## Designed For…
+
+- Developers who want **clear rules** with **override control** when needed.
+- Teams that prefer **strict code** with **[Airbnb-style](https://github.com/airbnb/javascript) familiarity**.
+- Projects that need **predictable builds** and **low setup overhead**.
+
+## Our Values ✨
+
+1. **Automatic** — All project essentials are provisioned with minimal <abbr title="development and operations">DevOps</abbr> effort. You should not need to wire up basics by hand; the defaults handle it.
+2. **Explicit** — Every configuration detail is visible and precise. If a nuance matters (for example `"."` vs `"./"`, or pairing `module` with `moduleResolution`), it must be written out, not implied.
+3. **Independence** — Configurations (e.g. ESLint, TSConfig) stand on their own. There are no hidden base presets or cross-dependencies filling in values behind the scenes.
+4. **Predictable** — Given the same inputs, the outputs are always the same. Features that introduce non-determinism (e.g. `incremental`, artifact caches, package-lock drift) are disallowed.
+5. **Modern but stable** — Use forward-looking features that are officially supported and reliable. Avoid unstable or experimental options where bugs are still being worked out.
+
+## Scope and Boundaries
+
+- **Node.js <abbr title="Long-Term Support">LTS</abbr> first** — Nova tracks the latest long-term support baselines for Node.js.
+- **Modern modules** — Nova targets ESM-based builds and excludes legacy "script" pipelines.
+- **No experimental features** — Only officially supported and stable options are allowed. Your project is not a beta playground.
+
+## Preset Philosophy
+
+- **Airbnb-inspired** — Strict, familiar defaults adapted from [eslint-config-airbnb](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb).
+- **Pre-curated** — Each preset is a complete config with correctness, safety, and style rules already chosen for you. No need to hand-pick individual rules.
+- **Scenario-based** — Presets are tailored to different intents: *library*, *browser app*, *Node service*, or *framework*. No single "base" config to inherit from.
+- **Compositional** — Designed to work with runtime fundamentals (e.g., bundler frameworks, node scripts) rather than fight them. You pick the preset that matches what you are building and extend it as needed.
+- **Balanced freedom** — Overrides are allowed so projects can grow, but guardrails prevent risky or disliked patterns.

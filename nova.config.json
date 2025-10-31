@@ -1,0 +1,78 @@
+{
+  "project": {
+    "name": {
+      "slug": "nova",
+      "title": "Nova"
+    },
+    "description": {
+      "short": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
+      "long": "Nova is a JavaScript and TypeScript monorepo suite (formerly \"Foundation Nova\"), offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility."
+    },
+    "keywords": [
+      "eslint",
+      "eslint-config",
+      "eslint-flat-config",
+      "typescript",
+      "tsconfig",
+      "tsconfig-presets",
+      "linting",
+      "code-style",
+      "scripts",
+      "templates",
+      "react",
+      "nextjs",
+      "node",
+      "monorepo"
+    ]
+  },
+  "entities": [
+    {
+      "name": "CBN Ventures",
+      "email": "contact@cbnventures.io",
+      "url": "https://www.cbnventures.io",
+      "roles": [
+        "author"
+      ]
+    },
+    {
+      "name": "Jacky Liang",
+      "email": "hello@mrjackyliang.com",
+      "url": "https://www.mrjackyliang.com",
+      "roles": [
+        "contributor",
+        "supporter"
+      ]
+    }
+  ],
+  "urls": {
+    "homepage": "https://cbnventures.github.io/nova/",
+    "repository": "git+https://github.com/cbnventures/nova.git",
+    "bugs": "https://github.com/cbnventures/nova/issues",
+    "license": "https://github.com/cbnventures/nova/blob/HEAD/LICENSE",
+    "logo": "https://cbnventures.github.io/nova/images/logo.svg",
+    "documentation": "https://cbnventures.github.io/nova/",
+    "github": "https://github.com/cbnventures/nova",
+    "npm": "https://www.npmjs.com/package/@cbnventures/nova",
+    "fundSources": [
+      "https://github.com/sponsors/cbnventures",
+      "https://www.paypal.com/biz/profile/cbnventures"
+    ]
+  },
+  "workspaces": {
+    "./": {
+      "name": "nova-project",
+      "role": "project",
+      "policy": "freezable"
+    },
+    "./apps/docs": {
+      "name": "nova-docs",
+      "role": "docs",
+      "policy": "freezable"
+    },
+    "./packages/nova": {
+      "name": "@cbnventures/nova",
+      "role": "package",
+      "policy": "distributable"
+    }
+  }
+}
