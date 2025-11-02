@@ -1,5 +1,18 @@
 # @cbnventures/nova
 
+## 0.12.0
+
+### Minor Changes
+
+- Added a `Logger.dev` feature where a developer can use that in replacement of `console.log`.
+- Added custom ESLint rules to be exported for usage (starting with the `no-logger-dev` rule).
+- `Logger.customize` now has the ability for developer to declare the type and purpose of logging (in addition to the function name).
+
+### Patch Changes
+
+- Running ESLint during builds will now treat warnings as errors (for `@cbnventures/nova` package).
+- Added tests (to test for the `discoverPathsWithFile`).
+
 ## 0.11.0
 
 ### Minor Changes

@@ -112,7 +112,8 @@ export class CLIUtilityInitialize {
 
     if (options.dryRun === true) {
       Logger.customize({
-        name: 'CLIUtilityInitialize.run::options',
+        name: 'CLIUtilityInitialize.run',
+        purpose: 'options',
         padBottom: 1,
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
@@ -123,7 +124,8 @@ export class CLIUtilityInitialize {
 
     if (promptFlowResult === 'cancel') {
       Logger.customize({
-        name: 'CLIUtilityInitialize.run::promptFlow',
+        name: 'CLIUtilityInitialize.run',
+        purpose: 'promptFlow',
         padTop: 1,
         padBottom: 1,
       }).debug('Prompt flow exited without saving.');
@@ -135,7 +137,8 @@ export class CLIUtilityInitialize {
 
     if (options.dryRun === true) {
       Logger.customize({
-        name: 'CLIUtilityInitialize.run::promptFlow',
+        name: 'CLIUtilityInitialize.run',
+        purpose: 'promptFlow',
         padTop: 1,
         padBottom: 1,
       }).debug('Dry run enabled. Skipping save operation.');
@@ -382,7 +385,8 @@ export class CLIUtilityInitialize {
       const slugPrefix = new RegExp(`^${previousSlug}-`);
 
       Logger.customize({
-        name: 'CLIUtilityInitialize.promptProject::updated',
+        name: 'CLIUtilityInitialize.promptProject',
+        purpose: 'updated',
         padTop: 1,
       }).info(`Project slug updated from "${previousSlug || '(unset)'}" to "${currentSlug || '(unset)'}".`);
 
@@ -402,12 +406,16 @@ export class CLIUtilityInitialize {
           workspace.name = name.replace(slugPrefix, `${currentSlug}-`);
         }
 
-        Logger.customize({ name: 'CLIUtilityInitialize.promptProject::updated' }).info(`Workspace name updated from "${name}" to "${workspace.name}".`);
+        Logger.customize({
+          name: 'CLIUtilityInitialize.promptProject',
+          purpose: 'updated',
+        }).info(`Workspace name updated from "${name}" to "${workspace.name}".`);
       }
     }
 
     Logger.customize({
-      name: 'CLIUtilityInitialize.promptProject::updated',
+      name: 'CLIUtilityInitialize.promptProject',
+      purpose: 'updated',
       padTop: (slugChanged && config.workspaces !== undefined) ? 0 : 1,
       padBottom: 1,
     }).info('Project details updated.');
@@ -584,7 +592,8 @@ export class CLIUtilityInitialize {
         sync();
 
         Logger.customize({
-          name: 'CLIUtilityInitialize.promptEntities::add',
+          name: 'CLIUtilityInitialize.promptEntities',
+          purpose: 'add',
           padTop: 1,
           padBottom: 1,
         }).info('Added new entity.');
@@ -615,7 +624,8 @@ export class CLIUtilityInitialize {
         sync();
 
         Logger.customize({
-          name: 'CLIUtilityInitialize.promptEntities::edit',
+          name: 'CLIUtilityInitialize.promptEntities',
+          purpose: 'edit',
           padTop: 1,
           padBottom: 1,
         }).info('Updated entity.');
@@ -656,7 +666,8 @@ export class CLIUtilityInitialize {
         sync();
 
         Logger.customize({
-          name: 'CLIUtilityInitialize.promptEntities::remove',
+          name: 'CLIUtilityInitialize.promptEntities',
+          purpose: 'remove',
           padTop: 1,
           padBottom: 1,
         }).info('Removed entity.');
@@ -971,7 +982,8 @@ export class CLIUtilityInitialize {
     }
 
     Logger.customize({
-      name: 'CLIUtilityInitialize.promptUrls::updated',
+      name: 'CLIUtilityInitialize.promptUrls',
+      purpose: 'updated',
       padTop: 1,
       padBottom: 1,
     }).info('URL references updated.');
@@ -1005,7 +1017,10 @@ export class CLIUtilityInitialize {
       return `./${relativePath.split(path.sep).join('/')}`;
     });
 
-    Logger.customize({ name: 'CLIUtilityInitialize.promptWorkspaces::paths' }).debug(workspacePaths);
+    Logger.customize({
+      name: 'CLIUtilityInitialize.promptWorkspaces',
+      purpose: 'paths',
+    }).debug(workspacePaths);
 
     while (true) {
       const choices = workspacePaths.map((workspacePath) => {
@@ -1073,7 +1088,8 @@ export class CLIUtilityInitialize {
       Object.assign(config, { workspaces });
 
       Logger.customize({
-        name: 'CLIUtilityInitialize.promptWorkspaces::updated',
+        name: 'CLIUtilityInitialize.promptWorkspaces',
+        purpose: 'updated',
         padTop: 1,
         padBottom: 1,
       }).info(`Updated workspace "${workspacePath}" → ${formResult.workspace.name} · ${formResult.workspace.role} · ${formResult.workspace.policy}`);
@@ -1323,12 +1339,16 @@ export class CLIUtilityInitialize {
   private static async checkPath(currentDirectory: CLIUtilityInitializeCheckPathCurrentDirectory): CLIUtilityInitializeCheckPathReturns {
     const locations = await discoverPathsWithFile('package.json', 'backward');
 
-    Logger.customize({ name: 'CLIUtilityInitialize.checkPath::detectedLocations' }).debug(locations);
+    Logger.customize({
+      name: 'CLIUtilityInitialize.checkPath',
+      purpose: 'detectedLocations',
+    }).debug(locations);
 
     // If command was ran outside of project root directory.
     if (locations.length < 1) {
       Logger.customize({
-        name: 'CLIUtilityInitialize.checkPath::lessThanOne',
+        name: 'CLIUtilityInitialize.checkPath',
+        purpose: 'lessThanOne',
         padBottom: 1,
       }).error([
         'No "package.json" files were found. Re-run this command inside the project root directory.',
@@ -1341,7 +1361,8 @@ export class CLIUtilityInitialize {
     // If command was ran inside a monorepo package.
     if (locations.length > 1) {
       Logger.customize({
-        name: 'CLIUtilityInitialize.checkPath::greaterThanOne',
+        name: 'CLIUtilityInitialize.checkPath',
+        purpose: 'greaterThanOne',
         padBottom: 1,
       }).error([
         'Multiple "package.json" files were found. Re-run this command inside the project root directory.',
@@ -1354,7 +1375,8 @@ export class CLIUtilityInitialize {
     // If command was ran outside the project root directory.
     if (locations.length === 1 && locations[0] !== currentDirectory) {
       Logger.customize({
-        name: 'CLIUtilityInitialize.checkPath::notProjectRootDir',
+        name: 'CLIUtilityInitialize.checkPath',
+        purpose: 'notProjectRootDir',
         padBottom: 1,
       }).error([
         'Must be run inside the project root directory.',

@@ -143,7 +143,10 @@ export async function discoverPathsWithFile(fileName: DiscoverPathsWithFileFileN
       const targetPath = path.join(currentDirectory, fileName);
 
       try {
-        Logger.customize({ name: 'discoverPathsWithFile::backward' }).debug(`Current directory: "${currentDirectory}"`);
+        Logger.customize({
+          name: 'discoverPathsWithFile',
+          purpose: 'backward',
+        }).debug(`Current directory: "${currentDirectory}"`);
 
         // Attempt to access the specified file.
         await fs.access(targetPath);
@@ -182,7 +185,10 @@ export async function discoverPathsWithFile(fileName: DiscoverPathsWithFileFileN
         continue;
       }
 
-      Logger.customize({ name: 'discoverPathsWithFile::forward' }).debug(`Current directory: "${currentDirectory}"`);
+      Logger.customize({
+        name: 'discoverPathsWithFile',
+        purpose: 'forward',
+      }).debug(`Current directory: "${currentDirectory}"`);
 
       let realDirectory: string;
 
@@ -312,8 +318,15 @@ export async function executeShell(command: ExecuteShellCommand): ExecuteShellRe
       code: 0,
     };
 
-    Logger.customize({ name: 'executeShell::command' }).debug(fullCommand);
-    Logger.customize({ name: 'executeShell::output' }).debug(output);
+    Logger.customize({
+      name: 'executeShell',
+      purpose: 'command',
+    }).debug(fullCommand);
+
+    Logger.customize({
+      name: 'executeShell',
+      purpose: 'output',
+    }).debug(output);
 
     return output;
   } catch (error) {
@@ -337,8 +350,15 @@ export async function executeShell(command: ExecuteShellCommand): ExecuteShellRe
       }
     }
 
-    Logger.customize({ name: 'executeShell::command' }).debug(fullCommand);
-    Logger.customize({ name: 'executeShell::output' }).debug(output);
+    Logger.customize({
+      name: 'executeShell',
+      purpose: 'command',
+    }).debug(fullCommand);
+
+    Logger.customize({
+      name: 'executeShell',
+      purpose: 'output',
+    }).debug(output);
 
     return output;
   }

@@ -1,3 +1,4 @@
+import { Logger } from '@/toolkit/index.js';
 import type {
   CLIRecipeSyncVersionsRunOptions,
   CLIRecipeSyncVersionsRunReturns,
@@ -19,6 +20,6 @@ export class CLIRecipeSyncVersions {
    * @since 1.0.0
    */
   public static async run(options: CLIRecipeSyncVersionsRunOptions): CLIRecipeSyncVersionsRunReturns {
-    process.stdout.write(`cli recipe sync versions - ${JSON.stringify(options, null, 2)}\n`);
+    Logger.debug(`cli recipe sync versions - ${JSON.stringify(options, null, 2)}`);
   }
 }

@@ -9,6 +9,8 @@ import type {
   LoggerCustomizeReturns,
   LoggerDebugMessage,
   LoggerDebugReturns,
+  LoggerDevMessage,
+  LoggerDevReturns,
   LoggerEmitLevel,
   LoggerEmitMessage,
   LoggerEmitOptions,
@@ -20,6 +22,9 @@ import type {
   LoggerPrefixLevel,
   LoggerPrefixOptions,
   LoggerPrefixReturns,
+  LoggerScopeLabelOptions,
+  LoggerScopeLabelReturns,
+  LoggerScopeLabelSegments,
   LoggerShouldLogCurrentLogLevel,
   LoggerShouldLogLevel,
   LoggerShouldLogReturns,
@@ -36,6 +41,32 @@ import type {
  * @since 1.0.0
  */
 export default class Logger {
+  /**
+   * Logger - Debug.
+   *
+   * @param {LoggerDebugMessage} message - Message.
+   *
+   * @returns {LoggerDebugReturns}
+   *
+   * @since 1.0.0
+   */
+  public static debug(...message: LoggerDebugMessage): LoggerDebugReturns {
+    Logger.emit('debug', {}, ...message);
+  }
+
+  /**
+   * Logger - Dev.
+   *
+   * @param {LoggerDevMessage} message - Message.
+   *
+   * @returns {LoggerDevReturns}
+   *
+   * @since 1.0.0
+   */
+  public static dev(...message: LoggerDevMessage): LoggerDevReturns {
+    Logger.emit('dev', {}, ...message);
+  }
+
   /**
    * Logger - Info.
    *
@@ -76,19 +107,6 @@ export default class Logger {
   }
 
   /**
-   * Logger - Debug.
-   *
-   * @param {LoggerDebugMessage} message - Message.
-   *
-   * @returns {LoggerDebugReturns}
-   *
-   * @since 1.0.0
-   */
-  public static debug(...message: LoggerDebugMessage): LoggerDebugReturns {
-    Logger.emit('debug', {}, ...message);
-  }
-
-  /**
    * Logger - Customize.
    *
    * @param {LoggerCustomizeOptions} options - Options.
@@ -101,6 +119,9 @@ export default class Logger {
     return {
       debug(...message: LoggerDebugMessage): LoggerDebugReturns {
         Logger.emit('debug', options, ...message);
+      },
+      dev(...message: LoggerDevMessage): LoggerDevReturns {
+        Logger.emit('dev', options, ...message);
       },
       info(...message: LoggerInfoMessage): LoggerInfoReturns {
         Logger.emit('info', options, ...message);
@@ -173,6 +194,8 @@ export default class Logger {
       info: 20,
       warn: 30,
       error: 40,
+      // This weight is intentional.
+      dev: 100,
     };
 
     const isBrowser = typeof globalThis === 'object' && Reflect.has(globalThis, 'window');
@@ -199,13 +222,17 @@ export default class Logger {
    */
   private static prefix(level: LoggerPrefixLevel, options: LoggerPrefixOptions): LoggerPrefixReturns {
     const levelLabelUpper = level.toUpperCase();
-    const nameLabel = (options.name) ? ` ${chalk.dim(`[${options.name}]`)}` : '';
+    const scopeLabel = Logger.scopeLabel(options);
+    const scopeTag = ((process.env['LOG_LEVEL'] === 'debug' || process.env['NODE_ENV'] === 'development') && scopeLabel !== null) ? ` ${chalk.dim(`[${scopeLabel}]`)}` : '';
 
     let coloredLevelLabel;
 
     switch (level) {
       case 'debug':
         coloredLevelLabel = chalk.grey(levelLabelUpper);
+        break;
+      case 'dev':
+        coloredLevelLabel = chalk.magenta(levelLabelUpper);
         break;
       case 'info':
         coloredLevelLabel = chalk.blue(levelLabelUpper);
@@ -223,10 +250,39 @@ export default class Logger {
 
     // Show log timestamp if the "LOG_TIME" environment variable is seen.
     if (process.env['LOG_TIME'] && process.env['LOG_TIME'] === 'true') {
-      return `${chalk.dim(currentTimestamp())} ${coloredLevelLabel}${nameLabel}`;
+      return `${chalk.dim(currentTimestamp())} ${coloredLevelLabel}${scopeTag}`;
     }
 
-    return `${coloredLevelLabel}${nameLabel}`;
+    return `${coloredLevelLabel}${scopeTag}`;
+  }
+
+  /**
+   * Logger - Scope label.
+   *
+   * @param {LoggerScopeLabelOptions} options - Options.
+   *
+   * @private
+   *
+   * @returns {LoggerScopeLabelReturns}
+   *
+   * @since 1.0.0
+   */
+  private static scopeLabel(options: LoggerScopeLabelOptions): LoggerScopeLabelReturns {
+    const segments: LoggerScopeLabelSegments = [];
+
+    if (options.name !== undefined) {
+      segments.push(options.name);
+    }
+
+    if (options.type !== undefined) {
+      segments.push(options.type);
+    }
+
+    if (options.purpose !== undefined) {
+      segments.push(options.purpose);
+    }
+
+    return (segments.length > 0) ? segments.join('::') : null;
   }
 
   /**

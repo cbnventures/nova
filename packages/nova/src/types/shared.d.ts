@@ -70,6 +70,7 @@ export type ItemPrettyNames = Record<string, string>;
  */
 export type LogLevel =
   'debug'
+  | 'dev'
   | 'info'
   | 'warn'
   | 'error';
@@ -81,12 +82,18 @@ export type LogLevel =
  */
 export type LogOptionsName = string;
 
+export type LogOptionsType = 'function' | 'method' | 'test';
+
+export type LogOptionsPurpose = string;
+
 export type LogOptionsPadTop = number;
 
 export type LogOptionsPadBottom = number;
 
 export type LogOptions = {
   name?: LogOptionsName;
+  type?: LogOptionsType;
+  purpose?: LogOptionsPurpose;
   padTop?: LogOptionsPadTop;
   padBottom?: LogOptionsPadBottom;
 };

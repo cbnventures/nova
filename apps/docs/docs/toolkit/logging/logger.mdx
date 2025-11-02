@@ -35,7 +35,7 @@ The `Logger` battery locks down terminal output with environment-aware level gat
 ## Why Use This Battery?
 
 1. Delivers out-of-the-box logging, so you skip the busywork of customizing `console` wrappers.
-2. Automatically adjusts verbosity based on `NODE_ENV` and `LOG_LEVEL`, reducing noise in production.
+2. Automatically adjusts verbosity based on `NODE_ENV` and allows you to override through `LOG_LEVEL`.
 3. Color‑coded output by default, with optional timestamps for easier reading.
 
 ## Capabilities
@@ -51,6 +51,10 @@ The `Logger` battery locks down terminal output with environment-aware level gat
 Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
 :::
 
+:::warning Development Logging
+`Logger.dev` is meant for local debugging (enhanced version of `console.log`). Enable the [no-logger-dev](/docs/rules/eslint/no-logger-dev) ESLint rule to protect you from leaking logs.
+:::
+
 <Tabs groupId="logger-usage">
   <TabItem value="basics" label="Basics" default>
 
@@ -60,7 +64,8 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
     Logger.debug('Loading configuration');
     Logger.info('Build finished');
     Logger.warn('Cache miss; re-installing dependencies');
-    Logger.error('Tests failed', new Error('integration timeout'));
+    Logger.error('Tests failed', new Error('some error'));
+    Logger.dev('Only used in development');
     ```
 
   </TabItem>
@@ -70,14 +75,16 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
     import { Logger } from '@cbnventures/nova/toolkit';
 
     const log = Logger.customize({
-      name: 'cli::init',
-      padTop: 1,
-      padBottom: 0,
+      name: 'SomeClass.init',
+      padTop: 0,
+      padBottom: 1,
     });
 
+    log.debug('Checking existing project state');
     log.info('Initializing project');
     log.warn('Optional dependency missing; skipping feature');
     log.error('Aborting due to validation errors');
+    log.dev('Only used in development');
     ```
 
   </TabItem>
@@ -86,14 +93,12 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
     ```ts
     import { Logger } from '@cbnventures/nova/toolkit';
 
-    const details = [
+    Logger.info([
       'Scanning workspace',
       '- packages: 4',
       '- apps: 1',
       `- node: ${process.version}`,
-    ].join('\n');
-
-    Logger.info(details);
+    ].join('\n'));
 
     Logger.error(
       [
@@ -101,7 +106,7 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
         '- Missing env: GITHUB_TOKEN',
         '- Failing tests: 3',
       ].join('\n'),
-      new Error('gate failed'),
+      new Error('some error'),
     );
     ```
 
@@ -115,7 +120,7 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
     <img
       src={loggerBasics}
       alt="Basics preview"
-      width={1155}
+      width={792}
       height={435}
       style={{
         maxWidth: '100%',
@@ -127,7 +132,7 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
     <img
       src={loggerScoped}
       alt="Scoped logger preview"
-      width={1155}
+      width={792}
       height={435}
       style={{
         maxWidth: '100%',
@@ -139,7 +144,7 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
     <img
       src={loggerMultiline}
       alt="Multiline alignment preview"
-      width={1155}
+      width={792}
       height={435}
       style={{
         maxWidth: '100%',
@@ -160,23 +165,27 @@ Before you run a script, set `LOG_LEVEL` for the right verbosity and toggle `LOG
 | Setting     | Type     | Default                                                                                      | Description                                                               |
 |-------------|----------|----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
 | `LOG_LEVEL` | `string` | `'debug'` when `NODE_ENV=development`; `'warn'` for browser `production`; otherwise `'info'` | Minimum level emitted; accepts `debug`, `info`, `warn`, `error`.          |
-| `NODE_ENV`  | `string` | —                                                                                            | Controls the default `LOG_LEVEL`; set to `'development'` for chatty logs. |
 | `LOG_TIME`  | `string` | —                                                                                            | Set to the string `'true'` to prefix each message with an ISO timestamp.  |
+| `NODE_ENV`  | `string` | —                                                                                            | Controls the default `LOG_LEVEL`; set to `'development'` for chatty logs. |
 
 ### Options
 
 Call `Logger.customize({ ... })` to spin up scoped loggers, giving each phase a name and using padding to separate sections in the terminal.
 
-| Option      | Type   | Default | Description                                                                          |
-|-------------|--------|---------|--------------------------------------------------------------------------------------|
-| `name`      | string | —       | Appends a dimmed `[name]` tag to the colored level label for quick filtering.        |
-| `padTop`    | number | `0`     | Inserts that many blank lines **before** the payload (values below `0` are ignored). |
-| `padBottom` | number | `0`     | Inserts that many blank lines **after** the payload (values below `0` are ignored).  |
+*Scope tags render only when `LOG_LEVEL=debug`.*
+
+| Option      | Type                               | Default | Description                                                                                                                                                       |
+|-------------|------------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`      | string                             | —       | The **first** segment in the dimmed scope tag (for example `[name::type::purpose]`). Shown when `LOG_LEVEL` is `'debug'` or `NODE_ENV` is `'development'`.        |
+| `type`      | `'function' \| 'method' \| 'test'` | —       | The **second** segment highlighting what is emitting (for example `[name::type::purpose]`). Shown when `LOG_LEVEL` is `'debug'` or `NODE_ENV` is `'development'`. |
+| `purpose`   | string                             | —       | The **third** segment that calls out the intent (for example `[name::type::purpose]`). Shown when `LOG_LEVEL` is `'debug'` or `NODE_ENV` is `'development'`.      |
+| `padTop`    | number                             | `0`     | Inserts that many blank lines **before** the payload (values below `0` are ignored).                                                                              |
+| `padBottom` | number                             | `0`     | Inserts that many blank lines **after** the payload (values below `0` are ignored).                                                                               |
 
 ## Troubleshooting
 
 - **Nothing prints to the terminal.** — Check `LOG_LEVEL`; if it is set higher than your message severity, downgrade it or unset it entirely.
 - **Colors missing in CI logs.** — Some environments disable ANSI. Export `FORCE_COLOR=1` or rely on timestamps/names for identification.
-- **Extra blank lines surround messages.** — Review `padTop`/`padBottom` on customized loggers and reset them to `0` when not needed.
+- **Extra blank lines surround messages.** — Review `padTop` / `padBottom` on customized loggers and reset them to `0` when not needed.
 - **Timestamps not appearing.** — Ensure `LOG_TIME` is set to the string `'true'`, not any other truthy value.
 - **Debug logs still hidden locally.** — Confirm `NODE_ENV` is `'development'` or explicitly set `LOG_LEVEL=debug`.

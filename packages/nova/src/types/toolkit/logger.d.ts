@@ -9,6 +9,7 @@ export type LoggerCustomizeOptions = LogOptions;
 
 export type LoggerCustomizeReturns = {
   debug(...message: LoggerDebugMessage): LoggerDebugReturns;
+  dev(...message: LoggerDevMessage): LoggerDevReturns;
   info(...message: LoggerInfoMessage): LoggerInfoReturns;
   warn(...message: LoggerWarnMessage): LoggerWarnReturns;
   error(...message: LoggerErrorMessage): LoggerErrorReturns;
@@ -22,6 +23,15 @@ export type LoggerCustomizeReturns = {
 export type LoggerDebugMessage = unknown[];
 
 export type LoggerDebugReturns = void;
+
+/**
+ * Logger - Dev.
+ *
+ * @since 1.0.0
+ */
+export type LoggerDevMessage = unknown[];
+
+export type LoggerDevReturns = void;
 
 /**
  * Logger - Emit.
@@ -64,6 +74,17 @@ export type LoggerPrefixLevel = LogLevel;
 export type LoggerPrefixOptions = LogOptions;
 
 export type LoggerPrefixReturns = string;
+
+/**
+ * Logger - Scope label.
+ *
+ * @since 1.0.0
+ */
+export type LoggerScopeLabelOptions = LogOptions;
+
+export type LoggerScopeLabelReturns = string | null;
+
+export type LoggerScopeLabelSegments = string[];
 
 /**
  * Logger - Should log.

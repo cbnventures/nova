@@ -10,7 +10,7 @@
     "build": "npm-run-all --sequential build:*",
     "build:build": "docusaurus build",
     "check": "npm-run-all --parallel check:*",
-    "check:lint": "eslint ./",
+    "check:lint": "eslint ./ --max-warnings=0",
     "check:types": "tsc --noEmit",
     "clean": "npm-run-all --parallel clean:*",
     "clean:clear": "docusaurus clear"

@@ -1,3 +1,4 @@
+import { Logger } from '@/toolkit/index.js';
 import type {
   CLIRecipeSyncMetadataRunOptions,
   CLIRecipeSyncMetadataRunReturns,
@@ -19,6 +20,6 @@ export class CLIRecipeSyncMetadata {
    * @since 1.0.0
    */
   public static async run(options: CLIRecipeSyncMetadataRunOptions): CLIRecipeSyncMetadataRunReturns {
-    process.stdout.write(`cli recipe sync metadata - ${JSON.stringify(options, null, 2)}\n`);
+    Logger.debug(`cli recipe sync metadata - ${JSON.stringify(options, null, 2)}`);
   }
 }
