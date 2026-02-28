@@ -6,20 +6,11 @@ import type { ChalkInstance } from 'chalk';
  *
  * @since 1.0.0
  */
-export type CLIExecuteCommandOptions<Options> = {
-  [OptionKey in keyof Options]?: true;
-};
+export type CLIExecuteCommandOptions<Options> = Partial<Options>;
 
-export type CLIExecuteCommandTarget = (options: CLIExecuteCommandOptions) => void | Promise<void>;
+export type CLIExecuteCommandTarget<Options> = (options: CLIExecuteCommandOptions<Options>) => void | Promise<void>;
 
 export type CLIExecuteCommandReturns = Promise<void>;
-
-/**
- * CLI - Get header.
- *
- * @since 1.0.0
- */
-export type CLIGetHeaderReturns = string;
 
 /**
  * CLI - Get command usage.
@@ -29,6 +20,13 @@ export type CLIGetHeaderReturns = string;
 export type CLIGetCommandUsageCommand = CommandUnknownOpts;
 
 export type CLIGetCommandUsageReturns = string;
+
+/**
+ * CLI - Get header.
+ *
+ * @since 1.0.0
+ */
+export type CLIGetHeaderReturns = string;
 
 /**
  * CLI - Get subcommand term.

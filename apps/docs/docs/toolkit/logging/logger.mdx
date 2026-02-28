@@ -36,7 +36,7 @@ The `Logger` battery locks down terminal output with environment-aware level gat
 
 1. Delivers out-of-the-box logging, so you skip the busywork of customizing `console` wrappers.
 2. Automatically adjusts verbosity based on `NODE_ENV` and allows you to override through `LOG_LEVEL`.
-3. Color‑coded output by default, with optional timestamps for easier reading.
+3. Produces color‑coded output by default, with optional timestamps for easier reading.
 
 ## Capabilities
 
@@ -48,7 +48,7 @@ The `Logger` battery locks down terminal output with environment-aware level gat
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
+Examples use TypeScript, but the [API](/docs/quickstart/terminology#fundamentals) is identical in JavaScript ([ESM](/docs/quickstart/terminology#javascript-and-typescript)-only).
 :::
 
 :::warning Development Logging
@@ -172,20 +172,22 @@ Before you run a script, set `LOG_LEVEL` for the right verbosity and toggle `LOG
 
 Call `Logger.customize({ ... })` to spin up scoped loggers, giving each phase a name and using padding to separate sections in the terminal.
 
-*Scope tags render only when `LOG_LEVEL=debug`.*
+:::tip Scope Tags
+Scope tags (`name`, `type`, and `purpose` options) render only when `LOG_LEVEL` is `'debug'` or `NODE_ENV` is `'development'`.
+:::
 
-| Option      | Type                               | Default | Description                                                                                                                                                       |
-|-------------|------------------------------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`      | string                             | —       | The **first** segment in the dimmed scope tag (for example `[name::type::purpose]`). Shown when `LOG_LEVEL` is `'debug'` or `NODE_ENV` is `'development'`.        |
-| `type`      | `'function' \| 'method' \| 'test'` | —       | The **second** segment highlighting what is emitting (for example `[name::type::purpose]`). Shown when `LOG_LEVEL` is `'debug'` or `NODE_ENV` is `'development'`. |
-| `purpose`   | string                             | —       | The **third** segment that calls out the intent (for example `[name::type::purpose]`). Shown when `LOG_LEVEL` is `'debug'` or `NODE_ENV` is `'development'`.      |
-| `padTop`    | number                             | `0`     | Inserts that many blank lines **before** the payload (values below `0` are ignored).                                                                              |
-| `padBottom` | number                             | `0`     | Inserts that many blank lines **after** the payload (values below `0` are ignored).                                                                               |
+| Option      | Type                               | Default | Description                                                                          |
+|-------------|------------------------------------|---------|--------------------------------------------------------------------------------------|
+| `name`      | string                             | —       | The **first** segment shows who is emitting (e.g., function name).                   |
+| `type`      | `'function' \| 'method' \| 'test'` | —       | The **second** segment highlighting what is emitting.                                |
+| `purpose`   | string                             | —       | The **third** segment that calls out the intent of this log.                         |
+| `padTop`    | number                             | `0`     | Inserts that many blank lines **before** the payload (values below `0` are ignored). |
+| `padBottom` | number                             | `0`     | Inserts that many blank lines **after** the payload (values below `0` are ignored).  |
 
 ## Troubleshooting
 
 - **Nothing prints to the terminal.** — Check `LOG_LEVEL`; if it is set higher than your message severity, downgrade it or unset it entirely.
 - **Colors missing in CI logs.** — Some environments disable ANSI. Export `FORCE_COLOR=1` or rely on timestamps/names for identification.
 - **Extra blank lines surround messages.** — Review `padTop` / `padBottom` on customized loggers and reset them to `0` when not needed.
-- **Timestamps not appearing.** — Ensure `LOG_TIME` is set to the string `'true'`, not any other truthy value.
+- **Timestamps not appearing.** — `LOG_TIME` expects the exact string `'true'`, not any other truthy value.
 - **Debug logs still hidden locally.** — Confirm `NODE_ENV` is `'development'` or explicitly set `LOG_LEVEL=debug`.

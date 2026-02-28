@@ -1,0 +1,110 @@
+---
+id: switch-case-blocks
+title: Switch Case Blocks
+description: Require every non-empty switch case to wrap its body in a block so declarations stay scoped and branches stay independent.
+keywords:
+  - nova
+  - eslint rule
+  - switch case
+  - block scope
+  - code style
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Enforce block-wrapped switch cases so each branch is self-contained and declarations never leak across cases.
+
+## Summary
+
+The `switch-case-blocks` rule requires every non-empty `switch` case to wrap its body in a block (`{ }`). Empty cases used for intentional fallthrough are allowed.
+
+## Why Use This Rule?
+
+1. Prevents accidental variable leaks between cases that share the same function scope.
+2. Makes each case self-contained so reordering or removing one won't break another.
+3. Gives a consistent visual boundary that's easier to scan.
+
+## Examples
+
+<Tabs groupId="switch-case-blocks-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    switch (action) {
+      case 'start': {
+        const id = getId();
+        run(id);
+        break;
+      }
+      case 'stop': {
+        cleanup();
+        break;
+      }
+      // Empty cases for intentional fallthrough are fine.
+      case 'pause':
+      case 'resume':
+      default: {
+        log('unhandled action');
+        break;
+      }
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    switch (action) {
+      case 'start':
+        const id = getId();
+        run(id);
+        break;
+      case 'stop':
+        cleanup();
+        break;
+      case 'pause':
+      case 'resume':
+      default:
+        log('unhandled action');
+        break;
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint flat config:
+
+```ts
+import { switchCaseBlocks } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'switch-case-blocks': switchCaseBlocks,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/switch-case-blocks': ['error'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **False positive on an empty case.** — Empty cases (no statements at all) are allowed for intentional fallthrough. If the case has any statement, it needs a block.
+- **Conflicts with another formatter.** — Some formatters strip braces from single-statement cases. Configure the formatter to preserve block statements inside switch cases.

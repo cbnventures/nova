@@ -47,7 +47,7 @@ Practical TSConfig guidance for Nova that uses **small, composable preset chains
     <span>DO: Pair <code>{'module'}</code> with <code>{'moduleResolution'}</code> correctly</span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Keep them in sync by using <code>{'"module": "nodenext"'}</code> with <code>{'"moduleResolution": "nodenext"'}</code> for Node ESM, or <code>{'"module": "esnext"'}</code> with <code>{'"moduleResolution": "bundler"'}</code> for bundlers.</li>
+    <li><strong>What</strong>: Keep them in sync by using <code>{'"module": "nodenext"'}</code> with <code>{'"moduleResolution": "nodenext"'}</code> for Node [ESM](/docs/quickstart/terminology#javascript-and-typescript), or <code>{'"module": "esnext"'}</code> with <code>{'"moduleResolution": "bundler"'}</code> for [bundlers](/docs/quickstart/terminology#builds-and-tooling).</li>
     <li><strong>Why</strong>: Mismatched values make TypeScript and your runtime resolve imports differently, which causes "cannot find module" errors. Pairing keeps resolution consistent.</li>
   </ul>
 </details>

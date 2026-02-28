@@ -46,7 +46,7 @@ body:
       label: Post-check confirmation
       description: Before proceeding further, please confirm the following by checking each box. This confirmation is crucial for the consideration of your request. __All boxes MUST be checked; failure to comply will result in your request being closed.__
       options:
-        - label: I have filled in the form __exactly as requested__ and did not attempt to circumvent form validation.
+        - label: I have filled in the form __exactly as requested__ and did not attempt to circumvent form validation
           required: true
   - type: checkboxes
     id: legal

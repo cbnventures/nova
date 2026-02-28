@@ -9,3 +9,7 @@ tags:
 ---
 
 Coming soon
+
+## Notes
+
+- **`allowSyntheticDefaultImports`** is set to `true`. Third-party packages like Zod v4 ship `.d.cts` type files that use `import X from "module"` default import syntax internally. With `skipLibCheck: false`, TypeScript checks those files too. Setting this to `false` causes type errors in third-party type declarations that the project has no control over.

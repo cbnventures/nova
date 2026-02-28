@@ -1,6 +1,15 @@
 import type { TSESLint, TSESTree } from '@typescript-eslint/utils';
 
 /**
+ * No logger dev - Came from logger customize.
+ *
+ * @since 1.0.0
+ */
+export type NoLoggerDevCameFromLoggerCustomizeIdentifier = TSESTree.Identifier;
+
+export type NoLoggerDevCameFromLoggerCustomizeReturns = boolean;
+
+/**
  * No logger dev - Find variable.
  *
  * @since 1.0.0
@@ -17,12 +26,3 @@ export type NoLoggerDevFindVariableReturns = TSESLint.Scope.Variable | undefined
 export type NoLoggerDevIsLoggerCustomizeCallNode = TSESTree.Node | null | undefined;
 
 export type NoLoggerDevIsLoggerCustomizeCallTypeGuard = TSESTree.CallExpression;
-
-/**
- * No logger dev - Came from logger customize.
- *
- * @since 1.0.0
- */
-export type NoLoggerDevCameFromLoggerCustomizeIdentifier = TSESTree.Identifier;
-
-export type NoLoggerDevCameFromLoggerCustomizeReturns = boolean;

@@ -1,0 +1,91 @@
+---
+id: no-raw-text-in-code
+title: No Raw Text in Code
+description: Disallow unwrapped text inside code JSX elements to prevent MDX from parsing special characters as JSX tags.
+keywords:
+  - nova
+  - eslint rule
+  - mdx
+  - jsx
+  - code element
+  - raw text
+  - linting
+tags:
+  - rules
+  - eslint
+  - mdx
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Disallow unwrapped text inside `<code>` JSX elements to prevent MDX from parsing special characters as JSX tags.
+
+## Summary
+
+The `no-raw-text-in-code` rule reports any unwrapped text placed directly between `<code>` JSX tags without a `{}` expression wrapper (i.e., `JSXText` AST nodes). Unwrapped text that contains characters like `<`, `>`, `{`, or `}` causes MDX parsing failures because the parser treats them as JSX syntax.
+
+## Why Use This Rule?
+
+1. Prevents MDX build failures caused by special characters being parsed as JSX — for example, `<code>Array<string></code>` breaks because `<string>` is interpreted as a JSX opening tag.
+2. Catches the issue at lint time instead of at build time or runtime.
+3. Enforces a consistent pattern of wrapping text in `{}` expressions inside `<code>` elements.
+
+## Examples
+
+<Tabs groupId="no-raw-text-in-code-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```mdx
+    {/* Wrap text in a {} expression */}
+    <code>{'Array<string>'}</code>
+
+    {/* Or use backticks in prose instead */}
+    Use the `Array<string>` type.
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```mdx
+    {/* Unwrapped text — "Array<string>" breaks MDX parsing */}
+    <code>Array<string></code>
+    ```
+
+  </TabItem>
+</Tabs>
+
+:::danger
+Unwrapped text like `<code>Array<string></code>` will cause MDX to interpret `<string>` as a JSX opening tag, resulting in a build error.
+:::
+
+## Configuration
+
+Enable the rule in your ESLint flat config for MDX files:
+
+```ts
+import { noRawTextInCode } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    files: ['**/*.mdx'],
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-raw-text-in-code': noRawTextInCode,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-raw-text-in-code': ['error'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **Error fires on plain text without special characters.** — The rule flags all unwrapped text inside `<code>`, not just text with special characters. It is recommended to always use `{}` expression wrappers for consistency and to prevent future issues if the text changes.
+- **Want to use backticks instead?** — In prose, backtick syntax (`` `Array<string>` ``) is the simplest alternative and avoids the issue entirely.

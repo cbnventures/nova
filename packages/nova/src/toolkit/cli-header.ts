@@ -1,18 +1,23 @@
 import { PATTERN_ANSI, PATTERN_ANSI_START } from '@/lib/regex.js';
 import { Logger } from '@/toolkit/index.js';
+
 import type {
   CLIHeaderAlignAlign,
   CLIHeaderAlignReturns,
   CLIHeaderAlignString,
   CLIHeaderAlignWidth,
-  CLIHeaderBorderChars,
+  CLIHeaderBorderCharsReturns,
   CLIHeaderBorderCharsStyle,
   CLIHeaderPadToWidthReturns,
   CLIHeaderPadToWidthString,
   CLIHeaderPadToWidthWidth,
+  CLIHeaderRenderContentStrings,
+  CLIHeaderRenderDisplayStrings,
   CLIHeaderRenderOptions,
   CLIHeaderRenderReturns,
   CLIHeaderRenderTexts,
+  CLIHeaderStripAnsiReturns,
+  CLIHeaderStripAnsiString,
   CLIHeaderTruncateMax,
   CLIHeaderTruncateReturns,
   CLIHeaderTruncateString,
@@ -37,13 +42,21 @@ export default class CLIHeader {
    * @since 1.0.0
    */
   public static render(texts: CLIHeaderRenderTexts, options?: CLIHeaderRenderOptions): CLIHeaderRenderReturns {
-    const align = options?.align ?? 'center';
-    const marginTop = Math.max(0, options?.marginTop ?? 0);
-    const marginBottom = Math.max(0, options?.marginBottom ?? 0);
-    const paddingX = Math.max(0, options?.paddingX ?? 0);
-    const paddingY = Math.max(0, options?.paddingY ?? 0);
-    const style = options?.style ?? 'box';
-    const width = Math.max(0, options?.width ?? process.stdout.columns);
+    const resolvedOptions = options ?? {};
+    const interactive = resolvedOptions.interactive ?? (process.stdout.isTTY === true);
+
+    // Non-interactive mode outputs plain text without borders.
+    if (interactive === false) {
+      return texts.map((text) => CLIHeader.stripAnsi(text)).join('\n');
+    }
+
+    const align = resolvedOptions.align ?? 'center';
+    const marginTop = Math.max(0, resolvedOptions.marginTop ?? 0);
+    const marginBottom = Math.max(0, resolvedOptions.marginBottom ?? 0);
+    const paddingX = Math.max(0, resolvedOptions.paddingX ?? 0);
+    const paddingY = Math.max(0, resolvedOptions.paddingY ?? 0);
+    const style = resolvedOptions.style ?? 'box';
+    const width = Math.max(0, resolvedOptions.width ?? process.stdout.columns);
 
     const topMargin = '\n'.repeat(marginTop);
     const bottomMargin = '\n'.repeat(marginBottom);
@@ -54,8 +67,8 @@ export default class CLIHeader {
     const bottomBorder = `${borderChars.bottomLeft}${'─'.repeat(borderlessWidth)}${borderChars.bottomRight}`;
     const contentWidth = Math.max(0, borderlessWidth - (2 * paddingX));
 
-    const contentStrings: string[] = [];
-    const displayStrings: string[] = [];
+    const contentStrings: CLIHeaderRenderContentStrings = [];
+    const displayStrings: CLIHeaderRenderDisplayStrings = [];
 
     // Text - Top vertical padding.
     for (let i = 0; i < paddingY; i += 1) {
@@ -95,13 +108,13 @@ export default class CLIHeader {
    *
    * @private
    *
-   * @returns {CLIHeaderBorderChars}
+   * @returns {CLIHeaderBorderCharsReturns}
    *
    * @since 1.0.0
    */
-  private static borderChars(style: CLIHeaderBorderCharsStyle): CLIHeaderBorderChars {
+  private static borderChars(style: CLIHeaderBorderCharsStyle): CLIHeaderBorderCharsReturns {
     switch (style) {
-      case 'round':
+      case 'round': {
         return {
           topLeft: '╭',
           topRight: '╮',
@@ -110,7 +123,8 @@ export default class CLIHeader {
           horizontal: '─',
           vertical: '│',
         };
-      case 'thick':
+      }
+      case 'thick': {
         return {
           topLeft: '╔',
           topRight: '╗',
@@ -119,8 +133,9 @@ export default class CLIHeader {
           horizontal: '═',
           vertical: '║',
         };
+      }
       case 'box':
-      default:
+      default: {
         return {
           topLeft: '┌',
           topRight: '┐',
@@ -129,7 +144,23 @@ export default class CLIHeader {
           horizontal: '─',
           vertical: '│',
         };
+      }
     }
+  }
+
+  /**
+   * CLI Header - Strip ANSI.
+   *
+   * @param {CLIHeaderStripAnsiString} string - String.
+   *
+   * @private
+   *
+   * @returns {CLIHeaderStripAnsiReturns}
+   *
+   * @since 1.0.0
+   */
+  private static stripAnsi(string: CLIHeaderStripAnsiString): CLIHeaderStripAnsiReturns {
+    return string.replace(new RegExp(PATTERN_ANSI, 'g'), '');
   }
 
   /**
@@ -163,7 +194,7 @@ export default class CLIHeader {
       const matches = slice.match(PATTERN_ANSI_START);
 
       // Skips the ANSI portion.
-      if (matches) {
+      if (matches !== null) {
         const code = matches[0];
 
         Logger.customize({
@@ -222,7 +253,7 @@ export default class CLIHeader {
       const matches = slice.match(PATTERN_ANSI_START);
 
       // Adds the ANSI portion back.
-      if (matches) {
+      if (matches !== null) {
         const code = matches[0];
 
         output += code;
@@ -261,7 +292,7 @@ export default class CLIHeader {
       purpose: 'second-pass',
     }).debug(JSON.stringify(output));
 
-    if (needsEllipsis) {
+    if (needsEllipsis === true) {
       output += '…';
 
       Logger.customize({

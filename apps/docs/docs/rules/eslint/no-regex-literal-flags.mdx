@@ -1,0 +1,85 @@
+---
+id: no-regex-literal-flags
+title: No Regex Literal Flags
+description: Disallow flags on regex literals so shared patterns stay reusable and callers add flags at the call site via new RegExp.
+keywords:
+  - nova
+  - eslint rule
+  - regex
+  - regular expression
+  - regex flags
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Disallow flags on regex literals so shared patterns stay reusable and callers add flags at the call site via `new RegExp(pattern, flags)`.
+
+## Summary
+
+The `no-regex-literal-flags` rule reports any regex literal that carries flags (e.g., `/pattern/gi`). Patterns defined without flags can be reused by multiple callers, each choosing the flags they need through `new RegExp(pattern, flags)`.
+
+## Why Use This Rule?
+
+1. Keeps centralized patterns flag-free so they work in any context without assumptions.
+2. Moves flag decisions to the call site where the intent is clearest.
+3. Prevents accidental global or case-insensitive matching baked into shared patterns.
+
+## Examples
+
+<Tabs groupId="no-regex-literal-flags-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Flag-free pattern in the patterns file.
+    export const PATTERN_DIGITS = /\d+/;
+
+    // Caller adds flags at the call site.
+    const allDigits = new RegExp(PATTERN_DIGITS, 'g');
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Flags baked into the pattern.
+    export const PATTERN_DIGITS = /\d+/g;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint flat config:
+
+```ts
+import { noRegexLiteralFlags } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-regex-literal-flags': noRegexLiteralFlags,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-regex-literal-flags': ['error'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **Need a flag for a one-off use?** — Import the flag-free pattern and wrap it with `new RegExp(pattern, flags)` at the call site.
+- **Conflicts with `no-regex-literals`.** — The two rules complement each other. Use `no-regex-literals` in application code to ban all inline literals, and use `no-regex-literal-flags` in the patterns file to keep definitions flag-free.

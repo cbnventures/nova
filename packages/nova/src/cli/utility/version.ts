@@ -1,14 +1,18 @@
-import * as os from 'os';
+import {
+  arch,
+  platform,
+  release,
+  version,
+} from 'os';
 
 import chalk from 'chalk';
 
 import {
-  itemBrandPrettyNames,
-  itemCategoryPrettyNames,
-  itemColumnTitlePrettyNames,
-  itemTypePrettyNames,
+  itemPrettyNamesBrand,
+  itemPrettyNamesCategory,
+  itemPrettyNamesColumnTitle,
+  itemPrettyNamesType,
 } from '@/lib/item.js';
-import { MarkdownTable } from '@/toolkit/index.js';
 import {
   PATTERN_DOUBLE_QUOTED_STRING_CAPTURE,
   PATTERN_JAVA_VERSION_LINE,
@@ -22,7 +26,10 @@ import {
   parseWindowsRegistryQuery,
   pathExists,
 } from '@/lib/utility.js';
+import { MarkdownTable } from '@/toolkit/index.js';
+
 import type {
+  CLIUtilityVersionGetBrowserVersionAppPath,
   CLIUtilityVersionGetBrowserVersionBrowsers,
   CLIUtilityVersionGetBrowserVersionReturns,
   CLIUtilityVersionGetEnvironmentManagerVersionManagers,
@@ -33,6 +40,7 @@ import type {
   CLIUtilityVersionGetNodeVersionTools,
   CLIUtilityVersionGetOsVersionArchitecture,
   CLIUtilityVersionGetOsVersionBuild,
+  CLIUtilityVersionGetOsVersionCurrentBuild,
   CLIUtilityVersionGetOsVersionKernel,
   CLIUtilityVersionGetOsVersionName,
   CLIUtilityVersionGetOsVersionReturns,
@@ -43,7 +51,7 @@ import type {
   CLIUtilityVersionRunOptions,
   CLIUtilityVersionRunReturns,
   CLIUtilityVersionRunTasks,
-} from '@/types/cli/utility.d.ts';
+} from '@/types/cli/utility/version.d.ts';
 
 /**
  * CLI Utility - Version.
@@ -64,27 +72,27 @@ export class CLIUtilityVersion {
     const tasks: CLIUtilityVersionRunTasks = [];
 
     // Node.js + Tools.
-    if (options.node || options.all || Object.keys(options).length === 0) {
+    if (options.node === true || options.all === true || Object.keys(options).length === 0) {
       tasks.push(CLIUtilityVersion.getNodeVersion().then((response) => ['node', response]));
     }
 
     // Environment Managers.
-    if (options.env || options.all || Object.keys(options).length === 0) {
+    if (options.env === true || options.all === true || Object.keys(options).length === 0) {
       tasks.push(CLIUtilityVersion.getEnvironmentManagerVersion().then((response) => ['env', response]));
     }
 
     // Operating System.
-    if (options.os || options.all || Object.keys(options).length === 0) {
+    if (options.os === true || options.all === true || Object.keys(options).length === 0) {
       tasks.push(CLIUtilityVersion.getOsVersion().then((response) => ['os', response]));
     }
 
     // Web Browsers.
-    if (options.browser || options.all || Object.keys(options).length === 0) {
+    if (options.browser === true || options.all === true || Object.keys(options).length === 0) {
       tasks.push(CLIUtilityVersion.getBrowserVersion().then((response) => ['browsers', response]));
     }
 
     // Interpreters / Runtimes.
-    if (options.interpreter || options.all || Object.keys(options).length === 0) {
+    if (options.interpreter === true || options.all === true || Object.keys(options).length === 0) {
       tasks.push(CLIUtilityVersion.getInterpreterVersion().then((response) => ['interpreters', response]));
     }
 
@@ -94,48 +102,6 @@ export class CLIUtilityVersion {
 
     // Print out the versions to the console.
     CLIUtilityVersion.print(list);
-  }
-
-  /**
-   * CLI Utility - Version - Print.
-   *
-   * @param {CLIUtilityVersionPrintList} list - List.
-   *
-   * @private
-   *
-   * @returns {CLIUtilityVersionPrintReturns}
-   *
-   * @since 1.0.0
-   */
-  private static print(list: CLIUtilityVersionPrintList): CLIUtilityVersionPrintReturns {
-    // Each category maps to a rows-by-key object used to render a single two-column table.
-    for (const [category, rowsByKey] of Object.entries(list)) {
-      // Skip empty objects.
-      if (Object.keys(rowsByKey).length === 0) {
-        continue;
-      }
-
-      // Build the table.
-      const table = new MarkdownTable([
-        chalk.bold.yellow(itemColumnTitlePrettyNames[`key-${category}`] ?? 'Key'),
-        chalk.bold.yellow(itemColumnTitlePrettyNames[`value-${category}`] ?? 'Value'),
-      ], {
-        padDelimiterRow: false,
-        minimumColumnWidth: 10,
-      });
-
-      // Push data into the table.
-      for (const [rowKey, rowValue] of Object.entries(rowsByKey)) {
-        table.addRow([
-          itemBrandPrettyNames[rowKey] ?? itemTypePrettyNames[rowKey] ?? chalk.grey(rowKey),
-          rowValue,
-        ]);
-      }
-
-      // Print the table.
-      process.stdout.write(`${itemCategoryPrettyNames[category] ?? chalk.grey(category)}\n`);
-      process.stdout.write(`${table.render()}\n\n`);
-    }
   }
 
   /**
@@ -166,7 +132,8 @@ export class CLIUtilityVersion {
 
     // Attempt to retrieve the Node.js version.
     if (nodeJsVersion.code === 0) {
-      const match = nodeJsVersion.textOut.match(PATTERN_SEMVER)?.[1];
+      const matchResult = nodeJsVersion.textOut.match(PATTERN_SEMVER);
+      const match = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -178,7 +145,8 @@ export class CLIUtilityVersion {
 
     // Attempt to retrieve the Node Package Manager (npm) version.
     if (npmVersion.code === 0) {
-      const match = npmVersion.textOut.match(PATTERN_SEMVER)?.[1];
+      const matchResult = npmVersion.textOut.match(PATTERN_SEMVER);
+      const match = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -190,7 +158,8 @@ export class CLIUtilityVersion {
 
     // Attempt to retrieve the Yarn version.
     if (yarnVersion.code === 0) {
-      const match = yarnVersion.textOut.match(PATTERN_SEMVER)?.[1];
+      const matchResult = yarnVersion.textOut.match(PATTERN_SEMVER);
+      const match = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -202,7 +171,8 @@ export class CLIUtilityVersion {
 
     // Attempt to retrieve the Performant Node Package Manager (pnpm) version.
     if (pnpmVersion.code === 0) {
-      const match = pnpmVersion.textOut.match(PATTERN_SEMVER)?.[1];
+      const matchResult = pnpmVersion.textOut.match(PATTERN_SEMVER);
+      const match = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -214,7 +184,8 @@ export class CLIUtilityVersion {
 
     // Attempt to retrieve the Bun version.
     if (bunVersion.code === 0) {
-      const match = bunVersion.textOut.match(PATTERN_SEMVER)?.[1];
+      const matchResult = bunVersion.textOut.match(PATTERN_SEMVER);
+      const match = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -245,8 +216,9 @@ export class CLIUtilityVersion {
     let managers: CLIUtilityVersionGetEnvironmentManagerVersionManagers = {};
 
     // Attempt to retrieve the Node Version Manager (nvm-posix) version.
-    if (os.platform() !== 'win32' && nvmVersion.code === 0) {
-      const match = nvmVersion.textOut.match(PATTERN_SEMVER)?.[1];
+    if (platform() !== 'win32' && nvmVersion.code === 0) {
+      const matchResult = nvmVersion.textOut.match(PATTERN_SEMVER);
+      const match = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         managers = {
@@ -257,8 +229,9 @@ export class CLIUtilityVersion {
     }
 
     // Attempt to retrieve the Node Version Manager for Windows (nvm-windows) version.
-    if (os.platform() === 'win32' && nvmVersion.code === 0) {
-      const match = nvmVersion.textOut.match(PATTERN_SEMVER)?.[1];
+    if (platform() === 'win32' && nvmVersion.code === 0) {
+      const matchResult = nvmVersion.textOut.match(PATTERN_SEMVER);
+      const match = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         managers = {
@@ -270,7 +243,8 @@ export class CLIUtilityVersion {
 
     // Attempt to retrieve the Volta version.
     if (voltaVersion.code === 0) {
-      const match = voltaVersion.textOut.match(PATTERN_SEMVER)?.[1];
+      const matchResult = voltaVersion.textOut.match(PATTERN_SEMVER);
+      const match = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         managers = {
@@ -293,16 +267,16 @@ export class CLIUtilityVersion {
    * @since 1.0.0
    */
   private static async getOsVersion(): CLIUtilityVersionGetOsVersionReturns {
-    const platform = os.platform();
-    const architecture: CLIUtilityVersionGetOsVersionArchitecture = os.arch();
-    const kernel: CLIUtilityVersionGetOsVersionKernel = os.release();
+    const currentPlatform = platform();
+    const architecture: CLIUtilityVersionGetOsVersionArchitecture = arch();
+    const kernel: CLIUtilityVersionGetOsVersionKernel = release();
 
-    let name: CLIUtilityVersionGetOsVersionName = platform;
-    let version: CLIUtilityVersionGetOsVersionVersion = os.version();
+    let name: CLIUtilityVersionGetOsVersionName = currentPlatform;
+    let currentVersion: CLIUtilityVersionGetOsVersionVersion = version();
     let build: CLIUtilityVersionGetOsVersionBuild = '—';
 
     // macOS.
-    if (platform === 'darwin') {
+    if (currentPlatform === 'darwin') {
       const [productName, productVersion, buildVersion] = await Promise.all([
         executeShell('sw_vers -productName'),
         executeShell('sw_vers -productVersion'),
@@ -310,33 +284,58 @@ export class CLIUtilityVersion {
       ]);
 
       name = productName.textOut ?? 'macOS';
-      version = productVersion.textOut ?? version;
+      currentVersion = productVersion.textOut ?? currentVersion;
       build = buildVersion.textOut ?? '—';
     }
 
     // Windows.
-    if (platform === 'win32') {
+    if (currentPlatform === 'win32') {
       const registryQuery = await parseWindowsRegistryQuery('HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion');
-      const currentBuild = registryQuery['CurrentBuild']?.data ?? registryQuery['CurrentBuildNumber']?.data;
-      const updateBuildRevision = registryQuery['UBR']?.data;
+      const currentBuildEntry = registryQuery['CurrentBuild'];
+      const currentBuildNumberEntry = registryQuery['CurrentBuildNumber'];
+      const updateBuildRevisionEntry = registryQuery['UBR'];
+      const productNameEntry = registryQuery['ProductName'];
+      const displayVersionEntry = registryQuery['DisplayVersion'];
+      const releaseIdEntry = registryQuery['ReleaseId'];
 
-      name = registryQuery['ProductName']?.data ?? 'Windows';
-      version = registryQuery['DisplayVersion']?.data ?? registryQuery['ReleaseId']?.data ?? version;
-      build = (currentBuild) ? ((updateBuildRevision) ? `${currentBuild}.${updateBuildRevision}` : currentBuild) : '—';
+      let currentBuild: CLIUtilityVersionGetOsVersionCurrentBuild;
+
+      if (currentBuildEntry !== undefined) {
+        currentBuild = currentBuildEntry.data;
+      } else if (currentBuildNumberEntry !== undefined) {
+        currentBuild = currentBuildNumberEntry.data;
+      }
+      const updateBuildRevision = (updateBuildRevisionEntry !== undefined) ? updateBuildRevisionEntry.data : undefined;
+
+      name = (productNameEntry !== undefined) ? productNameEntry.data : 'Windows';
+
+      if (displayVersionEntry !== undefined) {
+        currentVersion = displayVersionEntry.data;
+      } else if (releaseIdEntry !== undefined) {
+        currentVersion = releaseIdEntry.data;
+      }
+
+      if (currentBuild !== undefined && updateBuildRevision !== undefined) {
+        build = `${currentBuild}.${updateBuildRevision}`;
+      } else if (currentBuild !== undefined) {
+        build = currentBuild;
+      } else {
+        build = '—';
+      }
     }
 
     // Linux.
-    if (platform === 'linux') {
+    if (currentPlatform === 'linux') {
       const osRelease = await parseLinuxOsReleaseFile();
 
       name = osRelease['NAME'] ?? 'Linux';
-      version = osRelease['VERSION'] ?? '—';
+      currentVersion = osRelease['VERSION'] ?? '—';
       build = osRelease['BUILD_ID'] ?? '—';
     }
 
     return {
       name,
-      version,
+      version: currentVersion,
       architecture,
       build,
       kernel,
@@ -353,12 +352,12 @@ export class CLIUtilityVersion {
    * @since 1.0.0
    */
   private static async getBrowserVersion(): CLIUtilityVersionGetBrowserVersionReturns {
-    const platform = os.platform();
+    const currentPlatform = platform();
 
     let browsers: CLIUtilityVersionGetBrowserVersionBrowsers = {};
 
     // macOS (must have "./Contents/Info" file and "CFBundleShortVersionString" key).
-    if (platform === 'darwin') {
+    if (currentPlatform === 'darwin') {
       const supportedBrowsers = {
         chrome: 'Google Chrome.app',
         safari: 'Safari.app',
@@ -377,7 +376,14 @@ export class CLIUtilityVersion {
           const user = `${process.env['HOME'] ?? ''}/Applications/${appName}`;
 
           const [hasSystem, hasUser] = await Promise.all([pathExists(system), pathExists(user)]);
-          const appPath = (hasSystem) ? system : (hasUser) ? user : null;
+
+          let appPath: CLIUtilityVersionGetBrowserVersionAppPath = null;
+
+          if (hasSystem === true) {
+            appPath = system;
+          } else if (hasUser === true) {
+            appPath = user;
+          }
 
           if (appPath === null) {
             return null;
@@ -406,7 +412,7 @@ export class CLIUtilityVersion {
     }
 
     // Windows (must be registered into "App Paths" and have "VersionInfo.ProductVersion" key).
-    if (platform === 'win32') {
+    if (currentPlatform === 'win32') {
       const supportedBrowsers = {
         chrome: 'chrome.exe',
         edge: 'msedge.exe',
@@ -454,7 +460,7 @@ export class CLIUtilityVersion {
     }
 
     // Linux (must have a command that exists in PATH and supports the "--version" argument).
-    if (platform === 'linux') {
+    if (currentPlatform === 'linux') {
       const supportedBrowsers = {
         'chrome': 'google-chrome',
         'firefox': 'firefox',
@@ -520,11 +526,12 @@ export class CLIUtilityVersion {
     // Attempt to retrieve the Java version.
     if (javaVersion.code === 0) {
       const match = javaVersion.textOut.match(new RegExp(PATTERN_JAVA_VERSION_LINE, 'mi'));
-      const matchVersion = match?.[1] ?? 'N/A';
-      const matchDistribution = match?.[2] ?? 'N/A';
-      const matchBuild = match?.[4] ?? 'N/A';
 
       if (match !== null) {
+        const matchVersion = match[1] ?? 'N/A';
+        const matchDistribution = match[2] ?? 'N/A';
+        const matchBuild = match[4] ?? 'N/A';
+
         interpreters = {
           ...interpreters,
           java: `${matchVersion} (distro: ${matchDistribution}, build: ${matchBuild})`,
@@ -535,12 +542,13 @@ export class CLIUtilityVersion {
     // Attempt to retrieve the Rust version.
     if (rustVersion.code === 0) {
       const match = rustVersion.textOut.match(PATTERN_RUSTC_VERSION_LINE);
-      const matchVersion = match?.[1] ?? 'N/A';
-      const matchBuildHash = match?.[2] ?? 'N/A';
-      const matchBuildDate = match?.[3] ?? 'N/A';
-      const matchSource = match?.[4] ?? 'rustup';
 
       if (match !== null) {
+        const matchVersion = match[1] ?? 'N/A';
+        const matchBuildHash = match[2] ?? 'N/A';
+        const matchBuildDate = match[3] ?? 'N/A';
+        const matchSource = match[4] ?? 'rustup';
+
         interpreters = {
           ...interpreters,
           rust: `${matchVersion} (build hash: ${matchBuildHash}, build date: ${matchBuildDate}, source: ${matchSource})`,
@@ -549,5 +557,47 @@ export class CLIUtilityVersion {
     }
 
     return interpreters;
+  }
+
+  /**
+   * CLI Utility - Version - Print.
+   *
+   * @param {CLIUtilityVersionPrintList} list - List.
+   *
+   * @private
+   *
+   * @returns {CLIUtilityVersionPrintReturns}
+   *
+   * @since 1.0.0
+   */
+  private static print(list: CLIUtilityVersionPrintList): CLIUtilityVersionPrintReturns {
+    // Each category maps to a rows-by-key object used to render a single two-column table.
+    for (const [category, rowsByKey] of Object.entries(list)) {
+      // Skip empty objects.
+      if (Object.keys(rowsByKey).length === 0) {
+        continue;
+      }
+
+      // Build the table.
+      const table = new MarkdownTable([
+        chalk.bold.yellow(itemPrettyNamesColumnTitle[`key-${category}`] ?? 'Key'),
+        chalk.bold.yellow(itemPrettyNamesColumnTitle[`value-${category}`] ?? 'Value'),
+      ], {
+        padDelimiterRow: false,
+        minimumColumnWidth: 10,
+      });
+
+      // Push data into the table.
+      for (const [rowKey, rowValue] of Object.entries(rowsByKey)) {
+        table.addRow([
+          itemPrettyNamesBrand[rowKey] ?? itemPrettyNamesType[rowKey] ?? chalk.grey(rowKey),
+          rowValue,
+        ]);
+      }
+
+      // Print the table.
+      process.stdout.write(`${itemPrettyNamesCategory[category] ?? chalk.grey(category)}\n`);
+      process.stdout.write(`${table.render()}\n\n`);
+    }
   }
 }

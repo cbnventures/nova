@@ -164,7 +164,7 @@ const config: Config = {
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} CBN Ventures LLC. All Rights Reserved.`,
+      copyright: `Copyright © 2025-${new Date().getFullYear()} CBN Ventures LLC. All Rights Reserved.`,
     },
     prism: {
       theme: prismThemes.github,

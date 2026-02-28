@@ -1,6 +1,7 @@
 {
   "name": "nova-docs",
   "version": "0.0.0",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "npm-run-all --parallel dev:*",
@@ -11,32 +12,32 @@
     "build:build": "docusaurus build",
     "check": "npm-run-all --parallel check:*",
     "check:lint": "eslint ./ --max-warnings=0",
-    "check:types": "tsc --noEmit",
+    "check:types": "nova utility type-check",
     "clean": "npm-run-all --parallel clean:*",
     "clean:clear": "docusaurus clear"
   },
   "engines": {
-    "node": "^22"
+    "node": "^20 || ^22 || ^24"
   },
   "dependencies": {
     "@docusaurus/core": "3.9.2",
     "@docusaurus/preset-classic": "3.9.2",
-    "@easyops-cn/docusaurus-search-local": "0.52.1",
+    "@easyops-cn/docusaurus-search-local": "0.54.1",
     "@iconify/react": "6.0.2",
     "@mdx-js/react": "3.1.1",
     "prism-react-renderer": "2.4.1",
-    "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react": "19.2.4",
+    "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@cbnventures/nova": "file:../../packages/nova",
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/types": "3.9.2",
     "@types/node": "24.9.1",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
     "docusaurus-plugin-module-alias": "0.0.2",
-    "eslint": "9.38.0",
+    "eslint": "9.39.3",
     "npm-run-all": "4.1.5",
     "typescript": "5.9.3"
   }

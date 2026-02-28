@@ -1,0 +1,265 @@
+---
+id: changelog
+title: Changelog
+description: Record individual changes and release versioned changelogs with a guided flow that combines the record and release steps into a single beginner-friendly command.
+keywords:
+  - nova
+  - nova changelog
+  - nova utility changelog
+  - changeset alternative
+  - changelog management
+  - version bump
+  - semver
+  - release workflow
+  - ci cd changelog
+tags:
+  - changelog
+  - cli
+  - utility
+  - versioning
+  - release
+  - semver
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Record individual changes and release versioned changelogs with a single command that guides you through each step.
+
+## Summary
+
+The `changelog` command combines two workflows into one guided flow:
+
+- **Recording** a change (what happened).
+- **Releasing** accumulated changes (bump versions and write a `CHANGELOG.md`).
+
+In interactive mode, a menu lets you pick which action to take. In non-interactive mode, the `--record` and `--release` flags drive the same workflows from scripts and CI/CD pipelines.
+
+Recorded entries are stored as individual `.md` files in a `.changelog/` directory at the [monorepo root](/docs/quickstart/terminology#git-and-workflow). When released, the entries are consumed, versions are bumped in each affected `package.json`, and a `CHANGELOG.md` is written (or updated) in the [workspace](/docs/quickstart/terminology#nova-concepts) directory.
+
+## Why Use This Command?
+
+- Combines the record-and-release lifecycle into one command instead of separate tools.
+- Interactive prompts guide you through package selection, category, description, and [SemVer](/docs/quickstart/terminology#fundamentals) bump type. No flags to memorize.
+- The `--record` and `--release` flags enable the same workflow in CI/CD without prompts.
+- The **dry run** option lets you preview every change before any file is touched.
+
+## Use Cases
+
+- **Solo projects** — Record a change and release it in the same session without learning a separate versioning tool.
+- **Team workflows** — Each contributor records changes in their PR. A maintainer runs the release step when ready.
+- **CI/CD automation** — Use `--record` in a pipeline step to capture changes, then `--release` in a publish step to bump versions and write changelogs.
+- **Migration from Changesets** — Replace `changeset add` with `nova utility changelog --record` and `changeset version` with `nova utility changelog --release`.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js [LTS](/docs/quickstart/terminology#fundamentals) release with either the installed `nova` [CLI](/docs/quickstart/terminology#fundamentals) or `npx`.
+- **Project root** — Run the command from the directory containing the top-level `package.json` ([monorepos](/docs/quickstart/terminology#git-and-workflow) included).
+- **Nova config** — A valid [`nova.config.json`](/docs/quickstart/terminology#nova-concepts) must exist with at least one non-[freezable](/docs/quickstart/terminology#nova-concepts) workspace defined.
+
+## Usage
+
+You can run this command in two ways:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova utility changelog
+
+    # Shorthand
+    nova util cl
+    ```
+
+    **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest utility changelog
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest util cl
+    ```
+
+    **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                        | Description                                                                |
+|-----------------------------|----------------------------------------------------------------------------|
+| `--record`                  | Record a change. Prompts for missing values unless all flags are provided. |
+| `--release`                 | Release accumulated changes.                                               |
+| `-p, --package <name>`      | Package name for recording.                                                |
+| `-c, --category <category>` | Category: `updated`, `fixed`, `added`, `removed`.                          |
+| `-b, --bump <type>`         | Bump type: `major`, `minor`, `patch`.                                      |
+| `-m, --message <message>`   | Change description.                                                        |
+| `-d, --dry-run`             | Preview changes without writing files.                                     |
+
+## How It Works
+
+### Record Flow
+
+1. **Select package** — Auto-selects if only one non-freezable workspace exists. Otherwise prompts.
+2. **Select category** — Choose from Updated, Fixed, Added, or Removed.
+3. **Enter description** — Free-text description of the change.
+4. **Select bump type** — Pre-selected based on category (Added/Updated = minor, Fixed = patch, Removed = major). Override if needed.
+5. **Save** — Writes an entry file to `.changelog/` with a random adjective-noun-verb filename.
+
+### Release Flow
+
+1. **Read entries** — Collects all `.md` files from `.changelog/`.
+2. **Show summary** — Lists entries grouped by package with the computed version bump (highest bump wins).
+3. **Confirm** — Interactive only. Non-interactive mode (`--release`) skips this step.
+4. **Bump version** — Updates the `version` field in each affected `package.json`.
+5. **Write CHANGELOG.md** — Prepends a new version section. Creates the file if it does not exist.
+6. **Clean up** — Deletes consumed entry files from `.changelog/`.
+
+:::danger Non-Zero Exit Code
+The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). CI pipelines that use this command will fail the step on errors.
+:::
+
+### Entry File Format
+
+Each recorded change is stored as an individual `.md` file in `.changelog/`:
+
+```markdown title=".changelog/brave-cats-run.md"
+---
+package: "@cbnventures/nova"
+category: added
+bump: minor
+---
+
+New ESLint rule for switch case blocks.
+```
+
+### CHANGELOG.md Format
+
+Released entries are written in the following format. Headings are ordered as UPDATED, FIXED, ADDED, REMOVED. Empty headings are omitted.
+
+```markdown title="packages/nova/CHANGELOG.md"
+# @cbnventures/nova
+
+## 1.3.0 (2026-02-25)
+
+### FIXED
+- Crash in initialize command.
+
+### ADDED
+- New ESLint rule for switch case blocks.
+```
+
+## Examples
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Record"
+        # Original
+        nova utility changelog --record \
+          --package "@cbnventures/nova" \
+          --category added \
+          --bump minor \
+          --message "New ESLint rule."
+
+        # Shorthand
+        nova util cl --record \
+          -p "@cbnventures/nova" \
+          -c added \
+          -b minor \
+          -m "New ESLint rule."
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Release"
+        # Original
+        nova utility changelog --release --dry-run
+
+        # Shorthand
+        nova util cl --release -d
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Record"
+        # Original
+        npx --yes @cbnventures/nova@latest utility changelog \
+          --record \
+          --package "@cbnventures/nova" \
+          --category added \
+          --bump minor \
+          --message "New ESLint rule."
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util cl \
+          --record \
+          -p "@cbnventures/nova" \
+          -c added \
+          -b minor \
+          -m "New ESLint rule."
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Release"
+        # Original
+        npx --yes @cbnventures/nova@latest utility changelog \
+          --release --dry-run
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util cl \
+          --release -d
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+</Tabs>
+
+## Migration from Changesets
+
+For users migrating from the [Changesets](https://github.com/changesets/changesets) workflow, Nova provides equivalent flags under `nova utility changelog`:
+
+| Command                            | Equivalent          | What It Does                                      |
+|------------------------------------|---------------------|---------------------------------------------------|
+| `nova utility changelog --record`  | `changeset add`     | Record a change with `-p`, `-c`, `-b`, `-m` flags |
+| `nova utility changelog --release` | `changeset version` | Release accumulated changes and bump versions     |
+
+:::tip Shorten long commands with scripts
+Nova bundles many tools in one package, so commands can be verbose. Shorten them by adding aliases to the `"scripts"` field in your **root** `package.json` (the one at the [monorepo root](/docs/quickstart/terminology#git-and-workflow)):
+
+```json title="package.json"
+{
+  "scripts": {
+    "changelog:record": "nova utility changelog --record",
+    "changelog:release": "nova utility changelog --release"
+  }
+}
+```
+
+Then run `npm run changelog:record` or `npm run changelog:release`.
+:::
+
+## Troubleshooting
+
+- **"No eligible (non-freezable) workspaces found"** — Confirm that `nova.config.json` has at least one workspace with a [trackable](/docs/quickstart/terminology#nova-concepts) or [distributable](/docs/quickstart/terminology#nova-concepts) [workspace policy](/docs/quickstart/terminology#nova-concepts).
+- **"Cannot use --record and --release together"** — These flags are mutually exclusive. Run them as separate commands.
+- **"Non-interactive record requires --package, --category, --bump, and --message"** — All four flags are required when using `--record`. Omit `--record` for interactive mode.
+- **"No changelog entries found"** — The `.changelog/` directory is empty or does not exist. Record at least one change before releasing.
+- **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-freezable workspace in `nova.config.json`.

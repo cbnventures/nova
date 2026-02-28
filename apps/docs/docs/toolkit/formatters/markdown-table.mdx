@@ -34,21 +34,21 @@ The `MarkdownTable` battery turns rows of text into perfectly aligned Markdown t
 
 ## Why Use This Battery?
 
-1. Way easier to scan than dumping raw JSON or console logs into an update.
-2. ANSI-supported output for terminals, and clean, copy‑ready Markdown for docs.
+1. Produces output that is easier to scan than raw JSON or console log dumps.
+2. Supports ANSI for terminals and produces clean, copy‑ready Markdown for docs.
 3. Keeps diffs tidy in Git, so reviewers spot row-level changes fast.
 
 ## Capabilities
 
 - Accounts for ANSI colors and escapes special characters so tables align correctly and render cleanly.
-- Enforces header and row parity, so to stop malformed tables from being generated.
+- Enforces header and row parity to prevent malformed tables from being generated.
 - Built-in minimum column sizing and optional padded separators create copy-paste-ready tables.
 - Chained row insertion lets automation pipelines stream data directly into reports with ease.
 
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
+Examples use TypeScript, but the [API](/docs/quickstart/terminology#fundamentals) is identical in JavaScript ([ESM](/docs/quickstart/terminology#javascript-and-typescript)-only).
 :::
 
 <Tabs groupId="markdown-table-usage">
@@ -159,7 +159,7 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
   <TabItem value="ansi" label="ANSI-aware">
     <img
       src={markdownTableAnsi}
-      alt="ANSI-aware ansi preview"
+      alt="ANSI-aware preview"
       width={682}
       height={389}
       style={{
@@ -184,7 +184,7 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
 
 ## Customize
 
-Tune the runtime behavior with the environment variables and options below.
+Tune the runtime behavior with the options below.
 
 ### Options
 
@@ -197,6 +197,6 @@ Pass these options into the `MarkdownTable` constructor to control column widths
 
 ## Troubleshooting
 
-- **`"headers" must be a non-empty array.`** — Ensure you pass at least one header string when constructing the table.
+- **`"headers" must be a non-empty array.`** — The constructor expects at least one header string.
 - **`Length of "rows" must equal length of "headers"`.** — Each row array must align with the number of headers; pad missing cells before calling `addRow`.
 - **Unexpected spacing?** — Increase `minimumColumnWidth` when cells contain long strings or disable delimiter padding by leaving `padDelimiterRow` at its default.

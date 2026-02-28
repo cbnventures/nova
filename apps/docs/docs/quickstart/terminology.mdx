@@ -1,9 +1,15 @@
 ---
 id: terminology
 title: Terminology
-description: Plain language developer terminology with clear definitions for APIs, packages, JavaScript modules, build tools, Git workflow, testing, performance, and security.
+description: Nova concepts, workspace policies, and plain language developer terminology with clear definitions for APIs, packages, JavaScript modules, build tools, Git workflow, testing, performance, and security.
 keywords:
   - nova
+  - nova concepts
+  - workspace policy
+  - freezable
+  - trackable
+  - distributable
+  - nova config
   - developer glossary
   - software terminology
   - api vs sdk
@@ -15,6 +21,7 @@ keywords:
   - cors
   - csp
   - git workflow
+  - monorepo
   - testing types
   - performance terms
   - security basics
@@ -25,11 +32,24 @@ tags:
   - fundamentals
   - concepts
   - learning
+  - nova
+  - workspace
 ---
 
 # Terminology
 
 Short, practical definitions for newer developers. Tables list the familiar term first, also known as, then the definition.
+
+## Nova Concepts
+
+| Term                 | Also known as         | Definition                                                                                                  |
+|----------------------|-----------------------|-------------------------------------------------------------------------------------------------------------|
+| **workspace**        | package               | A directory inside a monorepo with its own `package.json`, representing one unit of code.                   |
+| **workspace policy** | —                     | A label that controls how Nova treats a workspace: `freezable`, `trackable`, or `distributable`.            |
+| **freezable**        | locked workspace      | A workspace whose version stays at `0.0.0` and is never published (e.g., the monorepo root, docs).          |
+| **trackable**        | private workspace     | A workspace whose version is tracked but remains private (not published to a registry).                     |
+| **distributable**    | publishable workspace | A workspace whose version is tracked and can be published to a package registry.                            |
+| **nova.config.json** | Nova config           | The configuration file at the monorepo root that defines workspaces, roles, policies, and project metadata. |
 
 ## Fundamentals
 
@@ -48,7 +68,7 @@ Short, practical definitions for newer developers. Tables list the familiar term
 | **Dependency**             | runtime dep   | A package your app needs when it runs.                                                                             |
 | **Development dependency** | dev dep       | A package used for build, test, or tooling, not at runtime.                                                        |
 | **Peer dependency**        | peer dep      | A package your project must install because a library you use expects to use your copy, with a compatible version. |
-| **lockfile**               | package lock  | A file that pins exact versions so installs are repeatable.                                                        |
+| **Lockfile**               | package lock  | A file that pins exact versions so installs are repeatable.                                                        |
 
 ## JavaScript and TypeScript
 
@@ -107,14 +127,16 @@ Short, practical definitions for newer developers. Tables list the familiar term
 
 ## Git and Workflow
 
-| Term             | Also known as | Definition                                                                       |
-|------------------|---------------|----------------------------------------------------------------------------------|
-| **commit**       | revision      | A saved snapshot of changes in the repository.                                   |
-| **branch**       | —             | A movable line of work that points to a commit.                                  |
-| **merge**        | merge commit  | Combine changes from one branch into another, creating a merge commit if needed. |
-| **rebase**       | —             | Move commits to a new base and replay them to keep history linear.               |
-| **fast forward** | FF merge      | A merge that only moves the branch pointer to a later commit with no new commit. |
-| **tag**          | release tag   | A named pointer to a specific commit, often used for releases.                   |
+| Term              | Also known as      | Definition                                                                            |
+|-------------------|--------------------|---------------------------------------------------------------------------------------|
+| **commit**        | revision           | A saved snapshot of changes in the repository.                                        |
+| **branch**        | —                  | A movable line of work that points to a commit.                                       |
+| **merge**         | merge commit       | Combine changes from one branch into another, creating a merge commit if needed.      |
+| **rebase**        | —                  | Move commits to a new base and replay them to keep history linear.                    |
+| **fast forward**  | FF merge           | A merge that only moves the branch pointer to a later commit with no new commit.      |
+| **tag**           | release tag        | A named pointer to a specific commit, often used for releases.                        |
+| **monorepo**      | multi-package repo | A single repository that holds multiple packages, apps, or services managed together. |
+| **monorepo root** | project root       | The top-level directory that contains the root `package.json` and all workspaces.     |
 
 ## Testing
 

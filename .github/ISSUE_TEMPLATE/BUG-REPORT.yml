@@ -48,7 +48,7 @@ body:
     id: program-version
     attributes:
       label: Program version
-      description: What version of the program are you using? You may find this information inside the `package.json` file, where it says `version`.
+      description: What version of the program are you using?
       placeholder: e.g. 1.0.0
     validations:
       required: true

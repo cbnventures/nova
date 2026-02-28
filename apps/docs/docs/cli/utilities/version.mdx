@@ -31,7 +31,7 @@ import TabItem from '@theme/TabItem';
 import versionTerminalOutput from './_assets_/version-1.png';
 import versionRendered from './_assets_/version-2.png';
 
-Generate Markdown-ready tables of version information only for your OS, developer tools, package managers, browsers, and runtimes in one run.
+Generate Markdown-ready tables of version information for your OS, developer tools, package managers, browsers, and runtimes in a single run.
 
 ## Summary
 
@@ -43,18 +43,14 @@ Paste the tables as is. The output is **Markdown-ready** for quick reports.
 
 ## Why Use This Command?
 
-Manually checking version numbers across multiple tools is slow and error-prone. This command provides a single, reliable snapshot by:
-
-- Checking multiple categories at once (Node.js, package managers, OS, browsers, interpreters).
-- Producing uniform tables so no details are missed.
-- Working across macOS, Windows, and Linux with platform-specific detection.
-- Giving maintainers a clear system profile when you report a bug.
-
-Use it whenever you need to share system information without running several commands.
+- Check multiple categories at once (Node.js, package managers, OS, browsers, interpreters).
+- Produce uniform tables so no details are missed.
+- Work across macOS, Windows, and Linux with platform-specific detection.
+- Give maintainers a clear system profile when you report a bug.
 
 ## Use Cases
 
-- **Bug reporting** — Quickly attach system information to GitHub issues without manually running multiple commands.
+- **Bug reporting** — Attach system information to GitHub issues without manually running multiple commands.
 - **Team collaboration** — Share consistent system snapshots with teammates for debugging or onboarding.
 - **CI/CD pipelines** — Record system information in build logs or artifacts for reproducibility.
 - **System verification** — Confirm that required tools are installed and up to date before starting development.
@@ -100,14 +96,14 @@ You can run this command in two ways:
 
 ## Options
 
-| Flag                | Description                                       |
-|---------------------|---------------------------------------------------|
-| `-a, --all`         | Show all available versions                       |
-| `-b, --browser`     | Show web browser versions                         |
-| `-e, --env`         | Show environment manager versions                 |
-| `-i, --interpreter` | Show interpreter / runtime versions               |
-| `-n, --node`        | Show Node.js and related package manager versions |
-| `-o, --os`          | Show operating system details                     |
+| Flag                | Description                                        |
+|---------------------|----------------------------------------------------|
+| `-a, --all`         | Show all available versions.                       |
+| `-b, --browser`     | Show web browser versions.                         |
+| `-e, --env`         | Show environment manager versions.                 |
+| `-i, --interpreter` | Show interpreter / runtime versions.               |
+| `-n, --node`        | Show Node.js and related package manager versions. |
+| `-o, --os`          | Show operating system details.                     |
 
 ## Categories
 

@@ -22,11 +22,11 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import CodeBlock from '@theme/CodeBlock';
 
-Generate or update the Nova config file with an interactive wizard by guiding you towards each step, and saving when you're done.
+Generate or update the Nova config file with an interactive wizard that guides you through each step and saves when you confirm.
 
 ## Summary
 
-The `initialize` command scaffolds and maintains the `nova.config.json` file by opening a guided flow across project metadata, key entities, and canonical URLs.
+The `initialize` command scaffolds and maintains the [`nova.config.json`](/docs/quickstart/terminology#nova-concepts) file by opening a guided flow across project metadata, key entities, and canonical URLs.
 
 Existing values populate each prompt so you can edit an accurate snapshot and only persist changes when you confirm them.
 
@@ -46,9 +46,9 @@ Existing values populate each prompt so you can edit an accurate snapshot and on
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js LTS release with either the installed `nova` CLI or `npx`.
-- **Project root** — Run the command from the directory containing the top-level `package.json` (monorepos included).
-- **Interactive terminal** — Make sure the session can display the wizard's prompts.
+- **Node.js runtime** — Use any Node.js [LTS](/docs/quickstart/terminology#fundamentals) release with either the installed `nova` [CLI](/docs/quickstart/terminology#fundamentals) or `npx`.
+- **Project root** — Run the command from the directory containing the top-level `package.json` ([monorepo](/docs/quickstart/terminology#git-and-workflow) root included).
+- **Interactive terminal** — The session needs to support interactive prompts for the wizard to function.
 
 ## Usage
 
@@ -59,10 +59,10 @@ You can run this command in two ways:
 
     ```bash
     # Original
-    nova utility version
+    nova utility initialize
 
     # Shorthand
-    nova util ver
+    nova util init
     ```
 
     **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
@@ -72,10 +72,10 @@ You can run this command in two ways:
 
     ```bash
     # Original
-    npx --yes @cbnventures/nova@latest utility version
+    npx --yes @cbnventures/nova@latest utility initialize
 
     # Shorthand
-    npx --yes @cbnventures/nova@latest util ver
+    npx --yes @cbnventures/nova@latest util init
     ```
 
     **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
@@ -85,9 +85,10 @@ You can run this command in two ways:
 
 ## Options
 
-| Flag            | Description                                 |
-|-----------------|---------------------------------------------|
-| `-d, --dry-run` | Skip saving to disk (warning will display). |
+| Flag                 | Description                                                                 |
+|----------------------|-----------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the entire wizard without writing `nova.config.json` to disk.       |
+| `-r, --replace-file` | Overwrite the existing `nova.config.json` instead of creating a dated copy. |
 
 ## Flow Overview
 
@@ -99,26 +100,33 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 
 ### Project
 
-- Captures the project display name, package slug, short and long descriptions, and comma-separated keywords.
-- Slug validation only accepts letters, numbers, hyphen, and underscore characters.
+- **Purpose**: Edit project display name, slug, short/long descriptions, and keywords in one guided step.
+- **Nice to know**: Slug updates propagate to [workspace](/docs/quickstart/terminology#nova-concepts) names for roles that depend on it (`project`, `docs`, `config`, `app`, `tool`) to keep names consistent.
+- **Things to watch**: Slug allows only letters, numbers, hyphens, and underscores up to 214 characters; keywords are validated per item (50 characters max).
 
 ### Entities
 
-- Manages people or organizations related to the project (authors, contributors, supporters).
-- For each entity you can set a name, email, URL, and roles; emails follow a simple pattern check and URLs must be valid `http://` or `https://`.
-- Menu supports **Add**, **Edit**, and **Remove** with confirmation before deletion; duplicates and blank roles are trimmed automatically.
+- **Purpose**: Manage project-related people and organizations with name, email, URL, and roles in a single flow.
+- **Nice to know**: Roles are chosen from the allowed set (author, contributor, supporter) so you don't have to remember labels.
+- **Things to watch**: Emails must be valid (contain `@` and a domain); URLs must be valid `http://` or `https://` before they're saved.
+
+### Emails
+
+- **Purpose**: Capture a canonical contact for issues/support so tools and metadata can reference a single address.
+- **Nice to know**: Single email field today, kept simple for quick updates.
+- **Things to watch**: Only valid addresses persist; blanks remove the stored email.
 
 ### URLs
 
-- Repository URLs accept `git:`, `git+https:`, `git+ssh:`, `git+http:`, and standard `http://` or `https://`.
-- Normalizes all canonical project links: `homepage`, `repository`, `issues`, `license`, `logo`, `docs`, `github`, `npm`, and comma-separated funding sources.
-- Funding sources are sanitized individually and stored as an array, skipping invalid entries.
+- **Purpose**: Configure canonical links with validation/normalization before persisting: homepage, repository, bugs, license, logo, docs, github, npm, and funding.
+- **Nice to know**: Repository accepts `git:`, `git+https:`, `git+ssh:`, `git+http:` plus `http://`, `https://`; all other URLs are `http://`, `https://` only.
+- **Things to watch**: Funding sources are entered comma-separated and saved as a list after validation.
 
-## URL Sanitization and Validation
+### Workspaces
 
-- Enter a single space in any URL prompt to clear the value.
-- All URLs pass through sanitization, which trims whitespace, parses with the WHATWG `URL` class, and only persists allowed protocols.
-- Funding URLs share the same validation, and any values Nova cannot normalize are ignored.
+- **Purpose**: List detected workspaces (`package.json`) and edit each with role/policy in one place.
+- **Nice to know**: Roles (project, config, docs, app, package, tool, template) and policies ([freezable](/docs/quickstart/terminology#nova-concepts), [trackable](/docs/quickstart/terminology#nova-concepts), [distributable](/docs/quickstart/terminology#nova-concepts)) are constrained to allowed combinations so you don't accidentally pick an invalid pairing.
+- **Things to watch**: Naming rules enforced by role (config/app/tool require the project-slug prefix when set); distributable workspaces can opt into syncing selected metadata fields.
 
 ## Saving and Canceling
 
@@ -131,8 +139,8 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 {
     "project": {
       "name": {
-        "title": "Example Project",
-        "slug": "example-project"
+        "title": "Example",
+        "slug": "example"
       },
       "description": {
         "short": "Sample settings for a Nova-powered JavaScript toolkit.",
@@ -164,6 +172,9 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
         ]
       }
     ],
+    "emails": {
+      "bugs": "bugs@example.com"
+    },
     "urls": {
       "homepage": "https://example.com",
       "repository": "https://github.com/example/example-project",
@@ -177,6 +188,33 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
         "https://github.com/sponsors/example",
         "https://opencollective.com/example"
       ]
+    },
+    "workspaces": {
+      "./": {
+        "name": "example-project",
+        "role": "project",
+        "policy": "freezable"
+      },
+      "./apps/docs": {
+        "name": "example-docs",
+        "role": "docs",
+        "policy": "freezable"
+      },
+      "./packages/nova": {
+        "name": "@company/example",
+        "role": "package",
+        "policy": "distributable",
+        "syncProperties": [
+          "description",
+          "keywords",
+          "author",
+          "contributors",
+          "funding",
+          "homepage",
+          "repository",
+          "bugs"
+        ]
+      }
     }
   }
 ```
@@ -185,4 +223,4 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 
 - **"Must be run inside the project root directory."** — Verify you execute the command where the project root `package.json` resides. App or package folders inside monorepos are not allowed.
 - **Validation loops keep reappearing.** — Fix the highlighted email or URL before continuing. To drop the value, enter a single space and press **Enter**.
-- **No file was created.** — Make sure `nova.config.json` is writable and that you did not pass `--dry-run` or choose **Cancel**.
+- **No file was created.** — Confirm that `nova.config.json` is writable and that `--dry-run` was not passed or **Cancel** was not chosen.

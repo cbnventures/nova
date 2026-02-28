@@ -1,0 +1,244 @@
+---
+id: sync-packages
+title: Sync Packages
+description: Enforce consistent package.json conventions across every workspace in a Nova-managed monorepo by syncing metadata, validating keys, and reordering fields from a single source of truth.
+keywords:
+  - nova
+  - nova sync packages
+  - nova recipe sync-packages
+  - package json sync
+  - monorepo package sync
+  - workspace metadata
+  - package json key order
+  - engines constraint
+  - spdx license validation
+  - nova config json
+tags:
+  - cli
+  - recipe
+  - package-json
+  - monorepo
+  - workspace
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+Sync every [workspace](/docs/quickstart/terminology#nova-concepts) `package.json` against conventions defined in [`nova.config.json`](/docs/quickstart/terminology#nova-concepts).
+
+## Summary
+
+The `sync-packages` recipe reads your `nova.config.json` file, iterates over every configured workspace, and enforces a strict set of rules on each `package.json`. It validates required fields, removes forbidden keys, strips empty conditional values, merges deprecated aliases into their preferred forms, and reorders all keys into a canonical layout.
+
+License validation uses identifiers fetched from the [SPDX License List](https://spdx.org/licenses/) at runtime, and engine constraints are derived from the [Node.js release schedule](https://github.com/nodejs/Release) to target all current [LTS](/docs/quickstart/terminology#fundamentals) versions.
+
+## Why Use This Command?
+
+- Keep every workspace `package.json` consistent without manual auditing.
+- Enforce role-based and policy-based rules so only allowed keys appear in each workspace.
+- Automatically resolve deprecated aliases (`bundledDependencies` to `bundleDependencies`, `typings` to `types`).
+- Maintain a canonical key order across all packages for readable, predictable diffs.
+- Validate licenses against the authoritative SPDX registry and engines against live LTS data.
+
+## Use Cases
+
+- **Onboarding** — Run after adding a new workspace so its `package.json` conforms from day one.
+- **Routine maintenance** — Periodically sync all workspaces to catch drift in metadata, [dependencies](/docs/quickstart/terminology#packages-and-dependencies), and key ordering.
+- **CI/CD gating** — Use `--dry-run` in CI to fail builds when any workspace deviates from conventions.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js LTS release with either the installed `nova` [CLI](/docs/quickstart/terminology#fundamentals) or `npx`.
+- **Project root** — Run the command from the directory containing the top-level `package.json` ([monorepo](/docs/quickstart/terminology#git-and-workflow) root included).
+- **Nova config** — A `nova.config.json` file with at least one workspace defined.
+
+## Usage
+
+You can run this command in two ways:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova recipe sync-packages
+
+    # Shorthand
+    nova rcp sp
+    ```
+
+    **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest recipe sync-packages
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest rcp sp
+    ```
+
+    **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                   | Description                                                                    |
+|------------------------|--------------------------------------------------------------------------------|
+| `-d, --dry-run`        | Preview all changes without writing any files to disk.                         |
+| `-i, --ignore-unknown` | Keep unknown keys in `package.json` instead of removing them.                  |
+| `-r, --replace-file`   | Overwrite the existing `package.json` instead of creating a dated backup copy. |
+
+:::danger Be careful with `--replace-file`
+When `--replace-file` is passed, the command skips backup creation and overwrites each `package.json` in place.
+:::
+
+:::tip Backup reminder
+By default, the command creates a dated backup copy of each `package.json` before writing changes (e.g., `package.2026-01-01_0001.json`).
+:::
+
+## How It Works
+
+### Three-Bucket Model
+
+Every `package.json` key is classified into one of three buckets for each workspace role and policy:
+
+| Bucket          | Behavior                                                                      |
+|-----------------|-------------------------------------------------------------------------------|
+| **Required**    | Always present. A default value is added if missing.                          |
+| **Conditional** | Kept if it contains meaningful data. Stripped if empty (`{}`, `[]`, or `""`). |
+| **Forbidden**   | Removed with a warning. The workspace's role or policy does not allow it.     |
+
+### Handler Pipeline
+
+The recipe processes each workspace through an ordered pipeline of handlers:
+
+1. **handleUnknown** — Remove keys not in the official npm spec or bundler list (skipped with `--ignore-unknown`).
+2. **handleIdentity** — Sync `name`, `version`, `description`, `keywords`, `license`.
+3. **handleOwnership** — Sync `homepage`, `bugs`, `author`, `contributors`, `funding`, `repository`.
+4. **handleRuntime** — Sync `exports`, `main`, `type`, `browser`, `imports`.
+5. **handleArtifacts** — Sync `files`, `bin`, `man`, `directories`.
+6. **handlePublish** — Sync `private`, `publishConfig`.
+7. **handleTooling** — Sync `scripts`, `gypfile`, `config`, `workspaces`.
+8. **handleCorepack** — Sync `packageManager`.
+9. **handleEnvironment** — Sync `engines`, `os`, `cpu`, `libc`, `devEngines`.
+10. **handleDependencies** — Sync all dependency keys including alias merging.
+11. **handleBundler** — Sync unofficial bundler keys (`types`, `module`, `sideEffects`, `esnext`) and merge `typings` into `types`.
+12. **handleReorder** — Rewrite all keys in canonical order (always runs last).
+
+### Canonical Key Ordering
+
+After all handlers run, keys are reordered into a canonical layout:
+
+1. Identity: `name`, `version`, `description`, `keywords`, `license`
+2. Ownership: `homepage`, `bugs`, `author`, `contributors`, `funding`, `repository`
+3. Runtime: `exports`, `main`, `type`, `browser`, `imports`
+4. Artifacts: `files`, `bin`, `man`, `directories`
+5. Publishing: `private`, `publishConfig`
+6. Tooling: `scripts`, `gypfile`, `config`, `workspaces`
+7. Corepack: `packageManager`
+8. Environment: `engines`, `os`, `cpu`, `libc`, `devEngines`
+9. Dependencies: `dependencies`, `devDependencies`, `peerDependencies`, `peerDependenciesMeta`, `bundleDependencies`, `optionalDependencies`, `overrides`
+10. Bundler: `types`, `module`, `sideEffects`, `esnext`
+
+Unknown keys (when `--ignore-unknown` is active) trail at the end, preserving their original order.
+
+## Key Categories
+
+| Category     | Keys                                                                                                                                     |
+|--------------|------------------------------------------------------------------------------------------------------------------------------------------|
+| Identity     | `name`, `version`, `description`, `keywords`, `license`                                                                                  |
+| Ownership    | `homepage`, `bugs`, `author`, `contributors`, `funding`, `repository`                                                                    |
+| Runtime      | `exports`, `main`, `type`, `browser`, `imports`                                                                                          |
+| Artifacts    | `files`, `bin`, `man`, `directories`                                                                                                     |
+| Publishing   | `private`, `publishConfig`                                                                                                               |
+| Tooling      | `scripts`, `gypfile`, `config`, `workspaces`                                                                                             |
+| Corepack     | `packageManager`                                                                                                                         |
+| Environment  | `engines`, `os`, `cpu`, `libc`, `devEngines`                                                                                             |
+| Dependencies | `dependencies`, `devDependencies`, `peerDependencies`, `peerDependenciesMeta`, `bundleDependencies`, `optionalDependencies`, `overrides` |
+| Bundler      | `types`, `module`, `sideEffects`, `esnext`                                                                                               |
+
+## Role-Based Rules
+
+Each key is classified as Required, Conditional, or Forbidden depending on the workspace role and policy. Universal keys (all roles) are listed separately.
+
+### Universal Keys (all roles)
+
+| Key                               | Bucket      | Notes                                                                                                                                                                                                   |
+|-----------------------------------|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`                            | Required    | Must match workspace manifest name.                                                                                                                                                                     |
+| `version`                         | Required    | `0.0.0` for [freezable](/docs/quickstart/terminology#nova-concepts); `> 0.0.0` for [trackable](/docs/quickstart/terminology#nova-concepts)/[distributable](/docs/quickstart/terminology#nova-concepts). |
+| `license`                         | Required    | Validated against SPDX. Falls back to license file reference or `UNLICENSED`.                                                                                                                           |
+| `scripts`                         | Required    | Empty `{}` is valid.                                                                                                                                                                                    |
+| `engines`                         | Required    | Node constraint fetched from the Node.js releases [API](/docs/quickstart/terminology#fundamentals).                                                                                                     |
+| `os`, `cpu`, `libc`, `devEngines` | Conditional | Kept if meaningful, stripped if empty.                                                                                                                                                                  |
+| `config`, `gypfile`               | Conditional | `config` stripped if empty; `gypfile` auto-detected from `binding.gyp`.                                                                                                                                 |
+| All dependency keys               | Conditional | Stripped if empty. `bundledDependencies` merged into `bundleDependencies`.                                                                                                                              |
+
+### Per-Role Keys
+
+The keys below are Conditional for the roles listed and Forbidden for all other roles.
+
+| Key                      | Bucket      | Allowed Roles              |
+|--------------------------|-------------|----------------------------|
+| `packageManager`         | Conditional | project                    |
+| `workspaces`             | Required    | project                    |
+| `exports`                | Conditional | config, package, tool      |
+| `main`                   | Conditional | config, app, package, tool |
+| `type`                   | Conditional | config, app, package, tool |
+| `browser`                | Conditional | package                    |
+| `imports`                | Conditional | config, app, package, tool |
+| `files`                  | Conditional | package, tool              |
+| `bin`                    | Conditional | package, tool              |
+| `man`                    | Conditional | package, tool              |
+| `directories`            | Conditional | package, tool              |
+| `publishConfig`          | Conditional | package                    |
+| `types` / `module`       | Conditional | config, package, tool      |
+| `sideEffects` / `esnext` | Conditional | package                    |
+
+### Policy-Based Keys
+
+| Key                       | freezable          | trackable            | distributable                      |
+|---------------------------|--------------------|----------------------|------------------------------------|
+| `version`                 | Required (`0.0.0`) | Required (`> 0.0.0`) | Required (`> 0.0.0`)               |
+| `private`                 | Required (`true`)  | Required (`true`)    | Required (`false`)                 |
+| `description`, `keywords` | Forbidden          | Forbidden            | Conditional (via `syncProperties`) |
+| Ownership keys            | Forbidden          | Forbidden            | Conditional (via `syncProperties`) |
+
+## Bundler Keys
+
+These keys are not part of the official npm or Node.js specification but are widely used by bundler ecosystems:
+
+| Key           | Vendor                   | Purpose                                                                                         |
+|---------------|--------------------------|-------------------------------------------------------------------------------------------------|
+| `types`       | TypeScript (Microsoft)   | Points to the TypeScript declaration entry file.                                                |
+| `module`      | Rollup (Rich Harris)     | Points to the [ESM](/docs/quickstart/terminology#javascript-and-typescript) entry for bundlers. |
+| `sideEffects` | webpack (Tobias Koppers) | Declares whether the package has side effects for tree-shaking.                                 |
+| `esnext`      | Community (Angular APF)  | Points to untranspiled ESM source for bundler optimization.                                     |
+
+The `typings` key (a legacy alias for `types`) is always merged into `types` and then deleted, following the same consolidation pattern as `bundledDependencies` to `bundleDependencies`.
+
+## Unsupported Keys
+
+Keys not recognized by the official npm spec, Node.js spec, or bundler list are considered unsupported. By default, unsupported keys are removed with a warning. Pass `--ignore-unknown` to keep them (they will appear after all canonical keys in the output).
+
+## Sources
+
+- [Node.js Packages API](https://nodejs.org/api/packages.html) — `exports`, `imports`, `type`, `main`
+- [npm package.json](https://docs.npmjs.com/cli/v11/configuring-npm/package-json) — All npm-recognized keys
+- [Corepack](https://github.com/nodejs/corepack) — `packageManager`
+- [Node.js Release Schedule](https://github.com/nodejs/Release) — LTS version data
+- [SPDX License List](https://spdx.org/licenses/) — License identifier validation
+
+## Troubleshooting
+
+- **"Must be run inside the project root directory."** — Verify you execute the command where the project root `package.json` resides. App or package folders inside monorepos are not allowed.
+- **"No workspaces detected"** — Ensure your `nova.config.json` has at least one workspace entry.
+- **"No accessible package.json files were found"** — Check that the workspace paths in `nova.config.json` actually contain `package.json` files.
+- **SPDX or Node.js API failures** — The command warns and continues. License validation is skipped when the SPDX API is unreachable. Engine constraints fall back to an empty `engines` object when the Node.js API is unreachable.
+- **Unexpected key removals** — If a key you need is being removed, check the role-based rules above. You may need to adjust your workspace role in `nova.config.json` or pass `--ignore-unknown` for non-standard keys.

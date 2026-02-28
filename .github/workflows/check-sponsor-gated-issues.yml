@@ -1,6 +1,6 @@
-name: "Sponsor Gated Support"
+name: "Check Sponsor Gated Issues"
 
-run-name: "Running a task to check sponsor gated issues"
+run-name: "${{ github.event_name == 'issues' && format('Analyzing issue #{0}', github.event.issue.number) || format('Analyzing comment on issue #{0}', github.event.issue.number) }}"
 
 on:
   issue_comment:
@@ -22,7 +22,10 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v5"
+        uses: "actions/checkout@v6"
+
+      - name: "Show current workflow directory"
+        run: "ls -la"
 
       - name: "Check support issues"
         uses: "mrjackyliang/sponsor-gated-support@v1.0.1"

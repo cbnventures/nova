@@ -1,8 +1,18 @@
 import { promises as fs } from 'fs';
-import * as path from 'path';
+import { join } from 'path';
 
-import { itemAllowedPoliciesByRole } from '@/lib/item.js';
+import {
+  itemAllowedPoliciesByRole,
+  itemAllowedRoles,
+  itemAllowedSyncProperties,
+  itemGenericProtocols,
+  itemNovaConfigEmailFields,
+  itemNovaConfigUrlFields,
+  itemRepositoryProtocols,
+} from '@/lib/item.js';
 import { PATTERN_EMAIL_SIMPLE, PATTERN_SLUG_SCOPED, PATTERN_SLUG_SIMPLE } from '@/lib/regex.js';
+import { isFileIdentical, isPlainObject, renameFileWithDate } from '@/lib/utility.js';
+
 import type {
   NovaConfigConfig,
   NovaConfigGetArrayOfHttpUrlsField,
@@ -12,16 +22,18 @@ import type {
   NovaConfigGetArrayOfNonEmptyStringsValue,
   NovaConfigGetEmailReturns,
   NovaConfigGetEmailValue,
-  NovaConfigGetHttpUrlField,
-  NovaConfigGetHttpUrlReturns,
-  NovaConfigGetHttpUrlValue,
   NovaConfigGetNonEmptyStringReturns,
   NovaConfigGetNonEmptyStringValue,
+  NovaConfigGetUrlField,
+  NovaConfigGetUrlReturns,
+  NovaConfigGetUrlValue,
   NovaConfigIsEntityRoleTypeGuard,
   NovaConfigIsEntityRoleValue,
-  NovaConfigIsPlainObjectTypeGuard,
-  NovaConfigIsPlainObjectValue,
+  NovaConfigLoadParsedFile,
   NovaConfigLoadReturns,
+  NovaConfigParseEmailsEmails,
+  NovaConfigParseEmailsReturns,
+  NovaConfigParseEmailsValue,
   NovaConfigParseEntitiesParsedEntity,
   NovaConfigParseEntitiesReturns,
   NovaConfigParseEntitiesValue,
@@ -36,14 +48,17 @@ import type {
   NovaConfigParseUrlsUrls,
   NovaConfigParseUrlsValue,
   NovaConfigParseValue,
-  NovaConfigParseWorkspacesAllowedRoles,
   NovaConfigParseWorkspacesIsNameAllowedName,
   NovaConfigParseWorkspacesIsNameAllowedReturns,
   NovaConfigParseWorkspacesIsNameAllowedRole,
+  NovaConfigParseWorkspacesAllowedSyncProperties,
   NovaConfigParseWorkspacesReturns,
   NovaConfigParseWorkspacesSlug,
+  NovaConfigParseWorkspacesSyncProperties,
+  NovaConfigParseWorkspacesSyncPropertiesTypeGuard,
   NovaConfigParseWorkspacesValue,
   NovaConfigParseWorkspacesWorkspaces,
+  NovaConfigSaveReplaceFile,
   NovaConfigSaveReturns,
   NovaConfigSetReturns,
   NovaConfigSetValue,
@@ -83,11 +98,11 @@ export class NovaConfig {
   public async load(): NovaConfigLoadReturns {
     const currentDirectory = process.cwd();
     const configFileName = 'nova.config.json';
-    const configPath = path.join(currentDirectory, configFileName);
+    const configPath = join(currentDirectory, configFileName);
 
     try {
       const rawFile = await fs.readFile(configPath, 'utf-8');
-      const parsedFile = JSON.parse(rawFile);
+      const parsedFile: NovaConfigLoadParsedFile = JSON.parse(rawFile);
 
       // Salvage-first method.
       this.#config = this.parse(parsedFile);
@@ -114,72 +129,36 @@ export class NovaConfig {
   /**
    * Nova Config - Save.
    *
+   * @param {NovaConfigSaveReplaceFile} replaceFile - Replace file.
+   *
    * @returns {NovaConfigSaveReturns}
    *
    * @since 1.0.0
    */
-  public async save(): NovaConfigSaveReturns {
+  public async save(replaceFile: NovaConfigSaveReplaceFile): NovaConfigSaveReturns {
     this.#config = this.parse(this.#config);
 
     const currentDirectory = process.cwd();
-    const configPath = path.join(currentDirectory, 'nova.config.json');
-    const serializedConfig = `${JSON.stringify(this.#config, null, 2)}\n`;
-    const normalizedConfig = JSON.stringify(this.#config);
-
-    let hasExistingFile = false;
-    let existingNormalized = '';
-
-    try {
-      const existingRaw = await fs.readFile(configPath, 'utf-8');
-
-      hasExistingFile = true;
-
-      try {
-        const existingParsed = JSON.parse(existingRaw);
-
-        existingNormalized = JSON.stringify(this.parse(existingParsed));
-      } catch {
-        /* empty */
-      }
-    } catch {
-      /* empty */
-    }
+    const configPath = join(currentDirectory, 'nova.config.json');
 
     // No changes detected, skip touching the filesystem.
-    if (existingNormalized === normalizedConfig) {
+    if (await isFileIdentical(configPath, this.#config)) {
       return;
     }
 
-    // Move existing file to "nova.config.YYYY-MM-DD_0001.json".
-    if (hasExistingFile) {
-      const now = new Date();
-      const timestamp = [
-        now.getUTCFullYear(),
-        (now.getUTCMonth() + 1).toString().padStart(2, '0'),
-        now.getUTCDate().toString().padStart(2, '0'),
-      ].join('-');
-
-      let suffix = 1;
-
-      while (true) {
-        const suffixLabel = suffix.toString().padStart(4, '0');
-        const backupFileName = `nova.config.${timestamp}_${suffixLabel}.json`;
-        const backupPath = path.join(currentDirectory, backupFileName);
-
-        // If file is accessible, increment the suffix count.
-        try {
-          await fs.access(backupPath);
-
-          suffix += 1;
-        } catch {
-          await fs.rename(configPath, backupPath);
-
-          break;
-        }
-      }
+    // Rename existing file if user chooses not to replace file.
+    if (replaceFile === false) {
+      await renameFileWithDate(configPath, 'nova.config', 'json');
     }
 
-    await fs.writeFile(configPath, serializedConfig, 'utf-8');
+    const configJson = JSON.stringify(this.#config, null, 2);
+    const configContents = `${configJson}\n`;
+
+    await fs.writeFile(
+      configPath,
+      configContents,
+      'utf-8',
+    );
   }
 
   /**
@@ -196,14 +175,16 @@ export class NovaConfig {
   private parse(value: NovaConfigParseValue): NovaConfigParseReturns {
     const result: NovaConfigParseResult = {};
 
-    if (!this.isPlainObject(value)) {
+    if (!isPlainObject(value)) {
       return result;
     }
 
     const project = this.parseProject(value['project']);
     const entities = this.parseEntities(value['entities']);
+    const emails = this.parseEmails(value['emails']);
     const urls = this.parseUrls(value['urls']);
-    const workspaces = this.parseWorkspaces(value['workspaces'], project?.name?.slug);
+    const projectSlug = (project !== undefined && project.name !== undefined) ? project.name.slug : undefined;
+    const workspaces = this.parseWorkspaces(value['workspaces'], projectSlug);
 
     if (project !== undefined) {
       result.project = project;
@@ -211,6 +192,10 @@ export class NovaConfig {
 
     if (entities !== undefined) {
       result.entities = entities;
+    }
+
+    if (emails !== undefined) {
+      result.emails = emails;
     }
 
     if (urls !== undefined) {
@@ -236,7 +221,7 @@ export class NovaConfig {
    * @since 1.0.0
    */
   private parseProject(value: NovaConfigParseProjectValue): NovaConfigParseProjectReturns {
-    if (!this.isPlainObject(value)) {
+    if (!isPlainObject(value)) {
       return undefined;
     }
 
@@ -246,7 +231,7 @@ export class NovaConfig {
     const valueDescription = value['description'];
     const valueKeywords = this.getArrayOfNonEmptyStrings(value['keywords']);
 
-    if (this.isPlainObject(valueName)) {
+    if (isPlainObject(valueName)) {
       const name: NovaConfigParseProjectName = {};
 
       const slug = this.getNonEmptyString(valueName['slug']);
@@ -265,7 +250,7 @@ export class NovaConfig {
       }
     }
 
-    if (this.isPlainObject(valueDescription)) {
+    if (isPlainObject(valueDescription)) {
       const description: NovaConfigParseProjectDescription = {};
 
       const short = this.getNonEmptyString(valueDescription['short']);
@@ -308,13 +293,13 @@ export class NovaConfig {
     }
 
     const entities = value
-      .filter(this.isPlainObject)
+      .filter(isPlainObject)
       .map((entity) => {
         const parsedEntity: NovaConfigParseEntitiesParsedEntity = {};
 
         const name = this.getNonEmptyString(entity['name']);
         const email = this.getEmail(entity['email']);
-        const url = this.getHttpUrl(entity['url']);
+        const url = this.getUrl(entity['url']);
         const roles = entity['roles'];
 
         if (name !== undefined) {
@@ -345,6 +330,36 @@ export class NovaConfig {
   }
 
   /**
+   * Nova Config - Parse emails.
+   *
+   * @param {NovaConfigParseEmailsValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {NovaConfigParseEmailsReturns}
+   *
+   * @since 1.0.0
+   */
+  private parseEmails(value: NovaConfigParseEmailsValue): NovaConfigParseEmailsReturns {
+    if (!isPlainObject(value)) {
+      return undefined;
+    }
+
+    const emails: NovaConfigParseEmailsEmails = {};
+    const emailFields = itemNovaConfigEmailFields;
+
+    for (const emailField of emailFields) {
+      const parsedEmail = this.getEmail(value[emailField]);
+
+      if (parsedEmail !== undefined) {
+        emails[emailField] = parsedEmail;
+      }
+    }
+
+    return (Object.keys(emails).length > 0) ? emails : undefined;
+  }
+
+  /**
    * Nova Config - Parse urls.
    *
    * @param {NovaConfigParseUrlsValue} value - Value.
@@ -356,24 +371,15 @@ export class NovaConfig {
    * @since 1.0.0
    */
   private parseUrls(value: NovaConfigParseUrlsValue): NovaConfigParseUrlsReturns {
-    if (!this.isPlainObject(value)) {
+    if (!isPlainObject(value)) {
       return undefined;
     }
 
     const urls: NovaConfigParseUrlsUrls = {};
-    const urlFields = [
-      'homepage',
-      'repository',
-      'bugs',
-      'license',
-      'logo',
-      'documentation',
-      'github',
-      'npm',
-    ] as const;
+    const urlFields = itemNovaConfigUrlFields;
 
     for (const urlField of urlFields) {
-      const parsedUrl = this.getHttpUrl(value[urlField], urlField);
+      const parsedUrl = this.getUrl(value[urlField], (urlField === 'repository') ? 'repository' : 'generic');
 
       if (parsedUrl !== undefined) {
         urls[urlField] = parsedUrl;
@@ -402,12 +408,11 @@ export class NovaConfig {
    * @since 1.0.0
    */
   private parseWorkspaces(value: NovaConfigParseWorkspacesValue, slug: NovaConfigParseWorkspacesSlug): NovaConfigParseWorkspacesReturns {
-    if (!this.isPlainObject(value)) {
+    if (!isPlainObject(value)) {
       return undefined;
     }
 
     const workspaces: NovaConfigParseWorkspacesWorkspaces = {};
-    const allowedRoles: NovaConfigParseWorkspacesAllowedRoles = ['project', 'docs', 'config', 'app', 'package', 'tool'];
     const configSlug = this.getNonEmptyString(slug);
 
     /**
@@ -416,27 +421,31 @@ export class NovaConfig {
      * @param {NovaConfigParseWorkspacesIsNameAllowedRole} role - Role.
      * @param {NovaConfigParseWorkspacesIsNameAllowedName} name - Name.
      *
+     * @private
+     *
      * @returns {NovaConfigParseWorkspacesIsNameAllowedReturns}
      *
      * @since 1.0.0
      */
     const isNameAllowed = (role: NovaConfigParseWorkspacesIsNameAllowedRole, name: NovaConfigParseWorkspacesIsNameAllowedName): NovaConfigParseWorkspacesIsNameAllowedReturns => {
       switch (role) {
-        case 'project':
+        case 'project': {
           if (configSlug !== undefined) {
             return name === `${configSlug}-project`;
           }
 
           return name === 'project';
-        case 'docs':
+        }
+        case 'docs': {
           if (configSlug !== undefined) {
             return name === `${configSlug}-docs`;
           }
 
           return name === 'docs';
+        }
         case 'tool':
         case 'config':
-        case 'app':
+        case 'app': {
           const base = (configSlug !== undefined) ? `${configSlug}-${role}` : role;
 
           if (!name.startsWith(`${base}-`)) {
@@ -446,27 +455,32 @@ export class NovaConfig {
           const descriptor = name.slice(base.length + 1);
 
           return descriptor.length > 0 && PATTERN_SLUG_SIMPLE.test(descriptor);
-        case 'package':
+        }
+        case 'template':
+        case 'package': {
           return PATTERN_SLUG_SIMPLE.test(name) || PATTERN_SLUG_SCOPED.test(name);
-        default:
+        }
+        default: {
           return false;
+        }
       }
     };
 
     for (const [path, options] of Object.entries(value)) {
-      if (!this.isPlainObject(options)) {
+      if (!isPlainObject(options)) {
         continue;
       }
 
       const nameCandidate = this.getNonEmptyString(options['name']);
       const roleCandidate = this.getNonEmptyString(options['role']);
       const policyCandidate = this.getNonEmptyString(options['policy']);
+      const syncPropertiesCandidate = this.getArrayOfNonEmptyStrings(options['syncProperties']);
 
       if (nameCandidate === undefined) {
         continue;
       }
 
-      const role = allowedRoles.find((allowedRole) => allowedRole === roleCandidate);
+      const role = itemAllowedRoles.find((itemAllowedRole) => itemAllowedRole === roleCandidate);
 
       if (role === undefined) {
         continue;
@@ -483,10 +497,31 @@ export class NovaConfig {
         continue;
       }
 
+      let syncProperties: NovaConfigParseWorkspacesSyncProperties;
+
+      if (policy === 'distributable' && syncPropertiesCandidate !== undefined) {
+        const allowedSyncProperties: NovaConfigParseWorkspacesAllowedSyncProperties = new Set(itemAllowedSyncProperties);
+
+        syncProperties = syncPropertiesCandidate.filter((value): value is NovaConfigParseWorkspacesSyncPropertiesTypeGuard => allowedSyncProperties.has(value));
+
+        if (syncProperties.length === 0) {
+          syncProperties = undefined;
+        }
+      }
+
+      const pinVersionsCandidate = options['pinVersions'];
+      const pinVersions = (pinVersionsCandidate === true) ? true : undefined;
+
+      const syncLtsEnginesCandidate = options['syncLtsEngines'];
+      const syncLtsEngines = (syncLtsEnginesCandidate === true) ? true : undefined;
+
       workspaces[path] = {
         name: nameCandidate,
         role,
         policy,
+        ...(syncProperties !== undefined) ? { syncProperties } : {},
+        ...(pinVersions !== undefined) ? { pinVersions } : {},
+        ...(syncLtsEngines !== undefined) ? { syncLtsEngines } : {},
       };
     }
 
@@ -510,32 +545,6 @@ export class NovaConfig {
       || value === 'contributor'
       || value === 'supporter'
     );
-  }
-
-  /**
-   * Nova Config - Is plain object.
-   *
-   * @param {NovaConfigIsPlainObjectValue} value - Value.
-   *
-   * @private
-   *
-   * @returns {boolean}
-   *
-   * @since 1.0.0
-   */
-  private isPlainObject(value: NovaConfigIsPlainObjectValue): value is NovaConfigIsPlainObjectTypeGuard {
-    if (typeof value !== 'object' || value === null) {
-      return false;
-    }
-
-    if (Array.isArray(value)) {
-      return false;
-    }
-
-    const prototype = Object.getPrototypeOf(value);
-
-    // Treat both ordinary object literals and prototype-less dictionaries (Object.create(null)) as "plain".
-    return prototype === Object.prototype || prototype === null;
   }
 
   /**
@@ -579,7 +588,7 @@ export class NovaConfig {
     }
 
     const items = value
-      .map((item) => this.getHttpUrl(item, field))
+      .map((item) => this.getUrl(item, field))
       .filter((item): item is string => item !== undefined);
 
     return (items.length > 0) ? items : undefined;
@@ -611,18 +620,18 @@ export class NovaConfig {
   }
 
   /**
-   * Nova Config - Get http url.
+   * Nova Config - Get url.
    *
-   * @param {NovaConfigGetHttpUrlValue} value   - Value.
-   * @param {NovaConfigGetHttpUrlField} [field] - Field.
+   * @param {NovaConfigGetUrlValue} value   - Value.
+   * @param {NovaConfigGetUrlField} [field] - Field.
    *
    * @private
    *
-   * @returns {NovaConfigGetHttpUrlReturns}
+   * @returns {NovaConfigGetUrlReturns}
    *
    * @since 1.0.0
    */
-  private getHttpUrl(value: NovaConfigGetHttpUrlValue, field?: NovaConfigGetHttpUrlField): NovaConfigGetHttpUrlReturns {
+  private getUrl(value: NovaConfigGetUrlValue, field?: NovaConfigGetUrlField): NovaConfigGetUrlReturns {
     const candidateUrl = this.getNonEmptyString(value);
 
     if (candidateUrl === undefined) {
@@ -632,11 +641,12 @@ export class NovaConfig {
     try {
       const url = new URL(candidateUrl);
 
-      const genericProtocols = ['http:', 'https:'];
-      const repositoryProtocols = ['git:', 'git+https:', 'git+ssh:', 'git+http:', 'https:', 'http:'];
-      const allowedProtocols = (field === 'repository') ? repositoryProtocols : genericProtocols;
+      const allowedProtocols = (field === 'repository') ? itemRepositoryProtocols : itemGenericProtocols;
+      const isAllowed = allowedProtocols.some(
+        (allowedProtocol) => allowedProtocol === url.protocol,
+      );
 
-      return allowedProtocols.includes(url.protocol) ? candidateUrl : undefined;
+      return (isAllowed === true) ? candidateUrl : undefined;
     } catch {
       return undefined;
     }

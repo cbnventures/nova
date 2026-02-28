@@ -40,7 +40,7 @@ const noLoggerDev = ESLintUtils.RuleCreator(() => '#')({
     const findVariable = (identifier: NoLoggerDevFindVariableIdentifier): NoLoggerDevFindVariableReturns => {
       const scopeManager = context.sourceCode.scopeManager;
 
-      if (!scopeManager) {
+      if (scopeManager == null) {
         return undefined;
       }
 
@@ -49,7 +49,7 @@ const noLoggerDev = ESLintUtils.RuleCreator(() => '#')({
         const variable = scope.set.get(identifier.name);
 
         // Confirm the identifier we are examining lines up with the variable's reference entry.
-        if (variable && variable.references.some((reference) => reference.identifier === identifier)) {
+        if (variable !== undefined && variable.references.some((reference) => reference.identifier === identifier)) {
           return variable;
         }
       }
@@ -67,7 +67,7 @@ const noLoggerDev = ESLintUtils.RuleCreator(() => '#')({
      * @since 1.0.0
      */
     const isLoggerCustomizeCall = (node: NoLoggerDevIsLoggerCustomizeCallNode): node is NoLoggerDevIsLoggerCustomizeCallTypeGuard => {
-      if (!node || node.type !== 'CallExpression') {
+      if (node == null || node.type !== 'CallExpression') {
         return false;
       }
 
@@ -99,7 +99,7 @@ const noLoggerDev = ESLintUtils.RuleCreator(() => '#')({
     const cameFromLoggerCustomize = (identifier: NoLoggerDevCameFromLoggerCustomizeIdentifier): NoLoggerDevCameFromLoggerCustomizeReturns => {
       const variable = findVariable(identifier);
 
-      if (!variable) {
+      if (variable === undefined) {
         return false;
       }
 

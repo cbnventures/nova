@@ -20,7 +20,7 @@ export type CLIHeaderAlignReturns = string;
  */
 export type CLIHeaderBorderCharsStyle = BorderStyle;
 
-export type CLIHeaderBorderChars = {
+export type CLIHeaderBorderCharsReturns = {
   topLeft: string;
   topRight: string;
   bottomLeft: string;
@@ -61,6 +61,8 @@ export type CLIHeaderRenderOptionsStyle = BorderStyle;
 
 export type CLIHeaderRenderOptionsWidth = number;
 
+export type CLIHeaderRenderOptionsInteractive = boolean;
+
 export type CLIHeaderRenderOptions = {
   align?: CLIHeaderRenderOptionsAlign;
   marginTop?: CLIHeaderRenderOptionsMarginTop;
@@ -69,9 +71,23 @@ export type CLIHeaderRenderOptions = {
   paddingY?: CLIHeaderRenderOptionsPaddingY;
   style?: CLIHeaderRenderOptionsStyle;
   width?: CLIHeaderRenderOptionsWidth;
+  interactive?: CLIHeaderRenderOptionsInteractive;
 };
 
 export type CLIHeaderRenderReturns = string;
+
+export type CLIHeaderRenderContentStrings = string[];
+
+export type CLIHeaderRenderDisplayStrings = string[];
+
+/**
+ * CLI Header - Strip ANSI.
+ *
+ * @since 1.0.0
+ */
+export type CLIHeaderStripAnsiString = string;
+
+export type CLIHeaderStripAnsiReturns = string;
 
 /**
  * CLI Header - Truncate.

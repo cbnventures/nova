@@ -1,0 +1,90 @@
+---
+id: no-regex-literals
+title: No Regex Literals
+description: Disallow inline regex literal expressions so patterns are centralized in a shared patterns file and reusable across the codebase.
+keywords:
+  - nova
+  - eslint rule
+  - regex
+  - regular expression
+  - centralize patterns
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Disallow inline regex literal expressions so patterns are centralized in a shared patterns file and stay reusable across the codebase.
+
+## Summary
+
+The `no-regex-literals` rule reports any regex literal expression (e.g., `/^v/`, `/\d+/g`). It is recommended to define patterns in a dedicated file (such as `regex.ts`) and import them where needed.
+
+## Why Use This Rule?
+
+1. Centralizes regex patterns so they are easier to find, review, and maintain.
+2. Prevents duplicate patterns scattered across the codebase.
+3. Encourages reusable, well-documented patterns with clear names.
+
+## Examples
+
+<Tabs groupId="no-regex-literals-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    import { PATTERN_LEADING_V } from '@/lib/regex.js';
+
+    const cleaned = version.replace(PATTERN_LEADING_V, '');
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const cleaned = version.replace(/^v/, '');
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint flat config:
+
+```ts
+import { noRegexLiterals } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-regex-literals': noRegexLiterals,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-regex-literals': ['error', {
+        allowedFiles: ['regex.ts'],
+      }],
+    },
+  },
+];
+```
+
+### Options
+
+| Option         | Type       | Default | Description                                                                    |
+|----------------|------------|---------|--------------------------------------------------------------------------------|
+| `allowedFiles` | `string[]` | `[]`    | Files where regex literals are permitted (matched by filename or path suffix). |
+
+Each entry in `allowedFiles` is matched against the end of the file path. For example, `'regex.ts'` matches any file named `regex.ts`, and `'src/lib/regex.ts'` matches that specific path.
+
+## Troubleshooting
+
+- **Error fires inside the patterns file.** — Add the filename to the `allowedFiles` option so the rule knows it is a designated patterns file.
+- **Want to use `new RegExp()` inline instead?** — The rule only targets regex literals (`/pattern/`). Constructing a `RegExp` from an imported pattern string is allowed.

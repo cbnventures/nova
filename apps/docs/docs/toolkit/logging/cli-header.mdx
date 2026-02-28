@@ -24,7 +24,7 @@ import cliHeaderBasic from './_assets_/cli-header-1.png';
 import cliHeaderStyled from './_assets_/cli-header-2.png';
 import cliHeaderMargins from './_assets_/cli-header-3.png';
 
-Display consistent CLI banners sized for any terminal, preserving color codes and honoring padding preferences.
+Display consistent [CLI](/docs/quickstart/terminology#fundamentals) banners sized for any terminal, preserving color codes and honoring padding preferences.
 
 ## Summary
 
@@ -33,7 +33,7 @@ The `CLIHeader` battery renders ANSI-safe banner strings you can print, giving a
 ## Why Use This Battery?
 
 1. Displays a branded heading so every command run carries clear visual identity.
-2. Pin important information (release version, commit SHA, target environment, etc.) in the header.
+2. Pin important information (release version, [commit](/docs/quickstart/terminology#git-and-workflow) SHA, target environment, etc.) in the header.
 3. Helps surface high-priority notices, like upcoming deprecations or required flags.
 
 ## Capabilities
@@ -46,7 +46,7 @@ The `CLIHeader` battery renders ANSI-safe banner strings you can print, giving a
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
+Examples use TypeScript, but the [API](/docs/quickstart/terminology#fundamentals) is identical in JavaScript ([ESM](/docs/quickstart/terminology#javascript-and-typescript)-only).
 :::
 
 <Tabs groupId="cli-header-usage">
@@ -162,21 +162,22 @@ Examples use TypeScript, but the API is identical in JavaScript (ESM-only).
 
 ## Customize
 
-Tune the runtime behavior with the environment variables and options below.
+Tune the runtime behavior with the options below.
 
 ### Options
 
 Pass these values as the second argument to `CLIHeader.render(lines, options)` and pick the border style, width, and padding that style the banner to fit your content.
 
-| Option         | Type                            | Default                  | Description                                                                               |
-|----------------|---------------------------------|--------------------------|-------------------------------------------------------------------------------------------|
-| `align`        | `'left' \| 'center' \| 'right'` | `'center'`               | Aligns each content row within the frame; defaults to centered text.                      |
-| `width`        | `number`                        | `process.stdout.columns` | Target frame width. Falls back to the current terminal columns—set this explicitly in CI. |
-| `style`        | `'box' \| 'round' \| 'thick'`   | `'box'`                  | Picks the border characters used for the top, bottom, and vertical edges.                 |
-| `paddingX`     | `number`                        | `0`                      | Adds spaces on both sides of each content row (negative values are treated as `0`).       |
-| `paddingY`     | `number`                        | `0`                      | Adds blank content rows above and below the provided text (negative values become `0`).   |
-| `marginTop`    | `number`                        | `0`                      | Emits that many blank lines before the banner block (clamped at `0`).                     |
-| `marginBottom` | `number`                        | `0`                      | Emits that many blank lines after the banner block (clamped at `0`).                      |
+| Option         | Type                            | Default                  | Description                                                                                                                                             |
+|----------------|---------------------------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `align`        | `'left' \| 'center' \| 'right'` | `'center'`               | Aligns each content row within the frame; defaults to centered text.                                                                                    |
+| `width`        | `number`                        | `process.stdout.columns` | Target frame width. Falls back to the current terminal columns—set this explicitly in CI.                                                               |
+| `style`        | `'box' \| 'round' \| 'thick'`   | `'box'`                  | Picks the border characters used for the top, bottom, and vertical edges.                                                                               |
+| `paddingX`     | `number`                        | `0`                      | Adds spaces on both sides of each content row (negative values are treated as `0`).                                                                     |
+| `paddingY`     | `number`                        | `0`                      | Adds blank content rows above and below the provided text (negative values become `0`).                                                                 |
+| `marginTop`    | `number`                        | `0`                      | Emits that many blank lines before the banner block (clamped at `0`).                                                                                   |
+| `marginBottom` | `number`                        | `0`                      | Emits that many blank lines after the banner block (clamped at `0`).                                                                                    |
+| `interactive`  | `boolean`                       | `process.stdout.isTTY`   | When `false`, strips ANSI codes and outputs plain text without borders, padding, or margins—ideal for CI/CD pipelines and non-interactive environments. |
 
 ## Troubleshooting
 

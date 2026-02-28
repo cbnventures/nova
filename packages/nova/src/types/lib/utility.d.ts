@@ -1,5 +1,13 @@
 import type { ExecException } from 'child_process';
 
+import type {
+  LinuxOsReleaseEntries,
+  NovaConfigWorkspace,
+  WindowsRegistryKeys,
+  WorkspaceManifest,
+  WorkspaceManifestFileContents,
+} from '@/types/shared.d.ts';
+
 /**
  * Current timestamp.
  *
@@ -8,7 +16,7 @@ import type { ExecException } from 'child_process';
 export type CurrentTimestampReturns = string;
 
 /**
- * Current timestamp. - Pad left.
+ * Current timestamp - Pad left.
  *
  * @since 1.0.0
  */
@@ -43,7 +51,11 @@ export type DiscoverPathsWithFileReturns = Promise<string[]>;
 
 export type DiscoverPathsWithFileResults = string[];
 
-export type DiscoverPathsWithFileVisited = string;
+export type DiscoverPathsWithFileVisited = Set<string>;
+
+export type DiscoverPathsWithFileSkipDirectories = Set<string>;
+
+export type DiscoverPathsWithFileRealDirectory = string;
 
 /**
  * Execute shell.
@@ -84,22 +96,76 @@ export type IsCommandExistsReturns = Promise<boolean>;
  */
 export type IsExecuteShellErrorError = unknown;
 
-export type IsExecuteShellErrorTypeGuard = IsExecuteShellErrorObject;
+export type IsExecuteShellErrorTypeGuard = ExecException;
 
-export type IsExecuteShellErrorObject = ExecException;
+export type IsExecuteShellErrorObject = Record<string, unknown>;
+
+/**
+ * Is file identical.
+ *
+ * @since 1.0.0
+ */
+export type IsFileIdenticalExistingFilePath = string;
+
+export type IsFileIdenticalProposedContents = unknown;
+
+export type IsFileIdenticalReturns = Promise<boolean>;
+
+/**
+ * Is plain object.
+ *
+ * @since 1.0.0
+ */
+export type IsPlainObjectValue = unknown;
+
+export type IsPlainObjectTypeGuard = Record<string, unknown>;
+
+/**
+ * Is project root.
+ *
+ * @since 1.0.0
+ */
+export type IsProjectRootCurrentDirectory = string;
+
+export type IsProjectRootReturns = Promise<boolean>;
+
+/**
+ * Load workspace manifests.
+ *
+ * @since 1.0.0
+ */
+export type LoadWorkspaceManifestsOptionsProjectRoot = string;
+
+export type LoadWorkspaceManifestsOptionsWorkspaces = [string, NovaConfigWorkspace][];
+
+export type LoadWorkspaceManifestsOptions = {
+  projectRoot: LoadWorkspaceManifestsOptionsProjectRoot;
+  workspaces: LoadWorkspaceManifestsOptionsWorkspaces;
+};
+
+export type LoadWorkspaceManifestsReturns = Promise<LoadWorkspaceManifestsPackageJsons>;
+
+export type LoadWorkspaceManifestsPackageJsons = WorkspaceManifest[];
+
+export type LoadWorkspaceManifestsParsedFile = WorkspaceManifestFileContents;
 
 /**
  * Parse linux os release file.
  *
  * @since 1.0.0
  */
-export type ParseLinuxOsReleaseFileOsReleaseEntry = string;
-
-export type ParseLinuxOsReleaseFileOsReleaseEntries = {
-  [key: string]: ParseLinuxOsReleaseFileOsReleaseEntry;
-};
-
 export type ParseLinuxOsReleaseFileReturns = Promise<ParseLinuxOsReleaseFileOsReleaseEntries>;
+
+export type ParseLinuxOsReleaseFileOsReleaseEntries = LinuxOsReleaseEntries;
+
+/**
+ * Parse linux os release text.
+ *
+ * @since 1.0.0
+ */
+export type ParseLinuxOsReleaseTextText = string;
+
+export type ParseLinuxOsReleaseTextReturns = LinuxOsReleaseEntries;
 
 /**
  * Parse windows registry query.
@@ -108,34 +174,20 @@ export type ParseLinuxOsReleaseFileReturns = Promise<ParseLinuxOsReleaseFileOsRe
  */
 export type ParseWindowsRegistryQueryRegistryPaths = string | string[];
 
-export type ParseWindowsRegistryQueryRegistryKeyType =
-  'REG_NONE'
-  | 'REG_SZ'
-  | 'REG_EXPAND_SZ'
-  | 'REG_BINARY'
-  | 'REG_DWORD'
-  | 'REG_DWORD_LITTLE_ENDIAN'
-  | 'REG_DWORD_BIG_ENDIAN'
-  | 'REG_MULTI_SZ'
-  | 'REG_LINK'
-  | 'REG_FULL_RESOURCE_DESCRIPTOR'
-  | 'REG_RESOURCE_LIST'
-  | 'REG_RESOURCE_REQUIREMENTS_LIST'
-  | 'REG_QWORD'
-  | 'REG_QWORD_LITTLE_ENDIAN';
-
-export type ParseWindowsRegistryQueryRegistryKeyData = string;
-
-export type ParseWindowsRegistryQueryRegistryKey = {
-  type: ParseWindowsRegistryQueryRegistryKeyType;
-  data: ParseWindowsRegistryQueryRegistryKeyData;
-};
-
-export type ParseWindowsRegistryQueryRegistryKeys = {
-  [key: string]: ParseWindowsRegistryQueryRegistryKey;
-};
-
 export type ParseWindowsRegistryQueryReturns = Promise<ParseWindowsRegistryQueryRegistryKeys>;
+
+export type ParseWindowsRegistryQueryRegistryKeys = WindowsRegistryKeys;
+
+/**
+ * Parse windows registry text.
+ *
+ * @since 1.0.0
+ */
+export type ParseWindowsRegistryTextText = string;
+
+export type ParseWindowsRegistryTextReturns = WindowsRegistryKeys;
+
+export type ParseWindowsRegistryTextRegistryKeyType = string;
 
 /**
  * Path exists.
@@ -145,3 +197,27 @@ export type ParseWindowsRegistryQueryReturns = Promise<ParseWindowsRegistryQuery
 export type PathExistsPath = string;
 
 export type PathExistsReturns = Promise<boolean>;
+
+/**
+ * Rename file with date.
+ *
+ * @since 1.0.0
+ */
+export type RenameFileWithDateOldPath = string;
+
+export type RenameFileWithDatePrefix = string;
+
+export type RenameFileWithDateSuffix = string;
+
+export type RenameFileWithDateReturns = Promise<boolean>;
+
+/**
+ * Save workspace manifest.
+ *
+ * @since 1.0.0
+ */
+export type SaveWorkspaceManifestWorkspace = WorkspaceManifest;
+
+export type SaveWorkspaceManifestReplaceFile = boolean;
+
+export type SaveWorkspaceManifestReturns = Promise<void>;

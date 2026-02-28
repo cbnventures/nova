@@ -3,16 +3,18 @@ import type { PromptObject } from 'prompts';
 import type {
   DialogAction,
   EntityMenuAction,
-  HttpUrlField,
+  NormalizedResult,
   NovaConfig,
   NovaConfigCategory,
   NovaConfigEntities,
   NovaConfigEntity,
   NovaConfigEntityRole,
-  NovaConfigUrls,
   NovaConfigWorkspace,
   NovaConfigWorkspacePolicy,
   NovaConfigWorkspaceRole,
+  NovaConfigWorkspaces,
+  NovaConfigWorkspaceSyncProperty,
+  UrlProtocol,
 } from '@/types/shared.d.ts';
 
 /**
@@ -25,15 +27,93 @@ export type CLIUtilityInitializeCheckPathCurrentDirectory = string;
 export type CLIUtilityInitializeCheckPathReturns = Promise<boolean>;
 
 /**
- * CLI Utility - Initialize - Is allowed http url.
+ * CLI Utility - Initialize - Normalize email.
  *
  * @since 1.0.0
  */
-export type CLIUtilityInitializeIsAllowedHttpUrlValue = string;
+export type CLIUtilityInitializeNormalizeEmailValue = unknown;
 
-export type CLIUtilityInitializeIsAllowedHttpUrlField = HttpUrlField;
+export type CLIUtilityInitializeNormalizeEmailReturns = NormalizedResult<string>;
 
-export type CLIUtilityInitializeIsAllowedHttpUrlReturns = boolean;
+/**
+ * CLI Utility - Initialize - Normalize project slug.
+ *
+ * @since 1.0.0
+ */
+export type CLIUtilityInitializeNormalizeProjectSlugValue = unknown;
+
+export type CLIUtilityInitializeNormalizeProjectSlugReturns = NormalizedResult<string>;
+
+/**
+ * CLI Utility - Initialize - Normalize text.
+ *
+ * @since 1.0.0
+ */
+export type CLIUtilityInitializeNormalizeTextValue = unknown;
+
+export type CLIUtilityInitializeNormalizeTextMaxLength = number;
+
+export type CLIUtilityInitializeNormalizeTextReturns = NormalizedResult<string>;
+
+/**
+ * CLI Utility - Initialize - Normalize text array.
+ *
+ * @since 1.0.0
+ */
+export type CLIUtilityInitializeNormalizeTextArrayValue = unknown;
+
+export type CLIUtilityInitializeNormalizeTextArrayMaxLengthPerItem = number;
+
+export type CLIUtilityInitializeNormalizeTextArrayReturns = NormalizedResult<string[]>;
+
+/**
+ * CLI Utility - Initialize - Normalize url.
+ *
+ * @since 1.0.0
+ */
+export type CLIUtilityInitializeNormalizeUrlValue = unknown;
+
+export type CLIUtilityInitializeNormalizeUrlProtocol = UrlProtocol;
+
+export type CLIUtilityInitializeNormalizeUrlReturns = NormalizedResult<string>;
+
+/**
+ * CLI Utility - Initialize - Normalize url array.
+ *
+ * @since 1.0.0
+ */
+export type CLIUtilityInitializeNormalizeUrlArrayValue = unknown;
+
+export type CLIUtilityInitializeNormalizeUrlArrayProtocol = UrlProtocol;
+
+export type CLIUtilityInitializeNormalizeUrlArrayReturns = NormalizedResult<string[]>;
+
+/**
+ * CLI Utility - Initialize - Normalize workspace name.
+ *
+ * @since 1.0.0
+ */
+export type CLIUtilityInitializeNormalizeWorkspaceNameValue = unknown;
+
+export type CLIUtilityInitializeNormalizeWorkspaceNameRole = NovaConfigWorkspaceRole;
+
+export type CLIUtilityInitializeNormalizeWorkspaceNameBase = string;
+
+export type CLIUtilityInitializeNormalizeWorkspaceNameReturns = NormalizedResult<string>;
+
+/**
+ * CLI Utility - Initialize - Prompt emails.
+ *
+ * @since 1.0.0
+ */
+export type CLIUtilityInitializePromptEmailsConfig = NovaConfig;
+
+export type CLIUtilityInitializePromptEmailsReturns = Promise<Extract<DialogAction, 'back'>>;
+
+export type CLIUtilityInitializePromptEmailsQuestionsOutputKey =
+  'emailsBugs';
+
+export type CLIUtilityInitializePromptEmailsQuestionsOutputValue = string;
 
 /**
  * CLI Utility - Initialize - Prompt entities.
@@ -120,7 +200,7 @@ export type CLIUtilityInitializePromptEntitiesFormExistingRoles = NovaConfigEnti
 
 export type CLIUtilityInitializePromptEntitiesFormQuestionsOutputKey = 'entityName' | 'entityEmail' | 'entityUrl' | 'entityRoles';
 
-export type CLIUtilityInitializePromptEntitiesFormQuestionsOutputValue<Key extends CLIUtilityInitializePromptEntitiesFormOutputKey> = Key extends 'entityRoles' ? NovaConfigEntityRole[] : string;
+export type CLIUtilityInitializePromptEntitiesFormQuestionsOutputValue<Key extends CLIUtilityInitializePromptEntitiesFormQuestionsOutputKey> = Key extends 'entityRoles' ? NovaConfigEntityRole[] : string;
 
 export type CLIUtilityInitializePromptEntitiesFormResolvedEntity = NovaConfigEntity;
 
@@ -194,8 +274,6 @@ export type CLIUtilityInitializePromptUrlsConfig = NovaConfig;
 
 export type CLIUtilityInitializePromptUrlsReturns = Promise<Extract<DialogAction, 'back'>>;
 
-export type CLIUtilityInitializePromptUrlsValidatedUrls = NovaConfigUrls;
-
 export type CLIUtilityInitializePromptUrlsQuestionsOutputKey =
   'urlsHomepage'
   | 'urlsRepository'
@@ -209,38 +287,29 @@ export type CLIUtilityInitializePromptUrlsQuestionsOutputKey =
 
 export type CLIUtilityInitializePromptUrlsQuestionsOutputValue = string;
 
-export type CLIUtilityInitializePromptUrlsFundSourcesList = string[];
-
-/**
- * CLI Utility - Initialize - Prompt urls - Validate.
- *
- * @since 1.0.0
- */
-export type CLIUtilityInitializePromptUrlsValidateKey = Exclude<keyof NovaConfigUrls, 'fundSources'>;
-
-export type CLIUtilityInitializePromptUrlsValidateInput = string | undefined;
-
-export type CLIUtilityInitializePromptUrlsValidateReturns = void;
-
 /**
  * CLI Utility - Initialize - Prompt with cancel.
  *
  * @since 1.0.0
  */
-export type CLIUtilityInitializePromptWithCancelQuestions<Keys> = PromptObject<Keys> | PromptObject<Keys>[];
+export type CLIUtilityInitializePromptWithCancelQuestions<Keys extends string> = PromptObject<Keys> | PromptObject<Keys>[];
 
-export type CLIUtilityInitializePromptWithCancelReturnsResolvedResult<Keys, Result> = Record<Keys, Result>;
+export type CLIUtilityInitializePromptWithCancelReturnsResolvedCancelled = false;
 
-export type CLIUtilityInitializePromptWithCancelReturnsResolved<Keys, Result> = {
-  cancelled: false;
+export type CLIUtilityInitializePromptWithCancelReturnsResolvedResult<Keys extends string, Result> = Record<Keys, Result>;
+
+export type CLIUtilityInitializePromptWithCancelReturnsResolved<Keys extends string, Result> = {
+  cancelled: CLIUtilityInitializePromptWithCancelReturnsResolvedCancelled;
   result: CLIUtilityInitializePromptWithCancelReturnsResolvedResult<Keys, Result>;
 };
 
+export type CLIUtilityInitializePromptWithCancelReturnsRejectCancelled = true;
+
 export type CLIUtilityInitializePromptWithCancelReturnsReject = {
-  cancelled: true;
+  cancelled: CLIUtilityInitializePromptWithCancelReturnsRejectCancelled;
 };
 
-export type CLIUtilityInitializePromptWithCancelReturns<Keys, Result> = Promise<CLIUtilityInitializePromptWithCancelReturnsResolved<Keys, Result> | CLIUtilityInitializePromptWithCancelReturnsReject>;
+export type CLIUtilityInitializePromptWithCancelReturns<Keys extends string, Result> = Promise<CLIUtilityInitializePromptWithCancelReturnsResolved<Keys, Result> | CLIUtilityInitializePromptWithCancelReturnsReject>;
 
 /**
  * CLI Utility - Initialize - Prompt workspaces.
@@ -266,7 +335,7 @@ export type CLIUtilityInitializePromptWorkspacesMenuOutputValue = string;
  */
 export type CLIUtilityInitializePromptWorkspacesFormOptionsWorkspacePath = string;
 
-export type CLIUtilityInitializePromptWorkspacesFormOptionsExistingWorkspace = NovaConfigWorkspace;
+export type CLIUtilityInitializePromptWorkspacesFormOptionsExistingWorkspace = NovaConfigWorkspace | undefined;
 
 export type CLIUtilityInitializePromptWorkspacesFormOptionsProjectSlug = string | undefined;
 
@@ -326,6 +395,18 @@ export type CLIUtilityInitializePromptWorkspacesFormPolicyPromptKey = 'workspace
 
 export type CLIUtilityInitializePromptWorkspacesFormPolicyPromptValue = NovaConfigWorkspacePolicy;
 
+export type CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptKey = 'workspaceSyncProperties';
+
+export type CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptValue = NovaConfigWorkspaceSyncProperty[];
+
+export type CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptKey = 'workspacePinVersions';
+
+export type CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptValue = boolean;
+
+export type CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptKey = 'workspaceSyncLtsEngines';
+
+export type CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptValue = boolean;
+
 /**
  * CLI Utility - Initialize - Prompt workspaces form - Resolve name.
  *
@@ -336,141 +417,17 @@ export type CLIUtilityInitializePromptWorkspacesFormResolveNameRole = NovaConfig
 export type CLIUtilityInitializePromptWorkspacesFormResolveNameReturns = Promise<string | undefined>;
 
 /**
- * CLI Utility - Initialize - Validate fund sources.
- *
- * @since 1.0.0
- */
-export type CLIUtilityInitializeValidateFundSourcesValue = string;
-
-export type CLIUtilityInitializeValidateFundSourcesReturns = true | string;
-
-/**
- * CLI Utility - Initialize - Validate http url.
- *
- * @since 1.0.0
- */
-export type CLIUtilityInitializeValidateHttpUrlValue = string;
-
-export type CLIUtilityInitializeValidateHttpUrlField = HttpUrlField;
-
-export type CLIUtilityInitializeValidateHttpUrlReturns = true | string;
-
-/**
- * CLI Utility - Initialize - Sanitize http url.
- *
- * @since 1.0.0
- */
-export type CLIUtilityInitializeSanitizeHttpUrlValue = string | undefined;
-
-export type CLIUtilityInitializeSanitizeHttpUrlField = HttpUrlField;
-
-export type CLIUtilityInitializeSanitizeHttpUrlReturns = string | undefined;
-
-/**
  * CLI Utility - Initialize - Run.
  *
  * @since 1.0.0
  */
+export type CLIUtilityInitializeRunOptionsDryRun = true;
+
+export type CLIUtilityInitializeRunOptionsReplaceFile = true;
+
 export type CLIUtilityInitializeRunOptions = {
-  dryRun?: true;
+  dryRun?: CLIUtilityInitializeRunOptionsDryRun;
+  replaceFile?: CLIUtilityInitializeRunOptionsReplaceFile;
 };
 
 export type CLIUtilityInitializeRunReturns = Promise<void>;
-
-/**
- * CLI Utility - Version - Get browser version.
- *
- * @since 1.0.0
- */
-export type CLIUtilityVersionGetBrowserVersionReturns = Promise<CLIUtilityVersionGetBrowserVersionBrowsers>;
-
-export type CLIUtilityVersionGetBrowserVersionBrowsers = Record<string, string>;
-
-/**
- * CLI Utility - Version - Get environment manager version.
- *
- * @since 1.0.0
- */
-export type CLIUtilityVersionGetEnvironmentManagerVersionReturns = Promise<CLIUtilityVersionGetEnvironmentManagerVersionManagers>;
-
-export type CLIUtilityVersionGetEnvironmentManagerVersionManagers = Record<string, string>;
-
-/**
- * CLI Utility - Version - Get interpreter version.
- *
- * @since 1.0.0
- */
-export type CLIUtilityVersionGetInterpreterVersionReturns = Promise<CLIUtilityVersionGetInterpreterVersionInterpreters>;
-
-export type CLIUtilityVersionGetInterpreterVersionInterpreters = Record<string, string>;
-
-/**
- * CLI Utility - Version - Get node version.
- *
- * @since 1.0.0
- */
-export type CLIUtilityVersionGetNodeVersionReturns = Promise<CLIUtilityVersionGetNodeVersionTools>;
-
-export type CLIUtilityVersionGetNodeVersionTools = Record<string, string>;
-
-/**
- * CLI Utility - Version - Get os version.
- *
- * @since 1.0.0
- */
-export type CLIUtilityVersionGetOsVersionReturnsName = CLIUtilityVersionGetOsVersionName;
-
-export type CLIUtilityVersionGetOsVersionReturnsVersion = CLIUtilityVersionGetOsVersionVersion;
-
-export type CLIUtilityVersionGetOsVersionReturnsArchitecture = CLIUtilityVersionGetOsVersionArchitecture;
-
-export type CLIUtilityVersionGetOsVersionReturnsBuild = CLIUtilityVersionGetOsVersionBuild;
-
-export type CLIUtilityVersionGetOsVersionReturnsKernel = CLIUtilityVersionGetOsVersionKernel;
-
-export type CLIUtilityVersionGetOsVersionReturns = Promise<{
-  name: CLIUtilityVersionGetOsVersionReturnsName;
-  version: CLIUtilityVersionGetOsVersionReturnsVersion;
-  architecture: CLIUtilityVersionGetOsVersionReturnsArchitecture;
-  build: CLIUtilityVersionGetOsVersionReturnsBuild;
-  kernel: CLIUtilityVersionGetOsVersionReturnsKernel;
-}>;
-
-export type CLIUtilityVersionGetOsVersionName = NodeJS.Platform | string;
-
-export type CLIUtilityVersionGetOsVersionVersion = string;
-
-export type CLIUtilityVersionGetOsVersionArchitecture = NodeJS.Architecture;
-
-export type CLIUtilityVersionGetOsVersionBuild = string;
-
-export type CLIUtilityVersionGetOsVersionKernel = string;
-
-/**
- * CLI Utility - Version - Print.
- *
- * @since 1.0.0
- */
-export type CLIUtilityVersionPrintList = Record<string, Record<string, string>>;
-
-export type CLIUtilityVersionPrintReturns = void;
-
-/**
- * CLI Utility - Version - Run.
- *
- * @since 1.0.0
- */
-export type CLIUtilityVersionRunOptions = {
-  all?: true;
-  browser?: true;
-  env?: true;
-  interpreter?: true;
-  node?: true;
-  os?: true;
-};
-
-export type CLIUtilityVersionRunReturns = Promise<void>;
-
-export type CLIUtilityVersionRunTasks = Promise<[keyof CLIUtilityVersionRunList, Record<string, string>]>[];
-
-export type CLIUtilityVersionRunList = Record<string, Record<string, string>>;

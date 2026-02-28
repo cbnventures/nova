@@ -112,7 +112,6 @@ const config: FlatConfig = [
         ImportDeclaration: {
           minProperties: 4,
           multiline: true,
-          consistent: true,
         },
         // TypeScript type literals (e.g., type X = { a: string }).
         TSTypeLiteral: {
@@ -207,26 +206,6 @@ const config: FlatConfig = [
 
       // Prefer template literals instead of "string" + "concatenation".
       'prefer-template': ['error'],
-    },
-  },
-  {
-    name: 'nova/dx-code-style/regex',
-    files: [
-      '**/*.js',
-      '**/*.ts',
-      '**/*.jsx',
-      '**/*.tsx',
-      '**/*.cjs',
-      '**/*.cts',
-      '**/*.mjs',
-      '**/*.mts',
-    ],
-    rules: {
-      // Keep patterns reusable and do not put flags on literals so callers choose flags to use with "RegExp".
-      'no-restricted-syntax': ['error', {
-        selector: 'Literal[regex][regex.flags=/./]',
-        message: 'Do not use flags on regex literals. Add flags with RegExp("pattern", "flags") at the call site instead.',
-      }],
     },
   },
   {

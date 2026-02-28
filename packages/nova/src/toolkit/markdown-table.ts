@@ -1,4 +1,5 @@
 import { CHARACTER_PIPE, LINEBREAK_CRLF_OR_LF, PATTERN_ANSI } from '@/lib/regex.js';
+
 import type {
   MarkdownTableAddRowReturns,
   MarkdownTableAddRowRow,
@@ -33,12 +34,16 @@ export default class MarkdownTable {
   /**
    * Markdown Table - Headers.
    *
+   * @private
+   *
    * @since 1.0.0
    */
   readonly #headers: MarkdownTableHeaders;
 
   /**
    * Markdown Table - Minimum column width.
+   *
+   * @private
    *
    * @since 1.0.0
    */
@@ -47,12 +52,16 @@ export default class MarkdownTable {
   /**
    * Markdown Table - Pad delimiter row.
    *
+   * @private
+   *
    * @since 1.0.0
    */
   readonly #padDelimiterRow: MarkdownTablePadDelimiterRow;
 
   /**
    * Markdown Table - Rows.
+   *
+   * @private
    *
    * @since 1.0.0
    */
@@ -72,9 +81,9 @@ export default class MarkdownTable {
     }
 
     // In case you need to think about it, each array is panned out like a row.
-    this.#headers = headers.map((header) => String(header));
-    this.#minimumColumnWidth = Math.max(3, options?.minimumColumnWidth ?? 3);
-    this.#padDelimiterRow = options?.padDelimiterRow ?? false;
+    this.#headers = headers;
+    this.#minimumColumnWidth = (options !== undefined) ? Math.max(3, options.minimumColumnWidth) : 3;
+    this.#padDelimiterRow = (options !== undefined) ? options.padDelimiterRow : false;
     this.#rows = [];
   }
 

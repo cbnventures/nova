@@ -1,0 +1,144 @@
+---
+id: sync-lts-engines
+title: Sync LTS Engines
+description: Sync the engines.node constraint in workspace package.json files to match currently active Node.js LTS versions.
+keywords:
+  - nova
+  - nova sync lts engines
+  - nova recipe sync-lts-engines
+  - node lts versions
+  - engines node
+  - package json engines
+  - nova config json
+tags:
+  - cli
+  - recipe
+  - package-json
+  - engines
+  - node-lts
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+Sync the `engines.node` constraint in [workspace](/docs/quickstart/terminology#nova-concepts) `package.json` files to match currently active Node.js LTS versions.
+
+## Summary
+
+The `sync-lts-engines` recipe reads your `nova.config.json` file, iterates over workspaces that have `"syncLtsEngines": true`, fetches the current Node.js release schedule from [GitHub](https://github.com/nodejs/Release), and sets `engines.node` to a constraint covering all active LTS versions (e.g., `^20 || ^22 || ^24`). If `engines` or `engines.node` is missing, it is created automatically. If the value already matches, no change is made.
+
+## Why Use This Command?
+
+- Keep **engine constraints current** as Node.js releases new LTS versions and retires old ones.
+- Ensure all workspaces **share the same constraint** without manual edits.
+- Catch **stale engine values** in CI using `--dry-run`.
+
+## Use Cases
+
+- **After a new LTS release** — Run when a new even-numbered Node.js version enters LTS to pick it up automatically.
+- **Routine maintenance** — Periodically sync all workspaces to keep constraints fresh.
+- **CI/CD gating** — Use `--dry-run` in CI to detect workspaces whose engine constraint has fallen behind.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js LTS release with either the installed `nova` [CLI](/docs/quickstart/terminology#fundamentals) or `npx`.
+- **Network access** — The command fetches the Node.js release schedule from GitHub. An internet connection is required.
+- **Project root** — Run the command from the directory containing the top-level `package.json` ([monorepo](/docs/quickstart/terminology#git-and-workflow) root included).
+- **Nova config** — A `nova.config.json` file with at least one workspace that has `"syncLtsEngines": true`.
+
+## Usage
+
+You can run this command in two ways:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova recipe sync-lts-engines
+
+    # Shorthand
+    nova rcp sle
+    ```
+
+    **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest recipe sync-lts-engines
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest rcp sle
+    ```
+
+    **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                                    |
+|----------------------|--------------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview all changes without writing any files to disk.                         |
+| `-r, --replace-file` | Overwrite the existing `package.json` instead of creating a dated backup copy. |
+
+:::danger Be careful with `--replace-file`
+When `--replace-file` is passed, the command skips backup creation and overwrites each `package.json` in place.
+:::
+
+:::tip Backup reminder
+By default, the command creates a dated backup copy of each `package.json` before writing changes (e.g., `package.2026-01-01_0001.json`).
+:::
+
+## Configuration
+
+LTS engine sync is **opt-in** per workspace. Add `"syncLtsEngines": true` to any workspace in your `nova.config.json`:
+
+```json
+{
+  "workspaces": {
+    "./": {
+      "name": "my-project",
+      "role": "project",
+      "policy": "freezable",
+      "syncLtsEngines": true
+    },
+    "./packages/core": {
+      "name": "@my-org/core",
+      "role": "package",
+      "policy": "distributable",
+      "syncLtsEngines": true
+    }
+  }
+}
+```
+
+Workspaces without `"syncLtsEngines": true` are skipped entirely.
+
+## How It Works
+
+### Constraint Source
+
+The recipe fetches the [Node.js release schedule](https://github.com/nodejs/Release) from GitHub and builds a constraint from all versions whose LTS window has started and whose end-of-life date has not passed. For example, if versions 20, 22, and 24 are all active LTS, the constraint becomes `^20 || ^22 || ^24`.
+
+### Engine Handling
+
+| Scenario                               | Action                                      |
+|----------------------------------------|---------------------------------------------|
+| `engines` field missing                | Created with `{ "node": "<constraint>" }`   |
+| `engines` exists, `node` missing       | `engines.node` is added with the constraint |
+| `engines.node` matches constraint      | No change — already up to date              |
+| `engines.node` differs from constraint | Updated to the current constraint           |
+| `engines` is not a plain object        | Skipped with a warning                      |
+
+## Troubleshooting
+
+- **"Must be run inside the project root directory."** — Verify you execute the command where the project root `package.json` resides. App or package folders inside monorepos are not allowed.
+- **"No workspaces have syncLtsEngines enabled"** — Add `"syncLtsEngines": true` to at least one workspace in your `nova.config.json`.
+- **"Unable to determine active Node.js LTS versions"** — Check your internet connection. The command needs to reach GitHub to fetch the release schedule.
+- **"No accessible package.json files were found"** — Check that the workspace paths in `nova.config.json` actually contain `package.json` files.

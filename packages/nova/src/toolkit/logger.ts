@@ -1,9 +1,10 @@
-import * as util from 'node:util';
+import { format } from 'util';
 
 import chalk from 'chalk';
 
 import { LINEBREAK_CRLF_OR_LF, PATTERN_ANSI } from '@/lib/regex.js';
 import { currentTimestamp } from '@/lib/utility.js';
+
 import type {
   LoggerCustomizeOptions,
   LoggerCustomizeReturns,
@@ -26,7 +27,9 @@ import type {
   LoggerScopeLabelReturns,
   LoggerScopeLabelSegments,
   LoggerShouldLogCurrentLogLevel,
+  LoggerShouldLogDefaultLogLevel,
   LoggerShouldLogLevel,
+  LoggerShouldLogPreferredLogLevel,
   LoggerShouldLogReturns,
   LoggerShouldLogWeights,
   LoggerStripAnsiColorsReturns,
@@ -157,7 +160,7 @@ export default class Logger {
     const padBottom = '\n'.repeat(Math.max(0, options.padBottom ?? 0));
 
     const stream = (level === 'warn' || level === 'error') ? process.stderr : process.stdout;
-    const formattedMessage = (message.length > 0) ? util.format(...message) : '';
+    const formattedMessage = (message.length > 0) ? format(...message) : '';
 
     if (padTop.length > 0) {
       stream.write(padTop);
@@ -202,8 +205,17 @@ export default class Logger {
     const nodeEnv = process.env['NODE_ENV'] ?? 'production';
 
     const currentLogLevel = (process.env['LOG_LEVEL'] ?? '').toLowerCase();
-    const defaultLogLevel = (isBrowser && nodeEnv === 'production') ? 'warn' : (nodeEnv === 'development') ? 'debug' : 'info';
-    const preferredLogLevel = Object.keys(weights).includes(currentLogLevel as LoggerShouldLogCurrentLogLevel) ? (currentLogLevel as LoggerShouldLogCurrentLogLevel) : defaultLogLevel;
+    let defaultLogLevel: LoggerShouldLogDefaultLogLevel;
+
+    if (isBrowser === true && nodeEnv === 'production') {
+      defaultLogLevel = 'warn';
+    } else if (nodeEnv === 'development') {
+      defaultLogLevel = 'debug';
+    } else {
+      defaultLogLevel = 'info';
+    }
+
+    const preferredLogLevel: LoggerShouldLogPreferredLogLevel = Object.keys(weights).includes(currentLogLevel as LoggerShouldLogCurrentLogLevel) ? (currentLogLevel as LoggerShouldLogCurrentLogLevel) : defaultLogLevel;
 
     return weights[level] >= weights[preferredLogLevel];
   }
@@ -228,28 +240,34 @@ export default class Logger {
     let coloredLevelLabel;
 
     switch (level) {
-      case 'debug':
+      case 'debug': {
         coloredLevelLabel = chalk.grey(levelLabelUpper);
         break;
-      case 'dev':
+      }
+      case 'dev': {
         coloredLevelLabel = chalk.magenta(levelLabelUpper);
         break;
-      case 'info':
+      }
+      case 'info': {
         coloredLevelLabel = chalk.blue(levelLabelUpper);
         break;
-      case 'warn':
+      }
+      case 'warn': {
         coloredLevelLabel = chalk.yellow(levelLabelUpper);
         break;
-      case 'error':
+      }
+      case 'error': {
         coloredLevelLabel = chalk.red(levelLabelUpper);
         break;
-      default:
+      }
+      default: {
         coloredLevelLabel = chalk.white(levelLabelUpper);
         break;
+      }
     }
 
     // Show log timestamp if the "LOG_TIME" environment variable is seen.
-    if (process.env['LOG_TIME'] && process.env['LOG_TIME'] === 'true') {
+    if (process.env['LOG_TIME'] !== undefined && process.env['LOG_TIME'] === 'true') {
       return `${chalk.dim(currentTimestamp())} ${coloredLevelLabel}${scopeTag}`;
     }
 

@@ -1,4 +1,4 @@
-import type { MarkdownTable } from '@/toolkit/markdown-table.ts';
+import type { MarkdownTable } from '@/toolkit/index.ts';
 
 /**
  * Markdown Table - Add row.

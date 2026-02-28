@@ -6,6 +6,58 @@
 export type BorderStyle = 'box' | 'round' | 'thick';
 
 /**
+ * Changelog entry.
+ *
+ * @since 1.0.0
+ */
+export type ChangelogEntryPackage = string;
+
+export type ChangelogEntryCategory = 'updated' | 'fixed' | 'added' | 'removed';
+
+export type ChangelogEntryBump = 'major' | 'minor' | 'patch';
+
+export type ChangelogEntryMessage = string;
+
+export type ChangelogEntryFilePath = string;
+
+export type ChangelogEntry = {
+  package: ChangelogEntryPackage;
+  category: ChangelogEntryCategory;
+  bump: ChangelogEntryBump;
+  message: ChangelogEntryMessage;
+  filePath: ChangelogEntryFilePath;
+};
+
+/**
+ * Changelog options.
+ *
+ * @since 1.0.0
+ */
+export type ChangelogOptionsRecord = true;
+
+export type ChangelogOptionsRelease = true;
+
+export type ChangelogOptionsPackage = string;
+
+export type ChangelogOptionsCategory = string;
+
+export type ChangelogOptionsBump = string;
+
+export type ChangelogOptionsMessage = string;
+
+export type ChangelogOptionsDryRun = true;
+
+export type ChangelogOptions = {
+  record?: ChangelogOptionsRecord;
+  release?: ChangelogOptionsRelease;
+  package?: ChangelogOptionsPackage;
+  category?: ChangelogOptionsCategory;
+  bump?: ChangelogOptionsBump;
+  message?: ChangelogOptionsMessage;
+  dryRun?: ChangelogOptionsDryRun;
+};
+
+/**
  * Dialog action.
  *
  * @since 1.0.0
@@ -50,13 +102,6 @@ export type EntityMenuActionBack = {
 export type EntityMenuAction = EntityMenuActionAdd | EntityMenuActionEdit | EntityMenuActionRemove | EntityMenuActionBack;
 
 /**
- * Http url field.
- *
- * @since 1.0.0
- */
-export type HttpUrlField = 'repository' | 'generic';
-
-/**
  * Item pretty names.
  *
  * @since 1.0.0
@@ -96,6 +141,31 @@ export type LogOptions = {
   purpose?: LogOptionsPurpose;
   padTop?: LogOptionsPadTop;
   padBottom?: LogOptionsPadBottom;
+};
+
+/**
+ * Normalized result.
+ *
+ * @since 1.0.0
+ */
+export type NormalizedResultResult = true | string;
+
+export type NormalizedResultSanitized<ReturnType> = ReturnType | undefined;
+
+export type NormalizedResult<ReturnType> = {
+  result: NormalizedResultResult;
+  sanitized: NormalizedResultSanitized<ReturnType>;
+};
+
+/**
+ * Linux os release entries.
+ *
+ * @since 1.0.0
+ */
+export type LinuxOsReleaseEntry = string;
+
+export type LinuxOsReleaseEntries = {
+  [key: string]: LinuxOsReleaseEntry;
 };
 
 /**
@@ -150,6 +220,12 @@ export type NovaConfigEntity = {
 
 export type NovaConfigEntities = NovaConfigEntity[];
 
+export type NovaConfigEmailsBugs = string;
+
+export type NovaConfigEmails = {
+  bugs?: NovaConfigEmailsBugs;
+};
+
 export type NovaConfigUrlsHomepage = string;
 
 export type NovaConfigUrlsRepository = string;
@@ -184,14 +260,33 @@ export type NovaConfigUrls = {
 
 export type NovaConfigWorkspaceName = string;
 
-export type NovaConfigWorkspaceRole = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool';
+export type NovaConfigWorkspaceRole = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
 
 export type NovaConfigWorkspacePolicy = 'freezable' | 'trackable' | 'distributable';
+
+export type NovaConfigWorkspaceSyncProperty =
+  'description'
+  | 'keywords'
+  | 'author'
+  | 'contributors'
+  | 'funding'
+  | 'homepage'
+  | 'repository'
+  | 'bugs';
+
+export type NovaConfigWorkspaceSyncProperties = NovaConfigWorkspaceSyncProperty[];
+
+export type NovaConfigWorkspacePinVersions = boolean;
+
+export type NovaConfigWorkspaceSyncLtsEngines = boolean;
 
 export type NovaConfigWorkspace = {
   name: NovaConfigWorkspaceName;
   role: NovaConfigWorkspaceRole;
   policy: NovaConfigWorkspacePolicy;
+  syncProperties?: NovaConfigWorkspaceSyncProperties;
+  pinVersions?: NovaConfigWorkspacePinVersions;
+  syncLtsEngines?: NovaConfigWorkspaceSyncLtsEngines;
 };
 
 export type NovaConfigWorkspaces = {
@@ -201,6 +296,7 @@ export type NovaConfigWorkspaces = {
 export type NovaConfig = {
   project?: NovaConfigProject;
   entities?: NovaConfigEntities;
+  emails?: NovaConfigEmails;
   urls?: NovaConfigUrls;
   workspaces?: NovaConfigWorkspaces;
 };
@@ -210,7 +306,7 @@ export type NovaConfig = {
  *
  * @since 1.0.0
  */
-export type NovaConfigCategory = 'project' | 'entities' | 'urls' | 'workspaces';
+export type NovaConfigCategory = 'project' | 'entities' | 'emails' | 'urls' | 'workspaces';
 
 /**
  * Text align.
@@ -218,3 +314,59 @@ export type NovaConfigCategory = 'project' | 'entities' | 'urls' | 'workspaces';
  * @since 1.0.0
  */
 export type TextAlign = 'left' | 'center' | 'right';
+
+/**
+ * Url protocol.
+ *
+ * @since 1.0.0
+ */
+export type UrlProtocol = 'generic' | 'repository';
+
+/**
+ * Windows registry keys.
+ *
+ * @since 1.0.0
+ */
+export type WindowsRegistryKeyType =
+  'REG_NONE'
+  | 'REG_SZ'
+  | 'REG_EXPAND_SZ'
+  | 'REG_BINARY'
+  | 'REG_DWORD'
+  | 'REG_DWORD_LITTLE_ENDIAN'
+  | 'REG_DWORD_BIG_ENDIAN'
+  | 'REG_MULTI_SZ'
+  | 'REG_LINK'
+  | 'REG_FULL_RESOURCE_DESCRIPTOR'
+  | 'REG_RESOURCE_LIST'
+  | 'REG_RESOURCE_REQUIREMENTS_LIST'
+  | 'REG_QWORD'
+  | 'REG_QWORD_LITTLE_ENDIAN';
+
+export type WindowsRegistryKeyData = string;
+
+export type WindowsRegistryKey = {
+  type: WindowsRegistryKeyType;
+  data: WindowsRegistryKeyData;
+};
+
+export type WindowsRegistryKeys = {
+  [key: string]: WindowsRegistryKey;
+};
+
+/**
+ * Workspace manifest.
+ *
+ * @since 1.0.0
+ */
+export type WorkspaceManifestManifest = NovaConfigWorkspace;
+
+export type WorkspaceManifestFilePath = string;
+
+export type WorkspaceManifestFileContents = Record<string, unknown>;
+
+export type WorkspaceManifest = {
+  manifest: WorkspaceManifestManifest;
+  filePath: WorkspaceManifestFilePath;
+  fileContents: WorkspaceManifestFileContents;
+};

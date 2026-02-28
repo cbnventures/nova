@@ -1,0 +1,159 @@
+---
+id: pin-versions
+title: Pin Versions
+description: Strip range prefixes from dependency versions in workspace package.json files, ensuring deterministic installs without relying on lock files.
+keywords:
+  - nova
+  - nova pin versions
+  - nova recipe pin-versions
+  - pin dependency versions
+  - strip version prefix
+  - exact versions
+  - package json versions
+  - nova config json
+tags:
+  - cli
+  - recipe
+  - package-json
+  - dependencies
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import CodeBlock from '@theme/CodeBlock';
+
+Strip range prefixes from [dependency](/docs/quickstart/terminology#packages-and-dependencies) versions in [workspace](/docs/quickstart/terminology#nova-concepts) `package.json` files.
+
+## Summary
+
+The `pin-versions` recipe reads your `nova.config.json` file, iterates over workspaces that have `"pinVersions": true`, and strips range prefixes (`^`, `~`, `>=`, `>`, `<=`, `<`) from every version string in `dependencies` and `devDependencies`. Versions that are already pinned, local file references (`file:`), and peer dependencies are left untouched. Unpinnable values like `*` or `latest` are flagged as errors.
+
+## Why Use This Command?
+
+- Guarantee **deterministic installs** without relying on `package-lock.json` or other lock files.
+- Catch **accidental range prefixes** introduced by `npm install --save` (which defaults to `^`).
+- Enforce **exact version pinning** as a CI gate using `--dry-run`.
+
+## Use Cases
+
+- **After adding dependencies** — Run after `npm install` to strip the `^` prefix npm adds by default.
+- **Routine maintenance** — Periodically pin all workspaces to catch drift from manual edits.
+- **CI/CD gating** — Use `--dry-run` in CI to fail builds when any dependency has a range prefix.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js LTS release with either the installed `nova` [CLI](/docs/quickstart/terminology#fundamentals) or `npx`.
+- **Project root** — Run the command from the directory containing the top-level `package.json` ([monorepo](/docs/quickstart/terminology#git-and-workflow) root included).
+- **Nova config** — A `nova.config.json` file with at least one workspace that has `"pinVersions": true`.
+
+## Usage
+
+You can run this command in two ways:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova recipe pin-versions
+
+    # Shorthand
+    nova rcp pv
+    ```
+
+    **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest recipe pin-versions
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest rcp pv
+    ```
+
+    **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                                    |
+|----------------------|--------------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview all changes without writing any files to disk.                         |
+| `-r, --replace-file` | Overwrite the existing `package.json` instead of creating a dated backup copy. |
+
+:::danger Be careful with `--replace-file`
+When `--replace-file` is passed, the command skips backup creation and overwrites each `package.json` in place.
+:::
+
+:::tip Backup reminder
+By default, the command creates a dated backup copy of each `package.json` before writing changes (e.g., `package.2026-01-01_0001.json`).
+:::
+
+## Configuration
+
+Version pinning is **opt-in** per workspace. Add `"pinVersions": true` to any workspace in your `nova.config.json`:
+
+```json
+{
+  "workspaces": {
+    "./": {
+      "name": "my-project",
+      "role": "project",
+      "policy": "freezable",
+      "pinVersions": true
+    },
+    "./packages/core": {
+      "name": "@my-org/core",
+      "role": "package",
+      "policy": "distributable",
+      "pinVersions": true
+    }
+  }
+}
+```
+
+Workspaces without `"pinVersions": true` are skipped entirely.
+
+## How It Works
+
+### Dependency Groups
+
+The recipe checks the following dependency groups in each workspace `package.json`:
+
+| Group                  | Checked             |
+|------------------------|---------------------|
+| `dependencies`         | Yes                 |
+| `devDependencies`      | Yes                 |
+| `peerDependencies`     | No (left untouched) |
+| `optionalDependencies` | No (left untouched) |
+
+### Version Handling
+
+| Version Format      | Action                        | Example              |
+|---------------------|-------------------------------|----------------------|
+| `^1.2.3`, `~1.2.3`  | Strip prefix → `1.2.3`        | `^9.39.3` → `9.39.3` |
+| `>=1.2.3`, `>1.2.3` | Strip prefix → `1.2.3`        | `>=8.0.0` → `8.0.0`  |
+| `<=1.2.3`, `<1.2.3` | Strip prefix → `1.2.3`        | `<2.0.0` → `2.0.0`   |
+| `1.2.3`             | Already pinned — no change    |                      |
+| `file:../local`     | Local reference — no change   |                      |
+| `*`                 | Unpinnable — flagged as error |                      |
+| `latest`            | Unpinnable — flagged as error |                      |
+
+### Exit Codes
+
+| Code | Meaning                                                                           |
+|------|-----------------------------------------------------------------------------------|
+| `0`  | All versions are pinned (or already were).                                        |
+| `1`  | One or more versions are unpinnable (`*`, `latest`) or the command failed to run. |
+
+## Troubleshooting
+
+- **"Must be run inside the project root directory."** — Verify you execute the command where the project root `package.json` resides. App or package folders inside monorepos are not allowed.
+- **"No workspaces have pinVersions enabled"** — Add `"pinVersions": true` to at least one workspace in your `nova.config.json`.
+- **"No accessible package.json files were found"** — Check that the workspace paths in `nova.config.json` actually contain `package.json` files.
+- **Unpinnable version errors** — Replace `*` or `latest` with an exact version number (e.g., `1.2.3`). These cannot be automatically pinned because they do not represent a specific version.

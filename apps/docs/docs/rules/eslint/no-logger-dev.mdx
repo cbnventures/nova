@@ -1,11 +1,97 @@
 ---
 id: no-logger-dev
 title: No Logger.dev
-description: x
+description: Disallow Logger.dev calls in production code so dev-only logging statements are caught before release.
 keywords:
-  - x
+  - nova
+  - eslint rule
+  - logger
+  - dev logging
+  - production safety
+  - linting
 tags:
-  - x
+  - rules
+  - eslint
+  - logging
 ---
 
-Coming soon
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Flag `Logger.dev` calls so dev-only logging statements get caught before they ship to production.
+
+## Summary
+
+The `no-logger-dev` rule reports any call to `.dev()` on `Logger`, `Logger.customize()`, or variables assigned from `Logger.customize()`. Use `Logger.debug` instead if you want to keep the log.
+
+## Why Use This Rule?
+
+1. Prevents dev-only log statements from leaking into production builds.
+2. Catches scoped loggers too, not just direct `Logger.dev()` calls.
+3. Keeps the codebase clean by making dev logging intentionally noisy during linting.
+
+## Examples
+
+<Tabs groupId="no-logger-dev-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    import { Logger } from '@cbnventures/nova/toolkit';
+
+    // Use debug, info, warn, or error instead.
+    Logger.debug('Loading configuration');
+    Logger.info('Build finished');
+
+    const log = Logger.customize({ name: 'init' });
+    log.debug('Checking project state');
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    import { Logger } from '@cbnventures/nova/toolkit';
+
+    // Direct usage.
+    Logger.dev('Loading configuration');
+
+    // Chained from customize.
+    Logger.customize({ name: 'init' }).dev('Checking project state');
+
+    // Variable assigned from customize.
+    const log = Logger.customize({ name: 'init' });
+    log.dev('Checking project state');
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint flat config:
+
+```ts
+import { noLoggerDev } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-logger-dev': noLoggerDev,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-logger-dev': ['warn'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **Warning fires on a `.dev()` call that isn't Logger.** — The rule only flags calls on identifiers named `Logger` or variables traced back to `Logger.customize()`. Other objects with a `.dev()` method are ignored.
+- **Want to keep the log?** — Replace `Logger.dev` with `Logger.debug`. Debug logs are gated by `LOG_LEVEL` and stay silent in production by default.

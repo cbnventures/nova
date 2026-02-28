@@ -1,7 +1,7 @@
 {
   "name": "nova-project",
   "version": "0.0.0",
-  "type": "module",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "dev": "turbo run dev",
@@ -10,21 +10,19 @@
     "check": "turbo run check",
     "deploy": "turbo run deploy",
     "clean": "turbo run clean",
-    "record": "changeset add",
-    "release": "changeset version"
+    "changelog": "nova utility changelog"
   },
-  "engines": {
-    "node": "^22"
-  },
-  "devDependencies": {
-    "@cbnventures/nova": "file:./packages/nova",
-    "@changesets/cli": "2.29.7",
-    "jiti": "2.6.1",
-    "turbo": "2.5.8"
-  },
-  "packageManager": "npm@11.6.2",
   "workspaces": [
     "./apps/*",
     "./packages/*"
-  ]
+  ],
+  "packageManager": "npm@11.6.2",
+  "engines": {
+    "node": "^20 || ^22 || ^24"
+  },
+  "devDependencies": {
+    "@cbnventures/nova": "file:./packages/nova",
+    "jiti": "2.6.1",
+    "turbo": "2.8.12"
+  }
 }

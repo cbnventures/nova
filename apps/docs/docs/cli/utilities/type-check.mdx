@@ -1,0 +1,171 @@
+---
+id: type-check
+title: Type Check
+description: Run full TypeScript type checking scoped to project-owned files, filtering out third-party diagnostics so strict configs like skipLibCheck false remain practical.
+keywords:
+  - nova
+  - nova type-check
+  - typescript type checking
+  - skipLibCheck false
+  - project diagnostics
+  - tsconfig strict
+  - ci cd type checking
+  - monorepo type safety
+tags:
+  - type-check
+  - cli
+  - diagnostics
+  - typescript
+  - ci-cd
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Run full TypeScript type checking while filtering diagnostics to only project-owned files, keeping strict configs practical in real-world projects.
+
+## Summary
+
+The `type-check` command uses the TypeScript compiler API to run `getPreEmitDiagnostics` against a project, then filters the results to only include errors in files owned by the project. Third-party diagnostics (from `node_modules`) are excluded so that `skipLibCheck: false` can be used without surfacing errors in dependencies the project maintainer cannot control.
+
+:::tip Strict Without the Noise
+Setting `skipLibCheck: false` in a TSConfig preset catches more bugs, but it also surfaces errors inside third-party packages. This command gives you the strictness without the noise.
+:::
+
+## Why Use This Command?
+
+- Catch type errors in project code that `skipLibCheck: true` would normally hide.
+- Keep `skipLibCheck: false` in shared TSConfig presets without blocking CI on third-party issues.
+- Produce clear, file-scoped diagnostics with line and column numbers for quick navigation.
+- Replace manual `tsc --noEmit` invocations that may report uncontrollable errors.
+
+## Use Cases
+
+- **[Monorepo](/docs/quickstart/terminology#git-and-workflow) maintenance** — Run type checks per [workspace](/docs/quickstart/terminology#nova-concepts) with each workspace's own `tsconfig.json`.
+- **CI/CD pipelines** — Add a type-check step that exits with code 1 on project errors while ignoring dependency noise.
+- **Strict TSConfig adoption** — Migrate from `skipLibCheck: true` to `false` incrementally by surfacing only your own errors.
+- **Pre-commit checks** — Confirm type safety before committing without waiting for a full build.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js [LTS](/docs/quickstart/terminology#fundamentals) release with either the installed `nova` [CLI](/docs/quickstart/terminology#fundamentals) or `npx`.
+- **TypeScript** — Must be installed as a [dependency](/docs/quickstart/terminology#packages-and-dependencies) (direct or peer) in the workspace.
+- **tsconfig.json** — A valid TypeScript configuration file must exist in the workspace (or be specified with `--project`).
+
+## Usage
+
+You can run this command in two ways:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova utility type-check
+
+    # Shorthand
+    nova util tc
+    ```
+
+    **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest utility type-check
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest util tc
+    ```
+
+    **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                   | Description            |
+|------------------------|------------------------|
+| `-p, --project <path>` | Path to tsconfig.json. |
+
+When `--project` is omitted, the command searches for `tsconfig.json` starting from the current working directory.
+
+## How It Works
+
+1. **Resolve config** — Locate the `tsconfig.json` file from `--project` or by searching from the current directory.
+2. **Parse config** — Read and parse the TypeScript configuration using the compiler API.
+3. **Create program** — Build a full TypeScript program from the parsed file list and compiler options.
+4. **Collect diagnostics** — Run `getPreEmitDiagnostics` to gather all type errors, including those inside `node_modules`.
+5. **Filter** — Keep only diagnostics where the source file starts with the current working directory **and** does not contain `node_modules` in its path.
+6. **Report** — Print each error with file path, line, column, and message, then exit with code 1 if any errors remain.
+
+:::danger Non-Zero Exit Code
+The command exits with code **1** when project-owned type errors are found. CI pipelines that use this command will fail the step on type errors.
+:::
+
+## Examples
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Default (auto-detect tsconfig.json)"
+        # Original
+        nova utility type-check
+
+        # Shorthand
+        nova util tc
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Custom tsconfig path"
+        # Original
+        nova utility type-check --project ./tsconfig.build.json
+
+        # Shorthand
+        nova util tc -p ./tsconfig.build.json
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Default (auto-detect tsconfig.json)"
+        # Original
+        npx --yes @cbnventures/nova@latest utility type-check
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util tc
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Custom tsconfig path"
+        # Original
+        npx --yes @cbnventures/nova@latest utility type-check --project ./tsconfig.build.json
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util tc -p ./tsconfig.build.json
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+</Tabs>
+
+## Troubleshooting
+
+- **No tsconfig.json found** — Confirm a `tsconfig.json` exists in the current directory, or pass the correct path with `--project`.
+- **TypeScript not installed** — The command requires TypeScript as a dependency. Run `npm install typescript` if it is missing.
+- **Zero errors but build fails** — This command only checks types; build errors from bundlers or other tools are not covered.
+- **Errors in generated files** — If generated files (e.g., `.docusaurus`) appear in diagnostics, add them to the `exclude` array in your `tsconfig.json`.

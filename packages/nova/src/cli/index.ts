@@ -3,17 +3,21 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 
 import packageJson from '../../package.json' with { type: 'json' };
-import { CLIRecipeSyncMetadata } from '@/cli/recipe/sync-metadata.js';
-import { CLIRecipeSyncVersions } from '@/cli/recipe/sync-versions.js';
+import { CLIRecipePinVersions } from '@/cli/recipe/pin-versions.js';
+import { CLIRecipeSyncLtsEngines } from '@/cli/recipe/sync-lts-engines.js';
+import { CLIRecipeSyncPackages } from '@/cli/recipe/sync-packages.js';
+import { CLIUtilityChangelog } from '@/cli/utility/changelog.js';
 import { CLIUtilityInitialize } from '@/cli/utility/initialize.js';
+import { CLIUtilityTypeCheck } from '@/cli/utility/type-check.js';
 import { CLIUtilityVersion } from '@/cli/utility/version.js';
 import {
   PATTERN_ANSI,
   PATTERN_ERROR_PREFIX,
   PATTERN_NOVA_PREFIX,
-  WHITESPACE_PATTERN,
+  PATTERN_WHITESPACE,
 } from '@/lib/regex.js';
 import { CLIHeader, Logger } from '@/toolkit/index.js';
+
 import type {
   CLIExecuteCommandOptions,
   CLIExecuteCommandReturns,
@@ -47,7 +51,7 @@ class CLI {
    *
    * @since 1.0.0
    */
-  #program: CLIProgram = new Command() as CLIProgram;
+  readonly #program: CLIProgram = new Command() as CLIProgram;
 
   /**
    * CLI - Constructor.
@@ -97,7 +101,7 @@ class CLI {
    */
   private registerCommands(): CLIRegisterCommandsReturns {
     /**
-     * Generate.
+     * CLI - Register commands - Generate.
      *
      * @since 1.0.0
      */
@@ -174,7 +178,7 @@ class CLI {
       .description('Create a vite.config.mjs file for Vite configuration');
 
     /**
-     * Recipe.
+     * CLI - Register commands - Recipe.
      *
      * @since 1.0.0
      */
@@ -187,27 +191,41 @@ class CLI {
       .helpCommand(false);
 
     recipe
-      .command('sync-metadata')
-      .alias('sm')
+      .command('pin-versions')
+      .alias('pv')
       .usage('[options]')
-      .description('Keeps every workspace manifest aligned with repository conventions and canonical metadata')
+      .description('Pin all workspace dependency versions by stripping range prefixes')
       .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CLIRecipeSyncMetadata.run);
+        await this.executeCommand<typeof options>(options, CLIRecipePinVersions.run);
       });
 
     recipe
-      .command('sync-versions')
-      .alias('sv')
+      .command('sync-lts-engines')
+      .alias('sle')
       .usage('[options]')
-      .description('Applies the monorepo\'s standard toolchain and version policy across all packages')
+      .description('Sync Node.js engine constraints to current LTS versions across workspaces')
       .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CLIRecipeSyncVersions.run);
+        await this.executeCommand<typeof options>(options, CLIRecipeSyncLtsEngines.run);
+      });
+
+    recipe
+      .command('sync-packages')
+      .alias('sp')
+      .usage('[options]')
+      .description('Ensures every workspace "package.json" file matches defined conventions drawn from "nova.config.json"')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-i, --ignore-unknown', 'Ignore unknown keys found in workspace manifest files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIRecipeSyncPackages.run);
       });
 
     /**
-     * Scaffold.
+     * CLI - Register commands - Scaffold.
      *
      * @since 1.0.0
      */
@@ -224,7 +242,7 @@ class CLI {
       .description('Next.js');
 
     /**
-     * Utility.
+     * CLI - Register commands - Utility.
      *
      * @since 1.0.0
      */
@@ -237,13 +255,40 @@ class CLI {
       .helpCommand(false);
 
     utility
+      .command('changelog')
+      .alias('cl')
+      .usage('[options]')
+      .description('Record changes and release versioned changelogs')
+      .option('--record', 'Record a change')
+      .option('--release', 'Release accumulated changes')
+      .option('-p, --package <name>', 'Package name')
+      .option('-c, --category <category>', 'Category (updated, fixed, added, removed)')
+      .option('-b, --bump <type>', 'Bump type (major, minor, patch)')
+      .option('-m, --message <message>', 'Change description')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIUtilityChangelog.run);
+      });
+
+    utility
       .command('initialize')
       .alias('init')
       .usage('[options]')
       .description('Generate a new Nova config for this project')
       .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CLIUtilityInitialize.run);
+      });
+
+    utility
+      .command('type-check')
+      .alias('tc')
+      .usage('[options]')
+      .description('Run type checks scoped to project-owned files')
+      .option('-p, --project <path>', 'Path to tsconfig.json')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIUtilityTypeCheck.run);
       });
 
     utility
@@ -260,6 +305,33 @@ class CLI {
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CLIUtilityVersion.run);
       });
+  }
+
+  /**
+   * CLI - Execute command.
+   *
+   * @param {CLIExecuteCommandOptions} options - Options.
+   * @param {CLIExecuteCommandTarget}  target  - Target.
+   *
+   * @private
+   *
+   * @returns {CLIExecuteCommandReturns}
+   *
+   * @since 1.0.0
+   */
+  private async executeCommand<Options>(options: CLIExecuteCommandOptions<Options>, target: CLIExecuteCommandTarget<Options>): CLIExecuteCommandReturns {
+    const command = process.argv.join(' ').match(PATTERN_NOVA_PREFIX);
+
+    // Write the header.
+    process.stdout.write(`${this.getHeader()}\n`);
+
+    // Write the running method.
+    const commandLabel = (command !== null) ? command[0] : 'N/A';
+
+    process.stdout.write(`${chalk.bold.bgBlue('CURRENTLY RUNNING:')} ${commandLabel}\n\n`);
+
+    // Attempts to run the passed in function or method.
+    await target(options);
   }
 
   /**
@@ -426,37 +498,12 @@ class CLI {
     processedText = processedText.replace(PATTERN_ANSI, '');
 
     // Trim and normalize whitespace.
-    processedText = processedText.replace(new RegExp(WHITESPACE_PATTERN, 'g'), ' ').trim();
+    processedText = processedText.replace(new RegExp(PATTERN_WHITESPACE, 'g'), ' ').trim();
 
     // Capitalize first letter.
     processedText = `${processedText.charAt(0).toUpperCase()}${processedText.slice(1)}`;
 
     Logger.error(processedText);
-  }
-
-  /**
-   * CLI - Execute command.
-   *
-   * @param {CLIExecuteCommandOptions} options - Options.
-   * @param {CLIExecuteCommandTarget}  target  - Target.
-   *
-   * @private
-   *
-   * @returns {CLIExecuteCommandReturns}
-   *
-   * @since 1.0.0
-   */
-  private async executeCommand<Options>(options: CLIExecuteCommandOptions<Options>, target: CLIExecuteCommandTarget): CLIExecuteCommandReturns {
-    const command = process.argv.join(' ').match(PATTERN_NOVA_PREFIX);
-
-    // Write the header.
-    process.stdout.write(`${this.getHeader()}\n`);
-
-    // Write the running method.
-    process.stdout.write(`${chalk.bold.bgBlue('CURRENTLY RUNNING:')} ${(command !== null) ? command[0] : 'N/A'}\n\n`);
-
-    // Attempts to run the passed in function or method.
-    await target(options);
   }
 }
 

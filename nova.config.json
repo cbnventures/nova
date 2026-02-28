@@ -29,7 +29,7 @@
     {
       "name": "CBN Ventures",
       "email": "contact@cbnventures.io",
-      "url": "https://www.cbnventures.io",
+      "url": "https://www.cbnventures.io/",
       "roles": [
         "author"
       ]
@@ -37,13 +37,16 @@
     {
       "name": "Jacky Liang",
       "email": "hello@mrjackyliang.com",
-      "url": "https://www.mrjackyliang.com",
+      "url": "https://www.mrjackyliang.com/",
       "roles": [
         "contributor",
         "supporter"
       ]
     }
   ],
+  "emails": {
+    "bugs": "bugs@cbnventures.io"
+  },
   "urls": {
     "homepage": "https://cbnventures.github.io/nova/",
     "repository": "git+https://github.com/cbnventures/nova.git",
@@ -62,17 +65,33 @@
     "./": {
       "name": "nova-project",
       "role": "project",
-      "policy": "freezable"
+      "policy": "freezable",
+      "pinVersions": true,
+      "syncLtsEngines": true
     },
     "./apps/docs": {
       "name": "nova-docs",
       "role": "docs",
-      "policy": "freezable"
+      "policy": "freezable",
+      "pinVersions": true,
+      "syncLtsEngines": true
     },
     "./packages/nova": {
       "name": "@cbnventures/nova",
       "role": "package",
-      "policy": "distributable"
+      "policy": "distributable",
+      "syncProperties": [
+        "description",
+        "keywords",
+        "author",
+        "contributors",
+        "funding",
+        "homepage",
+        "repository",
+        "bugs"
+      ],
+      "pinVersions": true,
+      "syncLtsEngines": true
     }
   }
 }

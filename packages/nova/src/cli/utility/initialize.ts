@@ -1,19 +1,41 @@
-import * as path from 'path';
+import { relative, sep } from 'path';
 
 import chalk from 'chalk';
 import prompts from 'prompts';
 
-import { itemAllowedPoliciesByRole } from '@/lib/item.js';
+import { itemAllowedPoliciesByRole, itemAllowedSyncProperties } from '@/lib/item.js';
 import { NovaConfig } from '@/lib/nova-config.js';
 import { PATTERN_EMAIL_SIMPLE, PATTERN_SLUG_SCOPED, PATTERN_SLUG_SIMPLE } from '@/lib/regex.js';
 import { discoverPathsWithFile } from '@/lib/utility.js';
 import { Logger } from '@/toolkit/index.js';
+
 import type {
   CLIUtilityInitializeCheckPathCurrentDirectory,
   CLIUtilityInitializeCheckPathReturns,
-  CLIUtilityInitializeIsAllowedHttpUrlField,
-  CLIUtilityInitializeIsAllowedHttpUrlReturns,
-  CLIUtilityInitializeIsAllowedHttpUrlValue,
+  CLIUtilityInitializeNormalizeEmailReturns,
+  CLIUtilityInitializeNormalizeEmailValue,
+  CLIUtilityInitializeNormalizeProjectSlugReturns,
+  CLIUtilityInitializeNormalizeProjectSlugValue,
+  CLIUtilityInitializeNormalizeTextArrayMaxLengthPerItem,
+  CLIUtilityInitializeNormalizeTextArrayReturns,
+  CLIUtilityInitializeNormalizeTextArrayValue,
+  CLIUtilityInitializeNormalizeTextMaxLength,
+  CLIUtilityInitializeNormalizeTextReturns,
+  CLIUtilityInitializeNormalizeTextValue,
+  CLIUtilityInitializeNormalizeUrlArrayProtocol,
+  CLIUtilityInitializeNormalizeUrlArrayReturns,
+  CLIUtilityInitializeNormalizeUrlArrayValue,
+  CLIUtilityInitializeNormalizeUrlProtocol,
+  CLIUtilityInitializeNormalizeUrlReturns,
+  CLIUtilityInitializeNormalizeUrlValue,
+  CLIUtilityInitializeNormalizeWorkspaceNameBase,
+  CLIUtilityInitializeNormalizeWorkspaceNameReturns,
+  CLIUtilityInitializeNormalizeWorkspaceNameRole,
+  CLIUtilityInitializeNormalizeWorkspaceNameValue,
+  CLIUtilityInitializePromptEmailsConfig,
+  CLIUtilityInitializePromptEmailsQuestionsOutputKey,
+  CLIUtilityInitializePromptEmailsQuestionsOutputValue,
+  CLIUtilityInitializePromptEmailsReturns,
   CLIUtilityInitializePromptEntitiesChoices,
   CLIUtilityInitializePromptEntitiesConfig,
   CLIUtilityInitializePromptEntitiesDeleteFormConfirmOutputKey,
@@ -47,14 +69,9 @@ import type {
   CLIUtilityInitializePromptProjectReturns,
   CLIUtilityInitializePromptProjectRolesToSync,
   CLIUtilityInitializePromptUrlsConfig,
-  CLIUtilityInitializePromptUrlsFundSourcesList,
   CLIUtilityInitializePromptUrlsQuestionsOutputKey,
   CLIUtilityInitializePromptUrlsQuestionsOutputValue,
   CLIUtilityInitializePromptUrlsReturns,
-  CLIUtilityInitializePromptUrlsValidatedUrls,
-  CLIUtilityInitializePromptUrlsValidateInput,
-  CLIUtilityInitializePromptUrlsValidateKey,
-  CLIUtilityInitializePromptUrlsValidateReturns,
   CLIUtilityInitializePromptWithCancelQuestions,
   CLIUtilityInitializePromptWithCancelReturns,
   CLIUtilityInitializePromptWorkspaces,
@@ -69,21 +86,19 @@ import type {
   CLIUtilityInitializePromptWorkspacesFormReturns,
   CLIUtilityInitializePromptWorkspacesFormRolePromptKey,
   CLIUtilityInitializePromptWorkspacesFormRolePromptValue,
+  CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptKey,
+  CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptValue,
+  CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptKey,
+  CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptValue,
+  CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptKey,
+  CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptValue,
   CLIUtilityInitializePromptWorkspacesMenuOutputKey,
   CLIUtilityInitializePromptWorkspacesMenuOutputValue,
   CLIUtilityInitializePromptWorkspacesReturns,
   CLIUtilityInitializePromptWorkspacesSummaryParts,
   CLIUtilityInitializeRunOptions,
   CLIUtilityInitializeRunReturns,
-  CLIUtilityInitializeSanitizeHttpUrlField,
-  CLIUtilityInitializeSanitizeHttpUrlReturns,
-  CLIUtilityInitializeSanitizeHttpUrlValue,
-  CLIUtilityInitializeValidateFundSourcesReturns,
-  CLIUtilityInitializeValidateFundSourcesValue,
-  CLIUtilityInitializeValidateHttpUrlField,
-  CLIUtilityInitializeValidateHttpUrlReturns,
-  CLIUtilityInitializeValidateHttpUrlValue,
-} from '@/types/cli/utility.d.ts';
+} from '@/types/cli/utility/initialize.d.ts';
 
 /**
  * CLI Utility - Initialize.
@@ -104,18 +119,29 @@ export class CLIUtilityInitialize {
     const currentDirectory = process.cwd();
     const isProjectRoot = await CLIUtilityInitialize.checkPath(currentDirectory);
 
-    if (!isProjectRoot) {
+    if (isProjectRoot !== true) {
       process.exitCode = 1;
 
       return;
     }
 
-    if (options.dryRun === true) {
+    const isDryRun = options.dryRun === true;
+    const isReplaceFile = options.replaceFile === true;
+
+    if (isDryRun === true) {
       Logger.customize({
         name: 'CLIUtilityInitialize.run',
         purpose: 'options',
-        padBottom: 1,
       }).warn('Dry run enabled. File changes will not be made in this session.');
+    }
+
+    if (isReplaceFile === true) {
+      const replaceFileNotice = (isDryRun) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+
+      Logger.customize({
+        name: 'CLIUtilityInitialize.run',
+        purpose: 'options',
+      }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
     const novaConfig = new NovaConfig();
@@ -126,8 +152,6 @@ export class CLIUtilityInitialize {
       Logger.customize({
         name: 'CLIUtilityInitialize.run',
         purpose: 'promptFlow',
-        padTop: 1,
-        padBottom: 1,
       }).debug('Prompt flow exited without saving.');
 
       return;
@@ -135,18 +159,16 @@ export class CLIUtilityInitialize {
 
     novaConfig.set(workingFile);
 
-    if (options.dryRun === true) {
+    if (isDryRun === true) {
       Logger.customize({
         name: 'CLIUtilityInitialize.run',
         purpose: 'promptFlow',
-        padTop: 1,
-        padBottom: 1,
       }).debug('Dry run enabled. Skipping save operation.');
 
       return;
     }
 
-    await novaConfig.save();
+    await novaConfig.save(isReplaceFile);
   }
 
   /**
@@ -172,9 +194,14 @@ export class CLIUtilityInitialize {
         description: 'Manage entities, their roles, and contact information.',
         handler: CLIUtilityInitialize.promptEntities,
       },
+      emails: {
+        label: 'Emails',
+        description: 'Configure project emails (bugs, etc.).',
+        handler: CLIUtilityInitialize.promptEmails,
+      },
       urls: {
         label: 'URLs',
-        description: 'Set URLs for docs, repo, support, and funding sources.',
+        description: 'Configure project URLs (homepage, repository, fund sources, etc.).',
         handler: CLIUtilityInitialize.promptUrls,
       },
       workspaces: {
@@ -248,13 +275,14 @@ export class CLIUtilityInitialize {
    */
   private static async promptProject(config: CLIUtilityInitializePromptProjectConfig): CLIUtilityInitializePromptProjectReturns {
     const existingProject = config.project;
-    const existingProjectName = existingProject?.name;
-    const existingProjectDescription = existingProject?.description;
-    const existingProjectKeywords = existingProject?.keywords;
+    const existingProjectName = (existingProject !== undefined) ? existingProject.name : undefined;
+    const existingProjectDescription = (existingProject !== undefined) ? existingProject.description : undefined;
+    const existingProjectKeywords = (existingProject !== undefined) ? existingProject.keywords : undefined;
 
     const project = (existingProject !== undefined) ? { ...existingProject } : {};
     const projectName = (existingProjectName !== undefined) ? { ...existingProjectName } : {};
     const projectDescription = (existingProjectDescription !== undefined) ? { ...existingProjectDescription } : {};
+    const projectKeywords = (existingProjectKeywords !== undefined) ? [...existingProjectKeywords] : [];
 
     const questionsOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptProjectQuestionsOutputKeys, CLIUtilityInitializePromptProjectQuestionsOutputResult>([
       {
@@ -262,39 +290,35 @@ export class CLIUtilityInitialize {
         name: 'projectNameTitle',
         message: 'Project title (display name)',
         initial: projectName.title ?? '',
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeText(value, Infinity).result,
       },
       {
         type: 'text',
         name: 'projectNameSlug',
         message: 'Project slug (package name)',
         initial: projectName.slug ?? '',
-        validate: (value) => {
-          const trimmed = value.trim();
-
-          if (trimmed === '' || new RegExp(PATTERN_SLUG_SIMPLE, 'i').test(trimmed)) {
-            return true;
-          }
-
-          return 'Use letters, numbers, hyphens, and underscores only.';
-        },
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeProjectSlug(value).result,
       },
       {
         type: 'text',
         name: 'projectDescriptionShort',
         message: 'Short description',
         initial: projectDescription.short ?? '',
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeText(value, Infinity).result,
       },
       {
         type: 'text',
         name: 'projectDescriptionLong',
         message: 'Long description',
         initial: projectDescription.long ?? '',
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeText(value, Infinity).result,
       },
       {
         type: 'text',
         name: 'projectKeywords',
         message: 'Keywords (comma separated)',
-        initial: (Array.isArray(existingProjectKeywords)) ? existingProjectKeywords.join(', ') : '',
+        initial: (projectKeywords.length > 0) ? projectKeywords.join(', ') : '',
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeTextArray(value, 50).result,
       },
     ]);
 
@@ -304,68 +328,59 @@ export class CLIUtilityInitialize {
 
     const questionsOutputResult = questionsOutput.result;
 
-    const projectNameTitleInput = (questionsOutputResult.projectNameTitle ?? '').trim();
-    const projectNameSlugInput = (questionsOutputResult.projectNameSlug ?? '').trim();
-    const projectDescriptionShortInput = (questionsOutputResult.projectDescriptionShort ?? '').trim();
-    const projectDescriptionLongInput = (questionsOutputResult.projectDescriptionLong ?? '').trim();
-    const projectKeywordsInput = (questionsOutputResult.projectKeywords ?? '').trim();
+    const projectNameTitleInput = CLIUtilityInitialize.normalizeText(questionsOutputResult.projectNameTitle, Infinity).sanitized;
+    const projectNameSlugInput = CLIUtilityInitialize.normalizeProjectSlug(questionsOutputResult.projectNameSlug).sanitized;
+    const projectDescriptionShortInput = CLIUtilityInitialize.normalizeText(questionsOutputResult.projectDescriptionShort, Infinity).sanitized;
+    const projectDescriptionLongInput = CLIUtilityInitialize.normalizeText(questionsOutputResult.projectDescriptionLong, Infinity).sanitized;
+    const projectKeywordsInput = CLIUtilityInitialize.normalizeTextArray(questionsOutputResult.projectKeywords, 50).sanitized;
 
-    // Project name - Title.
-    if (projectNameTitleInput === '') {
-      Reflect.deleteProperty(projectName, 'title');
-    } else {
+    // Project - Name - Title.
+    if (projectNameTitleInput !== undefined) {
       projectName.title = projectNameTitleInput;
+    } else {
+      Reflect.deleteProperty(projectName, 'title');
     }
 
-    // Project name - Slug.
-    if (projectNameSlugInput === '') {
-      Reflect.deleteProperty(projectName, 'slug');
-    } else {
+    // Project - Name - Slug.
+    if (projectNameSlugInput !== undefined) {
       projectName.slug = projectNameSlugInput;
-    }
-
-    // Project description - Short.
-    if (projectDescriptionShortInput === '') {
-      Reflect.deleteProperty(projectDescription, 'short');
     } else {
-      projectDescription.short = projectDescriptionShortInput;
+      Reflect.deleteProperty(projectName, 'slug');
     }
 
-    // Project description - Long.
-    if (projectDescriptionLongInput === '') {
-      Reflect.deleteProperty(projectDescription, 'long');
-    } else {
-      projectDescription.long = projectDescriptionLongInput;
-    }
-
-    // Project name.
+    // Project - Name.
     if (Object.keys(projectName).length > 0) {
       project.name = projectName;
     } else {
       Reflect.deleteProperty(project, 'name');
     }
 
-    // Project description.
+    // Project - Description - Short.
+    if (projectDescriptionShortInput !== undefined) {
+      projectDescription.short = projectDescriptionShortInput;
+    } else {
+      Reflect.deleteProperty(projectDescription, 'short');
+    }
+
+    // Project - Description - Long.
+    if (projectDescriptionLongInput !== undefined) {
+      projectDescription.long = projectDescriptionLongInput;
+    } else {
+      Reflect.deleteProperty(projectDescription, 'long');
+    }
+
+    // Project - Description.
     if (Object.keys(projectDescription).length > 0) {
       project.description = projectDescription;
     } else {
       Reflect.deleteProperty(project, 'description');
     }
 
-    // Project keywords.
-    if (projectKeywordsInput === '') {
-      Reflect.deleteProperty(project, 'keywords');
+    // Project - Keywords.
+    if (projectKeywordsInput !== undefined && projectKeywordsInput.length > 0) {
+      project.keywords = projectKeywordsInput;
     } else {
-      const projectKeywordsList = projectKeywordsInput
-        .split(',')
-        .map((projectKeywordInput) => projectKeywordInput.trim())
-        .filter((projectKeywordInput) => projectKeywordInput !== '');
-
-      if (projectKeywordsList.length > 0) {
-        project.keywords = projectKeywordsList;
-      } else {
-        Reflect.deleteProperty(project, 'keywords');
-      }
+      Reflect.deleteProperty(project, 'keywords');
     }
 
     // Project.
@@ -375,8 +390,8 @@ export class CLIUtilityInitialize {
       Reflect.deleteProperty(config, 'project');
     }
 
-    const previousSlug = existingProjectName?.slug ?? '';
-    const currentSlug = config.project?.name?.slug ?? '';
+    const previousSlug = (existingProjectName !== undefined) ? existingProjectName.slug ?? '' : '';
+    const currentSlug = (config.project !== undefined && config.project.name !== undefined) ? config.project.name.slug ?? '' : '';
     const slugChanged = previousSlug !== currentSlug;
 
     // Automatically update workspace names for specific roles that use the project slug.
@@ -655,7 +670,7 @@ export class CLIUtilityInitialize {
 
         const shouldRemove = await CLIUtilityInitialize.promptEntitiesDeleteForm(entityLabel);
 
-        if (!shouldRemove) {
+        if (shouldRemove !== true) {
           continue;
         }
 
@@ -690,14 +705,14 @@ export class CLIUtilityInitialize {
   private static async promptEntitiesForm(entity: CLIUtilityInitializePromptEntitiesFormEntity, mode: CLIUtilityInitializePromptEntitiesFormMode): CLIUtilityInitializePromptEntitiesFormReturns {
     const validRoles = ['author', 'contributor', 'supporter'] as CLIUtilityInitializePromptEntitiesFormValidRoles;
 
-    const existingName = (typeof entity?.name === 'string') ? entity.name : '';
-    const existingEmail = (typeof entity?.email === 'string') ? entity.email : '';
-    const existingUrl = (typeof entity?.url === 'string') ? entity.url : '';
+    const existingName = (entity !== undefined && typeof entity.name === 'string') ? entity.name : '';
+    const existingEmail = (entity !== undefined && typeof entity.email === 'string') ? entity.email : '';
+    const existingUrl = (entity !== undefined && typeof entity.url === 'string') ? entity.url : '';
 
     let existingRoles: CLIUtilityInitializePromptEntitiesFormExistingRoles = [];
 
     // If roles exist inside the entity, add it in.
-    if (Array.isArray(entity?.roles)) {
+    if (entity !== undefined && Array.isArray(entity.roles)) {
       existingRoles = entity.roles.filter((role) => validRoles.includes(role));
     }
 
@@ -707,44 +722,21 @@ export class CLIUtilityInitialize {
         name: 'entityName',
         message: 'Entity name',
         initial: existingName,
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeText(value, Infinity).result,
       },
       {
         type: 'text',
         name: 'entityEmail',
         message: 'Entity email address',
         initial: existingEmail,
-        validate: (value) => {
-          const trimmed = value.trim();
-
-          if (trimmed === '') {
-            return true;
-          }
-
-          if (PATTERN_EMAIL_SIMPLE.test(trimmed)) {
-            return true;
-          }
-
-          return 'Enter a valid email address or leave blank.';
-        },
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeEmail(value).result,
       },
       {
         type: 'text',
         name: 'entityUrl',
         message: 'Entity website',
         initial: existingUrl,
-        validate: (value) => {
-          const trimmed = value.trim();
-
-          if (trimmed === '') {
-            return true;
-          }
-
-          if (CLIUtilityInitialize.isAllowedHttpUrl(trimmed)) {
-            return true;
-          }
-
-          return 'Enter a valid URL (http:// or https://) or leave blank.';
-        },
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
       },
       {
         type: 'multiselect',
@@ -766,29 +758,29 @@ export class CLIUtilityInitialize {
 
     const questionsOutputResult = questionsOutput.result;
 
-    const entityNameInput = (typeof questionsOutputResult.entityName === 'string') ? questionsOutputResult.entityName.trim() : '';
-    const entityEmailInput = (typeof questionsOutputResult.entityEmail === 'string') ? questionsOutputResult.entityEmail.trim() : '';
-    const entityUrlInput = (typeof questionsOutputResult.entityUrl === 'string') ? questionsOutputResult.entityUrl.trim() : '';
+    const entityNameInput = CLIUtilityInitialize.normalizeText(questionsOutputResult.entityName, Infinity).sanitized;
+    const entityEmailInput = CLIUtilityInitialize.normalizeEmail(questionsOutputResult.entityEmail).sanitized;
+    const entityUrlInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.entityUrl, 'generic').sanitized;
     const entityRolesInput = Array.isArray(questionsOutputResult.entityRoles) ? [...questionsOutputResult.entityRoles] : [];
 
     const resolvedEntity: CLIUtilityInitializePromptEntitiesFormResolvedEntity = {};
 
-    // Entity name.
-    if (entityNameInput !== '') {
+    // Entity - Name.
+    if (entityNameInput !== undefined) {
       resolvedEntity.name = entityNameInput;
     }
 
-    // Entity email.
-    if (entityEmailInput !== '') {
+    // Entity - Email.
+    if (entityEmailInput !== undefined) {
       resolvedEntity.email = entityEmailInput;
     }
 
-    // Entity url.
-    if (entityUrlInput !== '') {
+    // Entity - Url.
+    if (entityUrlInput !== undefined) {
       resolvedEntity.url = entityUrlInput;
     }
 
-    // Entity roles.
+    // Entity - Roles.
     if (entityRolesInput.length > 0) {
       resolvedEntity.roles = entityRolesInput;
     }
@@ -835,6 +827,64 @@ export class CLIUtilityInitialize {
   }
 
   /**
+   * CLI Utility - Initialize - Prompt emails.
+   *
+   * @param {CLIUtilityInitializePromptEmailsConfig} config - Config.
+   *
+   * @private
+   *
+   * @returns {CLIUtilityInitializePromptEmailsReturns}
+   *
+   * @since 1.0.0
+   */
+  private static async promptEmails(config: CLIUtilityInitializePromptEmailsConfig): CLIUtilityInitializePromptEmailsReturns {
+    const existingEmails = config.emails;
+
+    const emails = (existingEmails !== undefined) ? { ...existingEmails } : {};
+
+    const questionsOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptEmailsQuestionsOutputKey, CLIUtilityInitializePromptEmailsQuestionsOutputValue>([
+      {
+        type: 'text',
+        name: 'emailsBugs',
+        message: 'Issue tracker email',
+        initial: emails.bugs ?? '',
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeEmail(value).result,
+      },
+    ]);
+
+    if (questionsOutput.cancelled) {
+      return 'back';
+    }
+
+    const questionsOutputResult = questionsOutput.result;
+
+    const emailsBugsInput = CLIUtilityInitialize.normalizeEmail(questionsOutputResult.emailsBugs).sanitized;
+
+    // Emails - Bugs.
+    if (emailsBugsInput !== undefined) {
+      emails.bugs = emailsBugsInput;
+    } else {
+      Reflect.deleteProperty(emails, 'bugs');
+    }
+
+    // Emails.
+    if (Object.keys(emails).length > 0) {
+      Object.assign(config, { emails });
+    } else {
+      Reflect.deleteProperty(config, 'emails');
+    }
+
+    Logger.customize({
+      name: 'CLIUtilityInitialize.promptEmails',
+      purpose: 'updated',
+      padTop: 1,
+      padBottom: 1,
+    }).info('Email references updated.');
+
+    return 'back';
+  }
+
+  /**
    * CLI Utility - Initialize - Prompt urls.
    *
    * @param {CLIUtilityInitializePromptUrlsConfig} config - Config.
@@ -850,90 +900,69 @@ export class CLIUtilityInitialize {
 
     const urls = (existingUrls !== undefined) ? { ...existingUrls } : {};
 
-    const validatedUrls: CLIUtilityInitializePromptUrlsValidatedUrls = {};
-
-    /**
-     * CLI Utility - Initialize - Prompt urls - Validate.
-     *
-     * @param {CLIUtilityInitializePromptUrlsValidateKey}   key   - Key.
-     * @param {CLIUtilityInitializePromptUrlsValidateInput} input - Input.
-     *
-     * @returns {CLIUtilityInitializePromptUrlsValidateReturns}
-     *
-     * @since 1.0.0
-     */
-    const validate = (key: CLIUtilityInitializePromptUrlsValidateKey, input: CLIUtilityInitializePromptUrlsValidateInput): CLIUtilityInitializePromptUrlsValidateReturns => {
-      const field = (key === 'repository') ? 'repository' : undefined;
-      const sanitizedUrl = CLIUtilityInitialize.sanitizeHttpUrl(input, field);
-
-      if (sanitizedUrl !== undefined) {
-        validatedUrls[key] = sanitizedUrl;
-      }
-    };
-
     const questionsOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptUrlsQuestionsOutputKey, CLIUtilityInitializePromptUrlsQuestionsOutputValue>([
       {
         type: 'text',
         name: 'urlsHomepage',
         message: 'Homepage URL',
         initial: urls.homepage ?? '',
-        validate: (value) => CLIUtilityInitialize.validateHttpUrl(value),
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
       },
       {
         type: 'text',
         name: 'urlsRepository',
         message: 'Repository URL',
         initial: urls.repository ?? '',
-        validate: (value) => CLIUtilityInitialize.validateHttpUrl(value, 'repository'),
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'repository').result,
       },
       {
         type: 'text',
         name: 'urlsBugs',
         message: 'Issue tracker URL',
         initial: urls.bugs ?? '',
-        validate: (value) => CLIUtilityInitialize.validateHttpUrl(value),
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
       },
       {
         type: 'text',
         name: 'urlsLicense',
         message: 'License URL',
         initial: urls.license ?? '',
-        validate: (value) => CLIUtilityInitialize.validateHttpUrl(value),
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
       },
       {
         type: 'text',
         name: 'urlsLogo',
         message: 'Logo URL',
         initial: urls.logo ?? '',
-        validate: (value) => CLIUtilityInitialize.validateHttpUrl(value),
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
       },
       {
         type: 'text',
         name: 'urlsDocumentation',
         message: 'Documentation URL',
         initial: urls.documentation ?? '',
-        validate: (value) => CLIUtilityInitialize.validateHttpUrl(value),
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
       },
       {
         type: 'text',
         name: 'urlsGithub',
         message: 'GitHub URL',
         initial: urls.github ?? '',
-        validate: (value) => CLIUtilityInitialize.validateHttpUrl(value),
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
       },
       {
         type: 'text',
         name: 'urlsNpm',
         message: 'npm package URL',
         initial: urls.npm ?? '',
-        validate: (value) => CLIUtilityInitialize.validateHttpUrl(value),
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
       },
       {
         type: 'text',
         name: 'urlsFundSources',
         message: 'Funding URLs (comma separated)',
         initial: (Array.isArray(urls.fundSources)) ? urls.fundSources.join(', ') : '',
-        validate: CLIUtilityInitialize.validateFundSources,
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrlArray(value, 'generic').result,
       },
     ]);
 
@@ -943,40 +972,82 @@ export class CLIUtilityInitialize {
 
     const questionsOutputResult = questionsOutput.result;
 
-    validate('homepage', questionsOutputResult.urlsHomepage);
-    validate('repository', questionsOutputResult.urlsRepository);
-    validate('bugs', questionsOutputResult.urlsBugs);
-    validate('license', questionsOutputResult.urlsLicense);
-    validate('logo', questionsOutputResult.urlsLogo);
-    validate('documentation', questionsOutputResult.urlsDocumentation);
-    validate('github', questionsOutputResult.urlsGithub);
-    validate('npm', questionsOutputResult.urlsNpm);
+    const urlsHomepageInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsHomepage, 'generic').sanitized;
+    const urlsRepositoryInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsRepository, 'repository').sanitized;
+    const urlsBugsInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsBugs, 'generic').sanitized;
+    const urlsLicenseInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsLicense, 'generic').sanitized;
+    const urlsLogoInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsLogo, 'generic').sanitized;
+    const urlsDocumentationInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsDocumentation, 'generic').sanitized;
+    const urlsGithubInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsGithub, 'generic').sanitized;
+    const urlsNpmInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsNpm, 'generic').sanitized;
+    const urlsFundSourcesInput = CLIUtilityInitialize.normalizeUrlArray(questionsOutputResult.urlsFundSources, 'generic').sanitized;
 
-    const fundSourcesParts = questionsOutputResult.urlsFundSources
-      .split(',')
-      .map((fundSourceInput) => fundSourceInput.trim())
-      .filter((fundSourceInput) => fundSourceInput !== '');
+    // URLs - Homepage.
+    if (urlsHomepageInput !== undefined) {
+      urls.homepage = urlsHomepageInput;
+    } else {
+      Reflect.deleteProperty(urls, 'homepage');
+    }
+
+    // URLs - Repository.
+    if (urlsRepositoryInput !== undefined) {
+      urls.repository = urlsRepositoryInput;
+    } else {
+      Reflect.deleteProperty(urls, 'repository');
+    }
+
+    // URLs - Bugs.
+    if (urlsBugsInput !== undefined) {
+      urls.bugs = urlsBugsInput;
+    } else {
+      Reflect.deleteProperty(urls, 'bugs');
+    }
+
+    // URLs - License.
+    if (urlsLicenseInput !== undefined) {
+      urls.license = urlsLicenseInput;
+    } else {
+      Reflect.deleteProperty(urls, 'license');
+    }
+
+    // URLs - Logo.
+    if (urlsLogoInput !== undefined) {
+      urls.logo = urlsLogoInput;
+    } else {
+      Reflect.deleteProperty(urls, 'logo');
+    }
+
+    // URLs - Documentation.
+    if (urlsDocumentationInput !== undefined) {
+      urls.documentation = urlsDocumentationInput;
+    } else {
+      Reflect.deleteProperty(urls, 'documentation');
+    }
+
+    // URLs - Github.
+    if (urlsGithubInput !== undefined) {
+      urls.github = urlsGithubInput;
+    } else {
+      Reflect.deleteProperty(urls, 'github');
+    }
+
+    // URLs - Npm.
+    if (urlsNpmInput !== undefined) {
+      urls.npm = urlsNpmInput;
+    } else {
+      Reflect.deleteProperty(urls, 'npm');
+    }
 
     // URLs - Fund sources.
-    if (fundSourcesParts.length > 0) {
-      const fundSourcesList: CLIUtilityInitializePromptUrlsFundSourcesList = [];
-
-      for (const fundSourcesPart of fundSourcesParts) {
-        const sanitizedUrl = CLIUtilityInitialize.sanitizeHttpUrl(fundSourcesPart, 'generic');
-
-        if (sanitizedUrl !== undefined) {
-          fundSourcesList.push(sanitizedUrl);
-        }
-      }
-
-      if (fundSourcesList.length > 0) {
-        validatedUrls.fundSources = fundSourcesList;
-      }
+    if (urlsFundSourcesInput !== undefined) {
+      urls.fundSources = urlsFundSourcesInput;
+    } else {
+      Reflect.deleteProperty(urls, 'fundSources');
     }
 
     // URLs.
-    if (Object.keys(validatedUrls).length > 0) {
-      Object.assign(config, { urls: validatedUrls });
+    if (Object.keys(urls).length > 0) {
+      Object.assign(config, { urls });
     } else {
       Reflect.deleteProperty(config, 'urls');
     }
@@ -1008,13 +1079,13 @@ export class CLIUtilityInitialize {
     // The "run" command already guarantees we run in the project root (called "checkPath"), so we can traverse forward directly.
     const rawWorkspacePaths = await discoverPathsWithFile('package.json', 'forward');
     const workspacePaths = rawWorkspacePaths.map((rawWorkspacePath) => {
-      const relativePath = path.relative(process.cwd(), rawWorkspacePath);
+      const relativePath = relative(process.cwd(), rawWorkspacePath);
 
       if (relativePath === '') {
         return './';
       }
 
-      return `./${relativePath.split(path.sep).join('/')}`;
+      return `./${relativePath.split(sep).join('/')}`;
     });
 
     Logger.customize({
@@ -1027,15 +1098,15 @@ export class CLIUtilityInitialize {
         const workspace = workspaces[workspacePath];
         const summaryParts: CLIUtilityInitializePromptWorkspacesSummaryParts = [];
 
-        if (workspace.name) {
+        if (workspace !== undefined && workspace.name !== undefined) {
           summaryParts.push(workspace.name);
         }
 
-        if (workspace.role) {
+        if (workspace !== undefined && workspace.role !== undefined) {
           summaryParts.push(workspace.role);
         }
 
-        if (workspace.policy) {
+        if (workspace !== undefined && workspace.policy !== undefined) {
           summaryParts.push(workspace.policy);
         }
 
@@ -1076,14 +1147,14 @@ export class CLIUtilityInitialize {
       const formResult = await CLIUtilityInitialize.promptWorkspacesForm({
         workspacePath,
         existingWorkspace: workspaces[workspacePath],
-        projectSlug: config.project?.name?.slug,
+        projectSlug: (config.project !== undefined && config.project.name !== undefined) ? config.project.name.slug : undefined,
       });
 
       if (formResult.action === 'back') {
         continue;
       }
 
-      workspaces[workspacePath] = formResult.workspace;
+      Reflect.set(workspaces, workspacePath, formResult.workspace);
 
       Object.assign(config, { workspaces });
 
@@ -1139,6 +1210,11 @@ export class CLIUtilityInitialize {
         description: 'Internal CLI or build tools (e.g., codegen, bundler)',
         value: 'tool',
       },
+      {
+        title: 'Template',
+        description: 'Ready-to-copy scaffold bundles consumed by generators (e.g., starter files)',
+        value: 'template',
+      },
     ];
     const policy: CLIUtilityInitializePromptWorkspacesFormPolicy = {
       freezable: {
@@ -1181,54 +1257,15 @@ export class CLIUtilityInitialize {
         type: 'text',
         name: 'workspaceName',
         message: 'Workspace package name',
-        initial: options.existingWorkspace.name,
-        validate: (value) => {
-          const trimmed = value.trim();
-
-          if (trimmed === '') {
-            return 'Enter a package name.';
-          }
-
-          switch (role) {
-            case 'config':
-            case 'app':
-            case 'tool':
-              // Base for "config", "app", and "tool" is either `${projectSlug}-${role}` or just `${role}`.
-              const expectedPrefix = `${base}-`;
-
-              if (!trimmed.startsWith(expectedPrefix)) {
-                return `Begin with "${expectedPrefix}" and add a descriptor slug.`;
-              }
-
-              const descriptor = trimmed.slice(expectedPrefix.length);
-
-              if (descriptor.length === 0) {
-                return 'Add a descriptor after the prefix.';
-              }
-
-              if (!PATTERN_SLUG_SIMPLE.test(descriptor)) {
-                return 'Descriptor must match the slug pattern (lowercase letters, numbers, hyphens, underscores).';
-              }
-
-              return true;
-            case 'package':
-            default:
-              if (PATTERN_SLUG_SIMPLE.test(trimmed) || PATTERN_SLUG_SCOPED.test(trimmed)) {
-                return true;
-              }
-
-              return 'Enter an unscoped slug or a scoped package name (e.g. @scope/name).';
-          }
-        },
+        initial: (options.existingWorkspace !== undefined) ? options.existingWorkspace.name ?? '' : '',
+        validate: (value: unknown) => CLIUtilityInitialize.normalizeWorkspaceName(value, role, base).result,
       });
 
       if (namePrompt.cancelled) {
         return undefined;
       }
 
-      const name = namePrompt.result.workspaceName.trim();
-
-      return (name === '') ? undefined : name;
+      return CLIUtilityInitialize.normalizeWorkspaceName(namePrompt.result.workspaceName, role, base).sanitized;
     };
 
     // For each workspace, the user must select a role.
@@ -1241,7 +1278,7 @@ export class CLIUtilityInitialize {
         description: role.description,
         value: role.value,
       })),
-      initial: Math.max(0, allowedRoles.findIndex((role) => role.value === options.existingWorkspace.role)),
+      initial: Math.max(0, allowedRoles.findIndex((role) => options.existingWorkspace !== undefined && role.value === options.existingWorkspace.role)),
     });
 
     if (rolePrompt.cancelled) {
@@ -1263,7 +1300,7 @@ export class CLIUtilityInitialize {
         description: policy[allowedPolicy].description,
         value: allowedPolicy,
       })),
-      initial: Math.max(0, allowedPolicies.findIndex((policy) => policy === options.existingWorkspace.policy)),
+      initial: Math.max(0, allowedPolicies.findIndex((policy) => options.existingWorkspace !== undefined && policy === options.existingWorkspace.policy)),
     });
 
     if (policyPrompt.cancelled) {
@@ -1281,12 +1318,73 @@ export class CLIUtilityInitialize {
       };
     }
 
+    let syncProperties;
+
+    // "syncProperties" is only for workspaces with a "distributable" policy.
+    if (selectedPolicy === 'distributable') {
+      const syncPropertiesPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptKey, CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptValue>({
+        type: 'multiselect',
+        name: 'workspaceSyncProperties',
+        message: 'Select metadata properties to sync',
+        choices: itemAllowedSyncProperties.map((property) => ({
+          title: property,
+          value: property,
+          selected: (options.existingWorkspace !== undefined && options.existingWorkspace.syncProperties !== undefined) ? options.existingWorkspace.syncProperties.includes(property) : false,
+        })),
+      });
+
+      if (syncPropertiesPrompt.cancelled) {
+        return {
+          action: 'back',
+        };
+      }
+
+      const selectedSyncProperties = syncPropertiesPrompt.result.workspaceSyncProperties;
+
+      if (selectedSyncProperties.length > 0) {
+        syncProperties = selectedSyncProperties;
+      }
+    }
+
+    const pinVersionsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptKey, CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptValue>({
+      type: 'confirm',
+      name: 'workspacePinVersions',
+      message: 'Pin dependency versions?',
+      initial: options.existingWorkspace !== undefined && options.existingWorkspace.pinVersions === true,
+    });
+
+    if (pinVersionsPrompt.cancelled) {
+      return {
+        action: 'back',
+      };
+    }
+
+    const selectedPinVersions = pinVersionsPrompt.result.workspacePinVersions;
+
+    const syncLtsEnginesPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptKey, CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptValue>({
+      type: 'confirm',
+      name: 'workspaceSyncLtsEngines',
+      message: 'Sync Node.js LTS engine constraint?',
+      initial: options.existingWorkspace !== undefined && options.existingWorkspace.syncLtsEngines === true,
+    });
+
+    if (syncLtsEnginesPrompt.cancelled) {
+      return {
+        action: 'back',
+      };
+    }
+
+    const selectedSyncLtsEngines = syncLtsEnginesPrompt.result.workspaceSyncLtsEngines;
+
     return {
       action: 'apply',
       workspace: {
         name: resolvedName,
         role: selectedRole,
         policy: selectedPolicy,
+        ...(syncProperties !== undefined) ? { syncProperties } : {},
+        ...(selectedPinVersions === true) ? { pinVersions: selectedPinVersions } : {},
+        ...(selectedSyncLtsEngines === true) ? { syncLtsEngines: selectedSyncLtsEngines } : {},
       },
     };
   }
@@ -1349,7 +1447,6 @@ export class CLIUtilityInitialize {
       Logger.customize({
         name: 'CLIUtilityInitialize.checkPath',
         purpose: 'lessThanOne',
-        padBottom: 1,
       }).error([
         'No "package.json" files were found. Re-run this command inside the project root directory.',
         `Current directory is "${currentDirectory}"`,
@@ -1363,7 +1460,6 @@ export class CLIUtilityInitialize {
       Logger.customize({
         name: 'CLIUtilityInitialize.checkPath',
         purpose: 'greaterThanOne',
-        padBottom: 1,
       }).error([
         'Multiple "package.json" files were found. Re-run this command inside the project root directory.',
         `Current directory is "${currentDirectory}"`,
@@ -1377,7 +1473,6 @@ export class CLIUtilityInitialize {
       Logger.customize({
         name: 'CLIUtilityInitialize.checkPath',
         purpose: 'notProjectRootDir',
-        padBottom: 1,
       }).error([
         'Must be run inside the project root directory.',
         `Current directory is "${currentDirectory}"`,
@@ -1390,122 +1485,396 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Validate http url.
+   * CLI Utility - Initialize - Normalize email.
    *
-   * @param {CLIUtilityInitializeValidateHttpUrlValue} value   - Value.
-   * @param {CLIUtilityInitializeValidateHttpUrlField} [field] - Field.
+   * @param {CLIUtilityInitializeNormalizeEmailValue} value - Value.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeValidateHttpUrlReturns}
+   * @returns {CLIUtilityInitializeNormalizeEmailReturns}
    *
    * @since 1.0.0
    */
-  private static validateHttpUrl(value: CLIUtilityInitializeValidateHttpUrlValue, field?: CLIUtilityInitializeValidateHttpUrlField): CLIUtilityInitializeValidateHttpUrlReturns {
-    const trimmed = value.trim();
-
-    if (trimmed === '') {
-      return true;
+  private static normalizeEmail(value: CLIUtilityInitializeNormalizeEmailValue): CLIUtilityInitializeNormalizeEmailReturns {
+    if (typeof value !== 'string') {
+      return {
+        result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
+        sanitized: undefined,
+      };
     }
 
-    if (CLIUtilityInitialize.isAllowedHttpUrl(trimmed, field)) {
-      return true;
+    const trimmedValue = value.trim();
+
+    // Allow blanks.
+    if (trimmedValue === '') {
+      return {
+        result: true,
+        sanitized: undefined,
+      };
     }
 
-    return 'Enter a valid URL (http:// or https://) or leave blank.';
+    if (!PATTERN_EMAIL_SIMPLE.test(trimmedValue)) {
+      return {
+        result: 'Enter a valid email address or leave blank.',
+        sanitized: undefined,
+      };
+    }
+
+    return {
+      result: true,
+      sanitized: trimmedValue,
+    };
   }
 
   /**
-   * CLI Utility - Initialize - Validate fund sources.
+   * CLI Utility - Initialize - Normalize project slug.
    *
-   * @param {CLIUtilityInitializeValidateFundSourcesValue} value - Value.
+   * @param {CLIUtilityInitializeNormalizeProjectSlugValue} value - Value.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeValidateFundSourcesReturns}
+   * @returns {CLIUtilityInitializeNormalizeProjectSlugReturns}
    *
    * @since 1.0.0
    */
-  private static validateFundSources(value: CLIUtilityInitializeValidateFundSourcesValue): CLIUtilityInitializeValidateFundSourcesReturns {
-    const trimmed = value.trim();
-
-    if (trimmed === '') {
-      return true;
+  private static normalizeProjectSlug(value: CLIUtilityInitializeNormalizeProjectSlugValue): CLIUtilityInitializeNormalizeProjectSlugReturns {
+    if (typeof value !== 'string') {
+      return {
+        result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
+        sanitized: undefined,
+      };
     }
 
-    const parts = trimmed
-      .split(',')
-      .map((part) => part.trim())
-      .filter((part) => part !== '');
+    const trimmedValue = value.trim();
 
-    for (const part of parts) {
-      if (!CLIUtilityInitialize.isAllowedHttpUrl(part, 'generic')) {
-        return 'Enter comma separated URLs (http:// or https://) or leave blank.';
+    // Allow blanks.
+    if (trimmedValue === '') {
+      return {
+        result: true,
+        sanitized: undefined,
+      };
+    }
+
+    if (
+      trimmedValue.length > 214
+      || !new RegExp(PATTERN_SLUG_SIMPLE, 'i').test(trimmedValue)
+    ) {
+      return {
+        result: 'Use only letters, numbers, hyphens, or underscores, and keep it at 214 characters or fewer.',
+        sanitized: undefined,
+      };
+    }
+
+    return {
+      result: true,
+      sanitized: trimmedValue,
+    };
+  }
+
+  /**
+   * CLI Utility - Initialize - Normalize text.
+   *
+   * @param {CLIUtilityInitializeNormalizeTextValue}     value     - Value.
+   * @param {CLIUtilityInitializeNormalizeTextMaxLength} maxLength - Max length.
+   *
+   * @private
+   *
+   * @returns {CLIUtilityInitializeNormalizeTextReturns}
+   *
+   * @since 1.0.0
+   */
+  private static normalizeText(value: CLIUtilityInitializeNormalizeTextValue, maxLength: CLIUtilityInitializeNormalizeTextMaxLength): CLIUtilityInitializeNormalizeTextReturns {
+    if (typeof value !== 'string') {
+      return {
+        result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
+        sanitized: undefined,
+      };
+    }
+
+    const trimmedValue = value.trim();
+
+    // Allow blanks.
+    if (trimmedValue === '') {
+      return {
+        result: true,
+        sanitized: undefined,
+      };
+    }
+
+    if (trimmedValue.length > maxLength) {
+      return {
+        result: `Input a value under ${maxLength} character(s) or leave blank.`,
+        sanitized: undefined,
+      };
+    }
+
+    return {
+      result: true,
+      sanitized: trimmedValue,
+    };
+  }
+
+  /**
+   * CLI Utility - Initialize - Normalize text array.
+   *
+   * @param {CLIUtilityInitializeNormalizeTextArrayValue}            value            - Value.
+   * @param {CLIUtilityInitializeNormalizeTextArrayMaxLengthPerItem} maxLengthPerItem - Max length per item.
+   *
+   * @private
+   *
+   * @returns {CLIUtilityInitializeNormalizeTextArrayReturns}
+   *
+   * @since 1.0.0
+   */
+  private static normalizeTextArray(value: CLIUtilityInitializeNormalizeTextArrayValue, maxLengthPerItem: CLIUtilityInitializeNormalizeTextArrayMaxLengthPerItem): CLIUtilityInitializeNormalizeTextArrayReturns {
+    if (typeof value !== 'string') {
+      return {
+        result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
+        sanitized: undefined,
+      };
+    }
+
+    const trimmedValue = value.trim();
+
+    // Allow blanks.
+    if (trimmedValue === '') {
+      return {
+        result: true,
+        sanitized: undefined,
+      };
+    }
+
+    const items = trimmedValue
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item !== '');
+
+    for (let i = 0; i < items.length; i += 1) {
+      const { result, sanitized } = CLIUtilityInitialize.normalizeText(items[i], maxLengthPerItem);
+
+      if (result !== true) {
+        return {
+          result: `Invalid entry "${items[i]}": Input a value under ${maxLengthPerItem} character(s) or remove entry.`,
+          sanitized: undefined,
+        };
+      }
+
+      if (sanitized !== undefined) {
+        items[i] = sanitized;
       }
     }
 
-    return true;
+    return {
+      result: true,
+      sanitized: items,
+    };
   }
 
   /**
-   * CLI Utility - Initialize - Sanitize http url.
+   * CLI Utility - Initialize - Normalize url.
    *
-   * @param {CLIUtilityInitializeSanitizeHttpUrlValue} value   - Value.
-   * @param {CLIUtilityInitializeSanitizeHttpUrlField} [field] - Field.
+   * @param {CLIUtilityInitializeNormalizeUrlValue}    value    - Value.
+   * @param {CLIUtilityInitializeNormalizeUrlProtocol} protocol - Protocol.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeSanitizeHttpUrlReturns}
+   * @returns {CLIUtilityInitializeNormalizeUrlReturns}
    *
    * @since 1.0.0
    */
-  private static sanitizeHttpUrl(value: CLIUtilityInitializeSanitizeHttpUrlValue, field?: CLIUtilityInitializeSanitizeHttpUrlField): CLIUtilityInitializeSanitizeHttpUrlReturns {
+  private static normalizeUrl(value: CLIUtilityInitializeNormalizeUrlValue, protocol: CLIUtilityInitializeNormalizeUrlProtocol): CLIUtilityInitializeNormalizeUrlReturns {
     if (typeof value !== 'string') {
-      return undefined;
+      return {
+        result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
+        sanitized: undefined,
+      };
     }
 
-    const trimmed = value.trim();
+    const trimmedValue = value.trim();
 
-    if (trimmed === '') {
-      return undefined;
+    // Allow blanks.
+    if (trimmedValue === '') {
+      return {
+        result: true,
+        sanitized: undefined,
+      };
     }
+
+    const rules = {
+      generic: {
+        allowed: ['http:', 'https:'],
+        message: 'Enter a valid generic URL (e.g., https://) or leave blank.',
+      },
+      repository: {
+        allowed: ['git:', 'git+https:', 'git+ssh:', 'git+http:', 'http:', 'https:'],
+        message: 'Enter a valid repository URL (e.g., git+https://) or leave blank.',
+      },
+    };
+
+    const allowed = (protocol === 'repository') ? rules.repository.allowed : rules.generic.allowed;
+    const errorMessage = (protocol === 'repository') ? rules.repository.message : rules.generic.message;
 
     try {
-      const parsedUrl = new URL(trimmed);
+      const url = new URL(trimmedValue);
 
-      if (CLIUtilityInitialize.isAllowedHttpUrl(parsedUrl.toString(), field)) {
-        return parsedUrl.toString();
+      if (allowed.includes(url.protocol)) {
+        return {
+          result: true,
+          sanitized: url.toString(),
+        };
       }
     } catch {
       /* empty */
     }
 
-    return undefined;
+    return {
+      result: errorMessage,
+      sanitized: undefined,
+    };
   }
 
   /**
-   * CLI Utility - Initialize - Is allowed http url.
+   * CLI Utility - Initialize - Normalize url array.
    *
-   * @param {CLIUtilityInitializeIsAllowedHttpUrlValue} value   - Value.
-   * @param {CLIUtilityInitializeIsAllowedHttpUrlField} [field] - Field.
+   * @param {CLIUtilityInitializeNormalizeUrlArrayValue}    value    - Value.
+   * @param {CLIUtilityInitializeNormalizeUrlArrayProtocol} protocol - Protocol.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeIsAllowedHttpUrlReturns}
+   * @returns {CLIUtilityInitializeNormalizeUrlArrayReturns}
    *
    * @since 1.0.0
    */
-  private static isAllowedHttpUrl(value: CLIUtilityInitializeIsAllowedHttpUrlValue, field?: CLIUtilityInitializeIsAllowedHttpUrlField): CLIUtilityInitializeIsAllowedHttpUrlReturns {
-    try {
-      const url = new URL(value);
+  private static normalizeUrlArray(value: CLIUtilityInitializeNormalizeUrlArrayValue, protocol: CLIUtilityInitializeNormalizeUrlArrayProtocol): CLIUtilityInitializeNormalizeUrlArrayReturns {
+    if (typeof value !== 'string') {
+      return {
+        result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
+        sanitized: undefined,
+      };
+    }
 
-      const genericProtocols = ['http:', 'https:'];
-      const repositoryProtocols = ['git:', 'git+https:', 'git+ssh:', 'git+http:', 'https:', 'http:'];
-      const allowedProtocols = (field === 'repository') ? repositoryProtocols : genericProtocols;
+    const trimmedValue = value.trim();
 
-      return allowedProtocols.includes(url.protocol);
-    } catch {
-      return false;
+    // Allow blanks.
+    if (trimmedValue === '') {
+      return {
+        result: true,
+        sanitized: undefined,
+      };
+    }
+
+    const items = trimmedValue
+      .split(',')
+      .map((item) => item.trim())
+      .filter((item) => item !== '');
+
+    for (let i = 0; i < items.length; i += 1) {
+      const { result, sanitized } = CLIUtilityInitialize.normalizeUrl(items[i], protocol);
+
+      if (result !== true) {
+        const errorMessages = {
+          generic: 'Enter a valid generic URL (e.g., https://) or remove entry.',
+          repository: 'Enter a valid repository URL (e.g., git+https://) or remove entry.',
+        };
+        const errorMessage = (protocol === 'repository') ? errorMessages.repository : errorMessages.generic;
+
+        return {
+          result: `Invalid URL "${items[i]}": ${errorMessage}`,
+          sanitized: undefined,
+        };
+      }
+
+      if (sanitized !== undefined) {
+        items[i] = sanitized;
+      }
+    }
+
+    return {
+      result: true,
+      sanitized: items,
+    };
+  }
+
+  /**
+   * CLI Utility - Initialize - Normalize workspace name.
+   *
+   * @param {CLIUtilityInitializeNormalizeWorkspaceNameValue} value - Value.
+   * @param {CLIUtilityInitializeNormalizeWorkspaceNameRole}  role  - Role.
+   * @param {CLIUtilityInitializeNormalizeWorkspaceNameBase}  base  - Base.
+   *
+   * @private
+   *
+   * @returns {CLIUtilityInitializeNormalizeWorkspaceNameReturns}
+   *
+   * @since 1.0.0
+   */
+  private static normalizeWorkspaceName(value: CLIUtilityInitializeNormalizeWorkspaceNameValue, role: CLIUtilityInitializeNormalizeWorkspaceNameRole, base: CLIUtilityInitializeNormalizeWorkspaceNameBase): CLIUtilityInitializeNormalizeWorkspaceNameReturns {
+    if (typeof value !== 'string') {
+      return {
+        result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
+        sanitized: undefined,
+      };
+    }
+
+    const trimmedValue = value.trim();
+
+    if (trimmedValue === '') {
+      return {
+        result: 'Enter a package name.',
+        sanitized: undefined,
+      };
+    }
+
+    switch (role) {
+      case 'config':
+      case 'app':
+      case 'tool': {
+        // Base for "config", "app", and "tool" is either `${projectSlug}-${role}` or just `${role}`.
+        const expectedPrefix = `${base}-`;
+
+        if (!trimmedValue.startsWith(expectedPrefix)) {
+          return {
+            result: `Begin with "${expectedPrefix}" and add a descriptor slug.`,
+            sanitized: undefined,
+          };
+        }
+
+        const descriptor = trimmedValue.slice(expectedPrefix.length);
+
+        if (descriptor.length === 0) {
+          return {
+            result: 'Add a descriptor after the prefix.',
+            sanitized: undefined,
+          };
+        }
+
+        if (!PATTERN_SLUG_SIMPLE.test(descriptor)) {
+          return {
+            result: 'Descriptor must match the slug pattern (lowercase letters, numbers, hyphens, underscores).',
+            sanitized: undefined,
+          };
+        }
+
+        return {
+          result: true,
+          sanitized: trimmedValue,
+        };
+      }
+      case 'template':
+      case 'package':
+      default: {
+        if (PATTERN_SLUG_SIMPLE.test(trimmedValue) || PATTERN_SLUG_SCOPED.test(trimmedValue)) {
+          return {
+            result: true,
+            sanitized: trimmedValue,
+          };
+        }
+
+        return {
+          result: 'Enter an unscoped slug or a scoped package name (e.g. @scope/name).',
+          sanitized: undefined,
+        };
+      }
     }
   }
 }

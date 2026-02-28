@@ -1,9 +1,15 @@
 import { exec, spawn } from 'child_process';
 import { promises as fs } from 'fs';
-import * as os from 'os';
-import * as path from 'path';
+import { platform } from 'os';
+import {
+  dirname,
+  join,
+  parse,
+  resolve,
+} from 'path';
 import { promisify } from 'util';
 
+import { itemSkipDirectories } from '@/lib/item.js';
 import {
   CHARACTER_DOUBLE_QUOTE,
   CHARACTER_SINGLE_QUOTE,
@@ -12,6 +18,7 @@ import {
   PATTERN_REGISTRY_QUERY_LINE,
 } from '@/lib/regex.js';
 import { Logger } from '@/toolkit/index.js';
+
 import type {
   CurrentTimestampPadLeftNumber,
   CurrentTimestampPadLeftReturns,
@@ -20,8 +27,10 @@ import type {
   DetectShellReturns,
   DiscoverPathsWithFileDirection,
   DiscoverPathsWithFileFileName,
+  DiscoverPathsWithFileRealDirectory,
   DiscoverPathsWithFileResults,
   DiscoverPathsWithFileReturns,
+  DiscoverPathsWithFileSkipDirectories,
   DiscoverPathsWithFileVisited,
   ExecuteShellCommand,
   ExecuteShellQuotePosixString,
@@ -32,14 +41,36 @@ import type {
   IsExecuteShellErrorError,
   IsExecuteShellErrorObject,
   IsExecuteShellErrorTypeGuard,
+  IsFileIdenticalExistingFilePath,
+  IsFileIdenticalProposedContents,
+  IsFileIdenticalReturns,
+  IsPlainObjectTypeGuard,
+  IsPlainObjectValue,
+  IsProjectRootCurrentDirectory,
+  IsProjectRootReturns,
+  LoadWorkspaceManifestsOptions,
+  LoadWorkspaceManifestsPackageJsons,
+  LoadWorkspaceManifestsParsedFile,
+  LoadWorkspaceManifestsReturns,
   ParseLinuxOsReleaseFileOsReleaseEntries,
   ParseLinuxOsReleaseFileReturns,
+  ParseLinuxOsReleaseTextReturns,
+  ParseLinuxOsReleaseTextText,
   ParseWindowsRegistryQueryRegistryKeys,
-  ParseWindowsRegistryQueryRegistryKeyType,
   ParseWindowsRegistryQueryRegistryPaths,
   ParseWindowsRegistryQueryReturns,
+  ParseWindowsRegistryTextRegistryKeyType,
+  ParseWindowsRegistryTextReturns,
+  ParseWindowsRegistryTextText,
   PathExistsPath,
   PathExistsReturns,
+  RenameFileWithDateOldPath,
+  RenameFileWithDatePrefix,
+  RenameFileWithDateReturns,
+  RenameFileWithDateSuffix,
+  SaveWorkspaceManifestReplaceFile,
+  SaveWorkspaceManifestReturns,
+  SaveWorkspaceManifestWorkspace,
 } from '@/types/lib/utility.d.ts';
 
 /**
@@ -95,25 +126,25 @@ export function currentTimestamp(): CurrentTimestampReturns {
  * @since 1.0.0
  */
 export function detectShell(): DetectShellReturns {
-  const platform = os.platform();
+  const currentPlatform = platform();
 
   // Windows.
-  if (platform === 'win32') {
+  if (currentPlatform === 'win32') {
     return 'cmd.exe';
   }
 
   // macOS.
-  if (platform === 'darwin') {
+  if (currentPlatform === 'darwin') {
     return '/bin/zsh';
   }
 
   // Linux.
-  if (platform === 'linux') {
+  if (currentPlatform === 'linux') {
     return '/bin/bash';
   }
 
   // AIX / Solaris.
-  if (['aix', 'sunos'].includes(platform)) {
+  if (['aix', 'sunos'].includes(currentPlatform)) {
     return '/bin/ksh';
   }
 
@@ -135,12 +166,12 @@ export async function discoverPathsWithFile(fileName: DiscoverPathsWithFileFileN
   const results: DiscoverPathsWithFileResults = [];
 
   if (direction === 'backward') {
-    const rootDirectory = path.parse(startDirectory).root;
+    const rootDirectory = parse(startDirectory).root;
 
     let currentDirectory = startDirectory;
 
     while (true) {
-      const targetPath = path.join(currentDirectory, fileName);
+      const targetPath = join(currentDirectory, fileName);
 
       try {
         Logger.customize({
@@ -163,20 +194,14 @@ export async function discoverPathsWithFile(fileName: DiscoverPathsWithFileFileN
       }
 
       // Traverse towards the root directory.
-      currentDirectory = path.dirname(currentDirectory);
+      currentDirectory = dirname(currentDirectory);
     }
   }
 
   if (direction === 'forward') {
     const queue = [startDirectory];
-    const visited = new Set<DiscoverPathsWithFileVisited>();
-    const skipDirectories = new Set([
-      'node_modules',
-      'dist',
-      'build',
-      'out',
-      'coverage',
-    ]);
+    const visited: DiscoverPathsWithFileVisited = new Set();
+    const skipDirectories: DiscoverPathsWithFileSkipDirectories = new Set(itemSkipDirectories);
 
     while (queue.length > 0) {
       const currentDirectory = queue.shift();
@@ -190,7 +215,7 @@ export async function discoverPathsWithFile(fileName: DiscoverPathsWithFileFileN
         purpose: 'forward',
       }).debug(`Current directory: "${currentDirectory}"`);
 
-      let realDirectory: string;
+      let realDirectory: DiscoverPathsWithFileRealDirectory;
 
       try {
         // Resolve symlinks to avoid visiting the same location multiple times.
@@ -233,13 +258,13 @@ export async function discoverPathsWithFile(fileName: DiscoverPathsWithFileFileN
           continue;
         }
 
-        const nextDirectory = path.join(realDirectory, entry.name);
+        const nextDirectory = join(realDirectory, entry.name);
 
         // Queue sub-directories for traversal.
         queue.push(nextDirectory);
       }
 
-      if (hasTargetFile) {
+      if (hasTargetFile === true) {
         // Record directories that include the target file.
         results.push(realDirectory);
       }
@@ -374,7 +399,7 @@ export async function executeShell(command: ExecuteShellCommand): ExecuteShellRe
  * @since 1.0.0
  */
 export async function isCommandExists(command: IsCommandExistsCommand): IsCommandExistsReturns {
-  const isWin = os.platform() === 'win32';
+  const isWin = platform() === 'win32';
   const bin = (isWin) ? 'where' : 'sh';
   const args = (isWin) ? ['/Q', command] : ['-c', `command -v "${command}" >/dev/null 2>&1`];
 
@@ -414,13 +439,208 @@ export function isExecuteShellError(error: IsExecuteShellErrorError): error is I
   const hasKilled = 'killed' in object && typeof object['killed'] === 'boolean';
   const hasCode = 'code' in object && typeof object['code'] === 'number';
   const hasSignal = 'signal' in object && typeof object['signal'] === 'string';
-
-  // Worth noting that "stderr" is merged into "stdout" and encoding is forced to "string".
   const hasStdout = 'stdout' in object && typeof object['stdout'] === 'string';
   const hasStderr = 'stderr' in object && typeof object['stderr'] === 'string';
 
   // Treat presence of any canonical "execAsync" fields as sufficient.
   return hasCmd || hasKilled || hasCode || hasSignal || hasStdout || hasStderr;
+}
+
+/**
+ * Is file identical.
+ *
+ * @param {IsFileIdenticalExistingFilePath} existingFilePath - Existing file path.
+ * @param {IsFileIdenticalProposedContents} proposedContents - Proposed contents.
+ *
+ * @returns {IsFileIdenticalReturns}
+ *
+ * @since 1.0.0
+ */
+export async function isFileIdentical(existingFilePath: IsFileIdenticalExistingFilePath, proposedContents: IsFileIdenticalProposedContents): IsFileIdenticalReturns {
+  let oldFileContents;
+  let newFileContents;
+
+  if (typeof proposedContents === 'string') {
+    newFileContents = proposedContents;
+  } else {
+    let serialized;
+
+    try {
+      serialized = JSON.stringify(proposedContents, null, 2);
+    } catch {
+      Logger.customize({
+        name: 'isFileIdentical',
+        purpose: 'serialize',
+      }).error(`Failed to serialize proposed contents for "${existingFilePath}".`);
+
+      return false;
+    }
+
+    if (serialized === undefined) {
+      Logger.customize({
+        name: 'isFileIdentical',
+        purpose: 'serialize',
+      }).warn(`Serialization produced undefined for "${existingFilePath}".`);
+
+      return false;
+    }
+
+    newFileContents = `${serialized}\n`;
+  }
+
+  try {
+    oldFileContents = await fs.readFile(existingFilePath, 'utf-8');
+  } catch {
+    Logger.customize({
+      name: 'isFileIdentical',
+      purpose: 'read',
+    }).error(`Unable to read existing file "${existingFilePath}".`);
+
+    return false;
+  }
+
+  const isIdentical = oldFileContents === newFileContents;
+
+  const comparisonResult = (isIdentical) ? 'matches' : 'differs from';
+
+  Logger.customize({
+    name: 'isFileIdentical',
+    purpose: (isIdentical) ? 'identical' : 'different',
+  }).debug(`Existing file "${existingFilePath}" ${comparisonResult} proposed contents.`);
+
+  return isIdentical;
+}
+
+/**
+ * Is plain object.
+ *
+ * @param {IsPlainObjectValue} value - Value.
+ *
+ * @returns {boolean}
+ *
+ * @since 1.0.0
+ */
+export function isPlainObject(value: IsPlainObjectValue): value is IsPlainObjectTypeGuard {
+  if (typeof value !== 'object' || value === null) {
+    return false;
+  }
+
+  if (Array.isArray(value)) {
+    return false;
+  }
+
+  const prototype = Object.getPrototypeOf(value);
+
+  // Treat both ordinary object literals and prototype-less dictionaries (Object.create(null)) as "plain".
+  return prototype === Object.prototype || prototype === null;
+}
+
+/**
+ * Is project root.
+ *
+ * @param {IsProjectRootCurrentDirectory} currentDirectory - Current directory.
+ *
+ * @returns {IsProjectRootReturns}
+ *
+ * @since 1.0.0
+ */
+export async function isProjectRoot(currentDirectory: IsProjectRootCurrentDirectory): IsProjectRootReturns {
+  const locations = await discoverPathsWithFile('package.json', 'backward');
+
+  Logger.customize({
+    name: 'isProjectRoot',
+    purpose: 'detectedLocations',
+  }).debug(locations);
+
+  // If command was ran outside of project root directory.
+  if (locations.length < 1) {
+    Logger.customize({
+      name: 'isProjectRoot',
+      purpose: 'lessThanOne',
+    }).error([
+      'No "package.json" files were found. Re-run this command inside the project root directory.',
+      `Current directory is "${currentDirectory}"`,
+    ].join('\n'));
+
+    return false;
+  }
+
+  // If command was ran inside a monorepo package.
+  if (locations.length > 1) {
+    Logger.customize({
+      name: 'isProjectRoot',
+      purpose: 'greaterThanOne',
+    }).error([
+      'Multiple "package.json" files were found. Re-run this command inside the project root directory.',
+      `Current directory is "${currentDirectory}"`,
+    ].join('\n'));
+
+    return false;
+  }
+
+  // If command was ran outside the project root directory.
+  if (locations.length === 1 && locations[0] !== currentDirectory) {
+    Logger.customize({
+      name: 'isProjectRoot',
+      purpose: 'notProjectRootDir',
+    }).error([
+      'Must be run inside the project root directory.',
+      `Current directory is "${currentDirectory}"`,
+    ].join('\n'));
+
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Load workspace manifests.
+ *
+ * @param {LoadWorkspaceManifestsOptions} options - Options.
+ *
+ * @returns {LoadWorkspaceManifestsReturns}
+ *
+ * @since 1.0.0
+ */
+export async function loadWorkspaceManifests(options: LoadWorkspaceManifestsOptions): LoadWorkspaceManifestsReturns {
+  const { projectRoot, workspaces } = options;
+
+  const packageJsons: LoadWorkspaceManifestsPackageJsons = [];
+
+  for (const workspace of workspaces) {
+    const relativeWorkspacePath = workspace[0];
+    const workspaceManifest = workspace[1];
+
+    const absoluteWorkspacePath = resolve(projectRoot, relativeWorkspacePath);
+    const absolutePackageJsonPath = join(absoluteWorkspacePath, 'package.json');
+
+    try {
+      const rawFile = await fs.readFile(absolutePackageJsonPath, 'utf-8');
+      const parsedFile: LoadWorkspaceManifestsParsedFile = JSON.parse(rawFile);
+
+      packageJsons.push({
+        manifest: workspaceManifest,
+        filePath: absolutePackageJsonPath,
+        fileContents: parsedFile,
+      });
+
+      Logger.customize({
+        name: 'loadWorkspaceManifests',
+        purpose: 'load',
+      }).debug(`Loaded package manifest for workspace "${relativeWorkspacePath}".`);
+    } catch (error) {
+      Logger.customize({
+        name: 'loadWorkspaceManifests',
+        purpose: 'load',
+      }).error([
+        `Skipping workspace "${relativeWorkspacePath}" because the "package.json" file is inaccessible or invalid.`,
+        error,
+      ].join('\n'));
+    }
+  }
+
+  return packageJsons;
 }
 
 /**
@@ -432,7 +652,21 @@ export function isExecuteShellError(error: IsExecuteShellErrorError): error is I
  */
 export async function parseLinuxOsReleaseFile(): ParseLinuxOsReleaseFileReturns {
   const query = await executeShell('cat /etc/os-release');
-  const lines = query.textOut.split(LINEBREAK_CRLF_OR_LF);
+
+  return parseLinuxOsReleaseText(query.textOut);
+}
+
+/**
+ * Parse linux os release text.
+ *
+ * @param {ParseLinuxOsReleaseTextText} text - Text.
+ *
+ * @returns {ParseLinuxOsReleaseTextReturns}
+ *
+ * @since 1.0.0
+ */
+export function parseLinuxOsReleaseText(text: ParseLinuxOsReleaseTextText): ParseLinuxOsReleaseTextReturns {
+  const lines = text.split(LINEBREAK_CRLF_OR_LF);
   const osReleaseEntries: ParseLinuxOsReleaseFileOsReleaseEntries = {};
 
   for (const line of lines) {
@@ -453,7 +687,7 @@ export async function parseLinuxOsReleaseFile(): ParseLinuxOsReleaseFileReturns 
     // Strip wrapping quotes.
     value = value.replace(PATTERN_DOUBLE_QUOTED_STRING_CAPTURE, '$1');
 
-    osReleaseEntries[key] = value;
+    Reflect.set(osReleaseEntries, key, value);
   }
 
   return osReleaseEntries;
@@ -473,29 +707,7 @@ export async function parseWindowsRegistryQuery(registryPaths: ParseWindowsRegis
 
   for (const path of paths) {
     const query = await executeShell(`reg query "${path}"`);
-    const lines = query.textOut.split(LINEBREAK_CRLF_OR_LF);
-    const registryKeys: ParseWindowsRegistryQueryRegistryKeys = {};
-
-    for (const line of lines) {
-      const matches = line.match(PATTERN_REGISTRY_QUERY_LINE);
-
-      if (matches !== null) {
-        const registryKey = matches[1];
-        const registryKeyType = matches[2];
-        const registryKeyData = matches[3];
-
-        if (
-          registryKey !== undefined
-          && registryKeyType !== undefined
-          && registryKeyData !== undefined
-        ) {
-          registryKeys[registryKey] = {
-            type: registryKeyType as ParseWindowsRegistryQueryRegistryKeyType,
-            data: registryKeyData.trim(),
-          };
-        }
-      }
-    }
+    const registryKeys = parseWindowsRegistryText(query.textOut);
 
     // If we parsed any keys for this path, return immediately (fallback behavior).
     if (Object.keys(registryKeys).length > 0) {
@@ -505,6 +717,43 @@ export async function parseWindowsRegistryQuery(registryPaths: ParseWindowsRegis
 
   // No results.
   return {};
+}
+
+/**
+ * Parse windows registry text.
+ *
+ * @param {ParseWindowsRegistryTextText} text - Text.
+ *
+ * @returns {ParseWindowsRegistryTextReturns}
+ *
+ * @since 1.0.0
+ */
+export function parseWindowsRegistryText(text: ParseWindowsRegistryTextText): ParseWindowsRegistryTextReturns {
+  const lines = text.split(LINEBREAK_CRLF_OR_LF);
+  const registryKeys: ParseWindowsRegistryQueryRegistryKeys = {};
+
+  for (const line of lines) {
+    const matches = line.match(PATTERN_REGISTRY_QUERY_LINE);
+
+    if (matches !== null) {
+      const registryKey = matches[1];
+      const registryKeyType = matches[2];
+      const registryKeyData = matches[3];
+
+      if (
+        registryKey !== undefined
+        && registryKeyType !== undefined
+        && registryKeyData !== undefined
+      ) {
+        Reflect.set(registryKeys, registryKey, {
+          type: registryKeyType as ParseWindowsRegistryTextRegistryKeyType,
+          data: registryKeyData.trim(),
+        });
+      }
+    }
+  }
+
+  return registryKeys;
 }
 
 /**
@@ -524,4 +773,96 @@ export async function pathExists(path: PathExistsPath): PathExistsReturns {
   } catch {
     return false;
   }
+}
+
+/**
+ * Rename file with date.
+ *
+ * @param {RenameFileWithDateOldPath} oldPath - Old path.
+ * @param {RenameFileWithDatePrefix}  prefix  - Prefix.
+ * @param {RenameFileWithDateSuffix}  suffix  - Suffix.
+ *
+ * @returns {RenameFileWithDateReturns}
+ *
+ * @since 1.0.0
+ */
+export async function renameFileWithDate(oldPath: RenameFileWithDateOldPath, prefix: RenameFileWithDatePrefix, suffix: RenameFileWithDateSuffix): RenameFileWithDateReturns {
+  const directory = dirname(oldPath);
+
+  const now = new Date();
+  const timestamp = [
+    now.getUTCFullYear(),
+    (now.getUTCMonth() + 1).toString().padStart(2, '0'),
+    now.getUTCDate().toString().padStart(2, '0'),
+  ].join('-');
+
+  let counter = 1;
+
+  while (true) {
+    const counterLabel = counter.toString().padStart(4, '0');
+    const newFileName = `${prefix}.${timestamp}_${counterLabel}.${suffix}`;
+    const newPath = join(directory, newFileName);
+
+    // Keep trying until file does not exist.
+    try {
+      await fs.access(newPath);
+
+      Logger.customize({
+        name: 'renameFileWithDate',
+        purpose: 'candidateExists',
+      }).debug(`Candidate "${newPath}" already exists, trying next suffix.`);
+
+      counter += 1;
+    } catch {
+      // Attempt to rename file.
+      try {
+        await fs.rename(oldPath, newPath);
+
+        Logger.customize({
+          name: 'renameFileWithDate',
+          purpose: 'renameSuccess',
+        }).debug(`Renamed "${oldPath}" to "${newPath}".`);
+
+        return true;
+      } catch {
+        Logger.customize({
+          name: 'renameFileWithDate',
+          purpose: 'renameFailure',
+        }).error(`Failed to rename "${oldPath}" to "${newPath}".`);
+
+        return false;
+      }
+    }
+  }
+}
+
+/**
+ * Save workspace manifest.
+ *
+ * @param {SaveWorkspaceManifestWorkspace} workspace     - Workspace.
+ * @param {SaveWorkspaceManifestReplaceFile} replaceFile - Replace file.
+ *
+ * @returns {SaveWorkspaceManifestReturns}
+ *
+ * @since 1.0.0
+ */
+export async function saveWorkspaceManifest(workspace: SaveWorkspaceManifestWorkspace, replaceFile: SaveWorkspaceManifestReplaceFile): SaveWorkspaceManifestReturns {
+  // No changes detected, skip touching the filesystem.
+  if (await isFileIdentical(workspace.filePath, workspace.fileContents)) {
+    return;
+  }
+
+  // Rename existing file if user chooses not to replace file.
+  if (replaceFile === false) {
+    await renameFileWithDate(workspace.filePath, 'package', 'json');
+  }
+
+  const packageJson = JSON.stringify(workspace.fileContents, null, 2);
+  const packageContents = `${packageJson}\n`;
+
+  await fs.writeFile(
+    workspace.filePath,
+    packageContents,
+    'utf-8',
+  );
 }

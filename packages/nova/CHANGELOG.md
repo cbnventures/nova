@@ -1,61 +1,97 @@
 # @cbnventures/nova
 
-## 0.12.0
+## 0.13.0 (2026-02-27)
 
-### Minor Changes
+### UPDATED
+- Broadened `engines.node` from `^22` to `^20 || ^22 || ^24` to support all active Node.js LTS versions.
+- `skipLibCheck` will now be set to `false` for `dx-strict.json` TSConfig presets. To suppress type checks outside of project files, use the `nova utility type-check` command instead.
+- Enabled `allowSyntheticDefaultImports` in the `dx-strict.json` TSConfig preset.
+- Renamed item pretty name exports for consistency (e.g. `itemBrandPrettyNames` to `itemPrettyNamesBrand`).
+- Renamed `HttpUrlField` to `UrlProtocol` to better distinguish repository and generic URLs.
+- Replaced validation in favor for normalization in the "nova utility initialize" command.
+- Changed the CLI command `sync-metadata` to `sync-packages` to represent a broader view of `package.json` syncing.
+- Updated project scaffolding files, GitHub issue templates, and CI/CD workflows.
+- Removed padding from logs that aren't directly related to UI (e.g., limit padding for prompts only).
+- Replaced inline `no-restricted-syntax` configs in `dx-code-style` and `lang-mdx` presets with dedicated ESLint rules.
+- Stricter `ImportDeclaration` formatting in `dx-code-style` preset.
 
+### FIXED
+- Fixed an issue where the `nova utility initialize` command would crash because the existing workspace does not exist in the `nova.config.json` file.
+- Made types clearer for `ItemAllowedPoliciesByRole` because it was using `Exclude` instead of `Extract`.
+- Fixed documentation typos, grammar, and voice consistency across CLI, toolkit, and quickstart pages.
+
+### ADDED
+- Added version range regex patterns (`PATTERN_DIGITS`, `PATTERN_RANGE_GREATER_EQUAL_MAJOR`, `PATTERN_RANGE_MAJOR`) for engine constraint parsing.
+- Added `nova utility changelog` command with `record` and `release` subcommands for managing release notes.
+- Added `nova utility type-check` command. Widened `CLIExecuteCommandOptions` to `Partial<Options>`.
+- Added `nova recipe sync-lts-engines` command for syncing `engines.node` to the current Node.js LTS constraint.
+- Added `no-regex-literals`, `no-regex-literal-flags`, and `no-raw-text-in-code` ESLint rules.
+- Added an `interactive` option to the CLIHeader battery for plain-text output in non-TTY environments.
+- Added `nova recipe pin-versions` command for stripping range prefixes from dependency versions.
+- Added a "switch-case-blocks" ESLint rule for enforcing blocks inside switch cases.
+- Added an "emails" section into Nova configuration (support for additional canonical contact methods).
+- Added runtime API modules for SPDX license validation and Node.js LTS version detection.
+- Added a `--replace-file` option for the CLI `nova utility initialize` command.
+- Added `pinVersions` and `syncLtsEngines` workspace options to the Nova configuration.
+- Added a `template` role with `freezable` policy for those who would like to create templates/examples in their monorepo.
+- Added a "syncProperties" option for each workspace in the Nova configuration.
+- Added shared utilities `isPlainObject`, `isProjectRoot`, `loadWorkspaceManifests`, and `saveWorkspaceManifest` for recipe commands.
+- Added a shared utility `isFileIdentical` for checking identical files before editing them.
+- Added a shared utility `renameFileWithDate` for commands that make file modifications.
+
+### REMOVED
+- Removed the `sync-versions` CLI command. Its `packageManager` validation is now part of `sync-packages`.
+
+## 0.12.0 (2025-11-02)
+
+### UPDATED
+- `Logger.customize` now has the ability for developer to declare the type and purpose of logging (in addition to the function name).
+- Running ESLint during builds will now treat warnings as errors (for `@cbnventures/nova` package).
+
+### ADDED
 - Added a `Logger.dev` feature where a developer can use that in replacement of `console.log`.
 - Added custom ESLint rules to be exported for usage (starting with the `no-logger-dev` rule).
-- `Logger.customize` now has the ability for developer to declare the type and purpose of logging (in addition to the function name).
-
-### Patch Changes
-
-- Running ESLint during builds will now treat warnings as errors (for `@cbnventures/nova` package).
 - Added tests (to test for the `discoverPathsWithFile`).
 
-## 0.11.0
+## 0.11.0 (2025-10-30)
 
-### Minor Changes
-
+### UPDATED
 - Renamed "Foundation Nova" to "Nova".
 - Removed `freeze-deps` and `sync-pkg-mgr` recipe subcommands in favor of `sync-metadata` and `sync-versions` recipe subcommands.
-- Added `workspaces` support for Nova config to better manage apps/packages inside the monorepo.
-
-### Patch Changes
-
-- Fixed `engines.node` to be consistent with `^22` (The latest LTS version for Node.js).
 - Made a minor change to prefer shorthand properties (where key value pairs are the same visually).
 - Made a minor change to prefer template literals (instead of "string + concatenation").
 - Grouped type declaration files to its "types" respective folders.
-- Fixed logo SVG to include a newline at end of the file.
 - Refactored code that used CRLF to now use LF for modern reasons.
 - Changed "DiscoverPackageJsons" to a more versatile "DiscoverPathsWithFile" internal utility function.
 - Refactored the "initialize" command to remove garbage code generated by AI.
 - Changed "HttpUrlField" type to accept "generic" instead of "fundSources" (because too vague).
 
-## 0.10.0
+### FIXED
+- Fixed `engines.node` to be consistent with `^22` (The latest LTS version for Node.js).
+- Fixed logo SVG to include a newline at end of the file.
 
-### Minor Changes
+### ADDED
+- Added `workspaces` support for Nova config to better manage apps/packages inside the monorepo.
 
-- Removed the `inspect` CLI command now that we decided not to wrap ESLint/TypeScript print-config.
+## 0.10.0 (2025-10-26)
 
-### Patch Changes
-
+### UPDATED
 - Updated the CLI "CURRENTLY RUNNING:" text to also include the base command used (`nova`) for better debugging purposes.
 - Renamed `CLIInitialize` and `CLIVersion` to their sub-folder `CLIUtility*` variants.
 - Separated toolkit types into their own directory to prevent prefix collision.
-- Rename `sync-pkg-manager` to `sync-pkg-mgr` to shorten already long commands, in addition to adding a "one-letter per word" alias.
+- Renamed `sync-pkg-manager` to `sync-pkg-mgr` to shorten already long commands, in addition to adding a "one-letter per word" alias.
 
-## 0.9.0
+### REMOVED
+- Removed the `inspect` CLI command now that we decided not to wrap ESLint/TypeScript print-config.
 
-### Minor Changes
+## 0.9.0 (2025-10-24)
 
+### UPDATED
 - Prevent usage of `console` completely. Either use the `Logger` toolkit battery or write to the process directly. This is to prevent over-reliance of `console.log`.
 - Align multi-line log payloads with prefix-aware indentation.
 - Default production-browser logs to warn/error while keeping backend defaults.
-
-### Patch Changes
-
 - Refreshed docs and tooling stacks by bumping Docusaurus, React, TypeScript, ESLint, and related plugins/libs to their latest releases.
-- Add a single-character ellipsis when CLI header text is truncated to fit the specified width.
-- Add `CLIHeader` to the toolkit barrel export so consumers can import it via `@cbnventures/nova/toolkit`.
+
+### ADDED
+- Added a single-character ellipsis when CLI header text is truncated to fit the specified width.
+- Added `CLIHeader` to the toolkit barrel export so consumers can import it via `@cbnventures/nova/toolkit`.

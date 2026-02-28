@@ -1,10 +1,89 @@
 ---
 id: overview
 title: Overview
-description: x
+description: Nova Rules provides custom ESLint rules for catching unsafe patterns and enforcing consistent code style across JavaScript and TypeScript projects.
 sidebar_position: 1
 keywords:
-  - x
+  - nova
+  - eslint rules
+  - custom rules
+  - code quality
+  - linting
+  - no raw text in code
+  - no regex literal flags
+  - no regex literals
+  - switch case blocks
+  - no logger dev
+  - javascript
+  - typescript
 tags:
-  - x
+  - overview
+  - rules
+  - eslint
+  - code quality
+  - linting
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Overview
+
+Use **Nova Rules** to catch unsafe patterns and enforce consistent code style. Pick the rules that match your workflow.
+
+## Install
+
+If the package is not in your repo yet, go to **[Setup and Configure](/docs/quickstart/setup#choose-your-path)** and choose **Install into project**.
+
+:::caution Warning
+**Nova** must be installed **in your project** before importing rules. This is because Node.js resolves imports from your project's `node_modules` folder.
+:::
+
+:::info
+If you wish, you can install Nova **globally** (into the system) and **locally** (into the project) at the same time. They will not conflict with each other.
+:::
+
+## Purpose and Scope
+
+<Tabs groupId="purpose">
+  <TabItem value="what" label="What" default>
+    <ul>
+      <li><strong>Custom ESLint rules</strong> that catch patterns the built-in rule set does not cover.</li>
+      <li><strong>Focused checks</strong> that target specific risks like leaked dev logging and unscoped switch cases.</li>
+      <li><strong>No extra options</strong> required — enable each rule in your flat config and it works.</li>
+      <li>Designed to complement existing ESLint rules, not replace them.</li>
+    </ul>
+  </TabItem>
+  <TabItem value="when" label="When">
+    <ul>
+      <li>When built-in ESLint rules leave gaps in your project's conventions.</li>
+      <li>When you want consistent patterns across teams and projects.</li>
+      <li>When you prefer targeted rules over broad presets.</li>
+      <li>When you want each rule to focus on a single, well-defined concern.</li>
+    </ul>
+  </TabItem>
+  <TabItem value="where" label="Where">
+    <ul>
+      <li>In new or existing codebases.</li>
+      <li>In local development, CI, and code review workflows.</li>
+      <li>In any repository structure.</li>
+      <li>Alongside existing ESLint configs, plugins, and formatters.</li>
+    </ul>
+  </TabItem>
+</Tabs>
+
+## Rules
+
+All items below are **targeted**, **independent**, and **safe to adopt**. Enable only what you need. Each rule focuses on a single concern.
+
+### ESLint
+
+Custom rules for JavaScript and TypeScript projects.
+
+| Rule                                                                | Synopsis                                                                   |
+|---------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [No Logger.dev](/docs/rules/eslint/no-logger-dev)                   | Flag `Logger.dev` calls so dev-only logging gets caught before production. |
+| [No Raw Text in Code](/docs/rules/eslint/no-raw-text-in-code)       | Ban unwrapped text inside `<code>` elements to prevent MDX parsing issues. |
+| [No Regex Literal Flags](/docs/rules/eslint/no-regex-literal-flags) | Ban flags on regex literals so callers add flags at the call site.         |
+| [No Regex Literals](/docs/rules/eslint/no-regex-literals)           | Ban inline regex literals so patterns are centralized in a shared file.    |
+| [Switch Case Blocks](/docs/rules/eslint/switch-case-blocks)         | Require block-wrapped switch cases so declarations stay scoped per branch. |

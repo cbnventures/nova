@@ -99,6 +99,10 @@ export type LoggerShouldLogCurrentLogLevel = LogLevel;
 
 export type LoggerShouldLogWeights = Record<LogLevel, number>;
 
+export type LoggerShouldLogDefaultLogLevel = LogLevel;
+
+export type LoggerShouldLogPreferredLogLevel = LogLevel;
+
 /**
  * Logger - Strip ansi colors.
  *

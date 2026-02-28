@@ -1,4 +1,4 @@
-name: "Publish to GitHub Pages"
+name: "Publish to GitHub Pages (Docusaurus)"
 
 run-name: "Publishing ${{ github.event.release.tag_name }} to GitHub Pages"
 
@@ -16,10 +16,10 @@ jobs:
     runs-on: "ubuntu-latest"
     timeout-minutes: 10
     env:
-      WORKING_DIR: "./apps/docs"
+      WORKING_DIR: "${{ vars.DOCUSAURUS_WORKING_DIR }}"
     steps:
       - name: "Checkout repository"
-        uses: "actions/checkout@v5"
+        uses: "actions/checkout@v6"
 
       - name: "Setup Node.js"
         uses: "actions/setup-node@v6"
@@ -43,7 +43,7 @@ jobs:
         uses: "actions/configure-pages@v5"
 
       - name: "Upload artifact to GitHub Pages"
-        uses: "actions/upload-pages-artifact@v3"
+        uses: "actions/upload-pages-artifact@v4"
         with:
           path: "${{ env.WORKING_DIR }}/build"
 
