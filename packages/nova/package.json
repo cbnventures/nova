@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/nova",
-  "version": "0.13.0",
+  "version": "0.13.1",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -62,15 +62,15 @@
     "./presets/tsconfig/fw-nextjs.json": "./build/src/presets/tsconfig/fw-nextjs.json",
     "./presets/tsconfig/platform-cloudflare-workers.json": "./build/src/presets/tsconfig/platform-cloudflare-workers.json",
     "./presets/tsconfig/tool-vite.json": "./build/src/presets/tsconfig/tool-vite.json",
-    "./toolkit": "./build/src/presets/toolkit/index.js",
-    "./toolkit/*": "./build/src/presets/toolkit/*.js"
+    "./toolkit": "./build/src/toolkit/index.js",
+    "./toolkit/*": "./build/src/toolkit/*.js"
   },
   "type": "module",
   "files": [
     "./build"
   ],
   "bin": {
-    "nova": "./build/src/cli/index.js"
+    "nova": "build/src/cli/index.js"
   },
   "private": false,
   "scripts": {

@@ -1,5 +1,11 @@
 # @cbnventures/nova
 
+## 0.13.1 (2026-02-28)
+
+### FIXED
+- Removed the unnecessary `./` prefix from the `bin` path in `package.json`.
+- Fixed incorrect toolkit export paths pointing to ./build/src/presets/toolkit/ instead of ./build/src/toolkit/
+
 ## 0.13.0 (2026-02-27)
 
 ### UPDATED
