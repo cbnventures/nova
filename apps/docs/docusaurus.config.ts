@@ -17,7 +17,7 @@ const config: Config = {
   titleDelimiter: ' - ',
   tagline: 'Scripts, templates, and project configuration for the common JavaScript and TypeScript developer',
   favicon: 'favicon.ico',
-  url: 'https://docs.cbnventures.io',
+  url: 'https://cbnventures.github.io',
   baseUrl: '/nova/',
   organizationName: 'cbnventures',
   projectName: 'nova',
@@ -133,7 +133,10 @@ const config: Config = {
   themeConfig: {
     image: 'thumbnails/brand.png',
     metadata: [
-      { name: 'twitter:card', content: 'summary_large_image' },
+      {
+        name: 'twitter:card',
+        content: 'summary_large_image',
+      },
     ],
     colorMode: {
       defaultMode: 'light',

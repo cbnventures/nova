@@ -48,12 +48,12 @@
     "bugs": "bugs@cbnventures.io"
   },
   "urls": {
-    "homepage": "https://docs.cbnventures.io/nova/",
+    "homepage": "https://cbnventures.github.io/nova/",
     "repository": "git+https://github.com/cbnventures/nova.git",
     "bugs": "https://github.com/cbnventures/nova/issues",
     "license": "https://github.com/cbnventures/nova/blob/HEAD/LICENSE",
-    "logo": "https://docs.cbnventures.io/nova/images/logo.svg",
-    "documentation": "https://docs.cbnventures.io/nova/",
+    "logo": "https://cbnventures.github.io/nova/images/logo.svg",
+    "documentation": "https://cbnventures.github.io/nova/",
     "github": "https://github.com/cbnventures/nova",
     "npm": "https://www.npmjs.com/package/@cbnventures/nova",
     "fundSources": [

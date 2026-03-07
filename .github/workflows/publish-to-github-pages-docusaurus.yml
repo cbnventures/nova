@@ -1,10 +1,11 @@
 name: "Publish to GitHub Pages (Docusaurus)"
 
-run-name: "Publishing ${{ github.event.release.tag_name }} to GitHub Pages"
+run-name: "Publishing ${{ github.event.release.tag_name || 'manually' }} to GitHub Pages"
 
 on:
   release:
     types: [ "published" ]
+  workflow_dispatch:
 
 permissions:
   contents: "read"
@@ -16,6 +17,7 @@ jobs:
     runs-on: "ubuntu-latest"
     timeout-minutes: 10
     env:
+      ROOT_DIR: "${{ vars.ROOT_WORKING_DIR }}"
       WORKING_DIR: "${{ vars.DOCUSAURUS_WORKING_DIR }}"
     steps:
       - name: "Checkout repository"
@@ -24,20 +26,20 @@ jobs:
       - name: "Setup Node.js"
         uses: "actions/setup-node@v6"
         with:
-          node-version-file: "${{ env.WORKING_DIR }}/package.json"
+          node-version-file: "${{ env.ROOT_DIR }}/package.json"
           package-manager-cache: false
 
       - name: "Update npm"
         run: "npm install -g npm@latest"
-        working-directory: "${{ env.WORKING_DIR }}"
+        working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Install packages"
         run: "npm install"
-        working-directory: "${{ env.WORKING_DIR }}"
+        working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Build project"
         run: "npm run build"
-        working-directory: "${{ env.WORKING_DIR }}"
+        working-directory: "${{ env.ROOT_DIR }}"
 
       - name: "Setup GitHub Pages"
         uses: "actions/configure-pages@v5"
