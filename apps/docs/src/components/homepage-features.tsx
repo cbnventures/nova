@@ -21,7 +21,8 @@ export function HomepageFeatures() {
     {
       id: 'dev-config',
       title: 'Unified Developer Config',
-      icon: 'noto:gear',
+      icon: 'lucide:layers',
+      color: 'var(--ifm-color-primary)',
       description: (
         <>
           Includes preferred
@@ -41,7 +42,8 @@ export function HomepageFeatures() {
     {
       id: 'sync-scripts',
       title: 'Automated Sync Scripts',
-      icon: 'noto:repeat-button',
+      icon: 'lucide:terminal',
+      color: 'var(--ifm-color-primary)',
       description: (
         <>
           Provides reusable
@@ -55,7 +57,8 @@ export function HomepageFeatures() {
     {
       id: 'starter-templates',
       title: 'Ready-to-Use Templates',
-      icon: 'noto:page-facing-up',
+      icon: 'lucide:layout-template',
+      color: 'var(--ifm-color-primary)',
       description: (
         <>
           Offers scripts and template files that speed up project setup and ensure consistency across development environments.
@@ -72,7 +75,7 @@ export function HomepageFeatures() {
             items.map((featureItem) => (
               <div key={featureItem.id} className="col col--4">
                 <div className="text--center padding-bottom--md">
-                  <Icon icon={featureItem.icon} width="175" height="175" />
+                  <Icon icon={featureItem.icon} width="96" height="96" style={{ color: featureItem.color }} />
                 </div>
                 <div className="text--center padding-horiz--md">
                   <Heading as="h3">

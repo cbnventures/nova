@@ -26,6 +26,7 @@ import type {
   CurrentTimestampReturns,
   DetectShellReturns,
   DiscoverPathsWithFileDirection,
+  DiscoverPathsWithFileEntries,
   DiscoverPathsWithFileFileName,
   DiscoverPathsWithFileRealDirectory,
   DiscoverPathsWithFileResults,
@@ -33,7 +34,9 @@ import type {
   DiscoverPathsWithFileSkipDirectories,
   DiscoverPathsWithFileVisited,
   ExecuteShellCommand,
+  ExecuteShellQuotePosixReturns,
   ExecuteShellQuotePosixString,
+  ExecuteShellQuoteWindowsReturns,
   ExecuteShellQuoteWindowsString,
   ExecuteShellReturns,
   IsCommandExistsCommand,
@@ -52,13 +55,13 @@ import type {
   LoadWorkspaceManifestsPackageJsons,
   LoadWorkspaceManifestsParsedFile,
   LoadWorkspaceManifestsReturns,
-  ParseLinuxOsReleaseFileOsReleaseEntries,
   ParseLinuxOsReleaseFileReturns,
+  ParseLinuxOsReleaseTextOsReleaseEntries,
   ParseLinuxOsReleaseTextReturns,
   ParseLinuxOsReleaseTextText,
-  ParseWindowsRegistryQueryRegistryKeys,
   ParseWindowsRegistryQueryRegistryPaths,
   ParseWindowsRegistryQueryReturns,
+  ParseWindowsRegistryTextRegistryKeys,
   ParseWindowsRegistryTextRegistryKeyType,
   ParseWindowsRegistryTextReturns,
   ParseWindowsRegistryTextText,
@@ -230,7 +233,7 @@ export async function discoverPathsWithFile(fileName: DiscoverPathsWithFileFileN
 
       visited.add(realDirectory);
 
-      let entries;
+      let entries: DiscoverPathsWithFileEntries;
 
       try {
         // Attempt to read the directory contents.
@@ -289,8 +292,31 @@ export async function executeShell(command: ExecuteShellCommand): ExecuteShellRe
 
   let fullCommand = command;
 
-  const quotePosix = (string: ExecuteShellQuotePosixString) => string.replace(new RegExp(CHARACTER_SINGLE_QUOTE, 'g'), '\'\\\'\'');
-  const quoteWindows = (string: ExecuteShellQuoteWindowsString) => string.replace(new RegExp(CHARACTER_DOUBLE_QUOTE, 'g'), '"');
+  /**
+   * Execute shell - Quote posix.
+   *
+   * @param {ExecuteShellQuotePosixString} string - String.
+   *
+   * @private
+   *
+   * @returns {ExecuteShellQuotePosixReturns}
+   *
+   * @since 1.0.0
+   */
+  const quotePosix = (string: ExecuteShellQuotePosixString): ExecuteShellQuotePosixReturns => string.replace(new RegExp(CHARACTER_SINGLE_QUOTE.source, 'g'), '\'\\\'\'');
+
+  /**
+   * Execute shell - Quote windows.
+   *
+   * @param {ExecuteShellQuoteWindowsString} string - String.
+   *
+   * @private
+   *
+   * @returns {ExecuteShellQuoteWindowsReturns}
+   *
+   * @since 1.0.0
+   */
+  const quoteWindows = (string: ExecuteShellQuoteWindowsString): ExecuteShellQuoteWindowsReturns => string.replace(new RegExp(CHARACTER_DOUBLE_QUOTE.source, 'g'), '"');
 
   // Windows.
   if (shell === 'cmd.exe') {
@@ -604,7 +630,8 @@ export async function isProjectRoot(currentDirectory: IsProjectRootCurrentDirect
  * @since 1.0.0
  */
 export async function loadWorkspaceManifests(options: LoadWorkspaceManifestsOptions): LoadWorkspaceManifestsReturns {
-  const { projectRoot, workspaces } = options;
+  const projectRoot = options.projectRoot;
+  const workspaces = options.workspaces;
 
   const packageJsons: LoadWorkspaceManifestsPackageJsons = [];
 
@@ -667,7 +694,7 @@ export async function parseLinuxOsReleaseFile(): ParseLinuxOsReleaseFileReturns 
  */
 export function parseLinuxOsReleaseText(text: ParseLinuxOsReleaseTextText): ParseLinuxOsReleaseTextReturns {
   const lines = text.split(LINEBREAK_CRLF_OR_LF);
-  const osReleaseEntries: ParseLinuxOsReleaseFileOsReleaseEntries = {};
+  const osReleaseEntries: ParseLinuxOsReleaseTextOsReleaseEntries = {};
 
   for (const line of lines) {
     // Skip empty or commented lines.
@@ -675,7 +702,9 @@ export function parseLinuxOsReleaseText(text: ParseLinuxOsReleaseTextText): Pars
       continue;
     }
 
-    const [key, ...rest] = line.split('=');
+    const parts = line.split('=');
+    const key = parts[0];
+    const rest = parts.slice(1);
 
     if (key === undefined) {
       continue;
@@ -730,7 +759,7 @@ export async function parseWindowsRegistryQuery(registryPaths: ParseWindowsRegis
  */
 export function parseWindowsRegistryText(text: ParseWindowsRegistryTextText): ParseWindowsRegistryTextReturns {
   const lines = text.split(LINEBREAK_CRLF_OR_LF);
-  const registryKeys: ParseWindowsRegistryQueryRegistryKeys = {};
+  const registryKeys: ParseWindowsRegistryTextRegistryKeys = {};
 
   for (const line of lines) {
     const matches = line.match(PATTERN_REGISTRY_QUERY_LINE);
@@ -839,7 +868,7 @@ export async function renameFileWithDate(oldPath: RenameFileWithDateOldPath, pre
 /**
  * Save workspace manifest.
  *
- * @param {SaveWorkspaceManifestWorkspace} workspace     - Workspace.
+ * @param {SaveWorkspaceManifestWorkspace}  workspace   - Workspace.
  * @param {SaveWorkspaceManifestReplaceFile} replaceFile - Replace file.
  *
  * @returns {SaveWorkspaceManifestReturns}

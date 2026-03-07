@@ -24,29 +24,29 @@ import cliHeaderBasic from './_assets_/cli-header-1.png';
 import cliHeaderStyled from './_assets_/cli-header-2.png';
 import cliHeaderMargins from './_assets_/cli-header-3.png';
 
-Display consistent [CLI](/docs/quickstart/terminology#fundamentals) banners sized for any terminal, preserving color codes and honoring padding preferences.
+Display consistent <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> banners sized for any terminal, preserving color codes and honoring padding preferences.
 
 ## Summary
 
-The `CLIHeader` battery renders ANSI-safe banner strings you can print, giving any CLI an instant, on-brand frame with tunable borders, width, padding, and smart truncation.
+The `CLIHeader` battery renders <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>-safe banner strings you can print, giving any <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> an instant, on-brand frame with tunable borders, width, padding, and smart truncation.
 
 ## Why Use This Battery?
 
 1. Displays a branded heading so every command run carries clear visual identity.
-2. Pin important information (release version, [commit](/docs/quickstart/terminology#git-and-workflow) SHA, target environment, etc.) in the header.
+2. Pin important information (release version, <Term title="revision" to="/docs/quickstart/terminology#git-and-workflow">commit</Term> SHA, target environment, etc.) in the header.
 3. Helps surface high-priority notices, like upcoming deprecations or required flags.
 
 ## Capabilities
 
 - Terminal width is adapted during rendering, so banners match the window size without manual tuning.
 - Adds margin and padding controls without hand-tuning spaces or escape codes.
-- ANSI-aware truncation keeps long, colorized titles legible and prevents bleed into the rest of the output.
+- <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>-aware truncation keeps long, colorized titles legible and prevents bleed into the rest of the output.
 - Border presets cover box, round, and thick frames, giving teams on-brand presentation with no bloat.
 
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the [API](/docs/quickstart/terminology#fundamentals) is identical in JavaScript ([ESM](/docs/quickstart/terminology#javascript-and-typescript)-only).
+Examples use TypeScript, but the <Term title="application programming interface" to="/docs/quickstart/terminology#fundamentals">API</Term> is identical in JavaScript (<Term title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript">ESM</Term>-only).
 :::
 
 <Tabs groupId="cli-header-usage">

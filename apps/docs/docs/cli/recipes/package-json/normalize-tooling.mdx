@@ -1,0 +1,53 @@
+---
+id: normalize-tooling
+title: Normalize Tooling
+description: Normalize scripts, gypfile, config, and workspaces fields in workspace package.json files.
+keywords:
+  - nova
+  - normalize-tooling
+  - package.json
+  - scripts
+  - gypfile
+  - config
+  - workspaces
+tags:
+  - normalize-tooling
+  - cli
+  - recipe
+  - package-json
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Normalize **scripts**, **gypfile**, **config**, and **workspaces** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+
+## Summary
+
+The `normalize-tooling` recipe handles tooling-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json`. It normalizes the `scripts` object, `gypfile` flag, `config` object, and `workspaces` field according to workspace role conventions.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe package-json normalize-tooling [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe package-json normalize-tooling [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |

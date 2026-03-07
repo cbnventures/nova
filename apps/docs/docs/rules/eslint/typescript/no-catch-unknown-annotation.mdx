@@ -1,0 +1,96 @@
+---
+id: no-catch-unknown-annotation
+title: No Catch Unknown Annotation
+description: Disallow redundant unknown type annotations on catch clause variables because TypeScript defaults them to unknown.
+keywords:
+  - nova
+  - eslint rule
+  - catch clause
+  - unknown annotation
+  - redundant type
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Remove redundant `: unknown` annotations from catch clause variables because TypeScript already defaults them to `unknown`.
+
+## Summary
+
+The `no-catch-unknown-annotation` rule reports any catch clause parameter that has an explicit `: unknown` type annotation. Since TypeScript 4.4+ defaults catch variables to `unknown` (when `useUnknownInCatchVariables` or `strict` is enabled), the annotation adds no value and should be removed for cleanliness.
+
+## Why Use This Rule?
+
+1. Eliminates noise from redundant type annotations that TypeScript already enforces.
+2. Keeps catch clauses consistent across the codebase.
+3. Reduces the chance of cargo-culting an annotation that suggests the type might be something other than `unknown`.
+
+## Examples
+
+<Tabs groupId="no-catch-unknown-annotation-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    try {
+      riskyOperation();
+    } catch (error) {
+      // error is already unknown by default.
+      console.error(error);
+    }
+
+    try {
+      riskyOperation();
+    } catch {
+      // Omitting the parameter entirely is also fine.
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    try {
+      riskyOperation();
+    } catch (error: unknown) {
+      // The `: unknown` annotation is redundant.
+      console.error(error);
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+
+```ts
+import { noCatchUnknownAnnotation } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-catch-unknown-annotation': noCatchUnknownAnnotation,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-catch-unknown-annotation': ['warn'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **Warning fires but you want to keep the annotation for documentation.** — It is recommended to remove it and rely on TypeScript's built-in default. The annotation is purely redundant.
+- **Using an older TypeScript version.** — If your project uses TypeScript below 4.4 (or does not enable `useUnknownInCatchVariables` / `strict`), this rule does not apply since catch variables default to `any` in that configuration.

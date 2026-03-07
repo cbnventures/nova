@@ -1,7 +1,8 @@
 ---
 id: overview
-title: Overview
-description: Nova Rules provides custom ESLint rules for catching unsafe patterns and enforcing consistent code style across JavaScript and TypeScript projects.
+title: Custom ESLint Rules
+sidebar_label: Overview
+description: Custom ESLint rules for catching unsafe patterns and enforcing consistent code style across JavaScript and TypeScript projects.
 sidebar_position: 1
 keywords:
   - nova
@@ -9,9 +10,18 @@ keywords:
   - custom rules
   - code quality
   - linting
+  - no assign then return
+  - no bracket assignment
+  - no catch unknown annotation
+  - no destructuring
+  - no implicit boolean
+  - no inline type annotation
   - no raw text in code
   - no regex literal flags
   - no regex literals
+  - no shared type import
+  - no ternary in template literal
+  - require padding lines
   - switch case blocks
   - no logger dev
   - javascript
@@ -50,7 +60,7 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
     <ul>
       <li><strong>Custom ESLint rules</strong> that catch patterns the built-in rule set does not cover.</li>
       <li><strong>Focused checks</strong> that target specific risks like leaked dev logging and unscoped switch cases.</li>
-      <li><strong>No extra options</strong> required — enable each rule in your flat config and it works.</li>
+      <li><strong>No extra options</strong> required — enable each rule in your <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term> and it works.</li>
       <li>Designed to complement existing ESLint rules, not replace them.</li>
     </ul>
   </TabItem>
@@ -80,10 +90,43 @@ All items below are **targeted**, **independent**, and **safe to adopt**. Enable
 
 Custom rules for JavaScript and TypeScript projects.
 
-| Rule                                                                | Synopsis                                                                   |
-|---------------------------------------------------------------------|----------------------------------------------------------------------------|
-| [No Logger.dev](/docs/rules/eslint/no-logger-dev)                   | Flag `Logger.dev` calls so dev-only logging gets caught before production. |
-| [No Raw Text in Code](/docs/rules/eslint/no-raw-text-in-code)       | Ban unwrapped text inside `<code>` elements to prevent MDX parsing issues. |
-| [No Regex Literal Flags](/docs/rules/eslint/no-regex-literal-flags) | Ban flags on regex literals so callers add flags at the call site.         |
-| [No Regex Literals](/docs/rules/eslint/no-regex-literals)           | Ban inline regex literals so patterns are centralized in a shared file.    |
-| [Switch Case Blocks](/docs/rules/eslint/switch-case-blocks)         | Require block-wrapped switch cases so declarations stay scoped per branch. |
+#### Formatting
+
+| Rule                                                                         | Synopsis                                                                   |
+|------------------------------------------------------------------------------|----------------------------------------------------------------------------|
+| [No Raw Text in Code](/docs/rules/eslint/formatting/no-raw-text-in-code)     | Ban unwrapped text inside `<code>` elements to prevent MDX parsing issues. |
+| [Require Padding Lines](/docs/rules/eslint/formatting/require-padding-lines) | Require blank lines between specific statement patterns for readability.   |
+
+#### Nova
+
+| Rule                                                   | Synopsis                                                                   |
+|--------------------------------------------------------|----------------------------------------------------------------------------|
+| [No Logger.dev](/docs/rules/eslint/nova/no-logger-dev) | Flag `Logger.dev` calls so dev-only logging gets caught before production. |
+
+#### Patterns
+
+| Rule                                                                                         | Synopsis                                                                      |
+|----------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| [No Assign Then Return](/docs/rules/eslint/patterns/no-assign-then-return)                   | Return expressions directly instead of assigning to an intermediate variable. |
+| [No Bracket Assignment](/docs/rules/eslint/patterns/no-bracket-assignment)                   | Use `Reflect.set()` instead of bracket notation assignment.                   |
+| [No Destructuring](/docs/rules/eslint/patterns/no-destructuring)                             | Ban destructuring in callbacks, loops, functions, declarations, assignments.  |
+| [No Implicit Boolean](/docs/rules/eslint/patterns/no-implicit-boolean)                       | Require explicit comparisons instead of truthy/falsy coercion in conditions.  |
+| [No Ternary in Template Literal](/docs/rules/eslint/patterns/no-ternary-in-template-literal) | Extract ternary expressions out of template literal interpolation slots.      |
+| [Switch Case Blocks](/docs/rules/eslint/patterns/switch-case-blocks)                         | Require block-wrapped switch cases so declarations stay scoped per branch.    |
+
+#### Regex
+
+| Rule                                                                      | Synopsis                                                                |
+|---------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| [No Regex Literal Flags](/docs/rules/eslint/regex/no-regex-literal-flags) | Ban flags on regex literals so callers add flags at the call site.      |
+| [No Regex Literals](/docs/rules/eslint/regex/no-regex-literals)           | Ban inline regex literals so patterns are centralized in a shared file. |
+
+#### TypeScript
+
+| Rule                                                                                     | Synopsis                                                                     |
+|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------|
+| [No Catch Unknown Annotation](/docs/rules/eslint/typescript/no-catch-unknown-annotation) | Remove redundant `: unknown` annotations from catch clause variables.        |
+| [No Inline Type Annotation](/docs/rules/eslint/typescript/no-inline-type-annotation)     | Require named type aliases instead of inline type annotations in code files. |
+| [No Shared Type Import](/docs/rules/eslint/typescript/no-shared-type-import)             | Prevent code files from importing shared type files directly.                |
+
+> Using Nova presets? See **[Presets](/docs/presets/)** for composable ESLint and TSConfig layers.

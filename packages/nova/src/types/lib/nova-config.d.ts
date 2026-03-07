@@ -1,5 +1,6 @@
 import type {
   NovaConfig,
+  NovaConfigConfig,
   NovaConfigEmails,
   NovaConfigEntities,
   NovaConfigEntity,
@@ -10,9 +11,11 @@ import type {
   NovaConfigProjectNameSlug,
   NovaConfigUrls,
   NovaConfigWorkspaceName,
+  NovaConfigWorkspaceRecipeName,
+  NovaConfigWorkspaceRecipeSettings,
+  NovaConfigWorkspaceRecipes,
   NovaConfigWorkspaceRole,
   NovaConfigWorkspaces,
-  NovaConfigWorkspaceSyncProperty,
   UrlProtocol,
 } from '@/types/shared.d.ts';
 
@@ -21,7 +24,7 @@ import type {
  *
  * @since 1.0.0
  */
-export type NovaConfigConfig = NovaConfig;
+export type { NovaConfigConfig };
 
 /**
  * Nova Config - Get array of http urls.
@@ -162,11 +165,11 @@ export type NovaConfigParseWorkspacesReturns = NovaConfigWorkspaces | undefined;
 
 export type NovaConfigParseWorkspacesWorkspaces = NovaConfigWorkspaces;
 
-export type NovaConfigParseWorkspacesAllowedSyncProperties = Set<string>;
+export type NovaConfigParseWorkspacesRecipes = NovaConfigWorkspaceRecipes | undefined;
 
-export type NovaConfigParseWorkspacesSyncProperties = NovaConfigWorkspaceSyncProperty[] | undefined;
+export type NovaConfigParseWorkspacesAllowedRecipes = Set<NovaConfigWorkspaceRecipeName>;
 
-export type NovaConfigParseWorkspacesSyncPropertiesTypeGuard = NovaConfigWorkspaceSyncProperty;
+export type NovaConfigParseWorkspacesParsedSettings = NovaConfigWorkspaceRecipeSettings;
 
 /**
  * Nova Config - Parse workspaces - Is name allowed.
@@ -193,6 +196,6 @@ export type NovaConfigSaveReturns = Promise<void>;
  *
  * @since 1.0.0
  */
-export type NovaConfigSetValue = NovaConfigConfig;
+export type NovaConfigSetConfig = NovaConfigConfig;
 
 export type NovaConfigSetReturns = void;

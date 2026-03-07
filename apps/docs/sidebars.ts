@@ -1,6 +1,6 @@
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
 
-import { MenuBuilder } from './tools/menu-builder';
+import { MenuBuilder } from './utils/menu-builder';
 
 /**
  * Sidebars.

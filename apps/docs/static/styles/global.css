@@ -4,16 +4,16 @@
  * ==================================================
  */
 :root {
-  --ifm-color-primary: #9B1F1F;
-  --ifm-color-primary-dark: #7C1919;
-  --ifm-color-primary-darker: #6C1616;
-  --ifm-color-primary-darkest: #551111;
-  --ifm-color-primary-light: #AF4C4C;
-  --ifm-color-primary-lighter: #BE6D6D;
-  --ifm-color-primary-lightest: #CD8F8F;
+  --ifm-color-primary: #DC2626;
+  --ifm-color-primary-dark: #B91C1C;
+  --ifm-color-primary-darker: #991B1B;
+  --ifm-color-primary-darkest: #7F1D1D;
+  --ifm-color-primary-light: #EF4444;
+  --ifm-color-primary-lighter: #F87171;
+  --ifm-color-primary-lightest: #FCA5A5;
 
   --brand-accent: #FFBA33;
-  --brand-secondary: #E25050;
+  --brand-secondary: #EF4444;
 
   --ifm-link-color: var(--ifm-color-primary);
   --ifm-link-hover-color: var(--brand-secondary);
@@ -22,8 +22,8 @@
 
   --ifm-navbar-background-color: #FFFFFF;
   --ifm-navbar-link-hover-color: var(--brand-secondary);
-  --ifm-footer-background-color: #0F0F0F;
-  --ifm-footer-link-color: #EFEFEF;
+  --ifm-footer-background-color: #171717;
+  --ifm-footer-link-color: #D4D4D4;
   --ifm-footer-link-hover-color: var(--brand-accent);
 
   --ifm-button-background-color: var(--ifm-color-primary);
@@ -31,10 +31,10 @@
   --ifm-button-hover-background-color: var(--ifm-color-primary-dark);
   --ifm-button-hover-border-color: var(--ifm-color-primary-darker);
 
-  --ifm-pre-background: #FAF7F6;
-  --docusaurus-highlighted-code-line-bg: rgba(155, 31, 31, 0.08);
+  --ifm-pre-background: #F8FAFC;
+  --docusaurus-highlighted-code-line-bg: rgba(220, 38, 38, 0.08);
 
-  --ifm-table-stripe-background: rgba(155, 31, 31, 0.04);
+  --ifm-table-stripe-background: rgba(220, 38, 38, 0.04);
 }
 
 /**
@@ -43,24 +43,24 @@
  * ==================================================
  */
 [data-theme='dark'] {
-  --ifm-color-primary: #E25050;
-  --ifm-color-primary-dark: #C04444;
-  --ifm-color-primary-darker: #AA3C3C;
-  --ifm-color-primary-darkest: #883030;
-  --ifm-color-primary-light: #E66A6A;
-  --ifm-color-primary-lighter: #EB8484;
-  --ifm-color-primary-lightest: #EF9F9F;
+  --ifm-color-primary: #EF4444;
+  --ifm-color-primary-dark: #DC2626;
+  --ifm-color-primary-darker: #B91C1C;
+  --ifm-color-primary-darkest: #991B1B;
+  --ifm-color-primary-light: #F87171;
+  --ifm-color-primary-lighter: #FCA5A5;
+  --ifm-color-primary-lightest: #FECACA;
 
   --brand-accent: #FFBA33;
-  --brand-secondary: #E25050;
+  --brand-secondary: #F87171;
 
   --ifm-link-color: var(--ifm-color-primary);
   --ifm-link-hover-color: var(--brand-accent);
 
-  --ifm-navbar-background-color: #0F0F0F;
+  --ifm-navbar-background-color: #18181B;
   --ifm-navbar-link-hover-color: var(--brand-accent);
-  --ifm-footer-background-color: #0A0A0A;
-  --ifm-footer-link-color: #EAEAEA;
+  --ifm-footer-background-color: #111114;
+  --ifm-footer-link-color: #D4D4D8;
   --ifm-footer-link-hover-color: var(--brand-accent);
 
   --ifm-button-background-color: var(--ifm-color-primary);
@@ -68,10 +68,10 @@
   --ifm-button-hover-background-color: var(--ifm-color-primary-dark);
   --ifm-button-hover-border-color: var(--ifm-color-primary-darker);
 
-  --ifm-pre-background: #141111;
-  --docusaurus-highlighted-code-line-bg: rgba(226, 80, 80, 0.18);
+  --ifm-pre-background: #1A1A1E;
+  --docusaurus-highlighted-code-line-bg: rgba(239, 68, 68, 0.15);
 
-  --ifm-table-stripe-background: rgba(226, 80, 80, 0.06);
+  --ifm-table-stripe-background: rgba(239, 68, 68, 0.05);
 }
 
 /**
@@ -114,12 +114,43 @@
 
 /**
  * ==================================================
+ * Footer
+ * ==================================================
+ */
+.footer--dark {
+  --ifm-footer-background-color: #171717;
+  --ifm-footer-link-color: #D4D4D4;
+}
+
+[data-theme='dark'] .footer--dark {
+  --ifm-footer-background-color: #111114;
+  --ifm-footer-link-color: #D4D4D8;
+}
+
+/**
+ * ==================================================
+ * Hero
+ * ==================================================
+ */
+.hero--primary {
+  background-color: var(--ifm-color-primary);
+  background-image: url('/images/hero-pattern.svg');
+  background-repeat: repeat;
+  background-size: 240px 240px;
+}
+
+/**
+ * ==================================================
  * Global tweaks
  * ==================================================
  */
 code {
   background: color-mix(in srgb, var(--ifm-pre-background) 80%, white);
   border: 1px solid color-mix(in srgb, var(--ifm-color-primary) 20%, transparent);
+}
+
+[data-theme='dark'] code {
+  background: color-mix(in srgb, var(--ifm-pre-background) 80%, black);
 }
 
 /**
@@ -136,4 +167,9 @@ details summary {
 table td:first-child,
 table th:first-child {
   white-space: nowrap;
+}
+
+a > abbr {
+  text-decoration: none;
+  cursor: pointer;
 }

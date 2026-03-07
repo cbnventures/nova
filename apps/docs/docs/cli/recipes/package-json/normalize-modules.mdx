@@ -1,0 +1,54 @@
+---
+id: normalize-modules
+title: Normalize Modules
+description: Normalize exports, main, type, browser, and imports fields in workspace package.json files.
+keywords:
+  - nova
+  - normalize-modules
+  - package.json
+  - exports
+  - main
+  - type
+  - browser
+  - imports
+tags:
+  - normalize-modules
+  - cli
+  - recipe
+  - package-json
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Normalize **exports**, **main**, **type**, **browser**, and **imports** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+
+## Summary
+
+The `normalize-modules` recipe ensures that module resolution fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` follow the official Node.js module specification conventions. It handles exports map structure, main entry point, module type declaration, browser field, and import maps.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe package-json normalize-modules [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe package-json normalize-modules [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |

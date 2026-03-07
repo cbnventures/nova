@@ -5,11 +5,11 @@ import type { BorderStyle, TextAlign } from '@/types/shared.d.ts';
  *
  * @since 1.0.0
  */
-export type CLIHeaderAlignAlign = TextAlign;
-
 export type CLIHeaderAlignString = string;
 
 export type CLIHeaderAlignWidth = number;
+
+export type CLIHeaderAlignAlign = TextAlign;
 
 export type CLIHeaderAlignReturns = string;
 

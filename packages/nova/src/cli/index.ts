@@ -3,11 +3,20 @@ import chalk from 'chalk';
 import { Command } from 'commander';
 
 import packageJson from '../../package.json' with { type: 'json' };
-import { CLIRecipePinVersions } from '@/cli/recipe/pin-versions.js';
-import { CLIRecipeSyncLtsEngines } from '@/cli/recipe/sync-lts-engines.js';
-import { CLIRecipeSyncPackages } from '@/cli/recipe/sync-packages.js';
+import { CLIRecipePackageJsonCleanup } from '@/cli/recipe/package-json/cleanup.js';
+import { CLIRecipePackageJsonNormalizeArtifacts } from '@/cli/recipe/package-json/normalize-artifacts.js';
+import { CLIRecipePackageJsonNormalizeBundler } from '@/cli/recipe/package-json/normalize-bundler.js';
+import { CLIRecipePackageJsonNormalizeDependencies } from '@/cli/recipe/package-json/normalize-dependencies.js';
+import { CLIRecipePackageJsonNormalizeModules } from '@/cli/recipe/package-json/normalize-modules.js';
+import { CLIRecipePackageJsonNormalizeTooling } from '@/cli/recipe/package-json/normalize-tooling.js';
+import { CLIRecipePackageJsonSyncEnvironment } from '@/cli/recipe/package-json/sync-environment.js';
+import { CLIRecipePackageJsonSyncIdentity } from '@/cli/recipe/package-json/sync-identity.js';
+import { CLIRecipePackageJsonSyncOwnership } from '@/cli/recipe/package-json/sync-ownership.js';
 import { CLIUtilityChangelog } from '@/cli/utility/changelog.js';
 import { CLIUtilityInitialize } from '@/cli/utility/initialize.js';
+import { CLIUtilityRunRecipes } from '@/cli/utility/run-recipes.js';
+import { CLIUtilityRunScripts } from '@/cli/utility/run-scripts.js';
+import { CLIUtilityTranspile } from '@/cli/utility/transpile.js';
 import { CLIUtilityTypeCheck } from '@/cli/utility/type-check.js';
 import { CLIUtilityVersion } from '@/cli/utility/version.js';
 import {
@@ -22,7 +31,11 @@ import type {
   CLIExecuteCommandOptions,
   CLIExecuteCommandReturns,
   CLIExecuteCommandTarget,
+  CLIGetCommandUsageAliasLine,
+  CLIGetCommandUsageAliasLineStripped,
   CLIGetCommandUsageCommand,
+  CLIGetCommandUsageFullLine,
+  CLIGetCommandUsageFullLineStripped,
   CLIGetCommandUsageReturns,
   CLIGetHeaderReturns,
   CLIGetSubcommandTermCommand,
@@ -37,6 +50,7 @@ import type {
   CLIStyleTextTitleStyles,
   CLIStyleTextType,
 } from '@/types/cli/index.d.ts';
+import type { CLIUtilityRunScriptsRunOptions } from '@/types/cli/utility/run-scripts.d.ts';
 
 /**
  * CLI.
@@ -66,14 +80,14 @@ class CLI {
         .description('CLI for the Common Developer')
         .commandsGroup('Commands:')
         .configureOutput({
-          writeErr: (string) => process.stdout.write(string),
-          outputError: (string) => this.handleCliError(string),
+          writeErr: (text) => process.stdout.write(text),
+          outputError: (text) => this.handleCliError(text),
         })
         .configureHelp({
           commandDescription: () => '',
           commandUsage: (command) => this.getCommandUsage(command),
-          styleDescriptionText: (string) => this.styleText('description', string),
-          styleTitle: (string) => this.styleText('title', string),
+          styleDescriptionText: (text) => this.styleText('description', text),
+          styleTitle: (text) => this.styleText('title', text),
           subcommandTerm: (command) => this.getSubcommandTerm(command),
         })
         .addHelpText('beforeAll', this.getHeader())
@@ -190,38 +204,111 @@ class CLI {
       .commandsGroup('Subcommands:')
       .helpCommand(false);
 
-    recipe
-      .command('pin-versions')
-      .alias('pv')
+    const recipePackageJson = recipe
+      .command('package-json')
+      .alias('pkg')
+      .usage('<subcommand> [options]')
+      .description('Recipes for "package.json" file synchronization')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false);
+
+    recipePackageJson
+      .command('cleanup')
+      .alias('clean')
       .usage('[options]')
-      .description('Pin all workspace dependency versions by stripping range prefixes')
+      .description('Remove unsupported keys and reorder remaining keys')
       .option('-d, --dry-run', 'Preview changes without writing files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CLIRecipePinVersions.run);
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonCleanup.run);
       });
 
-    recipe
-      .command('sync-lts-engines')
-      .alias('sle')
+    recipePackageJson
+      .command('normalize-artifacts')
+      .alias('norm-art')
       .usage('[options]')
-      .description('Sync Node.js engine constraints to current LTS versions across workspaces')
+      .description('Normalize files, bin, man, directories, private, and publishConfig fields')
       .option('-d, --dry-run', 'Preview changes without writing files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CLIRecipeSyncLtsEngines.run);
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonNormalizeArtifacts.run);
       });
 
-    recipe
-      .command('sync-packages')
-      .alias('sp')
+    recipePackageJson
+      .command('normalize-bundler')
+      .alias('norm-bun')
       .usage('[options]')
-      .description('Ensures every workspace "package.json" file matches defined conventions drawn from "nova.config.json"')
+      .description('Normalize types, module, sideEffects, and esnext fields')
       .option('-d, --dry-run', 'Preview changes without writing files')
-      .option('-i, --ignore-unknown', 'Ignore unknown keys found in workspace manifest files')
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
-        await this.executeCommand<typeof options>(options, CLIRecipeSyncPackages.run);
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonNormalizeBundler.run);
+      });
+
+    recipePackageJson
+      .command('normalize-dependencies')
+      .alias('norm-dep')
+      .usage('[options]')
+      .description('Normalize dependency fields with optional version pinning')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonNormalizeDependencies.run);
+      });
+
+    recipePackageJson
+      .command('normalize-modules')
+      .alias('norm-mod')
+      .usage('[options]')
+      .description('Normalize exports, main, type, browser, and imports fields')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonNormalizeModules.run);
+      });
+
+    recipePackageJson
+      .command('normalize-tooling')
+      .alias('norm-tool')
+      .usage('[options]')
+      .description('Normalize scripts, gypfile, config, and workspaces fields')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonNormalizeTooling.run);
+      });
+
+    recipePackageJson
+      .command('sync-environment')
+      .alias('sync-env')
+      .usage('[options]')
+      .description('Sync engines, os, cpu, libc, devEngines, and packageManager fields')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonSyncEnvironment.run);
+      });
+
+    recipePackageJson
+      .command('sync-identity')
+      .alias('sync-id')
+      .usage('[options]')
+      .description('Sync name, version, description, keywords, and license fields')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonSyncIdentity.run);
+      });
+
+    recipePackageJson
+      .command('sync-ownership')
+      .alias('sync-own')
+      .usage('[options]')
+      .description('Sync homepage, bugs, author, contributors, funding, and repository fields')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIRecipePackageJsonSyncOwnership.run);
       });
 
     /**
@@ -256,7 +343,7 @@ class CLI {
 
     utility
       .command('changelog')
-      .alias('cl')
+      .alias('log')
       .usage('[options]')
       .description('Record changes and release versioned changelogs')
       .option('--record', 'Record a change')
@@ -282,8 +369,45 @@ class CLI {
       });
 
     utility
+      .command('run-recipes')
+      .alias('run-rcp')
+      .usage('[options]')
+      .description('Run all configured recipes')
+      .option('-d, --dry-run', 'Preview changes without writing files')
+      .option('-r, --replace-file', 'Replace the original file without creating a backup')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIUtilityRunRecipes.run);
+      });
+
+    utility
+      .command('run-scripts')
+      .alias('run-scr')
+      .usage('<pattern> [options]')
+      .description('Run package.json scripts by pattern in sequential or parallel mode')
+      .argument('<pattern>', 'Script name pattern (e.g., "build:*")')
+      .option('-s, --sequential', 'Run matched scripts one at a time, stopping on failure')
+      .option('-p, --parallel', 'Run matched scripts concurrently')
+      .action(async (pattern, options) => {
+        const runScriptsOptions = {
+          ...options,
+          pattern,
+        } as CLIUtilityRunScriptsRunOptions;
+        await this.executeCommand<CLIUtilityRunScriptsRunOptions>(runScriptsOptions, CLIUtilityRunScripts.run);
+      });
+
+    utility
+      .command('transpile')
+      .alias('xpile')
+      .usage('[options]')
+      .description('Transpile TypeScript with filtered diagnostics')
+      .option('-p, --project <path>', 'Path to tsconfig.json')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CLIUtilityTranspile.run);
+      });
+
+    utility
       .command('type-check')
-      .alias('tc')
+      .alias('type-chk')
       .usage('[options]')
       .description('Run type checks scoped to project-owned files')
       .option('-p, --project <path>', 'Path to tsconfig.json')
@@ -409,9 +533,20 @@ class CLI {
       parentCommand = parentCommand.parent;
     }
 
+    const fullLine: CLIGetCommandUsageFullLine = fullCommand.reverse().join(' ');
+    const aliasLine: CLIGetCommandUsageAliasLine = aliasCommand.reverse().join(' ');
+
+    // Strip ANSI codes before comparing to avoid false mismatches from styling.
+    const fullLineStripped: CLIGetCommandUsageFullLineStripped = fullLine.replace(new RegExp(PATTERN_ANSI, 'g'), '');
+    const aliasLineStripped: CLIGetCommandUsageAliasLineStripped = aliasLine.replace(new RegExp(PATTERN_ANSI, 'g'), '');
+
+    if (fullLineStripped === aliasLineStripped) {
+      return fullLine;
+    }
+
     return [
-      fullCommand.reverse().join(' '),
-      aliasCommand.reverse().join(' '),
+      fullLine,
+      aliasLine,
     ].join('\n       ');
   }
 
@@ -460,21 +595,21 @@ class CLI {
       'Subcommands:': [chalk.magenta],
       'Usage:': [chalk.green],
     };
-    const categoryFunctions = categoryStyles[type] ?? [];
-    const titleFunctions = titleStyles[text] ?? [];
+    const categoryFunctions = Reflect.get(categoryStyles, type) ?? [];
+    const titleFunctions = Reflect.get(titleStyles, text) ?? [];
 
     let coloredText = text;
 
     // Apply category type coloring.
-    categoryFunctions.forEach((categoryFunction) => {
+    for (const categoryFunction of categoryFunctions) {
       coloredText = categoryFunction(coloredText);
-    });
+    }
 
     // Apply per-title overrides.
     if (type === 'title') {
-      titleFunctions.forEach((titleFunction) => {
+      for (const titleFunction of titleFunctions) {
         coloredText = titleFunction(coloredText);
-      });
+      }
     }
 
     return coloredText;
@@ -492,13 +627,13 @@ class CLI {
    * @since 1.0.0
    */
   private handleCliError(text: CLIHandleCLIErrorText): CLIHandleCLIErrorReturns {
-    let processedText = text.replace(new RegExp(PATTERN_ERROR_PREFIX, 'i'), '');
+    let processedText = text.replace(new RegExp(PATTERN_ERROR_PREFIX.source, 'i'), '');
 
     // Strip ANSI coloring.
     processedText = processedText.replace(PATTERN_ANSI, '');
 
     // Trim and normalize whitespace.
-    processedText = processedText.replace(new RegExp(PATTERN_WHITESPACE, 'g'), ' ').trim();
+    processedText = processedText.replace(new RegExp(PATTERN_WHITESPACE.source, 'g'), ' ').trim();
 
     // Capitalize first letter.
     processedText = `${processedText.charAt(0).toUpperCase()}${processedText.slice(1)}`;

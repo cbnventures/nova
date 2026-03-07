@@ -25,7 +25,7 @@ import { Icon } from '@iconify/react';
 
 # Best Practices
 
-Practical ESLint guidance for Nova that uses a single **flat config** and **small, ordered layers**. Favor **explicit**, inspectable rules and **predictable** results. These practices apply to any [workspace](/docs/quickstart/terminology#nova-concepts) in a [monorepo](/docs/quickstart/terminology#git-and-workflow).
+Practical ESLint guidance for Nova that uses a single **<Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>** and **small, ordered layers**. Favor **explicit**, inspectable rules and **predictable** results. These practices apply to any <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> in a <Term title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow">monorepo</Term>.
 
 ## Dos and Don'ts
 
@@ -35,8 +35,8 @@ Practical ESLint guidance for Nova that uses a single **flat config** and **smal
     <span>DO: Use one flat config and start from Nova presets</span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Use a single <code>{'eslint.config.ts'}</code> or <code>{'eslint.config.js'}</code>. First <strong>import Nova presets</strong>, then add your project's layers and overrides in that same array.</li>
-    <li><strong>Why</strong>: One file is the source of truth. Presets give a reliable base. Your local entries then adjust behavior in a controlled, visible order.</li>
+    <li><strong>What</strong>: Use a single <code>{'eslint.config.mjs'}</code>. First <strong>import Nova <Term title="config layer" to="/docs/quickstart/terminology#nova-concepts">presets</Term></strong>, then add your project's layers and overrides in that same array.</li>
+    <li><strong>Why</strong>: One file is the source of truth. <Term title="config layer" to="/docs/quickstart/terminology#nova-concepts">Presets</Term> give a reliable base. Your local entries then adjust behavior in a controlled, visible order.</li>
   </ul>
 </details>
 
@@ -68,8 +68,8 @@ Practical ESLint guidance for Nova that uses a single **flat config** and **smal
     <span>DON'T: Mix flat config with legacy <code>{'.eslintrc*'}</code></span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Do not keep old config files alongside <code>{'eslint.config.ts'}</code> or <code>{'eslint.config.js'}</code>.</li>
-    <li><strong>Why</strong>: Split sources of truth cause confusion. Flat config expects rules and ignores to live in one place.</li>
+    <li><strong>What</strong>: Do not keep old config files alongside <code>{'eslint.config.mjs'}</code>.</li>
+    <li><strong>Why</strong>: Split sources of truth cause confusion. <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">Flat config</Term> expects rules and ignores to live in one place.</li>
   </ul>
 </details>
 

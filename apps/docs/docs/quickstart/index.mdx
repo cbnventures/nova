@@ -1,7 +1,8 @@
 ---
 id: overview
-title: Overview
-description: Nova is a strict JavaScript and TypeScript toolkit with composable presets, guided generators, and Airbnb style lint rules for consistent, predictable builds.
+title: Getting Started
+sidebar_label: Overview
+description: Nova is a strict JavaScript and TypeScript toolkit with composable presets, guided generators, and Airbnb-style lint rules for predictable builds.
 sidebar_position: 1
 keywords:
   - nova
@@ -43,7 +44,7 @@ Nova is a JavaScript and TypeScript monorepo suite (formerly "Foundation Nova").
 
 ## Our Values
 
-1. **Automatic** — All project essentials are provisioned with minimal <abbr title="development and operations">DevOps</abbr> effort. You should not need to wire up basics by hand; the defaults handle it.
+1. **Automatic** — All project essentials are provisioned with minimal <Term title="development and operations" to="/docs/quickstart/terminology#builds-and-tooling">DevOps</Term> effort. You should not need to wire up basics by hand; the defaults handle it.
 2. **Explicit** — Every configuration detail is visible and precise. If a nuance matters (for example `"."` vs `"./"`, or pairing `module` with `moduleResolution`), it must be written out, not implied.
 3. **Independence** — Configurations (e.g. ESLint, TSConfig) stand on their own. There are no hidden base presets or cross-dependencies filling in values behind the scenes.
 4. **Predictable** — Given the same inputs, the outputs are always the same. Features that introduce non-determinism (e.g. `incremental`, artifact caches, package-lock drift) are disallowed.
@@ -51,8 +52,8 @@ Nova is a JavaScript and TypeScript monorepo suite (formerly "Foundation Nova").
 
 ## Scope and Boundaries
 
-- **Node.js [LTS](/docs/quickstart/terminology#fundamentals) first** — Nova tracks the latest long-term support baselines for Node.js.
-- **Modern modules** — Nova targets [ESM](/docs/quickstart/terminology#javascript-and-typescript)-based builds and excludes legacy "script" pipelines.
+- **Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> first** — Nova tracks the latest long-term support baselines for Node.js.
+- **Modern modules** — Nova targets <Term title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript">ESM</Term>-based builds and excludes legacy "script" pipelines.
 - **No experimental features** — Only officially supported and stable options are allowed. Your project is not a beta playground.
 
 ## Preset Philosophy

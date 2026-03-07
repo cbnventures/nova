@@ -4,7 +4,7 @@ import { test } from 'node:test';
 import {
   itemAllowedPoliciesByRole,
   itemAllowedRoles,
-  itemAllowedSyncProperties,
+  itemAllowedRecipes,
   itemChangelogAdjectives,
   itemChangelogCategoryBumpMap,
   itemChangelogNouns,
@@ -64,21 +64,21 @@ test('allowed roles and policies', async (context) => {
 });
 
 /**
- * Allowed sync properties.
+ * Allowed recipes.
  *
  * @since 1.0.0
  */
-test('itemAllowedSyncProperties', async (context) => {
+test('itemAllowedRecipes', async (context) => {
   await context.test('has no duplicates', () => {
-    const unique = new Set(itemAllowedSyncProperties);
+    const unique = new Set(itemAllowedRecipes);
 
-    strictEqual(unique.size, itemAllowedSyncProperties.length);
+    strictEqual(unique.size, itemAllowedRecipes.length);
   });
 
-  await context.test('contains expected properties', () => {
-    ok(itemAllowedSyncProperties.includes('description'));
-    ok(itemAllowedSyncProperties.includes('author'));
-    ok(itemAllowedSyncProperties.includes('repository'));
+  await context.test('contains expected recipes', () => {
+    ok(itemAllowedRecipes.includes('sync-identity'));
+    ok(itemAllowedRecipes.includes('normalize-dependencies'));
+    ok(itemAllowedRecipes.includes('sync-environment'));
   });
 });
 

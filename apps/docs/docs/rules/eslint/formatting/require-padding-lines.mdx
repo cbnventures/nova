@@ -1,0 +1,158 @@
+---
+id: require-padding-lines
+title: Require Padding Lines
+description: Require blank lines between specific statement patterns for improved readability such as exit code before return and before loops.
+keywords:
+  - nova
+  - eslint rule
+  - padding lines
+  - blank lines
+  - readability
+  - code style
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require blank lines between specific statement patterns so code stays visually organized and easy to scan.
+
+## Summary
+
+The `require-padding-lines` rule enforces blank lines in five situations: between `process.exitCode` assignments and `return`, before loop statements, around bare `await` expressions adjacent to declarations, between distinct expression-statement operations, and between non-empty switch cases.
+
+## Why Use This Rule?
+
+1. Separates exit-code logic from the return statement so the intent is visually clear.
+2. Prevents loops from running into the declarations above them.
+3. Keeps bare `await` calls visually distinct from surrounding variable declarations.
+4. Adds breathing room between sequential method calls and `await` operations.
+5. Gives switch cases clear visual boundaries so each branch is easy to scan.
+
+## Examples
+
+<Tabs groupId="require-padding-lines-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    process.exitCode = 1;
+
+    return;
+
+    const items = getItems();
+
+    for (const item of items) {
+      process(item);
+    }
+
+    await Runner.fetchData();
+
+    const filtered = Runner.filterItems(items);
+
+    Runner.print(grouped);
+
+    await Runner.writeOutput(data);
+
+    switch (action) {
+      case 'start': {
+        run();
+        break;
+      }
+
+      case 'stop': {
+        cleanup();
+        break;
+      }
+
+      // Empty cases for intentional fallthrough are fine.
+      case 'pause':
+      case 'resume':
+      default: {
+        log('unhandled');
+        break;
+      }
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    process.exitCode = 1;
+    return;
+
+    const items = getItems();
+    for (const item of items) {
+      process(item);
+    }
+
+    await Runner.fetchData();
+    const filtered = Runner.filterItems(items);
+
+    Runner.print(grouped);
+    await Runner.writeOutput(data);
+
+    switch (action) {
+      case 'start': {
+        run();
+        break;
+      }
+      case 'stop': {
+        cleanup();
+        break;
+      }
+      case 'pause':
+      case 'resume':
+      default: {
+        log('unhandled');
+        break;
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+
+```ts
+import { requirePaddingLines } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'require-padding-lines': requirePaddingLines,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/require-padding-lines': ['warn'],
+    },
+  },
+];
+```
+
+### Options
+
+| Option                 | Type      | Default | Description                                                             |
+|------------------------|-----------|---------|-------------------------------------------------------------------------|
+| `exitCodeBeforeReturn` | `boolean` | `true`  | Require a blank line between `process.exitCode = N` and `return`.       |
+| `beforeLoops`          | `boolean` | `true`  | Require a blank line before `for`/`while`/`do...while` loop statements. |
+| `bareAwait`            | `boolean` | `true`  | Require a blank line separating bare `await` from declarations.         |
+| `betweenOperations`    | `boolean` | `true`  | Require a blank line between distinct expression-statement operations.  |
+| `betweenSwitchCases`   | `boolean` | `true`  | Require a blank line between non-empty switch cases.                    |
+
+Set any option to `false` to disable that specific check.
+
+## Troubleshooting
+
+- **Warning fires between two loops.** — The `beforeLoops` check only fires when a loop is preceded by a non-loop statement. Consecutive loops do not trigger a warning.
+- **Warning fires on an assigned await.** — The `bareAwait` check only targets `await` expressions that appear as standalone expression statements (no assignment). Assigned `await` like `const x = await fn()` is not affected.

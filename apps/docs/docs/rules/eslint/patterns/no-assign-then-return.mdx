@@ -1,0 +1,95 @@
+---
+id: no-assign-then-return
+title: No Assign Then Return
+description: Disallow assigning to a const variable and immediately returning it when the expression can be returned directly.
+keywords:
+  - nova
+  - eslint rule
+  - assign then return
+  - intermediate variable
+  - code style
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Return expressions directly instead of assigning to an intermediate variable that is immediately returned.
+
+## Summary
+
+The `no-assign-then-return` rule reports a `return` statement that returns an identifier when the immediately preceding statement is a `const` declaration of that same identifier. It is recommended to return the expression directly.
+
+## Why Use This Rule?
+
+1. Removes unnecessary intermediate variables that add visual noise.
+2. Makes the return value immediately visible without scanning back to the declaration.
+3. Keeps functions concise by eliminating a redundant line.
+
+## Examples
+
+<Tabs groupId="no-assign-then-return-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    function getActive(items) {
+      return items.filter((item) => item.active === true);
+    }
+
+    // Variable is used before the return — this is fine.
+    function process(items) {
+      const filtered = items.filter((item) => item.active === true);
+
+      Logger.info(`Found ${filtered.length} items`);
+
+      return filtered;
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    function getActive(items) {
+      const filtered = items.filter((item) => item.active === true);
+
+      return filtered;
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+
+```ts
+import { noAssignThenReturn } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-assign-then-return': noAssignThenReturn,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-assign-then-return': ['warn'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **Warning fires but the variable name is descriptive.** — It is recommended to return the expression directly. If a descriptive name is important, consider adding a comment above the return statement instead.
+- **Only `const` declarations are checked.** — Reassignable variables (`let`) are skipped because they might be modified between declaration and return.

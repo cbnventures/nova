@@ -26,7 +26,7 @@ Generate or update the Nova config file with an interactive wizard that guides y
 
 ## Summary
 
-The `initialize` command scaffolds and maintains the [`nova.config.json`](/docs/quickstart/terminology#nova-concepts) file by opening a guided flow across project metadata, key entities, and canonical URLs.
+The `initialize` command scaffolds and maintains the <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term> file by opening a guided flow across project metadata, key entities, and canonical URLs.
 
 Existing values populate each prompt so you can edit an accurate snapshot and only persist changes when you confirm them.
 
@@ -39,15 +39,15 @@ Existing values populate each prompt so you can edit an accurate snapshot and on
 
 ## Use Cases
 
-- **Onboarding** — Create the first `nova.config.json` for a new or migrated repository.
+- **Onboarding** — Create the first <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term> for a new or migrated repository.
 - **Metadata refresh** — Keep project descriptions, entities, and canonical URLs in sync after ownership changes.
 - **Normalization** — Clean up manually edited entries without hunting for typos in raw JSON.
-- **Generator support** — Feed consistent metadata to Nova generators so docs, README files, and release notes stay accurate.
+- **<Term title="template command" to="/docs/quickstart/terminology#nova-concepts">Generator</Term> support** — Feed consistent metadata to Nova <Term title="template command" to="/docs/quickstart/terminology#nova-concepts">generators</Term> so docs, README files, and release notes stay accurate.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js [LTS](/docs/quickstart/terminology#fundamentals) release with either the installed `nova` [CLI](/docs/quickstart/terminology#fundamentals) or `npx`.
-- **Project root** — Run the command from the directory containing the top-level `package.json` ([monorepo](/docs/quickstart/terminology#git-and-workflow) root included).
+- **Node.js runtime** — Use any Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> release with either the installed `nova` <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> or `npx`.
+- **Project root** — Run the command from the directory containing the top-level `package.json` (<Term title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow">monorepo</Term> root included).
 - **Interactive terminal** — The session needs to support interactive prompts for the wizard to function.
 
 ## Usage
@@ -101,7 +101,7 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 ### Project
 
 - **Purpose**: Edit project display name, slug, short/long descriptions, and keywords in one guided step.
-- **Nice to know**: Slug updates propagate to [workspace](/docs/quickstart/terminology#nova-concepts) names for roles that depend on it (`project`, `docs`, `config`, `app`, `tool`) to keep names consistent.
+- **Nice to know**: Slug updates propagate to <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> names for roles that depend on it (`project`, `docs`, `config`, `app`, `tool`) to keep names consistent.
 - **Things to watch**: Slug allows only letters, numbers, hyphens, and underscores up to 214 characters; keywords are validated per item (50 characters max).
 
 ### Entities
@@ -124,103 +124,225 @@ Existing values are pre-filled in each prompt. Press **Enter** to keep a value, 
 
 ### Workspaces
 
-- **Purpose**: List detected workspaces (`package.json`) and edit each with role/policy in one place.
-- **Nice to know**: Roles (project, config, docs, app, package, tool, template) and policies ([freezable](/docs/quickstart/terminology#nova-concepts), [trackable](/docs/quickstart/terminology#nova-concepts), [distributable](/docs/quickstart/terminology#nova-concepts)) are constrained to allowed combinations so you don't accidentally pick an invalid pairing.
-- **Things to watch**: Naming rules enforced by role (config/app/tool require the project-slug prefix when set); distributable workspaces can opt into syncing selected metadata fields.
+- **Purpose**: List detected <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspaces</Term> (`package.json`) and edit each with role/policy in one place.
+- **Nice to know**: Roles (project, config, docs, app, package, tool, template) and policies (<Term title="locked workspace" to="/docs/quickstart/terminology#nova-concepts">freezable</Term>, <Term title="private workspace" to="/docs/quickstart/terminology#nova-concepts">trackable</Term>, <Term title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts">distributable</Term>) are constrained to allowed combinations so you don't accidentally pick an invalid pairing.
+- **Things to watch**: Naming rules enforced by role (config/app/tool require the project-slug prefix when set); <Term title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts">distributable</Term> <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspaces</Term> can opt into syncing selected metadata fields.
 
 ## Saving and Canceling
 
-- Choosing **Save & Exit** writes to a file called `nova.config.json`.
+- Choosing **Save & Exit** writes to a file called <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>.
 - Choosing **Cancel** exits immediately without persisting changes and prints a debug log.
 
 ## Output Example
 
 ```json title="nova.config.json"
 {
-    "project": {
-      "name": {
-        "title": "Example",
-        "slug": "example"
-      },
-      "description": {
-        "short": "Sample settings for a Nova-powered JavaScript toolkit.",
-        "long": "Use Nova to keep linting, typing, and release metadata consistent across your JavaScript and TypeScript projects."
-      },
-      "keywords": [
-        "example",
-        "nova",
-        "tooling",
-        "config"
+  "project": {
+    "name": {
+      "slug": "example",
+      "title": "Example"
+    },
+    "description": {
+      "short": "Sample settings for a Nova-powered JavaScript toolkit.",
+      "long": "Use Nova to keep linting, typing, and release metadata consistent across your JavaScript and TypeScript projects."
+    },
+    "keywords": [
+      "example",
+      "nova",
+      "tooling",
+      "config"
+    ]
+  },
+  "entities": [
+    {
+      "name": "Example Author",
+      "email": "author@example.com",
+      "url": "https://example.com/author",
+      "roles": [
+        "author"
       ]
     },
-    "entities": [
-      {
-        "name": "Example Author",
-        "email": "author@example.com",
-        "url": "https://example.com/author",
-        "roles": [
-          "author"
-        ]
-      },
-      {
-        "name": "Example Collaborator",
-        "email": "collab@example.com",
-        "url": "https://example.com/collaborator",
-        "roles": [
-          "contributor",
-          "supporter"
+    {
+      "name": "Example Collaborator",
+      "email": "collab@example.com",
+      "url": "https://example.com/collaborator",
+      "roles": [
+        "contributor",
+        "supporter"
+      ]
+    }
+  ],
+  "emails": {
+    "bugs": "bugs@example.com"
+  },
+  "urls": {
+    "homepage": "https://example.com",
+    "repository": "https://github.com/example/example-project",
+    "bugs": "https://github.com/example/example-project/issues",
+    "license": "https://github.com/example/example-project/blob/main/LICENSE",
+    "logo": "https://example.com/assets/logo.svg",
+    "documentation": "https://docs.example.com/project",
+    "github": "https://github.com/example/example-project",
+    "npm": "https://www.npmjs.com/package/example-project",
+    "fundSources": [
+      "https://github.com/sponsors/example",
+      "https://opencollective.com/example"
+    ]
+  },
+  "workspaces": {
+    "./": {
+      "name": "example-project",
+      "role": "project",
+      "policy": "freezable",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
         ]
       }
-    ],
-    "emails": {
-      "bugs": "bugs@example.com"
     },
-    "urls": {
-      "homepage": "https://example.com",
-      "repository": "https://github.com/example/example-project",
-      "bugs": "https://github.com/example/example-project/issues",
-      "license": "https://github.com/example/example-project/blob/main/LICENSE",
-      "logo": "https://example.com/assets/logo.svg",
-      "documentation": "https://docs.example.com/project",
-      "github": "https://github.com/example/example-project",
-      "npm": "https://www.npmjs.com/package/example-project",
-      "fundSources": [
-        "https://github.com/sponsors/example",
-        "https://opencollective.com/example"
-      ]
+    "./apps/docs": {
+      "name": "example-docs",
+      "role": "docs",
+      "policy": "freezable",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
     },
-    "workspaces": {
-      "./": {
-        "name": "example-project",
-        "role": "project",
-        "policy": "freezable"
-      },
-      "./apps/docs": {
-        "name": "example-docs",
-        "role": "docs",
-        "policy": "freezable"
-      },
-      "./packages/nova": {
-        "name": "@company/example",
-        "role": "package",
-        "policy": "distributable",
-        "syncProperties": [
-          "description",
-          "keywords",
-          "author",
-          "contributors",
-          "funding",
-          "homepage",
-          "repository",
-          "bugs"
+    "./packages/nova": {
+      "name": "@company/example",
+      "role": "package",
+      "policy": "distributable",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true,
+          {
+            "description": true,
+            "keywords": true
+          }
+        ],
+        "sync-ownership": [
+          true,
+          {
+            "homepage": true,
+            "bugs": true,
+            "author": true,
+            "contributors": true,
+            "funding": true,
+            "repository": true
+          }
         ]
       }
     }
   }
+}
 ```
 
 ## Troubleshooting
 
-- **"Must be run inside the project root directory."** — Verify you execute the command where the project root `package.json` resides. App or package folders inside monorepos are not allowed.
+- **"Must be run inside the project root directory."** — Verify you execute the command where the project root `package.json` resides. App or package folders inside <Term title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow">monorepos</Term> are not allowed.
 - **Validation loops keep reappearing.** — Fix the highlighted email or URL before continuing. To drop the value, enter a single space and press **Enter**.
-- **No file was created.** — Confirm that `nova.config.json` is writable and that `--dry-run` was not passed or **Cancel** was not chosen.
+- **No file was created.** — Confirm that <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term> is writable and that `--dry-run` was not passed or **Cancel** was not chosen.

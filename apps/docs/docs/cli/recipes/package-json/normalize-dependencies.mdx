@@ -1,0 +1,62 @@
+---
+id: normalize-dependencies
+title: Normalize Dependencies
+description: Normalize dependency fields and optionally pin versions in workspace package.json files.
+keywords:
+  - nova
+  - normalize-dependencies
+  - package.json
+  - dependencies
+  - devDependencies
+  - pin versions
+  - bundleDependencies
+tags:
+  - normalize-dependencies
+  - cli
+  - recipe
+  - package-json
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Normalize dependency fields and optionally **pin versions** in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+
+## Summary
+
+The `normalize-dependencies` recipe handles all dependency-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json`. It normalizes `dependencies`, `devDependencies`, `peerDependencies`, `optionalDependencies`, `bundleDependencies` (merging from the deprecated `bundledDependencies` form), and `overrides`. When version pinning settings are enabled, it strips range prefixes (e.g., `^`, `~`) from dependency versions.
+
+## Settings
+
+Settings are configured per workspace in `nova.config.json` under the `recipes` key:
+
+| Setting                    | Type    | Description                                          |
+|----------------------------|---------|------------------------------------------------------|
+| `pinDependencyVersions`    | boolean | Strip range prefixes from `dependencies` versions    |
+| `pinDevDependencyVersions` | boolean | Strip range prefixes from `devDependencies` versions |
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe package-json normalize-dependencies [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe package-json normalize-dependencies [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |

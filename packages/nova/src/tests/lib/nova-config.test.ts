@@ -435,8 +435,8 @@ test('NovaConfig load', async (context) => {
     strictEqual(loaded.workspaces, undefined);
   });
 
-  await context.test('load parses pinVersions boolean from workspace config', async () => {
-    const projectDir = join(sandboxRoot, 'pin-versions');
+  await context.test('load parses recipes from workspace config', async () => {
+    const projectDir = join(sandboxRoot, 'recipes');
 
     await mkdir(projectDir, { recursive: true });
 
@@ -448,7 +448,12 @@ test('NovaConfig load', async (context) => {
             name: 'project',
             role: 'project',
             policy: 'freezable',
-            pinVersions: true,
+            recipes: {
+              'sync-identity': [true],
+              'normalize-dependencies': [true, {
+                pinDependencyVersions: true,
+              }],
+            },
           },
           'packages/core': {
             name: '@test/core',
@@ -483,12 +488,19 @@ test('NovaConfig load', async (context) => {
       fail('Expected packages/core workspace to be defined');
     }
 
-    strictEqual(rootWorkspace.pinVersions, true);
-    strictEqual(coreWorkspace.pinVersions, undefined);
+    const rootRecipes = rootWorkspace.recipes;
+
+    if (rootRecipes === undefined) {
+      fail('Expected root workspace recipes to be defined');
+    }
+
+    deepStrictEqual(rootRecipes['sync-identity'], [true]);
+    deepStrictEqual(rootRecipes['normalize-dependencies'], [true, { pinDependencyVersions: true }]);
+    strictEqual(coreWorkspace.recipes, undefined);
   });
 
-  await context.test('load ignores non-boolean pinVersions values', async () => {
-    const projectDir = join(sandboxRoot, 'pin-versions-invalid');
+  await context.test('load ignores invalid recipe tuples', async () => {
+    const projectDir = join(sandboxRoot, 'recipes-invalid');
 
     await mkdir(projectDir, { recursive: true });
 
@@ -500,7 +512,11 @@ test('NovaConfig load', async (context) => {
             name: 'project',
             role: 'project',
             policy: 'freezable',
-            pinVersions: 'yes',
+            recipes: {
+              'sync-identity': 'yes',
+              'normalize-modules': [],
+              'normalize-bundler': [true],
+            },
           },
         },
       }, null, 2),
@@ -524,11 +540,19 @@ test('NovaConfig load', async (context) => {
       fail('Expected root workspace to be defined');
     }
 
-    strictEqual(rootWorkspace.pinVersions, undefined);
+    const rootRecipes = rootWorkspace.recipes;
+
+    if (rootRecipes === undefined) {
+      fail('Expected root workspace recipes to be defined');
+    }
+
+    strictEqual(rootRecipes['sync-identity'], undefined);
+    strictEqual(rootRecipes['normalize-modules'], undefined);
+    deepStrictEqual(rootRecipes['normalize-bundler'], [true]);
   });
 
-  await context.test('load parses syncLtsEngines boolean from workspace config', async () => {
-    const projectDir = join(sandboxRoot, 'sync-lts-engines');
+  await context.test('load ignores unknown recipe names', async () => {
+    const projectDir = join(sandboxRoot, 'recipes-unknown');
 
     await mkdir(projectDir, { recursive: true });
 
@@ -540,12 +564,10 @@ test('NovaConfig load', async (context) => {
             name: 'project',
             role: 'project',
             policy: 'freezable',
-            syncLtsEngines: true,
-          },
-          'packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
+            recipes: {
+              'unknown-recipe': [true],
+              'sync-identity': [true],
+            },
           },
         },
       }, null, 2),
@@ -569,18 +591,18 @@ test('NovaConfig load', async (context) => {
       fail('Expected root workspace to be defined');
     }
 
-    const coreWorkspace = loadedWorkspaces['packages/core'];
+    const rootRecipes = rootWorkspace.recipes;
 
-    if (coreWorkspace === undefined) {
-      fail('Expected packages/core workspace to be defined');
+    if (rootRecipes === undefined) {
+      fail('Expected root workspace recipes to be defined');
     }
 
-    strictEqual(rootWorkspace.syncLtsEngines, true);
-    strictEqual(coreWorkspace.syncLtsEngines, undefined);
+    strictEqual(Object.keys(rootRecipes).length, 1);
+    deepStrictEqual(rootRecipes['sync-identity'], [true]);
   });
 
-  await context.test('load ignores non-boolean syncLtsEngines values', async () => {
-    const projectDir = join(sandboxRoot, 'sync-lts-engines-invalid');
+  await context.test('load filters non-boolean recipe settings', async () => {
+    const projectDir = join(sandboxRoot, 'recipes-settings-invalid');
 
     await mkdir(projectDir, { recursive: true });
 
@@ -592,7 +614,12 @@ test('NovaConfig load', async (context) => {
             name: 'project',
             role: 'project',
             policy: 'freezable',
-            syncLtsEngines: 'yes',
+            recipes: {
+              'normalize-dependencies': [true, {
+                pinDependencyVersions: true,
+                pinDevDependencyVersions: 'yes',
+              }],
+            },
           },
         },
       }, null, 2),
@@ -616,7 +643,13 @@ test('NovaConfig load', async (context) => {
       fail('Expected root workspace to be defined');
     }
 
-    strictEqual(rootWorkspace.syncLtsEngines, undefined);
+    const rootRecipes = rootWorkspace.recipes;
+
+    if (rootRecipes === undefined) {
+      fail('Expected root workspace recipes to be defined');
+    }
+
+    deepStrictEqual(rootRecipes['normalize-dependencies'], [true, { pinDependencyVersions: true }]);
   });
 
   await context.test('load filters invalid entity roles', async () => {

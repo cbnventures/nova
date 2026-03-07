@@ -1,0 +1,114 @@
+---
+id: no-destructuring
+title: No Destructuring
+description: Disallow destructuring patterns in callbacks, for-of loops, function parameters, variable declarations, and assignment expressions.
+keywords:
+  - nova
+  - eslint rule
+  - destructuring
+  - callback parameters
+  - for-of loops
+  - code style
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Disallow destructuring patterns to encourage descriptive parameter names and explicit property access.
+
+## Summary
+
+The `no-destructuring` rule reports destructuring patterns in five contexts: callback parameters, `for...of` loops, standalone function parameters, variable declarations, and assignment expressions. Each check can be independently toggled. Destructuring in `for...of` is allowed when the iterable is an `Object.entries()` call.
+
+## Why Use This Rule?
+
+1. Encourages descriptive parameter names that convey the whole object's role.
+2. Makes property access explicit so readers can trace where each value comes from.
+3. Keeps callback bodies readable with named intermediate constants.
+
+## Examples
+
+<Tabs groupId="no-destructuring-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Callback — descriptive param, explicit access.
+    items.map((item) => item.name);
+
+    // for...of — Object.entries() destructuring is allowed.
+    for (const [key, entry] of Object.entries(obj)) {
+      process(key, entry);
+    }
+
+    // Variable — assign and access separately.
+    const config = getConfig();
+    const name = config.name;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Callback — destructured parameter.
+    items.map(({ name }) => name);
+
+    // for...of — destructuring without Object.entries().
+    for (const [key, value] of grouped) {}
+
+    // Variable — destructured declaration.
+    const { name } = config;
+
+    // Function — destructured parameter.
+    function fn({ id }) { return id; }
+
+    // Assignment — destructured assignment.
+    ({ name } = config);
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+
+```ts
+import { noDestructuring } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-destructuring': noDestructuring,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-destructuring': ['warn'],
+    },
+  },
+];
+```
+
+### Options
+
+| Option                  | Type      | Default | Description                                                  |
+|-------------------------|-----------|---------|--------------------------------------------------------------|
+| `functionParams`        | `boolean` | `true`  | Ban destructuring in standalone function/method parameters.  |
+| `callbackParams`        | `boolean` | `true`  | Ban destructuring in callback parameters of array methods.   |
+| `forOfLoops`            | `boolean` | `true`  | Ban destructuring in `for...of` (except `Object.entries()`). |
+| `variableDeclarations`  | `boolean` | `true`  | Ban destructuring in `const`/`let`/`var` declarations.       |
+| `assignmentExpressions` | `boolean` | `true`  | Ban destructuring in assignment expressions.                 |
+
+Set any option to `false` to allow destructuring in that specific context.
+
+## Troubleshooting
+
+- **Warning fires on `Object.entries()` destructuring.** — The `forOfLoops` check specifically allows `Object.entries()`. If the warning still fires, make sure the iterable is a direct `Object.entries(x)` call.
+- **Want to allow destructuring in variable declarations only.** — Set `variableDeclarations: false` while keeping the other checks enabled.

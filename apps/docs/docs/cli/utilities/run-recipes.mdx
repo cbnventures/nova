@@ -1,0 +1,70 @@
+---
+id: run-recipes
+title: Run Recipes
+description: Run all configured recipes in sequence.
+keywords:
+  - nova
+  - run-recipes
+  - package.json
+  - recipes
+  - sync
+  - normalize
+tags:
+  - run-recipes
+  - cli
+  - utility
+  - recipes
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Run all enabled <Term title="transform script" to="/docs/quickstart/terminology#nova-concepts">recipes</Term> in sequence.
+
+## Summary
+
+The `run-recipes` command discovers and executes all registered <Term title="transform script" to="/docs/quickstart/terminology#nova-concepts">recipes</Term> in sequence. This is the single command that replaces chaining individual <Term title="transform script" to="/docs/quickstart/terminology#nova-concepts">recipe</Term> commands.
+
+## Why Use This Command?
+
+- **One command to rule them all** — Instead of chaining `nova recipe package-json sync-identity && nova recipe package-json sync-ownership && ...`, run a single `nova utility run-recipes`.
+- **Consistent ordering** — Recipes execute in their registered order, ensuring dependencies between recipes are respected.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> release with either the installed `nova` <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> or `npx`.
+- **<Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>** — A valid <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term> file must exist at the project root with configured <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspaces</Term>.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova utility run-recipes [options]
+
+    # Shorthand
+    nova util run-rcp [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest utility run-recipes [options]
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest util run-rcp [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |

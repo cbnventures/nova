@@ -1,0 +1,55 @@
+---
+id: normalize-artifacts
+title: Normalize Artifacts
+description: Normalize files, bin, man, directories, private, and publishConfig fields in workspace package.json files.
+keywords:
+  - nova
+  - normalize-artifacts
+  - package.json
+  - files
+  - bin
+  - man
+  - directories
+  - private
+  - publishConfig
+tags:
+  - normalize-artifacts
+  - cli
+  - recipe
+  - package-json
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Normalize **files**, **bin**, **man**, **directories**, **private**, and **publishConfig** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+
+## Summary
+
+The `normalize-artifacts` recipe ensures that publish and artifact-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` match the conventions defined by the workspace role and policy. It handles file inclusion lists, binary entry points, man pages, directory mappings, private flags, and publish configuration.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe package-json normalize-artifacts [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe package-json normalize-artifacts [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |

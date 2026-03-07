@@ -1,0 +1,165 @@
+---
+id: run-scripts
+title: Run Scripts
+description: Run package.json scripts by pattern in sequential or parallel mode using a built-in Nova utility with no extra dependencies.
+keywords:
+  - nova
+  - nova run-scripts
+  - npm-run-all alternative
+  - run scripts sequentially
+  - run scripts in parallel
+  - package.json scripts
+  - script orchestration
+  - monorepo scripts
+tags:
+  - run-scripts
+  - cli
+  - scripts
+  - orchestration
+  - monorepo
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Run `package.json` scripts by pattern in sequential or parallel mode with no extra <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependencies</Term>.
+
+## Summary
+
+The `run-scripts` command reads the `scripts` field from the nearest `package.json`, matches script names by a prefix pattern (e.g., `build:*`), and runs them either sequentially (stopping on first failure) or concurrently (reporting all failures).
+
+## Why Use This Command?
+
+- Run related scripts (e.g., `build:clean`, `build:transpile`, `build:fix-alias`) in a single command with no extra <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependencies</Term>.
+- Choose between sequential execution (for ordered pipelines) and parallel execution (for independent tasks).
+- Get clear exit codes and error messages when a script fails.
+
+## Use Cases
+
+- **Build pipelines** — Run `build:*` scripts sequentially so each step depends on the previous one.
+- **Development mode** — Run `dev:*` scripts in parallel to start watchers, dev servers, and other tools concurrently.
+- **<Term title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling">CI/CD</Term> checks** — Run `check:*` scripts sequentially or in parallel depending on whether order matters.
+- **Cleanup tasks** — Run `clean:*` scripts in parallel since cleanup operations are independent.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> release with either the installed `nova` <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> or `npx`.
+- **package.json** — A valid `package.json` with a `scripts` field must exist in the current working directory.
+
+## Usage
+
+You can run this command in two ways:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova utility run-scripts <pattern> [options]
+
+    # Shorthand
+    nova util run-scr <pattern> [options]
+    ```
+
+    **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest utility run-scripts <pattern> [options]
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest util run-scr <pattern> [options]
+    ```
+
+    **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag               | Description                                             |
+|--------------------|---------------------------------------------------------|
+| `-s, --sequential` | Run matched scripts one at a time, stopping on failure. |
+| `-p, --parallel`   | Run matched scripts concurrently.                       |
+
+Exactly one of `--sequential` or `--parallel` is required. The `<pattern>` argument supports a trailing wildcard (e.g., `build:*`) to match all scripts sharing a common prefix, or an exact script name.
+
+## Examples
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Sequential build pipeline"
+        # Original
+        nova utility run-scripts 'build:*' --sequential
+
+        # Shorthand
+        nova util run-scr -s 'build:*'
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Parallel dev watchers"
+        # Original
+        nova utility run-scripts 'dev:*' --parallel
+
+        # Shorthand
+        nova util run-scr -p 'dev:*'
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Sequential build pipeline"
+        # Original
+        npx --yes @cbnventures/nova@latest utility run-scripts 'build:*' --sequential
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util run-scr -s 'build:*'
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Parallel dev watchers"
+        # Original
+        npx --yes @cbnventures/nova@latest utility run-scripts 'dev:*' --parallel
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util run-scr -p 'dev:*'
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+</Tabs>
+
+## Migration from npm-run-all
+
+For users migrating from the [npm-run-all](https://github.com/mysticatea/npm-run-all) workflow, Nova provides equivalent flags under `nova utility run-scripts`:
+
+| Command                                           | Equivalent                         | What It Does                      |
+|---------------------------------------------------|------------------------------------|-----------------------------------|
+| `nova utility run-scripts 'build:*' --sequential` | `npm-run-all --sequential build:*` | Run matched scripts one at a time |
+| `nova utility run-scripts 'dev:*' --parallel`     | `npm-run-all --parallel dev:*`     | Run matched scripts concurrently  |
+
+After updating your `scripts` in `package.json`, `npm-run-all` can be removed from `devDependencies`.
+
+## Troubleshooting
+
+- **No "package.json" found** — Confirm a `package.json` exists in the current working directory before running the command.
+- **No scripts matched** — Verify that your pattern matches at least one key in the `scripts` field. A trailing `*` matches by prefix (e.g., `build:*` matches `build:clean`, `build:transpile`).
+- **Both modes specified** — Use either `--sequential` or `--parallel`, not both. The command will exit with an error if both are provided.
+- **Script fails in sequential mode** — Execution stops at the first failure. Fix the failing script and re-run.
+- **Script fails in parallel mode** — All scripts run to completion. Check the output for which scripts failed.

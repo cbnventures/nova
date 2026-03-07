@@ -34,7 +34,7 @@ Nova supports three starting paths. Use the runner for a one-off, install into s
 
 ## Requirements
 
-- Node.js [LTS](/docs/quickstart/terminology#fundamentals)
+- Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term>
 - Node Package Manager (npm)
 
 :::tip Quick Check
@@ -83,7 +83,7 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
     First, install Nova.
 
     ```bash
-    npm i -D @cbnventures/nova@latest
+    npm i @cbnventures/nova@latest
     ```
 
     Second, configure **TypeScript** through the `tsconfig.json` file. See **[TSConfig best practices](/docs/presets/tsconfig/best-practices)**.
@@ -91,16 +91,16 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
     ```json
     {
       "extends": [
-      "@cbnventures/nova/tsconfig/dx-essentials.json",
-      "@cbnventures/nova/tsconfig/dx-strict.json"
+        "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+        "@cbnventures/nova/presets/tsconfig/dx-strict.json"
       ]
     }
     ```
 
-    Third, configure **ESLint** through the `eslint.config.ts` or `eslint.config.js` file. See **[ESLint best practices](/docs/presets/eslint/best-practices)**.
+    Third, configure **ESLint** through the `eslint.config.mjs` file. See **[ESLint best practices](/docs/presets/eslint/best-practices)**.
 
     ```js
-    import { dxCodeStyle, dxIgnore } from '@cbnventures/nova/eslint';
+    import { dxCodeStyle, dxIgnore } from '@cbnventures/nova/presets/eslint';
 
     export default [
       ...dxIgnore,

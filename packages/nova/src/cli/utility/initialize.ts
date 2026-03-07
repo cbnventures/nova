@@ -3,7 +3,12 @@ import { relative, sep } from 'path';
 import chalk from 'chalk';
 import prompts from 'prompts';
 
-import { itemAllowedPoliciesByRole, itemAllowedSyncProperties } from '@/lib/item.js';
+import {
+  itemAllowedPoliciesByRole,
+  itemAllowedRecipes,
+  itemInitializeRolesToSync,
+  itemInitializeValidEntityRoles,
+} from '@/lib/item.js';
 import { NovaConfig } from '@/lib/nova-config.js';
 import { PATTERN_EMAIL_SIMPLE, PATTERN_SLUG_SCOPED, PATTERN_SLUG_SIMPLE } from '@/lib/regex.js';
 import { discoverPathsWithFile } from '@/lib/utility.js';
@@ -86,12 +91,12 @@ import type {
   CLIUtilityInitializePromptWorkspacesFormReturns,
   CLIUtilityInitializePromptWorkspacesFormRolePromptKey,
   CLIUtilityInitializePromptWorkspacesFormRolePromptValue,
-  CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptKey,
-  CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptValue,
-  CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptKey,
-  CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptValue,
-  CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptKey,
-  CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptValue,
+  CLIUtilityInitializePromptWorkspacesFormRecipeSettings,
+  CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey,
+  CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue,
+  CLIUtilityInitializePromptWorkspacesFormRecipes,
+  CLIUtilityInitializePromptWorkspacesFormRecipesPromptKey,
+  CLIUtilityInitializePromptWorkspacesFormRecipesPromptValue,
   CLIUtilityInitializePromptWorkspacesMenuOutputKey,
   CLIUtilityInitializePromptWorkspacesMenuOutputValue,
   CLIUtilityInitializePromptWorkspacesReturns,
@@ -396,7 +401,7 @@ export class CLIUtilityInitialize {
 
     // Automatically update workspace names for specific roles that use the project slug.
     if (slugChanged && config.workspaces !== undefined) {
-      const rolesToSync: CLIUtilityInitializePromptProjectRolesToSync = ['project', 'docs', 'config', 'app', 'tool'];
+      const rolesToSync: CLIUtilityInitializePromptProjectRolesToSync = [...itemInitializeRolesToSync];
       const slugPrefix = new RegExp(`^${previousSlug}-`);
 
       Logger.customize({
@@ -406,11 +411,11 @@ export class CLIUtilityInitialize {
       }).info(`Project slug updated from "${previousSlug || '(unset)'}" to "${currentSlug || '(unset)'}".`);
 
       for (const workspace of Object.values(config.workspaces)) {
-        if (!rolesToSync.includes(workspace.role)) {
+        if (rolesToSync.includes(workspace.role) === false) {
           continue;
         }
 
-        const { name } = workspace;
+        const name = workspace.name;
 
         // If user added a slug, removed the slug, or changed the slug.
         if (previousSlug === '' && currentSlug !== '') {
@@ -501,12 +506,18 @@ export class CLIUtilityInitialize {
       const choices: CLIUtilityInitializePromptEntitiesChoices = [];
 
       // Add the "EDIT" and "REMOVE" menu choices for each entity.
-      entities.forEach((entity, index) => {
+      for (let i = 0; i < entities.length; i += 1) {
+        const entity = entities[i];
+
+        if (entity === undefined) {
+          continue;
+        }
+
         const entityName = (entity.name !== undefined) ? entity.name.trim() : '';
         const entityEmail = (entity.email !== undefined) ? entity.email.trim() : '';
         const entityRoles = (Array.isArray(entity.roles)) ? entity.roles.filter((role) => role.trim() !== '') : [];
 
-        const label = entityName || entityEmail || `Entity ${index + 1}`;
+        const label = entityName || entityEmail || `Entity ${i + 1}`;
         const descriptionParts: CLIUtilityInitializePromptEntitiesDescriptionParts = [];
 
         // Add "email" to menu description for each entity.
@@ -520,7 +531,7 @@ export class CLIUtilityInitialize {
             .map((entityRole) => entityRole.trim())
             .filter((entityRole) => entityRole.length > 0)
             .reduce<CLIUtilityInitializePromptEntitiesNormalizedRolesReduce>((unique, entityRole) => {
-              if (!unique.includes(entityRole)) {
+              if (unique.includes(entityRole) === false) {
                 unique.push(entityRole);
               }
               return unique;
@@ -538,7 +549,7 @@ export class CLIUtilityInitialize {
           description: (description !== '') ? description : 'Update this entity.',
           value: {
             kind: 'edit',
-            index,
+            index: i,
           },
         });
 
@@ -547,10 +558,10 @@ export class CLIUtilityInitialize {
           description: 'Delete this entity.',
           value: {
             kind: 'remove',
-            index,
+            index: i,
           },
         });
-      });
+      }
 
       choices.push({
         title: 'Add new entity',
@@ -633,7 +644,7 @@ export class CLIUtilityInitialize {
         }
 
         // Update the entity.
-        entities[entityIndex] = entityResult.entity;
+        Reflect.set(entities, entityIndex, entityResult.entity);
 
         // Sync changes back to config.
         sync();
@@ -703,7 +714,7 @@ export class CLIUtilityInitialize {
    * @since 1.0.0
    */
   private static async promptEntitiesForm(entity: CLIUtilityInitializePromptEntitiesFormEntity, mode: CLIUtilityInitializePromptEntitiesFormMode): CLIUtilityInitializePromptEntitiesFormReturns {
-    const validRoles = ['author', 'contributor', 'supporter'] as CLIUtilityInitializePromptEntitiesFormValidRoles;
+    const validRoles = [...itemInitializeValidEntityRoles] as CLIUtilityInitializePromptEntitiesFormValidRoles;
 
     const existingName = (entity !== undefined && typeof entity.name === 'string') ? entity.name : '';
     const existingEmail = (entity !== undefined && typeof entity.email === 'string') ? entity.email : '';
@@ -1074,7 +1085,7 @@ export class CLIUtilityInitialize {
    * @since 1.0.0
    */
   private static async promptWorkspaces(config: CLIUtilityInitializePromptWorkspacesConfig): CLIUtilityInitializePromptWorkspacesReturns {
-    const workspaces: CLIUtilityInitializePromptWorkspaces = (config.workspaces) ? { ...(config.workspaces) } : {};
+    const workspaces: CLIUtilityInitializePromptWorkspaces = (config.workspaces !== undefined) ? { ...(config.workspaces) } : {};
 
     // The "run" command already guarantees we run in the project root (called "checkPath"), so we can traverse forward directly.
     const rawWorkspacePaths = await discoverPathsWithFile('package.json', 'forward');
@@ -1273,11 +1284,13 @@ export class CLIUtilityInitialize {
       type: 'select',
       name: 'workspaceRole',
       message: `Select a role for "${options.workspacePath}"`,
-      choices: allowedRoles.map((role) => ({
-        title: role.title,
-        description: role.description,
-        value: role.value,
-      })),
+      choices: allowedRoles.map((allowedRole) => {
+        return {
+          title: allowedRole.title,
+          description: allowedRole.description,
+          value: allowedRole.value,
+        };
+      }),
       initial: Math.max(0, allowedRoles.findIndex((role) => options.existingWorkspace !== undefined && role.value === options.existingWorkspace.role)),
     });
 
@@ -1295,12 +1308,16 @@ export class CLIUtilityInitialize {
       type: 'select',
       name: 'workspacePolicy',
       message: 'Select a policy',
-      choices: allowedPolicies.map((allowedPolicy) => ({
-        title: policy[allowedPolicy].label,
-        description: policy[allowedPolicy].description,
-        value: allowedPolicy,
-      })),
-      initial: Math.max(0, allowedPolicies.findIndex((policy) => options.existingWorkspace !== undefined && policy === options.existingWorkspace.policy)),
+      choices: allowedPolicies.map((allowedPolicy) => {
+        const policyEntry = Reflect.get(policy, allowedPolicy);
+
+        return {
+          title: policyEntry.label,
+          description: policyEntry.description,
+          value: allowedPolicy,
+        };
+      }),
+      initial: Math.max(0, allowedPolicies.findIndex((allowedPolicy) => options.existingWorkspace !== undefined && allowedPolicy === options.existingWorkspace.policy)),
     });
 
     if (policyPrompt.cancelled) {
@@ -1318,63 +1335,247 @@ export class CLIUtilityInitialize {
       };
     }
 
-    let syncProperties;
+    const existingRecipes = (options.existingWorkspace !== undefined && options.existingWorkspace.recipes !== undefined) ? options.existingWorkspace.recipes : undefined;
 
-    // "syncProperties" is only for workspaces with a "distributable" policy.
-    if (selectedPolicy === 'distributable') {
-      const syncPropertiesPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptKey, CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptValue>({
-        type: 'multiselect',
-        name: 'workspaceSyncProperties',
-        message: 'Select metadata properties to sync',
-        choices: itemAllowedSyncProperties.map((property) => ({
-          title: property,
-          value: property,
-          selected: (options.existingWorkspace !== undefined && options.existingWorkspace.syncProperties !== undefined) ? options.existingWorkspace.syncProperties.includes(property) : false,
-        })),
-      });
+    const recipesPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipesPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipesPromptValue>({
+      type: 'multiselect',
+      name: 'workspaceRecipes',
+      message: 'Select recipes to enable',
+      choices: itemAllowedRecipes.map((recipe) => {
+        const recipeTuple = (existingRecipes !== undefined) ? Reflect.get(existingRecipes, recipe) : undefined;
+        const recipeSelected = (Array.isArray(recipeTuple) && recipeTuple.length > 0 && recipeTuple[0] === true);
 
-      if (syncPropertiesPrompt.cancelled) {
         return {
-          action: 'back',
+          title: recipe,
+          value: recipe,
+          selected: recipeSelected,
         };
-      }
-
-      const selectedSyncProperties = syncPropertiesPrompt.result.workspaceSyncProperties;
-
-      if (selectedSyncProperties.length > 0) {
-        syncProperties = selectedSyncProperties;
-      }
-    }
-
-    const pinVersionsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptKey, CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptValue>({
-      type: 'confirm',
-      name: 'workspacePinVersions',
-      message: 'Pin dependency versions?',
-      initial: options.existingWorkspace !== undefined && options.existingWorkspace.pinVersions === true,
+      }),
     });
 
-    if (pinVersionsPrompt.cancelled) {
+    if (recipesPrompt.cancelled) {
       return {
         action: 'back',
       };
     }
 
-    const selectedPinVersions = pinVersionsPrompt.result.workspacePinVersions;
+    const selectedRecipes = recipesPrompt.result.workspaceRecipes;
+    const recipes: CLIUtilityInitializePromptWorkspacesFormRecipes = {};
 
-    const syncLtsEnginesPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptKey, CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptValue>({
-      type: 'confirm',
-      name: 'workspaceSyncLtsEngines',
-      message: 'Sync Node.js LTS engine constraint?',
-      initial: options.existingWorkspace !== undefined && options.existingWorkspace.syncLtsEngines === true,
-    });
+    for (const recipe of selectedRecipes) {
+      const existingTupleRaw = (existingRecipes !== undefined) ? Reflect.get(existingRecipes, recipe) : undefined;
+      const existingTuple = (Array.isArray(existingTupleRaw)) ? existingTupleRaw : undefined;
+      const existingSettings = (existingTuple !== undefined && existingTuple.length > 1) ? existingTuple[1] : undefined;
 
-    if (syncLtsEnginesPrompt.cancelled) {
-      return {
-        action: 'back',
-      };
+      if (recipe === 'sync-identity' && selectedPolicy === 'distributable') {
+        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+          type: 'multiselect',
+          name: 'workspaceRecipeSettings',
+          message: 'sync-identity: Select properties to sync',
+          choices: [
+            {
+              title: 'description',
+              value: 'description',
+              selected: existingSettings !== undefined && existingSettings['description'] === true,
+            },
+            {
+              title: 'keywords',
+              value: 'keywords',
+              selected: existingSettings !== undefined && existingSettings['keywords'] === true,
+            },
+          ],
+        });
+
+        if (settingsPrompt.cancelled) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+
+        if (selectedSettings.length > 0) {
+          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+
+          for (const setting of selectedSettings) {
+            Reflect.set(settings, setting, true);
+          }
+
+          Reflect.set(recipes, recipe, [true, settings]);
+        } else {
+          Reflect.set(recipes, recipe, [true]);
+        }
+      } else if (recipe === 'sync-ownership' && selectedPolicy === 'distributable') {
+        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+          type: 'multiselect',
+          name: 'workspaceRecipeSettings',
+          message: 'sync-ownership: Select properties to sync',
+          choices: [
+            {
+              title: 'homepage',
+              value: 'homepage',
+              selected: existingSettings !== undefined && existingSettings['homepage'] === true,
+            },
+            {
+              title: 'bugs',
+              value: 'bugs',
+              selected: existingSettings !== undefined && existingSettings['bugs'] === true,
+            },
+            {
+              title: 'author',
+              value: 'author',
+              selected: existingSettings !== undefined && existingSettings['author'] === true,
+            },
+            {
+              title: 'contributors',
+              value: 'contributors',
+              selected: existingSettings !== undefined && existingSettings['contributors'] === true,
+            },
+            {
+              title: 'funding',
+              value: 'funding',
+              selected: existingSettings !== undefined && existingSettings['funding'] === true,
+            },
+            {
+              title: 'repository',
+              value: 'repository',
+              selected: existingSettings !== undefined && existingSettings['repository'] === true,
+            },
+          ],
+        });
+
+        if (settingsPrompt.cancelled) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+
+        if (selectedSettings.length > 0) {
+          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+
+          for (const setting of selectedSettings) {
+            Reflect.set(settings, setting, true);
+          }
+
+          Reflect.set(recipes, recipe, [true, settings]);
+        } else {
+          Reflect.set(recipes, recipe, [true]);
+        }
+      } else if (recipe === 'sync-environment') {
+        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+          type: 'multiselect',
+          name: 'workspaceRecipeSettings',
+          message: 'sync-environment: Select settings',
+          choices: [
+            {
+              title: 'trackNodeLtsVersions',
+              value: 'trackNodeLtsVersions',
+              selected: existingSettings !== undefined && existingSettings['trackNodeLtsVersions'] === true,
+            },
+          ],
+        });
+
+        if (settingsPrompt.cancelled) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+
+        if (selectedSettings.length > 0) {
+          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+
+          for (const setting of selectedSettings) {
+            Reflect.set(settings, setting, true);
+          }
+
+          Reflect.set(recipes, recipe, [true, settings]);
+        } else {
+          Reflect.set(recipes, recipe, [true]);
+        }
+      } else if (recipe === 'cleanup') {
+        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+          type: 'multiselect',
+          name: 'workspaceRecipeSettings',
+          message: 'cleanup: Select settings',
+          choices: [
+            {
+              title: 'removeUnknownKeys',
+              value: 'removeUnknownKeys',
+              selected: existingSettings !== undefined && existingSettings['removeUnknownKeys'] === true,
+            },
+            {
+              title: 'reorderKeys',
+              value: 'reorderKeys',
+              selected: existingSettings !== undefined && existingSettings['reorderKeys'] === true,
+            },
+          ],
+        });
+
+        if (settingsPrompt.cancelled) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+
+        if (selectedSettings.length > 0) {
+          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+
+          for (const setting of selectedSettings) {
+            Reflect.set(settings, setting, true);
+          }
+
+          Reflect.set(recipes, recipe, [true, settings]);
+        } else {
+          Reflect.set(recipes, recipe, [true]);
+        }
+      } else if (recipe === 'normalize-dependencies') {
+        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+          type: 'multiselect',
+          name: 'workspaceRecipeSettings',
+          message: 'normalize-dependencies: Select settings',
+          choices: [
+            {
+              title: 'pinDependencyVersions',
+              value: 'pinDependencyVersions',
+              selected: existingSettings !== undefined && existingSettings['pinDependencyVersions'] === true,
+            },
+            {
+              title: 'pinDevDependencyVersions',
+              value: 'pinDevDependencyVersions',
+              selected: existingSettings !== undefined && existingSettings['pinDevDependencyVersions'] === true,
+            },
+          ],
+        });
+
+        if (settingsPrompt.cancelled) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+
+        if (selectedSettings.length > 0) {
+          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+
+          for (const setting of selectedSettings) {
+            Reflect.set(settings, setting, true);
+          }
+
+          Reflect.set(recipes, recipe, [true, settings]);
+        } else {
+          Reflect.set(recipes, recipe, [true]);
+        }
+      } else {
+        Reflect.set(recipes, recipe, [true]);
+      }
     }
-
-    const selectedSyncLtsEngines = syncLtsEnginesPrompt.result.workspaceSyncLtsEngines;
 
     return {
       action: 'apply',
@@ -1382,9 +1583,7 @@ export class CLIUtilityInitialize {
         name: resolvedName,
         role: selectedRole,
         policy: selectedPolicy,
-        ...(syncProperties !== undefined) ? { syncProperties } : {},
-        ...(selectedPinVersions === true) ? { pinVersions: selectedPinVersions } : {},
-        ...(selectedSyncLtsEngines === true) ? { syncLtsEngines: selectedSyncLtsEngines } : {},
+        ...(Object.keys(recipes).length > 0) ? { recipes } : {},
       },
     };
   }
@@ -1513,7 +1712,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    if (!PATTERN_EMAIL_SIMPLE.test(trimmedValue)) {
+    if (PATTERN_EMAIL_SIMPLE.test(trimmedValue) === false) {
       return {
         result: 'Enter a valid email address or leave blank.',
         sanitized: undefined,
@@ -1557,7 +1756,7 @@ export class CLIUtilityInitialize {
 
     if (
       trimmedValue.length > 214
-      || !new RegExp(PATTERN_SLUG_SIMPLE, 'i').test(trimmedValue)
+      || new RegExp(PATTERN_SLUG_SIMPLE, 'i').test(trimmedValue) === false
     ) {
       return {
         result: 'Use only letters, numbers, hyphens, or underscores, and keep it at 214 characters or fewer.',
@@ -1650,7 +1849,9 @@ export class CLIUtilityInitialize {
       .filter((item) => item !== '');
 
     for (let i = 0; i < items.length; i += 1) {
-      const { result, sanitized } = CLIUtilityInitialize.normalizeText(items[i], maxLengthPerItem);
+      const normalizedText = CLIUtilityInitialize.normalizeText(items[i], maxLengthPerItem);
+      const result = normalizedText.result;
+      const sanitized = normalizedText.sanitized;
 
       if (result !== true) {
         return {
@@ -1660,7 +1861,7 @@ export class CLIUtilityInitialize {
       }
 
       if (sanitized !== undefined) {
-        items[i] = sanitized;
+        Reflect.set(items, i, sanitized);
       }
     }
 
@@ -1769,7 +1970,9 @@ export class CLIUtilityInitialize {
       .filter((item) => item !== '');
 
     for (let i = 0; i < items.length; i += 1) {
-      const { result, sanitized } = CLIUtilityInitialize.normalizeUrl(items[i], protocol);
+      const normalizedUrl = CLIUtilityInitialize.normalizeUrl(items[i], protocol);
+      const result = normalizedUrl.result;
+      const sanitized = normalizedUrl.sanitized;
 
       if (result !== true) {
         const errorMessages = {
@@ -1785,7 +1988,7 @@ export class CLIUtilityInitialize {
       }
 
       if (sanitized !== undefined) {
-        items[i] = sanitized;
+        Reflect.set(items, i, sanitized);
       }
     }
 
@@ -1832,7 +2035,7 @@ export class CLIUtilityInitialize {
         // Base for "config", "app", and "tool" is either `${projectSlug}-${role}` or just `${role}`.
         const expectedPrefix = `${base}-`;
 
-        if (!trimmedValue.startsWith(expectedPrefix)) {
+        if (trimmedValue.startsWith(expectedPrefix) === false) {
           return {
             result: `Begin with "${expectedPrefix}" and add a descriptor slug.`,
             sanitized: undefined,
@@ -1848,7 +2051,7 @@ export class CLIUtilityInitialize {
           };
         }
 
-        if (!PATTERN_SLUG_SIMPLE.test(descriptor)) {
+        if (PATTERN_SLUG_SIMPLE.test(descriptor) === false) {
           return {
             result: 'Descriptor must match the slug pattern (lowercase letters, numbers, hyphens, underscores).',
             sanitized: undefined,
@@ -1863,7 +2066,7 @@ export class CLIUtilityInitialize {
       case 'template':
       case 'package':
       default: {
-        if (PATTERN_SLUG_SIMPLE.test(trimmedValue) || PATTERN_SLUG_SCOPED.test(trimmedValue)) {
+        if (PATTERN_SLUG_SIMPLE.test(trimmedValue) === true || PATTERN_SLUG_SCOPED.test(trimmedValue) === true) {
           return {
             result: true,
             sanitized: trimmedValue,

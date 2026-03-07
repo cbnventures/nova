@@ -6,7 +6,7 @@
     },
     "description": {
       "short": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
-      "long": "Nova is a JavaScript and TypeScript monorepo suite (formerly \"Foundation Nova\"), offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility."
+      "long": "Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility."
     },
     "keywords": [
       "eslint",
@@ -48,12 +48,12 @@
     "bugs": "bugs@cbnventures.io"
   },
   "urls": {
-    "homepage": "https://cbnventures.github.io/nova/",
+    "homepage": "https://docs.cbnventures.io/nova/",
     "repository": "git+https://github.com/cbnventures/nova.git",
     "bugs": "https://github.com/cbnventures/nova/issues",
     "license": "https://github.com/cbnventures/nova/blob/HEAD/LICENSE",
-    "logo": "https://cbnventures.github.io/nova/images/logo.svg",
-    "documentation": "https://cbnventures.github.io/nova/",
+    "logo": "https://docs.cbnventures.io/nova/images/logo.svg",
+    "documentation": "https://docs.cbnventures.io/nova/",
     "github": "https://github.com/cbnventures/nova",
     "npm": "https://www.npmjs.com/package/@cbnventures/nova",
     "fundSources": [
@@ -66,32 +66,148 @@
       "name": "nova-project",
       "role": "project",
       "policy": "freezable",
-      "pinVersions": true,
-      "syncLtsEngines": true
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
     },
     "./apps/docs": {
       "name": "nova-docs",
       "role": "docs",
       "policy": "freezable",
-      "pinVersions": true,
-      "syncLtsEngines": true
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
     },
     "./packages/nova": {
       "name": "@cbnventures/nova",
       "role": "package",
       "policy": "distributable",
-      "syncProperties": [
-        "description",
-        "keywords",
-        "author",
-        "contributors",
-        "funding",
-        "homepage",
-        "repository",
-        "bugs"
-      ],
-      "pinVersions": true,
-      "syncLtsEngines": true
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true,
+          {
+            "description": true,
+            "keywords": true
+          }
+        ],
+        "sync-ownership": [
+          true,
+          {
+            "homepage": true,
+            "bugs": true,
+            "author": true,
+            "contributors": true,
+            "funding": true,
+            "repository": true
+          }
+        ]
+      }
     }
   }
 }

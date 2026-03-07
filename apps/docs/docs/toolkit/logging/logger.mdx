@@ -30,7 +30,7 @@ Deliver consistent log output across local runs and CI without wiring custom for
 
 ## Summary
 
-The `Logger` battery locks down terminal output with environment-aware level gating, scope-able helpers, and ANSI-safe formatting so debug chatter stays in dev and production logs stay spotless.
+The `Logger` battery locks down terminal output with environment-aware level gating, scope-able helpers, and <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>-safe formatting so debug chatter stays in dev and production logs stay spotless.
 
 ## Why Use This Battery?
 
@@ -48,11 +48,11 @@ The `Logger` battery locks down terminal output with environment-aware level gat
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the [API](/docs/quickstart/terminology#fundamentals) is identical in JavaScript ([ESM](/docs/quickstart/terminology#javascript-and-typescript)-only).
+Examples use TypeScript, but the <Term title="application programming interface" to="/docs/quickstart/terminology#fundamentals">API</Term> is identical in JavaScript (<Term title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript">ESM</Term>-only).
 :::
 
 :::warning Development Logging
-`Logger.dev` is meant for local debugging (enhanced version of `console.log`). Enable the [no-logger-dev](/docs/rules/eslint/no-logger-dev) ESLint rule to protect you from leaking logs.
+`Logger.dev` is meant for local debugging (enhanced version of `console.log`). Enable the [no-logger-dev](/docs/rules/eslint/nova/no-logger-dev) ESLint rule to protect you from leaking logs.
 :::
 
 <Tabs groupId="logger-usage">
@@ -187,7 +187,7 @@ Scope tags (`name`, `type`, and `purpose` options) render only when `LOG_LEVEL` 
 ## Troubleshooting
 
 - **Nothing prints to the terminal.** — Check `LOG_LEVEL`; if it is set higher than your message severity, downgrade it or unset it entirely.
-- **Colors missing in CI logs.** — Some environments disable ANSI. Export `FORCE_COLOR=1` or rely on timestamps/names for identification.
+- **Colors missing in CI logs.** — Some environments disable <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>. Export `FORCE_COLOR=1` or rely on timestamps/names for identification.
 - **Extra blank lines surround messages.** — Review `padTop` / `padBottom` on customized loggers and reset them to `0` when not needed.
 - **Timestamps not appearing.** — `LOG_TIME` expects the exact string `'true'`, not any other truthy value.
 - **Debug logs still hidden locally.** — Confirm `NODE_ENV` is `'development'` or explicitly set `LOG_LEVEL=debug`.

@@ -5,7 +5,7 @@ import type { Config } from '@docusaurus/types';
 import * as docusaurusSearch from '@easyops-cn/docusaurus-search-local';
 import { themes as prismThemes } from 'prism-react-renderer';
 
-import { MenuBuilder } from './tools/menu-builder';
+import { MenuBuilder } from './utils/menu-builder';
 
 /**
  * Config.
@@ -16,12 +16,53 @@ const config: Config = {
   title: 'Nova',
   titleDelimiter: ' - ',
   tagline: 'Scripts, templates, and project configuration for the common JavaScript and TypeScript developer',
-  favicon: 'images/favicon.ico',
-  url: 'https://cbnventures.github.io',
+  favicon: 'favicon.ico',
+  url: 'https://docs.cbnventures.io',
   baseUrl: '/nova/',
   organizationName: 'cbnventures',
   projectName: 'nova',
   onBrokenLinks: 'throw',
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        property: 'og:type',
+        content: 'website',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/nova/apple-touch-icon.png',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '96x96',
+        href: '/nova/favicon-96x96.png',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: '/nova/favicon.svg',
+      },
+    },
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'manifest',
+        href: '/nova/site.webmanifest',
+      },
+    },
+  ],
   i18n: {
     defaultLocale: 'en',
     locales: [
@@ -55,6 +96,13 @@ const config: Config = {
         theme: {
           customCss: './static/styles/global.css',
         },
+        sitemap: {
+          lastmod: 'date',
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/docs/tags/**'],
+          filename: 'sitemap.xml',
+        },
       } satisfies Preset.Options,
     ],
   ],
@@ -83,6 +131,10 @@ const config: Config = {
     ],
   ],
   themeConfig: {
+    image: 'thumbnails/brand.png',
+    metadata: [
+      { name: 'twitter:card', content: 'summary_large_image' },
+    ],
     colorMode: {
       defaultMode: 'light',
       disableSwitch: false,

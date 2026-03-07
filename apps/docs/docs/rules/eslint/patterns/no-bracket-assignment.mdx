@@ -1,0 +1,87 @@
+---
+id: no-bracket-assignment
+title: No Bracket Assignment
+description: Disallow bracket notation assignment and encourage Reflect.set for dynamic property writes on objects.
+keywords:
+  - nova
+  - eslint rule
+  - bracket assignment
+  - Reflect.set
+  - dynamic property
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Use `Reflect.set()` instead of bracket notation assignment for dynamic property writes.
+
+## Summary
+
+The `no-bracket-assignment` rule reports any assignment expression where the left-hand side uses computed (bracket) member access (e.g., `target[key] = value`). It is recommended to use `Reflect.set(target, key, value)` instead.
+
+## Why Use This Rule?
+
+1. Makes dynamic property writes explicit and easy to search for.
+2. Avoids accidental mutation of function parameters when combined with `no-param-reassign`.
+3. Provides a consistent pattern for all dynamic property writes across the codebase.
+
+## Examples
+
+<Tabs groupId="no-bracket-assignment-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    Reflect.set(target, key, value);
+
+    target.prop = value;
+
+    // Reading via bracket notation is allowed.
+    const x = target[key];
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    target[key] = value;
+    target[key] += value;
+    obj['name'] = 'test';
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+
+```ts
+import { noBracketAssignment } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-bracket-assignment': noBracketAssignment,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-bracket-assignment': ['warn'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **Warning fires on array index assignment.** — Array index writes like `arr[0] = value` also use computed member access. Use `Reflect.set(arr, 0, value)` or consider whether `.splice()` or a new array is more appropriate.
+- **Reading via bracket notation is allowed.** — The rule only flags assignments (`=`, `+=`, etc.), not reads like `const x = target[key]`.

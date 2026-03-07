@@ -44,7 +44,7 @@ import type {
   CLIUtilityVersionGetOsVersionKernel,
   CLIUtilityVersionGetOsVersionName,
   CLIUtilityVersionGetOsVersionReturns,
-  CLIUtilityVersionGetOsVersionVersion,
+  CLIUtilityVersionGetOsVersionCurrentVersion,
   CLIUtilityVersionPrintList,
   CLIUtilityVersionPrintReturns,
   CLIUtilityVersionRunList,
@@ -272,7 +272,7 @@ export class CLIUtilityVersion {
     const kernel: CLIUtilityVersionGetOsVersionKernel = release();
 
     let name: CLIUtilityVersionGetOsVersionName = currentPlatform;
-    let currentVersion: CLIUtilityVersionGetOsVersionVersion = version();
+    let currentVersion: CLIUtilityVersionGetOsVersionCurrentVersion = version();
     let build: CLIUtilityVersionGetOsVersionBuild = '—';
 
     // macOS.
@@ -305,6 +305,7 @@ export class CLIUtilityVersion {
       } else if (currentBuildNumberEntry !== undefined) {
         currentBuild = currentBuildNumberEntry.data;
       }
+
       const updateBuildRevision = (updateBuildRevisionEntry !== undefined) ? updateBuildRevisionEntry.data : undefined;
 
       name = (productNameEntry !== undefined) ? productNameEntry.data : 'Windows';

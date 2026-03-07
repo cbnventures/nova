@@ -99,7 +99,11 @@ export type EntityMenuActionBack = {
   kind: EntityMenuActionBackKind;
 };
 
-export type EntityMenuAction = EntityMenuActionAdd | EntityMenuActionEdit | EntityMenuActionRemove | EntityMenuActionBack;
+export type EntityMenuAction =
+  EntityMenuActionAdd
+  | EntityMenuActionEdit
+  | EntityMenuActionRemove
+  | EntityMenuActionBack;
 
 /**
  * Item pretty names.
@@ -264,29 +268,36 @@ export type NovaConfigWorkspaceRole = 'project' | 'docs' | 'config' | 'app' | 'p
 
 export type NovaConfigWorkspacePolicy = 'freezable' | 'trackable' | 'distributable';
 
-export type NovaConfigWorkspaceSyncProperty =
-  'description'
-  | 'keywords'
-  | 'author'
-  | 'contributors'
-  | 'funding'
-  | 'homepage'
-  | 'repository'
-  | 'bugs';
+export type NovaConfigWorkspaceRecipeName =
+  'sync-identity'
+  | 'sync-ownership'
+  | 'normalize-modules'
+  | 'normalize-artifacts'
+  | 'sync-environment'
+  | 'normalize-dependencies'
+  | 'normalize-bundler'
+  | 'normalize-tooling'
+  | 'cleanup';
 
-export type NovaConfigWorkspaceSyncProperties = NovaConfigWorkspaceSyncProperty[];
+export type NovaConfigWorkspaceRecipeEnabled = boolean;
 
-export type NovaConfigWorkspacePinVersions = boolean;
+export type NovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
 
-export type NovaConfigWorkspaceSyncLtsEngines = boolean;
+export type NovaConfigWorkspaceRecipeTupleWithSettings = [NovaConfigWorkspaceRecipeEnabled, NovaConfigWorkspaceRecipeSettings];
+
+export type NovaConfigWorkspaceRecipeTupleWithoutSettings = [NovaConfigWorkspaceRecipeEnabled];
+
+export type NovaConfigWorkspaceRecipeTuple = NovaConfigWorkspaceRecipeTupleWithSettings | NovaConfigWorkspaceRecipeTupleWithoutSettings;
+
+export type NovaConfigWorkspaceRecipes = {
+  [key in NovaConfigWorkspaceRecipeName]?: NovaConfigWorkspaceRecipeTuple;
+};
 
 export type NovaConfigWorkspace = {
   name: NovaConfigWorkspaceName;
   role: NovaConfigWorkspaceRole;
   policy: NovaConfigWorkspacePolicy;
-  syncProperties?: NovaConfigWorkspaceSyncProperties;
-  pinVersions?: NovaConfigWorkspacePinVersions;
-  syncLtsEngines?: NovaConfigWorkspaceSyncLtsEngines;
+  recipes?: NovaConfigWorkspaceRecipes;
 };
 
 export type NovaConfigWorkspaces = {
@@ -300,6 +311,8 @@ export type NovaConfig = {
   urls?: NovaConfigUrls;
   workspaces?: NovaConfigWorkspaces;
 };
+
+export type NovaConfigConfig = NovaConfig;
 
 /**
  * Nova config category.

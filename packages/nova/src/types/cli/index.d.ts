@@ -21,6 +21,14 @@ export type CLIGetCommandUsageCommand = CommandUnknownOpts;
 
 export type CLIGetCommandUsageReturns = string;
 
+export type CLIGetCommandUsageFullLine = string;
+
+export type CLIGetCommandUsageAliasLine = string;
+
+export type CLIGetCommandUsageFullLineStripped = string;
+
+export type CLIGetCommandUsageAliasLineStripped = string;
+
 /**
  * CLI - Get header.
  *

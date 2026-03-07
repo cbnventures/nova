@@ -25,7 +25,6 @@
     "build": {
       "cache": false,
       "dependsOn": [
-        "check",
         "^build"
       ],
       "inputs": [
@@ -41,7 +40,7 @@
     "check": {
       "cache": false,
       "dependsOn": [
-        "^check",
+        "build",
         "^build"
       ],
       "inputs": [

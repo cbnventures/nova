@@ -30,7 +30,7 @@
 
 ## Introduction
 
-Nova is a JavaScript and TypeScript monorepo suite (formerly "Foundation Nova"), offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility.
+Nova is a JavaScript and TypeScript monorepo suite, offering strict presets and guided tooling to help you build with confidence, predictability, and minimal setup. It delivers strong defaults, robust linting and typing, and scaffolded project generators — all wrapped in guardrails that keep your workflow safe without sacrificing flexibility.
 
 ## Documentation
 

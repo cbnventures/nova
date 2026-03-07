@@ -1,0 +1,61 @@
+---
+id: sync-environment
+title: Sync Environment
+description: Sync engines, os, cpu, libc, devEngines, and packageManager fields in workspace package.json files, with optional Node.js LTS version tracking.
+keywords:
+  - nova
+  - sync-environment
+  - package.json
+  - engines
+  - node lts
+  - packageManager
+  - devEngines
+tags:
+  - sync-environment
+  - cli
+  - recipe
+  - package-json
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync **engines**, **os**, **cpu**, **libc**, **devEngines**, and **packageManager** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+
+## Summary
+
+The `sync-environment` recipe ensures that runtime environment fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` follow consistent conventions. When the `trackNodeLtsVersions` setting is enabled, it automatically updates the `engines.node` constraint to match all currently active Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> versions.
+
+## Settings
+
+Settings are configured per workspace in `nova.config.json` under the `recipes` key:
+
+| Setting                | Type    | Description                                                       |
+|------------------------|---------|-------------------------------------------------------------------|
+| `trackNodeLtsVersions` | boolean | Automatically sync `engines.node` to current Node.js LTS versions |
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe package-json sync-environment [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe package-json sync-environment [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |

@@ -1,0 +1,63 @@
+---
+id: sync-identity
+title: Sync Identity
+description: Sync name, version, description, keywords, and license fields in workspace package.json files using nova.config.json as the source of truth.
+keywords:
+  - nova
+  - sync-identity
+  - package.json
+  - name
+  - version
+  - description
+  - keywords
+  - license
+tags:
+  - sync-identity
+  - cli
+  - recipe
+  - package-json
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync **name**, **version**, **description**, **keywords**, and **license** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+
+## Summary
+
+The `sync-identity` recipe ensures that identity-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` match the conventions defined in <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>. It enforces consistent naming, valid <Term title="semantic versioning" to="/docs/quickstart/terminology#fundamentals">semver</Term> versions, and (for <Term title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts">distributable</Term> workspaces with the setting enabled) syncs description and keywords from the project-level config.
+
+## Settings
+
+Settings are configured per workspace in `nova.config.json` under the `recipes` key:
+
+| Setting       | Type    | Description                                                  |
+|---------------|---------|--------------------------------------------------------------|
+| `description` | boolean | Sync the `description` field (distributable workspaces only) |
+| `keywords`    | boolean | Sync the `keywords` field (distributable workspaces only)    |
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe package-json sync-identity [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe package-json sync-identity [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |

@@ -1,7 +1,7 @@
 ---
 id: terminology
 title: Terminology
-description: Nova concepts, workspace policies, and plain language developer terminology with clear definitions for APIs, packages, JavaScript modules, build tools, Git workflow, testing, performance, and security.
+description: Developer terminology and Nova concepts with clear definitions for APIs, modules, build tools, Git workflow, testing, and security.
 keywords:
   - nova
   - nova concepts
@@ -10,6 +10,10 @@ keywords:
   - trackable
   - distributable
   - nova config
+  - preset
+  - recipe
+  - generator
+  - scaffold
   - developer glossary
   - software terminology
   - api vs sdk
@@ -17,9 +21,14 @@ keywords:
   - esm vs commonjs
   - tree shaking
   - code splitting
+  - flat config
+  - devops
+  - ci cd
   - csr ssr ssg
   - cors
   - csp
+  - ansi
+  - tty
   - git workflow
   - monorepo
   - testing types
@@ -50,6 +59,10 @@ Short, practical definitions for newer developers. Tables list the familiar term
 | **trackable**        | private workspace     | A workspace whose version is tracked but remains private (not published to a registry).                     |
 | **distributable**    | publishable workspace | A workspace whose version is tracked and can be published to a package registry.                            |
 | **nova.config.json** | Nova config           | The configuration file at the monorepo root that defines workspaces, roles, policies, and project metadata. |
+| **preset**           | config layer          | A ready-made configuration layer you compose into your setup (e.g., ESLint presets, TSConfig presets).      |
+| **recipe**           | transform script      | A script that reads and transforms workspace `package.json` files according to rules in `nova.config.json`. |
+| **generator**        | template command      | A command that creates configuration files from built-in templates (e.g., Docker, GitHub workflows).        |
+| **scaffold**         | project starter       | A command that creates an entire project structure with folders, starter files, and wired configuration.    |
 
 ## Fundamentals
 
@@ -90,15 +103,18 @@ Short, practical definitions for newer developers. Tables list the familiar term
 
 ## Builds and Tooling
 
-| Term               | Also known as         | Definition                                                                                  |
-|--------------------|-----------------------|---------------------------------------------------------------------------------------------|
-| **bundle**         | build artifact        | Combine many source files into one or a few files the browser or Node.js can load.          |
-| **minify**         | —                     | Remove comments and whitespace and shorten names to shrink files.                           |
-| **tree shaking**   | dead code elimination | Remove code that is never imported or used.                                                 |
-| **code splitting** | lazy chunks           | Break the app into chunks and load them on demand or by route.                              |
-| **source map**     | `.map` file           | Link compiled or minified code back to the original files for debugging.                    |
-| **watch mode**     | auto rebuild          | Rebuild automatically when files change.                                                    |
-| **hot reload**     | HMR                   | Swap updated modules into a running app without a full page reload, often preserving state. |
+| Term               | Also known as                         | Definition                                                                                                                                                                |
+|--------------------|---------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **bundle**         | build artifact                        | Combine many source files into one or a few files the browser or Node.js can load.                                                                                        |
+| **minify**         | —                                     | Remove comments and whitespace and shorten names to shrink files.                                                                                                         |
+| **tree shaking**   | dead code elimination                 | Remove code that is never imported or used.                                                                                                                               |
+| **code splitting** | lazy chunks                           | Break the app into chunks and load them on demand or by route.                                                                                                            |
+| **source map**     | `.map` file                           | Link compiled or minified code back to the original files for debugging.                                                                                                  |
+| **watch mode**     | auto rebuild                          | Rebuild automatically when files change.                                                                                                                                  |
+| **hot reload**     | HMR                                   | Swap updated modules into a running app without a full page reload, often preserving state.                                                                               |
+| **flat config**    | single-file config                    | One file exporting a flat array of config objects instead of nested, cascading config files. ESLint adopted this pattern in v9, replacing the legacy `.eslintrc` cascade. |
+| **DevOps**         | development and operations            | Practices and tooling that unify development and operations to shorten the delivery cycle (e.g., automated builds, deploys, monitoring).                                  |
+| **CI/CD**          | continuous integration and deployment | Automatically build and test every change (CI), then push passing builds to production without manual steps (CD).                                                         |
 
 ## Module Behavior
 
@@ -114,16 +130,18 @@ Short, practical definitions for newer developers. Tables list the familiar term
 
 ## Runtime and Browser
 
-| Term              | Also known as           | Definition                                                                                |
-|-------------------|-------------------------|-------------------------------------------------------------------------------------------|
-| **event loop**    | —                       | The system that runs one task at a time and schedules what runs next.                     |
-| **blocking code** | synchronous stall       | Long synchronous work that stops the event loop so clicks and timers wait.                |
-| **hydration**     | reattach on client      | Client JavaScript takes over server-rendered HTML and wires up events.                    |
-| **CSR**           | client side rendering   | Render the UI in the browser after the JavaScript bundle loads.                           |
-| **SSR**           | server side rendering   | Render HTML on the server for each request, then hydrate in the browser.                  |
-| **SSG**           | static site generation  | Pre-render HTML at build time and serve static files.                                     |
-| **CORS**          | cross origin requests   | Browser rule that blocks cross-site requests unless the server opts in with CORS headers. |
-| **CSP**           | content security policy | Browser rule that allows only approved scripts and resources.                             |
+| Term              | Also known as           | Definition                                                                                                |
+|-------------------|-------------------------|-----------------------------------------------------------------------------------------------------------|
+| **event loop**    | —                       | The system that runs one task at a time and schedules what runs next.                                     |
+| **blocking code** | synchronous stall       | Long synchronous work that stops the event loop so clicks and timers wait.                                |
+| **hydration**     | reattach on client      | Client JavaScript takes over server-rendered HTML and wires up events.                                    |
+| **CSR**           | client side rendering   | Render the UI in the browser after the JavaScript bundle loads.                                           |
+| **SSR**           | server side rendering   | Render HTML on the server for each request, then hydrate in the browser.                                  |
+| **SSG**           | static site generation  | Pre-render HTML at build time and serve static files.                                                     |
+| **CORS**          | cross origin requests   | Browser rule that blocks cross-site requests unless the server opts in with CORS headers.                 |
+| **CSP**           | content security policy | Browser rule that allows only approved scripts and resources.                                             |
+| **ANSI**          | escape codes            | A set of escape sequences that control text color, formatting, and cursor position in terminal emulators. |
+| **TTY**           | teletypewriter          | A text-based terminal interface that accepts keyboard input and displays output.                          |
 
 ## Git and Workflow
 

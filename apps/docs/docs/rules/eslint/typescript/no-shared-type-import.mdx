@@ -1,0 +1,97 @@
+---
+id: no-shared-type-import
+title: No Shared Type Import
+description: Disallow importing shared type files in code files to enforce type layering where shared types flow through domain type files.
+keywords:
+  - nova
+  - eslint rule
+  - shared types
+  - type layering
+  - import restriction
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Enforce type layering by preventing code files from importing shared type files directly. Shared types should only be imported by `.d.ts` files.
+
+## Summary
+
+The `no-shared-type-import` rule reports imports from shared type files (e.g., `shared.d.ts`) when the importing file is not a `.d.ts` file. This enforces a layered type architecture where shared types flow through domain `.d.ts` files before reaching code files.
+
+## Why Use This Rule?
+
+1. Enforces a clean type hierarchy: `shared.d.ts` to domain `.d.ts` to `.ts` code.
+2. Prevents code files from depending on low-level shared types directly.
+3. Makes refactoring safer because shared type changes only propagate through domain type files.
+
+## Examples
+
+<Tabs groupId="no-shared-type-import-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // In a .d.ts file — importing shared types is allowed.
+    // types/cli/runner.d.ts
+    import type { EntryCategory } from '@/types/shared.d.ts';
+    export type RunnerRecordSelectedCategory = EntryCategory;
+
+    // In a .ts code file — import from the domain .d.ts file.
+    // cli/runner.ts
+    import type { RunnerRecordSelectedCategory } from '@/types/cli/runner.d.ts';
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // In a .ts code file — importing shared types directly.
+    // cli/runner.ts
+    import type { EntryCategory } from '@/types/shared.d.ts';
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+
+```ts
+import { noSharedTypeImport } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-shared-type-import': noSharedTypeImport,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-shared-type-import': ['error', {
+        sharedFiles: ['shared.d.ts'],
+      }],
+    },
+  },
+];
+```
+
+### Options
+
+| Option        | Type       | Default | Description                                                                       |
+|---------------|------------|---------|-----------------------------------------------------------------------------------|
+| `sharedFiles` | `string[]` | `[]`    | File paths or suffixes that identify shared type files (e.g., `['shared.d.ts']`). |
+
+Each entry in `sharedFiles` is matched against the end of the import source path. For example, `'shared.d.ts'` matches any import whose source ends with `/shared.d.ts`.
+
+## Troubleshooting
+
+- **Error fires on a `.d.ts` file.** — The rule skips `.d.ts` files entirely. If the file is a `.d.ts` but the error still fires, check that the filename extension is correct.
+- **Want to allow multiple shared files.** — Add each shared file path to the `sharedFiles` array (e.g., `['shared.d.ts', 'common.d.ts']`).

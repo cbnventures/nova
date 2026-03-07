@@ -1,0 +1,170 @@
+---
+id: transpile
+title: Transpile
+description: Transpile TypeScript with filtered diagnostics, emitting compiled output while suppressing third-party errors so strict configs like skipLibCheck false remain practical.
+keywords:
+  - nova
+  - nova transpile
+  - typescript transpile
+  - skipLibCheck false
+  - emit diagnostics
+  - tsconfig strict
+  - ci cd transpile
+  - monorepo build
+tags:
+  - transpile
+  - cli
+  - diagnostics
+  - typescript
+  - ci-cd
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Transpile TypeScript and emit compiled output while filtering diagnostics to only project-owned files, keeping strict configs practical in real-world projects.
+
+## Summary
+
+The `transpile` command uses the TypeScript compiler <Term title="application programming interface" to="/docs/quickstart/terminology#fundamentals">API</Term> to call `program.emit()` against a project, then filters the emit diagnostics to only include errors in files owned by the project. Third-party diagnostics (from `node_modules`) are excluded so that `skipLibCheck: false` can be used without surfacing errors in <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependencies</Term> the project maintainer cannot control.
+
+:::tip Build Without the Noise
+Setting `skipLibCheck: false` in a TSConfig preset catches more bugs, but raw `tsc` surfaces errors inside third-party packages. This command gives you the emit output without the noise.
+:::
+
+## Why Use This Command?
+
+- Emit compiled JavaScript while filtering diagnostics to project-owned files only.
+- Keep `skipLibCheck: false` in shared TSConfig presets without blocking builds on third-party issues.
+- Produce clear, file-scoped diagnostics with line and column numbers for quick navigation.
+- Replace manual `tsc` invocations that may report uncontrollable errors during emit.
+
+## Use Cases
+
+- **<Term title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow">Monorepo</Term> builds** — Transpile per <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> with each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s own `tsconfig.json`.
+- **<Term title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling">CI/CD</Term> pipelines** — Add a transpile step that exits with code 1 on project errors while ignoring <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependency</Term> noise.
+- **Strict TSConfig adoption** — Migrate from `skipLibCheck: true` to `false` incrementally by surfacing only your own errors during builds.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> release with either the installed `nova` <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> or `npx`.
+- **TypeScript** — Must be installed as a <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependency</Term> (direct or peer) in the <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>.
+- **tsconfig.json** — A valid TypeScript configuration file must exist in the <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> (or be specified with `--project`).
+
+## Usage
+
+You can run this command in two ways:
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova utility transpile
+
+    # Shorthand
+    nova util xpile
+    ```
+
+    **Note:** If Nova is installed **only locally** (inside a project), the command will work **only within that project's directory**. See the [npm docs](https://docs.npmjs.com/cli/configuring-npm/folders) for details.
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest utility transpile
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest util xpile
+    ```
+
+    **Note:** If you prefer the shorter `nova` command, see the [Setup and Configure](/docs/quickstart/setup) guide for installation instructions.
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                   | Description            |
+|------------------------|------------------------|
+| `-p, --project <path>` | Path to tsconfig.json. |
+
+When `--project` is omitted, the command searches for `tsconfig.json` starting from the current working directory.
+
+## How It Works
+
+1. **Resolve config** — Locate the `tsconfig.json` file from `--project` or by searching from the current directory.
+2. **Parse config** — Read and parse the TypeScript configuration using the compiler API.
+3. **Create program** — Build a full TypeScript program from the parsed file list and compiler options.
+4. **Emit** — Call `program.emit()` to write compiled output to the configured `outDir`.
+5. **Filter** — Keep only emit diagnostics where the source file starts with the current working directory **and** does not contain `node_modules` in its path.
+6. **Report** — Print each error with file path, line, column, and message, then exit with code 1 if any errors remain.
+
+:::danger Non-Zero Exit Code
+The command exits with code **1** when project-owned emit errors are found. CI pipelines that use this command will fail the step on errors.
+:::
+
+## Examples
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Default (auto-detect tsconfig.json)"
+        # Original
+        nova utility transpile
+
+        # Shorthand
+        nova util xpile
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Custom tsconfig path"
+        # Original
+        nova utility transpile --project ./tsconfig.build.json
+
+        # Shorthand
+        nova util xpile -p ./tsconfig.build.json
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+    <div className="row">
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Default (auto-detect tsconfig.json)"
+        # Original
+        npx --yes @cbnventures/nova@latest utility transpile
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util xpile
+        ```
+
+      </div>
+      <div className="col col--6 margin-bottom--sm">
+
+        ```bash title="Custom tsconfig path"
+        # Original
+        npx --yes @cbnventures/nova@latest utility transpile --project ./tsconfig.build.json
+
+        # Shorthand
+        npx --yes @cbnventures/nova@latest util xpile -p ./tsconfig.build.json
+        ```
+
+      </div>
+    </div>
+  </TabItem>
+</Tabs>
+
+## Troubleshooting
+
+- **No tsconfig.json found** — Confirm a `tsconfig.json` exists in the current directory, or pass the correct path with `--project`.
+- **TypeScript not installed** — The command requires TypeScript as a <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependency</Term>. Run `npm install typescript` if it is missing.
+- **Zero errors but build fails** — This command only handles emit; other build errors from <Term title="build tool" to="/docs/quickstart/terminology#builds-and-tooling">bundlers</Term> or other tools are not covered.
+- **Errors in generated files** — If generated files (e.g., `.docusaurus`) appear in diagnostics, add them to the `exclude` array in your `tsconfig.json`.

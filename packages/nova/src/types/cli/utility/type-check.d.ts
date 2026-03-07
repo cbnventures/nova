@@ -1,4 +1,4 @@
-import type { Diagnostic, ParsedCommandLine } from 'typescript';
+import type { Diagnostic, Program } from 'typescript';
 
 /**
  * CLI Utility - Type Check - Filter diagnostics.
@@ -23,7 +23,7 @@ export type CLIUtilityTypeCheckGetConfigPathReturns = string | undefined;
  *
  * @since 1.0.0
  */
-export type CLIUtilityTypeCheckGetDiagnosticsParsed = ParsedCommandLine;
+export type CLIUtilityTypeCheckGetDiagnosticsProgram = Program;
 
 export type CLIUtilityTypeCheckGetDiagnosticsReturns = readonly Diagnostic[];
 

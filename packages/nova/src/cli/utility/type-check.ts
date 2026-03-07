@@ -17,7 +17,7 @@ import type {
   CLIUtilityTypeCheckFilterDiagnosticsReturns,
   CLIUtilityTypeCheckGetConfigPathProject,
   CLIUtilityTypeCheckGetConfigPathReturns,
-  CLIUtilityTypeCheckGetDiagnosticsParsed,
+  CLIUtilityTypeCheckGetDiagnosticsProgram,
   CLIUtilityTypeCheckGetDiagnosticsReturns,
   CLIUtilityTypeCheckPrintDiagnosticsFileSet,
   CLIUtilityTypeCheckPrintDiagnosticsFiltered,
@@ -51,8 +51,9 @@ export class CLIUtilityTypeCheck {
 
     const { config } = readConfigFile(configPath, sys.readFile);
     const parsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
+    const program = createProgram(parsed.fileNames, parsed.options);
 
-    const diagnostics = CLIUtilityTypeCheck.getDiagnostics(parsed);
+    const diagnostics = CLIUtilityTypeCheck.getDiagnostics(program);
     const filtered = CLIUtilityTypeCheck.filterDiagnostics(diagnostics);
 
     CLIUtilityTypeCheck.printDiagnostics(filtered);
@@ -85,7 +86,7 @@ export class CLIUtilityTypeCheck {
   /**
    * CLI Utility - Type Check - Get diagnostics.
    *
-   * @param {CLIUtilityTypeCheckGetDiagnosticsParsed} parsed - Parsed.
+   * @param {CLIUtilityTypeCheckGetDiagnosticsProgram} program - Program.
    *
    * @private
    *
@@ -93,8 +94,7 @@ export class CLIUtilityTypeCheck {
    *
    * @since 1.0.0
    */
-  private static getDiagnostics(parsed: CLIUtilityTypeCheckGetDiagnosticsParsed): CLIUtilityTypeCheckGetDiagnosticsReturns {
-    const program = createProgram(parsed.fileNames, parsed.options);
+  private static getDiagnostics(program: CLIUtilityTypeCheckGetDiagnosticsProgram): CLIUtilityTypeCheckGetDiagnosticsReturns {
     return getPreEmitDiagnostics(program);
   }
 

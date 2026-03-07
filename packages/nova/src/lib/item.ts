@@ -1,14 +1,19 @@
 import type {
   ItemAllowedPoliciesByRole,
+  ItemAllowedRecipes,
   ItemAllowedRoles,
-  ItemAllowedSyncProperties,
   ItemChangelogAdjectives,
   ItemChangelogCategoryBumpMap,
+  ItemChangelogCategoryOrder,
   ItemChangelogNouns,
   ItemChangelogValidBumps,
   ItemChangelogValidCategories,
   ItemChangelogVerbs,
   ItemGenericProtocols,
+  ItemInitializeRolesToSync,
+  ItemInitializeValidEntityRoles,
+  ItemNormalizeBundlerRolesSideEffectsEsnext,
+  ItemNormalizeBundlerRolesTypesModule,
   ItemNovaConfigEmailFields,
   ItemNovaConfigUrlFields,
   ItemPackageJsonKeysBundler,
@@ -40,6 +45,23 @@ export const itemAllowedPoliciesByRole: ItemAllowedPoliciesByRole = {
 };
 
 /**
+ * Item - Allowed recipes.
+ *
+ * @since 1.0.0
+ */
+export const itemAllowedRecipes: ItemAllowedRecipes = [
+  'cleanup',
+  'normalize-artifacts',
+  'normalize-bundler',
+  'normalize-dependencies',
+  'normalize-modules',
+  'normalize-tooling',
+  'sync-environment',
+  'sync-identity',
+  'sync-ownership',
+];
+
+/**
  * Item - Allowed roles.
  *
  * @since 1.0.0
@@ -52,22 +74,6 @@ export const itemAllowedRoles: ItemAllowedRoles = [
   'package',
   'tool',
   'template',
-];
-
-/**
- * Item - Allowed sync properties.
- *
- * @since 1.0.0
- */
-export const itemAllowedSyncProperties: ItemAllowedSyncProperties = [
-  'description',
-  'keywords',
-  'author',
-  'contributors',
-  'funding',
-  'homepage',
-  'repository',
-  'bugs',
 ];
 
 /**
@@ -139,6 +145,18 @@ export const itemChangelogCategoryBumpMap: ItemChangelogCategoryBumpMap = {
   fixed: 'patch',
   removed: 'major',
 };
+
+/**
+ * Item - Changelog category order.
+ *
+ * @since 1.0.0
+ */
+export const itemChangelogCategoryOrder: ItemChangelogCategoryOrder = [
+  'updated',
+  'fixed',
+  'added',
+  'removed',
+];
 
 /**
  * Item - Changelog nouns.
@@ -287,6 +305,50 @@ export const itemChangelogVerbs: ItemChangelogVerbs = [
 export const itemGenericProtocols: ItemGenericProtocols = [
   'http:',
   'https:',
+];
+
+/**
+ * Item - Initialize roles to sync.
+ *
+ * @since 1.0.0
+ */
+export const itemInitializeRolesToSync: ItemInitializeRolesToSync = [
+  'project',
+  'docs',
+  'config',
+  'app',
+  'tool',
+];
+
+/**
+ * Item - Initialize valid entity roles.
+ *
+ * @since 1.0.0
+ */
+export const itemInitializeValidEntityRoles: ItemInitializeValidEntityRoles = [
+  'author',
+  'contributor',
+  'supporter',
+];
+
+/**
+ * Item - Normalize bundler roles (sideEffects esnext).
+ *
+ * @since 1.0.0
+ */
+export const itemNormalizeBundlerRolesSideEffectsEsnext: ItemNormalizeBundlerRolesSideEffectsEsnext = [
+  'package',
+];
+
+/**
+ * Item - Normalize bundler roles (types module).
+ *
+ * @since 1.0.0
+ */
+export const itemNormalizeBundlerRolesTypesModule: ItemNormalizeBundlerRolesTypesModule = [
+  'config',
+  'package',
+  'tool',
 ];
 
 /**

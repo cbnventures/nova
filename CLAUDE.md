@@ -1,2 +1,28 @@
-If AGENTS.md exists in this repository, read and follow all instructions in it.
-If VISION.md exists in this repository, read and follow all instructions in it.
+# CLAUDE.md
+
+Read and follow the conventions and rules defined in the files below.
+
+## Vision and Purpose
+
+- [VISION.md](VISION.md) — Purpose, marketing copy, and glossary.
+
+## Project Rules
+
+- [PROJECT_RULES.md](PROJECT_RULES.md) — Project identity, repository layout, source structure, key files, build tooling, workspace rules, project-specific patterns, documentation site, and publishing/deployment.
+
+## Coding Conventions
+
+### Universal
+
+- [conventions/universal.md](conventions/universal.md) — Workflow, general code style, documentation style, platform build rules, and release notes format.
+
+### Per Language
+
+- [conventions/typescript.md](conventions/typescript.md) — TypeScript / JavaScript conventions (type system, imports, class structure, code style, TSConfig).
+- [conventions/swift.md](conventions/swift.md) — Swift conventions (documentation style, code style).
+- [conventions/java.md](conventions/java.md) — Java conventions (documentation style, code style).
+- [conventions/kotlin.md](conventions/kotlin.md) — Kotlin conventions (documentation style, code style).
+- [conventions/csharp.md](conventions/csharp.md) — C# conventions (documentation style, code style).
+- [conventions/php.md](conventions/php.md) — PHP conventions (documentation style, code style).
+- [conventions/python.md](conventions/python.md) — Python conventions (documentation style, code style).
+- [conventions/shell.md](conventions/shell.md) — Shell / Docker conventions (documentation style, code style).

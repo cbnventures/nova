@@ -1,4 +1,5 @@
 import type { ExecException } from 'child_process';
+import type { Dirent } from 'fs';
 
 import type {
   LinuxOsReleaseEntries,
@@ -57,6 +58,8 @@ export type DiscoverPathsWithFileSkipDirectories = Set<string>;
 
 export type DiscoverPathsWithFileRealDirectory = string;
 
+export type DiscoverPathsWithFileEntries = Dirent[];
+
 /**
  * Execute shell.
  *
@@ -78,7 +81,11 @@ export type ExecuteShellReturns = Promise<{
 
 export type ExecuteShellQuotePosixString = string;
 
+export type ExecuteShellQuotePosixReturns = string;
+
 export type ExecuteShellQuoteWindowsString = string;
+
+export type ExecuteShellQuoteWindowsReturns = string;
 
 /**
  * Is command exists.
@@ -167,6 +174,8 @@ export type ParseLinuxOsReleaseTextText = string;
 
 export type ParseLinuxOsReleaseTextReturns = LinuxOsReleaseEntries;
 
+export type ParseLinuxOsReleaseTextOsReleaseEntries = LinuxOsReleaseEntries;
+
 /**
  * Parse windows registry query.
  *
@@ -186,6 +195,8 @@ export type ParseWindowsRegistryQueryRegistryKeys = WindowsRegistryKeys;
 export type ParseWindowsRegistryTextText = string;
 
 export type ParseWindowsRegistryTextReturns = WindowsRegistryKeys;
+
+export type ParseWindowsRegistryTextRegistryKeys = WindowsRegistryKeys;
 
 export type ParseWindowsRegistryTextRegistryKeyType = string;
 

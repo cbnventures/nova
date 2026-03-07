@@ -1,0 +1,68 @@
+---
+id: sync-ownership
+title: Sync Ownership
+description: Sync homepage, bugs, author, contributors, funding, and repository fields in workspace package.json files using nova.config.json as the source of truth.
+keywords:
+  - nova
+  - sync-ownership
+  - package.json
+  - homepage
+  - bugs
+  - author
+  - contributors
+  - funding
+  - repository
+tags:
+  - sync-ownership
+  - cli
+  - recipe
+  - package-json
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync **homepage**, **bugs**, **author**, **contributors**, **funding**, and **repository** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+
+## Summary
+
+The `sync-ownership` recipe ensures that ownership-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` match the values defined in <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>. For <Term title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts">distributable</Term> workspaces, each field can be individually enabled via recipe settings.
+
+## Settings
+
+Settings are configured per workspace in `nova.config.json` under the `recipes` key:
+
+| Setting        | Type    | Description                                                   |
+|----------------|---------|---------------------------------------------------------------|
+| `homepage`     | boolean | Sync the `homepage` field (distributable workspaces only)     |
+| `bugs`         | boolean | Sync the `bugs` field (distributable workspaces only)         |
+| `author`       | boolean | Sync the `author` field (distributable workspaces only)       |
+| `contributors` | boolean | Sync the `contributors` field (distributable workspaces only) |
+| `funding`      | boolean | Sync the `funding` field (distributable workspaces only)      |
+| `repository`   | boolean | Sync the `repository` field (distributable workspaces only)   |
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe package-json sync-ownership [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe package-json sync-ownership [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |

@@ -6,10 +6,15 @@
   ],
   "compilerOptions": {
     "baseUrl": "./",
+    "noEmit": false,
+    "noEmitOnError": false,
     "outDir": "./build",
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@site/*": [
+        "./*"
       ]
     },
     "rootDir": "./",

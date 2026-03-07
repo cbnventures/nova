@@ -95,11 +95,11 @@ export type LoggerShouldLogLevel = LogLevel;
 
 export type LoggerShouldLogReturns = boolean;
 
-export type LoggerShouldLogCurrentLogLevel = LogLevel;
-
 export type LoggerShouldLogWeights = Record<LogLevel, number>;
 
 export type LoggerShouldLogDefaultLogLevel = LogLevel;
+
+export type LoggerShouldLogCurrentLogLevel = LogLevel;
 
 export type LoggerShouldLogPreferredLogLevel = LogLevel;
 

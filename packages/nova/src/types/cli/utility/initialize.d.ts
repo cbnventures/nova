@@ -9,11 +9,14 @@ import type {
   NovaConfigEntities,
   NovaConfigEntity,
   NovaConfigEntityRole,
+  NovaConfigProjectNameSlug,
   NovaConfigWorkspace,
   NovaConfigWorkspacePolicy,
+  NovaConfigWorkspaceRecipeName,
+  NovaConfigWorkspaceRecipeSettings,
+  NovaConfigWorkspaceRecipes,
   NovaConfigWorkspaceRole,
   NovaConfigWorkspaces,
-  NovaConfigWorkspaceSyncProperty,
   UrlProtocol,
 } from '@/types/shared.d.ts';
 
@@ -337,7 +340,7 @@ export type CLIUtilityInitializePromptWorkspacesFormOptionsWorkspacePath = strin
 
 export type CLIUtilityInitializePromptWorkspacesFormOptionsExistingWorkspace = NovaConfigWorkspace | undefined;
 
-export type CLIUtilityInitializePromptWorkspacesFormOptionsProjectSlug = string | undefined;
+export type CLIUtilityInitializePromptWorkspacesFormOptionsProjectSlug = NovaConfigProjectNameSlug | undefined;
 
 export type CLIUtilityInitializePromptWorkspacesFormOptions = {
   workspacePath: CLIUtilityInitializePromptWorkspacesFormOptionsWorkspacePath;
@@ -395,17 +398,17 @@ export type CLIUtilityInitializePromptWorkspacesFormPolicyPromptKey = 'workspace
 
 export type CLIUtilityInitializePromptWorkspacesFormPolicyPromptValue = NovaConfigWorkspacePolicy;
 
-export type CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptKey = 'workspaceSyncProperties';
+export type CLIUtilityInitializePromptWorkspacesFormRecipesPromptKey = 'workspaceRecipes';
 
-export type CLIUtilityInitializePromptWorkspacesFormSyncPropertiesPromptValue = NovaConfigWorkspaceSyncProperty[];
+export type CLIUtilityInitializePromptWorkspacesFormRecipesPromptValue = NovaConfigWorkspaceRecipeName[];
 
-export type CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptKey = 'workspacePinVersions';
+export type CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey = 'workspaceRecipeSettings';
 
-export type CLIUtilityInitializePromptWorkspacesFormPinVersionsPromptValue = boolean;
+export type CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue = string[];
 
-export type CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptKey = 'workspaceSyncLtsEngines';
+export type CLIUtilityInitializePromptWorkspacesFormRecipes = NovaConfigWorkspaceRecipes;
 
-export type CLIUtilityInitializePromptWorkspacesFormSyncLtsEnginesPromptValue = boolean;
+export type CLIUtilityInitializePromptWorkspacesFormRecipeSettings = NovaConfigWorkspaceRecipeSettings;
 
 /**
  * CLI Utility - Initialize - Prompt workspaces form - Resolve name.

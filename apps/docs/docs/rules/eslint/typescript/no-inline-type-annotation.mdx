@@ -1,0 +1,94 @@
+---
+id: no-inline-type-annotation
+title: No Inline Type Annotation
+description: Disallow inline type annotations in code files and require named type aliases from definition files instead.
+keywords:
+  - nova
+  - eslint rule
+  - inline type
+  - type annotation
+  - named type
+  - type alias
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require named type aliases instead of inline type annotations in code files so every type is defined in a `.d.ts` file.
+
+## Summary
+
+The `no-inline-type-annotation` rule reports any type annotation that is not a plain `TSTypeReference` without type arguments. Arrays, unions, intersections, object literals, tuples, generics, function types, and primitive keywords are all flagged. The rule skips `.d.ts` files where inline types are expected.
+
+## Why Use This Rule?
+
+1. Centralizes all types in `.d.ts` files so the type layer is clearly separated from code.
+2. Makes refactoring safer because types have single definitions rather than scattered inline copies.
+3. Produces descriptive type names that document what each variable represents.
+
+## Examples
+
+<Tabs groupId="no-inline-type-annotation-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Named type from a .d.ts file.
+    const entries: RunnerParseEntries = [];
+
+    const config: RunnerRunConfig = JSON.parse(raw);
+
+    let selectedPackage: RunnerRunSelectedPackage;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const entries: string[] = [];
+
+    let x: string | undefined;
+
+    const m: Map<string, number> = new Map();
+
+    const name: string = '';
+
+    const obj: { name: string } = { name: 'test' };
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+
+```ts
+import { noInlineTypeAnnotation } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-inline-type-annotation': noInlineTypeAnnotation,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-inline-type-annotation': ['warn'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **Warning fires on a `.d.ts` file.** — The rule skips files ending in `.d.ts`. If the warning fires anyway, verify that the file extension is correct and that the filename reaches the rule.
+- **Simple type references like `: MyType` are allowed.** — Only plain `TSTypeReference` without type arguments passes. Generics like `: Map<K, V>` are still flagged because the type arguments are inline.

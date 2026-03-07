@@ -43,7 +43,7 @@ export type CLIUtilityVersionGetNodeVersionTools = Record<string, string>;
  */
 export type CLIUtilityVersionGetOsVersionReturns = Promise<{
   name: CLIUtilityVersionGetOsVersionName;
-  version: CLIUtilityVersionGetOsVersionVersion;
+  version: CLIUtilityVersionGetOsVersionCurrentVersion;
   architecture: CLIUtilityVersionGetOsVersionArchitecture;
   build: CLIUtilityVersionGetOsVersionBuild;
   kernel: CLIUtilityVersionGetOsVersionKernel;
@@ -55,7 +55,7 @@ export type CLIUtilityVersionGetOsVersionKernel = string;
 
 export type CLIUtilityVersionGetOsVersionName = NodeJS.Platform | string;
 
-export type CLIUtilityVersionGetOsVersionVersion = string;
+export type CLIUtilityVersionGetOsVersionCurrentVersion = string;
 
 export type CLIUtilityVersionGetOsVersionBuild = string;
 

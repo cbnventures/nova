@@ -1,0 +1,63 @@
+---
+id: cleanup
+title: Cleanup
+description: Remove unsupported keys and reorder remaining keys in workspace package.json files.
+keywords:
+  - nova
+  - cleanup
+  - package.json
+  - reorder
+  - unknown-keys
+  - sort
+tags:
+  - cleanup
+  - cli
+  - recipe
+  - package-json
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Remove unsupported keys and reorder remaining keys in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+
+## Summary
+
+The `cleanup` recipe finalizes each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` by removing keys that are not in the known set of npm, Node.js, Corepack, or <Term title="build tool" to="/docs/quickstart/terminology#builds-and-tooling">bundler</Term> fields and reordering remaining keys to a canonical order. Behavior is controlled per-<Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> via recipe settings in <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>.
+
+## Recipe Settings
+
+| Setting             | Default | Description                                                        |
+|---------------------|---------|--------------------------------------------------------------------|
+| `removeUnknownKeys` | `true`  | Remove keys not recognized by npm, Node.js, Corepack, or bundlers. |
+| `reorderKeys`       | `true`  | Reorder keys to a canonical sort order.                            |
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe package-json cleanup [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe package-json cleanup [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                               |
+|----------------------|-----------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                  |
+| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+
+## Unsupported Keys
+
+During cleanup, this recipe removes any `package.json` keys that are not in the known set of npm, Node.js, Corepack, or <Term title="build tool" to="/docs/quickstart/terminology#builds-and-tooling">bundler</Term> fields. Disable this behavior per-<Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> by setting `removeUnknownKeys` to `false` in the recipe settings.

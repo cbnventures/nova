@@ -1,0 +1,82 @@
+---
+id: no-ternary-in-template-literal
+title: No Ternary in Template Literal
+description: Disallow ternary expressions inside template literals to keep template strings readable and encourage extracting logic into variables.
+keywords:
+  - nova
+  - eslint rule
+  - ternary
+  - template literal
+  - readability
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Keep template literals readable by disallowing ternary expressions inside interpolation slots.
+
+## Summary
+
+The `no-ternary-in-template-literal` rule reports any `ConditionalExpression` (ternary) found inside a template literal's `${}` interpolation. It is recommended to extract the ternary into a named variable before embedding it in the template.
+
+## Why Use This Rule?
+
+1. Prevents dense, hard-to-scan template literals that bury logic inside interpolation.
+2. Encourages descriptive variable names that explain the branching intent.
+3. Makes debugging easier because the intermediate value is visible in a debugger.
+
+## Examples
+
+<Tabs groupId="no-ternary-in-template-literal-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    const label = (isActive === true) ? 'enabled' : 'disabled';
+
+    Logger.info(`Status: ${label}`);
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    Logger.info(`Status: ${(isActive === true) ? 'enabled' : 'disabled'}`);
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+
+```ts
+import { noTernaryInTemplateLiteral } from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-ternary-in-template-literal': noTernaryInTemplateLiteral,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-ternary-in-template-literal': ['warn'],
+    },
+  },
+];
+```
+
+This rule has no additional options.
+
+## Troubleshooting
+
+- **Want to keep the ternary inline for very short expressions.** — It is recommended to extract even short ternaries. The variable name documents the branching intent and the template stays clean.
+- **Nested template literals are not flagged.** — The rule only checks the direct expressions inside `${}`. A ternary inside a nested template literal within an expression would be flagged separately.

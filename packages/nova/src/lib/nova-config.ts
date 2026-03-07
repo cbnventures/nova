@@ -3,8 +3,8 @@ import { join } from 'path';
 
 import {
   itemAllowedPoliciesByRole,
+  itemAllowedRecipes,
   itemAllowedRoles,
-  itemAllowedSyncProperties,
   itemGenericProtocols,
   itemNovaConfigEmailFields,
   itemNovaConfigUrlFields,
@@ -51,17 +51,17 @@ import type {
   NovaConfigParseWorkspacesIsNameAllowedName,
   NovaConfigParseWorkspacesIsNameAllowedReturns,
   NovaConfigParseWorkspacesIsNameAllowedRole,
-  NovaConfigParseWorkspacesAllowedSyncProperties,
+  NovaConfigParseWorkspacesAllowedRecipes,
+  NovaConfigParseWorkspacesParsedSettings,
+  NovaConfigParseWorkspacesRecipes,
   NovaConfigParseWorkspacesReturns,
   NovaConfigParseWorkspacesSlug,
-  NovaConfigParseWorkspacesSyncProperties,
-  NovaConfigParseWorkspacesSyncPropertiesTypeGuard,
   NovaConfigParseWorkspacesValue,
   NovaConfigParseWorkspacesWorkspaces,
   NovaConfigSaveReplaceFile,
   NovaConfigSaveReturns,
   NovaConfigSetReturns,
-  NovaConfigSetValue,
+  NovaConfigSetConfig,
 } from '@/types/lib/nova-config.d.ts';
 
 /**
@@ -116,13 +116,13 @@ export class NovaConfig {
   /**
    * Nova Config - Set.
    *
-   * @param {NovaConfigSetValue} config - Config.
+   * @param {NovaConfigSetConfig} config - Config.
    *
    * @returns {NovaConfigSetReturns}
    *
    * @since 1.0.0
    */
-  public set(config: NovaConfigSetValue): NovaConfigSetReturns {
+  public set(config: NovaConfigSetConfig): NovaConfigSetReturns {
     this.#config = this.parse(config);
   }
 
@@ -352,7 +352,7 @@ export class NovaConfig {
       const parsedEmail = this.getEmail(value[emailField]);
 
       if (parsedEmail !== undefined) {
-        emails[emailField] = parsedEmail;
+        Reflect.set(emails, emailField, parsedEmail);
       }
     }
 
@@ -382,7 +382,7 @@ export class NovaConfig {
       const parsedUrl = this.getUrl(value[urlField], (urlField === 'repository') ? 'repository' : 'generic');
 
       if (parsedUrl !== undefined) {
-        urls[urlField] = parsedUrl;
+        Reflect.set(urls, urlField, parsedUrl);
       }
     }
 
@@ -474,7 +474,6 @@ export class NovaConfig {
       const nameCandidate = this.getNonEmptyString(options['name']);
       const roleCandidate = this.getNonEmptyString(options['role']);
       const policyCandidate = this.getNonEmptyString(options['policy']);
-      const syncPropertiesCandidate = this.getArrayOfNonEmptyStrings(options['syncProperties']);
 
       if (nameCandidate === undefined) {
         continue;
@@ -497,32 +496,65 @@ export class NovaConfig {
         continue;
       }
 
-      let syncProperties: NovaConfigParseWorkspacesSyncProperties;
+      let recipes: NovaConfigParseWorkspacesRecipes;
 
-      if (policy === 'distributable' && syncPropertiesCandidate !== undefined) {
-        const allowedSyncProperties: NovaConfigParseWorkspacesAllowedSyncProperties = new Set(itemAllowedSyncProperties);
+      const recipesCandidate = options['recipes'];
 
-        syncProperties = syncPropertiesCandidate.filter((value): value is NovaConfigParseWorkspacesSyncPropertiesTypeGuard => allowedSyncProperties.has(value));
+      if (isPlainObject(recipesCandidate)) {
+        const allowedRecipes: NovaConfigParseWorkspacesAllowedRecipes = new Set(itemAllowedRecipes);
+        const parsedRecipes: NovaConfigParseWorkspacesRecipes = {};
 
-        if (syncProperties.length === 0) {
-          syncProperties = undefined;
+        for (const [recipeName, recipeTuple] of Object.entries(recipesCandidate)) {
+          const matchedRecipe = [...allowedRecipes].find(
+            (allowedRecipe) => allowedRecipe === recipeName,
+          );
+
+          if (matchedRecipe === undefined) {
+            continue;
+          }
+
+          if (!Array.isArray(recipeTuple) || recipeTuple.length === 0) {
+            continue;
+          }
+
+          const enabled = recipeTuple[0];
+
+          if (typeof enabled !== 'boolean') {
+            continue;
+          }
+
+          const settings = recipeTuple[1];
+
+          if (settings !== undefined && isPlainObject(settings)) {
+            const parsedSettings: NovaConfigParseWorkspacesParsedSettings = {};
+
+            for (const [settingKey, settingValue] of Object.entries(settings)) {
+              if (typeof settingValue === 'boolean') {
+                Reflect.set(parsedSettings, settingKey, settingValue);
+              }
+            }
+
+            if (Object.keys(parsedSettings).length > 0) {
+              Reflect.set(parsedRecipes, matchedRecipe, [enabled, parsedSettings]);
+            } else {
+              Reflect.set(parsedRecipes, matchedRecipe, [enabled]);
+            }
+          } else {
+            Reflect.set(parsedRecipes, matchedRecipe, [enabled]);
+          }
+        }
+
+        if (Object.keys(parsedRecipes).length > 0) {
+          recipes = parsedRecipes;
         }
       }
 
-      const pinVersionsCandidate = options['pinVersions'];
-      const pinVersions = (pinVersionsCandidate === true) ? true : undefined;
-
-      const syncLtsEnginesCandidate = options['syncLtsEngines'];
-      const syncLtsEngines = (syncLtsEnginesCandidate === true) ? true : undefined;
-
-      workspaces[path] = {
+      Reflect.set(workspaces, path, {
         name: nameCandidate,
         role,
         policy,
-        ...(syncProperties !== undefined) ? { syncProperties } : {},
-        ...(pinVersions !== undefined) ? { pinVersions } : {},
-        ...(syncLtsEngines !== undefined) ? { syncLtsEngines } : {},
-      };
+        ...(recipes !== undefined) ? { recipes } : {},
+      });
     }
 
     return (Object.keys(workspaces).length > 0) ? workspaces : undefined;

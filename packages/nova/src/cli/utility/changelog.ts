@@ -7,6 +7,7 @@ import prompts from 'prompts';
 import {
   itemChangelogAdjectives,
   itemChangelogCategoryBumpMap,
+  itemChangelogCategoryOrder,
   itemChangelogNouns,
   itemChangelogValidBumps,
   itemChangelogValidCategories,
@@ -155,7 +156,7 @@ export class CLIUtilityChangelog {
       ],
     });
 
-    if (modeOutput.cancelled) {
+    if (modeOutput.cancelled === true) {
       return;
     }
 
@@ -316,7 +317,7 @@ export class CLIUtilityChangelog {
           }),
         });
 
-        if (packageOutput.cancelled) {
+        if (packageOutput.cancelled === true) {
           return;
         }
 
@@ -358,7 +359,7 @@ export class CLIUtilityChangelog {
         ],
       });
 
-      if (categoryOutput.cancelled) {
+      if (categoryOutput.cancelled === true) {
         return;
       }
 
@@ -384,7 +385,7 @@ export class CLIUtilityChangelog {
         },
       });
 
-      if (messageOutput.cancelled) {
+      if (messageOutput.cancelled === true) {
         return;
       }
 
@@ -423,7 +424,7 @@ export class CLIUtilityChangelog {
         initial: itemChangelogValidBumps.indexOf(suggestedBump),
       });
 
-      if (bumpOutput.cancelled) {
+      if (bumpOutput.cancelled === true) {
         return;
       }
 
@@ -545,6 +546,7 @@ export class CLIUtilityChangelog {
     for (const entry of grouped) {
       const packageName = entry[0];
       const packageEntries = entry[1];
+
       // Find workspace path.
       const workspaceEntry = Object.entries(workspaces).find((workspace) => {
         const workspaceConfig = workspace[1];
@@ -708,7 +710,7 @@ export class CLIUtilityChangelog {
         initial: false,
       });
 
-      if (confirmOutput.cancelled) {
+      if (confirmOutput.cancelled === true) {
         Logger.customize({
           name: 'CLIUtilityChangelog.release',
           purpose: 'cancelled',
@@ -805,7 +807,7 @@ export class CLIUtilityChangelog {
 
     try {
       const dirEntries = await fs.readdir(changelogDir);
-      files = dirEntries.filter((file) => file.endsWith('.md'));
+      files = dirEntries.filter((dirEntry) => dirEntry.endsWith('.md'));
     } catch {
       return entries;
     }
@@ -940,10 +942,10 @@ export class CLIUtilityChangelog {
     }
 
     // Build section in order: UPDATED, FIXED, ADDED, REMOVED.
-    const categoryOrder: CLIUtilityChangelogWriteChangelogCategoryOrder = ['updated', 'fixed', 'added', 'removed'];
+    const categoryOrder: CLIUtilityChangelogWriteChangelogCategoryOrder = [...itemChangelogCategoryOrder];
     const sectionParts: CLIUtilityChangelogWriteChangelogSectionParts = [];
 
-    sectionParts.push(`## ${version} (${dateString})`);
+    sectionParts.push(`## ${version} - ${dateString}`);
 
     for (const category of categoryOrder) {
       const messages = byCategory.get(category);

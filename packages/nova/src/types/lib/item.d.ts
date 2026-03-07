@@ -2,7 +2,10 @@ import type {
   ChangelogEntryBump,
   ChangelogEntryCategory,
   ItemPrettyNames,
+  NovaConfigEntityRole,
   NovaConfigWorkspacePolicy,
+  NovaConfigWorkspaceRecipeName,
+  NovaConfigWorkspaceRole,
 } from '@/types/shared.d.ts';
 
 /**
@@ -35,6 +38,13 @@ export type ItemAllowedPoliciesByRole = {
 };
 
 /**
+ * Item - Allowed recipes.
+ *
+ * @since 1.0.0
+ */
+export type ItemAllowedRecipes = readonly NovaConfigWorkspaceRecipeName[];
+
+/**
  * Item - Allowed roles.
  *
  * @since 1.0.0
@@ -47,22 +57,6 @@ export type ItemAllowedRoles = readonly [
   'package',
   'tool',
   'template',
-];
-
-/**
- * Item - Allowed sync properties.
- *
- * @since 1.0.0
- */
-export type ItemAllowedSyncProperties = readonly [
-  'description',
-  'keywords',
-  'author',
-  'contributors',
-  'funding',
-  'homepage',
-  'repository',
-  'bugs',
 ];
 
 /**
@@ -129,6 +123,13 @@ export type ItemChangelogAdjectives = readonly [
  * @since 1.0.0
  */
 export type ItemChangelogCategoryBumpMap = Record<ChangelogEntryCategory, ChangelogEntryBump>;
+
+/**
+ * Item - Changelog category order.
+ *
+ * @since 1.0.0
+ */
+export type ItemChangelogCategoryOrder = readonly ChangelogEntryCategory[];
 
 /**
  * Item - Changelog nouns.
@@ -278,6 +279,34 @@ export type ItemGenericProtocols = readonly [
   'http:',
   'https:',
 ];
+
+/**
+ * Item - Initialize roles to sync.
+ *
+ * @since 1.0.0
+ */
+export type ItemInitializeRolesToSync = readonly NovaConfigWorkspaceRole[];
+
+/**
+ * Item - Initialize valid entity roles.
+ *
+ * @since 1.0.0
+ */
+export type ItemInitializeValidEntityRoles = readonly NovaConfigEntityRole[];
+
+/**
+ * Item - Normalize bundler roles (sideEffects esnext).
+ *
+ * @since 1.0.0
+ */
+export type ItemNormalizeBundlerRolesSideEffectsEsnext = readonly NovaConfigWorkspaceRole[];
+
+/**
+ * Item - Normalize bundler roles (types module).
+ *
+ * @since 1.0.0
+ */
+export type ItemNormalizeBundlerRolesTypesModule = readonly NovaConfigWorkspaceRole[];
 
 /**
  * Item - Nova config email fields.

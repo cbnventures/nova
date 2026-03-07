@@ -1,5 +1,41 @@
 # @cbnventures/nova
 
+## 0.14.0 - 2026-03-07
+
+### UPDATED
+- Renamed CLI aliases from 2-letter initials to readable word fragments (e.g., `pv` to `pkg`, `cl` to `log`, `tc` to `type-chk`).
+- Renamed ESLint config files from `eslint.config.ts` to `eslint.config.mjs`.
+- Updated `nova.config.json` workspace schema, replacing `pinVersions`, `syncLtsEngines`, and `syncProperties` with a unified `recipes` object.
+- Reorganized ESLint rules into subcategories: `formatting/`, `nova/`, `patterns/`, `regex/`, and `typescript/`.
+- Updated `initialize` utility to configure recipes instead of legacy `pinVersions`, `syncLtsEngines`, and `syncProperties` flags.
+
+### FIXED
+- Renamed mismatched TSConfig preset doc filenames from `dx-code-style.mdx` to `dx-essentials.mdx` and `dx-ignore.mdx` to `dx-strict.mdx`.
+- Fixed incorrect import paths in setup and presets docs from `@cbnventures/nova/eslint` and `@cbnventures/nova/tsconfig/` to `@cbnventures/nova/presets/eslint` and `@cbnventures/nova/presets/tsconfig/`.
+- Fixed local install command in setup docs from `npm i -D` to `npm i` since Nova's toolkit exports are used at runtime.
+
+### ADDED
+- Added `no-destructuring` ESLint rule to ban destructuring in callbacks, loops, functions, declarations, and assignments.
+- Added `no-implicit-boolean` ESLint rule to require explicit comparisons instead of truthy/falsy coercion.
+- Added `no-shared-type-import` ESLint rule to prevent code files from importing shared type files directly.
+- Added 9 granular `package-json` recipes: `cleanup`, `normalize-artifacts`, `normalize-bundler`, `normalize-dependencies`, `normalize-modules`, `normalize-tooling`, `sync-environment`, `sync-identity`, and `sync-ownership`.
+- Added `require-padding-lines` ESLint rule to enforce blank lines between specific statement patterns.
+- Added `no-assign-then-return` ESLint rule to flag assign-then-return patterns.
+- Added `run-scripts` utility command to run package.json scripts by pattern in sequential or parallel mode.
+- Added `no-bracket-assignment` ESLint rule to enforce `Reflect.set()` over bracket notation assignment.
+- Added `no-inline-type-annotation` ESLint rule to enforce named type aliases over inline type annotations.
+- Added `transpile` CLI utility to compile TypeScript projects using the TypeScript compiler API.
+- Added `no-catch-unknown-annotation` ESLint rule to flag redundant `: unknown` annotations on catch clause variables.
+- Added `no-ternary-in-template-literal` ESLint rule to disallow ternary expressions inside template literals.
+- Added `run-recipes` CLI utility to orchestrate all enabled package-json recipes in sequence.
+- Added `betweenSwitchCases` option to the `require-padding-lines` ESLint rule, enforcing blank lines between non-empty switch cases while allowing grouped empty fallthrough cases.
+
+### REMOVED
+- Removed `jiti` devDependency from root `package.json`.
+- Removed `tsc-alias` devDependency, replaced by built-in `fix-aliases.mjs` script.
+- Removed `npm-run-all` dependency, replaced by built-in `run-scripts` utility.
+- Removed `pin-versions`, `sync-lts-engines`, and `sync-packages` recipes. Their functionality has been split into 8 granular `package-json` recipes.
+
 ## 0.13.1 (2026-02-28)
 
 ### FIXED
