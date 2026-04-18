@@ -15,32 +15,35 @@ keywords:
   - typescript projects
   - node projects
 tags:
+  - presets
   - eslint
   - flat-config
   - best-practices
   - reference
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import { Icon } from '@iconify/react';
+import Details from '@theme/Details';
 
 # Best Practices
 
-Practical ESLint guidance for Nova that uses a single **<Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>** and **small, ordered layers**. Favor **explicit**, inspectable rules and **predictable** results. These practices apply to any <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> in a <Term title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow">monorepo</Term>.
+Practical ESLint guidance for Nova that uses a single <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> and **small, ordered layers**. Favor **explicit**, inspectable rules and **predictable** results. These practices apply to any <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in a <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>.
 
 ## Dos and Don'ts
 
-<details>
+<Details>
   <summary>
     <Icon icon="openmoji:check-mark" width="20" height="20" />
-    <span>DO: Use one flat config and start from Nova presets</span>
+    <span>DO: Use one <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> and start from Nova presets</span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Use a single <code>{'eslint.config.mjs'}</code>. First <strong>import Nova <Term title="config layer" to="/docs/quickstart/terminology#nova-concepts">presets</Term></strong>, then add your project's layers and overrides in that same array.</li>
-    <li><strong>Why</strong>: One file is the source of truth. <Term title="config layer" to="/docs/quickstart/terminology#nova-concepts">Presets</Term> give a reliable base. Your local entries then adjust behavior in a controlled, visible order.</li>
+    <li><strong>What</strong>: Use a single <code>{'eslint.config.ts'}</code>. First <strong>import Nova <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>presets</Terminology></strong>, then add your project's layers and overrides in that same array.</li>
+    <li><strong>Why</strong>: One file is the source of truth. <Terminology title="config layer" to="/docs/quickstart/terminology#nova-concepts" color={true}>Presets</Terminology> give a reliable base. Your local entries then adjust behavior in a controlled, visible order.</li>
   </ul>
-</details>
+</Details>
 
-<details>
+<Details>
   <summary>
     <Icon icon="openmoji:check-mark" width="20" height="20" />
     <span>DO: Order layers intentionally</span>
@@ -49,9 +52,9 @@ Practical ESLint guidance for Nova that uses a single **<Term title="single-file
     <li><strong>What</strong>: Arrange as <em>ignores → style → language → environment/framework → platform → tool → your custom overrides</em>.</li>
     <li><strong>Why</strong>: ESLint merges top to bottom and the <em>last</em> matching entry wins. Stable order makes outcomes predictable.</li>
   </ul>
-</details>
+</Details>
 
-<details>
+<Details>
   <summary>
     <Icon icon="openmoji:check-mark" width="20" height="20" />
     <span>DO: Group rules into scoped entries</span>
@@ -60,20 +63,20 @@ Practical ESLint guidance for Nova that uses a single **<Term title="single-file
     <li><strong>What</strong>: Create an <strong>array of objects</strong>. Each object is a named group with <code>{'plugins'}</code>, <code>{'rules'}</code>, <code>{'settings'}</code>, <code>{'files'}</code>, <code>{'ignores'}</code>, etc.</li>
     <li><strong>Why</strong>: You control <em>where</em> a ruleset applies. This replaces legacy overrides and avoids accidental coverage.</li>
   </ul>
-</details>
+</Details>
 
-<details>
+<Details>
   <summary>
     <Icon icon="openmoji:cross-mark" width="20" height="20" />
-    <span>DON'T: Mix flat config with legacy <code>{'.eslintrc*'}</code></span>
+    <span>DON'T: Mix <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> with legacy <code>{'.eslintrc*'}</code></span>
   </summary>
   <ul>
-    <li><strong>What</strong>: Do not keep old config files alongside <code>{'eslint.config.mjs'}</code>.</li>
-    <li><strong>Why</strong>: Split sources of truth cause confusion. <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">Flat config</Term> expects rules and ignores to live in one place.</li>
+    <li><strong>What</strong>: Do not keep old config files alongside <code>{'eslint.config.ts'}</code>.</li>
+    <li><strong>Why</strong>: Split sources of truth cause confusion. <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>Flat config</Terminology> expects rules and ignores to live in one place.</li>
   </ul>
-</details>
+</Details>
 
-<details>
+<Details>
   <summary>
     <Icon icon="openmoji:cross-mark" width="20" height="20" />
     <span>DON'T: Reorder config layers casually</span>
@@ -82,9 +85,9 @@ Practical ESLint guidance for Nova that uses a single **<Term title="single-file
     <li><strong>What</strong>: Avoid moving entries unless you intend to change who wins on conflicts.</li>
     <li><strong>Why</strong>: Later entries override earlier ones. Order changes behavior.</li>
   </ul>
-</details>
+</Details>
 
-<details>
+<Details>
   <summary>
     <Icon icon="openmoji:cross-mark" width="20" height="20" />
     <span>DON'T: Lint build output or vendor folders</span>
@@ -93,7 +96,7 @@ Practical ESLint guidance for Nova that uses a single **<Term title="single-file
     <li><strong>What</strong>: Exclude generated code (e.g. <code>{'build'}</code>, <code>{'dist'}</code>, <code>{'node_modules'}</code>) from linting.</li>
     <li><strong>Why</strong>: Prevents noise, speed issues, and irrelevant rule failures from user-ignored files.</li>
   </ul>
-</details>
+</Details>
 
 ## Troubleshooting
 

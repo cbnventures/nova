@@ -1,0 +1,16 @@
+/**
+ * Doc Card List — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* Card grid uses a tighter gap than the layout grid. */
+article > .nova-grid {
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  article > .nova-grid {
+    gap: 1.25rem;
+  }
+}

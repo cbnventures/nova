@@ -1,0 +1,24 @@
+/**
+ * Signal — TOC visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-toc-link {
+  padding: 0.125rem 0;
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  color: var(--nova-color-neutral-400);
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-link:hover,
+.nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-500);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-toc-link:hover,
+[data-theme="dark"] .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-400);
+}

@@ -1,0 +1,15 @@
+/**
+ * Signal — Table visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Table Container
+ * ============================ */
+
+/* Dense, compact, left-aligned. Spreadsheet feel. Horizontal scroll on mobile. */
+.table-wrapper {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+}

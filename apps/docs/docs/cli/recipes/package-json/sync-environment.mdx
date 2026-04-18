@@ -11,28 +11,43 @@ keywords:
   - packageManager
   - devEngines
 tags:
-  - sync-environment
   - cli
+  - sync-environment
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Sync **engines**, **os**, **cpu**, **libc**, **devEngines**, and **packageManager** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Sync **engines**, **os**, **cpu**, **libc**, **devEngines**, and **packageManager** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `sync-environment` recipe ensures that runtime environment fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` follow consistent conventions. When the `trackNodeLtsVersions` setting is enabled, it automatically updates the `engines.node` constraint to match all currently active Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> versions.
+The `sync-environment` recipe ensures that runtime environment fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` follow consistent conventions.
+
+When the `trackNodeLtsVersions` setting is enabled, it automatically updates the `engines.node` constraint to match all currently active Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> versions.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects environment and runtime fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+
+- **`packageManager` (Conditional)** — Removed if the workspace role is not `project`. If the role is `project` but the value is not a string in `name@version` format, it is removed.
+- **`engines` (Required)** — If missing, it is created. When active Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> versions are available, `engines.node` is set to the computed constraint. If `engines` exists but `engines.node` is missing, the constraint is added.
+- **`engines.node` tracking** — When `trackNodeLtsVersions` is enabled, the recipe checks whether the current `engines.node` value covers all active <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> major versions using `>=N`, `^N`, `~N`, `N.x`, or `*` patterns. If coverage is incomplete, a warning is logged. The value is then synced to the computed constraint.
+- **`os` (Conditional)** — Removed if the field is present but empty.
+- **`cpu` (Conditional)** — Removed if the field is present but empty.
+- **`libc` (Required)** — Removed if `os` does not include `linux`. If missing but `os` includes `linux`, it is added as `["glibc"]`.
+- **`devEngines` (Conditional)** — Removed if the field is present but empty.
 
 ## Settings
 
 Settings are configured per workspace in `nova.config.json` under the `recipes` key:
 
-| Setting                | Type    | Description                                                       |
-|------------------------|---------|-------------------------------------------------------------------|
-| `trackNodeLtsVersions` | boolean | Automatically sync `engines.node` to current Node.js LTS versions |
+| Setting                | Type    | Description                                                        |
+|------------------------|---------|--------------------------------------------------------------------|
+| `trackNodeLtsVersions` | boolean | Automatically sync `engines.node` to current Node.js LTS versions. |
 
 ## Usage
 
@@ -55,7 +70,7 @@ Settings are configured per workspace in `nova.config.json` under the `recipes` 
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

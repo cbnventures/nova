@@ -1,0 +1,141 @@
+---
+id: no-optional-chaining
+title: No Optional Chaining
+description: Disallow the optional chaining operator so null and undefined checks are explicit.
+keywords:
+  - nova
+  - eslint rule
+  - optional chaining
+  - nullable
+  - explicit checks
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Ban the `?.` operator so null/undefined checks are explicit because implicit chaining hides which values are expected to be nullable.
+
+## Summary
+
+The `no-optional-chaining` rule reports any use of the optional chaining operator (`?.`), including optional property access (`obj?.prop`), optional element access (`arr?.[0]`), and optional calls (`fn?.()`).
+
+The nullish coalescing operator (`??`) is not affected.
+
+## Why Use This Rule?
+
+1. Forces explicit null/undefined checks so the reader knows exactly which variable is nullable.
+2. Prevents deep chains of `?.` that silently swallow missing intermediate objects.
+3. Keeps the nullish coalescing operator (`??`) available for providing defaults.
+
+## Examples
+
+<Tabs groupId="no-optional-chaining-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    if (user !== undefined) {
+      const name = user.name;
+    }
+
+    const first = arr !== undefined ? arr[0] : undefined;
+
+    // Nullish coalescing is allowed.
+    const name = inputName ?? 'default';
+    const port = config.port ?? 3000;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const name = user?.name;
+    const first = arr?.[0];
+    const result = fn?.();
+    const deep = obj?.a?.b?.c;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-optional-chaining-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoOptionalChaining } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-optional-chaining': NoOptionalChaining.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-optional-chaining': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoOptionalChaining } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-optional-chaining': NoOptionalChaining.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-optional-chaining': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Ternary replacement feels verbose** — Explicit checks like `x !== undefined ? x.name : undefined` are intentionally verbose. The verbosity signals that the value is nullable and forces the reader to consider both branches.
+- **Nullish coalescing (`??`) is not flagged** — Only the `?.` operator is banned. `??` is a separate operator and is permitted.

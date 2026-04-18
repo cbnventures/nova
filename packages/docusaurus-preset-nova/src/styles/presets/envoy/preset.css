@@ -1,0 +1,570 @@
+/**
+ * Envoy — Preset identity, design tokens, keyframes, and global visual styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Design Tokens
+ * ============================ */
+
+/* Warm off-white light mode, primary-tinted dark mode. */
+:root {
+  --nova-envoy-bg-light: color-mix(in srgb, var(--nova-color-primary-500), #fafafa 97%);
+  --nova-envoy-bg-dark: color-mix(in srgb, var(--nova-color-primary-900), #0a0a0a 85%);
+  --nova-envoy-surface-light: #ffffff;
+  --nova-envoy-surface-dark: color-mix(in srgb, var(--nova-color-primary-900), #111111 80%);
+  --nova-envoy-surface-raised-light: #ffffff;
+  --nova-envoy-surface-raised-dark: color-mix(in srgb, var(--nova-color-primary-900), #141414 75%);
+  --nova-envoy-border-light: var(--nova-color-neutral-200);
+  --nova-envoy-border-dark: color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  --nova-envoy-text-muted-light: var(--nova-color-neutral-500);
+  --nova-envoy-text-muted-dark: var(--nova-color-neutral-400);
+  --nova-envoy-glow-violet: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  --nova-envoy-glow-cyan: color-mix(in srgb, var(--nova-color-accent-500), transparent 90%);
+  --nova-envoy-gradient-hero: linear-gradient(135deg, var(--nova-color-primary-600) 0%, var(--nova-color-accent-500) 100%);
+  --nova-envoy-gradient-hero-dark: linear-gradient(135deg, var(--nova-color-primary-400) 0%, var(--nova-color-accent-400) 100%);
+  --nova-envoy-gradient-stats: linear-gradient(160deg, var(--nova-color-primary-600) 20%, var(--nova-color-accent-500) 80%);
+  --nova-envoy-gradient-stats-dark: linear-gradient(160deg, var(--nova-color-primary-400) 20%, var(--nova-color-accent-400) 80%);
+  --nova-envoy-shadow-soft: 0 1px 2px rgb(0 0 0 / 0.04), 0 2px 8px rgb(0 0 0 / 0.06);
+  --nova-envoy-shadow-card: 0 1px 3px rgb(0 0 0 / 0.04), 0 4px 16px rgb(0 0 0 / 0.06);
+  --nova-envoy-shadow-card-hover: 0 8px 32px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%), 0 2px 8px rgb(0 0 0 / 0.06);
+  --nova-envoy-shadow-elevated: 0 4px 12px rgb(0 0 0 / 0.05), 0 12px 40px rgb(0 0 0 / 0.08);
+  --nova-envoy-shadow-dark-card: 0 2px 8px rgb(0 0 0 / 0.2), 0 8px 24px rgb(0 0 0 / 0.15);
+  --nova-envoy-shadow-dark-card-hover: 0 8px 32px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%), 0 4px 16px rgb(0 0 0 / 0.2);
+  --nova-envoy-radius-generous: calc(var(--nova-shape-radius) * 1.5);
+  --nova-envoy-radius-pill: 999px;
+  --nova-color-warning-500: #f59e0b;
+  --nova-color-warning-400: #fbbf24;
+  --nova-color-warning-bg: rgba(245, 158, 11, 0.06);
+  --nova-color-warning-bg-dark: rgba(245, 158, 11, 0.1);
+  --nova-color-danger-500: #ef4444;
+  --nova-color-danger-400: #f87171;
+  --nova-color-danger-bg: rgba(239, 68, 68, 0.06);
+  --nova-color-danger-bg-dark: rgba(239, 68, 68, 0.1);
+
+  --nova-depth-card-border: 1px solid var(--nova-envoy-border-light);
+
+  /* Comfortable density: 16px base, scaling up at md and lg. */
+  --nova-grid-padding: 16px;
+  --nova-grid-gutter: 16px;
+  --nova-section-gap: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nova-grid-padding: 20px;
+    --nova-grid-gutter: 20px;
+    --nova-section-gap: 4.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nova-grid-padding: 24px;
+    --nova-grid-gutter: 24px;
+    --nova-section-gap: 5.5rem;
+  }
+}
+
+html {
+  background-color: var(--nova-envoy-bg-light);
+}
+
+[data-theme="dark"] {
+  --nova-depth-card-border: 1px solid var(--nova-color-neutral-800);
+  --nova-depth-code-border: 1px solid var(--nova-color-neutral-800);
+
+  background-color: var(--nova-envoy-bg-dark);
+}
+
+body {
+  min-width: 320px;
+
+  font-family: var(--nova-font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+
+  color: var(--nova-color-neutral-900);
+
+  background-color: var(--nova-envoy-bg-light);
+}
+
+[data-theme="dark"] body {
+  color: var(--nova-color-neutral-100);
+
+  background-color: var(--nova-envoy-bg-dark);
+}
+
+/* ============================
+ * 2. Keyframes
+ * ============================ */
+
+/* Fade in from below — hero entrance and staggered content reveals. */
+@keyframes envoy-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Subtle scale-up for elements entering the viewport. */
+@keyframes envoy-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Gentle pulse for focus indicators and interactive accents. */
+@keyframes envoy-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  }
+
+  50% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  }
+}
+
+/* Shimmer for loading states and decorative accents. */
+@keyframes envoy-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Soft entrance from below with a slight scale — for hero inner content. */
+@keyframes envoy-hero-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(32px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Gradient shift for hero heading background-position animation. */
+@keyframes envoy-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Subtle float for decorative background glows. */
+@keyframes envoy-float {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
+/* Respect user preference for reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* !important is intentional — accessibility override must win regardless of specificity. */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================
+ * 3. Links
+ * ============================ */
+
+/* Violet link color with underline on hover. */
+a {
+  color: var(--nova-color-primary-600);
+
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--nova-color-primary-700);
+
+  text-decoration: underline;
+}
+
+[data-theme="dark"] a {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] a:hover {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 4. CTA Buttons
+ * ============================ */
+
+/* Primary filled button with violet gradient and premium shadow. */
+.nova-cta-primary {
+  padding: 0.8rem 2.25rem;
+
+  font-family: var(--nova-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--nova-color-neutral-50);
+
+  background: linear-gradient(135deg, var(--nova-color-primary-500), var(--nova-color-primary-700));
+  border: none;
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%), 0 4px 16px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-cta-primary:hover,
+.nova-cta-primary:focus-visible {
+  color: var(--nova-color-neutral-50);
+
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--nova-color-primary-500), transparent 75%), 0 8px 28px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+  transform: translateY(-2px);
+}
+
+.nova-cta-primary:active {
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  transform: translateY(0);
+}
+
+[data-theme="dark"] .nova-cta-primary {
+  background: linear-gradient(135deg, var(--nova-color-primary-500), var(--nova-color-primary-600));
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--nova-color-primary-500), transparent 70%), 0 4px 20px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-cta-primary:hover,
+[data-theme="dark"] .nova-cta-primary:focus-visible {
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--nova-color-primary-500), transparent 65%), 0 8px 32px color-mix(in srgb, var(--nova-color-primary-500), transparent 75%), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  color: var(--nova-color-neutral-50);
+}
+
+/* Outline button with violet border and frosted glass feel. */
+.nova-cta-secondary {
+  padding: 0.8rem 2.25rem;
+
+  font-family: var(--nova-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 97%);
+  border: 1px solid var(--nova-color-primary-200);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.04);
+
+  transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-cta-secondary:hover,
+.nova-cta-secondary:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-color-primary-400);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .nova-cta-secondary {
+  color: var(--nova-color-primary-300);
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-cta-secondary:hover,
+[data-theme="dark"] .nova-cta-secondary:focus-visible {
+  color: var(--nova-color-primary-200);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  border-color: var(--nova-color-primary-400);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+}
+
+/* Centered CTA below a content block. */
+.nova-section-action {
+  margin-top: 2.5rem;
+
+  text-align: center;
+}
+
+/* CTA buttons have a subtle press-down effect on active. */
+.nova-cta-primary:active,
+.nova-cta-secondary:active,
+a[role="button"]:active {
+  transform: scale(0.97);
+}
+
+/* CTA buttons spring back after press. */
+.nova-cta-primary:active,
+.nova-cta-secondary:active {
+  transition-duration: 100ms;
+
+  transform: scale(0.97) translateY(0);
+}
+
+/* ============================
+ * 4. Scrollbar
+ * ============================ */
+
+html {
+  scrollbar-color: var(--nova-color-primary-300) transparent;
+}
+
+[data-theme="dark"] {
+  scrollbar-color: var(--nova-color-primary-700) transparent;
+}
+
+/* ============================
+ * 5. Stats & Spotlight
+ * ============================ */
+
+/* Section heading centered with display font and subtle gradient. */
+.nova-section-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .nova-section-heading {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .nova-section-heading {
+    font-size: 1.875rem;
+  }
+}
+
+[data-theme="dark"] .nova-section-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+.nova-section-description {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-section-description {
+  color: var(--nova-color-neutral-400);
+}
+
+/* Code snippet blocks with premium elevated styling and violet tint. */
+.nova-code-snippet {
+  background-color: #faf9fb;
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="dark"] .nova-code-snippet {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-envoy-border-dark);
+  box-shadow: var(--nova-envoy-shadow-dark-card), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* Stats grid — layout handled by nova-grid and nova-col classes. */
+.nova-stats-grid {
+  text-align: center;
+}
+
+.nova-stat-value {
+  font-family: var(--nova-font-display);
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+
+  background: var(--nova-envoy-gradient-stats);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+@media (min-width: 640px) {
+  .nova-stat-value {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .nova-stat-value {
+    font-size: 2.5rem;
+  }
+}
+
+[data-theme="dark"] .nova-stat-value {
+  background: var(--nova-envoy-gradient-stats-dark);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nova-stat-label {
+  margin: 0;
+
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--nova-color-neutral-500);
+  letter-spacing: 0.01em;
+}
+
+[data-theme="dark"] .nova-stat-label {
+  color: var(--nova-color-neutral-500);
+}
+
+/* Stats heading — display font, centered, same style as section heading. */
+.nova-stats-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .nova-stats-heading {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .nova-stats-heading {
+    font-size: 1.875rem;
+  }
+}
+
+[data-theme="dark"] .nova-stats-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+.nova-stats-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--nova-color-neutral-500);
+}
+
+@media (min-width: 640px) {
+  .nova-stats-description {
+    font-size: 1.05rem;
+  }
+}
+
+[data-theme="dark"] .nova-stats-description {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-stat {
+  padding: 1.25rem 0.75rem;
+}
+
+.nova-spotlight-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.625rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 640px) {
+  .nova-spotlight-heading {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .nova-spotlight-heading {
+    font-size: 1.875rem;
+  }
+}
+
+[data-theme="dark"] .nova-spotlight-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+/* ============================
+ * 6. Hero-to-Main Spacing
+ * ============================ */
+
+/* When a hero precedes main, collapse the first child's top margin so the hero's bottom padding controls the gap. */
+.nova-hero + main > :first-child {
+  margin-top: 0;
+}
+
+/* ============================
+ * 7. Surface Alt
+ * ============================ */
+
+.nova-surface-alt {
+  padding-block: 3rem;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 99%);
+  border-top: 1px solid var(--nova-color-neutral-200);
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-surface-alt {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 97%);
+  border-top-color: var(--nova-envoy-border-dark);
+  border-bottom-color: var(--nova-envoy-border-dark);
+}
+
+@media (min-width: 768px) {
+  .nova-surface-alt {
+    padding-block: 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-surface-alt {
+    padding-block: 4.5rem;
+  }
+}

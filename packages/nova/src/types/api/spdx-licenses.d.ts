@@ -1,33 +1,41 @@
 import type { z } from 'zod';
 
-import type { schemaSpdxLicensesResponse } from '@/lib/schema.ts';
+import type { libSchemaSpdxLicensesResponse } from '../../lib/schema.js';
 
 /**
- * SPDX Licenses - Fetch licenses.
+ * API - SPDX Licenses - Fetch Licenses.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type SpdxLicensesFetchLicensesReturns = Promise<Set<string> | undefined>;
+export type ApiSpdxLicensesFetchLicensesReturns = Promise<Set<string> | undefined>;
 
-export type SpdxLicensesFetchLicensesResponse = z.infer<typeof schemaSpdxLicensesResponse>;
+export type ApiSpdxLicensesFetchLicensesHttpResponse = Response;
 
-/**
- * SPDX Licenses - Licenses.
- *
- * @since 1.0.0
- */
-export type SpdxLicensesLicenses = Set<string> | undefined;
+export type ApiSpdxLicensesFetchLicensesResponseData = unknown;
 
-/**
- * SPDX Licenses - Populated.
- *
- * @since 1.0.0
- */
-export type SpdxLicensesPopulated = boolean | undefined;
+export type ApiSpdxLicensesFetchLicensesResponse = z.infer<typeof libSchemaSpdxLicensesResponse>;
+
+export type ApiSpdxLicensesFetchLicensesLicenseIds = string[];
+
+export type ApiSpdxLicensesFetchLicensesErrorMessage = string;
 
 /**
- * SPDX Licenses - Reset for testing.
+ * API - SPDX Licenses - Licenses.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type SpdxLicensesResetForTestingReturns = void;
+export type ApiSpdxLicensesLicenses = Set<string> | undefined;
+
+/**
+ * API - SPDX Licenses - Populated.
+ *
+ * @since 0.13.0
+ */
+export type ApiSpdxLicensesPopulated = boolean | undefined;
+
+/**
+ * API - SPDX Licenses - Reset For Testing.
+ *
+ * @since 0.13.0
+ */
+export type ApiSpdxLicensesResetForTestingReturns = void;

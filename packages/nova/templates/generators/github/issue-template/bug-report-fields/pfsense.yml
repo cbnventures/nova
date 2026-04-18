@@ -1,0 +1,8 @@
+  - type: "input"
+    id: "pfsense-version"
+    attributes:
+      label: "pfSense\xAE version"
+      description: "What version of pfSense\xAE are you using? Please note that only versions officially supported by Netgate\xAE, as listed on the [Releases](https://docs.netgate.com/pfsense/en/latest/releases/versions.html) page, will be considered."
+      placeholder: "e.g. CE 2.8.1, Plus 25.11.1"
+    validations:
+      required: true

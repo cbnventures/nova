@@ -16,15 +16,17 @@ keywords:
   - ci cd logs
   - bug reporting
 tags:
-  - versions
   - cli
+  - versions
   - diagnostics
   - system
   - bug-reporting
   - ci-cd
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import { Icon } from '@iconify/react';
+import Details from '@theme/Details';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -52,7 +54,7 @@ Paste the tables as is. The output is **Markdown-ready** for quick reports.
 
 - **Bug reporting** — Attach system information to GitHub issues without manually running multiple commands.
 - **Team collaboration** — Share consistent system snapshots with teammates for debugging or onboarding.
-- **<Term title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling">CI/CD</Term> pipelines** — Record system information in build logs or artifacts for reproducibility.
+- **<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines** — Record system information in build logs or artifacts for reproducibility.
 - **System verification** — Confirm that required tools are installed and up to date before starting development.
 
 ## Requirements
@@ -117,7 +119,7 @@ Each option enables checks for a specific category of tools or system informatio
 - Performant Node Package Manager (pnpm)
 - Bun
 
-<details>
+<Details>
   <summary>How Node.js tool version detection works</summary>
   <ul>
     <li><strong>Node.js</strong>: Read from <code>{'node --version'}</code>.</li>
@@ -126,7 +128,7 @@ Each option enables checks for a specific category of tools or system informatio
     <li><strong>pnpm</strong>: Read from <code>{'pnpm --version'}</code>.</li>
     <li><strong>Bun</strong>: Read from <code>{'bun --version'}</code>.</li>
   </ul>
-</details>
+</Details>
 
 ### Environment Managers
 
@@ -136,14 +138,14 @@ Each option enables checks for a specific category of tools or system informatio
 
 **Note**: On Windows, **NVM for Windows** is identified separately from **Node Version Manager**, since the original `nvm` only works in POSIX-compliant shells (macOS / Linux).
 
-<details>
+<Details>
   <summary>How environment manager version detection works</summary>
   <ul>
     <li><strong>nvm (POSIX)</strong>: Read from <code>{'nvm --version'}</code>.</li>
     <li><strong>nvm (Windows)</strong>: Read from <code>{'nvm --version'}</code>.</li>
     <li><strong>Volta</strong>: Read from <code>{'volta --version'}</code>.</li>
   </ul>
-</details>
+</Details>
 
 ### Operating System
 
@@ -153,14 +155,14 @@ Each option enables checks for a specific category of tools or system informatio
 - OS Build number (if available)
 - OS Kernel
 
-<details>
+<Details>
   <summary>How OS version detection works</summary>
   <ul>
     <li><strong>macOS</strong>: Read from the <code>{'sw_vers'}</code> command.</li>
     <li><strong>Windows</strong>: Read from the <code>{'CurrentVersion'}</code> key inside Windows Registry.</li>
     <li><strong>Linux</strong>: Read from the <code>{'/etc/os-release'}</code> file.</li>
   </ul>
-</details>
+</Details>
 
 ### Web Browsers
 
@@ -181,27 +183,27 @@ Each option enables checks for a specific category of tools or system informatio
 - ⚠️ — Intentionally excluded
 :::
 
-<details>
+<Details>
   <summary>How browser version detection works</summary>
   <ul>
     <li><strong>macOS</strong>: Read from <code>{'*.app/Contents/Info.plist'}</code> using <code>{'CFBundleShortVersionString'}</code>.</li>
     <li><strong>Windows</strong>: Read from the executable's file metadata <code>{'VersionInfo.ProductVersion'}</code> via Windows Registry App Paths.</li>
     <li><strong>Linux</strong>: Parsed from the output of running the binary on <code>{'PATH'}</code> with <code>{'--version'}</code>.</li>
   </ul>
-</details>
+</Details>
 
 ### Interpreters / Runtimes
 
 - Java (version, distribution, build info)
 - Rust (version, build hash, build date, source)
 
-<details>
+<Details>
   <summary>How interpreter version detection works</summary>
   <ul>
     <li><strong>Java</strong>: Parsed from <code>{'java --version'}</code>.</li>
     <li><strong>Rust</strong>: Parsed from <code>{'rustc --version'}</code>.</li>
   </ul>
-</details>
+</Details>
 
 ## Examples
 

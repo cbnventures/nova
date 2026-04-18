@@ -2,107 +2,217 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 
 import {
-  itemAllowedPoliciesByRole,
-  itemAllowedRecipes,
-  itemAllowedRoles,
-  itemGenericProtocols,
-  itemNovaConfigEmailFields,
-  itemNovaConfigUrlFields,
-  itemRepositoryProtocols,
-} from '@/lib/item.js';
-import { PATTERN_EMAIL_SIMPLE, PATTERN_SLUG_SCOPED, PATTERN_SLUG_SIMPLE } from '@/lib/regex.js';
-import { isFileIdentical, isPlainObject, renameFileWithDate } from '@/lib/utility.js';
+  libItemAllowedPoliciesByRole,
+  libItemAllowedRecipes,
+  libItemAllowedRoles,
+  libItemEmailFields,
+  libItemGenericProtocols,
+  libItemRepositoryProtocols,
+  libItemUrlFields,
+} from './item.js';
+import { LIB_REGEX_PATTERN_EMAIL_SIMPLE, LIB_REGEX_PATTERN_SLUG_SCOPED, LIB_REGEX_PATTERN_SLUG_SIMPLE } from './regex.js';
+import { isFileIdentical, isPlainObject, renameFileWithDate } from './utility.js';
 
 import type {
-  NovaConfigConfig,
-  NovaConfigGetArrayOfHttpUrlsField,
-  NovaConfigGetArrayOfHttpUrlsReturns,
-  NovaConfigGetArrayOfHttpUrlsValue,
-  NovaConfigGetArrayOfNonEmptyStringsReturns,
-  NovaConfigGetArrayOfNonEmptyStringsValue,
-  NovaConfigGetEmailReturns,
-  NovaConfigGetEmailValue,
-  NovaConfigGetNonEmptyStringReturns,
-  NovaConfigGetNonEmptyStringValue,
-  NovaConfigGetUrlField,
-  NovaConfigGetUrlReturns,
-  NovaConfigGetUrlValue,
-  NovaConfigIsEntityRoleTypeGuard,
-  NovaConfigIsEntityRoleValue,
-  NovaConfigLoadParsedFile,
-  NovaConfigLoadReturns,
-  NovaConfigParseEmailsEmails,
-  NovaConfigParseEmailsReturns,
-  NovaConfigParseEmailsValue,
-  NovaConfigParseEntitiesParsedEntity,
-  NovaConfigParseEntitiesReturns,
-  NovaConfigParseEntitiesValue,
-  NovaConfigParseProjectDescription,
-  NovaConfigParseProjectName,
-  NovaConfigParseProjectProject,
-  NovaConfigParseProjectReturns,
-  NovaConfigParseProjectValue,
-  NovaConfigParseResult,
-  NovaConfigParseReturns,
-  NovaConfigParseUrlsReturns,
-  NovaConfigParseUrlsUrls,
-  NovaConfigParseUrlsValue,
-  NovaConfigParseValue,
-  NovaConfigParseWorkspacesIsNameAllowedName,
-  NovaConfigParseWorkspacesIsNameAllowedReturns,
-  NovaConfigParseWorkspacesIsNameAllowedRole,
-  NovaConfigParseWorkspacesAllowedRecipes,
-  NovaConfigParseWorkspacesParsedSettings,
-  NovaConfigParseWorkspacesRecipes,
-  NovaConfigParseWorkspacesReturns,
-  NovaConfigParseWorkspacesSlug,
-  NovaConfigParseWorkspacesValue,
-  NovaConfigParseWorkspacesWorkspaces,
-  NovaConfigSaveReplaceFile,
-  NovaConfigSaveReturns,
-  NovaConfigSetReturns,
-  NovaConfigSetConfig,
-} from '@/types/lib/nova-config.d.ts';
+  LibNovaConfigConfig,
+  LibNovaConfigGetArrayOfHttpUrlsField,
+  LibNovaConfigGetArrayOfHttpUrlsItems,
+  LibNovaConfigGetArrayOfHttpUrlsReturns,
+  LibNovaConfigGetArrayOfHttpUrlsTypeGuard,
+  LibNovaConfigGetArrayOfHttpUrlsValue,
+  LibNovaConfigGetArrayOfNonEmptyStringsItems,
+  LibNovaConfigGetArrayOfNonEmptyStringsReturns,
+  LibNovaConfigGetArrayOfNonEmptyStringsTypeGuard,
+  LibNovaConfigGetArrayOfNonEmptyStringsValue,
+  LibNovaConfigGetEmailEmail,
+  LibNovaConfigGetEmailReturns,
+  LibNovaConfigGetEmailValue,
+  LibNovaConfigGetNonEmptyStringReturns,
+  LibNovaConfigGetNonEmptyStringString,
+  LibNovaConfigGetNonEmptyStringValue,
+  LibNovaConfigGetUrlAllowedProtocols,
+  LibNovaConfigGetUrlCandidateUrl,
+  LibNovaConfigGetUrlField,
+  LibNovaConfigGetUrlIsAllowed,
+  LibNovaConfigGetUrlReturns,
+  LibNovaConfigGetUrlUrl,
+  LibNovaConfigGetUrlValue,
+  LibNovaConfigIsEntityRoleTypeGuard,
+  LibNovaConfigIsEntityRoleValue,
+  LibNovaConfigLoadConfigFileName,
+  LibNovaConfigLoadConfigPath,
+  LibNovaConfigLoadCurrentDirectory,
+  LibNovaConfigLoadParsedFile,
+  LibNovaConfigLoadRawFile,
+  LibNovaConfigLoadReturns,
+  LibNovaConfigParseEmails,
+  LibNovaConfigParseEmailsEmailFields,
+  LibNovaConfigParseEmailsEmails,
+  LibNovaConfigParseEmailsParsedEmail,
+  LibNovaConfigParseEmailsReturns,
+  LibNovaConfigParseEmailsValue,
+  LibNovaConfigParseEntities,
+  LibNovaConfigParseEntitiesEmail,
+  LibNovaConfigParseEntitiesEntities,
+  LibNovaConfigParseEntitiesName,
+  LibNovaConfigParseEntitiesParsedEntity,
+  LibNovaConfigParseEntitiesParsedRoles,
+  LibNovaConfigParseEntitiesReturns,
+  LibNovaConfigParseEntitiesRoles,
+  LibNovaConfigParseEntitiesSortNameA,
+  LibNovaConfigParseEntitiesSortNameB,
+  LibNovaConfigParseEntitiesUrl,
+  LibNovaConfigParseEntitiesValue,
+  LibNovaConfigParseProject,
+  LibNovaConfigParseProjectAllowedLicenses,
+  LibNovaConfigParseProjectAllowedPlatforms,
+  LibNovaConfigParseProjectDescription,
+  LibNovaConfigParseProjectLicense,
+  LibNovaConfigParseProjectLong,
+  LibNovaConfigParseProjectName,
+  LibNovaConfigParseProjectParsedPlatforms,
+  LibNovaConfigParseProjectPlatform,
+  LibNovaConfigParseProjectProject,
+  LibNovaConfigParseProjectReturns,
+  LibNovaConfigParseProjectShort,
+  LibNovaConfigParseProjectSlug,
+  LibNovaConfigParseProjectTitle,
+  LibNovaConfigParseProjectValue,
+  LibNovaConfigParseProjectValueDescription,
+  LibNovaConfigParseProjectValueKeywords,
+  LibNovaConfigParseProjectValueLegalName,
+  LibNovaConfigParseProjectValueLicense,
+  LibNovaConfigParseProjectValueName,
+  LibNovaConfigParseProjectValuePlatforms,
+  LibNovaConfigParseProjectValuePronouns,
+  LibNovaConfigParseProjectValueStartingYear,
+  LibNovaConfigParseResult,
+  LibNovaConfigParseReturns,
+  LibNovaConfigParseUrls,
+  LibNovaConfigParseUrlsFundSources,
+  LibNovaConfigParseUrlsLoopIndex,
+  LibNovaConfigParseUrlsParsedUrl,
+  LibNovaConfigParseUrlsReturns,
+  LibNovaConfigParseUrlsUrlField,
+  LibNovaConfigParseUrlsUrlFields,
+  LibNovaConfigParseUrlsUrlFieldsFundSourcesIndex,
+  LibNovaConfigParseUrlsUrls,
+  LibNovaConfigParseUrlsValue,
+  LibNovaConfigParseValue,
+  LibNovaConfigParseWorkflows,
+  LibNovaConfigParseWorkflowsDependsOn,
+  LibNovaConfigParseWorkflowsItem,
+  LibNovaConfigParseWorkflowsParsedSettings,
+  LibNovaConfigParseWorkflowsRawDependsOn,
+  LibNovaConfigParseWorkflowsRawTriggers,
+  LibNovaConfigParseWorkflowsReturns,
+  LibNovaConfigParseWorkflowsSettings,
+  LibNovaConfigParseWorkflowsSettingsKey,
+  LibNovaConfigParseWorkflowsSettingsValue,
+  LibNovaConfigParseWorkflowsSortedSettingsEntries,
+  LibNovaConfigParseWorkflowsSortSuffixA,
+  LibNovaConfigParseWorkflowsSortSuffixB,
+  LibNovaConfigParseWorkflowsSortTemplateCompare,
+  LibNovaConfigParseWorkflowsSuffix,
+  LibNovaConfigParseWorkflowsTemplate,
+  LibNovaConfigParseWorkflowsTriggers,
+  LibNovaConfigParseWorkflowsTriggerValue,
+  LibNovaConfigParseWorkflowsValue,
+  LibNovaConfigParseWorkflowsWorkflow,
+  LibNovaConfigParseWorkflowsWorkflows,
+  LibNovaConfigParseWorkspaces,
+  LibNovaConfigParseWorkspacesAllowedPolicies,
+  LibNovaConfigParseWorkspacesAllowedRecipes,
+  LibNovaConfigParseWorkspacesEnabled,
+  LibNovaConfigParseWorkspacesIsNameAllowed,
+  LibNovaConfigParseWorkspacesIsNameAllowedBase,
+  LibNovaConfigParseWorkspacesIsNameAllowedDescriptor,
+  LibNovaConfigParseWorkspacesIsNameAllowedName,
+  LibNovaConfigParseWorkspacesIsNameAllowedReturns,
+  LibNovaConfigParseWorkspacesIsNameAllowedRole,
+  LibNovaConfigParseWorkspacesMatchedRecipe,
+  LibNovaConfigParseWorkspacesNameCandidate,
+  LibNovaConfigParseWorkspacesOptions,
+  LibNovaConfigParseWorkspacesParsedSettings,
+  LibNovaConfigParseWorkspacesPath,
+  LibNovaConfigParseWorkspacesPolicy,
+  LibNovaConfigParseWorkspacesPolicyCandidate,
+  LibNovaConfigParseWorkspacesRecipeName,
+  LibNovaConfigParseWorkspacesRecipes,
+  LibNovaConfigParseWorkspacesRecipesCandidate,
+  LibNovaConfigParseWorkspacesRecipeTuple,
+  LibNovaConfigParseWorkspacesReturns,
+  LibNovaConfigParseWorkspacesRole,
+  LibNovaConfigParseWorkspacesRoleCandidate,
+  LibNovaConfigParseWorkspacesSettingKey,
+  LibNovaConfigParseWorkspacesSettings,
+  LibNovaConfigParseWorkspacesSettingValue,
+  LibNovaConfigParseWorkspacesSlug,
+  LibNovaConfigParseWorkspacesSortedWorkspaces,
+  LibNovaConfigParseWorkspacesValue,
+  LibNovaConfigParseWorkspacesWorkspaceKeys,
+  LibNovaConfigParseWorkspacesWorkspaces,
+  LibNovaConfigSaveConfigPath,
+  LibNovaConfigSaveCurrentDirectory,
+  LibNovaConfigSaveReplaceFile,
+  LibNovaConfigSaveReturns,
+  LibNovaConfigSetConfig,
+  LibNovaConfigSetReturns,
+} from '../types/lib/nova-config.d.ts';
 
 /**
- * Nova Config.
+ * Lib - Nova Config.
  *
- * @since 1.0.0
+ * Loads, parses, and saves the nova.config.json file that drives all CLI commands. Every
+ * generator, recipe, and scaffold reads config through this class.
+ *
+ * @since 0.11.0
  */
-export class NovaConfig {
+export class LibNovaConfig {
   /**
-   * Nova Config - Config.
+   * Lib - Nova Config - Config.
+   *
+   * Holds the parsed nova.config.json object in memory between load, set,
+   * and save operations so the config state persists across method calls.
    *
    * @private
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  #config: NovaConfigConfig;
+  #config: LibNovaConfigConfig;
 
   /**
-   * Nova Config - Constructor.
+   * Lib - Nova Config - Constructor.
    *
-   * @since 1.0.0
+   * Initializes the config store as an empty object. Callers must follow up
+   * with load or set before the config contains usable data.
+   *
+   * @since 0.11.0
    */
   public constructor() {
     this.#config = {};
+
+    return;
   }
 
   /**
-   * Nova Config - Load.
+   * Lib - Nova Config - Load.
    *
-   * @returns {NovaConfigLoadReturns}
+   * Reads nova.config.json from the working directory and runs the salvage-first
+   * parser so invalid fields are silently dropped rather than causing failures.
    *
-   * @since 1.0.0
+   * @returns {LibNovaConfigLoadReturns}
+   *
+   * @since 0.11.0
    */
-  public async load(): NovaConfigLoadReturns {
-    const currentDirectory = process.cwd();
-    const configFileName = 'nova.config.json';
-    const configPath = join(currentDirectory, configFileName);
+  public async load(): LibNovaConfigLoadReturns {
+    const currentDirectory: LibNovaConfigLoadCurrentDirectory = process.cwd();
+    const configFileName: LibNovaConfigLoadConfigFileName = 'nova.config.json';
+    const configPath: LibNovaConfigLoadConfigPath = join(currentDirectory, configFileName);
 
     try {
-      const rawFile = await fs.readFile(configPath, 'utf-8');
-      const parsedFile: NovaConfigLoadParsedFile = JSON.parse(rawFile);
+      const rawFile: LibNovaConfigLoadRawFile = await fs.readFile(configPath, 'utf-8');
+      const parsedFile: LibNovaConfigLoadParsedFile = JSON.parse(rawFile);
 
       // Salvage-first method.
       this.#config = this.parse(parsedFile);
@@ -114,77 +224,90 @@ export class NovaConfig {
   }
 
   /**
-   * Nova Config - Set.
+   * Lib - Nova Config - Set.
    *
-   * @param {NovaConfigSetConfig} config - Config.
+   * Replaces the in-memory config with a parsed copy of the given object. Called by
+   * the initialize command after the user completes the prompt flow.
    *
-   * @returns {NovaConfigSetReturns}
+   * @param {LibNovaConfigSetConfig} config - Config.
    *
-   * @since 1.0.0
+   * @returns {LibNovaConfigSetReturns}
+   *
+   * @since 0.11.0
    */
-  public set(config: NovaConfigSetConfig): NovaConfigSetReturns {
+  public set(config: LibNovaConfigSetConfig): LibNovaConfigSetReturns {
     this.#config = this.parse(config);
+
+    return;
   }
 
   /**
-   * Nova Config - Save.
+   * Lib - Nova Config - Save.
    *
-   * @param {NovaConfigSaveReplaceFile} replaceFile - Replace file.
+   * Writes the parsed config to nova.config.json in the working directory. Skips
+   * the write when the file already matches the in-memory state.
    *
-   * @returns {NovaConfigSaveReturns}
+   * @param {LibNovaConfigSaveReplaceFile} replaceFile - Replace file.
    *
-   * @since 1.0.0
+   * @returns {LibNovaConfigSaveReturns}
+   *
+   * @since 0.11.0
    */
-  public async save(replaceFile: NovaConfigSaveReplaceFile): NovaConfigSaveReturns {
+  public async save(replaceFile: LibNovaConfigSaveReplaceFile): LibNovaConfigSaveReturns {
     this.#config = this.parse(this.#config);
 
-    const currentDirectory = process.cwd();
-    const configPath = join(currentDirectory, 'nova.config.json');
+    const currentDirectory: LibNovaConfigSaveCurrentDirectory = process.cwd();
+    const configPath: LibNovaConfigSaveConfigPath = join(currentDirectory, 'nova.config.json');
 
     // No changes detected, skip touching the filesystem.
-    if (await isFileIdentical(configPath, this.#config)) {
+    if (await isFileIdentical(configPath, this.#config) === true) {
       return;
     }
 
     // Rename existing file if user chooses not to replace file.
     if (replaceFile === false) {
-      await renameFileWithDate(configPath, 'nova.config', 'json');
+      await renameFileWithDate(configPath);
     }
-
-    const configJson = JSON.stringify(this.#config, null, 2);
-    const configContents = `${configJson}\n`;
 
     await fs.writeFile(
       configPath,
-      configContents,
+      `${JSON.stringify(this.#config, null, 2)}\n`,
       'utf-8',
     );
+
+    return;
   }
 
   /**
-   * Nova Config - Parse.
+   * Lib - Nova Config - Parse.
    *
-   * @param {NovaConfigParseValue} value - Value.
+   * Orchestrates section-level parsers for project, entities, emails, urls, and
+   * workspaces. Uses a salvage-first strategy to keep valid fields.
+   *
+   * @param {LibNovaConfigParseValue} value - Value.
    *
    * @private
    *
-   * @returns {NovaConfigParseReturns}
+   * @returns {LibNovaConfigParseReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private parse(value: NovaConfigParseValue): NovaConfigParseReturns {
-    const result: NovaConfigParseResult = {};
+  private parse(value: LibNovaConfigParseValue): LibNovaConfigParseReturns {
+    const result: LibNovaConfigParseResult = {};
 
-    if (!isPlainObject(value)) {
+    if (isPlainObject(value) === false) {
       return result;
     }
 
-    const project = this.parseProject(value['project']);
-    const entities = this.parseEntities(value['entities']);
-    const emails = this.parseEmails(value['emails']);
-    const urls = this.parseUrls(value['urls']);
-    const projectSlug = (project !== undefined && project.name !== undefined) ? project.name.slug : undefined;
-    const workspaces = this.parseWorkspaces(value['workspaces'], projectSlug);
+    const project: LibNovaConfigParseProject = this.parseProject(value['project']);
+    const entities: LibNovaConfigParseEntities = this.parseEntities(value['entities']);
+    const emails: LibNovaConfigParseEmails = this.parseEmails(value['emails']);
+    const workflows: LibNovaConfigParseWorkflows = this.parseWorkflows(value['workflows']);
+    const urls: LibNovaConfigParseUrls = this.parseUrls(value['urls']);
+    const workspaces: LibNovaConfigParseWorkspaces = this.parseWorkspaces(
+      value['workspaces'],
+      (project !== undefined && project['name'] !== undefined) ? project['name']['slug'] : undefined,
+    );
 
     if (project !== undefined) {
       result.project = project;
@@ -196,6 +319,10 @@ export class NovaConfig {
 
     if (emails !== undefined) {
       result.emails = emails;
+    }
+
+    if (workflows !== undefined) {
+      result.workflows = workflows;
     }
 
     if (urls !== undefined) {
@@ -210,39 +337,42 @@ export class NovaConfig {
   }
 
   /**
-   * Nova Config - Parse project.
+   * Lib - Nova Config - Parse Project.
    *
-   * @param {NovaConfigParseProjectValue} value - Value.
+   * Extracts name, description, keywords, license, platforms, and other identity
+   * fields. Downstream commands use these to populate package manifests.
+   *
+   * @param {LibNovaConfigParseProjectValue} value - Value.
    *
    * @private
    *
-   * @returns {NovaConfigParseProjectReturns}
+   * @returns {LibNovaConfigParseProjectReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private parseProject(value: NovaConfigParseProjectValue): NovaConfigParseProjectReturns {
-    if (!isPlainObject(value)) {
+  private parseProject(value: LibNovaConfigParseProjectValue): LibNovaConfigParseProjectReturns {
+    if (isPlainObject(value) === false) {
       return undefined;
     }
 
-    const project: NovaConfigParseProjectProject = {};
+    const project: LibNovaConfigParseProjectProject = {};
 
-    const valueName = value['name'];
-    const valueDescription = value['description'];
-    const valueKeywords = this.getArrayOfNonEmptyStrings(value['keywords']);
+    const valueName: LibNovaConfigParseProjectValueName = value['name'];
+    const valueDescription: LibNovaConfigParseProjectValueDescription = value['description'];
+    const valueKeywords: LibNovaConfigParseProjectValueKeywords = this.getArrayOfNonEmptyStrings(value['keywords']);
 
-    if (isPlainObject(valueName)) {
-      const name: NovaConfigParseProjectName = {};
+    if (isPlainObject(valueName) === true) {
+      const name: LibNovaConfigParseProjectName = {};
 
-      const slug = this.getNonEmptyString(valueName['slug']);
-      const title = this.getNonEmptyString(valueName['title']);
-
-      if (slug !== undefined) {
-        name.slug = slug;
-      }
+      const slug: LibNovaConfigParseProjectSlug = this.getNonEmptyString(valueName['slug']);
+      const title: LibNovaConfigParseProjectTitle = this.getNonEmptyString(valueName['title']);
 
       if (title !== undefined) {
         name.title = title;
+      }
+
+      if (slug !== undefined) {
+        name.slug = slug;
       }
 
       if (Object.keys(name).length > 0) {
@@ -250,11 +380,11 @@ export class NovaConfig {
       }
     }
 
-    if (isPlainObject(valueDescription)) {
-      const description: NovaConfigParseProjectDescription = {};
+    if (isPlainObject(valueDescription) === true) {
+      const description: LibNovaConfigParseProjectDescription = {};
 
-      const short = this.getNonEmptyString(valueDescription['short']);
-      const long = this.getNonEmptyString(valueDescription['long']);
+      const short: LibNovaConfigParseProjectShort = this.getNonEmptyString(valueDescription['short']);
+      const long: LibNovaConfigParseProjectLong = this.getNonEmptyString(valueDescription['long']);
 
       if (short !== undefined) {
         description.short = short;
@@ -273,34 +403,105 @@ export class NovaConfig {
       project.keywords = valueKeywords;
     }
 
+    const valueLegalName: LibNovaConfigParseProjectValueLegalName = this.getNonEmptyString(value['legalName']);
+
+    if (valueLegalName !== undefined) {
+      project.legalName = valueLegalName;
+    }
+
+    const valuePronouns: LibNovaConfigParseProjectValuePronouns = this.getNonEmptyString(value['pronouns']);
+
+    if (valuePronouns === 'personal' || valuePronouns === 'business') {
+      project.pronouns = valuePronouns;
+    }
+
+    const valuePlatforms: LibNovaConfigParseProjectValuePlatforms = value['platforms'];
+
+    if (Array.isArray(valuePlatforms) === true) {
+      const allowedPlatforms: LibNovaConfigParseProjectAllowedPlatforms = new Set([
+        'nodejs',
+        'swift',
+        'android',
+        'java',
+        'kotlin',
+        'csharp',
+        'php',
+        'python',
+        'macos',
+        'linux',
+        'windows',
+      ]);
+      const parsedPlatforms: LibNovaConfigParseProjectParsedPlatforms = valuePlatforms
+        .filter((item): item is LibNovaConfigParseProjectPlatform => typeof item === 'string' && allowedPlatforms.has(item));
+
+      if (parsedPlatforms.length > 0) {
+        project.platforms = parsedPlatforms;
+      }
+    }
+
+    const valueStartingYear: LibNovaConfigParseProjectValueStartingYear = value['startingYear'];
+
+    if (
+      typeof valueStartingYear === 'number'
+      && Number.isInteger(valueStartingYear) === true
+      && valueStartingYear >= 1970
+    ) {
+      project.startingYear = valueStartingYear;
+    }
+
+    const valueLicense: LibNovaConfigParseProjectValueLicense = this.getNonEmptyString(value['license']);
+    const allowedLicenses: LibNovaConfigParseProjectAllowedLicenses = new Set([
+      'AGPL-3.0',
+      'Apache-2.0',
+      'BSD-2-Clause',
+      'BSD-3-Clause',
+      'BSL-1.0',
+      'CC0-1.0',
+      'EPL-2.0',
+      'GPL-2.0',
+      'GPL-3.0',
+      'LGPL-2.1',
+      'MIT',
+      'MPL-2.0',
+      'Proprietary',
+      'Unlicense',
+    ]);
+
+    if (valueLicense !== undefined && allowedLicenses.has(valueLicense) === true) {
+      project.license = valueLicense as LibNovaConfigParseProjectLicense;
+    }
+
     return (Object.keys(project).length > 0) ? project : undefined;
   }
 
   /**
-   * Nova Config - Parse entities.
+   * Lib - Nova Config - Parse Entities.
    *
-   * @param {NovaConfigParseEntitiesValue} value - Value.
+   * Validates each entity object for name, email, url, and roles. The sync-ownership
+   * recipe consumes entities to populate package.json author fields.
+   *
+   * @param {LibNovaConfigParseEntitiesValue} value - Value.
    *
    * @private
    *
-   * @returns {NovaConfigParseEntitiesReturns}
+   * @returns {LibNovaConfigParseEntitiesReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private parseEntities(value: NovaConfigParseEntitiesValue): NovaConfigParseEntitiesReturns {
-    if (!Array.isArray(value)) {
+  private parseEntities(value: LibNovaConfigParseEntitiesValue): LibNovaConfigParseEntitiesReturns {
+    if (Array.isArray(value) === false) {
       return undefined;
     }
 
-    const entities = value
+    const entities: LibNovaConfigParseEntitiesEntities = value
       .filter(isPlainObject)
       .map((entity) => {
-        const parsedEntity: NovaConfigParseEntitiesParsedEntity = {};
+        const parsedEntity: LibNovaConfigParseEntitiesParsedEntity = {};
 
-        const name = this.getNonEmptyString(entity['name']);
-        const email = this.getEmail(entity['email']);
-        const url = this.getUrl(entity['url']);
-        const roles = entity['roles'];
+        const name: LibNovaConfigParseEntitiesName = this.getNonEmptyString(entity['name']);
+        const email: LibNovaConfigParseEntitiesEmail = this.getEmail(entity['email']);
+        const url: LibNovaConfigParseEntitiesUrl = this.getUrl(entity['url']);
+        const roles: LibNovaConfigParseEntitiesRoles = entity['roles'];
 
         if (name !== undefined) {
           parsedEntity.name = name;
@@ -314,8 +515,8 @@ export class NovaConfig {
           parsedEntity.url = url;
         }
 
-        if (Array.isArray(roles)) {
-          const parsedRoles = roles.filter(this.isEntityRole);
+        if (Array.isArray(roles) === true) {
+          const parsedRoles: LibNovaConfigParseEntitiesParsedRoles = roles.filter(this['isEntityRole']);
 
           if (parsedRoles.length > 0) {
             parsedEntity.roles = parsedRoles;
@@ -324,32 +525,46 @@ export class NovaConfig {
 
         return (Object.keys(parsedEntity).length > 0) ? parsedEntity : null;
       })
-      .filter((entity): entity is NovaConfigParseEntitiesParsedEntity => entity !== null);
+      .filter((entity): entity is LibNovaConfigParseEntitiesParsedEntity => entity !== null);
 
-    return (entities.length > 0) ? entities : undefined;
-  }
-
-  /**
-   * Nova Config - Parse emails.
-   *
-   * @param {NovaConfigParseEmailsValue} value - Value.
-   *
-   * @private
-   *
-   * @returns {NovaConfigParseEmailsReturns}
-   *
-   * @since 1.0.0
-   */
-  private parseEmails(value: NovaConfigParseEmailsValue): NovaConfigParseEmailsReturns {
-    if (!isPlainObject(value)) {
+    if (entities.length === 0) {
       return undefined;
     }
 
-    const emails: NovaConfigParseEmailsEmails = {};
-    const emailFields = itemNovaConfigEmailFields;
+    entities.sort((a, b) => {
+      const nameA: LibNovaConfigParseEntitiesSortNameA = a['name'] ?? '';
+      const nameB: LibNovaConfigParseEntitiesSortNameB = b['name'] ?? '';
+
+      return nameA.localeCompare(nameB);
+    });
+
+    return entities;
+  }
+
+  /**
+   * Lib - Nova Config - Parse Emails.
+   *
+   * Iterates over the allowed email field names from libItemEmailFields and validates
+   * each address. Currently only the bugs email field is supported.
+   *
+   * @param {LibNovaConfigParseEmailsValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {LibNovaConfigParseEmailsReturns}
+   *
+   * @since 0.11.0
+   */
+  private parseEmails(value: LibNovaConfigParseEmailsValue): LibNovaConfigParseEmailsReturns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const emails: LibNovaConfigParseEmailsEmails = {};
+    const emailFields: LibNovaConfigParseEmailsEmailFields = libItemEmailFields;
 
     for (const emailField of emailFields) {
-      const parsedEmail = this.getEmail(value[emailField]);
+      const parsedEmail: LibNovaConfigParseEmailsParsedEmail = this.getEmail(value[emailField]);
 
       if (parsedEmail !== undefined) {
         Reflect.set(emails, emailField, parsedEmail);
@@ -360,152 +575,175 @@ export class NovaConfig {
   }
 
   /**
-   * Nova Config - Parse urls.
+   * Lib - Nova Config - Parse URLs.
    *
-   * @param {NovaConfigParseUrlsValue} value - Value.
+   * Validates url fields like homepage, repository, bugs, license, and logo. Also
+   * parses the fundSources array used by the funding generator.
+   *
+   * @param {LibNovaConfigParseUrlsValue} value - Value.
    *
    * @private
    *
-   * @returns {NovaConfigParseUrlsReturns}
+   * @returns {LibNovaConfigParseUrlsReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private parseUrls(value: NovaConfigParseUrlsValue): NovaConfigParseUrlsReturns {
-    if (!isPlainObject(value)) {
+  private parseUrls(value: LibNovaConfigParseUrlsValue): LibNovaConfigParseUrlsReturns {
+    if (isPlainObject(value) === false) {
       return undefined;
     }
 
-    const urls: NovaConfigParseUrlsUrls = {};
-    const urlFields = itemNovaConfigUrlFields;
+    const urls: LibNovaConfigParseUrlsUrls = {};
+    const urlFields: LibNovaConfigParseUrlsUrlFields = libItemUrlFields;
+    const urlFieldsFundSourcesIndex: LibNovaConfigParseUrlsUrlFieldsFundSourcesIndex = urlFields.indexOf('privacyPolicy');
 
-    for (const urlField of urlFields) {
-      const parsedUrl = this.getUrl(value[urlField], (urlField === 'repository') ? 'repository' : 'generic');
+    for (let i: LibNovaConfigParseUrlsLoopIndex = 0; i < urlFields.length; i += 1) {
+      // Insert fundSources before privacyPolicy to match prompt order.
+      if (i === urlFieldsFundSourcesIndex) {
+        const fundSources: LibNovaConfigParseUrlsFundSources = this.getArrayOfHttpUrls(value['fundSources']);
+
+        if (fundSources !== undefined) {
+          urls.fundSources = fundSources;
+        }
+      }
+
+      const urlField: LibNovaConfigParseUrlsUrlField = urlFields[i]!;
+      const parsedUrl: LibNovaConfigParseUrlsParsedUrl = this.getUrl(value[urlField], (urlField === 'repository') ? 'repository' : 'generic');
 
       if (parsedUrl !== undefined) {
         Reflect.set(urls, urlField, parsedUrl);
       }
     }
 
-    const fundSources = this.getArrayOfHttpUrls(value['fundSources']);
-
-    if (fundSources !== undefined) {
-      urls.fundSources = fundSources;
-    }
-
     return (Object.keys(urls).length > 0) ? urls : undefined;
   }
 
   /**
-   * Nova Config - Parse workspaces.
+   * Lib - Nova Config - Parse Workspaces.
    *
-   * @param {NovaConfigParseWorkspacesValue} value - Value.
-   * @param {NovaConfigParseWorkspacesSlug}  slug  - Slug.
+   * Maps workspace paths to their name, role, policy, and recipe settings. Enforces
+   * naming conventions that depend on the project slug.
+   *
+   * @param {LibNovaConfigParseWorkspacesValue} value - Value.
+   * @param {LibNovaConfigParseWorkspacesSlug}  slug  - Slug.
    *
    * @private
    *
-   * @returns {NovaConfigParseWorkspacesReturns}
+   * @returns {LibNovaConfigParseWorkspacesReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private parseWorkspaces(value: NovaConfigParseWorkspacesValue, slug: NovaConfigParseWorkspacesSlug): NovaConfigParseWorkspacesReturns {
-    if (!isPlainObject(value)) {
+  private parseWorkspaces(value: LibNovaConfigParseWorkspacesValue, slug: LibNovaConfigParseWorkspacesSlug): LibNovaConfigParseWorkspacesReturns {
+    if (isPlainObject(value) === false) {
       return undefined;
     }
 
-    const workspaces: NovaConfigParseWorkspacesWorkspaces = {};
-    const configSlug = this.getNonEmptyString(slug);
+    const workspaces: LibNovaConfigParseWorkspacesWorkspaces = {};
 
     /**
-     * Nova Config - Parse workspaces - Is name allowed.
+     * Lib - Nova Config - Parse Workspaces - Is Name Allowed.
      *
-     * @param {NovaConfigParseWorkspacesIsNameAllowedRole} role - Role.
-     * @param {NovaConfigParseWorkspacesIsNameAllowedName} name - Name.
+     * Checks that a workspace name follows the naming pattern required by its role.
+     * Singular roles need exact matches while others need a suffix.
+     *
+     * @param {LibNovaConfigParseWorkspacesIsNameAllowedRole} role - Role.
+     * @param {LibNovaConfigParseWorkspacesIsNameAllowedName} name - Name.
      *
      * @private
      *
-     * @returns {NovaConfigParseWorkspacesIsNameAllowedReturns}
+     * @returns {LibNovaConfigParseWorkspacesIsNameAllowedReturns}
      *
-     * @since 1.0.0
+     * @since 0.11.0
      */
-    const isNameAllowed = (role: NovaConfigParseWorkspacesIsNameAllowedRole, name: NovaConfigParseWorkspacesIsNameAllowedName): NovaConfigParseWorkspacesIsNameAllowedReturns => {
+    const isNameAllowed: LibNovaConfigParseWorkspacesIsNameAllowed = (role: LibNovaConfigParseWorkspacesIsNameAllowedRole, name: LibNovaConfigParseWorkspacesIsNameAllowedName): LibNovaConfigParseWorkspacesIsNameAllowedReturns => {
       switch (role) {
         case 'project': {
-          if (configSlug !== undefined) {
-            return name === `${configSlug}-project`;
+          if (slug !== undefined) {
+            return name === `${slug}-project`;
           }
 
           return name === 'project';
         }
+
         case 'docs': {
-          if (configSlug !== undefined) {
-            return name === `${configSlug}-docs`;
+          if (slug !== undefined) {
+            return name === `${slug}-docs`;
           }
 
           return name === 'docs';
         }
+
         case 'tool':
         case 'config':
         case 'app': {
-          const base = (configSlug !== undefined) ? `${configSlug}-${role}` : role;
+          const base: LibNovaConfigParseWorkspacesIsNameAllowedBase = (slug !== undefined) ? `${slug}-${role}` : role;
 
-          if (!name.startsWith(`${base}-`)) {
+          if (name.startsWith(`${base}-`) === false) {
             return false;
           }
 
-          const descriptor = name.slice(base.length + 1);
+          const descriptor: LibNovaConfigParseWorkspacesIsNameAllowedDescriptor = name.slice(base.length + 1);
 
-          return descriptor.length > 0 && PATTERN_SLUG_SIMPLE.test(descriptor);
+          return descriptor.length > 0 && LIB_REGEX_PATTERN_SLUG_SIMPLE.test(descriptor);
         }
+
         case 'template':
         case 'package': {
-          return PATTERN_SLUG_SIMPLE.test(name) || PATTERN_SLUG_SCOPED.test(name);
+          return LIB_REGEX_PATTERN_SLUG_SIMPLE.test(name) || LIB_REGEX_PATTERN_SLUG_SCOPED.test(name);
         }
+
         default: {
           return false;
         }
       }
     };
 
-    for (const [path, options] of Object.entries(value)) {
-      if (!isPlainObject(options)) {
+    for (const valueEntry of Object.entries(value)) {
+      const path: LibNovaConfigParseWorkspacesPath = valueEntry[0];
+      const options: LibNovaConfigParseWorkspacesOptions = valueEntry[1];
+
+      if (isPlainObject(options) === false) {
         continue;
       }
 
-      const nameCandidate = this.getNonEmptyString(options['name']);
-      const roleCandidate = this.getNonEmptyString(options['role']);
-      const policyCandidate = this.getNonEmptyString(options['policy']);
+      const nameCandidate: LibNovaConfigParseWorkspacesNameCandidate = this.getNonEmptyString(options['name']);
+      const roleCandidate: LibNovaConfigParseWorkspacesRoleCandidate = this.getNonEmptyString(options['role']);
+      const policyCandidate: LibNovaConfigParseWorkspacesPolicyCandidate = this.getNonEmptyString(options['policy']);
 
       if (nameCandidate === undefined) {
         continue;
       }
 
-      const role = itemAllowedRoles.find((itemAllowedRole) => itemAllowedRole === roleCandidate);
+      const role: LibNovaConfigParseWorkspacesRole = libItemAllowedRoles.find((itemAllowedRole) => itemAllowedRole === roleCandidate);
 
       if (role === undefined) {
         continue;
       }
 
-      const allowedPolicies = itemAllowedPoliciesByRole[role];
-      const policy = allowedPolicies.find((allowedPolicy) => allowedPolicy === policyCandidate);
+      const allowedPolicies: LibNovaConfigParseWorkspacesAllowedPolicies = libItemAllowedPoliciesByRole[role];
+      const policy: LibNovaConfigParseWorkspacesPolicy = allowedPolicies.find((allowedPolicy) => allowedPolicy === policyCandidate);
 
       if (policy === undefined) {
         continue;
       }
 
-      if (!isNameAllowed(role, nameCandidate)) {
+      if (isNameAllowed(role, nameCandidate) === false) {
         continue;
       }
 
-      let recipes: NovaConfigParseWorkspacesRecipes;
+      let recipes: LibNovaConfigParseWorkspacesRecipes = undefined;
 
-      const recipesCandidate = options['recipes'];
+      const recipesCandidate: LibNovaConfigParseWorkspacesRecipesCandidate = options['recipes'];
 
-      if (isPlainObject(recipesCandidate)) {
-        const allowedRecipes: NovaConfigParseWorkspacesAllowedRecipes = new Set(itemAllowedRecipes);
-        const parsedRecipes: NovaConfigParseWorkspacesRecipes = {};
+      if (isPlainObject(recipesCandidate) === true) {
+        const allowedRecipes: LibNovaConfigParseWorkspacesAllowedRecipes = new Set(libItemAllowedRecipes);
+        const parsedRecipes: LibNovaConfigParseWorkspacesRecipes = {};
 
-        for (const [recipeName, recipeTuple] of Object.entries(recipesCandidate)) {
-          const matchedRecipe = [...allowedRecipes].find(
+        for (const recipesCandidateEntry of Object.entries(recipesCandidate)) {
+          const recipeName: LibNovaConfigParseWorkspacesRecipeName = recipesCandidateEntry[0];
+          const recipeTuple: LibNovaConfigParseWorkspacesRecipeTuple = recipesCandidateEntry[1];
+
+          const matchedRecipe: LibNovaConfigParseWorkspacesMatchedRecipe = [...allowedRecipes].find(
             (allowedRecipe) => allowedRecipe === recipeName,
           );
 
@@ -513,29 +751,35 @@ export class NovaConfig {
             continue;
           }
 
-          if (!Array.isArray(recipeTuple) || recipeTuple.length === 0) {
+          if (Array.isArray(recipeTuple) === false || recipeTuple.length === 0) {
             continue;
           }
 
-          const enabled = recipeTuple[0];
+          const enabled: LibNovaConfigParseWorkspacesEnabled = recipeTuple[0];
 
           if (typeof enabled !== 'boolean') {
             continue;
           }
 
-          const settings = recipeTuple[1];
+          const settings: LibNovaConfigParseWorkspacesSettings = recipeTuple[1];
 
-          if (settings !== undefined && isPlainObject(settings)) {
-            const parsedSettings: NovaConfigParseWorkspacesParsedSettings = {};
+          if (settings !== undefined && isPlainObject(settings) === true) {
+            const parsedSettings: LibNovaConfigParseWorkspacesParsedSettings = {};
 
-            for (const [settingKey, settingValue] of Object.entries(settings)) {
+            for (const settingsEntry of Object.entries(settings)) {
+              const settingKey: LibNovaConfigParseWorkspacesSettingKey = settingsEntry[0];
+              const settingValue: LibNovaConfigParseWorkspacesSettingValue = settingsEntry[1];
+
               if (typeof settingValue === 'boolean') {
                 Reflect.set(parsedSettings, settingKey, settingValue);
               }
             }
 
             if (Object.keys(parsedSettings).length > 0) {
-              Reflect.set(parsedRecipes, matchedRecipe, [enabled, parsedSettings]);
+              Reflect.set(parsedRecipes, matchedRecipe, [
+                enabled,
+                parsedSettings,
+              ]);
             } else {
               Reflect.set(parsedRecipes, matchedRecipe, [enabled]);
             }
@@ -550,28 +794,161 @@ export class NovaConfig {
       }
 
       Reflect.set(workspaces, path, {
-        name: nameCandidate,
         role,
         policy,
+        name: nameCandidate,
         ...(recipes !== undefined) ? { recipes } : {},
       });
     }
 
-    return (Object.keys(workspaces).length > 0) ? workspaces : undefined;
+    const workspaceKeys: LibNovaConfigParseWorkspacesWorkspaceKeys = Object.keys(workspaces);
+
+    if (workspaceKeys.length === 0) {
+      return undefined;
+    }
+
+    const sortedWorkspaces: LibNovaConfigParseWorkspacesSortedWorkspaces = {};
+
+    workspaceKeys.sort((a, b) => a.localeCompare(b));
+
+    for (const key of workspaceKeys) {
+      Reflect.set(sortedWorkspaces, key, Reflect.get(workspaces, key));
+    }
+
+    return sortedWorkspaces;
   }
 
   /**
-   * Nova Config - Is entity role.
+   * Lib - Nova Config - Parse Workflows.
    *
-   * @param {NovaConfigIsEntityRoleValue} value - Value.
+   * Validates each workflow object for template, optional suffix, triggers,
+   * optional depends-on, and optional settings. Settings values must be strings;
+   * non-string values are dropped.
+   *
+   * @param {LibNovaConfigParseWorkflowsValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {LibNovaConfigParseWorkflowsReturns}
+   *
+   * @since 0.20.0
+   */
+  private parseWorkflows(value: LibNovaConfigParseWorkflowsValue): LibNovaConfigParseWorkflowsReturns {
+    if (Array.isArray(value) === false) {
+      return undefined;
+    }
+
+    const workflows: LibNovaConfigParseWorkflowsWorkflows = [];
+
+    for (const item of value) {
+      const castItem: LibNovaConfigParseWorkflowsItem = item;
+
+      if (isPlainObject(castItem) === false) {
+        continue;
+      }
+
+      const template: LibNovaConfigParseWorkflowsTemplate = this.getNonEmptyString(castItem['template']);
+
+      if (template === undefined) {
+        continue;
+      }
+
+      const suffix: LibNovaConfigParseWorkflowsSuffix = this.getNonEmptyString(castItem['suffix']);
+
+      if (suffix === undefined) {
+        continue;
+      }
+
+      const rawTriggers: LibNovaConfigParseWorkflowsRawTriggers = castItem['triggers'];
+
+      if (Array.isArray(rawTriggers) === false) {
+        continue;
+      }
+
+      const triggers: LibNovaConfigParseWorkflowsTriggers = [];
+
+      for (const trigger of rawTriggers) {
+        const triggerValue: LibNovaConfigParseWorkflowsTriggerValue = this.getNonEmptyString(trigger);
+
+        if (triggerValue !== undefined) {
+          triggers.push(triggerValue);
+        }
+      }
+
+      const rawDependsOn: LibNovaConfigParseWorkflowsRawDependsOn = castItem['depends-on'];
+      const dependsOn: LibNovaConfigParseWorkflowsDependsOn = (Array.isArray(rawDependsOn) === true) ? rawDependsOn.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as LibNovaConfigParseWorkflowsDependsOn : [];
+      const settings: LibNovaConfigParseWorkflowsSettings = castItem['settings'];
+
+      // Build workflow object with properties in type-definition order: template, suffix, triggers, depends-on, settings.
+      const workflow: LibNovaConfigParseWorkflowsWorkflow = {
+        template,
+        suffix,
+        triggers,
+      };
+
+      if (dependsOn.length > 0) {
+        Reflect.set(workflow, 'depends-on', dependsOn);
+      }
+
+      if (isPlainObject(settings) === true) {
+        const parsedSettings: LibNovaConfigParseWorkflowsParsedSettings = {};
+        const sortedSettingsEntries: LibNovaConfigParseWorkflowsSortedSettingsEntries = Object.entries(settings).sort(
+          (a, b) => a[0].localeCompare(b[0]),
+        );
+
+        for (const settingsEntry of sortedSettingsEntries) {
+          const settingsKey: LibNovaConfigParseWorkflowsSettingsKey = settingsEntry[0];
+          const settingsValue: LibNovaConfigParseWorkflowsSettingsValue = settingsEntry[1];
+
+          if (typeof settingsValue === 'string') {
+            Reflect.set(parsedSettings, settingsKey, settingsValue);
+          }
+        }
+
+        if (Object.keys(parsedSettings).length > 0) {
+          workflow.settings = parsedSettings;
+        }
+      }
+
+      workflows.push(workflow);
+    }
+
+    if (workflows.length === 0) {
+      return undefined;
+    }
+
+    // Sort workflows by template, then by suffix.
+    workflows.sort((a, b) => {
+      const templateCompare: LibNovaConfigParseWorkflowsSortTemplateCompare = a['template'].localeCompare(b['template']);
+
+      if (templateCompare !== 0) {
+        return templateCompare;
+      }
+
+      const suffixA: LibNovaConfigParseWorkflowsSortSuffixA = a['suffix'] ?? '';
+      const suffixB: LibNovaConfigParseWorkflowsSortSuffixB = b['suffix'] ?? '';
+
+      return suffixA.localeCompare(suffixB);
+    });
+
+    return workflows;
+  }
+
+  /**
+   * Lib - Nova Config - Is Entity Role.
+   *
+   * Type guard that narrows a value to one of the three allowed entity roles: author,
+   * contributor, or supporter. Used by parseEntities as a filter.
+   *
+   * @param {LibNovaConfigIsEntityRoleValue} value - Value.
    *
    * @private
    *
    * @returns {boolean}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private isEntityRole(value: NovaConfigIsEntityRoleValue): value is NovaConfigIsEntityRoleTypeGuard {
+  private isEntityRole(value: LibNovaConfigIsEntityRoleValue): value is LibNovaConfigIsEntityRoleTypeGuard {
     return (
       value === 'author'
       || value === 'contributor'
@@ -580,71 +957,80 @@ export class NovaConfig {
   }
 
   /**
-   * Nova Config - Get array of non-empty strings.
+   * Lib - Nova Config - Get Array Of Non Empty Strings.
    *
-   * @param {NovaConfigGetArrayOfNonEmptyStringsValue} value - Value.
+   * Filters an array down to trimmed non-empty string entries. Used by parseProject
+   * to validate the keywords list in the project section.
+   *
+   * @param {LibNovaConfigGetArrayOfNonEmptyStringsValue} value - Value.
    *
    * @private
    *
-   * @returns {NovaConfigGetArrayOfNonEmptyStringsReturns}
+   * @returns {LibNovaConfigGetArrayOfNonEmptyStringsReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private getArrayOfNonEmptyStrings(value: NovaConfigGetArrayOfNonEmptyStringsValue): NovaConfigGetArrayOfNonEmptyStringsReturns {
-    if (!Array.isArray(value)) {
+  private getArrayOfNonEmptyStrings(value: LibNovaConfigGetArrayOfNonEmptyStringsValue): LibNovaConfigGetArrayOfNonEmptyStringsReturns {
+    if (Array.isArray(value) === false) {
       return undefined;
     }
 
-    const items = value
+    const items: LibNovaConfigGetArrayOfNonEmptyStringsItems = value
       .map((item) => this.getNonEmptyString(item))
-      .filter((item): item is string => item !== undefined);
+      .filter((item): item is LibNovaConfigGetArrayOfNonEmptyStringsTypeGuard => item !== undefined);
 
     return (items.length > 0) ? items : undefined;
   }
 
   /**
-   * Nova Config - Get array of http urls.
+   * Lib - Nova Config - Get Array Of HTTP URLs.
    *
-   * @param {NovaConfigGetArrayOfHttpUrlsValue} value   - Value.
-   * @param {NovaConfigGetArrayOfHttpUrlsField} [field] - Field.
+   * Validates each array entry as a URL through getUrl and discards invalid ones. Used by
+   * parseUrls to parse the fundSources list for Sponsors.
+   *
+   * @param {LibNovaConfigGetArrayOfHttpUrlsValue} value   - Value.
+   * @param {LibNovaConfigGetArrayOfHttpUrlsField} [field] - Field.
    *
    * @private
    *
-   * @returns {NovaConfigGetArrayOfHttpUrlsReturns}
+   * @returns {LibNovaConfigGetArrayOfHttpUrlsReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private getArrayOfHttpUrls(value: NovaConfigGetArrayOfHttpUrlsValue, field?: NovaConfigGetArrayOfHttpUrlsField): NovaConfigGetArrayOfHttpUrlsReturns {
-    if (!Array.isArray(value)) {
+  private getArrayOfHttpUrls(value: LibNovaConfigGetArrayOfHttpUrlsValue, field?: LibNovaConfigGetArrayOfHttpUrlsField): LibNovaConfigGetArrayOfHttpUrlsReturns {
+    if (Array.isArray(value) === false) {
       return undefined;
     }
 
-    const items = value
+    const items: LibNovaConfigGetArrayOfHttpUrlsItems = value
       .map((item) => this.getUrl(item, field))
-      .filter((item): item is string => item !== undefined);
+      .filter((item): item is LibNovaConfigGetArrayOfHttpUrlsTypeGuard => item !== undefined);
 
     return (items.length > 0) ? items : undefined;
   }
 
   /**
-   * Nova Config - Get email.
+   * Lib - Nova Config - Get Email.
    *
-   * @param {NovaConfigGetEmailValue} value - Value.
+   * Returns the trimmed value only when it passes the simple email regex check. Called by
+   * parseEmails for config fields and parseEntities for people.
+   *
+   * @param {LibNovaConfigGetEmailValue} value - Value.
    *
    * @private
    *
-   * @returns {NovaConfigGetEmailReturns}
+   * @returns {LibNovaConfigGetEmailReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private getEmail(value: NovaConfigGetEmailValue): NovaConfigGetEmailReturns {
-    const email = this.getNonEmptyString(value);
+  private getEmail(value: LibNovaConfigGetEmailValue): LibNovaConfigGetEmailReturns {
+    const email: LibNovaConfigGetEmailEmail = this.getNonEmptyString(value);
 
     if (email === undefined) {
       return undefined;
     }
 
-    if (!PATTERN_EMAIL_SIMPLE.test(email)) {
+    if (LIB_REGEX_PATTERN_EMAIL_SIMPLE.test(email) === false) {
       return undefined;
     }
 
@@ -652,29 +1038,32 @@ export class NovaConfig {
   }
 
   /**
-   * Nova Config - Get url.
+   * Lib - Nova Config - Get URL.
    *
-   * @param {NovaConfigGetUrlValue} value   - Value.
-   * @param {NovaConfigGetUrlField} [field] - Field.
+   * Parses the value as a URL and checks its protocol against the allowed list.
+   * Repository fields allow git protocols while others only allow http.
+   *
+   * @param {LibNovaConfigGetUrlValue} value   - Value.
+   * @param {LibNovaConfigGetUrlField} [field] - Field.
    *
    * @private
    *
-   * @returns {NovaConfigGetUrlReturns}
+   * @returns {LibNovaConfigGetUrlReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private getUrl(value: NovaConfigGetUrlValue, field?: NovaConfigGetUrlField): NovaConfigGetUrlReturns {
-    const candidateUrl = this.getNonEmptyString(value);
+  private getUrl(value: LibNovaConfigGetUrlValue, field?: LibNovaConfigGetUrlField): LibNovaConfigGetUrlReturns {
+    const candidateUrl: LibNovaConfigGetUrlCandidateUrl = this.getNonEmptyString(value);
 
     if (candidateUrl === undefined) {
       return undefined;
     }
 
     try {
-      const url = new URL(candidateUrl);
+      const url: LibNovaConfigGetUrlUrl = new URL(candidateUrl);
 
-      const allowedProtocols = (field === 'repository') ? itemRepositoryProtocols : itemGenericProtocols;
-      const isAllowed = allowedProtocols.some(
+      const allowedProtocols: LibNovaConfigGetUrlAllowedProtocols = (field === 'repository') ? libItemRepositoryProtocols : libItemGenericProtocols;
+      const isAllowed: LibNovaConfigGetUrlIsAllowed = allowedProtocols.some(
         (allowedProtocol) => allowedProtocol === url.protocol,
       );
 
@@ -685,22 +1074,25 @@ export class NovaConfig {
   }
 
   /**
-   * Nova Config - Get non-empty string.
+   * Lib - Nova Config - Get Non Empty String.
    *
-   * @param {NovaConfigGetNonEmptyStringValue} value - Value.
+   * Trims and returns a string only when the result is non-empty. Serves as the
+   * base validator for nearly every scalar field in the config file.
+   *
+   * @param {LibNovaConfigGetNonEmptyStringValue} value - Value.
    *
    * @private
    *
-   * @returns {NovaConfigGetNonEmptyStringReturns}
+   * @returns {LibNovaConfigGetNonEmptyStringReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private getNonEmptyString(value: NovaConfigGetNonEmptyStringValue): NovaConfigGetNonEmptyStringReturns {
+  private getNonEmptyString(value: LibNovaConfigGetNonEmptyStringValue): LibNovaConfigGetNonEmptyStringReturns {
     if (typeof value !== 'string') {
       return undefined;
     }
 
-    const string = value.trim();
+    const string: LibNovaConfigGetNonEmptyStringString = value.trim();
 
     return (string.length > 0) ? string : undefined;
   }

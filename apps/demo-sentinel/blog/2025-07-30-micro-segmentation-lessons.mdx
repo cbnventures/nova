@@ -1,0 +1,86 @@
+---
+title: "Three Micro-Segmentation Mistakes We Made So You Don't Have To"
+authors: [james]
+tags: [micro-segmentation, rampart, network]
+date: 2025-07-30
+---
+
+Rampart is Sentinel's micro-segmentation layer. It divides the network into zones, encrypts traffic between them, and enforces access policies at every zone boundary. We have been running it in production for over a year. In that time, we have made three significant mistakes — each one a lesson in how micro-segmentation can go wrong when the theory meets a real network.
+
+{/* truncate */}
+
+## Mistake 1: Too Many Zones
+
+Our initial Rampart deployment created one zone per microservice. The logic seemed sound: maximum isolation means maximum security. Every service boundary is a segmentation boundary. No service can reach any other service without an explicit zone-crossing policy.
+
+In practice, we created 87 zones for 87 microservices. The policy graph had 340 zone-crossing rules. A single request from the frontend to the payment confirmation page crossed 6 zone boundaries. Latency increased by 18 milliseconds per request — not from encryption overhead, but from 6 sequential policy evaluations at each boundary.
+
+We consolidated to 14 zones organized by trust level and data sensitivity:
+
+```text title="Zone consolidation"
+Before: 87 zones, 340 crossing rules, 6 hops per request
+After:  14 zones, 48 crossing rules, 2 hops per request
+
+Zone structure:
+  edge           → load balancers, CDN origin
+  web            → frontend services
+  api            → backend API services
+  data-layer     → databases, caches
+  analytics      → ETL, reporting
+  payments       → PCI-scoped services
+  auth           → identity, SSO integration
+  admin-tools    → internal dashboards
+  ci-cd          → build and deploy
+  monitoring     → Watchtower, Spyglass
+  control-plane  → Sentinel management
+  staging        → pre-production mirror
+  sandbox        → development, testing
+  external       → third-party integrations
+```
+
+The rule of thumb we arrived at: zone boundaries should follow trust boundaries, not service boundaries. Two services that handle the same class of data and share the same trust policies belong in the same zone.
+
+## Mistake 2: Symmetric Zone-Crossing Rules
+
+Early on, we wrote zone-crossing rules that were bidirectional by default. If `api` could reach `data-layer`, then `data-layer` could reach `api`. This seemed reasonable — services need to communicate in both directions.
+
+It was a lateral movement highway. A compromised database could initiate connections back to the API layer, which could reach the web layer, which could reach the edge. The entire path was authorized because every zone-crossing rule was symmetric.
+
+We switched to unidirectional rules:
+
+```text title="trust-policy.grain — unidirectional zone crossing"
+policy "api-to-data" {
+  resource   = "data-layer"
+  effect     = "allow"
+  direction  = "outbound"
+
+  conditions {
+    zone.origin = "api"
+    zone.target = "data-layer"
+  }
+}
+
+// No corresponding data-layer-to-api rule exists.
+// Response traffic flows back through the established connection.
+// New connections from data-layer to api are denied.
+```
+
+Response traffic on established connections still flows. New connections in the reverse direction are blocked. This eliminates the most common lateral movement pattern: a compromised service in a lower-trust zone initiating connections to a higher-trust zone.
+
+## Mistake 3: Ignoring DNS
+
+We segmented the network but left DNS resolution unsegmented. Every zone could resolve every hostname. A compromised service in the `sandbox` zone could not connect to `control-plane` resources — but it could resolve their hostnames and learn their IP addresses.
+
+This leaked internal topology to any attacker who gained a foothold. They could map the entire network without sending a single connection that crossed a zone boundary.
+
+We deployed per-zone DNS views. Each zone resolves only the hostnames of resources it is authorized to reach:
+
+- `sandbox` resolves sandbox resources only.
+- `api` resolves data-layer, auth, and external resources.
+- `control-plane` resolves everything.
+
+DNS is now a segmentation boundary, not just a naming service. If a zone cannot resolve a hostname, it cannot target that resource — not even for reconnaissance.
+
+## The Summary
+
+Micro-segmentation is not a topology exercise. It is a trust exercise. The zones should reflect trust boundaries, the rules should be unidirectional, and the supporting infrastructure — DNS, service discovery, certificate authorities — must respect the same boundaries. Otherwise, the segmentation is a map with holes in it, and attackers are very good at finding holes.

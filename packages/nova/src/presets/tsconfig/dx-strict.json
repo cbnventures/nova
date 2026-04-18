@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+  "$comment": "Overlay preset. Must be extended after dx-essentials in the extends chain; dx-strict overrides dx-essentials's skipLibCheck from true to false. Using dx-strict alone yields an incomplete config.",
   "compilerOptions": {
     "allowArbitraryExtensions": false,
     "allowSyntheticDefaultImports": true,

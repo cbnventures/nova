@@ -1,0 +1,60 @@
+---
+title: "Encrypting East-West Traffic Without Killing Throughput"
+authors: [rafael]
+tags: [encryption, micro-segmentation, rampart]
+date: 2024-07-22
+---
+
+Most organizations encrypt traffic at the edge. TLS terminates at the load balancer, and everything behind it travels in plaintext. The assumption is that internal traffic is safe because it never leaves the data center. That assumption is wrong, and it has been wrong for a long time.
+
+East-west traffic — the traffic between services inside your network — is where lateral movement happens. An attacker who compromises one service can sniff plaintext traffic to adjacent services, harvest credentials, and escalate privileges without ever touching the perimeter. Encrypting this traffic is not optional. The question is how to do it without destroying throughput.
+
+{/* truncate */}
+
+## The Performance Problem
+
+The naive approach is to enable mutual TLS between every service pair. This works at small scale. At large scale, it introduces three problems:
+
+1. **Handshake overhead.** Every new connection requires a TLS handshake. In a microservices architecture with hundreds of service-to-service calls per request, the cumulative handshake latency is measurable.
+2. **Certificate management.** Each service needs a certificate. Certificates expire. Rotation requires coordination. A single expired certificate can cascade into an outage.
+3. **CPU saturation.** TLS encryption and decryption consume CPU cycles. On high-throughput services processing tens of thousands of requests per second, the CPU overhead of per-request encryption is significant.
+
+We measured the impact on a production workload before deploying Rampart's encryption layer:
+
+| Metric                   | Plaintext | Naive mTLS | Rampart    |
+|--------------------------|-----------|------------|------------|
+| P50 latency (ms)         | 2.1       | 4.8        | 2.4        |
+| P99 latency (ms)         | 12.3      | 31.7       | 14.1       |
+| CPU utilization          | 34%       | 61%        | 38%        |
+| Handshake rate (per sec) | 0         | 8,400      | 340        |
+| Certificate count        | 0         | 214        | 12 (zones) |
+
+The difference is architectural. Naive mTLS establishes a new TLS session for every connection. Rampart establishes long-lived encrypted tunnels between zone boundaries and multiplexes service traffic over them.
+
+## How Rampart Handles It
+
+Rampart's encryption model operates at the zone level, not the service level. Instead of encrypting every service-to-service connection individually, Rampart establishes persistent encrypted tunnels between zone gateways. All traffic crossing a zone boundary flows through these tunnels.
+
+```text title="Rampart zone tunnel topology"
+┌──────────────┐    encrypted tunnel    ┌──────────────┐
+│  payments    │◄──────────────────────►│  data-layer  │
+│  zone        │                        │  zone        │
+│              │    encrypted tunnel    │              │
+│  svc-pay ──►─┤◄──────────────────────►├─► svc-cache  │
+│  svc-bill ─►─┤                        ├─► svc-db     │
+└──────────────┘                        └──────────────┘
+```
+
+The tunnels use WireGuard under the hood. Handshakes happen once per tunnel establishment, not once per connection. Certificate management reduces to one identity per zone, not one per service. CPU overhead drops because the encryption is amortized across thousands of connections sharing the same tunnel.
+
+## What We Encrypt
+
+Everything. Rampart does not distinguish between sensitive and non-sensitive east-west traffic. The encryption layer is transparent to the application — services connect to each other using the same addresses and ports they always did. The zone gateway intercepts the traffic, encrypts it, and forwards it through the tunnel.
+
+This eliminates the classification problem entirely. You do not need to decide which traffic is worth encrypting. You encrypt all of it, and the performance cost is negligible because the tunnel architecture amortizes the overhead.
+
+## The Tradeoff
+
+Zone-level encryption does not provide service-level isolation within a zone. Two services in the same Rampart zone can communicate in plaintext. This is by design — intra-zone traffic is governed by trust policies, not encryption. If you need encryption between services within the same zone, you need to split them into separate zones.
+
+The rule of thumb: if two services should not be able to read each other's traffic, they belong in different Rampart zones. Zone boundaries are both segmentation boundaries and encryption boundaries. They are the same thing.

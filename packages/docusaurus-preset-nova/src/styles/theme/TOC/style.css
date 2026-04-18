@@ -1,0 +1,66 @@
+/**
+ * ============================
+ * TOC — Container
+ * ============================
+ */
+
+/* Hidden on mobile — TOCCollapsible is shown instead. */
+.nova-toc {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nova-toc {
+    display: block;
+
+    position: sticky;
+    top: calc(var(--nova-layout-sticky-top, 5rem) + calc(var(--nova-section-gap) / 4));
+
+    max-height: calc(100vh - var(--nova-layout-sticky-top, 5rem) - calc(var(--nova-section-gap) / 4) - 1rem);
+    padding-left: 1rem;
+
+    border-left: 1px solid var(--nova-color-neutral-200);
+
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .nova-toc::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  [data-theme="dark"] .nova-toc {
+    border-left-color: var(--nova-color-neutral-800);
+  }
+}
+
+/**
+ * ============================
+ * TOC — List
+ * ============================
+ */
+
+.nova-toc-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.nova-toc-list .nova-toc-list {
+  padding-left: 1rem;
+}
+
+/**
+ * ============================
+ * TOC — Link
+ * ============================
+ */
+
+.nova-toc-link {
+  display: block;
+
+  text-decoration: none;
+}
+

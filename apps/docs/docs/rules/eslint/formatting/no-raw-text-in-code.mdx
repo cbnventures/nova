@@ -16,6 +16,7 @@ tags:
   - mdx
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -23,7 +24,9 @@ Disallow unwrapped text inside `<code>` JSX elements to prevent MDX from parsing
 
 ## Summary
 
-The `no-raw-text-in-code` rule reports any unwrapped text placed directly between `<code>` JSX tags without a `{}` expression wrapper (i.e., `JSXText` AST nodes). Unwrapped text that contains characters like `<`, `>`, `{`, or `}` causes MDX parsing failures because the parser treats them as JSX syntax.
+The `no-raw-text-in-code` rule reports any unwrapped text placed directly between `<code>` JSX tags without a `{}` expression wrapper.
+
+Unwrapped text that contains characters like `<`, `>`, `{`, or `}` causes MDX parsing failures because the parser treats them as JSX syntax.
 
 ## Why Use This Rule?
 
@@ -55,37 +58,81 @@ The `no-raw-text-in-code` rule reports any unwrapped text placed directly betwee
   </TabItem>
 </Tabs>
 
-:::danger
-Unwrapped text like `<code>Array<string></code>` will cause MDX to interpret `<string>` as a JSX opening tag, resulting in a build error.
-:::
-
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term> for MDX files:
+<Tabs groupId="no-raw-text-in-code-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { noRawTextInCode } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology> for MDX files:
 
-export default [
-  {
-    files: ['**/*.mdx'],
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { NoRawTextInCode } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        files: ['**/*.mdx'],
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-raw-text-in-code': NoRawTextInCode.rule,
+            },
+          },
+        },
         rules: {
-          'no-raw-text-in-code': noRawTextInCode,
+          '@cbnventures/nova/no-raw-text-in-code': ['error'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/no-raw-text-in-code': ['error'],
-    },
-  },
-];
-```
+    ];
+    ```
 
-This rule has no additional options.
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoRawTextInCode } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        files: ['**/*.mdx'],
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-raw-text-in-code': NoRawTextInCode.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-raw-text-in-code': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Error fires on plain text without special characters.** — The rule flags all unwrapped text inside `<code>`, not just text with special characters. It is recommended to always use `{}` expression wrappers for consistency and to prevent future issues if the text changes.
+- **Error fires on plain text without special characters** — The rule flags all unwrapped text inside `<code>`, not just text with special characters. It is recommended to always use `{}` expression wrappers for consistency and to prevent future issues if the text changes.
 - **Want to use backticks instead?** — In prose, backtick syntax (`` `Array<string>` ``) is the simplest alternative and avoids the issue entirely.

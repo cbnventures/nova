@@ -1,0 +1,71 @@
+---
+id: scaffold
+title: Scaffold
+description: Create a new Docusaurus workspace with the Nova preset already wired up using the scaffold command.
+sidebar_position: 1
+keywords:
+  - nova
+  - docusaurus facades
+  - scaffold
+  - getting started
+  - new workspace
+  - docusaurus preset
+  - nova cli
+tags:
+  - facades
+  - getting started
+  - scaffold
+  - docusaurus
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Scaffold
+
+The fastest way to get started. The scaffold command creates a ready-to-run Docusaurus workspace with the preset already wired up.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova scaffold docs docusaurus
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest scaffold docs docusaurus
+    ```
+
+  </TabItem>
+</Tabs>
+
+The wizard walks you through project name, workspace name, and output directory. Once complete, install dependencies and start the dev server:
+
+```bash
+npm install
+npm run start
+```
+
+## Options
+
+| Flag                      | Description                            |
+|---------------------------|----------------------------------------|
+| `-d, --dry-run`           | Preview changes without writing files. |
+| `--name <name>`           | Project or workspace name.             |
+| `--workspace-name <name>` | Workspace directory name.              |
+| `--output <dir>`          | Output directory.                      |
+
+## Non-Interactive Mode
+
+Provide all flags to skip the wizard entirely:
+
+```bash
+nova scaffold docs docusaurus --name my-docs --workspace-name docusaurus --output ./my-docs
+```
+
+For the full scaffold reference, see **[Scaffold Docusaurus](/docs/cli/scaffolding/docs/docusaurus)**.

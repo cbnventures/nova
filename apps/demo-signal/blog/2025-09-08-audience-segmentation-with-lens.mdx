@@ -1,0 +1,65 @@
+---
+title: "Segmenting Audiences by Behavior, Not Demographics"
+authors: [amara]
+tags: [audience, lens, prism, attribution]
+date: 2025-09-08
+---
+
+Demographics tell you who someone is. Behavior tells you what they want. We built Lens around that distinction. Traditional audience segmentation groups users by age, location, and job title. Lens segments them by what they clicked, how often they came back, and which content moved them closer to conversion.
+
+The results are not close. Behavioral segments outperform demographic segments on conversion rate by a factor of 2.4x across the accounts we measured.
+
+{/* truncate */}
+
+## Demographic vs Behavioral Segments
+
+We ran a controlled comparison across 30 accounts that had both demographic data (from CRM enrichment) and behavioral data (from Beacon click histories). Each account split their next campaign into two audience strategies:
+
+| Strategy    | Avg. CTR | Avg. Conversion Rate | Cost per Acquisition |
+|-------------|----------|----------------------|----------------------|
+| Demographic | 1.8%     | 1.2%                 | $42.00               |
+| Behavioral  | 2.6%     | 2.9%                 | $17.50               |
+
+Behavioral targeting produced higher click-through rates, more than double the conversion rate, and less than half the acquisition cost. The reason is straightforward: past behavior is a better predictor of future behavior than a job title.
+
+## How Lens Builds Segments
+
+Lens analyzes Beacon click data to identify behavioral clusters. Every user interaction with a Beacon link contributes to their behavioral profile:
+
+- **Content affinity**: Which documentation pages, blog posts, and product pages they visit.
+- **Engagement velocity**: How quickly they move from first click to repeat visit.
+- **Channel preference**: Whether they tend to arrive via email, social, search, or direct.
+- **Conversion proximity**: How many touchpoints they typically need before converting.
+
+Lens groups users into segments based on these signals:
+
+```json title="Lens segment definition"
+{
+  "segment": "high-intent-evaluators",
+  "criteria": {
+    "contentAffinity": ["pricing", "comparison", "case-study"],
+    "engagementVelocity": { "min": 3, "period": "7d" },
+    "conversionProximity": { "touchpointsRemaining": { "max": 2 } }
+  },
+  "size": 4280,
+  "conversionRate": 8.7
+}
+```
+
+This segment contains users who have visited pricing and comparison pages, returned at least three times in the past week, and are statistically within two touchpoints of converting. They are not defined by their industry or company size. They are defined by what they did.
+
+## Segments That Update Themselves
+
+Static segments decay. A list of "enterprise prospects" built in January is stale by March. Lens segments are dynamic — they recompute membership continuously as new behavioral data flows in from Beacon.
+
+A user who was in the `early-explorers` segment last week might move to `high-intent-evaluators` this week if their click pattern changes. The segment boundary is defined by behavior, and behavior changes. The segment adapts.
+
+## Connecting Lens to Flare
+
+Lens segments feed directly into Flare's campaign targeting. When you create a new campaign in Flare, you can target a Lens segment instead of (or in addition to) a demographic list. The campaign then reaches users whose behavior suggests they are ready for that specific message — not users who happen to match a demographic profile.
+
+The integration closes the loop: Beacon captures behavior, Lens segments it, Flare targets it, Prism measures the result, and the next Lens segmentation incorporates the new data. Each cycle produces sharper segments and more efficient campaigns.
+
+## Start with What You Have
+
+Lens does not require a CRM integration or a data warehouse. It builds segments from Beacon click data alone. If you are already using Beacon links, you already have the behavioral data Lens needs. The segments are waiting — you just need to look.

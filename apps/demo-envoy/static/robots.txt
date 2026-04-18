@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://envoy-demo.nova.cbnventures.io/sitemap.xml

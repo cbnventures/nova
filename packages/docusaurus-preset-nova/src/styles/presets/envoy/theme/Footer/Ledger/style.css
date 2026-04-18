@@ -1,0 +1,117 @@
+/**
+ * Envoy — Footer (Ledger) variant visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Footer Container
+ * ============================ */
+
+.nova-footer-ledger {
+  border-top: 1px solid var(--nova-envoy-border-light);
+  background-color: var(--nova-envoy-surface-light);
+  padding: 0.5rem 0;
+  font-size: 0.75rem;
+}
+
+[data-theme="dark"] .nova-footer-ledger {
+  border-top-color: var(--nova-envoy-border-dark);
+  background-color: var(--nova-envoy-surface-dark);
+}
+
+/* ============================
+ * 2. Copyright
+ * ============================ */
+
+.nova-footer-ledger p {
+  margin: 0;
+  color: var(--nova-color-neutral-400);
+  font-size: 0.75rem;
+}
+
+/* ============================
+ * 3. Links
+ * ============================ */
+
+.nova-footer-ledger-links a {
+  font-size: 0.75rem;
+  color: var(--nova-color-neutral-500);
+  text-decoration: none;
+  transition: color 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-footer-ledger-links a:hover,
+.nova-footer-ledger-links a:focus-visible {
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-footer-ledger-links a {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-footer-ledger-links a:hover,
+[data-theme="dark"] .nova-footer-ledger-links a:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Social Icons
+ * ============================ */
+
+.nova-footer-ledger-social a {
+  color: var(--nova-color-neutral-400);
+  text-decoration: none;
+  transition: color 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="dark"] .nova-footer-ledger-social a {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-footer-ledger-social a:hover,
+.nova-footer-ledger-social a:focus-visible {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-footer-ledger-social a:hover,
+[data-theme="dark"] .nova-footer-ledger-social a:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 5. Responsive
+ * ============================ */
+
+.nova-footer-ledger .nova-footer-ledger-bar {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.375rem;
+}
+
+.nova-footer-ledger-links {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nova-footer-ledger-social {
+  margin-top: 0.25rem;
+}
+
+@media (min-width: 640px) {
+  .nova-footer-ledger .nova-footer-ledger-bar {
+    flex-direction: row;
+    align-items: center;
+    gap: 0;
+  }
+
+  .nova-footer-ledger-links {
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .nova-footer-ledger-social {
+    margin-top: 0;
+  }
+}

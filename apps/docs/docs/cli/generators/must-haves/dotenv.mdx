@@ -1,11 +1,105 @@
 ---
 id: dotenv
 title: Dotenv (.env)
-description: x
+description: Generate .env and .env.sample files for managing local environment secrets.
 keywords:
-  - x
+  - nova
+  - nova generate
+  - dotenv
+  - env
+  - environment variables
+  - secrets
 tags:
-  - x
+  - cli
+  - generator
+  - must-haves
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create `.env` and `.env.sample` files pre-populated with Nova-related environment variables.
+
+## Why Use This Command?
+
+- Pre-populates Nova CLI logger settings and Node.js defaults so contributors know which variables are available.
+- Keeps sensitive values out of version control while documenting the expected shape.
+- Supports adding custom environment variables interactively with default values.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate must-haves dotenv
+
+    # Shorthand
+    nova gen must env
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate must-haves dotenv
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen must env
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Output Files
+
+| File          | Description                                              |
+|---------------|----------------------------------------------------------|
+| `.env`        | Environment variable placeholders for local development. |
+| `.env.sample` | Shareable template with empty values for contributors.   |
+
+## How It Works
+
+### New Files
+
+When `.env` and `.env.sample` do not exist yet, the generator creates them from the built-in template with Nova-specific defaults. You are then prompted to add your own environment variables one at a time.
+
+### Existing Files
+
+When `.env` or `.env.sample` already exists, you are prompted to choose between:
+
+- **Manage existing variables** — Opens a menu where you can add, edit, or delete environment variables in both files. Template variables (shipped with Nova) are read-only and cannot be deleted. Changes are saved to both `.env` and `.env.sample` simultaneously.
+- **Regenerate from template** — Replaces the files with a fresh copy from the template (a `.nova-backup` copy is created unless `--replace-file` is set).
+
+### Manage Menu
+
+When managing existing variables, the following actions are available:
+
+- **Add a variable** — Prompts for a key in `SCREAMING_SNAKE_CASE` (e.g. `API_KEY`) and a default value for `.env.sample`. The `.env` file always uses empty values. Duplicate and reserved keys are blocked.
+- **Edit a variable** — Select a variable, then enter new values for `.env` and `.env.sample` separately.
+- **Delete a variable** — Select a non-reserved variable to remove from both files.
+- **Save & Exit** — Exit the manage menu.
+- **Back** — Return to the mode selection menu.
+
+### Regenerate Prompts
+
+When regenerating (or creating new files), the generator prompts you to add custom environment variables:
+
+1. **Variable name** — Enter the key (e.g. `API_KEY`). Must be `SCREAMING_SNAKE_CASE`. Leave empty to finish.
+2. **Default value** — Enter a default value for `.env.sample` (leave empty for none). The `.env` file always uses empty values.
+3. Repeat until you leave the variable name empty.

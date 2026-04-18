@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>signal-logo</title>
+    <defs>
+        <path d="M0,0 L1024,0 L1024,1024 L0,1024 L0,0 Z" id="path-1"></path>
+    </defs>
+    <g id="signal-logo" stroke="none" fill="none" xlink:href="#path-1" fill-rule="evenodd">
+        <use fill="#E11D48" xlink:href="#path-1"></use>
+        <g id="nova-logo-nobg" transform="translate(160, 160)" stroke="#FFFFFF" stroke-width="1">
+            <g id="Group" transform="translate(86.625, 160.1875)">
+                <polyline id="Path" stroke-width="132.750419" points="0 425.117647 265.375 0 530.75 425.117647"></polyline>
+                <line x1="0" y1="425.117647" x2="530.75" y2="425.117647" id="Path" stroke-width="132.750419"></line>
+            </g>
+        </g>
+    </g>
+</svg>

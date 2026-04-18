@@ -1,19 +1,20 @@
-import { test } from 'node:test';
-
 import { RuleTester } from '@typescript-eslint/rule-tester';
+import { afterAll, describe, it } from 'vitest';
 
-import { noRawTextInCode } from '@/rules/eslint/index.js';
+import { NoRawTextInCode } from '../../../../rules/eslint/index.js';
+
+import type { TestsRulesEslintFormattingNoRawTextInCodeRuleTester } from '../../../../types/tests/rules/eslint/formatting/no-raw-text-in-code.test.d.ts';
 
 /**
- * No raw text in code.
+ * Tests - Rules - ESLint - Formatting - No Raw Text In Code.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-RuleTester.afterAll = () => {};
-RuleTester.describe = test;
-RuleTester.it = test;
+RuleTester.afterAll = afterAll;
+RuleTester.describe = describe;
+RuleTester.it = it;
 
-const ruleTester = new RuleTester({
+const ruleTester: TestsRulesEslintFormattingNoRawTextInCodeRuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
@@ -25,7 +26,7 @@ const ruleTester = new RuleTester({
   },
 });
 
-ruleTester.run('noRawTextInCode', noRawTextInCode, {
+ruleTester.run('noRawTextInCode', NoRawTextInCode['rule'], {
   valid: [
     {
       code: '<code>{"Array<string>"}</code>;',
@@ -41,6 +42,11 @@ ruleTester.run('noRawTextInCode', noRawTextInCode, {
     },
     {
       code: '<pre>raw text in pre</pre>;',
+    },
+    {
+      code: '<code>raw text</code>;',
+      options: [{ ignoreFiles: ['ignored-file.tsx'] }],
+      filename: '/path/to/ignored-file.tsx',
     },
   ],
   invalid: [

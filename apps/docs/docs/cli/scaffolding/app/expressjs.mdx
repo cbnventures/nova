@@ -1,0 +1,116 @@
+---
+id: expressjs
+title: Express.js
+description: Scaffold an Express.js workspace with monorepo or workspace mode.
+keywords:
+  - nova
+  - nova scaffold
+  - expressjs
+  - app
+  - api
+  - node
+tags:
+  - cli
+  - scaffold
+  - app
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold an **Express.js** workspace with TypeScript.
+
+## Why Use This Command?
+
+- Installs Express 5 with TypeScript and a `tsx watch` dev script so you can start writing routes with hot reload on the first command.
+- Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
+- Generates a minimal `src/index.ts` entry point so the server compiles and runs without extra boilerplate.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Empty directory** (monorepo mode) or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** (workspace mode) — The command auto-detects which mode to use.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold app expressjs
+
+    # Shorthand
+    nova scaf app express
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold app expressjs
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf app express
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                            |
+|---------------------------|----------------------------------------|
+| `-d, --dry-run`           | Preview changes without writing files. |
+| `--name <name>`           | Project or workspace name.             |
+| `--workspace-name <name>` | Workspace directory name.              |
+| `--output <dir>`          | Output directory.                      |
+
+## Output Structure
+
+```
+{project-slug}/
+├── package.json
+├── nova.config.json
+├── apps/
+│   └── {workspace-name}/
+│       ├── package.json
+│       ├── tsconfig.json
+│       └── src/
+│           └── index.ts
+└── packages/
+```
+
+## How It Works
+
+### Interactive Wizard
+
+When run without flags, the command walks you through an interactive wizard:
+
+**Monorepo mode** (no `package.json` found):
+
+1. **Project name** — Enter a slug for your monorepo (e.g. `my-api`).
+2. **Workspace name** — Enter a slug for the workspace directory (default: `express`).
+3. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
+4. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
+5. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+
+**Workspace mode** (`package.json` with `workspaces` found):
+
+1. **Package name** — Enter a slug for the workspace package (e.g. `my-api`).
+2. **Workspace name** — Enter a slug for the workspace directory (default: `express`).
+3. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+
+### Non-Interactive Mode
+
+Provide `--name`, `--workspace-name`, and `--output` to skip all prompts:
+
+```bash
+nova scaffold app expressjs --name my-api --workspace-name express --output ./my-api
+```
+
+## Next Steps
+
+After scaffolding, consider running generators to add essential project files like `.editorconfig`, `.gitignore`, `LICENSE`, and `README.md`.

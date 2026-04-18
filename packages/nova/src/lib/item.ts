@@ -1,55 +1,75 @@
 import type {
-  ItemAllowedPoliciesByRole,
-  ItemAllowedRecipes,
-  ItemAllowedRoles,
-  ItemChangelogAdjectives,
-  ItemChangelogCategoryBumpMap,
-  ItemChangelogCategoryOrder,
-  ItemChangelogNouns,
-  ItemChangelogValidBumps,
-  ItemChangelogValidCategories,
-  ItemChangelogVerbs,
-  ItemGenericProtocols,
-  ItemInitializeRolesToSync,
-  ItemInitializeValidEntityRoles,
-  ItemNormalizeBundlerRolesSideEffectsEsnext,
-  ItemNormalizeBundlerRolesTypesModule,
-  ItemNovaConfigEmailFields,
-  ItemNovaConfigUrlFields,
-  ItemPackageJsonKeysBundler,
-  ItemPackageJsonKeysCorepack,
-  ItemPackageJsonKeysNodeJs,
-  ItemPackageJsonKeysNpm,
-  ItemPackageJsonSortOrder,
-  ItemPrettyNamesBrand,
-  ItemPrettyNamesCategory,
-  ItemPrettyNamesColumnTitle,
-  ItemPrettyNamesType,
-  ItemRepositoryProtocols,
-  ItemSkipDirectories,
-} from '@/types/lib/item.d.ts';
+  LibItemAllowedPoliciesByRole,
+  LibItemAllowedRecipes,
+  LibItemAllowedRoles,
+  LibItemBundlerKeys,
+  LibItemChangelogAdjectives,
+  LibItemChangelogCategoryBumpMap,
+  LibItemChangelogNouns,
+  LibItemChangelogOrderedCategories,
+  LibItemChangelogValidBumps,
+  LibItemChangelogValidCategories,
+  LibItemChangelogVerbs,
+  LibItemCorepackKeys,
+  LibItemEmailFields,
+  LibItemGenericProtocols,
+  LibItemNodeJsKeys,
+  LibItemNpmKeys,
+  LibItemPrettyNamesAbbreviation,
+  LibItemPrettyNamesBrand,
+  LibItemPrettyNamesCategory,
+  LibItemPrettyNamesColumnTitle,
+  LibItemPrettyNamesKeyword,
+  LibItemPrettyNamesType,
+  LibItemRepositoryProtocols,
+  LibItemSideEffectsEsnextRoles,
+  LibItemSkipDirectories,
+  LibItemSortOrderKeys,
+  LibItemSyncRoles,
+  LibItemTypesModuleRoles,
+  LibItemUrlFields,
+  LibItemValidEntityRoles,
+} from '../types/lib/item.d.ts';
 
 /**
- * Item - Allowed policies by role.
+ * Lib - Item - Allowed Policies By Role.
  *
- * @since 1.0.0
+ * Maps each workspace role to the lifecycle policies it supports. Used by nova-config
+ * parsing and the initialize prompt to constrain selection.
+ *
+ * @since 0.11.0
  */
-export const itemAllowedPoliciesByRole: ItemAllowedPoliciesByRole = {
+export const libItemAllowedPoliciesByRole: LibItemAllowedPoliciesByRole = {
   project: ['freezable'],
-  config: ['freezable', 'trackable'],
-  docs: ['freezable', 'trackable'],
+  config: [
+    'freezable',
+    'trackable',
+  ],
+  docs: [
+    'freezable',
+    'trackable',
+  ],
   app: ['trackable'],
-  package: ['trackable', 'distributable'],
-  tool: ['freezable', 'trackable'],
+  package: [
+    'trackable',
+    'distributable',
+  ],
+  tool: [
+    'freezable',
+    'trackable',
+  ],
   template: ['freezable'],
 };
 
 /**
- * Item - Allowed recipes.
+ * Lib - Item - Allowed Recipes.
  *
- * @since 1.0.0
+ * Canonical list of package-json recipe names that the CLI accepts. Nova-config
+ * validates workspace recipes against this set during parsing.
+ *
+ * @since 0.11.0
  */
-export const itemAllowedRecipes: ItemAllowedRecipes = [
+export const libItemAllowedRecipes: LibItemAllowedRecipes = [
   'cleanup',
   'normalize-artifacts',
   'normalize-bundler',
@@ -62,11 +82,14 @@ export const itemAllowedRecipes: ItemAllowedRecipes = [
 ];
 
 /**
- * Item - Allowed roles.
+ * Lib - Item - Allowed Roles.
  *
- * @since 1.0.0
+ * Every valid workspace role in the monorepo. Used by nova-config to validate
+ * role candidates and by the initialize prompt to populate role choices.
+ *
+ * @since 0.11.0
  */
-export const itemAllowedRoles: ItemAllowedRoles = [
+export const libItemAllowedRoles: LibItemAllowedRoles = [
   'project',
   'docs',
   'config',
@@ -77,11 +100,14 @@ export const itemAllowedRoles: ItemAllowedRoles = [
 ];
 
 /**
- * Item - Changelog adjectives.
+ * Lib - Item - Changelog Adjectives.
  *
- * @since 1.0.0
+ * Word pool for random changelog file name generation. Combined with a noun and verb
+ * to produce names like "bold-cats-jump".
+ *
+ * @since 0.11.0
  */
-export const itemChangelogAdjectives: ItemChangelogAdjectives = [
+export const libItemChangelogAdjectives: LibItemChangelogAdjectives = [
   'afraid',
   'bold',
   'brave',
@@ -135,11 +161,14 @@ export const itemChangelogAdjectives: ItemChangelogAdjectives = [
 ];
 
 /**
- * Item - Changelog category bump map.
+ * Lib - Item - Changelog Category Bump Map.
  *
- * @since 1.0.0
+ * Maps each changelog category to its default semver bump level. The changelog record
+ * command uses this to pre-select the bump when chosen.
+ *
+ * @since 0.11.0
  */
-export const itemChangelogCategoryBumpMap: ItemChangelogCategoryBumpMap = {
+export const libItemChangelogCategoryBumpMap: LibItemChangelogCategoryBumpMap = {
   added: 'minor',
   updated: 'minor',
   fixed: 'patch',
@@ -147,23 +176,14 @@ export const itemChangelogCategoryBumpMap: ItemChangelogCategoryBumpMap = {
 };
 
 /**
- * Item - Changelog category order.
+ * Lib - Item - Changelog Nouns.
  *
- * @since 1.0.0
- */
-export const itemChangelogCategoryOrder: ItemChangelogCategoryOrder = [
-  'updated',
-  'fixed',
-  'added',
-  'removed',
-];
-
-/**
- * Item - Changelog nouns.
+ * Word pool for random changelog file name generation. Combined with an adjective and
+ * verb to produce names like "bold-cats-jump".
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export const itemChangelogNouns: ItemChangelogNouns = [
+export const libItemChangelogNouns: LibItemChangelogNouns = [
   'ants',
   'bags',
   'bats',
@@ -217,22 +237,43 @@ export const itemChangelogNouns: ItemChangelogNouns = [
 ];
 
 /**
- * Item - Changelog valid bumps.
+ * Lib - Item - Changelog Ordered Categories.
  *
- * @since 1.0.0
+ * Controls the section ordering when writing the changelog markdown. Sections
+ * appear as UPDATED, FIXED, ADDED, then REMOVED in the output file.
+ *
+ * @since 0.11.0
  */
-export const itemChangelogValidBumps: ItemChangelogValidBumps = [
+export const libItemChangelogOrderedCategories: LibItemChangelogOrderedCategories = [
+  'updated',
+  'fixed',
+  'added',
+  'removed',
+];
+
+/**
+ * Lib - Item - Changelog Valid Bumps.
+ *
+ * Accepted semver bump levels for changelog entries. The changelog record command
+ * validates user input and parses existing entries.
+ *
+ * @since 0.11.0
+ */
+export const libItemChangelogValidBumps: LibItemChangelogValidBumps = [
   'major',
   'minor',
   'patch',
 ];
 
 /**
- * Item - Changelog valid categories.
+ * Lib - Item - Changelog Valid Categories.
  *
- * @since 1.0.0
+ * Accepted changelog entry categories. The changelog record command validates
+ * user input and parses existing entries against this list.
+ *
+ * @since 0.11.0
  */
-export const itemChangelogValidCategories: ItemChangelogValidCategories = [
+export const libItemChangelogValidCategories: LibItemChangelogValidCategories = [
   'added',
   'updated',
   'fixed',
@@ -240,11 +281,14 @@ export const itemChangelogValidCategories: ItemChangelogValidCategories = [
 ];
 
 /**
- * Item - Changelog verbs.
+ * Lib - Item - Changelog Verbs.
  *
- * @since 1.0.0
+ * Word pool for random changelog file name generation. Combined with an adjective and
+ * noun to produce names like "bold-cats-jump".
+ *
+ * @since 0.11.0
  */
-export const itemChangelogVerbs: ItemChangelogVerbs = [
+export const libItemChangelogVerbs: LibItemChangelogVerbs = [
   'ask',
   'bake',
   'bite',
@@ -298,21 +342,27 @@ export const itemChangelogVerbs: ItemChangelogVerbs = [
 ];
 
 /**
- * Item - Generic protocols.
+ * Lib - Item - Generic Protocols.
  *
- * @since 1.0.0
+ * Allowed URL schemes for non-repository fields in nova-config. The getUrl validator
+ * selects this list for homepage, bugs, and documentation.
+ *
+ * @since 0.11.0
  */
-export const itemGenericProtocols: ItemGenericProtocols = [
+export const libItemGenericProtocols: LibItemGenericProtocols = [
   'http:',
   'https:',
 ];
 
 /**
- * Item - Initialize roles to sync.
+ * Lib - Item - Sync Roles.
  *
- * @since 1.0.0
+ * Workspace roles whose names are prefixed with the project slug. When the slug changes,
+ * the initialize command renames these workspaces automatically.
+ *
+ * @since 0.11.0
  */
-export const itemInitializeRolesToSync: ItemInitializeRolesToSync = [
+export const libItemSyncRoles: LibItemSyncRoles = [
   'project',
   'docs',
   'config',
@@ -321,51 +371,62 @@ export const itemInitializeRolesToSync: ItemInitializeRolesToSync = [
 ];
 
 /**
- * Item - Initialize valid entity roles.
+ * Lib - Item - Valid Entity Roles.
  *
- * @since 1.0.0
+ * Accepted roles for people entries in nova-config. The initialize prompt uses this
+ * list to populate the role multi-select.
+ *
+ * @since 0.11.0
  */
-export const itemInitializeValidEntityRoles: ItemInitializeValidEntityRoles = [
+export const libItemValidEntityRoles: LibItemValidEntityRoles = [
   'author',
   'contributor',
   'supporter',
 ];
 
 /**
- * Item - Normalize bundler roles (sideEffects esnext).
+ * Lib - Item - Side Effects ESNext Roles.
  *
- * @since 1.0.0
+ * Workspace roles that may declare sideEffects and esnext fields in package.json. The
+ * normalize-bundler recipe strips these fields from all other roles.
+ *
+ * @since 0.11.0
  */
-export const itemNormalizeBundlerRolesSideEffectsEsnext: ItemNormalizeBundlerRolesSideEffectsEsnext = [
-  'package',
-];
+export const libItemSideEffectsEsnextRoles: LibItemSideEffectsEsnextRoles = ['package'];
 
 /**
- * Item - Normalize bundler roles (types module).
+ * Lib - Item - Types Module Roles.
  *
- * @since 1.0.0
+ * Workspace roles that may declare types and module fields in package.json. The
+ * normalize-bundler recipe strips these fields from all other roles.
+ *
+ * @since 0.11.0
  */
-export const itemNormalizeBundlerRolesTypesModule: ItemNormalizeBundlerRolesTypesModule = [
+export const libItemTypesModuleRoles: LibItemTypesModuleRoles = [
   'config',
   'package',
   'tool',
 ];
 
 /**
- * Item - Nova config email fields.
+ * Lib - Item - Email Fields.
  *
- * @since 1.0.0
+ * Nova-config field names whose values are validated as email addresses. The parseEmails
+ * method iterates this list to extract and verify each address.
+ *
+ * @since 0.11.0
  */
-export const itemNovaConfigEmailFields: ItemNovaConfigEmailFields = [
-  'bugs',
-];
+export const libItemEmailFields: LibItemEmailFields = ['bugs'];
 
 /**
- * Item - Nova config url fields.
+ * Lib - Item - URL Fields.
  *
- * @since 1.0.0
+ * Nova-config field names whose values are validated as URLs. The parseUrls method
+ * iterates this list and applies protocol checks per field.
+ *
+ * @since 0.11.0
  */
-export const itemNovaConfigUrlFields: ItemNovaConfigUrlFields = [
+export const libItemUrlFields: LibItemUrlFields = [
   'homepage',
   'repository',
   'bugs',
@@ -374,42 +435,57 @@ export const itemNovaConfigUrlFields: ItemNovaConfigUrlFields = [
   'documentation',
   'github',
   'npm',
+  'docker',
+  'privacyPolicy',
+  'termsOfUse',
 ];
 
 /**
- * Item - Package.json keys (Bundler).
+ * Lib - Item - Bundler Keys.
  *
- * @since 1.0.0
+ * Package.json fields owned by bundler tooling such as TypeScript, Rollup, and webpack.
+ * The cleanup recipe includes these in the allowed-keys set.
+ *
+ * @since 0.11.0
  */
-export const itemPackageJsonKeysBundler: ItemPackageJsonKeysBundler = [
+export const libItemBundlerKeys: LibItemBundlerKeys = [
+
   // TypeScript (Microsoft).
   'types',
+
   // Rollup (Rich Harris).
   'module',
+
   // webpack (Tobias Koppers).
   'sideEffects',
+
   // Community (Angular APF).
   'esnext',
 ];
 
 /**
- * Item - Package.json keys (Corepack).
+ * Lib - Item - Corepack Keys.
  *
- * @since 1.0.0
+ * Package.json fields managed by Node.js Corepack. The cleanup recipe includes these in
+ * the allowed-keys set to avoid flagging them as unknown.
+ *
+ * @since 0.11.0
  */
-export const itemPackageJsonKeysCorepack: ItemPackageJsonKeysCorepack = [
-  // Workspace & Tooling.
-  'packageManager',
-];
+export const libItemCorepackKeys: LibItemCorepackKeys = ['packageManager'];
 
 /**
- * Item - Package.json keys (Node.js).
+ * Lib - Item - Node Js Keys.
  *
- * @since 1.0.0
+ * Package.json fields defined by the Node.js runtime for module resolution and entry
+ * points. The cleanup recipe includes these in the allowed-keys set.
+ *
+ * @since 0.11.0
  */
-export const itemPackageJsonKeysNodeJs: ItemPackageJsonKeysNodeJs = [
+export const libItemNodeJsKeys: LibItemNodeJsKeys = [
+
   // Identity & Discovery.
   'name',
+
   // Runtime Entry Points.
   'main',
   'type',
@@ -418,17 +494,22 @@ export const itemPackageJsonKeysNodeJs: ItemPackageJsonKeysNodeJs = [
 ];
 
 /**
- * Item - Package.json keys (npm).
+ * Lib - Item - npm Keys.
  *
- * @since 1.0.0
+ * Package.json fields defined by the npm registry specification. The cleanup recipe
+ * combines these with bundler, Corepack, and Node.js keys.
+ *
+ * @since 0.11.0
  */
-export const itemPackageJsonKeysNpm: ItemPackageJsonKeysNpm = [
+export const libItemNpmKeys: LibItemNpmKeys = [
+
   // Identity & Discovery.
   'name',
   'version',
   'description',
   'keywords',
   'license',
+
   // Ownership & Support.
   'homepage',
   'bugs',
@@ -436,29 +517,35 @@ export const itemPackageJsonKeysNpm: ItemPackageJsonKeysNpm = [
   'contributors',
   'funding',
   'repository',
+
   // Runtime Entry Points.
   'exports',
   'main',
   'browser',
+
   // Executables & Artifacts.
   'files',
   'bin',
   'man',
   'directories',
+
   // Publishing Controls.
   'private',
   'publishConfig',
+
   // Workspace & Tooling.
   'scripts',
   'gypfile',
   'config',
   'workspaces',
+
   //  Environment Constraints.
   'engines',
   'os',
   'cpu',
   'libc',
   'devEngines',
+
   // Dependency Specs.
   'dependencies',
   'devDependencies',
@@ -471,17 +558,22 @@ export const itemPackageJsonKeysNpm: ItemPackageJsonKeysNpm = [
 ];
 
 /**
- * Item - Package.json keys sort order.
+ * Lib - Item - Sort Order Keys.
  *
- * @since 1.0.0
+ * Canonical key ordering for package.json files. The cleanup recipe reorders every
+ * workspace manifest to match this sequence, appending unknown keys last.
+ *
+ * @since 0.11.0
  */
-export const itemPackageJsonSortOrder: ItemPackageJsonSortOrder = [
+export const libItemSortOrderKeys: LibItemSortOrderKeys = [
+
   // Identity.
   'name',
   'version',
   'description',
   'keywords',
   'license',
+
   // Ownership.
   'homepage',
   'bugs',
@@ -489,33 +581,40 @@ export const itemPackageJsonSortOrder: ItemPackageJsonSortOrder = [
   'contributors',
   'funding',
   'repository',
+
   // Runtime.
   'exports',
   'main',
   'type',
   'browser',
   'imports',
+
   // Artifacts.
   'files',
   'bin',
   'man',
   'directories',
+
   // Publishing.
   'private',
   'publishConfig',
+
   // Tooling.
   'scripts',
   'gypfile',
   'config',
   'workspaces',
+
   // Corepack.
   'packageManager',
+
   // Environment.
   'engines',
   'os',
   'cpu',
   'libc',
   'devEngines',
+
   // Dependencies.
   'dependencies',
   'devDependencies',
@@ -524,6 +623,7 @@ export const itemPackageJsonSortOrder: ItemPackageJsonSortOrder = [
   'bundleDependencies',
   'optionalDependencies',
   'overrides',
+
   // Bundler (by vendor).
   'types',
   'module',
@@ -532,11 +632,62 @@ export const itemPackageJsonSortOrder: ItemPackageJsonSortOrder = [
 ];
 
 /**
- * Item - Pretty Names - Brand.
+ * Lib - Item - Pretty Names Abbreviation.
  *
- * @since 1.0.0
+ * Maps lowercase abbreviations to their uppercase form. The require-jsdoc-hierarchy
+ * ESLint rule uses this to capitalize segments in JSDoc summary lines.
+ *
+ * @since 0.15.0
  */
-export const itemPrettyNamesBrand: ItemPrettyNamesBrand = {
+export const libItemPrettyNamesAbbreviation: LibItemPrettyNamesAbbreviation = {
+  'ai': 'AI',
+  'ansi': 'ANSI',
+  'api': 'API',
+  'aws': 'AWS',
+  'cli': 'CLI',
+  'crlf': 'CRLF',
+  'css': 'CSS',
+  'dns': 'DNS',
+  'dom': 'DOM',
+  'dx': 'DX',
+  'fw': 'FW',
+  'html': 'HTML',
+  'http': 'HTTP',
+  'https': 'HTTPS',
+  'id': 'ID',
+  'io': 'IO',
+  'ip': 'IP',
+  'json': 'JSON',
+  'jsx': 'JSX',
+  'lf': 'LF',
+  'lts': 'LTS',
+  'mdx': 'MDX',
+  'os': 'OS',
+  'sdk': 'SDK',
+  'spdx': 'SPDX',
+  'sql': 'SQL',
+  'ssh': 'SSH',
+  'ssl': 'SSL',
+  'tcp': 'TCP',
+  'tls': 'TLS',
+  'tsx': 'TSX',
+  'udp': 'UDP',
+  'ui': 'UI',
+  'uri': 'URI',
+  'url': 'URL',
+  'urls': 'URLs',
+  'xml': 'XML',
+};
+
+/**
+ * Lib - Item - Pretty Names Brand.
+ *
+ * Maps camelCase brand keys to their display names. The version command uses this to
+ * label rows in the environment table printed to the terminal.
+ *
+ * @since 0.11.0
+ */
+export const libItemPrettyNamesBrand: LibItemPrettyNamesBrand = {
   'brave': 'Brave Browser',
   'bun': 'Bun',
   'chrome': 'Google Chrome',
@@ -558,11 +709,14 @@ export const itemPrettyNamesBrand: ItemPrettyNamesBrand = {
 };
 
 /**
- * Item - Pretty Names - Category.
+ * Lib - Item - Pretty Names Category.
  *
- * @since 1.0.0
+ * Maps category keys to their display headings. The version command prints these as
+ * section titles above each environment table group.
+ *
+ * @since 0.11.0
  */
-export const itemPrettyNamesCategory: ItemPrettyNamesCategory = {
+export const libItemPrettyNamesCategory: LibItemPrettyNamesCategory = {
   'browsers': 'Web Browsers',
   'env': 'Environment Managers',
   'interpreters': 'Interpreters / Runtimes',
@@ -571,11 +725,14 @@ export const itemPrettyNamesCategory: ItemPrettyNamesCategory = {
 };
 
 /**
- * Item - Pretty Names - Column Title.
+ * Lib - Item - Pretty Names Column Title.
  *
- * @since 1.0.0
+ * Maps composite keys like "key-browsers" to column headers for the markdown tables
+ * built by the version command's environment output.
+ *
+ * @since 0.11.0
  */
-export const itemPrettyNamesColumnTitle: ItemPrettyNamesColumnTitle = {
+export const libItemPrettyNamesColumnTitle: LibItemPrettyNamesColumnTitle = {
   'key-browsers': 'Browser',
   'key-env': 'Manager',
   'key-interpreters': 'Program',
@@ -589,11 +746,38 @@ export const itemPrettyNamesColumnTitle: ItemPrettyNamesColumnTitle = {
 };
 
 /**
- * Item - Pretty Names - Type.
+ * Lib - Item - Pretty Names Keyword.
  *
- * @since 1.0.0
+ * Maps lowercase keywords to their branded display form. The require-jsdoc-hierarchy
+ * ESLint rule uses this alongside abbreviations for segment casing.
+ *
+ * @since 0.15.0
  */
-export const itemPrettyNamesType: ItemPrettyNamesType = {
+export const libItemPrettyNamesKeyword: LibItemPrettyNamesKeyword = {
+  'eslint': 'ESLint',
+  'esnext': 'ESNext',
+  'express': 'Express.js',
+  'expressjs': 'Express.js',
+  'github': 'GitHub',
+  'javascript': 'JavaScript',
+  'jsdoc': 'JSDoc',
+  'kofi': 'Ko-fi',
+  'nextjs': 'Next.js',
+  'npm': 'npm',
+  'package-json': 'package.json',
+  'paypal': 'PayPal',
+  'typescript': 'TypeScript',
+};
+
+/**
+ * Lib - Item - Pretty Names Type.
+ *
+ * Maps OS-related keys to their display labels. The version command falls back to this
+ * map when a row key has no matching brand name.
+ *
+ * @since 0.11.0
+ */
+export const libItemPrettyNamesType: LibItemPrettyNamesType = {
   'architecture': 'OS Architecture',
   'build': 'OS Build',
   'kernel': 'OS Kernel',
@@ -602,11 +786,14 @@ export const itemPrettyNamesType: ItemPrettyNamesType = {
 };
 
 /**
- * Item - Repository protocols.
+ * Lib - Item - Repository Protocols.
  *
- * @since 1.0.0
+ * Allowed URL schemes for the repository field in nova-config. Includes git-specific
+ * protocols that are invalid for generic URL fields.
+ *
+ * @since 0.11.0
  */
-export const itemRepositoryProtocols: ItemRepositoryProtocols = [
+export const libItemRepositoryProtocols: LibItemRepositoryProtocols = [
   'git:',
   'git+https:',
   'git+ssh:',
@@ -616,11 +803,14 @@ export const itemRepositoryProtocols: ItemRepositoryProtocols = [
 ];
 
 /**
- * Item - Skip directories.
+ * Lib - Item - Skip Directories.
  *
- * @since 1.0.0
+ * Directory names excluded during workspace discovery. The discoverPathsWithFile
+ * utility skips these to avoid scanning build artifacts.
+ *
+ * @since 0.11.0
  */
-export const itemSkipDirectories: ItemSkipDirectories = [
+export const libItemSkipDirectories: LibItemSkipDirectories = [
   'node_modules',
   'dist',
   'build',

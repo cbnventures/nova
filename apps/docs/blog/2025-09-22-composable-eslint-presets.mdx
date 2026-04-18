@@ -1,0 +1,94 @@
+---
+title: "Composable ESLint Presets: Layers Instead of Inheritance"
+description: How Nova's ESLint presets use independent layers — language, environment, and framework — to replace brittle config inheritance with predictable composition.
+slug: composable-eslint-presets
+authors:
+  - mrjackyliang
+tags:
+  - nova
+  - eslint
+  - presets
+  - typescript
+  - monorepo
+  - configuration
+---
+
+Most ESLint flat configs start the same way. You spread a popular shared config into your array, add your overrides, and move on. But as the project grows — more workspaces, more file types, more framework-specific needs — the config grows with it. You end up with a single array where language rules, environment globals, and framework conventions are tangled together, and figuring out which object added which rule means reading the whole thing top to bottom.
+
+Nova's presets are designed to keep that clean. Each preset handles one concern, and you compose them into exactly the combination your workspace needs.
+
+{/* truncate */}
+
+## The Problem with Monolithic Configs
+
+Even with flat config, shared presets tend to ship as one large array that covers everything. You spread it in and get hundreds of rules — some relevant, some not. When a rule behaves unexpectedly, you trace through the shared config to figure out where it came from. When two workspaces need different rules, you fork the config or add per-workspace overrides.
+
+The config stays flat, but the complexity doesn't.
+
+## Layers, Not Inheritance
+
+Nova's presets are independent arrays. Each one handles a specific concern, and you spread them into your config in any order:
+
+```javascript
+import {
+  dxCodeStyle,
+  envNode,
+  langTypescript,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...envNode,
+];
+```
+
+Three layers, each self-contained:
+
+- **Code style** (`dxCodeStyle`) — Conventions, formatting, and structural patterns that apply everywhere
+- **Language** (`langTypescript`) — TypeScript-specific rules and parser configuration
+- **Environment** (`envNode`) — Node.js globals, module resolution, and platform constraints
+
+A browser project uses `envBrowser` instead of `envNode`. A Docusaurus site adds `fwDocusaurus` on top. Each workspace composes exactly the layers it needs.
+
+## What Each Layer Does
+
+### Code Style
+
+The `dxCodeStyle` layer covers rules that apply regardless of language or environment: naming conventions, import ordering, comment formatting, and structural patterns. These are the rules that keep a codebase consistent across every file.
+
+### Language
+
+Language layers configure the parser and add language-specific rules. `langTypescript` sets up `@typescript-eslint/parser`, enables type-aware rules, and configures strictness. `langJavascript` and `langMdx` do the same for their respective file types.
+
+### Environment
+
+Environment layers add globals and module settings for a specific runtime. `envNode` adds Node.js globals and CommonJS/ESM resolution. `envBrowser` adds DOM globals. `envEdge` covers edge runtimes like Cloudflare Workers.
+
+### Framework
+
+Framework layers add rules specific to a framework's patterns. `fwNextjs` handles Next.js conventions. `fwExpressjs` handles Express. `fwDocusaurus` handles Docusaurus. You only add the one you need.
+
+## The TSConfig Side
+
+The same layering applies to TypeScript configuration. Nova ships TSConfig presets that compose the same way — a strict baseline, an environment target, and an optional framework layer:
+
+```json
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/env-node.json"
+  ]
+}
+```
+
+No guessing which `compilerOptions` came from where. Each preset handles one concern.
+
+## Why This Matters
+
+The point isn't that composition is better than inheritance in the abstract. The point is that monorepos have diverse workspaces — an API server, a docs site, a CLI tool, a shared library — and each one needs a different combination of rules. Composable layers make that easy without maintaining a dozen forked configs.
+
+One language layer. One environment. One framework if you need it. The same code style everywhere.
+
+See the full [preset documentation](/docs/presets/eslint/best-practices/) for the complete list of available layers and what each one configures.

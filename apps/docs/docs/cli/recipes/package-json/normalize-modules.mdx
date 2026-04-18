@@ -12,20 +12,37 @@ keywords:
   - browser
   - imports
 tags:
-  - normalize-modules
   - cli
+  - normalize-modules
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Normalize **exports**, **main**, **type**, **browser**, and **imports** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Normalize **exports**, **main**, **type**, **browser**, and **imports** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `normalize-modules` recipe ensures that module resolution fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` follow the official Node.js module specification conventions. It handles exports map structure, main entry point, module type declaration, browser field, and import maps.
+The `normalize-modules` recipe ensures that module resolution fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` follow the official Node.js module specification conventions.
+
+It handles exports map structure, main entry point, module type declaration, browser field, and import maps.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects module resolution fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+
+- **`exports` (Conditional)** — Removed if the workspace role is not `config`, `package`, or `tool`. For allowed roles, if the value is a string it is normalized into `{ ".": { "default": value } }`.
+- **`main` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`. For allowed roles, the recipe cross-references `main` with `exports['.'].require`:
+  - If both exist and differ — a warning is logged and no changes are applied.
+  - If `main` exists but `exports['.'].require` does not — `exports['.'].require` is set from `main`.
+  - If `exports['.'].require` exists but `main` does not — `main` is set from `exports['.'].require`.
+  - If `main` exists and `exports['.']` is a string — `exports['.']` is normalized into `{ "default": exports['.'], "require": main }`.
+- **`type` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`.
+- **`browser` (Conditional)** — Removed if the workspace role is not `package`. For packages, the same cross-reference logic as `main` is applied using `exports['.'].browser`.
+- **`imports` (Conditional)** — Removed if the workspace role is not `config`, `app`, `package`, or `tool`.
 
 ## Usage
 
@@ -48,7 +65,7 @@ The `normalize-modules` recipe ensures that module resolution fields in each <Te
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

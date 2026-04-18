@@ -1,0 +1,23 @@
+/**
+ * ============================
+ * Tag — Base
+ * ============================
+ */
+
+.nova-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  text-decoration: none;
+}
+
+/**
+ * ============================
+ * Tag — Count
+ * ============================
+ */
+
+.nova-tag-count {
+  opacity: 0.7;
+}

@@ -1,0 +1,91 @@
+---
+id: hero
+title: Hero
+description: Full-width hero section with heading, tagline, and call-to-action buttons for landing pages.
+sidebar_position: 1
+keywords:
+  - nova
+  - docusaurus facades
+  - hero component
+  - landing page
+  - call to action
+  - eyebrow text
+  - hero section
+tags:
+  - facades
+  - component
+  - hero
+  - landing page
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Hero
+
+Full-width hero section with a heading, tagline, primary call-to-action link, and optional secondary link. Supports an eyebrow label and alternate surface styling.
+
+## Summary
+
+The Hero component renders a `<header>` element containing a heading, tagline paragraph, and one or two call-to-action links. Use it as the opening section of a landing page or product homepage.
+
+## Why Use This Component?
+
+- **Consistent hero layout** across all pages without writing custom CSS.
+- **Preset-aware** — colors, typography, and spacing adapt to the active preset.
+- **Flexible** — optional eyebrow, secondary CTA, and surface variant cover common hero patterns.
+
+## Usage
+
+<Tabs groupId="hero-usage">
+  <TabItem value="basic" label="Basic" default>
+
+```tsx title="src/pages/index.tsx"
+import { Hero } from '@cbnventures/docusaurus-preset-nova/components';
+
+<Hero
+  heading="Build with confidence"
+  tagline="Strict presets and guided tooling for predictable builds."
+  ctaLabel="Get Started"
+  ctaLink="/docs/quickstart/"
+/>
+```
+
+  </TabItem>
+  <TabItem value="full" label="Full options">
+
+```tsx title="src/pages/index.tsx"
+import { Hero } from '@cbnventures/docusaurus-preset-nova/components';
+
+<Hero
+  eyebrow="Introducing Nova"
+  heading="Build with confidence"
+  tagline="Strict presets and guided tooling for predictable builds."
+  ctaLabel="Get Started"
+  ctaLink="/docs/quickstart/"
+  secondaryCtaLabel="View on GitHub"
+  secondaryCtaLink="https://github.com/cbnventures/nova"
+  surface="alt"
+/>
+```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Prop                | Type                  | Default     | Description                                                        |
+|---------------------|-----------------------|-------------|--------------------------------------------------------------------|
+| `heading`           | `ReactNode`           | —           | Main heading content. Required.                                    |
+| `tagline`           | `string`              | —           | Supporting text below the heading. Required.                       |
+| `ctaLabel`          | `string`              | —           | Primary call-to-action button label. Required.                     |
+| `ctaLink`           | `string`              | —           | Primary call-to-action URL. Required.                              |
+| `eyebrow`           | `string \| undefined` | `undefined` | Small label above the heading.                                     |
+| `secondaryCtaLabel` | `string \| undefined` | `undefined` | Secondary button label. Both label and link must be set to render. |
+| `secondaryCtaLink`  | `string \| undefined` | `undefined` | Secondary button URL. Both label and link must be set to render.   |
+| `surface`           | `'alt' \| undefined`  | `undefined` | Set to `'alt'` to use the alternate surface background.            |
+
+## Troubleshooting
+
+- **Secondary CTA not rendering** — Both `secondaryCtaLabel` and `secondaryCtaLink` must be set. If either is `undefined`, the secondary button is hidden.
+- **Eyebrow not visible** — The `eyebrow` prop is optional. If not set, the space above the heading is omitted entirely.

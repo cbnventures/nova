@@ -1,0 +1,81 @@
+/**
+ * Envoy — Tag visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-tag {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-envoy-radius-pill);
+  transition: border-color 200ms ease,
+              color 200ms ease,
+              background-color 200ms ease;
+}
+
+.nova-tag:hover,
+.nova-tag:focus-visible {
+  color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-tag {
+  color: var(--nova-color-neutral-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-envoy-border-dark);
+}
+
+[data-theme="dark"] .nova-tag:hover,
+[data-theme="dark"] .nova-tag:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+.nova-blog-tags-list-link {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-envoy-radius-pill);
+  text-decoration: none;
+  transition: border-color 200ms ease,
+              color 200ms ease,
+              background-color 200ms ease;
+}
+
+.nova-blog-tags-list-link:hover,
+.nova-blog-tags-list-link:focus-visible {
+  color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-tags-list-link {
+  color: var(--nova-color-neutral-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-envoy-border-dark);
+}
+
+[data-theme="dark"] .nova-blog-tags-list-link:hover,
+[data-theme="dark"] .nova-blog-tags-list-link:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+.nova-blog-tags-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

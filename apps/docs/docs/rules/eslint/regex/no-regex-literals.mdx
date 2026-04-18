@@ -15,6 +15,7 @@ tags:
   - code style
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -53,38 +54,104 @@ The `no-regex-literals` rule reports any regex literal expression (e.g., `/^v/`,
 
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+<Tabs groupId="no-regex-literals-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { noRegexLiterals } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
-export default [
-  {
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { NoRegexLiterals } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-regex-literals': NoRegexLiterals.rule,
+            },
+          },
+        },
         rules: {
-          'no-regex-literals': noRegexLiterals,
+          '@cbnventures/nova/no-regex-literals': ['error'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/no-regex-literals': ['error', {
-        allowedFiles: ['regex.ts'],
-      }],
-    },
-  },
-];
-```
+    ];
+    ```
 
-### Options
+  </TabItem>
+  <TabItem value="set-regex-file" label="Set Regex File">
 
-| Option         | Type       | Default | Description                                                                    |
-|----------------|------------|---------|--------------------------------------------------------------------------------|
-| `allowedFiles` | `string[]` | `[]`    | Files where regex literals are permitted (matched by filename or path suffix). |
+    Point to your centralized regex patterns file:
 
-Each entry in `allowedFiles` is matched against the end of the file path. For example, `'regex.ts'` matches any file named `regex.ts`, and `'src/lib/regex.ts'` matches that specific path.
+    ```ts
+    import { NoRegexLiterals } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-regex-literals': NoRegexLiterals.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-regex-literals': ['error', {
+            regexFile: './src/lib/regex.ts',
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoRegexLiterals } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-regex-literals': NoRegexLiterals.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-regex-literals': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                        |
+|---------------|------------|---------|------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.             |
+| `regexFile`   | `string`   | `''`    | Path to centralized patterns file. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Error fires inside the patterns file.** — Add the filename to the `allowedFiles` option so the rule knows it is a designated patterns file.
+- **Error fires inside the patterns file** — Add the filename to the `ignoreFiles` option so the rule skips that file.
 - **Want to use `new RegExp()` inline instead?** — The rule only targets regex literals (`/pattern/`). Constructing a `RegExp` from an imported pattern string is allowed.

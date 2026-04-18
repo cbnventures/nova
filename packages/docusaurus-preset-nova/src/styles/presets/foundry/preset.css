@@ -1,0 +1,678 @@
+/**
+ * Foundry — Preset identity, design tokens, keyframes, and global visual styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Design Tokens
+ * ============================ */
+
+:root {
+  --nova-foundry-bg: #ffffff;
+  --nova-foundry-surface: #ffffff;
+  --nova-foundry-surface-raised: #ffffff;
+  --nova-foundry-surface-overlay: rgba(255, 255, 255, 0.88);
+  --nova-foundry-border: var(--nova-color-neutral-200);
+  --nova-foundry-border-subtle: var(--nova-color-neutral-100);
+  --nova-foundry-glow-primary: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  --nova-foundry-glow-accent: color-mix(in srgb, var(--nova-color-accent-500), transparent 90%);
+  --nova-color-warning-500: #f59e0b;
+  --nova-color-warning-400: #fbbf24;
+  --nova-color-warning-bg: rgba(245, 158, 11, 0.06);
+  --nova-color-warning-bg-dark: rgba(245, 158, 11, 0.1);
+  --nova-color-danger-500: #ef4444;
+  --nova-color-danger-400: #f87171;
+  --nova-color-danger-bg: rgba(239, 68, 68, 0.06);
+  --nova-color-danger-bg-dark: rgba(239, 68, 68, 0.1);
+  --nova-grid-padding: 16px;
+  --nova-grid-gutter: 16px;
+  --nova-section-gap: 3rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nova-grid-padding: 20px;
+    --nova-grid-gutter: 20px;
+    --nova-section-gap: 4rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nova-grid-padding: 24px;
+    --nova-grid-gutter: 24px;
+    --nova-section-gap: 5rem;
+  }
+}
+
+[data-theme="dark"] {
+  --nova-foundry-bg: #0b0f1a;
+  --nova-foundry-surface: #0b0f1a;
+  --nova-foundry-surface-raised: #111827;
+  --nova-foundry-surface-overlay: rgba(11, 15, 26, 0.88);
+  --nova-foundry-border: var(--nova-color-neutral-800);
+  --nova-foundry-border-subtle: var(--nova-color-neutral-900);
+  --nova-foundry-glow-primary: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  --nova-foundry-glow-accent: rgba(124, 58, 237, 0.10);
+  --nova-depth-card-border: 1px solid var(--nova-color-neutral-800);
+  --nova-depth-code-border: 1px solid var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 2. Body & Page Background
+ * ============================ */
+
+body {
+  font-family: var(--nova-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--nova-color-neutral-900);
+  background-color: var(--nova-foundry-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="dark"] body {
+  color: var(--nova-color-neutral-200);
+  background-color: var(--nova-foundry-bg);
+}
+
+/* ============================
+ * 3. Selection
+ * ============================ */
+
+::selection {
+  background-color: var(--nova-color-primary-200);
+  color: var(--nova-color-primary-900);
+}
+
+[data-theme="dark"] ::selection {
+  background-color: var(--nova-color-primary-800);
+  color: var(--nova-color-primary-100);
+}
+
+/* ============================
+ * 4. Focus Visible
+ * ============================ */
+
+:focus-visible {
+  outline: 2px solid var(--nova-color-primary-400);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 5. Responsive Body Typography
+ * ============================ */
+
+/* --- sm (640px) — body text scales up. --- */
+@media (min-width: 640px) {
+  body {
+    font-size: 1rem;
+  }
+}
+
+/* ============================
+ * 6. Viewport Overflow Guard
+ * ============================ */
+
+/* ============================
+ * 7. Keyframes
+ * ============================ */
+
+@keyframes foundry-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes foundry-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes foundry-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes foundry-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes foundry-blur-in {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+  }
+
+  to {
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+/* ============================
+ * 8. Reduced Motion
+ * ============================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* !important is intentional — accessibility override must win regardless of specificity. */
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================
+ * 9. Links
+ * ============================ */
+
+a {
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+[data-theme="dark"] a {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] a:hover,
+[data-theme="dark"] a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 10. CTA Buttons
+ * ============================ */
+
+/* --- Primary CTA --- */
+
+.nova-cta-primary {
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-family: var(--nova-font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-primary-600);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background-color var(--nova-motion-duration) ease,
+              box-shadow var(--nova-motion-duration) ease;
+}
+
+@media (min-width: 640px) {
+  .nova-cta-primary {
+    padding: 0.6875rem 1.75rem;
+    font-size: 0.9375rem;
+  }
+}
+
+.nova-cta-primary:hover,
+.nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-700);
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--nova-color-primary-500), transparent 65%), 0 1px 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  color: var(--nova-color-neutral-50);
+}
+
+.nova-cta-primary:active {
+  background-color: var(--nova-color-primary-800);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+}
+
+[data-theme="dark"] .nova-cta-primary {
+  background-color: var(--nova-color-primary-500);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-cta-primary:hover,
+[data-theme="dark"] .nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-400);
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--nova-color-primary-500), transparent 60%), 0 0 40px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  color: var(--nova-color-neutral-50);
+}
+
+/* --- Secondary CTA --- */
+
+.nova-cta-secondary {
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  font-family: var(--nova-font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+  background-color: transparent;
+  border: 1px solid var(--nova-color-primary-200);
+  border-radius: var(--nova-shape-radius);
+  transition: background-color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease,
+              color var(--nova-motion-duration) ease,
+              box-shadow var(--nova-motion-duration) ease;
+}
+
+@media (min-width: 640px) {
+  .nova-cta-secondary {
+    padding: 0.6875rem 1.75rem;
+    font-size: 0.9375rem;
+  }
+}
+
+.nova-cta-secondary:hover,
+.nova-cta-secondary:focus-visible {
+  background-color: var(--nova-color-primary-50);
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+.nova-cta-secondary:active {
+  background-color: var(--nova-color-primary-100);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-cta-secondary {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-800);
+}
+
+[data-theme="dark"] .nova-cta-secondary:hover,
+[data-theme="dark"] .nova-cta-secondary:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  border-color: var(--nova-color-primary-500);
+  color: var(--nova-color-primary-300);
+  box-shadow: 0 2px 12px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+}
+
+/* --- CTA Animations --- */
+
+.nova-cta-primary {
+  transition: background-color var(--nova-motion-duration) ease,
+              box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
+              transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-cta-primary:hover,
+.nova-cta-primary:focus-visible {
+  transform: translateY(calc(-1px * var(--nova-motion-hover-effects)));
+}
+
+.nova-cta-primary:active {
+  transform: translateY(0) scale(0.99);
+  transition-duration: calc(var(--nova-motion-duration) * 0.5);
+}
+
+.nova-cta-secondary {
+  transition: background-color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease,
+              color var(--nova-motion-duration) ease,
+              box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
+              transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-cta-secondary:hover,
+.nova-cta-secondary:focus-visible {
+  transform: translateY(calc(-1px * var(--nova-motion-hover-effects)));
+}
+
+.nova-cta-secondary:active {
+  transform: translateY(0) scale(0.99);
+  transition-duration: calc(var(--nova-motion-duration) * 0.5);
+}
+
+/* ============================
+ * 10. Scrollbar
+ * ============================ */
+
+html {
+  scrollbar-color: var(--nova-color-primary-300) transparent;
+}
+
+[data-theme="dark"] {
+  scrollbar-color: var(--nova-color-primary-700) transparent;
+}
+
+/* ============================
+ * 11. Stats & Spotlight
+ * ============================ */
+
+.nova-stats-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-stats-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+@media (min-width: 640px) {
+  .nova-stats-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-stats-heading {
+    font-size: 1.75rem;
+  }
+}
+
+.nova-stats-description {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-stats-description {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-stat {
+  padding: 1.25rem 0.75rem;
+}
+
+.nova-stat + .nova-stat {
+  border-left: 1px solid var(--nova-foundry-border);
+}
+
+[data-theme="dark"] .nova-stat + .nova-stat {
+  border-left-color: var(--nova-foundry-border);
+}
+
+.nova-stat:nth-child(odd) {
+  border-left: none;
+}
+
+.nova-stat:nth-child(n+3) {
+  border-top: 1px solid var(--nova-foundry-border);
+}
+
+[data-theme="dark"] .nova-stat:nth-child(n+3) {
+  border-top-color: var(--nova-foundry-border);
+}
+
+@media (min-width: 640px) {
+  .nova-stat:nth-child(odd) {
+    border-left: none;
+  }
+
+  .nova-stat:nth-child(n+3) {
+    border-top: none;
+  }
+
+  .nova-stat:nth-child(n+2) {
+    border-left: 1px solid var(--nova-foundry-border);
+  }
+
+  [data-theme="dark"] .nova-stat:nth-child(n+2) {
+    border-left-color: var(--nova-foundry-border);
+  }
+}
+
+.nova-stat-value {
+  font-family: var(--nova-font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-stat-value {
+  color: var(--nova-color-neutral-100);
+}
+
+@media (min-width: 640px) {
+  .nova-stat-value {
+    font-size: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-stat-value {
+    font-size: 2.5rem;
+  }
+}
+
+.nova-stat-primary {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-stat-primary {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-stat-accent {
+  color: var(--nova-color-accent-600);
+}
+
+[data-theme="dark"] .nova-stat-accent {
+  color: var(--nova-color-accent-400);
+}
+
+.nova-stat-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-stat-label {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-spotlight-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-spotlight-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+.nova-section-description {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-section-description {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-code-snippet {
+  background-color: #fff;
+  border: 1px solid var(--nova-foundry-border);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .nova-code-snippet {
+  background-color: var(--nova-color-neutral-950);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================
+ * 12. Surface Alt
+ * ============================ */
+
+.nova-surface-alt {
+  padding-block: 2.5rem;
+  background-color: var(--nova-color-neutral-50);
+  border-top: 1px solid var(--nova-foundry-border);
+  border-bottom: 1px solid var(--nova-foundry-border);
+}
+
+[data-theme="dark"] .nova-surface-alt {
+  background-color: var(--nova-foundry-surface-raised);
+  border-top-color: var(--nova-foundry-border);
+  border-bottom-color: var(--nova-foundry-border);
+}
+
+@media (min-width: 768px) {
+  .nova-surface-alt {
+    padding-block: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-surface-alt {
+    padding-block: 4rem;
+  }
+}
+
+/* ============================
+ * 13. Typography
+ * ============================ */
+
+p {
+  line-height: 1.75;
+  color: var(--nova-color-neutral-900);
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] p {
+  color: var(--nova-color-neutral-300);
+}
+
+/* ============================
+ * 14. Tables
+ * ============================ */
+
+table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+  margin-bottom: 0;
+  border: 1px solid var(--nova-foundry-border);
+  border-radius: var(--nova-shape-radius);
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  table {
+    min-width: 0;
+  }
+}
+
+table thead {
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] table thead {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+table th {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-500);
+  padding: 0.625rem 0.75rem;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 2px solid var(--nova-foundry-border);
+}
+
+table td {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--nova-foundry-border-subtle);
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] table th {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] table td {
+  color: var(--nova-color-neutral-300);
+}
+
+@media (min-width: 768px) {
+  table th {
+    padding: 0.75rem 1rem;
+  }
+
+  table td {
+    padding: 0.75rem 1rem;
+  }
+}
+
+table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] table tbody tr:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+table tbody tr {
+  transition: background-color var(--nova-motion-duration) ease;
+}
+
+table tbody tr:hover {
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] table tbody tr:hover {
+  background-color: rgba(255, 255, 255, 0.03);
+}

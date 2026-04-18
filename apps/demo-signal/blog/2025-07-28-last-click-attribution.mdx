@@ -1,0 +1,117 @@
+---
+title: "The Death of Last-Click Attribution"
+authors: [suki]
+tags: [attribution, prism, multi-touch]
+---
+
+A user clicks seven times across three channels over two weeks. They convert. Your attribution model gives 100% credit to the last click — the retargeting banner they happened to see five minutes before signing up. That banner did not cause the conversion. It just happened to be in the room when it happened.
+
+{/* truncate */}
+
+## The Last-Click Lie
+
+Last-click attribution is the default in most analytics tools because it is easy to implement. It answers the question "what was the final touchpoint?" which sounds like the right question until you realize it is not.
+
+Consider a real path we traced through Prism:
+
+| Day | Channel     | Action                             |
+|-----|-------------|------------------------------------|
+| 1   | Social      | Clicked a shared Beacon link.      |
+| 3   | Email       | Opened newsletter, clicked CTA.    |
+| 5   | Blog        | Read a case study via Beacon link. |
+| 8   | Search      | Searched the brand name, clicked.  |
+| 10  | Email       | Clicked a follow-up email link.    |
+| 12  | Retargeting | Saw a banner ad, clicked.          |
+| 14  | Direct      | Typed the URL directly, converted. |
+
+Under last-click attribution, "direct" gets 100% credit. The user typed the URL. That is the conversion event. But direct is not a channel — it is the absence of information. The user already knew the URL because of everything that came before.
+
+## Two Views of the Same Conversion
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="last-click" label="Last-Click View" default>
+
+```json title="Last-click attribution"
+{
+  "model": "last-click",
+  "conversion": { "event": "signup", "value": 49.00 },
+  "attribution": [
+    {
+      "channel": "direct",
+      "weight": 1.00,
+      "touchpoints": 1
+    }
+  ],
+  "ignored": [
+    "social (day 1)",
+    "email (day 3)",
+    "blog (day 5)",
+    "search (day 8)",
+    "email (day 10)",
+    "retargeting (day 12)"
+  ]
+}
+```
+
+Six touchpoints across three channels are ignored. The entire conversion narrative is erased.
+
+</TabItem>
+<TabItem value="multi-touch" label="Multi-Touch View">
+
+```json title="Prism multi-touch attribution (decay model, 7d half-life)"
+{
+  "model": "decay",
+  "halfLife": "7d",
+  "conversion": { "event": "signup", "value": 49.00 },
+  "attribution": [
+    { "channel": "social", "day": 1, "weight": 0.04 },
+    { "channel": "email", "day": 3, "weight": 0.06 },
+    { "channel": "blog", "day": 5, "weight": 0.08 },
+    { "channel": "search", "day": 8, "weight": 0.12 },
+    { "channel": "email", "day": 10, "weight": 0.18 },
+    { "channel": "retargeting", "day": 12, "weight": 0.24 },
+    { "channel": "direct", "day": 14, "weight": 0.28 }
+  ]
+}
+```
+
+Every touchpoint receives credit proportional to its proximity to the conversion. The story is intact.
+
+</TabItem>
+</Tabs>
+
+## Why This Matters for Spend
+
+When your attribution model is wrong, your budget allocation is wrong. Last-click systematically overcredits the channels closest to conversion (retargeting, branded search, direct) and undercredits the channels that create awareness (social, content, top-of-funnel email).
+
+Teams running last-click attribution tend to:
+
+1. Over-invest in retargeting because it "converts" the best.
+2. Cut social and content budgets because they "do not drive conversions."
+3. Confuse demand capture with demand creation.
+4. Eventually wonder why their pipeline dried up after cutting top-of-funnel spend.
+
+## What Prism Does Differently
+
+Prism traces every Beacon link interaction across the full user journey. When a conversion happens, it walks backward through every touchpoint and distributes credit using the configured attribution model.
+
+```bash title="Query a conversion path"
+signal prism path --trace "trc_4a7b3c8d9e0f1234" --model decay --half-life 7d
+```
+
+The output includes every touchpoint, its channel, its timestamp, and its weighted contribution to the conversion. No touchpoint is ignored. No channel gets zero credit unless it genuinely was not in the path.
+
+## The Transition
+
+Switching from last-click to multi-touch attribution is not a technology change. It is a conversation change. Stakeholders who have built dashboards around last-click metrics will see their numbers shift. Channels that looked like top performers may drop. Channels that looked weak may rise.
+
+This is not a bug. It is the correction. The underlying reality did not change — only the lens did.
+
+## Find the Signal
+
+Attribution is not about credit. It is about understanding. When you see the full path, you make better decisions. When you only see the last click, you are optimizing for the wrong thing.
+
+That is why we built Prism. And that is why last-click attribution is dying.

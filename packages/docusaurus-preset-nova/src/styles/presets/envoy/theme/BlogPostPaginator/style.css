@@ -1,0 +1,91 @@
+/**
+ * Envoy — Blog Post Paginator visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-blog-post-paginator {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--nova-envoy-border-light);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator {
+  border-top-color: var(--nova-envoy-border-dark);
+}
+
+/* ============================
+ * Heading
+ * ============================ */
+
+.nova-blog-post-paginator-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.125rem;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+/* ============================
+ * Link
+ * ============================ */
+
+.nova-blog-post-paginator-link {
+  padding: 0.75rem 1rem;
+
+  border-radius: var(--nova-envoy-radius-generous);
+
+  transition: background-color 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-blog-post-paginator-link:hover,
+.nova-blog-post-paginator-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-link:hover,
+[data-theme="dark"] .nova-blog-post-paginator-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+/* ============================
+ * Label
+ * ============================ */
+
+.nova-blog-post-paginator-label {
+  font-size: 0.75rem;
+  color: var(--nova-envoy-text-muted-light);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-label {
+  color: var(--nova-envoy-text-muted-dark);
+}
+
+/* ============================
+ * Title
+ * ============================ */
+
+.nova-blog-post-paginator-title {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-title {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Excerpt
+ * ============================ */
+
+.nova-blog-post-paginator-excerpt {
+  color: var(--nova-color-neutral-500);
+  line-height: 1.6;
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-excerpt {
+  color: var(--nova-color-neutral-400);
+}

@@ -1,0 +1,187 @@
+---
+id: require-hash-private
+title: Require Hash Private
+description: Require #hash notation for private class members instead of the private keyword.
+keywords:
+  - nova
+  - eslint rule
+  - hash private
+  - class members
+  - private keyword
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require `#hash` notation for private class members instead of the `private` keyword.
+
+## Summary
+
+The `require-hash-private` rule reports any class property or method that uses the TypeScript `private` keyword instead of the `#hash` notation for private members.
+
+By default, methods are skipped (`skipMethods: true`) and only properties are checked.
+
+## Why Use This Rule?
+
+1. `#hash` fields are enforced at runtime by the JavaScript engine, not just at <Terminology title="translate source to lower-level form" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>compile</Terminology> time.
+2. Prevents accidental access from outside the class that `private` keyword alone cannot catch.
+3. Keeps the codebase consistent by using one notation for all private members.
+
+## Examples
+
+<Tabs groupId="require-hash-private-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    class User {
+      #name: string;
+      #age: number;
+
+      constructor(name: string, age: number) {
+        this.#name = name;
+        this.#age = age;
+
+        return;
+      }
+
+      public getName(): string {
+        return this.#name;
+      }
+
+      // private methods are allowed when skipMethods is true.
+      private static validate(): void {
+        return;
+      }
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    class User {
+      private name: string;
+      private age: number;
+
+      constructor(name: string, age: number) {
+        this.name = name;
+        this.age = age;
+
+        return;
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-hash-private-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireHashPrivate } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-hash-private': RequireHashPrivate.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-hash-private': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="apply-to-methods" label="Apply to Methods">
+
+    Apply the rule to methods in addition to fields:
+
+    ```ts
+    import { RequireHashPrivate } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-hash-private': RequireHashPrivate.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-hash-private': ['error', {
+            skipMethods: false,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireHashPrivate } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-hash-private': RequireHashPrivate.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-hash-private': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                                 |
+|---------------|------------|---------|---------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                      |
+| `skipMethods` | `boolean`  | `true`  | Skip method definitions from being checked. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on a method** — Set `skipMethods: false` to also check methods. By default, only properties are checked.
+- **Already using `#hash` but still flagged** — The rule checks for the `private` keyword. If the member already uses `#hash` notation, it is not flagged. Make sure you are not combining `private` with `#hash`.
+- **Want to allow `private` on static methods** — Use `skipMethods: true` (the default) to skip all method definitions, including static ones.

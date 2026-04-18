@@ -1,0 +1,107 @@
+/**
+ * ============================
+ * Install Strip — Section
+ * ============================
+ */
+
+.nova-install-strip {
+  margin-block: var(--nova-section-gap);
+  text-align: center;
+}
+
+/**
+ * ============================
+ * Install Strip — Command
+ * ============================
+ */
+
+.nova-install-strip-command {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+}
+
+/**
+ * ============================
+ * Install Strip — Block Variant
+ * ============================
+ */
+
+.nova-install-strip button.nova-install-strip-command-block {
+  cursor: pointer;
+}
+
+/**
+ * ============================
+ * Install Strip — Icon Variant
+ * ============================
+ */
+
+/* Two separate floating blocks — no shared wrapper styling. */
+.nova-install-strip .nova-install-strip-command:not(.nova-install-strip-command-block) {
+  align-items: stretch;
+  gap: 0.5rem;
+
+  background: none;
+  border: none;
+  box-shadow: none;
+}
+
+/**
+ * ============================
+ * Install Strip — Code
+ * ============================
+ */
+
+.nova-install-strip .nova-install-strip-code {
+  display: inline-flex;
+  align-items: center;
+  max-width: 100%;
+
+  white-space: nowrap;
+
+  background: none;
+  border: none;
+
+  overflow-x: auto;
+}
+
+.nova-install-strip-command-block .nova-install-strip-code {
+  min-width: 0;
+  overflow-x: auto;
+}
+
+/**
+ * ============================
+ * Install Strip — Copy Button
+ * ============================
+ */
+
+.nova-install-strip-copy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: 22px;
+
+  background: none;
+  border: none;
+}
+
+/* Icon-only variant: copy button is a separate click target. */
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy {
+  width: 2.75rem;
+  cursor: pointer;
+}
+
+/**
+ * ============================
+ * Install Strip — Text Copy Button
+ * ============================
+ */
+
+.nova-install-strip-copy-text {
+  width: auto;
+  min-width: 4rem;
+  cursor: pointer;
+}

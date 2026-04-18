@@ -1,0 +1,74 @@
+/**
+ * ============================
+ * Loading — Container
+ * ============================
+ */
+
+.nova-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+
+  min-height: 200px;
+
+  text-align: center;
+}
+
+/**
+ * ============================
+ * Loading — Retry Button
+ * ============================
+ */
+
+.nova-loading-retry,
+.nova-error-retry {
+  padding: 0.5rem 1rem;
+
+  font-size: 0.875rem;
+
+  cursor: pointer;
+  border: 1px solid var(--nova-color-neutral-300);
+  border-radius: var(--nova-shape-radius);
+  background: transparent;
+  color: inherit;
+
+  transition: border-color 0.2s ease,
+              background-color 0.2s ease;
+}
+
+.nova-loading-retry:hover,
+.nova-error-retry:hover {
+  border-color: var(--nova-color-primary-400);
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-loading-retry,
+[data-theme="dark"] .nova-error-retry {
+  border-color: var(--nova-color-neutral-700);
+}
+
+[data-theme="dark"] .nova-loading-retry:hover,
+[data-theme="dark"] .nova-error-retry:hover {
+  border-color: var(--nova-color-primary-600);
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/**
+ * ============================
+ * Loading — Message
+ * ============================
+ */
+
+.nova-loading-message,
+.nova-error-message {
+  margin: 0;
+
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-loading-message,
+[data-theme="dark"] .nova-error-message {
+  color: var(--nova-color-neutral-400);
+}

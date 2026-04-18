@@ -1,0 +1,161 @@
+---
+title: Your First Forge
+sidebar_position: 2
+tags:
+  - guides
+  - tutorial
+---
+
+import Details from '@theme/Details';
+
+# Your First Forge
+
+This guide walks you through creating a workspace from scratch using Foundry. You will write a `.grain` manifest, run your first forge, and inspect the output.
+
+## Step 1: Create the Project Directory
+
+Start with an empty directory:
+
+```bash
+mkdir my-project && cd my-project
+```
+
+## Step 2: Write the Manifest
+
+Create a `project.grain` file at the root. This is the only file Foundry needs.
+
+```text title="project.grain"
+# A minimal workspace with two packages.
+workspace "my-project" {
+  lang    = "alloy"
+  target  = "arcline"
+  warden  = ["strict", "conventions"]
+  // highlight-start
+  crucible = auto
+  // highlight-end
+
+  packages {
+    core { type = "library" }
+    api  { type = "service", depends = ["core"] }
+  }
+}
+```
+
+Line 6 is the key directive. Setting `crucible = auto` tells Foundry to generate test scaffolds from your type signatures automatically. You can also set it to `manual` if you prefer to write tests yourself.
+
+## Step 3: Run the Forge
+
+Execute the `foundry ignite` command:
+
+```bash title="Forge the workspace"
+foundry ignite
+```
+
+Foundry reads your manifest, resolves the dependency graph, generates configuration artifacts, and scaffolds every package.
+
+```text title="Terminal output"
+→ Reading project.grain
+→ Resolved workspace "my-project" with 2 packages
+→ Dependency graph: core → api
+→ Forging package: core (library)
+    ✓ Generated blueprint.grain
+    ✓ Generated .wardenrc.grain (strict + conventions)
+    ✓ Generated alloy.config.grain
+    ✓ Crucible scaffolded 4 test files from 4 type exports
+→ Forging package: api (service)
+    ✓ Generated blueprint.grain
+    ✓ Generated .wardenrc.grain (strict + conventions)
+    ✓ Generated alloy.config.grain
+    ✓ Generated spoke.config.grain (service target)
+    ✓ Crucible scaffolded 6 test files from 6 type exports
+→ Done in 3.8s
+```
+
+## Step 4: Inspect the Output
+
+After forging, your directory looks like this:
+
+```text title="Generated workspace structure"
+my-project/
+  project.grain
+  packages/
+    core/
+      blueprint.grain
+      .wardenrc.grain
+      alloy.config.grain
+      src/
+      tests/
+        format.assay.al
+        validate.assay.al
+        parse.assay.al
+        transform.assay.al
+    api/
+      blueprint.grain
+      .wardenrc.grain
+      alloy.config.grain
+      spoke.config.grain
+      src/
+      tests/
+        routes.assay.al
+        handlers.assay.al
+        middleware.assay.al
+        auth.assay.al
+        response.assay.al
+        errors.assay.al
+```
+
+Every configuration file is generated from the manifest. The test files in `tests/` are scaffolds created by Crucible based on the type signatures it found in `src/`.
+
+:::tip
+Run `foundry ignite --dry-run` to preview the full output without writing any files. This is useful for validating a new manifest before committing.
+:::
+
+## Step 5: Build and Test
+
+With the workspace forged, you can build and test immediately:
+
+```bash title="Build all packages"
+foundry bellows build
+```
+
+```bash title="Run all tests"
+foundry crucible run
+```
+
+Bellows respects the Tongs dependency graph, so `core` builds before `api`. Crucible runs the scaffolded tests — they will pass with placeholder assertions until you fill in the implementation.
+
+<Details>
+<summary>Full forge output with verbose logging</summary>
+
+```text
+$ foundry ignite --verbose
+[00:00.000] Loading manifest: project.grain
+[00:00.012] Parsed workspace "my-project" (2 packages, 1 dependency edge)
+[00:00.014] Resolving Tongs dependency graph...
+[00:00.015]   core → (no dependencies)
+[00:00.015]   api → [core]
+[00:00.016] Graph resolution complete. 2 nodes, 1 edge, 0 cycles.
+[00:00.018] Forging package: core
+[00:00.024]   Writing blueprint.grain (1.2 KB)
+[00:00.026]   Writing .wardenrc.grain (380 rules, 2 presets)
+[00:00.031]   Writing alloy.config.grain (strict mode)
+[00:00.045]   Crucible: scanning 4 exported types in src/
+[00:00.052]   Crucible: generated 4 test files (format, validate, parse, transform)
+[00:00.054] Forging package: api
+[00:00.058]   Writing blueprint.grain (1.4 KB)
+[00:00.060]   Writing .wardenrc.grain (380 rules, 2 presets)
+[00:00.064]   Writing alloy.config.grain (strict mode)
+[00:00.068]   Writing spoke.config.grain (service target, Arcline deployment)
+[00:00.082]   Crucible: scanning 6 exported types in src/
+[00:00.091]   Crucible: generated 6 test files (routes, handlers, middleware, auth, response, errors)
+[00:00.093] Forge complete. 2 packages, 14 files written.
+[00:03.800] Total time: 3.8s (includes Warden rule generation)
+```
+
+</Details>
+
+## Next Steps
+
+- [Manifests](/docs/guides/manifests/) — Learn every directive available in `.grain` files.
+- [Workspace Management](/docs/guides/workspace-management/) — Manage dependencies across dozens of packages.
+- [Build Pipeline](/docs/pipeline/build-pipeline/) — Understand how Quench caching and Bellows parallelism work.

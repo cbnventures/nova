@@ -1,0 +1,118 @@
+/**
+ * Sentinel — Search visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Search Bar Input
+ * ============================ */
+
+.nova-search-bar-input {
+  background-color: var(--nova-color-neutral-50);
+  border-color: var(--nova-color-neutral-300);
+  color: var(--nova-color-neutral-800);
+  font-family: var(--nova-font-body);
+  border-radius: var(--nova-shape-radius);
+  width: 100%;
+  max-width: 200px;
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    box-shadow var(--nova-motion-duration) ease;
+}
+
+.nova-search-bar-input:focus {
+  border-color: var(--nova-color-primary-500);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+}
+
+[data-theme="dark"] .nova-search-bar-input {
+  background-color: var(--nova-color-neutral-900);
+  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-search-bar-input:focus {
+  border-color: var(--nova-color-primary-500);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+}
+
+/* ============================
+ * 2. Search Dropdown
+ * ============================ */
+
+.nova-search-dropdown {
+  background: var(--nova-color-neutral-50);
+  border-color: var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-search-dropdown {
+  background: var(--nova-color-neutral-900);
+  border-color: var(--nova-color-neutral-700);
+}
+
+/* ============================
+ * 3. Search Results
+ * ============================ */
+
+.nova-search-result {
+  border-bottom-color: var(--nova-color-neutral-100);
+}
+
+.nova-search-result:hover,
+.nova-search-result:focus-visible,
+.nova-search-result--active {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 95%);
+}
+
+[data-theme="dark"] .nova-search-result {
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-search-result:hover,
+[data-theme="dark"] .nova-search-result:focus-visible,
+[data-theme="dark"] .nova-search-result--active {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+.nova-search-result-title {
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-search-result-title {
+  color: var(--nova-color-neutral-50);
+}
+
+/* ============================
+ * 4. Search Result Transitions
+ * ============================ */
+
+.nova-search-result {
+  transition: background-color var(--nova-motion-duration) ease;
+}
+
+/* ============================
+ * 5. Mobile Menu Search
+ * ============================ */
+
+/* Mobile search input — structured with primary focus ring. */
+.nova-mobile-menu-search .nova-search-bar-input {
+  width: 100%;
+  max-width: none;
+
+  background-color: var(--nova-color-neutral-50);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-mobile-menu-search .nova-search-bar-input {
+  background-color: var(--nova-color-neutral-900);
+}
+
+/* Mobile dropdown results — inline. */
+.nova-mobile-menu-search .nova-search-dropdown {
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+}

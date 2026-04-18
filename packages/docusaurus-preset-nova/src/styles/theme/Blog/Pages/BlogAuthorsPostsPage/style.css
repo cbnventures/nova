@@ -1,0 +1,34 @@
+/**
+ * Blog Authors Posts Page — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* Author posts header — spacing and alignment. */
+.nova-blog-author-posts-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-blog-author-posts-header {
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+.nova-blog-author-posts-header .nova-heading {
+  margin-bottom: 0.25rem;
+
+  font-size: 1.25rem;
+}
+
+.nova-blog-author-posts-header p {
+  margin: 0;
+
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-blog-author-posts-header p {
+  color: var(--nova-color-neutral-400);
+}

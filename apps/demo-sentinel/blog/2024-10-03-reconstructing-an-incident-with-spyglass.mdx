@@ -1,0 +1,72 @@
+---
+title: "Reconstructing an Incident We Almost Missed"
+authors: [james]
+tags: [spyglass, incident-response, audit]
+date: 2024-10-03
+---
+
+At 2:14 AM on a Thursday, a service account in our production environment made a request to an endpoint it had never accessed before. The request succeeded. Watchtower did not alert because the access was permitted by policy. The service account had legitimate credentials, a passing posture score, and the target resource was within its Rampart zone.
+
+It took Spyglass to reveal that the request was the beginning of a data exfiltration attempt.
+
+{/* truncate */}
+
+## What Happened
+
+The service account `svc-etl-west` runs nightly extract-transform-load jobs against the analytics database. It connects to the same three endpoints every night, at the same time, following the same pattern. On this particular Thursday, it connected to a fourth endpoint: the bulk export API for the customer records service.
+
+The connection was authorized. The trust policy for `svc-etl-west` granted access to all endpoints in the `data-layer` zone, and the bulk export API was in that zone. From Sentinel's perspective, the access decision was correct. The policy was too broad — but it was being enforced as written.
+
+## How Spyglass Found It
+
+Spyglass does not just log access decisions. It builds behavioral baselines for every identity in the system. When we queried the Spyglass timeline for `svc-etl-west`, the anomaly was immediately visible:
+
+```bash title="Spyglass behavioral query"
+sentinel spyglass query \
+  --type behavior-deviation \
+  --identity svc-etl-west \
+  --period "2024-09-01..2024-10-03" \
+  --threshold 2-sigma
+```
+
+```text title="Spyglass output"
+Behavior Deviation Report: svc-etl-west
+  Baseline period: 2024-09-01 to 2024-10-02 (31 days)
+  Baseline endpoints: 3
+    - analytics-db.data-layer:5432
+    - staging-cache.data-layer:6379
+    - transform-api.data-layer:8080
+
+  Deviation detected: 2024-10-03T02:14:22Z
+    New endpoint: bulk-export.data-layer:443
+    Request type: GET /v2/customers/export?format=csv&limit=all
+    Data volume:  247 MB response
+    Deviation:    3.7 sigma (never-before-seen endpoint + anomalous data volume)
+```
+
+A service account that had connected to the same three endpoints for 31 consecutive days suddenly connected to a fourth and downloaded 247 MB of customer data. The access was permitted, but the behavior was anomalous.
+
+## The Investigation
+
+We traced the compromise to a leaked environment variable in a CI pipeline log. The `svc-etl-west` credentials had been printed to stdout during a failed deployment three weeks earlier. The log was accessible to anyone with read access to the CI system.
+
+The timeline:
+
+- **September 12**: Failed deployment prints `svc-etl-west` credentials to CI log.
+- **September 12 to October 2**: Credentials sit in the log unnoticed.
+- **October 3, 02:14 AM**: Attacker uses credentials to access the bulk export API.
+- **October 3, 08:30 AM**: Security team reviews Spyglass daily deviation report.
+- **October 3, 08:47 AM**: Credentials rotated, service account re-enrolled.
+- **October 3, 09:15 AM**: CI pipeline patched to redact environment variables.
+
+Total exposure window: 33 minutes from detection to credential rotation.
+
+## What We Changed
+
+Three things:
+
+- **Narrowed the trust policy.** `svc-etl-west` now has explicit endpoint grants instead of zone-wide access. It can reach exactly three endpoints and nothing else.
+- **Added Spyglass behavioral alerts.** Any identity that deviates beyond 2-sigma from its baseline now triggers an immediate alert, even if the access decision was permitted.
+- **Rotated all CI secrets.** Every service account credential that had ever appeared in a CI log was rotated, regardless of whether it was currently exposed.
+
+The access was legitimate by policy. The behavior was not legitimate by history. Without Spyglass, we would not have known until the customer data appeared somewhere it should not have been.

@@ -1,63 +1,118 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
+import { isIgnoredFile } from '../../../lib/utility.js';
+
 import type {
-  NoCatchUnknownAnnotationCheckCatchClauseNode,
-  NoCatchUnknownAnnotationCheckCatchClauseReturns,
-} from '@/types/rules/eslint/typescript/no-catch-unknown-annotation.d.ts';
+  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseContext,
+  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseNode,
+  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseParam,
+  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseReturns,
+  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseTypeAnnotation,
+  RulesEslintTypescriptNoCatchUnknownAnnotationRuleDefaultOptionsIgnoreFiles,
+  RulesEslintTypescriptNoCatchUnknownAnnotationRuleOptions,
+} from '../../../types/rules/eslint/typescript/no-catch-unknown-annotation.d.ts';
 
 /**
- * No catch unknown annotation.
+ * Rules - ESLint - TypeScript - No Catch Unknown Annotation.
  *
- * @since 1.0.0
+ * Removes the redundant `: unknown` annotation on catch clause variables. TypeScript already
+ * defaults catch parameters to unknown, so the annotation is noise.
+ *
+ * @since 0.14.0
  */
-const noCatchUnknownAnnotation = ESLintUtils.RuleCreator(() => '#')({
-  name: 'no-catch-unknown-annotation',
-  meta: {
-    type: 'suggestion',
-    docs: {
-      description: 'Disallow redundant `: unknown` annotation on catch clause variables.',
+export class RulesEslintTypescriptNoCatchUnknownAnnotation {
+  /**
+   * Rules - ESLint - TypeScript - No Catch Unknown Annotation - Rule.
+   *
+   * Registered under the name no-catch-unknown-annotation and exported through the rules
+   * index as NoCatchUnknownAnnotation for preset consumption.
+   *
+   * @since 0.14.0
+   */
+  public static rule = ESLintUtils.RuleCreator(() => '#')({
+    name: 'no-catch-unknown-annotation',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow redundant `: unknown` annotation on catch clause variables.',
+      },
+      fixable: 'code',
+      messages: {
+        removeCatchAnnotation: 'Remove the redundant `: unknown` annotation. TypeScript defaults catch variables to `unknown`.',
+      },
+      schema: [{
+        type: 'object',
+        properties: {
+          ignoreFiles: {
+            type: 'array',
+            items: {
+              type: 'string',
+            },
+          },
+        },
+        additionalProperties: false,
+      }],
     },
-    messages: {
-      removeCatchAnnotation: 'Remove the redundant `: unknown` annotation. TypeScript defaults catch variables to `unknown`.',
+    defaultOptions: [{
+      ignoreFiles: [] as RulesEslintTypescriptNoCatchUnknownAnnotationRuleDefaultOptionsIgnoreFiles,
+    }],
+    create(context, defaultOptions) {
+      const options: RulesEslintTypescriptNoCatchUnknownAnnotationRuleOptions = defaultOptions[0];
+
+      // Skip ignored files.
+      if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
+        return {};
+      }
+
+      return {
+        CatchClause(node) {
+          RulesEslintTypescriptNoCatchUnknownAnnotation.checkCatchClause(context, node);
+
+          return;
+        },
+      };
     },
-    schema: [],
-  },
-  defaultOptions: [],
-  create(context) {
-    /**
-     * No catch unknown annotation - Check catch clause.
-     *
-     * @param {NoCatchUnknownAnnotationCheckCatchClauseNode} node - Catch clause node.
-     *
-     * @returns {NoCatchUnknownAnnotationCheckCatchClauseReturns}
-     *
-     * @since 1.0.0
-     */
-    const checkCatchClause = (node: NoCatchUnknownAnnotationCheckCatchClauseNode): NoCatchUnknownAnnotationCheckCatchClauseReturns => {
-      const param = node.param;
+  });
 
-      if (param == null) {
-        return;
-      }
+  /**
+   * Rules - ESLint - TypeScript - No Catch Unknown Annotation - Check Catch Clause.
+   *
+   * Inspects the catch clause parameter for a
+   * TSUnknownKeyword type annotation and provides an
+   * auto-fix that removes the redundant annotation.
+   *
+   * @private
+   *
+   * @param {RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseContext} context - Context.
+   * @param {RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseNode}    node    - Node.
+   *
+   * @returns {RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseReturns}
+   *
+   * @since 0.14.0
+   */
+  private static checkCatchClause(context: RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseContext, node: RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseNode): RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseReturns {
+    const param: RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseParam = node.param;
 
-      const typeAnnotation = param.typeAnnotation;
+    if (param === undefined || param === null) {
+      return;
+    }
 
-      if (typeAnnotation === undefined) {
-        return;
-      }
+    const typeAnnotation: RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseTypeAnnotation = param.typeAnnotation;
 
-      if (typeAnnotation.typeAnnotation.type === 'TSUnknownKeyword') {
-        context.report({
-          node: typeAnnotation,
-          messageId: 'removeCatchAnnotation',
-        });
-      }
-    };
+    if (typeAnnotation === undefined) {
+      return;
+    }
 
-    return {
-      CatchClause: checkCatchClause,
-    };
-  },
-});
+    if (typeAnnotation.typeAnnotation.type === 'TSUnknownKeyword') {
+      context.report({
+        node: typeAnnotation,
+        messageId: 'removeCatchAnnotation',
+        fix(fixer) {
+          return fixer.remove(typeAnnotation);
+        },
+      });
+    }
 
-export default noCatchUnknownAnnotation;
+    return;
+  }
+}

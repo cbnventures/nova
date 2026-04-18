@@ -1,6 +1,7 @@
 ---
 id: setup
 title: Setup and Configure
+sidebar_position: 2
 description: Setup and configuration for Nova covering installation instructions and TypeScript and ESLint presets setup.
 keywords:
   - nova setup
@@ -15,16 +16,16 @@ keywords:
   - nova cli
   - version check
 tags:
+  - quickstart
   - setup
   - installation
-  - configuration
-  - initialization
+  - cli
   - presets
   - eslint
   - typescript
-  - cli
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -34,7 +35,7 @@ Nova supports three starting paths. Use the runner for a one-off, install into s
 
 ## Requirements
 
-- Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term>
+- Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology>
 - Node Package Manager (npm)
 
 :::tip Quick Check
@@ -97,9 +98,9 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
     }
     ```
 
-    Third, configure **ESLint** through the `eslint.config.mjs` file. See **[ESLint best practices](/docs/presets/eslint/best-practices)**.
+    Third, configure **ESLint** through the `eslint.config.ts` file. See **[ESLint best practices](/docs/presets/eslint/best-practices)**.
 
-    ```js
+    ```ts
     import { dxCodeStyle, dxIgnore } from '@cbnventures/nova/presets/eslint';
 
     export default [
@@ -116,8 +117,6 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
 
   </TabItem>
 </Tabs>
-
----
 
 ## Next Steps
 

@@ -1,0 +1,233 @@
+/**
+ * Sentinel — Code block visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Code Block Container
+ * ============================ */
+
+.nova-code-block {
+  border-radius: var(--nova-shape-radius);
+  border: var(--nova-depth-code-border);
+  border-color: var(--nova-color-neutral-300);
+  box-shadow: var(--nova-depth-code-shadow);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+[data-theme="dark"] .nova-code-block {
+  border-color: var(--nova-color-neutral-800);
+}
+
+.nova-code-block pre.shiki {
+  padding: 0.75rem 1rem;
+
+  background-color: var(--nova-color-neutral-900);
+  border-radius: 0;
+
+  overflow-x: auto;
+}
+
+[data-theme="dark"] .nova-code-block pre.shiki {
+  background-color: var(--nova-sentinel-code-bg);
+}
+
+/* Sentinel uses a dark code background in light mode, so Shiki must
+   render with dark-theme token colors in both modes. Fallback to
+   neutral-300 for spans without Shiki dark tokens. */
+.nova-code-block .shiki,
+.nova-code-block .shiki span {
+  color: var(--shiki-dark, var(--nova-color-neutral-300));
+  background-color: var(--shiki-dark-bg);
+}
+
+/* ============================
+ * 2. Code Block Title
+ * ============================ */
+
+.nova-code-block-title {
+  background-color: var(--nova-color-neutral-800);
+  color: var(--nova-color-primary-300);
+  font-family: var(--nova-font-code);
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--nova-color-neutral-700);
+  padding: 0.5rem 0.75rem;
+}
+
+[data-theme="dark"] .nova-code-block-title {
+  background-color: var(--nova-sentinel-code-title-bg);
+  color: var(--nova-color-primary-400);
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 3. Code Block Language Label
+ * ============================ */
+
+.nova-code-block-lang {
+  font-family: var(--nova-font-code);
+  color: var(--nova-color-neutral-600);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ============================
+ * 4. Toolbar
+ * ============================ */
+
+/* Sentinel uses dark code blocks in light mode so the
+   toolbar border must match the dark surface below. */
+.nova-code-block-toolbar {
+  border-bottom: 1px solid var(--nova-color-neutral-700);
+}
+
+[data-theme="dark"] .nova-code-block-toolbar {
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 5. Code Block Copy Button
+ * ============================ */
+
+.nova-code-block-copy {
+  color: var(--nova-color-neutral-600);
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--nova-color-neutral-600);
+  border-radius: calc(var(--nova-shape-radius) * 0.5);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+[data-theme="dark"] .nova-code-block-copy {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-code-block-copy:active {
+  color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+@media (hover: hover) {
+  .nova-code-block-copy:hover {
+    color: var(--nova-color-primary-500);
+    border-color: var(--nova-color-primary-500);
+    background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  }
+}
+
+.nova-code-block-copy:focus-visible {
+  color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+[data-theme="dark"] .nova-code-block-copy:active {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+@media (hover: hover) {
+  [data-theme="dark"] .nova-code-block-copy:hover {
+    color: var(--nova-color-primary-400);
+    border-color: var(--nova-color-primary-600);
+    background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  }
+}
+
+[data-theme="dark"] .nova-code-block-copy:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+/* ============================
+ * 6. Code Block Expand
+ * ============================ */
+
+.nova-code-block-expand {
+  background-color: var(--nova-sentinel-code-title-bg);
+  color: var(--nova-color-neutral-500);
+  border: none;
+  border-top: 1px solid var(--nova-color-neutral-800);
+}
+
+.nova-code-block-expand:hover,
+.nova-code-block-expand:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 7. Copy Button Transitions
+ * ============================ */
+
+.nova-code-block-copy,
+.nova-code-block-wrap {
+  transition:
+    color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+.nova-code-block-wrap {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--nova-color-neutral-600);
+  border-radius: calc(var(--nova-shape-radius) * 0.5);
+  color: var(--nova-color-neutral-600);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+}
+
+[data-theme="dark"] .nova-code-block-wrap {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-code-block-wrap:active,
+[data-word-wrap="true"] .nova-code-block-wrap {
+  color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+@media (hover: hover) {
+  .nova-code-block-wrap:hover {
+    color: var(--nova-color-primary-500);
+    border-color: var(--nova-color-primary-500);
+    background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  }
+}
+
+.nova-code-block-wrap:focus-visible {
+  color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+[data-theme="dark"] .nova-code-block-wrap:active,
+[data-theme="dark"] [data-word-wrap="true"] .nova-code-block-wrap {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+@media (hover: hover) {
+  [data-theme="dark"] .nova-code-block-wrap:hover {
+    color: var(--nova-color-primary-400);
+    border-color: var(--nova-color-primary-600);
+    background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  }
+}
+
+[data-theme="dark"] .nova-code-block-wrap:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}

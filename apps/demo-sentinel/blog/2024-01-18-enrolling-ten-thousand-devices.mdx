@@ -1,0 +1,52 @@
+---
+title: "Enrolling Ten Thousand Devices in a Weekend"
+authors: [james]
+tags: [device-enrollment, zero-trust, bastion]
+date: 2024-01-18
+---
+
+We had seventy-two hours to migrate an enterprise fleet from certificate-based VPN authentication to Sentinel device enrollment. Ten thousand endpoints. Three continents. No downtime tolerance. This is what we learned.
+
+The project started as a six-week rollout. Then the customer's VPN concentrator vendor announced an end-of-life date that fell two months earlier than expected, and the timeline collapsed to a weekend.
+
+{/* truncate */}
+
+## The Enrollment Pipeline
+
+Sentinel device enrollment is not an install-and-forget agent push. Each device must register a hardware identity, attest its posture, and receive a Bastion gateway binding before it can participate in any trust evaluation. The sequence looks like this:
+
+```text title="Enrollment sequence"
+1. Agent install        → sentinel-agent deployed via MDM
+2. Hardware attestation → TPM/Secure Enclave key generated
+3. Posture baseline     → OS version, disk encryption, firewall state recorded
+4. Bastion binding      → device assigned to nearest Bastion gateway
+5. Policy assignment    → device inherits trust policies from its device group
+```
+
+Each step must succeed before the next begins. A device that fails posture baseline does not receive a Bastion binding. A device without a Bastion binding cannot reach any protected resource. There is no fallback path.
+
+## What Broke
+
+Three things went wrong during the migration weekend:
+
+- **1,247 devices failed posture baseline.** Most were running an OS version one minor release behind the minimum. We had set the posture threshold at OS version `>=14.2` and the fleet had a long tail of `14.1` holdouts. We lowered the threshold to `14.1` for a 30-day grace period and flagged those devices for forced update.
+- **Bastion gateway saturation in the APAC region.** We had provisioned three Bastion nodes for the Sydney office. The enrollment storm hit all three simultaneously, and connection queuing exceeded the 30-second timeout. We spun up two additional nodes and re-ran the APAC batch.
+- **A group policy conflict.** Devices in the `contractors` group inherited both the `restricted-access` and `internal-services-baseline` policies. The intersection was empty — no resource satisfied both policy conditions — so contractor devices enrolled successfully but could not reach anything. We resolved it by creating a dedicated `contractor-services` policy with explicit resource grants.
+
+## The Numbers
+
+| Metric                        | Target  | Actual    |
+|-------------------------------|---------|-----------|
+| Devices enrolled              | 10,000  | 9,814     |
+| Enrollment failures           | < 500   | 186       |
+| Mean enrollment time          | < 5 min | 3 min 42s |
+| Bastion gateway uptime        | 99.9%   | 99.7%     |
+| Post-enrollment support calls | < 200   | 91        |
+
+The 186 failures were hardware attestation issues — devices with disabled TPMs or Secure Enclaves. Those required hands-on IT intervention and were completed the following week.
+
+## What We Would Change
+
+Next time we would pre-stage Bastion gateway capacity at 3x the expected concurrent enrollment rate, not 1.5x. The enrollment storm pattern is spikier than steady-state traffic, and gateway queuing is the bottleneck. We would also run a posture pre-check sweep a week before the migration to catch OS version stragglers early.
+
+Device enrollment is the foundation of zero-trust. Every trust decision Sentinel makes depends on knowing the device, knowing its health, and knowing its location. Getting ten thousand devices through that gate in a weekend was not elegant, but it worked. And every one of those devices is now continuously evaluated, every 90 seconds, for the rest of its lifecycle.

@@ -1,0 +1,110 @@
+---
+title: The 3MB Container That Replaced Our Entire Integration Layer
+authors: [anders]
+tags: [vial, minimal, architecture]
+date: 2025-08-22
+---
+
+We had twelve services, nine cron jobs, a shared Ferric queue, and a database that four different scripts wrote to without coordination. That was our integration layer. It worked — until it did not.
+
+{/* truncate */}
+
+## The Problem
+
+Integration layers grow like sediment. Nobody designs them. They accumulate. A Threadbare webhook needs to reach Canary, so someone writes a script. Glassboard needs to notify a Spoke endpoint, so someone writes another script. Each one works in isolation. Together, they form something that nobody understands and everybody is afraid to touch.
+
+Our integration layer looked like this:
+
+```text title="Before Envoy — system inventory"
+Services:         12
+Cron jobs:         9
+Shared queues:     3
+Database tables:   7 (4 with no documented schema)
+Languages:         4 (Alloy, Sable, Ferric, Spark scripts)
+Total image size:  2.4GB across all containers
+Weekly failures:   3-5 (average)
+MTTR:              47 minutes (median)
+```
+
+## The Decision
+
+We did not set out to build a minimal container. We set out to replace one script — the Threadbare-to-Canary relay that kept failing on weekends. But once we had a working relay with retry logic, transformation, and authentication, the question became obvious: why not replace all of them?
+
+The constraint we set was aggressive: zero external dependencies. Every library, every protocol handler, every transformation engine — written from scratch in Alloy, compiled to a static binary, packed into a Vial image.
+
+### Why zero external dependencies?
+
+External dependencies are other people's decisions. They change versioning schedules, deprecate APIs, introduce vulnerabilities, and occasionally vanish entirely. For infrastructure that runs between systems, stability is not a feature. It is the feature.
+
+Every dependency we did not include is a supply chain risk we did not accept and a breaking change we will never have to debug at 3 AM.
+
+## Before and After
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="before" label="Before Envoy" default>
+
+```text title="Integration layer — pre-Envoy"
+┌──────────────────────────────────────────┐
+│  12 services (Alloy, Sable, Ferric)      │
+│  9 cron jobs (Spark scripts)             │
+│  3 shared queues (Ferric-queue)          │
+│  1 shared database (7 tables)            │
+│                                          │
+│  Total: 2.4GB across 12 containers       │
+│  Languages: 4                            │
+│  Failure rate: 3-5 per week              │
+│  MTTR: 47 minutes                        │
+└──────────────────────────────────────────┘
+```
+
+</TabItem>
+<TabItem value="after" label="After Envoy">
+
+```text title="Integration layer — post-Envoy"
+┌──────────────────────────────────────────┐
+│  1 service (Envoy)                       │
+│  0 cron jobs                             │
+│  0 shared queues                         │
+│  0 shared databases                      │
+│                                          │
+│  Total: 3MB single container             │
+│  Languages: 1 (Alloy)                    │
+│  Failure rate: 0 per week (with retry)   │
+│  MTTR: not applicable                    │
+└──────────────────────────────────────────┘
+```
+
+</TabItem>
+</Tabs>
+
+## The Numbers
+
+After six months in production, the numbers speak for themselves:
+
+| Metric                  | Before Envoy | After Envoy |
+|-------------------------|--------------|-------------|
+| Container image size    | 2.4GB total  | 3MB         |
+| Services to maintain    | 12           | 1           |
+| Weekly failures         | 3-5          | 0           |
+| Median time to recovery | 47 minutes   | N/A         |
+| Message delivery rate   | ~96%         | 100%        |
+| Relay latency (p99)     | 340ms        | 4.7ms       |
+
+The relay latency improvement is the most dramatic. Our previous layer routed messages through a Ferric queue, a database write, and a polling consumer. Envoy routes them in memory with Dispatch and delivers them synchronously with Courier. The queue is gone. The database is gone. The polling interval is gone.
+
+## What 3MB Buys You
+
+The small image size is a side effect, not a goal. It is what happens when you write everything yourself and include nothing you do not need. But the side effects of the side effect are worth noting:
+
+- **Cold start:** Under 200ms. Trellis can reschedule Envoy pods faster than most services finish their health checks.
+- **Attack surface:** No third-party code means no third-party vulnerabilities. The Vial image contains the Envoy binary and nothing else.
+- **Auditability:** The entire codebase fits in a single review session. Every line of code that handles your messages is code we wrote and you can read.
+
+## The Lesson
+
+Integration infrastructure should be invisible. If you are thinking about your integration layer, it has already failed. It should be small enough to understand, reliable enough to forget, and fast enough that nobody notices it is there.
+
+Three megabytes. Zero dependencies. Messages arrive. That is the entire product.

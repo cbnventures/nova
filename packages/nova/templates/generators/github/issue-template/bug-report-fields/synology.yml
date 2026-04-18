@@ -1,0 +1,8 @@
+  - type: "input"
+    id: "dsm-version"
+    attributes:
+      label: "Synology\xAE DSM version"
+      description: "What version of Synology\xAE DSM are you using? Please note that only products that are not \"End of Life,\" as listed on the [Product Support Status](https://www.synology.com/en-us/products/status?status=all&firmware_support=suspended) page, will be considered."
+      placeholder: "e.g. 7.3.2-86009 Update 1"
+    validations:
+      required: true

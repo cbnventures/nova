@@ -1,0 +1,53 @@
+/**
+ * Signal — Announcement bar visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-announcement-bar {
+  background-color: var(--nova-color-neutral-900);
+  color: var(--nova-color-neutral-300);
+  text-align: center;
+  padding: 0.3125rem 1rem;
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-announcement-bar {
+  background-color: var(--nova-color-neutral-950);
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+.nova-announcement-bar a {
+  color: var(--nova-color-primary-400);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .nova-announcement-bar a {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 3. Close Button
+ * ============================ */
+
+.nova-announcement-bar-close {
+  padding: 0.25rem;
+  color: var(--nova-color-neutral-500);
+
+  opacity: 0.7;
+  transition: opacity var(--nova-motion-duration) ease;
+}
+
+.nova-announcement-bar-close:hover,
+.nova-announcement-bar-close:focus-visible {
+  opacity: 1;
+  color: var(--nova-color-neutral-300);
+}
+
+[data-theme="dark"] .nova-announcement-bar-close {
+  color: var(--nova-color-neutral-500);
+}

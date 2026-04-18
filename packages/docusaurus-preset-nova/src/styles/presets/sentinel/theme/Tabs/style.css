@@ -1,0 +1,70 @@
+/**
+ * Sentinel — Tabs visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Tabs Container
+ * ============================ */
+
+.nova-tabs {
+  margin-bottom: 1rem;
+}
+
+/* ============================
+ * 2. Tab List
+ * ============================ */
+
+.nova-tabs-list {
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-tabs-list {
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 3. Tab Button
+ * ============================ */
+
+.nova-tabs-tab {
+  padding: 0.625rem 0.75rem;
+
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--nova-color-neutral-600);
+
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+.nova-tabs-tab:hover,
+.nova-tabs-tab:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+.nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-color-primary-700);
+  border-bottom-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-tabs-tab {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-color-primary-400);
+  border-bottom-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Tab Panel
+ * ============================ */
+
+.nova-tabs-panel {
+  padding: 0.75rem 0;
+}

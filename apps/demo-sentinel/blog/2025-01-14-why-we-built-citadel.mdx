@@ -1,0 +1,76 @@
+---
+title: "Why We Built a Policy Engine from Scratch"
+authors: [ingrid]
+tags: [policy, zero-trust, philosophy]
+date: 2025-01-14
+---
+
+When we started building Sentinel, we evaluated every policy engine on the market. Open Policy Agent. Cedar. Google's Zanzibar. Each one was designed for a different problem, and none of them solved ours. So we built Citadel.
+
+This is not a "not invented here" story. It is a story about what happens when your policy evaluation requirements include time, device state, behavioral history, and continuous re-evaluation — and every existing engine assumes policies are evaluated once per request.
+
+{/* truncate */}
+
+## The Problem with Request-Time Evaluation
+
+Traditional policy engines are designed for a synchronous request-response cycle. A service receives a request, asks the policy engine "should I allow this?", and gets a yes-or-no answer. The evaluation happens at request time, using the facts available at that moment.
+
+This model works for API authorization. It does not work for continuous trust evaluation. Here is why:
+
+```text title="Request-time evaluation"
+T=0s    User sends request → policy engine evaluates → ALLOW
+T=90s   Device posture drops below threshold → nobody re-evaluates
+T=180s  User sends another request → policy engine evaluates → ALLOW
+        (posture score is stale — last check was 3 minutes ago)
+```
+
+The policy engine answered correctly both times. The problem is that nobody asked the question between T=0s and T=180s. For 180 seconds, the user had access they should not have had.
+
+## What Citadel Does Differently
+
+Citadel is a push-based policy engine. Instead of waiting for a request to trigger evaluation, Citadel continuously evaluates every active session against the current policy set. When any input changes — device posture, behavior score, network context, session age — Citadel re-evaluates immediately and pushes the result to the enforcement layer.
+
+The evaluation loop runs every 90 seconds at baseline, but it also triggers on events:
+
+- Watchtower reports a posture change → Citadel re-evaluates all sessions for that device.
+- A Rampart zone boundary changes → Citadel re-evaluates all sessions crossing that boundary.
+- A trust policy is updated → Citadel re-evaluates all sessions governed by that policy.
+
+This means revocation is not a background job. It is a real-time operation. When a device fails a posture check, Citadel revokes access within the current evaluation cycle — not at the next request.
+
+## The Policy Language
+
+Citadel policies are written in a domain-specific language called Grain. We designed Grain for readability by security teams, not developers. A Grain policy reads like a declaration of intent:
+
+```text title="trust-policy.grain"
+policy "production-database" {
+  resource = "db-cluster-prod"
+  effect   = "allow"
+
+  conditions {
+    identity.role      = "engineer"
+    identity.team      in ["platform", "data"]
+    device.posture     >= 85
+    device.encryption  = true
+    session.age        <= 1800
+    behavior.score     >= 75
+    time.window        = "weekdays 06:00..22:00 UTC"
+  }
+
+  on_failure {
+    action = "revoke"
+    notify = ["security-ops", "team-lead"]
+    log    = "spyglass"
+  }
+}
+```
+
+Every condition is a continuously evaluated fact. `session.age <= 1800` does not mean the session was under 30 minutes when it started. It means the session is under 30 minutes right now. When the session crosses that threshold, Citadel revokes access without waiting for the next request.
+
+## What We Gave Up
+
+Building a custom policy engine means maintaining a custom policy engine. We cannot point customers at the OPA documentation or the Cedar playground. We own the language, the evaluator, the debugger, and the documentation.
+
+That tradeoff is worth it because the alternative — bolting continuous evaluation onto a request-time engine — would have required us to build most of Citadel anyway, but as a wrapper around someone else's assumptions. We chose to own the assumptions instead.
+
+The result is a policy engine that was designed from the start for the problem zero-trust actually presents: not "should this request be allowed?" but "should this session still be trusted?"

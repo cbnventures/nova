@@ -1,0 +1,76 @@
+/**
+ * Sentinel — Tag visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-tag {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-family: var(--nova-font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--nova-color-neutral-500);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: 0;
+  transition: border-color var(--nova-motion-duration) ease,
+              color var(--nova-motion-duration) ease;
+}
+
+.nova-tag:hover,
+.nova-tag:focus-visible {
+  color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-tag {
+  color: var(--nova-color-neutral-400);
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-tag:hover,
+[data-theme="dark"] .nova-tag:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+}
+
+.nova-blog-tags-list-link {
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-family: var(--nova-font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--nova-color-neutral-500);
+  border: 1px solid var(--nova-color-neutral-200);
+  text-decoration: none;
+  transition: border-color var(--nova-motion-duration) ease,
+              color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-tags-list-link:hover,
+.nova-blog-tags-list-link:focus-visible {
+  color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-tags-list-link {
+  color: var(--nova-color-neutral-400);
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-blog-tags-list-link:hover,
+[data-theme="dark"] .nova-blog-tags-list-link:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+}
+
+.nova-blog-tags-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

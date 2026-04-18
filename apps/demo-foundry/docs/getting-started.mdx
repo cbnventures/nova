@@ -1,0 +1,67 @@
+---
+title: Getting Started
+sidebar_position: 1
+tags:
+  - getting started
+  - overview
+---
+
+# Getting Started
+
+Foundry is a compiler for developer intent. You describe what your workspace should look like in a single `.grain` manifest, and Foundry forges the entire development environment — directory structure, dependency graph, build pipeline, linting rules, and test scaffolds.
+
+No configuration files. No manual wiring. One manifest in, a full environment out.
+
+## What Foundry Does
+
+Foundry reads a `.grain` manifest and produces everything a multi-package workspace needs to build, lint, test, and deploy. Instead of maintaining dozens of configuration files across packages, you maintain one file that declares your intent.
+
+| Tool         | Purpose                                                              |
+|--------------|----------------------------------------------------------------------|
+| **Anvil**    | Core CLI — reads a Blueprint manifest and forges the workspace.      |
+| **Tongs**    | Dependency graph resolver and visualizer.                            |
+| **Quench**   | Incremental build cache — only rebuilds what changed.                |
+| **Bellows**  | Parallel task runner across workspaces.                              |
+| **Crucible** | Test harness generator — writes test scaffolds from type signatures. |
+| **Slag**     | Dead code and unused dependency detector.                            |
+
+## Quick Start
+
+Install Foundry globally via Spark:
+
+```bash title="Install Foundry"
+spark install foundry
+```
+
+Create a minimal `.grain` manifest in your project root:
+
+```text title="project.grain"
+workspace "my-app" {
+  lang   = "alloy"
+  warden = ["strict"]
+
+  packages {
+    core { type = "library" }
+    api  { type = "service", depends = ["core"] }
+  }
+}
+```
+
+Forge the workspace:
+
+```bash title="Run your first forge"
+foundry ignite
+```
+
+Foundry reads the manifest, resolves the dependency graph, generates Warden rules, scaffolds test files, and writes every configuration artifact your packages need.
+
+:::tip
+Run `foundry ignite --dry-run` to preview what Foundry will generate without writing any files to disk. This is the fastest way to validate a manifest before committing.
+:::
+
+## Next Steps
+
+- [Installation](/docs/guides/installation/) — Prerequisites, install methods, and verification.
+- [Your First Forge](/docs/guides/your-first-forge/) — A step-by-step walkthrough from empty directory to running workspace.
+- [Manifests](/docs/guides/manifests/) — Deep dive into `.grain` syntax and every directive.
+- [CLI Reference](/docs/reference/cli-reference/) — Full command documentation for every Foundry tool.

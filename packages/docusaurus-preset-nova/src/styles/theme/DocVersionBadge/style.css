@@ -1,0 +1,12 @@
+/**
+ * ============================
+ * Version — Badge
+ * ============================
+ */
+
+.nova-version-badge {
+  display: inline-block;
+  padding: 2px 8px;
+
+  font-size: 0.75rem;
+}

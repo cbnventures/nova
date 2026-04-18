@@ -1,0 +1,76 @@
+/**
+ * Sentinel — Blog Sidebar visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Sidebar Title
+ * ============================ */
+
+/* Section label with display font and primary color. */
+.nova-blog-sidebar strong {
+  font-family: var(--nova-font-display);
+
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-sidebar strong {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 2. Year Headings
+ * ============================ */
+
+.nova-blog-sidebar h4 {
+  color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-blog-sidebar h4 {
+  color: var(--nova-color-neutral-200);
+}
+
+/* ============================
+ * 3. Sidebar Links
+ * ============================ */
+
+/* Links with left border indicator matching doc sidebar. */
+.nova-blog-sidebar a {
+  color: var(--nova-color-neutral-600);
+  border-left: 2px solid transparent;
+  border-radius: 0 var(--nova-shape-radius) var(--nova-shape-radius) 0;
+
+  transition: color var(--nova-motion-duration) ease,
+              border-left-color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-blog-sidebar a {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-blog-sidebar a:hover,
+.nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-primary-700);
+  border-left-color: var(--nova-color-primary-500);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+[data-theme="dark"] .nova-blog-sidebar a:hover,
+[data-theme="dark"] .nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-left-color: var(--nova-color-primary-600);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 95%);
+}
+
+/* Override aside padding so the sidebar nav fills edge-to-edge
+   and the scrollbar sits against the border. The sidebar's own
+   padding handles internal spacing instead. */
+@media (min-width: 1024px) {
+  .nova-blog-root aside {
+    padding-inline: 0;
+  }
+}

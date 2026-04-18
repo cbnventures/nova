@@ -1,55 +1,55 @@
 import type {
-  ChangelogEntryBump,
-  ChangelogEntryCategory,
-  ItemPrettyNames,
-  NovaConfigEntityRole,
-  NovaConfigWorkspacePolicy,
-  NovaConfigWorkspaceRecipeName,
-  NovaConfigWorkspaceRole,
-} from '@/types/shared.d.ts';
+  SharedChangelogEntryBump,
+  SharedChangelogEntryCategory,
+  SharedItemPrettyNames,
+  SharedNovaConfigEntityRole,
+  SharedNovaConfigWorkspacePolicy,
+  SharedNovaConfigWorkspaceRecipeName,
+  SharedNovaConfigWorkspaceRole,
+} from '../shared.d.ts';
 
 /**
- * Item - Allowed policies by role.
+ * Lib - Item - Allowed Policies By Role.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemAllowedPoliciesByRoleProject = Extract<NovaConfigWorkspacePolicy, 'freezable'>[];
+export type LibItemAllowedPoliciesByRoleProject = Extract<SharedNovaConfigWorkspacePolicy, 'freezable'>[];
 
-export type ItemAllowedPoliciesByRoleConfig = Extract<NovaConfigWorkspacePolicy, 'freezable' | 'trackable'>[];
+export type LibItemAllowedPoliciesByRoleConfig = Extract<SharedNovaConfigWorkspacePolicy, 'freezable' | 'trackable'>[];
 
-export type ItemAllowedPoliciesByRoleDocs = Extract<NovaConfigWorkspacePolicy, 'freezable' | 'trackable'>[];
+export type LibItemAllowedPoliciesByRoleDocs = Extract<SharedNovaConfigWorkspacePolicy, 'freezable' | 'trackable'>[];
 
-export type ItemAllowedPoliciesByRoleApp = Extract<NovaConfigWorkspacePolicy, 'trackable'>[];
+export type LibItemAllowedPoliciesByRoleApp = Extract<SharedNovaConfigWorkspacePolicy, 'trackable'>[];
 
-export type ItemAllowedPoliciesByRolePackage = Extract<NovaConfigWorkspacePolicy, 'trackable' | 'distributable'>[];
+export type LibItemAllowedPoliciesByRolePackage = Extract<SharedNovaConfigWorkspacePolicy, 'trackable' | 'distributable'>[];
 
-export type ItemAllowedPoliciesByRoleTool = Extract<NovaConfigWorkspacePolicy, 'freezable' | 'trackable'>[];
+export type LibItemAllowedPoliciesByRoleTool = Extract<SharedNovaConfigWorkspacePolicy, 'freezable' | 'trackable'>[];
 
-export type ItemAllowedPoliciesByRoleTemplate = Extract<NovaConfigWorkspacePolicy, 'freezable'>[];
+export type LibItemAllowedPoliciesByRoleTemplate = Extract<SharedNovaConfigWorkspacePolicy, 'freezable'>[];
 
-export type ItemAllowedPoliciesByRole = {
-  project: ItemAllowedPoliciesByRoleProject;
-  config: ItemAllowedPoliciesByRoleConfig;
-  docs: ItemAllowedPoliciesByRoleDocs;
-  app: ItemAllowedPoliciesByRoleApp;
-  package: ItemAllowedPoliciesByRolePackage;
-  tool: ItemAllowedPoliciesByRoleTool;
-  template: ItemAllowedPoliciesByRoleTemplate;
+export type LibItemAllowedPoliciesByRole = {
+  project: LibItemAllowedPoliciesByRoleProject;
+  config: LibItemAllowedPoliciesByRoleConfig;
+  docs: LibItemAllowedPoliciesByRoleDocs;
+  app: LibItemAllowedPoliciesByRoleApp;
+  package: LibItemAllowedPoliciesByRolePackage;
+  tool: LibItemAllowedPoliciesByRoleTool;
+  template: LibItemAllowedPoliciesByRoleTemplate;
 };
 
 /**
- * Item - Allowed recipes.
+ * Lib - Item - Allowed Recipes.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemAllowedRecipes = readonly NovaConfigWorkspaceRecipeName[];
+export type LibItemAllowedRecipes = readonly SharedNovaConfigWorkspaceRecipeName[];
 
 /**
- * Item - Allowed roles.
+ * Lib - Item - Allowed Roles.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemAllowedRoles = readonly [
+export type LibItemAllowedRoles = readonly [
   'project',
   'docs',
   'config',
@@ -60,11 +60,23 @@ export type ItemAllowedRoles = readonly [
 ];
 
 /**
- * Item - Changelog adjectives.
+ * Lib - Item - Bundler Keys.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemChangelogAdjectives = readonly [
+export type LibItemBundlerKeys = readonly [
+  'types',
+  'module',
+  'sideEffects',
+  'esnext',
+];
+
+/**
+ * Lib - Item - Changelog Adjectives.
+ *
+ * @since 0.11.0
+ */
+export type LibItemChangelogAdjectives = readonly [
   'afraid',
   'bold',
   'brave',
@@ -118,25 +130,18 @@ export type ItemChangelogAdjectives = readonly [
 ];
 
 /**
- * Item - Changelog category bump map.
+ * Lib - Item - Changelog Category Bump Map.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemChangelogCategoryBumpMap = Record<ChangelogEntryCategory, ChangelogEntryBump>;
+export type LibItemChangelogCategoryBumpMap = Record<SharedChangelogEntryCategory, SharedChangelogEntryBump>;
 
 /**
- * Item - Changelog category order.
+ * Lib - Item - Changelog Nouns.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemChangelogCategoryOrder = readonly ChangelogEntryCategory[];
-
-/**
- * Item - Changelog nouns.
- *
- * @since 1.0.0
- */
-export type ItemChangelogNouns = readonly [
+export type LibItemChangelogNouns = readonly [
   'ants',
   'bags',
   'bats',
@@ -190,22 +195,29 @@ export type ItemChangelogNouns = readonly [
 ];
 
 /**
- * Item - Changelog valid bumps.
+ * Lib - Item - Changelog Ordered Categories.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemChangelogValidBumps = readonly [
+export type LibItemChangelogOrderedCategories = readonly SharedChangelogEntryCategory[];
+
+/**
+ * Lib - Item - Changelog Valid Bumps.
+ *
+ * @since 0.11.0
+ */
+export type LibItemChangelogValidBumps = readonly [
   'major',
   'minor',
   'patch',
 ];
 
 /**
- * Item - Changelog valid categories.
+ * Lib - Item - Changelog Valid Categories.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemChangelogValidCategories = readonly [
+export type LibItemChangelogValidCategories = readonly [
   'added',
   'updated',
   'fixed',
@@ -213,11 +225,11 @@ export type ItemChangelogValidCategories = readonly [
 ];
 
 /**
- * Item - Changelog verbs.
+ * Lib - Item - Changelog Verbs.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemChangelogVerbs = readonly [
+export type LibItemChangelogVerbs = readonly [
   'ask',
   'bake',
   'bite',
@@ -271,95 +283,39 @@ export type ItemChangelogVerbs = readonly [
 ];
 
 /**
- * Item - Generic protocols.
+ * Lib - Item - Corepack Keys.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemGenericProtocols = readonly [
+export type LibItemCorepackKeys = readonly [
+  'packageManager',
+];
+
+/**
+ * Lib - Item - Email Fields.
+ *
+ * @since 0.11.0
+ */
+export type LibItemEmailFields = readonly [
+  'bugs',
+];
+
+/**
+ * Lib - Item - Generic Protocols.
+ *
+ * @since 0.11.0
+ */
+export type LibItemGenericProtocols = readonly [
   'http:',
   'https:',
 ];
 
 /**
- * Item - Initialize roles to sync.
+ * Lib - Item - Node Js Keys.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemInitializeRolesToSync = readonly NovaConfigWorkspaceRole[];
-
-/**
- * Item - Initialize valid entity roles.
- *
- * @since 1.0.0
- */
-export type ItemInitializeValidEntityRoles = readonly NovaConfigEntityRole[];
-
-/**
- * Item - Normalize bundler roles (sideEffects esnext).
- *
- * @since 1.0.0
- */
-export type ItemNormalizeBundlerRolesSideEffectsEsnext = readonly NovaConfigWorkspaceRole[];
-
-/**
- * Item - Normalize bundler roles (types module).
- *
- * @since 1.0.0
- */
-export type ItemNormalizeBundlerRolesTypesModule = readonly NovaConfigWorkspaceRole[];
-
-/**
- * Item - Nova config email fields.
- *
- * @since 1.0.0
- */
-export type ItemNovaConfigEmailFields = readonly [
-  'bugs',
-];
-
-/**
- * Item - Nova config url fields.
- *
- * @since 1.0.0
- */
-export type ItemNovaConfigUrlFields = readonly [
-  'homepage',
-  'repository',
-  'bugs',
-  'license',
-  'logo',
-  'documentation',
-  'github',
-  'npm',
-];
-
-/**
- * Item - Package.json keys (Bundler).
- *
- * @since 1.0.0
- */
-export type ItemPackageJsonKeysBundler = readonly [
-  'types',
-  'module',
-  'sideEffects',
-  'esnext',
-];
-
-/**
- * Item - Package.json keys (Corepack).
- *
- * @since 1.0.0
- */
-export type ItemPackageJsonKeysCorepack = readonly [
-  'packageManager',
-];
-
-/**
- * Item - Package.json keys (Node.js).
- *
- * @since 1.0.0
- */
-export type ItemPackageJsonKeysNodeJs = readonly [
+export type LibItemNodeJsKeys = readonly [
   'name',
   'main',
   'type',
@@ -368,11 +324,11 @@ export type ItemPackageJsonKeysNodeJs = readonly [
 ];
 
 /**
- * Item - Package.json keys (npm).
+ * Lib - Item - npm Keys.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemPackageJsonKeysNpm = readonly [
+export type LibItemNpmKeys = readonly [
   'name',
   'version',
   'description',
@@ -413,11 +369,87 @@ export type ItemPackageJsonKeysNpm = readonly [
 ];
 
 /**
- * Item - Package.json keys sort order.
+ * Lib - Item - Pretty Names Abbreviation.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type ItemPackageJsonSortOrder = readonly [
+export type LibItemPrettyNamesAbbreviation = SharedItemPrettyNames;
+
+/**
+ * Lib - Item - Pretty Names Brand.
+ *
+ * @since 0.11.0
+ */
+export type LibItemPrettyNamesBrand = SharedItemPrettyNames;
+
+/**
+ * Lib - Item - Pretty Names Category.
+ *
+ * @since 0.11.0
+ */
+export type LibItemPrettyNamesCategory = SharedItemPrettyNames;
+
+/**
+ * Lib - Item - Pretty Names Column Title.
+ *
+ * @since 0.11.0
+ */
+export type LibItemPrettyNamesColumnTitle = SharedItemPrettyNames;
+
+/**
+ * Lib - Item - Pretty Names Keyword.
+ *
+ * @since 0.15.0
+ */
+export type LibItemPrettyNamesKeyword = SharedItemPrettyNames;
+
+/**
+ * Lib - Item - Pretty Names Type.
+ *
+ * @since 0.11.0
+ */
+export type LibItemPrettyNamesType = SharedItemPrettyNames;
+
+/**
+ * Lib - Item - Repository Protocols.
+ *
+ * @since 0.11.0
+ */
+export type LibItemRepositoryProtocols = readonly [
+  'git:',
+  'git+https:',
+  'git+ssh:',
+  'git+http:',
+  'https:',
+  'http:',
+];
+
+/**
+ * Lib - Item - Side Effects ESNext Roles.
+ *
+ * @since 0.11.0
+ */
+export type LibItemSideEffectsEsnextRoles = readonly SharedNovaConfigWorkspaceRole[];
+
+/**
+ * Lib - Item - Skip Directories.
+ *
+ * @since 0.11.0
+ */
+export type LibItemSkipDirectories = readonly [
+  'node_modules',
+  'dist',
+  'build',
+  'out',
+  'coverage',
+];
+
+/**
+ * Lib - Item - Sort Order Keys.
+ *
+ * @since 0.11.0
+ */
+export type LibItemSortOrderKeys = readonly [
   'name',
   'version',
   'description',
@@ -464,56 +496,41 @@ export type ItemPackageJsonSortOrder = readonly [
 ];
 
 /**
- * Item - Pretty Names - Brand.
+ * Lib - Item - Sync Roles.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemPrettyNamesBrand = ItemPrettyNames;
+export type LibItemSyncRoles = readonly SharedNovaConfigWorkspaceRole[];
 
 /**
- * Item - Pretty Names - Category.
+ * Lib - Item - Types Module Roles.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemPrettyNamesCategory = ItemPrettyNames;
+export type LibItemTypesModuleRoles = readonly SharedNovaConfigWorkspaceRole[];
 
 /**
- * Item - Pretty Names - Column Title.
+ * Lib - Item - URL Fields.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemPrettyNamesColumnTitle = ItemPrettyNames;
-
-/**
- * Item - Pretty Names - Type.
- *
- * @since 1.0.0
- */
-export type ItemPrettyNamesType = ItemPrettyNames;
-
-/**
- * Item - Repository protocols.
- *
- * @since 1.0.0
- */
-export type ItemRepositoryProtocols = readonly [
-  'git:',
-  'git+https:',
-  'git+ssh:',
-  'git+http:',
-  'https:',
-  'http:',
+export type LibItemUrlFields = readonly [
+  'homepage',
+  'repository',
+  'bugs',
+  'license',
+  'logo',
+  'documentation',
+  'github',
+  'npm',
+  'docker',
+  'privacyPolicy',
+  'termsOfUse',
 ];
 
 /**
- * Item - Skip directories.
+ * Lib - Item - Valid Entity Roles.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemSkipDirectories = readonly [
-  'node_modules',
-  'dist',
-  'build',
-  'out',
-  'coverage',
-];
+export type LibItemValidEntityRoles = readonly SharedNovaConfigEntityRole[];

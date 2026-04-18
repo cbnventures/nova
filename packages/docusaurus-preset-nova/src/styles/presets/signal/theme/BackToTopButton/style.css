@@ -1,0 +1,50 @@
+/**
+ * Signal — Back to top button visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Back to Top Button
+ * ============================ */
+
+.nova-back-to-top {
+  bottom: 1rem;
+  right: 1rem;
+  width: 32px;
+  height: 32px;
+  background-color: var(--nova-color-neutral-50);
+  color: var(--nova-color-neutral-500);
+  border: 1px solid var(--nova-color-neutral-300);
+  font-size: 0.75rem;
+}
+
+.nova-back-to-top:hover,
+.nova-back-to-top:focus-visible {
+  border-color: var(--nova-color-primary-500);
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-back-to-top {
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-back-to-top:hover,
+[data-theme="dark"] .nova-back-to-top:focus-visible {
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 2. Responsive
+ * ============================ */
+
+/* xs — 480px and above */
+@media (min-width: 480px) {
+  .nova-back-to-top {
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+}

@@ -1,0 +1,74 @@
+---
+title: "Measuring Print Campaign ROI with QR Codes and Beacon"
+authors: [amara]
+tags: [qr-codes, campaign, conversion, branded-domains]
+date: 2026-02-12
+---
+
+Print advertising is a $60 billion industry with a measurement problem. You run a magazine ad, a direct mail piece, or a conference banner and you have no idea whether it worked. Digital campaigns report clicks, conversions, and cost per acquisition in real time. Print campaigns report nothing — unless you give them a link.
+
+We helped a B2B software company instrument their entire print portfolio with Beacon QR codes. Over six months, they tracked 94,000 scans and attributed $2.1 million in pipeline to print placements that were previously unmeasured.
+
+{/* truncate */}
+
+## The Instrumentation Strategy
+
+The client ran print campaigns across four channels: trade magazine ads, direct mail, conference signage, and product inserts. Each placement received a unique Beacon QR code with channel-specific attribution metadata:
+
+```json title="Print placement attribution"
+{
+  "placements": [
+    {
+      "channel": "magazine",
+      "publication": "DevOps Weekly",
+      "issue": "2025-Q3",
+      "beacon": "go.client.example/mag-devops-q3",
+      "qrVariant": "logo-overlay"
+    },
+    {
+      "channel": "direct-mail",
+      "campaign": "enterprise-renewal",
+      "dropDate": "2025-08-15",
+      "beacon": "go.client.example/dm-ent-0815",
+      "qrVariant": "high-contrast"
+    }
+  ]
+}
+```
+
+Each QR code used the client's branded domain, which increased scan rates by 28% compared to generic short URLs — consistent with the branded domain lift we measured in earlier studies.
+
+## Six-Month Results
+
+| Channel          | QR Scans   | Unique Users | Conversions | Pipeline Value |
+|------------------|------------|--------------|-------------|----------------|
+| Trade magazines  | 31,200     | 24,800       | 186         | $740,000       |
+| Direct mail      | 42,100     | 38,600       | 312         | $890,000       |
+| Conference signs | 14,300     | 11,900       | 94          | $310,000       |
+| Product inserts  | 6,400      | 5,200        | 41          | $160,000       |
+| **Total**        | **94,000** | **80,500**   | **633**     | **$2,100,000** |
+
+Direct mail produced the highest volume and the highest pipeline value. Trade magazines had the best scan-to-conversion ratio at 0.6%. Conference signage punched above its weight relative to the number of impressions.
+
+## QR Design Details
+
+Not all QR codes perform equally. We tested four visual treatments across the direct mail channel:
+
+- **Standard black-and-white**: 2.8% scan rate.
+- **Brand-colored**: 3.1% scan rate.
+- **Logo overlay**: 3.4% scan rate.
+- **High contrast with CTA text**: 4.2% scan rate.
+
+The highest-performing variant combined high visual contrast with a clear call-to-action printed next to the code: "Scan to see your renewal options." The CTA text mattered more than the code's visual design. A QR code without context is a mystery box — adding a single line of text tells the user why they should bother scanning.
+
+## Closing the Attribution Loop
+
+The real value was not the scan data itself — it was connecting print scans to downstream conversions. Prism traced the full path from QR scan to demo request to closed deal. For the first time, the client could calculate cost per acquisition for each print placement and compare it directly to their digital channels.
+
+Print was not their most efficient channel. But it was not their least efficient either. Direct mail produced a lower cost per acquisition than paid social, which surprised the team and shifted budget allocation for the following quarter.
+
+## The Measurement Gap Is the Strategy Gap
+
+The client had been running print campaigns for years without measurement. Not because they did not care about ROI, but because they had no mechanism to track it. The absence of data was treated as evidence that print did not work, when in reality it was evidence of nothing.
+
+Give print a link and it becomes measurable. Give it a Beacon link and it becomes attributable. The channel did not change. The visibility did.

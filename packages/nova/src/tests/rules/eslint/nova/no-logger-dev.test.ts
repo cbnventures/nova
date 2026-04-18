@@ -1,26 +1,27 @@
-import { test } from 'node:test';
-
 import { RuleTester } from '@typescript-eslint/rule-tester';
+import { afterAll, describe, it } from 'vitest';
 
-import { noLoggerDev } from '@/rules/eslint/index.js';
+import { NoLoggerDev } from '../../../../rules/eslint/index.js';
+
+import type { TestsRulesEslintNovaNoLoggerDevRuleTester } from '../../../../types/tests/rules/eslint/nova/no-logger-dev.test.d.ts';
 
 /**
- * No logger dev.
+ * Tests - Rules - ESLint - Nova - No Logger Dev.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-RuleTester.afterAll = () => {};
-RuleTester.describe = test;
-RuleTester.it = test;
+RuleTester.afterAll = afterAll;
+RuleTester.describe = describe;
+RuleTester.it = it;
 
-const ruleTester = new RuleTester({
+const ruleTester: TestsRulesEslintNovaNoLoggerDevRuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
   },
 });
 
-ruleTester.run('noLoggerDev', noLoggerDev, {
+ruleTester.run('noLoggerDev', NoLoggerDev['rule'], {
   valid: [
     {
       code: 'Logger.info("hello");',
@@ -45,6 +46,11 @@ ruleTester.run('noLoggerDev', noLoggerDev, {
     },
     {
       code: 'other.dev();',
+    },
+    {
+      code: 'Logger.dev("debug message");',
+      options: [{ ignoreFiles: ['ignored.ts'] }],
+      filename: '/path/to/ignored.ts',
     },
   ],
   invalid: [

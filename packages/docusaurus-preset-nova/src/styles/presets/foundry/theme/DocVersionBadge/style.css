@@ -1,0 +1,37 @@
+/**
+ * Foundry — Version badge and banner visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Version Badge
+ * ============================ */
+
+.nova-version-badge {
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  background-color: var(--nova-color-primary-50);
+  color: var(--nova-color-primary-700);
+  border-radius: 9999px;
+}
+
+[data-theme="dark"] .nova-version-badge {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 2. Version Banner
+ * ============================ */
+
+.nova-version-banner {
+  font-size: 0.875rem;
+  background-color: var(--nova-color-neutral-100);
+  border-bottom: 1px solid var(--nova-foundry-border);
+}
+
+[data-theme="dark"] .nova-version-banner {
+  background-color: var(--nova-color-neutral-900);
+}

@@ -1,0 +1,117 @@
+---
+id: stats
+title: Stats
+description: Metric display grid with labeled values and optional color accents for landing pages.
+sidebar_position: 3
+keywords:
+  - nova
+  - docusaurus facades
+  - stats component
+  - metrics display
+  - statistics grid
+  - landing page
+  - color accents
+tags:
+  - facades
+  - component
+  - stats
+  - landing page
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Stats
+
+Responsive grid of metric items with labeled values. Each item can be tinted with a primary or accent color.
+
+Use it to display key numbers on a landing page.
+
+## Summary
+
+The Stats component renders a `<section>` containing a grid of value–label pairs. Each item can be color-coded using the `color` property to draw attention with the preset's primary or accent color.
+
+## Why Use This Component?
+
+- **Highlight key numbers** with consistent formatting across pages.
+- **Color-coded values** using the active preset's primary or accent palette.
+- **Preset-aware** — typography and spacing adapt to the active preset.
+
+## Usage
+
+<Tabs groupId="stats-usage">
+  <TabItem value="basic" label="Basic" default>
+
+```tsx title="src/pages/index.tsx"
+import { Stats } from '@cbnventures/docusaurus-preset-nova/components';
+
+<Stats
+  items={[
+    {
+      value: '50+',
+      label: 'ESLint Rules',
+      color: 'primary',
+    },
+    {
+      value: '4',
+      label: 'Presets',
+      color: 'accent',
+    },
+    {
+      value: '9',
+      label: 'Components',
+      color: 'primary',
+    },
+  ]}
+/>
+```
+
+  </TabItem>
+  <TabItem value="full" label="With heading and description">
+
+```tsx title="src/pages/index.tsx"
+import { Stats } from '@cbnventures/docusaurus-preset-nova/components';
+
+<Stats
+  heading="By the Numbers"
+  description="Nova ships with everything you need."
+  surface="alt"
+  items={[
+    {
+      value: '50+',
+      label: 'ESLint Rules',
+      color: 'primary',
+    },
+    {
+      value: '4',
+      label: 'Presets',
+      color: 'accent',
+    },
+    {
+      value: '9',
+      label: 'Components',
+      color: 'primary',
+    },
+    {
+      value: '0',
+      label: 'Swizzles Needed',
+    },
+  ]}
+/>
+```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Prop          | Type                                                                     | Default     | Description                                             |
+|---------------|--------------------------------------------------------------------------|-------------|---------------------------------------------------------|
+| `items`       | `Array<{ value: string, label: string, color?: 'primary' \| 'accent' }>` | —           | Metric items. Required.                                 |
+| `heading`     | `string \| undefined`                                                    | `undefined` | Optional section heading above the grid.                |
+| `description` | `string \| undefined`                                                    | `undefined` | Optional description paragraph below the heading.       |
+| `surface`     | `'alt' \| undefined`                                                     | `undefined` | Set to `'alt'` to use the alternate surface background. |
+
+## Troubleshooting
+
+- **Color not applying** — The `color` prop accepts `'primary'` or `'accent'` only. If omitted, the value renders without a color accent.

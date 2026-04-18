@@ -12,20 +12,33 @@ keywords:
   - sideEffects
   - esnext
 tags:
-  - normalize-bundler
   - cli
+  - normalize-bundler
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Normalize **types**, **module**, **sideEffects**, and **esnext** <Term title="build tool" to="/docs/quickstart/terminology#builds-and-tooling">bundler</Term> convention fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Normalize **types**, **module**, **sideEffects**, and **esnext** <Terminology title="build tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundler</Terminology> convention fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `normalize-bundler` recipe handles unofficial <Term title="build tool" to="/docs/quickstart/terminology#builds-and-tooling">bundler</Term> convention fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json`. It merges the deprecated `typings` field into `types`, and normalizes `module`, `sideEffects`, and `esnext` fields according to common bundler expectations.
+The `normalize-bundler` recipe handles unofficial <Terminology title="build tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundler</Terminology> convention fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json`.
+
+It merges the deprecated `typings` field into `types`, and normalizes `module`, `sideEffects`, and `esnext` fields according to common bundler expectations.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects bundler convention fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+
+- **`typings` → `types` merge (Conditional)** — If both fields exist, the existing `types` value is kept and `typings` is deleted. If only `typings` exists, it is renamed to `types`.
+- **`types` (Conditional)** — Removed if the workspace role does not allow it (only `package` and `tool` roles retain this field).
+- **`module` (Conditional)** — Removed if the workspace role does not allow it (only `package` and `tool` roles retain this field).
+- **`sideEffects` (Conditional)** — Removed if the workspace role does not allow it (only `package` roles retain this field).
+- **`esnext` (Conditional)** — Removed if the workspace role does not allow it (only `package` roles retain this field).
 
 ## Usage
 
@@ -48,7 +61,7 @@ The `normalize-bundler` recipe handles unofficial <Term title="build tool" to="/
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

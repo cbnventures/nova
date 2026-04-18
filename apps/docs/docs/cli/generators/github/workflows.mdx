@@ -1,11 +1,259 @@
 ---
 id: workflows
 title: Workflows
-description: x
+description: Generate GitHub Actions workflow files from nova.config.json for CI/CD automation.
 keywords:
-  - x
+  - nova
+  - nova generate
+  - github
+  - workflows
+  - github actions
+  - CI/CD
+  - nova config
+  - workflow templates
 tags:
-  - x
+  - cli
+  - generator
+  - github
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Generate GitHub Actions workflow files under `.github/workflows/` from the `"workflows"` array in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+The generator reads each entry, substitutes variables from the template metadata, validates the output YAML, and writes the result to disk.
+
+## Why Use This Command?
+
+- Bootstraps a full set of <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> workflows without writing YAML by hand.
+- Covers common automation scenarios like publishing, issue management, and deployments.
+- Keeps workflow definitions consistent across Nova-managed repositories.
+- Supports multiple instances of the same template (e.g., two Cloudflare Pages deployments) via suffixes.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+- **Configured workflows** — The `"workflows"` array must exist in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. Use `nova utility initialize` to configure it interactively.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate github workflows
+
+    # Shorthand
+    nova gen gh workflows
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate github workflows
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen gh workflows
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Config-Driven Workflow Entries
+
+Each entry in the `"workflows"` array maps to one output file. An entry contains:
+
+| Field        | Required | Description                                                                                                                                          |
+|--------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `template`   | Yes      | The name of a bundled workflow template (e.g., `"publish-to-npm"`).                                                                                  |
+| `suffix`     | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.                                                  |
+| `triggers`   | Yes      | An array of trigger names (e.g., `["release"]`). Available triggers depend on the template. Use an empty array for templates with baked-in triggers. |
+| `depends-on` | No       | An array of workflow references in `{template}-{suffix}` format. Required when using `workflow-run-*` triggers.                                      |
+| `settings`   | No       | Key-value pairs that override variable placeholders in the template.                                                                                 |
+
+### Config Examples
+
+**Template with a single trigger:**
+
+```json
+{
+  "template": "lock-inactive-issues",
+  "suffix": "weekly",
+  "triggers": ["schedule"]
+}
+```
+
+**Template with literal settings:**
+
+```json
+{
+  "template": "publish-to-npm",
+  "suffix": "my-package",
+  "triggers": ["release"],
+  "settings": {
+    "NPM_TOKEN": "NPM_TOKEN",
+    "ROOT_WORKING_DIR": "./",
+    "NPM_WORKING_DIR": "./packages/my-package"
+  }
+}
+```
+
+**Ordered publishing with `depends-on`:**
+
+```json
+[
+  {
+    "template": "publish-to-npm",
+    "suffix": "core",
+    "triggers": ["release"],
+    "settings": {
+      "NPM_TOKEN": "NPM_TOKEN",
+      "ROOT_WORKING_DIR": "./",
+      "NPM_WORKING_DIR": "./packages/core"
+    }
+  },
+  {
+    "template": "publish-to-npm",
+    "suffix": "preset",
+    "triggers": ["workflow-run-success"],
+    "depends-on": ["publish-to-npm-core"],
+    "settings": {
+      "NPM_TOKEN": "NPM_TOKEN",
+      "ROOT_WORKING_DIR": "./",
+      "NPM_WORKING_DIR": "./packages/preset"
+    }
+  }
+]
+```
+
+In the second entry, `depends-on` references `"publish-to-npm-core"` (the `{template}-{suffix}` of the first workflow). The preset only publishes after the core package succeeds.
+
+**Multiple instances with suffix and secret remapping:**
+
+```json
+[
+  {
+    "template": "publish-to-cloudflare-pages-docusaurus",
+    "suffix": "project-docs",
+    "triggers": ["release"],
+    "settings": {
+      "CLOUDFLARE_PROJECT_NAME": "project-docs",
+      "ROOT_WORKING_DIR": "./",
+      "DOCUSAURUS_WORKING_DIR": "./apps/docs"
+    }
+  },
+  {
+    "template": "publish-to-cloudflare-pages-docusaurus",
+    "suffix": "marketing-site",
+    "triggers": ["release"],
+    "settings": {
+      "CLOUDFLARE_API_TOKEN": "MARKETING_CF_TOKEN",
+      "CLOUDFLARE_ACCOUNT_ID": "MARKETING_CF_ACCOUNT",
+      "CLOUDFLARE_PROJECT_NAME": "marketing-site",
+      "ROOT_WORKING_DIR": "./",
+      "DOCUSAURUS_WORKING_DIR": "./apps/marketing"
+    }
+  }
+]
+```
+
+In the second entry above, `CLOUDFLARE_API_TOKEN` is remapped from its default secret name to `MARKETING_CF_TOKEN`, and `CLOUDFLARE_ACCOUNT_ID` is remapped from its default variable name to `MARKETING_CF_ACCOUNT`. This lets each instance reference distinct GitHub secrets and variables.
+
+### Available Triggers
+
+Each template supports a specific set of triggers. The generator reads the available triggers from the template's `triggers/` folder.
+
+| Trigger                | Description                                         | Requires `depends-on` |
+|------------------------|-----------------------------------------------------|-----------------------|
+| `release`              | Runs when a GitHub release is published             | No                    |
+| `push`                 | Runs when code is pushed to the main branch         | No                    |
+| `schedule`             | Runs on a weekly cron schedule                      | No                    |
+| `workflow-run-success` | Runs after another workflow completes successfully  | Yes                   |
+| `workflow-run-failure` | Runs after another workflow fails                   | Yes                   |
+| `workflow-run-any`     | Runs after another workflow completes (any outcome) | Yes                   |
+
+All templates also include `workflow_dispatch` (manual trigger with dry-run option) automatically.
+
+## Variable Formats
+
+Each template declares variables with one of three formats. The format determines how the value is substituted into the generated YAML:
+
+| Format    | Substitution behavior                                                                                                                            |
+|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------|
+| `secret`  | Produces `${{ secrets.NAME }}` in the output. If a setting is provided, the secret reference uses the setting value as the name instead.         |
+| `var`     | Produces `${{ vars.NAME }}` in the output. If a setting is provided, the variable reference uses the setting value as the name instead.          |
+| `literal` | Replaces the placeholder with the exact string from `settings`. All literal variables must have a corresponding setting or the entry is skipped. |
+
+## Output Filename Convention
+
+Generated files are written to `.github/workflows/` with the naming pattern:
+
+```
+nova-{template}.yml              # without suffix
+nova-{template}-{suffix}.yml     # with suffix
+```
+
+**Examples:**
+- `nova-lock-inactive-issues.yml`
+- `nova-publish-to-npm-nova.yml`
+- `nova-publish-to-cloudflare-pages-docusaurus-project-docs.yml`
+
+## Available Templates
+
+| Template                                 | Description                            | Notes                                                                                                                         |
+|------------------------------------------|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+| `check-sponsor-gated-issues`             | Gate issues by GitHub sponsor status   | Requires `PERSONAL_ACCESS_TOKEN` secret and multiple literal settings.                                                        |
+| `lock-inactive-issues`                   | Lock inactive issues and pull requests | No manual setup needed (uses automatic `GITHUB_TOKEN`).                                                                       |
+| `publish-to-aws-amplify-nextjs`          | Deploy Next.js to AWS Amplify          | Requires AWS secrets plus `AMPLIFY_APP_ID` variable and literal settings. **Disable auto-build in Amplify Console.**          |
+| `publish-to-cloudflare-pages-docusaurus` | Deploy Docusaurus to Cloudflare Pages  | Requires `CLOUDFLARE_API_TOKEN` secret, `CLOUDFLARE_ACCOUNT_ID` variable, and literal settings.                               |
+| `publish-to-docker-hub`                  | Publish Docker images to Docker Hub    | Requires `DOCKERHUB_TOKEN` secret and `DOCKERHUB_USERNAME` variable.                                                          |
+| `publish-to-github-packages`             | Publish packages to GitHub Packages    | Requires literal `ROOT_WORKING_DIR` and `NPM_WORKING_DIR` settings.                                                           |
+| `publish-to-github-pages-docusaurus`     | Deploy Docusaurus to GitHub Pages      | Requires literal `ROOT_WORKING_DIR` and `DOCUSAURUS_WORKING_DIR` settings.                                                    |
+| `publish-to-npm`                         | Publish packages to npm                | Requires literal `ROOT_WORKING_DIR` and `NPM_WORKING_DIR` settings. Optionally `NPM_TOKEN` secret for token-based publishing. |
+
+## How It Works
+
+### Reading Config
+
+The generator loads <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> and reads the `"workflows"` array. If the array is missing or empty, the generator exits with no changes.
+
+### Validation
+
+Before generating each file, the generator checks:
+
+1. The template name matches a known bundled template.
+2. The template directory and base file exist on disk.
+3. Each trigger in `triggers` has a corresponding file in the template's `triggers/` folder.
+4. When a trigger requires `depends-on`, the config entry provides it and the referenced workflow exists.
+5. Circular `depends-on` references are detected and rejected.
+6. All `literal`-format variables have a corresponding entry in `settings`.
+7. No two entries produce the same output filename.
+
+If any check fails, the entry is skipped with an error message.
+
+### File Generation
+
+Each valid entry produces one YAML file under `.github/workflows/`. Variable placeholders are substituted based on the template metadata and the entry's `settings`.
+
+If the target file already exists, a `.nova-backup` copy is created unless `--replace-file` is set.
+
+### Orphan Cleanup
+
+After generation, the generator scans `.github/workflows/` for existing `nova-*.yml` files that are not in the current config. These orphaned files are backed up (renamed with a `.nova-backup` timestamp) or deleted when `--replace-file` is set.
+
+### Setup Instructions
+
+After all files are generated, the generator prints a summary of secrets and variables that need to be configured on GitHub. This covers every non-automatic `secret` and `var` format variable across all generated workflows.

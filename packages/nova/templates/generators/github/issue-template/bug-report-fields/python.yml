@@ -1,0 +1,8 @@
+  - type: "input"
+    id: "python-version"
+    attributes:
+      label: "Python version"
+      description: "What version of Python are you using? Run `python --version` in your terminal to find out."
+      placeholder: "e.g. 3.14.3"
+    validations:
+      required: true

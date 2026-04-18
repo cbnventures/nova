@@ -1,0 +1,187 @@
+/**
+ * Sentinel — Blog preview section visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Blog Preview Container
+ * ============================ */
+
+.nova-blog-preview-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+
+  color: var(--nova-color-neutral-900);
+
+}
+
+.nova-blog-preview-no-description .nova-blog-preview-heading {
+  margin-bottom: calc(var(--nova-shape-gap) * 4);
+}
+
+.nova-blog-preview-has-description .nova-blog-preview-heading {
+  margin-bottom: calc(var(--nova-shape-gap) * 2);
+}
+
+[data-theme="dark"] .nova-blog-preview-heading {
+  color: var(--nova-color-neutral-50);
+}
+
+.nova-blog-preview-description {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--nova-color-neutral-500);
+  margin-bottom: calc(var(--nova-shape-gap) * 3);
+}
+
+[data-theme="dark"] .nova-blog-preview-description {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 2. Blog Preview Card
+ * ============================ */
+
+.nova-blog-preview-card {
+  padding: var(--nova-shape-padding);
+
+  border: 1px solid var(--nova-color-neutral-200);
+  border-left: 3px solid var(--nova-color-primary-500);
+  border-radius: var(--nova-shape-radius);
+  background-color: var(--nova-color-neutral-50);
+
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-preview-card:hover {
+  border-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 97%);
+}
+
+[data-theme="dark"] .nova-blog-preview-card {
+  border-color: var(--nova-color-neutral-800);
+  border-left-color: var(--nova-color-primary-600);
+  background-color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover {
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+/* ============================
+ * 3. Blog Preview Card Content
+ * ============================ */
+
+.nova-blog-preview-card time {
+  display: block;
+
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  color: var(--nova-color-primary-600);
+
+  margin-bottom: calc(var(--nova-shape-gap) * 0.5);
+}
+
+[data-theme="dark"] .nova-blog-preview-card time {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-blog-preview-card h3 {
+  font-family: var(--nova-font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+
+  color: var(--nova-color-neutral-900);
+
+  margin-bottom: calc(var(--nova-shape-gap) * 0.5);
+}
+
+[data-theme="dark"] .nova-blog-preview-card h3 {
+  color: var(--nova-color-neutral-100);
+}
+
+.nova-blog-preview-card p {
+  font-size: 0.8125rem;
+  line-height: 1.65;
+
+  color: var(--nova-color-neutral-500);
+
+  margin: 0 0 calc(var(--nova-shape-gap) * 0.75) 0;
+}
+
+[data-theme="dark"] .nova-blog-preview-card p {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-blog-preview-card a {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-preview-card a:hover,
+.nova-blog-preview-card a:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-preview-card a {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-blog-preview-card a:hover,
+[data-theme="dark"] .nova-blog-preview-card a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 4. Responsive Blog Preview
+ * ============================ */
+
+@media (min-width: 640px) {
+  .nova-blog-preview-heading {
+    font-size: 1.5rem;
+    margin-bottom: calc(var(--nova-shape-gap) * 2.5);
+  }
+
+  .nova-blog-preview-card {
+    padding: calc(var(--nova-shape-padding) * 1.25);
+  }
+
+  .nova-blog-preview-card h3 {
+    font-size: 1.0625rem;
+  }
+
+  .nova-blog-preview-card p {
+    font-size: 0.875rem;
+  }
+
+  .nova-blog-preview-card a {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-blog-preview-heading {
+    font-size: 1.75rem;
+    margin-bottom: calc(var(--nova-shape-gap) * 3);
+  }
+
+  .nova-blog-preview-card {
+    padding: calc(var(--nova-shape-padding) * 1.5);
+  }
+}

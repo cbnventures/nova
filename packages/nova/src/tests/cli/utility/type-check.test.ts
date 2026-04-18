@@ -8,114 +8,121 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIUtilityTypeCheck } from '@/cli/utility/type-check.js';
+import { afterAll, describe, it } from 'vitest';
+
+import { CliUtilityTypeCheck } from '../../../cli/utility/type-check.js';
 
 import type {
-  CLIUtilityTypeCheckTestOriginalCwd,
-  CLIUtilityTypeCheckTestSandboxRoot,
-} from '@/types/tests/cli/utility/type-check.test.d.ts';
+  TestsCliUtilityTypeCheckRunIndexPath,
+  TestsCliUtilityTypeCheckRunOriginalCwd,
+  TestsCliUtilityTypeCheckRunProjectDirectory,
+  TestsCliUtilityTypeCheckRunSandboxDirectory,
+  TestsCliUtilityTypeCheckRunSandboxRoot,
+  TestsCliUtilityTypeCheckRunTemporaryDirectory,
+  TestsCliUtilityTypeCheckRunTemporaryPrefix,
+  TestsCliUtilityTypeCheckRunTsconfigContents,
+  TestsCliUtilityTypeCheckRunTsconfigPath,
+} from '../../../types/tests/cli/utility/type-check.test.d.ts';
 
 /**
- * CLI Utility - Type Check - Run.
+ * Tests - CLI - Utility - Type Check - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIUtilityTypeCheck.run', async (context) => {
-  const originalCwd: CLIUtilityTypeCheckTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIUtilityTypeCheckTestSandboxRoot = await realpath(await mkdtemp(join(tmpdir(), `nova-${context.name}-`)));
+describe('CliUtilityTypeCheck.run', async () => {
+  const originalCwd: TestsCliUtilityTypeCheckRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliUtilityTypeCheckRunTemporaryDirectory = tmpdir();
+  const temporaryPrefix: TestsCliUtilityTypeCheckRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxDirectory: TestsCliUtilityTypeCheckRunSandboxDirectory = await mkdtemp(temporaryPrefix);
+  const sandboxRoot: TestsCliUtilityTypeCheckRunSandboxRoot = await realpath(sandboxDirectory);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('reports no errors for valid TypeScript', async () => {
-    const projectDir = join(sandboxRoot, 'valid-ts');
+  it('reports no errors for valid TypeScript', async () => {
+    const projectDirectory: TestsCliUtilityTypeCheckRunProjectDirectory = join(sandboxRoot, 'valid-ts');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'tsconfig.json'),
-      JSON.stringify({
-        compilerOptions: {
-          strict: true,
-          noEmit: true,
-        },
-        include: ['*.ts'],
-      }, null, 2),
-      'utf-8',
-    );
+    const tsconfigPath: TestsCliUtilityTypeCheckRunTsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: TestsCliUtilityTypeCheckRunTsconfigContents = JSON.stringify({
+      compilerOptions: {
+        strict: true,
+        noEmit: true,
+      },
+      include: ['*.ts'],
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'index.ts'),
-      'const greeting: string = "hello";\nconsole.log(greeting);\n',
-      'utf-8',
-    );
+    await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const indexPath: TestsCliUtilityTypeCheckRunIndexPath = join(projectDirectory, 'index.ts');
 
-    process.exitCode = undefined;
+    await writeFile(indexPath, 'const greeting: string = "hello";\nconsole.log(greeting);\n', 'utf-8');
 
-    CLIUtilityTypeCheck.run({
-      project: join(projectDir, 'tsconfig.json'),
+    process.chdir(projectDirectory);
+
+    CliUtilityTypeCheck.run({
+      project: tsconfigPath,
     });
 
     strictEqual(process.exitCode, undefined);
+
+    return;
   });
 
-  await context.test('sets exit code for invalid TypeScript', async () => {
-    const projectDir = join(sandboxRoot, 'invalid-ts');
+  it('sets exit code for invalid TypeScript', async () => {
+    const projectDirectory: TestsCliUtilityTypeCheckRunProjectDirectory = join(sandboxRoot, 'invalid-ts');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'tsconfig.json'),
-      JSON.stringify({
-        compilerOptions: {
-          strict: true,
-          noEmit: true,
-        },
-        include: ['*.ts'],
-      }, null, 2),
-      'utf-8',
-    );
+    const tsconfigPath: TestsCliUtilityTypeCheckRunTsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: TestsCliUtilityTypeCheckRunTsconfigContents = JSON.stringify({
+      compilerOptions: {
+        strict: true,
+        noEmit: true,
+      },
+      include: ['*.ts'],
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'index.ts'),
-      'const greeting: number = "hello";\n',
-      'utf-8',
-    );
+    await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const indexPath: TestsCliUtilityTypeCheckRunIndexPath = join(projectDirectory, 'index.ts');
 
-    process.exitCode = undefined;
+    await writeFile(indexPath, 'const greeting: number = "hello";\n', 'utf-8');
 
-    CLIUtilityTypeCheck.run({
-      project: join(projectDir, 'tsconfig.json'),
+    process.chdir(projectDirectory);
+
+    CliUtilityTypeCheck.run({
+      project: tsconfigPath,
     });
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('errors when no tsconfig.json found', async () => {
-    const projectDir = join(sandboxRoot, 'no-tsconfig');
+  it('errors when no tsconfig.json found', async () => {
+    const projectDirectory: TestsCliUtilityTypeCheckRunProjectDirectory = join(sandboxRoot, 'no-tsconfig');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    process.chdir(projectDir);
+    process.chdir(projectDirectory);
 
-    process.exitCode = undefined;
-
-    CLIUtilityTypeCheck.run({});
+    CliUtilityTypeCheck.run({});
 
     strictEqual(process.exitCode, undefined);
+
+    return;
   });
+
+  return;
 });

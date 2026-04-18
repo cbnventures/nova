@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://signal-demo.nova.cbnventures.io/sitemap.xml

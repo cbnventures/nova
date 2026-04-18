@@ -1,0 +1,75 @@
+---
+title: "Cache Invalidation Is Not Hard (If You Hash Everything)"
+authors: [kofi]
+tags: [caching, quench, performance, bellows]
+date: 2024-07-22
+---
+
+There is a famous quote about the two hard problems in computer science: cache invalidation, naming things, and off-by-one errors. We solved the first one by refusing to invalidate anything. Quench does not invalidate cache entries. It creates new ones. Old entries expire. The cache is append-only and immutable.
+
+This is not a new idea. Content-addressable storage has been around since Git. But applying it to build caches — where the "content" is the combination of source code, dependency versions, compiler flags, and platform targets — required us to rethink what a cache key actually means.
+
+{/* truncate */}
+
+## The Cache Key
+
+A Quench cache key is a SHA-256 hash of four inputs, concatenated in a deterministic order:
+
+1. **Source hash.** Every file in the package, sorted by path, hashed individually, then Merkle-tree'd into a single root hash.
+2. **Dependency hash.** The resolved version of every dependency in the Tongs graph, including transitive dependencies.
+3. **Manifest hash.** The relevant section of the `.grain` manifest — Warden rules, Smelter target, platform flags.
+4. **Toolchain hash.** The version of Foundry itself, plus the version of every compiler and tool in the pipeline.
+
+If any of these four inputs change, the cache key changes, and Quench treats it as a fresh build. If none change, the cached artifacts are restored byte-for-byte.
+
+```text title="Quench cache key breakdown"
+$ foundry quench key --verbose packages/core
+
+Source hash:      a1b2c3d4e5f6...
+Dependency hash:  f6e5d4c3b2a1...
+Manifest hash:    1a2b3c4d5e6f...
+Toolchain hash:   6f5e4d3c2b1a...
+─────────────────────────────────
+Cache key:        9x8y7z6w5v4u...
+```
+
+## Why Not Timestamps?
+
+Most build tools use file modification timestamps to decide what needs rebuilding. This is fast but wrong. Timestamps break in at least three common scenarios:
+
+- **Git operations.** Checking out a branch changes the mtime of every file that differs between branches, even if you switch back. The build cache is now stale for files that did not actually change.
+- **CI environments.** Continuous integration runners typically clone the repository fresh, which sets every mtime to the clone time. From the build tool's perspective, every file just changed.
+- **Time zones and clock skew.** Distributed teams with unsynchronized clocks can produce timestamps that are in the future relative to cached artifacts. The build tool sees a "newer" source file and rebuilds unnecessarily.
+
+Hashing the file content instead of checking its timestamp eliminates all three problems. Two files with identical content produce identical hashes regardless of when they were last modified, who modified them, or what timezone the machine is in.
+
+## Remote Cache Sharing
+
+By default, Quench stores cache artifacts in a local directory. But because cache keys are deterministic, sharing them across machines is straightforward. If developer A builds package `core` and pushes the cached artifact to a shared store, developer B can pull that artifact and skip the build entirely — as long as their inputs produce the same cache key.
+
+We support three remote backends:
+
+- **Filesystem (NFS/SMB).** Mount a shared directory. Quench reads and writes to it like a local cache.
+- **Object storage.** S3-compatible endpoints. Each cache entry is a single object keyed by its hash.
+- **Foundry Cloud.** A managed service that handles storage, eviction, and access control. We run this for our own team.
+
+The remote cache reduced our CI build times by an additional 40% because most pull request builds share 95% of their cache keys with the main branch.
+
+## Eviction
+
+Quench does not delete cache entries during a build. Eviction is a separate, offline process. The default policy is LRU with a 7-day TTL and a 10 GB size cap. You can adjust both in the manifest:
+
+```text title="project.grain — cache eviction policy"
+workspace "my-workspace" {
+  quench {
+    max_size = "20GB"
+    max_age  = "14d"
+  }
+}
+```
+
+Eviction runs automatically at the end of a successful build, or manually with `foundry quench prune`. It never runs during a build because removing a cache entry mid-build could cause a dependent package to miss the cache it was about to hit.
+
+## The Lesson
+
+Cache invalidation is hard when you try to figure out what changed. It is trivial when you hash everything and let the hashes tell you.

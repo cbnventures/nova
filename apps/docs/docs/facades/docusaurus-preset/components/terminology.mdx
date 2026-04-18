@@ -1,0 +1,94 @@
+---
+id: terminology
+title: Terminology
+description: Inline glossary component that expands abbreviations on hover and optionally links to a glossary page.
+sidebar_position: 9
+keywords:
+  - nova
+  - docusaurus facades
+  - terminology component
+  - glossary tooltip
+  - inline definition
+  - documentation
+tags:
+  - facades
+  - component
+  - terminology
+  - glossary
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Terminology
+
+Inline glossary component that expands abbreviations on hover. Wrap any text to add a tooltip with the expanded form. Optionally links to a glossary page and supports a color accent.
+
+## Summary
+
+The Terminology component renders an `<abbr>` (or `<Link>` when `to` is provided) with `aria-label` and `title` attributes set to the expanded abbreviation. On hover, browsers display the tooltip natively.
+
+The optional `color` prop adds a visual accent to distinguish glossary terms from regular text.
+
+## Why Use This Component?
+
+- **Abbreviation expansion** without leaving the page or breaking reading flow.
+- **Linked glossary** — optionally navigate to a terminology page on click.
+- **Accessible** — uses native `title` and `aria-label` attributes for screen readers.
+- **Preset-aware** — the color accent uses the active preset's primary color.
+
+## Usage
+
+<Tabs groupId="terminology-usage">
+  <TabItem value="basic" label="Basic" default>
+
+```tsx
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+
+<p>
+  Nova provides strict <Terminology title="pre-built configuration layer">presets</Terminology> for
+  TypeScript projects.
+</p>
+```
+
+  </TabItem>
+  <TabItem value="linked" label="With link">
+
+```tsx
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+
+<p>
+  Configure your <Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript">ESM</Terminology> build
+  pipeline with Nova presets.
+</p>
+```
+
+  </TabItem>
+  <TabItem value="colored" label="With color accent">
+
+```tsx
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+
+<p>
+  Every <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color>CLI</Terminology> command
+  runs through the Nova toolkit.
+</p>
+```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Prop       | Type                   | Default     | Description                                                       |
+|------------|------------------------|-------------|-------------------------------------------------------------------|
+| `children` | `ReactNode`            | —           | The text to wrap with a tooltip. Required.                        |
+| `title`    | `string`               | —           | Expanded abbreviation shown on hover. Required.                   |
+| `to`       | `string \| undefined`  | `undefined` | Link target. When set, renders as a `<Link>` instead of `<abbr>`. |
+| `color`    | `boolean \| undefined` | `undefined` | Set to `true` to add a color accent to the text.                  |
+
+## Troubleshooting
+
+- **Tooltip not showing** — The tooltip uses the native HTML `title` attribute. It appears after a brief hover delay, which varies by browser.
+- **Color accent** — The `color` prop adds the `nova-terminology-colored` CSS class. This is styled by the active preset.
+- **Link not navigating** — Ensure the `to` prop points to a valid docs path. Without `to`, the component renders as a non-interactive `<abbr>`.

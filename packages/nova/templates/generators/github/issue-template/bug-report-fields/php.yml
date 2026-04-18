@@ -1,0 +1,8 @@
+  - type: "input"
+    id: "php-version"
+    attributes:
+      label: "PHP version"
+      description: "What version of PHP are you using? Run `php --version` in your terminal to find out."
+      placeholder: "e.g. 8.5.3"
+    validations:
+      required: true

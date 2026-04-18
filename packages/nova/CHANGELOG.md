@@ -1,5 +1,40 @@
 # @cbnventures/nova
 
+## 0.15.0 - 2026-04-18
+
+### UPDATED
+- ESLint presets and config migrated from .mjs/.mts to TypeScript
+- Documentation URLs migrated to nova.cbnventures.io
+- Build process split into source transpilation, type copying, template bundling, and tsconfig preset copying
+- TSConfig fan-out with dedicated source, tests, and config tsconfigs
+- 4 ESLint rules reorganized into better-fitting categories
+- Toolkit classes renamed to PascalCase convention (ToolkitCliHeader, ToolkitLogger, ToolkitMarkdownTable)
+- ESLint runtime presets renamed from env-* to runtime-*
+- Test runner migrated from Node.js native tests to Vitest
+- Parallel script runner now streams output in real-time with color-coded prefixes and configurable buffer interval
+
+### FIXED
+- runtime-cloudflare-workers TSConfig preset lib array corrected from WebWorker to ESNext
+
+### ADDED
+- 30 new ESLint rules across conventions, formatting, jsdoc, patterns, safety, syntax, and typescript categories
+- Workflow dependency chains via depends-on for ordered publishing across packages
+- Modular trigger system for workflow generator with per-template trigger files
+- GitHub generators for FUNDING.yml, issue templates, and workflow files
+- Agent convention generator producing CLAUDE.md, AGENTS.md, PROJECT_RULES.md, VISION.md, and language-specific coding guides
+- Scaffold starter template for bootstrapping new monorepos
+- Interactive workflow setup in init TUI with template, suffix, trigger, depends-on, and variable description prompts
+- .env auto-loading from project root or config directory at CLI startup
+- Scaffold commands for Next.js, Vite, Express.js, Cloudflare Workers, and Docusaurus workspaces
+- Nova config URL fields with init TUI prompts for Docker Hub, privacy policy, and terms of use
+- Public type exports via ./types/* paths
+- .novaignore marker file to exclude directories from workspace discovery
+- Must-have generators for .env.sample, .editorconfig, .gitignore, LICENSE, and README
+- Nova config project identity fields with init TUI prompts for legal name, pronouns, platforms, starting year, and license
+
+### REMOVED
+- platform-cloudflare-workers ESLint preset (merged into runtime-cloudflare-workers)
+
 ## 0.14.0 - 2026-03-07
 
 ### UPDATED

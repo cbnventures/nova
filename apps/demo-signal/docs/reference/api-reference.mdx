@@ -1,0 +1,298 @@
+---
+title: API Reference
+sidebar_position: 1
+tags:
+  - reference
+  - api
+---
+
+import Details from '@theme/Details';
+
+# API Reference
+
+Signal exposes a REST API through Spoke. Every feature available in the CLI is available programmatically. All requests require a Bearer token in the `Authorization` header.
+
+## Base URL
+
+```
+https://api.signal.example/v2
+```
+
+## Authentication
+
+```bash title="Authenticated request"
+curl -H "Authorization: Bearer sk_live_your_api_key" \
+  https://api.signal.example/v2/beacons
+```
+
+All API keys start with `sk_live_` for production and `sk_test_` for sandbox environments. Generate keys from the Signal dashboard or via the `signal auth` CLI command.
+
+---
+
+## Links
+
+### Create a Beacon Link
+
+| Property | Value                   |
+|----------|-------------------------|
+| Method   | `POST`                  |
+| Path     | `/v2/beacons`           |
+| Auth     | Bearer token (required) |
+
+```bash title="Create a Beacon link"
+curl -X POST https://api.signal.example/v2/beacons \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://threadbare.example/pricing",
+    "domain": "go.signal.example",
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta"
+  }'
+```
+
+<Details>
+<summary>Response schema</summary>
+
+```json title="201 Created"
+{
+  "id": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "shortUrl": "https://go.signal.example/a7x9m2",
+  "url": "https://threadbare.example/pricing",
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  },
+  "clicks": 0,
+  "createdAt": "2025-02-20T09:15:00.000Z"
+}
+```
+
+</Details>
+
+### List Beacon Links
+
+| Property | Value                   |
+|----------|-------------------------|
+| Method   | `GET`                   |
+| Path     | `/v2/beacons`           |
+| Auth     | Bearer token (required) |
+
+| Parameter  | Type   | Default | Description                           |
+|------------|--------|---------|---------------------------------------|
+| `campaign` | string | —       | Filter by campaign name.              |
+| `channel`  | string | —       | Filter by channel.                    |
+| `domain`   | string | —       | Filter by branded domain.             |
+| `limit`    | number | 50      | Results per page (max 200).           |
+| `cursor`   | string | —       | Pagination cursor from previous page. |
+
+```bash title="List links for a campaign"
+curl "https://api.signal.example/v2/beacons?campaign=product-launch&limit=10" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+### Update a Beacon Link
+
+| Property | Value                   |
+|----------|-------------------------|
+| Method   | `PATCH`                 |
+| Path     | `/v2/beacons/:id`       |
+| Auth     | Bearer token (required) |
+
+```bash title="Update destination URL"
+curl -X PATCH https://api.signal.example/v2/beacons/bcn_01J9K4M7N2P8Q3R5S6T1U0V2 \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://threadbare.example/pricing-v2" }'
+```
+
+### Delete a Beacon Link
+
+| Property | Value                   |
+|----------|-------------------------|
+| Method   | `DELETE`                |
+| Path     | `/v2/beacons/:id`       |
+| Auth     | Bearer token (required) |
+
+```bash title="Delete a link"
+curl -X DELETE https://api.signal.example/v2/beacons/bcn_01J9K4M7N2P8Q3R5S6T1U0V2 \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## Analytics
+
+### Query Clicks
+
+| Property | Value                   |
+|----------|-------------------------|
+| Method   | `GET`                   |
+| Path     | `/v2/analytics/clicks`  |
+| Auth     | Bearer token (required) |
+
+| Parameter     | Type   | Default | Description                                |
+|---------------|--------|---------|--------------------------------------------|
+| `beacon`      | string | —       | Filter by Beacon ID.                       |
+| `campaign`    | string | —       | Filter by campaign.                        |
+| `from`        | string | 7d ago  | Start date (ISO 8601).                     |
+| `to`          | string | now     | End date (ISO 8601).                       |
+| `granularity` | string | `day`   | Aggregation period: `hour`, `day`, `week`. |
+
+```bash title="Query click analytics"
+curl "https://api.signal.example/v2/analytics/clicks?campaign=product-launch&granularity=day" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+<Details>
+<summary>Response schema</summary>
+
+```json title="200 OK"
+{
+  "campaign": "product-launch",
+  "granularity": "day",
+  "data": [
+    { "date": "2025-02-18", "clicks": 2150, "unique": 1540 },
+    { "date": "2025-02-19", "clicks": 1890, "unique": 1350 },
+    { "date": "2025-02-20", "clicks": 2480, "unique": 1780 }
+  ]
+}
+```
+
+</Details>
+
+### Query Attribution Paths
+
+| Property | Value                   |
+|----------|-------------------------|
+| Method   | `GET`                   |
+| Path     | `/v2/analytics/paths`   |
+| Auth     | Bearer token (required) |
+
+| Parameter  | Type   | Default  | Description                                                 |
+|------------|--------|----------|-------------------------------------------------------------|
+| `trace`    | string | —        | Specific trace ID.                                          |
+| `campaign` | string | —        | All paths in a campaign.                                    |
+| `model`    | string | `linear` | Attribution model: `linear`, `decay`, `position`, `custom`. |
+
+```bash title="Query a specific attribution path"
+curl "https://api.signal.example/v2/analytics/paths?trace=trc_8f3a1b2c4d5e6f70&model=decay" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## Audiences
+
+### List Segments
+
+| Property | Value                    |
+|----------|--------------------------|
+| Method   | `GET`                    |
+| Path     | `/v2/audiences/segments` |
+| Auth     | Bearer token (required)  |
+
+### Create a Segment
+
+| Property | Value                    |
+|----------|--------------------------|
+| Method   | `POST`                   |
+| Path     | `/v2/audiences/segments` |
+| Auth     | Bearer token (required)  |
+
+```bash title="Create a segment"
+curl -X POST https://api.signal.example/v2/audiences/segments \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "high-intent-email",
+    "conditions": [
+      { "field": "channel", "operator": "==", "value": "email" },
+      { "field": "clicks", "operator": ">=", "value": 5 }
+    ]
+  }'
+```
+
+### Query Overlap
+
+| Property | Value                   |
+|----------|-------------------------|
+| Method   | `POST`                  |
+| Path     | `/v2/audiences/overlap` |
+| Auth     | Bearer token (required) |
+
+```bash title="Query audience overlap"
+curl -X POST https://api.signal.example/v2/audiences/overlap \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "segments": ["high-intent-email", "social-clickers"] }'
+```
+
+<Details>
+<summary>Response schema</summary>
+
+```json title="200 OK"
+{
+  "segments": ["high-intent-email", "social-clickers"],
+  "sizes": { "high-intent-email": 4280, "social-clickers": 6120 },
+  "overlap": { "count": 1720, "percent": 40.2 }
+}
+```
+
+</Details>
+
+---
+
+## Campaigns
+
+### Create a Campaign
+
+| Property | Value                   |
+|----------|-------------------------|
+| Method   | `POST`                  |
+| Path     | `/v2/campaigns`         |
+| Auth     | Bearer token (required) |
+
+### Take a Snapshot
+
+| Property | Value                         |
+|----------|-------------------------------|
+| Method   | `POST`                        |
+| Path     | `/v2/campaigns/:id/snapshots` |
+| Auth     | Bearer token (required)       |
+
+### Compare Snapshots
+
+| Property | Value                                 |
+|----------|---------------------------------------|
+| Method   | `GET`                                 |
+| Path     | `/v2/campaigns/:id/snapshots/compare` |
+| Auth     | Bearer token (required)               |
+
+| Parameter | Type   | Description                         |
+|-----------|--------|-------------------------------------|
+| `from`    | string | Label or ID of the first snapshot.  |
+| `to`      | string | Label or ID of the second snapshot. |
+
+```bash title="Compare two snapshots"
+curl "https://api.signal.example/v2/campaigns/cmp_01J9L2M8N4P6Q7R3S5T0U1V9/snapshots/compare?from=week-1&to=week-2" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## Keyboard Shortcuts (CLI)
+
+The Signal CLI supports keyboard shortcuts in interactive mode:
+
+| Shortcut                                          | Action                       |
+|---------------------------------------------------|------------------------------|
+| <kbd>Ctrl</kbd> + <kbd>C</kbd>                    | Cancel current operation.    |
+| <kbd>Ctrl</kbd> + <kbd>L</kbd>                    | Clear the Pulse live stream. |
+| <kbd>Ctrl</kbd> + <kbd>R</kbd>                    | Refresh campaign metrics.    |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | Export current view to CSV.  |
+
+On macOS, substitute <kbd>Ctrl</kbd> with <kbd>Cmd</kbd> for most shortcuts.

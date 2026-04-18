@@ -1,64 +1,67 @@
-import { CLIRecipePackageJsonCleanup } from '@/cli/recipe/package-json/cleanup.js';
-import { CLIRecipePackageJsonNormalizeArtifacts } from '@/cli/recipe/package-json/normalize-artifacts.js';
-import { CLIRecipePackageJsonNormalizeBundler } from '@/cli/recipe/package-json/normalize-bundler.js';
-import { CLIRecipePackageJsonNormalizeDependencies } from '@/cli/recipe/package-json/normalize-dependencies.js';
-import { CLIRecipePackageJsonNormalizeModules } from '@/cli/recipe/package-json/normalize-modules.js';
-import { CLIRecipePackageJsonNormalizeTooling } from '@/cli/recipe/package-json/normalize-tooling.js';
-import { CLIRecipePackageJsonSyncEnvironment } from '@/cli/recipe/package-json/sync-environment.js';
-import { CLIRecipePackageJsonSyncIdentity } from '@/cli/recipe/package-json/sync-identity.js';
-import { CLIRecipePackageJsonSyncOwnership } from '@/cli/recipe/package-json/sync-ownership.js';
+import { CliRecipePackageJsonCleanup } from './package-json/cleanup.js';
+import { CliRecipePackageJsonNormalizeArtifacts } from './package-json/normalize-artifacts.js';
+import { CliRecipePackageJsonNormalizeBundler } from './package-json/normalize-bundler.js';
+import { CliRecipePackageJsonNormalizeDependencies } from './package-json/normalize-dependencies.js';
+import { CliRecipePackageJsonNormalizeModules } from './package-json/normalize-modules.js';
+import { CliRecipePackageJsonNormalizeTooling } from './package-json/normalize-tooling.js';
+import { CliRecipePackageJsonSyncEnvironment } from './package-json/sync-environment.js';
+import { CliRecipePackageJsonSyncIdentity } from './package-json/sync-identity.js';
+import { CliRecipePackageJsonSyncOwnership } from './package-json/sync-ownership.js';
 
-import type { CLIRecipeRegistry } from '@/types/cli/recipe/index.d.ts';
+import type { CliRecipeRegistry } from '../../types/cli/recipe/index.d.ts';
 
 /**
- * CLI Recipe - Registry.
+ * CLI - Recipe - Registry.
  *
- * @since 1.0.0
+ * Ordered list of all package-json recipes executed by run-recipes. Each entry maps a
+ * recipe name to its run method for invocation.
+ *
+ * @since 0.14.0
  */
-export const recipeRegistry: CLIRecipeRegistry = [
+export const registry: CliRecipeRegistry = [
   {
     name: 'sync-identity',
     label: 'package-json/sync-identity',
-    run: CLIRecipePackageJsonSyncIdentity.run,
+    run: CliRecipePackageJsonSyncIdentity['run'],
   },
   {
     name: 'sync-ownership',
     label: 'package-json/sync-ownership',
-    run: CLIRecipePackageJsonSyncOwnership.run,
+    run: CliRecipePackageJsonSyncOwnership['run'],
   },
   {
     name: 'normalize-modules',
     label: 'package-json/normalize-modules',
-    run: CLIRecipePackageJsonNormalizeModules.run,
+    run: CliRecipePackageJsonNormalizeModules['run'],
   },
   {
     name: 'normalize-artifacts',
     label: 'package-json/normalize-artifacts',
-    run: CLIRecipePackageJsonNormalizeArtifacts.run,
+    run: CliRecipePackageJsonNormalizeArtifacts['run'],
   },
   {
     name: 'sync-environment',
     label: 'package-json/sync-environment',
-    run: CLIRecipePackageJsonSyncEnvironment.run,
+    run: CliRecipePackageJsonSyncEnvironment['run'],
   },
   {
     name: 'normalize-dependencies',
     label: 'package-json/normalize-dependencies',
-    run: CLIRecipePackageJsonNormalizeDependencies.run,
+    run: CliRecipePackageJsonNormalizeDependencies['run'],
   },
   {
     name: 'normalize-bundler',
     label: 'package-json/normalize-bundler',
-    run: CLIRecipePackageJsonNormalizeBundler.run,
+    run: CliRecipePackageJsonNormalizeBundler['run'],
   },
   {
     name: 'normalize-tooling',
     label: 'package-json/normalize-tooling',
-    run: CLIRecipePackageJsonNormalizeTooling.run,
+    run: CliRecipePackageJsonNormalizeTooling['run'],
   },
   {
     name: 'cleanup',
     label: 'package-json/cleanup',
-    run: CLIRecipePackageJsonCleanup.run,
+    run: CliRecipePackageJsonCleanup['run'],
   },
 ];

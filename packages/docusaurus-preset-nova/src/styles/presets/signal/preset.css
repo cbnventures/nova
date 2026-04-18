@@ -1,0 +1,574 @@
+/**
+ * Signal — Preset identity, design tokens, keyframes, and global visual styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Design Tokens
+ * ============================ */
+
+:root {
+  --nova-signal-bg-light: #ffffff;
+  --nova-signal-bg-dark: var(--nova-color-neutral-950);
+  --nova-grid-padding: 12px;
+  --nova-grid-gutter: 12px;
+  --nova-section-gap: 2rem;
+}
+
+@media (min-width: 640px) {
+  :root {
+    --nova-section-gap: 2.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nova-grid-padding: 16px;
+    --nova-grid-gutter: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nova-grid-padding: 20px;
+    --nova-grid-gutter: 20px;
+    --nova-section-gap: 3rem;
+  }
+}
+
+[data-theme="dark"] {
+  --nova-depth-card-border: 1px solid var(--nova-color-neutral-700);
+  --nova-depth-code-border: 1px solid var(--nova-color-neutral-700);
+}
+
+/* Text selection — rose highlight. */
+::selection {
+  background-color: var(--nova-color-primary-200);
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] ::selection {
+  background-color: var(--nova-color-primary-800);
+  color: var(--nova-color-neutral-50);
+}
+
+/* Universal focus — sharp rose outline, no blur. */
+:focus-visible {
+  outline: 2px solid var(--nova-color-primary-600);
+  outline-offset: 0;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--nova-color-primary-400);
+}
+
+/* Remove default focus ring where focus-visible applies. */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Viewport overflow guard. */
+html {
+  overflow-x: hidden;
+}
+
+/* ============================
+ * 2. Keyframes
+ * ============================ */
+
+/* Links — instant color shift, no transform. */
+a {
+  transition: color var(--nova-motion-duration) ease;
+}
+
+/* Buttons — background and border shift. */
+button,
+[role="button"] {
+  transition:
+    background-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease;
+}
+
+/* Sidebar links — background shift. */
+nav[aria-label="Docs sidebar"] li a {
+  transition:
+    color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease;
+}
+
+/* Tab indicators — border shift. */
+[role="tab"] {
+  transition:
+    color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease;
+}
+
+/* Footer links — color shift. */
+.nova-footer-ledger-links a,
+.nova-footer-ledger-social a {
+  transition: color var(--nova-motion-duration) ease;
+}
+
+/* Pagination — border shift. */
+.pagination-nav__link {
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+/* Search results — background shift. */
+.nova-search-result {
+  transition: background-color var(--nova-motion-duration) ease;
+}
+
+/* Cards — border shift only. */
+.nova-doc-card,
+article[class*="card"] {
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+/* Tags — border and color shift. */
+.tag {
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease;
+}
+
+/* Back to top — border and color shift. */
+.nova-back-to-top {
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease;
+}
+
+/* Code copy button — color shift. */
+.nova-code-block-copy {
+  transition: color var(--nova-motion-duration) ease;
+}
+
+/* Code expand button — color shift. */
+.nova-code-block-expand {
+  transition: color var(--nova-motion-duration) ease;
+}
+
+/* Reduced motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* !important is intentional — accessibility override must win regardless of specificity. */
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================
+ * 3. Links
+ * ============================ */
+
+/* Rose links, always underlined. No hover reveal. */
+a {
+  color: var(--nova-color-primary-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] a {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] a:hover,
+[data-theme="dark"] a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 4. CTA Buttons
+ * ============================ */
+
+/* Primary CTA — dark fill, rose on hover. */
+.nova-cta-primary {
+  padding: 0.5rem 1.25rem;
+  background-color: var(--nova-color-neutral-900);
+  color: var(--nova-color-neutral-50);
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid var(--nova-color-neutral-900);
+  transition:
+    background-color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-cta-primary {
+  background-color: var(--nova-color-neutral-50);
+  color: var(--nova-color-neutral-900);
+  border-color: var(--nova-color-neutral-50);
+}
+
+.nova-cta-primary:hover,
+.nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-600);
+  color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-cta-primary:hover,
+[data-theme="dark"] .nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+  color: var(--nova-color-neutral-50);
+}
+
+/* Secondary CTA — ghost, bordered. */
+.nova-cta-secondary {
+  padding: 0.5rem 1.25rem;
+  border: 1px solid var(--nova-color-neutral-300);
+  color: var(--nova-color-neutral-600);
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: transparent;
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-cta-secondary {
+  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-cta-secondary:hover,
+.nova-cta-secondary:focus-visible {
+  border-color: var(--nova-color-primary-600);
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-cta-secondary:hover,
+[data-theme="dark"] .nova-cta-secondary:focus-visible {
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-400);
+}
+
+.nova-cta-primary,
+.nova-cta-secondary {
+  width: 100%;
+  text-align: center;
+}
+
+@media (min-width: 480px) {
+  .nova-cta-primary,
+  .nova-cta-secondary {
+    width: auto;
+    text-align: left;
+  }
+}
+
+/* ============================
+ * 4. Scrollbar
+ * ============================ */
+
+html {
+  scrollbar-color: var(--nova-color-primary-300) transparent;
+}
+
+[data-theme="dark"] {
+  scrollbar-color: var(--nova-color-primary-700) transparent;
+}
+
+/* ============================
+ * 5. Stats & Spotlight
+ * ============================ */
+
+.nova-stats-heading {
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-stats-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+.nova-stats-description {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-stats-description {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-stat {
+  padding: 1rem 0.5rem;
+}
+
+.nova-stat + .nova-stat {
+  border-left: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-stat + .nova-stat {
+  border-left-color: var(--nova-color-neutral-800);
+}
+
+.nova-stat:nth-child(odd) {
+  border-left: none;
+}
+
+.nova-stat:nth-child(n+3) {
+  border-top: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-stat:nth-child(n+3) {
+  border-top-color: var(--nova-color-neutral-800);
+}
+
+@media (min-width: 640px) {
+  .nova-stat:nth-child(odd) {
+    border-left: none;
+  }
+
+  .nova-stat:nth-child(n+3) {
+    border-top: none;
+  }
+
+  .nova-stat:nth-child(n+2) {
+    border-left: 1px solid var(--nova-color-neutral-200);
+  }
+
+  [data-theme="dark"] .nova-stat:nth-child(n+2) {
+    border-left-color: var(--nova-color-neutral-800);
+  }
+}
+
+.nova-stat-value {
+  font-family: var(--nova-font-code);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-stat-value {
+  color: var(--nova-color-neutral-100);
+}
+
+@media (min-width: 640px) {
+  .nova-stat-value {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-stat-value {
+    font-size: 2rem;
+  }
+}
+
+.nova-stat-primary {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-stat-primary {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-stat-accent {
+  color: var(--nova-color-accent-600);
+}
+
+[data-theme="dark"] .nova-stat-accent {
+  color: var(--nova-color-accent-400);
+}
+
+.nova-stat-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-stat-label {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-spotlight-heading {
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-spotlight-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+.nova-section-description {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-section-description {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-code-snippet {
+  background-color: var(--nova-signal-bg-light);
+  border: 1px solid var(--nova-color-neutral-300);
+}
+
+[data-theme="dark"] .nova-code-snippet {
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-700);
+}
+
+/* ============================
+ * 6. Surface Alt
+ * ============================ */
+
+.nova-surface-alt {
+  padding-block: 2rem;
+  border-top: 1px solid var(--nova-color-neutral-200);
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-surface-alt {
+  border-top-color: var(--nova-color-neutral-800);
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+@media (min-width: 640px) {
+  .nova-surface-alt {
+    padding-block: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-surface-alt {
+    padding-block: 3rem;
+  }
+}
+
+/* ============================
+ * 7. Typography
+ * ============================ */
+
+/* Body text — Inter, compact line-height. */
+body {
+  font-family: var(--nova-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--nova-color-neutral-800);
+  background-color: var(--nova-signal-bg-light);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="dark"] body {
+  background-color: var(--nova-color-neutral-950);
+  color: var(--nova-color-neutral-300);
+}
+
+li {
+  margin-bottom: 0.125rem;
+  color: var(--nova-color-neutral-700);
+}
+
+[data-theme="dark"] li {
+  color: var(--nova-color-neutral-300);
+}
+
+li::marker {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] li::marker {
+  color: var(--nova-color-neutral-600);
+}
+
+/* ============================
+ * 8. Tables
+ * ============================ */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--nova-color-neutral-200);
+  min-width: 480px;
+}
+
+[data-theme="dark"] table {
+  border-color: var(--nova-color-neutral-800);
+}
+
+th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.3125rem 0.5rem;
+  border-bottom: 2px solid var(--nova-color-neutral-300);
+  border-right: 1px solid var(--nova-color-neutral-200);
+  color: var(--nova-color-neutral-500);
+  background-color: var(--nova-color-neutral-50);
+  white-space: nowrap;
+}
+
+th:last-child {
+  border-right: none;
+}
+
+[data-theme="dark"] th {
+  border-bottom-color: var(--nova-color-neutral-700);
+  border-right-color: var(--nova-color-neutral-800);
+  color: var(--nova-color-neutral-500);
+  background-color: var(--nova-color-neutral-900);
+}
+
+td {
+  padding: 0.3125rem 0.5rem;
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+  border-right: 1px solid var(--nova-color-neutral-200);
+  vertical-align: top;
+}
+
+td:last-child {
+  border-right: none;
+}
+
+[data-theme="dark"] td {
+  border-bottom-color: var(--nova-color-neutral-800);
+  border-right-color: var(--nova-color-neutral-800);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+

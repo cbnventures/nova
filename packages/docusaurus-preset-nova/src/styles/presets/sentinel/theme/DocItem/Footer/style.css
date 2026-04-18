@@ -1,0 +1,22 @@
+/**
+ * Sentinel — Doc footer visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-doc-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-doc-footer {
+  border-top-color: var(--nova-color-neutral-800);
+}
+
+@media (min-width: 768px) {
+  .nova-doc-footer {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+}

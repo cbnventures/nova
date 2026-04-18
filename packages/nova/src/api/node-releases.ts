@@ -1,81 +1,106 @@
-import { PATTERN_LEADING_V } from '@/lib/regex.js';
-import { schemaNodeReleasesSchedule } from '@/lib/schema.js';
-import { Logger } from '@/toolkit/index.js';
+import { LIB_REGEX_PATTERN_LEADING_V } from '../lib/regex.js';
+import { libSchemaNodeReleasesSchedule } from '../lib/schema.js';
+import { Logger } from '../toolkit/index.js';
 
 import type {
-  NodeReleasesConstraint,
-  NodeReleasesFetchLtsVersionsActiveLtsMajors,
-  NodeReleasesFetchLtsVersionsReturns,
-  NodeReleasesFetchLtsVersionsSchedule,
-  NodeReleasesPopulated,
-  NodeReleasesResetForTestingReturns,
-} from '@/types/api/node-releases.d.ts';
+  ApiNodeReleasesConstraint,
+  ApiNodeReleasesFetchLtsVersionsActiveLtsMajors,
+  ApiNodeReleasesFetchLtsVersionsEntry,
+  ApiNodeReleasesFetchLtsVersionsErrorMessage,
+  ApiNodeReleasesFetchLtsVersionsKey,
+  ApiNodeReleasesFetchLtsVersionsMajor,
+  ApiNodeReleasesFetchLtsVersionsResponse,
+  ApiNodeReleasesFetchLtsVersionsResponseData,
+  ApiNodeReleasesFetchLtsVersionsReturns,
+  ApiNodeReleasesFetchLtsVersionsSchedule,
+  ApiNodeReleasesFetchLtsVersionsStrippedKey,
+  ApiNodeReleasesFetchLtsVersionsToday,
+  ApiNodeReleasesPopulated,
+  ApiNodeReleasesResetForTestingReturns,
+} from '../types/api/node-releases.d.ts';
 
 /**
- * Node Releases.
+ * API - Node Releases.
  *
- * @since 1.0.0
+ * Fetches and caches the active Node.js LTS version
+ * constraint. Used by the sync-environment recipe to set
+ * the engines.node field in package.json.
+ *
+ * @since 0.13.0
  */
-export class NodeReleases {
+export class ApiNodeReleases {
   /**
-   * Node Releases - Constraint.
+   * API - Node Releases - Constraint.
+   *
+   * Holds the semver constraint string built from active LTS versions after the first fetch,
+   * for example "^18 || ^20 || ^22".
    *
    * @private
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  static #constraint: NodeReleasesConstraint;
+  static #constraint: ApiNodeReleasesConstraint;
 
   /**
-   * Node Releases - Populated.
+   * API - Node Releases - Populated.
+   *
+   * Guards against repeated network requests. Set to true after the first fetch attempt
+   * regardless of whether the request succeeded or failed.
    *
    * @private
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  static #populated: NodeReleasesPopulated;
+  static #populated: ApiNodeReleasesPopulated;
 
   /**
-   * Node Releases - Fetch LTS versions.
+   * API - Node Releases - Fetch LTS Versions.
    *
-   * @returns {NodeReleasesFetchLtsVersionsReturns}
+   * Downloads the release schedule from GitHub, filters for active LTS versions, and builds a
+   * semver constraint string. Returns the cached value on repeat calls.
    *
-   * @since 1.0.0
+   * @returns {ApiNodeReleasesFetchLtsVersionsReturns}
+   *
+   * @since 0.13.0
    */
-  public static async fetchLtsVersions(): NodeReleasesFetchLtsVersionsReturns {
-    if (NodeReleases.#populated === true) {
-      return NodeReleases.#constraint;
+  public static async fetchLtsVersions(): ApiNodeReleasesFetchLtsVersionsReturns {
+    if (ApiNodeReleases.#populated === true) {
+      return ApiNodeReleases.#constraint;
     }
 
     try {
-      const response = await fetch('https://raw.githubusercontent.com/nodejs/Release/main/schedule.json');
+      const response: ApiNodeReleasesFetchLtsVersionsResponse = await fetch('https://raw.githubusercontent.com/nodejs/Release/main/schedule.json');
 
       if (response.ok === false) {
         Logger.customize({
-          name: 'NodeReleases',
+          name: 'ApiNodeReleases',
           purpose: 'fetch',
         }).warn(`Failed to fetch Node.js release schedule. HTTP status: ${response.status}`);
 
-        NodeReleases.#populated = true;
+        ApiNodeReleases.#populated = true;
 
         return undefined;
       }
 
-      const responseData = await response.json();
+      const responseData: ApiNodeReleasesFetchLtsVersionsResponseData = await response.json<ApiNodeReleasesFetchLtsVersionsResponseData>();
 
-      const schedule: NodeReleasesFetchLtsVersionsSchedule = schemaNodeReleasesSchedule.parse(responseData);
-      const today = new Date().toISOString().slice(0, 10);
+      const schedule: ApiNodeReleasesFetchLtsVersionsSchedule = libSchemaNodeReleasesSchedule.parse(responseData);
+      const today: ApiNodeReleasesFetchLtsVersionsToday = new Date().toISOString().slice(0, 10);
 
       // Collect major versions where LTS has started and end-of-life has not passed.
-      const activeLtsMajors: NodeReleasesFetchLtsVersionsActiveLtsMajors = [];
+      const activeLtsMajors: ApiNodeReleasesFetchLtsVersionsActiveLtsMajors = [];
 
-      for (const [key, entry] of Object.entries(schedule)) {
+      for (const scheduleEntry of Object.entries(schedule)) {
+        const key: ApiNodeReleasesFetchLtsVersionsKey = scheduleEntry[0];
+        const entry: ApiNodeReleasesFetchLtsVersionsEntry = scheduleEntry[1];
+
         if (
-          typeof entry.lts === 'string'
-          && entry.lts <= today
-          && entry.end >= today
+          typeof entry['lts'] === 'string'
+          && entry['lts'] <= today
+          && entry['end'] >= today
         ) {
-          const major = parseInt(key.replace(PATTERN_LEADING_V, ''), 10);
+          const strippedKey: ApiNodeReleasesFetchLtsVersionsStrippedKey = key.replace(LIB_REGEX_PATTERN_LEADING_V, '');
+          const major: ApiNodeReleasesFetchLtsVersionsMajor = parseInt(strippedKey, 10);
 
           if (Number.isNaN(major) === false) {
             activeLtsMajors.push(major);
@@ -85,47 +110,54 @@ export class NodeReleases {
 
       if (activeLtsMajors.length === 0) {
         Logger.customize({
-          name: 'NodeReleases',
+          name: 'ApiNodeReleases',
           purpose: 'parse',
         }).warn('No active LTS versions found in Node.js release schedule.');
 
-        NodeReleases.#populated = true;
+        ApiNodeReleases.#populated = true;
 
         return undefined;
       }
 
       // Build constraint targeting all active LTS versions (e.g., "^18 || ^20 || ^22").
-      NodeReleases.#constraint = activeLtsMajors
+      ApiNodeReleases.#constraint = activeLtsMajors
         .sort((a, b) => a - b)
         .map((major) => `^${major}`)
         .join(' || ');
-      NodeReleases.#populated = true;
+      ApiNodeReleases.#populated = true;
 
-      return NodeReleases.#constraint;
+      return ApiNodeReleases.#constraint;
     } catch (error) {
-      Logger.customize({
-        name: 'NodeReleases',
-        purpose: 'fetch',
-      }).warn([
+      const errorMessage: ApiNodeReleasesFetchLtsVersionsErrorMessage = [
         'Failed to fetch Node.js release schedule.',
         error,
-      ].join('\n'));
+      ].join('\n');
 
-      NodeReleases.#populated = true;
+      Logger.customize({
+        name: 'ApiNodeReleases',
+        purpose: 'fetch',
+      }).warn(errorMessage);
+
+      ApiNodeReleases.#populated = true;
 
       return undefined;
     }
   }
 
   /**
-   * Node Releases - Reset for testing.
+   * API - Node Releases - Reset For Testing.
    *
-   * @returns {NodeReleasesResetForTestingReturns}
+   * Clears the cached constraint and populated flag
+   * so tests can exercise the fetch path from a clean state.
    *
-   * @since 1.0.0
+   * @returns {ApiNodeReleasesResetForTestingReturns}
+   *
+   * @since 0.13.0
    */
-  public static resetForTesting(): NodeReleasesResetForTestingReturns {
-    NodeReleases.#constraint = undefined;
-    NodeReleases.#populated = undefined;
+  public static resetForTesting(): ApiNodeReleasesResetForTestingReturns {
+    ApiNodeReleases.#constraint = undefined;
+    ApiNodeReleases.#populated = undefined;
+
+    return;
   }
 }

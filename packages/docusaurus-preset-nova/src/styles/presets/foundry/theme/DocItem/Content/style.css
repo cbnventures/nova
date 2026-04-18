@@ -1,0 +1,18 @@
+/**
+ * Foundry — Table visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Table Container
+ * ============================ */
+
+/* Wrap tables in a scrollable container for narrow viewports. */
+.table-wrapper,
+article .markdown > table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}

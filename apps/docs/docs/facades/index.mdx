@@ -1,0 +1,86 @@
+---
+id: overview
+title: Facades
+sidebar_label: Overview
+description: Opinionated visual identity layers that give your site a distinct look with zero manual theming.
+sidebar_position: 1
+keywords:
+  - nova
+  - facades
+  - visual identity
+  - theme preset
+  - css custom properties
+  - design tokens
+  - opinionated theme
+  - documentation site
+  - landing page
+tags:
+  - facades
+  - overview
+  - theme
+  - preset
+  - design
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Overview
+
+Use **Nova Facades** to give your site a distinct visual identity. Each facade is an opinionated preset that ships ready to use — no manual theming, no CSS overrides, no design decisions.
+
+## Purpose and Scope
+
+<Tabs groupId="facades-purpose">
+  <TabItem value="what" label="What" default>
+    <ul>
+      <li><strong>Complete visual identities</strong> for your site, applied on top of a supported framework.</li>
+      <li><strong>Design tokens</strong> generated as CSS custom properties from a simple configuration object.</li>
+      <li><strong>Pre-built components</strong> (Hero, Features, Stats, and more) that respect the active preset.</li>
+    </ul>
+  </TabItem>
+  <TabItem value="when" label="When">
+    <ul>
+      <li>When your site should look nothing like the default framework theme.</li>
+      <li>When you want a cohesive look across colors, typography, shape, depth, and motion.</li>
+      <li>When you prefer choosing a preset over assembling a design system.</li>
+      <li>When you want pre-built landing page components that match your site identity.</li>
+    </ul>
+  </TabItem>
+  <TabItem value="where" label="Where">
+    <ul>
+      <li>In new workspaces scaffolded with the Nova <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology>.</li>
+      <li>In documentation sites, product landing pages, and developer portals.</li>
+    </ul>
+  </TabItem>
+</Tabs>
+
+## What Is a Facade?
+
+A facade is an opinionated visual identity layer applied on top of a framework. It is not a design system or a starter template.
+
+**There are no tokens to hand-pick or components to compose from. The structure and content are yours.**
+
+A facade gives your site a **complete look** that ships ready to use. You pick a preset, override what you want, and build your content.
+
+The facade handles colors, typography, shape, depth, motion, navbar, footer, and code highlighting.
+
+## Available Facades
+
+### Docusaurus Preset
+
+The `@cbnventures/docusaurus-preset-nova` package provides four visual presets for Docusaurus v3 sites. Each preset defines a full visual identity: colors, fonts, shape language, depth treatment, motion behavior, navbar variant, and footer variant.
+
+| Preset                                                           | Identity                                                      |
+|------------------------------------------------------------------|---------------------------------------------------------------|
+| **[Foundry](/docs/facades/docusaurus-preset/presets/foundry)**   | Warm orange and amber with rounded shapes and elevated cards. |
+| **[Sentinel](/docs/facades/docusaurus-preset/presets/sentinel)** | Teal and indigo with rounded shapes and flat cards.           |
+| **[Signal](/docs/facades/docusaurus-preset/presets/signal)**     | Rose and amber with sharp shapes and compact density.         |
+| **[Envoy](/docs/facades/docusaurus-preset/presets/envoy)**       | Purple and cyan with rounded shapes and elevated cards.       |
+
+## Philosophy
+
+Nova Facades are designed so you should not need to customize beyond the configuration. Every visual decision is controlled through the preset.
+
+If the preset does not cover your use case, [open an issue](https://github.com/cbnventures/nova/issues) so the configuration can be expanded rather than requiring a manual override.

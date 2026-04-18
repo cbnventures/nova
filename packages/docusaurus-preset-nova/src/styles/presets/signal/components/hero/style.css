@@ -1,0 +1,105 @@
+/**
+ * Signal — Hero visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Hero Container
+ * ============================ */
+
+.nova-hero {
+  margin: 2rem 0 1.5rem;
+  text-align: center;
+}
+
+/* ============================
+ * 2. Hero Eyebrow
+ * ============================ */
+
+.nova-hero-eyebrow {
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-600);
+  margin-bottom: 0.625rem;
+}
+
+[data-theme="dark"] .nova-hero-eyebrow {
+  color: var(--nova-color-accent-400);
+}
+
+/* ============================
+ * 3. Hero Heading
+ * ============================ */
+
+.nova-hero-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+  color: var(--nova-color-neutral-900);
+  border: none;
+  padding: 0;
+}
+
+[data-theme="dark"] .nova-hero-heading {
+  color: var(--nova-color-neutral-50);
+}
+
+/* ============================
+ * 4. Hero Tagline
+ * ============================ */
+
+.nova-hero-tagline {
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-hero-tagline {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 5. Hero Actions
+ * ============================ */
+
+.nova-hero-actions {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+/* ============================
+ * 6. Responsive
+ * ============================ */
+
+@media (min-width: 480px) {
+  .nova-hero-heading {
+    font-size: 1.75rem;
+  }
+
+  .nova-hero-actions {
+    flex-direction: row;
+    align-items: stretch;
+  }
+}
+
+@media (min-width: 768px) {
+  .nova-hero {
+    margin: 3rem 0 2rem;
+  }
+
+  .nova-hero-heading {
+    font-size: 2.25rem;
+  }
+
+  .nova-hero-tagline {
+    font-size: 0.9375rem;
+  }
+}

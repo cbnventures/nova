@@ -1,0 +1,199 @@
+---
+id: no-use-before-define
+title: No Use Before Define
+description: Disallow use of variables, constants, functions, classes, and types before they are defined.
+keywords:
+  - nova
+  - eslint rule
+  - use before define
+  - forward reference
+  - hoisting
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Catch identifiers used before their declaration so read order matches definition order. Set individual options to `false` to allow forward references for specific categories.
+
+## Summary
+
+The `no-use-before-define` rule reports any identifier that is referenced before its declaration — including variables, functions, classes, and types.
+
+All categories are checked by default. Set individual options to `false` to allow forward references for specific categories.
+
+## Why Use This Rule?
+
+1. Prevents confusing references to variables that have not been declared yet in the read order.
+2. Allows functions and classes to reference each other freely for alphabetical organization.
+3. Catches temporal dead zone errors at lint time instead of at runtime.
+
+## Examples
+
+<Tabs groupId="no-use-before-define-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Function called before definition — allowed.
+    function apple() {
+      banana();
+
+      return;
+    }
+
+    function banana() {
+      cherry();
+
+      return;
+    }
+
+    function cherry() {
+      return 'done';
+    }
+
+    // Class referenced before definition — allowed.
+    class Animal {
+      public createDog() {
+        return new Dog();
+      }
+    }
+
+    class Dog extends Animal {}
+
+    // Type used before definition — allowed.
+    type Input = {
+      result: Output;
+    };
+
+    type Output = {
+      value: string;
+    };
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const x = y + 1;
+    const y = 5;
+
+    console.log(name);
+    let name = 'Alice';
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-use-before-define-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoUseBeforeDefine } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-use-before-define': NoUseBeforeDefine.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-use-before-define': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="allow-forward-references" label="Allow Forward References">
+
+    Allow functions, classes, and types to be referenced before their declaration:
+
+    ```ts
+    import { NoUseBeforeDefine } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-use-before-define': NoUseBeforeDefine.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-use-before-define': ['error', {
+            classes: false,
+            functions: false,
+            types: false,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoUseBeforeDefine } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-use-before-define': NoUseBeforeDefine.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-use-before-define': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                                  |
+|---------------|------------|---------|----------------------------------------------|
+| `classes`     | `boolean`  | `true`  | Check class declarations.                    |
+| `functions`   | `boolean`  | `true`  | Check function declarations.                 |
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                       |
+| `types`       | `boolean`  | `true`  | Check type alias and interface declarations. |
+| `variables`   | `boolean`  | `true`  | Check const and let declarations.            |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Function forward references are flagged** — Set `functions` to `false` if you want to allow function forward references for alphabetical organization.
+- **All categories are checked by default** — Set `classes`, `functions`, or `types` to `false` individually to allow forward references for specific categories.

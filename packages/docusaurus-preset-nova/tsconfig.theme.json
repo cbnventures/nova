@@ -1,0 +1,41 @@
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json",
+    "@cbnventures/nova/presets/tsconfig/runtime-browser.json"
+  ],
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "outDir": "./build",
+    "rootDir": "./",
+    "types": [
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/types",
+      "@types/node",
+      "@types/react",
+      "@types/react-dom",
+      "./nova-theme"
+    ]
+  },
+  "include": [
+    "./nova-theme.d.ts",
+    "./src/components/**/*",
+    "./src/lib/mermaid.ts",
+    "./src/lib/rehype-shiki.ts",
+    "./src/lib/search/perform-search.ts",
+    "./src/lib/search/use-search-worker.ts",
+    "./src/lib/search/use-search-highlight.ts",
+    "./src/types/lib/mermaid.d.ts",
+    "./src/types/lib/rehype-shiki.d.ts",
+    "./src/types/lib/search/worker.d.ts",
+    "./src/types/lib/search/use-search-worker.d.ts",
+    "./src/types/lib/search/use-search-highlight.d.ts",
+    "./src/theme/**/*",
+    "./src/types/theme/Root/icons.d.ts",
+    "./src/tests/**/*"
+  ],
+  "exclude": [
+    "./build/**",
+    "./node_modules/**"
+  ]
+}

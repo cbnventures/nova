@@ -1,0 +1,121 @@
+---
+id: nextjs
+title: Next.js
+description: Scaffold a Next.js workspace with monorepo or workspace mode.
+keywords:
+  - nova
+  - nova scaffold
+  - nextjs
+  - next.js
+  - app
+  - react
+  - monorepo
+tags:
+  - cli
+  - scaffold
+  - app
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **Next.js** workspace with React, TypeScript, and the App Router.
+
+## Why Use This Command?
+
+- Installs Next.js 15 with React 19, TypeScript, and the App Router so you can start building pages immediately.
+- Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
+- Wires up `next dev`, `next build`, and `next start` scripts so the workspace runs without extra configuration.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Empty directory** (monorepo mode) or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** (workspace mode) — The command auto-detects which mode to use.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold app nextjs
+
+    # Shorthand
+    nova scaf app next
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold app nextjs
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf app next
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                            |
+|---------------------------|----------------------------------------|
+| `-d, --dry-run`           | Preview changes without writing files. |
+| `--name <name>`           | Project or workspace name.             |
+| `--workspace-name <name>` | Workspace directory name.              |
+| `--output <dir>`          | Output directory.                      |
+
+## Output Structure
+
+```
+{project-slug}/
+├── package.json
+├── nova.config.json
+├── apps/
+│   └── {workspace-name}/
+│       ├── package.json
+│       ├── next.config.mjs
+│       ├── tsconfig.json
+│       └── src/
+│           └── app/
+│               ├── layout.tsx
+│               ├── page.tsx
+│               └── globals.css
+└── packages/
+```
+
+## How It Works
+
+### Interactive Wizard
+
+When run without flags, the command walks you through an interactive wizard:
+
+**Monorepo mode** (no `package.json` found):
+
+1. **Project name** — Enter a slug for your monorepo (e.g. `my-app`).
+2. **Workspace name** — Enter a slug for the workspace directory (default: `nextjs`).
+3. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
+4. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
+5. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+
+**Workspace mode** (`package.json` with `workspaces` found):
+
+1. **Package name** — Enter a slug for the workspace package (e.g. `my-app`).
+2. **Workspace name** — Enter a slug for the workspace directory (default: `nextjs`).
+3. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+
+### Non-Interactive Mode
+
+Provide `--name`, `--workspace-name`, and `--output` to skip all prompts:
+
+```bash
+nova scaffold app nextjs --name my-app --workspace-name nextjs --output ./my-app
+```
+
+## Next Steps
+
+After scaffolding, consider running generators to add essential project files like `.editorconfig`, `.gitignore`, `LICENSE`, and `README.md`.

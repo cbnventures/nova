@@ -1,0 +1,188 @@
+---
+title: Configuration
+sidebar_position: 3
+description: The .grain relay manifest defines sources, transformations, destinations, and retry policies. Full directive reference included.
+tags:
+  - setup
+  - configuration
+---
+
+import Details from '@theme/Details';
+
+# Configuration
+
+Envoy is configured through a `.grain` relay manifest. The manifest declares every relay — what it listens for, how it transforms the payload, where it delivers, and what happens when delivery fails.
+
+## Relay Manifest Structure
+
+A relay manifest contains one or more `relay` blocks. Each block defines a complete pipeline from source to destination.
+
+```text title="relay.grain"
+relay "glassboard-to-canary" {
+  source      = "glassboard"
+  cipher      = "hmac-sha256"
+  destination = "canary://infra-alerts"
+
+  transform {
+    title    = "[{{ severity }}] {{ alertname }}"
+    body     = "{{ instance }} — {{ message }}"
+    priority = severity_to_priority(severity)
+    tags     = ["{{ severity_emoji }}"]
+  }
+
+  retry {
+    strategy = "exponential"
+    max      = 5
+    backoff  = "1s, 5s, 30s, 2m, 10m"
+  }
+}
+
+relay "threadbare-to-canary" {
+  source      = "threadbare"
+  cipher      = "hmac-sha256"
+  destination = "canary://ci-builds"
+
+  transform {
+    title = "[{{ repo }}] {{ count }} commit(s) to {{ branch }}"
+    body  = "{{ author }}: {{ commit_summary }}"
+  }
+}
+```
+
+## Configuration Directives
+
+| Directive     | Type   | Required | Description                                                               |
+|---------------|--------|----------|---------------------------------------------------------------------------|
+| `source`      | string | Yes      | The integration source identifier (e.g., `threadbare`, `glassboard`).     |
+| `cipher`      | string | No       | Authentication mode: `hmac-sha256`, `bearer`, `ip-allowlist`, or `none`.  |
+| `destination` | string | Yes      | Delivery target in `protocol://topic` format.                             |
+| `transform`   | block  | No       | Parcel transformation rules for the payload.                              |
+| `retry`       | block  | No       | Courier retry policy. Defaults to exponential backoff with 3 attempts.    |
+| `filter`      | block  | No       | Conditional relay — only process messages matching the filter expression. |
+| `fanout`      | list   | No       | Deliver to multiple destinations from a single source.                    |
+
+## Transform Block
+
+The `transform` block defines how Parcel rewrites the payload. Fields use Mustache-style template syntax with access to the source payload.
+
+```text title="Transform directives"
+transform {
+  title    = "[{{ severity }}] {{ alertname }}"
+  body     = "{{ instance }} — {{ message }}"
+  priority = severity_to_priority(severity)
+  tags     = ["{{ severity_emoji }}"]
+  actions  = [
+    { label = "View Dashboard", url = "{{ dashboard_url }}" }
+  ]
+}
+```
+
+| Field      | Type         | Description                                                  |
+|------------|--------------|--------------------------------------------------------------|
+| `title`    | template     | Notification title. Supports template variables.             |
+| `body`     | template     | Notification body. Supports template variables and newlines. |
+| `priority` | number/fn    | Priority level (1-5) or a mapping function.                  |
+| `tags`     | list         | Tag identifiers attached to the notification.                |
+| `actions`  | list of maps | Interactive actions (view links, dismiss buttons).           |
+
+## Retry Block
+
+The `retry` block configures Courier's delivery guarantee behavior.
+
+```text title="Retry directives"
+retry {
+  strategy   = "exponential"
+  max        = 5
+  backoff    = "1s, 5s, 30s, 2m, 10m"
+  jitter     = 0.25
+  dead_letter {
+    enabled    = true
+    retention  = "30d"
+    escalation = "dispatch://fallback-channel"
+  }
+}
+```
+
+| Field         | Type   | Default       | Description                                                 |
+|---------------|--------|---------------|-------------------------------------------------------------|
+| `strategy`    | string | `exponential` | Retry strategy: `exponential`, `fixed`, or `immediate`.     |
+| `max`         | number | `3`           | Maximum retry attempts before dead-letter.                  |
+| `backoff`     | string | `1s, 4s, 16s` | Comma-separated delay schedule for each attempt.            |
+| `jitter`      | float  | `0.25`        | Randomization range as a fraction of the current delay.     |
+| `dead_letter` | block  | enabled       | Dead-letter queue configuration for undeliverable messages. |
+
+## Filter Block
+
+The `filter` block adds conditional relay logic. Only messages matching the filter expression are processed. All others are silently dropped.
+
+```text title="Filter example"
+relay "critical-alerts-only" {
+  source = "glassboard"
+  // highlight-start
+  filter {
+    severity = "critical"
+  }
+  // highlight-end
+  destination = "canary://oncall-urgent"
+}
+```
+
+## Multiple Relays
+
+A single manifest can declare as many relays as needed. Envoy loads all of them at startup and routes incoming messages to the first matching relay.
+
+```text title="Multi-relay manifest"
+relay "critical-glassboard"  { source = "glassboard", filter { severity = "critical" }, destination = "canary://oncall-urgent" }
+relay "standard-glassboard"  { source = "glassboard", destination = "canary://infra-alerts" }
+relay "threadbare-pushes"    { source = "threadbare", destination = "canary://ci-builds" }
+relay "canary-heartbeats"    { source = "canary", destination = "canary://monitoring" }
+```
+
+:::warning Relay Ordering
+Relays are evaluated in declaration order. If two relays match the same source, the first one wins. Place more specific relays (with filters) before general catch-all relays.
+:::
+
+<Details>
+<summary>Full directive reference</summary>
+
+| Directive                           | Type    | Default       | Description                                          |
+|-------------------------------------|---------|---------------|------------------------------------------------------|
+| `relay.source`                      | string  | —             | Integration source identifier.                       |
+| `relay.cipher`                      | string  | `none`        | Authentication mode.                                 |
+| `relay.destination`                 | string  | —             | Delivery target (protocol://topic).                  |
+| `relay.transform.title`             | string  | —             | Notification title template.                         |
+| `relay.transform.body`              | string  | —             | Notification body template.                          |
+| `relay.transform.priority`          | number  | `3`           | Notification priority (1-5).                         |
+| `relay.transform.tags`              | list    | `[]`          | Notification tags.                                   |
+| `relay.retry.strategy`              | string  | `exponential` | Retry strategy.                                      |
+| `relay.retry.max`                   | number  | `3`           | Maximum retry attempts.                              |
+| `relay.retry.backoff`               | string  | `1s, 4s, 16s` | Delay schedule.                                      |
+| `relay.retry.jitter`                | float   | `0.25`        | Jitter fraction.                                     |
+| `relay.retry.dead_letter.enabled`   | boolean | `true`        | Enable dead-letter queue.                            |
+| `relay.retry.dead_letter.retention` | string  | `7d`          | Retention period for dead-lettered messages.         |
+| `relay.filter.*`                    | varies  | —             | Conditional filter fields (matched against payload). |
+| `relay.fanout`                      | list    | —             | Multiple destination targets.                        |
+
+</Details>
+
+## Validation
+
+Validate the manifest before starting the relay:
+
+```bash title="Validate configuration"
+envoy validate --config relay.grain
+```
+
+```text title="Validation output"
+[validate] Loading relay.grain
+[validate] Relay "glassboard-to-canary" ... OK
+[validate] Relay "threadbare-to-canary" ... OK
+[validate] 2 relays configured, 0 errors
+[validate] Configuration is valid.
+```
+
+## Next Steps
+
+- [Protocol Translation](/docs/core/protocol-translation/) — How Parcel transforms payloads between formats.
+- [Routing & Dispatch](/docs/core/routing-dispatch/) — Content-based routing and severity escalation.
+- [Authentication](/docs/core/authentication/) — Cipher verification modes in depth.

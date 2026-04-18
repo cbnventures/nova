@@ -1,0 +1,215 @@
+---
+title: CLI Reference
+sidebar_position: 2
+tags:
+  - reference
+  - cli
+---
+
+import Details from '@theme/Details';
+
+# CLI Reference
+
+The Foundry CLI provides six core commands — one for each sub-tool — plus top-level commands for forging and deploying workspaces.
+
+## Usage
+
+```bash
+foundry <command> [options]
+```
+
+## Top-Level Commands
+
+| Command            | Description                                      |
+|--------------------|--------------------------------------------------|
+| `foundry ignite`   | Forge the workspace from the `.grain` manifest.  |
+| `foundry deploy`   | Ship packages to a deployment target.            |
+| `foundry tongs`    | Resolve and visualize the dependency graph.      |
+| `foundry quench`   | Manage the incremental build cache.              |
+| `foundry bellows`  | Run tasks in parallel across workspace packages. |
+| `foundry crucible` | Generate and run test scaffolds.                 |
+| `foundry slag`     | Detect dead code and unused dependencies.        |
+| `foundry warden`   | Run the linting engine.                          |
+
+## foundry ignite
+
+Reads the `.grain` manifest and generates all workspace artifacts — directory structure, configuration files, Warden rules, and Crucible test scaffolds.
+
+```bash title="Forge the workspace"
+foundry ignite
+```
+
+| Flag            | Description                                      |
+|-----------------|--------------------------------------------------|
+| `--dry-run`     | Preview output without writing files.            |
+| `--incremental` | Only regenerate packages with changed inputs.    |
+| `--ci`          | Structured JSON output for pipeline integration. |
+| `--verbose`     | Print detailed logs for every operation.         |
+
+```text title="Example output"
+$ foundry ignite --verbose
+[00:00.000] Loading manifest: project.grain
+[00:00.012] Parsed workspace "my-app" (3 packages, 2 edges)
+[00:00.018] Forging core (library)
+[00:00.052] Forging api (service)
+[00:00.091] Forging web (app)
+[00:03.800] Done in 3.8s
+```
+
+## foundry tongs
+
+Resolves the dependency graph from the manifest and provides query and visualization tools.
+
+```bash
+foundry tongs <subcommand>
+```
+
+| Subcommand                        | Description                                   |
+|-----------------------------------|-----------------------------------------------|
+| `tongs graph`                     | Print the dependency graph.                   |
+| `tongs graph --format mermaid`    | Output the graph as a Mermaid diagram.        |
+| `tongs verify`                    | Check for cycles and missing references.      |
+| `tongs query --depends-on <pkg>`  | List packages that depend on a given package. |
+| `tongs query --build-order <pkg>` | Print the build order for a specific package. |
+
+## foundry quench
+
+Manages the content-addressable build cache.
+
+```bash
+foundry quench <subcommand>
+```
+
+| Subcommand                     | Description                                         |
+|--------------------------------|-----------------------------------------------------|
+| `quench status`                | Show cache hit/miss status for all packages.        |
+| `quench prune --older-than 7d` | Remove cache entries older than the given duration. |
+| `quench clear`                 | Delete the entire cache.                            |
+| `quench stats`                 | Print cache size, entry count, and hit rate.        |
+
+## foundry bellows
+
+Runs tasks in parallel across workspace packages, respecting the Tongs dependency graph.
+
+```bash
+foundry bellows <task> [options]
+```
+
+| Flag                | Description                                     |
+|---------------------|-------------------------------------------------|
+| `--only <pkg>`      | Run the task for a single package and its deps. |
+| `--concurrency <n>` | Override the number of parallel workers.        |
+| `--verbose`         | Print per-package timing and status.            |
+
+```text title="Example: parallel build"
+$ foundry bellows build --verbose
+  Wave 1: core (1.2s)
+  Wave 2: auth, cli, docs (2.1s, parallel)
+  Wave 3: api, web (1.8s, parallel)
+  Total: 5.1s
+```
+
+## foundry crucible
+
+Generates test scaffolds from type signatures and runs tests.
+
+```bash
+foundry crucible <subcommand>
+```
+
+| Subcommand                        | Description                                  |
+|-----------------------------------|----------------------------------------------|
+| `crucible run`                    | Run all generated and manual tests.          |
+| `crucible watch`                  | Watch for changes and re-run affected tests. |
+| `crucible run --update-snapshots` | Update all snapshot files.                   |
+| `crucible run --only <pkg>`       | Run tests for a single package.              |
+
+## foundry slag
+
+Scans the workspace for dead code, unused exports, and orphaned dependencies.
+
+```bash
+foundry slag <subcommand>
+```
+
+| Subcommand    | Description                                                    |
+|---------------|----------------------------------------------------------------|
+| `slag scan`   | Scan the workspace and report unused code.                     |
+| `slag clean`  | Remove detected dead code (requires `--confirm`).              |
+| `slag report` | Generate a JSON report of all unused exports and dependencies. |
+
+## foundry warden
+
+Runs the linting engine against the workspace.
+
+```bash
+foundry warden <subcommand>
+```
+
+| Subcommand                  | Description                                       |
+|-----------------------------|---------------------------------------------------|
+| `warden check`              | Run all rules and report violations.              |
+| `warden fix`                | Auto-fix all fixable violations.                  |
+| `warden check --only <pkg>` | Lint a single package.                            |
+| `warden list`               | List all enabled rules and their severity levels. |
+
+## foundry deploy
+
+Ships workspace packages to a deployment target.
+
+```bash
+foundry deploy --target <target> [options]
+```
+
+| Flag               | Description                                         |
+|--------------------|-----------------------------------------------------|
+| `--target`         | Deployment target: `arcline`, `vial`, or `trellis`. |
+| `--confirm`        | Required for production deployments.                |
+| `--rollback <ver>` | Roll back to a specific version.                    |
+| `--verbose`        | Print detailed deployment logs.                     |
+
+## Interactive Mode
+
+Foundry includes an interactive CLI mode for exploration and discovery. Launch it with:
+
+```bash
+foundry interactive
+```
+
+Keyboard shortcuts in interactive mode:
+
+- <kbd>Ctrl</kbd> + <kbd>F</kbd> — search commands.
+- <kbd>Ctrl</kbd> + <kbd>G</kbd> — view the dependency graph.
+- <kbd>Ctrl</kbd> + <kbd>R</kbd> — re-run the last command.
+- <kbd>Tab</kbd> — autocomplete command names and flags.
+- <kbd>Ctrl</kbd> + <kbd>C</kbd> — exit interactive mode.
+
+<Details>
+<summary>Full flag reference for all commands</summary>
+
+| Command    | Flag                 | Type      | Default  | Description                    |
+|------------|----------------------|-----------|----------|--------------------------------|
+| `ignite`   | `--dry-run`          | `Boolean` | `false`  | Preview without writing.       |
+| `ignite`   | `--incremental`      | `Boolean` | `false`  | Rebuild changed packages only. |
+| `ignite`   | `--ci`               | `Boolean` | `false`  | Structured JSON output.        |
+| `ignite`   | `--verbose`          | `Boolean` | `false`  | Detailed logging.              |
+| `deploy`   | `--target`           | `Text`    | Required | Deployment target.             |
+| `deploy`   | `--confirm`          | `Boolean` | `false`  | Confirm production deploy.     |
+| `deploy`   | `--rollback`         | `Text`    | Optional | Version to roll back to.       |
+| `bellows`  | `--only`             | `Text`    | Optional | Single package scope.          |
+| `bellows`  | `--concurrency`      | `Numeric` | Auto     | Parallel worker count.         |
+| `crucible` | `--update-snapshots` | `Boolean` | `false`  | Overwrite snapshot files.      |
+| `crucible` | `--only`             | `Text`    | Optional | Single package scope.          |
+| `slag`     | `--confirm`          | `Boolean` | `false`  | Allow destructive cleanup.     |
+| `warden`   | `--only`             | `Text`    | Optional | Single package scope.          |
+
+</Details>
+
+## Global Options
+
+All commands support these flags:
+
+| Flag        | Description                     |
+|-------------|---------------------------------|
+| `--help`    | Show help text for any command. |
+| `--version` | Print the Foundry CLI version.  |

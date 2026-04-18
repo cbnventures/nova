@@ -1,0 +1,14 @@
+/**
+ * Blog Sidebar Mobile — Override styles for BlogSidebar inside the overlay panel.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Sidebar Inside Overlay
+ * ============================ */
+
+/* Override sticky positioning when rendered inside the overlay panel. */
+.nova-sidebar-mobile-content .nova-blog-sidebar {
+  position: static;
+}

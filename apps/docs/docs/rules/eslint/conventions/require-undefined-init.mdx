@@ -1,0 +1,142 @@
+---
+id: require-undefined-init
+title: Require Undefined Init
+description: Require explicit undefined initializer when declaring variables without a value.
+keywords:
+  - nova
+  - eslint rule
+  - undefined init
+  - variable declaration
+  - code style
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require `= undefined` when declaring uninitialized variables because an explicit initializer distinguishes intentionally empty declarations from accidental omissions.
+
+## Summary
+
+The `require-undefined-init` rule reports any `let` declaration that has no initializer. The opposite of ESLint's built-in `no-undef-init`.
+
+`const` declarations always require an initializer by the language, so they are not checked.
+
+## Why Use This Rule?
+
+1. Makes the intent of an empty variable declaration explicit — `let x = undefined` shows the developer chose to leave it empty.
+2. Distinguishes intentional emptiness from a forgotten assignment.
+3. Keeps variable declarations consistent — every `let` has `=`.
+
+## Examples
+
+<Tabs groupId="require-undefined-init-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    let name = undefined;
+    let count = undefined;
+    let user = undefined;
+
+    // Already has a value — not affected.
+    let name = 'default';
+    const items = [];
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    let name;
+    let count;
+    let user;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-undefined-init-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireUndefinedInit } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-undefined-init': RequireUndefinedInit.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-undefined-init': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireUndefinedInit } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-undefined-init': RequireUndefinedInit.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-undefined-init': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-undefined-init: error'
+```
+
+## Troubleshooting
+
+- **Conflicts with `no-undef-init`** — This rule is the inverse of the built-in `no-undef-init`. Disable `no-undef-init` when using this rule.
+- **`const` declarations are not checked** — `const` requires an initializer by the JavaScript language specification. Only `let` is checked.

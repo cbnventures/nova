@@ -1,0 +1,172 @@
+---
+id: signal
+title: Signal
+description: Rose and amber preset with Space Grotesk, Inter, and JetBrains Mono fonts, sharp shapes, and compact density.
+sidebar_position: 3
+keywords:
+  - nova
+  - docusaurus facades
+  - signal preset
+  - rose theme
+  - space grotesk
+  - inter font
+  - jetbrains mono
+  - sharp shapes
+  - flat cards
+  - monolith navbar
+  - ledger footer
+tags:
+  - facades
+  - preset
+  - signal
+  - docusaurus
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+import ThemedImage from '@theme/ThemedImage';
+
+import signalLight from './_assets_/signal-light.png';
+import signalDark from './_assets_/signal-dark.png';
+
+# Signal
+
+Rose and amber tones paired with Space Grotesk headings, Inter body text, and JetBrains Mono for code blocks. Sharp shapes with compact spacing and flat cards with bordered code blocks.
+
+## Why Use This Preset?
+
+- Bold rose palette with sharp shapes so your documentation communicates energy and precision.
+- Compact density so pages pack more content above the fold for data-heavy documentation.
+- Monolith navbar so the navigation anchors the page with a strong, unified header.
+
+## Preview
+
+<ThemedImage sources={{ light: signalLight, dark: signalDark }} alt="Signal preset preview" width={1280} height={900} style={{ maxWidth: '100%', height: 'auto' }} />
+
+## Summary
+
+Signal is designed for analytics and marketing tool documentation. The bold palette communicates energy while the sharp shapes and compact density maximize information density. Motion is set to subtle speed with staggered reveals disabled and hover effects enabled.
+
+## Configuration
+
+The full default configuration for the Signal preset:
+
+```ts
+{
+  preset: 'signal',
+  // Default values (no overrides needed):
+  // colors.primary:          '#e11d48'
+  // colors.accent:           '#f59e0b'
+  // colors.neutral:          '#525252'
+  // fonts.display:           'Space Grotesk'
+  // fonts.body:              'Inter'
+  // fonts.code:              'JetBrains Mono'
+  // shape.radius:            'sharp'
+  // shape.density:           'compact'
+  // depth.cards:             'flat'
+  // depth.codeBlocks:        'bordered'
+  // motion.speed:            'subtle'
+  // motion.staggeredReveals: false
+  // motion.hoverEffects:     true
+  // navbar:                  'monolith'
+  // footer:                  'ledger'
+}
+```
+
+## Overrides
+
+Override any category to customize the Signal identity. Unspecified values keep their defaults.
+
+<Tabs groupId="signal-overrides">
+  <TabItem value="colors" label="Colors" default>
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'signal',
+  overrides: {
+    colors: {
+      primary: '#be123c',
+      accent: '#d97706',
+      neutral: '#737373',
+    },
+  },
+}
+```
+
+Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+
+  </TabItem>
+  <TabItem value="fonts" label="Fonts">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'signal',
+  overrides: {
+    fonts: {
+      display: 'Archivo',
+      body: 'IBM Plex Sans',
+      code: 'Fira Code',
+    },
+  },
+}
+```
+
+Font families are set as CSS custom properties. Google Fonts are loaded automatically.
+
+  </TabItem>
+  <TabItem value="shape" label="Shape & Depth">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'signal',
+  overrides: {
+    shape: {
+      radius: 'rounded',
+      density: 'comfortable',
+    },
+    depth: {
+      cards: 'elevated',
+      codeBlocks: 'elevated',
+    },
+  },
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## Navbar and Footer
+
+Signal uses the **Monolith** navbar and **Ledger** footer.
+
+| Slot   | Variant    | Description                                      |
+|--------|------------|--------------------------------------------------|
+| Navbar | `monolith` | Compact single-bar navigation with inline links. |
+| Footer | `ledger`   | Minimal footer with streamlined link layout.     |
+
+Override the variant in the preset options:
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'signal',
+  overrides: {
+    navbar: 'compass',
+    footer: 'launchpad',
+  },
+}
+```
+
+Available navbar variants:
+
+- `bridge`
+- `canopy`
+- `monolith`
+- `compass`
+
+Available footer variants:
+
+- `commons`
+- `embassy`
+- `ledger`
+- `launchpad`

@@ -1,0 +1,13 @@
+/**
+ * ============================
+ * Doc Footer — Layout
+ * ============================
+ */
+
+.nova-doc-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  margin-top: 1.5rem;
+}

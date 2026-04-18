@@ -1,0 +1,172 @@
+---
+id: foundry
+title: Foundry
+description: Warm orange and amber preset with Plus Jakarta Sans, Inter, and Fira Code fonts, rounded shapes, and elevated card depth.
+sidebar_position: 1
+keywords:
+  - nova
+  - docusaurus facades
+  - foundry preset
+  - orange theme
+  - plus jakarta sans
+  - inter font
+  - fira code
+  - rounded shapes
+  - elevated cards
+  - bridge navbar
+  - commons footer
+tags:
+  - facades
+  - preset
+  - foundry
+  - docusaurus
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+import ThemedImage from '@theme/ThemedImage';
+
+import foundryLight from './_assets_/foundry-light.png';
+import foundryDark from './_assets_/foundry-dark.png';
+
+# Foundry
+
+Warm orange and amber tones paired with Plus Jakarta Sans headings, Inter body text, and Fira Code for code blocks. Rounded shapes with comfortable spacing and elevated cards with soft shadows.
+
+## Why Use This Preset?
+
+- Warm orange palette so developer-facing documentation feels approachable rather than sterile.
+- Plus Jakarta Sans headings paired with Inter body text so the typography balances personality with readability.
+- Elevated cards and staggered reveals so content sections feel layered and polished.
+
+## Preview
+
+<ThemedImage sources={{ light: foundryLight, dark: foundryDark }} alt="Foundry preset preview" width={1280} height={900} style={{ maxWidth: '100%', height: 'auto' }} />
+
+## Summary
+
+Foundry is designed for developer tooling and infrastructure documentation. The warm palette communicates approachability while the elevated card depth adds visual hierarchy. Motion is set to normal speed with staggered reveals and hover effects enabled.
+
+## Configuration
+
+The full default configuration for the Foundry preset:
+
+```ts
+{
+  preset: 'foundry',
+  // Default values (no overrides needed):
+  // colors.primary:          '#ea580c'
+  // colors.accent:           '#fbbf24'
+  // colors.neutral:          '#78716c'
+  // fonts.display:           'Plus Jakarta Sans'
+  // fonts.body:              'Inter'
+  // fonts.code:              'Fira Code'
+  // shape.radius:            'rounded'
+  // shape.density:           'comfortable'
+  // depth.cards:             'elevated'
+  // depth.codeBlocks:        'bordered'
+  // motion.speed:            'normal'
+  // motion.staggeredReveals: true
+  // motion.hoverEffects:     true
+  // navbar:                  'bridge'
+  // footer:                  'commons'
+}
+```
+
+## Overrides
+
+Override any category to customize the Foundry identity. Unspecified values keep their defaults.
+
+<Tabs groupId="foundry-overrides">
+  <TabItem value="colors" label="Colors" default>
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'foundry',
+  overrides: {
+    colors: {
+      primary: '#dc2626',
+      accent: '#f59e0b',
+      neutral: '#6b7280',
+    },
+  },
+}
+```
+
+Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+
+  </TabItem>
+  <TabItem value="fonts" label="Fonts">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'foundry',
+  overrides: {
+    fonts: {
+      display: 'Sora',
+      body: 'Nunito Sans',
+      code: 'JetBrains Mono',
+    },
+  },
+}
+```
+
+Font families are set as CSS custom properties. Google Fonts are loaded automatically.
+
+  </TabItem>
+  <TabItem value="shape" label="Shape & Depth">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'foundry',
+  overrides: {
+    shape: {
+      radius: 'pill',
+      density: 'spacious',
+    },
+    depth: {
+      cards: 'glass',
+      codeBlocks: 'elevated',
+    },
+  },
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## Navbar and Footer
+
+Foundry uses the **Bridge** navbar and **Commons** footer.
+
+| Slot   | Variant   | Description                                                     |
+|--------|-----------|-----------------------------------------------------------------|
+| Navbar | `bridge`  | Horizontal navigation bar with logo, links, and search.         |
+| Footer | `commons` | Multi-column footer with sections, social links, and copyright. |
+
+Override the variant in the preset options:
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'foundry',
+  overrides: {
+    navbar: 'monolith',
+    footer: 'ledger',
+  },
+}
+```
+
+Available navbar variants:
+
+- `bridge`
+- `canopy`
+- `monolith`
+- `compass`
+
+Available footer variants:
+
+- `commons`
+- `embassy`
+- `ledger`
+- `launchpad`

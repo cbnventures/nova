@@ -1,0 +1,184 @@
+---
+id: require-jsdoc-body
+title: Require JSDoc Body
+description: Require a body paragraph in JSDoc blocks that explains why the declaration exists.
+keywords:
+  - nova
+  - eslint rule
+  - jsdoc
+  - body text
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require a body paragraph in JSDoc blocks that explains why the declaration exists.
+
+## Summary
+
+The `require-jsdoc-body` rule reports any JSDoc block that is missing a body paragraph after the summary line. The body paragraph must explain why the declaration exists and meet minimum and maximum line count and line width constraints.
+
+## Why Use This Rule?
+
+1. Forces authors to explain the purpose behind each declaration, not just restate its name.
+2. Catches JSDoc blocks that have a summary line but no context for future readers.
+3. Enforces consistent body length and width so inline documentation stays readable.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-body-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * Reads the file at the given path and returns
+     * a parsed configuration object.
+     *
+     * @param {string} path - Path.
+     *
+     * @returns {Config}
+     *
+     * @since 1.0.0
+     */
+    function parseConfig(path) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    /**
+     * Parse the configuration file.
+     *
+     * @param {string} path - Path.
+     *
+     * @returns {Config}
+     *
+     * @since 1.0.0
+     */
+    function parseConfig(path) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-body-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocBody } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-body': RequireJsdocBody.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-body': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-test-directories" label="Skip Test Directories">
+
+    Skip files in specific directories:
+
+    ```ts
+    import { RequireJsdocBody } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-body': RequireJsdocBody.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-body': ['error', {
+            skipDirectories: ['tests'],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocBody } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-body': RequireJsdocBody.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-body': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option            | Type       | Default | Description                                    |
+|-------------------|------------|---------|------------------------------------------------|
+| `ignoreFiles`     | `string[]` | `[]`    | File patterns to skip.                         |
+| `maxLines`        | `number`   | `3`     | Maximum number of lines allowed in the body.   |
+| `maxWidth`        | `number`   | `80`    | Maximum character width allowed per body line. |
+| `minLines`        | `number`   | `2`     | Minimum number of lines required in the body.  |
+| `skipDirectories` | `string[]` | `[]`    | Directory names to skip.                       |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires even though a body is present** — Check that the body paragraph is separated from the summary line by a blank `*` line. Text immediately after the summary is treated as part of the summary, not as body text.
+- **Body too short or too long** — Adjust `minLines` and `maxLines` to match your project's documentation standards.
+- **Line too wide** — The `maxWidth` option defaults to `80` characters per body line. Wrap long sentences to stay within the limit.
+- **Want to skip specific files** — Use the `ignoreFiles` option to exclude files that do not need body paragraphs.

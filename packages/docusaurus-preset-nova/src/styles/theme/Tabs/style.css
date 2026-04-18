@@ -1,0 +1,49 @@
+/**
+ * Tabs — Component structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Tabs — Tab List
+ * ============================ */
+
+.nova-tabs-list {
+  display: flex;
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.nova-tabs-list::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================
+ * Tabs — Tab Button
+ * ============================ */
+
+.nova-tabs-tab {
+  font: inherit;
+  white-space: nowrap;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.nova-tabs-tab:active {
+  transform: none;
+}
+
+/* ============================
+ * Tabs — Panel
+ * ============================ */
+
+.nova-tabs-panel[hidden] {
+  display: none;
+}

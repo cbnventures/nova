@@ -1,0 +1,102 @@
+/**
+ * Foundry — Search bar, dropdown, and results visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Search Bar Input
+ * ============================ */
+
+.nova-search-bar-input {
+  font-family: var(--nova-font-body);
+  border-radius: var(--nova-shape-radius);
+  background-color: var(--nova-color-neutral-50);
+  transition: border-color var(--nova-motion-duration) ease,
+              box-shadow var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-search-bar-input {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.nova-search-bar-input:focus {
+  border-color: var(--nova-color-primary-300);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+}
+
+[data-theme="dark"] .nova-search-bar-input:focus {
+  border-color: var(--nova-color-primary-700);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+}
+
+/* ============================
+ * 2. Search Dropdown
+ * ============================ */
+
+.nova-search-dropdown {
+  border-radius: var(--nova-shape-radius);
+  border-color: var(--nova-foundry-border);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+  background-color: var(--nova-foundry-surface);
+  animation: foundry-scale-in calc(var(--nova-motion-duration) * 1.5) cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top right;
+}
+
+[data-theme="dark"] .nova-search-dropdown {
+  background-color: var(--nova-foundry-surface-raised);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.1);
+}
+
+/* ============================
+ * 3. Search Results
+ * ============================ */
+
+.nova-search-result:hover,
+.nova-search-result:focus-visible,
+.nova-search-result--active {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 95%);
+}
+
+[data-theme="dark"] .nova-search-result,
+[data-theme="dark"] .nova-search-count {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .nova-search-result:hover,
+[data-theme="dark"] .nova-search-result:focus-visible,
+[data-theme="dark"] .nova-search-result--active {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+.nova-search-result-title {
+  font-family: var(--nova-font-body);
+}
+
+/* ============================
+ * 4. Mobile Menu Search
+ * ============================ */
+
+/* Mobile search input — full width with clean neutral surface. */
+.nova-mobile-menu-search .nova-search-bar-input {
+  width: 100%;
+  max-width: none;
+
+  background-color: var(--nova-color-neutral-50);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-mobile-menu-search .nova-search-bar-input {
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Mobile dropdown results — inline without floating treatment. */
+.nova-mobile-menu-search .nova-search-dropdown {
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+}

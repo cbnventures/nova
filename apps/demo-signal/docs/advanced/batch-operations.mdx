@@ -1,0 +1,123 @@
+---
+title: Batch Operations
+sidebar_position: 2
+tags:
+  - advanced
+  - batch
+---
+
+# Batch Operations
+
+Create thousands of Beacon links in a single call. Import from CSV, mint programmatically through the Spoke API, and manage links in bulk.
+
+## CSV Import
+
+Prepare a CSV file with one link per row. Each row maps a destination URL to campaign metadata:
+
+```csv title="links.csv"
+url,campaign,channel,variant,domain,slug
+https://threadbare.example/pricing,product-launch,email,pricing-direct,go.signal.example,price1
+https://threadbare.example/pricing,product-launch,email,pricing-soft,go.signal.example,price2
+https://threadbare.example/demo,product-launch,social,demo-cta,go.signal.example,demo1
+https://threadbare.example/demo,product-launch,paid,demo-banner,go.signal.example,demo2
+https://threadbare.example/blog/launch,product-launch,email,blog-link,go.signal.example,blog1
+```
+
+## CSV Column Reference
+
+| Column     | Required | Description                                           |
+|------------|----------|-------------------------------------------------------|
+| `url`      | Yes      | Destination URL for the Beacon redirect.              |
+| `campaign` | Yes      | Campaign name for attribution grouping.               |
+| `channel`  | Yes      | Channel identifier (email, social, paid, event).      |
+| `variant`  | No       | Variant label for A/B testing. Defaults to `default`. |
+| `domain`   | No       | Branded domain. Uses account default if omitted.      |
+| `slug`     | No       | Custom slug. Auto-generated if omitted.               |
+| `tags`     | No       | Comma-separated tags for filtering.                   |
+| `expires`  | No       | Expiration date in ISO 8601 format.                   |
+
+## Running the Import
+
+```bash title="Import links from CSV"
+signal beacon batch import \
+  --input ./links.csv \
+  --on-duplicate skip \
+  --dry-run
+```
+
+The `--dry-run` flag validates the CSV without creating any links. Remove it to execute the import:
+
+```bash title="Execute the import"
+signal beacon batch import --input ./links.csv --on-duplicate skip
+```
+
+```json title="Batch import result"
+{
+  "total": 5,
+  "created": 5,
+  "skipped": 0,
+  "errors": 0,
+  "duration": "340ms"
+}
+```
+
+## Spoke API Batch Endpoint
+
+For programmatic batch creation, use the Spoke API directly:
+
+```bash title="Spoke API batch create"
+curl -X POST https://api.signal.example/v2/beacons/batch \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "links": [
+      {
+        "url": "https://threadbare.example/pricing",
+        "campaign": "product-launch",
+        "channel": "email",
+        "variant": "pricing-direct"
+      },
+      {
+        "url": "https://threadbare.example/demo",
+        "campaign": "product-launch",
+        "channel": "social",
+        "variant": "demo-cta"
+      }
+    ]
+  }'
+```
+
+The batch endpoint accepts up to 1,000 links per request.
+
+:::warning[Rate Limits]
+The Spoke API enforces rate limits on batch operations. The default plan allows 10 batch requests per minute, with a maximum of 1,000 links per request. Exceeding the limit returns a `429 Too Many Requests` response with a `Retry-After` header. For higher limits, contact Signal support or use the `--throttle` flag in the CLI to auto-pace requests.
+:::
+
+## Bulk Update
+
+Update existing Beacon links in bulk — change destinations, campaigns, or metadata:
+
+```bash title="Bulk update"
+signal beacon batch update \
+  --input ./updates.csv \
+  --match-by slug
+```
+
+The `--match-by` flag tells Signal which CSV column to use for matching existing links. Valid values are `slug`, `id`, or `url`.
+
+## Bulk Export
+
+Export all Beacon links for a campaign to CSV:
+
+```bash title="Export campaign links"
+signal beacon batch export \
+  --campaign "product-launch" \
+  --output ./product-launch-links.csv
+```
+
+The export includes link IDs, slugs, destinations, attribution metadata, click counts, and creation timestamps.
+
+## Next Steps
+
+- [API Reference](/docs/reference/api-reference/) — Full Spoke API documentation for all endpoints.
+- [Campaign Management](/docs/features/campaign-management/) — Organize batch-created links into campaigns.

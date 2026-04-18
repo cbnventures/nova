@@ -15,6 +15,7 @@ tags:
   - logging
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,9 @@ Flag `Logger.dev` calls so dev-only logging statements get caught before they sh
 
 ## Summary
 
-The `no-logger-dev` rule reports any call to `.dev()` on `Logger`, `Logger.customize()`, or variables assigned from `Logger.customize()`. Use `Logger.debug` instead if you want to keep the log.
+The `no-logger-dev` rule reports any call to `.dev()` on `Logger`, `Logger.customize()`, or variables assigned from `Logger.customize()`.
+
+Use `Logger.debug` instead if you want to keep the log.
 
 ## Why Use This Rule?
 
@@ -68,30 +71,77 @@ The `no-logger-dev` rule reports any call to `.dev()` on `Logger`, `Logger.custo
 
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+<Tabs groupId="no-logger-dev-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { noLoggerDev } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
-export default [
-  {
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { NoLoggerDev } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-logger-dev': NoLoggerDev.rule,
+            },
+          },
+        },
         rules: {
-          'no-logger-dev': noLoggerDev,
+          '@cbnventures/nova/no-logger-dev': ['warn'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/no-logger-dev': ['warn'],
-    },
-  },
-];
-```
+    ];
+    ```
 
-This rule has no additional options.
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoLoggerDev } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-logger-dev': NoLoggerDev.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-logger-dev': ['warn', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Warning fires on a `.dev()` call that isn't Logger.** — The rule only flags calls on identifiers named `Logger` or variables traced back to `Logger.customize()`. Other objects with a `.dev()` method are ignored.
+- **Warning fires on a `.dev()` call that isn't Logger** — The rule only flags calls on identifiers named `Logger` or variables traced back to `Logger.customize()`. Other objects with a `.dev()` method are ignored.
 - **Want to keep the log?** — Replace `Logger.dev` with `Logger.debug`. Debug logs are gated by `LOG_LEVEL` and stay silent in production by default.

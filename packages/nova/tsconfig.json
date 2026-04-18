@@ -1,30 +1,14 @@
 {
-  "extends": [
-    "./src/presets/tsconfig/dx-essentials.json",
-    "./src/presets/tsconfig/dx-strict.json",
-    "./src/presets/tsconfig/env-node.json"
-  ],
-  "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./build",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+  "references": [
+    {
+      "path": "./tsconfig.config.json"
     },
-    "rootDir": "./",
-    "types": [
-      "@commander-js/extra-typings",
-      "@types/eslint-plugin-jsx-a11y",
-      "@types/node"
-    ]
-  },
-  "include": [
-    "./*",
-    "./src/**/*"
+    {
+      "path": "./tsconfig.source.json"
+    },
+    {
+      "path": "./tsconfig.tests.json"
+    }
   ],
-  "exclude": [
-    "./build/**",
-    "./node_modules/**"
-  ]
+  "files": []
 }

@@ -1,0 +1,192 @@
+/**
+ * ============================
+ * Navbar — Monolith — Bar Layout
+ * ============================
+ */
+
+.nova-navbar-monolith {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nova-navbar-monolith-actions {
+  position: absolute;
+  right: var(--nova-grid-padding);
+  top: 50%;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  transform: translateY(-50%);
+}
+
+/**
+ * ============================
+ * Navbar — Monolith — Mobile Menu Overlay
+ * ============================
+ */
+
+.nova-navbar-monolith-menu-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 300;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/**
+ * ============================
+ * Navbar — Monolith — Mobile Menu Open/Close State
+ * ============================
+ */
+
+@keyframes nova-navbar-monolith-menu-open {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes nova-navbar-monolith-menu-close {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.nova-navbar-monolith-menu-open {
+  animation: nova-navbar-monolith-menu-open 200ms ease forwards;
+}
+
+.nova-navbar-monolith-menu-closing {
+  animation: nova-navbar-monolith-menu-close 200ms ease forwards;
+}
+
+/**
+ * ============================
+ * Navbar — Monolith — Mobile Menu Panel
+ * ============================
+ */
+
+/* Always-float panel — never goes full-screen. */
+.nova-navbar-monolith-menu-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  width: calc(100% - 2rem);
+  max-width: 320px;
+  max-height: calc(100dvh - 4.5rem);
+  margin-top: 3.5rem;
+  padding: 1rem;
+
+  overflow-y: auto;
+}
+
+/**
+ * ============================
+ * Navbar — Monolith — Mobile Menu Header
+ * ============================
+ */
+
+.nova-navbar-monolith-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/**
+ * ============================
+ * Navbar — Monolith — Mobile Menu Close
+ * ============================
+ */
+
+.nova-navbar-monolith-menu-close {
+  flex-shrink: 0;
+  margin-left: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+
+  background: none;
+  border: 1px solid var(--nova-color-neutral-300);
+  border-radius: 0.375rem;
+
+  cursor: pointer;
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-close {
+  border-color: var(--nova-color-neutral-700);
+}
+
+/**
+ * ============================
+ * Navbar — Monolith — Mobile Menu Search
+ * ============================
+ */
+
+.nova-navbar-monolith-menu-search {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+}
+
+.nova-navbar-monolith-menu-search:empty {
+  display: none;
+}
+
+/**
+ * ============================
+ * Navbar — Monolith — Mobile Menu Results
+ * ============================
+ */
+
+.nova-navbar-monolith-menu-results {}
+
+.nova-navbar-monolith-menu-results:empty {
+  display: none;
+}
+
+/**
+ * ============================
+ * Navbar — Monolith — Mobile Menu Items
+ * ============================
+ */
+
+.nova-navbar-monolith-menu-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.nova-navbar-monolith-menu-item {
+  display: flex;
+  align-items: center;
+
+  padding: 0.75rem;
+
+  text-decoration: none;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.nova-navbar-monolith-menu-item:hover {
+  text-decoration: none;
+}

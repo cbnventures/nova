@@ -1,0 +1,80 @@
+---
+title: "How Forge Scaffolds a New Package in 4 Seconds"
+authors: [elena]
+tags: [workspace, anvil, developer-experience, manifests]
+date: 2025-10-14
+---
+
+Adding a new package to a monorepo should take seconds, not hours. Before Foundry, adding a package to our workspace meant creating a directory, copying a `package.json` template, copying a `tsconfig.json` template, adding the package to the root workspace configuration, wiring up Smelter project references, and running `npm install`. Then hoping you did not forget a step.
+
+Forge does all of this with a single command. The new package is ready to build in 4 seconds. Here is what happens under the hood.
+
+{/* truncate */}
+
+## The Command
+
+```text title="Adding a new package"
+$ foundry forge create --name payments --type service --depends core,auth
+
+  Creating package: payments
+  Type: service
+  Dependencies: core, auth
+
+  ✓ Created packages/payments/
+  ✓ Generated package.json
+  ✓ Generated project references
+  ✓ Updated project.grain manifest
+  ✓ Updated Tongs dependency graph
+  ✓ Ran Anvil validation (0 errors)
+
+  Done in 3.8s. Run "foundry ignite" to build.
+```
+
+One command. Four flags. The package is created, registered in the manifest, wired into the dependency graph, and validated — all before the developer writes a single line of code.
+
+## What Forge Generates
+
+Forge creates the minimal set of files a package needs. Nothing more. The generated structure depends on the package type:
+
+- **Library.** `src/index.al`, `src/types/index.d.al`, one Crucible test file.
+- **Service.** Everything in library, plus `src/server.al` with a health-check endpoint.
+- **App.** Everything in library, plus `src/main.al` with an entry point and a Smelter configuration for bundling.
+
+Every generated file follows the workspace's Warden conventions. If your manifest specifies `warden = ["strict", "conventions"]`, the generated code passes all 380 rules out of the box. No cleanup required.
+
+## Manifest Integration
+
+The most important thing Forge does is not file generation — it is manifest registration. When Forge creates a new package, it adds a package block to the `.grain` manifest and runs Anvil to validate the updated dependency graph.
+
+This means:
+
+- Bellows immediately knows about the new package and can schedule it in parallel builds.
+- Quench creates a cache slot for it on the first build.
+- Warden scopes its rules to include the new package.
+- Tongs tracks its dependencies for impact analysis.
+
+If Forge just created files without registering the package, every downstream tool would need manual configuration. Registration is the difference between "I created a directory" and "I added a package to the workspace."
+
+## Templates vs. Generation
+
+We considered using templates — static files with placeholder tokens that Forge would fill in. We rejected this approach for three reasons:
+
+- **Templates drift.** When conventions change, someone has to update every template. In practice, templates are always out of date.
+- **Templates cannot express constraints.** A template cannot say "if the package type is service and it depends on auth, add a middleware import." Conditional logic in templates leads to template languages, which are just bad programming languages.
+- **Templates encourage copy-paste.** Developers copy the template, then modify it. Modifications accumulate. Within a quarter, every package's boilerplate is slightly different.
+
+Forge uses code generation instead. The generator reads the manifest, resolves the dependency graph, and emits files programmatically. When conventions change, we update the generator, not a dozen template files.
+
+## The 4-Second Budget
+
+Forge has a strict performance budget: 4 seconds on a cold start, under 1 second on a warm start (when Quench has the dependency graph cached). The breakdown:
+
+- **0.8s** — Read and parse the `.grain` manifest.
+- **0.6s** — Resolve the dependency graph through Tongs.
+- **0.4s** — Generate files.
+- **1.2s** — Run Anvil validation on the updated graph.
+- **0.8s** — Write files and update the manifest.
+
+If Anvil validation fails — for example, the new package introduces a circular dependency — Forge aborts without writing any files. You do not end up with a half-created package that needs manual cleanup.
+
+The build toolchain should never make you wait. If adding a package takes longer than opening a new browser tab, something is wrong.

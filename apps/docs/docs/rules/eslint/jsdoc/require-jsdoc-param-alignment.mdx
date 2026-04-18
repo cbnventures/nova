@@ -1,0 +1,158 @@
+---
+id: require-jsdoc-param-alignment
+title: Require JSDoc Param Alignment
+description: Require vertical alignment of param types, names, and dashes in JSDoc blocks.
+keywords:
+  - nova
+  - eslint rule
+  - jsdoc
+  - param alignment
+  - vertical alignment
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require vertical alignment of `@param` types, names, and dashes in JSDoc blocks.
+
+## Summary
+
+The `require-jsdoc-param-alignment` rule reports any JSDoc block where two or more `@param` tags have misaligned columns.
+
+The rule checks that all parameter names start at the same column and all dashes start at the same column. Blocks with zero or one `@param` tag are skipped.
+
+## Why Use This Rule?
+
+1. Makes multi-parameter JSDoc blocks easier to scan by aligning types, names, and descriptions into columns.
+2. Enforces a consistent visual format across all JSDoc documentation.
+3. Catches accidental misalignment that happens during refactoring or parameter renaming.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-param-alignment-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    /**
+     * Merge two datasets.
+     *
+     * @param {MergeSource}  source  - Source.
+     * @param {MergeOptions} options - Options.
+     *
+     * @returns {MergeReturns}
+     *
+     * @since 1.0.0
+     */
+    function merge(source, options) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    /**
+     * Merge two datasets.
+     *
+     * @param {MergeSource} source - Source.
+     * @param {MergeOptions} options - Options.
+     *
+     * @returns {MergeReturns}
+     *
+     * @since 1.0.0
+     */
+    function merge(source, options) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-param-alignment-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocParamAlignment } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-param-alignment': RequireJsdocParamAlignment.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-param-alignment': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocParamAlignment } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-param-alignment': RequireJsdocParamAlignment.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-param-alignment': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-param-alignment: error'
+```
+
+## Troubleshooting
+
+- **Warning fires but alignment looks correct visually** — The rule checks character positions, not visual width. If you use a non-monospace font in your editor, the columns may appear aligned but differ in character count. Switch to a monospace font to verify.
+- **Single-param blocks are not checked** — The rule only fires when a JSDoc block has two or more `@param` tags. Single-parameter blocks are skipped because there is nothing to align against.

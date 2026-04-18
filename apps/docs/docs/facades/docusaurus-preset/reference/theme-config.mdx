@@ -1,0 +1,153 @@
+---
+id: theme-config
+title: Theme Config
+description: Full reference for the Nova Docusaurus theme configuration including site metadata, navbar, footer, docs, blog, and color mode.
+sidebar_position: 2
+keywords:
+  - nova
+  - docusaurus facades
+  - theme config
+  - configuration reference
+  - navbar config
+  - footer config
+  - color mode
+  - site metadata
+  - announcement bar
+  - table of contents
+tags:
+  - facades
+  - reference
+  - theme config
+  - configuration
+---
+
+# Theme Config
+
+Full reference for the `themeConfig` section of `docusaurus.config.ts`. These options control site metadata, navigation, footer, color mode, and content display.
+
+## Top-Level Structure
+
+```ts title="docusaurus.config.ts"
+themeConfig: {
+  site: { /* ... */ },
+  colorMode: { /* ... */ },
+  navbar: { /* ... */ },
+  docs: { /* ... */ },
+  blog: { /* ... */ },
+  tableOfContents: { /* ... */ },
+  announcementBar: { /* ... */ },
+  footer: { /* ... */ },
+  backToTopButton: true,
+  mermaid: { /* ... */ },
+},
+```
+
+## Site
+
+| Option                   | Type                                       | Default     | Description                                       |
+|--------------------------|--------------------------------------------|-------------|---------------------------------------------------|
+| `site.title`             | `string`                                   | `''`        | Site title for browser tab and SEO.               |
+| `site.logo`              | `object`                                   | `{}`        | Logo configuration.                               |
+| `site.logo.alt`          | `string`                                   | `''`        | Logo alt text.                                    |
+| `site.logo.src`          | `string`                                   | `''`        | Logo icon image source path.                      |
+| `site.logo.srcDark`      | `string \| undefined`                      | `undefined` | Logo icon source for dark mode.                   |
+| `site.logo.href`         | `string \| undefined`                      | `undefined` | Logo click URL.                                   |
+| `site.logo.wordmark`     | `string \| undefined`                      | `undefined` | Wordmark image source path (full logo with text). |
+| `site.logo.wordmarkDark` | `string \| undefined`                      | `undefined` | Wordmark source for dark mode.                    |
+| `site.logo.title`        | `string \| undefined`                      | `undefined` | Brand title text shown in navbar.                 |
+| `site.image`             | `string`                                   | `''`        | Default social/SEO image path.                    |
+| `site.metadata`          | `Array<{ name: string, content: string }>` | `[]`        | Additional meta tags.                             |
+
+## Color Mode
+
+| Option                    | Type                            | Default    | Description                                                                                     |
+|---------------------------|---------------------------------|------------|-------------------------------------------------------------------------------------------------|
+| `colorMode.defaultMode`   | `'system' \| 'light' \| 'dark'` | `'system'` | Default color mode on first visit.                                                              |
+| `colorMode.disableSwitch` | `boolean`                       | `false`    | Hide the color mode toggle. Setting `defaultMode` to `'system'` already respects OS preference. |
+
+## Navbar
+
+| Option                | Type                  | Default     | Description                          |
+|-----------------------|-----------------------|-------------|--------------------------------------|
+| `navbar.title`        | `string \| undefined` | `undefined` | Text label next to the logo.         |
+| `navbar.hideOnScroll` | `boolean`             | `false`     | Hide the navbar when scrolling down. |
+| `navbar.items`        | `NavbarItem[]`        | `[]`        | Navigation items. See below.         |
+
+### Navbar Items
+
+Each item in the `navbar.items` array follows this structure:
+
+| Property    | Type                        | Description                                                      |
+|-------------|-----------------------------|------------------------------------------------------------------|
+| `label`     | `string`                    | Display text.                                                    |
+| `position`  | `'left' \| 'right'`         | Side of the navbar.                                              |
+| `type`      | `'docSidebar' \| undefined` | `'docSidebar'` links to a sidebar, `undefined` for direct links. |
+| `sidebarId` | `string \| undefined`       | Sidebar ID when `type` is `'docSidebar'`.                        |
+| `to`        | `string \| undefined`       | Internal URL when `type` is `undefined`.                         |
+| `href`      | `string \| undefined`       | External URL when `type` is `undefined`.                         |
+| `icon`      | `string \| undefined`       | Iconify icon identifier (e.g., `'lucide:rocket'`).               |
+
+## Docs
+
+| Option                                | Type      | Default          | Description                                          |
+|---------------------------------------|-----------|------------------|------------------------------------------------------|
+| `docs.versionPersistence`             | `string`  | `'localStorage'` | Where to persist the active version.                 |
+| `docs.sidebar.hideable`               | `boolean` | `false`          | Allow users to collapse the sidebar.                 |
+| `docs.sidebar.autoCollapseCategories` | `boolean` | `false`          | Auto-collapse other categories when one is expanded. |
+
+## Blog
+
+| Option                     | Type       | Default  | Description                                                                    |
+|----------------------------|------------|----------|--------------------------------------------------------------------------------|
+| `blog.sidebar.groupByYear` | `boolean`  | `true`   | Group blog posts by year in the sidebar.                                       |
+| `blog.layout.heading`      | `string`   | `'Blog'` | Blog listing page heading.                                                     |
+| `blog.layout.description`  | `string`   | `''`     | Blog listing page description.                                                 |
+| `blog.share.platforms`     | `string[]` | `[]`     | Share button platforms. Accepts `x`, `facebook`, `linkedin`, `reddit`, `copy`. |
+
+## Table of Contents
+
+| Option                            | Type     | Default | Description                              |
+|-----------------------------------|----------|---------|------------------------------------------|
+| `tableOfContents.minHeadingLevel` | `number` | `2`     | Minimum heading level to include in TOC. |
+| `tableOfContents.maxHeadingLevel` | `number` | `3`     | Maximum heading level to include in TOC. |
+
+## Announcement Bar
+
+| Option                            | Type                  | Default     | Description                        |
+|-----------------------------------|-----------------------|-------------|------------------------------------|
+| `announcementBar.id`              | `string`              | —           | Unique ID for dismiss persistence. |
+| `announcementBar.content`         | `string`              | —           | HTML content of the announcement.  |
+| `announcementBar.backgroundColor` | `string \| undefined` | `undefined` | Background color override.         |
+| `announcementBar.textColor`       | `string \| undefined` | `undefined` | Text color override.               |
+| `announcementBar.isCloseable`     | `boolean`             | `true`      | Whether users can dismiss the bar. |
+
+## Footer
+
+Set to `false` to hide the footer entirely. Otherwise, provide an object:
+
+| Option               | Type                                                   | Default     | Description                        |
+|----------------------|--------------------------------------------------------|-------------|------------------------------------|
+| `footer.sections`    | `Record<string, FooterLink[]>`                         | `{}`        | Named groups of footer links.      |
+| `footer.layout`      | `Record<string, { title?, section }>`                  | `{}`        | Layout mapping for footer columns. |
+| `footer.socialLinks` | `Array<{ icon: string, href: string, label: string }>` | `[]`        | Social media icon links.           |
+| `footer.copyright`   | `string \| undefined`                                  | `undefined` | Copyright text.                    |
+| `footer.credit`      | `boolean`                                              | `true`      | Show "Built with Nova" credit.     |
+| `footer.cta`         | `string \| undefined`                                  | `undefined` | Call-to-action text or HTML.       |
+
+## Back to Top Button
+
+:::info[Docusaurus Pass-Through]
+This option is passed directly to Docusaurus and is not validated by the Nova preset schema.
+:::
+
+| Option            | Type      | Default | Description                           |
+|-------------------|-----------|---------|---------------------------------------|
+| `backToTopButton` | `boolean` | `true`  | Show the back-to-top floating button. |
+
+## Mermaid
+
+| Option                | Type     | Default     | Description                                                         |
+|-----------------------|----------|-------------|---------------------------------------------------------------------|
+| `mermaid.theme.dark`  | `string` | `'dark'`    | Mermaid theme used in dark mode.                                    |
+| `mermaid.theme.light` | `string` | `'default'` | Mermaid theme used in light mode.                                   |
+| `mermaid.options`     | `object` | `{}`        | Additional Mermaid configuration passed through to the Mermaid API. |

@@ -1,29 +1,29 @@
 ---
 id: run-recipes
 title: Run Recipes
-description: Run all configured recipes in sequence.
+description: Run all configured recipes in sequence so every workspace stays consistent with a single command.
 keywords:
   - nova
-  - run-recipes
+  - nova run-recipes
   - package.json
-  - recipes
   - sync
   - normalize
 tags:
-  - run-recipes
   - cli
+  - run-recipes
   - utility
   - recipes
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Run all enabled <Term title="transform script" to="/docs/quickstart/terminology#nova-concepts">recipes</Term> in sequence.
+Run all enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> in sequence.
 
 ## Summary
 
-The `run-recipes` command discovers and executes all registered <Term title="transform script" to="/docs/quickstart/terminology#nova-concepts">recipes</Term> in sequence. This is the single command that replaces chaining individual <Term title="transform script" to="/docs/quickstart/terminology#nova-concepts">recipe</Term> commands.
+The `run-recipes` command discovers and executes all registered <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> in sequence. This is the single command that replaces chaining individual <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> commands.
 
 ## Why Use This Command?
 
@@ -32,8 +32,8 @@ The `run-recipes` command discovers and executes all registered <Term title="tra
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> release with either the installed `nova` <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> or `npx`.
-- **<Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>** — A valid <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term> file must exist at the project root with configured <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspaces</Term>.
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> — A valid <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file must exist at the project root with configured <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspaces</Terminology>.
 
 ## Usage
 
@@ -64,7 +64,7 @@ The `run-recipes` command discovers and executes all registered <Term title="tra
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

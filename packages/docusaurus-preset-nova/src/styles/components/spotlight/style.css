@@ -1,0 +1,67 @@
+/**
+ * ============================
+ * Spotlight — Section
+ * ============================
+ */
+
+.nova-spotlight {
+  margin-block: var(--nova-section-gap);
+}
+
+/**
+ * ============================
+ * Spotlight — Inner
+ * ============================
+ */
+
+.nova-spotlight-inner {
+  max-width: var(--nova-grid-md);
+  text-align: center;
+}
+
+/**
+ * ============================
+ * Spotlight — Heading
+ * ============================
+ */
+
+.nova-spotlight-heading {
+  margin-block: calc(var(--nova-shape-gap) * 3);
+  text-align: center;
+}
+
+/**
+ * ============================
+ * Spotlight — Code Snippet
+ * ============================
+ */
+
+.nova-spotlight-inner .nova-code-snippet {
+  padding: 1.5rem 1.75rem;
+  margin-block: calc(var(--nova-shape-gap) * 4);
+
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  text-align: left;
+
+  overflow-x: auto;
+}
+
+/**
+ * ============================
+ * Spotlight — Section Description
+ * ============================
+ */
+
+.nova-spotlight-inner .nova-section-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .nova-spotlight-inner .nova-section-description {
+    font-size: 1.05rem;
+  }
+}

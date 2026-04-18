@@ -1,0 +1,94 @@
+---
+title: "We Deleted 40% of Our Dependencies and Nothing Broke"
+authors: [elena]
+tags: [monorepo, workspace, anvil, caching]
+date: 2026-03-28
+---
+
+Our workspace had 847 dependencies. We ran `foundry anvil audit` and discovered that 339 of them were unused, duplicated, or pulled in transitively by packages we no longer needed. We deleted them over two days. The build still passed. The tests still passed. The bundle size dropped by 31%.
+
+Dependency management in a monorepo is not the same as dependency management in a single project. The problems compound differently, and the tools you need are different. Here is what we found and how we fixed it.
+
+{/* truncate */}
+
+## The Three Types of Dependency Waste
+
+Anvil's audit categorizes dependency waste into three buckets:
+
+### 1. Phantom Consumers
+
+A phantom consumer is a package that declares a dependency it never imports. This happens when someone removes an import during a refactor but forgets to remove the dependency from `package.json`. In a single-project repo, this is a minor annoyance. In a monorepo, it cascades — every downstream package inherits the phantom dependency through hoisting.
+
+```text title="Anvil audit output — phantom consumers"
+$ foundry anvil audit --type phantom-consumers
+
+  packages/api
+    lodash@4.17.21 — declared, never imported (3 files scanned)
+    uuid@9.0.0    — declared, never imported (3 files scanned)
+
+  packages/web
+    moment@2.30.1 — declared, never imported (47 files scanned)
+```
+
+We found 87 phantom consumers across 90 packages. Removing them shaved 142 MB off the `node_modules` directory.
+
+### 2. Version Duplication
+
+Version duplication occurs when two packages in the workspace depend on different versions of the same library. The package manager installs both versions, and the bundle includes both copies. In our workspace, `date-fns` appeared in three different versions: 2.29.0, 2.30.0, and 3.0.0.
+
+| Library  | Versions in Workspace | Packages Using Each | Resolution          |
+|----------|-----------------------|---------------------|---------------------|
+| date-fns | 2.29, 2.30, 3.0       | 4 / 2 / 1           | Upgrade all to 3.0  |
+| chalk    | 4.1, 5.3              | 12 / 3              | Upgrade all to 5.3  |
+| zod      | 3.21, 3.22            | 8 / 6               | Upgrade all to 3.22 |
+| uuid     | 8.3, 9.0              | 1 / 14              | Upgrade all to 9.0  |
+
+Consolidating these four libraries eliminated 12 duplicate packages from the dependency tree.
+
+### 3. Transitive Weight
+
+Transitive weight is the dependency cost of a package you barely use. We had a logging library that pulled in 47 transitive dependencies — including a YAML parser, a template engine, and a color manipulation library — for a package where we used exactly one function: `formatTimestamp`.
+
+Anvil flags high-weight dependencies and suggests alternatives:
+
+```text title="Anvil audit output — transitive weight"
+  packages/core
+    fancy-logger@2.1.0
+      Direct size: 24 KB
+      Transitive deps: 47
+      Transitive size: 3.8 MB
+      Used exports: formatTimestamp (1 of 34)
+      Suggestion: Replace with a 4-line utility function
+```
+
+We replaced `fancy-logger` with a 4-line function. The `core` package's dependency count dropped from 52 to 5.
+
+## The Deletion Process
+
+We did not delete 339 dependencies in one commit. We used a three-step process:
+
+1. **Audit.** `foundry anvil audit` produces the full report. We reviewed it as a team and categorized every finding as "delete," "upgrade," or "investigate."
+2. **Verify.** For each deletion batch, we ran `foundry ignite` to confirm the build passed and `foundry crucible` to confirm all contract tests passed. We batched deletions by package to keep the diffs reviewable.
+3. **Measure.** After each batch, we measured install time, build time, and bundle size. This gave us confidence that we were moving in the right direction and helped us prioritize which deletions mattered most.
+
+## The Results
+
+| Metric              | Before  | After   | Change |
+|---------------------|---------|---------|--------|
+| Total dependencies  | 847     | 508     | -40%   |
+| `node_modules` size | 1.12 GB | 784 MB  | -30%   |
+| Install time        | 48s     | 31s     | -35%   |
+| Bundle size (web)   | 2.4 MB  | 1.66 MB | -31%   |
+| Quench cache size   | 4.2 GB  | 2.8 GB  | -33%   |
+
+Every metric improved. Install time dropped because npm had fewer packages to resolve and link. Bundle size dropped because the bundler had fewer duplicate libraries to include. Cache size dropped because smaller packages produce smaller artifacts.
+
+## Run the Audit
+
+```bash
+foundry anvil audit
+```
+
+One command. No configuration. The audit reads your manifest, scans every source file, and produces a ranked list of dependency waste. Start with the phantom consumers — they are the safest to delete and often the most numerous.
+
+Dependency management is not a one-time task. We run the audit monthly as part of our maintenance cycle. Dependencies accumulate like dust. If you do not clean them regularly, you wake up one day with 847 of them and wonder how you got there.

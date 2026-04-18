@@ -1,0 +1,123 @@
+/**
+ * Signal — Doc Sidebar Mobile visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Trigger Button
+ * ============================ */
+
+.nova-sidebar-mobile-trigger {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  color: var(--nova-color-neutral-500);
+
+  background-color: var(--nova-color-neutral-50);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: 0;
+
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-mobile-trigger:hover,
+.nova-sidebar-mobile-trigger:focus-visible {
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-trigger {
+  color: var(--nova-color-neutral-400);
+
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-trigger:hover,
+[data-theme="dark"] .nova-sidebar-mobile-trigger:focus-visible {
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Overlay
+ * ============================ */
+
+.nova-sidebar-mobile-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: url(#nova-pixelate);
+  -webkit-backdrop-filter: url(#nova-pixelate);
+}
+
+/* ============================
+ * Panel
+ * ============================ */
+
+.nova-sidebar-mobile-panel {
+  background-color: var(--nova-color-neutral-50);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-top: 2px solid var(--nova-color-primary-600);
+  border-radius: 0;
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-panel {
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-800);
+  border-top-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * Header
+ * ============================ */
+
+.nova-sidebar-mobile-header-title {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ============================
+ * Close Button
+ * ============================ */
+
+.nova-sidebar-mobile-close {
+  color: var(--nova-color-neutral-500);
+  border-radius: 0;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-mobile-close:hover,
+.nova-sidebar-mobile-close:focus-visible {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-close {
+  color: var(--nova-color-neutral-500);
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-close:hover,
+[data-theme="dark"] .nova-sidebar-mobile-close:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Snappy Fade
+ * ============================ */
+
+@keyframes nova-sidebar-mobile-snap {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nova-sidebar-mobile-panel {
+  animation: nova-sidebar-mobile-snap 150ms ease;
+}

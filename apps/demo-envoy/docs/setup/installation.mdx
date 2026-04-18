@@ -1,0 +1,137 @@
+---
+title: Installation
+sidebar_position: 1
+description: Install Envoy via Vial container, Spark CLI, or Trellis deployment. Includes health check verification and minimal footprint notes.
+tags:
+  - setup
+  - installation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Installation
+
+Envoy ships as a 3MB Vial image with zero external dependencies. Choose the deployment method that fits your infrastructure.
+
+## Prerequisites
+
+| Requirement | Minimum Version | Notes                                                     |
+|-------------|-----------------|-----------------------------------------------------------|
+| **Vial**    | 4.0             | Recommended for production. Compose v2 for stack deploys. |
+| **Spark**   | 2.1             | Alternative CLI-based deployment.                         |
+| **Trellis** | 1.8             | Orchestrated deployment across clusters.                  |
+
+## Install
+
+<Tabs>
+<TabItem value="vial" label="Vial" default>
+
+Pull the image from the registry:
+
+```bash title="Pull and run with Vial"
+vial pull envoy:latest
+vial run -d \
+  --name envoy \
+  --restart unless-stopped \
+  -p 8090:8090 \
+  envoy:latest
+```
+
+Verify the container is running:
+
+```bash
+vial logs envoy
+# [envoy] Starting on port 8090
+# [envoy] Cipher: ready
+# [envoy] Courier: ready
+# [envoy] Health check: OK
+```
+
+</TabItem>
+<TabItem value="spark" label="Spark CLI">
+
+Install the Envoy CLI globally:
+
+```bash title="Install with Spark"
+spark install envoy
+```
+
+Start the relay server:
+
+```bash
+envoy start --port 8090
+```
+
+Or with explicit configuration:
+
+```bash
+envoy start --config relay.grain --port 8090
+```
+
+</TabItem>
+<TabItem value="trellis" label="Trellis">
+
+Deploy to a Trellis cluster using the manifest:
+
+```text title="envoy.trellis.grain"
+deployment "envoy" {
+  image    = "envoy:latest"
+  replicas = 2
+  port     = 8090
+
+  resources {
+    memory = "32Mi"
+    cpu    = "50m"
+  }
+
+  health {
+    path     = "/health"
+    interval = "10s"
+  }
+}
+```
+
+Apply the deployment:
+
+```bash title="Deploy to Trellis"
+trellis apply envoy.trellis.grain
+```
+
+</TabItem>
+</Tabs>
+
+:::tip Minimal Footprint
+The Envoy Vial image is 3MB. That is not a typo. Zero external dependencies means zero bloat. Cold starts complete in under 200ms, and the attack surface is limited to code we wrote and you can audit.
+:::
+
+## Post-Install Verification
+
+Regardless of deployment method, verify the relay is operational:
+
+```bash title="Health check"
+curl http://localhost:8090/health
+```
+
+Expected response:
+
+```json title="Health check response"
+{
+  "status": "healthy",
+  "version": "2.1.0",
+  "uptime_seconds": 12,
+  "components": {
+    "cipher": "ready",
+    "parcel": "ready",
+    "dispatch": "ready",
+    "courier": "ready",
+    "ledger": "ready"
+  }
+}
+```
+
+## What Comes Next
+
+- [Your First Relay](/docs/setup/your-first-relay/) — Receive a Threadbare webhook, transform it, deliver it to Canary.
+- [Configuration](/docs/setup/configuration/) — The `.grain` relay manifest in depth.
+- [Integrations](/docs/advanced/integrations/) — Built-in translators for Threadbare, Glassboard, and Canary.

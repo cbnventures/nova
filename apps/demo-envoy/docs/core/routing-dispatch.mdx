@@ -1,0 +1,134 @@
+---
+title: Routing & Dispatch
+sidebar_position: 2
+description: Content-based routing, severity escalation, topic fanout, and conditional delivery rules.
+tags:
+  - core
+  - routing
+---
+
+# Routing & Dispatch
+
+Dispatch is Envoy's routing engine. After Parcel transforms the payload, Dispatch decides where it goes. Routing decisions are based on content, source identity, severity level, or custom rules declared in the relay manifest.
+
+## Content-Based Routing
+
+The simplest routing strategy: inspect the payload and route based on what it contains. Dispatch evaluates the `filter` block of each relay in declaration order. The first match wins.
+
+```text title="relay.grain — content-based routing"
+relay "critical-alerts" {
+  source = "glassboard"
+  filter { severity = "critical" }
+  destination = "canary://oncall-urgent"
+  transform { priority = 5 }
+}
+
+relay "warning-alerts" {
+  source = "glassboard"
+  filter { severity = "warning" }
+  destination = "canary://infra-alerts"
+  transform { priority = 3 }
+}
+
+relay "info-alerts" {
+  source = "glassboard"
+  destination = "canary://infra-log"
+  transform { priority = 1 }
+}
+```
+
+A critical Glassboard alert routes to `oncall-urgent`. A warning routes to `infra-alerts`. Everything else falls through to `infra-log`.
+
+## Severity Escalation
+
+Dispatch can escalate messages based on severity thresholds. When a source fires repeated alerts within a time window, the effective severity increases and the routing changes.
+
+```text title="Escalation rules"
+escalation {
+  source   = "glassboard"
+  window   = "5m"
+  thresholds {
+    3  = "warning"     # 3 alerts in 5 minutes → escalate to warning
+    10 = "critical"    # 10 alerts in 5 minutes → escalate to critical
+  }
+}
+```
+
+| Alert Count (5m window) | Original Severity | Effective Severity | Routed To              |
+|-------------------------|-------------------|--------------------|------------------------|
+| 1                       | info              | info               | canary://infra-log     |
+| 3                       | info              | warning            | canary://infra-alerts  |
+| 10                      | info              | critical           | canary://oncall-urgent |
+
+:::warning
+Escalation modifies the effective severity for routing purposes only. The original severity in the payload is preserved in Ledger. This ensures audit accuracy while allowing routing flexibility.
+:::
+
+## Topic Fanout
+
+A single incoming message can be delivered to multiple destinations. Declare a `fanout` list instead of a single `destination`.
+
+```text title="relay.grain — fanout"
+relay "deploy-notifications" {
+  source = "threadbare"
+  filter { event = "release" }
+
+  // highlight-start
+  fanout = [
+    "canary://deploy-alerts",
+    "canary://team-general",
+    "spoke://dashboard.internal/webhook"
+  ]
+  // highlight-end
+
+  transform {
+    title = "[{{ repo }}] Release {{ tag }}"
+    body  = "{{ author }} published {{ tag }}"
+  }
+}
+```
+
+Courier delivers to each destination independently. A failure on one does not block the others. Each delivery gets its own retry schedule and Ledger entry.
+
+## Conditional Delivery
+
+Route messages differently based on time of day or day of week. Useful for after-hours escalation.
+
+```text title="Time-based routing"
+relay "after-hours-critical" {
+  source = "glassboard"
+  filter {
+    severity = "critical"
+    // highlight-next-line
+    schedule = "weekdays 18:00-08:00, weekends *"
+  }
+  destination = "canary://oncall-emergency"
+  transform { priority = 5 }
+}
+
+relay "business-hours-critical" {
+  source = "glassboard"
+  filter {
+    severity = "critical"
+    schedule = "weekdays 08:00-18:00"
+  }
+  destination = "canary://oncall-urgent"
+  transform { priority = 5 }
+}
+```
+
+## Routing Strategies
+
+| Strategy            | Use Case                         | Configuration                       |
+|---------------------|----------------------------------|-------------------------------------|
+| Content-based       | Route by payload fields          | `filter { field = "value" }`        |
+| Source-based        | Route by origin identity         | `source = "glassboard"`             |
+| Severity escalation | Increase urgency under volume    | `escalation { thresholds { ... } }` |
+| Topic fanout        | Deliver to multiple destinations | `fanout = ["a", "b", "c"]`          |
+| Time-based          | Different routing by schedule    | `filter { schedule = "..." }`       |
+| Fallback            | Catch-all for unmatched messages | Last relay with no filter           |
+
+## Next Steps
+
+- [Authentication](/docs/core/authentication/) — How Cipher verifies source identity before Dispatch processes the message.
+- [Architecture](/docs/advanced/architecture/) — System-level view of how Dispatch, Courier, and Embassy interact.

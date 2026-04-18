@@ -11,406 +11,416 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIRecipePackageJsonCleanup } from '@/cli/recipe/package-json/cleanup.js';
+import { afterAll, describe, it } from 'vitest';
+
+import { CliRecipePackageJsonCleanup } from '../../../../cli/recipe/package-json/cleanup.js';
 
 import type {
-  CLIRecipePackageJsonCleanupTestOriginalCwd,
-  CLIRecipePackageJsonCleanupTestSandboxRoot,
-} from '@/types/tests/cli/recipe/package-json/cleanup.test.d.ts';
+  TestsCliRecipePackageJsonCleanupRunDescriptionIndex,
+  TestsCliRecipePackageJsonCleanupRunKeys,
+  TestsCliRecipePackageJsonCleanupRunLicenseIndex,
+  TestsCliRecipePackageJsonCleanupRunNameIndex,
+  TestsCliRecipePackageJsonCleanupRunNovaConfigContents,
+  TestsCliRecipePackageJsonCleanupRunNovaConfigPath,
+  TestsCliRecipePackageJsonCleanupRunOriginalCwd,
+  TestsCliRecipePackageJsonCleanupRunOutput,
+  TestsCliRecipePackageJsonCleanupRunPackageJsonContents,
+  TestsCliRecipePackageJsonCleanupRunPackageJsonPath,
+  TestsCliRecipePackageJsonCleanupRunParsed,
+  TestsCliRecipePackageJsonCleanupRunProjectDirectory,
+  TestsCliRecipePackageJsonCleanupRunSandboxPath,
+  TestsCliRecipePackageJsonCleanupRunSandboxRoot,
+  TestsCliRecipePackageJsonCleanupRunTemporaryDirectory,
+  TestsCliRecipePackageJsonCleanupRunVersionIndex,
+  TestsCliRecipePackageJsonCleanupRunWorkspaceDirectory,
+  TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonContents,
+  TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonPath,
+} from '../../../../types/tests/cli/recipe/package-json/cleanup.test.d.ts';
 
 /**
- * CLI Recipe - package.json - Cleanup - Run.
+ * Tests - CLI - Recipe - package.json - Cleanup - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIRecipePackageJsonCleanup.run', async (context) => {
-  const originalCwd: CLIRecipePackageJsonCleanupTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIRecipePackageJsonCleanupTestSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('CliRecipePackageJsonCleanup.run', async () => {
+  const originalCwd: TestsCliRecipePackageJsonCleanupRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliRecipePackageJsonCleanupRunTemporaryDirectory = tmpdir();
+  const sandboxPath: TestsCliRecipePackageJsonCleanupRunSandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsCliRecipePackageJsonCleanupRunSandboxRoot = await mkdtemp(sandboxPath);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('sets exit code when not at project root', async () => {
-    const projectDir = join(sandboxRoot, 'not-project-root');
+  it('sets exit code when not at project root', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonCleanupRunProjectDirectory = join(sandboxRoot, 'not-project-root');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    process.chdir(projectDir);
+    process.chdir(projectDirectory);
 
-    process.exitCode = undefined;
-
-    await CLIRecipePackageJsonCleanup.run({});
+    await CliRecipePackageJsonCleanup.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('skips when no workspaces have the recipe enabled', async () => {
-    const projectDir = join(sandboxRoot, 'no-recipe');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('skips when no workspaces have the recipe enabled', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonCleanupRunProjectDirectory = join(sandboxRoot, 'no-recipe');
+    const workspaceDirectory: TestsCliRecipePackageJsonCleanupRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-no-recipe',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonCleanupRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonCleanupRunPackageJsonContents = JSON.stringify({
+      name: 'test-no-recipe',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonCleanupRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonCleanupRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: '@test/core',
-        version: '1.0.0',
-        customField: 'should-stay',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      customField: 'should-stay',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonCleanup.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonCleanup.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
     // The custom field should still be there because the recipe is not enabled.
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonCleanupRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonCleanupRunParsed = JSON.parse(output);
 
     strictEqual(parsed['customField'], 'should-stay');
+
+    return;
   });
 
-  await context.test('reorders package.json keys in defined sort order', async () => {
-    const projectDir = join(sandboxRoot, 'reorder');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('reorders package.json keys in defined sort order', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonCleanupRunProjectDirectory = join(sandboxRoot, 'reorder');
+    const workspaceDirectory: TestsCliRecipePackageJsonCleanupRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-reorder',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonCleanupRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonCleanupRunPackageJsonContents = JSON.stringify({
+      name: 'test-reorder',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'cleanup': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonCleanupRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonCleanupRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'cleanup': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
     // Write package.json with keys in wrong order.
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        license: 'MIT',
-        version: '1.0.0',
-        name: '@test/core',
-        description: 'Test package',
-      }, null, 2),
-      'utf-8',
-    );
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonContents = JSON.stringify({
+      license: 'MIT',
+      version: '1.0.0',
+      name: '@test/core',
+      description: 'Test package',
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIRecipePackageJsonCleanup.run({
+    await CliRecipePackageJsonCleanup.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
-    const keys = Object.keys(parsed);
+    const output: TestsCliRecipePackageJsonCleanupRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonCleanupRunParsed = JSON.parse(output);
+    const keys: TestsCliRecipePackageJsonCleanupRunKeys = Object.keys(parsed);
 
     // "name" should come before "version", "version" before "description", "description" before "license".
-    const nameIndex = keys.indexOf('name');
-    const versionIndex = keys.indexOf('version');
-    const descriptionIndex = keys.indexOf('description');
-    const licenseIndex = keys.indexOf('license');
+    const nameIndex: TestsCliRecipePackageJsonCleanupRunNameIndex = keys.indexOf('name');
+    const versionIndex: TestsCliRecipePackageJsonCleanupRunVersionIndex = keys.indexOf('version');
+    const descriptionIndex: TestsCliRecipePackageJsonCleanupRunDescriptionIndex = keys.indexOf('description');
+    const licenseIndex: TestsCliRecipePackageJsonCleanupRunLicenseIndex = keys.indexOf('license');
 
     strictEqual(nameIndex < versionIndex, true);
     strictEqual(versionIndex < descriptionIndex, true);
     strictEqual(descriptionIndex < licenseIndex, true);
+
+    return;
   });
 
-  await context.test('removes unknown keys from package.json', async () => {
-    const projectDir = join(sandboxRoot, 'unknown-keys');
-    const workspaceDir = join(projectDir, 'packages', 'lib');
+  it('removes unknown keys from package.json', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonCleanupRunProjectDirectory = join(sandboxRoot, 'unknown-keys');
+    const workspaceDirectory: TestsCliRecipePackageJsonCleanupRunWorkspaceDirectory = join(projectDirectory, 'packages', 'lib');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-unknown',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonCleanupRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonCleanupRunPackageJsonContents = JSON.stringify({
+      name: 'test-unknown',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/lib': {
-            name: '@test/lib',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'cleanup': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonCleanupRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonCleanupRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/lib': {
+          name: '@test/lib',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'cleanup': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
     // Write package.json with an unknown key.
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: '@test/lib',
-        version: '1.0.0',
-        customField: 'should-be-removed',
-      }, null, 2),
-      'utf-8',
-    );
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/lib',
+      version: '1.0.0',
+      customField: 'should-be-removed',
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIRecipePackageJsonCleanup.run({
+    await CliRecipePackageJsonCleanup.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonCleanupRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonCleanupRunParsed = JSON.parse(output);
 
     strictEqual(parsed['customField'], undefined);
     strictEqual(parsed['name'], '@test/lib');
+
+    return;
   });
 
-  await context.test('keeps unknown keys when removeUnknownKeys is disabled via settings', async () => {
-    const projectDir = join(sandboxRoot, 'keep-unknown');
-    const workspaceDir = join(projectDir, 'packages', 'keep');
+  it('keeps unknown keys when removeUnknownKeys is disabled via settings', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonCleanupRunProjectDirectory = join(sandboxRoot, 'keep-unknown');
+    const workspaceDirectory: TestsCliRecipePackageJsonCleanupRunWorkspaceDirectory = join(projectDirectory, 'packages', 'keep');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-keep-unknown',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonCleanupRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonCleanupRunPackageJsonContents = JSON.stringify({
+      name: 'test-keep-unknown',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/keep': {
-            name: '@test/keep',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'cleanup': [true, { removeUnknownKeys: false }],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonCleanupRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonCleanupRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/keep': {
+          name: '@test/keep',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'cleanup': [
+              true,
+              { removeUnknownKeys: false },
+            ],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: '@test/keep',
-        version: '1.0.0',
-        customField: 'should-stay',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/keep',
+      version: '1.0.0',
+      customField: 'should-stay',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonCleanup.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonCleanup.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonCleanupRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonCleanupRunParsed = JSON.parse(output);
 
     strictEqual(parsed['customField'], 'should-stay');
+
+    return;
   });
 
-  await context.test('skips reordering when reorderKeys is disabled via settings', async () => {
-    const projectDir = join(sandboxRoot, 'skip-sort');
-    const workspaceDir = join(projectDir, 'packages', 'unsorted');
+  it('skips reordering when reorderKeys is disabled via settings', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonCleanupRunProjectDirectory = join(sandboxRoot, 'skip-sort');
+    const workspaceDirectory: TestsCliRecipePackageJsonCleanupRunWorkspaceDirectory = join(projectDirectory, 'packages', 'unsorted');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-skip-sort',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonCleanupRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonCleanupRunPackageJsonContents = JSON.stringify({
+      name: 'test-skip-sort',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/unsorted': {
-            name: '@test/unsorted',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'cleanup': [true, { reorderKeys: false }],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonCleanupRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonCleanupRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/unsorted': {
+          name: '@test/unsorted',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'cleanup': [
+              true,
+              { reorderKeys: false },
+            ],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
     // Write package.json with keys in wrong order.
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        license: 'MIT',
-        name: '@test/unsorted',
-        version: '1.0.0',
-      }, null, 2),
-      'utf-8',
-    );
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonContents = JSON.stringify({
+      license: 'MIT',
+      name: '@test/unsorted',
+      version: '1.0.0',
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIRecipePackageJsonCleanup.run({
+    await CliRecipePackageJsonCleanup.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
-    const keys = Object.keys(parsed);
+    const output: TestsCliRecipePackageJsonCleanupRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonCleanupRunParsed = JSON.parse(output);
+    const keys: TestsCliRecipePackageJsonCleanupRunKeys = Object.keys(parsed);
 
     // Keys should remain in original order since sorting is skipped.
     deepStrictEqual(keys[0], 'license');
     deepStrictEqual(keys[1], 'name');
     deepStrictEqual(keys[2], 'version');
+
+    return;
   });
 
-  await context.test('does not modify files during dry run', async () => {
-    const projectDir = join(sandboxRoot, 'dry-run');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('does not modify files during dry run', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonCleanupRunProjectDirectory = join(sandboxRoot, 'dry-run');
+    const workspaceDirectory: TestsCliRecipePackageJsonCleanupRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-dry-run',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonCleanupRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonCleanupRunPackageJsonContents = JSON.stringify({
+      name: 'test-dry-run',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'cleanup': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonCleanupRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonCleanupRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'cleanup': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
+
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
     // Write package.json with an unknown key.
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: '@test/core',
-        version: '1.0.0',
-        customField: 'should-stay-in-dry-run',
-      }, null, 2),
-      'utf-8',
-    );
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      customField: 'should-stay-in-dry-run',
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIRecipePackageJsonCleanup.run({
+    await CliRecipePackageJsonCleanup.run({
       dryRun: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
     // The file should not have been modified.
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonCleanupRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonCleanupRunParsed = JSON.parse(output);
 
     strictEqual(parsed['customField'], 'should-stay-in-dry-run');
+
+    return;
   });
+
+  return;
 });

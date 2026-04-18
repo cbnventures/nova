@@ -1,0 +1,106 @@
+---
+title: Retry Logic Is Harder Than You Think
+authors: [nneka]
+tags: [courier, retry, infrastructure]
+date: 2025-06-05
+---
+
+Everyone thinks they understand retry logic. Send the request. If it fails, send it again. Maybe wait a second. Maybe two. How hard could it be?
+
+{/* truncate */}
+
+Harder than you think. Much harder.
+
+## The Naive Approach
+
+The simplest retry is an immediate retry. The request failed, so you send it again right now. This works exactly once — when the failure was a transient network blip. In every other scenario, it makes things worse.
+
+```text title="Immediate retry under load"
+03:47:00  POST /relay — 503 Service Unavailable
+03:47:00  POST /relay — 503 Service Unavailable (retry 1)
+03:47:00  POST /relay — 503 Service Unavailable (retry 2)
+03:47:00  POST /relay — 503 Service Unavailable (retry 3)
+# Destination is overloaded. You just made it worse.
+```
+
+The next step up is fixed-interval retry. Wait one second between attempts. Better, but still problematic. If a hundred relays are all retrying on the same one-second cadence, you get a synchronized thundering herd that keeps the destination pinned.
+
+## What Courier Actually Does
+
+Courier uses exponential backoff with jitter. The backoff increases the delay between retries. The jitter randomizes the exact timing so concurrent retries do not synchronize.
+
+| Strategy            | Delay Pattern                  | Thundering Herd Risk | Delivery Guarantee |
+|---------------------|--------------------------------|----------------------|--------------------|
+| Immediate           | 0s, 0s, 0s                     | Critical             | None               |
+| Fixed interval      | 1s, 1s, 1s                     | High                 | Weak               |
+| Exponential backoff | 1s, 2s, 4s, 8s                 | Medium               | Moderate           |
+| Backoff + jitter    | 0.8s, 2.3s, 3.7s, 9.1s         | Low                  | Strong             |
+| Courier             | Backoff + jitter + dead-letter | Minimal              | Guaranteed         |
+
+The last row is where Courier lives. Backoff and jitter handle the timing. But guaranteed delivery requires two more pieces: dead-letter queues and delivery receipts.
+
+## Dead-Letter Queues
+
+A message that has exhausted all retry attempts is not deleted. It moves to a dead-letter queue — a holding area for messages that could not be delivered within the retry window.
+
+```text title="Courier dead-letter flow"
+Attempt 1  →  503  →  wait 1.2s
+Attempt 2  →  503  →  wait 4.7s
+Attempt 3  →  503  →  wait 28.3s
+Attempt 4  →  503  →  wait 2m 10s
+Attempt 5  →  503  →  DEAD LETTER
+
+Message moved to: /ledger/dead-letter/msg_a7f3c9
+Escalation: Dispatch routes to fallback destination
+```
+
+Dead-lettered messages are queryable via the Spoke API. Operators can inspect, retry manually, or purge. Ledger records every state transition.
+
+## Delivery Receipts
+
+Courier does not consider a message delivered when the destination returns 200. It considers a message delivered when the destination returns 200 *and* the response body matches the expected receipt schema.
+
+This distinction matters. A reverse proxy returning 200 with an empty body is not the same as the actual service confirming receipt. Courier validates the receipt, records it in Ledger, and only then marks the delivery as complete.
+
+### Full Courier retry configuration schema
+
+```text title="relay.grain — retry block"
+retry {
+  # Strategy: "exponential" | "fixed" | "immediate"
+  strategy = "exponential"
+
+  # Maximum retry attempts before dead-letter
+  max = 5
+
+  # Base delay for exponential backoff
+  base_delay = "1s"
+
+  # Maximum delay cap
+  max_delay = "10m"
+
+  # Jitter range (percentage of current delay)
+  jitter = 0.25
+
+  # Dead-letter queue configuration
+  dead_letter {
+    enabled = true
+    retention = "30d"
+    escalation = "dispatch://fallback-channel"
+  }
+
+  # Delivery receipt validation
+  receipt {
+    required = true
+    schema   = "standard"
+    timeout  = "5s"
+  }
+}
+```
+
+## The Lesson
+
+Retry logic is not a loop with a sleep call. It is a state machine with at least five states: pending, attempting, backing off, dead-lettered, and delivered. Each transition has rules. Each state has side effects. Each failure mode has a different correct response.
+
+Courier handles this so the relay manifest does not have to. You declare the retry policy in your `.grain` file. Courier handles the rest.
+
+That is the point. Reliability should not require expertise at every integration point. It should be the default.

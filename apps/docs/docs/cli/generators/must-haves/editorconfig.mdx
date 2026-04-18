@@ -1,11 +1,72 @@
 ---
 id: editorconfig
 title: EditorConfig (.editorconfig)
-description: x
+description: Generate a .editorconfig file that enforces consistent coding styles across editors and IDEs.
 keywords:
-  - x
+  - nova
+  - nova generate
+  - editorconfig
+  - coding styles
+  - indentation
+  - line endings
 tags:
-  - x
+  - cli
+  - generator
+  - must-haves
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create a `.editorconfig` file that tells editors and IDEs to use consistent indentation, charset, and line-ending settings across the project.
+
+## Why Use This Command?
+
+- Keeps formatting consistent without relying on each contributor's editor settings.
+- Works with most popular editors out of the box.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate must-haves editorconfig
+
+    # Shorthand
+    nova gen must editorconfig
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate must-haves editorconfig
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen must editorconfig
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Output Files
+
+| File            | Description                                         |
+|-----------------|-----------------------------------------------------|
+| `.editorconfig` | EditorConfig settings for consistent coding styles. |

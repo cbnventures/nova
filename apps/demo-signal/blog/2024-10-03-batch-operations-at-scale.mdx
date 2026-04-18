@@ -1,0 +1,75 @@
+---
+title: "We Migrated 140,000 Links in Eleven Minutes"
+authors: [luca]
+tags: [batch, beacon, branded-domains, analytics]
+date: 2024-10-03
+---
+
+A fintech client came to us with a problem. They had 140,000 active short links spread across three different link shortening services. Each service had its own redirect rules, its own analytics silo, and its own branded domain. They wanted everything consolidated into Beacon — without breaking a single existing link.
+
+Relay processed the entire migration in eleven minutes. Zero downtime. Zero broken redirects. Full attribution history preserved.
+
+{/* truncate */}
+
+## The Migration Pipeline
+
+Relay is Signal's batch operations engine. It handles bulk link creation, modification, and migration through a declarative job format:
+
+```json title="Relay migration job"
+{
+  "job": "migrate",
+  "source": {
+    "provider": "bitly",
+    "apiKey": "env:BITLY_API_KEY",
+    "filter": {
+      "createdAfter": "2022-01-01",
+      "status": "active"
+    }
+  },
+  "target": {
+    "domain": "go.fintech.example",
+    "preserveSlugs": true,
+    "attribution": {
+      "campaign": "migration-q4",
+      "channel": "legacy"
+    }
+  },
+  "options": {
+    "dryRun": false,
+    "concurrency": 50,
+    "redirectChain": true
+  }
+}
+```
+
+The `redirectChain` option is critical. It configures the old short URL to redirect through Beacon before reaching the final destination. Users who click an old link get seamlessly routed through the new system, and the click is attributed in Beacon's analytics from that point forward.
+
+## Performance at Scale
+
+We benchmarked Relay across different job sizes:
+
+| Links   | Duration | Throughput  | Error Rate |
+|---------|----------|-------------|------------|
+| 1,000   | 4s       | 250 links/s | 0.00%      |
+| 10,000  | 38s      | 263 links/s | 0.00%      |
+| 50,000  | 3m 12s   | 260 links/s | 0.01%      |
+| 140,000 | 11m 04s  | 211 links/s | 0.02%      |
+
+Throughput stays consistent up to about 50,000 links. Beyond that, rate limiting on source provider APIs becomes the bottleneck — not Relay itself. The error rate at 140,000 links was 0.02%, which amounted to 28 links that needed manual review due to malformed destination URLs in the source data.
+
+## Bulk Modification
+
+Migration is one use case. The more common Relay operation is bulk modification — updating thousands of links at once when a campaign changes or a domain rotates:
+
+- **Domain rotation**: Move all links from `go.old-brand.com` to `go.new-brand.com` in a single job.
+- **Attribution backfill**: Add campaign metadata to legacy links that were created without it.
+- **Expiration sweep**: Set expiration dates on links older than a threshold.
+- **Destination update**: Redirect all links pointing to a deprecated URL to its replacement.
+
+Each operation runs as an atomic job with full rollback support. If a job fails partway through, Relay reverts the partial changes and reports exactly which links could not be processed.
+
+## Why Batch Matters
+
+Most link management tools treat links as individual objects. You create them one at a time, you edit them one at a time, and you analyze them one at a time. That works when you have a hundred links. It does not work when you have a hundred thousand.
+
+Relay treats links as a dataset. You define the operation declaratively, Relay validates it against the full link inventory, and then it executes. The difference between managing links individually and managing them in batch is the difference between editing cells in a spreadsheet and running a SQL migration.

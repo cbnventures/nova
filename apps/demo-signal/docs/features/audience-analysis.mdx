@@ -1,0 +1,122 @@
+---
+title: Audience Analysis
+sidebar_position: 4
+tags:
+  - features
+  - analytics
+---
+
+# Audience Analysis
+
+Resonance detects where audiences bleed into each other. Define segments, measure overlap between campaigns, and find the patterns hiding in your click streams.
+
+## Why Overlap Matters
+
+Two campaigns targeting "different" audiences often share more visitors than you expect. When 40% of your email list also clicks your social ads, you are paying twice to reach the same people. Resonance makes this visible.
+
+## Defining Segments
+
+A segment is a named audience defined by a set of conditions. Segments are evaluated against Beacon click data in real time.
+
+```bash title="Create a segment"
+signal resonance segment create \
+  --name "engaged-email" \
+  --condition "channel == email" \
+  --condition "clicks >= 3" \
+  --condition "last_click within 14d"
+```
+
+```json title="Segment response"
+{
+  "id": "seg_01J9P4R6S8T2U0V3W1X5Y7Z9",
+  "name": "engaged-email",
+  "conditions": [
+    { "field": "channel", "operator": "==", "value": "email" },
+    { "field": "clicks", "operator": ">=", "value": 3 },
+    { "field": "last_click", "operator": "within", "value": "14d" }
+  ],
+  "size": 4280,
+  "updatedAt": "2025-02-20T12:00:00Z"
+}
+```
+
+## Segment Operators
+
+| Operator   | Description                    | Example                           |
+|------------|--------------------------------|-----------------------------------|
+| `==`       | Equals                         | `channel == email`                |
+| `!=`       | Not equals                     | `channel != direct`               |
+| `>=`       | Greater than or equal          | `clicks >= 3`                     |
+| `<=`       | Less than or equal             | `clicks <= 10`                    |
+| `in`       | Matches any value in a list    | `campaign in [launch, summer]`    |
+| `within`   | Within a time duration         | `last_click within 7d`            |
+| `between`  | Between two values (inclusive) | `conversion_value between 10,100` |
+| `contains` | String contains                | `variant contains hero`           |
+
+## Measuring Overlap
+
+Query the overlap between two or more segments:
+
+```bash title="Measure audience overlap"
+signal resonance overlap \
+  --segments "engaged-email,social-clickers,search-converters"
+```
+
+```json title="Overlap output"
+{
+  "segments": ["engaged-email", "social-clickers", "search-converters"],
+  "sizes": {
+    "engaged-email": 4280,
+    "social-clickers": 6120,
+    "search-converters": 2840
+  },
+  "overlaps": {
+    "engaged-email + social-clickers": { "count": 1720, "percent": 40.2 },
+    "engaged-email + search-converters": { "count": 890, "percent": 20.8 },
+    "social-clickers + search-converters": { "count": 1340, "percent": 21.9 },
+    "all-three": { "count": 510, "percent": 11.9 }
+  }
+}
+```
+
+In this example, 40.2% of the engaged email audience also appears in the social clickers segment. That is the bleed Resonance detects.
+
+## Cross-Campaign Bleed Detection
+
+Detect when two campaigns are competing for the same audience:
+
+```bash title="Cross-campaign bleed"
+signal resonance bleed \
+  --campaigns "product-launch,summer-sale" \
+  --threshold 0.30
+```
+
+```json title="Bleed detection output"
+{
+  "campaigns": ["product-launch", "summer-sale"],
+  "sharedAudience": 2840,
+  "bleedRate": 0.42,
+  "exceededThreshold": true,
+  "recommendation": "Consider merging audiences or staggering campaign windows to reduce spend overlap."
+}
+```
+
+A bleed rate of 0.42 means 42% of the combined audience saw both campaigns. If the threshold is 0.30, Resonance flags this as excessive overlap.
+
+## Exporting Segments
+
+Export a segment as a CSV for use in external tools:
+
+```bash title="Export a segment"
+signal resonance segment export \
+  --name "engaged-email" \
+  --format csv \
+  --output ./engaged-email-segment.csv
+```
+
+The export includes anonymous visitor identifiers, click counts, channels, and last-seen timestamps. No personally identifiable information is included.
+
+## Next Steps
+
+- [QR & Deep Links](/docs/advanced/qr-deep-links/) — Generate Flare links for physical-to-digital attribution.
+- [API Reference](/docs/reference/api-reference/) — Programmatic access to segments and overlap queries.

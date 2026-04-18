@@ -1,0 +1,113 @@
+---
+title: "Translating Between Webhook Protocols Without Losing Your Mind"
+authors: [tomas]
+tags: [protocol, payload, architecture]
+date: 2024-11-03
+---
+
+Every webhook provider invents their own format. GitHub sends a JSON body with an `X-Hub-Signature-256` header. Stripe sends a JSON body with a `Stripe-Signature` header and a completely different signing scheme. Twilio sends form-encoded data with an `X-Twilio-Signature` that signs the full URL including query parameters.
+
+That is three providers. We support forty-seven. Each one is a snowflake.
+
+{/* truncate */}
+
+## The Problem
+
+A relay platform has to speak every protocol on the inbound side and translate to a normalized format on the outbound side. The naive approach is a giant switch statement: if the source is GitHub, parse it this way; if the source is Stripe, parse it that way.
+
+We wrote that switch statement. It was 2,400 lines long by the time we hit twenty providers. Every new provider was another 80-120 lines. Every provider API change was a bug we discovered when a customer's relays started failing.
+
+```text title="The switch statement era — provider count vs. code size"
+Providers    Lines of Code    Bugs per Month
+─────────────────────────────────────────────
+     5            400              0.2
+    10            920              0.8
+    20          2,400              2.1
+    30          4,100              4.7
+    47          never got here
+```
+
+The curve was super-linear. Each new provider added more code, but it also added more interactions with existing providers. A change to the shared parsing logic could break any of them.
+
+## Parcel: A Protocol Grammar
+
+We replaced the switch statement with Parcel, a declarative protocol grammar. Instead of writing code to parse each provider, we write a `.parcel` file that describes the provider's webhook format — where the signature lives, how to verify it, where the payload is, what encoding it uses, and how to extract the fields we need.
+
+```text title="parcel/github.parcel"
+provider "github" {
+  auth {
+    method  = "hmac-sha256"
+    header  = "X-Hub-Signature-256"
+    prefix  = "sha256="
+    payload = body
+  }
+
+  envelope {
+    format  = "json"
+    event   = header("X-GitHub-Event")
+    id      = header("X-GitHub-Delivery")
+  }
+
+  extract {
+    repository = "$.repository.full_name"
+    action     = "$.action"
+    sender     = "$.sender.login"
+  }
+}
+```
+
+```text title="parcel/stripe.parcel"
+provider "stripe" {
+  auth {
+    method  = "hmac-sha256"
+    header  = "Stripe-Signature"
+    prefix  = "v1="
+    payload = timestamp_body("t=")
+  }
+
+  envelope {
+    format  = "json"
+    event   = "$.type"
+    id      = "$.id"
+  }
+
+  extract {
+    object_type = "$.data.object.object"
+    amount      = "$.data.object.amount"
+    currency    = "$.data.object.currency"
+  }
+}
+```
+
+The Parcel engine reads the grammar, builds a provider-specific parser at startup, and validates every incoming webhook against it. Adding a new provider is a new `.parcel` file — no code changes, no recompilation, no risk to existing providers.
+
+## The Translation Layer
+
+Parsing the inbound webhook is half the problem. The other half is translating the extracted fields into whatever format the destination expects. A Canary notification has different fields than a Spoke API call, which has different fields than a raw HTTP POST.
+
+Envoy's transform block handles this with a template syntax that references extracted fields:
+
+```text title="relay.grain — transform block"
+transform {
+  format = "json"
+  body   = {
+    "title":    "[{{ provider }}] {{ event }}",
+    "message":  "{{ repository }} — {{ action }} by {{ sender }}",
+    "priority": event_priority(event),
+    "metadata": {
+      "source":   "{{ provider }}",
+      "event_id": "{{ id }}"
+    }
+  }
+}
+```
+
+The template is compiled once when the relay is loaded. At runtime, field substitution is a lookup table — no string parsing, no regex, no allocations. A transform takes 0.3ms at the p50.
+
+## What We Learned
+
+Protocol translation is not a coding problem. It is a grammar problem. Once you express the protocol as data instead of code, the parser can be generic, the validation can be automatic, and the test surface shrinks from "every provider's code path" to "the grammar engine itself."
+
+We went from 2,400 lines of provider-specific code to 47 `.parcel` files averaging 25 lines each — 1,175 lines total, with zero shared mutable state between them. The bug rate dropped from 4.7 per month to 0.3.
+
+Grammar beats code. Every time.

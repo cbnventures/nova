@@ -1,0 +1,58 @@
+/**
+ * Sentinel — Back to top button visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Back to Top Button
+ * ============================ */
+
+.nova-back-to-top {
+  bottom: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  background-color: var(--nova-color-neutral-50);
+  color: var(--nova-color-neutral-600);
+  border: 1px solid var(--nova-color-neutral-300);
+  border-radius: var(--nova-shape-radius);
+  transition:
+    background-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease;
+}
+
+.nova-back-to-top:hover,
+.nova-back-to-top:focus-visible {
+  background-color: var(--nova-color-primary-50);
+  color: var(--nova-color-primary-700);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-back-to-top {
+  background-color: var(--nova-color-neutral-800);
+  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-neutral-300);
+}
+
+[data-theme="dark"] .nova-back-to-top:hover,
+[data-theme="dark"] .nova-back-to-top:focus-visible {
+  background-color: var(--nova-color-primary-800);
+  color: var(--nova-color-neutral-50);
+  border-color: var(--nova-color-primary-600);
+}
+
+/* ============================
+ * 2. Responsive
+ * ============================ */
+
+/* md — 768px and above */
+@media (min-width: 768px) {
+  .nova-back-to-top {
+    bottom: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+  }
+}

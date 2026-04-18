@@ -1,0 +1,140 @@
+---
+id: no-default-export-declaration
+title: No Default Export Declaration
+description: Disallow attaching function or class declarations to export default.
+keywords:
+  - nova
+  - eslint rule
+  - default export
+  - export default
+  - declaration
+  - linting
+tags:
+  - rules
+  - eslint
+  - conventions
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Disallow attaching function or class declarations to `export default` because declaring first and exporting separately keeps the declaration scannable and the default export visible at the bottom of the file.
+
+## Summary
+
+The `no-default-export-declaration` rule reports `export default function` and `export default class` declarations. The fix separates the declaration from the export, placing `export default Name;` at the end of the file.
+
+Named exports (`export function foo`) and anonymous arrow defaults (`export default () => {}`) are not affected.
+
+## Why Use This Rule?
+
+1. Keeps the declaration and the default export as two distinct concerns — define first, export at the bottom.
+2. Makes the default export easy to find by scanning the last lines of the file.
+3. Prevents accidental anonymous defaults when the function or class name is stripped during minification.
+
+## Examples
+
+<Tabs groupId="no-default-export-declaration-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```tsx
+    function HomepageHeader() {
+      return <header>Hello</header>;
+    }
+
+    export default HomepageHeader;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```tsx
+    export default function HomepageHeader() {
+      return <header>Hello</header>;
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-default-export-declaration-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoDefaultExportDeclaration } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-default-export-declaration': NoDefaultExportDeclaration.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-default-export-declaration': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoDefaultExportDeclaration } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-default-export-declaration': NoDefaultExportDeclaration.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-default-export-declaration': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/no-default-export-declaration: error'
+```
+
+## Troubleshooting
+
+- **Named exports are not flagged** — `export function foo()` is a named export, not a default export. Only `export default function` and `export default class` are reported.
+- **Anonymous arrow default is not flagged** — `export default () => {}` has no declaration name to separate, so it is allowed.

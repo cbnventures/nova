@@ -1,0 +1,191 @@
+---
+id: require-bracket-property-access
+title: Require Bracket Property Access
+description: Require bracket notation instead of dot notation for property access on project-defined plain objects.
+keywords:
+  - nova
+  - eslint rule
+  - typescript
+  - bracket notation
+  - dot notation
+  - property access
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require bracket notation (`obj['prop']`) instead of dot notation (`obj.prop`) for property access on project-defined plain objects so there is a visual distinction between accessing your own data and built-in or library properties.
+
+## Summary
+
+The `require-bracket-property-access` rule reports dot notation property access on types defined in project source (interfaces, type aliases, Records). It auto-fixes `obj.prop` to `obj['prop']`.
+
+The rule inspects TypeScript's type information to distinguish project-defined types from built-in, Node.js, and third-party types.
+
+## Why Use This Rule?
+
+1. Creates a clear visual boundary between your own data shapes and built-in or library properties.
+2. Makes property access on plain data objects greppable and explicit.
+3. Pairs with `no-bracket-assignment` to keep bracket notation reserved for reads and `Reflect.set()` for writes.
+
+## Examples
+
+<Tabs groupId="require-bracket-property-access-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    type Config = { name: string; timeout: number };
+    const config: Config = { name: 'app', timeout: 100 };
+
+    const name = config['name'];
+    const timeout = config['timeout'];
+
+    // Dot notation is allowed for built-in types.
+    const len = [1, 2, 3].length;
+    const msg = new Error('fail').message;
+
+    // Dot notation is allowed for method calls.
+    console.log('hello');
+
+    // Dot notation is allowed for class instance members.
+    class Service {
+      url = '';
+
+      fetch() {
+        return this.url;
+      }
+    }
+
+    // Dot notation is allowed for enums.
+    enum Status { Ok, Fail }
+    const s = Status.Ok;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    type Config = { name: string; timeout: number };
+    const config: Config = { name: 'app', timeout: 100 };
+
+    const name = config.name;
+    const timeout = config.timeout;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-bracket-property-access-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireBracketPropertyAccess } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-bracket-property-access': RequireBracketPropertyAccess.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-bracket-property-access': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="allow-specific-properties" label="Allow Specific Properties">
+
+    Allow dot notation for commonly accessed built-in properties:
+
+    ```ts
+    import { RequireBracketPropertyAccess } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-bracket-property-access': RequireBracketPropertyAccess.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-bracket-property-access': ['error', {
+            allowedProperties: ['length', 'name'],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireBracketPropertyAccess } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-bracket-property-access': RequireBracketPropertyAccess.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-bracket-property-access': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option              | Type       | Default | Description                                  |
+|---------------------|------------|---------|----------------------------------------------|
+| `allowedProperties` | `string[]` | `[]`    | Property names to always allow dot notation. |
+| `ignoreFiles`       | `string[]` | `[]`    | File patterns to skip.                       |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-bracket-property-access: error'
+```
+
+## Troubleshooting
+
+- **Error fires on a third-party type** — The rule resolves type origins by inspecting TypeScript's type information. If the type is defined in your project but wraps a third-party type, the rule may still flag it. Use the `allowedProperties` option to exclude specific property names.
+- **Error fires on a class instance property** — Class instance members accessed via `this` or a typed instance variable are excluded. If the rule still fires, check that the type is declared as a `class` and not a plain `type` or `interface`.
+- **Left-side assignments are not flagged** — Assignment targets like `obj.prop = value` are handled by the separate `no-bracket-assignment` rule.

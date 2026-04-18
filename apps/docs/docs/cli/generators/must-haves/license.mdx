@@ -1,11 +1,104 @@
 ---
 id: license
 title: License (LICENSE)
-description: x
+description: Generate a LICENSE file populated with license type, author, and year information from nova.config.json.
 keywords:
-  - x
+  - nova
+  - nova generate
+  - license
+  - mit
+  - apache
+  - gpl
+  - bsd
+  - copyright
+  - legal
 tags:
-  - x
+  - cli
+  - generator
+  - must-haves
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create a `LICENSE` file populated with the chosen license type, author legal name, and year range from the Nova config.
+
+## Why Use This Command?
+
+- Supports 13 open-source licenses and a proprietary option so you can pick the right one from the config.
+- Auto-fills legal boilerplate so the license stays accurate when the year rolls over or ownership changes.
+- Pulls the license type, author name, and starting year directly from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, eliminating manual edits.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> — A valid config file must exist at the project root with the fields listed below.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate must-haves license
+
+    # Shorthand
+    nova gen must lic
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate must-haves license
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen must lic
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Config Fields
+
+| Field                  | Description                                                                              |
+|------------------------|------------------------------------------------------------------------------------------|
+| `project.legalName`    | The legal name used in the copyright notice.                                             |
+| `project.license`      | SPDX license identifier. If not set, you are prompted to select a license interactively. |
+| `project.startingYear` | The year the project was first published (defaults to now).                              |
+
+## Supported Licenses
+
+| SPDX Identifier | License Name                            |
+|-----------------|-----------------------------------------|
+| `AGPL-3.0`      | GNU Affero General Public License v3.0  |
+| `Apache-2.0`    | Apache License 2.0                      |
+| `BSD-2-Clause`  | BSD 2-Clause "Simplified" License       |
+| `BSD-3-Clause`  | BSD 3-Clause "New" or "Revised" License |
+| `BSL-1.0`       | Boost Software License 1.0              |
+| `CC0-1.0`       | Creative Commons Zero v1.0 Universal    |
+| `EPL-2.0`       | Eclipse Public License 2.0              |
+| `GPL-2.0`       | GNU General Public License v2.0         |
+| `GPL-3.0`       | GNU General Public License v3.0         |
+| `LGPL-2.1`      | GNU Lesser General Public License v2.1  |
+| `MIT`           | MIT License                             |
+| `MPL-2.0`       | Mozilla Public License 2.0              |
+| `Unlicense`     | The Unlicense                           |
+| `Proprietary`   | Proprietary (All Rights Reserved)       |
+
+## Output Files
+
+| File      | Description                                             |
+|-----------|---------------------------------------------------------|
+| `LICENSE` | License file populated with author name and year range. |

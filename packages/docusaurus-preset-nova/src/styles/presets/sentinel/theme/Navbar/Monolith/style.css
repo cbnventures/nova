@@ -1,0 +1,267 @@
+/**
+ * Sentinel — Navbar (Monolith) variant visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Navbar Container
+ * ============================ */
+
+.navbar {
+  padding: 0.5rem 0;
+  background-color: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+
+[data-theme="dark"] .navbar {
+  background-color: rgba(3, 7, 10, 0.95);
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 2. Brand
+ * ============================ */
+
+.nova-navbar-monolith-brand a {
+  font-family: var(--nova-font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--nova-color-neutral-900);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.125rem;
+}
+
+[data-theme="dark"] .nova-navbar-monolith-brand a {
+  color: var(--nova-color-neutral-50);
+}
+
+.nova-navbar-monolith-brand img {
+  height: 24px;
+  width: auto;
+}
+
+/* ============================
+ * 3. Actions
+ * ============================ */
+
+.nova-color-mode-toggle {
+  font-family: var(--nova-font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--nova-color-neutral-600);
+  background: none;
+  border: 1px solid var(--nova-color-neutral-300);
+  border-radius: var(--nova-shape-radius);
+  transition: color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+.nova-color-mode-toggle:hover,
+.nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-700);
+  border-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+[data-theme="dark"] .nova-color-mode-toggle {
+  color: var(--nova-color-neutral-400);
+  border-color: var(--nova-color-neutral-700);
+}
+
+[data-theme="dark"] .nova-color-mode-toggle:hover,
+[data-theme="dark"] .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+/* ============================
+ * 4. Responsive
+ * ============================ */
+
+.nova-navbar-monolith {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nova-navbar-monolith-actions {
+  position: static;
+  transform: none;
+}
+
+@media (min-width: 640px) {
+  .nova-navbar-monolith {
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .nova-navbar-monolith-actions {
+    position: absolute;
+    right: var(--nova-grid-padding);
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* ============================
+ * 5. Hamburger Toggle
+ * ============================ */
+
+.nova-navbar-monolith .nova-hamburger-toggle {
+  font-family: var(--nova-font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--nova-color-neutral-600);
+  background: none;
+  border: 1px solid var(--nova-color-neutral-300);
+  border-radius: var(--nova-shape-radius);
+  transition: color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+.nova-navbar-monolith .nova-hamburger-toggle:hover,
+.nova-navbar-monolith .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-700);
+  border-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith .nova-hamburger-toggle {
+  color: var(--nova-color-neutral-400);
+  border-color: var(--nova-color-neutral-700);
+}
+
+[data-theme="dark"] .nova-navbar-monolith .nova-hamburger-toggle:hover,
+[data-theme="dark"] .nova-navbar-monolith .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+/* ============================
+ * 6. Mobile Menu — Overlay
+ * ============================ */
+
+.nova-navbar-monolith-menu-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================
+ * 7. Mobile Menu — Panel
+ * ============================ */
+
+.nova-navbar-monolith-menu-panel {
+  background-color: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-panel {
+  background-color: rgba(3, 7, 10, 0.97);
+  border-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 8. Mobile Menu — Close
+ * ============================ */
+
+.nova-navbar-monolith-menu-close {
+  color: var(--nova-color-neutral-600);
+  border-radius: var(--nova-shape-radius);
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+.nova-navbar-monolith-menu-close:hover,
+.nova-navbar-monolith-menu-close:focus-visible {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-close {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-close:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-close:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+/* ============================
+ * 9. Mobile Menu — Items
+ * ============================ */
+
+.nova-navbar-monolith-menu-items {
+  gap: 0.125rem;
+}
+
+.nova-navbar-monolith-menu-item {
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--nova-color-neutral-700);
+  border-radius: var(--nova-shape-radius);
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+.nova-navbar-monolith-menu-item:hover,
+.nova-navbar-monolith-menu-item:focus-visible {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-item {
+  color: var(--nova-color-neutral-300);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-item:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+/* Active mobile menu item — current page indicator. */
+.nova-navbar-monolith-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-700);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 10. Mobile Menu — Fade
+ * ============================ */
+
+@keyframes nova-navbar-monolith-menu-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.nova-navbar-monolith-menu-panel {
+  animation: nova-navbar-monolith-menu-fade 200ms ease;
+}

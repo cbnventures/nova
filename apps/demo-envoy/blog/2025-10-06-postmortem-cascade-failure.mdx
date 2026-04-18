@@ -1,0 +1,99 @@
+---
+title: "Post-Mortem: The Cascade Failure That Took Down Four Customers"
+authors: [anders]
+tags: [incident-response, observability, monitoring]
+date: 2025-10-06
+---
+
+On September 29th at 16:42 UTC, a single misconfigured Parcel file caused a cascade failure that affected four customers, dropped 12,000 messages over 23 minutes, and triggered the longest incident in Envoy's history.
+
+This is the full post-mortem. No details redacted.
+
+{/* truncate */}
+
+## Timeline
+
+```text title="Incident #112 — 2025-09-29"
+16:42:00  Customer D deploys new relay config with malformed .parcel file
+16:42:00  Parcel parser enters infinite loop on recursive field reference
+16:42:01  CPU on envoy-prod-03 hits 100%
+16:42:03  Courier stops processing relays on envoy-prod-03
+16:42:03  Trellis health check fails → marks envoy-prod-03 as unhealthy
+16:42:04  Trellis redistributes traffic to envoy-prod-01 and envoy-prod-02
+16:42:04  Traffic spike on envoy-prod-01 (from 15k to 25k RPS)
+16:42:08  envoy-prod-01 latency p99 spikes to 940ms
+16:42:15  Glassboard fires P2 alert (latency breach)
+16:42:30  envoy-prod-03 restarts, loads same bad config, enters infinite loop again
+16:42:31  Trellis marks envoy-prod-03 as unhealthy (again)
+16:42:45  Glassboard escalates to P1 (repeated failure + sustained latency)
+16:43:02  On-call engineer acknowledges
+16:44:30  Engineer identifies envoy-prod-03 restart loop in Trellis logs
+16:46:00  Engineer cordons envoy-prod-03 (removed from pool)
+16:46:15  Traffic stabilizes on envoy-prod-01 and envoy-prod-02
+16:47:00  Latency returns to normal
+16:52:00  Root cause identified: recursive $ref in customer D's .parcel file
+16:55:00  Customer D's config rolled back
+17:05:00  envoy-prod-03 restarted with clean config
+17:05:30  All clear
+```
+
+Total duration: 23 minutes 30 seconds. Messages dropped: 12,147. Customers affected: 4 (all sharing envoy-prod-01 and envoy-prod-02 during the traffic redistribution).
+
+## Root Cause
+
+Customer D's `.parcel` file contained a circular field reference:
+
+```text title="The bad .parcel file (simplified)"
+provider "internal-webhook" {
+  extract {
+    user_id   = "$.data.user.id"
+    user_data = "$.data.user"
+    nested    = "$ref:user_data.nested"   # ← references itself via user_data
+  }
+}
+```
+
+The `$ref:user_data.nested` extraction referenced `user_data`, which contained the full `$.data.user` object, which contained a `nested` field that pointed back to the same path. The Parcel parser followed the reference chain without a depth limit and entered an infinite loop.
+
+## What Went Wrong
+
+Three things failed:
+
+1. **No validation of circular references.** The Parcel parser validated syntax but not reference topology. A circular reference was syntactically valid.
+2. **No CPU isolation between customers.** All customer configs ran on shared Courier instances. One customer's bad config consumed 100% CPU on the shared instance.
+3. **Restart loop.** Trellis restarted the failed instance, which loaded the same bad config, which triggered the same infinite loop. The restart was not a recovery — it was a repetition.
+
+## What We Fixed
+
+### Fix 1: Reference Depth Limit
+
+Parcel now enforces a maximum reference depth of 8. Any `$ref` chain deeper than 8 levels is rejected at config load time with a clear error message.
+
+### Fix 2: Config Validation Gate
+
+New relay configs are now validated in a sandboxed Vial instance before being applied to production. The sandbox processes a synthetic webhook through the full pipeline. If it crashes, loops, or exceeds a 5-second timeout, the config is rejected.
+
+### Fix 3: Per-Customer CPU Budgets
+
+Courier now tracks CPU time per customer config. If a single customer's relays consume more than 40% of available CPU for more than 10 seconds, Courier automatically suspends that customer's config and fires a P1 alert with the customer ID and config hash.
+
+### Fix 4: Config-Aware Restarts
+
+Trellis now checks whether a failed instance was processing the same config that caused the previous failure. If the config has not changed, Trellis does not restart — it cordons the instance and alerts the operator instead.
+
+## Impact Assessment
+
+| Customer | Messages Dropped | Recovery Time | Root Cause Exposure    |
+|----------|------------------|---------------|------------------------|
+| A        | 3,412            | 4 min 15s     | Traffic redistribution |
+| B        | 5,891            | 4 min 15s     | Traffic redistribution |
+| C        | 2,203            | 4 min 15s     | Traffic redistribution |
+| D        | 641              | 13 min        | Direct (bad config)    |
+
+All dropped messages were recovered from Ledger's write-ahead log and replayed within two hours of the incident.
+
+## The Lesson
+
+Multi-tenant infrastructure fails in multi-tenant ways. A bug in one customer's config should not be able to affect another customer's traffic. Isolation is not optional — it is the boundary between "one customer has a bad day" and "four customers have a bad day."
+
+We violated that boundary. We will not violate it again.

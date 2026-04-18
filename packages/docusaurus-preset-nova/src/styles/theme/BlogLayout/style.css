@@ -1,0 +1,87 @@
+/**
+ * Blog Layout — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Blog Root
+ * ============================ */
+
+/* Prevent grid children from overflowing on narrow viewports. */
+.nova-blog-root .nova-container,
+.nova-blog-root .nova-grid {
+  min-width: 0;
+}
+
+.nova-blog-root main {
+  min-width: 0;
+
+  padding-top: calc(var(--nova-section-gap) / 4);
+  padding-bottom: calc(var(--nova-section-gap) / 4);
+}
+
+/* Hidden on mobile — mobile trigger provides navigation. */
+.nova-blog-root aside {
+  display: none;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .nova-blog-root aside {
+    display: block;
+  }
+}
+
+/* ============================
+ * 2. Blog Header
+ * ============================ */
+
+/* Blog heading — editorial scale, not hero scale. */
+.nova-blog-header .nova-heading {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+
+  font-size: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .nova-blog-header .nova-heading {
+    font-size: 1.75rem;
+  }
+}
+
+/* Blog description — muted subtitle below the heading. */
+.nova-blog-description {
+  margin-top: 0;
+  margin-bottom: 1.25rem;
+
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-blog-description {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 3. TOC Column
+ * ============================ */
+
+/* Hide TOC column on mobile — TOCCollapsible trigger handles mobile.
+   On desktop, the inner .nova-toc handles its own sticky, border,
+   padding, max-height, and scroll. The column is just a grid cell. */
+.nova-blog-toc-column {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nova-blog-toc-column {
+    display: block;
+  }
+}
+
+/* ============================
+ * 4. Post Page — Compact Header
+ * ============================ */

@@ -1,0 +1,92 @@
+---
+title: "Strict TypeScript Is Not Strict Enough"
+authors: [priya]
+tags: [typescript, warden, linting, developer-experience]
+date: 2024-12-11
+---
+
+TypeScript's `strict` mode enables eight compiler flags. It bans implicit `any`, enforces null checks, and catches a class of bugs that vanilla JavaScript ignores entirely. For most teams, that is enough. For a monorepo with 200 packages, shared types, and cross-package contracts, it is not even close.
+
+We turned on every `strict` flag on day one. Then we wrote 26 Warden rules on top of it. Here is why the compiler alone is not sufficient, and what we do about it.
+
+{/* truncate */}
+
+## What `strict` Gives You
+
+TypeScript `strict` mode enables the following flags:
+
+- `noImplicitAny`
+- `noImplicitThis`
+- `strictNullChecks`
+- `strictFunctionTypes`
+- `strictBindCallApply`
+- `strictPropertyInitialization`
+- `alwaysStrict`
+- `useUnknownInCatchVariables`
+
+These are table stakes. If your project does not have `strict: true`, stop reading this post and go enable it. The rest of this article assumes you already have.
+
+## What `strict` Does Not Give You
+
+The compiler catches type errors. It does not catch type design errors. Here are three patterns that pass `strict` mode without a single diagnostic but cause real problems at scale.
+
+### Pattern 1: Implicit `any` in Generic Defaults
+
+```typescript title="Passes strict — still dangerous"
+function merge<T = any>(a: T, b: T): T {
+  return { ...a, ...b };
+}
+
+// No type argument provided — T defaults to any
+const result = merge({ name: "foundry" }, { version: 2 });
+// result is any — all type safety is gone
+```
+
+The compiler does not warn because `T = any` is an explicit generic default, not an implicit `any`. Warden catches this with `warden/no-generic-any-default`, which bans `any` as a generic default value.
+
+### Pattern 2: Unsafe Index Signatures
+
+```typescript title="Passes strict — returns undefined at runtime"
+interface Config {
+  [key: string]: string;
+}
+
+const config: Config = { host: "localhost" };
+const port: string = config["port"];
+// port is typed as string, but is actually undefined
+```
+
+TypeScript 4.1 added `noUncheckedIndexedAccess`, but it is not part of `strict` mode. Most teams do not know it exists. Warden enforces it via manifest-level Smelter configuration — every Foundry workspace has `noUncheckedIndexedAccess` enabled by default.
+
+### Pattern 3: Type Assertions Masking Bugs
+
+```typescript title="Passes strict — crashes at runtime"
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+const data: unknown = JSON.parse(response.body);
+const user = data as User;
+// No runtime validation — if data is missing fields, user.email is undefined
+```
+
+Type assertions (`as`) bypass the type checker entirely. The compiler trusts you. Warden does not. The rule `warden/no-unsafe-assertion` flags every `as` expression that narrows from `unknown` or `any` without a preceding type guard or validation function.
+
+## The 26 Rules
+
+We organized the 26 rules into four categories:
+
+- **Type safety (9 rules).** Patterns that pass the compiler but produce `any` or `undefined` at runtime.
+- **API contracts (7 rules).** Patterns that make cross-package types fragile — optional properties used as required, discriminated unions without exhaustive checks, generic constraints that are too wide.
+- **Import hygiene (5 rules).** Type-only imports, no circular type references, no re-exporting third-party types.
+- **Naming and structure (5 rules).** Type files must live in a `types/` directory, interfaces must use a specific naming convention, enums are banned in favor of const objects.
+
+The full list is in the [Warden Rules](/docs/pipeline/warden-rules/) documentation. Every rule includes a rationale, a passing example, and a failing example.
+
+## The Payoff
+
+After enabling these 26 rules across our internal workspace, we tracked runtime type errors in production for 90 days. Type errors — meaning crashes or incorrect behavior caused by a value being a different type than the code expected — dropped from an average of 4.2 per week to 0.3 per week. Most of the remaining errors came from external API responses that changed without notice.
+
+Strict mode is the floor, not the ceiling. The compiler tells you when the types are wrong. Warden tells you when the types are right but fragile.

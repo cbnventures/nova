@@ -1,0 +1,342 @@
+/**
+ * Envoy — Typography: links, doc content, admonitions, cards, tabs, TOC, and selection.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Links
+ * ============================ */
+
+/* ============================
+ * 2. Doc Content Area
+ * ============================ */
+
+/* Article content uses comfortable reading line-height. Grid handles width. */
+article {
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* Horizontal rules are subtle with violet tint. */
+hr {
+  margin: 2rem 0;
+
+  border: none;
+  border-top: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] hr {
+  border-top-color: var(--nova-envoy-border-dark);
+}
+
+/* Blockquotes have a violet left border. */
+blockquote {
+  margin: 1rem 0;
+  padding: 0.75rem 1.25rem;
+
+  color: var(--nova-color-neutral-600);
+  font-style: italic;
+
+  border-left: 3px solid var(--nova-color-primary-300);
+  border-radius: 0 var(--nova-envoy-radius-generous) var(--nova-envoy-radius-generous) 0;
+}
+
+[data-theme="dark"] blockquote {
+  color: var(--nova-color-neutral-400);
+
+  border-left-color: var(--nova-color-primary-600);
+}
+
+/* ============================
+ * 3. Admonitions
+ * ============================ */
+
+/* Colorful but not aggressive admonition blocks. */
+.nova-admonition {
+  padding: var(--nova-shape-padding);
+  margin: 1.5rem 0;
+
+  border-left: 4px solid var(--nova-color-neutral-300);
+  border-radius: 0 var(--nova-envoy-radius-generous) var(--nova-envoy-radius-generous) 0;
+
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-admonition {
+  background-color: color-mix(in srgb, var(--nova-color-neutral-500), transparent 92%);
+  border-left-color: var(--nova-color-neutral-500);
+}
+
+/* Tip admonitions use violet. */
+.nova-admonition[data-admonition-type="tip"] {
+  border-left-color: var(--nova-color-primary-500);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-admonition[data-admonition-type="tip"] {
+  border-left-color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* Info admonitions use cyan. */
+.nova-admonition[data-admonition-type="info"] {
+  border-left-color: var(--nova-color-accent-500);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-admonition[data-admonition-type="info"] {
+  border-left-color: var(--nova-color-accent-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 90%);
+}
+
+/* Warning admonitions use amber. */
+.nova-admonition[data-admonition-type="warning"],
+.nova-admonition[data-admonition-type="caution"] {
+  border-left-color: var(--nova-color-warning-500);
+
+  background-color: var(--nova-color-warning-bg);
+}
+
+[data-theme="dark"] .nova-admonition[data-admonition-type="warning"],
+[data-theme="dark"] .nova-admonition[data-admonition-type="caution"] {
+  border-left-color: var(--nova-color-warning-400);
+
+  background-color: var(--nova-color-warning-bg-dark);
+}
+
+/* Danger admonitions use red. */
+.nova-admonition[data-admonition-type="danger"] {
+  border-left-color: var(--nova-color-danger-500);
+
+  background-color: var(--nova-color-danger-bg);
+}
+
+[data-theme="dark"] .nova-admonition[data-admonition-type="danger"] {
+  border-left-color: var(--nova-color-danger-400);
+
+  background-color: var(--nova-color-danger-bg-dark);
+}
+
+/* Admonition title styling. */
+.nova-admonition-heading strong {
+  font-family: var(--nova-font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* ============================
+ * 4. Cards
+ * ============================ */
+
+/* Elevated cards with generous radius, layered shadow, smooth hover lift. */
+.nova-card,
+.card {
+  padding: var(--nova-shape-padding);
+
+  background-color: var(--nova-envoy-surface-raised-light);
+  border: var(--nova-depth-card-border);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-card);
+  backdrop-filter: var(--nova-depth-card-backdrop);
+  -webkit-backdrop-filter: var(--nova-depth-card-backdrop);
+
+  transition: transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    border-color var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-card:hover,
+.card:hover {
+  border-color: var(--nova-color-primary-300);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .nova-card,
+[data-theme="dark"] .card {
+  background-color: var(--nova-envoy-surface-raised-dark);
+  border-color: var(--nova-envoy-border-dark);
+  box-shadow: var(--nova-envoy-shadow-dark-card);
+}
+
+[data-theme="dark"] .nova-card:hover,
+[data-theme="dark"] .card:hover {
+  border-color: var(--nova-color-primary-600);
+  box-shadow: var(--nova-envoy-shadow-dark-card-hover);
+}
+
+/* Doc cards on category generated index pages — grid handled by nova-grid classes. */
+.doc-card-list {
+  margin: 1.5rem 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.doc-card-list article {
+  padding: var(--nova-shape-padding);
+
+  background-color: var(--nova-envoy-surface-raised-light);
+  border: var(--nova-depth-card-border);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-card);
+  backdrop-filter: var(--nova-depth-card-backdrop);
+  -webkit-backdrop-filter: var(--nova-depth-card-backdrop);
+
+  transition: transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    border-color var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.doc-card-list article:hover {
+  border-color: var(--nova-color-primary-300);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+
+  transform: translateY(-3px);
+}
+
+[data-theme="dark"] .doc-card-list article {
+  background-color: var(--nova-envoy-surface-raised-dark);
+  border-color: var(--nova-envoy-border-dark);
+  box-shadow: var(--nova-envoy-shadow-dark-card);
+}
+
+[data-theme="dark"] .doc-card-list article:hover {
+  border-color: var(--nova-color-primary-600);
+  box-shadow: var(--nova-envoy-shadow-dark-card-hover);
+}
+
+/* ============================
+ * 5. Tabs
+ * ============================ */
+
+/* Tab bar with violet active state. */
+.tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1rem;
+
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+
+  overflow-x: auto;
+}
+
+[data-theme="dark"] .tabs {
+  border-bottom-color: var(--nova-envoy-border-dark);
+}
+
+.tabs li {
+  padding: 0.5rem 1rem;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--nova-color-neutral-500);
+  white-space: nowrap;
+
+  border-bottom: 2px solid transparent;
+  border-radius: var(--nova-envoy-radius-generous) var(--nova-envoy-radius-generous) 0 0;
+
+  cursor: pointer;
+
+  transition: color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+.tabs li:hover,
+.tabs li:focus-visible {
+  color: var(--nova-color-primary-600);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+.tabs li[aria-selected="true"],
+.tabs li.active {
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+
+  border-bottom-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .tabs li[aria-selected="true"],
+[data-theme="dark"] .tabs li.active {
+  color: var(--nova-color-primary-300);
+
+  border-bottom-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 6. Table of Contents
+ * ============================ */
+
+/* Right-side TOC with sticky positioning and warm styling. */
+.table-of-contents {
+  position: sticky;
+  top: calc(var(--nova-navbar-height, 60px) + 1.5rem);
+
+  padding: 1rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 98%);
+  border: 1px solid var(--nova-envoy-border-light);
+  border-radius: var(--nova-envoy-radius-generous);
+}
+
+[data-theme="dark"] .table-of-contents {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+  border-color: var(--nova-envoy-border-dark);
+}
+
+.table-of-contents a {
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-500);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.table-of-contents a:hover,
+.table-of-contents a:focus-visible {
+  color: var(--nova-color-primary-600);
+
+  text-decoration: none;
+}
+
+.table-of-contents a.active {
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .table-of-contents a {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .table-of-contents a:hover,
+[data-theme="dark"] .table-of-contents a:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .table-of-contents a.active {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 7. Selection Highlight
+ * ============================ */
+
+/* Violet text selection in light mode, deep violet in dark mode. */
+::selection {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] ::selection {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 70%);
+  color: var(--nova-color-neutral-50);
+}

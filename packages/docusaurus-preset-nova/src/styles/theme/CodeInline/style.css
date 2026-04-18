@@ -1,0 +1,24 @@
+/**
+ * ============================
+ * Code Inline — Base
+ * ============================
+ */
+
+.nova-code-inline {
+  padding: 0.125rem 0.375rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.875em;
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  border-radius: 0.25rem;
+}
+
+[data-theme="dark"] .nova-code-inline {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 82%);
+}

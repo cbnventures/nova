@@ -1,0 +1,27 @@
+/**
+ * Foundry — TOC visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-toc-link {
+  padding: 0.25rem 0;
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-500);
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-link:hover,
+.nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-toc-link {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-toc-link:hover,
+[data-theme="dark"] .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-400);
+}

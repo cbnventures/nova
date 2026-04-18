@@ -1,36 +1,28 @@
 import { z } from 'zod';
 
 /**
- * Schema - Node releases schedule entry.
+ * Lib - Schema - Node Releases Schedule.
  *
- * @since 1.0.0
+ * Validates the JSON response from the Node.js release schedule API.
+ * Used by ApiNodeReleases to parse the LTS and end-of-life dates for each major version.
+ *
+ * @since 0.13.0
  */
-export const schemaNodeReleasesScheduleEntry = z.object({
+export const libSchemaNodeReleasesSchedule = z.record(z.string(), z.object({
   lts: z.string().optional(),
   end: z.string(),
-});
+}));
 
 /**
- * Schema - Node releases schedule.
+ * Lib - Schema - SPDX Licenses Response.
  *
- * @since 1.0.0
- */
-export const schemaNodeReleasesSchedule = z.record(z.string(), schemaNodeReleasesScheduleEntry);
-
-/**
- * Schema - SPDX licenses license.
+ * Validates the JSON response from the SPDX licenses API. Used by
+ * ApiSpdxLicenses to extract the list of valid license identifiers.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export const schemaSpdxLicensesLicense = z.object({
-  licenseId: z.string(),
-});
-
-/**
- * Schema - SPDX licenses response.
- *
- * @since 1.0.0
- */
-export const schemaSpdxLicensesResponse = z.object({
-  licenses: z.array(schemaSpdxLicensesLicense),
+export const libSchemaSpdxLicensesResponse = z.object({
+  licenses: z.array(z.object({
+    licenseId: z.string(),
+  })),
 });

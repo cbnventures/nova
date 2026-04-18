@@ -7,7 +7,6 @@ keywords:
   - logger
   - log level
   - cli logging
-  - chalk
   - debug tooling
   - diagnostics
   - automation
@@ -19,6 +18,7 @@ tags:
   - diagnostics
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -30,13 +30,13 @@ Deliver consistent log output across local runs and CI without wiring custom for
 
 ## Summary
 
-The `Logger` battery locks down terminal output with environment-aware level gating, scope-able helpers, and <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>-safe formatting so debug chatter stays in dev and production logs stay spotless.
+The `Logger` battery locks down terminal output with environment-aware level gating, scope-able helpers, and <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>-safe formatting so debug chatter stays in dev and production logs stay spotless.
 
 ## Why Use This Battery?
 
 1. Delivers out-of-the-box logging, so you skip the busywork of customizing `console` wrappers.
 2. Automatically adjusts verbosity based on `NODE_ENV` and allows you to override through `LOG_LEVEL`.
-3. Produces color‑coded output by default, with optional timestamps for easier reading.
+3. Produces color-coded output by default, with optional timestamps for easier reading.
 
 ## Capabilities
 
@@ -48,7 +48,7 @@ The `Logger` battery locks down terminal output with environment-aware level gat
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the <Term title="application programming interface" to="/docs/quickstart/terminology#fundamentals">API</Term> is identical in JavaScript (<Term title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript">ESM</Term>-only).
+Examples use TypeScript, but the <Terminology title="application programming interface" to="/docs/quickstart/terminology#fundamentals" color={true}>API</Terminology> is identical in JavaScript (<Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology>-only).
 :::
 
 :::warning Development Logging
@@ -158,13 +158,13 @@ Examples use TypeScript, but the <Term title="application programming interface"
 
 Tune the runtime behavior with the environment variables and options below.
 
-### Environment variables
+### Environment Variables
 
 Before you run a script, set `LOG_LEVEL` for the right verbosity and toggle `LOG_TIME` to `'true'` when you want timestamped output.
 
 | Setting     | Type     | Default                                                                                      | Description                                                               |
 |-------------|----------|----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| `LOG_LEVEL` | `string` | `'debug'` when `NODE_ENV=development`; `'warn'` for browser `production`; otherwise `'info'` | Minimum level emitted; accepts `debug`, `info`, `warn`, `error`.          |
+| `LOG_LEVEL` | `string` | `'debug'` when `NODE_ENV=development`; `'warn'` for browser `production`; otherwise `'info'` | Minimum level emitted; accepts `debug`, `dev`, `info`, `warn`, `error`.   |
 | `LOG_TIME`  | `string` | —                                                                                            | Set to the string `'true'` to prefix each message with an ISO timestamp.  |
 | `NODE_ENV`  | `string` | —                                                                                            | Controls the default `LOG_LEVEL`; set to `'development'` for chatty logs. |
 
@@ -186,8 +186,8 @@ Scope tags (`name`, `type`, and `purpose` options) render only when `LOG_LEVEL` 
 
 ## Troubleshooting
 
-- **Nothing prints to the terminal.** — Check `LOG_LEVEL`; if it is set higher than your message severity, downgrade it or unset it entirely.
-- **Colors missing in CI logs.** — Some environments disable <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>. Export `FORCE_COLOR=1` or rely on timestamps/names for identification.
-- **Extra blank lines surround messages.** — Review `padTop` / `padBottom` on customized loggers and reset them to `0` when not needed.
-- **Timestamps not appearing.** — `LOG_TIME` expects the exact string `'true'`, not any other truthy value.
-- **Debug logs still hidden locally.** — Confirm `NODE_ENV` is `'development'` or explicitly set `LOG_LEVEL=debug`.
+- **Nothing prints to the terminal** — Check `LOG_LEVEL`; if it is set higher than your message severity, downgrade it or unset it entirely.
+- **Colors missing in CI logs** — Some environments disable <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>. Export `FORCE_COLOR=1` or rely on timestamps/names for identification.
+- **Extra blank lines surround messages** — Review `padTop` / `padBottom` on customized loggers and reset them to `0` when not needed.
+- **Timestamps not appearing** — `LOG_TIME` expects the exact string `'true'`, not any other truthy value.
+- **Debug logs still hidden locally** — Confirm `NODE_ENV` is `'development'` or explicitly set `LOG_LEVEL=debug`.

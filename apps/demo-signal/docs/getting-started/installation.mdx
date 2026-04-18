@@ -1,0 +1,94 @@
+---
+title: Installation
+sidebar_position: 1
+tags:
+  - getting started
+  - installation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Installation
+
+Install the Signal CLI and configure your API key. The entire setup takes under two minutes.
+
+## Prerequisites
+
+| Requirement    | Version | Notes                                                   |
+|----------------|---------|---------------------------------------------------------|
+| Spark          | ^3.0    | The CLI runtime for Signal and its sub-tools.           |
+| Alloy          | ^5.0    | Required for custom Prism attribution model scripts.    |
+| Signal API Key | —       | Generate one at your Signal dashboard or via Spoke API. |
+
+## Install
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+```bash title="Install via Spark"
+spark install signal-cli
+```
+
+This installs the `signal` command globally. Verify the installation:
+
+```bash
+signal --version
+```
+
+</TabItem>
+<TabItem value="loom" label="Loom Registry">
+
+```bash title="Install via Loom"
+loom add --global signal-cli
+```
+
+Loom resolves dependencies from the Loom Registry and links the `signal` binary to your path.
+
+</TabItem>
+<TabItem value="vial" label="Vial Container">
+
+```bash title="Run via Vial"
+vial pull signal/cli:latest
+vial run signal/cli:latest -- signal --version
+```
+
+The Vial image includes the CLI and all sub-tools. No host dependencies required.
+
+</TabItem>
+</Tabs>
+
+## Configure Your API Key
+
+After installation, authenticate with your Signal API key:
+
+```bash title="Authenticate"
+signal auth login --key sk_live_your_api_key_here
+```
+
+Signal stores the key in `~/.signal/credentials.grain`. The key is used for all Spoke API calls, including Beacon link creation and Prism queries.
+
+:::tip
+For CI/CD pipelines running through Conduit, set the `SIGNAL_API_KEY` environment variable instead of using the interactive login. The CLI reads the variable automatically when no credentials file is present.
+:::
+
+## Verify
+
+Create a test Beacon link to confirm everything is connected:
+
+```bash
+signal beacon create --url "https://example.com" --campaign "install-test"
+```
+
+If the command returns a short link URL, the installation is complete.
+
+## Self-Hosted vs Cloud
+
+Signal runs as a managed service by default. All Beacon redirects, Pulse event capture, and Prism attribution processing happen on Signal's infrastructure across 180+ regions.
+
+For teams that need to keep attribution data on their own infrastructure, Signal also ships as a self-hosted Vial deployment. See the [Vial installation tab](#install) above and the deployment guide on [Arcline Cloud](https://nova.cbnventures.io) for details.
+
+## Next Steps
+
+- [Quick Start](/docs/getting-started/quick-start/) — Mint your first Beacon link and watch a click arrive.
+- [Branded Domains](/docs/features/branded-domains/) — Set up custom domains for your Beacon links.

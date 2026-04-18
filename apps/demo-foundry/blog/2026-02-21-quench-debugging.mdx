@@ -1,0 +1,71 @@
+---
+title: "Debugging a Quench Cache Miss That Should Not Have Happened"
+authors: [kofi]
+tags: [caching, quench, performance, developer-experience]
+date: 2026-02-21
+---
+
+Last Tuesday, a developer on our team opened a ticket: "Quench says `core` is a cache miss, but I have not changed anything in `core`." She was right. No source files had changed. No dependencies had updated. The manifest was identical. But Quench was rebuilding `core` on every run, turning a 3-second warm build into a 14-second cold build.
+
+We spent two hours tracking it down. The culprit was a single environment variable. Here is the full debugging story.
+
+{/* truncate */}
+
+## Step 1: Check the Cache Key
+
+Quench provides a `diff` command that compares the current cache key against the last cached entry. This is the first thing to run when a cache miss looks wrong.
+
+```text title="Quench cache key diff"
+$ foundry quench diff packages/core
+
+Source hash:      MATCH  a1b2c3d4...
+Dependency hash:  MATCH  f6e5d4c3...
+Manifest hash:    MATCH  1a2b3c4d...
+Toolchain hash:   MISS   6f5e4d3c... → 7g6f5e4d...
+```
+
+The toolchain hash had changed. But nobody had updated Foundry, and the Node.js version was pinned. Something in the toolchain fingerprint was different.
+
+## Step 2: Inspect the Toolchain Hash
+
+The toolchain hash is composed of the versions of every tool in the pipeline. We expanded it:
+
+```text title="Toolchain hash breakdown"
+$ foundry quench key --toolchain --verbose packages/core
+
+foundry:          2.4.1    MATCH
+node:             22.11.0  MATCH
+smelter:          5.7.2    MATCH
+warden:           3.1.0    MATCH
+env.NODE_OPTIONS: --max-old-space-size=4096  MISS (previously unset)
+```
+
+There it was. The developer had added `NODE_OPTIONS=--max-old-space-size=4096` to her shell profile over the weekend to debug a memory issue in a different project. She forgot to remove it. Quench includes select environment variables in the toolchain hash because they can affect compilation behavior — `NODE_OPTIONS` is one of them.
+
+## Step 3: Understand Why
+
+Quench hashes environment variables that could change build output. `NODE_OPTIONS` qualifies because flags like `--experimental-vm-modules` or `--conditions` can alter module resolution and compilation behavior. The memory limit flag (`--max-old-space-size`) does not change output, but Quench does not parse individual flags within `NODE_OPTIONS` — it hashes the entire value.
+
+This is a deliberate trade-off. Parsing `NODE_OPTIONS` to determine which flags are build-relevant and which are not would add complexity and risk false cache hits. Hashing the whole string is conservative: it might cause unnecessary rebuilds, but it will never serve stale artifacts.
+
+## Step 4: Fix It
+
+The fix was simple:
+
+```bash
+unset NODE_OPTIONS
+foundry ignite
+```
+
+The cache key matched. The build took 3.2 seconds.
+
+## The Broader Lesson
+
+Every "mysterious" cache miss we have investigated has fallen into one of four categories:
+
+- **Environment variable changes.** The most common. Shell profiles, `.env` files, and CI runner defaults all contribute.
+- **Toolchain version drift.** A Homebrew upgrade bumped Node.js from 22.11.0 to 22.12.0. The source code is identical, but the compiler version changed.
+- **Clock-based operations.** A source file contained `new Date()` in a module-level constant. The file's content hash changed every time Smelter compiled it because the date string was embedded in the output. Warden now flags this with `warden/no-runtime-date-in-module-scope`.
+- **Non-deterministic dependencies.** A third-party package published a new version without a lockfile change (because the version range allowed it). The dependency hash changed even though `package-lock.json` was identical. We now pin every dependency to an exact version.
+
+The `foundry quench diff` command is the single most useful debugging tool in Foundry. When a build takes longer than expected, run the diff before anything else. The answer is always in the hash.

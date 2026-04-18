@@ -1,0 +1,158 @@
+---
+id: no-script-url
+title: No Script URL
+description: Disallow javascript colon URLs except for explicitly allowed patterns such as javascript void zero.
+keywords:
+  - nova
+  - eslint rule
+  - script url
+  - javascript void
+  - XSS
+  - linting
+tags:
+  - rules
+  - eslint
+  - safety
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Block `javascript:` URLs except explicitly allowed patterns because script URLs execute arbitrary code and are a common <Terminology title="cross site scripting" to="/docs/quickstart/terminology#security" color={true}>XSS</Terminology> vector.
+
+## Summary
+
+The `no-script-url` rule reports any string literal whose value starts with `javascript:` unless it matches one of the allowed patterns.
+
+## Why Use This Rule?
+
+1. Prevents XSS vulnerabilities from `javascript:` URLs that execute arbitrary code.
+2. Makes dangerous patterns visible during code review instead of hiding in string values.
+3. Provides an `allowedPatterns` escape hatch for cases where `javascript:` URLs are intentional.
+
+## Examples
+
+<Tabs groupId="no-script-url-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    const link = '#';
+    const path = '/some-path';
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const href = 'javascript:alert("XSS")';
+    const link = 'javascript:doSomething()';
+    const back = 'javascript:history.back()';
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-script-url-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoScriptUrl } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-script-url': NoScriptUrl.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-script-url': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="allow-void-zero" label="Allow Void Zero">
+
+    Allow `javascript:void(0)` as an anchor placeholder:
+
+    ```ts
+    import { NoScriptUrl } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-script-url': NoScriptUrl.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-script-url': ['error', {
+            allowedPatterns: ['javascript:void(0)'],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoScriptUrl } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-script-url': NoScriptUrl.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-script-url': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option            | Type       | Default | Description                        |
+|-------------------|------------|---------|------------------------------------|
+| `allowedPatterns` | `string[]` | `[]`    | Exact `javascript:` URLs to allow. |
+| `ignoreFiles`     | `string[]` | `[]`    | File patterns to skip.             |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on `javascript:void(0)`** — Add `'javascript:void(0)'` to the `allowedPatterns` option.
+- **Template literals are not checked** — The rule only inspects string literals. Dynamic `javascript:` URLs built via template literals are not caught.

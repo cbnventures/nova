@@ -1,0 +1,182 @@
+/**
+ * Signal — Footer (Launchpad) variant visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Navigation Lists
+ * ============================ */
+
+.nova-footer-launchpad nav ul li a {
+  display: inline-block;
+}
+
+/* ============================
+ * 2. Footer Base
+ * ============================ */
+
+.nova-footer-launchpad {
+  font-size: 0.75rem;
+  background-color: var(--nova-color-neutral-50);
+  border-top: 2px solid var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-footer-launchpad {
+  background-color: var(--nova-color-neutral-950);
+  border-top-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 3. CTA Section
+ * ============================ */
+
+.nova-footer-launchpad-cta {
+  position: relative;
+  padding-block: 2.5rem;
+  text-align: center;
+  background-color: var(--nova-color-neutral-900);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .nova-footer-launchpad-cta {
+  background-color: var(--nova-color-neutral-950);
+  border-bottom: 1px solid var(--nova-color-neutral-800);
+}
+
+.nova-footer-launchpad-cta p {
+  position: relative;
+  margin: 0;
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--nova-color-neutral-50);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+@media (min-width: 640px) {
+  .nova-footer-launchpad-cta p {
+    font-size: 1rem;
+  }
+}
+
+/* ============================
+ * 4. Link Columns
+ * ============================ */
+
+.nova-footer-launchpad-columns {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-block: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-footer-launchpad-columns {
+    flex-direction: row;
+    gap: 2rem;
+  }
+}
+
+.nova-footer-launchpad-columns nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 120px;
+  gap: 0.25rem;
+}
+
+.nova-footer-launchpad-columns nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.nova-footer-launchpad-columns nav h3 {
+  margin: 0 0 0.25rem;
+  font-family: var(--nova-font-code);
+  font-size: 0.625rem;
+  font-weight: 600;
+  color: var(--nova-color-neutral-500);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nova-footer-launchpad-columns nav a {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  color: var(--nova-color-neutral-500);
+  text-decoration: none;
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-footer-launchpad-columns nav a:hover,
+.nova-footer-launchpad-columns nav a:focus-visible {
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-footer-launchpad-columns nav a {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-footer-launchpad-columns nav a:hover,
+[data-theme="dark"] .nova-footer-launchpad-columns nav a:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 5. Social Media Strip
+ * ============================ */
+
+.nova-footer-launchpad-social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding-block: 0.75rem;
+}
+
+.nova-footer-launchpad-social a {
+  color: var(--nova-color-neutral-500);
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-footer-launchpad-social a:hover,
+.nova-footer-launchpad-social a:focus-visible {
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-footer-launchpad-social a {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-footer-launchpad-social a:hover,
+[data-theme="dark"] .nova-footer-launchpad-social a:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 6. Legal Bar
+ * ============================ */
+
+.nova-footer-launchpad-legal {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-block: 0.75rem;
+  border-top: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-footer-launchpad-legal {
+  border-top-color: var(--nova-color-neutral-800);
+}
+
+.nova-footer-launchpad-legal p {
+  margin: 0;
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  color: var(--nova-color-neutral-500);
+}

@@ -1,0 +1,139 @@
+---
+title: Your First Relay
+sidebar_position: 2
+description: Receive a Threadbare webhook, transform it with Parcel, and deliver it to Canary. A step-by-step walkthrough from zero to working relay.
+tags:
+  - setup
+  - tutorial
+---
+
+import Details from '@theme/Details';
+
+# Your First Relay
+
+This walkthrough takes you from a fresh Envoy install to a working relay that receives a Threadbare code push webhook, transforms it into a readable notification, and delivers it to Canary.
+
+## Step 1: Write the Relay Manifest
+
+Create a `relay.grain` file in your working directory. This manifest defines one relay: Threadbare push events routed to a Canary topic.
+
+```text title="relay.grain"
+relay "threadbare-pushes" {
+  source = "threadbare"
+  // highlight-next-line
+  cipher = "hmac-sha256"
+
+  transform {
+    // highlight-start
+    title = "[{{ repo }}] {{ count }} new commit(s) to {{ branch }}"
+    body  = "{{ author }} pushed to {{ branch }}:\n{{ commit_summary }}"
+    // highlight-end
+    priority = 3
+    tags     = ["package"]
+  }
+
+  destination = "canary://ci-builds"
+
+  retry {
+    strategy = "exponential"
+    max      = 5
+  }
+}
+```
+
+The `cipher` directive tells Envoy to validate the incoming webhook using HMAC-SHA256 signatures. Threadbare signs every webhook payload with the secret you configure on their side.
+
+## Step 2: Start the Relay
+
+Start Envoy with the manifest:
+
+```bash title="Start Envoy"
+envoy start --config relay.grain --port 8090
+```
+
+Envoy reads the manifest, initializes Cipher with the HMAC verification mode, compiles the Parcel transformation template, and registers the Dispatch route.
+
+## Step 3: Configure the Source
+
+In your Threadbare repository settings, add a webhook:
+
+- **Payload URL:** `https://your-envoy-host:8090/relay/threadbare`
+- **Content type:** `application/json`
+- **Secret:** The same secret Envoy uses for HMAC validation
+- **Events:** Select "Just the push event"
+
+## Step 4: Push a Commit
+
+Push a commit to the repository. Threadbare fires the webhook. Envoy receives it:
+
+```json title="Incoming Threadbare payload"
+{
+  "ref": "refs/heads/main",
+  "repository": { "full_name": "acme/web-app" },
+  "pusher": { "name": "nneka" },
+  "commits": [
+    { "id": "a7f3c9d", "message": "Fix rate limiter edge case" },
+    { "id": "b2e8f1a", "message": "Update Courier retry defaults" }
+  ]
+}
+```
+
+Parcel transforms it into the Canary format:
+
+```json title="Transformed Canary notification"
+{
+  "title": "[acme/web-app] 2 new commit(s) to main",
+  "body": "nneka pushed to main:\n- a7f3c9d: Fix rate limiter edge case\n- b2e8f1a: Update Courier retry defaults",
+  "priority": 3,
+  "tags": ["package"]
+}
+```
+
+Courier delivers it to the `ci-builds` Canary topic and records a delivery receipt in Ledger.
+
+<Details>
+<summary>Full relay log for this transaction</summary>
+
+```text title="Envoy relay log"
+[cipher]   threadbare-pushes  HMAC-SHA256 valid (source: 203.0.113.42)
+[parcel]   threadbare-pushes  Transformed: 2 fields mapped, 0 dropped
+[dispatch] threadbare-pushes  Routed to: canary://ci-builds
+[courier]  threadbare-pushes  Attempt 1/5 — 200 OK (3.1ms)
+[courier]  threadbare-pushes  Delivery receipt: confirmed
+[ledger]   threadbare-pushes  Recorded: msg_f7a2b8c4 → delivered
+```
+
+</Details>
+
+## Step 5: Verify in Ledger
+
+Query the Ledger to confirm the delivery:
+
+```bash title="Query Ledger"
+curl http://localhost:8090/api/deliveries?relay=threadbare-pushes&limit=1
+```
+
+```json title="Ledger response"
+{
+  "deliveries": [
+    {
+      "id": "msg_f7a2b8c4",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 1,
+      "latency_ms": 3.1,
+      "timestamp": "2025-03-01T14:22:07Z"
+    }
+  ]
+}
+```
+
+:::tip
+Run `envoy status` from the CLI to see a live summary of all active relays, their delivery rates, and any messages currently in retry or dead-letter state.
+:::
+
+## Next Steps
+
+- [Configuration](/docs/setup/configuration/) — Full `.grain` relay manifest reference with all directives.
+- [Protocol Translation](/docs/core/protocol-translation/) — Deep dive into Parcel transformation pipelines.
+- [Routing & Dispatch](/docs/core/routing-dispatch/) — Content-based routing, severity escalation, and topic fanout.

@@ -1,0 +1,73 @@
+---
+title: "What Changes When You Hit 100 Million Clicks"
+authors: [luca]
+tags: [analytics, pulse, batch, dark-traffic]
+date: 2026-03-24
+---
+
+At a thousand clicks, analytics is a spreadsheet. At a million clicks, it is a dashboard. At a hundred million clicks, it is an engineering problem. The queries that ran in milliseconds at small scale take minutes. The dashboards that loaded instantly start timing out. The attribution models that produced clean results start surfacing statistical noise as if it were signal.
+
+We crossed the 100-million-click threshold on our own analytics infrastructure last quarter. Here is what broke and how we fixed it.
+
+{/* truncate */}
+
+## The First Thing That Broke: Query Latency
+
+Prism attribution queries scan every touchpoint in a conversion path. At 10 million clicks, a full attribution report across all campaigns completed in 8 seconds. At 100 million, the same query took 4 minutes and 12 seconds. The relationship between data volume and query time was not linear — it was superlinear due to the join complexity of multi-touch paths.
+
+We solved this with pre-aggregated attribution summaries. Instead of computing attribution from raw events at query time, Prism now maintains rolling summaries that update incrementally as new events arrive:
+
+```json title="Pre-aggregated attribution summary"
+{
+  "campaign": "core-activation-trial-004",
+  "period": "2026-03-01/2026-03-24",
+  "summary": {
+    "totalConversions": 2841,
+    "attributedTouchpoints": 18694,
+    "channelWeights": {
+      "email": 0.34,
+      "social": 0.21,
+      "paid": 0.19,
+      "organic": 0.14,
+      "direct": 0.12
+    },
+    "medianPathLength": 4,
+    "p95QueryTime": "220ms"
+  }
+}
+```
+
+The same query that took 4 minutes against raw events now completes in 220 milliseconds against the pre-aggregated summary. For exploratory queries that need raw-event granularity, we partition data by time range and campaign, so the query only scans the relevant subset.
+
+## The Second Thing That Broke: Dashboard Rendering
+
+Pulse dashboards at 100 million clicks had two problems. First, the real-time event stream was producing more events per second than the WebSocket connection could deliver to the browser. Second, the aggregate charts were re-rendering on every event, causing the browser to consume 2 GB of memory within minutes.
+
+We introduced three changes:
+
+- **Server-side sampling**: The Pulse stream samples events at a configurable rate for display purposes. At 100 million clicks, a 1% sample still produces hundreds of events per minute — more than enough for visual monitoring.
+- **Windowed aggregation**: Charts display fixed time windows (1 minute, 5 minutes, 1 hour) instead of cumulative totals. This bounds the dataset size regardless of total volume.
+- **Progressive rendering**: The dashboard loads the most recent window first and back-fills historical windows on demand.
+
+## The Third Thing That Broke: Dark Traffic Detection
+
+Beacon's dark traffic heuristics compare attributed traffic against unattributed traffic to estimate the dark traffic rate per channel. At small scale, this comparison is straightforward. At 100 million clicks, the heuristics started flagging statistical artifacts as dark traffic anomalies.
+
+The fix was raising the minimum sample size for dark traffic detection from 100 clicks to 1,000 clicks per channel per day. This eliminated false positives from low-volume channels without reducing detection accuracy on high-volume channels.
+
+## Lessons from Scale
+
+| Problem                | Root Cause              | Solution                   |
+|------------------------|-------------------------|----------------------------|
+| Slow attribution       | Full-table scan         | Pre-aggregated summaries   |
+| Dashboard memory bloat | Unbounded event stream  | Server-side sampling       |
+| Chart rendering lag    | Cumulative data loading | Windowed aggregation       |
+| False dark traffic     | Low sample size         | Higher detection threshold |
+
+None of these problems were visible at 10 million clicks. They emerged gradually as volume increased, and each one required a different architectural response. The systems that work at small scale are not the systems that work at large scale. The abstractions survive, but the implementations change.
+
+## Plan for the Next Order of Magnitude
+
+We are currently at 100 million clicks. The next threshold is a billion. We have already identified the components that will break next — the event ingestion pipeline and the trace ID lookup index — and we are redesigning them now, before they fail.
+
+Scale is not a feature you ship. It is a property you maintain. The moment you stop planning for the next order of magnitude is the moment your current architecture starts aging.

@@ -1,0 +1,72 @@
+---
+title: "Your Conversion Window Is Probably Wrong"
+authors: [suki]
+tags: [conversion, prism, multi-touch, analytics]
+date: 2025-11-17
+---
+
+Most attribution tools default to a 30-day conversion window. Click happens on day one, conversion happens on day twenty-nine, and the click gets credit. Conversion happens on day thirty-one, and the click is forgotten. The boundary is arbitrary, and it distorts your data in ways that are hard to detect and expensive to ignore.
+
+We analyzed 12 million conversions across Prism and found that the optimal conversion window varies by a factor of 6x depending on the product category.
+
+{/* truncate */}
+
+## The Window Distribution
+
+Prism records the elapsed time between first attributed touch and conversion for every conversion event. We bucketed 12 million conversions by product category and measured the window that captures 90% of conversions:
+
+| Product Category      | Median Time to Convert | 90th Percentile Window |
+|-----------------------|------------------------|------------------------|
+| Consumer SaaS         | 3 days                 | 14 days                |
+| B2B SaaS (SMB)        | 8 days                 | 28 days                |
+| B2B SaaS (Mid-market) | 18 days                | 52 days                |
+| B2B SaaS (Enterprise) | 41 days                | 84 days                |
+| E-commerce            | 1 day                  | 7 days                 |
+
+Enterprise B2B conversions take six times longer than consumer SaaS conversions. A 30-day window captures 90% of consumer conversions but only 60% of enterprise conversions. Forty percent of enterprise attribution data is silently dropped.
+
+## What Happens Outside the Window
+
+Conversions that fall outside the attribution window are not lost — they are misattributed. They show up as "direct" or "organic" conversions with no attributed marketing touchpoint. This creates two problems:
+
+1. **Marketing undervaluation.** Campaigns that drive long-cycle conversions appear to underperform because their conversions fall outside the window.
+2. **Channel distortion.** Top-of-funnel channels (content, social, events) tend to appear earlier in the path. A short window disproportionately cuts their credit.
+
+## Prism's Adaptive Windows
+
+Prism does not use a fixed conversion window. It calculates the window dynamically based on your actual conversion data:
+
+```json title="Adaptive window configuration"
+{
+  "windowStrategy": "adaptive",
+  "calibration": {
+    "targetCapture": 0.95,
+    "minWindow": "7d",
+    "maxWindow": "90d",
+    "recalibrationInterval": "30d"
+  },
+  "current": {
+    "calculatedWindow": "38d",
+    "captureRate": 0.95,
+    "lastCalibrated": "2025-11-01"
+  }
+}
+```
+
+The adaptive window recalculates monthly based on your trailing conversion data. If your sales cycle shortens, the window tightens. If it lengthens, the window expands. The target capture rate ensures that 95% of conversions fall within the window — regardless of how your business changes.
+
+## The Budget Impact
+
+We modeled the budget impact of switching from a fixed 30-day window to Prism's adaptive window for 50 B2B SaaS accounts:
+
+- Accounts with sales cycles under 30 days saw minimal change (the default was already close to optimal).
+- Accounts with sales cycles over 30 days recovered an average of 22% more attributed conversions.
+- Top-of-funnel channel credit increased by 31% on average, which shifted budget allocation toward demand-creation activities.
+
+The conversions were always happening. The window was just cutting them off before attribution could connect them to their source.
+
+## Choosing the Right Window
+
+If you cannot use an adaptive window, at least measure your actual conversion timing before picking a number. Run a Prism path query with no window constraint and look at the distribution of time-to-convert. Set your window at the 90th or 95th percentile of that distribution.
+
+A conversion window is not a preference. It is a measurement parameter, and it should be calibrated to your data — not defaulted to a round number that some analytics tool chose for you.

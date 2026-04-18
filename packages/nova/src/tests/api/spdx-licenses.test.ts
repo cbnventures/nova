@@ -1,122 +1,137 @@
 import { ok, strictEqual } from 'node:assert/strict';
-import { test } from 'node:test';
 
-import { SpdxLicenses } from '@/api/spdx-licenses.js';
+import {
+  afterEach, describe, it, vi,
+} from 'vitest';
+
+import { ApiSpdxLicenses } from '../../api/spdx-licenses.js';
+
+import type {
+  TestsApiSpdxLicensesFetchLicensesCallCount,
+  TestsApiSpdxLicensesFetchLicensesFirst,
+  TestsApiSpdxLicensesFetchLicensesHasApache,
+  TestsApiSpdxLicensesFetchLicensesHasIsc,
+  TestsApiSpdxLicensesFetchLicensesHasMit,
+  TestsApiSpdxLicensesFetchLicensesResult,
+  TestsApiSpdxLicensesFetchLicensesSecond,
+} from '../../types/tests/api/spdx-licenses.test.d.ts';
 
 /**
- * SPDX licenses fetch licenses.
+ * Tests - API - SPDX Licenses - Fetch Licenses.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('SpdxLicenses.fetchLicenses', async (context) => {
-  context.afterEach(() => {
-    SpdxLicenses.resetForTesting();
+describe('ApiSpdxLicenses.fetchLicenses', async () => {
+  afterEach(() => {
+    ApiSpdxLicenses.resetForTesting();
+
+    return;
   });
 
-  await context.test('returns Set of license IDs for valid response', async (t) => {
-    t.mock.method(global, 'fetch', () => Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve({
-        licenses: [
-          { licenseId: 'MIT' },
-          { licenseId: 'Apache-2.0' },
-          { licenseId: 'ISC' },
-        ],
-      }),
-    }));
+  it('returns Set of license IDs for valid response', async () => {
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify({
+      licenses: [
+        { licenseId: 'MIT' },
+        { licenseId: 'Apache-2.0' },
+        { licenseId: 'ISC' },
+      ],
+    }))));
 
-    const result = await SpdxLicenses.fetchLicenses();
+    const result: TestsApiSpdxLicensesFetchLicensesResult = await ApiSpdxLicenses.fetchLicenses();
 
     ok(result instanceof Set);
     strictEqual(result.size, 3);
-    ok(result.has('MIT'));
-    ok(result.has('Apache-2.0'));
-    ok(result.has('ISC'));
+    const hasMit: TestsApiSpdxLicensesFetchLicensesHasMit = result.has('MIT');
+    const hasApache: TestsApiSpdxLicensesFetchLicensesHasApache = result.has('Apache-2.0');
+    const hasIsc: TestsApiSpdxLicensesFetchLicensesHasIsc = result.has('ISC');
+
+    ok(hasMit);
+    ok(hasApache);
+    ok(hasIsc);
+
+    return;
   });
 
-  await context.test('caches result after first fetch', async (t) => {
-    let callCount = 0;
+  it('caches result after first fetch', async () => {
+    let callCount: TestsApiSpdxLicensesFetchLicensesCallCount = 0;
 
-    t.mock.method(global, 'fetch', () => {
+    vi.spyOn(global, 'fetch').mockImplementation(() => {
       callCount += 1;
 
-      return Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({
-          licenses: [
-            { licenseId: 'MIT' },
-          ],
-        }),
-      });
+      return Promise.resolve(new Response(JSON.stringify({
+        licenses: [{ licenseId: 'MIT' }],
+      })));
     });
 
-    await SpdxLicenses.fetchLicenses();
-    await SpdxLicenses.fetchLicenses();
+    await ApiSpdxLicenses.fetchLicenses();
+    await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(callCount, 1);
+
+    return;
   });
 
-  await context.test('caches undefined result after fetch failure', async (t) => {
-    let callCount = 0;
+  it('caches undefined result after fetch failure', async () => {
+    let callCount: TestsApiSpdxLicensesFetchLicensesCallCount = 0;
 
-    t.mock.method(global, 'fetch', () => {
+    vi.spyOn(global, 'fetch').mockImplementation(() => {
       callCount += 1;
 
-      return Promise.resolve({
-        ok: false,
-        status: 500,
-      });
+      return Promise.resolve(new Response(null, { status: 500 }));
     });
 
-    const first = await SpdxLicenses.fetchLicenses();
-    const second = await SpdxLicenses.fetchLicenses();
+    const first: TestsApiSpdxLicensesFetchLicensesFirst = await ApiSpdxLicenses.fetchLicenses();
+    const second: TestsApiSpdxLicensesFetchLicensesSecond = await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(first, undefined);
     strictEqual(second, undefined);
     strictEqual(callCount, 1);
+
+    return;
   });
 
-  await context.test('returns undefined on HTTP 500', async (t) => {
-    t.mock.method(global, 'fetch', () => Promise.resolve({
-      ok: false,
-      status: 500,
-    }));
+  it('returns undefined on HTTP 500', async () => {
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(null, { status: 500 })));
 
-    const result = await SpdxLicenses.fetchLicenses();
+    const result: TestsApiSpdxLicensesFetchLicensesResult = await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(result, undefined);
+
+    return;
   });
 
-  await context.test('returns undefined on network error', async (t) => {
-    t.mock.method(global, 'fetch', () => Promise.reject(new Error('network error')));
+  it('returns undefined on network error', async () => {
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.reject(new Error('network error')));
 
-    const result = await SpdxLicenses.fetchLicenses();
+    const result: TestsApiSpdxLicensesFetchLicensesResult = await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(result, undefined);
+
+    return;
   });
 
-  await context.test('returns undefined on malformed JSON', async (t) => {
-    t.mock.method(global, 'fetch', () => Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve('not an object'),
-    }));
+  it('returns undefined on malformed JSON', async () => {
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify('not an object'))));
 
-    const result = await SpdxLicenses.fetchLicenses();
+    const result: TestsApiSpdxLicensesFetchLicensesResult = await ApiSpdxLicenses.fetchLicenses();
 
     strictEqual(result, undefined);
+
+    return;
   });
 
-  await context.test('returns empty Set for empty licenses array', async (t) => {
-    t.mock.method(global, 'fetch', () => Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve({
-        licenses: [],
-      }),
-    }));
+  it('returns empty Set for empty licenses array', async () => {
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify({
+      licenses: [],
+    }))));
 
-    const result = await SpdxLicenses.fetchLicenses();
+    const result: TestsApiSpdxLicensesFetchLicensesResult = await ApiSpdxLicenses.fetchLicenses();
 
     ok(result instanceof Set);
     strictEqual(result.size, 0);
+
+    return;
   });
+
+  return;
 });

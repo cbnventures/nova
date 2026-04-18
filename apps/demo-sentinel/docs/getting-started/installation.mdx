@@ -1,0 +1,120 @@
+---
+title: Installation
+sidebar_position: 1
+description: Deploy the Sentinel agent via Spark, Vial container, or the Arcline Cloud marketplace.
+tags:
+  - getting started
+  - installation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Installation
+
+Sentinel requires an agent on every endpoint that participates in the trust evaluation loop. The agent communicates with the Sentinel control plane over Filament tunnels and reports device posture to Watchtower.
+
+## Prerequisites
+
+- **Spark CLI** 2.0 or later (for Spark installation method)
+- **Filament** protocol support on the host network (UDP 51820)
+- A Sentinel control plane instance (cloud-hosted or self-managed)
+
+:::warning Filament Protocol Version
+Sentinel 3.x requires Filament protocol version 2.0 or later. Older Filament implementations do not support the encrypted posture telemetry channel that Garrison uses for device health reporting. Verify your Filament version with `filament --version` before proceeding.
+:::
+
+## Install the Agent
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+```bash title="Install via Spark"
+spark install sentinel-agent
+```
+
+Spark resolves the correct binary for your operating system and architecture. The agent is installed to `~/.spark/bin/sentinel-agent` and added to your PATH automatically.
+
+```bash title="Verify installation"
+sentinel-agent --version
+```
+
+</TabItem>
+<TabItem value="vial" label="Vial Container">
+
+```bash title="Pull the Sentinel agent image"
+vial pull sentinel/agent:latest
+```
+
+Run the agent as a long-lived container:
+
+```bash title="Run the agent container"
+vial run -d \
+  --name sentinel-agent \
+  --restart always \
+  --cap-add NET_ADMIN \
+  -v /var/lib/sentinel:/data \
+  sentinel/agent:latest
+```
+
+The `NET_ADMIN` capability is required for Filament tunnel management.
+
+</TabItem>
+<TabItem value="arcline" label="Arcline Marketplace">
+
+```bash title="Deploy from Arcline Marketplace"
+arcline deploy sentinel-agent \
+  --region us-east-1 \
+  --tier standard \
+  --auto-enroll
+```
+
+The Arcline marketplace deployment includes automatic Garrison enrollment and Filament tunnel provisioning. No additional configuration is required.
+
+</TabItem>
+</Tabs>
+
+## Register with the Control Plane
+
+After installation, register the agent with your Sentinel control plane:
+
+```bash title="Agent registration"
+sentinel-agent register \
+  --control-plane sentinel.yourcompany.internal \
+  --enrollment-token $SENTINEL_ENROLLMENT_TOKEN
+```
+
+The agent performs an initial posture check during registration. Garrison records the baseline device state — OS version, disk encryption status, firewall configuration, and installed patch level.
+
+```text title="Registration output"
+Registering with control plane: sentinel.yourcompany.internal
+  Device ID:       dev_a3b7c9d1e5f2
+  Filament tunnel: established (UDP 51820)
+  Posture baseline: captured
+    OS:             macOS 15.2
+    Encryption:     FileVault enabled (AES-256)
+    Firewall:       active
+    Patch level:    current
+
+Registration complete. Watchtower evaluation begins in 90s.
+```
+
+:::note Enrollment Tokens
+Enrollment tokens are single-use and expire after 24 hours. Generate new tokens from the Sentinel dashboard or via the Spoke API: `sentinel api tokens create --type enrollment --ttl 24h`.
+:::
+
+## Post-Installation
+
+Once registered, the agent operates autonomously:
+
+- **Garrison** checks device posture on a continuous loop and reports to the control plane.
+- **Watchtower** evaluates the agent's posture data against active trust policies every 90 seconds.
+- **Drawbridge** grants or revokes Filament tunnel access based on the evaluation result.
+
+No manual intervention is required after enrollment. Policy changes propagate to enrolled agents automatically.
+
+## Next Steps
+
+- [Your First Policy](/docs/getting-started/your-first-policy/) — Write a trust policy and attach it to a resource.
+- [Device Enrollment](/docs/trust/device-enrollment/) — Posture baselines and compliance profiles in detail.
+- [Platform Overview](/docs/platform-overview/) — Architecture and component reference.

@@ -1,0 +1,80 @@
+/**
+ * ============================
+ * Doc Breadcrumbs — Nav
+ * ============================
+ */
+
+/* Hidden on mobile — DocSidebarMobile trigger shows hierarchy instead. */
+.nova-breadcrumbs {
+  display: none;
+
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 1024px) {
+  .nova-breadcrumbs {
+    display: block;
+  }
+}
+
+/**
+ * ============================
+ * Doc Breadcrumbs — List
+ * ============================
+ */
+
+.nova-breadcrumbs-list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+/**
+ * ============================
+ * Doc Breadcrumbs — Item
+ * ============================
+ */
+
+.nova-breadcrumbs-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nova-breadcrumbs-item:not(:last-child)::after {
+  margin-left: 0.25rem;
+
+  content: "/";
+
+  opacity: 0.6;
+}
+
+/**
+ * ============================
+ * Doc Breadcrumbs — Home Icon
+ * ============================
+ */
+
+.nova-breadcrumbs-home {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nova-breadcrumbs-home svg {
+  display: block;
+}
+
+/**
+ * ============================
+ * Doc Breadcrumbs — Link
+ * ============================
+ */
+
+.nova-breadcrumbs-link {
+  text-decoration: none;
+}

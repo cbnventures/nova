@@ -1,110 +1,203 @@
-import type { BorderStyle, TextAlign } from '@/types/shared.d.ts';
+import type { SharedBorderCharacters, SharedBorderStyle, SharedTextAlign } from '../shared.d.ts';
 
 /**
- * CLI Header - Align.
+ * Toolkit - CLI Header - Align.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIHeaderAlignString = string;
+export type ToolkitCliHeaderAlignString = string;
 
-export type CLIHeaderAlignWidth = number;
+export type ToolkitCliHeaderAlignWidth = number;
 
-export type CLIHeaderAlignAlign = TextAlign;
+export type ToolkitCliHeaderAlignAlign = SharedTextAlign;
 
-export type CLIHeaderAlignReturns = string;
+export type ToolkitCliHeaderAlignReturns = string;
+
+export type ToolkitCliHeaderAlignStringLength = number;
+
+export type ToolkitCliHeaderAlignAvailableSpace = number;
+
+export type ToolkitCliHeaderAlignLeftPadding = number;
+
+export type ToolkitCliHeaderAlignRightPadding = number;
 
 /**
- * CLI Header - Border chars.
+ * Toolkit - CLI Header - Border Characters.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIHeaderBorderCharsStyle = BorderStyle;
+export type ToolkitCliHeaderBorderCharactersStyle = SharedBorderStyle;
 
-export type CLIHeaderBorderCharsReturns = {
-  topLeft: string;
-  topRight: string;
-  bottomLeft: string;
-  bottomRight: string;
-  horizontal: string;
-  vertical: string;
+export type ToolkitCliHeaderBorderCharactersReturns = SharedBorderCharacters;
+
+/**
+ * Toolkit - CLI Header - Pad To Width.
+ *
+ * @since 0.11.0
+ */
+export type ToolkitCliHeaderPadToWidthString = string;
+
+export type ToolkitCliHeaderPadToWidthWidth = number;
+
+export type ToolkitCliHeaderPadToWidthReturns = string;
+
+export type ToolkitCliHeaderPadToWidthVisibleLength = number;
+
+export type ToolkitCliHeaderPadToWidthPaddingCount = number;
+
+/**
+ * Toolkit - CLI Header - Render.
+ *
+ * @since 0.11.0
+ */
+export type ToolkitCliHeaderRenderTexts = string[];
+
+export type ToolkitCliHeaderRenderOptionsAlign = SharedTextAlign;
+
+export type ToolkitCliHeaderRenderOptionsMarginTop = number;
+
+export type ToolkitCliHeaderRenderOptionsMarginBottom = number;
+
+export type ToolkitCliHeaderRenderOptionsPaddingX = number;
+
+export type ToolkitCliHeaderRenderOptionsPaddingY = number;
+
+export type ToolkitCliHeaderRenderOptionsStyle = SharedBorderStyle;
+
+export type ToolkitCliHeaderRenderOptionsWidth = number;
+
+export type ToolkitCliHeaderRenderOptionsInteractive = boolean;
+
+export type ToolkitCliHeaderRenderOptions = {
+  align?: ToolkitCliHeaderRenderOptionsAlign;
+  marginTop?: ToolkitCliHeaderRenderOptionsMarginTop;
+  marginBottom?: ToolkitCliHeaderRenderOptionsMarginBottom;
+  paddingX?: ToolkitCliHeaderRenderOptionsPaddingX;
+  paddingY?: ToolkitCliHeaderRenderOptionsPaddingY;
+  style?: ToolkitCliHeaderRenderOptionsStyle;
+  width?: ToolkitCliHeaderRenderOptionsWidth;
+  interactive?: ToolkitCliHeaderRenderOptionsInteractive;
 };
 
-/**
- * CLI Header - Pad to width.
- *
- * @since 1.0.0
- */
-export type CLIHeaderPadToWidthString = string;
+export type ToolkitCliHeaderRenderReturns = string;
 
-export type CLIHeaderPadToWidthWidth = number;
+export type ToolkitCliHeaderRenderResolvedOptions = ToolkitCliHeaderRenderOptions;
 
-export type CLIHeaderPadToWidthReturns = string;
+export type ToolkitCliHeaderRenderInteractive = boolean;
 
-/**
- * CLI Header - Render.
- *
- * @since 1.0.0
- */
-export type CLIHeaderRenderTexts = string[];
+export type ToolkitCliHeaderRenderAlign = SharedTextAlign;
 
-export type CLIHeaderRenderOptionsAlign = TextAlign;
+export type ToolkitCliHeaderRenderMarginTop = number;
 
-export type CLIHeaderRenderOptionsMarginTop = number;
+export type ToolkitCliHeaderRenderMarginBottom = number;
 
-export type CLIHeaderRenderOptionsMarginBottom = number;
+export type ToolkitCliHeaderRenderPaddingX = number;
 
-export type CLIHeaderRenderOptionsPaddingX = number;
+export type ToolkitCliHeaderRenderPaddingY = number;
 
-export type CLIHeaderRenderOptionsPaddingY = number;
+export type ToolkitCliHeaderRenderStyle = SharedBorderStyle;
 
-export type CLIHeaderRenderOptionsStyle = BorderStyle;
+export type ToolkitCliHeaderRenderWidth = number;
 
-export type CLIHeaderRenderOptionsWidth = number;
+export type ToolkitCliHeaderRenderTopMargin = string;
 
-export type CLIHeaderRenderOptionsInteractive = boolean;
+export type ToolkitCliHeaderRenderBottomMargin = string;
 
-export type CLIHeaderRenderOptions = {
-  align?: CLIHeaderRenderOptionsAlign;
-  marginTop?: CLIHeaderRenderOptionsMarginTop;
-  marginBottom?: CLIHeaderRenderOptionsMarginBottom;
-  paddingX?: CLIHeaderRenderOptionsPaddingX;
-  paddingY?: CLIHeaderRenderOptionsPaddingY;
-  style?: CLIHeaderRenderOptionsStyle;
-  width?: CLIHeaderRenderOptionsWidth;
-  interactive?: CLIHeaderRenderOptionsInteractive;
-};
+export type ToolkitCliHeaderRenderBorderCharacters = SharedBorderCharacters;
 
-export type CLIHeaderRenderReturns = string;
+export type ToolkitCliHeaderRenderBorderlessWidth = number;
 
-export type CLIHeaderRenderContentStrings = string[];
+export type ToolkitCliHeaderRenderTopBorder = string;
 
-export type CLIHeaderRenderDisplayStrings = string[];
+export type ToolkitCliHeaderRenderBottomBorder = string;
+
+export type ToolkitCliHeaderRenderContentWidth = number;
+
+export type ToolkitCliHeaderRenderContentStrings = string[];
+
+export type ToolkitCliHeaderRenderDisplayStrings = string[];
+
+export type ToolkitCliHeaderRenderAlignedEmpty = string;
+
+export type ToolkitCliHeaderRenderTruncatedText = string;
+
+export type ToolkitCliHeaderRenderAlignedText = string;
+
+export type ToolkitCliHeaderRenderPadded = string;
+
+export type ToolkitCliHeaderRenderPaddedRow = string;
 
 /**
- * CLI Header - Strip ANSI.
+ * Toolkit - CLI Header - Strip ANSI.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIHeaderStripAnsiString = string;
+export type ToolkitCliHeaderStripAnsiString = string;
 
-export type CLIHeaderStripAnsiReturns = string;
+export type ToolkitCliHeaderStripAnsiReturns = string;
+
+export type ToolkitCliHeaderStripAnsiPattern = RegExp;
 
 /**
- * CLI Header - Truncate.
+ * Toolkit - CLI Header - Truncate.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIHeaderTruncateString = string;
+export type ToolkitCliHeaderTruncateString = string;
 
-export type CLIHeaderTruncateMax = number;
+export type ToolkitCliHeaderTruncateMax = number;
 
-export type CLIHeaderTruncateReturns = string;
+export type ToolkitCliHeaderTruncateReturns = string;
+
+export type ToolkitCliHeaderTruncateSerializedInput = string;
+
+export type ToolkitCliHeaderTruncateRawIndex = number;
+
+export type ToolkitCliHeaderTruncatePlain = string;
+
+export type ToolkitCliHeaderTruncateSlice = string;
+
+export type ToolkitCliHeaderTruncateMatches = RegExpMatchArray | null;
+
+export type ToolkitCliHeaderTruncateCode = string;
+
+export type ToolkitCliHeaderTruncateStripAnsiMessage = string;
+
+export type ToolkitCliHeaderTruncateCharacter = string;
+
+export type ToolkitCliHeaderTruncateStripVisibleMessage = string;
+
+export type ToolkitCliHeaderTruncateSerializedPlain = string;
+
+export type ToolkitCliHeaderTruncatePlainLength = number;
+
+export type ToolkitCliHeaderTruncateNeedsEllipsis = boolean;
+
+export type ToolkitCliHeaderTruncateVisibleWidth = number;
+
+export type ToolkitCliHeaderTruncateSerializedWidthInfo = string;
+
+export type ToolkitCliHeaderTruncateVisibleIndex = number;
+
+export type ToolkitCliHeaderTruncateOutput = string;
+
+export type ToolkitCliHeaderTruncateRebuildAnsiMessage = string;
+
+export type ToolkitCliHeaderTruncateRebuildVisibleMessage = string;
+
+export type ToolkitCliHeaderTruncateSerializedSecondPass = string;
+
+export type ToolkitCliHeaderTruncateSerializedEllipsis = string;
+
+export type ToolkitCliHeaderTruncateSerializedEnd = string;
 
 /**
- * CLI Header - Visible length.
+ * Toolkit - CLI Header - Visible Length.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIHeaderVisibleLengthString = string;
+export type ToolkitCliHeaderVisibleLengthString = string;
 
-export type CLIHeaderVisibleLengthReturns = number;
+export type ToolkitCliHeaderVisibleLengthReturns = number;
+
+export type ToolkitCliHeaderVisibleLengthPattern = RegExp;

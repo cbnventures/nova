@@ -1,0 +1,142 @@
+---
+title: Device Enrollment
+sidebar_position: 2
+description: Garrison agent onboarding, posture baselines, compliance profiles, and continuous device health monitoring.
+tags:
+  - trust
+  - devices
+---
+
+# Device Enrollment
+
+Every device that participates in the Sentinel trust evaluation loop must be enrolled through Garrison. Enrollment establishes a posture baseline — the initial snapshot of device health that all future evaluations are measured against.
+
+## Enrollment Flow
+
+Enrollment is a three-step process: install the agent, authenticate with the control plane, and capture the posture baseline.
+
+```bash title="Enroll a device"
+sentinel-agent enroll \
+  --control-plane sentinel.yourcompany.internal \
+  --token $ENROLLMENT_TOKEN \
+  --profile standard
+```
+
+```text title="Enrollment output"
+Enrolling device with Sentinel control plane...
+  Device ID:         dev_7f3a2b9c4e1d
+  Platform:          macOS 15.2 (arm64)
+  Agent version:     3.4.1
+
+  Posture baseline captured:
+    OS version:      15.2 (current)
+    Disk encryption: FileVault enabled (AES-256)
+    Firewall:        active (stealth mode)
+    Patch level:     current (0 pending)
+    Screen lock:     enabled (5 min timeout)
+    Antivirus:       active (definitions current)
+
+  Compliance profile: standard (applied)
+  Filament tunnel:    established (UDP 51820)
+  First Watchtower evaluation: 90s
+
+Enrollment complete.
+```
+
+The posture baseline is immutable. It serves as the reference point for Garrison's continuous compliance checks. If a device's posture degrades below the baseline thresholds defined in its compliance profile, Watchtower is notified and Drawbridge adjusts access accordingly.
+
+## Posture Check Categories
+
+Garrison evaluates the following categories during enrollment and on every subsequent check:
+
+| Category           | Checks                                                           | Weight |
+|--------------------|------------------------------------------------------------------|--------|
+| **OS integrity**   | Version currency, security patch level, jailbreak/root detection | 25%    |
+| **Encryption**     | Full-disk encryption enabled, algorithm strength, key age        | 20%    |
+| **Network**        | Firewall active, stealth mode, open port count                   | 15%    |
+| **Authentication** | Screen lock enabled, timeout duration, biometric enrollment      | 15%    |
+| **Software**       | Antivirus active, definition currency, unauthorized software     | 15%    |
+| **Configuration**  | MDM profile compliance, certificate validity, agent version      | 10%    |
+
+The composite posture score is a weighted sum of all category scores. A score of 100 means every check in every category passes. A score below the policy threshold triggers the `on_failure` handler.
+
+:::tip Baseline Drift
+After enrollment, Garrison tracks how each check drifts from the baseline. A device that was enrolled with a posture score of 95 and drops to 82 is flagged differently than a device that was enrolled at 82. Baseline drift is a stronger signal than absolute score in many environments.
+:::
+
+## Compliance Profiles
+
+Compliance profiles define the minimum posture requirements for a group of devices. Every enrolled device is assigned to one profile:
+
+```text title="profiles/standard.grain"
+profile "standard" {
+  posture_minimum = 80
+
+  requirements {
+    os.patch_age     <= 30       # days since last patch
+    encryption       = true
+    firewall         = true
+    screen_lock      = true
+    screen_timeout   <= 300      # seconds
+    antivirus        = true
+  }
+}
+```
+
+```text title="profiles/high-security.grain"
+profile "high-security" {
+  posture_minimum = 95
+
+  requirements {
+    os.patch_age     <= 7
+    encryption       = true
+    encryption.algo  = "AES-256"
+    firewall         = true
+    firewall.stealth = true
+    screen_lock      = true
+    screen_timeout   <= 60
+    antivirus        = true
+    antivirus.defs   <= 1        # days since last definition update
+    biometric        = true
+  }
+}
+```
+
+:::warning Profile Changes
+Changing a compliance profile retroactively re-evaluates all devices assigned to that profile. Devices that no longer meet the new requirements will fail their next Watchtower evaluation and lose access. Always run a Parapet simulation before tightening profile requirements.
+:::
+
+## Re-Enrollment
+
+Devices must re-enroll when:
+
+- The operating system is reinstalled or major-version upgraded.
+- The Sentinel agent is reinstalled.
+- The enrollment token has been revoked by an administrator.
+- The device has been offline for longer than the profile's `max_offline` duration (default: 30 days).
+
+Re-enrollment captures a new posture baseline and resets the baseline drift tracking.
+
+## Monitoring Enrolled Devices
+
+Query enrolled devices and their current posture:
+
+```bash title="List enrolled devices"
+sentinel garrison list --profile standard --sort posture
+```
+
+```text title="Device list output"
+DEVICE ID         PLATFORM        POSTURE  PROFILE        LAST CHECK
+dev_7f3a2b9c4e1d  macOS 15.2      94       standard       2m ago
+dev_b2c8d4e6f1a3  Windows 11      91       standard       1m ago
+dev_e5f7a1b3c9d2  Ubuntu 24.04    87       standard       45s ago
+dev_a9c1e3f5b7d4  macOS 15.1      76       standard       30s ago  (!)
+
+(!) Below profile minimum (80). Access restricted.
+```
+
+## Next Steps
+
+- [Trust Policies](/docs/trust/trust-policies/) — How posture scores feed into policy evaluation.
+- [Access Control](/docs/trust/access-control/) — How Drawbridge uses posture data to grant or revoke access.
+- [Micro-Segmentation](/docs/operations/micro-segmentation/) — Zone-level isolation based on device and workload posture.

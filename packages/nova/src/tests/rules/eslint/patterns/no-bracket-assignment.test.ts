@@ -1,26 +1,27 @@
-import { test } from 'node:test';
-
 import { RuleTester } from '@typescript-eslint/rule-tester';
+import { afterAll, describe, it } from 'vitest';
 
-import { noBracketAssignment } from '@/rules/eslint/index.js';
+import { NoBracketAssignment } from '../../../../rules/eslint/index.js';
+
+import type { TestsRulesEslintPatternsNoBracketAssignmentRuleTester } from '../../../../types/tests/rules/eslint/patterns/no-bracket-assignment.test.d.ts';
 
 /**
- * No bracket assignment.
+ * Tests - Rules - ESLint - Patterns - No Bracket Assignment.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-RuleTester.afterAll = () => {};
-RuleTester.describe = test;
-RuleTester.it = test;
+RuleTester.afterAll = afterAll;
+RuleTester.describe = describe;
+RuleTester.it = it;
 
-const ruleTester = new RuleTester({
+const ruleTester: TestsRulesEslintPatternsNoBracketAssignmentRuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
   },
 });
 
-ruleTester.run('noBracketAssignment', noBracketAssignment, {
+ruleTester.run('noBracketAssignment', NoBracketAssignment['rule'], {
   valid: [
     {
       code: 'Reflect.set(target, key, value);',
@@ -31,10 +32,16 @@ ruleTester.run('noBracketAssignment', noBracketAssignment, {
     {
       code: 'const x = target[key];',
     },
+    {
+      code: 'target[key] = value;',
+      options: [{ ignoreFiles: ['ignored-file.ts'] }],
+      filename: '/path/to/ignored-file.ts',
+    },
   ],
   invalid: [
     {
       code: 'target[key] = value;',
+      output: 'Reflect.set(target, key, value);',
       errors: [{ messageId: 'useReflectSet' }],
     },
     {
@@ -43,6 +50,7 @@ ruleTester.run('noBracketAssignment', noBracketAssignment, {
     },
     {
       code: 'obj[\'name\'] = \'test\';',
+      output: 'Reflect.set(obj, \'name\', \'test\');',
       errors: [{ messageId: 'useReflectSet' }],
     },
   ],

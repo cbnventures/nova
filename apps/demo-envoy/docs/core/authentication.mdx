@@ -1,0 +1,138 @@
+---
+title: Authentication
+sidebar_position: 3
+description: Cipher verification modes including HMAC-SHA256 signatures, bearer tokens, IP allowlists, and token rotation.
+tags:
+  - core
+  - authentication
+---
+
+# Authentication
+
+Cipher is Envoy's authentication gateway. Every incoming request passes through Cipher before reaching Parcel or Dispatch. If Cipher rejects the request, the pipeline stops. Nothing is transformed. Nothing is routed. Nothing is delivered.
+
+## Verification Modes
+
+Cipher supports three verification modes. They can be used independently or combined.
+
+### HMAC-SHA256 Signatures
+
+The most common mode for webhook sources. The sender computes `HMAC-SHA256(shared_secret, request_body)` and includes the result in a header. Cipher recomputes the hash and compares.
+
+```text title="relay.grain — HMAC verification"
+relay "threadbare-pushes" {
+  source = "threadbare"
+  // highlight-next-line
+  cipher = "hmac-sha256"
+
+  cipher_config {
+    header = "X-Threadbare-Signature-256"
+    secret = "${THREADBARE_WEBHOOK_SECRET}"
+  }
+
+  destination = "canary://ci-builds"
+}
+```
+
+Cipher reads the `X-Threadbare-Signature-256` header, computes the expected hash using the shared secret, and rejects the request if they do not match. The comparison is constant-time to prevent timing attacks.
+
+### Bearer Tokens
+
+For custom integrations that send a static token in the `Authorization` header.
+
+```text title="relay.grain — Bearer token"
+relay "custom-integration" {
+  source = "generic"
+  // highlight-next-line
+  cipher = "bearer"
+
+  cipher_config {
+    token = "${CUSTOM_RELAY_TOKEN}"
+  }
+
+  destination = "canary://custom-events"
+}
+```
+
+### IP Allowlists
+
+Restrict relay access to specific IP addresses or CIDR ranges. Useful as a secondary layer alongside HMAC or bearer verification.
+
+```text title="relay.grain — IP allowlist"
+relay "internal-only" {
+  source = "spoke"
+  // highlight-next-line
+  cipher = "ip-allowlist"
+
+  cipher_config {
+    addresses = [
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16"
+    ]
+  }
+
+  destination = "canary://internal-events"
+}
+```
+
+:::warning
+IP allowlists are fragile in dynamic environments where source IPs change frequently (e.g., serverless platforms, auto-scaling groups, Trellis pod rescheduling). Use HMAC or bearer tokens as the primary verification mode and IP allowlists as a supplementary check.
+:::
+
+## Combining Modes
+
+When multiple Cipher modes are configured on the same relay, Envoy accepts the request if **any** mode succeeds. This allows different source types to coexist on the same endpoint.
+
+```text title="relay.grain — combined modes"
+relay "multi-source" {
+  source = "generic"
+
+  cipher_config {
+    modes = [
+      { type = "hmac-sha256", header = "X-Signature", secret = "${HMAC_SECRET}" },
+      { type = "bearer", token = "${BEARER_TOKEN}" },
+      { type = "ip-allowlist", addresses = ["10.0.0.0/8"] }
+    ]
+  }
+
+  destination = "canary://all-events"
+}
+```
+
+## Token Rotation
+
+Cipher supports zero-downtime token rotation. Declare a primary and a secondary secret. Envoy validates against both during the rotation window.
+
+```text title="relay.grain — token rotation"
+cipher_config {
+  secret          = "${NEW_WEBHOOK_SECRET}"
+  // highlight-next-line
+  previous_secret = "${OLD_WEBHOOK_SECRET}"
+  rotation_window = "24h"
+}
+```
+
+During the rotation window, Cipher accepts requests signed with either secret. After the window expires, only the primary secret is valid. Ledger records which secret was used for each request, so you can verify that all sources have migrated before removing the old secret.
+
+:::danger Running Without Authentication
+Envoy allows `cipher = "none"` for development and testing. Never deploy a relay to production without authentication. An unauthenticated relay endpoint is an open door for payload injection — any system on the network can send arbitrary messages to your destinations.
+:::
+
+## Cipher Logging
+
+Every authentication decision is recorded in Ledger:
+
+```text title="Cipher log entries"
+[cipher] threadbare-pushes  HMAC-SHA256 valid   (source: 203.0.113.42)
+[cipher] custom-integration  Bearer valid        (source: 10.0.1.15)
+[cipher] unknown-source      REJECTED — no matching mode (source: 198.51.100.7)
+```
+
+Failed authentication attempts include the source IP, the attempted mode, and the reason for rejection. This data is queryable via the Spoke API for security auditing.
+
+## Next Steps
+
+- [Integrations](/docs/advanced/integrations/) — How Cipher is configured for each built-in integration.
+- [Architecture](/docs/advanced/architecture/) — Where Cipher sits in the full request lifecycle.
+- [API Reference](/docs/reference/api-reference/) — Cipher status and audit endpoints.

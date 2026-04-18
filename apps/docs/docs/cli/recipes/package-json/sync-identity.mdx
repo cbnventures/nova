@@ -12,29 +12,42 @@ keywords:
   - keywords
   - license
 tags:
-  - sync-identity
   - cli
+  - sync-identity
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Sync **name**, **version**, **description**, **keywords**, and **license** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Sync **name**, **version**, **description**, **keywords**, and **license** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `sync-identity` recipe ensures that identity-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` match the conventions defined in <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>. It enforces consistent naming, valid <Term title="semantic versioning" to="/docs/quickstart/terminology#fundamentals">semver</Term> versions, and (for <Term title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts">distributable</Term> workspaces with the setting enabled) syncs description and keywords from the project-level config.
+The `sync-identity` recipe ensures that identity-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` match the conventions defined in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+It enforces consistent naming, valid <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>semver</Terminology> versions, and (for <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspaces with the setting enabled) syncs description and keywords from the project-level config.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects identity fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+
+- **`name` (Required)** — Synced from the workspace manifest name. If the value is not a string or does not match the manifest, it is overwritten.
+- **`version` (Required)** — Must be valid <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>semver</Terminology>. Workspaces with a `freezable` policy must stay at `0.0.0`. Workspaces with a `trackable` or `distributable` policy cannot be `0.0.0`. Invalid or mismatched versions are reset to `0.0.0` (freezable) or `0.0.1` (all others).
+- **`description` (Conditional)** — Removed if the workspace policy is not `distributable`. For distributable workspaces with the `description` setting enabled, the value is synced from `project.description.short` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If no description is defined, the field is removed.
+- **`keywords` (Conditional)** — Removed if the workspace policy is not `distributable`. For distributable workspaces with the `keywords` setting enabled, the value is synced from `project.keywords` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If no keywords are defined, the field is removed.
+- **`license` (Required)** — Validated against the SPDX license list. If the value is not a string or not a recognized SPDX identifier, the recipe searches for a `LICENSE` or `LICENSE.md` file in the package directory and then the project root. If found, the field is set to `SEE LICENSE IN ./path`. If no license file is found, the field is set to `UNLICENSED`.
 
 ## Settings
 
 Settings are configured per workspace in `nova.config.json` under the `recipes` key:
 
-| Setting       | Type    | Description                                                  |
-|---------------|---------|--------------------------------------------------------------|
-| `description` | boolean | Sync the `description` field (distributable workspaces only) |
-| `keywords`    | boolean | Sync the `keywords` field (distributable workspaces only)    |
+| Setting       | Type    | Description                                                   |
+|---------------|---------|---------------------------------------------------------------|
+| `description` | boolean | Sync the `description` field (distributable workspaces only). |
+| `keywords`    | boolean | Sync the `keywords` field (distributable workspaces only).    |
 
 ## Usage
 
@@ -57,7 +70,7 @@ Settings are configured per workspace in `nova.config.json` under the `recipes` 
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

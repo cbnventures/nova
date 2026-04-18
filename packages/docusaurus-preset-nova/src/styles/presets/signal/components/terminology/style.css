@@ -1,0 +1,35 @@
+/**
+ * Signal — Terminology inline term visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Terminology
+ * ============================ */
+
+.nova-terminology {
+  text-decoration: underline dotted var(--nova-color-neutral-400);
+  text-underline-offset: 2px;
+
+  transition: color var(--nova-motion-duration) ease,
+              text-decoration-color var(--nova-motion-duration) ease;
+}
+
+.nova-terminology:hover,
+.nova-terminology:focus-visible,
+.nova-terminology-colored {
+  color: var(--nova-color-primary-500);
+  text-decoration-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-terminology {
+  text-decoration-color: var(--nova-color-neutral-600);
+}
+
+[data-theme="dark"] .nova-terminology:hover,
+[data-theme="dark"] .nova-terminology:focus-visible,
+[data-theme="dark"] .nova-terminology-colored {
+  color: var(--nova-color-primary-400);
+  text-decoration-color: var(--nova-color-primary-400);
+}

@@ -1,0 +1,101 @@
+---
+id: base
+title: Base
+description: Scaffold a base monorepo project with workspaces configuration.
+keywords:
+  - nova
+  - nova scaffold
+  - starter
+  - base
+  - monorepo
+  - project
+tags:
+  - cli
+  - scaffold
+  - starter
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **base <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology>** project with workspaces configuration, ready for adding framework workspaces.
+
+## Why Use This Command?
+
+- Creates the root `package.json` with `workspaces` configured for `apps/*` and `packages/*` so you can add workspaces immediately.
+- Generates a baseline `nova.config.json` so recipes and utilities have a valid config to work with from the start.
+- Installs `@cbnventures/nova` as a dev dependency so the `nova` CLI is available inside the project without a global install.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Empty directory** — The command only works when no `package.json` exists.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold starter base
+
+    # Shorthand
+    nova scaf start base
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold starter base
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf start base
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag             | Description                            |
+|------------------|----------------------------------------|
+| `-d, --dry-run`  | Preview changes without writing files. |
+| `--name <name>`  | Project name.                          |
+| `--output <dir>` | Output directory.                      |
+
+## Output Structure
+
+```
+{project-slug}/
+├── package.json
+├── nova.config.json
+├── apps/
+└── packages/
+```
+
+## How It Works
+
+### Interactive Wizard
+
+When run without flags, the command walks you through an interactive wizard:
+
+1. **Project name** — Enter a slug for your monorepo (e.g. `my-app`).
+2. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
+3. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
+4. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+
+### Non-Interactive Mode
+
+Provide `--name` and `--output` to skip all prompts:
+
+```bash
+nova scaffold starter base --name my-app --output ./my-app
+```
+
+## Next Steps
+
+After scaffolding, use `nova scaffold app` or `nova scaffold docs` to add workspaces, then run generators for project-level files like `.editorconfig`, `.gitignore`, and `LICENSE`.

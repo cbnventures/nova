@@ -1,0 +1,145 @@
+---
+id: no-boolean-var-for-if
+title: No Boolean Var For If
+description: Disallow extracting a multi-condition boolean into a single-use variable for the next if-statement.
+keywords:
+  - nova
+  - eslint rule
+  - boolean variable
+  - if statement
+  - inline condition
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Inline the condition directly in the `if`-statement instead of extracting it into a single-use boolean variable.
+
+## Summary
+
+The `no-boolean-var-for-if` rule reports a `const` declaration with a `LogicalExpression` initializer (e.g., `&&`, `||`) when the variable is used exactly once as the test of the immediately following `if`-statement.
+
+Variables used more than once or in a different context are not affected.
+
+## Why Use This Rule?
+
+1. A single-use boolean variable adds an indirection that makes the reader jump between two lines to understand the condition.
+2. Inlining the condition keeps the logic visible at the point of decision.
+3. Reduces unnecessary variable declarations that exist only to name a condition used once.
+
+## Examples
+
+<Tabs groupId="no-boolean-var-for-if-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Inline the condition directly.
+    if (isReady === true && hasPermission === true) {
+      proceed();
+    }
+
+    // Variable used more than once — not flagged.
+    const isAllowed = isReady === true && hasPermission === true;
+    if (isAllowed === true) {
+      proceed();
+    }
+    log(isAllowed);
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Single-use boolean extracted just for the next if.
+    const isAllowed = isReady === true && hasPermission === true;
+    if (isAllowed) {
+      proceed();
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-boolean-var-for-if-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoBooleanVarForIf } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-boolean-var-for-if': NoBooleanVarForIf.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-boolean-var-for-if': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoBooleanVarForIf } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-boolean-var-for-if': NoBooleanVarForIf.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-boolean-var-for-if': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning does not fire when the variable is used twice** — The rule uses scope analysis and only flags variables that are read exactly once. If the variable is referenced in multiple places, it is not flagged.
+- **Warning does not fire on a non-logical initializer** — Only `LogicalExpression` initializers (`&&`, `||`, `??`) trigger the rule. Simple comparisons or function calls are not affected.
+- **Warning fires on a `const` with `let`** — The rule only checks `const` declarations. `let` declarations are not affected.

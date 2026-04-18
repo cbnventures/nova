@@ -1,0 +1,98 @@
+---
+title: "Rotating Encryption Keys Across 14 Rampart Zones"
+authors: [rafael]
+tags: [encryption, compliance, policy]
+date: 2026-01-08
+---
+
+Our compliance framework requires encryption key rotation every 90 days. That sounds simple until you realize that "encryption keys" in a Sentinel deployment means WireGuard tunnel keys for every Rampart zone boundary, TLS certificates for every Bastion gateway, and device enrollment keys for every endpoint agent. Rotating all of them without disrupting production traffic is a coordination problem that took us three quarters to get right.
+
+{/* truncate */}
+
+## The Inventory
+
+Before we could rotate anything, we needed to know what we had:
+
+```bash title="Key inventory"
+sentinel keys inventory --format table
+```
+
+```text title="Key inventory output"
+Key Type                Count   Oldest           Rotation Period
+──────────────────────  ──────  ───────────────  ───────────────
+WireGuard tunnel keys      48  2025-07-14       90 days
+Bastion TLS certs           6  2025-09-01       365 days
+Device enrollment keys  9,814  2024-01-18       180 days
+Zone CA certificates       14  2024-06-01       730 days
+Spyglass signing keys       2  2024-03-01       365 days
+```
+
+Five key types. Nearly 10,000 individual keys. Different rotation schedules. Different blast radii if rotation fails.
+
+## The Problem with Naive Rotation
+
+The first time we rotated WireGuard tunnel keys, we did it the obvious way: generate new keys, distribute them, swap them at a coordinated time. It worked. It also caused a 400-millisecond traffic interruption on every zone boundary as the tunnels renegotiated.
+
+400 milliseconds does not sound like much. Multiplied across 48 tunnel pairs, with services retrying failed requests, the downstream effect was a 12-second latency spike across the platform. Alerting fired. On-call engineers woke up. The rotation was successful, but the blast radius was unacceptable.
+
+## The Dual-Key Window
+
+We solved this with a dual-key window. Instead of swapping keys atomically, we run a transition period where both the old and new keys are valid simultaneously:
+
+```text title="Dual-key rotation timeline"
+Day 0:  Generate new key pair for zone boundary
+Day 0:  Distribute new key to both sides of the tunnel
+Day 0:  Both sides accept old AND new keys (dual-key window opens)
+Day 1:  New connections use new key; existing connections drain on old key
+Day 3:  Old key marked for deletion (dual-key window closes)
+Day 7:  Old key purged from all nodes
+```
+
+During the dual-key window, both keys are valid. New connections negotiate using the new key. Existing connections continue on the old key until they naturally close or are recycled. There is no coordinated swap, no traffic interruption, no alerting.
+
+## Automating the Schedule
+
+With five key types on different rotation schedules, manual coordination is impossible. We built a rotation calendar into Citadel that manages the schedule:
+
+```text title="trust-policy.grain — rotation schedule"
+rotation "quarterly-tunnel-keys" {
+  key_type  = "wireguard-tunnel"
+  interval  = 90d
+  window    = 72h
+  strategy  = "dual-key"
+
+  on_failure {
+    action = "hold"
+    notify = ["security-ops"]
+    log    = "spyglass"
+  }
+}
+
+rotation "annual-bastion-certs" {
+  key_type  = "bastion-tls"
+  interval  = 365d
+  window    = 168h
+  strategy  = "dual-cert"
+
+  on_failure {
+    action = "hold"
+    notify = ["security-ops", "infrastructure"]
+    log    = "spyglass"
+  }
+}
+```
+
+Each rotation runs independently. If a rotation fails — a node is unreachable, a key distribution times out — the strategy is to hold, not retry. A held rotation alerts the team and waits for manual intervention. We never force a key swap on a system that did not confirm receipt.
+
+## The Compliance Output
+
+Every rotation event is logged to Spyglass with full provenance: which key was rotated, which nodes were involved, when the dual-key window opened and closed, and whether any connections were interrupted. The compliance report is generated from that log:
+
+```bash title="Compliance rotation report"
+sentinel spyglass export \
+  --type key-rotation \
+  --period 2025-Q4 \
+  --framework soc2
+```
+
+The auditor gets a report showing that every key was rotated within its required interval, every rotation used the dual-key strategy, and zero production interruptions occurred. The evidence is automatic. The rotation is automatic. The only manual step is reviewing the held rotations — and in the last four quarters, there have been two.

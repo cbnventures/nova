@@ -5,94 +5,207 @@ import chalk from 'chalk';
 import prompts from 'prompts';
 
 import {
-  itemChangelogAdjectives,
-  itemChangelogCategoryBumpMap,
-  itemChangelogCategoryOrder,
-  itemChangelogNouns,
-  itemChangelogValidBumps,
-  itemChangelogValidCategories,
-  itemChangelogVerbs,
-} from '@/lib/item.js';
-import { NovaConfig } from '@/lib/nova-config.js';
-import { PATTERN_LEADING_NEWLINES } from '@/lib/regex.js';
-import { Logger } from '@/toolkit/index.js';
+  libItemChangelogAdjectives,
+  libItemChangelogCategoryBumpMap,
+  libItemChangelogNouns,
+  libItemChangelogOrderedCategories,
+  libItemChangelogValidBumps,
+  libItemChangelogValidCategories,
+  libItemChangelogVerbs,
+} from '../../lib/item.js';
+import { LibNovaConfig } from '../../lib/nova-config.js';
+import { LIB_REGEX_PATTERN_LEADING_NEWLINES } from '../../lib/regex.js';
+import { Logger } from '../../toolkit/index.js';
 
 import type {
-  CLIUtilityChangelogGenerateFileNameReturns,
-  CLIUtilityChangelogParseEntriesEntries,
-  CLIUtilityChangelogParseEntriesEntryBump,
-  CLIUtilityChangelogParseEntriesEntryCategory,
-  CLIUtilityChangelogParseEntriesEntryPackage,
-  CLIUtilityChangelogParseEntriesFiles,
-  CLIUtilityChangelogParseEntriesReturns,
-  CLIUtilityChangelogPromptWithCancelQuestions,
-  CLIUtilityChangelogPromptWithCancelReturns,
-  CLIUtilityChangelogRecordBumpOutputKey,
-  CLIUtilityChangelogRecordBumpOutputValue,
-  CLIUtilityChangelogRecordCategoryOutputKey,
-  CLIUtilityChangelogRecordCategoryOutputValue,
-  CLIUtilityChangelogRecordMessageOutputKey,
-  CLIUtilityChangelogRecordMessageOutputValue,
-  CLIUtilityChangelogRecordOptions,
-  CLIUtilityChangelogRecordPackageOutputKey,
-  CLIUtilityChangelogRecordPackageOutputValue,
-  CLIUtilityChangelogRecordReturns,
-  CLIUtilityChangelogRecordSelectedBump,
-  CLIUtilityChangelogRecordSelectedCategory,
-  CLIUtilityChangelogRecordSelectedMessage,
-  CLIUtilityChangelogRecordSelectedPackage,
-  CLIUtilityChangelogReleaseBumpPriority,
-  CLIUtilityChangelogReleaseConfirmOutputKey,
-  CLIUtilityChangelogReleaseConfirmOutputValue,
-  CLIUtilityChangelogReleaseGrouped,
-  CLIUtilityChangelogReleaseHighestBump,
-  CLIUtilityChangelogReleaseOptions,
-  CLIUtilityChangelogReleasePackageJson,
-  CLIUtilityChangelogReleaseReleases,
-  CLIUtilityChangelogReleaseReturns,
-  CLIUtilityChangelogRunModeOutputKey,
-  CLIUtilityChangelogRunModeOutputValue,
-  CLIUtilityChangelogRunOptions,
-  CLIUtilityChangelogRunReturns,
-  CLIUtilityChangelogWriteChangelogByCategory,
-  CLIUtilityChangelogWriteChangelogCategoryOrder,
-  CLIUtilityChangelogWriteChangelogEntries,
-  CLIUtilityChangelogWriteChangelogPackageDir,
-  CLIUtilityChangelogWriteChangelogPackageName,
-  CLIUtilityChangelogWriteChangelogReturns,
-  CLIUtilityChangelogWriteChangelogSectionParts,
-  CLIUtilityChangelogWriteChangelogVersion,
-} from '@/types/cli/utility/changelog.d.ts';
+  CliUtilityChangelogGenerateFileNameAdjective,
+  CliUtilityChangelogGenerateFileNameNoun,
+  CliUtilityChangelogGenerateFileNameReturns,
+  CliUtilityChangelogGenerateFileNameVerb,
+  CliUtilityChangelogParseEntriesChangelogDirectory,
+  CliUtilityChangelogParseEntriesColonIndex,
+  CliUtilityChangelogParseEntriesContent,
+  CliUtilityChangelogParseEntriesCurrentDirectory,
+  CliUtilityChangelogParseEntriesEndIndex,
+  CliUtilityChangelogParseEntriesEntries,
+  CliUtilityChangelogParseEntriesEntryBump,
+  CliUtilityChangelogParseEntriesEntryCategory,
+  CliUtilityChangelogParseEntriesEntryFiles,
+  CliUtilityChangelogParseEntriesEntryPackage,
+  CliUtilityChangelogParseEntriesFilePath,
+  CliUtilityChangelogParseEntriesKey,
+  CliUtilityChangelogParseEntriesLine,
+  CliUtilityChangelogParseEntriesLines,
+  CliUtilityChangelogParseEntriesMessage,
+  CliUtilityChangelogParseEntriesReturns,
+  CliUtilityChangelogParseEntriesValue,
+  CliUtilityChangelogPromptWithCancelCancelled,
+  CliUtilityChangelogPromptWithCancelQuestions,
+  CliUtilityChangelogPromptWithCancelResult,
+  CliUtilityChangelogPromptWithCancelReturns,
+  CliUtilityChangelogRecordBumpOutput,
+  CliUtilityChangelogRecordBumpOutputKey,
+  CliUtilityChangelogRecordBumpOutputResult,
+  CliUtilityChangelogRecordBumpOutputValue,
+  CliUtilityChangelogRecordCategoryOutput,
+  CliUtilityChangelogRecordCategoryOutputKey,
+  CliUtilityChangelogRecordCategoryOutputResult,
+  CliUtilityChangelogRecordCategoryOutputValue,
+  CliUtilityChangelogRecordChangelogDirectory,
+  CliUtilityChangelogRecordConfig,
+  CliUtilityChangelogRecordContent,
+  CliUtilityChangelogRecordCurrentDirectory,
+  CliUtilityChangelogRecordEligibleWorkspaces,
+  CliUtilityChangelogRecordFileName,
+  CliUtilityChangelogRecordFilePath,
+  CliUtilityChangelogRecordFilterWorkspaceConfig,
+  CliUtilityChangelogRecordFilterWorkspaceConfigPolicy,
+  CliUtilityChangelogRecordFindEligibleWorkspaceConfig,
+  CliUtilityChangelogRecordFindEligibleWorkspaceConfigName,
+  CliUtilityChangelogRecordIsDryRun,
+  CliUtilityChangelogRecordMapEligibleWorkspaceConfig,
+  CliUtilityChangelogRecordMapEligibleWorkspaceConfigName,
+  CliUtilityChangelogRecordMapEligibleWorkspaceConfigPolicy,
+  CliUtilityChangelogRecordMapEligibleWorkspaceConfigRole,
+  CliUtilityChangelogRecordMessageOutput,
+  CliUtilityChangelogRecordMessageOutputKey,
+  CliUtilityChangelogRecordMessageOutputResult,
+  CliUtilityChangelogRecordMessageOutputValue,
+  CliUtilityChangelogRecordMessageValidateValue,
+  CliUtilityChangelogRecordOptions,
+  CliUtilityChangelogRecordPackageOutput,
+  CliUtilityChangelogRecordPackageOutputKey,
+  CliUtilityChangelogRecordPackageOutputResult,
+  CliUtilityChangelogRecordPackageOutputValue,
+  CliUtilityChangelogRecordReadmeContent,
+  CliUtilityChangelogRecordReadmePath,
+  CliUtilityChangelogRecordReturns,
+  CliUtilityChangelogRecordSelectedBump,
+  CliUtilityChangelogRecordSelectedCategory,
+  CliUtilityChangelogRecordSelectedMessage,
+  CliUtilityChangelogRecordSelectedPackage,
+  CliUtilityChangelogRecordSuggestedBump,
+  CliUtilityChangelogRecordValidBump,
+  CliUtilityChangelogRecordValidCategory,
+  CliUtilityChangelogRecordValidMessage,
+  CliUtilityChangelogRecordValidPackage,
+  CliUtilityChangelogRecordValidPackageEntry,
+  CliUtilityChangelogRecordWorkspaces,
+  CliUtilityChangelogReleaseApplyPackageJsonPath,
+  CliUtilityChangelogReleaseApplyReleaseEntries,
+  CliUtilityChangelogReleaseApplyReleaseNewVersion,
+  CliUtilityChangelogReleaseApplyReleasePackageDirectory,
+  CliUtilityChangelogReleaseApplyReleasePackageName,
+  CliUtilityChangelogReleaseApplyUpdatedContents,
+  CliUtilityChangelogReleaseApplyUpdatedPackageJson,
+  CliUtilityChangelogReleaseBumpPriority,
+  CliUtilityChangelogReleaseCategoryEntries,
+  CliUtilityChangelogReleaseCategoryEntryMessage,
+  CliUtilityChangelogReleaseCategoryLabel,
+  CliUtilityChangelogReleaseCategoryOrder,
+  CliUtilityChangelogReleaseConfig,
+  CliUtilityChangelogReleaseConfirmOutput,
+  CliUtilityChangelogReleaseConfirmOutputKey,
+  CliUtilityChangelogReleaseConfirmOutputResult,
+  CliUtilityChangelogReleaseConfirmOutputValue,
+  CliUtilityChangelogReleaseCurrentDirectory,
+  CliUtilityChangelogReleaseCurrentVersion,
+  CliUtilityChangelogReleaseEntries,
+  CliUtilityChangelogReleaseExisting,
+  CliUtilityChangelogReleaseFindWorkspaceConfig,
+  CliUtilityChangelogReleaseFindWorkspaceConfigName,
+  CliUtilityChangelogReleaseGroups,
+  CliUtilityChangelogReleaseHighestBump,
+  CliUtilityChangelogReleaseIsDryRun,
+  CliUtilityChangelogReleaseIsNonInteractive,
+  CliUtilityChangelogReleaseNewVersion,
+  CliUtilityChangelogReleaseOptions,
+  CliUtilityChangelogReleasePackageDirectory,
+  CliUtilityChangelogReleasePackageEntries,
+  CliUtilityChangelogReleasePackageJson,
+  CliUtilityChangelogReleasePackageJsonPath,
+  CliUtilityChangelogReleasePackageJsonRaw,
+  CliUtilityChangelogReleasePackageName,
+  CliUtilityChangelogReleaseParsedPackageJson,
+  CliUtilityChangelogReleaseReleases,
+  CliUtilityChangelogReleaseReturns,
+  CliUtilityChangelogReleaseSummaryReleaseCurrentVersion,
+  CliUtilityChangelogReleaseSummaryReleaseEntries,
+  CliUtilityChangelogReleaseSummaryReleaseHighestBump,
+  CliUtilityChangelogReleaseSummaryReleaseNewVersion,
+  CliUtilityChangelogReleaseSummaryReleasePackageName,
+  CliUtilityChangelogReleaseVersionParts,
+  CliUtilityChangelogReleaseVersionPartsMajor,
+  CliUtilityChangelogReleaseVersionPartsMinor,
+  CliUtilityChangelogReleaseVersionPartsPatch,
+  CliUtilityChangelogReleaseWorkspaceEntry,
+  CliUtilityChangelogReleaseWorkspacePath,
+  CliUtilityChangelogReleaseWorkspaces,
+  CliUtilityChangelogRunIsDryRun,
+  CliUtilityChangelogRunModeOutput,
+  CliUtilityChangelogRunModeOutputKey,
+  CliUtilityChangelogRunModeOutputResult,
+  CliUtilityChangelogRunModeOutputValue,
+  CliUtilityChangelogRunOptions,
+  CliUtilityChangelogRunReturns,
+  CliUtilityChangelogWriteChangelogAfterHeading,
+  CliUtilityChangelogWriteChangelogByCategory,
+  CliUtilityChangelogWriteChangelogCategoryOrder,
+  CliUtilityChangelogWriteChangelogChangelogPath,
+  CliUtilityChangelogWriteChangelogDateString,
+  CliUtilityChangelogWriteChangelogEntries,
+  CliUtilityChangelogWriteChangelogExisting,
+  CliUtilityChangelogWriteChangelogExistingContent,
+  CliUtilityChangelogWriteChangelogMessages,
+  CliUtilityChangelogWriteChangelogNewContent,
+  CliUtilityChangelogWriteChangelogNewSection,
+  CliUtilityChangelogWriteChangelogPackageDirectory,
+  CliUtilityChangelogWriteChangelogPackageHeading,
+  CliUtilityChangelogWriteChangelogPackageName,
+  CliUtilityChangelogWriteChangelogPrependedContent,
+  CliUtilityChangelogWriteChangelogReturns,
+  CliUtilityChangelogWriteChangelogSectionParts,
+  CliUtilityChangelogWriteChangelogToday,
+  CliUtilityChangelogWriteChangelogTrimmedAfterHeading,
+  CliUtilityChangelogWriteChangelogVersion,
+} from '../../types/cli/utility/changelog.d.ts';
 
 /**
- * CLI Utility - Changelog.
+ * CLI - Utility - Changelog.
  *
- * @since 1.0.0
+ * Records individual change entries into .changelog/
+ * and releases them by bumping package.json versions
+ * and prepending CHANGELOG.md sections.
+ *
+ * @since 0.13.0
  */
-export class CLIUtilityChangelog {
+export class CliUtilityChangelog {
   /**
-   * CLI Utility - Changelog - Run.
+   * CLI - Utility - Changelog - Run.
    *
-   * @param {CLIUtilityChangelogRunOptions} options - Options.
+   * Entry point invoked by the CLI. Routes to record or release mode based on flags, falling
+   * back to an interactive prompt when neither flag is provided.
    *
-   * @returns {CLIUtilityChangelogRunReturns}
+   * @param {CliUtilityChangelogRunOptions} options - Options.
    *
-   * @since 1.0.0
+   * @returns {CliUtilityChangelogRunReturns}
+   *
+   * @since 0.13.0
    */
-  public static async run(options: CLIUtilityChangelogRunOptions): CLIUtilityChangelogRunReturns {
-    const isDryRun = options.dryRun === true;
+  public static async run(options: CliUtilityChangelogRunOptions): CliUtilityChangelogRunReturns {
+    const isDryRun: CliUtilityChangelogRunIsDryRun = options['dryRun'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CLIUtilityChangelog.run',
+        name: 'CliUtilityChangelog.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     // Mutually exclusive check.
-    if (options.record === true && options.release === true) {
+    if (options['record'] === true && options['release'] === true) {
       Logger.customize({
-        name: 'CLIUtilityChangelog.run',
+        name: 'CliUtilityChangelog.run',
         purpose: 'validate',
       }).error('Cannot use --record and --release together.');
 
@@ -102,23 +215,23 @@ export class CLIUtilityChangelog {
     }
 
     // Record mode (interactive or non-interactive).
-    if (options.record === true) {
+    if (options['record'] === true) {
       if (
         (
-          options.package === undefined
-          || options.category === undefined
-          || options.bump === undefined
-          || options.message === undefined
+          options['package'] === undefined
+          || options['category'] === undefined
+          || options['bump'] === undefined
+          || options['message'] === undefined
         )
         && (
-          options.package !== undefined
-          || options.category !== undefined
-          || options.bump !== undefined
-          || options.message !== undefined
+          options['package'] !== undefined
+          || options['category'] !== undefined
+          || options['bump'] !== undefined
+          || options['message'] !== undefined
         )
       ) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.run',
+          name: 'CliUtilityChangelog.run',
           purpose: 'validate',
         }).error('Non-interactive record requires --package, --category, --bump, and --message.');
 
@@ -127,20 +240,20 @@ export class CLIUtilityChangelog {
         return;
       }
 
-      await CLIUtilityChangelog.record(options);
+      await CliUtilityChangelog.record(options);
 
       return;
     }
 
     // Release mode (interactive or non-interactive).
-    if (options.release === true) {
-      await CLIUtilityChangelog.release(options);
+    if (options['release'] === true) {
+      await CliUtilityChangelog.release(options);
 
       return;
     }
 
     // Interactive mode.
-    const modeOutput = await CLIUtilityChangelog.promptWithCancel<CLIUtilityChangelogRunModeOutputKey, CLIUtilityChangelogRunModeOutputValue>({
+    const modeOutput: CliUtilityChangelogRunModeOutput = await CliUtilityChangelog.promptWithCancel<CliUtilityChangelogRunModeOutputKey, CliUtilityChangelogRunModeOutputValue>({
       type: 'select',
       name: 'action',
       message: 'What would you like to do?',
@@ -156,53 +269,57 @@ export class CLIUtilityChangelog {
       ],
     });
 
-    if (modeOutput.cancelled === true) {
+    if (modeOutput['cancelled'] === true) {
       return;
     }
 
-    const modeOutputResult = modeOutput.result;
+    const modeOutputResult: CliUtilityChangelogRunModeOutputResult = modeOutput['result'];
 
     if (modeOutputResult.action === undefined) {
       return;
     }
 
     if (modeOutputResult.action === 'record') {
-      await CLIUtilityChangelog.record(options);
+      await CliUtilityChangelog.record(options);
     } else {
-      await CLIUtilityChangelog.release(options);
+      await CliUtilityChangelog.release(options);
     }
+
+    return;
   }
 
   /**
-   * CLI Utility - Changelog - Record.
+   * CLI - Utility - Changelog - Record.
    *
-   * @param {CLIUtilityChangelogRecordOptions} options - Options.
+   * Writes a front-matter entry file into .changelog/ with package, category, bump, and
+   * message fields. Supports interactive and CLI modes.
+   *
+   * @param {CliUtilityChangelogRecordOptions} options - Options.
    *
    * @private
    *
-   * @returns {CLIUtilityChangelogRecordReturns}
+   * @returns {CliUtilityChangelogRecordReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static async record(options: CLIUtilityChangelogRecordOptions): CLIUtilityChangelogRecordReturns {
-    const isDryRun = options.dryRun === true;
+  private static async record(options: CliUtilityChangelogRecordOptions): CliUtilityChangelogRecordReturns {
+    const isDryRun: CliUtilityChangelogRecordIsDryRun = options['dryRun'] === true;
 
     // Load "nova.config.json" for workspace list.
-    const novaConfig = new NovaConfig();
-    const config = await novaConfig.load();
-    const workspaces = config.workspaces ?? {};
+    const config: CliUtilityChangelogRecordConfig = await new LibNovaConfig().load();
+    const workspaces: CliUtilityChangelogRecordWorkspaces = config['workspaces'] ?? {};
 
     // Filter to non-freezable workspaces.
-    const eligibleWorkspaces = Object.entries(workspaces).filter((workspace) => {
-      const workspaceConfig = workspace[1];
-      const workspaceConfigPolicy = workspaceConfig.policy;
+    const eligibleWorkspaces: CliUtilityChangelogRecordEligibleWorkspaces = Object.entries(workspaces).filter((workspace) => {
+      const workspaceConfig: CliUtilityChangelogRecordFilterWorkspaceConfig = workspace[1];
+      const workspaceConfigPolicy: CliUtilityChangelogRecordFilterWorkspaceConfigPolicy = workspaceConfig['policy'];
 
       return workspaceConfigPolicy !== 'freezable';
     });
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CLIUtilityChangelog.record',
+        name: 'CliUtilityChangelog.record',
         purpose: 'workspaces',
       }).error('No eligible (non-freezable) workspaces found in "nova.config.json".');
 
@@ -211,32 +328,32 @@ export class CLIUtilityChangelog {
       return;
     }
 
-    let selectedPackage: CLIUtilityChangelogRecordSelectedPackage;
-    let selectedCategory: CLIUtilityChangelogRecordSelectedCategory;
-    let selectedBump: CLIUtilityChangelogRecordSelectedBump;
-    let selectedMessage: CLIUtilityChangelogRecordSelectedMessage;
+    let selectedPackage: CliUtilityChangelogRecordSelectedPackage = undefined;
+    let selectedCategory: CliUtilityChangelogRecordSelectedCategory = undefined;
+    let selectedBump: CliUtilityChangelogRecordSelectedBump = undefined;
+    let selectedMessage: CliUtilityChangelogRecordSelectedMessage = undefined;
 
     // Non-interactive mode.
     if (
-      options.package !== undefined
-      && options.category !== undefined
-      && options.bump !== undefined
-      && options.message !== undefined
+      options['package'] !== undefined
+      && options['category'] !== undefined
+      && options['bump'] !== undefined
+      && options['message'] !== undefined
     ) {
       // Validate package.
-      const validPackageEntry = eligibleWorkspaces.find((eligibleWorkspace) => {
-        const eligibleWorkspaceConfig = eligibleWorkspace[1];
-        const eligibleWorkspaceConfigName = eligibleWorkspaceConfig.name;
+      const validPackageEntry: CliUtilityChangelogRecordValidPackageEntry = eligibleWorkspaces.find((eligibleWorkspace) => {
+        const eligibleWorkspaceConfig: CliUtilityChangelogRecordFindEligibleWorkspaceConfig = eligibleWorkspace[1];
+        const eligibleWorkspaceConfigName: CliUtilityChangelogRecordFindEligibleWorkspaceConfigName = eligibleWorkspaceConfig['name'];
 
-        return eligibleWorkspaceConfigName === options.package;
+        return eligibleWorkspaceConfigName === options['package'];
       });
-      const validPackage = (validPackageEntry !== undefined) ? validPackageEntry[1].name : undefined;
+      const validPackage: CliUtilityChangelogRecordValidPackage = (validPackageEntry !== undefined) ? validPackageEntry[1]['name'] : undefined;
 
       if (validPackage === undefined) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.record',
+          name: 'CliUtilityChangelog.record',
           purpose: 'validate',
-        }).error(`Package "${options.package}" is not a valid non-freezable workspace.`);
+        }).error(`Package "${options['package']}" is not a valid non-freezable workspace.`);
 
         process.exitCode = 1;
 
@@ -244,13 +361,13 @@ export class CLIUtilityChangelog {
       }
 
       // Validate category.
-      const validCategory = itemChangelogValidCategories.find((itemChangelogValidCategory) => itemChangelogValidCategory === options.category);
+      const validCategory: CliUtilityChangelogRecordValidCategory = libItemChangelogValidCategories.find((libItemChangelogValidCategory) => libItemChangelogValidCategory === options['category']);
 
       if (validCategory === undefined) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.record',
+          name: 'CliUtilityChangelog.record',
           purpose: 'validate',
-        }).error(`Category "${options.category}" is invalid. Use: ${itemChangelogValidCategories.join(', ')}.`);
+        }).error(`Category "${options['category']}" is invalid. Use: ${libItemChangelogValidCategories.join(', ')}.`);
 
         process.exitCode = 1;
 
@@ -258,13 +375,13 @@ export class CLIUtilityChangelog {
       }
 
       // Validate bump.
-      const validBump = itemChangelogValidBumps.find((itemChangelogValidBump) => itemChangelogValidBump === options.bump);
+      const validBump: CliUtilityChangelogRecordValidBump = libItemChangelogValidBumps.find((libItemChangelogValidBump) => libItemChangelogValidBump === options['bump']);
 
       if (validBump === undefined) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.record',
+          name: 'CliUtilityChangelog.record',
           purpose: 'validate',
-        }).error(`Bump type "${options.bump}" is invalid. Use: ${itemChangelogValidBumps.join(', ')}.`);
+        }).error(`Bump type "${options['bump']}" is invalid. Use: ${libItemChangelogValidBumps.join(', ')}.`);
 
         process.exitCode = 1;
 
@@ -272,11 +389,11 @@ export class CLIUtilityChangelog {
       }
 
       // Validate message.
-      const validMessage = options.message.trim();
+      const validMessage: CliUtilityChangelogRecordValidMessage = options['message'].trim();
 
       if (validMessage === '') {
         Logger.customize({
-          name: 'CLIUtilityChangelog.record',
+          name: 'CliUtilityChangelog.record',
           purpose: 'validate',
         }).error('Message cannot be empty.');
 
@@ -292,22 +409,22 @@ export class CLIUtilityChangelog {
     } else {
       // Select package.
       if (eligibleWorkspaces.length === 1 && eligibleWorkspaces[0] !== undefined) {
-        selectedPackage = eligibleWorkspaces[0][1].name;
+        selectedPackage = eligibleWorkspaces[0][1]['name'];
 
         Logger.customize({
-          name: 'CLIUtilityChangelog.record',
+          name: 'CliUtilityChangelog.record',
           purpose: 'package',
         }).info(`Auto-selected package: ${selectedPackage}`);
       } else {
-        const packageOutput = await CLIUtilityChangelog.promptWithCancel<CLIUtilityChangelogRecordPackageOutputKey, CLIUtilityChangelogRecordPackageOutputValue>({
+        const packageOutput: CliUtilityChangelogRecordPackageOutput = await CliUtilityChangelog.promptWithCancel<CliUtilityChangelogRecordPackageOutputKey, CliUtilityChangelogRecordPackageOutputValue>({
           type: 'select',
           name: 'package',
           message: 'Select a package.',
           choices: eligibleWorkspaces.map((eligibleWorkspace) => {
-            const eligibleWorkspaceConfig = eligibleWorkspace[1];
-            const eligibleWorkspaceConfigName = eligibleWorkspaceConfig.name;
-            const eligibleWorkspaceConfigRole = eligibleWorkspaceConfig.role;
-            const eligibleWorkspaceConfigPolicy = eligibleWorkspaceConfig.policy;
+            const eligibleWorkspaceConfig: CliUtilityChangelogRecordMapEligibleWorkspaceConfig = eligibleWorkspace[1];
+            const eligibleWorkspaceConfigName: CliUtilityChangelogRecordMapEligibleWorkspaceConfigName = eligibleWorkspaceConfig['name'];
+            const eligibleWorkspaceConfigRole: CliUtilityChangelogRecordMapEligibleWorkspaceConfigRole = eligibleWorkspaceConfig['role'];
+            const eligibleWorkspaceConfigPolicy: CliUtilityChangelogRecordMapEligibleWorkspaceConfigPolicy = eligibleWorkspaceConfig['policy'];
 
             return {
               title: eligibleWorkspaceConfigName,
@@ -317,11 +434,11 @@ export class CLIUtilityChangelog {
           }),
         });
 
-        if (packageOutput.cancelled === true) {
+        if (packageOutput['cancelled'] === true) {
           return;
         }
 
-        const packageOutputResult = packageOutput.result;
+        const packageOutputResult: CliUtilityChangelogRecordPackageOutputResult = packageOutput['result'];
 
         if (packageOutputResult.package === undefined) {
           return;
@@ -331,7 +448,7 @@ export class CLIUtilityChangelog {
       }
 
       // Select category.
-      const categoryOutput = await CLIUtilityChangelog.promptWithCancel<CLIUtilityChangelogRecordCategoryOutputKey, CLIUtilityChangelogRecordCategoryOutputValue>({
+      const categoryOutput: CliUtilityChangelogRecordCategoryOutput = await CliUtilityChangelog.promptWithCancel<CliUtilityChangelogRecordCategoryOutputKey, CliUtilityChangelogRecordCategoryOutputValue>({
         type: 'select',
         name: 'category',
         message: 'Select a category.',
@@ -359,11 +476,11 @@ export class CLIUtilityChangelog {
         ],
       });
 
-      if (categoryOutput.cancelled === true) {
+      if (categoryOutput['cancelled'] === true) {
         return;
       }
 
-      const categoryOutputResult = categoryOutput.result;
+      const categoryOutputResult: CliUtilityChangelogRecordCategoryOutputResult = categoryOutput['result'];
 
       if (categoryOutputResult.category === undefined) {
         return;
@@ -372,11 +489,11 @@ export class CLIUtilityChangelog {
       selectedCategory = categoryOutputResult.category;
 
       // Enter description.
-      const messageOutput = await CLIUtilityChangelog.promptWithCancel<CLIUtilityChangelogRecordMessageOutputKey, CLIUtilityChangelogRecordMessageOutputValue>({
+      const messageOutput: CliUtilityChangelogRecordMessageOutput = await CliUtilityChangelog.promptWithCancel<CliUtilityChangelogRecordMessageOutputKey, CliUtilityChangelogRecordMessageOutputValue>({
         type: 'text',
         name: 'message',
         message: 'Describe the change.',
-        validate: (value: unknown) => {
+        validate: (value: CliUtilityChangelogRecordMessageValidateValue) => {
           if (typeof value !== 'string' || value.trim() === '') {
             return 'Enter a description.';
           }
@@ -385,11 +502,11 @@ export class CLIUtilityChangelog {
         },
       });
 
-      if (messageOutput.cancelled === true) {
+      if (messageOutput['cancelled'] === true) {
         return;
       }
 
-      const messageOutputResult = messageOutput.result;
+      const messageOutputResult: CliUtilityChangelogRecordMessageOutputResult = messageOutput['result'];
 
       if (messageOutputResult.message === undefined) {
         return;
@@ -398,9 +515,9 @@ export class CLIUtilityChangelog {
       selectedMessage = messageOutputResult.message.trim();
 
       // Select bump type (auto-suggested based on category).
-      const suggestedBump = itemChangelogCategoryBumpMap[selectedCategory];
+      const suggestedBump: CliUtilityChangelogRecordSuggestedBump = libItemChangelogCategoryBumpMap[selectedCategory];
 
-      const bumpOutput = await CLIUtilityChangelog.promptWithCancel<CLIUtilityChangelogRecordBumpOutputKey, CLIUtilityChangelogRecordBumpOutputValue>({
+      const bumpOutput: CliUtilityChangelogRecordBumpOutput = await CliUtilityChangelog.promptWithCancel<CliUtilityChangelogRecordBumpOutputKey, CliUtilityChangelogRecordBumpOutputValue>({
         type: 'select',
         name: 'bump',
         message: 'Select version bump type.',
@@ -421,14 +538,14 @@ export class CLIUtilityChangelog {
             value: 'patch' as const,
           },
         ],
-        initial: itemChangelogValidBumps.indexOf(suggestedBump),
+        initial: libItemChangelogValidBumps.indexOf(suggestedBump),
       });
 
-      if (bumpOutput.cancelled === true) {
+      if (bumpOutput['cancelled'] === true) {
         return;
       }
 
-      const bumpOutputResult = bumpOutput.result;
+      const bumpOutputResult: CliUtilityChangelogRecordBumpOutputResult = bumpOutput['result'];
 
       if (bumpOutputResult.bump === undefined) {
         return;
@@ -438,11 +555,12 @@ export class CLIUtilityChangelog {
     }
 
     // Write entry file.
-    const fileName = CLIUtilityChangelog.generateFileName();
-    const changelogDir = join(process.cwd(), '.changelog');
-    const filePath = join(changelogDir, `${fileName}.md`);
+    const fileName: CliUtilityChangelogRecordFileName = CliUtilityChangelog.generateFileName();
+    const currentDirectory: CliUtilityChangelogRecordCurrentDirectory = process.cwd();
+    const changelogDirectory: CliUtilityChangelogRecordChangelogDirectory = join(currentDirectory, '.changelog');
+    const filePath: CliUtilityChangelogRecordFilePath = join(changelogDirectory, `${fileName}.md`);
 
-    const content = [
+    const content: CliUtilityChangelogRecordContent = [
       '---',
       `package: "${selectedPackage}"`,
       `category: ${selectedCategory}`,
@@ -455,7 +573,7 @@ export class CLIUtilityChangelog {
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CLIUtilityChangelog.record',
+        name: 'CliUtilityChangelog.record',
         purpose: 'dryRun',
         padTop: 1,
       }).info(`Would write "${filePath}":`);
@@ -465,56 +583,59 @@ export class CLIUtilityChangelog {
       return;
     }
 
-    await fs.mkdir(changelogDir, { recursive: true });
+    await fs.mkdir(changelogDirectory, { recursive: true });
 
     // Generate a README.md if one doesn't already exist.
-    const readmePath = join(changelogDir, 'README.md');
+    const readmePath: CliUtilityChangelogRecordReadmePath = join(changelogDirectory, 'README.md');
 
     try {
       await fs.access(readmePath);
     } catch {
-      await fs.writeFile(
-        readmePath,
-        [
-          '# Changelog',
-          '',
-          'Welcome! This folder was automatically generated by `nova utility changelog`, a tool designed for managing versioning and release notes in your monorepo. To learn more about how it works, visit the [documentation](https://cbnventures.github.io/nova/docs/cli/utilities/changelog).',
-          '',
-        ].join('\n'),
-        'utf-8',
-      );
+      const readmeContent: CliUtilityChangelogRecordReadmeContent = [
+        '# Changelog',
+        '',
+        'Welcome! This folder was automatically generated by `nova utility changelog`, a tool designed for managing versioning and release notes in your monorepo. To learn more about how it works, visit the [documentation](https://nova.cbnventures.io/docs/cli/utilities/changelog).',
+        '',
+      ].join('\n');
+
+      await fs.writeFile(readmePath, readmeContent, 'utf-8');
     }
 
     await fs.writeFile(filePath, content, 'utf-8');
 
     Logger.customize({
-      name: 'CLIUtilityChangelog.record',
+      name: 'CliUtilityChangelog.record',
       purpose: 'saved',
       padTop: 1,
     }).info(`Recorded change to "${filePath}".`);
+
+    return;
   }
 
   /**
-   * CLI Utility - Changelog - Release.
+   * CLI - Utility - Changelog - Release.
    *
-   * @param {CLIUtilityChangelogReleaseOptions} options - Options.
+   * Parses all .changelog/ entries, computes the highest semver bump per package, updates
+   * package.json, writes CHANGELOG.md, then deletes consumed entry files.
+   *
+   * @param {CliUtilityChangelogReleaseOptions} options - Options.
    *
    * @private
    *
-   * @returns {CLIUtilityChangelogReleaseReturns}
+   * @returns {CliUtilityChangelogReleaseReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static async release(options: CLIUtilityChangelogReleaseOptions): CLIUtilityChangelogReleaseReturns {
-    const isDryRun = options.dryRun === true;
-    const isNonInteractive = options.release === true;
+  private static async release(options: CliUtilityChangelogReleaseOptions): CliUtilityChangelogReleaseReturns {
+    const isDryRun: CliUtilityChangelogReleaseIsDryRun = options['dryRun'] === true;
+    const isNonInteractive: CliUtilityChangelogReleaseIsNonInteractive = options['release'] === true;
 
     // Parse all entries.
-    const entries = await CLIUtilityChangelog.parseEntries();
+    const entries: CliUtilityChangelogReleaseEntries = await CliUtilityChangelog.parseEntries();
 
     if (entries.length === 0) {
       Logger.customize({
-        name: 'CLIUtilityChangelog.release',
+        name: 'CliUtilityChangelog.release',
         purpose: 'entries',
       }).info('No changelog entries found in ".changelog/".');
 
@@ -522,42 +643,43 @@ export class CLIUtilityChangelog {
     }
 
     // Group by package.
-    const grouped: CLIUtilityChangelogReleaseGrouped = new Map();
+    const groups: CliUtilityChangelogReleaseGroups = new Map();
 
     for (const entry of entries) {
-      const existing = grouped.get(entry.package) ?? [];
+      const existing: CliUtilityChangelogReleaseExisting = groups.get(entry['package']) ?? [];
+
       existing.push(entry);
-      grouped.set(entry.package, existing);
+
+      groups.set(entry['package'], existing);
     }
 
     // Load "nova.config.json" for workspace paths.
-    const novaConfig = new NovaConfig();
-    const config = await novaConfig.load();
-    const workspaces = config.workspaces ?? {};
+    const config: CliUtilityChangelogReleaseConfig = await new LibNovaConfig().load();
+    const workspaces: CliUtilityChangelogReleaseWorkspaces = config['workspaces'] ?? {};
 
     // Compute version bumps per package.
-    const bumpPriority: CLIUtilityChangelogReleaseBumpPriority = {
+    const bumpPriority: CliUtilityChangelogReleaseBumpPriority = {
       major: 3,
       minor: 2,
       patch: 1,
     };
-    const releases: CLIUtilityChangelogReleaseReleases = [];
+    const releases: CliUtilityChangelogReleaseReleases = [];
 
-    for (const entry of grouped) {
-      const packageName = entry[0];
-      const packageEntries = entry[1];
+    for (const group of groups) {
+      const packageName: CliUtilityChangelogReleasePackageName = group[0];
+      const packageEntries: CliUtilityChangelogReleasePackageEntries = group[1];
 
       // Find workspace path.
-      const workspaceEntry = Object.entries(workspaces).find((workspace) => {
-        const workspaceConfig = workspace[1];
-        const workspaceConfigName = workspaceConfig.name;
+      const workspaceEntry: CliUtilityChangelogReleaseWorkspaceEntry = Object.entries(workspaces).find((workspace) => {
+        const workspaceConfig: CliUtilityChangelogReleaseFindWorkspaceConfig = workspace[1];
+        const workspaceConfigName: CliUtilityChangelogReleaseFindWorkspaceConfigName = workspaceConfig['name'];
 
         return workspaceConfigName === packageName;
       });
 
       if (workspaceEntry === undefined) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.release',
+          name: 'CliUtilityChangelog.release',
           purpose: 'workspace',
         }).error(`Package "${packageName}" not found in "nova.config.json".`);
 
@@ -566,18 +688,19 @@ export class CLIUtilityChangelog {
         return;
       }
 
-      const workspacePath = workspaceEntry[0];
-      const packageDir = resolve(process.cwd(), workspacePath);
-      const packageJsonPath = join(packageDir, 'package.json');
+      const workspacePath: CliUtilityChangelogReleaseWorkspacePath = workspaceEntry[0];
+      const currentDirectory: CliUtilityChangelogReleaseCurrentDirectory = process.cwd();
+      const packageDirectory: CliUtilityChangelogReleasePackageDirectory = resolve(currentDirectory, workspacePath);
+      const packageJsonPath: CliUtilityChangelogReleasePackageJsonPath = join(packageDirectory, 'package.json');
 
       // Read "package.json".
-      let packageJsonRaw;
+      let packageJsonRaw: CliUtilityChangelogReleasePackageJsonRaw = undefined;
 
       try {
         packageJsonRaw = await fs.readFile(packageJsonPath, 'utf-8');
       } catch {
         Logger.customize({
-          name: 'CLIUtilityChangelog.release',
+          name: 'CliUtilityChangelog.release',
           purpose: 'readPackageJson',
         }).error(`Unable to read "${packageJsonPath}".`);
 
@@ -586,13 +709,13 @@ export class CLIUtilityChangelog {
         return;
       }
 
-      let packageJson: CLIUtilityChangelogReleasePackageJson;
+      let parsedPackageJson: CliUtilityChangelogReleaseParsedPackageJson = undefined;
 
       try {
-        packageJson = JSON.parse(packageJsonRaw);
+        parsedPackageJson = JSON.parse(packageJsonRaw);
       } catch {
         Logger.customize({
-          name: 'CLIUtilityChangelog.release',
+          name: 'CliUtilityChangelog.release',
           purpose: 'parsePackageJson',
         }).error(`Unable to parse "${packageJsonPath}".`);
 
@@ -601,11 +724,17 @@ export class CLIUtilityChangelog {
         return;
       }
 
-      const currentVersion = (typeof packageJson['version'] === 'string') ? packageJson['version'] : undefined;
+      if (parsedPackageJson === undefined) {
+        process.exitCode = 1;
+
+        return;
+      }
+
+      const currentVersion: CliUtilityChangelogReleaseCurrentVersion = (typeof parsedPackageJson['version'] === 'string') ? parsedPackageJson['version'] : undefined;
 
       if (currentVersion === undefined) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.release',
+          name: 'CliUtilityChangelog.release',
           purpose: 'version',
         }).error(`No "version" field found in "${packageJsonPath}".`);
 
@@ -615,31 +744,33 @@ export class CLIUtilityChangelog {
       }
 
       // Compute the highest bump.
-      let highestBump: CLIUtilityChangelogReleaseHighestBump = 'patch';
+      let highestBump: CliUtilityChangelogReleaseHighestBump = 'patch';
 
-      for (const entry of packageEntries) {
-        if (bumpPriority[entry.bump] > bumpPriority[highestBump]) {
-          highestBump = entry.bump;
+      for (const packageEntry of packageEntries) {
+        if (bumpPriority[packageEntry['bump']] > bumpPriority[highestBump]) {
+          highestBump = packageEntry['bump'];
         }
       }
 
       // Compute new version.
-      const versionParts = currentVersion.split('.').map(Number);
-      const versionPartsMajor = versionParts[0] ?? 0;
-      const versionPartsMinor = versionParts[1] ?? 0;
-      const versionPartsPatch = versionParts[2] ?? 0;
+      const versionParts: CliUtilityChangelogReleaseVersionParts = currentVersion.split('.').map(Number);
+      const versionPartsMajor: CliUtilityChangelogReleaseVersionPartsMajor = versionParts[0] ?? 0;
+      const versionPartsMinor: CliUtilityChangelogReleaseVersionPartsMinor = versionParts[1] ?? 0;
+      const versionPartsPatch: CliUtilityChangelogReleaseVersionPartsPatch = versionParts[2] ?? 0;
 
-      let newVersion = currentVersion;
+      let newVersion: CliUtilityChangelogReleaseNewVersion = currentVersion;
 
       switch (highestBump) {
         case 'major': {
           newVersion = `${versionPartsMajor + 1}.0.0`;
           break;
         }
+
         case 'minor': {
           newVersion = `${versionPartsMajor}.${versionPartsMinor + 1}.0`;
           break;
         }
+
         case 'patch': {
           newVersion = `${versionPartsMajor}.${versionPartsMinor}.${versionPartsPatch + 1}`;
           break;
@@ -652,7 +783,7 @@ export class CLIUtilityChangelog {
 
       releases.push({
         packageName,
-        packageDir,
+        packageDirectory,
         currentVersion,
         newVersion,
         highestBump,
@@ -662,11 +793,11 @@ export class CLIUtilityChangelog {
 
     // Show summary.
     Logger.customize({
-      name: 'CLIUtilityChangelog.release',
+      name: 'CliUtilityChangelog.release',
       purpose: 'summary',
     }).info('Release summary:');
 
-    const categoryOrder = [
+    const categoryOrder: CliUtilityChangelogReleaseCategoryOrder = [
       'updated',
       'fixed',
       'added',
@@ -674,25 +805,27 @@ export class CLIUtilityChangelog {
     ];
 
     for (const release of releases) {
-      const releasePackageName = release.packageName;
-      const releaseCurrentVersion = release.currentVersion;
-      const releaseNewVersion = release.newVersion;
-      const releaseHighestBump = release.highestBump;
-      const releaseEntries = release.entries;
+      const releasePackageName: CliUtilityChangelogReleaseSummaryReleasePackageName = release['packageName'];
+      const releaseCurrentVersion: CliUtilityChangelogReleaseSummaryReleaseCurrentVersion = release['currentVersion'];
+      const releaseNewVersion: CliUtilityChangelogReleaseSummaryReleaseNewVersion = release['newVersion'];
+      const releaseHighestBump: CliUtilityChangelogReleaseSummaryReleaseHighestBump = release['highestBump'];
+      const releaseEntries: CliUtilityChangelogReleaseSummaryReleaseEntries = release['entries'];
 
       process.stdout.write(`\n  ${chalk.bold(releasePackageName)}: ${releaseCurrentVersion} → ${chalk.green(releaseNewVersion)} (${releaseHighestBump})\n`);
 
       for (const category of categoryOrder) {
-        const categoryEntries = releaseEntries.filter((releaseEntry) => releaseEntry.category === category);
+        const categoryEntries: CliUtilityChangelogReleaseCategoryEntries = releaseEntries.filter((releaseEntry) => releaseEntry['category'] === category);
 
         if (categoryEntries.length === 0) {
           continue;
         }
 
-        process.stdout.write(`    ${chalk.yellow(category.toUpperCase())}:\n`);
+        const categoryLabel: CliUtilityChangelogReleaseCategoryLabel = category.toUpperCase();
+
+        process.stdout.write(`    ${chalk.yellow(categoryLabel)}:\n`);
 
         for (const categoryEntry of categoryEntries) {
-          const categoryEntryMessage = categoryEntry.message;
+          const categoryEntryMessage: CliUtilityChangelogReleaseCategoryEntryMessage = categoryEntry['message'];
 
           process.stdout.write(`      - ${categoryEntryMessage}\n`);
         }
@@ -703,27 +836,27 @@ export class CLIUtilityChangelog {
 
     // Confirm (interactive only).
     if (isNonInteractive !== true) {
-      const confirmOutput = await CLIUtilityChangelog.promptWithCancel<CLIUtilityChangelogReleaseConfirmOutputKey, CLIUtilityChangelogReleaseConfirmOutputValue>({
+      const confirmOutput: CliUtilityChangelogReleaseConfirmOutput = await CliUtilityChangelog.promptWithCancel<CliUtilityChangelogReleaseConfirmOutputKey, CliUtilityChangelogReleaseConfirmOutputValue>({
         type: 'confirm',
         name: 'confirm',
         message: 'Proceed with release?',
         initial: false,
       });
 
-      if (confirmOutput.cancelled === true) {
+      if (confirmOutput['cancelled'] === true) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.release',
+          name: 'CliUtilityChangelog.release',
           purpose: 'cancelled',
         }).info('Release cancelled.');
 
         return;
       }
 
-      const confirmOutputResult = confirmOutput.result;
+      const confirmOutputResult: CliUtilityChangelogReleaseConfirmOutputResult = confirmOutput['result'];
 
       if (confirmOutputResult.confirm !== true) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.release',
+          name: 'CliUtilityChangelog.release',
           purpose: 'cancelled',
         }).info('Release cancelled.');
 
@@ -733,7 +866,7 @@ export class CLIUtilityChangelog {
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CLIUtilityChangelog.release',
+        name: 'CliUtilityChangelog.release',
         purpose: 'dryRun',
       }).info('Dry run complete. No files were modified.');
 
@@ -742,88 +875,101 @@ export class CLIUtilityChangelog {
 
     // Apply changes.
     for (const release of releases) {
-      const releasePackageName = release.packageName;
-      const releasePackageDir = release.packageDir;
-      const releaseNewVersion = release.newVersion;
-      const releaseEntries = release.entries;
-      const packageJsonPath = join(releasePackageDir, 'package.json');
+      const releasePackageName: CliUtilityChangelogReleaseApplyReleasePackageName = release['packageName'];
+      const releasePackageDirectory: CliUtilityChangelogReleaseApplyReleasePackageDirectory = release['packageDirectory'];
+      const releaseNewVersion: CliUtilityChangelogReleaseApplyReleaseNewVersion = release['newVersion'];
+      const releaseEntries: CliUtilityChangelogReleaseApplyReleaseEntries = release['entries'];
+      const packageJsonPath: CliUtilityChangelogReleaseApplyPackageJsonPath = join(releasePackageDirectory, 'package.json');
 
       // Read and update "package.json".
-      const packageJsonRaw = await fs.readFile(packageJsonPath, 'utf-8');
-      const packageJson: CLIUtilityChangelogReleasePackageJson = JSON.parse(packageJsonRaw);
+      const packageJson: CliUtilityChangelogReleasePackageJson = JSON.parse(await fs.readFile(packageJsonPath, 'utf-8'));
+
+      if (
+        packageJson === null
+        || typeof packageJson !== 'object'
+        || typeof packageJson['version'] !== 'string'
+      ) {
+        throw new Error(`Invalid package.json at "${packageJsonPath}": missing or non-string "version" field.`);
+      }
 
       Reflect.set(packageJson, 'version', releaseNewVersion);
 
-      const updatedPackageJson = JSON.stringify(packageJson, null, 2);
-      const updatedContents = `${updatedPackageJson}\n`;
+      const updatedPackageJson: CliUtilityChangelogReleaseApplyUpdatedPackageJson = JSON.stringify(packageJson, null, 2);
+      const updatedContents: CliUtilityChangelogReleaseApplyUpdatedContents = `${updatedPackageJson}\n`;
 
       await fs.writeFile(packageJsonPath, updatedContents, 'utf-8');
 
       Logger.customize({
-        name: 'CLIUtilityChangelog.release',
+        name: 'CliUtilityChangelog.release',
         purpose: 'bumpVersion',
       }).info(`Updated "${packageJsonPath}" version to ${releaseNewVersion}.`);
 
       // Write "CHANGELOG.md".
-      await CLIUtilityChangelog.writeChangelog(
-        releasePackageDir,
+      await CliUtilityChangelog.writeChangelog(
+        releasePackageDirectory,
         releasePackageName,
         releaseNewVersion,
         releaseEntries,
       );
 
       Logger.customize({
-        name: 'CLIUtilityChangelog.release',
+        name: 'CliUtilityChangelog.release',
         purpose: 'writeChangelog',
       }).info(`Updated "CHANGELOG.md" for ${releasePackageName}.`);
     }
 
     // Clean up consumed entry files.
     for (const entry of entries) {
-      await fs.unlink(entry.filePath);
+      await fs.unlink(entry['filePath']);
     }
 
     Logger.customize({
-      name: 'CLIUtilityChangelog.release',
+      name: 'CliUtilityChangelog.release',
       purpose: 'complete',
       padTop: 1,
     }).info('Release complete.');
+
+    return;
   }
 
   /**
-   * CLI Utility - Changelog - Parse entries.
+   * CLI - Utility - Changelog - Parse Entries.
+   *
+   * Reads every markdown file in .changelog/ and extracts front-matter fields and body text.
+   * Called by release to gather pending changes.
    *
    * @private
    *
-   * @returns {CLIUtilityChangelogParseEntriesReturns}
+   * @returns {CliUtilityChangelogParseEntriesReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static async parseEntries(): CLIUtilityChangelogParseEntriesReturns {
-    const changelogDir = join(process.cwd(), '.changelog');
-    const entries: CLIUtilityChangelogParseEntriesEntries = [];
+  private static async parseEntries(): CliUtilityChangelogParseEntriesReturns {
+    const currentDirectory: CliUtilityChangelogParseEntriesCurrentDirectory = process.cwd();
+    const changelogDirectory: CliUtilityChangelogParseEntriesChangelogDirectory = join(currentDirectory, '.changelog');
+    const entries: CliUtilityChangelogParseEntriesEntries = [];
 
-    let files: CLIUtilityChangelogParseEntriesFiles;
+    let entryFiles: CliUtilityChangelogParseEntriesEntryFiles = undefined;
 
     try {
-      const dirEntries = await fs.readdir(changelogDir);
-      files = dirEntries.filter((dirEntry) => dirEntry.endsWith('.md'));
+      entryFiles = (await fs.readdir(changelogDirectory)).filter((directoryEntry) => directoryEntry.endsWith('.md'));
     } catch {
       return entries;
     }
 
-    for (const file of files) {
-      const filePath = join(changelogDir, file);
-      const content = await fs.readFile(filePath, 'utf-8');
+    for (const entryFile of entryFiles) {
+      const filePath: CliUtilityChangelogParseEntriesFilePath = join(changelogDirectory, entryFile);
+
+      const content: CliUtilityChangelogParseEntriesContent = await fs.readFile(filePath, 'utf-8');
 
       // Parse front matter.
-      const lines = content.split('\n');
+      const lines: CliUtilityChangelogParseEntriesLines = content.split('\n');
 
       if (lines[0] !== '---') {
         continue;
       }
 
-      let endIndex = -1;
+      let endIndex: CliUtilityChangelogParseEntriesEndIndex = -1;
 
       for (let i = 1; i < lines.length; i += 1) {
         if (lines[i] === '---') {
@@ -837,35 +983,35 @@ export class CLIUtilityChangelog {
       }
 
       // Parse key: value pairs.
-      let entryPackage: CLIUtilityChangelogParseEntriesEntryPackage;
-      let entryCategory: CLIUtilityChangelogParseEntriesEntryCategory;
-      let entryBump: CLIUtilityChangelogParseEntriesEntryBump;
+      let entryPackage: CliUtilityChangelogParseEntriesEntryPackage = undefined;
+      let entryCategory: CliUtilityChangelogParseEntriesEntryCategory = undefined;
+      let entryBump: CliUtilityChangelogParseEntriesEntryBump = undefined;
 
       for (let i = 1; i < endIndex; i += 1) {
-        const line = lines[i];
+        const line: CliUtilityChangelogParseEntriesLine = lines[i];
 
         if (line === undefined) {
           continue;
         }
 
-        const colonIndex = line.indexOf(':');
+        const colonIndex: CliUtilityChangelogParseEntriesColonIndex = line.indexOf(':');
 
         if (colonIndex === -1) {
           continue;
         }
 
-        const key = line.slice(0, colonIndex).trim();
-        let value = line.slice(colonIndex + 1).trim();
+        const key: CliUtilityChangelogParseEntriesKey = line.slice(0, colonIndex).trim();
+        let value: CliUtilityChangelogParseEntriesValue = line.slice(colonIndex + 1).trim();
 
         // Remove surrounding quotes.
         if (
           (
-            value.startsWith('"')
-            && value.endsWith('"')
+            value.startsWith('"') === true
+            && value.endsWith('"') === true
           )
           || (
-            value.startsWith('\'')
-            && value.endsWith('\'')
+            value.startsWith('\'') === true
+            && value.endsWith('\'') === true
           )
         ) {
           value = value.slice(1, -1);
@@ -874,14 +1020,14 @@ export class CLIUtilityChangelog {
         if (key === 'package') {
           entryPackage = value;
         } else if (key === 'category') {
-          entryCategory = itemChangelogValidCategories.find((itemChangelogValidCategory) => itemChangelogValidCategory === value);
+          entryCategory = libItemChangelogValidCategories.find((libItemChangelogValidCategory) => libItemChangelogValidCategory === value);
         } else if (key === 'bump') {
-          entryBump = itemChangelogValidBumps.find((itemChangelogValidBump) => itemChangelogValidBump === value);
+          entryBump = libItemChangelogValidBumps.find((libItemChangelogValidBump) => libItemChangelogValidBump === value);
         }
       }
 
       // Extract message from body.
-      const message = lines.slice(endIndex + 1).join('\n').trim();
+      const message: CliUtilityChangelogParseEntriesMessage = lines.slice(endIndex + 1).join('\n').trim();
 
       if (
         entryPackage === undefined
@@ -890,9 +1036,9 @@ export class CLIUtilityChangelog {
         || message === ''
       ) {
         Logger.customize({
-          name: 'CLIUtilityChangelog.parseEntries',
+          name: 'CliUtilityChangelog.parseEntries',
           purpose: 'skip',
-        }).warn(`Skipping "${file}": invalid or missing front matter.`);
+        }).warn(`Skipping "${entryFile}": invalid or missing front matter.`);
 
         continue;
       }
@@ -910,45 +1056,50 @@ export class CLIUtilityChangelog {
   }
 
   /**
-   * CLI Utility - Changelog - Write changelog.
+   * CLI - Utility - Changelog - Write Changelog.
    *
-   * @param {CLIUtilityChangelogWriteChangelogPackageDir}  packageDir  - Package dir.
-   * @param {CLIUtilityChangelogWriteChangelogPackageName} packageName - Package name.
-   * @param {CLIUtilityChangelogWriteChangelogVersion}     version     - Version.
-   * @param {CLIUtilityChangelogWriteChangelogEntries}     entries     - Entries.
+   * Builds a dated version section grouped by category order and prepends it to the existing
+   * CHANGELOG.md or creates the file if it does not exist.
+   *
+   * @param {CliUtilityChangelogWriteChangelogPackageDirectory} packageDirectory - Package directory.
+   * @param {CliUtilityChangelogWriteChangelogPackageName}      packageName      - Package name.
+   * @param {CliUtilityChangelogWriteChangelogVersion}          version          - Version.
+   * @param {CliUtilityChangelogWriteChangelogEntries}          entries          - Entries.
    *
    * @private
    *
-   * @returns {CLIUtilityChangelogWriteChangelogReturns}
+   * @returns {CliUtilityChangelogWriteChangelogReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static async writeChangelog(packageDir: CLIUtilityChangelogWriteChangelogPackageDir, packageName: CLIUtilityChangelogWriteChangelogPackageName, version: CLIUtilityChangelogWriteChangelogVersion, entries: CLIUtilityChangelogWriteChangelogEntries): CLIUtilityChangelogWriteChangelogReturns {
-    const changelogPath = join(packageDir, 'CHANGELOG.md');
-    const today = new Date();
-    const dateString = [
+  private static async writeChangelog(packageDirectory: CliUtilityChangelogWriteChangelogPackageDirectory, packageName: CliUtilityChangelogWriteChangelogPackageName, version: CliUtilityChangelogWriteChangelogVersion, entries: CliUtilityChangelogWriteChangelogEntries): CliUtilityChangelogWriteChangelogReturns {
+    const changelogPath: CliUtilityChangelogWriteChangelogChangelogPath = join(packageDirectory, 'CHANGELOG.md');
+    const today: CliUtilityChangelogWriteChangelogToday = new Date();
+    const dateString: CliUtilityChangelogWriteChangelogDateString = [
       today.getFullYear(),
       (today.getMonth() + 1).toString().padStart(2, '0'),
       today.getDate().toString().padStart(2, '0'),
     ].join('-');
 
     // Group entries by category.
-    const byCategory: CLIUtilityChangelogWriteChangelogByCategory = new Map();
+    const byCategory: CliUtilityChangelogWriteChangelogByCategory = new Map();
 
     for (const entry of entries) {
-      const existing = byCategory.get(entry.category) ?? [];
-      existing.push(entry.message);
-      byCategory.set(entry.category, existing);
+      const existing: CliUtilityChangelogWriteChangelogExisting = byCategory.get(entry['category']) ?? [];
+
+      existing.push(entry['message']);
+
+      byCategory.set(entry['category'], existing);
     }
 
     // Build section in order: UPDATED, FIXED, ADDED, REMOVED.
-    const categoryOrder: CLIUtilityChangelogWriteChangelogCategoryOrder = [...itemChangelogCategoryOrder];
-    const sectionParts: CLIUtilityChangelogWriteChangelogSectionParts = [];
+    const categoryOrder: CliUtilityChangelogWriteChangelogCategoryOrder = [...libItemChangelogOrderedCategories];
+    const sectionParts: CliUtilityChangelogWriteChangelogSectionParts = [];
 
     sectionParts.push(`## ${version} - ${dateString}`);
 
     for (const category of categoryOrder) {
-      const messages = byCategory.get(category);
+      const messages: CliUtilityChangelogWriteChangelogMessages = byCategory.get(category);
 
       if (messages === undefined || messages.length === 0) {
         continue;
@@ -962,10 +1113,10 @@ export class CLIUtilityChangelog {
       }
     }
 
-    const newSection = sectionParts.join('\n');
+    const newSection: CliUtilityChangelogWriteChangelogNewSection = sectionParts.join('\n');
 
     // Read existing or create new.
-    let existingContent = '';
+    let existingContent: CliUtilityChangelogWriteChangelogExistingContent = '';
 
     try {
       existingContent = await fs.readFile(changelogPath, 'utf-8');
@@ -973,45 +1124,73 @@ export class CLIUtilityChangelog {
       /* empty */
     }
 
-    const packageHeading = `# ${packageName}`;
+    const packageHeading: CliUtilityChangelogWriteChangelogPackageHeading = `# ${packageName}`;
 
     if (existingContent === '') {
       // Create new file.
-      await fs.writeFile(changelogPath, `${packageHeading}\n\n${newSection}\n`, 'utf-8');
-    } else if (existingContent.startsWith(packageHeading)) {
-      // Prepend after package heading.
-      const afterHeading = existingContent.slice(packageHeading.length);
+      const newContent: CliUtilityChangelogWriteChangelogNewContent = [
+        packageHeading,
+        '',
+        newSection,
+        '',
+      ].join('\n');
 
-      await fs.writeFile(changelogPath, `${packageHeading}\n\n${newSection}\n${afterHeading.replace(PATTERN_LEADING_NEWLINES, '\n')}`, 'utf-8');
+      await fs.writeFile(changelogPath, newContent, 'utf-8');
+    } else if (existingContent.startsWith(packageHeading) === true) {
+      // Prepend after package heading.
+      const afterHeading: CliUtilityChangelogWriteChangelogAfterHeading = existingContent.slice(packageHeading.length);
+      const trimmedAfterHeading: CliUtilityChangelogWriteChangelogTrimmedAfterHeading = afterHeading.replace(LIB_REGEX_PATTERN_LEADING_NEWLINES, '\n');
+
+      const prependedContent: CliUtilityChangelogWriteChangelogPrependedContent = [
+        packageHeading,
+        '',
+        newSection,
+        trimmedAfterHeading,
+      ].join('\n');
+
+      await fs.writeFile(changelogPath, prependedContent, 'utf-8');
     } else {
       // Prepend with package heading.
-      await fs.writeFile(changelogPath, `${packageHeading}\n\n${newSection}\n\n${existingContent}`, 'utf-8');
+      const prependedContent: CliUtilityChangelogWriteChangelogPrependedContent = [
+        packageHeading,
+        '',
+        newSection,
+        '',
+        existingContent,
+      ].join('\n');
+
+      await fs.writeFile(changelogPath, prependedContent, 'utf-8');
     }
+
+    return;
   }
 
   /**
-   * CLI Utility - Changelog - Prompt with cancel.
+   * CLI - Utility - Changelog - Prompt With Cancel.
    *
-   * @param {CLIUtilityChangelogPromptWithCancelQuestions} questions - Questions.
+   * Wraps the prompts library with cancellation detection. Returns a discriminated union so
+   * callers can check cancelled before using result.
+   *
+   * @param {CliUtilityChangelogPromptWithCancelQuestions} questions - Questions.
    *
    * @private
    *
-   * @returns {CLIUtilityChangelogPromptWithCancelReturns}
+   * @returns {CliUtilityChangelogPromptWithCancelReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static async promptWithCancel<Keys extends string, Result>(questions: CLIUtilityChangelogPromptWithCancelQuestions<Keys>): CLIUtilityChangelogPromptWithCancelReturns<Keys, Result> {
-    let cancelled = false;
+  private static async promptWithCancel<Keys extends string, Result>(questions: CliUtilityChangelogPromptWithCancelQuestions<Keys>): CliUtilityChangelogPromptWithCancelReturns<Keys, Result> {
+    let cancelled: CliUtilityChangelogPromptWithCancelCancelled = false;
 
-    const result = await prompts<Keys>(questions, {
-      onCancel: () => {
-        cancelled = true;
-
-        return false;
-      },
+    const result: CliUtilityChangelogPromptWithCancelResult<Keys, Result> = await prompts<Keys>(questions, {
+      onCancel: () => false,
     });
 
-    if (cancelled) {
+    if (Object.keys(result).length === 0) {
+      cancelled = true;
+    }
+
+    if (cancelled === true) {
       return {
         cancelled: true,
       };
@@ -1024,18 +1203,21 @@ export class CLIUtilityChangelog {
   }
 
   /**
-   * CLI Utility - Changelog - Generate file name.
+   * CLI - Utility - Changelog - Generate File Name.
+   *
+   * Produces a random three-word slug from the adjectives, nouns, and verbs word lists.
+   * Used as the entry file name in .changelog/.
    *
    * @private
    *
-   * @returns {CLIUtilityChangelogGenerateFileNameReturns}
+   * @returns {CliUtilityChangelogGenerateFileNameReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static generateFileName(): CLIUtilityChangelogGenerateFileNameReturns {
-    const adjective = itemChangelogAdjectives[Math.floor(Math.random() * itemChangelogAdjectives.length)];
-    const noun = itemChangelogNouns[Math.floor(Math.random() * itemChangelogNouns.length)];
-    const verb = itemChangelogVerbs[Math.floor(Math.random() * itemChangelogVerbs.length)];
+  private static generateFileName(): CliUtilityChangelogGenerateFileNameReturns {
+    const adjective: CliUtilityChangelogGenerateFileNameAdjective = libItemChangelogAdjectives[Math.floor(Math.random() * libItemChangelogAdjectives.length)];
+    const noun: CliUtilityChangelogGenerateFileNameNoun = libItemChangelogNouns[Math.floor(Math.random() * libItemChangelogNouns.length)];
+    const verb: CliUtilityChangelogGenerateFileNameVerb = libItemChangelogVerbs[Math.floor(Math.random() * libItemChangelogVerbs.length)];
 
     return `${adjective}-${noun}-${verb}`;
   }

@@ -1,0 +1,171 @@
+---
+id: require-jsdoc-private
+title: Require JSDoc Private
+description: Require a private tag in JSDoc blocks for private class members to keep documentation consistent with access modifiers.
+keywords:
+  - nova
+  - eslint rule
+  - jsdoc
+  - private tag
+  - class members
+  - access modifier
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require a `@private` tag in JSDoc blocks for private class members.
+
+## Summary
+
+The `require-jsdoc-private` rule reports any private class member (method or property) that has a JSDoc block but is missing a `@private` tag.
+
+A member is considered private if it uses the `private` keyword or a `#` private identifier. Members without a JSDoc block are not flagged.
+
+## Why Use This Rule?
+
+1. Keeps JSDoc tags consistent with TypeScript access modifiers so readers do not have to check two places.
+2. Ensures documentation tools that consume `@private` tags correctly hide internal members.
+3. Catches cases where a member was made private but the JSDoc block was not updated.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-private-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    class Runner {
+      /**
+       * Runner - Config.
+       *
+       * @private
+       *
+       * @since 1.0.0
+       */
+      #config = {};
+
+      /**
+       * Runner - Execute.
+       *
+       * @private
+       *
+       * @since 1.0.0
+       */
+      private static execute() {
+        // ...
+      }
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    class Runner {
+      /**
+       * Runner - Config.
+       *
+       * @since 1.0.0
+       */
+      #config = {};
+
+      /**
+       * Runner - Execute.
+       *
+       * @since 1.0.0
+       */
+      private static execute() {
+        // ...
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-private-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocPrivate } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-private': RequireJsdocPrivate.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-private': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocPrivate } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-private': RequireJsdocPrivate.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-private': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-private: error'
+```
+
+## Troubleshooting
+
+- **Warning does not fire for members without JSDoc** — The rule only checks members that already have a JSDoc block. If a private member has no JSDoc comment, the rule does not report it.
+- **Public members with `@private` are not flagged** — This rule only checks that private members have the tag. It does not check for mismatched tags on public members.

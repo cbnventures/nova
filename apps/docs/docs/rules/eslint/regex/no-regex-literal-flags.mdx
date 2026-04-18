@@ -15,6 +15,7 @@ tags:
   - code style
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -56,30 +57,77 @@ The `no-regex-literal-flags` rule reports any regex literal that carries flags (
 
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+<Tabs groupId="no-regex-literal-flags-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { noRegexLiteralFlags } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
-export default [
-  {
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { NoRegexLiteralFlags } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-regex-literal-flags': NoRegexLiteralFlags.rule,
+            },
+          },
+        },
         rules: {
-          'no-regex-literal-flags': noRegexLiteralFlags,
+          '@cbnventures/nova/no-regex-literal-flags': ['error'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/no-regex-literal-flags': ['error'],
-    },
-  },
-];
-```
+    ];
+    ```
 
-This rule has no additional options.
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoRegexLiteralFlags } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-regex-literal-flags': NoRegexLiteralFlags.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-regex-literal-flags': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
 - **Need a flag for a one-off use?** — Import the flag-free pattern and wrap it with `new RegExp(pattern, flags)` at the call site.
-- **Conflicts with `no-regex-literals`.** — The two rules complement each other. Use `no-regex-literals` in application code to ban all inline literals, and use `no-regex-literal-flags` in the patterns file to keep definitions flag-free.
+- **Conflicts with `no-regex-literals`** — The two rules complement each other. Use `no-regex-literals` in application code to ban all inline literals, and use `no-regex-literal-flags` in the patterns file to keep definitions flag-free.

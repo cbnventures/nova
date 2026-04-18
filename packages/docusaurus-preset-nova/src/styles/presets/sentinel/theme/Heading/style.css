@@ -1,0 +1,143 @@
+/**
+ * Sentinel — Typography: headings and responsive heading scales.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Headings (mobile-first)
+ * ============================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--nova-font-display);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: var(--nova-color-neutral-50);
+}
+
+h1 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 1.375rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1.1875rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.625rem;
+}
+
+h4 {
+  font-size: 1.0625rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+h5 {
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+h6 {
+  font-size: 0.9375rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 2.25rem;
+    margin-bottom: 0.875rem;
+  }
+
+  h3 {
+    font-size: 1.3125rem;
+    margin-top: 1.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h4 {
+    font-size: 1.125rem;
+  }
+
+  h5 {
+    font-size: 1.0625rem;
+  }
+}
+
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.25rem;
+    margin-bottom: 1.375rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+    margin-top: 2.375rem;
+  }
+
+  h3 {
+    font-size: 1.4375rem;
+  }
+
+  h4 {
+    font-size: 1.1875rem;
+    margin-top: 1.375rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.875rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+    margin-top: 1.5rem;
+  }
+
+  h5 {
+    font-size: 1.125rem;
+    margin-top: 1.25rem;
+  }
+}

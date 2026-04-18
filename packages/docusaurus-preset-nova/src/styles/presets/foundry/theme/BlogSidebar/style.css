@@ -1,0 +1,66 @@
+/**
+ * Foundry — Blog Sidebar visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Sidebar Title
+ * ============================ */
+
+.nova-blog-sidebar strong {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-blog-sidebar strong {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 2. Year Headings
+ * ============================ */
+
+.nova-blog-sidebar h4 {
+  color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-blog-sidebar h4 {
+  color: var(--nova-color-neutral-200);
+}
+
+/* ============================
+ * 3. Sidebar Links
+ * ============================ */
+
+/* Links with subtle neutral hover matching doc sidebar. */
+.nova-blog-sidebar a {
+  color: var(--nova-color-neutral-600);
+  border-radius: var(--nova-shape-radius);
+
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-blog-sidebar a {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-blog-sidebar a:hover,
+.nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-neutral-900);
+
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-blog-sidebar a:hover,
+[data-theme="dark"] .nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-neutral-200);
+
+  background-color: rgba(255, 255, 255, 0.04);
+}
+
+/* ============================
+ * 4. Sidebar Border
+ * ============================ */
+
+/* Aside border and padding inherited from DocSidebar preset (bare aside selector). */

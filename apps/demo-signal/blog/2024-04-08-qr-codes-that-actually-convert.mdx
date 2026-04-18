@@ -1,0 +1,63 @@
+---
+title: "QR Codes That Actually Convert"
+authors: [suki]
+tags: [qr-codes, beacon, conversion, engagement]
+date: 2024-04-08
+---
+
+QR codes had a reputation problem for years. They were the punchline of marketing presentations — something you put on a billboard because someone in the meeting insisted. Then mobile cameras got native QR scanning, and usage climbed 400% between 2020 and 2023. The codes work now. The question is whether your QR strategy does.
+
+We analyzed 8 million QR scans routed through Beacon over twelve months. The data tells a clear story: QR codes convert well when they are contextual, and they convert terribly when they are generic.
+
+{/* truncate */}
+
+## Context-Aware vs Generic QR Links
+
+A generic QR code points to a homepage or a landing page. A context-aware QR code encodes campaign metadata, location data, and audience intent into the Beacon redirect. The performance gap is significant:
+
+| QR Type       | Scan Rate | Bounce Rate | Conversion Rate |
+|---------------|-----------|-------------|-----------------|
+| Generic       | 2.1%      | 74%         | 0.8%            |
+| Context-aware | 2.3%      | 41%         | 3.6%            |
+
+Scan rates are nearly identical — the physical placement of the code matters more than what it encodes. But bounce rate and conversion rate diverge sharply. Context-aware codes land users on pages that match their intent, and that makes all the difference.
+
+## Deep Links for Physical-to-Digital
+
+The highest-performing QR deployments we tracked were deep links — codes that route users directly to a specific screen in a mobile app rather than a web page:
+
+```json title="QR deep link configuration"
+{
+  "shortUrl": "https://go.signal.example/qr-menu-42",
+  "destination": {
+    "ios": "signal://menu/42?source=qr&loc=downtown",
+    "android": "intent://menu/42#Intent;scheme=signal;package=com.signal.app;end",
+    "fallback": "https://signal.example/menu/42"
+  },
+  "attribution": {
+    "campaign": "restaurant-q2",
+    "channel": "qr-print",
+    "variant": "table-tent-downtown"
+  }
+}
+```
+
+The deep link routes iOS and Android users directly into the app. Users without the app installed hit the fallback web URL. Beacon resolves the correct destination at redirect time based on the user agent, and the attribution metadata travels with every path.
+
+## Print Placement Matters
+
+We tracked scan rates by physical placement across 200 retail locations:
+
+- **Table tents**: 4.2% scan rate (eye-level, idle time)
+- **Receipts**: 1.8% scan rate (post-purchase, motivation present)
+- **Window signage**: 0.6% scan rate (passing traffic, low intent)
+- **Product packaging**: 3.1% scan rate (high engagement moment)
+- **Event badges**: 5.7% scan rate (captive audience, networking context)
+
+Event badges outperformed everything else. The combination of a captive audience, a networking motivation, and a phone already in hand creates ideal scanning conditions.
+
+## Tracking the Offline-to-Online Bridge
+
+Every QR scan through Beacon creates a full attribution record. Prism can trace a conversion path that begins with a physical QR scan on a conference badge and ends with a signup three days later from a desktop browser. The trace ID links the two events even though they happened on different devices in different contexts.
+
+This is the bridge that most offline marketing has never had: a deterministic link between a physical touchpoint and a digital conversion, with no cookies, no fingerprinting, and no guesswork.

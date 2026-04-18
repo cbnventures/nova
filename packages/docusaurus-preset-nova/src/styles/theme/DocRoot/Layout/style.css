@@ -1,0 +1,19 @@
+/**
+ * DocRoot Layout — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* Prevent grid children from overflowing their containers on narrow viewports. */
+.nova-doc-root .nova-container,
+.nova-doc-root .nova-grid {
+  min-width: 0;
+}
+
+.nova-doc-root main {
+  min-width: 0;
+}
+
+.nova-doc-root aside {
+  min-width: 0;
+}

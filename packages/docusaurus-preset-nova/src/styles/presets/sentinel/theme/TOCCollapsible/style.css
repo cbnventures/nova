@@ -1,0 +1,153 @@
+/**
+ * Sentinel — TOC Collapsible visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Trigger Button
+ * ============================ */
+
+.nova-toc-collapsible-trigger {
+  color: var(--nova-color-neutral-600);
+
+  background-color: var(--nova-color-neutral-50);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-collapsible-trigger:hover,
+.nova-toc-collapsible-trigger:focus-visible {
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger {
+  color: var(--nova-color-neutral-400);
+
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger:hover,
+[data-theme="dark"] .nova-toc-collapsible-trigger:focus-visible {
+  border-color: var(--nova-color-primary-600);
+}
+
+/* ============================
+ * Overlay
+ * ============================ */
+
+.nova-toc-collapsible-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================
+ * Panel
+ * ============================ */
+
+.nova-toc-collapsible-panel {
+  background-color: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-panel {
+  background-color: rgba(3, 7, 10, 0.97);
+}
+
+@media (min-width: 576px) {
+  .nova-toc-collapsible-panel {
+    border: 1px solid var(--nova-color-neutral-200);
+    border-radius: var(--nova-shape-radius);
+  }
+
+  [data-theme="dark"] .nova-toc-collapsible-panel {
+    border-color: var(--nova-color-neutral-800);
+  }
+}
+
+/* ============================
+ * Header
+ * ============================ */
+
+.nova-toc-collapsible-header-title {
+  font-family: var(--nova-font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-header-title {
+  color: var(--nova-color-neutral-50);
+}
+
+/* ============================
+ * Close Button
+ * ============================ */
+
+.nova-toc-collapsible-close {
+  color: var(--nova-color-neutral-600);
+  border-radius: var(--nova-shape-radius);
+
+  transition: color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-collapsible-close:hover,
+.nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-close {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-close:hover,
+[data-theme="dark"] .nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+/* ============================
+ * Subtle Fade
+ * ============================ */
+
+@keyframes nova-toc-collapsible-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.nova-toc-collapsible-panel {
+  animation: nova-toc-collapsible-fade 200ms ease;
+}
+
+/* ============================
+ * TOC Links
+ * ============================ */
+
+.nova-toc-collapsible-content .nova-toc-link {
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-500);
+}
+
+.nova-toc-collapsible-content .nova-toc-link:hover,
+.nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link:hover,
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-400);
+}

@@ -1,0 +1,55 @@
+/**
+ * Announcement Bar — Component structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Announcement Bar — Container
+ * ============================ */
+
+.nova-announcement-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ============================
+ * Announcement Bar — Content
+ * ============================ */
+
+.nova-announcement-bar-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ============================
+ * Announcement Bar — Close Button
+ * ============================ */
+
+.nova-announcement-bar-close {
+  position: relative;
+
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Extends touch target to 44px without changing visual size. */
+.nova-announcement-bar-close::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+}
+
+.nova-announcement-bar-close:active {
+  transform: none;
+}

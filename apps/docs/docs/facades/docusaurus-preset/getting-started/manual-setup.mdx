@@ -1,0 +1,72 @@
+---
+id: manual-setup
+title: Manual Setup
+description: Install and configure the Nova Docusaurus preset in an existing Docusaurus v3 project.
+sidebar_position: 2
+keywords:
+  - nova
+  - docusaurus facades
+  - manual setup
+  - installation
+  - existing project
+  - docusaurus config
+  - preset configuration
+tags:
+  - facades
+  - getting started
+  - installation
+  - docusaurus
+---
+
+# Manual Setup
+
+For existing Docusaurus v3 projects that need the preset added by hand.
+
+## Install the Package
+
+```bash
+npm install @cbnventures/docusaurus-preset-nova
+```
+
+## Configure the Preset
+
+Replace the default `@docusaurus/preset-classic` entry in `docusaurus.config.ts` with the Nova preset:
+
+```ts title="docusaurus.config.ts"
+import type { DocusaurusNovaConfig } from '@cbnventures/docusaurus-preset-nova/types/config';
+
+const config: DocusaurusNovaConfig = {
+  // ...
+  presets: [[
+    '@cbnventures/docusaurus-preset-nova',
+    {
+      preset: 'envoy',
+    },
+  ]],
+};
+
+export default config;
+```
+
+The `preset` field is required. Choose one of `'foundry'`, `'sentinel'`, `'signal'`, or `'envoy'`.
+
+## Override Defaults
+
+Pass an `overrides` object to customize individual values without switching presets:
+
+```ts title="docusaurus.config.ts"
+presets: [[
+  '@cbnventures/docusaurus-preset-nova',
+  {
+    preset: 'envoy',
+    overrides: {
+      colors: {
+        primary: '#2563eb',
+      },
+      navbar: 'canopy',
+    },
+  },
+]],
+```
+
+For the full list of override options, see **[Preset Options](/docs/facades/docusaurus-preset/reference/preset-options)**.

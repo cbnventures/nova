@@ -1,0 +1,74 @@
+/**
+ * Blog Authors List Page — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* Authors grid — responsive card layout. */
+.nova-blog-authors-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .nova-blog-authors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Author card — horizontal layout with avatar and info. */
+.nova-blog-author-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  padding: 0.75rem;
+
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-blog-author-card {
+  border-color: var(--nova-color-neutral-800);
+}
+
+.nova-blog-author-card img {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.nova-blog-author-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.nova-blog-author-card-info strong {
+  font-size: 0.875rem;
+}
+
+.nova-blog-author-card-title {
+  font-size: 0.75rem;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-blog-author-card-title {
+  color: var(--nova-color-neutral-400);
+}
+
+/* Author card as link — remove underline and add hover. */
+a.nova-blog-author-card {
+  text-decoration: none;
+  color: inherit;
+
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+a.nova-blog-author-card:hover {
+  border-color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] a.nova-blog-author-card:hover {
+  border-color: var(--nova-color-primary-700);
+}

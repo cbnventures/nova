@@ -1,0 +1,48 @@
+/**
+ * Envoy — Blog Archive Page visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* Year heading with subtle bottom border as section divider. */
+.nova-blog-archive section h3 {
+  padding-bottom: 0.5rem;
+
+  color: var(--nova-color-neutral-800);
+
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-blog-archive section h3 {
+  color: var(--nova-color-neutral-200);
+
+  border-bottom-color: var(--nova-envoy-border-dark);
+}
+
+/* Archive links — violet hover with generous radius. */
+.nova-blog-archive a {
+  color: var(--nova-color-neutral-700);
+  border-radius: var(--nova-envoy-radius-generous);
+  padding: 0.25rem 0.5rem;
+
+  transition: color 200ms ease,
+              background-color 200ms ease;
+}
+
+[data-theme="dark"] .nova-blog-archive a {
+  color: var(--nova-color-neutral-300);
+}
+
+.nova-blog-archive a:hover,
+.nova-blog-archive a:focus-visible {
+  color: var(--nova-color-primary-600);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-blog-archive a:hover,
+[data-theme="dark"] .nova-blog-archive a:focus-visible {
+  color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}

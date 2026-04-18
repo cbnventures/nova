@@ -1,0 +1,291 @@
+---
+id: agent-conventions
+title: Agent Conventions
+description: Generate agent convention files for coding assistants like Claude and Cursor.
+keywords:
+  - nova
+  - nova generate
+  - agent conventions
+  - claude
+  - cursor
+  - cursorrules
+  - agents
+  - project rules
+  - vision
+tags:
+  - cli
+  - generator
+  - must-haves
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create agent convention files that guide coding assistants with project-specific rules, coding standards, and architectural context.
+
+## Why Use This Command?
+
+- Gives coding assistants consistent instructions so generated code follows your project conventions.
+- Produces a full set of files (`.cursorrules`, `AGENTS.md`, `CLAUDE.md`, `VISION.md`, `PROJECT_RULES.md`, and `conventions/*.md`) in one step.
+- Convention files cover universal rules, documentation style, plus per-language guides for TypeScript, CSS, Swift, Java, Kotlin, C#, PHP, Python, Shell, and Docker.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate must-haves agent-conventions
+
+    # Shorthand
+    nova gen must agent
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate must-haves agent-conventions
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen must agent
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                         |
+|----------------------|---------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file paths without writing anything to disk.     |
+| `-r, --replace-file` | Overwrite existing files instead of creating `.nova-backup` copies. |
+
+## Output Files
+
+The generator creates 17 files total:
+
+| File                           | Purpose                                  |
+|--------------------------------|------------------------------------------|
+| `.cursorrules`                 | Cursor-specific project instructions     |
+| `AGENTS.md`                    | Top-level agent instructions             |
+| `CLAUDE.md`                    | Claude-specific project instructions     |
+| `VISION.md`                    | Project vision and glossary              |
+| `PROJECT_RULES.md`             | Project identity and structure rules     |
+| `conventions/universal.md`     | Universal workflow and style conventions |
+| `conventions/css.md`           | CSS conventions                          |
+| `conventions/csharp.md`        | C# conventions                           |
+| `conventions/docker.md`        | Docker conventions                       |
+| `conventions/documentation.md` | Documentation site page conventions      |
+| `conventions/java.md`          | Java conventions                         |
+| `conventions/kotlin.md`        | Kotlin conventions                       |
+| `conventions/php.md`           | PHP conventions                          |
+| `conventions/python.md`        | Python conventions                       |
+| `conventions/shell.md`         | Shell conventions                        |
+| `conventions/swift.md`         | Swift conventions                        |
+| `conventions/typescript.md`    | TypeScript and JavaScript conventions    |
+
+## Vision and Rules Workshop
+
+After the generator creates your files, `VISION.md` and `PROJECT_RULES.md` will contain empty scaffolds.
+
+The Vision and Rules Workshop is a guided session where you sit down with an AI agent and answer 80 questions about your upcoming project. By the end, the agent produces complete, honest versions of both files.
+
+:::warning
+
+This will take 1-2 hours. You're defining what this project is and isn't. Grab a drink, close your other tabs, and give honest answers.
+
+:::
+
+Copy the prompt below and paste it into your AI coding assistant (e.g., Claude Code, Cursor, etc.). The agent will guide you through 80 questions.
+
+<div className="code-scroll">
+
+```text
+You are conducting a Vision & Rules Workshop. Your job is to help the user fill out VISION.md and PROJECT_RULES.md with honest, thorough, well-considered answers.
+
+Rules:
+- Ask questions one tier at a time. Do not rush.
+- If an answer is vague, push back with a specific follow-up.
+- If the answer is "I don't know," do not skip it. Research the space, present options, educate, and help the user decide.
+- If answers contradict earlier answers, call it out immediately.
+- Summarize the user's answers after each tier before moving to the next.
+- At the end, generate the complete VISION.md and PROJECT_RULES.md from all answers.
+
+This will take 1-2 hours. Warn the user upfront.
+
+---
+
+Tier 1 -- The Basics (~5 min)
+1. What's the project name?
+2. What does it do? One sentence, no jargon.
+3. What category is this? (CLI tool, library, framework, app, platform, service?)
+4. Is this open source, internal, or commercial?
+5. What language and runtime?
+6. What's the repository URL?
+
+Tier 2 -- The Origin Story (~10 min)
+7. Why did you start building this? What happened that made you say "I need to make this"?
+8. Was there a specific moment of frustration that triggered it?
+9. What did you try before deciding to build your own?
+10. What was wrong with each of those alternatives?
+11. How long have you been thinking about this before writing the first line of code?
+12. If you never build this, what happens? Does the world just keep going, or is something genuinely missing?
+
+Tier 3 -- Who Is This For (~15 min)
+13. Describe your ideal user. Not a persona -- a real person. What's their job? What's their day like?
+14. What situation triggers them to search for something like this?
+15. What are they frustrated about right now, specifically?
+16. How are they solving that frustration today without your project?
+17. What's painful about their current workaround?
+18. When they first discover your project, what makes them stop and look closer?
+19. What does your user need to already know before they can use this?
+20. What would a first-time user get wrong? What's the most common misunderstanding?
+21. Who is this NOT for? Who should look elsewhere?
+22. If someone in your target audience says "I don't need this," what are they not seeing?
+
+Tier 4 -- The Value (~15 min)
+23. What does your project give someone that they genuinely cannot get anywhere else?
+24. If you had to explain this to a stranger at a coffee shop, what would you say?
+25. What's the key insight behind this project that most people miss?
+26. What does the user's life look like BEFORE using this?
+27. What does the user's life look like AFTER using this?
+28. What's the feeling you want someone to have after using this for the first time?
+29. Is this a "nice to have" or a "can't work without it"? Be honest.
+30. If it's "nice to have" -- what would make it "can't work without it"?
+
+Tier 5 -- The Stance (~15 min)
+31. What's the philosophical stance of this project? What hill does it die on?
+32. What opinions does this project enforce that some people will disagree with?
+33. Why are those opinions the right ones?
+34. What does this project intentionally make hard or impossible? Why?
+35. What does this project intentionally make easy? Why?
+36. If someone forks this and removes your opinionated defaults, what breaks? What do they lose?
+37. What's the one rule of this project that can never be broken?
+38. What would you refuse to add to this project no matter how many people asked?
+
+Tier 6 -- Scope & Boundaries (~15 min)
+39. What does v1.0 include? List every capability, no hand-waving.
+40. For each capability -- why is it in v1.0 and not v2.0?
+41. What does v1.0 explicitly NOT include?
+42. For each exclusion -- why not?
+43. What features have you been tempted to add? Why did you resist?
+44. Where's the line between "this project handles it" and "that's the user's responsibility"?
+45. If a user asks for something outside that line, what do you tell them?
+46. What's out of scope forever -- not "later," but never? Why?
+47. If you could only ship three features, which three? Why those?
+48. What would you cut if you had to ship in half the time?
+
+Tier 7 -- Competition & Positioning (~10 min)
+49. Name every alternative your user might consider instead of this.
+50. For each -- what do they do well?
+51. For each -- where do they fall short?
+52. For each -- why would someone pick yours instead?
+53. For each -- why might someone honestly pick theirs instead? No ego.
+54. What's the one thing you do that none of them do?
+55. What's something they do that you intentionally don't? Why?
+56. If a competitor copied your best feature tomorrow, what would still make you different?
+
+Tier 8 -- Risks & Honesty (~15 min)
+57. What's the biggest risk that could kill this project?
+58. What's the second biggest?
+59. What part of this project are you least confident about?
+60. What assumption are you making that could turn out to be wrong?
+61. If this project fails, what's the most likely reason?
+62. What criticism of this project would actually sting because it might be true?
+63. What's the hardest problem this project needs to solve, and do you have a clear answer yet?
+64. If you had to start over tomorrow, what would you do differently?
+65. What's the thing you're avoiding thinking about?
+66. Is there a version of this project that's too ambitious? Where's that line?
+
+Tier 9 -- Marketing & Words (~10 min)
+67. Write a tagline. Under 15 words. Try three drafts.
+68. Write the elevator pitch. Imagine you have 30 seconds. Go.
+69. List 3-5 key features. For each: what it does in one sentence, why it matters in one sentence.
+70. What words or phrases should always appear when describing this project?
+71. What words or phrases should never appear? (e.g., "revolutionary," "game-changing")
+72. Write the first paragraph a new user would read on your homepage or README.
+
+Tier 10 -- The Future (~10 min)
+73. Where does this go after v1.0?
+74. What's the natural next step that users will ask for?
+75. What would make you abandon this project? Be honest.
+76. Who maintains this if you're unavailable for six months?
+77. Three years from now, what does success look like?
+78. Three years from now, what does failure look like?
+79. What do you want people to say about this project when you're not in the room?
+80. If this project achieves everything you want -- what was it all for?
+```
+
+</div>
+
+## Code Convention Audit
+
+Once your convention files are in place, you can run a full codebase audit to catch violations and fix them automatically.
+
+Copy the prompt below and paste it into your AI coding assistant. The agent will scan your codebase against every rule in your convention files, report violations, fix them, and verify the results.
+
+<div className="code-scroll">
+
+```text
+You are the orchestrator agent. Follow this pipeline exactly.
+
+---
+
+Phase 1 — Load conventions
+- Read all agent and coding conventions from the project (AGENTS.md or CLAUDE.md).
+- Parse each rule as a discrete, individually-enforceable unit.
+- Output a numbered list of every rule you found before proceeding.
+
+---
+
+Phase 2 — Audit
+- Scan the entire codebase against every rule from Phase 1.
+- For each violation found, record:
+  - Rule ID (from Phase 1)
+  - File path + line number(s)
+  - What the violation is
+  - What the fix should be
+- Do not fix anything yet. Output the full violation report before proceeding.
+
+---
+
+Phase 3 — Fix (sub-agent delegation)
+- Spawn one sub-agent per rule that has at least one violation.
+- Each sub-agent is scoped to exactly one rule and must:
+  1. Re-read its assigned rule.
+  2. Apply all fixes for that rule across the entire codebase.
+  3. Report which files were changed and why.
+- Sub-agents must not modify files outside the scope of their assigned rule.
+
+---
+
+Phase 4 — Test
+- After all sub-agents complete, run the full test suite.
+- Report pass/fail counts and any new failures introduced by fixes.
+
+---
+
+Phase 5 — Re-audit (parallel sub-agent sweep)
+- Do NOT loop back to Phase 2 as a single pass.
+- Spawn one sub-agent per rule (all rules, not just previously violated ones).
+- Each sub-agent must:
+  1. Re-read its assigned rule.
+  2. Scan the entire codebase for any remaining or newly introduced violations of that rule.
+  3. Fix every violation it finds.
+  4. Report: files changed and violations fixed, or "clean" if none found.
+- Sub-agents must not modify files outside the scope of their assigned rule.
+- After all sub-agents complete, run the full test suite.
+- If every sub-agent reports "clean" AND all tests pass, the pipeline is complete.
+- Otherwise, output a summary of remaining violations and/or test failures, then ask the user whether to run another Phase 5 cycle or stop.
+```
+
+</div>

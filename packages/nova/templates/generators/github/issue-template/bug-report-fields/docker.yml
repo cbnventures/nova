@@ -1,0 +1,33 @@
+  - type: "input"
+    id: "docker-version"
+    attributes:
+      label: "Docker version"
+      description: "What version of Docker are you using? Run `docker version --format '{{.Server.Version}}'` in your terminal to find out."
+      placeholder: "e.g. 29.2.1"
+    validations:
+      required: true
+  - type: "input"
+    id: "host-os"
+    attributes:
+      label: "Host operating system"
+      description: "What operating system is Docker running on (not the container OS)?"
+      placeholder: "e.g. Ubuntu 22.04, Debian 12, macOS 14, Windows 11"
+    validations:
+      required: true
+  - type: "input"
+    id: "architecture"
+    attributes:
+      label: "Host architecture"
+      description: "What is your host architecture?"
+      placeholder: "e.g. amd64, arm64"
+    validations:
+      required: true
+  - type: "textarea"
+    id: "deployment"
+    attributes:
+      label: "How you run the container"
+      description: "Paste your `docker run` command or Docker Compose service definition."
+      placeholder: "docker run ... or compose.yml service snippet"
+      render: "Shell"
+    validations:
+      required: true

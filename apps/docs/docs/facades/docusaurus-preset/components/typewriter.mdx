@@ -1,0 +1,105 @@
+---
+id: typewriter
+title: Typewriter
+description: Animated text typing effect that cycles through a list of words with configurable speed and looping.
+sidebar_position: 8
+keywords:
+  - nova
+  - docusaurus facades
+  - typewriter component
+  - typing animation
+  - text animation
+  - word cycling
+  - landing page
+tags:
+  - facades
+  - component
+  - typewriter
+  - animation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Typewriter
+
+Animated text typing effect that cycles through a list of words. Characters are typed one at a time, paused, then deleted before the next word begins.
+
+Supports a static prefix and configurable speed.
+
+## Summary
+
+The Typewriter component is a compound component with three parts: the main `Typewriter` wrapper, a `Typewriter.Prefix` for static text, and `Typewriter.Word` for each animated word. The animation cycles through typing, pausing, deleting, and advancing to the next word.
+
+## Why Use This Component?
+
+- **Engaging hero text** — add dynamic text cycling to landing page headings.
+- **Configurable timing** — control type speed, delete speed, pause duration, and loop behavior.
+- **Compound API** — static prefix and animated words are declared as JSX children for clean composition.
+
+## Usage
+
+<Tabs groupId="typewriter-usage">
+  <TabItem value="basic" label="Basic" default>
+
+```tsx title="src/pages/index.tsx"
+import { Typewriter } from '@cbnventures/docusaurus-preset-nova/components';
+
+<Typewriter>
+  <Typewriter.Prefix>Build </Typewriter.Prefix>
+  <Typewriter.Word>with confidence</Typewriter.Word>
+  <Typewriter.Word>predictable builds</Typewriter.Word>
+  <Typewriter.Word>strict presets</Typewriter.Word>
+</Typewriter>
+```
+
+  </TabItem>
+  <TabItem value="custom" label="Custom timing">
+
+```tsx title="src/pages/index.tsx"
+import { Typewriter } from '@cbnventures/docusaurus-preset-nova/components';
+
+<Typewriter
+  typeSpeed={60}
+  deleteSpeed={30}
+  pauseDuration={2000}
+  loop={false}
+>
+  <Typewriter.Word>first word</Typewriter.Word>
+  <Typewriter.Word>second word</Typewriter.Word>
+  <Typewriter.Word>final word</Typewriter.Word>
+</Typewriter>
+```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+### Typewriter (main)
+
+| Prop            | Type                   | Default | Description                                            |
+|-----------------|------------------------|---------|--------------------------------------------------------|
+| `children`      | `ReactNode`            | —       | Prefix and Word sub-components. Required.              |
+| `typeSpeed`     | `number \| undefined`  | `80`    | Milliseconds between each typed character.             |
+| `deleteSpeed`   | `number \| undefined`  | `50`    | Milliseconds between each deleted character.           |
+| `pauseDuration` | `number \| undefined`  | `3000`  | Milliseconds to pause after typing a word.             |
+| `loop`          | `boolean \| undefined` | `true`  | Whether to loop back to the first word after the last. |
+
+### Typewriter.Prefix
+
+| Prop       | Type        | Default | Description                    |
+|------------|-------------|---------|--------------------------------|
+| `children` | `ReactNode` | —       | Static text before the cursor. |
+
+### Typewriter.Word
+
+| Prop       | Type     | Default | Description      |
+|------------|----------|---------|------------------|
+| `children` | `string` | —       | Word to animate. |
+
+## Troubleshooting
+
+- **Animation not visible** — Ensure at least one `Typewriter.Word` is passed as a child. Without words, nothing animates.
+- **Loop stops** — Set `loop={false}` to stop on the last word. The final word stays visible after typing completes.
+- **Width jumps** — The component measures each word to set a stable width. If words are very different lengths, you may see the container resize between words.

@@ -9,143 +9,185 @@ import {
   sys,
 } from 'typescript';
 
-import { Logger } from '@/toolkit/index.js';
+import { Logger } from '../../toolkit/index.js';
 
 import type {
-  CLIUtilityTranspileEmitFilesProgram,
-  CLIUtilityTranspileEmitFilesReturns,
-  CLIUtilityTranspileFilterDiagnosticsDiagnostics,
-  CLIUtilityTranspileFilterDiagnosticsReturns,
-  CLIUtilityTranspileGetConfigPathProject,
-  CLIUtilityTranspileGetConfigPathReturns,
-  CLIUtilityTranspilePrintDiagnosticsFileSet,
-  CLIUtilityTranspilePrintDiagnosticsFiltered,
-  CLIUtilityTranspilePrintDiagnosticsReturns,
-  CLIUtilityTranspileRunOptions,
-  CLIUtilityTranspileRunReturns,
-} from '@/types/cli/utility/transpile.d.ts';
+  CliUtilityTranspileEmitFilesProgram,
+  CliUtilityTranspileEmitFilesReturns,
+  CliUtilityTranspileFilterDiagnosticsCurrentDirectory,
+  CliUtilityTranspileFilterDiagnosticsDiagnostics,
+  CliUtilityTranspileFilterDiagnosticsFileName,
+  CliUtilityTranspileFilterDiagnosticsReturns,
+  CliUtilityTranspileGetConfigPathCurrentDirectory,
+  CliUtilityTranspileGetConfigPathProject,
+  CliUtilityTranspileGetConfigPathResolved,
+  CliUtilityTranspileGetConfigPathReturns,
+  CliUtilityTranspilePrintDiagnosticsCharacter,
+  CliUtilityTranspilePrintDiagnosticsFileName,
+  CliUtilityTranspilePrintDiagnosticsFileSet,
+  CliUtilityTranspilePrintDiagnosticsFilteredDiagnostics,
+  CliUtilityTranspilePrintDiagnosticsLine,
+  CliUtilityTranspilePrintDiagnosticsMessage,
+  CliUtilityTranspilePrintDiagnosticsPosition,
+  CliUtilityTranspilePrintDiagnosticsReturns,
+  CliUtilityTranspileRunConfig,
+  CliUtilityTranspileRunConfigPath,
+  CliUtilityTranspileRunFilteredDiagnostics,
+  CliUtilityTranspileRunOptions,
+  CliUtilityTranspileRunParsed,
+  CliUtilityTranspileRunProgram,
+  CliUtilityTranspileRunReturns,
+} from '../../types/cli/utility/transpile.d.ts';
 
 /**
- * CLI Utility - Transpile.
+ * CLI - Utility - Transpile.
  *
- * @since 1.0.0
+ * Compiles TypeScript to JavaScript and reports emit
+ * diagnostics scoped to project-owned files. Shares the same pipeline as type-check.
+ *
+ * @since 0.14.0
  */
-export class CLIUtilityTranspile {
+export class CliUtilityTranspile {
   /**
-   * CLI Utility - Transpile - Run.
+   * CLI - Utility - Transpile - Run.
    *
-   * @param {CLIUtilityTranspileRunOptions} options - Options.
+   * Locates tsconfig.json, creates a TypeScript program, emits output
+   * files, filters diagnostics to project files, and prints compilation errors.
    *
-   * @returns {CLIUtilityTranspileRunReturns}
+   * @param {CliUtilityTranspileRunOptions} options - Options.
    *
-   * @since 1.0.0
+   * @returns {CliUtilityTranspileRunReturns}
+   *
+   * @since 0.14.0
    */
-  public static run(options: CLIUtilityTranspileRunOptions): CLIUtilityTranspileRunReturns {
-    const configPath = CLIUtilityTranspile.getConfigPath(options.project);
+  public static run(options: CliUtilityTranspileRunOptions): CliUtilityTranspileRunReturns {
+    const configPath: CliUtilityTranspileRunConfigPath = CliUtilityTranspile.getConfigPath(options['project']);
 
     if (configPath === undefined) {
       Logger.error('No tsconfig.json found. Use --project to specify a path.');
       return;
     }
 
-    const { config } = readConfigFile(configPath, sys.readFile);
-    const parsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
-    const program = createProgram(parsed.fileNames, parsed.options);
-    const emitResult = CLIUtilityTranspile.emitFiles(program);
-    const filtered = CLIUtilityTranspile.filterDiagnostics(emitResult.diagnostics);
+    const config: CliUtilityTranspileRunConfig = readConfigFile(configPath, sys.readFile)['config'];
+    const parsed: CliUtilityTranspileRunParsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
+    const program: CliUtilityTranspileRunProgram = createProgram(parsed.fileNames, parsed.options);
+    const filteredDiagnostics: CliUtilityTranspileRunFilteredDiagnostics = CliUtilityTranspile.filterDiagnostics(CliUtilityTranspile.emitFiles(program).diagnostics);
 
-    CLIUtilityTranspile.printDiagnostics(filtered);
+    CliUtilityTranspile.printDiagnostics(filteredDiagnostics);
 
-    if (filtered.length > 0) {
+    if (filteredDiagnostics.length > 0) {
       process.exitCode = 1;
     }
+
+    return;
   }
 
   /**
-   * CLI Utility - Transpile - Get config path.
+   * CLI - Utility - Transpile - Get Config Path.
    *
-   * @param {CLIUtilityTranspileGetConfigPathProject} project - Project.
+   * Resolves the tsconfig.json path from the --project flag or
+   * searches upward from the current directory. Returns undefined when not found.
+   *
+   * @param {CliUtilityTranspileGetConfigPathProject} project - Project.
    *
    * @private
    *
-   * @returns {CLIUtilityTranspileGetConfigPathReturns}
+   * @returns {CliUtilityTranspileGetConfigPathReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static getConfigPath(project: CLIUtilityTranspileGetConfigPathProject): CLIUtilityTranspileGetConfigPathReturns {
+  private static getConfigPath(project: CliUtilityTranspileGetConfigPathProject): CliUtilityTranspileGetConfigPathReturns {
+    const currentDirectory: CliUtilityTranspileGetConfigPathCurrentDirectory = process.cwd();
+
     if (project !== undefined) {
-      const resolved = resolve(process.cwd(), project);
-      return (sys.fileExists(resolved)) ? resolved : undefined;
+      const resolved: CliUtilityTranspileGetConfigPathResolved = resolve(currentDirectory, project);
+      return (sys.fileExists(resolved) === true) ? resolved : undefined;
     }
 
-    return findConfigFile(process.cwd(), sys.fileExists, 'tsconfig.json');
+    return findConfigFile(currentDirectory, sys.fileExists, 'tsconfig.json');
   }
 
   /**
-   * CLI Utility - Transpile - Emit files.
+   * CLI - Utility - Transpile - Emit Files.
    *
-   * @param {CLIUtilityTranspileEmitFilesProgram} program - Program.
+   * Invokes program.emit to write compiled JavaScript and declaration
+   * files to disk. Returns the emit result with diagnostics for reporting.
+   *
+   * @param {CliUtilityTranspileEmitFilesProgram} program - Program.
    *
    * @private
    *
-   * @returns {CLIUtilityTranspileEmitFilesReturns}
+   * @returns {CliUtilityTranspileEmitFilesReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static emitFiles(program: CLIUtilityTranspileEmitFilesProgram): CLIUtilityTranspileEmitFilesReturns {
+  private static emitFiles(program: CliUtilityTranspileEmitFilesProgram): CliUtilityTranspileEmitFilesReturns {
     return program.emit();
   }
 
   /**
-   * CLI Utility - Transpile - Filter diagnostics.
+   * CLI - Utility - Transpile - Filter Diagnostics.
    *
-   * @param {CLIUtilityTranspileFilterDiagnosticsDiagnostics} diagnostics - Diagnostics.
+   * Keeps only diagnostics originating from files under the current working directory and
+   * excludes anything inside node_modules.
+   *
+   * @param {CliUtilityTranspileFilterDiagnosticsDiagnostics} diagnostics - Diagnostics.
    *
    * @private
    *
-   * @returns {CLIUtilityTranspileFilterDiagnosticsReturns}
+   * @returns {CliUtilityTranspileFilterDiagnosticsReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static filterDiagnostics(diagnostics: CLIUtilityTranspileFilterDiagnosticsDiagnostics): CLIUtilityTranspileFilterDiagnosticsReturns {
+  private static filterDiagnostics(diagnostics: CliUtilityTranspileFilterDiagnosticsDiagnostics): CliUtilityTranspileFilterDiagnosticsReturns {
+    const currentDirectory: CliUtilityTranspileFilterDiagnosticsCurrentDirectory = process.cwd();
+
     return diagnostics.filter((diagnostic) => {
-      const fileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : '';
-      return fileName.startsWith(process.cwd()) && !fileName.includes('node_modules');
+      const fileName: CliUtilityTranspileFilterDiagnosticsFileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : '';
+      return fileName.startsWith(currentDirectory) === true && fileName.includes('node_modules') === false;
     });
   }
 
   /**
-   * CLI Utility - Transpile - Print diagnostics.
+   * CLI - Utility - Transpile - Print Diagnostics.
    *
-   * @param {CLIUtilityTranspilePrintDiagnosticsFiltered} filtered - Filtered.
+   * Outputs each diagnostic with file, line, and column information
+   * via Logger.error, then prints a summary of total errors and affected files.
+   *
+   * @param {CliUtilityTranspilePrintDiagnosticsFilteredDiagnostics} filteredDiagnostics - Filtered diagnostics.
    *
    * @private
    *
-   * @returns {CLIUtilityTranspilePrintDiagnosticsReturns}
+   * @returns {CliUtilityTranspilePrintDiagnosticsReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static printDiagnostics(filtered: CLIUtilityTranspilePrintDiagnosticsFiltered): CLIUtilityTranspilePrintDiagnosticsReturns {
-    const fileSet: CLIUtilityTranspilePrintDiagnosticsFileSet = new Set();
+  private static printDiagnostics(filteredDiagnostics: CliUtilityTranspilePrintDiagnosticsFilteredDiagnostics): CliUtilityTranspilePrintDiagnosticsReturns {
+    const fileSet: CliUtilityTranspilePrintDiagnosticsFileSet = new Set();
 
-    for (const diagnostic of filtered) {
-      const fileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : 'unknown';
-      const message = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+    for (const filteredDiagnostic of filteredDiagnostics) {
+      const fileName: CliUtilityTranspilePrintDiagnosticsFileName = (filteredDiagnostic.file !== undefined) ? filteredDiagnostic.file.fileName : 'unknown';
+      const message: CliUtilityTranspilePrintDiagnosticsMessage = flattenDiagnosticMessageText(filteredDiagnostic.messageText, '\n');
 
       fileSet.add(fileName);
 
-      if (diagnostic.file !== undefined && diagnostic.start !== undefined) {
-        const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
+      if (filteredDiagnostic.file !== undefined && filteredDiagnostic.start !== undefined) {
+        const position: CliUtilityTranspilePrintDiagnosticsPosition = filteredDiagnostic.file.getLineAndCharacterOfPosition(filteredDiagnostic.start);
+        const line: CliUtilityTranspilePrintDiagnosticsLine = position.line;
+        const character: CliUtilityTranspilePrintDiagnosticsCharacter = position.character;
+
         Logger.error(`${fileName}:${line + 1}:${character + 1} - ${message}`);
       } else {
         Logger.error(message);
       }
     }
 
-    if (filtered.length > 0) {
-      Logger.info(`Found ${filtered.length} error(s) in ${fileSet.size} file(s).`);
+    if (filteredDiagnostics.length > 0) {
+      Logger.info(`Found ${filteredDiagnostics.length} error(s) in ${fileSet.size} file(s).`);
     } else {
       Logger.info('No type errors found.');
     }
+
+    return;
   }
 }

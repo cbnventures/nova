@@ -4,415 +4,553 @@ import {
   match,
   strictEqual,
 } from 'node:assert/strict';
-import { test } from 'node:test';
+
+import { describe, it } from 'vitest';
 
 import {
-  CHARACTER_DOUBLE_QUOTE,
-  CHARACTER_PIPE,
-  CHARACTER_SINGLE_QUOTE,
-  LINEBREAK_CRLF_OR_LF,
-  PATTERN_ANSI,
-  PATTERN_ANSI_START,
-  PATTERN_DIGITS,
-  PATTERN_DOUBLE_QUOTED_STRING_CAPTURE,
-  PATTERN_EMAIL_SIMPLE,
-  PATTERN_ERROR_PREFIX,
-  PATTERN_LEADING_NEWLINES,
-  PATTERN_LEADING_NON_DIGITS,
-  PATTERN_LEADING_V,
-  PATTERN_NAME_AT_VERSION,
-  PATTERN_NOVA_PREFIX,
-  PATTERN_RANGE_CAPTURE_REMAINDER,
-  PATTERN_RANGE_GREATER_EQUAL_MAJOR,
-  PATTERN_RANGE_MAJOR,
-  PATTERN_REGISTRY_QUERY_LINE,
-  PATTERN_RUSTC_VERSION_LINE,
-  PATTERN_SEMVER,
-  PATTERN_SLUG_SCOPED,
-  PATTERN_SLUG_SIMPLE,
-  PATTERN_WHITESPACE,
-} from '@/lib/regex.js';
+  LIB_REGEX_CHARACTER_DOUBLE_QUOTE,
+  LIB_REGEX_CHARACTER_PIPE,
+  LIB_REGEX_CHARACTER_SINGLE_QUOTE,
+  LIB_REGEX_LINEBREAK_CRLF_OR_LF,
+  LIB_REGEX_PATTERN_ANSI,
+  LIB_REGEX_PATTERN_ANSI_START,
+  LIB_REGEX_PATTERN_DIGITS,
+  LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE,
+  LIB_REGEX_PATTERN_EMAIL_SIMPLE,
+  LIB_REGEX_PATTERN_ERROR_PREFIX,
+  LIB_REGEX_PATTERN_LEADING_NEWLINES,
+  LIB_REGEX_PATTERN_LEADING_NON_DIGITS,
+  LIB_REGEX_PATTERN_LEADING_V,
+  LIB_REGEX_PATTERN_NAME_AT_VERSION,
+  LIB_REGEX_PATTERN_NOVA_PREFIX,
+  LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER,
+  LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR,
+  LIB_REGEX_PATTERN_RANGE_MAJOR,
+  LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE,
+  LIB_REGEX_PATTERN_RUSTC_VERSION_LINE,
+  LIB_REGEX_PATTERN_SEMVER,
+  LIB_REGEX_PATTERN_SLUG_SCOPED,
+  LIB_REGEX_PATTERN_SLUG_SIMPLE,
+  LIB_REGEX_PATTERN_WHITESPACE,
+} from '../../lib/regex.js';
+
+import type {
+  TestsLibRegexPatternDoubleQuotedStringCaptureMatches,
+  TestsLibRegexPatternLeadingNonDigitsMatches,
+  TestsLibRegexPatternRangeCaptureRemainderMatches,
+  TestsLibRegexPatternRegistryQueryLineMatches,
+  TestsLibRegexPatternRustcVersionLineMatches,
+  TestsLibRegexPatternSemverMatches,
+  TestsLibRegexPatternSemverMatchGroups,
+  TestsLibRegexVersionRangePatternsMatches,
+} from '../../types/tests/lib/regex.test.d.ts';
 
 /**
- * Character patterns.
+ * Tests - Lib - Regex - Character Patterns.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('character patterns', async (context) => {
-  await context.test('CHARACTER_DOUBLE_QUOTE matches double quote', () => {
-    match('"hello"', CHARACTER_DOUBLE_QUOTE);
+describe('character patterns', async () => {
+  it('LIB_REGEX_CHARACTER_DOUBLE_QUOTE matches double quote', () => {
+    match('"hello"', LIB_REGEX_CHARACTER_DOUBLE_QUOTE);
+
+    return;
   });
 
-  await context.test('CHARACTER_DOUBLE_QUOTE does not match single quote', () => {
-    doesNotMatch('\'hello\'', CHARACTER_DOUBLE_QUOTE);
+  it('LIB_REGEX_CHARACTER_DOUBLE_QUOTE does not match single quote', () => {
+    doesNotMatch('\'hello\'', LIB_REGEX_CHARACTER_DOUBLE_QUOTE);
+
+    return;
   });
 
-  await context.test('CHARACTER_PIPE matches pipe', () => {
-    match('a | b', CHARACTER_PIPE);
+  it('LIB_REGEX_CHARACTER_PIPE matches pipe', () => {
+    match('a | b', LIB_REGEX_CHARACTER_PIPE);
+
+    return;
   });
 
-  await context.test('CHARACTER_PIPE does not match plain text', () => {
-    doesNotMatch('hello', CHARACTER_PIPE);
+  it('LIB_REGEX_CHARACTER_PIPE does not match plain text', () => {
+    doesNotMatch('hello', LIB_REGEX_CHARACTER_PIPE);
+
+    return;
   });
 
-  await context.test('CHARACTER_SINGLE_QUOTE matches single quote', () => {
-    match('it\'s', CHARACTER_SINGLE_QUOTE);
+  it('LIB_REGEX_CHARACTER_SINGLE_QUOTE matches single quote', () => {
+    match('it\'s', LIB_REGEX_CHARACTER_SINGLE_QUOTE);
+
+    return;
   });
 
-  await context.test('CHARACTER_SINGLE_QUOTE does not match double quote', () => {
-    doesNotMatch('"hello"', CHARACTER_SINGLE_QUOTE);
+  it('LIB_REGEX_CHARACTER_SINGLE_QUOTE does not match double quote', () => {
+    doesNotMatch('"hello"', LIB_REGEX_CHARACTER_SINGLE_QUOTE);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Line break pattern.
+ * Tests - Lib - Regex - Linebreak CRLF Or LF.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('LINEBREAK_CRLF_OR_LF', async (context) => {
-  await context.test('matches LF', () => {
-    match('line1\nline2', LINEBREAK_CRLF_OR_LF);
+describe('LIB_REGEX_LINEBREAK_CRLF_OR_LF', async () => {
+  it('matches LF', () => {
+    match('line1\nline2', LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+
+    return;
   });
 
-  await context.test('matches CRLF', () => {
-    match('line1\r\nline2', LINEBREAK_CRLF_OR_LF);
+  it('matches CRLF', () => {
+    match('line1\r\nline2', LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+
+    return;
   });
 
-  await context.test('does not match plain text', () => {
-    doesNotMatch('no linebreak', LINEBREAK_CRLF_OR_LF);
+  it('does not match plain text', () => {
+    doesNotMatch('no linebreak', LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * ANSI patterns.
+ * Tests - Lib - Regex - ANSI Patterns.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('ANSI patterns', async (context) => {
-  await context.test('PATTERN_ANSI matches escape code', () => {
-    match('\x1b[31mred\x1b[0m', PATTERN_ANSI);
+describe('ANSI patterns', async () => {
+  it('LIB_REGEX_PATTERN_ANSI matches escape code', () => {
+    match('\x1b[31mred\x1b[0m', LIB_REGEX_PATTERN_ANSI);
+
+    return;
   });
 
-  await context.test('PATTERN_ANSI does not match plain text', () => {
-    doesNotMatch('plain text', PATTERN_ANSI);
+  it('LIB_REGEX_PATTERN_ANSI does not match plain text', () => {
+    doesNotMatch('plain text', LIB_REGEX_PATTERN_ANSI);
+
+    return;
   });
 
-  await context.test('PATTERN_ANSI_START matches escape at start', () => {
-    match('\x1b[31mred', PATTERN_ANSI_START);
+  it('LIB_REGEX_PATTERN_ANSI_START matches escape at start', () => {
+    match('\x1b[31mred', LIB_REGEX_PATTERN_ANSI_START);
+
+    return;
   });
 
-  await context.test('PATTERN_ANSI_START does not match escape in middle', () => {
-    doesNotMatch('text\x1b[31m', PATTERN_ANSI_START);
+  it('LIB_REGEX_PATTERN_ANSI_START does not match escape in middle', () => {
+    doesNotMatch('text\x1b[31m', LIB_REGEX_PATTERN_ANSI_START);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_DIGITS.
+ * Tests - Lib - Regex - Pattern Digits.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_DIGITS', async (context) => {
-  await context.test('matches digits in string', () => {
-    match('abc123', PATTERN_DIGITS);
+describe('LIB_REGEX_PATTERN_DIGITS', async () => {
+  it('matches digits in string', () => {
+    match('abc123', LIB_REGEX_PATTERN_DIGITS);
+
+    return;
   });
 
-  await context.test('does not match non-digit string', () => {
-    doesNotMatch('abcdef', PATTERN_DIGITS);
+  it('does not match non-digit string', () => {
+    doesNotMatch('abcdef', LIB_REGEX_PATTERN_DIGITS);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_DOUBLE_QUOTED_STRING_CAPTURE.
+ * Tests - Lib - Regex - Pattern Double Quoted String Capture.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_DOUBLE_QUOTED_STRING_CAPTURE', async (context) => {
-  await context.test('captures content between double quotes', () => {
-    const matches = '"hello world"'.match(PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+describe('LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE', async () => {
+  it('captures content between double quotes', () => {
+    const matches: TestsLibRegexPatternDoubleQuotedStringCaptureMatches = '"hello world"'.match(LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], 'hello world');
+
+    return;
   });
 
-  await context.test('does not match unquoted string', () => {
-    doesNotMatch('hello world', PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+  it('does not match unquoted string', () => {
+    doesNotMatch('hello world', LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+
+    return;
   });
 
-  await context.test('does not match single-quoted string', () => {
-    doesNotMatch('\'hello world\'', PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+  it('does not match single-quoted string', () => {
+    doesNotMatch('\'hello world\'', LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_EMAIL_SIMPLE.
+ * Tests - Lib - Regex - Pattern Email Simple.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_EMAIL_SIMPLE', async (context) => {
-  await context.test('matches standard email', () => {
-    match('user@example.com', PATTERN_EMAIL_SIMPLE);
+describe('LIB_REGEX_PATTERN_EMAIL_SIMPLE', async () => {
+  it('matches standard email', () => {
+    match('user@example.com', LIB_REGEX_PATTERN_EMAIL_SIMPLE);
+
+    return;
   });
 
-  await context.test('matches email with subdomain', () => {
-    match('user@mail.example.com', PATTERN_EMAIL_SIMPLE);
+  it('matches email with subdomain', () => {
+    match('user@mail.example.com', LIB_REGEX_PATTERN_EMAIL_SIMPLE);
+
+    return;
   });
 
-  await context.test('does not match missing at sign', () => {
-    doesNotMatch('userexample.com', PATTERN_EMAIL_SIMPLE);
+  it('does not match missing at sign', () => {
+    doesNotMatch('userexample.com', LIB_REGEX_PATTERN_EMAIL_SIMPLE);
+
+    return;
   });
 
-  await context.test('does not match missing domain', () => {
-    doesNotMatch('user@', PATTERN_EMAIL_SIMPLE);
+  it('does not match missing domain', () => {
+    doesNotMatch('user@', LIB_REGEX_PATTERN_EMAIL_SIMPLE);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_ERROR_PREFIX.
+ * Tests - Lib - Regex - Pattern Error Prefix.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_ERROR_PREFIX', async (context) => {
-  await context.test('matches error prefix', () => {
-    match('error: something went wrong', PATTERN_ERROR_PREFIX);
+describe('LIB_REGEX_PATTERN_ERROR_PREFIX', async () => {
+  it('matches error prefix', () => {
+    match('error: something went wrong', LIB_REGEX_PATTERN_ERROR_PREFIX);
+
+    return;
   });
 
-  await context.test('does not match warning prefix', () => {
-    doesNotMatch('warning: something', PATTERN_ERROR_PREFIX);
+  it('does not match warning prefix', () => {
+    doesNotMatch('warning: something', LIB_REGEX_PATTERN_ERROR_PREFIX);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_LEADING_NEWLINES.
+ * Tests - Lib - Regex - Pattern Leading Newlines.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_LEADING_NEWLINES', async (context) => {
-  await context.test('matches leading newlines', () => {
-    match('\n\ncontent', PATTERN_LEADING_NEWLINES);
+describe('LIB_REGEX_PATTERN_LEADING_NEWLINES', async () => {
+  it('matches leading newlines', () => {
+    match('\n\ncontent', LIB_REGEX_PATTERN_LEADING_NEWLINES);
+
+    return;
   });
 
-  await context.test('does not match text without leading newlines', () => {
-    doesNotMatch('content\n', PATTERN_LEADING_NEWLINES);
+  it('does not match text without leading newlines', () => {
+    doesNotMatch('content\n', LIB_REGEX_PATTERN_LEADING_NEWLINES);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_LEADING_NON_DIGITS.
+ * Tests - Lib - Regex - Pattern Leading Non Digits.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_LEADING_NON_DIGITS', async (context) => {
-  await context.test('matches leading non-digit characters', () => {
-    const matches = 'abc123'.match(PATTERN_LEADING_NON_DIGITS);
+describe('LIB_REGEX_PATTERN_LEADING_NON_DIGITS', async () => {
+  it('matches leading non-digit characters', () => {
+    const matches: TestsLibRegexPatternLeadingNonDigitsMatches = 'abc123'.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[0], 'abc');
+
+    return;
   });
 
-  await context.test('returns empty match when string starts with digit', () => {
-    const matches = '123abc'.match(PATTERN_LEADING_NON_DIGITS);
+  it('returns empty match when string starts with digit', () => {
+    const matches: TestsLibRegexPatternLeadingNonDigitsMatches = '123abc'.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[0], '');
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_LEADING_V.
+ * Tests - Lib - Regex - Pattern Leading V.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_LEADING_V', async (context) => {
-  await context.test('matches leading v', () => {
-    match('v20', PATTERN_LEADING_V);
+describe('LIB_REGEX_PATTERN_LEADING_V', async () => {
+  it('matches leading v', () => {
+    match('v20', LIB_REGEX_PATTERN_LEADING_V);
+
+    return;
   });
 
-  await context.test('does not match string without leading v', () => {
-    doesNotMatch('20', PATTERN_LEADING_V);
+  it('does not match string without leading v', () => {
+    doesNotMatch('20', LIB_REGEX_PATTERN_LEADING_V);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_NAME_AT_VERSION.
+ * Tests - Lib - Regex - Pattern Name At Version.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_NAME_AT_VERSION', async (context) => {
-  await context.test('matches name at version', () => {
-    match('node@20', PATTERN_NAME_AT_VERSION);
+describe('LIB_REGEX_PATTERN_NAME_AT_VERSION', async () => {
+  it('matches name at version', () => {
+    match('node@20', LIB_REGEX_PATTERN_NAME_AT_VERSION);
+
+    return;
   });
 
-  await context.test('does not match scoped package', () => {
-    doesNotMatch('@scope/package', PATTERN_NAME_AT_VERSION);
+  it('does not match scoped package', () => {
+    doesNotMatch('@scope/package', LIB_REGEX_PATTERN_NAME_AT_VERSION);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_NOVA_PREFIX.
+ * Tests - Lib - Regex - Pattern Nova Prefix.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_NOVA_PREFIX', async (context) => {
-  await context.test('matches nova prefix', () => {
-    match('nova-project', PATTERN_NOVA_PREFIX);
+describe('LIB_REGEX_PATTERN_NOVA_PREFIX', async () => {
+  it('matches nova prefix', () => {
+    match('nova-project', LIB_REGEX_PATTERN_NOVA_PREFIX);
+
+    return;
   });
 
-  await context.test('does not match unrelated string', () => {
-    doesNotMatch('other-project', PATTERN_NOVA_PREFIX);
+  it('does not match unrelated string', () => {
+    doesNotMatch('other-project', LIB_REGEX_PATTERN_NOVA_PREFIX);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_RANGE_CAPTURE_REMAINDER.
+ * Tests - Lib - Regex - Pattern Range Capture Remainder.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_RANGE_CAPTURE_REMAINDER', async (context) => {
-  await context.test('captures remainder after caret prefix', () => {
-    const matches = '^1.2.3'.match(PATTERN_RANGE_CAPTURE_REMAINDER);
+describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
+  it('captures remainder after caret prefix', () => {
+    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '^1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '1.2.3');
+
+    return;
   });
 
-  await context.test('captures remainder after tilde prefix', () => {
-    const matches = '~1.2.3'.match(PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after tilde prefix', () => {
+    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '~1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '1.2.3');
+
+    return;
   });
 
-  await context.test('captures remainder after >= prefix', () => {
-    const matches = '>=1.2.3'.match(PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after >= prefix', () => {
+    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '>=1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '1.2.3');
+
+    return;
   });
 
-  await context.test('captures remainder after > prefix', () => {
-    const matches = '>1.2.3'.match(PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after > prefix', () => {
+    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '>1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '1.2.3');
+
+    return;
   });
 
-  await context.test('captures remainder after <= prefix', () => {
-    const matches = '<=2.0.0'.match(PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after <= prefix', () => {
+    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '<=2.0.0'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '2.0.0');
+
+    return;
   });
 
-  await context.test('captures remainder after < prefix', () => {
-    const matches = '<2.0.0'.match(PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('captures remainder after < prefix', () => {
+    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '<2.0.0'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '2.0.0');
+
+    return;
   });
 
-  await context.test('does not match already-pinned version', () => {
-    doesNotMatch('1.2.3', PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('does not match already-pinned version', () => {
+    doesNotMatch('1.2.3', LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+
+    return;
   });
 
-  await context.test('does not match file protocol', () => {
-    doesNotMatch('file:../local', PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('does not match file protocol', () => {
+    doesNotMatch('file:../local', LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+
+    return;
   });
 
-  await context.test('does not match wildcard', () => {
-    doesNotMatch('*', PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('does not match wildcard', () => {
+    doesNotMatch('*', LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+
+    return;
   });
 
-  await context.test('does not match latest', () => {
-    doesNotMatch('latest', PATTERN_RANGE_CAPTURE_REMAINDER);
+  it('does not match latest', () => {
+    doesNotMatch('latest', LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Version range patterns.
+ * Tests - Lib - Regex - Version Range Patterns.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('version range patterns', async (context) => {
-  await context.test('PATTERN_RANGE_GREATER_EQUAL_MAJOR captures major from >= range', () => {
-    const matches = '>=18'.match(PATTERN_RANGE_GREATER_EQUAL_MAJOR);
+describe('version range patterns', async () => {
+  it('LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR captures major from >= range', () => {
+    const matches: TestsLibRegexVersionRangePatternsMatches = '>=18'.match(LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '18');
+
+    return;
   });
 
-  await context.test('PATTERN_RANGE_GREATER_EQUAL_MAJOR does not match caret range', () => {
-    doesNotMatch('^18', PATTERN_RANGE_GREATER_EQUAL_MAJOR);
+  it('LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR does not match caret range', () => {
+    doesNotMatch('^18', LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
+
+    return;
   });
 
-  await context.test('PATTERN_RANGE_MAJOR captures major from caret range', () => {
-    const matches = '^20'.match(PATTERN_RANGE_MAJOR);
+  it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from caret range', () => {
+    const matches: TestsLibRegexVersionRangePatternsMatches = '^20'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '20');
+
+    return;
   });
 
-  await context.test('PATTERN_RANGE_MAJOR captures major from tilde range', () => {
-    const matches = '~18'.match(PATTERN_RANGE_MAJOR);
+  it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from tilde range', () => {
+    const matches: TestsLibRegexVersionRangePatternsMatches = '~18'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '18');
+
+    return;
   });
 
-  await context.test('PATTERN_RANGE_MAJOR captures major from bare number', () => {
-    const matches = '22'.match(PATTERN_RANGE_MAJOR);
+  it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from bare number', () => {
+    const matches: TestsLibRegexVersionRangePatternsMatches = '22'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
     strictEqual(matches[1], '22');
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_REGISTRY_QUERY_LINE.
+ * Tests - Lib - Regex - Pattern Registry Query Line.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_REGISTRY_QUERY_LINE', async (context) => {
-  await context.test('matches Windows registry line', () => {
-    const matches = '    ProductName    REG_SZ    Windows 10 Pro'.match(PATTERN_REGISTRY_QUERY_LINE);
+describe('LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE', async () => {
+  it('matches Windows registry line', () => {
+    const matches: TestsLibRegexPatternRegistryQueryLineMatches = '    ProductName    REG_SZ    Windows 10 Pro'.match(LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -421,21 +559,27 @@ test('PATTERN_REGISTRY_QUERY_LINE', async (context) => {
     strictEqual(matches[1], 'ProductName');
     strictEqual(matches[2], 'REG_SZ');
     strictEqual(matches[3], 'Windows 10 Pro');
+
+    return;
   });
 
-  await context.test('does not match empty line', () => {
-    doesNotMatch('', PATTERN_REGISTRY_QUERY_LINE);
+  it('does not match empty line', () => {
+    doesNotMatch('', LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_RUSTC_VERSION_LINE.
+ * Tests - Lib - Regex - Pattern Rustc Version Line.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_RUSTC_VERSION_LINE', async (context) => {
-  await context.test('matches rustc version output', () => {
-    const matches = 'rustc 1.75.0 (82e1608df 2023-12-21)'.match(PATTERN_RUSTC_VERSION_LINE);
+describe('LIB_REGEX_PATTERN_RUSTC_VERSION_LINE', async () => {
+  it('matches rustc version output', () => {
+    const matches: TestsLibRegexPatternRustcVersionLineMatches = 'rustc 1.75.0 (82e1608df 2023-12-21)'.match(LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -444,138 +588,180 @@ test('PATTERN_RUSTC_VERSION_LINE', async (context) => {
     strictEqual(matches[1], '1.75.0');
     strictEqual(matches[2], '82e1608df');
     strictEqual(matches[3], '2023-12-21');
+
+    return;
   });
 
-  await context.test('does not match unrelated version string', () => {
-    doesNotMatch('node v20.10.0', PATTERN_RUSTC_VERSION_LINE);
+  it('does not match unrelated version string', () => {
+    doesNotMatch('node v20.10.0', LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_SEMVER.
+ * Tests - Lib - Regex - Pattern Semver.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_SEMVER', async (context) => {
-  await context.test('matches simple semver', () => {
-    const matches = '1.2.3'.match(PATTERN_SEMVER);
+describe('LIB_REGEX_PATTERN_SEMVER', async () => {
+  it('matches simple semver', () => {
+    const matches: TestsLibRegexPatternSemverMatches = '1.2.3'.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups = matches.groups;
+    const matchGroups: TestsLibRegexPatternSemverMatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
     }
 
     strictEqual(matchGroups['semver'], '1.2.3');
+
+    return;
   });
 
-  await context.test('matches semver with prerelease', () => {
-    const matches = '1.0.0-beta.1'.match(PATTERN_SEMVER);
+  it('matches semver with prerelease', () => {
+    const matches: TestsLibRegexPatternSemverMatches = '1.0.0-beta.1'.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups = matches.groups;
+    const matchGroups: TestsLibRegexPatternSemverMatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
     }
 
     strictEqual(matchGroups['semver'], '1.0.0-beta.1');
+
+    return;
   });
 
-  await context.test('matches semver with build metadata', () => {
-    const matches = '1.0.0+build.123'.match(PATTERN_SEMVER);
+  it('matches semver with build metadata', () => {
+    const matches: TestsLibRegexPatternSemverMatches = '1.0.0+build.123'.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups = matches.groups;
+    const matchGroups: TestsLibRegexPatternSemverMatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
     }
 
     strictEqual(matchGroups['semver'], '1.0.0+build.123');
+
+    return;
   });
 
-  await context.test('matches semver embedded in text', () => {
-    const matches = 'version 2.5.10 released'.match(PATTERN_SEMVER);
+  it('matches semver embedded in text', () => {
+    const matches: TestsLibRegexPatternSemverMatches = 'version 2.5.10 released'.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups = matches.groups;
+    const matchGroups: TestsLibRegexPatternSemverMatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
     }
 
     strictEqual(matchGroups['semver'], '2.5.10');
+
+    return;
   });
 
-  await context.test('does not match two-part version', () => {
-    doesNotMatch('1.2', PATTERN_SEMVER);
+  it('does not match two-part version', () => {
+    doesNotMatch('1.2', LIB_REGEX_PATTERN_SEMVER);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Slug patterns.
+ * Tests - Lib - Regex - Slug Patterns.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('slug patterns', async (context) => {
-  await context.test('PATTERN_SLUG_SIMPLE matches simple slug', () => {
-    match('my-package', PATTERN_SLUG_SIMPLE);
+describe('slug patterns', async () => {
+  it('LIB_REGEX_PATTERN_SLUG_SIMPLE matches simple slug', () => {
+    match('my-package', LIB_REGEX_PATTERN_SLUG_SIMPLE);
+
+    return;
   });
 
-  await context.test('PATTERN_SLUG_SIMPLE matches single word', () => {
-    match('nova', PATTERN_SLUG_SIMPLE);
+  it('LIB_REGEX_PATTERN_SLUG_SIMPLE matches single word', () => {
+    match('nova', LIB_REGEX_PATTERN_SLUG_SIMPLE);
+
+    return;
   });
 
-  await context.test('PATTERN_SLUG_SIMPLE does not match uppercase', () => {
-    doesNotMatch('MyPackage', PATTERN_SLUG_SIMPLE);
+  it('LIB_REGEX_PATTERN_SLUG_SIMPLE does not match uppercase', () => {
+    doesNotMatch('MyPackage', LIB_REGEX_PATTERN_SLUG_SIMPLE);
+
+    return;
   });
 
-  await context.test('PATTERN_SLUG_SIMPLE does not match scoped name', () => {
-    doesNotMatch('@scope/name', PATTERN_SLUG_SIMPLE);
+  it('LIB_REGEX_PATTERN_SLUG_SIMPLE does not match scoped name', () => {
+    doesNotMatch('@scope/name', LIB_REGEX_PATTERN_SLUG_SIMPLE);
+
+    return;
   });
 
-  await context.test('PATTERN_SLUG_SCOPED matches scoped package', () => {
-    match('@cbnventures/nova', PATTERN_SLUG_SCOPED);
+  it('LIB_REGEX_PATTERN_SLUG_SCOPED matches scoped package', () => {
+    match('@cbnventures/nova', LIB_REGEX_PATTERN_SLUG_SCOPED);
+
+    return;
   });
 
-  await context.test('PATTERN_SLUG_SCOPED does not match unscoped name', () => {
-    doesNotMatch('nova', PATTERN_SLUG_SCOPED);
+  it('LIB_REGEX_PATTERN_SLUG_SCOPED does not match unscoped name', () => {
+    doesNotMatch('nova', LIB_REGEX_PATTERN_SLUG_SCOPED);
+
+    return;
   });
 
-  await context.test('PATTERN_SLUG_SCOPED does not match uppercase scope', () => {
-    doesNotMatch('@Scope/name', PATTERN_SLUG_SCOPED);
+  it('LIB_REGEX_PATTERN_SLUG_SCOPED does not match uppercase scope', () => {
+    doesNotMatch('@Scope/name', LIB_REGEX_PATTERN_SLUG_SCOPED);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * PATTERN_WHITESPACE.
+ * Tests - Lib - Regex - Pattern Whitespace.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('PATTERN_WHITESPACE', async (context) => {
-  await context.test('matches spaces', () => {
-    match('hello world', PATTERN_WHITESPACE);
+describe('LIB_REGEX_PATTERN_WHITESPACE', async () => {
+  it('matches spaces', () => {
+    match('hello world', LIB_REGEX_PATTERN_WHITESPACE);
+
+    return;
   });
 
-  await context.test('matches tabs', () => {
-    match('hello\tworld', PATTERN_WHITESPACE);
+  it('matches tabs', () => {
+    match('hello\tworld', LIB_REGEX_PATTERN_WHITESPACE);
+
+    return;
   });
 
-  await context.test('does not match non-whitespace string', () => {
-    doesNotMatch('helloworld', PATTERN_WHITESPACE);
+  it('does not match non-whitespace string', () => {
+    doesNotMatch('helloworld', LIB_REGEX_PATTERN_WHITESPACE);
+
+    return;
   });
+
+  return;
 });

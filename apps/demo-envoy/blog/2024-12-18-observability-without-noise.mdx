@@ -1,0 +1,91 @@
+---
+title: "Observability Without the Noise"
+authors: [nneka]
+tags: [observability, monitoring, reliability]
+date: 2024-12-18
+---
+
+We had 14,000 metrics. Twelve dashboards. Four alert channels. And when the Spoke endpoint went down at 11:23 PM on a Thursday, nobody noticed for forty minutes because the signal was buried under noise.
+
+The problem was not a lack of observability. It was too much of it.
+
+{/* truncate */}
+
+## The Noise Problem
+
+Every relay in Courier emits metrics: receive time, auth time, transform time, route time, deliver time, payload size, response code, retry count, destination, source, event type. Multiply that by 30,000 relays per second and you get a firehose of data points that is technically comprehensive and practically useless.
+
+Our Glassboard dashboards looked impressive. They had graphs for everything. But "everything" meant that when delivery latency to one destination spiked, it was one line among forty on a chart that nobody had looked at in three days.
+
+```text title="Alert volume — Q3 2024"
+Month     Alerts Fired    Actionable    False Positives    Missed Incidents
+──────────────────────────────────────────────────────────────────────────
+July           312             41              267                4
+August         287             38              244                3
+September      341             52              282                7
+──────────────────────────────────────────────────────────────────────────
+Total          940            131              793               14
+```
+
+131 actionable alerts out of 940 total. That is a 14% signal rate. The other 86% trained the on-call engineer to ignore notifications.
+
+## The Three Rules
+
+We rewrote our alerting from scratch with three rules:
+
+1. **Alert on symptoms, not causes.** Do not alert when CPU is high. Alert when delivery latency breaches SLA. CPU is a cause. Latency is a symptom. Customers experience symptoms.
+2. **One alert, one action.** Every alert must have a clear, documented response. If the response is "look at the dashboard and figure it out," the alert is not ready.
+3. **Silence is a signal.** If an alert has not fired in 90 days, delete it. Alerts that never fire are either misconfigured or monitoring something that does not break. Either way, they are noise.
+
+## The New Stack
+
+Glassboard now tracks five aggregate metrics per destination:
+
+- **Delivery rate** (messages per second)
+- **Error rate** (non-2xx responses per second)
+- **Latency** (p50 and p99 delivery time)
+- **Queue depth** (messages waiting for delivery)
+- **Dead-letter count** (messages that exhausted retries in the last hour)
+
+That is it. Five numbers per destination. If any of them cross their threshold, Glassboard fires a single alert through Courier with enough context to diagnose the issue without opening a dashboard.
+
+```text title="Glassboard alert payload — delivered via Courier"
+{
+  "severity": "critical",
+  "destination": "spoke://crm-sync",
+  "trigger": "error_rate",
+  "value": 42.3,
+  "threshold": 5.0,
+  "window": "60s",
+  "context": {
+    "delivery_rate": 180.7,
+    "latency_p99": "340ms",
+    "queue_depth": 1247,
+    "dead_letters_1h": 89,
+    "top_error": "503 Service Unavailable (78%)",
+    "sample_message_id": "msg_f8a2c1d4"
+  }
+}
+```
+
+The on-call engineer gets one notification. It tells them what is broken, how broken it is, and where to start looking. No dashboard required for triage.
+
+## Results
+
+After the rewrite, we ran both systems in parallel for 30 days:
+
+| Metric                   | Old Alerting | New Alerting |
+|--------------------------|--------------|--------------|
+| Alerts per month         | 312          | 23           |
+| Actionable rate          | 14%          | 91%          |
+| Missed incidents         | 4            | 0            |
+| Mean time to detect      | 11 min       | 47 sec       |
+| On-call fatigue (survey) | 7.2/10       | 2.1/10       |
+
+Twenty-three alerts in a month. Twenty-one of them were actionable. Zero missed incidents. Mean time to detect dropped from eleven minutes to forty-seven seconds.
+
+## The Lesson
+
+Observability is not about collecting data. It is about surfacing the right data at the right time. Every metric you add to a dashboard, every alert you configure, every notification channel you enable — each one costs attention. And attention is the scarcest resource on the on-call rotation.
+
+Five metrics. One alert. Enough context to act. That is the entire observability philosophy.

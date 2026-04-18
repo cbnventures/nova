@@ -1,0 +1,15 @@
+/**
+ * Envoy — Doc footer visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-doc-footer {
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--nova-envoy-border-light);
+}
+
+[data-theme="dark"] .nova-doc-footer {
+  border-top-color: var(--nova-envoy-border-dark);
+}

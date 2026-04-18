@@ -1,0 +1,65 @@
+/**
+ * Foundry — Details/collapsible visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Details Container
+ * ============================ */
+
+.nova-details {
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--nova-foundry-border);
+  border-radius: var(--nova-shape-radius);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .nova-details {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================
+ * 2. Summary
+ * ============================ */
+
+.nova-details-summary {
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  background-color: var(--nova-color-neutral-50);
+  transition: background-color var(--nova-motion-duration) ease;
+}
+
+.nova-details-summary:hover,
+.nova-details-summary:focus-visible {
+  background-color: var(--nova-color-neutral-100);
+}
+
+[data-theme="dark"] .nova-details-summary {
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .nova-details-summary:hover,
+[data-theme="dark"] .nova-details-summary:focus-visible {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-open="true"] > .nova-details-summary {
+  border-bottom: 1px solid var(--nova-foundry-border);
+}
+
+/* ============================
+ * 3. Content
+ * ============================ */
+
+.nova-details-content-body {
+  padding: 0.75rem 1rem;
+}
+
+/* ============================
+ * 4. Expand Animation
+ * ============================ */
+
+[data-open="true"] > .nova-details-content {
+  animation: foundry-fade-in var(--nova-motion-duration) ease;
+}

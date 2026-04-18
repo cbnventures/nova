@@ -1,0 +1,79 @@
+---
+title: "Why We Started Building Our Own ESLint Rules"
+description: Off-the-shelf ESLint rules cover the common cases. But when you need to enforce project-specific patterns, the gaps become obvious — and that's when you start writing your own.
+slug: eslint-rules-we-built
+authors:
+  - mrjackyliang
+tags:
+  - nova
+  - eslint
+  - rules
+  - typescript
+  - code-quality
+  - linting
+---
+
+Nova's ESLint presets started as compositions of existing rules. Pick the right combination of `@typescript-eslint`, `eslint-plugin-import`, and the built-in set, layer them into presets, and ship. For most patterns, that works.
+
+Then we hit the first gap.
+
+{/* truncate */}
+
+## The Gap
+
+We use a custom `Logger` class across the Nova codebase. It has a `.dev()` method — a development-only logger meant for temporary debugging, like `console.log` but scoped and formatted. The problem: `.dev()` calls kept slipping into committed code. Not because anyone intended to ship them, but because there was no rule to catch them.
+
+ESLint's `no-restricted-syntax` can target method calls, but the error message is generic: "Using 'CallExpression' is not allowed." That tells you nothing about *why*. A developer seeing that for the first time has to go read the ESLint config to understand the intent.
+
+So we wrote `no-logger-dev` — Nova's first custom ESLint rule.
+
+## What a Custom Rule Gives You
+
+### A Name That Explains Itself
+
+`no-logger-dev` is immediately clear. You know what it catches and why. Compare that to a `no-restricted-syntax` entry with a 5-line AST selector — even with a custom message, it's harder to maintain and harder to discover.
+
+### Targeted Fix Suggestions
+
+A custom rule can provide specific guidance: "Remove Logger.dev before building to production — use Logger.debug instead if you want to keep the log." A generic rule can only say "this pattern is not allowed."
+
+### Dedicated Documentation
+
+Every custom rule gets its own documentation page with examples of what passes, what fails, and the rationale. When a developer asks "why is this flagged?", the answer is one click away — not buried in a config file.
+
+## Why Not Just Ban `console`?
+
+We already do. Nova's presets ban `console` entirely — if you want to log, use `Logger`. But `Logger.dev` is intentionally part of the API. It's useful during development. The rule isn't about banning a dangerous method; it's about catching temporary code that shouldn't ship. That nuance doesn't fit neatly into a generic rule configuration.
+
+## The Pattern Going Forward
+
+`no-logger-dev` is small — it targets one method on one class. But it proved the value of purpose-built rules over generic configuration. When an existing rule can't express the exact pattern you need, or when the error message matters as much as the enforcement, a custom rule is worth the investment.
+
+We're planning more. Patterns around naming conventions, import structure, type annotations, and code formatting that are specific to how we write TypeScript. Each one will follow the same principle: a clear name, a documented rationale, and error messages that teach instead of just rejecting.
+
+## Using the Rule
+
+`no-logger-dev` ships as a warning by default — loud enough to notice, not blocking enough to break your flow during development:
+
+```javascript
+import {
+  NoLoggerDev,
+} from '@cbnventures/nova/rules/eslint';
+
+export default [
+  {
+    plugins: {
+      '@cbnventures/nova': {
+        rules: {
+          'no-logger-dev': NoLoggerDev.rule,
+        },
+      },
+    },
+    rules: {
+      '@cbnventures/nova/no-logger-dev': ['warn'],
+    },
+  },
+];
+```
+
+Browse the [rule documentation](/docs/rules/) for full details, examples, and configuration options.

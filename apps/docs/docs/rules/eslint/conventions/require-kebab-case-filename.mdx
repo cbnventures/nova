@@ -1,0 +1,162 @@
+---
+id: require-kebab-case-filename
+title: Require Kebab Case Filename
+description: Require kebab-case file names for TypeScript files.
+keywords:
+  - nova
+  - eslint rule
+  - kebab-case
+  - file naming
+  - filename convention
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require kebab-case file names for TypeScript files so the file system stays consistent and case-insensitive platforms behave predictably.
+
+## Summary
+
+The `require-kebab-case-filename` rule checks the file name stem (without known extensions like `.ts`, `.tsx`, `.d.ts`, `.test.ts`, etc.) against a kebab-case pattern.
+
+If the stem does not match, the rule reports on the first line of the file.
+
+## Why Use This Rule?
+
+1. Prevents case-sensitivity issues across platforms — macOS and Windows treat `MyFile.ts` and `myfile.ts` as the same file, causing subtle bugs.
+2. Keeps the file system consistent and predictable across the entire codebase.
+3. Aligns file names with URL conventions and package naming standards.
+
+## Examples
+
+<Tabs groupId="require-kebab-case-filename-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // File: user-service.ts — kebab-case stem.
+    // File: get-sidebars.test.ts — kebab-case stem with .test.ts extension.
+    // File: nova-config.d.ts — kebab-case stem with .d.ts extension.
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // File: UserService.ts — PascalCase.
+    // File: user_service.ts — snake_case.
+    // File: userService.ts — camelCase.
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-kebab-case-filename-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireKebabCaseFilename } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-kebab-case-filename': RequireKebabCaseFilename.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-kebab-case-filename': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="add-extra-extensions" label="Add Extra Extensions">
+
+    Strip additional compound extensions before validating the stem. The rule already handles `.ts`, `.tsx`, `.js`, `.jsx`, `.mts`, `.mjs`, `.cts`, `.cjs`, `.d.ts`, `.d.mts`, `.d.cts`, `.test.ts`, and `.test.d.ts`:
+
+    ```ts
+    import { RequireKebabCaseFilename } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-kebab-case-filename': RequireKebabCaseFilename.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-kebab-case-filename': ['error', {
+            extraExtensions: ['.spec.ts', '.stories.tsx'],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireKebabCaseFilename } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-kebab-case-filename': RequireKebabCaseFilename.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-kebab-case-filename': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option            | Type       | Default | Description                                              |
+|-------------------|------------|---------|----------------------------------------------------------|
+| `extraExtensions` | `string[]` | `[]`    | Compound extensions to strip before validating the stem. |
+| `ignoreFiles`     | `string[]` | `[]`    | File patterns to skip.                                   |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on a generated file** — Add the file pattern to `ignoreFiles` (e.g., `['**/generated/**']`).
+- **Warning fires on a file with compound extensions** — The rule strips known extensions (`.d.ts`, `.test.ts`, `.tsx`, etc.) before checking. If your extension is not recognized, the full name including the extra extension is checked against kebab-case.
+- **Want to allow PascalCase for React components** — Add the component file patterns to `ignoreFiles` (e.g., `['**/components/**']`).

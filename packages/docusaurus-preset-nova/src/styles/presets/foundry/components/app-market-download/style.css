@@ -1,0 +1,85 @@
+/**
+ * Foundry — App market download visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Section
+ * ============================ */
+
+/* ============================
+ * 2. Label
+ * ============================ */
+
+.nova-app-market-download-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--nova-color-neutral-500);
+  margin-bottom: 1rem;
+}
+
+[data-theme="dark"] .nova-app-market-download-label {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 3. Button
+ * ============================ */
+
+.nova-app-market-download-button {
+  padding: 0.625rem 1.25rem;
+
+  color: var(--nova-color-neutral-50);
+
+  background-color: var(--nova-color-neutral-950);
+  border: none;
+  border-radius: var(--nova-shape-radius);
+  box-shadow: 0 0 0 0 transparent,
+              inset 0 1px 0 rgba(255, 255, 255, 0.03);
+
+  transition: box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
+              transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-app-market-download-button:hover,
+.nova-app-market-download-button:focus-visible {
+  color: var(--nova-color-neutral-50);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03),
+              0 4px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(calc(-1px * var(--nova-motion-hover-effects)));
+}
+
+[data-theme="dark"] .nova-app-market-download-button {
+  color: var(--nova-color-neutral-50);
+  box-shadow: 0 0 0 0 transparent,
+              0 0 0 0 transparent,
+              inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .nova-app-market-download-button:hover,
+[data-theme="dark"] .nova-app-market-download-button:focus-visible {
+  color: var(--nova-color-neutral-50);
+  box-shadow: 0 4px 24px color-mix(in srgb, var(--nova-color-primary-500), transparent 88%),
+              0 0 0 1px color-mix(in srgb, var(--nova-color-primary-500), transparent 94%),
+              inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+/* ============================
+ * 4. Button Text
+ * ============================ */
+
+.nova-app-market-download-button-subtitle {
+  font-size: 0.5625rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+  opacity: 0.85;
+}
+
+.nova-app-market-download-button-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+}

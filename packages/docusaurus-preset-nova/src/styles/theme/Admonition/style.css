@@ -1,0 +1,36 @@
+/**
+ * ============================
+ * Admonition — Heading
+ * ============================
+ */
+
+.nova-admonition-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+
+  text-transform: capitalize;
+}
+
+/**
+ * ============================
+ * Admonition — Icon
+ * ============================
+ */
+
+.nova-admonition-icon {
+  flex-shrink: 0;
+}
+
+/**
+ * ============================
+ * Admonition — Body
+ * ============================
+ */
+
+.nova-admonition-body > :last-child {
+  margin-bottom: 0;
+}

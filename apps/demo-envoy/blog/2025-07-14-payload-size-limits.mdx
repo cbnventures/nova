@@ -1,0 +1,92 @@
+---
+title: "Why We Cap Payloads at 256KB and What Happens When You Hit It"
+authors: [nneka]
+tags: [payload, protocol, courier]
+date: 2025-07-14
+---
+
+A customer tried to relay a 47MB webhook payload through Courier last Tuesday. It was a CI/CD system sending the entire build log as a JSON blob in the webhook body. The relay failed. The customer opened a support ticket asking us to raise the limit.
+
+We did not raise the limit. Here is why.
+
+{/* truncate */}
+
+## The 256KB Limit
+
+Courier enforces a 256KB maximum payload size for all incoming webhooks. Any payload larger than 256KB is rejected at the receive stage with a `413 Payload Too Large` response. The message never enters the pipeline. No authentication, no transformation, no routing, no delivery attempt.
+
+This is not a technical limitation. Courier could handle larger payloads. The limit is a design decision with three justifications.
+
+### 1. Memory Predictability
+
+Courier processes relays in memory. Every payload is held in a buffer from receive through delivery. At 30,000 relays per second, a 256KB limit means Courier needs at most 7.3GB of buffer memory at peak (assuming every relay is at the maximum size, which they never are — average payload is 4.2KB).
+
+```text title="Memory ceiling at various payload limits"
+Limit       Peak Memory (30k RPS)    Avg Memory (4.2KB actual)
+──────────────────────────────────────────────────────────────
+256KB              7.3GB                     126MB
+1MB               28.6GB                     126MB
+10MB             286.0GB                     126MB
+Unlimited             ?                      126MB (until it isn't)
+```
+
+The "unlimited" row is the problem. Average payload size does not protect you. One customer sending 47MB payloads at 100 RPS would consume 4.7GB on its own — enough to starve every other relay in the pipeline.
+
+### 2. Retry Cost
+
+Every retry re-sends the full payload. A 4KB payload retried five times costs 20KB of bandwidth. A 47MB payload retried five times costs 235MB. Multiply that by concurrent retries across destinations and the bandwidth cost becomes the dominant factor in relay performance.
+
+### 3. Destination Compatibility
+
+Most webhook destinations have their own payload limits. Slack caps at 40KB. Discord caps at 8MB. Canary caps at 1MB. PagerDuty caps at 512KB. If Courier accepts a 47MB payload, transforms it, and delivers it to a destination that rejects it for being too large, the retry loop will never succeed. The message will exhaust its retries and dead-letter — wasting compute, bandwidth, and the customer's time.
+
+## What Happens When You Hit It
+
+The rejection is immediate and informative:
+
+```text title="413 response — payload too large"
+HTTP/1.1 413 Payload Too Large
+Content-Type: application/json
+X-Courier-Request-Id: req_b8c4a2f1
+
+{
+  "error": "payload_too_large",
+  "message": "Payload size 49283072 bytes exceeds maximum 262144 bytes",
+  "received_bytes": 49283072,
+  "max_bytes": 262144,
+  "suggestion": "Use Parcel's extract block to send only the fields you need, or host the full payload externally and send a reference URL"
+}
+```
+
+The response includes the exact size received and the maximum allowed. It also suggests two approaches for handling large payloads.
+
+## The Reference URL Pattern
+
+For payloads that genuinely need to be large — build logs, audit trails, file attachments — the recommended pattern is to host the payload externally and relay a reference URL instead.
+
+```text title="relay.grain — reference URL pattern"
+transform {
+  format = "json"
+  body   = {
+    "event":       "{{ event }}",
+    "summary":     truncate(body, 1024),
+    "payload_url": "{{ source_url }}/payloads/{{ id }}",
+    "payload_size": "{{ content_length }}",
+    "sha256":       "{{ body_hash }}"
+  }
+}
+```
+
+The destination receives a small relay with enough context to decide whether it needs the full payload. If it does, it fetches it directly from the source. The relay stays small, the retries stay cheap, and the destination controls when and whether to download the full content.
+
+## The Customer's Resolution
+
+The CI/CD customer switched to the reference URL pattern. Their webhook now sends a 2.8KB payload with a link to the build log. The destination fetches the log asynchronously. Relay latency dropped from timeout (the 47MB payload was hitting Courier's 30-second receive timeout) to 3ms.
+
+They thanked us for not raising the limit.
+
+## The Lesson
+
+Constraints are features. A payload limit is not a restriction — it is a guarantee. It guarantees that no single relay can starve the pipeline, that retries will always be affordable, and that destinations will never receive payloads they cannot handle.
+
+The temptation is always to raise the limit. The correct response is almost always to redesign the payload.

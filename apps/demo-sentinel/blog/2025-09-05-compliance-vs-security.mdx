@@ -1,0 +1,106 @@
+---
+title: "Why Compliance Is Not Security (But You Still Need Both)"
+authors: [rafael]
+tags: [compliance, spyglass, audit]
+---
+
+We have worked with organizations that passed every audit on the calendar and still got breached. We have also worked with organizations that could not pass a single audit but had security postures that would make nation-states pause. The two things are not the same.
+
+{/* truncate */}
+
+## The Gap
+
+Compliance is a checklist. Security is a posture. A checklist tells you whether a control exists. A posture tells you whether it works.
+
+Consider disk encryption. A compliance framework asks: "Are endpoint devices encrypted?" The answer is yes or no. A security posture asks: "Are endpoint devices encrypted, is the encryption algorithm current, has the key been rotated in the last 90 days, and has any device reported a decryption failure?" The answer is a spectrum.
+
+| Compliance Question                 | Security Question                                                                    |
+|-------------------------------------|--------------------------------------------------------------------------------------|
+| Are devices encrypted?              | What percentage of devices use AES-256 vs deprecated algorithms?                     |
+| Is MFA enabled?                     | What is the average time between MFA prompt and approval? Is anyone rubber-stamping? |
+| Are access logs retained?           | Can you reconstruct a full session from log data alone?                              |
+| Is there an incident response plan? | When was the last time you tested it with a simulated breach?                        |
+| Are patches applied?                | What is the mean time from CVE disclosure to fleet-wide remediation?                 |
+
+Every row in that table is the difference between passing an audit and being secure.
+
+## How Spyglass Bridges the Gap
+
+Spyglass is Sentinel's audit and forensics engine. It maintains an immutable log of every access decision, every policy evaluation, and every connection event for seven years. But retention is not the point. Reconstruction is.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="compliance" label="Compliance View" default>
+
+```text title="Compliance audit export"
+$ sentinel spyglass export \
+    --framework soc2 \
+    --period 2025-Q2
+
+SOC 2 Type II — Q2 2025
+  CC6.1 Logical Access Controls:     PASS (continuous enforcement via Drawbridge)
+  CC6.3 Role-Based Access:           PASS (policy-based, evaluated every 90s)
+  CC7.2 System Monitoring:           PASS (Watchtower posture checks, 90s interval)
+  CC8.1 Change Management:           PASS (Parapet simulation required for policy changes)
+
+  Evidence artifacts: 4,291 policy evaluations, 847 device posture checks
+  Export format: PDF + structured JSON
+```
+
+</TabItem>
+<TabItem value="security" label="Security View">
+
+```text title="Security posture query"
+$ sentinel spyglass query \
+    --type session-reconstruction \
+    --user svc-deploy-east \
+    --period "2025-06-01..2025-06-15"
+
+Session Reconstruction: svc-deploy-east
+  Total sessions: 1,247
+  Unique resources accessed: 34
+  Zone crossings: 12
+  Failed policy evaluations: 3
+    - 2025-06-04T03:41:00Z: posture score 71 (threshold 80) → access revoked
+    - 2025-06-09T14:22:00Z: location anomaly (new IP range) → step-up MFA required
+    - 2025-06-12T09:15:00Z: session age exceeded 3600s → forced re-authentication
+
+  Anomalies detected: 1
+    - 2025-06-09T14:22:00Z: first-ever connection from IP range 203.0.113.0/24
+      Resolution: legitimate — engineer traveling, confirmed via out-of-band channel
+```
+
+</TabItem>
+</Tabs>
+
+The compliance view tells the auditor that controls exist. The security view tells the security team what actually happened. Both are generated from the same data. The difference is the question you ask.
+
+## The Three Things Compliance Cannot Measure
+
+**1. Reaction time.** A compliance framework does not measure how quickly you detect and contain a threat. Spyglass records the timestamp of every policy evaluation. We can measure mean-time-to-revocation down to the millisecond.
+
+**2. Lateral movement exposure.** No audit checklist asks "how many hops can a compromised service account traverse before hitting a segmentation boundary?" Rampart zone topology and Parapet simulation answer that question continuously.
+
+**3. Trust decay.** A user who authenticated eight hours ago is not the same risk as a user who authenticated thirty seconds ago. Compliance frameworks treat authentication as binary. Sentinel treats it as a depreciating asset — posture scores decay, session age accumulates, and Watchtower re-evaluates the entire picture every 90 seconds.
+
+## What We Recommend
+
+Do not choose between compliance and security. Build the security posture first, then extract compliance evidence from it.
+
+Sentinel was designed for this pattern. Spyglass generates compliance reports from the same data stream that powers security operations. The audit evidence is a byproduct of doing security correctly — not a separate workstream that competes for engineering time.
+
+```bash title="Generate compliance evidence from live data"
+sentinel spyglass export --framework hipaa --period 2025-Q3
+sentinel spyglass export --framework pci-dss --period 2025-Q3
+sentinel spyglass export --framework iso27001 --period 2025-Q3
+```
+
+Three commands. Three frameworks. Same underlying data. The audit is already done — you just need to format it.
+
+## Further Reading
+
+- [Audit & Forensics](/docs/operations/audit-forensics/) — Full Spyglass capabilities and query syntax.
+- [Policy Simulation](/docs/operations/policy-simulation/) — How Parapet validates policies before they reach production.
+- [Platform Overview](/docs/platform-overview/) — The architecture that makes continuous compliance possible.

@@ -1,0 +1,96 @@
+/**
+ * Sentinel — Blog List Paginator visual styling.
+ *
+ * Flat style — no border, background tint on hover, left accent on active.
+ *
+ * @since 0.15.0
+ */
+
+/* Nav links — flat with tint on hover. */
+.nova-blog-list-paginator-nav {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+
+  border-radius: var(--nova-shape-radius);
+
+  transition: color var(--nova-motion-duration) ease,
+    background var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-nav {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-blog-list-paginator-nav:hover,
+.nova-blog-list-paginator-nav:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-nav:hover,
+[data-theme="dark"] .nova-blog-list-paginator-nav:focus-visible {
+  color: var(--nova-color-primary-300);
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* Page links — flat with tint on hover. */
+.nova-blog-list-paginator-page {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+
+  border-radius: var(--nova-shape-radius);
+
+  transition: color var(--nova-motion-duration) ease,
+    background var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-blog-list-paginator-page:hover,
+.nova-blog-list-paginator-page:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page:hover,
+[data-theme="dark"] .nova-blog-list-paginator-page:focus-visible {
+  color: var(--nova-color-primary-300);
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* Active page — left accent bar, tinted background. */
+.nova-blog-list-paginator-page-active {
+  color: var(--nova-color-primary-700);
+  font-weight: 700;
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-left: 2px solid var(--nova-color-primary-500);
+  border-radius: var(--nova-shape-radius);
+
+  cursor: default;
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page-active {
+  color: var(--nova-color-primary-300);
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  border-left-color: var(--nova-color-primary-400);
+}
+
+/* Ellipsis — muted. */
+.nova-blog-list-paginator-ellipsis {
+  font-family: var(--nova-font-display);
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-ellipsis {
+  color: var(--nova-color-neutral-600);
+}

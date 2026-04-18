@@ -1,0 +1,65 @@
+/**
+ * Blog Archive Page — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Archive Container
+ * ============================ */
+
+/* Archive page has section gap matching blog layout. */
+.nova-blog-archive {
+  padding-block: var(--nova-section-gap);
+}
+
+/* Page heading — display heading for the archive title. */
+.nova-blog-archive > .nova-heading {
+  margin-bottom: 1.5rem;
+
+  font-size: 1.5rem;
+}
+
+/* ============================
+ * 2. Year Sections
+ * ============================ */
+
+/* Year heading — section divider between archive groups. */
+.nova-blog-archive section {
+  margin-bottom: 2rem;
+}
+
+.nova-blog-archive section:last-child {
+  margin-bottom: 0;
+}
+
+.nova-blog-archive section h3 {
+  margin-bottom: 0.75rem;
+}
+
+/* ============================
+ * 3. Post Links
+ * ============================ */
+
+/* Reset list styles for clean link rendering. */
+.nova-blog-archive ul {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.nova-blog-archive li {
+  margin-bottom: 0.25rem;
+}
+
+/* Archive links — block-level with padding for click target. */
+.nova-blog-archive a {
+  display: inline-block;
+  padding: 0.25rem 0;
+
+  font-size: 0.875rem;
+  line-height: 1.5;
+
+  text-decoration: none;
+}

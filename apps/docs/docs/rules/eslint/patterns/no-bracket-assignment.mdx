@@ -15,6 +15,7 @@ tags:
   - code style
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,9 @@ Use `Reflect.set()` instead of bracket notation assignment for dynamic property 
 
 ## Summary
 
-The `no-bracket-assignment` rule reports any assignment expression where the left-hand side uses computed (bracket) member access (e.g., `target[key] = value`). It is recommended to use `Reflect.set(target, key, value)` instead.
+The `no-bracket-assignment` rule reports any assignment expression where the left-hand side uses computed (bracket) member access (e.g., `target[key] = value`).
+
+It is recommended to use `Reflect.set(target, key, value)` instead.
 
 ## Why Use This Rule?
 
@@ -58,30 +61,81 @@ The `no-bracket-assignment` rule reports any assignment expression where the lef
 
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+<Tabs groupId="no-bracket-assignment-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { noBracketAssignment } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
-export default [
-  {
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { NoBracketAssignment } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-bracket-assignment': NoBracketAssignment.rule,
+            },
+          },
+        },
         rules: {
-          'no-bracket-assignment': noBracketAssignment,
+          '@cbnventures/nova/no-bracket-assignment': ['error'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/no-bracket-assignment': ['warn'],
-    },
-  },
-];
-```
+    ];
+    ```
 
-This rule has no additional options.
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoBracketAssignment } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-bracket-assignment': NoBracketAssignment.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-bracket-assignment': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes for simple `=` assignments. Compound operators (`+=`, `-=`, `*=`, etc.) are reported but not auto-fixed. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/no-bracket-assignment: error'
+```
 
 ## Troubleshooting
 
-- **Warning fires on array index assignment.** — Array index writes like `arr[0] = value` also use computed member access. Use `Reflect.set(arr, 0, value)` or consider whether `.splice()` or a new array is more appropriate.
-- **Reading via bracket notation is allowed.** — The rule only flags assignments (`=`, `+=`, etc.), not reads like `const x = target[key]`.
+- **Warning fires on array index assignment** — Array index writes like `arr[0] = value` also use computed member access. Use `Reflect.set(arr, 0, value)` or consider whether `.splice()` or a new array is more appropriate.
+- **Reading via bracket notation is allowed** — The rule only flags assignments (`=`, `+=`, etc.), not reads like `const x = target[key]`.

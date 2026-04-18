@@ -1,0 +1,172 @@
+---
+id: envoy
+title: Envoy
+description: Purple and cyan preset with Plus Jakarta Sans, Inter, and JetBrains Mono fonts, rounded shapes, and elevated card depth.
+sidebar_position: 4
+keywords:
+  - nova
+  - docusaurus facades
+  - envoy preset
+  - purple theme
+  - plus jakarta sans
+  - inter font
+  - jetbrains mono
+  - rounded shapes
+  - elevated cards
+  - compass navbar
+  - launchpad footer
+tags:
+  - facades
+  - preset
+  - envoy
+  - docusaurus
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+import ThemedImage from '@theme/ThemedImage';
+
+import envoyLight from './_assets_/envoy-light.png';
+import envoyDark from './_assets_/envoy-dark.png';
+
+# Envoy
+
+Purple and cyan tones paired with Plus Jakarta Sans headings, Inter body text, and JetBrains Mono for code blocks. Rounded shapes with comfortable spacing and elevated cards with soft shadows.
+
+## Why Use This Preset?
+
+- Purple and cyan palette so infrastructure documentation communicates reliability and modernity.
+- Elevated cards with the Compass navbar so visual hierarchy guides readers through complex topics.
+- Staggered reveals and hover effects so the site feels responsive and polished during navigation.
+
+## Preview
+
+<ThemedImage sources={{ light: envoyLight, dark: envoyDark }} alt="Envoy preset preview" width={1280} height={900} style={{ maxWidth: '100%', height: 'auto' }} />
+
+## Summary
+
+Envoy is designed for infrastructure and relay service documentation. The cool purple palette communicates reliability while the elevated card depth adds visual hierarchy. Motion is set to normal speed with staggered reveals and hover effects enabled.
+
+## Configuration
+
+The full default configuration for the Envoy preset:
+
+```ts
+{
+  preset: 'envoy',
+  // Default values (no overrides needed):
+  // colors.primary:          '#7c3aed'
+  // colors.accent:           '#06b6d4'
+  // colors.neutral:          '#71717a'
+  // fonts.display:           'Plus Jakarta Sans'
+  // fonts.body:              'Inter'
+  // fonts.code:              'JetBrains Mono'
+  // shape.radius:            'rounded'
+  // shape.density:           'comfortable'
+  // depth.cards:             'elevated'
+  // depth.codeBlocks:        'bordered'
+  // motion.speed:            'normal'
+  // motion.staggeredReveals: true
+  // motion.hoverEffects:     true
+  // navbar:                  'compass'
+  // footer:                  'launchpad'
+}
+```
+
+## Overrides
+
+Override any category to customize the Envoy identity. Unspecified values keep their defaults.
+
+<Tabs groupId="envoy-overrides">
+  <TabItem value="colors" label="Colors" default>
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  overrides: {
+    colors: {
+      primary: '#6d28d9',
+      accent: '#0891b2',
+      neutral: '#52525b',
+    },
+  },
+}
+```
+
+Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+
+  </TabItem>
+  <TabItem value="fonts" label="Fonts">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  overrides: {
+    fonts: {
+      display: 'Manrope',
+      body: 'Nunito Sans',
+      code: 'Fira Code',
+    },
+  },
+}
+```
+
+Font families are set as CSS custom properties. Google Fonts are loaded automatically.
+
+  </TabItem>
+  <TabItem value="shape" label="Shape & Depth">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  overrides: {
+    shape: {
+      radius: 'pill',
+      density: 'spacious',
+    },
+    depth: {
+      cards: 'glass',
+      codeBlocks: 'elevated',
+    },
+  },
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## Navbar and Footer
+
+Envoy uses the **Compass** navbar and **Launchpad** footer.
+
+| Slot   | Variant     | Description                                          |
+|--------|-------------|------------------------------------------------------|
+| Navbar | `compass`   | Navigation bar with directional navigation cues.     |
+| Footer | `launchpad` | Footer with call-to-action emphasis and quick links. |
+
+Override the variant in the preset options:
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'envoy',
+  overrides: {
+    navbar: 'bridge',
+    footer: 'commons',
+  },
+}
+```
+
+Available navbar variants:
+
+- `bridge`
+- `canopy`
+- `monolith`
+- `compass`
+
+Available footer variants:
+
+- `commons`
+- `embassy`
+- `ledger`
+- `launchpad`

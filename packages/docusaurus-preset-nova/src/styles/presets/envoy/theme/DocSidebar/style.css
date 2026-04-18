@@ -1,0 +1,187 @@
+/**
+ * Envoy — Sidebar visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Sidebar Base
+ * ============================ */
+
+/* Sidebar navigation sits in a clean column with warm background. */
+.nova-sidebar {
+  font-size: 0.875rem;
+}
+
+.nova-sidebar ul {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.nova-sidebar-item {
+  margin: 0 0 0.125rem;
+}
+
+/* ============================
+ * 2. Sidebar Links
+ * ============================ */
+
+/* Sidebar links with violet active indicator. */
+.nova-sidebar-item > .nova-sidebar-link {
+  display: block;
+  padding: 0.5rem 1rem;
+
+  color: var(--nova-color-neutral-600);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-sidebar-item > .nova-sidebar-link:hover,
+.nova-sidebar-item > .nova-sidebar-link:focus-visible {
+  color: var(--nova-color-primary-600);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link:hover,
+[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link:focus-visible {
+  color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* Active sidebar link has a rounded violet left indicator. */
+.nova-sidebar-item > .nova-sidebar-link[aria-current="page"] {
+  padding-left: calc(1rem - 3px);
+
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-left: 3px solid var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link[aria-current="page"] {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  border-left-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 3. Sidebar Categories
+ * ============================ */
+
+.nova-sidebar-category-summary {
+  --nova-sidebar-category-padding-block: 0.5rem;
+  --nova-sidebar-category-padding-inline: 1rem;
+
+  gap: 0.375rem;
+  padding: 0.5rem 1rem;
+
+  color: var(--nova-color-neutral-600);
+}
+
+.nova-sidebar-category-summary:not(:has([aria-current="page"])):hover,
+.nova-sidebar-category-summary:not(:has([aria-current="page"])):focus-visible {
+  color: var(--nova-color-primary-600);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+/* Active category summary — matches active link styling. */
+.nova-sidebar-category-summary:has([aria-current="page"]) {
+  padding-left: calc(1rem - 3px);
+
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-left: 3px solid var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-sidebar-category-summary {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-sidebar-category-summary:not(:has([aria-current="page"])):hover,
+[data-theme="dark"] .nova-sidebar-category-summary:not(:has([aria-current="page"])):focus-visible {
+  color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+[data-theme="dark"] .nova-sidebar-category-summary:has([aria-current="page"]) {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  border-left-color: var(--nova-color-primary-400);
+}
+
+/* Chevron icon — soft rounded chevron-right (Lucide). */
+.nova-sidebar-category-summary::after {
+  background-color: var(--nova-color-primary-400);
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+
+  transition: transform 250ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="dark"] .nova-sidebar-category-summary::after {
+  background-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 4. Sidebar Collapse Toggle
+ * ============================ */
+
+/* Sidebar toggle button with violet accent and generous radius. */
+.nova-sidebar-toggle {
+  background: var(--nova-envoy-surface-light);
+  border-color: var(--nova-color-neutral-200);
+  border-radius: var(--nova-envoy-radius-generous);
+
+  transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-sidebar-toggle:hover,
+.nova-sidebar-toggle:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-color-primary-300);
+  transform: scale(1.08);
+}
+
+[data-theme="dark"] .nova-sidebar-toggle {
+  background: var(--nova-envoy-surface-dark);
+  border-color: var(--nova-envoy-border-dark);
+}
+
+[data-theme="dark"] .nova-sidebar-toggle:hover,
+[data-theme="dark"] .nova-sidebar-toggle:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  border-color: var(--nova-color-primary-600);
+}
+
+/* ============================
+ * 5. Responsive Layout
+ * ============================ */
+
+@media (min-width: 1024px) {
+  aside {
+    border-right: 1px solid var(--nova-envoy-border-light);
+  }
+
+  [data-theme="dark"] aside {
+    border-right-color: var(--nova-envoy-border-dark);
+  }
+}
+

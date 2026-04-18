@@ -1,0 +1,82 @@
+---
+title: "Replacing 300 Lines of CI YAML with foundry ignite"
+authors: [kofi]
+tags: [ci-cd, bellows, performance, quench]
+date: 2025-12-20
+---
+
+We audited our GitHub Actions workflow last month. It was 312 lines of YAML spread across four files. It installed dependencies, built packages in a hand-coded dependency order, ran tests with a custom matrix strategy, ran linting in a separate job, and uploaded artifacts. It took 22 minutes on average and broke at least once a month when someone added a package and forgot to update the build order.
+
+We replaced all of it with a single `foundry ignite` call. The CI pipeline is now 14 lines of YAML and runs in 5 minutes. Here is what we learned.
+
+{/* truncate */}
+
+## The Old Pipeline
+
+The old pipeline had four stages, each defined in a separate YAML file because the main file had grown too long to maintain:
+
+1. **Install** — `npm ci` with a cache key based on `package-lock.json`.
+2. **Build** — A hand-coded list of packages in dependency order. Every time someone added a package, they had to update this list manually. If they forgot, the build failed with a cryptic "module not found" error.
+3. **Test** — A matrix strategy that split packages across 4 parallel runners. The matrix was also hand-coded and required updates whenever packages were added or removed.
+4. **Lint** — A separate job that ran after build, because Warden needed compiled output to check type-aware rules.
+
+The fundamental problem was that the CI pipeline encoded knowledge that the build tool should own. The dependency order, the parallelization strategy, and the relationship between build and lint were all hard-coded in YAML instead of derived from the workspace graph.
+
+## The New Pipeline
+
+```yaml title=".github/workflows/build.yml"
+name: Build
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: foundry ignite --ci
+```
+
+That is the entire pipeline. Fourteen lines. The `--ci` flag tells Foundry to enable remote cache reads (but not writes — only the main branch populates the cache), fail on any Warden warning (warnings are errors in CI), and output structured logs that GitHub Actions can parse.
+
+## What `foundry ignite --ci` Does
+
+A single `foundry ignite --ci` call replaces all four stages of the old pipeline:
+
+- **Dependency resolution.** Bellows reads the Tongs graph and determines build order automatically. No hand-coded lists.
+- **Parallel build.** Bellows schedules packages across available cores. On GitHub Actions' `ubuntu-latest` runner (4 cores, 16 GB RAM), it achieves roughly 3.2x parallelism.
+- **Integrated test and lint.** Crucible tests and Warden lint run as part of the build pipeline, not as separate jobs. As soon as a package finishes building, its tests start. Linting runs alongside tests.
+- **Remote cache.** Quench checks the remote cache before building each package. On a typical pull request, 85% to 95% of packages are cache hits because the base branch has already been built.
+
+## The Numbers
+
+We tracked CI performance for 30 days after the migration:
+
+| Metric                     | Old Pipeline | New Pipeline | Change |
+|----------------------------|--------------|--------------|--------|
+| Average wall-clock time    | 22m 14s      | 5m 08s       | -77%   |
+| P95 wall-clock time        | 31m 40s      | 7m 22s       | -77%   |
+| Pipeline config lines      | 312          | 14           | -96%   |
+| "Build broken" incidents   | 3/month      | 0/month      | -100%  |
+| Cache hit rate (PR builds) | N/A          | 91%          | —      |
+
+The "build broken" incidents dropped to zero because the pipeline no longer contains any workspace-specific knowledge. When someone adds a package, the manifest changes, Bellows reads the new graph, and the pipeline adapts automatically.
+
+## Remote Cache Economics
+
+Quench's remote cache stores build artifacts in an S3-compatible bucket. Each artifact is keyed by its content hash, so duplicate entries are impossible. Our 90-package workspace generates approximately 1.2 GB of cache data per week.
+
+The cost is negligible — under $2/month on S3 Standard. The time savings, at an average of 17 minutes per build and roughly 40 builds per day, adds up to over 11 hours of developer-wait-time saved per day. The ROI on a $2/month S3 bucket is difficult to overstate.
+
+## The Lesson
+
+CI pipelines should be declarative, not procedural. They should say "build this workspace" and let the build tool figure out the rest. The moment your CI YAML contains dependency order, parallelization logic, or conditional steps tied to specific packages, you have encoded knowledge that will rot.
+
+Let the tool that owns the dependency graph own the build strategy. Your CI pipeline should be boring.

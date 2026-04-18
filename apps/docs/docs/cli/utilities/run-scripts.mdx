@@ -8,21 +8,20 @@ keywords:
   - npm-run-all alternative
   - run scripts sequentially
   - run scripts in parallel
-  - package.json scripts
   - script orchestration
-  - monorepo scripts
 tags:
-  - run-scripts
   - cli
+  - run-scripts
   - scripts
   - orchestration
   - monorepo
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Run `package.json` scripts by pattern in sequential or parallel mode with no extra <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependencies</Term>.
+Run `package.json` scripts by pattern in sequential or parallel mode with no extra <Terminology title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependencies</Terminology>.
 
 ## Summary
 
@@ -30,7 +29,7 @@ The `run-scripts` command reads the `scripts` field from the nearest `package.js
 
 ## Why Use This Command?
 
-- Run related scripts (e.g., `build:clean`, `build:transpile`, `build:fix-alias`) in a single command with no extra <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependencies</Term>.
+- Run related scripts (e.g., `build:clean`, `build:transpile`, `build:fix-alias`) in a single command with no extra <Terminology title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependencies</Terminology>.
 - Choose between sequential execution (for ordered pipelines) and parallel execution (for independent tasks).
 - Get clear exit codes and error messages when a script fails.
 
@@ -38,12 +37,12 @@ The `run-scripts` command reads the `scripts` field from the nearest `package.js
 
 - **Build pipelines** — Run `build:*` scripts sequentially so each step depends on the previous one.
 - **Development mode** — Run `dev:*` scripts in parallel to start watchers, dev servers, and other tools concurrently.
-- **<Term title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling">CI/CD</Term> checks** — Run `check:*` scripts sequentially or in parallel depending on whether order matters.
+- **<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> checks** — Run `check:*` scripts sequentially or in parallel depending on whether order matters.
 - **Cleanup tasks** — Run `clean:*` scripts in parallel since cleanup operations are independent.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> release with either the installed `nova` <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> or `npx`.
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
 - **package.json** — A valid `package.json` with a `scripts` field must exist in the current working directory.
 
 ## Usage
@@ -81,12 +80,15 @@ You can run this command in two ways:
 
 ## Options
 
-| Flag               | Description                                             |
-|--------------------|---------------------------------------------------------|
-| `-s, --sequential` | Run matched scripts one at a time, stopping on failure. |
-| `-p, --parallel`   | Run matched scripts concurrently.                       |
+| Flag                | Description                                                                  |
+|---------------------|------------------------------------------------------------------------------|
+| `-s, --sequential`  | Run matched scripts one at a time, stopping on failure.                      |
+| `-p, --parallel`    | Run matched scripts concurrently.                                            |
+| `-b, --buffer <ms>` | Flush interval in milliseconds for parallel log grouping. Defaults to `500`. |
 
 Exactly one of `--sequential` or `--parallel` is required. The `<pattern>` argument supports a trailing wildcard (e.g., `build:*`) to match all scripts sharing a common prefix, or an exact script name.
+
+In parallel mode, each script's output is prefixed with `[script-name]` and grouped using a time-windowed log queue. Use `--buffer` to adjust the flush interval (default: `500` ms).
 
 ## Examples
 
@@ -149,10 +151,11 @@ Exactly one of `--sequential` or `--parallel` is required. The `<pattern>` argum
 
 For users migrating from the [npm-run-all](https://github.com/mysticatea/npm-run-all) workflow, Nova provides equivalent flags under `nova utility run-scripts`:
 
-| Command                                           | Equivalent                         | What It Does                      |
-|---------------------------------------------------|------------------------------------|-----------------------------------|
-| `nova utility run-scripts 'build:*' --sequential` | `npm-run-all --sequential build:*` | Run matched scripts one at a time |
-| `nova utility run-scripts 'dev:*' --parallel`     | `npm-run-all --parallel dev:*`     | Run matched scripts concurrently  |
+| Command                                                    | Equivalent                         | What It Does                                     |
+|------------------------------------------------------------|------------------------------------|--------------------------------------------------|
+| `nova utility run-scripts 'build:*' --sequential`          | `npm-run-all --sequential build:*` | Run matched scripts one at a time.               |
+| `nova utility run-scripts 'dev:*' --parallel`              | `npm-run-all --parallel dev:*`     | Run matched scripts concurrently.                |
+| `nova utility run-scripts 'dev:*' --parallel --buffer 200` | —                                  | Run concurrently with 200 ms log flush interval. |
 
 After updating your `scripts` in `package.json`, `npm-run-all` can be removed from `devDependencies`.
 

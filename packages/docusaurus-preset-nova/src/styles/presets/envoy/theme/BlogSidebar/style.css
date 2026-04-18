@@ -1,0 +1,67 @@
+/**
+ * Envoy — Blog Sidebar visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Sidebar Title
+ * ============================ */
+
+/* Section label in muted violet. */
+.nova-blog-sidebar strong {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-sidebar strong {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 2. Year Headings
+ * ============================ */
+
+.nova-blog-sidebar h4 {
+  color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-blog-sidebar h4 {
+  color: var(--nova-color-neutral-200);
+}
+
+/* ============================
+ * 3. Sidebar Links
+ * ============================ */
+
+/* Links with violet hover background matching doc sidebar. */
+.nova-blog-sidebar a {
+  color: var(--nova-color-neutral-600);
+  border-radius: var(--nova-envoy-radius-generous);
+
+  transition: color 200ms ease,
+              background-color 200ms ease;
+}
+
+[data-theme="dark"] .nova-blog-sidebar a {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-blog-sidebar a:hover,
+.nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-primary-600);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-blog-sidebar a:hover,
+[data-theme="dark"] .nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* ============================
+ * 4. Sidebar Border
+ * ============================ */
+
+/* Aside border and padding inherited from DocSidebar preset (bare aside selector). */

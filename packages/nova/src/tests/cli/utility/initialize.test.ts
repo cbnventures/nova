@@ -6,46 +6,54 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIUtilityInitialize } from '@/cli/utility/initialize.js';
+import { afterAll, describe, it } from 'vitest';
+
+import { CliUtilityInitialize } from '../../../cli/utility/initialize.js';
 
 import type {
-  CLIUtilityInitializeTestOriginalCwd,
-  CLIUtilityInitializeTestSandboxRoot,
-} from '@/types/tests/cli/utility/initialize.test.d.ts';
+  TestsCliUtilityInitializeRunOriginalCwd,
+  TestsCliUtilityInitializeRunProjectDirectory,
+  TestsCliUtilityInitializeRunSandboxRoot,
+  TestsCliUtilityInitializeRunTemporaryDirectory,
+  TestsCliUtilityInitializeRunTemporaryPrefix,
+} from '../../../types/tests/cli/utility/initialize.test.d.ts';
 
 /**
- * CLI Utility - Initialize - Run.
+ * Tests - CLI - Utility - Initialize - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIUtilityInitialize.run', async (context) => {
-  const originalCwd: CLIUtilityInitializeTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIUtilityInitializeTestSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('CliUtilityInitialize.run', async () => {
+  const originalCwd: TestsCliUtilityInitializeRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliUtilityInitializeRunTemporaryDirectory = tmpdir();
+  const temporaryPrefix: TestsCliUtilityInitializeRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsCliUtilityInitializeRunSandboxRoot = await mkdtemp(temporaryPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('sets exit code when not at project root', async () => {
-    const projectDir = join(sandboxRoot, 'not-project-root');
+  it('sets exit code when not at project root', async () => {
+    const projectDirectory: TestsCliUtilityInitializeRunProjectDirectory = join(sandboxRoot, 'not-project-root');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    process.chdir(projectDir);
+    process.chdir(projectDirectory);
 
-    process.exitCode = undefined;
-
-    await CLIUtilityInitialize.run({});
+    await CliUtilityInitialize.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
+
+  return;
 });

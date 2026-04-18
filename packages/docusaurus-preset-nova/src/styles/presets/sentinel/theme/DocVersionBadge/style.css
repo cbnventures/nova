@@ -1,0 +1,40 @@
+/**
+ * Sentinel — Version badge and banner visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Version Badge
+ * ============================ */
+
+.nova-version-badge {
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  letter-spacing: 0.04em;
+  background-color: var(--nova-color-accent-100);
+  color: var(--nova-color-accent-700);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-version-badge {
+  background-color: var(--nova-color-accent-900);
+  color: var(--nova-color-accent-300);
+}
+
+/* ============================
+ * 2. Version Banner
+ * ============================ */
+
+.nova-version-banner {
+  background-color: var(--nova-color-accent-50);
+  color: var(--nova-color-accent-800);
+  border-bottom: 1px solid var(--nova-color-accent-200);
+  font-size: 0.875rem;
+}
+
+[data-theme="dark"] .nova-version-banner {
+  background-color: var(--nova-color-accent-900);
+  color: var(--nova-color-accent-200);
+  border-bottom-color: var(--nova-color-accent-700);
+}

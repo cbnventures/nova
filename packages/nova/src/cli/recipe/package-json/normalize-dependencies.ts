@@ -1,49 +1,94 @@
 import chalk from 'chalk';
 
-import { NovaConfig } from '@/lib/nova-config.js';
-import { PATTERN_RANGE_CAPTURE_REMAINDER } from '@/lib/regex.js';
+import { LibNovaConfig } from '../../../lib/nova-config.js';
+import { LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER } from '../../../lib/regex.js';
 import {
   isPlainObject,
   isProjectRoot,
   loadWorkspaceManifests,
   saveWorkspaceManifest,
-} from '@/lib/utility.js';
-import { Logger } from '@/toolkit/index.js';
+} from '../../../lib/utility.js';
+import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CLIRecipePackageJsonNormalizeDependenciesHandleReturns,
-  CLIRecipePackageJsonNormalizeDependenciesHandleWorkspace,
-  CLIRecipePackageJsonNormalizeDependenciesIsEmptyReturns,
-  CLIRecipePackageJsonNormalizeDependenciesIsEmptyValue,
-  CLIRecipePackageJsonNormalizeDependenciesPinDependenciesDepGroups,
-  CLIRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions,
-  CLIRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions,
-  CLIRecipePackageJsonNormalizeDependenciesPinDependenciesReturns,
-  CLIRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace,
-  CLIRecipePackageJsonNormalizeDependenciesRunOptions,
-  CLIRecipePackageJsonNormalizeDependenciesRunReturns,
-  CLIRecipePackageJsonNormalizeDependenciesStripPrefixReturns,
-  CLIRecipePackageJsonNormalizeDependenciesStripPrefixVersion,
-} from '@/types/cli/recipe/package-json/normalize-dependencies.d.ts';
+  CliRecipePackageJsonNormalizeDependenciesHandleBundledDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandleBundleDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandleFileContents,
+  CliRecipePackageJsonNormalizeDependenciesHandleManifest,
+  CliRecipePackageJsonNormalizeDependenciesHandleMergedBundleDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandlePackageBundledDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandlePackageBundleDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandlePackageDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandlePackageDevDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandlePackageOptionalDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandlePackageOverrides,
+  CliRecipePackageJsonNormalizeDependenciesHandlePackagePeerDependencies,
+  CliRecipePackageJsonNormalizeDependenciesHandlePackagePeerDependenciesMeta,
+  CliRecipePackageJsonNormalizeDependenciesHandleReturns,
+  CliRecipePackageJsonNormalizeDependenciesHandleWorkspace,
+  CliRecipePackageJsonNormalizeDependenciesIsEmptyReturns,
+  CliRecipePackageJsonNormalizeDependenciesIsEmptyValue,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepGroups,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepName,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesDeps,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepVersion,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinned,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesReturns,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesStripped,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesUnpinnable,
+  CliRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace,
+  CliRecipePackageJsonNormalizeDependenciesRunCount,
+  CliRecipePackageJsonNormalizeDependenciesRunCurrentDirectory,
+  CliRecipePackageJsonNormalizeDependenciesRunEligibleWorkspaces,
+  CliRecipePackageJsonNormalizeDependenciesRunHasUnpinnable,
+  CliRecipePackageJsonNormalizeDependenciesRunIsAtProjectRoot,
+  CliRecipePackageJsonNormalizeDependenciesRunIsDryRun,
+  CliRecipePackageJsonNormalizeDependenciesRunIsReplaceFile,
+  CliRecipePackageJsonNormalizeDependenciesRunOptions,
+  CliRecipePackageJsonNormalizeDependenciesRunPinDependencyVersions,
+  CliRecipePackageJsonNormalizeDependenciesRunPinDevDependencyVersions,
+  CliRecipePackageJsonNormalizeDependenciesRunRecipes,
+  CliRecipePackageJsonNormalizeDependenciesRunRecipeSettings,
+  CliRecipePackageJsonNormalizeDependenciesRunRecipeTuple,
+  CliRecipePackageJsonNormalizeDependenciesRunRecipeTupleFilter,
+  CliRecipePackageJsonNormalizeDependenciesRunReplaceFileNotice,
+  CliRecipePackageJsonNormalizeDependenciesRunReturns,
+  CliRecipePackageJsonNormalizeDependenciesRunWorkingFile,
+  CliRecipePackageJsonNormalizeDependenciesRunWorkingFileWorkspaces,
+  CliRecipePackageJsonNormalizeDependenciesRunWorkspaceConfigFilter,
+  CliRecipePackageJsonNormalizeDependenciesRunWorkspaceRecipesFilter,
+  CliRecipePackageJsonNormalizeDependenciesRunWorkspaces,
+  CliRecipePackageJsonNormalizeDependenciesStripPrefixMatch,
+  CliRecipePackageJsonNormalizeDependenciesStripPrefixReturns,
+  CliRecipePackageJsonNormalizeDependenciesStripPrefixVersion,
+} from '../../../types/cli/recipe/package-json/normalize-dependencies.d.ts';
 
 /**
- * CLI Recipe - package.json - Normalize Dependencies.
+ * CLI - Recipe - package.json - Normalize Dependencies.
  *
- * @since 1.0.0
+ * Cleans up dependency fields by removing empty groups, merging bundledDependencies into
+ * bundleDependencies, and optionally pinning version ranges.
+ *
+ * @since 0.14.0
  */
-export class CLIRecipePackageJsonNormalizeDependencies {
+export class CliRecipePackageJsonNormalizeDependencies {
   /**
-   * CLI Recipe - package.json - Normalize Dependencies - Run.
+   * CLI - Recipe - package.json - Normalize Dependencies - Run.
    *
-   * @param {CLIRecipePackageJsonNormalizeDependenciesRunOptions} options - Options.
+   * Loads nova.config.json, filters eligible workspaces, then normalizes dependency fields and
+   * pins versions when configured. Sets exit code.
    *
-   * @returns {CLIRecipePackageJsonNormalizeDependenciesRunReturns}
+   * @param {CliRecipePackageJsonNormalizeDependenciesRunOptions} options - Options.
    *
-   * @since 1.0.0
+   * @returns {CliRecipePackageJsonNormalizeDependenciesRunReturns}
+   *
+   * @since 0.14.0
    */
-  public static async run(options: CLIRecipePackageJsonNormalizeDependenciesRunOptions): CLIRecipePackageJsonNormalizeDependenciesRunReturns {
-    const currentDirectory = process.cwd();
-    const isAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: CliRecipePackageJsonNormalizeDependenciesRunOptions): CliRecipePackageJsonNormalizeDependenciesRunReturns {
+    const currentDirectory: CliRecipePackageJsonNormalizeDependenciesRunCurrentDirectory = process.cwd();
+    const isAtProjectRoot: CliRecipePackageJsonNormalizeDependenciesRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -51,32 +96,31 @@ export class CLIRecipePackageJsonNormalizeDependencies {
       return;
     }
 
-    const isDryRun = options.dryRun === true;
-    const isReplaceFile = options.replaceFile === true;
+    const isDryRun: CliRecipePackageJsonNormalizeDependenciesRunIsDryRun = options['dryRun'] === true;
+    const isReplaceFile: CliRecipePackageJsonNormalizeDependenciesRunIsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.run',
+        name: 'CliRecipePackageJsonNormalizeDependencies.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice = (isDryRun) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: CliRecipePackageJsonNormalizeDependenciesRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.run',
+        name: 'CliRecipePackageJsonNormalizeDependencies.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const novaConfig = new NovaConfig();
-    const workingFile = await novaConfig.load();
-    const workingFileWorkspaces = Object.entries(workingFile.workspaces ?? {});
+    const workingFile: CliRecipePackageJsonNormalizeDependenciesRunWorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: CliRecipePackageJsonNormalizeDependenciesRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.run',
+        name: 'CliRecipePackageJsonNormalizeDependencies.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-dependencies. No workspaces detected in the "nova.config.json" file.');
 
@@ -84,15 +128,15 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig = workspace[1];
-      const workspaceRecipes = workspaceConfig.recipes;
+    const eligibleWorkspaces: CliRecipePackageJsonNormalizeDependenciesRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: CliRecipePackageJsonNormalizeDependenciesRunWorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: CliRecipePackageJsonNormalizeDependenciesRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple = workspaceRecipes['normalize-dependencies'];
+      const recipeTuple: CliRecipePackageJsonNormalizeDependenciesRunRecipeTupleFilter = workspaceRecipes['normalize-dependencies'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -103,21 +147,21 @@ export class CLIRecipePackageJsonNormalizeDependencies {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.run',
+        name: 'CliRecipePackageJsonNormalizeDependencies.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-dependencies. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces = await loadWorkspaceManifests({
+    const workspaces: CliRecipePackageJsonNormalizeDependenciesRunWorkspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.run',
+        name: 'CliRecipePackageJsonNormalizeDependencies.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-dependencies. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -125,30 +169,30 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     }
 
     Logger.customize({
-      name: 'CLIRecipePackageJsonNormalizeDependencies.run',
+      name: 'CliRecipePackageJsonNormalizeDependencies.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for normalize-dependencies.`);
 
-    let hasUnpinnable = false;
+    let hasUnpinnable: CliRecipePackageJsonNormalizeDependenciesRunHasUnpinnable = false;
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.run',
+        name: 'CliRecipePackageJsonNormalizeDependencies.run',
         purpose: 'iteration',
-      }).info(`Running normalize-dependencies for the "${workspace.manifest.name}" workspace ...`);
+      }).info(`Running normalize-dependencies for the "${workspace['manifest']['name']}" workspace ...`);
 
-      await CLIRecipePackageJsonNormalizeDependencies.handle(workspace);
+      await CliRecipePackageJsonNormalizeDependencies.handle(workspace);
 
       // Check if version pinning is enabled in the recipe settings.
-      const recipes = workspace.manifest.recipes;
-      const recipeTuple = (recipes !== undefined) ? recipes['normalize-dependencies'] : undefined;
-      const recipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
-      const pinDependencyVersions = (recipeSettings !== undefined && recipeSettings['pinDependencyVersions'] === true);
-      const pinDevDependencyVersions = (recipeSettings !== undefined && recipeSettings['pinDevDependencyVersions'] === true);
+      const recipes: CliRecipePackageJsonNormalizeDependenciesRunRecipes = workspace['manifest']['recipes'];
+      const recipeTuple: CliRecipePackageJsonNormalizeDependenciesRunRecipeTuple = (recipes !== undefined) ? recipes['normalize-dependencies'] : undefined;
+      const recipeSettings: CliRecipePackageJsonNormalizeDependenciesRunRecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
+      const pinDependencyVersions: CliRecipePackageJsonNormalizeDependenciesRunPinDependencyVersions = (recipeSettings !== undefined && recipeSettings['pinDependencyVersions'] === true);
+      const pinDevDependencyVersions: CliRecipePackageJsonNormalizeDependenciesRunPinDevDependencyVersions = (recipeSettings !== undefined && recipeSettings['pinDevDependencyVersions'] === true);
 
       if (pinDependencyVersions === true || pinDevDependencyVersions === true) {
-        const count = CLIRecipePackageJsonNormalizeDependencies.pinDependencies(workspace, pinDependencyVersions, pinDevDependencyVersions);
+        const count: CliRecipePackageJsonNormalizeDependenciesRunCount = CliRecipePackageJsonNormalizeDependencies.pinDependencies(workspace, pinDependencyVersions, pinDevDependencyVersions);
 
         if (count < 0) {
           hasUnpinnable = true;
@@ -165,41 +209,46 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     if (hasUnpinnable === true) {
       process.exitCode = 1;
     }
+
+    return;
   }
 
   /**
-   * CLI Recipe - package.json - Normalize Dependencies - Handle.
+   * CLI - Recipe - package.json - Normalize Dependencies - Handle.
    *
-   * @param {CLIRecipePackageJsonNormalizeDependenciesHandleWorkspace} workspace - Workspace.
+   * Removes empty dependency groups, merges the legacy bundledDependencies alias into
+   * bundleDependencies, and cleans up empty overrides for one workspace.
+   *
+   * @param {CliRecipePackageJsonNormalizeDependenciesHandleWorkspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CLIRecipePackageJsonNormalizeDependenciesHandleReturns}
+   * @returns {CliRecipePackageJsonNormalizeDependenciesHandleReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static async handle(workspace: CLIRecipePackageJsonNormalizeDependenciesHandleWorkspace): CLIRecipePackageJsonNormalizeDependenciesHandleReturns {
-    const fileContents = workspace.fileContents;
-    const manifest = workspace.manifest;
+  private static async handle(workspace: CliRecipePackageJsonNormalizeDependenciesHandleWorkspace): CliRecipePackageJsonNormalizeDependenciesHandleReturns {
+    const fileContents: CliRecipePackageJsonNormalizeDependenciesHandleFileContents = workspace['fileContents'];
+    const manifest: CliRecipePackageJsonNormalizeDependenciesHandleManifest = workspace['manifest'];
 
-    const packageDependencies = fileContents['dependencies'];
-    const packageDevDependencies = fileContents['devDependencies'];
-    const packagePeerDependencies = fileContents['peerDependencies'];
-    const packagePeerDependenciesMeta = fileContents['peerDependenciesMeta'];
-    const packageBundleDependencies = fileContents['bundleDependencies'];
-    const packageBundledDependencies = fileContents['bundledDependencies'];
-    const packageOptionalDependencies = fileContents['optionalDependencies'];
-    const packageOverrides = fileContents['overrides'];
+    const packageDependencies: CliRecipePackageJsonNormalizeDependenciesHandlePackageDependencies = fileContents['dependencies'];
+    const packageDevDependencies: CliRecipePackageJsonNormalizeDependenciesHandlePackageDevDependencies = fileContents['devDependencies'];
+    const packagePeerDependencies: CliRecipePackageJsonNormalizeDependenciesHandlePackagePeerDependencies = fileContents['peerDependencies'];
+    const packagePeerDependenciesMeta: CliRecipePackageJsonNormalizeDependenciesHandlePackagePeerDependenciesMeta = fileContents['peerDependenciesMeta'];
+    const packageBundleDependencies: CliRecipePackageJsonNormalizeDependenciesHandlePackageBundleDependencies = fileContents['bundleDependencies'];
+    const packageBundledDependencies: CliRecipePackageJsonNormalizeDependenciesHandlePackageBundledDependencies = fileContents['bundledDependencies'];
+    const packageOptionalDependencies: CliRecipePackageJsonNormalizeDependenciesHandlePackageOptionalDependencies = fileContents['optionalDependencies'];
+    const packageOverrides: CliRecipePackageJsonNormalizeDependenciesHandlePackageOverrides = fileContents['overrides'];
 
     // Sync the "dependencies" field (Conditional).
     if (
       packageDependencies !== undefined // Package "dependencies" is defined.
-      && CLIRecipePackageJsonNormalizeDependencies.isEmpty(packageDependencies) // Package "dependencies" is empty.
+      && CliRecipePackageJsonNormalizeDependencies.isEmpty(packageDependencies) === true // Package "dependencies" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'dependencies',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "dependencies" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "dependencies" ...`);
 
       Reflect.deleteProperty(fileContents, 'dependencies');
     }
@@ -207,12 +256,12 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     // Sync the "devDependencies" field (Conditional).
     if (
       packageDevDependencies !== undefined // Package "devDependencies" is defined.
-      && CLIRecipePackageJsonNormalizeDependencies.isEmpty(packageDevDependencies) // Package "devDependencies" is empty.
+      && CliRecipePackageJsonNormalizeDependencies.isEmpty(packageDevDependencies) === true // Package "devDependencies" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'devDependencies',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "devDependencies" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "devDependencies" ...`);
 
       Reflect.deleteProperty(fileContents, 'devDependencies');
     }
@@ -220,12 +269,12 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     // Sync the "peerDependencies" field (Conditional).
     if (
       packagePeerDependencies !== undefined // Package "peerDependencies" is defined.
-      && CLIRecipePackageJsonNormalizeDependencies.isEmpty(packagePeerDependencies) // Package "peerDependencies" is empty.
+      && CliRecipePackageJsonNormalizeDependencies.isEmpty(packagePeerDependencies) === true // Package "peerDependencies" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'peerDependencies',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "peerDependencies" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "peerDependencies" ...`);
 
       Reflect.deleteProperty(fileContents, 'peerDependencies');
     }
@@ -233,12 +282,12 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     // Sync the "peerDependenciesMeta" field (Conditional).
     if (
       packagePeerDependenciesMeta !== undefined // Package "peerDependenciesMeta" is defined.
-      && CLIRecipePackageJsonNormalizeDependencies.isEmpty(packagePeerDependenciesMeta) // Package "peerDependenciesMeta" is empty.
+      && CliRecipePackageJsonNormalizeDependencies.isEmpty(packagePeerDependenciesMeta) === true // Package "peerDependenciesMeta" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'peerDependenciesMeta',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "peerDependenciesMeta" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "peerDependenciesMeta" ...`);
 
       Reflect.deleteProperty(fileContents, 'peerDependenciesMeta');
     }
@@ -247,21 +296,24 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     if (
       packageBundledDependencies !== undefined // Package "bundledDependencies" is defined.
     ) {
-      const bundleDependencies = Array.isArray(packageBundleDependencies) ? packageBundleDependencies : [];
-      const bundledDependencies = Array.isArray(packageBundledDependencies) ? packageBundledDependencies : [];
-      const mergedBundleDependencies = [...new Set([...bundleDependencies, ...bundledDependencies])];
+      const bundleDependencies: CliRecipePackageJsonNormalizeDependenciesHandleBundleDependencies = (Array.isArray(packageBundleDependencies) === true) ? packageBundleDependencies : [];
+      const bundledDependencies: CliRecipePackageJsonNormalizeDependenciesHandleBundledDependencies = (Array.isArray(packageBundledDependencies) === true) ? packageBundledDependencies : [];
+      const mergedBundleDependencies: CliRecipePackageJsonNormalizeDependenciesHandleMergedBundleDependencies = [...new Set([
+        ...bundleDependencies,
+        ...bundledDependencies,
+      ])];
 
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'bundleDependencies',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Merging "bundledDependencies" into "bundleDependencies" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Merging "bundledDependencies" into "bundleDependencies" ...`);
 
       Reflect.set(fileContents, 'bundleDependencies', mergedBundleDependencies);
 
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'bundledDependencies',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing "bundledDependencies". "bundledDependencies" is an alias of "bundleDependencies".`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "bundledDependencies". "bundledDependencies" is an alias of "bundleDependencies".`);
 
       Reflect.deleteProperty(fileContents, 'bundledDependencies');
     }
@@ -269,12 +321,12 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     // Sync the "bundleDependencies" field (Conditional).
     if (
       fileContents['bundleDependencies'] !== undefined // Package "bundleDependencies" is defined.
-      && CLIRecipePackageJsonNormalizeDependencies.isEmpty(fileContents['bundleDependencies']) // Package "bundleDependencies" is empty.
+      && CliRecipePackageJsonNormalizeDependencies.isEmpty(fileContents['bundleDependencies']) === true // Package "bundleDependencies" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'bundleDependencies',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "bundleDependencies" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "bundleDependencies" ...`);
 
       Reflect.deleteProperty(fileContents, 'bundleDependencies');
     }
@@ -282,12 +334,12 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     // Sync the "optionalDependencies" field (Conditional).
     if (
       packageOptionalDependencies !== undefined // Package "optionalDependencies" is defined.
-      && CLIRecipePackageJsonNormalizeDependencies.isEmpty(packageOptionalDependencies) // Package "optionalDependencies" is empty.
+      && CliRecipePackageJsonNormalizeDependencies.isEmpty(packageOptionalDependencies) === true // Package "optionalDependencies" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'optionalDependencies',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "optionalDependencies" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "optionalDependencies" ...`);
 
       Reflect.deleteProperty(fileContents, 'optionalDependencies');
     }
@@ -295,32 +347,37 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     // Sync the "overrides" field (Conditional).
     if (
       packageOverrides !== undefined // Package "overrides" is defined.
-      && CLIRecipePackageJsonNormalizeDependencies.isEmpty(packageOverrides) // Package "overrides" is empty.
+      && CliRecipePackageJsonNormalizeDependencies.isEmpty(packageOverrides) === true // Package "overrides" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.handle',
+        name: 'CliRecipePackageJsonNormalizeDependencies.handle',
         purpose: 'overrides',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "overrides" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "overrides" ...`);
 
       Reflect.deleteProperty(fileContents, 'overrides');
     }
+
+    return;
   }
 
   /**
-   * CLI Recipe - package.json - Normalize Dependencies - Pin dependencies.
+   * CLI - Recipe - package.json - Normalize Dependencies - Pin Dependencies.
    *
-   * @param {CLIRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace}                workspace                - Workspace.
-   * @param {CLIRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions}    pinDependencyVersions    - Pin dependency versions.
-   * @param {CLIRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions} pinDevDependencyVersions - Pin dev dependency versions.
+   * Strips range prefixes like ^ and ~ from version strings in dependencies and
+   * devDependencies. Returns a negative count when unpinnable.
+   *
+   * @param {CliRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace}                workspace                - Workspace.
+   * @param {CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions}    pinDependencyVersions    - Pin dependency versions.
+   * @param {CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions} pinDevDependencyVersions - Pin dev dependency versions.
    *
    * @private
    *
-   * @returns {CLIRecipePackageJsonNormalizeDependenciesPinDependenciesReturns}
+   * @returns {CliRecipePackageJsonNormalizeDependenciesPinDependenciesReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static pinDependencies(workspace: CLIRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace, pinDependencyVersions: CLIRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions, pinDevDependencyVersions: CLIRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions): CLIRecipePackageJsonNormalizeDependenciesPinDependenciesReturns {
-    const depGroups: CLIRecipePackageJsonNormalizeDependenciesPinDependenciesDepGroups = [];
+  private static pinDependencies(workspace: CliRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace, pinDependencyVersions: CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions, pinDevDependencyVersions: CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions): CliRecipePackageJsonNormalizeDependenciesPinDependenciesReturns {
+    const depGroups: CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepGroups = [];
 
     if (pinDependencyVersions === true) {
       depGroups.push('dependencies');
@@ -330,29 +387,32 @@ export class CLIRecipePackageJsonNormalizeDependencies {
       depGroups.push('devDependencies');
     }
 
-    let pinned = 0;
-    let unpinnable = 0;
+    let pinned: CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinned = 0;
+    let unpinnable: CliRecipePackageJsonNormalizeDependenciesPinDependenciesUnpinnable = 0;
 
     for (const depGroup of depGroups) {
-      const deps = workspace.fileContents[depGroup];
+      const deps: CliRecipePackageJsonNormalizeDependenciesPinDependenciesDeps = workspace['fileContents'][depGroup];
 
-      if (!isPlainObject(deps)) {
+      if (isPlainObject(deps) === false) {
         continue;
       }
 
-      for (const [depName, depVersion] of Object.entries(deps)) {
+      for (const depEntry of Object.entries(deps)) {
+        const depName: CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepName = depEntry[0];
+        const depVersion: CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepVersion = depEntry[1];
+
         if (typeof depVersion !== 'string') {
           continue;
         }
 
-        const stripped = CLIRecipePackageJsonNormalizeDependencies.stripPrefix(depVersion);
+        const stripped: CliRecipePackageJsonNormalizeDependenciesPinDependenciesStripped = CliRecipePackageJsonNormalizeDependencies.stripPrefix(depVersion);
 
         // Unpinnable version (e.g. "*" or "latest").
         if (stripped === undefined) {
           Logger.customize({
-            name: 'CLIRecipePackageJsonNormalizeDependencies.pinDependencies',
+            name: 'CliRecipePackageJsonNormalizeDependencies.pinDependencies',
             purpose: depGroup,
-          }).error(`${chalk.magenta(`"${workspace.manifest.name}" workspace`)} → "${depName}" has unpinnable version "${depVersion}".`);
+          }).error(`${chalk.magenta(`"${workspace['manifest']['name']}" workspace`)} → "${depName}" has unpinnable version "${depVersion}".`);
 
           unpinnable += 1;
 
@@ -368,9 +428,9 @@ export class CLIRecipePackageJsonNormalizeDependencies {
         Reflect.set(deps, depName, stripped);
 
         Logger.customize({
-          name: 'CLIRecipePackageJsonNormalizeDependencies.pinDependencies',
+          name: 'CliRecipePackageJsonNormalizeDependencies.pinDependencies',
           purpose: depGroup,
-        }).info(`${chalk.magenta(`"${workspace.manifest.name}" workspace`)} → Pinned "${depName}" from "${depVersion}" to "${stripped}".`);
+        }).info(`${chalk.magenta(`"${workspace['manifest']['name']}" workspace`)} → Pinned "${depName}" from "${depVersion}" to "${stripped}".`);
 
         pinned += 1;
       }
@@ -378,9 +438,9 @@ export class CLIRecipePackageJsonNormalizeDependencies {
 
     if (pinned === 0 && unpinnable === 0) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonNormalizeDependencies.pinDependencies',
+        name: 'CliRecipePackageJsonNormalizeDependencies.pinDependencies',
         purpose: 'summary',
-      }).info(`${chalk.magenta(`"${workspace.manifest.name}" workspace`)} → All versions are already pinned.`);
+      }).info(`${chalk.magenta(`"${workspace['manifest']['name']}" workspace`)} → All versions are already pinned.`);
     }
 
     // Return negative if there were unpinnable versions.
@@ -392,19 +452,22 @@ export class CLIRecipePackageJsonNormalizeDependencies {
   }
 
   /**
-   * CLI Recipe - package.json - Normalize Dependencies - Strip prefix.
+   * CLI - Recipe - package.json - Normalize Dependencies - Strip Prefix.
    *
-   * @param {CLIRecipePackageJsonNormalizeDependenciesStripPrefixVersion} version - Version.
+   * Removes the ^, ~, or >= range prefix from a semver string. Returns undefined for wildcard
+   * and latest values that cannot be pinned.
+   *
+   * @param {CliRecipePackageJsonNormalizeDependenciesStripPrefixVersion} version - Version.
    *
    * @private
    *
-   * @returns {CLIRecipePackageJsonNormalizeDependenciesStripPrefixReturns}
+   * @returns {CliRecipePackageJsonNormalizeDependenciesStripPrefixReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static stripPrefix(version: CLIRecipePackageJsonNormalizeDependenciesStripPrefixVersion): CLIRecipePackageJsonNormalizeDependenciesStripPrefixReturns {
+  private static stripPrefix(version: CliRecipePackageJsonNormalizeDependenciesStripPrefixVersion): CliRecipePackageJsonNormalizeDependenciesStripPrefixReturns {
     // Local file references are always valid.
-    if (version.startsWith('file:')) {
+    if (version.startsWith('file:') === true) {
       return version;
     }
 
@@ -414,7 +477,7 @@ export class CLIRecipePackageJsonNormalizeDependencies {
     }
 
     // Strip range prefix if present.
-    const match = version.match(PATTERN_RANGE_CAPTURE_REMAINDER);
+    const match: CliRecipePackageJsonNormalizeDependenciesStripPrefixMatch = version.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (match !== null && match[1] !== undefined) {
       return match[1];
@@ -425,17 +488,21 @@ export class CLIRecipePackageJsonNormalizeDependencies {
   }
 
   /**
-   * CLI Recipe - package.json - Normalize Dependencies - Is empty.
+   * CLI - Recipe - package.json - Normalize Dependencies - Is Empty.
    *
-   * @param {CLIRecipePackageJsonNormalizeDependenciesIsEmptyValue} value - Value.
+   * Checks whether a value is null, undefined, a blank
+   * string, an empty array, or an object with no keys.
+   * Used by handle to decide when to remove fields.
+   *
+   * @param {CliRecipePackageJsonNormalizeDependenciesIsEmptyValue} value - Value.
    *
    * @private
    *
-   * @returns {CLIRecipePackageJsonNormalizeDependenciesIsEmptyReturns}
+   * @returns {CliRecipePackageJsonNormalizeDependenciesIsEmptyReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static isEmpty(value: CLIRecipePackageJsonNormalizeDependenciesIsEmptyValue): CLIRecipePackageJsonNormalizeDependenciesIsEmptyReturns {
+  private static isEmpty(value: CliRecipePackageJsonNormalizeDependenciesIsEmptyValue): CliRecipePackageJsonNormalizeDependenciesIsEmptyReturns {
     if (value === null || value === undefined) {
       return true;
     }
@@ -444,7 +511,7 @@ export class CLIRecipePackageJsonNormalizeDependencies {
       return value.trim() === '';
     }
 
-    if (Array.isArray(value)) {
+    if (Array.isArray(value) === true) {
       return value.length === 0;
     }
 

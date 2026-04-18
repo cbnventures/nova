@@ -1,123 +1,261 @@
 /**
- * Border style.
+ * Shared - Border Characters.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type BorderStyle = 'box' | 'round' | 'thick';
+export type SharedBorderCharactersTopLeft = string;
 
-/**
- * Changelog entry.
- *
- * @since 1.0.0
- */
-export type ChangelogEntryPackage = string;
+export type SharedBorderCharactersTopRight = string;
 
-export type ChangelogEntryCategory = 'updated' | 'fixed' | 'added' | 'removed';
+export type SharedBorderCharactersBottomLeft = string;
 
-export type ChangelogEntryBump = 'major' | 'minor' | 'patch';
+export type SharedBorderCharactersBottomRight = string;
 
-export type ChangelogEntryMessage = string;
+export type SharedBorderCharactersHorizontal = string;
 
-export type ChangelogEntryFilePath = string;
+export type SharedBorderCharactersVertical = string;
 
-export type ChangelogEntry = {
-  package: ChangelogEntryPackage;
-  category: ChangelogEntryCategory;
-  bump: ChangelogEntryBump;
-  message: ChangelogEntryMessage;
-  filePath: ChangelogEntryFilePath;
+export type SharedBorderCharacters = {
+  topLeft: SharedBorderCharactersTopLeft;
+  topRight: SharedBorderCharactersTopRight;
+  bottomLeft: SharedBorderCharactersBottomLeft;
+  bottomRight: SharedBorderCharactersBottomRight;
+  horizontal: SharedBorderCharactersHorizontal;
+  vertical: SharedBorderCharactersVertical;
 };
 
 /**
- * Changelog options.
+ * Shared - Border Style.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ChangelogOptionsRecord = true;
+export type SharedBorderStyle = 'box' | 'round' | 'thick';
 
-export type ChangelogOptionsRelease = true;
+/**
+ * Shared - Changelog Entry.
+ *
+ * @since 0.13.0
+ */
+export type SharedChangelogEntryPackage = string;
 
-export type ChangelogOptionsPackage = string;
+export type SharedChangelogEntryCategory = 'updated' | 'fixed' | 'added' | 'removed';
 
-export type ChangelogOptionsCategory = string;
+export type SharedChangelogEntryBump = 'major' | 'minor' | 'patch';
 
-export type ChangelogOptionsBump = string;
+export type SharedChangelogEntryMessage = string;
 
-export type ChangelogOptionsMessage = string;
+export type SharedChangelogEntryFilePath = string;
 
-export type ChangelogOptionsDryRun = true;
-
-export type ChangelogOptions = {
-  record?: ChangelogOptionsRecord;
-  release?: ChangelogOptionsRelease;
-  package?: ChangelogOptionsPackage;
-  category?: ChangelogOptionsCategory;
-  bump?: ChangelogOptionsBump;
-  message?: ChangelogOptionsMessage;
-  dryRun?: ChangelogOptionsDryRun;
+export type SharedChangelogEntry = {
+  package: SharedChangelogEntryPackage;
+  category: SharedChangelogEntryCategory;
+  bump: SharedChangelogEntryBump;
+  message: SharedChangelogEntryMessage;
+  filePath: SharedChangelogEntryFilePath;
 };
 
 /**
- * Dialog action.
+ * Shared - Changelog Options.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type DialogAction = 'save' | 'cancel' | 'back';
+export type SharedChangelogOptionsRecord = true;
+
+export type SharedChangelogOptionsRelease = true;
+
+export type SharedChangelogOptionsPackage = string;
+
+export type SharedChangelogOptionsCategory = string;
+
+export type SharedChangelogOptionsBump = string;
+
+export type SharedChangelogOptionsMessage = string;
+
+export type SharedChangelogOptionsDryRun = true;
+
+export type SharedChangelogOptions = {
+  record?: SharedChangelogOptionsRecord;
+  release?: SharedChangelogOptionsRelease;
+  package?: SharedChangelogOptionsPackage;
+  category?: SharedChangelogOptionsCategory;
+  bump?: SharedChangelogOptionsBump;
+  message?: SharedChangelogOptionsMessage;
+  dryRun?: SharedChangelogOptionsDryRun;
+};
 
 /**
- * Entity menu action.
+ * Shared - Dialog Action.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type EntityMenuActionAddKind = 'add';
-
-export type EntityMenuActionAdd = {
-  kind: EntityMenuActionAddKind;
-};
-
-export type EntityMenuActionEditKind = 'edit';
-
-export type EntityMenuActionEditIndex = number;
-
-export type EntityMenuActionEdit = {
-  kind: EntityMenuActionEditKind;
-  index: EntityMenuActionEditIndex;
-};
-
-export type EntityMenuActionRemoveKind = 'remove';
-
-export type EntityMenuActionRemoveIndex = number;
-
-export type EntityMenuActionRemove = {
-  kind: EntityMenuActionRemoveKind;
-  index: EntityMenuActionRemoveIndex;
-};
-
-export type EntityMenuActionBackKind = 'back';
-
-export type EntityMenuActionBack = {
-  kind: EntityMenuActionBackKind;
-};
-
-export type EntityMenuAction =
-  EntityMenuActionAdd
-  | EntityMenuActionEdit
-  | EntityMenuActionRemove
-  | EntityMenuActionBack;
+export type SharedDialogAction = 'save' | 'cancel' | 'back';
 
 /**
- * Item pretty names.
+ * Shared - Entity Menu Action.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type ItemPrettyNames = Record<string, string>;
+export type SharedEntityMenuActionAddKind = 'add';
+
+export type SharedEntityMenuActionAdd = {
+  kind: SharedEntityMenuActionAddKind;
+};
+
+export type SharedEntityMenuActionEditKind = 'edit';
+
+export type SharedEntityMenuActionEditIndex = number;
+
+export type SharedEntityMenuActionEdit = {
+  kind: SharedEntityMenuActionEditKind;
+  index: SharedEntityMenuActionEditIndex;
+};
+
+export type SharedEntityMenuActionRemoveKind = 'remove';
+
+export type SharedEntityMenuActionRemoveIndex = number;
+
+export type SharedEntityMenuActionRemove = {
+  kind: SharedEntityMenuActionRemoveKind;
+  index: SharedEntityMenuActionRemoveIndex;
+};
+
+export type SharedEntityMenuActionBackKind = 'back';
+
+export type SharedEntityMenuActionBack = {
+  kind: SharedEntityMenuActionBackKind;
+};
+
+export type SharedEntityMenuAction =
+  SharedEntityMenuActionAdd
+  | SharedEntityMenuActionEdit
+  | SharedEntityMenuActionRemove
+  | SharedEntityMenuActionBack;
 
 /**
- * Log level.
+ * Shared - Env Entry.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type LogLevel =
+export type SharedEnvEntryKey = string;
+
+export type SharedEnvEntryValue = string;
+
+export type SharedEnvEntry = {
+  key: SharedEnvEntryKey;
+  value: SharedEnvEntryValue;
+};
+
+export type SharedEnvEntries = SharedEnvEntry[];
+
+/**
+ * Shared - Fund Platform.
+ *
+ * @since 0.15.0
+ */
+export type SharedFundPlatformId =
+  'github-sponsors'
+  | 'paypal'
+  | 'open-collective'
+  | 'ko-fi'
+  | 'buy-me-a-coffee'
+  | 'patreon'
+  | 'liberapay'
+  | 'unknown';
+
+export type SharedFundPlatformUrl = string;
+
+export type SharedFundPlatformLogo = string;
+
+export type SharedFundPlatformLabel = string;
+
+export type SharedFundPlatformAlt = string;
+
+export type SharedFundPlatformColor = string;
+
+export type SharedFundPlatform = {
+  id: SharedFundPlatformId;
+  url: SharedFundPlatformUrl;
+  logo: SharedFundPlatformLogo;
+  label: SharedFundPlatformLabel;
+  alt: SharedFundPlatformAlt;
+  color: SharedFundPlatformColor;
+};
+
+/**
+ * Shared - Item Pretty Names.
+ *
+ * @since 0.11.0
+ */
+export type SharedItemPrettyNames = Record<string, string>;
+
+/**
+ * Shared - JSDoc Hierarchy Create Options.
+ *
+ * @since 0.15.0
+ */
+export type SharedJsdocHierarchyCreateOptionsAnchorDirectories = string[];
+
+export type SharedJsdocHierarchyCreateOptionsIgnoreFiles = string[];
+
+export type SharedJsdocHierarchyCreateOptionsKnownNames = Record<string, string>;
+
+export type SharedJsdocHierarchyCreateOptionsStripDirectories = string[];
+
+export type SharedJsdocHierarchyCreateOptions = Readonly<{
+  anchorDirectories: SharedJsdocHierarchyCreateOptionsAnchorDirectories;
+  ignoreFiles: SharedJsdocHierarchyCreateOptionsIgnoreFiles;
+  knownNames: SharedJsdocHierarchyCreateOptionsKnownNames;
+  stripDirectories: SharedJsdocHierarchyCreateOptionsStripDirectories;
+}>;
+
+/**
+ * Shared - JSDoc Hierarchy Find Summary Info Result.
+ *
+ * @since 0.15.0
+ */
+export type SharedJsdocHierarchyFindSummaryInfoResultIndex = number;
+
+export type SharedJsdocHierarchyFindSummaryInfoResultText = string;
+
+export type SharedJsdocHierarchyFindSummaryInfoResult = {
+  index: SharedJsdocHierarchyFindSummaryInfoResultIndex;
+  text: SharedJsdocHierarchyFindSummaryInfoResultText;
+};
+
+/**
+ * Shared - Linux OS Release Entries.
+ *
+ * @since 0.13.0
+ */
+export type SharedLinuxOsReleaseEntry = string;
+
+export type SharedLinuxOsReleaseEntries = {
+  [key: string]: SharedLinuxOsReleaseEntry;
+};
+
+/**
+ * Shared - Logger Customize Returns.
+ *
+ * @since 0.15.0
+ */
+export type SharedLoggerCustomizeReturnsMessage = unknown[];
+
+export type SharedLoggerCustomizeReturnsMethodReturns = void;
+
+export type SharedLoggerCustomizeReturns = {
+  debug(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
+  dev(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
+  info(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
+  warn(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
+  error(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
+};
+
+/**
+ * Shared - Log Level.
+ *
+ * @since 0.11.0
+ */
+export type SharedLogLevel =
   'debug'
   | 'dev'
   | 'info'
@@ -125,150 +263,245 @@ export type LogLevel =
   | 'error';
 
 /**
- * Log options.
+ * Shared - Log Options.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type LogOptionsName = string;
+export type SharedLogOptionsName = string;
 
-export type LogOptionsType = 'function' | 'method' | 'test';
+export type SharedLogOptionsType = 'function' | 'method' | 'test';
 
-export type LogOptionsPurpose = string;
+export type SharedLogOptionsPurpose = string;
 
-export type LogOptionsPadTop = number;
+export type SharedLogOptionsPadTop = number;
 
-export type LogOptionsPadBottom = number;
+export type SharedLogOptionsPadBottom = number;
 
-export type LogOptions = {
-  name?: LogOptionsName;
-  type?: LogOptionsType;
-  purpose?: LogOptionsPurpose;
-  padTop?: LogOptionsPadTop;
-  padBottom?: LogOptionsPadBottom;
+export type SharedLogOptions = {
+  name?: SharedLogOptionsName;
+  type?: SharedLogOptionsType;
+  purpose?: SharedLogOptionsPurpose;
+  padTop?: SharedLogOptionsPadTop;
+  padBottom?: SharedLogOptionsPadBottom;
 };
 
 /**
- * Normalized result.
+ * Shared - Log Queue Entry.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type NormalizedResultResult = true | string;
+export type SharedLogQueueEntryScript = string;
 
-export type NormalizedResultSanitized<ReturnType> = ReturnType | undefined;
+export type SharedLogQueueEntryStream = 'stdout' | 'stderr';
 
-export type NormalizedResult<ReturnType> = {
-  result: NormalizedResultResult;
-  sanitized: NormalizedResultSanitized<ReturnType>;
+export type SharedLogQueueEntryLine = string;
+
+export type SharedLogQueueEntry = {
+  script: SharedLogQueueEntryScript;
+  stream: SharedLogQueueEntryStream;
+  line: SharedLogQueueEntryLine;
 };
 
 /**
- * Linux os release entries.
+ * Shared - Monorepo Context.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type LinuxOsReleaseEntry = string;
+export type SharedMonorepoContextMonorepoContext = 'monorepo';
 
-export type LinuxOsReleaseEntries = {
-  [key: string]: LinuxOsReleaseEntry;
+export type SharedMonorepoContextMonorepo = {
+  context: SharedMonorepoContextMonorepoContext;
+};
+
+export type SharedMonorepoContextWorkspaceContext = 'workspace';
+
+export type SharedMonorepoContextWorkspaceRoot = string;
+
+export type SharedMonorepoContextWorkspace = {
+  context: SharedMonorepoContextWorkspaceContext;
+  root: SharedMonorepoContextWorkspaceRoot;
+};
+
+export type SharedMonorepoContextStandaloneContext = 'standalone';
+
+export type SharedMonorepoContextStandalone = {
+  context: SharedMonorepoContextStandaloneContext;
+};
+
+export type SharedMonorepoContextNestedContext = 'nested';
+
+export type SharedMonorepoContextNested = {
+  context: SharedMonorepoContextNestedContext;
+};
+
+export type SharedMonorepoContext =
+  SharedMonorepoContextMonorepo
+  | SharedMonorepoContextWorkspace
+  | SharedMonorepoContextStandalone
+  | SharedMonorepoContextNested;
+
+/**
+ * Shared - Normalized Result.
+ *
+ * @since 0.13.0
+ */
+export type SharedNormalizedResultResult = true | string;
+
+export type SharedNormalizedResultSanitized<ReturnType> = ReturnType | undefined;
+
+export type SharedNormalizedResult<ReturnType> = {
+  result: SharedNormalizedResultResult;
+  sanitized: SharedNormalizedResultSanitized<ReturnType>;
 };
 
 /**
- * Nova config.
+ * Shared - Nova Config.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigProjectNameSlug = string;
+export type SharedNovaConfigProjectNameSlug = string;
 
-export type NovaConfigProjectNameTitle = string;
+export type SharedNovaConfigProjectNameTitle = string;
 
-export type NovaConfigProjectName = {
-  slug?: NovaConfigProjectNameSlug;
-  title?: NovaConfigProjectNameTitle;
+export type SharedNovaConfigProjectName = {
+  slug?: SharedNovaConfigProjectNameSlug;
+  title?: SharedNovaConfigProjectNameTitle;
 };
 
-export type NovaConfigProjectDescriptionShort = string;
+export type SharedNovaConfigProjectDescriptionShort = string;
 
-export type NovaConfigProjectDescriptionLong = string;
+export type SharedNovaConfigProjectDescriptionLong = string;
 
-export type NovaConfigProjectDescription = {
-  short?: NovaConfigProjectDescriptionShort;
-  long?: NovaConfigProjectDescriptionLong;
+export type SharedNovaConfigProjectDescription = {
+  short?: SharedNovaConfigProjectDescriptionShort;
+  long?: SharedNovaConfigProjectDescriptionLong;
 };
 
-export type NovaConfigProjectKeyword = string;
+export type SharedNovaConfigProjectKeyword = string;
 
-export type NovaConfigProjectKeywords = NovaConfigProjectKeyword[];
+export type SharedNovaConfigProjectKeywords = SharedNovaConfigProjectKeyword[];
 
-export type NovaConfigProject = {
-  name?: NovaConfigProjectName;
-  description?: NovaConfigProjectDescription;
-  keywords?: NovaConfigProjectKeywords;
+export type SharedNovaConfigProjectLegalName = string;
+
+export type SharedNovaConfigProjectPronouns = 'personal' | 'business';
+
+export type SharedNovaConfigProjectPlatform =
+  'nodejs'
+  | 'swift'
+  | 'android'
+  | 'java'
+  | 'kotlin'
+  | 'csharp'
+  | 'php'
+  | 'python'
+  | 'macos'
+  | 'linux'
+  | 'windows';
+
+export type SharedNovaConfigProjectPlatforms = SharedNovaConfigProjectPlatform[];
+
+export type SharedNovaConfigProjectStartingYear = number;
+
+export type SharedNovaConfigProjectLicense =
+  'AGPL-3.0'
+  | 'Apache-2.0'
+  | 'BSD-2-Clause'
+  | 'BSD-3-Clause'
+  | 'BSL-1.0'
+  | 'CC0-1.0'
+  | 'EPL-2.0'
+  | 'GPL-2.0'
+  | 'GPL-3.0'
+  | 'LGPL-2.1'
+  | 'MIT'
+  | 'MPL-2.0'
+  | 'Proprietary'
+  | 'Unlicense';
+
+export type SharedNovaConfigProject = {
+  name?: SharedNovaConfigProjectName;
+  description?: SharedNovaConfigProjectDescription;
+  keywords?: SharedNovaConfigProjectKeywords;
+  legalName?: SharedNovaConfigProjectLegalName;
+  pronouns?: SharedNovaConfigProjectPronouns;
+  platforms?: SharedNovaConfigProjectPlatforms;
+  startingYear?: SharedNovaConfigProjectStartingYear;
+  license?: SharedNovaConfigProjectLicense;
 };
 
-export type NovaConfigEntityName = string;
+export type SharedNovaConfigEntityName = string;
 
-export type NovaConfigEntityEmail = string;
+export type SharedNovaConfigEntityEmail = string;
 
-export type NovaConfigEntityUrl = string;
+export type SharedNovaConfigEntityUrl = string;
 
-export type NovaConfigEntityRole = 'author' | 'contributor' | 'supporter';
+export type SharedNovaConfigEntityRole = 'author' | 'contributor' | 'supporter';
 
-export type NovaConfigEntityRoles = NovaConfigEntityRole[];
+export type SharedNovaConfigEntityRoles = SharedNovaConfigEntityRole[];
 
-export type NovaConfigEntity = {
-  name?: NovaConfigEntityName;
-  email?: NovaConfigEntityEmail;
-  url?: NovaConfigEntityUrl;
-  roles?: NovaConfigEntityRoles;
+export type SharedNovaConfigEntity = {
+  name?: SharedNovaConfigEntityName;
+  email?: SharedNovaConfigEntityEmail;
+  url?: SharedNovaConfigEntityUrl;
+  roles?: SharedNovaConfigEntityRoles;
 };
 
-export type NovaConfigEntities = NovaConfigEntity[];
+export type SharedNovaConfigEntities = SharedNovaConfigEntity[];
 
-export type NovaConfigEmailsBugs = string;
+export type SharedNovaConfigEmailsBugs = string;
 
-export type NovaConfigEmails = {
-  bugs?: NovaConfigEmailsBugs;
+export type SharedNovaConfigEmails = {
+  bugs?: SharedNovaConfigEmailsBugs;
 };
 
-export type NovaConfigUrlsHomepage = string;
+export type SharedNovaConfigUrlsHomepage = string;
 
-export type NovaConfigUrlsRepository = string;
+export type SharedNovaConfigUrlsRepository = string;
 
-export type NovaConfigUrlsBugs = string;
+export type SharedNovaConfigUrlsBugs = string;
 
-export type NovaConfigUrlsLicense = string;
+export type SharedNovaConfigUrlsLicense = string;
 
-export type NovaConfigUrlsLogo = string;
+export type SharedNovaConfigUrlsLogo = string;
 
-export type NovaConfigUrlsDocumentation = string;
+export type SharedNovaConfigUrlsDocker = string;
 
-export type NovaConfigUrlsGitHub = string;
+export type SharedNovaConfigUrlsDocumentation = string;
 
-export type NovaConfigUrlsNpm = string;
+export type SharedNovaConfigUrlsGitHub = string;
 
-export type NovaConfigUrlsFundSource = string;
+export type SharedNovaConfigUrlsNpm = string;
 
-export type NovaConfigUrlsFundSources = NovaConfigUrlsFundSource[];
+export type SharedNovaConfigUrlsFundSource = string;
 
-export type NovaConfigUrls = {
-  homepage?: NovaConfigUrlsHomepage;
-  repository?: NovaConfigUrlsRepository;
-  bugs?: NovaConfigUrlsBugs;
-  license?: NovaConfigUrlsLicense;
-  logo?: NovaConfigUrlsLogo;
-  documentation?: NovaConfigUrlsDocumentation;
-  github?: NovaConfigUrlsGitHub;
-  npm?: NovaConfigUrlsNpm;
-  fundSources?: NovaConfigUrlsFundSources;
+export type SharedNovaConfigUrlsFundSources = SharedNovaConfigUrlsFundSource[];
+
+export type SharedNovaConfigUrlsPrivacyPolicy = string;
+
+export type SharedNovaConfigUrlsTermsOfUse = string;
+
+export type SharedNovaConfigUrls = {
+  homepage?: SharedNovaConfigUrlsHomepage;
+  repository?: SharedNovaConfigUrlsRepository;
+  bugs?: SharedNovaConfigUrlsBugs;
+  license?: SharedNovaConfigUrlsLicense;
+  logo?: SharedNovaConfigUrlsLogo;
+  docker?: SharedNovaConfigUrlsDocker;
+  documentation?: SharedNovaConfigUrlsDocumentation;
+  github?: SharedNovaConfigUrlsGitHub;
+  npm?: SharedNovaConfigUrlsNpm;
+  fundSources?: SharedNovaConfigUrlsFundSources;
+  privacyPolicy?: SharedNovaConfigUrlsPrivacyPolicy;
+  termsOfUse?: SharedNovaConfigUrlsTermsOfUse;
 };
 
-export type NovaConfigWorkspaceName = string;
+export type SharedNovaConfigWorkspaceName = string;
 
-export type NovaConfigWorkspaceRole = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
+export type SharedNovaConfigWorkspaceRole = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
 
-export type NovaConfigWorkspacePolicy = 'freezable' | 'trackable' | 'distributable';
+export type SharedNovaConfigWorkspacePolicy = 'freezable' | 'trackable' | 'distributable';
 
-export type NovaConfigWorkspaceRecipeName =
+export type SharedNovaConfigWorkspaceRecipeName =
   'sync-identity'
   | 'sync-ownership'
   | 'normalize-modules'
@@ -279,68 +512,174 @@ export type NovaConfigWorkspaceRecipeName =
   | 'normalize-tooling'
   | 'cleanup';
 
-export type NovaConfigWorkspaceRecipeEnabled = boolean;
+export type SharedNovaConfigWorkspaceRecipeEnabled = boolean;
 
-export type NovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
+export type SharedNovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
 
-export type NovaConfigWorkspaceRecipeTupleWithSettings = [NovaConfigWorkspaceRecipeEnabled, NovaConfigWorkspaceRecipeSettings];
+export type SharedNovaConfigWorkspaceRecipeTupleWithSettings = [SharedNovaConfigWorkspaceRecipeEnabled, SharedNovaConfigWorkspaceRecipeSettings];
 
-export type NovaConfigWorkspaceRecipeTupleWithoutSettings = [NovaConfigWorkspaceRecipeEnabled];
+export type SharedNovaConfigWorkspaceRecipeTupleWithoutSettings = [SharedNovaConfigWorkspaceRecipeEnabled];
 
-export type NovaConfigWorkspaceRecipeTuple = NovaConfigWorkspaceRecipeTupleWithSettings | NovaConfigWorkspaceRecipeTupleWithoutSettings;
+export type SharedNovaConfigWorkspaceRecipeTuple = SharedNovaConfigWorkspaceRecipeTupleWithSettings | SharedNovaConfigWorkspaceRecipeTupleWithoutSettings;
 
-export type NovaConfigWorkspaceRecipes = {
-  [key in NovaConfigWorkspaceRecipeName]?: NovaConfigWorkspaceRecipeTuple;
+export type SharedNovaConfigWorkspaceRecipes = {
+  [key in SharedNovaConfigWorkspaceRecipeName]?: SharedNovaConfigWorkspaceRecipeTuple;
 };
 
-export type NovaConfigWorkspace = {
-  name: NovaConfigWorkspaceName;
-  role: NovaConfigWorkspaceRole;
-  policy: NovaConfigWorkspacePolicy;
-  recipes?: NovaConfigWorkspaceRecipes;
+export type SharedNovaConfigWorkspace = {
+  name: SharedNovaConfigWorkspaceName;
+  role: SharedNovaConfigWorkspaceRole;
+  policy: SharedNovaConfigWorkspacePolicy;
+  recipes?: SharedNovaConfigWorkspaceRecipes;
 };
 
-export type NovaConfigWorkspaces = {
-  [key: string]: NovaConfigWorkspace;
+export type SharedNovaConfigWorkspaces = {
+  [key: string]: SharedNovaConfigWorkspace;
 };
 
-export type NovaConfig = {
-  project?: NovaConfigProject;
-  entities?: NovaConfigEntities;
-  emails?: NovaConfigEmails;
-  urls?: NovaConfigUrls;
-  workspaces?: NovaConfigWorkspaces;
+export type SharedNovaConfigWorkflowSuffix = string;
+
+export type SharedNovaConfigWorkflowTemplate = string;
+
+export type SharedNovaConfigWorkflowTrigger = string;
+
+export type SharedNovaConfigWorkflowTriggers = SharedNovaConfigWorkflowTrigger[];
+
+export type SharedNovaConfigWorkflowDependsOn = string[];
+
+export type SharedNovaConfigWorkflowSettingsKey = string;
+
+export type SharedNovaConfigWorkflowSettingsValue = string;
+
+export type SharedNovaConfigWorkflowSettings = {
+  [key: SharedNovaConfigWorkflowSettingsKey]: SharedNovaConfigWorkflowSettingsValue;
 };
 
-export type NovaConfigConfig = NovaConfig;
+export type SharedNovaConfigWorkflow = {
+  'template': SharedNovaConfigWorkflowTemplate;
+  'suffix': SharedNovaConfigWorkflowSuffix;
+  'triggers': SharedNovaConfigWorkflowTriggers;
+  'depends-on'?: SharedNovaConfigWorkflowDependsOn;
+  'settings'?: SharedNovaConfigWorkflowSettings;
+};
+
+export type SharedNovaConfigWorkflows = SharedNovaConfigWorkflow[];
+
+export type SharedNovaConfig = {
+  project?: SharedNovaConfigProject;
+  entities?: SharedNovaConfigEntities;
+  emails?: SharedNovaConfigEmails;
+  urls?: SharedNovaConfigUrls;
+  workspaces?: SharedNovaConfigWorkspaces;
+  workflows?: SharedNovaConfigWorkflows;
+};
+
+export type SharedNovaConfigConfig = SharedNovaConfig;
 
 /**
- * Nova config category.
+ * Shared - Nova Config Category.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigCategory = 'project' | 'entities' | 'emails' | 'urls' | 'workspaces';
+export type SharedNovaConfigCategory = 'project' | 'entities' | 'emails' | 'urls' | 'workspaces' | 'workflows';
 
 /**
- * Text align.
+ * Shared - Prompt With Cancel.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type TextAlign = 'left' | 'center' | 'right';
+export type SharedPromptWithCancelResolvedCancelled = false;
+
+export type SharedPromptWithCancelResolvedResult<Keys extends string, Result> = Record<Keys, Result>;
+
+export type SharedPromptWithCancelResolved<Keys extends string, Result> = {
+  cancelled: SharedPromptWithCancelResolvedCancelled;
+  result: SharedPromptWithCancelResolvedResult<Keys, Result>;
+};
+
+export type SharedPromptWithCancelRejectCancelled = true;
+
+export type SharedPromptWithCancelReject = {
+  cancelled: SharedPromptWithCancelRejectCancelled;
+};
 
 /**
- * Url protocol.
+ * Shared - Run Scripts Options.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type UrlProtocol = 'generic' | 'repository';
+export type SharedRunScriptsOptionsPattern = string;
+
+export type SharedRunScriptsOptionsSequential = true | undefined;
+
+export type SharedRunScriptsOptionsParallel = true | undefined;
+
+export type SharedRunScriptsOptionsBuffer = string | undefined;
+
+export type SharedRunScriptsOptions = {
+  pattern?: SharedRunScriptsOptionsPattern;
+  sequential?: SharedRunScriptsOptionsSequential;
+  parallel?: SharedRunScriptsOptionsParallel;
+  buffer?: SharedRunScriptsOptionsBuffer;
+};
 
 /**
- * Windows registry keys.
+ * Shared - Scaffold Config.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type WindowsRegistryKeyType =
+export type SharedScaffoldConfigMode = 'monorepo' | 'workspace';
+
+export type SharedScaffoldConfigName = string;
+
+export type SharedScaffoldConfigOutputDirectory = string;
+
+export type SharedScaffoldConfigWorkspaceName = string;
+
+export type SharedScaffoldConfig = {
+  mode: SharedScaffoldConfigMode;
+  name: SharedScaffoldConfigName;
+  outputDirectory: SharedScaffoldConfigOutputDirectory;
+  workspaceName: SharedScaffoldConfigWorkspaceName;
+};
+
+/**
+ * Shared - Shell Output.
+ *
+ * @since 0.15.0
+ */
+export type SharedShellOutputTextOut = string;
+
+export type SharedShellOutputTextError = string;
+
+export type SharedShellOutputCode = number;
+
+export type SharedShellOutput = {
+  textOut: SharedShellOutputTextOut;
+  textError: SharedShellOutputTextError;
+  code: SharedShellOutputCode;
+};
+
+/**
+ * Shared - Text Align.
+ *
+ * @since 0.11.0
+ */
+export type SharedTextAlign = 'left' | 'center' | 'right';
+
+/**
+ * Shared - URL Protocol.
+ *
+ * @since 0.11.0
+ */
+export type SharedUrlProtocol = 'generic' | 'repository';
+
+/**
+ * Shared - Windows Registry Keys.
+ *
+ * @since 0.13.0
+ */
+export type SharedWindowsRegistryKeyType =
   'REG_NONE'
   | 'REG_SZ'
   | 'REG_EXPAND_SZ'
@@ -356,30 +695,30 @@ export type WindowsRegistryKeyType =
   | 'REG_QWORD'
   | 'REG_QWORD_LITTLE_ENDIAN';
 
-export type WindowsRegistryKeyData = string;
+export type SharedWindowsRegistryKeyData = string;
 
-export type WindowsRegistryKey = {
-  type: WindowsRegistryKeyType;
-  data: WindowsRegistryKeyData;
+export type SharedWindowsRegistryKey = {
+  type: SharedWindowsRegistryKeyType;
+  data: SharedWindowsRegistryKeyData;
 };
 
-export type WindowsRegistryKeys = {
-  [key: string]: WindowsRegistryKey;
+export type SharedWindowsRegistryKeys = {
+  [key: string]: SharedWindowsRegistryKey;
 };
 
 /**
- * Workspace manifest.
+ * Shared - Workspace Manifest.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type WorkspaceManifestManifest = NovaConfigWorkspace;
+export type SharedWorkspaceManifestManifest = SharedNovaConfigWorkspace;
 
-export type WorkspaceManifestFilePath = string;
+export type SharedWorkspaceManifestFilePath = string;
 
-export type WorkspaceManifestFileContents = Record<string, unknown>;
+export type SharedWorkspaceManifestFileContents = Record<string, unknown>;
 
-export type WorkspaceManifest = {
-  manifest: WorkspaceManifestManifest;
-  filePath: WorkspaceManifestFilePath;
-  fileContents: WorkspaceManifestFileContents;
+export type SharedWorkspaceManifest = {
+  manifest: SharedWorkspaceManifestManifest;
+  filePath: SharedWorkspaceManifestFilePath;
+  fileContents: SharedWorkspaceManifestFileContents;
 };

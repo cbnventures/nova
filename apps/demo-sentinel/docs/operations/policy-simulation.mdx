@@ -1,0 +1,179 @@
+---
+title: Policy Simulation
+sidebar_position: 3
+description: Parapet sandbox, dry-run mode, traffic replay, and policy diff analysis.
+tags:
+  - operations
+  - simulation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Policy Simulation
+
+Parapet is Sentinel's policy simulation sandbox. It tests access policies against real historical traffic without modifying any live policy state. Before a new policy reaches production, Parapet answers the question: what would change?
+
+## Why Simulate
+
+Policy changes are inherently risky. A rule that looks correct in isolation can interact with existing policies in unexpected ways — granting access where none existed, or revoking access from a critical service account. Parapet eliminates this risk by replaying recorded Filament tunnel traffic through the proposed policy set and producing an exact impact report.
+
+:::warning Simulation Is Not a Guarantee
+Parapet replays historical traffic. It reveals how proposed policies would have evaluated against past connection patterns. It cannot predict traffic patterns that have never occurred. Always combine Parapet simulation with manual threat modeling for new zone architectures or novel access patterns.
+:::
+
+## Simulation Modes
+
+<Tabs>
+<TabItem value="dryrun" label="Dry Run" default>
+
+Dry-run mode evaluates a draft policy against the current fleet without replaying traffic. It shows which currently active sessions would pass or fail under the proposed rules:
+
+```bash title="Dry-run simulation"
+sentinel parapet dry-run \
+  --policy draft:tightened-posture \
+  --scope all-devices
+```
+
+```text title="Dry-run output"
+Parapet Dry Run: tightened-posture
+  Policy change: device.posture >= 80 → device.posture >= 90
+  Scope: all enrolled devices (1,247)
+
+  Current sessions that would be affected:
+    Would still pass:     1,089 (87.3%)
+    Would now fail:       158 (12.7%)
+
+  Failure breakdown by platform:
+    macOS:    42 devices (avg posture 84)
+    Windows:  67 devices (avg posture 82)
+    Linux:    31 devices (avg posture 86)
+    Android:  18 devices (avg posture 79)
+
+  Failure breakdown by cause:
+    OS patch level stale:      89
+    Antivirus definitions:     34
+    Screen lock timeout:       22
+    Firewall disabled:         13
+```
+
+Dry-run is fast — it completes in seconds because it evaluates the current snapshot, not historical traffic.
+
+</TabItem>
+<TabItem value="replay" label="Traffic Replay">
+
+Traffic replay processes historical Filament tunnel records through the proposed policy set. It shows how every connection over a time period would have been evaluated:
+
+```bash title="Traffic replay simulation"
+sentinel parapet simulate \
+  --policy-set production \
+  --include draft:tightened-posture \
+  --traffic-source production-replay \
+  --duration 7d
+```
+
+```text title="Replay output"
+Parapet Simulation Report
+  Policy set:      production + draft:tightened-posture
+  Traffic source:  production-replay (5,847,291 connections)
+  Duration:        7d replay in 43m 12s
+
+  Results:
+    Connections evaluated:   5,847,291
+    Access granted:          5,412,447 (92.6%)
+    Access denied:           434,844 (7.4%)
+
+  Delta from current production:
+    New grants:     0
+    New denials:    434,844
+    Unchanged:      5,412,447
+
+  Anomalies detected: 0
+  Lateral movement paths found: 0
+```
+
+Traffic replay takes longer but provides the complete picture. The delta report shows exactly what would change relative to the current production policy set.
+
+</TabItem>
+</Tabs>
+
+## Policy Diff
+
+Parapet can compare two policy sets side by side and show the access difference for every resource:
+
+```bash title="Policy diff"
+sentinel parapet diff \
+  --baseline production \
+  --proposed production+draft:tightened-posture
+```
+
+```text title="Diff output"
+Parapet Policy Diff
+  Baseline: production (current)
+  Proposed: production + draft:tightened-posture
+
+  Resource: api-cluster-east
+    Baseline:  1,089 sessions granted
+    Proposed:  931 sessions granted
+    Delta:     -158 sessions (posture threshold increase)
+
+  Resource: data-layer
+    Baseline:  247 sessions granted
+    Proposed:  247 sessions granted
+    Delta:     no change
+
+  Resource: admin-tools
+    Baseline:  12 sessions granted
+    Proposed:  12 sessions granted
+    Delta:     no change
+
+  Summary:
+    Resources affected: 1 of 3
+    Total session impact: -158 (13.6% of api-cluster-east)
+```
+
+## Promoting a Simulation
+
+After reviewing the simulation results, promote the draft policy to production:
+
+```bash title="Promote after simulation"
+sentinel parapet promote \
+  --draft tightened-posture \
+  --simulation-id sim_7f3a2b9c
+```
+
+The promotion links the new policy to its simulation results in Spyglass. Auditors can trace every production policy back to the simulation that validated it.
+
+:::note Simulation Requirements
+Every policy change that modifies access conditions must pass through a Parapet simulation before promotion. This is enforced by the Sentinel control plane — direct policy application without simulation is disabled for production resources by default.
+:::
+
+## Automated Simulation in Conduit
+
+Integrate Parapet into your Conduit CI pipeline to simulate policy changes on every commit:
+
+```text title="conduit.grain — policy simulation step"
+pipeline "policy-deploy" {
+  stage "simulate" {
+    run = "sentinel parapet simulate --policy-set production --include $DRAFT_POLICY --duration 24h"
+    fail_on = "anomalies > 0 || new_denials > 500"
+  }
+
+  stage "review" {
+    type    = "manual"
+    approvers = ["security-ops"]
+  }
+
+  stage "promote" {
+    run = "sentinel parapet promote --draft $DRAFT_POLICY --simulation-id $SIM_ID"
+  }
+}
+```
+
+The pipeline runs a 24-hour traffic replay, blocks promotion if anomalies are detected or the denial count exceeds the threshold, requires manual approval from the security operations team, and then promotes the policy automatically.
+
+## Next Steps
+
+- [Trust Policies](/docs/trust/trust-policies/) — The policy grammar that Parapet simulates against.
+- [Audit & Forensics](/docs/operations/audit-forensics/) — How simulation results are recorded in Spyglass.
+- [API Reference](/docs/reference/api-reference/) — Programmatic access to Parapet simulation and promotion endpoints.

@@ -1,0 +1,53 @@
+name: "Publish to AWS Amplify / Next.js[__WORKFLOW_ID__]"
+
+run-name: "[__RUN_NAME__]"
+
+on:
+[__TRIGGERS__]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Run without making changes"
+        required: false
+        type: "boolean"
+        default: true
+
+permissions:
+  contents: "read"
+
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: false
+
+env:
+  AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+  AWS_REGION: "${{ vars.AWS_REGION }}"
+  AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+  AMPLIFY_APP_ID: "${{ vars.AMPLIFY_APP_ID }}"
+  AMPLIFY_BRANCH_NAME: "${{ vars.AMPLIFY_BRANCH_NAME }}"
+  PUBLISH: "[__PUBLISH_CONDITION__]"
+
+jobs:
+  publish-to-aws-amplify:
+    runs-on: "ubuntu-latest"
+    timeout-minutes: 10
+[__JOBS_CONDITION__]
+    steps:
+      - name: "Configure AWS credentials"
+        uses: "aws-actions/configure-aws-credentials@v4"
+        with:
+          aws-access-key-id: "${{ env.AWS_ACCESS_KEY_ID }}"
+          aws-secret-access-key: "${{ env.AWS_SECRET_ACCESS_KEY }}"
+          aws-region: "${{ env.AWS_REGION }}"
+
+      - name: "Trigger Amplify build"
+        run: |
+          if [ "${PUBLISH}" = "true" ]; then
+            echo "[Publish] Production."
+            aws amplify start-job \
+              --app-id "${AMPLIFY_APP_ID}" \
+              --branch-name "${AMPLIFY_BRANCH_NAME}" \
+              --job-type RELEASE
+          else
+            echo "[Publish] Dry run."
+          fi

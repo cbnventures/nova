@@ -1,96 +1,122 @@
-import { schemaSpdxLicensesResponse } from '@/lib/schema.js';
-import { Logger } from '@/toolkit/index.js';
+import { libSchemaSpdxLicensesResponse } from '../lib/schema.js';
+import { Logger } from '../toolkit/index.js';
 
 import type {
-  SpdxLicensesFetchLicensesResponse,
-  SpdxLicensesFetchLicensesReturns,
-  SpdxLicensesLicenses,
-  SpdxLicensesPopulated,
-  SpdxLicensesResetForTestingReturns,
-} from '@/types/api/spdx-licenses.d.ts';
+  ApiSpdxLicensesFetchLicensesErrorMessage,
+  ApiSpdxLicensesFetchLicensesHttpResponse,
+  ApiSpdxLicensesFetchLicensesLicenseIds,
+  ApiSpdxLicensesFetchLicensesResponse,
+  ApiSpdxLicensesFetchLicensesResponseData,
+  ApiSpdxLicensesFetchLicensesReturns,
+  ApiSpdxLicensesLicenses,
+  ApiSpdxLicensesPopulated,
+  ApiSpdxLicensesResetForTestingReturns,
+} from '../types/api/spdx-licenses.d.ts';
 
 /**
- * SPDX Licenses.
+ * API - SPDX Licenses.
  *
- * @since 1.0.0
+ * Fetches and caches valid license identifiers
+ * from the SPDX registry. Used by the license generator
+ * to validate user input against the official list.
+ *
+ * @since 0.13.0
  */
-export class SpdxLicenses {
+export class ApiSpdxLicenses {
   /**
-   * SPDX Licenses - Licenses.
+   * API - SPDX Licenses - Licenses.
+   *
+   * Stores the set of license identifiers after the first successful fetch so subsequent
+   * calls avoid a network round-trip.
    *
    * @private
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  static #licenses: SpdxLicensesLicenses;
+  static #licenses: ApiSpdxLicensesLicenses;
 
   /**
-   * SPDX Licenses - Populated.
+   * API - SPDX Licenses - Populated.
+   *
+   * Guards against repeated network requests. Set to true after the first fetch attempt
+   * regardless of whether the request succeeded or failed.
    *
    * @private
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  static #populated: SpdxLicensesPopulated;
+  static #populated: ApiSpdxLicensesPopulated;
 
   /**
-   * SPDX Licenses - Fetch licenses.
+   * API - SPDX Licenses - Fetch Licenses.
    *
-   * @returns {SpdxLicensesFetchLicensesReturns}
+   * Downloads the SPDX license list from spdx.org and parses the response with Zod. Returns
+   * the cached set on repeat calls without another network request.
    *
-   * @since 1.0.0
+   * @returns {ApiSpdxLicensesFetchLicensesReturns}
+   *
+   * @since 0.13.0
    */
-  public static async fetchLicenses(): SpdxLicensesFetchLicensesReturns {
-    if (SpdxLicenses.#populated === true) {
-      return SpdxLicenses.#licenses;
+  public static async fetchLicenses(): ApiSpdxLicensesFetchLicensesReturns {
+    if (ApiSpdxLicenses.#populated === true) {
+      return ApiSpdxLicenses.#licenses;
     }
 
     try {
-      const response = await fetch('https://spdx.org/licenses/licenses.json');
+      const response: ApiSpdxLicensesFetchLicensesHttpResponse = await fetch('https://spdx.org/licenses/licenses.json');
 
       if (response.ok === false) {
         Logger.customize({
-          name: 'SpdxLicenses',
+          name: 'ApiSpdxLicenses',
           purpose: 'fetch',
         }).warn(`Failed to fetch SPDX licenses. HTTP status: ${response.status}`);
 
-        SpdxLicenses.#populated = true;
+        ApiSpdxLicenses.#populated = true;
 
         return undefined;
       }
 
-      const responseData = await response.json();
+      const responseData: ApiSpdxLicensesFetchLicensesResponseData = await response.json<ApiSpdxLicensesFetchLicensesResponseData>();
 
-      const data: SpdxLicensesFetchLicensesResponse = schemaSpdxLicensesResponse.parse(responseData);
+      const data: ApiSpdxLicensesFetchLicensesResponse = libSchemaSpdxLicensesResponse.parse(responseData);
 
-      SpdxLicenses.#licenses = new Set(data.licenses.map((license) => license.licenseId));
-      SpdxLicenses.#populated = true;
+      const licenseIds: ApiSpdxLicensesFetchLicensesLicenseIds = data['licenses'].map((license) => license['licenseId']);
 
-      return SpdxLicenses.#licenses;
+      ApiSpdxLicenses.#licenses = new Set(licenseIds);
+      ApiSpdxLicenses.#populated = true;
+
+      return ApiSpdxLicenses.#licenses;
     } catch (error) {
-      Logger.customize({
-        name: 'SpdxLicenses',
-        purpose: 'fetch',
-      }).warn([
+      const message: ApiSpdxLicensesFetchLicensesErrorMessage = [
         'Failed to fetch SPDX licenses.',
         error,
-      ].join('\n'));
+      ].join('\n');
 
-      SpdxLicenses.#populated = true;
+      Logger.customize({
+        name: 'ApiSpdxLicenses',
+        purpose: 'fetch',
+      }).warn(message);
+
+      ApiSpdxLicenses.#populated = true;
 
       return undefined;
     }
   }
 
   /**
-   * SPDX Licenses - Reset for testing.
+   * API - SPDX Licenses - Reset For Testing.
    *
-   * @returns {SpdxLicensesResetForTestingReturns}
+   * Clears the cached license set and populated flag so
+   * tests can exercise the fetch path from a clean state.
    *
-   * @since 1.0.0
+   * @returns {ApiSpdxLicensesResetForTestingReturns}
+   *
+   * @since 0.13.0
    */
-  public static resetForTesting(): SpdxLicensesResetForTestingReturns {
-    SpdxLicenses.#licenses = undefined;
-    SpdxLicenses.#populated = undefined;
+  public static resetForTesting(): ApiSpdxLicensesResetForTestingReturns {
+    ApiSpdxLicenses.#licenses = undefined;
+    ApiSpdxLicenses.#populated = undefined;
+
+    return;
   }
 }

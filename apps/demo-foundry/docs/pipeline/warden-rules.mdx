@@ -1,0 +1,165 @@
+---
+title: Warden Rules
+sidebar_position: 2
+tags:
+  - pipeline
+  - linting
+---
+
+# Warden Rules
+
+Warden is Foundry's linting engine. It ships 380+ rules across six categories, all enabled by default when you declare `warden = ["strict"]` in your manifest. No configuration file. No decision fatigue. One preset, all rules.
+
+## Rule Categories
+
+| Category    | Rules | Fixable | Focus                                          |
+|-------------|-------|---------|------------------------------------------------|
+| Conventions | 68    | 12      | Naming, exports, file structure, privacy.      |
+| Formatting  | 55    | 55      | Whitespace, comments, visual consistency.      |
+| Patterns    | 72    | 8       | Logic flow, assignments, control structures.   |
+| Safety      | 45    | 0       | Dangerous runtime patterns, implicit coercion. |
+| Syntax      | 60    | 15      | Language feature restrictions, compatibility.  |
+| Types       | 80    | 24      | Type annotations, generics, inference limits.  |
+
+## Presets
+
+Presets are named collections of rules. You stack them in the manifest, and later presets override earlier ones when rules conflict.
+
+```text title="project.grain"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+}
+```
+
+| Preset        | Rules | Description                                 |
+|---------------|-------|---------------------------------------------|
+| `strict`      | 220   | Core safety and type rules. The foundation. |
+| `conventions` | 95    | Naming, exports, and structural patterns.   |
+| `formatting`  | 65    | Whitespace, line length, and comment style. |
+
+:::warning
+The `strict` preset enables rules that reject implicit `any` and require explicit return types on all exported functions. If you are migrating an existing codebase, start with `conventions` and add `strict` once your type coverage is above 90%.
+:::
+
+## Severity Levels
+
+Every rule has one of three severity levels:
+
+| Severity | Behavior                                        |
+|----------|-------------------------------------------------|
+| `error`  | Fails the forge. Must be fixed before shipping. |
+| `warn`   | Prints a warning. Does not fail the forge.      |
+| `info`   | Informational. Appears in verbose output only.  |
+
+## Custom Rules
+
+You can adjust individual rules in the manifest `rules` block:
+
+```text title="project.grain — overriding a rule"
+workspace "my-app" {
+  warden = ["strict"]
+
+  rules {
+    "warden/no-default-export" = "off"
+    "warden/max-params"        = ["error", { max = 5 }]
+  }
+}
+```
+
+Overrides are explicit, version-controlled, and visible in the manifest. No hidden configuration files.
+
+## Rule Examples
+
+### Catching Violations
+
+Warden reports violations with the rule name, file path, line number, and a one-sentence explanation:
+
+```text title="Warden output"
+$ foundry warden check
+
+  src/utils/format.al
+    12:1  error  warden/no-default-export   Default exports are banned in library packages.
+    34:5  warn   warden/no-shadow           Variable "result" shadows a variable in the outer scope.
+
+  src/services/notify.al
+    8:1   error  warden/require-explicit-return  Exported functions must declare a return type.
+
+  3 problems (2 errors, 1 warning)
+```
+
+### Diff Highlighting
+
+Here is a rule catching and fixing a violation:
+
+```alloy title="Before — implicit return type"
+// remove-start
+export function formatDate(timestamp: Numeric) {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+// remove-end
+// add-start
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+// add-end
+```
+
+The `warden/require-explicit-return` rule has an auto-fix that infers the return type from the function body and adds it to the signature.
+
+<details>
+<summary>Full rule list by category</summary>
+
+**Conventions (68 rules)**
+
+| Rule                      | Fixable | Description                                             |
+|---------------------------|---------|---------------------------------------------------------|
+| `no-default-export`       | Yes     | Bans default exports in library packages.               |
+| `no-barrel-files`         | Yes     | Bans re-export index files.                             |
+| `require-exhaustive-deps` | No      | All function dependencies must be explicit.             |
+| `consistent-naming`       | No      | Enforces camelCase for variables, PascalCase for types. |
+| `file-name-case`          | No      | File names must match the primary export name.          |
+| ...                       |         | *65 additional rules in this category.*                 |
+
+**Safety (45 rules)**
+
+| Rule                    | Fixable | Description                                  |
+|-------------------------|---------|----------------------------------------------|
+| `no-eval`               | No      | Bans `eval` and `Function` constructor.      |
+| `no-implicit-coercion`  | Yes     | Requires explicit type conversions.          |
+| `no-prototype-builtins` | No      | Bans direct prototype method calls.          |
+| `no-unsafe-assignment`  | No      | Prevents assigning `any` to typed variables. |
+| ...                     |         | *41 additional rules in this category.*      |
+
+**Types (80 rules)**
+
+| Rule                      | Fixable | Description                                   |
+|---------------------------|---------|-----------------------------------------------|
+| `require-explicit-return` | Yes     | Exported functions must declare return types. |
+| `no-implicit-any`         | No      | Bans implicit `any` in all positions.         |
+| `consistent-type-imports` | Yes     | Enforces `import type` for type-only imports. |
+| `no-unnecessary-generics` | No      | Bans generic parameters that can be inferred. |
+| ...                       |         | *76 additional rules in this category.*       |
+
+</details>
+
+## Running Warden
+
+Warden runs automatically during the verify stage of every forge. You can also run it standalone:
+
+```bash title="Check the entire workspace"
+foundry warden check
+```
+
+```bash title="Auto-fix all fixable violations"
+foundry warden fix
+```
+
+```bash title="Check a single package"
+foundry warden check --only api
+```
+
+## Next Steps
+
+- [Testing with Crucible](/docs/pipeline/testing-with-crucible/) — Test scaffolding that pairs with Warden rules.
+- [Build Pipeline](/docs/pipeline/build-pipeline/) — Where Warden fits in the forge lifecycle.
+- [CLI Reference](/docs/reference/cli-reference/) — Full command reference for `foundry warden`.

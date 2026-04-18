@@ -1,0 +1,55 @@
+---
+id: spotlight
+title: Spotlight
+description: Highlighted section with a heading and freeform children content for showcasing a key feature.
+sidebar_position: 4
+keywords:
+  - nova
+  - docusaurus facades
+  - spotlight component
+  - feature highlight
+  - landing page
+  - code preview
+tags:
+  - facades
+  - component
+  - spotlight
+  - landing page
+---
+
+# Spotlight
+
+Section wrapper with a heading and freeform children content.
+
+Use it to spotlight a key feature, code sample, or visual on a landing page.
+
+## Summary
+
+The Spotlight component renders a `<section>` with a heading and any children you pass. Unlike Features or Stats, it does not impose a grid — you control the inner layout entirely.
+
+## Why Use This Component?
+
+- **Freeform content** — pass any JSX as children (code blocks, images, custom layouts).
+- **Consistent section wrapper** — heading style and spacing match other preset components.
+- **Preset-aware** — typography and surface styling adapt to the active preset.
+
+## Usage
+
+```tsx title="src/pages/index.tsx"
+import { Spotlight } from '@cbnventures/docusaurus-preset-nova/components';
+import CodeBlock from '@theme/CodeBlock';
+
+<Spotlight heading="Quick Setup" surface="alt">
+  <CodeBlock language="bash">
+    npx --yes @cbnventures/nova@latest scaffold docs docusaurus
+  </CodeBlock>
+</Spotlight>
+```
+
+## Options
+
+| Prop       | Type                 | Default     | Description                                             |
+|------------|----------------------|-------------|---------------------------------------------------------|
+| `heading`  | `string`             | —           | Section heading text. Required.                         |
+| `children` | `ReactNode`          | —           | Freeform content below the heading. Required.           |
+| `surface`  | `'alt' \| undefined` | `undefined` | Set to `'alt'` to use the alternate surface background. |

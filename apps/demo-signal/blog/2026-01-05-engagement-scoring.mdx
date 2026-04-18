@@ -1,0 +1,67 @@
+---
+title: "Building an Engagement Score from Click Data Alone"
+authors: [luca]
+tags: [engagement, lens, pulse, beacon]
+date: 2026-01-05
+---
+
+Lead scoring traditionally requires a CRM, a marketing automation platform, and a six-month implementation project. We wanted to know: how good of an engagement score can you build from nothing but Beacon click data? The answer surprised us. Click-derived engagement scores predicted conversion with 78% accuracy — within 5 percentage points of scores built from full CRM data.
+
+The implication is significant. If you have Beacon links in your campaigns, you already have the raw material for a useful engagement model. You do not need a CRM integration to start.
+
+{/* truncate */}
+
+## The Scoring Model
+
+We built a scoring model using four signals available from Beacon click data:
+
+- **Frequency**: Number of Beacon link clicks in the trailing 30 days.
+- **Recency**: Days since last Beacon link click.
+- **Depth**: Number of distinct content categories visited (pricing, docs, blog, case studies).
+- **Velocity**: Rate of change in click frequency over the trailing 14 days (accelerating, steady, or decelerating).
+
+Each signal is normalized to a 0-100 scale and weighted:
+
+```json title="Engagement score formula"
+{
+  "model": "click-engagement-v1",
+  "weights": {
+    "frequency": 0.25,
+    "recency": 0.30,
+    "depth": 0.25,
+    "velocity": 0.20
+  },
+  "decayFunction": "exponential",
+  "halfLife": "14d"
+}
+```
+
+Recency gets the highest weight because it is the strongest single predictor. A user who clicked yesterday is more likely to convert than a user who clicked thirty times last month but has gone silent.
+
+## Accuracy Comparison
+
+We tested the click-derived score against two baselines across 18 accounts:
+
+| Scoring Method     | Prediction Accuracy | False Positive Rate | Data Sources Required  |
+|--------------------|---------------------|---------------------|------------------------|
+| CRM + MAP          | 83%                 | 12%                 | CRM, email, web, forms |
+| Click-derived only | 78%                 | 16%                 | Beacon clicks only     |
+| Demographics only  | 54%                 | 38%                 | Firmographic data      |
+
+The click-derived score is 5 points behind the full CRM model but 24 points ahead of demographics alone. It requires a single data source. For teams without a CRM integration — or teams whose CRM data is incomplete — this is a meaningful upgrade over the alternative.
+
+## Pulse Integration
+
+Engagement scores flow into Pulse dashboards as a real-time metric. When a user's score crosses a threshold, Pulse can trigger an alert:
+
+- Score crosses 80: Notify the sales team that a high-engagement lead is active right now.
+- Score drops below 30 after being above 60: Flag the user as at risk of disengaging.
+- Score increases by more than 20 points in a single day: A research spike is happening — this user is actively evaluating.
+
+The combination of Lens segmentation and Pulse alerting turns passive click data into an active signal pipeline. You are not waiting for a weekly report to discover that a prospect went from casual browsing to intense evaluation. You find out in minutes.
+
+## Limitations
+
+Click-derived scoring has blind spots. It cannot capture offline interactions, phone calls, or in-app behavior that does not route through Beacon links. It works best for top-of-funnel and mid-funnel engagement where link clicks are the primary interaction.
+
+For teams that need full-funnel scoring, the click-derived model is a starting point — not a replacement. But for teams that have nothing today, 78% accuracy from a single data source is a defensible place to start.

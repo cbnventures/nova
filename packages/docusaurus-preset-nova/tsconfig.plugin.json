@@ -1,0 +1,53 @@
+{
+  "extends": [
+    "@cbnventures/nova/presets/tsconfig/dx-essentials.json",
+    "@cbnventures/nova/presets/tsconfig/dx-strict.json"
+  ],
+  "compilerOptions": {
+    "jsx": "preserve",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "verbatimModuleSyntax": false,
+    "noEmitOnError": false,
+    "outDir": "./build",
+    "rootDir": "./",
+    "types": [
+      "@docusaurus/module-type-aliases",
+      "@docusaurus/types",
+      "@types/node",
+      "@types/react",
+      "@types/react-dom",
+      "./nova-theme"
+    ]
+  },
+  "include": [
+    "./*",
+    "./src/**/*"
+  ],
+  "exclude": [
+    "./build/**",
+    "./eslint.config.ts",
+    "./vitest.config.ts",
+    "./node_modules/**",
+    "./src/components/**",
+    "./src/presets/*/components/**",
+    "./src/presets/*/theme/**",
+    "./src/tests/**",
+    "./src/theme/**",
+    "./src/types/theme/**",
+    "./src/lib/mermaid.ts",
+    "./src/lib/rehype-shiki.ts",
+    "./src/lib/search/perform-search.ts",
+    "./src/lib/search/worker.ts",
+    "./src/lib/search/use-search-worker.ts",
+    "./src/lib/search/use-search-highlight.ts",
+    "./src/types/lib/mermaid.d.ts",
+    "./src/types/lib/rehype-shiki.d.ts",
+    "./src/types/lib/search/worker.d.ts",
+    "./src/types/lib/search/use-search-worker.d.ts",
+    "./src/types/lib/search/use-search-highlight.d.ts"
+  ]
+}

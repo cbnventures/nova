@@ -1,0 +1,22 @@
+/**
+ * Foundry — Doc footer visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-doc-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--nova-foundry-border-subtle);
+}
+
+[data-theme="dark"] .nova-doc-footer {
+  border-top-color: rgba(255, 255, 255, 0.08);
+}
+
+@media (min-width: 768px) {
+  .nova-doc-footer {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+}

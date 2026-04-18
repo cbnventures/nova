@@ -1,0 +1,20 @@
+  - type: "input"
+    id: "dotnet-version"
+    attributes:
+      label: ".NET version"
+      description: "What version of .NET are you using? Run `dotnet --version` in your terminal to find out."
+      placeholder: "e.g. 8.0.14"
+    validations:
+      required: true
+  - type: "dropdown"
+    id: "operating-system"
+    attributes:
+      label: "Operating system"
+      description: "What operating system are you using?"
+      options:
+        - "Windows"
+        - "macOS"
+        - "Linux"
+        - "Other"
+    validations:
+      required: true

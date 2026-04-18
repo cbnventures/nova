@@ -17,6 +17,7 @@ tags:
   - automation
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -24,29 +25,29 @@ import cliHeaderBasic from './_assets_/cli-header-1.png';
 import cliHeaderStyled from './_assets_/cli-header-2.png';
 import cliHeaderMargins from './_assets_/cli-header-3.png';
 
-Display consistent <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> banners sized for any terminal, preserving color codes and honoring padding preferences.
+Display consistent <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> banners sized for any terminal, preserving color codes and honoring padding preferences.
 
 ## Summary
 
-The `CLIHeader` battery renders <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>-safe banner strings you can print, giving any <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> an instant, on-brand frame with tunable borders, width, padding, and smart truncation.
+The `CLIHeader` battery renders <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>-safe banner strings you can print, giving any <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> an instant, on-brand frame with tunable borders, width, padding, and smart truncation.
 
 ## Why Use This Battery?
 
 1. Displays a branded heading so every command run carries clear visual identity.
-2. Pin important information (release version, <Term title="revision" to="/docs/quickstart/terminology#git-and-workflow">commit</Term> SHA, target environment, etc.) in the header.
+2. Pin important information (release version, <Terminology title="revision" to="/docs/quickstart/terminology#git-and-workflow" color={true}>commit</Terminology> SHA, target environment, etc.) in the header.
 3. Helps surface high-priority notices, like upcoming deprecations or required flags.
 
 ## Capabilities
 
 - Terminal width is adapted during rendering, so banners match the window size without manual tuning.
 - Adds margin and padding controls without hand-tuning spaces or escape codes.
-- <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>-aware truncation keeps long, colorized titles legible and prevents bleed into the rest of the output.
+- <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>-aware truncation keeps long, colorized titles legible and prevents bleed into the rest of the output.
 - Border presets cover box, round, and thick frames, giving teams on-brand presentation with no bloat.
 
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the <Term title="application programming interface" to="/docs/quickstart/terminology#fundamentals">API</Term> is identical in JavaScript (<Term title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript">ESM</Term>-only).
+Examples use TypeScript, but the <Terminology title="application programming interface" to="/docs/quickstart/terminology#fundamentals" color={true}>API</Terminology> is identical in JavaScript (<Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology>-only).
 :::
 
 <Tabs groupId="cli-header-usage">
@@ -168,19 +169,19 @@ Tune the runtime behavior with the options below.
 
 Pass these values as the second argument to `CLIHeader.render(lines, options)` and pick the border style, width, and padding that style the banner to fit your content.
 
-| Option         | Type                            | Default                  | Description                                                                                                                                             |
-|----------------|---------------------------------|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `align`        | `'left' \| 'center' \| 'right'` | `'center'`               | Aligns each content row within the frame; defaults to centered text.                                                                                    |
-| `width`        | `number`                        | `process.stdout.columns` | Target frame width. Falls back to the current terminal columns—set this explicitly in CI.                                                               |
-| `style`        | `'box' \| 'round' \| 'thick'`   | `'box'`                  | Picks the border characters used for the top, bottom, and vertical edges.                                                                               |
-| `paddingX`     | `number`                        | `0`                      | Adds spaces on both sides of each content row (negative values are treated as `0`).                                                                     |
-| `paddingY`     | `number`                        | `0`                      | Adds blank content rows above and below the provided text (negative values become `0`).                                                                 |
-| `marginTop`    | `number`                        | `0`                      | Emits that many blank lines before the banner block (clamped at `0`).                                                                                   |
-| `marginBottom` | `number`                        | `0`                      | Emits that many blank lines after the banner block (clamped at `0`).                                                                                    |
-| `interactive`  | `boolean`                       | `process.stdout.isTTY`   | When `false`, strips ANSI codes and outputs plain text without borders, padding, or margins—ideal for CI/CD pipelines and non-interactive environments. |
+| Option         | Type                            | Default                  | Description                                                                                                                                                                                                                                                                                                                                                                                                           |
+|----------------|---------------------------------|--------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `align`        | `'left' \| 'center' \| 'right'` | `'center'`               | Aligns each content row within the frame; defaults to centered text.                                                                                                                                                                                                                                                                                                                                                  |
+| `width`        | `number`                        | `process.stdout.columns` | Target frame width. Falls back to the current terminal columns—set this explicitly in CI.                                                                                                                                                                                                                                                                                                                             |
+| `style`        | `'box' \| 'round' \| 'thick'`   | `'box'`                  | Picks the border characters used for the top, bottom, and vertical edges.                                                                                                                                                                                                                                                                                                                                             |
+| `paddingX`     | `number`                        | `0`                      | Adds spaces on both sides of each content row (negative values are treated as `0`).                                                                                                                                                                                                                                                                                                                                   |
+| `paddingY`     | `number`                        | `0`                      | Adds blank content rows above and below the provided text (negative values become `0`).                                                                                                                                                                                                                                                                                                                               |
+| `marginTop`    | `number`                        | `0`                      | Emits that many blank lines before the banner block (clamped at `0`).                                                                                                                                                                                                                                                                                                                                                 |
+| `marginBottom` | `number`                        | `0`                      | Emits that many blank lines after the banner block (clamped at `0`).                                                                                                                                                                                                                                                                                                                                                  |
+| `interactive`  | `boolean`                       | `process.stdout.isTTY`   | When `false`, strips <Terminology title="escape codes" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology> codes and outputs plain text without borders, padding, or margins—ideal for <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines and non-interactive environments. |
 
 ## Troubleshooting
 
-- **Borders collapse or look uneven.** — Increase `width` or reduce `paddingX` so there is space between borders.
-- **Text truncates unexpectedly.** — Increase `width` or lower padding; a one-character ellipsis (`…`) indicates truncation.
-- **Extra blank lines.** — Check `marginTop`, `marginBottom`, and `paddingY`; set them to `0` for a tighter banner.
+- **Borders collapse or look uneven** — Increase `width` or reduce `paddingX` so there is space between borders.
+- **Text truncates unexpectedly** — Increase `width` or lower padding; a one-character ellipsis (`…`) indicates truncation.
+- **Extra blank lines** — Check `marginTop`, `marginBottom`, and `paddingY`; set them to `0` for a tighter banner.

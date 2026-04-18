@@ -1,0 +1,24 @@
+/**
+ * ============================
+ * Typewriter — Container
+ * ============================
+ */
+
+.nova-typewriter {
+  display: grid;
+}
+
+.nova-typewriter > * {
+  grid-area: 1 / 1;
+  align-self: center;
+}
+
+/**
+ * ============================
+ * Typewriter — Measure
+ * ============================
+ */
+
+.nova-typewriter-measure {
+  visibility: hidden;
+}

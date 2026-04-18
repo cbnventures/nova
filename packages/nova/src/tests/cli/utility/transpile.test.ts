@@ -9,115 +9,97 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIUtilityTranspile } from '@/cli/utility/transpile.js';
+import { afterAll, describe, it } from 'vitest';
+
+import { CliUtilityTranspile } from '../../../cli/utility/transpile.js';
 
 import type {
-  CLIUtilityTranspileTestOriginalCwd,
-  CLIUtilityTranspileTestSandboxRoot,
-} from '@/types/tests/cli/utility/transpile.test.d.ts';
+  TestsCliUtilityTranspileRunIndexPath,
+  TestsCliUtilityTranspileRunOriginalCwd,
+  TestsCliUtilityTranspileRunOutputExists,
+  TestsCliUtilityTranspileRunOutputJsPath,
+  TestsCliUtilityTranspileRunProjectDirectory,
+  TestsCliUtilityTranspileRunSandboxDirectory,
+  TestsCliUtilityTranspileRunSandboxRoot,
+  TestsCliUtilityTranspileRunTemporaryDirectory,
+  TestsCliUtilityTranspileRunTemporaryPrefix,
+  TestsCliUtilityTranspileRunTsconfigContents,
+  TestsCliUtilityTranspileRunTsconfigPath,
+} from '../../../types/tests/cli/utility/transpile.test.d.ts';
 
 /**
- * CLI Utility - Transpile - Run.
+ * Tests - CLI - Utility - Transpile - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIUtilityTranspile.run', async (context) => {
-  const originalCwd: CLIUtilityTranspileTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIUtilityTranspileTestSandboxRoot = await realpath(await mkdtemp(join(tmpdir(), `nova-${context.name}-`)));
+describe('CliUtilityTranspile.run', async () => {
+  const originalCwd: TestsCliUtilityTranspileRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliUtilityTranspileRunTemporaryDirectory = tmpdir();
+  const temporaryPrefix: TestsCliUtilityTranspileRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxDirectory: TestsCliUtilityTranspileRunSandboxDirectory = await mkdtemp(temporaryPrefix);
+  const sandboxRoot: TestsCliUtilityTranspileRunSandboxRoot = await realpath(sandboxDirectory);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('emits compiled output for valid TypeScript', async () => {
-    const projectDir = join(sandboxRoot, 'emit-valid-ts');
+  it('emits compiled output for valid TypeScript', async () => {
+    const projectDirectory: TestsCliUtilityTranspileRunProjectDirectory = join(sandboxRoot, 'emit-valid-ts');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'tsconfig.json'),
-      JSON.stringify({
-        compilerOptions: {
-          strict: true,
-          outDir: './build',
-        },
-        include: ['*.ts'],
-      }, null, 2),
-      'utf-8',
-    );
+    const tsconfigPath: TestsCliUtilityTranspileRunTsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: TestsCliUtilityTranspileRunTsconfigContents = JSON.stringify({
+      compilerOptions: {
+        strict: true,
+        outDir: './build',
+      },
+      include: ['*.ts'],
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'index.ts'),
-      'const greeting: string = "hello";\nconsole.log(greeting);\n',
-      'utf-8',
-    );
+    await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const indexPath: TestsCliUtilityTranspileRunIndexPath = join(projectDirectory, 'index.ts');
 
-    process.exitCode = undefined;
+    await writeFile(indexPath, 'const greeting: string = "hello";\nconsole.log(greeting);\n', 'utf-8');
 
-    CLIUtilityTranspile.run({
-      project: join(projectDir, 'tsconfig.json'),
+    process.chdir(projectDirectory);
+
+    CliUtilityTranspile.run({
+      project: tsconfigPath,
     });
 
     strictEqual(process.exitCode, undefined);
-    ok(existsSync(join(projectDir, 'build', 'index.js')));
+
+    const outputJsPath: TestsCliUtilityTranspileRunOutputJsPath = join(projectDirectory, 'build', 'index.js');
+    const outputExists: TestsCliUtilityTranspileRunOutputExists = existsSync(outputJsPath);
+
+    ok(outputExists);
+
+    return;
   });
 
-  await context.test('sets exit code for project type errors', async () => {
-    const projectDir = join(sandboxRoot, 'emit-invalid-ts');
+  it('errors when no tsconfig.json found', async () => {
+    const projectDirectory: TestsCliUtilityTranspileRunProjectDirectory = join(sandboxRoot, 'no-tsconfig');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'tsconfig.json'),
-      JSON.stringify({
-        compilerOptions: {
-          strict: true,
-          outDir: './build',
-        },
-        include: ['*.ts'],
-      }, null, 2),
-      'utf-8',
-    );
+    process.chdir(projectDirectory);
 
-    await writeFile(
-      join(projectDir, 'index.ts'),
-      'const greeting: number = "hello";\n',
-      'utf-8',
-    );
-
-    process.chdir(projectDir);
-
-    process.exitCode = undefined;
-
-    CLIUtilityTranspile.run({
-      project: join(projectDir, 'tsconfig.json'),
-    });
-
-    strictEqual(process.exitCode, 1);
-  });
-
-  await context.test('errors when no tsconfig.json found', async () => {
-    const projectDir = join(sandboxRoot, 'no-tsconfig');
-
-    await mkdir(projectDir, { recursive: true });
-
-    process.chdir(projectDir);
-
-    process.exitCode = undefined;
-
-    CLIUtilityTranspile.run({});
+    CliUtilityTranspile.run({});
 
     strictEqual(process.exitCode, undefined);
+
+    return;
   });
+
+  return;
 });

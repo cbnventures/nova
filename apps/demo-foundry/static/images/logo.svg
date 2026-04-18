@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>foundry-logo-nobg</title>
+    <g id="foundry-logo-nobg" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
+        <g id="Group" transform="translate(0, 66)">
+            <polygon id="Polygon" fill="#EA580C" points="768.54818 0 1024 443.367521 767.45182 887.367521 255.45182 888 0 444.632479 256.54818 0.632478632"></polygon>
+            <path d="M511,174 C511,174 690,389.2 690,532.666667 C690,631.658667 609.808,712 511,712 C412.192,712 332,631.658667 332,532.666667 C332,389.2 511,174 511,174 Z" id="Path" fill="#FBBF24"></path>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,70 @@
+import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
+
+/**
+ * Theme - Doc Category Generated Index Page - Doc Category Generated Index Page.
+ *
+ * @since 0.15.0
+ */
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationPreviousTitle = string;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationPreviousPermalink = string;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationPrevious = {
+  title: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationPreviousTitle;
+  permalink: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationPreviousPermalink;
+  [key: string]: unknown;
+} | undefined;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationNextTitle = string;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationNextPermalink = string;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationNext = {
+  title: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationNextTitle;
+  permalink: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationNextPermalink;
+  [key: string]: unknown;
+} | undefined;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigation = {
+  previous?: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationPrevious;
+  next?: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigationNext;
+};
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexTitle = string;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexDescription = string | undefined;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexKeywords = string[] | undefined;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexImage = string | undefined;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexNavigation = ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageNavigation;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndex = {
+  title: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexTitle;
+  description?: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexDescription;
+  keywords?: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexKeywords;
+  image?: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexImage;
+  navigation: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndexNavigation;
+  [key: string]: unknown;
+};
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePropsCategoryGeneratedIndex = ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndex;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageProps = {
+  categoryGeneratedIndex: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePropsCategoryGeneratedIndex;
+  [key: string]: unknown;
+};
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryItems = PropSidebarItem[];
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategory = {
+  items: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryItems;
+  [key: string]: unknown;
+};
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageImageUrl = string | undefined;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageMetadataSpread = Record<string, unknown>;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePaginatorSpread = Record<string, unknown>;

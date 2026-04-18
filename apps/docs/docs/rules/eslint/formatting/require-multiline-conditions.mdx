@@ -1,0 +1,192 @@
+---
+id: require-multiline-conditions
+title: Require Multiline Conditions
+description: Require each operand to be on its own line when a logical expression exceeds the allowed inline count.
+keywords:
+  - nova
+  - eslint rule
+  - multiline conditions
+  - logical expressions
+  - code style
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require each operand to be on its own line when a logical expression exceeds the allowed inline count.
+
+## Summary
+
+The `require-multiline-conditions` rule checks all `LogicalExpression` nodes (`&&`, `||`, `??`). It recursively counts the total leaf operands and, when the count exceeds a configurable `maxInline` threshold (default: `2`), requires each operand to start on its own line.
+
+This covers every context — `if`, `while`, `do...while`, `for`, ternary, `return`, variable declarations, and standalone expressions.
+
+## Why Use This Rule?
+
+1. Long boolean chains on a single line are hard to scan and review.
+2. Multiline format lets each condition stand out, making diffs cleaner.
+3. Consistent formatting reduces cognitive load when reading complex guards.
+
+## Examples
+
+<Tabs groupId="require-multiline-conditions-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Two operands — fits on one line.
+    if (a === true && b === false) {}
+
+    // Three operands — each on its own line.
+    if (
+      a === true
+      && b === false
+      && c === true
+    ) {}
+
+    // Return with multiline format.
+    return (
+      hasCmd === true
+      || hasKilled === true
+      || hasCode === true
+    );
+
+    // Nullish coalescing — each on its own line.
+    const label = (
+      brandName
+      ?? typeName
+      ?? fallback
+    );
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Three operands on one line.
+    if (a === true && b === false && c === true) {}
+
+    // Long return chain on one line.
+    return hasCmd === true || hasKilled === true || hasCode === true;
+
+    // Partial multiline — some operands still share a line.
+    if (
+      a === true
+      && b === false && c === true
+    ) {}
+
+    // Nullish coalescing chain on one line.
+    const label = brandName ?? typeName ?? fallback;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-multiline-conditions-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireMultilineConditions } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-multiline-conditions': RequireMultilineConditions.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-multiline-conditions': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="increase-inline-limit" label="Increase Inline Limit">
+
+    Allow more operands on a single line before requiring multiline format:
+
+    ```ts
+    import { RequireMultilineConditions } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-multiline-conditions': RequireMultilineConditions.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-multiline-conditions': ['error', {
+            maxInline: 3,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireMultilineConditions } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-multiline-conditions': RequireMultilineConditions.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-multiline-conditions': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                                                                     |
+|---------------|------------|---------|---------------------------------------------------------------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                                                          |
+| `maxInline`   | `number`   | `2`     | Maximum number of operands allowed on a single line before requiring multiline. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on a two-operand expression** — The default `maxInline` is `2`, which allows up to two operands inline. If you see a warning, the expression likely has more operands than expected due to nested logical expressions being flattened.
+- **Want to allow three operands inline** — Set `maxInline: 3` in the rule options.

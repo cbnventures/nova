@@ -1,211 +1,286 @@
-import { format } from 'util';
+import { format } from 'node:util';
 
 import chalk from 'chalk';
 
-import { LINEBREAK_CRLF_OR_LF, PATTERN_ANSI } from '@/lib/regex.js';
-import { currentTimestamp } from '@/lib/utility.js';
+import { LIB_REGEX_LINEBREAK_CRLF_OR_LF, LIB_REGEX_PATTERN_ANSI } from '../lib/regex.js';
+import { currentTimestamp } from '../lib/utility.js';
 
 import type {
-  LoggerCustomizeOptions,
-  LoggerCustomizeReturns,
-  LoggerDebugMessage,
-  LoggerDebugReturns,
-  LoggerDevMessage,
-  LoggerDevReturns,
-  LoggerEmitLevel,
-  LoggerEmitMessage,
-  LoggerEmitOptions,
-  LoggerEmitReturns,
-  LoggerErrorMessage,
-  LoggerErrorReturns,
-  LoggerInfoMessage,
-  LoggerInfoReturns,
-  LoggerPrefixLevel,
-  LoggerPrefixOptions,
-  LoggerPrefixReturns,
-  LoggerScopeLabelOptions,
-  LoggerScopeLabelReturns,
-  LoggerScopeLabelSegments,
-  LoggerShouldLogCurrentLogLevel,
-  LoggerShouldLogDefaultLogLevel,
-  LoggerShouldLogLevel,
-  LoggerShouldLogPreferredLogLevel,
-  LoggerShouldLogReturns,
-  LoggerShouldLogWeights,
-  LoggerStripAnsiColorsReturns,
-  LoggerStripAnsiColorsValue,
-  LoggerWarnMessage,
-  LoggerWarnReturns,
-} from '@/types/toolkit/logger.d.ts';
+  ToolkitLoggerCustomizeOptions,
+  ToolkitLoggerCustomizeReturns,
+  ToolkitLoggerDebugMessage,
+  ToolkitLoggerDebugReturns,
+  ToolkitLoggerDevMessage,
+  ToolkitLoggerDevReturns,
+  ToolkitLoggerEmitAlignedMessage,
+  ToolkitLoggerEmitFormattedMessage,
+  ToolkitLoggerEmitIndent,
+  ToolkitLoggerEmitLevel,
+  ToolkitLoggerEmitLinebreakPattern,
+  ToolkitLoggerEmitMessage,
+  ToolkitLoggerEmitOptions,
+  ToolkitLoggerEmitPadBottom,
+  ToolkitLoggerEmitPadBottomCount,
+  ToolkitLoggerEmitPadTop,
+  ToolkitLoggerEmitPadTopCount,
+  ToolkitLoggerEmitPayload,
+  ToolkitLoggerEmitPrefix,
+  ToolkitLoggerEmitPrefixVisibleLength,
+  ToolkitLoggerEmitReturns,
+  ToolkitLoggerEmitStream,
+  ToolkitLoggerErrorMessage,
+  ToolkitLoggerErrorReturns,
+  ToolkitLoggerInfoMessage,
+  ToolkitLoggerInfoReturns,
+  ToolkitLoggerPrefixColoredLevelLabel,
+  ToolkitLoggerPrefixLevel,
+  ToolkitLoggerPrefixLevelLabelUpper,
+  ToolkitLoggerPrefixOptions,
+  ToolkitLoggerPrefixReturns,
+  ToolkitLoggerPrefixScopeLabel,
+  ToolkitLoggerPrefixScopeTag,
+  ToolkitLoggerPrefixShowScope,
+  ToolkitLoggerPrefixTimestamp,
+  ToolkitLoggerScopeLabelOptions,
+  ToolkitLoggerScopeLabelReturns,
+  ToolkitLoggerScopeLabelSegments,
+  ToolkitLoggerShouldLogCurrentLogLevel,
+  ToolkitLoggerShouldLogDefaultLogLevel,
+  ToolkitLoggerShouldLogIsBrowser,
+  ToolkitLoggerShouldLogLevel,
+  ToolkitLoggerShouldLogNodeEnv,
+  ToolkitLoggerShouldLogPreferredLogLevel,
+  ToolkitLoggerShouldLogPreferredLogLevelCurrentLogLevel,
+  ToolkitLoggerShouldLogReturns,
+  ToolkitLoggerShouldLogWeights,
+  ToolkitLoggerStripAnsiColorsPattern,
+  ToolkitLoggerStripAnsiColorsReturns,
+  ToolkitLoggerStripAnsiColorsValue,
+  ToolkitLoggerWarnMessage,
+  ToolkitLoggerWarnReturns,
+} from '../types/toolkit/logger.d.ts';
 
 /**
- * Logger.
+ * Toolkit - Logger.
  *
- * @since 1.0.0
+ * Structured logging utility used across all CLI commands, API modules,
+ * and library helpers. Supports scoped labels, level filtering, and timestamped output.
+ *
+ * @since 0.11.0
  */
-export default class Logger {
+class ToolkitLogger {
   /**
-   * Logger - Debug.
+   * Toolkit - Logger - Debug.
    *
-   * @param {LoggerDebugMessage} message - Message.
+   * Emits a debug-level message to stdout. Only visible when LOG_LEVEL is set to debug or
+   * NODE_ENV is development.
    *
-   * @returns {LoggerDebugReturns}
+   * @param {ToolkitLoggerDebugMessage} message - Message.
    *
-   * @since 1.0.0
+   * @returns {ToolkitLoggerDebugReturns}
+   *
+   * @since 0.11.0
    */
-  public static debug(...message: LoggerDebugMessage): LoggerDebugReturns {
-    Logger.emit('debug', {}, ...message);
+  public static debug(...message: ToolkitLoggerDebugMessage): ToolkitLoggerDebugReturns {
+    ToolkitLogger.emit('debug', {}, ...message);
+
+    return;
   }
 
   /**
-   * Logger - Dev.
+   * Toolkit - Logger - Dev.
    *
-   * @param {LoggerDevMessage} message - Message.
+   * Emits a dev-level message with the highest weight so it always appears regardless of
+   * LOG_LEVEL. Must be removed before production builds.
    *
-   * @returns {LoggerDevReturns}
+   * @param {ToolkitLoggerDevMessage} message - Message.
    *
-   * @since 1.0.0
+   * @returns {ToolkitLoggerDevReturns}
+   *
+   * @since 0.12.0
    */
-  public static dev(...message: LoggerDevMessage): LoggerDevReturns {
-    Logger.emit('dev', {}, ...message);
+  public static dev(...message: ToolkitLoggerDevMessage): ToolkitLoggerDevReturns {
+    ToolkitLogger.emit('dev', {}, ...message);
+
+    return;
   }
 
   /**
-   * Logger - Info.
+   * Toolkit - Logger - Info.
    *
-   * @param {LoggerInfoMessage} message - Message.
+   * Emits an info-level message to stdout. This is the default level in production
+   * and the most common level used by CLI commands and API modules.
    *
-   * @returns {LoggerInfoReturns}
+   * @param {ToolkitLoggerInfoMessage} message - Message.
    *
-   * @since 1.0.0
+   * @returns {ToolkitLoggerInfoReturns}
+   *
+   * @since 0.11.0
    */
-  public static info(...message: LoggerInfoMessage): LoggerInfoReturns {
-    Logger.emit('info', {}, ...message);
+  public static info(...message: ToolkitLoggerInfoMessage): ToolkitLoggerInfoReturns {
+    ToolkitLogger.emit('info', {}, ...message);
+
+    return;
   }
 
   /**
-   * Logger - Warn.
+   * Toolkit - Logger - Warn.
    *
-   * @param {LoggerWarnMessage} message - Message.
+   * Emits a warning-level message to stderr. Used for non-fatal
+   * issues that should be visible even when running in browser production mode.
    *
-   * @returns {LoggerWarnReturns}
+   * @param {ToolkitLoggerWarnMessage} message - Message.
    *
-   * @since 1.0.0
+   * @returns {ToolkitLoggerWarnReturns}
+   *
+   * @since 0.11.0
    */
-  public static warn(...message: LoggerWarnMessage): LoggerWarnReturns {
-    Logger.emit('warn', {}, ...message);
+  public static warn(...message: ToolkitLoggerWarnMessage): ToolkitLoggerWarnReturns {
+    ToolkitLogger.emit('warn', {}, ...message);
+
+    return;
   }
 
   /**
-   * Logger - Error.
+   * Toolkit - Logger - Error.
    *
-   * @param {LoggerErrorMessage} message - Message.
+   * Emits an error-level message to stderr. Carries the second-highest weight so
+   * it is only suppressed when logging is fully disabled.
    *
-   * @returns {LoggerErrorReturns}
+   * @param {ToolkitLoggerErrorMessage} message - Message.
    *
-   * @since 1.0.0
+   * @returns {ToolkitLoggerErrorReturns}
+   *
+   * @since 0.11.0
    */
-  public static error(...message: LoggerErrorMessage): LoggerErrorReturns {
-    Logger.emit('error', {}, ...message);
+  public static error(...message: ToolkitLoggerErrorMessage): ToolkitLoggerErrorReturns {
+    ToolkitLogger.emit('error', {}, ...message);
+
+    return;
   }
 
   /**
-   * Logger - Customize.
+   * Toolkit - Logger - Customize.
    *
-   * @param {LoggerCustomizeOptions} options - Options.
+   * Returns a scoped logger whose methods inherit the given options. Used by API
+   * modules and CLI header to tag output with name, type, and purpose labels.
    *
-   * @returns {LoggerCustomizeReturns}
+   * @param {ToolkitLoggerCustomizeOptions} options - Options.
    *
-   * @since 1.0.0
+   * @returns {ToolkitLoggerCustomizeReturns}
+   *
+   * @since 0.11.0
    */
-  public static customize(options: LoggerCustomizeOptions): LoggerCustomizeReturns {
+  public static customize(options: ToolkitLoggerCustomizeOptions): ToolkitLoggerCustomizeReturns {
     return {
-      debug(...message: LoggerDebugMessage): LoggerDebugReturns {
-        Logger.emit('debug', options, ...message);
+      debug(...message: ToolkitLoggerDebugMessage): ToolkitLoggerDebugReturns {
+        ToolkitLogger.emit('debug', options, ...message);
+
+        return;
       },
-      dev(...message: LoggerDevMessage): LoggerDevReturns {
-        Logger.emit('dev', options, ...message);
+      dev(...message: ToolkitLoggerDevMessage): ToolkitLoggerDevReturns {
+        ToolkitLogger.emit('dev', options, ...message);
+
+        return;
       },
-      info(...message: LoggerInfoMessage): LoggerInfoReturns {
-        Logger.emit('info', options, ...message);
+      info(...message: ToolkitLoggerInfoMessage): ToolkitLoggerInfoReturns {
+        ToolkitLogger.emit('info', options, ...message);
+
+        return;
       },
-      warn(...message: LoggerWarnMessage): LoggerWarnReturns {
-        Logger.emit('warn', options, ...message);
+      warn(...message: ToolkitLoggerWarnMessage): ToolkitLoggerWarnReturns {
+        ToolkitLogger.emit('warn', options, ...message);
+
+        return;
       },
-      error(...message: LoggerErrorMessage): LoggerErrorReturns {
-        Logger.emit('error', options, ...message);
+      error(...message: ToolkitLoggerErrorMessage): ToolkitLoggerErrorReturns {
+        ToolkitLogger.emit('error', options, ...message);
+
+        return;
       },
     };
   }
 
   /**
-   * Logger - Emit.
+   * Toolkit - Logger - Emit.
    *
-   * @param {LoggerEmitLevel}   level   - Level.
-   * @param {LoggerEmitOptions} options - Options.
-   * @param {LoggerEmitMessage} message - Message.
+   * Core output method called by every log level. Checks
+   * shouldLog, applies padding, formats the prefix, and writes to stdout or stderr.
+   *
+   * @param {ToolkitLoggerEmitLevel}   level   - Level.
+   * @param {ToolkitLoggerEmitOptions} options - Options.
+   * @param {ToolkitLoggerEmitMessage} message - Message.
    *
    * @private
    *
-   * @returns {LoggerEmitReturns}
+   * @returns {ToolkitLoggerEmitReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static emit(level: LoggerEmitLevel, options: LoggerEmitOptions, ...message: LoggerEmitMessage): LoggerEmitReturns {
-    if (!Logger.shouldLog(level)) {
+  private static emit(level: ToolkitLoggerEmitLevel, options: ToolkitLoggerEmitOptions, ...message: ToolkitLoggerEmitMessage): ToolkitLoggerEmitReturns {
+    if (ToolkitLogger.shouldLog(level) === false) {
       return;
     }
 
-    const padTop = '\n'.repeat(Math.max(0, options.padTop ?? 0));
-    const padBottom = '\n'.repeat(Math.max(0, options.padBottom ?? 0));
+    const padTopCount: ToolkitLoggerEmitPadTopCount = Math.max(0, options['padTop'] ?? 0);
+    const padBottomCount: ToolkitLoggerEmitPadBottomCount = Math.max(0, options['padBottom'] ?? 0);
+    const padTop: ToolkitLoggerEmitPadTop = '\n'.repeat(padTopCount);
+    const padBottom: ToolkitLoggerEmitPadBottom = '\n'.repeat(padBottomCount);
 
-    const stream = (level === 'warn' || level === 'error') ? process.stderr : process.stdout;
-    const formattedMessage = (message.length > 0) ? format(...message) : '';
+    const stream: ToolkitLoggerEmitStream = (level === 'warn' || level === 'error') ? process.stderr : process.stdout;
+    const formattedMessage: ToolkitLoggerEmitFormattedMessage = (message.length > 0) ? format(...message) : '';
 
     if (padTop.length > 0) {
       stream.write(padTop);
     }
 
-    const prefix = Logger.prefix(level, options);
-    const prefixVisibleLength = Logger.stripAnsiColors(prefix).length;
-    const indent = ' '.repeat(prefixVisibleLength + 1);
-    const alignedMessage = formattedMessage.replace(new RegExp(LINEBREAK_CRLF_OR_LF, 'g'), `$&${indent}`);
+    const prefix: ToolkitLoggerEmitPrefix = ToolkitLogger.prefix(level, options);
+    const prefixVisibleLength: ToolkitLoggerEmitPrefixVisibleLength = ToolkitLogger.stripAnsiColors(prefix).length;
+    const indent: ToolkitLoggerEmitIndent = ' '.repeat(prefixVisibleLength + 1);
+    const linebreakPattern: ToolkitLoggerEmitLinebreakPattern = new RegExp(LIB_REGEX_LINEBREAK_CRLF_OR_LF, 'g');
+    const alignedMessage: ToolkitLoggerEmitAlignedMessage = formattedMessage.replace(linebreakPattern, `$&${indent}`);
 
-    const payload = (formattedMessage.length > 0) ? `${prefix} ${alignedMessage}` : prefix;
+    const payload: ToolkitLoggerEmitPayload = (formattedMessage.length > 0) ? `${prefix} ${alignedMessage}` : prefix;
 
     stream.write(`${payload}\n`);
 
     if (padBottom.length > 0) {
       stream.write(padBottom);
     }
+
+    return;
   }
 
   /**
-   * Logger - Should log.
+   * Toolkit - Logger - Should Log.
    *
-   * @param {LoggerShouldLogLevel} level - Level.
+   * Compares the requested level weight against the active
+   * threshold derived from LOG_LEVEL, NODE_ENV, and whether the runtime is a browser.
+   *
+   * @param {ToolkitLoggerShouldLogLevel} level - Level.
    *
    * @private
    *
-   * @returns {LoggerShouldLogReturns}
+   * @returns {ToolkitLoggerShouldLogReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static shouldLog(level: LoggerShouldLogLevel): LoggerShouldLogReturns {
-    const weights: LoggerShouldLogWeights = {
+  private static shouldLog(level: ToolkitLoggerShouldLogLevel): ToolkitLoggerShouldLogReturns {
+    const weights: ToolkitLoggerShouldLogWeights = {
       debug: 10,
       info: 20,
       warn: 30,
       error: 40,
+
       // This weight is intentional.
       dev: 100,
     };
 
-    const isBrowser = typeof globalThis === 'object' && Reflect.has(globalThis, 'window');
-    const nodeEnv = process.env['NODE_ENV'] ?? 'production';
+    const isBrowser: ToolkitLoggerShouldLogIsBrowser = typeof globalThis === 'object' && Reflect.has(globalThis, 'window');
+    const nodeEnv: ToolkitLoggerShouldLogNodeEnv = process.env['NODE_ENV'] ?? 'production';
 
-    const currentLogLevel = (process.env['LOG_LEVEL'] ?? '').toLowerCase();
-    let defaultLogLevel: LoggerShouldLogDefaultLogLevel;
+    const currentLogLevel: ToolkitLoggerShouldLogCurrentLogLevel = (process.env['LOG_LEVEL'] ?? '').toLowerCase();
+    let defaultLogLevel: ToolkitLoggerShouldLogDefaultLogLevel = undefined;
 
     if (isBrowser === true && nodeEnv === 'production') {
       defaultLogLevel = 'warn';
@@ -215,51 +290,63 @@ export default class Logger {
       defaultLogLevel = 'info';
     }
 
-    const preferredLogLevel: LoggerShouldLogPreferredLogLevel = Object.keys(weights).includes(currentLogLevel as LoggerShouldLogCurrentLogLevel) ? (currentLogLevel as LoggerShouldLogCurrentLogLevel) : defaultLogLevel;
+    const preferredLogLevel: ToolkitLoggerShouldLogPreferredLogLevel = (Object.keys(weights).includes(currentLogLevel) === true) ? (currentLogLevel as ToolkitLoggerShouldLogPreferredLogLevelCurrentLogLevel) : defaultLogLevel;
 
     return weights[level] >= weights[preferredLogLevel];
   }
 
   /**
-   * Logger - Prefix.
+   * Toolkit - Logger - Prefix.
    *
-   * @param {LoggerPrefixLevel}   level   - Level.
-   * @param {LoggerPrefixOptions} options - Options.
+   * Builds the colored level label, optional scope tag, and optional timestamp
+   * that precede every log line. Scope tags only appear in debug mode.
+   *
+   * @param {ToolkitLoggerPrefixLevel}   level   - Level.
+   * @param {ToolkitLoggerPrefixOptions} options - Options.
    *
    * @private
    *
-   * @returns {LoggerPrefixReturns}
+   * @returns {ToolkitLoggerPrefixReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static prefix(level: LoggerPrefixLevel, options: LoggerPrefixOptions): LoggerPrefixReturns {
-    const levelLabelUpper = level.toUpperCase();
-    const scopeLabel = Logger.scopeLabel(options);
-    const scopeTag = ((process.env['LOG_LEVEL'] === 'debug' || process.env['NODE_ENV'] === 'development') && scopeLabel !== null) ? ` ${chalk.dim(`[${scopeLabel}]`)}` : '';
+  private static prefix(level: ToolkitLoggerPrefixLevel, options: ToolkitLoggerPrefixOptions): ToolkitLoggerPrefixReturns {
+    const levelLabelUpper: ToolkitLoggerPrefixLevelLabelUpper = level.toUpperCase();
+    const scopeLabel: ToolkitLoggerPrefixScopeLabel = ToolkitLogger.scopeLabel(options);
+    const showScope: ToolkitLoggerPrefixShowScope = (
+      process.env['LOG_LEVEL'] === 'debug'
+      || process.env['NODE_ENV'] === 'development'
+    ) && scopeLabel !== null;
+    const scopeTag: ToolkitLoggerPrefixScopeTag = (showScope === true) ? ` ${chalk.dim(`[${scopeLabel}]`)}` : '';
 
-    let coloredLevelLabel;
+    let coloredLevelLabel: ToolkitLoggerPrefixColoredLevelLabel = undefined;
 
     switch (level) {
       case 'debug': {
         coloredLevelLabel = chalk.grey(levelLabelUpper);
         break;
       }
+
       case 'dev': {
         coloredLevelLabel = chalk.magenta(levelLabelUpper);
         break;
       }
+
       case 'info': {
         coloredLevelLabel = chalk.blue(levelLabelUpper);
         break;
       }
+
       case 'warn': {
         coloredLevelLabel = chalk.yellow(levelLabelUpper);
         break;
       }
+
       case 'error': {
         coloredLevelLabel = chalk.red(levelLabelUpper);
         break;
       }
+
       default: {
         coloredLevelLabel = chalk.white(levelLabelUpper);
         break;
@@ -268,53 +355,65 @@ export default class Logger {
 
     // Show log timestamp if the "LOG_TIME" environment variable is seen.
     if (process.env['LOG_TIME'] !== undefined && process.env['LOG_TIME'] === 'true') {
-      return `${chalk.dim(currentTimestamp())} ${coloredLevelLabel}${scopeTag}`;
+      const timestamp: ToolkitLoggerPrefixTimestamp = currentTimestamp();
+
+      return `${chalk.dim(timestamp)} ${coloredLevelLabel}${scopeTag}`;
     }
 
     return `${coloredLevelLabel}${scopeTag}`;
   }
 
   /**
-   * Logger - Scope label.
+   * Toolkit - Logger - Scope Label.
    *
-   * @param {LoggerScopeLabelOptions} options - Options.
+   * Joins the name, type, and purpose segments from customize options into a
+   * double-colon-separated label. Returns null when no segments are present.
+   *
+   * @param {ToolkitLoggerScopeLabelOptions} options - Options.
    *
    * @private
    *
-   * @returns {LoggerScopeLabelReturns}
+   * @returns {ToolkitLoggerScopeLabelReturns}
    *
-   * @since 1.0.0
+   * @since 0.12.0
    */
-  private static scopeLabel(options: LoggerScopeLabelOptions): LoggerScopeLabelReturns {
-    const segments: LoggerScopeLabelSegments = [];
+  private static scopeLabel(options: ToolkitLoggerScopeLabelOptions): ToolkitLoggerScopeLabelReturns {
+    const segments: ToolkitLoggerScopeLabelSegments = [];
 
-    if (options.name !== undefined) {
-      segments.push(options.name);
+    if (options['name'] !== undefined) {
+      segments.push(options['name']);
     }
 
-    if (options.type !== undefined) {
-      segments.push(options.type);
+    if (options['type'] !== undefined) {
+      segments.push(options['type']);
     }
 
-    if (options.purpose !== undefined) {
-      segments.push(options.purpose);
+    if (options['purpose'] !== undefined) {
+      segments.push(options['purpose']);
     }
 
     return (segments.length > 0) ? segments.join('::') : null;
   }
 
   /**
-   * Logger - Strip ansi colors.
+   * Toolkit - Logger - Strip ANSI Colors.
    *
-   * @param {LoggerStripAnsiColorsValue} value - Value.
+   * Removes ANSI escape sequences so visible character length can be measured.
+   * Used by emit to calculate the indentation width for multi-line alignment.
+   *
+   * @param {ToolkitLoggerStripAnsiColorsValue} value - Value.
    *
    * @private
    *
-   * @returns {LoggerStripAnsiColorsReturns}
+   * @returns {ToolkitLoggerStripAnsiColorsReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static stripAnsiColors(value: LoggerStripAnsiColorsValue): LoggerStripAnsiColorsReturns {
-    return value.replace(new RegExp(PATTERN_ANSI, 'g'), '');
+  private static stripAnsiColors(value: ToolkitLoggerStripAnsiColorsValue): ToolkitLoggerStripAnsiColorsReturns {
+    const pattern: ToolkitLoggerStripAnsiColorsPattern = new RegExp(LIB_REGEX_PATTERN_ANSI, 'g');
+
+    return value.replace(pattern, '');
   }
 }
+
+export default ToolkitLogger;

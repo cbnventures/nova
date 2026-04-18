@@ -1,0 +1,158 @@
+---
+id: require-jsdoc-param-name
+title: Require JSDoc Param Name
+description: Require param descriptions to match the parameter name with the first letter capitalized and a trailing period.
+keywords:
+  - nova
+  - eslint rule
+  - jsdoc
+  - param description
+  - parameter name
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require `@param` descriptions to match the parameter name, capitalized with a trailing period.
+
+## Summary
+
+The `require-jsdoc-param-name` rule reports any `@param` tag whose description does not match the expected format derived from the parameter name.
+
+The expected description is the parameter name split on camelCase boundaries, with the first letter capitalized and all other letters lowercased, followed by a trailing period. For example, `defaultOptions` becomes `Default options.`.
+
+## Why Use This Rule?
+
+1. Ensures `@param` descriptions are consistent and predictable across the codebase.
+2. Eliminates freeform descriptions that may drift out of sync with the actual parameter name.
+3. Makes JSDoc blocks scannable because every description follows the same mechanical pattern.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-param-name-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    /**
+     * CLI - Utility - Changelog - Generate.
+     *
+     * @param {GenerateContext}        context        - Context.
+     * @param {GenerateDefaultOptions} defaultOptions - Default options.
+     *
+     * @returns {GenerateReturns}
+     *
+     * @since 1.0.0
+     */
+    function generate(context, defaultOptions) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    /**
+     * CLI - Utility - Changelog - Generate.
+     *
+     * @param {GenerateContext}        context        - The execution context.
+     * @param {GenerateDefaultOptions} defaultOptions - Opts passed in.
+     *
+     * @returns {GenerateReturns}
+     *
+     * @since 1.0.0
+     */
+    function generate(context, defaultOptions) {
+      // ...
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-param-name-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocParamName } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-param-name': RequireJsdocParamName.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-param-name': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocParamName } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-param-name': RequireJsdocParamName.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-param-name': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-param-name: error'
+```
+
+## Troubleshooting
+
+- **Warning fires with the wrong expected text** — The rule splits camelCase names on uppercase boundaries. Single-word parameters like `context` become `Context.`. Multi-word parameters like `defaultOptions` become `Default options.`.
+- **Param tags without a dash separator are skipped** — The rule only matches `@param` tags that follow the format `@param {Type} name - Description`. Tags without the ` - ` separator are not checked.

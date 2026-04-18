@@ -1,0 +1,147 @@
+{
+  "name": "@cbnventures/docusaurus-preset-nova",
+  "version": "0.15.0",
+  "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
+  "keywords": [
+    "eslint",
+    "eslint-config",
+    "eslint-flat-config",
+    "typescript",
+    "tsconfig",
+    "tsconfig-presets",
+    "linting",
+    "code-style",
+    "scripts",
+    "templates",
+    "docusaurus-preset",
+    "react",
+    "nextjs",
+    "node",
+    "monorepo"
+  ],
+  "license": "MIT",
+  "homepage": "https://nova.cbnventures.io/",
+  "bugs": {
+    "email": "bugs@cbnventures.io",
+    "url": "https://github.com/cbnventures/nova/issues"
+  },
+  "author": {
+    "name": "CBN Ventures",
+    "email": "contact@cbnventures.io",
+    "url": "https://www.cbnventures.io/"
+  },
+  "contributors": [
+    {
+      "name": "Jacky Liang",
+      "email": "hello@mrjackyliang.com",
+      "url": "https://www.mrjackyliang.com/"
+    }
+  ],
+  "funding": [
+    "https://github.com/sponsors/cbnventures",
+    "https://www.paypal.com/biz/profile/cbnventures"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbnventures/nova.git",
+    "directory": "packages/docusaurus-preset-nova"
+  },
+  "exports": {
+    ".": "./build/src/preset.js",
+    "./theme": "./build/src/index.js",
+    "./components": "./build/src/components/index.js",
+    "./types/theme": "./nova-theme.d.ts",
+    "./types/config": "./nova-config.d.ts"
+  },
+  "files": [
+    "./build",
+    "./nova-config.d.ts",
+    "./nova-theme.d.ts"
+  ],
+  "private": false,
+  "scripts": {
+    "dev": "node ../../scripts/run-scripts.mjs --parallel 'dev:*'",
+    "dev:watch-plugin": "tsc --project tsconfig.plugin.json --watch",
+    "dev:watch-theme": "tsc --project tsconfig.theme.json --watch",
+    "dev:fix-esm-imports": "node ../../scripts/fix-esm-imports.mjs --watch",
+    "build": "node ../../scripts/run-scripts.mjs --sequential 'build:*'",
+    "build:transpile-theme": "tsc --project tsconfig.theme.json --outDir ./build --skipLibCheck",
+    "build:transpile-plugin": "tsc --project tsconfig.plugin.json --outDir ./build --skipLibCheck",
+    "build:transpile-worker": "tsc --project tsconfig.worker.json --outDir ./build --skipLibCheck",
+    "build:copy-types": "shx rm -rf \"./build/src/types\" && shx cp -r \"./src/types\" \"./build/src/types\"",
+    "build:fix-esm-imports": "node ../../scripts/fix-esm-imports.mjs",
+    "build:copy-styles": "shx rm -rf \"./build/src/styles\" && shx cp -r \"./src/styles\" \"./build/src/styles\"",
+    "check": "node ../../scripts/run-scripts.mjs --sequential 'check:*'",
+    "check:lint": "eslint ./ --max-warnings=0",
+    "check:types-plugin": "node ../../scripts/type-check.mjs --project tsconfig.plugin.json",
+    "check:types-theme": "node ../../scripts/type-check.mjs --project tsconfig.theme.json",
+    "check:types-worker": "node ../../scripts/type-check.mjs --project tsconfig.worker.json",
+    "check:test": "vitest run",
+    "clean": "node ../../scripts/run-scripts.mjs --parallel 'clean:*'",
+    "clean:build": "shx rm -rf ./build"
+  },
+  "engines": {
+    "node": "^20 || ^22 || ^24"
+  },
+  "dependencies": {
+    "@cbnventures/nova": "^0.15.0",
+    "@codesandbox/sandpack-react": "2.20.0",
+    "@docusaurus/plugin-content-blog": "3.10.0",
+    "@docusaurus/plugin-content-docs": "3.10.0",
+    "@docusaurus/plugin-content-pages": "3.10.0",
+    "@docusaurus/plugin-google-tag-manager": "3.10.0",
+    "@docusaurus/plugin-sitemap": "3.10.0",
+    "mermaid": "11.0.0",
+    "@docusaurus/plugin-svgr": "3.10.0",
+    "@docusaurus/theme-common": "3.10.0",
+    "@docusaurus/theme-translations": "3.10.0",
+    "@docusaurus/utils-validation": "3.10.0",
+    "@iconify-json/ic": "1.2.4",
+    "@iconify-json/lucide": "1.2.101",
+    "@iconify-json/mdi": "1.2.3",
+    "@iconify-json/ri": "1.2.10",
+    "@iconify/react": "6.0.2",
+    "@mdx-js/react": "3.1.1",
+    "cheerio": "1.2.0",
+    "lunr": "2.3.9",
+    "lunr-languages": "1.14.0",
+    "mark.js": "8.11.1",
+    "nprogress": "0.2.0",
+    "rtlcss": "4.3.0",
+    "shiki": "4.0.2"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "3.10.0",
+    "@docusaurus/types": "3.10.0",
+    "@types/node": "24.9.1",
+    "@types/nprogress": "0.2.3",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.3",
+    "glob": "13.0.6",
+    "hastscript": "9.0.1",
+    "shx": "0.4.0",
+    "typescript": "5.9.3",
+    "vitest": "4.1.3"
+  },
+  "peerDependencies": {
+    "@docusaurus/core": "^3",
+    "@node-rs/jieba": "^2",
+    "react": "^18 || ^19",
+    "react-dom": "^18 || ^19"
+  },
+  "peerDependenciesMeta": {
+    "@docusaurus/core": {
+      "optional": false
+    },
+    "react": {
+      "optional": false
+    },
+    "react-dom": {
+      "optional": false
+    },
+    "@node-rs/jieba": {
+      "optional": true
+    }
+  }
+}

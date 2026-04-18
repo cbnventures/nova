@@ -1,0 +1,21 @@
+/**
+ * ============================
+ * Footer — Container Scoping
+ * ============================
+ */
+
+[class*="nova-footer-"] {
+  --nova-grid-container-max: var(--nova-layout-footer-max);
+}
+
+/**
+ * ============================
+ * Footer — Navigation Lists
+ * ============================
+ */
+
+footer nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}

@@ -1,11 +1,122 @@
 ---
 id: issue-template
-title: Issue Templates
-description: x
+title: Issue Template
+description: Generate GitHub issue template files for bug reports, feature requests, and support.
 keywords:
-  - x
+  - nova
+  - nova generate
+  - github
+  - issue template
+  - bug report
+  - feature request
+  - support request
 tags:
-  - x
+  - cli
+  - generator
+  - github
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create issue form templates under `.github/ISSUE_TEMPLATE/` including `config.yml`, `BUG-REPORT.yml`, `FEATURE-REQUEST.yml`, and `SUPPORT-REQUEST.yml`.
+
+An interactive multi-select prompt lets you choose which bug report fields to include — fields that match your configured dev platforms are pre-selected.
+
+## Why Use This Command?
+
+- Provides structured issue forms so reporters supply the right details upfront.
+- Generates templates for bug reports, feature requests, and support requests in one step.
+- Injects project-specific pronouns, links, and policies from the Nova config.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> — A valid config file must exist at the project root with the fields listed below.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate github issue-template
+
+    # Shorthand
+    nova gen gh issue
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate github issue-template
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen gh issue
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Config Fields
+
+| Field                | Description                                                     |
+|----------------------|-----------------------------------------------------------------|
+| `project.pronouns`   | Pronoun style (`personal` or `business`) for template language. |
+| `project.platforms`  | Dev platforms used to pre-select matching bug report fields.    |
+| `urls.github`        | GitHub repository URL used to build issue links.                |
+| `urls.fundSources`   | Fund source URLs used to derive the GitHub sponsor username.    |
+| `urls.privacyPolicy` | Privacy policy URL included in issue template footers.          |
+| `urls.termsOfUse`    | Terms of use URL included in issue template footers.            |
+
+## Output Files
+
+| File                                         | Description                           |
+|----------------------------------------------|---------------------------------------|
+| `.github/ISSUE_TEMPLATE/config.yml`          | Issue template chooser configuration. |
+| `.github/ISSUE_TEMPLATE/BUG-REPORT.yml`      | Bug report issue form.                |
+| `.github/ISSUE_TEMPLATE/FEATURE-REQUEST.yml` | Feature request issue form.           |
+| `.github/ISSUE_TEMPLATE/SUPPORT-REQUEST.yml` | Support request issue form.           |
+
+## How It Works
+
+### Interactive Selection
+
+A multi-select prompt lists every available bug report field. Fields that match your configured `project.platforms` are pre-selected for convenience.
+
+Press **space** to toggle individual fields, then **enter** to confirm your selection. If no fields are selected, the generator produces templates without platform-specific fields.
+
+### Available Bug Report Fields
+
+| Field       | Template File     | Collects                                            |
+|-------------|-------------------|-----------------------------------------------------|
+| Node.js     | `nodejs.yml`      | Node.js version.                                    |
+| Apple       | `apple.yml`       | Device type and OS version.                         |
+| Android     | `android.yml`     | Device model and Android version.                   |
+| C# / .NET   | `csharp.yml`      | .NET version and operating system.                  |
+| PHP         | `php.yml`         | PHP version.                                        |
+| Python      | `python.yml`      | Python version.                                     |
+| Homebridge  | `homebridge.yml`  | Plugin and Homebridge version.                      |
+| pfSense     | `pfsense.yml`     | pfSense version.                                    |
+| Synology    | `synology.yml`    | Synology DSM version.                               |
+| Docker      | `docker.yml`      | Docker version, host OS, architecture, and command. |
+| Web Browser | `web.yml`         | Browser name and version.                           |
+| Screenshots | `screenshots.yml` | Screenshot upload field.                            |
+
+### File Generation
+
+Each output file is built from a built-in template with placeholders replaced by values from the Nova config (pronouns, GitHub repo, legal links, and the selected bug report fields).
+
+If the target file already exists, a `.nova-backup` copy is created unless `--replace-file` is set.

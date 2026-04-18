@@ -1,0 +1,183 @@
+/**
+ * Envoy — Install strip visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Install Strip Base
+ * ============================ */
+
+/* ============================
+ * 2. Block Variant — Unified Card
+ * ============================ */
+
+/* Block variant — glass card with violet border glow on hover. */
+.nova-install-strip-command-block {
+  gap: 0;
+
+  background-color: var(--nova-envoy-surface-raised-light);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-soft);
+
+  transition: box-shadow var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    border-color var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-install-strip-command-block:hover,
+.nova-install-strip-command-block:focus-visible {
+  border-color: var(--nova-color-primary-300);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block {
+  background-color: var(--nova-envoy-surface-raised-dark);
+  border-color: var(--nova-envoy-border-dark);
+  box-shadow: var(--nova-envoy-shadow-dark-card);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block:hover,
+[data-theme="dark"] .nova-install-strip-command-block:focus-visible {
+  border-color: var(--nova-color-primary-600);
+  box-shadow: var(--nova-envoy-shadow-dark-card-hover);
+
+  transform: translateY(-2px);
+}
+
+/* ============================
+ * 3. Icon Variant — Two Floating Blocks
+ * ============================ */
+
+/* Code block — static card, no hover. */
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+  padding-right: 1.125rem;
+
+  background-color: var(--nova-envoy-surface-raised-light);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: var(--nova-envoy-shadow-soft);
+}
+
+@media (min-width: 640px) {
+  .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+    padding-right: 1.375rem;
+  }
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+  background-color: var(--nova-envoy-surface-raised-dark);
+  border-color: var(--nova-envoy-border-dark);
+  box-shadow: var(--nova-envoy-shadow-dark-card);
+}
+
+/* Copy button — interactive card with hover. */
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy {
+  color: var(--nova-color-neutral-400);
+
+  background-color: var(--nova-envoy-surface-raised-light);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: var(--nova-envoy-shadow-soft);
+
+  transition: color var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+              background-color var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+              border-color var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:hover,
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:focus-visible {
+  color: var(--nova-color-primary-500);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-color: var(--nova-color-primary-300);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy {
+  color: var(--nova-color-neutral-500);
+
+  background-color: var(--nova-envoy-surface-raised-dark);
+  border-color: var(--nova-envoy-border-dark);
+  box-shadow: var(--nova-envoy-shadow-dark-card);
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:hover,
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:focus-visible {
+  color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  border-color: var(--nova-color-primary-600);
+  box-shadow: var(--nova-envoy-shadow-dark-card-hover);
+}
+
+/* ============================
+ * 4. Code Display
+ * ============================ */
+
+/* Code element — monospace with violet dollar prefix. */
+.nova-install-strip .nova-install-strip-code {
+  padding: 0.75rem 0 0.75rem 1.125rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-600);
+}
+
+.nova-install-strip .nova-install-strip-code::before {
+  content: "$";
+
+  margin-right: 0.625rem;
+
+  color: var(--nova-color-primary-500);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .nova-install-strip .nova-install-strip-code {
+  color: var(--nova-color-neutral-300);
+}
+
+[data-theme="dark"] .nova-install-strip .nova-install-strip-code::before {
+  color: var(--nova-color-primary-400);
+}
+
+@media (min-width: 640px) {
+  .nova-install-strip .nova-install-strip-code {
+    padding: 0.875rem 0 0.875rem 1.375rem;
+    font-size: 0.9375rem;
+  }
+}
+
+/* ============================
+ * 5. Block Variant Copy Icon
+ * ============================ */
+
+/* Block copy button — muted icon inside the card. */
+.nova-install-strip-command-block .nova-install-strip-copy {
+  padding: 0.5rem 0.875rem;
+  margin: 0.25rem;
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 6. Label
+ * ============================ */
+
+/* Label — small muted descriptor above the command. */
+.nova-install-strip-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+
+  color: var(--nova-color-neutral-500);
+
+  margin-bottom: 0.625rem;
+}
+
+[data-theme="dark"] .nova-install-strip-label {
+  color: var(--nova-color-neutral-400);
+}

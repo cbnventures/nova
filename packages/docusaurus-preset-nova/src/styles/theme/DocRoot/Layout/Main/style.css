@@ -1,0 +1,10 @@
+/**
+ * DocRoot Layout Main — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+.nova-doc-root main {
+  padding-top: calc(var(--nova-section-gap) / 4);
+  padding-bottom: calc(var(--nova-section-gap) / 4);
+}

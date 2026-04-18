@@ -1,0 +1,115 @@
+---
+id: color-pipeline
+title: Color Pipeline
+description: How a single hex color is converted through HSL into an 11-level shade scale for CSS custom properties.
+sidebar_position: 2
+keywords:
+  - nova
+  - docusaurus facades
+  - color pipeline
+  - hex to hsl
+  - shade scale
+  - color generation
+  - css custom properties
+  - design tokens
+  - perceptual lightness
+tags:
+  - facades
+  - systems
+  - color
+  - pipeline
+  - design tokens
+---
+
+# Color Pipeline
+
+Each preset color (primary, accent, neutral) is a single hex value that passes through a generation pipeline to produce an 11-level shade scale.
+
+## Summary
+
+The pipeline converts a hex color to HSL, then interpolates lightness and adjusts saturation to produce 11 shades (50 through 950). Each shade is converted back to hex and written as a CSS custom property.
+
+The base color sits at the 600 level.
+
+## How It Works
+
+```mermaid
+flowchart TD
+    HEX["#ea580c"] --> RGB(["Hex → RGB"]):::muted --> HSL(["RGB → HSL"]):::muted
+    HSL --> SCALE(["Generate Shade Scale"]):::muted
+    SCALE --> BACK(["HSL → Hex"]):::muted
+    BACK --> CSS["11 CSS custom properties"]
+```
+
+### Step 1: Hex to HSL
+
+The input hex color (e.g., `#ea580c`) is parsed into RGB channels, then converted to HSL (hue, saturation, lightness) using standard color math.
+
+```
+#ea580c → RGB(234, 88, 12) → HSL(20.5°, 90.2%, 48.2%)
+```
+
+### Step 2: Generate Shade Scale
+
+Each shade level has a predefined lightness position and saturation factor:
+
+| Level | Position | Saturation Factor | Purpose      |
+|-------|----------|-------------------|--------------|
+| 50    | +0.93    | 0.40              | Near white   |
+| 100   | +0.86    | 0.55              | Very light   |
+| 200   | +0.73    | 0.70              | Light        |
+| 300   | +0.58    | 0.82              | Light-medium |
+| 400   | +0.39    | 0.92              | Medium-light |
+| 500   | +0.20    | 0.98              | Medium       |
+| 600   | 0        | 1.00              | Base color   |
+| 700   | −0.28    | 0.95              | Medium-dark  |
+| 800   | −0.50    | 0.90              | Dark         |
+| 900   | −0.66    | 0.85              | Very dark    |
+| 950   | −0.80    | 0.80              | Near black   |
+
+**Lightness calculation:**
+- Positive position: `targetLightness = baseLightness + (position × (100 − baseLightness))`
+- Negative position: `targetLightness = baseLightness × (1 + position)`
+
+**Saturation calculation:**
+- `adjustedSaturation = baseSaturation × saturationFactor`
+
+### Step 3: HSL to Hex
+
+Each computed HSL value is converted back to RGB, then to a hex string. The result is a set of 11 hex colors that form a perceptually smooth gradient from near-white to near-black.
+
+## Output
+
+For the Foundry primary color `#ea580c`:
+
+| Property                   | Value     |
+|----------------------------|-----------|
+| `--nova-color-primary-50`  | Lightest  |
+| `--nova-color-primary-100` | ↓         |
+| `--nova-color-primary-200` | ↓         |
+| `--nova-color-primary-300` | ↓         |
+| `--nova-color-primary-400` | ↓         |
+| `--nova-color-primary-500` | ↓         |
+| `--nova-color-primary-600` | `#ea580c` |
+| `--nova-color-primary-700` | ↓         |
+| `--nova-color-primary-800` | ↓         |
+| `--nova-color-primary-900` | ↓         |
+| `--nova-color-primary-950` | Darkest   |
+
+The same pipeline runs for `accent` and `neutral`, producing 33 CSS custom properties total (11 per color channel).
+
+## Using Color Tokens
+
+Reference the generated tokens in your CSS:
+
+```css
+.my-element {
+  color: var(--nova-color-primary-600);
+  background-color: var(--nova-color-neutral-50);
+  border-color: var(--nova-color-accent-200);
+}
+```
+
+Lighter shades (50–400) work well for backgrounds and borders. The base shade (600) is the brand color.
+
+Darker shades (700–950) work well for text and emphasis.

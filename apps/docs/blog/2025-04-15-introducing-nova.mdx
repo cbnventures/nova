@@ -1,0 +1,83 @@
+---
+title: "Introducing Nova: Stop Configuring, Start Building"
+description: Nova is a batteries-included toolkit for JavaScript and TypeScript monorepos that replaces config grind with composable presets, guided CLI tooling, and importable utilities.
+slug: introducing-nova
+authors:
+  - mrjackyliang
+tags:
+  - release
+  - nova
+  - monorepo
+  - typescript
+  - eslint
+  - tooling
+---
+
+You know the routine. New repo, new hour of setup. Copy your ESLint config from the last project, update the deprecated rules, wire up TypeScript, realize the TSConfig options changed again, scaffold the folder structure from memory, forget half the fields in `package.json`, and finally — an hour later — write your first line of actual code.
+
+Now multiply that by every workspace in a monorepo.
+
+Nova exists because that hour should be zero.
+
+{/* truncate */}
+
+## The Real Cost of Config Grind
+
+The obvious cost is time. The less obvious cost is what you don't build. Every project that stays in the "I'll set it up this weekend" phase is a project that never ships. If you're a JavaScript or TypeScript developer with ideas that span beyond the JS ecosystem — a mobile app, a docs site, an edge worker — the last thing you need is tooling overhead pulling you back into configuration files.
+
+Nova is a single package that handles the infrastructure so you can focus on the product.
+
+```bash
+npm install -g @cbnventures/nova
+```
+
+## What You Get
+
+### Composable Presets
+
+ESLint and TSConfig presets that stack in layers. Pick a language (TypeScript, JavaScript, MDX), add an environment (Node, browser, edge), then a framework (Next.js, Express, Docusaurus). Each layer is independent — no hidden base configs, no inheritance chains to debug.
+
+```javascript
+import {
+  dxCodeStyle,
+  envNode,
+  langTypescript,
+} from '@cbnventures/nova/presets/eslint';
+
+export default [
+  ...dxCodeStyle,
+  ...langTypescript,
+  ...envNode,
+];
+```
+
+### CLI Tooling
+
+Guided commands for routine maintenance and setup:
+
+- **Recipe** — Keep workspace manifests aligned with repository conventions and version policies
+- **Utility** — Initialize your config, check your development stack versions, and get your monorepo wired up
+
+Every command reads from a single `nova.config.json` at your monorepo root. Project metadata stays in one place and flows everywhere it needs to go.
+
+### Toolkit Utilities
+
+Importable modules for common tasks: structured logging with `Logger`, formatted CLI output with `CLIHeader`, and copy-pastable tables with `MarkdownTable`. Small, focused, and ready to drop into your own scripts.
+
+## The Philosophy
+
+Nova is opinionated on purpose:
+
+- **Explicit over implicit.** Every configuration detail is visible. No hidden defaults.
+- **Strict by default.** Catch problems early. Loosen only when you have a reason.
+- **Predictable output.** Same inputs, same results. No surprises across environments.
+- **Modern but stable.** ESM-only, Node.js LTS, officially supported features only.
+
+## Get Started
+
+```bash
+npm install -g @cbnventures/nova
+nova utility initialize
+```
+
+The initializer walks you through `nova.config.json`, then you're ready to start running recipes and keeping your workspaces in sync. Check out the [quickstart guide](/docs/quickstart/) to dive in.

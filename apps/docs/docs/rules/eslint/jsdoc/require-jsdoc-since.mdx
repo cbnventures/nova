@@ -1,0 +1,155 @@
+---
+id: require-jsdoc-since
+title: Require JSDoc Since
+description: Require a since tag in every JSDoc block to track when classes, methods, properties, and type declarations were introduced.
+keywords:
+  - nova
+  - eslint rule
+  - jsdoc
+  - since tag
+  - versioning
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require a `@since` tag in every JSDoc block to track when declarations were introduced.
+
+## Summary
+
+The `require-jsdoc-since` rule reports any JSDoc block on a class, method, property, function, type alias, interface, or enum that is missing a `@since` tag.
+
+This ensures every declaration records the version in which it was introduced, making it easy to track API evolution.
+
+## Why Use This Rule?
+
+1. Provides a version history directly in source code so contributors know when each declaration was added.
+2. Makes it possible to generate changelogs and migration guides from `@since` tags.
+3. Catches new declarations that were added without recording a version.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-since-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    /**
+     * CLI - Utility - Changelog.
+     *
+     * @since 1.0.0
+     */
+    export class CliUtilityChangelog {
+      /**
+       * CLI - Utility - Changelog - Generate.
+       *
+       * @since 1.2.0
+       */
+      public static generate() {
+        // ...
+      }
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    /**
+     * CLI - Utility - Changelog.
+     */
+    export class CliUtilityChangelog {
+      /**
+       * CLI - Utility - Changelog - Generate.
+       */
+      public static generate() {
+        // ...
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-since-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocSince } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-since': RequireJsdocSince.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-since': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocSince } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-since': RequireJsdocSince.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-since': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on declarations without JSDoc** — The rule only checks declarations that already have a JSDoc block. If a declaration has no JSDoc comment at all, the rule does not report it.
+- **Checked node types** — The rule checks classes, methods, properties, functions, type aliases, interfaces, and enums. Other node types like variable declarations are not checked.
+- **The `@since` value format is not validated** — The rule only checks for the presence of `@since`. It does not enforce a specific version format (e.g., semver).

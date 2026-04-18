@@ -1,0 +1,108 @@
+/**
+ * Signal — Blog Post Paginator visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-blog-post-paginator {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator {
+  border-top-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * Heading
+ * ============================ */
+
+.nova-blog-post-paginator-heading {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-heading {
+  color: var(--nova-color-neutral-100);
+}
+
+/* ============================
+ * Link
+ * ============================ */
+
+.nova-blog-post-paginator-link {
+  padding: 0.375rem 0.75rem;
+
+  border-left: 2px solid transparent;
+
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-paginator-link:hover,
+.nova-blog-post-paginator-link:focus-visible {
+  border-left-color: var(--nova-color-primary-500);
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-link:hover,
+[data-theme="dark"] .nova-blog-post-paginator-link:focus-visible {
+  border-left-color: var(--nova-color-primary-400);
+  background-color: var(--nova-color-neutral-900);
+}
+
+/* ============================
+ * Label
+ * ============================ */
+
+.nova-blog-post-paginator-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.625rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * Title
+ * ============================ */
+
+.nova-blog-post-paginator-title {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-title {
+  color: var(--nova-color-neutral-100);
+}
+
+.nova-blog-post-paginator-link:hover .nova-blog-post-paginator-title,
+.nova-blog-post-paginator-link:focus-visible .nova-blog-post-paginator-title {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-link:hover .nova-blog-post-paginator-title,
+[data-theme="dark"] .nova-blog-post-paginator-link:focus-visible .nova-blog-post-paginator-title {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Excerpt
+ * ============================ */
+
+.nova-blog-post-paginator-excerpt {
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-500);
+  line-height: 1.5;
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-excerpt {
+  color: var(--nova-color-neutral-400);
+}

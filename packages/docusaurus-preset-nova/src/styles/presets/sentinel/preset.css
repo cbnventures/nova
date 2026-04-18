@@ -1,0 +1,715 @@
+/**
+ * Sentinel — Preset identity, design tokens, keyframes, and global visual styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Design Tokens
+ * ============================ */
+
+:root {
+  --nova-grid-padding: 16px;
+  --nova-grid-gutter: 16px;
+  --nova-section-gap: 3rem;
+  --nova-layout-docs-max: 100%;
+  --nova-layout-blog-max: 100%;
+  --nova-color-info-bg: rgba(99, 102, 241, 0.04);
+  --nova-color-info-bg-dark: rgba(99, 102, 241, 0.06);
+  --nova-color-warning-500: #f59e0b;
+  --nova-color-warning-bg: rgba(245, 158, 11, 0.04);
+  --nova-color-warning-bg-dark: rgba(245, 158, 11, 0.06);
+  --nova-color-danger-500: #ef4444;
+  --nova-color-danger-bg: rgba(239, 68, 68, 0.04);
+  --nova-color-danger-bg-dark: rgba(239, 68, 68, 0.06);
+}
+
+@media (min-width: 640px) {
+  :root {
+    --nova-section-gap: 3.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nova-grid-padding: 20px;
+    --nova-grid-gutter: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nova-grid-padding: 24px;
+    --nova-grid-gutter: 24px;
+    --nova-section-gap: 5rem;
+  }
+}
+
+[data-theme="dark"] {
+  --nova-depth-card-border: 1px solid var(--nova-color-neutral-800);
+  --nova-depth-code-border: 1px solid var(--nova-color-neutral-800);
+  --nova-sentinel-code-bg: #0a0f14;
+  --nova-sentinel-code-title-bg: #0e1419;
+  --nova-sentinel-footer-bg: #030710;
+}
+
+html {
+  font-family: var(--nova-font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--nova-font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--nova-color-neutral-800);
+  background-color: #ffffff;
+}
+
+[data-theme="dark"] body {
+  color: var(--nova-color-neutral-200);
+  background-color: #060a0e;
+}
+
+::selection {
+  background-color: var(--nova-color-primary-200);
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] ::selection {
+  background-color: var(--nova-color-primary-700);
+  color: var(--nova-color-neutral-50);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--nova-color-primary-500);
+  outline-offset: 2px;
+}
+
+/* ============================
+ * 2. Keyframes
+ * ============================ */
+
+@keyframes sentinel-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sentinel-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sentinel-slide-up-delayed {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  40% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sentinel-pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--nova-color-primary-500), transparent 70%);
+  }
+
+  70% {
+    box-shadow: 0 0 0 5px color-mix(in srgb, var(--nova-color-primary-500), transparent 100%);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--nova-color-primary-500), transparent 100%);
+  }
+}
+
+@keyframes sentinel-border-reveal {
+  from {
+    border-left-color: transparent;
+  }
+
+  to {
+    border-left-color: var(--nova-color-primary-500);
+  }
+}
+
+@keyframes sentinel-stat-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    /* !important is intentional — accessibility override must win regardless of specificity. */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================
+ * 3. Links
+ * ============================ */
+
+a {
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--nova-color-primary-700);
+  text-decoration: underline;
+}
+
+[data-theme="dark"] a {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] a:hover {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 4. CTA Buttons
+ * ============================ */
+
+.nova-cta-primary {
+  padding: 0.625rem 1.5rem;
+  border-radius: var(--nova-shape-radius);
+  background-color: var(--nova-color-primary-600);
+  color: var(--nova-color-neutral-50);
+  font-family: var(--nova-font-display);
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  border: 1px solid var(--nova-color-primary-700);
+  transition:
+    background-color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease,
+    box-shadow var(--nova-motion-duration) ease;
+}
+
+.nova-cta-primary:hover,
+.nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-700);
+  border-color: var(--nova-color-primary-800);
+  color: var(--nova-color-neutral-50);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+[data-theme="dark"] .nova-cta-primary {
+  background-color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-500);
+  color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-cta-primary:hover,
+[data-theme="dark"] .nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-neutral-50);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%),
+    0 0 20px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+.nova-cta-secondary {
+  padding: 0.625rem 1.5rem;
+  border-radius: var(--nova-shape-radius);
+  border: 1px solid var(--nova-color-neutral-300);
+  color: var(--nova-color-neutral-700);
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  background-color: transparent;
+  transition:
+    color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease;
+}
+
+.nova-cta-secondary:hover,
+.nova-cta-secondary:focus-visible {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-cta-secondary {
+  color: var(--nova-color-neutral-300);
+  border-color: var(--nova-color-neutral-700);
+}
+
+[data-theme="dark"] .nova-cta-secondary:hover,
+[data-theme="dark"] .nova-cta-secondary:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-color-primary-600);
+}
+
+@media (min-width: 640px) {
+  .nova-cta-primary {
+    padding: 0.75rem 2rem;
+    font-size: 0.9375rem;
+  }
+
+  .nova-cta-secondary {
+    padding: 0.75rem 2rem;
+    font-size: 0.9375rem;
+  }
+}
+
+/* ============================
+ * 4. Scrollbar
+ * ============================ */
+
+html {
+  scrollbar-color: var(--nova-color-primary-300) transparent;
+}
+
+[data-theme="dark"] {
+  scrollbar-color: var(--nova-color-primary-700) transparent;
+}
+
+/* ============================
+ * 5. Stats & Spotlight
+ * ============================ */
+
+.nova-stats-inner {
+  text-align: center;
+}
+
+.nova-stats-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--nova-color-neutral-900);
+  border: none;
+  padding: 0;
+}
+
+[data-theme="dark"] .nova-stats-heading {
+  color: var(--nova-color-neutral-50);
+}
+
+.nova-stats-description {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-stats-description {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-stats-grid {
+  text-align: center;
+}
+
+.nova-stat {
+  padding: 1rem 0.75rem;
+  position: relative;
+}
+
+.nova-stat + .nova-stat {
+  border-left: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-stat + .nova-stat {
+  border-left-color: var(--nova-color-neutral-800);
+}
+
+/* Two-column stat layout: odd items have no left border */
+.nova-stat:nth-child(odd) {
+  border-left: none;
+}
+
+.nova-stat:nth-child(n+3) {
+  border-top: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-stat:nth-child(n+3) {
+  border-top-color: var(--nova-color-neutral-800);
+}
+
+.nova-stat-value {
+  font-family: var(--nova-font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.nova-stat-primary {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-stat-primary {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-stat-accent {
+  color: var(--nova-color-accent-600);
+}
+
+[data-theme="dark"] .nova-stat-accent {
+  color: var(--nova-color-accent-500);
+}
+
+.nova-stat-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-500);
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .nova-stats-heading {
+    font-size: 1.5rem;
+  }
+
+  .nova-stats-description {
+    font-size: 1rem;
+  }
+
+  .nova-stat {
+    padding: 1.25rem 1rem;
+  }
+
+  .nova-stat:nth-child(odd) {
+    border-left: none;
+  }
+
+  .nova-stat:nth-child(n+3) {
+    border-top: none;
+  }
+
+  .nova-stat:nth-child(n+2) {
+    border-left: 1px solid var(--nova-color-neutral-200);
+  }
+
+  [data-theme="dark"] .nova-stat:nth-child(n+2) {
+    border-left-color: var(--nova-color-neutral-800);
+  }
+
+  .nova-stat-value {
+    font-size: 2rem;
+  }
+
+  .nova-stat-label {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-stats-heading {
+    font-size: 1.75rem;
+  }
+
+  .nova-stat {
+    padding: 1.5rem 1rem;
+  }
+
+  .nova-stat-value {
+    font-size: 2.5rem;
+  }
+}
+
+.nova-spotlight-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--nova-color-neutral-900);
+  border: none;
+  padding: 0;
+}
+
+[data-theme="dark"] .nova-spotlight-heading {
+  color: var(--nova-color-neutral-50);
+}
+
+@media (min-width: 640px) {
+  .nova-spotlight-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-spotlight-heading {
+    font-size: 1.75rem;
+  }
+}
+
+.nova-section-description {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-section-description {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-code-snippet {
+  background-color: #fff;
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="dark"] .nova-code-snippet {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-color: var(--nova-color-neutral-700);
+}
+
+/* ============================
+ * 6. Surface Alt
+ * ============================ */
+
+.nova-surface-alt {
+  padding-block: 2.5rem;
+  border-top: 1px solid var(--nova-color-neutral-200);
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 100%, color-mix(in srgb, var(--nova-color-primary-500), transparent 97%) 0%, transparent 70%),
+    var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-surface-alt {
+  border-top-color: var(--nova-color-neutral-800);
+  border-bottom-color: var(--nova-color-neutral-800);
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 100%, color-mix(in srgb, var(--nova-color-primary-500), transparent 96%) 0%, transparent 70%),
+    var(--nova-color-neutral-950);
+}
+
+@media (min-width: 640px) {
+  .nova-surface-alt {
+    padding-block: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-surface-alt {
+    padding-block: 4rem;
+  }
+}
+
+/* ============================
+ * 7. Typography
+ * ============================ */
+
+p {
+  margin-bottom: 1rem;
+  color: var(--nova-color-neutral-600);
+}
+
+[data-theme="dark"] p {
+  color: var(--nova-color-neutral-300);
+}
+
+li {
+  margin-bottom: 0.25rem;
+  color: var(--nova-color-neutral-600);
+}
+
+[data-theme="dark"] li {
+  color: var(--nova-color-neutral-300);
+}
+
+li::marker {
+  color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 8. Tabs
+ * ============================ */
+
+[role="tablist"] {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+}
+
+[data-theme="dark"] [role="tablist"] {
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+[role="tab"] {
+  font-family: var(--nova-font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  padding: 0.5rem 0.75rem;
+  color: var(--nova-color-neutral-500);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease;
+}
+
+[role="tab"]:hover,
+[role="tab"]:focus-visible {
+  color: var(--nova-color-primary-600);
+}
+
+[role="tab"][aria-selected="true"] {
+  color: var(--nova-color-primary-700);
+  border-bottom-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] [role="tab"] {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] [role="tab"]:hover,
+[data-theme="dark"] [role="tab"]:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] [role="tab"][aria-selected="true"] {
+  color: var(--nova-color-primary-400);
+  border-bottom-color: var(--nova-color-primary-500);
+}
+
+@media (min-width: 768px) {
+  [role="tab"] {
+    font-size: 0.875rem;
+    padding: 0.625rem 1rem;
+  }
+}
+
+button,
+[role="tab"] {
+  transition:
+    color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+/* ============================
+ * 9. Tables
+ * ============================ */
+
+table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+  overflow: hidden;
+}
+
+[data-theme="dark"] table {
+  border-color: var(--nova-color-neutral-800);
+}
+
+thead {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+  border-bottom: 1px solid var(--nova-color-primary-200);
+}
+
+[data-theme="dark"] thead {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-bottom-color: var(--nova-color-primary-800);
+}
+
+th {
+  font-family: var(--nova-font-display);
+  font-weight: 700;
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-align: left;
+  padding: 0.5rem 0.75rem;
+  color: var(--nova-color-primary-700);
+  white-space: nowrap;
+}
+
+[data-theme="dark"] th {
+  color: var(--nova-color-primary-300);
+}
+
+td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+  color: var(--nova-color-neutral-600);
+  font-size: 0.875rem;
+}
+
+[data-theme="dark"] td {
+  border-bottom-color: var(--nova-color-neutral-800);
+  color: var(--nova-color-neutral-300);
+}
+
+tbody tr:hover td {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 98%);
+}
+
+[data-theme="dark"] tbody tr:hover td {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 97%);
+}
+
+@media (min-width: 768px) {
+  table {
+    min-width: 0;
+    font-size: 0.9375rem;
+  }
+
+  th {
+    font-size: 0.75rem;
+    padding: 0.625rem 1rem;
+  }
+
+  td {
+    padding: 0.625rem 1rem;
+  }
+}
+
+tbody tr {
+  transition: background-color var(--nova-motion-duration) ease;
+}
+

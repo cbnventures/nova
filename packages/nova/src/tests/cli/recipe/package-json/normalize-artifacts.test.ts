@@ -11,274 +11,279 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIRecipePackageJsonNormalizeArtifacts } from '@/cli/recipe/package-json/normalize-artifacts.js';
+import { afterAll, describe, it } from 'vitest';
+
+import { CliRecipePackageJsonNormalizeArtifacts } from '../../../../cli/recipe/package-json/normalize-artifacts.js';
 
 import type {
-  CLIRecipePackageJsonNormalizeArtifactsTestOriginalCwd,
-  CLIRecipePackageJsonNormalizeArtifactsTestSandboxRoot,
-} from '@/types/tests/cli/recipe/package-json/normalize-artifacts.test.d.ts';
+  TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigContents,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigPath,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunOriginalCwd,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunOutput,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonContents,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonPath,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunParsed,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunProjectDirectory,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunSandboxPath,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunSandboxRoot,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunTemporaryDirectory,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspaceDirectory,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonContents,
+  TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonPath,
+} from '../../../../types/tests/cli/recipe/package-json/normalize-artifacts.test.d.ts';
 
 /**
- * CLI Recipe - package.json - Normalize Artifacts - Run.
+ * Tests - CLI - Recipe - package.json - Normalize Artifacts - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIRecipePackageJsonNormalizeArtifacts.run', async (context) => {
-  const originalCwd: CLIRecipePackageJsonNormalizeArtifactsTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIRecipePackageJsonNormalizeArtifactsTestSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('CliRecipePackageJsonNormalizeArtifacts.run', async () => {
+  const originalCwd: TestsCliRecipePackageJsonNormalizeArtifactsRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunTemporaryDirectory = tmpdir();
+  const sandboxPath: TestsCliRecipePackageJsonNormalizeArtifactsRunSandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsCliRecipePackageJsonNormalizeArtifactsRunSandboxRoot = await mkdtemp(sandboxPath);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('sets exit code when not at project root', async () => {
-    const projectDir = join(sandboxRoot, 'not-project-root');
+  it('sets exit code when not at project root', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunProjectDirectory = join(sandboxRoot, 'not-project-root');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    process.chdir(projectDir);
+    process.chdir(projectDirectory);
 
-    process.exitCode = undefined;
-
-    await CLIRecipePackageJsonNormalizeArtifacts.run({});
+    await CliRecipePackageJsonNormalizeArtifacts.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('skips when no workspaces have the recipe enabled', async () => {
-    const projectDir = join(sandboxRoot, 'no-recipe');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('skips when no workspaces have the recipe enabled', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunProjectDirectory = join(sandboxRoot, 'no-recipe');
+    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-no-recipe',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonContents = JSON.stringify({
+      name: 'test-no-recipe',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: '@test/core',
-        version: '1.0.0',
-        bin: './build/cli.js',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      bin: './build/cli.js',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonNormalizeArtifacts.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeArtifacts.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
     // The bin should not have been normalized because the recipe is not enabled.
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonNormalizeArtifactsRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonNormalizeArtifactsRunParsed = JSON.parse(output);
 
     strictEqual(parsed['bin'], './build/cli.js');
+
+    return;
   });
 
-  await context.test('normalizes string bin to object for package role', async () => {
-    const projectDir = join(sandboxRoot, 'normalize-bin');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('normalizes string bin to object for package role', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunProjectDirectory = join(sandboxRoot, 'normalize-bin');
+    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-normalize-bin',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonContents = JSON.stringify({
+      name: 'test-normalize-bin',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'normalize-artifacts': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'normalize-artifacts': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: '@test/core',
-        version: '1.0.0',
-        bin: './build/cli.js',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      bin: './build/cli.js',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonNormalizeArtifacts.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeArtifacts.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonNormalizeArtifactsRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonNormalizeArtifactsRunParsed = JSON.parse(output);
 
     deepStrictEqual(parsed['bin'], {
       core: './build/cli.js',
     });
+
+    return;
   });
 
-  await context.test('sets private to true for non-distributable workspace', async () => {
-    const projectDir = join(sandboxRoot, 'sync-private');
-    const workspaceDir = join(projectDir, 'apps', 'docs');
+  it('sets private to true for non-distributable workspace', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunProjectDirectory = join(sandboxRoot, 'sync-private');
+    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspaceDirectory = join(projectDirectory, 'apps', 'docs');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-sync-private',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonContents = JSON.stringify({
+      name: 'test-sync-private',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './apps/docs': {
-            name: 'test-docs',
-            role: 'docs',
-            policy: 'freezable',
-            recipes: {
-              'normalize-artifacts': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './apps/docs': {
+          name: 'docs',
+          role: 'docs',
+          policy: 'freezable',
+          recipes: {
+            'normalize-artifacts': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-docs',
-        version: '0.0.0',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonContents = JSON.stringify({
+      name: 'docs',
+      version: '0.0.0',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonNormalizeArtifacts.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeArtifacts.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonNormalizeArtifactsRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonNormalizeArtifactsRunParsed = JSON.parse(output);
 
     strictEqual(parsed['private'], true);
+
+    return;
   });
 
-  await context.test('does not modify files during dry run', async () => {
-    const projectDir = join(sandboxRoot, 'dry-run');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('does not modify files during dry run', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunProjectDirectory = join(sandboxRoot, 'dry-run');
+    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-dry-run',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonNormalizeArtifactsRunPackageJsonContents = JSON.stringify({
+      name: 'test-dry-run',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'normalize-artifacts': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonNormalizeArtifactsRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'normalize-artifacts': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: '@test/core',
-        version: '1.0.0',
-        bin: './build/cli.js',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeArtifactsRunWorkspacePackageJsonContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+      bin: './build/cli.js',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonNormalizeArtifacts.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonNormalizeArtifacts.run({
       dryRun: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
     // The file should not have been modified.
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonNormalizeArtifactsRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonNormalizeArtifactsRunParsed = JSON.parse(output);
 
     strictEqual(parsed['bin'], './build/cli.js');
+
+    return;
   });
+
+  return;
 });

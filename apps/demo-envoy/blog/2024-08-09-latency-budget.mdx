@@ -1,0 +1,70 @@
+---
+title: "Your Webhook Has a Latency Budget and You Are Blowing It"
+authors: [anders]
+tags: [latency, incident-response, courier]
+date: 2024-08-09
+---
+
+A webhook that takes 300ms to deliver is not "a bit slow." It is a webhook that will miss its SLA during the next traffic spike. Every millisecond in your relay pipeline is borrowed time, and most teams have no idea where they are spending it.
+
+We spent three weeks instrumenting Courier's delivery pipeline down to the microsecond. What we found changed how we think about relay performance.
+
+{/* truncate */}
+
+## The Latency Budget
+
+Every relay has a latency budget — the total time from "webhook received" to "delivery confirmed." For real-time integrations like alerting, payment confirmation, or chat notifications, that budget is usually under 500ms. For batch integrations like CRM syncs or analytics pipelines, it might be 5 seconds. Either way, you are spending it whether you track it or not.
+
+Here is where a typical relay spends its budget:
+
+```text title="Latency breakdown — single relay (no pooling, no batching)"
+TLS handshake          38ms   ██████████████████░░░░░░░░   42%
+DNS resolution          8ms   ████░░░░░░░░░░░░░░░░░░░░░    9%
+TCP connect             5ms   ██░░░░░░░░░░░░░░░░░░░░░░░    6%
+Request serialization   2ms   █░░░░░░░░░░░░░░░░░░░░░░░░    2%
+Network transit        14ms   ███████░░░░░░░░░░░░░░░░░░   16%
+Server processing      18ms   █████████░░░░░░░░░░░░░░░░   20%
+Response parsing        1ms   ░░░░░░░░░░░░░░░░░░░░░░░░░    1%
+Courier overhead        4ms   ██░░░░░░░░░░░░░░░░░░░░░░░    4%
+─────────────────────────────────────────────────────────
+Total                  90ms
+```
+
+42% of the budget goes to TLS handshake. That is the cost of establishing a secure connection from scratch for every single delivery. It is also the first thing connection pooling eliminates.
+
+## The Invisible Tax
+
+DNS resolution at 8ms seems small. It is not. DNS is cached by the operating system, but cache TTLs vary. When a TTL expires mid-spike, DNS resolution jumps from 0.1ms (cached) to 8-40ms (recursive lookup). If your relay pipeline does not pre-resolve and pin DNS, you have an intermittent latency spike that shows up in the p99 but never reproduces in development.
+
+We found this during a production incident. Courier's p99 delivery latency was 12ms for three hours, then jumped to 85ms for six minutes, then dropped back. The logs showed nothing. The error rate was zero. Every delivery succeeded — just slowly.
+
+```text title="DNS cache miss during traffic spike — 2024-07-14"
+14:00:00  p99 delivery: 12ms  (DNS cached, TTL fresh)
+14:00:00  Relay rate: 4,200/s
+...
+16:47:22  DNS TTL expires for hook.customer-a.io
+16:47:22  p99 delivery: 84ms  (DNS recursive lookup)
+16:47:22  Relay rate: 4,200/s  (unchanged — no errors, just slow)
+16:48:14  DNS re-cached
+16:48:14  p99 delivery: 11ms
+```
+
+No alert fired because the error rate was zero. The latency SLA was breached for six minutes and nobody knew until a customer dashboard showed delayed notifications.
+
+## What Courier Does Now
+
+Courier maintains its own DNS cache with a minimum TTL floor of 300 seconds, regardless of what the upstream DNS server advertises. When a TTL expires, Courier pre-resolves the new address *before* evicting the old one, so there is never a resolution gap during delivery.
+
+For destinations with multiple A records, Courier also tracks per-address latency and routes to the fastest one. This is not load balancing — it is latency-aware routing. If `203.0.113.10` responds in 4ms and `203.0.113.11` responds in 22ms, Courier sends to `.10` until the numbers change.
+
+## The Compounding Problem
+
+Latency compounds across retries. A relay with a 90ms baseline that fails and retries three times with exponential backoff does not cost 90ms. It costs 90ms + 1s + 90ms + 4s + 90ms = 5.27 seconds. If the latency budget is 5 seconds, the third retry has already blown it — even if the delivery eventually succeeds.
+
+This is why Courier tracks cumulative relay time across retries. If the total elapsed time exceeds the relay's latency budget, Courier fast-tracks the message to the dead-letter queue instead of attempting another retry. A retry that will arrive too late is worse than a retry that never happens, because the late arrival creates a stale-data problem downstream.
+
+## The Lesson
+
+Latency is not a single number. It is a budget with line items, and every line item has a failure mode. TLS handshakes, DNS resolution, connection establishment, serialization — each one is a place where milliseconds accumulate silently until a spike turns them into seconds.
+
+Track the budget. Know where you are spending it. And design for the p99, not the p50 — because the p99 is what your customers experience when it matters most.

@@ -1,0 +1,143 @@
+---
+id: no-explicit-any
+title: No Explicit Any
+description: Disallow usage of the any type and require unknown with type guards or a specific type instead.
+keywords:
+  - nova
+  - eslint rule
+  - typescript
+  - any type
+  - unknown
+  - type safety
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Disallow usage of the `any` type. Use `unknown` and narrow with type guards, or define a specific type.
+
+## Summary
+
+The `no-explicit-any` rule reports every occurrence of the `any` type keyword in type annotations, return types, generics, and type aliases.
+
+Using `any` disables type checking entirely for that value, defeating the purpose of TypeScript.
+
+## Why Use This Rule?
+
+1. Prevents type safety holes that allow runtime errors to pass through the compiler uncaught.
+2. Encourages the use of `unknown` with proper type narrowing, which keeps the type system enforced.
+3. Makes the codebase easier to refactor because every value has a meaningful type.
+
+## Examples
+
+<Tabs groupId="no-explicit-any-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    function parseInput(raw: unknown): Config {
+      if (typeof raw !== 'object' || raw === null) {
+        throw new Error('Invalid input');
+      }
+
+      return raw as Config;
+    }
+
+    const data: Record<string, string> = {};
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    function parseInput(raw: any): any {
+      return raw;
+    }
+
+    const data: any = {};
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-explicit-any-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoExplicitAny } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-explicit-any': NoExplicitAny.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-explicit-any': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoExplicitAny } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-explicit-any': NoExplicitAny.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-explicit-any': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Error fires on third-party library types** — If a dependency's type definitions use `any`, the error comes from your own code referencing that type. Wrap the value in a named type alias with a more specific type or use `unknown`.
+- **Need `any` for a legitimate escape hatch** — Use the `ignoreFiles` option to exclude specific files where `any` is unavoidable.

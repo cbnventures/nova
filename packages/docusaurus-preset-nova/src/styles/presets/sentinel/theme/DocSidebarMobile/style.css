@@ -1,0 +1,130 @@
+/**
+ * Sentinel — Doc Sidebar Mobile visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Trigger Button
+ * ============================ */
+
+.nova-sidebar-mobile-trigger {
+  color: var(--nova-color-neutral-600);
+
+  background-color: var(--nova-color-neutral-50);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-mobile-trigger:hover,
+.nova-sidebar-mobile-trigger:focus-visible {
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-trigger {
+  color: var(--nova-color-neutral-400);
+
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-trigger:hover,
+[data-theme="dark"] .nova-sidebar-mobile-trigger:focus-visible {
+  border-color: var(--nova-color-primary-600);
+}
+
+/* ============================
+ * Overlay
+ * ============================ */
+
+.nova-sidebar-mobile-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================
+ * Panel
+ * ============================ */
+
+.nova-sidebar-mobile-panel {
+  background-color: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-panel {
+  background-color: rgba(3, 7, 10, 0.97);
+}
+
+@media (min-width: 576px) {
+  .nova-sidebar-mobile-panel {
+    border: 1px solid var(--nova-color-neutral-200);
+    border-radius: var(--nova-shape-radius);
+  }
+
+  [data-theme="dark"] .nova-sidebar-mobile-panel {
+    border-color: var(--nova-color-neutral-800);
+  }
+}
+
+/* ============================
+ * Header
+ * ============================ */
+
+.nova-sidebar-mobile-header-title {
+  font-family: var(--nova-font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-header-title {
+  color: var(--nova-color-neutral-50);
+}
+
+/* ============================
+ * Close Button
+ * ============================ */
+
+.nova-sidebar-mobile-close {
+  color: var(--nova-color-neutral-600);
+  border-radius: var(--nova-shape-radius);
+
+  transition: color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-mobile-close:hover,
+.nova-sidebar-mobile-close:focus-visible {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-close {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-close:hover,
+[data-theme="dark"] .nova-sidebar-mobile-close:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+/* ============================
+ * Subtle Fade
+ * ============================ */
+
+@keyframes nova-sidebar-mobile-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.nova-sidebar-mobile-panel {
+  animation: nova-sidebar-mobile-fade 200ms ease;
+}

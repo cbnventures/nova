@@ -1,0 +1,140 @@
+---
+id: require-type-naming
+title: Require Type Naming
+description: Require type alias names in definition files to start with the class name prefix derived from the file path.
+keywords:
+  - nova
+  - eslint rule
+  - typescript
+  - type naming
+  - type alias
+  - naming convention
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require type alias names in `.d.ts` files to start with the class name prefix derived from the file path.
+
+## Summary
+
+The `require-type-naming` rule reports any type alias in a `.d.ts` file whose name does not start with the expected prefix. The prefix is derived from the file path after the `types/` directory, with each segment converted to PascalCase.
+
+For example, a file at `types/cli/utility/changelog.d.ts` produces the prefix `CliUtilityChangelog`. The rule only applies to `.d.ts` files.
+
+## Why Use This Rule?
+
+1. Ensures type names are predictable and can be traced back to their definition file by name alone.
+2. Prevents naming collisions by scoping every type alias to its file path.
+3. Makes imports self-documenting because the type name contains its full module context.
+
+## Examples
+
+<Tabs groupId="require-type-naming-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // File: types/cli/utility/changelog.d.ts
+
+    export type CliUtilityChangelogGenerateContext = RuleContext;
+
+    export type CliUtilityChangelogGenerateReturns = void;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // File: types/cli/utility/changelog.d.ts
+
+    export type GenerateContext = RuleContext;
+
+    export type ChangelogReturns = void;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-type-naming-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireTypeNaming } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-type-naming': RequireTypeNaming.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-type-naming': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireTypeNaming } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-type-naming': RequireTypeNaming.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-type-naming': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires but the prefix looks correct** — Check that the file path segments after `types/` match exactly. The rule splits on `/` and converts each segment from kebab-case to PascalCase.
+- **Rule does not fire on `.ts` files** — This is expected. The rule only applies to files ending in `.d.ts`. Code files are not checked.
+- **Test type files use a different prefix** — Files ending in `.test.d.ts` have the `.test` portion stripped before deriving the prefix, so they use the same prefix as their non-test counterpart.

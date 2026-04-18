@@ -1,201 +1,421 @@
 import type {
-  NovaConfig,
-  NovaConfigConfig,
-  NovaConfigEmails,
-  NovaConfigEntities,
-  NovaConfigEntity,
-  NovaConfigEntityRole,
-  NovaConfigProject,
-  NovaConfigProjectDescription,
-  NovaConfigProjectName,
-  NovaConfigProjectNameSlug,
-  NovaConfigUrls,
-  NovaConfigWorkspaceName,
-  NovaConfigWorkspaceRecipeName,
-  NovaConfigWorkspaceRecipeSettings,
-  NovaConfigWorkspaceRecipes,
-  NovaConfigWorkspaceRole,
-  NovaConfigWorkspaces,
-  UrlProtocol,
-} from '@/types/shared.d.ts';
+  SharedNovaConfig,
+  SharedNovaConfigConfig,
+  SharedNovaConfigEmails,
+  SharedNovaConfigEntities,
+  SharedNovaConfigEntity,
+  SharedNovaConfigEntityRole,
+  SharedNovaConfigProject,
+  SharedNovaConfigProjectDescription,
+  SharedNovaConfigProjectLicense,
+  SharedNovaConfigProjectName,
+  SharedNovaConfigProjectNameSlug,
+  SharedNovaConfigProjectPlatform,
+  SharedNovaConfigUrls,
+  SharedNovaConfigWorkflow,
+  SharedNovaConfigWorkflows,
+  SharedNovaConfigWorkflowSettings,
+  SharedNovaConfigWorkspaceName,
+  SharedNovaConfigWorkspacePolicy,
+  SharedNovaConfigWorkspaceRecipeName,
+  SharedNovaConfigWorkspaceRecipes,
+  SharedNovaConfigWorkspaceRecipeSettings,
+  SharedNovaConfigWorkspaceRole,
+  SharedNovaConfigWorkspaces,
+  SharedUrlProtocol,
+} from '../shared.d.ts';
+
+import type {
+  LibItemEmailFields,
+  LibItemGenericProtocols,
+  LibItemRepositoryProtocols,
+  LibItemUrlFields,
+} from './item.d.ts';
 
 /**
- * Nova Config - Config.
+ * Lib - Nova Config - Config.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type { NovaConfigConfig };
+export type LibNovaConfigConfig = SharedNovaConfigConfig;
 
 /**
- * Nova Config - Get array of http urls.
+ * Lib - Nova Config - Constructor.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigGetArrayOfHttpUrlsValue = unknown;
-
-export type NovaConfigGetArrayOfHttpUrlsField = UrlProtocol;
-
-export type NovaConfigGetArrayOfHttpUrlsReturns = string[] | undefined;
 
 /**
- * Nova Config - Get array of non-empty strings.
+ * Lib - Nova Config - Get Array Of HTTP URLs.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigGetArrayOfNonEmptyStringsValue = unknown;
+export type LibNovaConfigGetArrayOfHttpUrlsValue = unknown;
 
-export type NovaConfigGetArrayOfNonEmptyStringsReturns = string[] | undefined;
+export type LibNovaConfigGetArrayOfHttpUrlsField = SharedUrlProtocol;
+
+export type LibNovaConfigGetArrayOfHttpUrlsReturns = string[] | undefined;
+
+export type LibNovaConfigGetArrayOfHttpUrlsItems = string[];
+
+export type LibNovaConfigGetArrayOfHttpUrlsTypeGuard = string;
 
 /**
- * Nova Config - Get email.
+ * Lib - Nova Config - Get Array Of Non Empty Strings.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigGetEmailValue = unknown;
+export type LibNovaConfigGetArrayOfNonEmptyStringsValue = unknown;
 
-export type NovaConfigGetEmailReturns = string | undefined;
+export type LibNovaConfigGetArrayOfNonEmptyStringsReturns = string[] | undefined;
+
+export type LibNovaConfigGetArrayOfNonEmptyStringsItems = string[];
+
+export type LibNovaConfigGetArrayOfNonEmptyStringsTypeGuard = string;
 
 /**
- * Nova Config - Get non-empty string.
+ * Lib - Nova Config - Get Email.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigGetNonEmptyStringValue = unknown;
+export type LibNovaConfigGetEmailValue = unknown;
 
-export type NovaConfigGetNonEmptyStringReturns = string | undefined;
+export type LibNovaConfigGetEmailReturns = string | undefined;
+
+export type LibNovaConfigGetEmailEmail = string | undefined;
 
 /**
- * Nova Config - Get url.
+ * Lib - Nova Config - Get Non Empty String.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigGetUrlValue = unknown;
+export type LibNovaConfigGetNonEmptyStringValue = unknown;
 
-export type NovaConfigGetUrlField = UrlProtocol;
+export type LibNovaConfigGetNonEmptyStringReturns = string | undefined;
 
-export type NovaConfigGetUrlReturns = string | undefined;
+export type LibNovaConfigGetNonEmptyStringString = string;
 
 /**
- * Nova Config - Is entity role.
+ * Lib - Nova Config - Get URL.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigIsEntityRoleValue = unknown;
+export type LibNovaConfigGetUrlValue = unknown;
 
-export type NovaConfigIsEntityRoleTypeGuard = NovaConfigEntityRole;
+export type LibNovaConfigGetUrlField = SharedUrlProtocol;
+
+export type LibNovaConfigGetUrlReturns = string | undefined;
+
+export type LibNovaConfigGetUrlCandidateUrl = string | undefined;
+
+export type LibNovaConfigGetUrlUrl = URL;
+
+export type LibNovaConfigGetUrlAllowedProtocols = LibItemGenericProtocols | LibItemRepositoryProtocols;
+
+export type LibNovaConfigGetUrlIsAllowed = boolean;
 
 /**
- * Nova Config - Load.
+ * Lib - Nova Config - Is Entity Role.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigLoadReturns = Promise<NovaConfigConfig>;
+export type LibNovaConfigIsEntityRoleValue = unknown;
 
-export type NovaConfigLoadParsedFile = unknown;
+export type LibNovaConfigIsEntityRoleTypeGuard = SharedNovaConfigEntityRole;
 
 /**
- * Nova Config - Parse.
+ * Lib - Nova Config - Load.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigParseValue = unknown;
+export type LibNovaConfigLoadReturns = Promise<SharedNovaConfigConfig>;
 
-export type NovaConfigParseReturns = NovaConfig;
+export type LibNovaConfigLoadCurrentDirectory = string;
 
-export type NovaConfigParseResult = NovaConfig;
+export type LibNovaConfigLoadConfigFileName = string;
+
+export type LibNovaConfigLoadConfigPath = string;
+
+export type LibNovaConfigLoadRawFile = string;
+
+export type LibNovaConfigLoadParsedFile = unknown;
 
 /**
- * Nova Config - Parse emails.
+ * Lib - Nova Config - Parse.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigParseEmailsValue = unknown;
+export type LibNovaConfigParseValue = unknown;
 
-export type NovaConfigParseEmailsReturns = NovaConfigEmails | undefined;
+export type LibNovaConfigParseReturns = SharedNovaConfig;
 
-export type NovaConfigParseEmailsEmails = NovaConfigEmails;
+export type LibNovaConfigParseResult = SharedNovaConfig;
+
+export type LibNovaConfigParseProject = SharedNovaConfigProject | undefined;
+
+export type LibNovaConfigParseEntities = SharedNovaConfigEntities | undefined;
+
+export type LibNovaConfigParseEmails = SharedNovaConfigEmails | undefined;
+
+export type LibNovaConfigParseWorkflows = SharedNovaConfigWorkflows | undefined;
+
+export type LibNovaConfigParseUrls = SharedNovaConfigUrls | undefined;
+
+export type LibNovaConfigParseWorkspaces = SharedNovaConfigWorkspaces | undefined;
 
 /**
- * Nova Config - Parse entities.
+ * Lib - Nova Config - Parse Emails.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigParseEntitiesValue = unknown;
+export type LibNovaConfigParseEmailsValue = unknown;
 
-export type NovaConfigParseEntitiesReturns = NovaConfigEntities | undefined;
+export type LibNovaConfigParseEmailsReturns = SharedNovaConfigEmails | undefined;
 
-export type NovaConfigParseEntitiesParsedEntity = NovaConfigEntity;
+export type LibNovaConfigParseEmailsEmails = SharedNovaConfigEmails;
+
+export type LibNovaConfigParseEmailsEmailFields = LibItemEmailFields;
+
+export type LibNovaConfigParseEmailsParsedEmail = string | undefined;
 
 /**
- * Nova Config - Parse project.
+ * Lib - Nova Config - Parse Entities.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigParseProjectValue = unknown;
+export type LibNovaConfigParseEntitiesValue = unknown;
 
-export type NovaConfigParseProjectReturns = NovaConfigProject | undefined;
+export type LibNovaConfigParseEntitiesReturns = SharedNovaConfigEntities | undefined;
 
-export type NovaConfigParseProjectProject = NovaConfigProject;
+export type LibNovaConfigParseEntitiesEntities = SharedNovaConfigEntity[];
 
-export type NovaConfigParseProjectName = NovaConfigProjectName;
+export type LibNovaConfigParseEntitiesParsedEntity = SharedNovaConfigEntity;
 
-export type NovaConfigParseProjectDescription = NovaConfigProjectDescription;
+export type LibNovaConfigParseEntitiesName = string | undefined;
+
+export type LibNovaConfigParseEntitiesEmail = string | undefined;
+
+export type LibNovaConfigParseEntitiesUrl = string | undefined;
+
+export type LibNovaConfigParseEntitiesRoles = unknown;
+
+export type LibNovaConfigParseEntitiesParsedRoles = SharedNovaConfigEntityRole[];
+
+export type LibNovaConfigParseEntitiesSortNameA = string;
+
+export type LibNovaConfigParseEntitiesSortNameB = string;
 
 /**
- * Nova Config - Parse urls.
+ * Lib - Nova Config - Parse Project.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigParseUrlsValue = unknown;
+export type LibNovaConfigParseProjectValue = unknown;
 
-export type NovaConfigParseUrlsReturns = NovaConfigUrls | undefined;
+export type LibNovaConfigParseProjectReturns = SharedNovaConfigProject | undefined;
 
-export type NovaConfigParseUrlsUrls = NovaConfigUrls;
+export type LibNovaConfigParseProjectProject = SharedNovaConfigProject;
+
+export type LibNovaConfigParseProjectValueName = unknown;
+
+export type LibNovaConfigParseProjectValueDescription = unknown;
+
+export type LibNovaConfigParseProjectValueKeywords = string[] | undefined;
+
+export type LibNovaConfigParseProjectName = SharedNovaConfigProjectName;
+
+export type LibNovaConfigParseProjectSlug = string | undefined;
+
+export type LibNovaConfigParseProjectTitle = string | undefined;
+
+export type LibNovaConfigParseProjectDescription = SharedNovaConfigProjectDescription;
+
+export type LibNovaConfigParseProjectShort = string | undefined;
+
+export type LibNovaConfigParseProjectLong = string | undefined;
+
+export type LibNovaConfigParseProjectValueLegalName = string | undefined;
+
+export type LibNovaConfigParseProjectValuePronouns = string | undefined;
+
+export type LibNovaConfigParseProjectValuePlatforms = unknown;
+
+export type LibNovaConfigParseProjectAllowedPlatforms = Set<string>;
+
+export type LibNovaConfigParseProjectParsedPlatforms = SharedNovaConfigProjectPlatform[];
+
+export type LibNovaConfigParseProjectPlatform = SharedNovaConfigProjectPlatform;
+
+export type LibNovaConfigParseProjectValueStartingYear = unknown;
+
+export type LibNovaConfigParseProjectValueLicense = string | undefined;
+
+export type LibNovaConfigParseProjectAllowedLicenses = Set<string>;
+
+export type LibNovaConfigParseProjectLicense = SharedNovaConfigProjectLicense;
 
 /**
- * Nova Config - Parse workspaces.
+ * Lib - Nova Config - Parse URLs.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigParseWorkspacesValue = unknown;
+export type LibNovaConfigParseUrlsValue = unknown;
 
-export type NovaConfigParseWorkspacesSlug = NovaConfigProjectNameSlug | undefined;
+export type LibNovaConfigParseUrlsReturns = SharedNovaConfigUrls | undefined;
 
-export type NovaConfigParseWorkspacesReturns = NovaConfigWorkspaces | undefined;
+export type LibNovaConfigParseUrlsUrls = SharedNovaConfigUrls;
 
-export type NovaConfigParseWorkspacesWorkspaces = NovaConfigWorkspaces;
+export type LibNovaConfigParseUrlsUrlFields = LibItemUrlFields;
 
-export type NovaConfigParseWorkspacesRecipes = NovaConfigWorkspaceRecipes | undefined;
+export type LibNovaConfigParseUrlsUrlFieldsFundSourcesIndex = number;
 
-export type NovaConfigParseWorkspacesAllowedRecipes = Set<NovaConfigWorkspaceRecipeName>;
+export type LibNovaConfigParseUrlsLoopIndex = number;
 
-export type NovaConfigParseWorkspacesParsedSettings = NovaConfigWorkspaceRecipeSettings;
+export type LibNovaConfigParseUrlsFundSources = string[] | undefined;
+
+export type LibNovaConfigParseUrlsUrlField = string;
+
+export type LibNovaConfigParseUrlsParsedUrl = string | undefined;
 
 /**
- * Nova Config - Parse workspaces - Is name allowed.
+ * Lib - Nova Config - Parse Workflows.
  *
- * @since 1.0.0
+ * @since 0.20.0
  */
-export type NovaConfigParseWorkspacesIsNameAllowedRole = NovaConfigWorkspaceRole;
+export type LibNovaConfigParseWorkflowsValue = unknown;
 
-export type NovaConfigParseWorkspacesIsNameAllowedName = NovaConfigWorkspaceName;
+export type LibNovaConfigParseWorkflowsReturns = SharedNovaConfigWorkflows | undefined;
 
-export type NovaConfigParseWorkspacesIsNameAllowedReturns = boolean;
+export type LibNovaConfigParseWorkflowsWorkflows = SharedNovaConfigWorkflow[];
+
+export type LibNovaConfigParseWorkflowsItem = unknown;
+
+export type LibNovaConfigParseWorkflowsTemplate = string | undefined;
+
+export type LibNovaConfigParseWorkflowsSuffix = string | undefined;
+
+export type LibNovaConfigParseWorkflowsRawTriggers = unknown;
+
+export type LibNovaConfigParseWorkflowsTriggers = string[];
+
+export type LibNovaConfigParseWorkflowsTriggerValue = string | undefined;
+
+export type LibNovaConfigParseWorkflowsRawDependsOn = unknown;
+
+export type LibNovaConfigParseWorkflowsDependsOn = string[];
+
+export type LibNovaConfigParseWorkflowsSettings = unknown;
+
+export type LibNovaConfigParseWorkflowsWorkflow = SharedNovaConfigWorkflow;
+
+export type LibNovaConfigParseWorkflowsParsedSettings = SharedNovaConfigWorkflowSettings;
+
+export type LibNovaConfigParseWorkflowsSortedSettingsEntries = [string, unknown][];
+
+export type LibNovaConfigParseWorkflowsSettingsKey = string;
+
+export type LibNovaConfigParseWorkflowsSettingsValue = unknown;
+
+export type LibNovaConfigParseWorkflowsSortTemplateCompare = number;
+
+export type LibNovaConfigParseWorkflowsSortSuffixA = string;
+
+export type LibNovaConfigParseWorkflowsSortSuffixB = string;
 
 /**
- * Nova Config - Save.
+ * Lib - Nova Config - Parse Workspaces.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigSaveReplaceFile = boolean;
+export type LibNovaConfigParseWorkspacesValue = unknown;
 
-export type NovaConfigSaveReturns = Promise<void>;
+export type LibNovaConfigParseWorkspacesSlug = SharedNovaConfigProjectNameSlug | undefined;
+
+export type LibNovaConfigParseWorkspacesReturns = SharedNovaConfigWorkspaces | undefined;
+
+export type LibNovaConfigParseWorkspacesWorkspaces = SharedNovaConfigWorkspaces;
+
+export type LibNovaConfigParseWorkspacesPath = string;
+
+export type LibNovaConfigParseWorkspacesOptions = unknown;
+
+export type LibNovaConfigParseWorkspacesNameCandidate = string | undefined;
+
+export type LibNovaConfigParseWorkspacesRoleCandidate = string | undefined;
+
+export type LibNovaConfigParseWorkspacesPolicyCandidate = string | undefined;
+
+export type LibNovaConfigParseWorkspacesRole = SharedNovaConfigWorkspaceRole | undefined;
+
+export type LibNovaConfigParseWorkspacesAllowedPolicies = SharedNovaConfigWorkspacePolicy[];
+
+export type LibNovaConfigParseWorkspacesPolicy = SharedNovaConfigWorkspacePolicy | undefined;
+
+export type LibNovaConfigParseWorkspacesRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+
+export type LibNovaConfigParseWorkspacesRecipesCandidate = unknown;
+
+export type LibNovaConfigParseWorkspacesAllowedRecipes = Set<SharedNovaConfigWorkspaceRecipeName>;
+
+export type LibNovaConfigParseWorkspacesRecipeName = string;
+
+export type LibNovaConfigParseWorkspacesRecipeTuple = unknown;
+
+export type LibNovaConfigParseWorkspacesMatchedRecipe = SharedNovaConfigWorkspaceRecipeName | undefined;
+
+export type LibNovaConfigParseWorkspacesEnabled = unknown;
+
+export type LibNovaConfigParseWorkspacesSettings = unknown;
+
+export type LibNovaConfigParseWorkspacesParsedSettings = SharedNovaConfigWorkspaceRecipeSettings;
+
+export type LibNovaConfigParseWorkspacesSettingKey = string;
+
+export type LibNovaConfigParseWorkspacesSettingValue = unknown;
+
+export type LibNovaConfigParseWorkspacesWorkspaceKeys = string[];
+
+export type LibNovaConfigParseWorkspacesSortedWorkspaces = SharedNovaConfigWorkspaces;
 
 /**
- * Nova Config - Set.
+ * Lib - Nova Config - Parse Workspaces - Is Name Allowed.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type NovaConfigSetConfig = NovaConfigConfig;
+export type LibNovaConfigParseWorkspacesIsNameAllowedRole = SharedNovaConfigWorkspaceRole;
 
-export type NovaConfigSetReturns = void;
+export type LibNovaConfigParseWorkspacesIsNameAllowedName = SharedNovaConfigWorkspaceName;
+
+export type LibNovaConfigParseWorkspacesIsNameAllowedReturns = boolean;
+
+export type LibNovaConfigParseWorkspacesIsNameAllowed = (role: LibNovaConfigParseWorkspacesIsNameAllowedRole, name: LibNovaConfigParseWorkspacesIsNameAllowedName) => LibNovaConfigParseWorkspacesIsNameAllowedReturns;
+
+export type LibNovaConfigParseWorkspacesIsNameAllowedBase = string;
+
+export type LibNovaConfigParseWorkspacesIsNameAllowedDescriptor = string;
+
+/**
+ * Lib - Nova Config - Save.
+ *
+ * @since 0.11.0
+ */
+export type LibNovaConfigSaveReplaceFile = boolean;
+
+export type LibNovaConfigSaveReturns = Promise<void>;
+
+export type LibNovaConfigSaveCurrentDirectory = string;
+
+export type LibNovaConfigSaveConfigPath = string;
+
+export type LibNovaConfigSaveConfigJson = string;
+
+export type LibNovaConfigSaveConfigContents = string;
+
+/**
+ * Lib - Nova Config - Set.
+ *
+ * @since 0.11.0
+ */
+export type LibNovaConfigSetConfig = SharedNovaConfigConfig;
+
+export type LibNovaConfigSetReturns = void;

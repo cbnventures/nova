@@ -1,128 +1,421 @@
-import { relative, sep } from 'path';
+import { promises as fs } from 'fs';
+import { join, relative, sep } from 'path';
 
 import chalk from 'chalk';
 import prompts from 'prompts';
 
 import {
-  itemAllowedPoliciesByRole,
-  itemAllowedRecipes,
-  itemInitializeRolesToSync,
-  itemInitializeValidEntityRoles,
-} from '@/lib/item.js';
-import { NovaConfig } from '@/lib/nova-config.js';
-import { PATTERN_EMAIL_SIMPLE, PATTERN_SLUG_SCOPED, PATTERN_SLUG_SIMPLE } from '@/lib/regex.js';
-import { discoverPathsWithFile } from '@/lib/utility.js';
-import { Logger } from '@/toolkit/index.js';
+  libItemAllowedPoliciesByRole,
+  libItemAllowedRecipes,
+  libItemSyncRoles,
+  libItemValidEntityRoles,
+} from '../../lib/item.js';
+import { LibNovaConfig } from '../../lib/nova-config.js';
+import {
+  LIB_REGEX_PATTERN_EMAIL_SIMPLE,
+  LIB_REGEX_PATTERN_SLUG_SCOPED,
+  LIB_REGEX_PATTERN_SLUG_SIMPLE,
+  LIB_REGEX_PATTERN_YML_EXTENSION,
+} from '../../lib/regex.js';
+import { discoverPathsWithFile, pathExists, resolveTemplatePath } from '../../lib/utility.js';
+import { libWorkflowTemplatesMetadata } from '../../lib/workflow-templates.js';
+import { Logger } from '../../toolkit/index.js';
 
 import type {
-  CLIUtilityInitializeCheckPathCurrentDirectory,
-  CLIUtilityInitializeCheckPathReturns,
-  CLIUtilityInitializeNormalizeEmailReturns,
-  CLIUtilityInitializeNormalizeEmailValue,
-  CLIUtilityInitializeNormalizeProjectSlugReturns,
-  CLIUtilityInitializeNormalizeProjectSlugValue,
-  CLIUtilityInitializeNormalizeTextArrayMaxLengthPerItem,
-  CLIUtilityInitializeNormalizeTextArrayReturns,
-  CLIUtilityInitializeNormalizeTextArrayValue,
-  CLIUtilityInitializeNormalizeTextMaxLength,
-  CLIUtilityInitializeNormalizeTextReturns,
-  CLIUtilityInitializeNormalizeTextValue,
-  CLIUtilityInitializeNormalizeUrlArrayProtocol,
-  CLIUtilityInitializeNormalizeUrlArrayReturns,
-  CLIUtilityInitializeNormalizeUrlArrayValue,
-  CLIUtilityInitializeNormalizeUrlProtocol,
-  CLIUtilityInitializeNormalizeUrlReturns,
-  CLIUtilityInitializeNormalizeUrlValue,
-  CLIUtilityInitializeNormalizeWorkspaceNameBase,
-  CLIUtilityInitializeNormalizeWorkspaceNameReturns,
-  CLIUtilityInitializeNormalizeWorkspaceNameRole,
-  CLIUtilityInitializeNormalizeWorkspaceNameValue,
-  CLIUtilityInitializePromptEmailsConfig,
-  CLIUtilityInitializePromptEmailsQuestionsOutputKey,
-  CLIUtilityInitializePromptEmailsQuestionsOutputValue,
-  CLIUtilityInitializePromptEmailsReturns,
-  CLIUtilityInitializePromptEntitiesChoices,
-  CLIUtilityInitializePromptEntitiesConfig,
-  CLIUtilityInitializePromptEntitiesDeleteFormConfirmOutputKey,
-  CLIUtilityInitializePromptEntitiesDeleteFormConfirmOutputValue,
-  CLIUtilityInitializePromptEntitiesDeleteFormLabel,
-  CLIUtilityInitializePromptEntitiesDeleteFormReturns,
-  CLIUtilityInitializePromptEntitiesDescriptionParts,
-  CLIUtilityInitializePromptEntitiesEntities,
-  CLIUtilityInitializePromptEntitiesFormEntity,
-  CLIUtilityInitializePromptEntitiesFormExistingRoles,
-  CLIUtilityInitializePromptEntitiesFormMode,
-  CLIUtilityInitializePromptEntitiesFormQuestionsOutputKey,
-  CLIUtilityInitializePromptEntitiesFormQuestionsOutputValue,
-  CLIUtilityInitializePromptEntitiesFormResolvedEntity,
-  CLIUtilityInitializePromptEntitiesFormReturns,
-  CLIUtilityInitializePromptEntitiesFormValidRoles,
-  CLIUtilityInitializePromptEntitiesMenuOutputKeys,
-  CLIUtilityInitializePromptEntitiesMenuOutputResult,
-  CLIUtilityInitializePromptEntitiesNormalizedRolesReduce,
-  CLIUtilityInitializePromptEntitiesReturns,
-  CLIUtilityInitializePromptEntitiesSyncReturns,
-  CLIUtilityInitializePromptFlowCategory,
-  CLIUtilityInitializePromptFlowChoices,
-  CLIUtilityInitializePromptFlowConfig,
-  CLIUtilityInitializePromptFlowReturns,
-  CLIUtilityInitializePromptFlowSelectMenuOutputKeys,
-  CLIUtilityInitializePromptFlowSelectMenuOutputResult,
-  CLIUtilityInitializePromptProjectConfig,
-  CLIUtilityInitializePromptProjectQuestionsOutputKeys,
-  CLIUtilityInitializePromptProjectQuestionsOutputResult,
-  CLIUtilityInitializePromptProjectReturns,
-  CLIUtilityInitializePromptProjectRolesToSync,
-  CLIUtilityInitializePromptUrlsConfig,
-  CLIUtilityInitializePromptUrlsQuestionsOutputKey,
-  CLIUtilityInitializePromptUrlsQuestionsOutputValue,
-  CLIUtilityInitializePromptUrlsReturns,
-  CLIUtilityInitializePromptWithCancelQuestions,
-  CLIUtilityInitializePromptWithCancelReturns,
-  CLIUtilityInitializePromptWorkspaces,
-  CLIUtilityInitializePromptWorkspacesConfig,
-  CLIUtilityInitializePromptWorkspacesFormAllowedRoles,
-  CLIUtilityInitializePromptWorkspacesFormOptions,
-  CLIUtilityInitializePromptWorkspacesFormPolicy,
-  CLIUtilityInitializePromptWorkspacesFormPolicyPromptKey,
-  CLIUtilityInitializePromptWorkspacesFormPolicyPromptValue,
-  CLIUtilityInitializePromptWorkspacesFormResolveNameReturns,
-  CLIUtilityInitializePromptWorkspacesFormResolveNameRole,
-  CLIUtilityInitializePromptWorkspacesFormReturns,
-  CLIUtilityInitializePromptWorkspacesFormRolePromptKey,
-  CLIUtilityInitializePromptWorkspacesFormRolePromptValue,
-  CLIUtilityInitializePromptWorkspacesFormRecipeSettings,
-  CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey,
-  CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue,
-  CLIUtilityInitializePromptWorkspacesFormRecipes,
-  CLIUtilityInitializePromptWorkspacesFormRecipesPromptKey,
-  CLIUtilityInitializePromptWorkspacesFormRecipesPromptValue,
-  CLIUtilityInitializePromptWorkspacesMenuOutputKey,
-  CLIUtilityInitializePromptWorkspacesMenuOutputValue,
-  CLIUtilityInitializePromptWorkspacesReturns,
-  CLIUtilityInitializePromptWorkspacesSummaryParts,
-  CLIUtilityInitializeRunOptions,
-  CLIUtilityInitializeRunReturns,
-} from '@/types/cli/utility/initialize.d.ts';
+  CliUtilityInitializeCheckPathCurrentDirectory,
+  CliUtilityInitializeCheckPathGreaterThanOneMessage,
+  CliUtilityInitializeCheckPathLessThanOneMessage,
+  CliUtilityInitializeCheckPathLocations,
+  CliUtilityInitializeCheckPathNotProjectRootDirectoryMessage,
+  CliUtilityInitializeCheckPathReturns,
+  CliUtilityInitializeNormalizeEmailReturns,
+  CliUtilityInitializeNormalizeEmailTrimmedValue,
+  CliUtilityInitializeNormalizeEmailValue,
+  CliUtilityInitializeNormalizeProjectSlugReturns,
+  CliUtilityInitializeNormalizeProjectSlugTrimmedValue,
+  CliUtilityInitializeNormalizeProjectSlugValue,
+  CliUtilityInitializeNormalizeTextArrayItems,
+  CliUtilityInitializeNormalizeTextArrayMaxLengthPerItem,
+  CliUtilityInitializeNormalizeTextArrayNormalizedText,
+  CliUtilityInitializeNormalizeTextArrayResult,
+  CliUtilityInitializeNormalizeTextArrayReturns,
+  CliUtilityInitializeNormalizeTextArraySanitized,
+  CliUtilityInitializeNormalizeTextArrayTrimmedValue,
+  CliUtilityInitializeNormalizeTextArrayValue,
+  CliUtilityInitializeNormalizeTextMaxLength,
+  CliUtilityInitializeNormalizeTextReturns,
+  CliUtilityInitializeNormalizeTextTrimmedValue,
+  CliUtilityInitializeNormalizeTextValue,
+  CliUtilityInitializeNormalizeUrlAllowed,
+  CliUtilityInitializeNormalizeUrlArrayErrorMessage,
+  CliUtilityInitializeNormalizeUrlArrayErrorMessages,
+  CliUtilityInitializeNormalizeUrlArrayItems,
+  CliUtilityInitializeNormalizeUrlArrayNormalizedUrl,
+  CliUtilityInitializeNormalizeUrlArrayProtocol,
+  CliUtilityInitializeNormalizeUrlArrayResult,
+  CliUtilityInitializeNormalizeUrlArrayReturns,
+  CliUtilityInitializeNormalizeUrlArraySanitized,
+  CliUtilityInitializeNormalizeUrlArrayTrimmedValue,
+  CliUtilityInitializeNormalizeUrlArrayValue,
+  CliUtilityInitializeNormalizeUrlErrorMessage,
+  CliUtilityInitializeNormalizeUrlProtocol,
+  CliUtilityInitializeNormalizeUrlReturns,
+  CliUtilityInitializeNormalizeUrlRules,
+  CliUtilityInitializeNormalizeUrlTrimmedValue,
+  CliUtilityInitializeNormalizeUrlUrl,
+  CliUtilityInitializeNormalizeUrlValue,
+  CliUtilityInitializeNormalizeWorkspaceNameBase,
+  CliUtilityInitializeNormalizeWorkspaceNameDescriptor,
+  CliUtilityInitializeNormalizeWorkspaceNameExpectedPrefix,
+  CliUtilityInitializeNormalizeWorkspaceNameReturns,
+  CliUtilityInitializeNormalizeWorkspaceNameRole,
+  CliUtilityInitializeNormalizeWorkspaceNameTrimmedValue,
+  CliUtilityInitializeNormalizeWorkspaceNameValue,
+  CliUtilityInitializePromptEmailsConfig,
+  CliUtilityInitializePromptEmailsEmails,
+  CliUtilityInitializePromptEmailsEmailsBugsInput,
+  CliUtilityInitializePromptEmailsExistingEmails,
+  CliUtilityInitializePromptEmailsQuestionsOutput,
+  CliUtilityInitializePromptEmailsQuestionsOutputKey,
+  CliUtilityInitializePromptEmailsQuestionsOutputResult,
+  CliUtilityInitializePromptEmailsQuestionsOutputValue,
+  CliUtilityInitializePromptEmailsReturns,
+  CliUtilityInitializePromptEmailsValidateValue,
+  CliUtilityInitializePromptEntitiesChoices,
+  CliUtilityInitializePromptEntitiesClonedEntity,
+  CliUtilityInitializePromptEntitiesConfig,
+  CliUtilityInitializePromptEntitiesDeleteFormConfirmOutput,
+  CliUtilityInitializePromptEntitiesDeleteFormConfirmOutputKey,
+  CliUtilityInitializePromptEntitiesDeleteFormConfirmOutputResult,
+  CliUtilityInitializePromptEntitiesDeleteFormConfirmOutputValue,
+  CliUtilityInitializePromptEntitiesDeleteFormLabel,
+  CliUtilityInitializePromptEntitiesDeleteFormReturns,
+  CliUtilityInitializePromptEntitiesDescription,
+  CliUtilityInitializePromptEntitiesDescriptionParts,
+  CliUtilityInitializePromptEntitiesEntities,
+  CliUtilityInitializePromptEntitiesEntity,
+  CliUtilityInitializePromptEntitiesEntityEmail,
+  CliUtilityInitializePromptEntitiesEntityIndex,
+  CliUtilityInitializePromptEntitiesEntityLabel,
+  CliUtilityInitializePromptEntitiesEntityName,
+  CliUtilityInitializePromptEntitiesEntityResult,
+  CliUtilityInitializePromptEntitiesEntityRoles,
+  CliUtilityInitializePromptEntitiesEntityToEdit,
+  CliUtilityInitializePromptEntitiesEntityToRemove,
+  CliUtilityInitializePromptEntitiesFormEntity,
+  CliUtilityInitializePromptEntitiesFormEntityEmailInput,
+  CliUtilityInitializePromptEntitiesFormEntityNameInput,
+  CliUtilityInitializePromptEntitiesFormEntityRolesInput,
+  CliUtilityInitializePromptEntitiesFormEntityUrlInput,
+  CliUtilityInitializePromptEntitiesFormExistingEmail,
+  CliUtilityInitializePromptEntitiesFormExistingName,
+  CliUtilityInitializePromptEntitiesFormExistingRoles,
+  CliUtilityInitializePromptEntitiesFormExistingUrl,
+  CliUtilityInitializePromptEntitiesFormMode,
+  CliUtilityInitializePromptEntitiesFormQuestionsOutput,
+  CliUtilityInitializePromptEntitiesFormQuestionsOutputKey,
+  CliUtilityInitializePromptEntitiesFormQuestionsOutputResult,
+  CliUtilityInitializePromptEntitiesFormQuestionsOutputValue,
+  CliUtilityInitializePromptEntitiesFormResolvedEntity,
+  CliUtilityInitializePromptEntitiesFormReturns,
+  CliUtilityInitializePromptEntitiesFormValidateValue,
+  CliUtilityInitializePromptEntitiesFormValidRoles,
+  CliUtilityInitializePromptEntitiesJoinedRoles,
+  CliUtilityInitializePromptEntitiesLabel,
+  CliUtilityInitializePromptEntitiesMenuOutput,
+  CliUtilityInitializePromptEntitiesMenuOutputKey,
+  CliUtilityInitializePromptEntitiesMenuOutputResult,
+  CliUtilityInitializePromptEntitiesMenuOutputResultValue,
+  CliUtilityInitializePromptEntitiesNormalizedEntities,
+  CliUtilityInitializePromptEntitiesNormalizedEntity,
+  CliUtilityInitializePromptEntitiesNormalizedRoles,
+  CliUtilityInitializePromptEntitiesNormalizedRolesReduce,
+  CliUtilityInitializePromptEntitiesResult,
+  CliUtilityInitializePromptEntitiesReturns,
+  CliUtilityInitializePromptEntitiesShouldRemove,
+  CliUtilityInitializePromptEntitiesSortNameA,
+  CliUtilityInitializePromptEntitiesSortNameB,
+  CliUtilityInitializePromptEntitiesSync,
+  CliUtilityInitializePromptEntitiesSyncReturns,
+  CliUtilityInitializePromptFlowCategory,
+  CliUtilityInitializePromptFlowCategoryHandler,
+  CliUtilityInitializePromptFlowCategoryKey,
+  CliUtilityInitializePromptFlowCategoryKeys,
+  CliUtilityInitializePromptFlowChoices,
+  CliUtilityInitializePromptFlowConfig,
+  CliUtilityInitializePromptFlowMenuOutput,
+  CliUtilityInitializePromptFlowMenuOutputResult,
+  CliUtilityInitializePromptFlowReturns,
+  CliUtilityInitializePromptFlowSelectMenuOutputKey,
+  CliUtilityInitializePromptFlowSelectMenuOutputResult,
+  CliUtilityInitializePromptProjectConfig,
+  CliUtilityInitializePromptProjectCurrentLabel,
+  CliUtilityInitializePromptProjectCurrentSlug,
+  CliUtilityInitializePromptProjectExistingProject,
+  CliUtilityInitializePromptProjectExistingProjectDescription,
+  CliUtilityInitializePromptProjectExistingProjectKeywords,
+  CliUtilityInitializePromptProjectExistingProjectLegalName,
+  CliUtilityInitializePromptProjectExistingProjectLicense,
+  CliUtilityInitializePromptProjectExistingProjectName,
+  CliUtilityInitializePromptProjectExistingProjectPlatforms,
+  CliUtilityInitializePromptProjectExistingProjectPronouns,
+  CliUtilityInitializePromptProjectExistingProjectStartingYear,
+  CliUtilityInitializePromptProjectLegalNameOutput,
+  CliUtilityInitializePromptProjectLegalNameOutputKey,
+  CliUtilityInitializePromptProjectLegalNameOutputResult,
+  CliUtilityInitializePromptProjectLicenseChoices,
+  CliUtilityInitializePromptProjectLicenseInitialIndex,
+  CliUtilityInitializePromptProjectLicenseOutput,
+  CliUtilityInitializePromptProjectLicenseOutputKey,
+  CliUtilityInitializePromptProjectLicenseOutputResult,
+  CliUtilityInitializePromptProjectName2,
+  CliUtilityInitializePromptProjectParsed,
+  CliUtilityInitializePromptProjectPlatformChoices,
+  CliUtilityInitializePromptProjectPlatformsOutput,
+  CliUtilityInitializePromptProjectPlatformsOutputKey,
+  CliUtilityInitializePromptProjectPlatformsOutputResult,
+  CliUtilityInitializePromptProjectPreviousLabel,
+  CliUtilityInitializePromptProjectPreviousSlug,
+  CliUtilityInitializePromptProjectProject,
+  CliUtilityInitializePromptProjectProjectDescription,
+  CliUtilityInitializePromptProjectProjectDescriptionLongInput,
+  CliUtilityInitializePromptProjectProjectDescriptionShortInput,
+  CliUtilityInitializePromptProjectProjectKeywords,
+  CliUtilityInitializePromptProjectProjectKeywordsInput,
+  CliUtilityInitializePromptProjectProjectLegalNameInput,
+  CliUtilityInitializePromptProjectProjectLicenseInput,
+  CliUtilityInitializePromptProjectProjectName,
+  CliUtilityInitializePromptProjectProjectNameSlugInput,
+  CliUtilityInitializePromptProjectProjectNameTitleInput,
+  CliUtilityInitializePromptProjectProjectPlatformsInput,
+  CliUtilityInitializePromptProjectProjectPronounsInput,
+  CliUtilityInitializePromptProjectPronounsOutput,
+  CliUtilityInitializePromptProjectPronounsOutputKey,
+  CliUtilityInitializePromptProjectPronounsOutputResult,
+  CliUtilityInitializePromptProjectQuestionsOutput,
+  CliUtilityInitializePromptProjectQuestionsOutputKey,
+  CliUtilityInitializePromptProjectQuestionsOutputResult,
+  CliUtilityInitializePromptProjectQuestionsOutputResultValue,
+  CliUtilityInitializePromptProjectReturns,
+  CliUtilityInitializePromptProjectRolesToSync,
+  CliUtilityInitializePromptProjectSlugChanged,
+  CliUtilityInitializePromptProjectSlugPrefix,
+  CliUtilityInitializePromptProjectStartingYearOutput,
+  CliUtilityInitializePromptProjectStartingYearOutputKey,
+  CliUtilityInitializePromptProjectStartingYearOutputResult,
+  CliUtilityInitializePromptProjectStartingYearParsed,
+  CliUtilityInitializePromptProjectStartingYearRaw,
+  CliUtilityInitializePromptProjectTrimmed,
+  CliUtilityInitializePromptProjectValidateValue,
+  CliUtilityInitializePromptUrlsConfig,
+  CliUtilityInitializePromptUrlsExistingUrls,
+  CliUtilityInitializePromptUrlsQuestionsOutput,
+  CliUtilityInitializePromptUrlsQuestionsOutputKey,
+  CliUtilityInitializePromptUrlsQuestionsOutputResult,
+  CliUtilityInitializePromptUrlsQuestionsOutputValue,
+  CliUtilityInitializePromptUrlsReturns,
+  CliUtilityInitializePromptUrlsUrls,
+  CliUtilityInitializePromptUrlsUrlsBugsInput,
+  CliUtilityInitializePromptUrlsUrlsDockerInput,
+  CliUtilityInitializePromptUrlsUrlsDocumentationInput,
+  CliUtilityInitializePromptUrlsUrlsFundSourcesInput,
+  CliUtilityInitializePromptUrlsUrlsGithubInput,
+  CliUtilityInitializePromptUrlsUrlsHomepageInput,
+  CliUtilityInitializePromptUrlsUrlsLicenseInput,
+  CliUtilityInitializePromptUrlsUrlsLogoInput,
+  CliUtilityInitializePromptUrlsUrlsNpmInput,
+  CliUtilityInitializePromptUrlsUrlsPrivacyPolicyInput,
+  CliUtilityInitializePromptUrlsUrlsRepositoryInput,
+  CliUtilityInitializePromptUrlsUrlsTermsOfUseInput,
+  CliUtilityInitializePromptUrlsValidateValue,
+  CliUtilityInitializePromptWithCancelCancelled,
+  CliUtilityInitializePromptWithCancelQuestions,
+  CliUtilityInitializePromptWithCancelResult,
+  CliUtilityInitializePromptWithCancelReturns,
+  CliUtilityInitializePromptWorkflowsChoices,
+  CliUtilityInitializePromptWorkflowsClonedWorkflow,
+  CliUtilityInitializePromptWorkflowsConfig,
+  CliUtilityInitializePromptWorkflowsDeleteFormConfirmOutput,
+  CliUtilityInitializePromptWorkflowsDeleteFormConfirmOutputKey,
+  CliUtilityInitializePromptWorkflowsDeleteFormConfirmOutputResult,
+  CliUtilityInitializePromptWorkflowsDeleteFormConfirmOutputValue,
+  CliUtilityInitializePromptWorkflowsDeleteFormLabel,
+  CliUtilityInitializePromptWorkflowsDeleteFormReturns,
+  CliUtilityInitializePromptWorkflowsDescription,
+  CliUtilityInitializePromptWorkflowsFormCompositeKey,
+  CliUtilityInitializePromptWorkflowsFormDependsOnChoices,
+  CliUtilityInitializePromptWorkflowsFormDependsOnOutput,
+  CliUtilityInitializePromptWorkflowsFormDependsOnOutputKey,
+  CliUtilityInitializePromptWorkflowsFormDependsOnOutputResult,
+  CliUtilityInitializePromptWorkflowsFormDependsOnOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormEditIndex,
+  CliUtilityInitializePromptWorkflowsFormExistingDependsOn,
+  CliUtilityInitializePromptWorkflowsFormExistingSuffix,
+  CliUtilityInitializePromptWorkflowsFormExistingTemplate,
+  CliUtilityInitializePromptWorkflowsFormExistingTriggers,
+  CliUtilityInitializePromptWorkflowsFormFoundIndex,
+  CliUtilityInitializePromptWorkflowsFormInitialValue,
+  CliUtilityInitializePromptWorkflowsFormIsDuplicate,
+  CliUtilityInitializePromptWorkflowsFormMatchedMetadata,
+  CliUtilityInitializePromptWorkflowsFormMode,
+  CliUtilityInitializePromptWorkflowsFormPromptMessage,
+  CliUtilityInitializePromptWorkflowsFormResolvedWorkflow,
+  CliUtilityInitializePromptWorkflowsFormReturns,
+  CliUtilityInitializePromptWorkflowsFormSelectedDependsOn,
+  CliUtilityInitializePromptWorkflowsFormSelectedSuffix,
+  CliUtilityInitializePromptWorkflowsFormSelectedTemplate,
+  CliUtilityInitializePromptWorkflowsFormSelectedTriggers,
+  CliUtilityInitializePromptWorkflowsFormSettings,
+  CliUtilityInitializePromptWorkflowsFormSettingsOutput,
+  CliUtilityInitializePromptWorkflowsFormSettingsOutputKey,
+  CliUtilityInitializePromptWorkflowsFormSettingsOutputResult,
+  CliUtilityInitializePromptWorkflowsFormSettingsOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormSettingValue,
+  CliUtilityInitializePromptWorkflowsFormSuffixOutput,
+  CliUtilityInitializePromptWorkflowsFormSuffixOutputKey,
+  CliUtilityInitializePromptWorkflowsFormSuffixOutputResult,
+  CliUtilityInitializePromptWorkflowsFormSuffixOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormTemplateChoices,
+  CliUtilityInitializePromptWorkflowsFormTemplateInitialIndex,
+  CliUtilityInitializePromptWorkflowsFormTemplateOutput,
+  CliUtilityInitializePromptWorkflowsFormTemplateOutputKey,
+  CliUtilityInitializePromptWorkflowsFormTemplateOutputResult,
+  CliUtilityInitializePromptWorkflowsFormTemplateOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormTriggerChoices,
+  CliUtilityInitializePromptWorkflowsFormTriggerName,
+  CliUtilityInitializePromptWorkflowsFormTriggersDir,
+  CliUtilityInitializePromptWorkflowsFormTriggersDirExists,
+  CliUtilityInitializePromptWorkflowsFormTriggersFiles,
+  CliUtilityInitializePromptWorkflowsFormTriggersOutput,
+  CliUtilityInitializePromptWorkflowsFormTriggersOutputKey,
+  CliUtilityInitializePromptWorkflowsFormTriggersOutputResult,
+  CliUtilityInitializePromptWorkflowsFormTriggersOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormVariableConfig,
+  CliUtilityInitializePromptWorkflowsFormVariableDescriptionParts,
+  CliUtilityInitializePromptWorkflowsFormVariableEntries,
+  CliUtilityInitializePromptWorkflowsFormVariableName,
+  CliUtilityInitializePromptWorkflowsFormWorkflow,
+  CliUtilityInitializePromptWorkflowsFormWorkflows,
+  CliUtilityInitializePromptWorkflowsLabel,
+  CliUtilityInitializePromptWorkflowsMenuOutput,
+  CliUtilityInitializePromptWorkflowsMenuOutputKey,
+  CliUtilityInitializePromptWorkflowsMenuOutputResult,
+  CliUtilityInitializePromptWorkflowsMenuOutputResultValue,
+  CliUtilityInitializePromptWorkflowsMenuSuffix,
+  CliUtilityInitializePromptWorkflowsMenuTemplate,
+  CliUtilityInitializePromptWorkflowsMenuTriggers,
+  CliUtilityInitializePromptWorkflowsMenuWorkflow,
+  CliUtilityInitializePromptWorkflowsOutputFileName,
+  CliUtilityInitializePromptWorkflowsRemoveSuffix,
+  CliUtilityInitializePromptWorkflowsRemoveTemplate,
+  CliUtilityInitializePromptWorkflowsResult,
+  CliUtilityInitializePromptWorkflowsReturns,
+  CliUtilityInitializePromptWorkflowsShouldRemove,
+  CliUtilityInitializePromptWorkflowsSortSuffixA,
+  CliUtilityInitializePromptWorkflowsSortSuffixB,
+  CliUtilityInitializePromptWorkflowsSortTemplateA,
+  CliUtilityInitializePromptWorkflowsSortTemplateB,
+  CliUtilityInitializePromptWorkflowsSortTemplateCompare,
+  CliUtilityInitializePromptWorkflowsSync,
+  CliUtilityInitializePromptWorkflowsSyncReturns,
+  CliUtilityInitializePromptWorkflowsTriggersLabel,
+  CliUtilityInitializePromptWorkflowsWorkflowIndex,
+  CliUtilityInitializePromptWorkflowsWorkflows,
+  CliUtilityInitializePromptWorkflowsWorkflowToEdit,
+  CliUtilityInitializePromptWorkflowsWorkflowToRemove,
+  CliUtilityInitializePromptWorkspaces,
+  CliUtilityInitializePromptWorkspacesChoices,
+  CliUtilityInitializePromptWorkspacesConfig,
+  CliUtilityInitializePromptWorkspacesCurrentWorkingDirectory,
+  CliUtilityInitializePromptWorkspacesFormAllowedPolicies,
+  CliUtilityInitializePromptWorkspacesFormAllowedRoles,
+  CliUtilityInitializePromptWorkspacesFormExistingPolicyIndex,
+  CliUtilityInitializePromptWorkspacesFormExistingRecipes,
+  CliUtilityInitializePromptWorkspacesFormExistingRoleIndex,
+  CliUtilityInitializePromptWorkspacesFormExistingSettings,
+  CliUtilityInitializePromptWorkspacesFormExistingTuple,
+  CliUtilityInitializePromptWorkspacesFormExistingTupleRaw,
+  CliUtilityInitializePromptWorkspacesFormOptions,
+  CliUtilityInitializePromptWorkspacesFormPolicy,
+  CliUtilityInitializePromptWorkspacesFormPolicyEntry,
+  CliUtilityInitializePromptWorkspacesFormPolicyPrompt,
+  CliUtilityInitializePromptWorkspacesFormPolicyPromptKey,
+  CliUtilityInitializePromptWorkspacesFormPolicyPromptValue,
+  CliUtilityInitializePromptWorkspacesFormRecipes,
+  CliUtilityInitializePromptWorkspacesFormRecipeSelected,
+  CliUtilityInitializePromptWorkspacesFormRecipeSettings,
+  CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey,
+  CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue,
+  CliUtilityInitializePromptWorkspacesFormRecipesPrompt,
+  CliUtilityInitializePromptWorkspacesFormRecipesPromptKey,
+  CliUtilityInitializePromptWorkspacesFormRecipesPromptValue,
+  CliUtilityInitializePromptWorkspacesFormRecipeTuple,
+  CliUtilityInitializePromptWorkspacesFormResolvedName,
+  CliUtilityInitializePromptWorkspacesFormResolveName,
+  CliUtilityInitializePromptWorkspacesFormResolveNameBase,
+  CliUtilityInitializePromptWorkspacesFormResolveNameNamePrompt,
+  CliUtilityInitializePromptWorkspacesFormResolveNamePromptKey,
+  CliUtilityInitializePromptWorkspacesFormResolveNamePromptValue,
+  CliUtilityInitializePromptWorkspacesFormResolveNameReturns,
+  CliUtilityInitializePromptWorkspacesFormResolveNameRole,
+  CliUtilityInitializePromptWorkspacesFormResolveNameValidateValue,
+  CliUtilityInitializePromptWorkspacesFormResult,
+  CliUtilityInitializePromptWorkspacesFormReturns,
+  CliUtilityInitializePromptWorkspacesFormRolePrompt,
+  CliUtilityInitializePromptWorkspacesFormRolePromptKey,
+  CliUtilityInitializePromptWorkspacesFormRolePromptValue,
+  CliUtilityInitializePromptWorkspacesFormSelectedPolicy,
+  CliUtilityInitializePromptWorkspacesFormSelectedRecipes,
+  CliUtilityInitializePromptWorkspacesFormSelectedRole,
+  CliUtilityInitializePromptWorkspacesFormSelectedSettings,
+  CliUtilityInitializePromptWorkspacesFormSettingsPrompt,
+  CliUtilityInitializePromptWorkspacesMenuOutput,
+  CliUtilityInitializePromptWorkspacesMenuOutputKey,
+  CliUtilityInitializePromptWorkspacesMenuOutputResult,
+  CliUtilityInitializePromptWorkspacesMenuOutputValue,
+  CliUtilityInitializePromptWorkspacesRawWorkspacePaths,
+  CliUtilityInitializePromptWorkspacesRelativePath,
+  CliUtilityInitializePromptWorkspacesReturns,
+  CliUtilityInitializePromptWorkspacesSummaryParts,
+  CliUtilityInitializePromptWorkspacesWorkspace,
+  CliUtilityInitializePromptWorkspacesWorkspacePath,
+  CliUtilityInitializePromptWorkspacesWorkspacePaths,
+  CliUtilityInitializeRunCurrentDirectory,
+  CliUtilityInitializeRunIsDryRun,
+  CliUtilityInitializeRunIsProjectRoot,
+  CliUtilityInitializeRunIsReplaceFile,
+  CliUtilityInitializeRunNovaConfig,
+  CliUtilityInitializeRunOptions,
+  CliUtilityInitializeRunPromptFlowResult,
+  CliUtilityInitializeRunReplaceFileNotice,
+  CliUtilityInitializeRunReturns,
+  CliUtilityInitializeRunWorkingFile,
+} from '../../types/cli/utility/initialize.d.ts';
 
 /**
- * CLI Utility - Initialize.
+ * CLI - Utility - Initialize.
  *
- * @since 1.0.0
+ * Interactive setup wizard for the nova.config.json file. Registered as the "nova utility
+ * initialize" command and walks the user through each config category.
+ *
+ * @since 0.11.0
  */
-export class CLIUtilityInitialize {
+export class CliUtilityInitialize {
   /**
-   * CLI Utility - Initialize - Run.
+   * CLI - Utility - Initialize - Run.
    *
-   * @param {CLIUtilityInitializeRunOptions} options - Options.
+   * Entry point called by the CLI action handler. Verifies the working directory, loads the
+   * config, runs the prompt flow, then persists changes.
    *
-   * @returns {CLIUtilityInitializeRunReturns}
+   * @param {CliUtilityInitializeRunOptions} options - Options.
    *
-   * @since 1.0.0
+   * @returns {CliUtilityInitializeRunReturns}
+   *
+   * @since 0.11.0
    */
-  public static async run(options: CLIUtilityInitializeRunOptions): CLIUtilityInitializeRunReturns {
-    const currentDirectory = process.cwd();
-    const isProjectRoot = await CLIUtilityInitialize.checkPath(currentDirectory);
+  public static async run(options: CliUtilityInitializeRunOptions): CliUtilityInitializeRunReturns {
+    const currentDirectory: CliUtilityInitializeRunCurrentDirectory = process.cwd();
+    const isProjectRoot: CliUtilityInitializeRunIsProjectRoot = await CliUtilityInitialize.checkPath(currentDirectory);
 
     if (isProjectRoot !== true) {
       process.exitCode = 1;
@@ -130,32 +423,32 @@ export class CLIUtilityInitialize {
       return;
     }
 
-    const isDryRun = options.dryRun === true;
-    const isReplaceFile = options.replaceFile === true;
+    const isDryRun: CliUtilityInitializeRunIsDryRun = options['dryRun'] === true;
+    const isReplaceFile: CliUtilityInitializeRunIsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CLIUtilityInitialize.run',
+        name: 'CliUtilityInitialize.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice = (isDryRun) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: CliUtilityInitializeRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CLIUtilityInitialize.run',
+        name: 'CliUtilityInitialize.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const novaConfig = new NovaConfig();
-    const workingFile = await novaConfig.load();
-    const promptFlowResult = await CLIUtilityInitialize.promptFlow(workingFile);
+    const novaConfig: CliUtilityInitializeRunNovaConfig = new LibNovaConfig();
+    const workingFile: CliUtilityInitializeRunWorkingFile = await novaConfig.load();
+    const promptFlowResult: CliUtilityInitializeRunPromptFlowResult = await CliUtilityInitialize.promptFlow(workingFile);
 
     if (promptFlowResult === 'cancel') {
       Logger.customize({
-        name: 'CLIUtilityInitialize.run',
+        name: 'CliUtilityInitialize.run',
         purpose: 'promptFlow',
       }).debug('Prompt flow exited without saving.');
 
@@ -166,7 +459,7 @@ export class CLIUtilityInitialize {
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CLIUtilityInitialize.run',
+        name: 'CliUtilityInitialize.run',
         purpose: 'promptFlow',
       }).debug('Dry run enabled. Skipping save operation.');
 
@@ -174,53 +467,63 @@ export class CLIUtilityInitialize {
     }
 
     await novaConfig.save(isReplaceFile);
+
+    return;
   }
 
   /**
-   * CLI Utility - Initialize - Prompt flow.
+   * CLI - Utility - Initialize - Prompt Flow.
    *
-   * @param {CLIUtilityInitializePromptFlowConfig} config - Config.
+   * Top-level menu loop that lists configuration categories (project, entities, emails, URLs,
+   * workspaces) and dispatches to each sub-prompt.
+   *
+   * @param {CliUtilityInitializePromptFlowConfig} config - Config.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptFlowReturns}
+   * @returns {CliUtilityInitializePromptFlowReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptFlow(config: CLIUtilityInitializePromptFlowConfig): CLIUtilityInitializePromptFlowReturns {
-    const category: CLIUtilityInitializePromptFlowCategory = {
+  private static async promptFlow(config: CliUtilityInitializePromptFlowConfig): CliUtilityInitializePromptFlowReturns {
+    const category: CliUtilityInitializePromptFlowCategory = {
       project: {
         label: 'Project',
         description: 'Configure project metadata (name, description, keywords).',
-        handler: CLIUtilityInitialize.promptProject,
+        handler: CliUtilityInitialize['promptProject'],
       },
       entities: {
         label: 'Entities',
         description: 'Manage entities, their roles, and contact information.',
-        handler: CLIUtilityInitialize.promptEntities,
+        handler: CliUtilityInitialize['promptEntities'],
       },
       emails: {
         label: 'Emails',
         description: 'Configure project emails (bugs, etc.).',
-        handler: CLIUtilityInitialize.promptEmails,
+        handler: CliUtilityInitialize['promptEmails'],
+      },
+      workflows: {
+        label: 'Workflows',
+        description: 'Configure workflow templates and settings.',
+        handler: CliUtilityInitialize['promptWorkflows'],
       },
       urls: {
         label: 'URLs',
         description: 'Configure project URLs (homepage, repository, fund sources, etc.).',
-        handler: CLIUtilityInitialize.promptUrls,
+        handler: CliUtilityInitialize['promptUrls'],
       },
       workspaces: {
         label: 'Workspaces',
         description: 'Review workspace packages, assigning roles and policies.',
-        handler: CLIUtilityInitialize.promptWorkspaces,
+        handler: CliUtilityInitialize['promptWorkspaces'],
       },
     };
 
     while (true) {
-      const categoryKeys = Object.keys(category) as (keyof typeof category)[];
-      const choices: CLIUtilityInitializePromptFlowChoices = categoryKeys.map((categoryKey) => ({
-        title: category[categoryKey].label,
-        description: category[categoryKey].description,
+      const categoryKeys: CliUtilityInitializePromptFlowCategoryKeys = Object.keys(category) as CliUtilityInitializePromptFlowCategoryKeys;
+      const choices: CliUtilityInitializePromptFlowChoices = categoryKeys.map((categoryKey) => ({
+        title: category[categoryKey]['label'],
+        description: category[categoryKey]['description'],
         value: categoryKey,
       }));
 
@@ -236,18 +539,18 @@ export class CLIUtilityInitialize {
         value: 'cancel',
       });
 
-      const menuOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptFlowSelectMenuOutputKeys, CLIUtilityInitializePromptFlowSelectMenuOutputResult>({
+      const menuOutput: CliUtilityInitializePromptFlowMenuOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptFlowSelectMenuOutputKey, CliUtilityInitializePromptFlowSelectMenuOutputResult>({
         type: 'select',
         name: 'action',
         message: 'Select a Nova configuration category to edit.',
         choices,
       });
 
-      if (menuOutput.cancelled) {
+      if (menuOutput['cancelled'] === true) {
         return 'cancel';
       }
 
-      const menuOutputResult = menuOutput.result;
+      const menuOutputResult: CliUtilityInitializePromptFlowMenuOutputResult = menuOutput['result'];
 
       if (
         menuOutputResult.action === undefined
@@ -260,84 +563,92 @@ export class CLIUtilityInitialize {
         return 'save';
       }
 
-      const categoryKey = menuOutputResult.action;
-      const categoryHandler = category[categoryKey].handler;
+      const categoryKey: CliUtilityInitializePromptFlowCategoryKey = menuOutputResult.action;
+      const categoryHandler: CliUtilityInitializePromptFlowCategoryHandler = category[categoryKey]['handler'];
 
       await categoryHandler(config);
     }
   }
 
   /**
-   * CLI Utility - Initialize - Prompt project.
+   * CLI - Utility - Initialize - Prompt Project.
    *
-   * @param {CLIUtilityInitializePromptProjectConfig} config - Config.
+   * Collects project-level metadata such as name, slug, descriptions, keywords, legal name,
+   * pronouns, platforms, starting year, and license.
+   *
+   * @param {CliUtilityInitializePromptProjectConfig} config - Config.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptProjectReturns}
+   * @returns {CliUtilityInitializePromptProjectReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptProject(config: CLIUtilityInitializePromptProjectConfig): CLIUtilityInitializePromptProjectReturns {
-    const existingProject = config.project;
-    const existingProjectName = (existingProject !== undefined) ? existingProject.name : undefined;
-    const existingProjectDescription = (existingProject !== undefined) ? existingProject.description : undefined;
-    const existingProjectKeywords = (existingProject !== undefined) ? existingProject.keywords : undefined;
+  private static async promptProject(config: CliUtilityInitializePromptProjectConfig): CliUtilityInitializePromptProjectReturns {
+    const existingProject: CliUtilityInitializePromptProjectExistingProject = config['project'];
+    const existingProjectName: CliUtilityInitializePromptProjectExistingProjectName = (existingProject !== undefined) ? existingProject['name'] : undefined;
+    const existingProjectDescription: CliUtilityInitializePromptProjectExistingProjectDescription = (existingProject !== undefined) ? existingProject['description'] : undefined;
+    const existingProjectKeywords: CliUtilityInitializePromptProjectExistingProjectKeywords = (existingProject !== undefined) ? existingProject['keywords'] : undefined;
+    const existingProjectLegalName: CliUtilityInitializePromptProjectExistingProjectLegalName = (existingProject !== undefined) ? existingProject['legalName'] : undefined;
+    const existingProjectPronouns: CliUtilityInitializePromptProjectExistingProjectPronouns = (existingProject !== undefined) ? existingProject['pronouns'] : undefined;
+    const existingProjectPlatforms: CliUtilityInitializePromptProjectExistingProjectPlatforms = (existingProject !== undefined) ? existingProject['platforms'] : undefined;
+    const existingProjectStartingYear: CliUtilityInitializePromptProjectExistingProjectStartingYear = (existingProject !== undefined) ? existingProject['startingYear'] : undefined;
+    const existingProjectLicense: CliUtilityInitializePromptProjectExistingProjectLicense = (existingProject !== undefined) ? existingProject['license'] : undefined;
 
-    const project = (existingProject !== undefined) ? { ...existingProject } : {};
-    const projectName = (existingProjectName !== undefined) ? { ...existingProjectName } : {};
-    const projectDescription = (existingProjectDescription !== undefined) ? { ...existingProjectDescription } : {};
-    const projectKeywords = (existingProjectKeywords !== undefined) ? [...existingProjectKeywords] : [];
+    const project: CliUtilityInitializePromptProjectProject = (existingProject !== undefined) ? { ...existingProject } : {};
+    const projectName: CliUtilityInitializePromptProjectProjectName = (existingProjectName !== undefined) ? { ...existingProjectName } : {};
+    const projectDescription: CliUtilityInitializePromptProjectProjectDescription = (existingProjectDescription !== undefined) ? { ...existingProjectDescription } : {};
+    const projectKeywords: CliUtilityInitializePromptProjectProjectKeywords = (existingProjectKeywords !== undefined) ? [...existingProjectKeywords] : [];
 
-    const questionsOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptProjectQuestionsOutputKeys, CLIUtilityInitializePromptProjectQuestionsOutputResult>([
+    const questionsOutput: CliUtilityInitializePromptProjectQuestionsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptProjectQuestionsOutputKey, CliUtilityInitializePromptProjectQuestionsOutputResult>([
       {
         type: 'text',
         name: 'projectNameTitle',
         message: 'Project title (display name)',
-        initial: projectName.title ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeText(value, Infinity).result,
+        initial: projectName['title'] ?? '',
+        validate: (value: CliUtilityInitializePromptProjectValidateValue) => CliUtilityInitialize.normalizeText(value, Infinity)['result'],
       },
       {
         type: 'text',
         name: 'projectNameSlug',
         message: 'Project slug (package name)',
-        initial: projectName.slug ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeProjectSlug(value).result,
+        initial: projectName['slug'] ?? '',
+        validate: (value: CliUtilityInitializePromptProjectValidateValue) => CliUtilityInitialize.normalizeProjectSlug(value)['result'],
       },
       {
         type: 'text',
         name: 'projectDescriptionShort',
         message: 'Short description',
-        initial: projectDescription.short ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeText(value, Infinity).result,
+        initial: projectDescription['short'] ?? '',
+        validate: (value: CliUtilityInitializePromptProjectValidateValue) => CliUtilityInitialize.normalizeText(value, Infinity)['result'],
       },
       {
         type: 'text',
         name: 'projectDescriptionLong',
         message: 'Long description',
-        initial: projectDescription.long ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeText(value, Infinity).result,
+        initial: projectDescription['long'] ?? '',
+        validate: (value: CliUtilityInitializePromptProjectValidateValue) => CliUtilityInitialize.normalizeText(value, Infinity)['result'],
       },
       {
         type: 'text',
         name: 'projectKeywords',
         message: 'Keywords (comma separated)',
         initial: (projectKeywords.length > 0) ? projectKeywords.join(', ') : '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeTextArray(value, 50).result,
+        validate: (value: CliUtilityInitializePromptProjectValidateValue) => CliUtilityInitialize.normalizeTextArray(value, 50)['result'],
       },
     ]);
 
-    if (questionsOutput.cancelled) {
+    if (questionsOutput['cancelled'] === true) {
       return 'back';
     }
 
-    const questionsOutputResult = questionsOutput.result;
+    const questionsOutputResult: CliUtilityInitializePromptProjectQuestionsOutputResultValue = questionsOutput['result'];
 
-    const projectNameTitleInput = CLIUtilityInitialize.normalizeText(questionsOutputResult.projectNameTitle, Infinity).sanitized;
-    const projectNameSlugInput = CLIUtilityInitialize.normalizeProjectSlug(questionsOutputResult.projectNameSlug).sanitized;
-    const projectDescriptionShortInput = CLIUtilityInitialize.normalizeText(questionsOutputResult.projectDescriptionShort, Infinity).sanitized;
-    const projectDescriptionLongInput = CLIUtilityInitialize.normalizeText(questionsOutputResult.projectDescriptionLong, Infinity).sanitized;
-    const projectKeywordsInput = CLIUtilityInitialize.normalizeTextArray(questionsOutputResult.projectKeywords, 50).sanitized;
+    const projectNameTitleInput: CliUtilityInitializePromptProjectProjectNameTitleInput = CliUtilityInitialize.normalizeText(questionsOutputResult.projectNameTitle, Infinity)['sanitized'];
+    const projectNameSlugInput: CliUtilityInitializePromptProjectProjectNameSlugInput = CliUtilityInitialize.normalizeProjectSlug(questionsOutputResult.projectNameSlug)['sanitized'];
+    const projectDescriptionShortInput: CliUtilityInitializePromptProjectProjectDescriptionShortInput = CliUtilityInitialize.normalizeText(questionsOutputResult.projectDescriptionShort, Infinity)['sanitized'];
+    const projectDescriptionLongInput: CliUtilityInitializePromptProjectProjectDescriptionLongInput = CliUtilityInitialize.normalizeText(questionsOutputResult.projectDescriptionLong, Infinity)['sanitized'];
+    const projectKeywordsInput: CliUtilityInitializePromptProjectProjectKeywordsInput = CliUtilityInitialize.normalizeTextArray(questionsOutputResult.projectKeywords, 50)['sanitized'];
 
     // Project - Name - Title.
     if (projectNameTitleInput !== undefined) {
@@ -388,6 +699,260 @@ export class CLIUtilityInitialize {
       Reflect.deleteProperty(project, 'keywords');
     }
 
+    // Project - Legal name.
+    const legalNameOutput: CliUtilityInitializePromptProjectLegalNameOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptProjectLegalNameOutputKey, CliUtilityInitializePromptProjectLegalNameOutputResult>({
+      type: 'text',
+      name: 'projectLegalName',
+      message: 'Legal name (for licenses and copyright notices)',
+      initial: (typeof existingProjectLegalName === 'string') ? existingProjectLegalName : '',
+    });
+
+    if (legalNameOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const projectLegalNameInput: CliUtilityInitializePromptProjectProjectLegalNameInput = CliUtilityInitialize.normalizeText(legalNameOutput['result'].projectLegalName, Infinity)['sanitized'];
+
+    if (projectLegalNameInput !== undefined) {
+      project.legalName = projectLegalNameInput;
+    } else {
+      Reflect.deleteProperty(project, 'legalName');
+    }
+
+    // Project - Pronouns.
+    const pronounsOutput: CliUtilityInitializePromptProjectPronounsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptProjectPronounsOutputKey, CliUtilityInitializePromptProjectPronounsOutputResult>({
+      type: 'select',
+      name: 'projectPronouns',
+      message: 'Pronouns',
+      choices: [
+        {
+          title: 'Business (we/us/our)',
+          value: 'business',
+        },
+        {
+          title: 'Personal (I/me/my)',
+          value: 'personal',
+        },
+      ],
+      initial: (existingProjectPronouns === 'personal') ? 1 : 0,
+    });
+
+    if (pronounsOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const projectPronounsInput: CliUtilityInitializePromptProjectProjectPronounsInput = pronounsOutput['result'].projectPronouns;
+
+    if (projectPronounsInput !== undefined) {
+      project.pronouns = projectPronounsInput;
+    } else {
+      Reflect.deleteProperty(project, 'pronouns');
+    }
+
+    // Project - Platforms.
+    const platformChoices: CliUtilityInitializePromptProjectPlatformChoices = [
+      {
+        title: 'Node.js',
+        value: 'nodejs',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('nodejs') === true,
+      },
+      {
+        title: 'Swift',
+        value: 'swift',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('swift') === true,
+      },
+      {
+        title: 'Android',
+        value: 'android',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('android') === true,
+      },
+      {
+        title: 'Java',
+        value: 'java',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('java') === true,
+      },
+      {
+        title: 'Kotlin',
+        value: 'kotlin',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('kotlin') === true,
+      },
+      {
+        title: 'C#',
+        value: 'csharp',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('csharp') === true,
+      },
+      {
+        title: 'PHP',
+        value: 'php',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('php') === true,
+      },
+      {
+        title: 'Python',
+        value: 'python',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('python') === true,
+      },
+      {
+        title: 'macOS',
+        value: 'macos',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('macos') === true,
+      },
+      {
+        title: 'Linux',
+        value: 'linux',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('linux') === true,
+      },
+      {
+        title: 'Windows',
+        value: 'windows',
+        selected: existingProjectPlatforms !== undefined && existingProjectPlatforms.includes('windows') === true,
+      },
+    ];
+
+    const platformsOutput: CliUtilityInitializePromptProjectPlatformsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptProjectPlatformsOutputKey, CliUtilityInitializePromptProjectPlatformsOutputResult>({
+      type: 'multiselect',
+      name: 'projectPlatforms',
+      message: 'Supported platforms',
+      choices: platformChoices,
+    });
+
+    if (platformsOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const projectPlatformsInput: CliUtilityInitializePromptProjectProjectPlatformsInput = platformsOutput['result'].projectPlatforms;
+
+    if (Array.isArray(projectPlatformsInput) === true && projectPlatformsInput.length > 0) {
+      project.platforms = projectPlatformsInput;
+    } else {
+      Reflect.deleteProperty(project, 'platforms');
+    }
+
+    // Project - Starting year.
+    const startingYearOutput: CliUtilityInitializePromptProjectStartingYearOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptProjectStartingYearOutputKey, CliUtilityInitializePromptProjectStartingYearOutputResult>({
+      type: 'text',
+      name: 'projectStartingYear',
+      message: 'Starting year (e.g. 2025)',
+      initial: (existingProjectStartingYear !== undefined) ? String(existingProjectStartingYear) : '',
+      validate: (value: CliUtilityInitializePromptProjectValidateValue) => {
+        const trimmed: CliUtilityInitializePromptProjectTrimmed = String(value ?? '').trim();
+
+        if (trimmed === '') {
+          return true;
+        }
+
+        const parsed: CliUtilityInitializePromptProjectParsed = Number(trimmed);
+
+        if (
+          Number.isNaN(parsed) === true
+          || Number.isInteger(parsed) === false
+          || parsed < 1970
+        ) {
+          return 'Must be an integer >= 1970';
+        }
+
+        return true;
+      },
+    });
+
+    if (startingYearOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const startingYearRaw: CliUtilityInitializePromptProjectStartingYearRaw = String(startingYearOutput['result'].projectStartingYear ?? '').trim();
+    const startingYearParsed: CliUtilityInitializePromptProjectStartingYearParsed = (startingYearRaw !== '') ? Number(startingYearRaw) : undefined;
+
+    if (
+      startingYearParsed !== undefined
+      && Number.isInteger(startingYearParsed) === true
+      && startingYearParsed >= 1970
+    ) {
+      project.startingYear = startingYearParsed;
+    } else {
+      Reflect.deleteProperty(project, 'startingYear');
+    }
+
+    // Project - License.
+    const licenseChoices: CliUtilityInitializePromptProjectLicenseChoices = [
+      {
+        title: 'MIT License',
+        value: 'MIT',
+      },
+      {
+        title: 'Apache License 2.0',
+        value: 'Apache-2.0',
+      },
+      {
+        title: 'GNU General Public License v3.0',
+        value: 'GPL-3.0',
+      },
+      {
+        title: 'GNU General Public License v2.0',
+        value: 'GPL-2.0',
+      },
+      {
+        title: 'GNU Affero General Public License v3.0',
+        value: 'AGPL-3.0',
+      },
+      {
+        title: 'GNU Lesser General Public License v2.1',
+        value: 'LGPL-2.1',
+      },
+      {
+        title: 'BSD 2-Clause "Simplified" License',
+        value: 'BSD-2-Clause',
+      },
+      {
+        title: 'BSD 3-Clause "New" or "Revised" License',
+        value: 'BSD-3-Clause',
+      },
+      {
+        title: 'Boost Software License 1.0',
+        value: 'BSL-1.0',
+      },
+      {
+        title: 'Creative Commons Zero v1.0 Universal',
+        value: 'CC0-1.0',
+      },
+      {
+        title: 'Eclipse Public License 2.0',
+        value: 'EPL-2.0',
+      },
+      {
+        title: 'Mozilla Public License 2.0',
+        value: 'MPL-2.0',
+      },
+      {
+        title: 'Proprietary (All Rights Reserved)',
+        value: 'Proprietary',
+      },
+      {
+        title: 'The Unlicense',
+        value: 'Unlicense',
+      },
+    ];
+
+    const licenseInitialIndex: CliUtilityInitializePromptProjectLicenseInitialIndex = licenseChoices.findIndex((choice) => choice['value'] === existingProjectLicense);
+
+    const licenseOutput: CliUtilityInitializePromptProjectLicenseOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptProjectLicenseOutputKey, CliUtilityInitializePromptProjectLicenseOutputResult>({
+      type: 'select',
+      name: 'projectLicense',
+      message: 'License',
+      choices: licenseChoices,
+      initial: (licenseInitialIndex !== -1) ? licenseInitialIndex : 0,
+    });
+
+    if (licenseOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const projectLicenseInput: CliUtilityInitializePromptProjectProjectLicenseInput = licenseOutput['result'].projectLicense;
+
+    if (projectLicenseInput !== undefined) {
+      project.license = projectLicenseInput;
+    } else {
+      Reflect.deleteProperty(project, 'license');
+    }
+
     // Project.
     if (Object.keys(project).length > 0) {
       Object.assign(config, { project });
@@ -395,27 +960,30 @@ export class CLIUtilityInitialize {
       Reflect.deleteProperty(config, 'project');
     }
 
-    const previousSlug = (existingProjectName !== undefined) ? existingProjectName.slug ?? '' : '';
-    const currentSlug = (config.project !== undefined && config.project.name !== undefined) ? config.project.name.slug ?? '' : '';
-    const slugChanged = previousSlug !== currentSlug;
+    const previousSlug: CliUtilityInitializePromptProjectPreviousSlug = (existingProjectName !== undefined) ? existingProjectName['slug'] ?? '' : '';
+    const currentSlug: CliUtilityInitializePromptProjectCurrentSlug = (config['project'] !== undefined && config['project']['name'] !== undefined) ? config['project']['name']['slug'] ?? '' : '';
+    const slugChanged: CliUtilityInitializePromptProjectSlugChanged = previousSlug !== currentSlug;
 
     // Automatically update workspace names for specific roles that use the project slug.
-    if (slugChanged && config.workspaces !== undefined) {
-      const rolesToSync: CLIUtilityInitializePromptProjectRolesToSync = [...itemInitializeRolesToSync];
-      const slugPrefix = new RegExp(`^${previousSlug}-`);
+    if (slugChanged === true && config['workspaces'] !== undefined) {
+      const rolesToSync: CliUtilityInitializePromptProjectRolesToSync = [...libItemSyncRoles];
+      const slugPrefix: CliUtilityInitializePromptProjectSlugPrefix = new RegExp(`^${previousSlug}-`);
+
+      const previousLabel: CliUtilityInitializePromptProjectPreviousLabel = (previousSlug !== '') ? previousSlug : '(unset)';
+      const currentLabel: CliUtilityInitializePromptProjectCurrentLabel = (currentSlug !== '') ? currentSlug : '(unset)';
 
       Logger.customize({
-        name: 'CLIUtilityInitialize.promptProject',
+        name: 'CliUtilityInitialize.promptProject',
         purpose: 'updated',
         padTop: 1,
-      }).info(`Project slug updated from "${previousSlug || '(unset)'}" to "${currentSlug || '(unset)'}".`);
+      }).info(`Project slug updated from "${previousLabel}" to "${currentLabel}".`);
 
-      for (const workspace of Object.values(config.workspaces)) {
-        if (rolesToSync.includes(workspace.role) === false) {
+      for (const workspace of Object.values(config['workspaces'])) {
+        if (rolesToSync.includes(workspace['role']) === false) {
           continue;
         }
 
-        const name = workspace.name;
+        const name: CliUtilityInitializePromptProjectName2 = workspace['name'];
 
         // If user added a slug, removed the slug, or changed the slug.
         if (previousSlug === '' && currentSlug !== '') {
@@ -427,16 +995,16 @@ export class CLIUtilityInitialize {
         }
 
         Logger.customize({
-          name: 'CLIUtilityInitialize.promptProject',
+          name: 'CliUtilityInitialize.promptProject',
           purpose: 'updated',
-        }).info(`Workspace name updated from "${name}" to "${workspace.name}".`);
+        }).info(`Workspace name updated from "${name}" to "${workspace['name']}".`);
       }
     }
 
     Logger.customize({
-      name: 'CLIUtilityInitialize.promptProject',
+      name: 'CliUtilityInitialize.promptProject',
       purpose: 'updated',
-      padTop: (slugChanged && config.workspaces !== undefined) ? 0 : 1,
+      padTop: (slugChanged === true && config['workspaces'] !== undefined) ? 0 : 1,
       padBottom: 1,
     }).info('Project details updated.');
 
@@ -444,27 +1012,31 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Prompt entities.
+   * CLI - Utility - Initialize - Prompt Entities.
    *
-   * @param {CLIUtilityInitializePromptEntitiesConfig} config - Config.
+   * CRUD menu for the entities array in
+   * nova.config.json. Each entity holds a name, email,
+   * URL, and role list used by sync recipes.
+   *
+   * @param {CliUtilityInitializePromptEntitiesConfig} config - Config.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptEntitiesReturns}
+   * @returns {CliUtilityInitializePromptEntitiesReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptEntities(config: CLIUtilityInitializePromptEntitiesConfig): CLIUtilityInitializePromptEntitiesReturns {
-    const entities: CLIUtilityInitializePromptEntitiesEntities = [];
+  private static async promptEntities(config: CliUtilityInitializePromptEntitiesConfig): CliUtilityInitializePromptEntitiesReturns {
+    const entities: CliUtilityInitializePromptEntitiesEntities = [];
 
     // Populate the entities from config.
-    if (Array.isArray(config.entities)) {
-      for (const configEntity of config.entities) {
-        const clonedEntity = { ...configEntity };
+    if (Array.isArray(config['entities']) === true) {
+      for (const configEntity of config['entities']) {
+        const clonedEntity: CliUtilityInitializePromptEntitiesClonedEntity = { ...configEntity };
 
         // Entities - Roles.
-        if (Array.isArray(configEntity.roles)) {
-          clonedEntity.roles = [...configEntity.roles];
+        if (Array.isArray(configEntity['roles']) === true) {
+          clonedEntity.roles = [...configEntity['roles']];
         } else {
           Reflect.deleteProperty(clonedEntity, 'roles');
         }
@@ -474,21 +1046,24 @@ export class CLIUtilityInitialize {
     }
 
     /**
-     * CLI Utility - Initialize - Prompt entities - Sync.
+     * CLI - Utility - Initialize - Prompt Entities - Sync.
      *
-     * @returns {CLIUtilityInitializePromptEntitiesSyncReturns}
+     * Flushes the local entities array back into the config object after every add, edit, or
+     * remove action so partial changes are not lost.
      *
-     * @since 1.0.0
+     * @returns {CliUtilityInitializePromptEntitiesSyncReturns}
+     *
+     * @since 0.11.0
      */
-    const sync = (): CLIUtilityInitializePromptEntitiesSyncReturns => {
+    const sync: CliUtilityInitializePromptEntitiesSync = (): CliUtilityInitializePromptEntitiesSyncReturns => {
       if (entities.length > 0) {
         // Entities.
-        const normalizedEntities = entities.map((entity) => {
-          const normalizedEntity = { ...entity };
+        const normalizedEntities: CliUtilityInitializePromptEntitiesNormalizedEntities = entities.map((entity) => {
+          const normalizedEntity: CliUtilityInitializePromptEntitiesNormalizedEntity = { ...entity };
 
           // Entities - Roles.
-          if (Array.isArray(entity.roles) && entity.roles.length > 0) {
-            normalizedEntity.roles = [...entity.roles];
+          if (Array.isArray(entity['roles']) === true && entity['roles'].length > 0) {
+            normalizedEntity.roles = [...entity['roles']];
           } else {
             Reflect.deleteProperty(normalizedEntity, 'roles');
           }
@@ -500,25 +1075,41 @@ export class CLIUtilityInitialize {
       } else {
         Reflect.deleteProperty(config, 'entities');
       }
+
+      return;
     };
 
     while (true) {
-      const choices: CLIUtilityInitializePromptEntitiesChoices = [];
+      entities.sort((a, b) => {
+        const nameA: CliUtilityInitializePromptEntitiesSortNameA = (a !== undefined && a['name'] !== undefined) ? a['name'] : '';
+        const nameB: CliUtilityInitializePromptEntitiesSortNameB = (b !== undefined && b['name'] !== undefined) ? b['name'] : '';
+
+        return nameA.localeCompare(nameB);
+      });
+
+      const choices: CliUtilityInitializePromptEntitiesChoices = [];
 
       // Add the "EDIT" and "REMOVE" menu choices for each entity.
       for (let i = 0; i < entities.length; i += 1) {
-        const entity = entities[i];
+        const entity: CliUtilityInitializePromptEntitiesEntity = entities[i];
 
         if (entity === undefined) {
           continue;
         }
 
-        const entityName = (entity.name !== undefined) ? entity.name.trim() : '';
-        const entityEmail = (entity.email !== undefined) ? entity.email.trim() : '';
-        const entityRoles = (Array.isArray(entity.roles)) ? entity.roles.filter((role) => role.trim() !== '') : [];
+        const entityName: CliUtilityInitializePromptEntitiesEntityName = (entity['name'] !== undefined) ? entity['name'].trim() : '';
+        const entityEmail: CliUtilityInitializePromptEntitiesEntityEmail = (entity['email'] !== undefined) ? entity['email'].trim() : '';
+        const entityRoles: CliUtilityInitializePromptEntitiesEntityRoles = (Array.isArray(entity['roles']) === true) ? entity['roles'].filter((role) => role.trim() !== '') : [];
 
-        const label = entityName || entityEmail || `Entity ${i + 1}`;
-        const descriptionParts: CLIUtilityInitializePromptEntitiesDescriptionParts = [];
+        let label: CliUtilityInitializePromptEntitiesLabel = `Entity ${i + 1}`;
+
+        if (entityName !== '') {
+          label = entityName;
+        } else if (entityEmail !== '') {
+          label = entityEmail;
+        }
+
+        const descriptionParts: CliUtilityInitializePromptEntitiesDescriptionParts = [];
 
         // Add "email" to menu description for each entity.
         if (entityEmail !== '') {
@@ -527,10 +1118,10 @@ export class CLIUtilityInitialize {
 
         // Add "roles" to menu description for each entity.
         if (entityRoles.length > 0) {
-          const normalizedRoles = entityRoles
+          const normalizedRoles: CliUtilityInitializePromptEntitiesNormalizedRoles = entityRoles
             .map((entityRole) => entityRole.trim())
             .filter((entityRole) => entityRole.length > 0)
-            .reduce<CLIUtilityInitializePromptEntitiesNormalizedRolesReduce>((unique, entityRole) => {
+            .reduce<CliUtilityInitializePromptEntitiesNormalizedRolesReduce>((unique, entityRole) => {
               if (unique.includes(entityRole) === false) {
                 unique.push(entityRole);
               }
@@ -538,11 +1129,13 @@ export class CLIUtilityInitialize {
             }, []);
 
           if (normalizedRoles.length > 0) {
-            descriptionParts.push(normalizedRoles.join(', '));
+            const joinedRoles: CliUtilityInitializePromptEntitiesJoinedRoles = normalizedRoles.join(', ');
+
+            descriptionParts.push(joinedRoles);
           }
         }
 
-        const description = descriptionParts.join(' · ');
+        const description: CliUtilityInitializePromptEntitiesDescription = descriptionParts.join(' · ');
 
         choices.push({
           title: `${chalk.yellow.bold('[EDIT]')} ${label}`,
@@ -579,23 +1172,23 @@ export class CLIUtilityInitialize {
         },
       });
 
-      const menuOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptEntitiesMenuOutputKeys, CLIUtilityInitializePromptEntitiesMenuOutputResult>({
+      const menuOutput: CliUtilityInitializePromptEntitiesMenuOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptEntitiesMenuOutputKey, CliUtilityInitializePromptEntitiesMenuOutputResult>({
         type: 'select',
         name: 'action',
         message: (entities.length > 0) ? 'Select an entity to manage.' : 'No entities found. Choose an option.',
         choices,
       });
 
-      if (menuOutput.cancelled) {
+      if (menuOutput['cancelled'] === true) {
         return 'back';
       }
 
-      const menuOutputResult = menuOutput.result;
+      const menuOutputResult: CliUtilityInitializePromptEntitiesMenuOutputResultValue = menuOutput['result'];
 
       // If user wants to go back to the main menu.
       if (
         menuOutputResult.action === undefined
-        || menuOutputResult.action.kind === 'back'
+        || menuOutputResult.action['kind'] === 'back'
       ) {
         // Sync changes back to config.
         sync();
@@ -604,21 +1197,21 @@ export class CLIUtilityInitialize {
       }
 
       // If user wants to add an entity.
-      if (menuOutputResult.action.kind === 'add') {
-        const result = await CLIUtilityInitialize.promptEntitiesForm(undefined, 'create');
+      if (menuOutputResult.action['kind'] === 'add') {
+        const result: CliUtilityInitializePromptEntitiesResult = await CliUtilityInitialize.promptEntitiesForm(undefined, 'create');
 
-        if (result.action === 'back') {
+        if (result['action'] === 'back') {
           continue;
         }
 
         // Add a new entity.
-        entities.push(result.entity);
+        entities.push(result['entity']);
 
         // Sync changes back to config.
         sync();
 
         Logger.customize({
-          name: 'CLIUtilityInitialize.promptEntities',
+          name: 'CliUtilityInitialize.promptEntities',
           purpose: 'add',
           padTop: 1,
           padBottom: 1,
@@ -628,29 +1221,30 @@ export class CLIUtilityInitialize {
       }
 
       // If user wants to edit an entity.
-      if (menuOutputResult.action.kind === 'edit') {
-        const entityIndex = menuOutputResult.action.index;
+      if (menuOutputResult.action['kind'] === 'edit') {
+        const entityIndex: CliUtilityInitializePromptEntitiesEntityIndex = menuOutputResult.action['index'];
 
         // If entity index was out-of-bounds.
         if (entityIndex < 0 || entityIndex >= entities.length) {
           continue;
         }
 
-        const entityToEdit = entities[entityIndex];
-        const entityResult = await CLIUtilityInitialize.promptEntitiesForm(entityToEdit, 'update');
+        const entityToEdit: CliUtilityInitializePromptEntitiesEntityToEdit = entities[entityIndex];
 
-        if (entityResult.action === 'back') {
+        const entityResult: CliUtilityInitializePromptEntitiesEntityResult = await CliUtilityInitialize.promptEntitiesForm(entityToEdit, 'update');
+
+        if (entityResult['action'] === 'back') {
           continue;
         }
 
         // Update the entity.
-        Reflect.set(entities, entityIndex, entityResult.entity);
+        Reflect.set(entities, entityIndex, entityResult['entity']);
 
         // Sync changes back to config.
         sync();
 
         Logger.customize({
-          name: 'CLIUtilityInitialize.promptEntities',
+          name: 'CliUtilityInitialize.promptEntities',
           purpose: 'edit',
           padTop: 1,
           padBottom: 1,
@@ -660,26 +1254,32 @@ export class CLIUtilityInitialize {
       }
 
       // If user wants to remove an entity.
-      if (menuOutputResult.action.kind === 'remove') {
-        const entityIndex = menuOutputResult.action.index;
+      if (menuOutputResult.action['kind'] === 'remove') {
+        const entityIndex: CliUtilityInitializePromptEntitiesEntityIndex = menuOutputResult.action['index'];
 
         // If entity index was out-of-bounds.
         if (entityIndex < 0 || entityIndex >= entities.length) {
           continue;
         }
 
-        const entityToRemove = entities[entityIndex];
+        const entityToRemove: CliUtilityInitializePromptEntitiesEntityToRemove = entities[entityIndex];
 
         // If entity to remove does not exist.
         if (entityToRemove === undefined) {
           continue;
         }
 
-        const entityName = (typeof entityToRemove.name === 'string') ? entityToRemove.name.trim() : '';
-        const entityEmail = (typeof entityToRemove.email === 'string') ? entityToRemove.email.trim() : '';
-        const entityLabel = entityName || entityEmail || `Entity ${entityIndex + 1}`;
+        const entityName: CliUtilityInitializePromptEntitiesEntityName = (typeof entityToRemove['name'] === 'string') ? entityToRemove['name'].trim() : '';
+        const entityEmail: CliUtilityInitializePromptEntitiesEntityEmail = (typeof entityToRemove['email'] === 'string') ? entityToRemove['email'].trim() : '';
+        let entityLabel: CliUtilityInitializePromptEntitiesEntityLabel = `Entity ${entityIndex + 1}`;
 
-        const shouldRemove = await CLIUtilityInitialize.promptEntitiesDeleteForm(entityLabel);
+        if (entityName !== '') {
+          entityLabel = entityName;
+        } else if (entityEmail !== '') {
+          entityLabel = entityEmail;
+        }
+
+        const shouldRemove: CliUtilityInitializePromptEntitiesShouldRemove = await CliUtilityInitialize.promptEntitiesDeleteForm(entityLabel);
 
         if (shouldRemove !== true) {
           continue;
@@ -692,7 +1292,7 @@ export class CLIUtilityInitialize {
         sync();
 
         Logger.customize({
-          name: 'CLIUtilityInitialize.promptEntities',
+          name: 'CliUtilityInitialize.promptEntities',
           purpose: 'remove',
           padTop: 1,
           padBottom: 1,
@@ -702,52 +1302,55 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Prompt entities form.
+   * CLI - Utility - Initialize - Prompt Entities Form.
    *
-   * @param {CLIUtilityInitializePromptEntitiesFormEntity} entity - Entity.
-   * @param {CLIUtilityInitializePromptEntitiesFormMode}   mode   - Mode.
+   * Shared form for both creating and editing an entity. Prompts for name, email, website, and
+   * roles, then returns the assembled entity or back.
+   *
+   * @param {CliUtilityInitializePromptEntitiesFormEntity} entity - Entity.
+   * @param {CliUtilityInitializePromptEntitiesFormMode}   mode   - Mode.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptEntitiesFormReturns}
+   * @returns {CliUtilityInitializePromptEntitiesFormReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptEntitiesForm(entity: CLIUtilityInitializePromptEntitiesFormEntity, mode: CLIUtilityInitializePromptEntitiesFormMode): CLIUtilityInitializePromptEntitiesFormReturns {
-    const validRoles = [...itemInitializeValidEntityRoles] as CLIUtilityInitializePromptEntitiesFormValidRoles;
+  private static async promptEntitiesForm(entity: CliUtilityInitializePromptEntitiesFormEntity, mode: CliUtilityInitializePromptEntitiesFormMode): CliUtilityInitializePromptEntitiesFormReturns {
+    const validRoles: CliUtilityInitializePromptEntitiesFormValidRoles = [...libItemValidEntityRoles] as CliUtilityInitializePromptEntitiesFormValidRoles;
 
-    const existingName = (entity !== undefined && typeof entity.name === 'string') ? entity.name : '';
-    const existingEmail = (entity !== undefined && typeof entity.email === 'string') ? entity.email : '';
-    const existingUrl = (entity !== undefined && typeof entity.url === 'string') ? entity.url : '';
+    const existingName: CliUtilityInitializePromptEntitiesFormExistingName = (entity !== undefined && typeof entity['name'] === 'string') ? entity['name'] : '';
+    const existingEmail: CliUtilityInitializePromptEntitiesFormExistingEmail = (entity !== undefined && typeof entity['email'] === 'string') ? entity['email'] : '';
+    const existingUrl: CliUtilityInitializePromptEntitiesFormExistingUrl = (entity !== undefined && typeof entity['url'] === 'string') ? entity['url'] : '';
 
-    let existingRoles: CLIUtilityInitializePromptEntitiesFormExistingRoles = [];
+    let existingRoles: CliUtilityInitializePromptEntitiesFormExistingRoles = [];
 
     // If roles exist inside the entity, add it in.
-    if (entity !== undefined && Array.isArray(entity.roles)) {
-      existingRoles = entity.roles.filter((role) => validRoles.includes(role));
+    if (entity !== undefined && Array.isArray(entity['roles']) === true) {
+      existingRoles = entity['roles'].filter((role) => validRoles.includes(role));
     }
 
-    const questionsOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptEntitiesFormQuestionsOutputKey, CLIUtilityInitializePromptEntitiesFormQuestionsOutputValue<CLIUtilityInitializePromptEntitiesFormQuestionsOutputKey>>([
+    const questionsOutput: CliUtilityInitializePromptEntitiesFormQuestionsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptEntitiesFormQuestionsOutputKey, CliUtilityInitializePromptEntitiesFormQuestionsOutputValue<CliUtilityInitializePromptEntitiesFormQuestionsOutputKey>>([
       {
         type: 'text',
         name: 'entityName',
         message: 'Entity name',
         initial: existingName,
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeText(value, Infinity).result,
+        validate: (value: CliUtilityInitializePromptEntitiesFormValidateValue) => CliUtilityInitialize.normalizeText(value, Infinity)['result'],
       },
       {
         type: 'text',
         name: 'entityEmail',
         message: 'Entity email address',
         initial: existingEmail,
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeEmail(value).result,
+        validate: (value: CliUtilityInitializePromptEntitiesFormValidateValue) => CliUtilityInitialize.normalizeEmail(value)['result'],
       },
       {
         type: 'text',
         name: 'entityUrl',
         message: 'Entity website',
         initial: existingUrl,
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
+        validate: (value: CliUtilityInitializePromptEntitiesFormValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
       {
         type: 'multiselect',
@@ -761,20 +1364,20 @@ export class CLIUtilityInitialize {
       },
     ]);
 
-    if (questionsOutput.cancelled) {
+    if (questionsOutput['cancelled'] === true) {
       return {
         action: 'back',
       };
     }
 
-    const questionsOutputResult = questionsOutput.result;
+    const questionsOutputResult: CliUtilityInitializePromptEntitiesFormQuestionsOutputResult = questionsOutput['result'];
 
-    const entityNameInput = CLIUtilityInitialize.normalizeText(questionsOutputResult.entityName, Infinity).sanitized;
-    const entityEmailInput = CLIUtilityInitialize.normalizeEmail(questionsOutputResult.entityEmail).sanitized;
-    const entityUrlInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.entityUrl, 'generic').sanitized;
-    const entityRolesInput = Array.isArray(questionsOutputResult.entityRoles) ? [...questionsOutputResult.entityRoles] : [];
+    const entityNameInput: CliUtilityInitializePromptEntitiesFormEntityNameInput = CliUtilityInitialize.normalizeText(questionsOutputResult.entityName, Infinity)['sanitized'];
+    const entityEmailInput: CliUtilityInitializePromptEntitiesFormEntityEmailInput = CliUtilityInitialize.normalizeEmail(questionsOutputResult.entityEmail)['sanitized'];
+    const entityUrlInput: CliUtilityInitializePromptEntitiesFormEntityUrlInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.entityUrl, 'generic')['sanitized'];
+    const entityRolesInput: CliUtilityInitializePromptEntitiesFormEntityRolesInput = (Array.isArray(questionsOutputResult.entityRoles) === true) ? [...questionsOutputResult.entityRoles] : [];
 
-    const resolvedEntity: CLIUtilityInitializePromptEntitiesFormResolvedEntity = {};
+    const resolvedEntity: CliUtilityInitializePromptEntitiesFormResolvedEntity = {};
 
     // Entity - Name.
     if (entityNameInput !== undefined) {
@@ -810,66 +1413,70 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Prompt entities delete form.
+   * CLI - Utility - Initialize - Prompt Entities Delete Form.
    *
-   * @param {CLIUtilityInitializePromptEntitiesDeleteFormLabel} label - Label.
+   * Displays a yes/no confirmation before removing an entity. Called by promptEntities when
+   * the user selects a REMOVE action from the entity menu.
+   *
+   * @param {CliUtilityInitializePromptEntitiesDeleteFormLabel} label - Label.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptEntitiesDeleteFormReturns}
+   * @returns {CliUtilityInitializePromptEntitiesDeleteFormReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptEntitiesDeleteForm(label: CLIUtilityInitializePromptEntitiesDeleteFormLabel): CLIUtilityInitializePromptEntitiesDeleteFormReturns {
-    const confirmOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptEntitiesDeleteFormConfirmOutputKey, CLIUtilityInitializePromptEntitiesDeleteFormConfirmOutputValue>({
+  private static async promptEntitiesDeleteForm(label: CliUtilityInitializePromptEntitiesDeleteFormLabel): CliUtilityInitializePromptEntitiesDeleteFormReturns {
+    const confirmOutput: CliUtilityInitializePromptEntitiesDeleteFormConfirmOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptEntitiesDeleteFormConfirmOutputKey, CliUtilityInitializePromptEntitiesDeleteFormConfirmOutputValue>({
       type: 'confirm',
       name: 'confirm',
       message: `Remove entity "${label}"?`,
       initial: false,
     });
 
-    if (confirmOutput.cancelled) {
+    if (confirmOutput['cancelled'] === true) {
       return false;
     }
 
-    const confirmOutputResult = confirmOutput.result;
+    const confirmOutputResult: CliUtilityInitializePromptEntitiesDeleteFormConfirmOutputResult = confirmOutput['result'];
 
     return confirmOutputResult.confirm;
   }
 
   /**
-   * CLI Utility - Initialize - Prompt emails.
+   * CLI - Utility - Initialize - Prompt Emails.
    *
-   * @param {CLIUtilityInitializePromptEmailsConfig} config - Config.
+   * Collects project-level email addresses such as the issue tracker email. Values are written
+   * into the config emails section for sync.
+   *
+   * @param {CliUtilityInitializePromptEmailsConfig} config - Config.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptEmailsReturns}
+   * @returns {CliUtilityInitializePromptEmailsReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptEmails(config: CLIUtilityInitializePromptEmailsConfig): CLIUtilityInitializePromptEmailsReturns {
-    const existingEmails = config.emails;
+  private static async promptEmails(config: CliUtilityInitializePromptEmailsConfig): CliUtilityInitializePromptEmailsReturns {
+    const existingEmails: CliUtilityInitializePromptEmailsExistingEmails = config['emails'];
 
-    const emails = (existingEmails !== undefined) ? { ...existingEmails } : {};
+    const emails: CliUtilityInitializePromptEmailsEmails = (existingEmails !== undefined) ? { ...existingEmails } : {};
 
-    const questionsOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptEmailsQuestionsOutputKey, CLIUtilityInitializePromptEmailsQuestionsOutputValue>([
-      {
-        type: 'text',
-        name: 'emailsBugs',
-        message: 'Issue tracker email',
-        initial: emails.bugs ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeEmail(value).result,
-      },
-    ]);
+    const questionsOutput: CliUtilityInitializePromptEmailsQuestionsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptEmailsQuestionsOutputKey, CliUtilityInitializePromptEmailsQuestionsOutputValue>([{
+      type: 'text',
+      name: 'emailsBugs',
+      message: 'Issue tracker email',
+      initial: emails['bugs'] ?? '',
+      validate: (value: CliUtilityInitializePromptEmailsValidateValue) => CliUtilityInitialize.normalizeEmail(value)['result'],
+    }]);
 
-    if (questionsOutput.cancelled) {
+    if (questionsOutput['cancelled'] === true) {
       return 'back';
     }
 
-    const questionsOutputResult = questionsOutput.result;
+    const questionsOutputResult: CliUtilityInitializePromptEmailsQuestionsOutputResult = questionsOutput['result'];
 
-    const emailsBugsInput = CLIUtilityInitialize.normalizeEmail(questionsOutputResult.emailsBugs).sanitized;
+    const emailsBugsInput: CliUtilityInitializePromptEmailsEmailsBugsInput = CliUtilityInitialize.normalizeEmail(questionsOutputResult.emailsBugs)['sanitized'];
 
     // Emails - Bugs.
     if (emailsBugsInput !== undefined) {
@@ -886,7 +1493,7 @@ export class CLIUtilityInitialize {
     }
 
     Logger.customize({
-      name: 'CLIUtilityInitialize.promptEmails',
+      name: 'CliUtilityInitialize.promptEmails',
       purpose: 'updated',
       padTop: 1,
       padBottom: 1,
@@ -896,102 +1503,130 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Prompt urls.
+   * CLI - Utility - Initialize - Prompt URLs.
    *
-   * @param {CLIUtilityInitializePromptUrlsConfig} config - Config.
+   * Collects all project URLs including homepage,
+   * repository, bugs, license, logo, docs, GitHub, npm,
+   * Docker, funding, privacy, and terms.
+   *
+   * @param {CliUtilityInitializePromptUrlsConfig} config - Config.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptUrlsReturns}
+   * @returns {CliUtilityInitializePromptUrlsReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptUrls(config: CLIUtilityInitializePromptUrlsConfig): CLIUtilityInitializePromptUrlsReturns {
-    const existingUrls = config.urls;
+  private static async promptUrls(config: CliUtilityInitializePromptUrlsConfig): CliUtilityInitializePromptUrlsReturns {
+    const existingUrls: CliUtilityInitializePromptUrlsExistingUrls = config['urls'];
 
-    const urls = (existingUrls !== undefined) ? { ...existingUrls } : {};
+    const urls: CliUtilityInitializePromptUrlsUrls = (existingUrls !== undefined) ? { ...existingUrls } : {};
 
-    const questionsOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptUrlsQuestionsOutputKey, CLIUtilityInitializePromptUrlsQuestionsOutputValue>([
+    const questionsOutput: CliUtilityInitializePromptUrlsQuestionsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptUrlsQuestionsOutputKey, CliUtilityInitializePromptUrlsQuestionsOutputValue>([
       {
         type: 'text',
         name: 'urlsHomepage',
         message: 'Homepage URL',
-        initial: urls.homepage ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
+        initial: urls['homepage'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
       {
         type: 'text',
         name: 'urlsRepository',
         message: 'Repository URL',
-        initial: urls.repository ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'repository').result,
+        initial: urls['repository'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'repository')['result'],
       },
       {
         type: 'text',
         name: 'urlsBugs',
         message: 'Issue tracker URL',
-        initial: urls.bugs ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
+        initial: urls['bugs'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
       {
         type: 'text',
         name: 'urlsLicense',
         message: 'License URL',
-        initial: urls.license ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
+        initial: urls['license'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
       {
         type: 'text',
         name: 'urlsLogo',
         message: 'Logo URL',
-        initial: urls.logo ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
+        initial: urls['logo'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
       {
         type: 'text',
         name: 'urlsDocumentation',
         message: 'Documentation URL',
-        initial: urls.documentation ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
+        initial: urls['documentation'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
       {
         type: 'text',
         name: 'urlsGithub',
         message: 'GitHub URL',
-        initial: urls.github ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
+        initial: urls['github'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
       {
         type: 'text',
         name: 'urlsNpm',
         message: 'npm package URL',
-        initial: urls.npm ?? '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrl(value, 'generic').result,
+        initial: urls['npm'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
+      },
+      {
+        type: 'text',
+        name: 'urlsDocker',
+        message: 'Docker Hub URL',
+        initial: urls['docker'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
       {
         type: 'text',
         name: 'urlsFundSources',
         message: 'Funding URLs (comma separated)',
-        initial: (Array.isArray(urls.fundSources)) ? urls.fundSources.join(', ') : '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeUrlArray(value, 'generic').result,
+        initial: (Array.isArray(urls['fundSources']) === true) ? urls['fundSources'].join(', ') : '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrlArray(value, 'generic')['result'],
+      },
+      {
+        type: 'text',
+        name: 'urlsPrivacyPolicy',
+        message: 'Privacy policy URL',
+        initial: urls['privacyPolicy'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
+      },
+      {
+        type: 'text',
+        name: 'urlsTermsOfUse',
+        message: 'Terms of use URL',
+        initial: urls['termsOfUse'] ?? '',
+        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
       },
     ]);
 
-    if (questionsOutput.cancelled) {
+    if (questionsOutput['cancelled'] === true) {
       return 'back';
     }
 
-    const questionsOutputResult = questionsOutput.result;
+    const questionsOutputResult: CliUtilityInitializePromptUrlsQuestionsOutputResult = questionsOutput['result'];
 
-    const urlsHomepageInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsHomepage, 'generic').sanitized;
-    const urlsRepositoryInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsRepository, 'repository').sanitized;
-    const urlsBugsInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsBugs, 'generic').sanitized;
-    const urlsLicenseInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsLicense, 'generic').sanitized;
-    const urlsLogoInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsLogo, 'generic').sanitized;
-    const urlsDocumentationInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsDocumentation, 'generic').sanitized;
-    const urlsGithubInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsGithub, 'generic').sanitized;
-    const urlsNpmInput = CLIUtilityInitialize.normalizeUrl(questionsOutputResult.urlsNpm, 'generic').sanitized;
-    const urlsFundSourcesInput = CLIUtilityInitialize.normalizeUrlArray(questionsOutputResult.urlsFundSources, 'generic').sanitized;
+    const urlsHomepageInput: CliUtilityInitializePromptUrlsUrlsHomepageInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsHomepage, 'generic')['sanitized'];
+    const urlsRepositoryInput: CliUtilityInitializePromptUrlsUrlsRepositoryInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsRepository, 'repository')['sanitized'];
+    const urlsBugsInput: CliUtilityInitializePromptUrlsUrlsBugsInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsBugs, 'generic')['sanitized'];
+    const urlsLicenseInput: CliUtilityInitializePromptUrlsUrlsLicenseInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsLicense, 'generic')['sanitized'];
+    const urlsLogoInput: CliUtilityInitializePromptUrlsUrlsLogoInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsLogo, 'generic')['sanitized'];
+    const urlsDocumentationInput: CliUtilityInitializePromptUrlsUrlsDocumentationInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsDocumentation, 'generic')['sanitized'];
+    const urlsGithubInput: CliUtilityInitializePromptUrlsUrlsGithubInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsGithub, 'generic')['sanitized'];
+    const urlsNpmInput: CliUtilityInitializePromptUrlsUrlsNpmInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsNpm, 'generic')['sanitized'];
+    const urlsDockerInput: CliUtilityInitializePromptUrlsUrlsDockerInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsDocker, 'generic')['sanitized'];
+    const urlsFundSourcesInput: CliUtilityInitializePromptUrlsUrlsFundSourcesInput = CliUtilityInitialize.normalizeUrlArray(questionsOutputResult.urlsFundSources, 'generic')['sanitized'];
+    const urlsPrivacyPolicyInput: CliUtilityInitializePromptUrlsUrlsPrivacyPolicyInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsPrivacyPolicy, 'generic')['sanitized'];
+    const urlsTermsOfUseInput: CliUtilityInitializePromptUrlsUrlsTermsOfUseInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsTermsOfUse, 'generic')['sanitized'];
 
     // URLs - Homepage.
     if (urlsHomepageInput !== undefined) {
@@ -1049,11 +1684,32 @@ export class CLIUtilityInitialize {
       Reflect.deleteProperty(urls, 'npm');
     }
 
+    // URLs - Docker.
+    if (urlsDockerInput !== undefined) {
+      urls.docker = urlsDockerInput;
+    } else {
+      Reflect.deleteProperty(urls, 'docker');
+    }
+
     // URLs - Fund sources.
     if (urlsFundSourcesInput !== undefined) {
       urls.fundSources = urlsFundSourcesInput;
     } else {
       Reflect.deleteProperty(urls, 'fundSources');
+    }
+
+    // URLs - Privacy policy.
+    if (urlsPrivacyPolicyInput !== undefined) {
+      urls.privacyPolicy = urlsPrivacyPolicyInput;
+    } else {
+      Reflect.deleteProperty(urls, 'privacyPolicy');
+    }
+
+    // URLs - Terms of use.
+    if (urlsTermsOfUseInput !== undefined) {
+      urls.termsOfUse = urlsTermsOfUseInput;
+    } else {
+      Reflect.deleteProperty(urls, 'termsOfUse');
     }
 
     // URLs.
@@ -1064,7 +1720,7 @@ export class CLIUtilityInitialize {
     }
 
     Logger.customize({
-      name: 'CLIUtilityInitialize.promptUrls',
+      name: 'CliUtilityInitialize.promptUrls',
       purpose: 'updated',
       padTop: 1,
       padBottom: 1,
@@ -1074,23 +1730,628 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Prompt workspaces.
+   * CLI - Utility - Initialize - Prompt Workflows.
    *
-   * @param {CLIUtilityInitializePromptWorkspacesConfig} config - Config.
+   * Manages the workflow entries in config via an interactive
+   * Add / Edit / Remove / Back menu loop. Each workflow binds
+   * a template, suffix, triggers, depends-on, and settings.
+   *
+   * @param {CliUtilityInitializePromptWorkflowsConfig} config - Config.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptWorkspacesReturns}
+   * @returns {CliUtilityInitializePromptWorkflowsReturns}
    *
-   * @since 1.0.0
+   * @since 0.15.0
    */
-  private static async promptWorkspaces(config: CLIUtilityInitializePromptWorkspacesConfig): CLIUtilityInitializePromptWorkspacesReturns {
-    const workspaces: CLIUtilityInitializePromptWorkspaces = (config.workspaces !== undefined) ? { ...(config.workspaces) } : {};
+  private static async promptWorkflows(config: CliUtilityInitializePromptWorkflowsConfig): CliUtilityInitializePromptWorkflowsReturns {
+    const workflows: CliUtilityInitializePromptWorkflowsWorkflows = [];
+
+    // Populate the workflows from config.
+    if (Array.isArray(config['workflows']) === true) {
+      for (const configWorkflow of config['workflows']) {
+        const clonedWorkflow: CliUtilityInitializePromptWorkflowsClonedWorkflow = { ...configWorkflow };
+
+        // Workflows - Triggers.
+        if (Array.isArray(configWorkflow['triggers']) === true) {
+          clonedWorkflow.triggers = [...configWorkflow['triggers']];
+        }
+
+        // Workflows - Settings.
+        if (configWorkflow['settings'] !== undefined) {
+          clonedWorkflow.settings = { ...configWorkflow['settings'] };
+        } else {
+          Reflect.deleteProperty(clonedWorkflow, 'settings');
+        }
+
+        workflows.push(clonedWorkflow);
+      }
+    }
+
+    /**
+     * CLI - Utility - Initialize - Prompt Workflows - Sync.
+     *
+     * Flushes the local workflows array back into the config object after every add, edit, or
+     * remove action so partial changes are not lost.
+     *
+     * @returns {CliUtilityInitializePromptWorkflowsSyncReturns}
+     *
+     * @since 0.15.0
+     */
+    const sync: CliUtilityInitializePromptWorkflowsSync = (): CliUtilityInitializePromptWorkflowsSyncReturns => {
+      if (workflows.length > 0) {
+        const normalizedWorkflows: CliUtilityInitializePromptWorkflowsWorkflows = workflows.map((workflow) => {
+          const normalizedWorkflow: CliUtilityInitializePromptWorkflowsClonedWorkflow = { ...workflow };
+
+          // Workflows - Triggers.
+          if (Array.isArray(workflow['triggers']) === true && workflow['triggers'].length > 0) {
+            normalizedWorkflow.triggers = [...workflow['triggers']];
+          }
+
+          // Workflows - Depends On.
+          if (Array.isArray(workflow['depends-on']) === true && workflow['depends-on'].length > 0) {
+            Reflect.set(normalizedWorkflow, 'depends-on', [...workflow['depends-on']]);
+          } else {
+            Reflect.deleteProperty(normalizedWorkflow, 'depends-on');
+          }
+
+          // Workflows - Settings.
+          if (workflow['settings'] !== undefined && Object.keys(workflow['settings']).length > 0) {
+            normalizedWorkflow.settings = { ...workflow['settings'] };
+          } else {
+            Reflect.deleteProperty(normalizedWorkflow, 'settings');
+          }
+
+          return normalizedWorkflow;
+        });
+
+        Object.assign(config, { workflows: normalizedWorkflows });
+      } else {
+        Reflect.deleteProperty(config, 'workflows');
+      }
+
+      return;
+    };
+
+    while (true) {
+      workflows.sort((a, b) => {
+        const templateA: CliUtilityInitializePromptWorkflowsSortTemplateA = (a !== undefined && typeof a['template'] === 'string') ? a['template'] : '';
+        const templateB: CliUtilityInitializePromptWorkflowsSortTemplateB = (b !== undefined && typeof b['template'] === 'string') ? b['template'] : '';
+        const templateCompare: CliUtilityInitializePromptWorkflowsSortTemplateCompare = templateA.localeCompare(templateB);
+
+        if (templateCompare !== 0) {
+          return templateCompare;
+        }
+
+        const suffixA: CliUtilityInitializePromptWorkflowsSortSuffixA = (a !== undefined && typeof a['suffix'] === 'string') ? a['suffix'] : '';
+        const suffixB: CliUtilityInitializePromptWorkflowsSortSuffixB = (b !== undefined && typeof b['suffix'] === 'string') ? b['suffix'] : '';
+
+        return suffixA.localeCompare(suffixB);
+      });
+
+      const choices: CliUtilityInitializePromptWorkflowsChoices = [];
+
+      // Add the "EDIT" and "REMOVE" menu choices for each workflow.
+      for (let i = 0; i < workflows.length; i += 1) {
+        const workflow: CliUtilityInitializePromptWorkflowsMenuWorkflow = workflows[i];
+
+        if (workflow === undefined) {
+          continue;
+        }
+
+        const template: CliUtilityInitializePromptWorkflowsMenuTemplate = (typeof workflow['template'] === 'string') ? workflow['template'].trim() : '';
+        const suffix: CliUtilityInitializePromptWorkflowsMenuSuffix = (typeof workflow['suffix'] === 'string') ? workflow['suffix'].trim() : '';
+        const triggers: CliUtilityInitializePromptWorkflowsMenuTriggers = (Array.isArray(workflow['triggers']) === true) ? workflow['triggers'] : [];
+
+        let label: CliUtilityInitializePromptWorkflowsLabel = `Workflow ${i + 1}`;
+
+        if (template !== '' && suffix !== '') {
+          label = `${template}-${suffix}`;
+        } else if (template !== '') {
+          label = template;
+        }
+
+        const triggersLabel: CliUtilityInitializePromptWorkflowsTriggersLabel = (triggers.length > 0) ? ` [${triggers.join(', ')}]` : '';
+        const outputFileName: CliUtilityInitializePromptWorkflowsOutputFileName = (suffix !== '') ? `nova-${template}-${suffix}.yml` : `nova-${template}.yml`;
+        const description: CliUtilityInitializePromptWorkflowsDescription = (template !== '') ? `${outputFileName}${triggersLabel}` : 'Update this workflow.';
+
+        choices.push({
+          title: `${chalk.yellow.bold('[EDIT]')} ${label}`,
+          description,
+          value: {
+            kind: 'edit',
+            index: i,
+          },
+        });
+
+        choices.push({
+          title: `${chalk.red.bold('[REMOVE]')} ${label}`,
+          description: 'Delete this workflow.',
+          value: {
+            kind: 'remove',
+            index: i,
+          },
+        });
+      }
+
+      choices.push({
+        title: 'Add new workflow',
+        description: 'Create a new workflow.',
+        value: {
+          kind: 'add',
+        },
+      });
+
+      choices.push({
+        title: 'Back',
+        description: 'Return to the category selection.',
+        value: {
+          kind: 'back',
+        },
+      });
+
+      const menuOutput: CliUtilityInitializePromptWorkflowsMenuOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsMenuOutputKey, CliUtilityInitializePromptWorkflowsMenuOutputResult>({
+        type: 'select',
+        name: 'action',
+        message: (workflows.length > 0) ? 'Select a workflow to manage.' : 'No workflows found. Choose an option.',
+        choices,
+      });
+
+      if (menuOutput['cancelled'] === true) {
+        return 'back';
+      }
+
+      const menuOutputResult: CliUtilityInitializePromptWorkflowsMenuOutputResultValue = menuOutput['result'];
+
+      // If user wants to go back to the main menu.
+      if (
+        menuOutputResult.action === undefined
+        || menuOutputResult.action['kind'] === 'back'
+      ) {
+        // Sync changes back to config.
+        sync();
+
+        return 'back';
+      }
+
+      // If user wants to add a workflow.
+      if (menuOutputResult.action['kind'] === 'add') {
+        const result: CliUtilityInitializePromptWorkflowsResult = await CliUtilityInitialize.promptWorkflowsForm(undefined, 'create', workflows);
+
+        if (result['action'] === 'back') {
+          continue;
+        }
+
+        // Add a new workflow.
+        workflows.push(result['workflow']);
+
+        // Sync changes back to config.
+        sync();
+
+        Logger.customize({
+          name: 'CliUtilityInitialize.promptWorkflows',
+          purpose: 'add',
+          padTop: 1,
+          padBottom: 1,
+        }).info('Added new workflow.');
+
+        continue;
+      }
+
+      // If user wants to edit a workflow.
+      if (menuOutputResult.action['kind'] === 'edit') {
+        const workflowIndex: CliUtilityInitializePromptWorkflowsWorkflowIndex = menuOutputResult.action['index'];
+
+        // If workflow index was out-of-bounds.
+        if (workflowIndex < 0 || workflowIndex >= workflows.length) {
+          continue;
+        }
+
+        const workflowToEdit: CliUtilityInitializePromptWorkflowsWorkflowToEdit = workflows[workflowIndex];
+
+        const workflowResult: CliUtilityInitializePromptWorkflowsResult = await CliUtilityInitialize.promptWorkflowsForm(workflowToEdit, 'update', workflows);
+
+        if (workflowResult['action'] === 'back') {
+          continue;
+        }
+
+        // Update the workflow.
+        Reflect.set(workflows, workflowIndex, workflowResult['workflow']);
+
+        // Sync changes back to config.
+        sync();
+
+        Logger.customize({
+          name: 'CliUtilityInitialize.promptWorkflows',
+          purpose: 'edit',
+          padTop: 1,
+          padBottom: 1,
+        }).info('Updated workflow.');
+
+        continue;
+      }
+
+      // If user wants to remove a workflow.
+      if (menuOutputResult.action['kind'] === 'remove') {
+        const workflowIndex: CliUtilityInitializePromptWorkflowsWorkflowIndex = menuOutputResult.action['index'];
+
+        // If workflow index was out-of-bounds.
+        if (workflowIndex < 0 || workflowIndex >= workflows.length) {
+          continue;
+        }
+
+        const workflowToRemove: CliUtilityInitializePromptWorkflowsWorkflowToRemove = workflows[workflowIndex];
+
+        // If workflow to remove does not exist.
+        if (workflowToRemove === undefined) {
+          continue;
+        }
+
+        const template: CliUtilityInitializePromptWorkflowsRemoveTemplate = (typeof workflowToRemove['template'] === 'string') ? workflowToRemove['template'].trim() : '';
+        const suffix: CliUtilityInitializePromptWorkflowsRemoveSuffix = (typeof workflowToRemove['suffix'] === 'string') ? workflowToRemove['suffix'].trim() : '';
+        let workflowLabel: CliUtilityInitializePromptWorkflowsLabel = `Workflow ${workflowIndex + 1}`;
+
+        if (template !== '' && suffix !== '') {
+          workflowLabel = `${template}-${suffix}`;
+        } else if (template !== '') {
+          workflowLabel = template;
+        }
+
+        const shouldRemove: CliUtilityInitializePromptWorkflowsShouldRemove = await CliUtilityInitialize.promptWorkflowsDeleteForm(workflowLabel);
+
+        if (shouldRemove !== true) {
+          continue;
+        }
+
+        // Delete the workflow.
+        workflows.splice(workflowIndex, 1);
+
+        // Sync changes back to config.
+        sync();
+
+        Logger.customize({
+          name: 'CliUtilityInitialize.promptWorkflows',
+          purpose: 'remove',
+          padTop: 1,
+          padBottom: 1,
+        }).info('Removed workflow.');
+      }
+    }
+  }
+
+  /**
+   * CLI - Utility - Initialize - Prompt Workflows Form.
+   *
+   * Shared form for creating or editing a workflow. Prompts
+   * for template, suffix, triggers, depends-on, and settings,
+   * then returns the assembled workflow or back.
+   *
+   * @param {CliUtilityInitializePromptWorkflowsFormWorkflow}  workflow  - Workflow.
+   * @param {CliUtilityInitializePromptWorkflowsFormMode}      mode      - Mode.
+   * @param {CliUtilityInitializePromptWorkflowsFormWorkflows} workflows - Workflows.
+   *
+   * @private
+   *
+   * @returns {CliUtilityInitializePromptWorkflowsFormReturns}
+   *
+   * @since 0.15.0
+   */
+  private static async promptWorkflowsForm(workflow: CliUtilityInitializePromptWorkflowsFormWorkflow, mode: CliUtilityInitializePromptWorkflowsFormMode, workflows: CliUtilityInitializePromptWorkflowsFormWorkflows): CliUtilityInitializePromptWorkflowsFormReturns {
+    const existingTemplate: CliUtilityInitializePromptWorkflowsFormExistingTemplate = (workflow !== undefined && typeof workflow['template'] === 'string') ? workflow['template'] : '';
+    const existingSuffix: CliUtilityInitializePromptWorkflowsFormExistingSuffix = (workflow !== undefined && typeof workflow['suffix'] === 'string') ? workflow['suffix'] : '';
+    const existingTriggers: CliUtilityInitializePromptWorkflowsFormExistingTriggers = (workflow !== undefined && Array.isArray(workflow['triggers']) === true) ? workflow['triggers'] : [];
+    const existingDependsOn: CliUtilityInitializePromptWorkflowsFormExistingDependsOn = (workflow !== undefined && Array.isArray(workflow['depends-on']) === true) ? workflow['depends-on'] : [];
+
+    // Build template choices from metadata.
+    const templateChoices: CliUtilityInitializePromptWorkflowsFormTemplateChoices = libWorkflowTemplatesMetadata.map((entry) => ({
+      title: entry['name'],
+      description: entry['description'],
+      value: entry['name'],
+    }));
+
+    // Find initial index for pre-selection when editing.
+    let templateInitialIndex: CliUtilityInitializePromptWorkflowsFormTemplateInitialIndex = 0;
+
+    if (existingTemplate !== '') {
+      const foundIndex: CliUtilityInitializePromptWorkflowsFormFoundIndex = templateChoices.findIndex((choice) => choice['value'] === existingTemplate);
+
+      if (foundIndex >= 0) {
+        templateInitialIndex = foundIndex;
+      }
+    }
+
+    // Prompt for template selection.
+    const templateOutput: CliUtilityInitializePromptWorkflowsFormTemplateOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormTemplateOutputKey, CliUtilityInitializePromptWorkflowsFormTemplateOutputResult>({
+      type: 'select',
+      name: 'template',
+      message: 'Select a workflow template.',
+      choices: templateChoices,
+      initial: templateInitialIndex,
+    });
+
+    if (templateOutput['cancelled'] === true) {
+      return {
+        action: 'back',
+      };
+    }
+
+    const templateOutputResult: CliUtilityInitializePromptWorkflowsFormTemplateOutputResultValue = templateOutput['result'];
+    const selectedTemplate: CliUtilityInitializePromptWorkflowsFormSelectedTemplate = templateOutputResult.template;
+
+    // Prompt for suffix with duplicate validation.
+    const suffixOutput: CliUtilityInitializePromptWorkflowsFormSuffixOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormSuffixOutputKey, CliUtilityInitializePromptWorkflowsFormSuffixOutputResult>({
+      type: 'text',
+      name: 'suffix',
+      message: 'Workflow suffix (used in filename and workflow name)',
+      initial: existingSuffix,
+      validate: (value) => {
+        const trimmed: CliUtilityInitializePromptWorkflowsFormSelectedSuffix = (typeof value === 'string') ? value.trim() : '';
+
+        if (trimmed === '') {
+          return 'Suffix is required.';
+        }
+
+        const compositeKey: CliUtilityInitializePromptWorkflowsFormCompositeKey = `${selectedTemplate}-${trimmed}`;
+        const editIndex: CliUtilityInitializePromptWorkflowsFormEditIndex = (workflow !== undefined) ? workflows.indexOf(workflow) : -1;
+        const isDuplicate: CliUtilityInitializePromptWorkflowsFormIsDuplicate = workflows.some((w, i) => {
+          if (i === editIndex) {
+            return false;
+          }
+
+          const existingKey: CliUtilityInitializePromptWorkflowsFormCompositeKey = `${w['template']}-${w['suffix'] ?? ''}`;
+
+          return existingKey === compositeKey;
+        });
+
+        if (isDuplicate === true) {
+          return 'A workflow with this template and suffix already exists.';
+        }
+
+        return true;
+      },
+    });
+
+    if (suffixOutput['cancelled'] === true) {
+      return {
+        action: 'back',
+      };
+    }
+
+    const suffixOutputResult: CliUtilityInitializePromptWorkflowsFormSuffixOutputResultValue = suffixOutput['result'];
+    const selectedSuffix: CliUtilityInitializePromptWorkflowsFormSelectedSuffix = (typeof suffixOutputResult.suffix === 'string') ? suffixOutputResult.suffix.trim() : '';
+
+    // Discover available triggers from the template's triggers/ folder.
+    const triggersDir: CliUtilityInitializePromptWorkflowsFormTriggersDir = join(resolveTemplatePath(import.meta.url, 'generators/github/workflows'), selectedTemplate, 'triggers');
+    const triggersDirExists: CliUtilityInitializePromptWorkflowsFormTriggersDirExists = await pathExists(triggersDir);
+    let selectedTriggers: CliUtilityInitializePromptWorkflowsFormSelectedTriggers = [];
+
+    if (triggersDirExists === true) {
+      const triggersFiles: CliUtilityInitializePromptWorkflowsFormTriggersFiles = (await fs.readdir(triggersDir)).filter((file) => file.endsWith('.yml'));
+
+      const triggerChoices: CliUtilityInitializePromptWorkflowsFormTriggerChoices = triggersFiles.map((file) => {
+        const triggerName: CliUtilityInitializePromptWorkflowsFormTriggerName = file.replace(LIB_REGEX_PATTERN_YML_EXTENSION, '');
+
+        return {
+          title: triggerName,
+          value: triggerName,
+          selected: existingTriggers.includes(triggerName),
+        };
+      });
+
+      const triggersOutput: CliUtilityInitializePromptWorkflowsFormTriggersOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormTriggersOutputKey, CliUtilityInitializePromptWorkflowsFormTriggersOutputResult>({
+        type: 'multiselect',
+        name: 'triggers',
+        message: 'Select triggers for this workflow.',
+        choices: triggerChoices,
+      });
+
+      if (triggersOutput['cancelled'] === true) {
+        return {
+          action: 'back',
+        };
+      }
+
+      const triggersOutputResult: CliUtilityInitializePromptWorkflowsFormTriggersOutputResultValue = triggersOutput['result'];
+      selectedTriggers = (Array.isArray(triggersOutputResult.triggers) === true) ? triggersOutputResult.triggers : [];
+    }
+
+    // Prompt for depends-on if any selected trigger starts with "workflow-run".
+    let selectedDependsOn: CliUtilityInitializePromptWorkflowsFormSelectedDependsOn = undefined;
+
+    if (selectedTriggers.some((trigger) => trigger.startsWith('workflow-run')) === true) {
+      const dependsOnChoices: CliUtilityInitializePromptWorkflowsFormDependsOnChoices = workflows
+        .filter((w) =>
+          w !== workflow
+          && typeof w['template'] === 'string'
+          && w['template'].trim() !== '',
+        )
+        .map((w) => {
+          const compositeKey: CliUtilityInitializePromptWorkflowsFormCompositeKey = (typeof w['suffix'] === 'string' && w['suffix'].trim() !== '') ? `${w['template']}-${w['suffix']}` : w['template'];
+
+          return {
+            title: compositeKey,
+            value: compositeKey,
+            selected: existingDependsOn.includes(compositeKey),
+          };
+        });
+
+      if (dependsOnChoices.length > 0) {
+        const dependsOnOutput: CliUtilityInitializePromptWorkflowsFormDependsOnOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormDependsOnOutputKey, CliUtilityInitializePromptWorkflowsFormDependsOnOutputResult>({
+          type: 'multiselect',
+          name: 'dependsOn',
+          message: 'Select the workflows this depends on.',
+          choices: dependsOnChoices,
+        });
+
+        if (dependsOnOutput['cancelled'] === true) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const dependsOnOutputResult: CliUtilityInitializePromptWorkflowsFormDependsOnOutputResultValue = dependsOnOutput['result'];
+        selectedDependsOn = (Array.isArray(dependsOnOutputResult.dependsOn) === true && dependsOnOutputResult.dependsOn.length > 0) ? dependsOnOutputResult.dependsOn : undefined;
+      }
+    }
+
+    // Find the matched metadata for the selected template.
+    const matchedMetadata: CliUtilityInitializePromptWorkflowsFormMatchedMetadata = libWorkflowTemplatesMetadata.find((entry) => entry['name'] === selectedTemplate);
+
+    // Build the settings from variable prompts.
+    const settings: CliUtilityInitializePromptWorkflowsFormSettings = {};
+
+    if (matchedMetadata !== undefined) {
+      const variableEntries: CliUtilityInitializePromptWorkflowsFormVariableEntries = Object.entries(matchedMetadata['variables']);
+
+      for (const variableEntry of variableEntries) {
+        const variableName: CliUtilityInitializePromptWorkflowsFormVariableName = variableEntry[0];
+        const variableConfig: CliUtilityInitializePromptWorkflowsFormVariableConfig = variableEntry[1];
+
+        // Skip auto variables (e.g. GITHUB_TOKEN with auto: true).
+        if (variableConfig['auto'] === true) {
+          continue;
+        }
+
+        let promptMessage: CliUtilityInitializePromptWorkflowsFormPromptMessage = `Literal: ${variableName}`;
+        let initialValue: CliUtilityInitializePromptWorkflowsFormInitialValue = '';
+
+        if (variableConfig['format'] === 'secret') {
+          promptMessage = `Secret: ${variableName}`;
+          initialValue = (typeof variableConfig['default'] === 'string') ? variableConfig['default'] : '';
+        } else if (variableConfig['format'] === 'var') {
+          promptMessage = `Variable: ${variableName}`;
+          initialValue = (typeof variableConfig['default'] === 'string') ? variableConfig['default'] : '';
+        }
+
+        // Append description and example if available.
+        const parts: CliUtilityInitializePromptWorkflowsFormVariableDescriptionParts = [];
+
+        if (typeof variableConfig['description'] === 'string') {
+          parts.push(variableConfig['description']);
+        }
+
+        if (typeof variableConfig['example'] === 'string') {
+          parts.push(`e.g. ${variableConfig['example']}`);
+        }
+
+        if (parts.length > 0) {
+          promptMessage = `${promptMessage} (${parts.join(', ')})`;
+        }
+
+        // If editing, pre-fill from existing settings.
+        if (
+          workflow !== undefined
+          && workflow['settings'] !== undefined
+          && typeof workflow['settings'][variableName] === 'string'
+        ) {
+          initialValue = workflow['settings'][variableName];
+        }
+
+        const settingsOutput: CliUtilityInitializePromptWorkflowsFormSettingsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormSettingsOutputKey, CliUtilityInitializePromptWorkflowsFormSettingsOutputResult>({
+          type: 'text',
+          name: 'settingValue',
+          message: promptMessage,
+          initial: initialValue,
+        });
+
+        if (settingsOutput['cancelled'] === true) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const settingsOutputResult: CliUtilityInitializePromptWorkflowsFormSettingsOutputResultValue = settingsOutput['result'];
+        const settingValue: CliUtilityInitializePromptWorkflowsFormSettingValue = (typeof settingsOutputResult.settingValue === 'string') ? settingsOutputResult.settingValue.trim().replaceAll('\\n', '\n') : '';
+
+        if (settingValue !== '') {
+          Reflect.set(settings, variableName, settingValue);
+        }
+      }
+    }
+
+    // Build the resolved workflow.
+    const resolvedWorkflow: CliUtilityInitializePromptWorkflowsFormResolvedWorkflow = {
+      template: selectedTemplate,
+      suffix: selectedSuffix,
+      triggers: selectedTriggers,
+    };
+
+    // Workflow - Depends On.
+    if (selectedDependsOn !== undefined) {
+      Reflect.set(resolvedWorkflow, 'depends-on', selectedDependsOn);
+    }
+
+    // Workflow - Settings.
+    if (Object.keys(settings).length > 0) {
+      resolvedWorkflow.settings = settings;
+    }
+
+    // Prevents empty workflows from being created.
+    if (mode === 'create' && selectedTemplate.trim() === '') {
+      return {
+        action: 'back',
+      };
+    }
+
+    return {
+      action: 'apply',
+      workflow: resolvedWorkflow,
+    };
+  }
+
+  /**
+   * CLI - Utility - Initialize - Prompt Workflows Delete Form.
+   *
+   * Displays a yes/no confirmation before removing a workflow. Called by promptWorkflows when
+   * the user selects a REMOVE action from the workflow menu.
+   *
+   * @param {CliUtilityInitializePromptWorkflowsDeleteFormLabel} label - Label.
+   *
+   * @private
+   *
+   * @returns {CliUtilityInitializePromptWorkflowsDeleteFormReturns}
+   *
+   * @since 0.15.0
+   */
+  private static async promptWorkflowsDeleteForm(label: CliUtilityInitializePromptWorkflowsDeleteFormLabel): CliUtilityInitializePromptWorkflowsDeleteFormReturns {
+    const confirmOutput: CliUtilityInitializePromptWorkflowsDeleteFormConfirmOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsDeleteFormConfirmOutputKey, CliUtilityInitializePromptWorkflowsDeleteFormConfirmOutputValue>({
+      type: 'confirm',
+      name: 'confirm',
+      message: `Remove workflow "${label}"?`,
+      initial: false,
+    });
+
+    if (confirmOutput['cancelled'] === true) {
+      return false;
+    }
+
+    const confirmOutputResult: CliUtilityInitializePromptWorkflowsDeleteFormConfirmOutputResult = confirmOutput['result'];
+
+    return confirmOutputResult.confirm;
+  }
+
+  /**
+   * CLI - Utility - Initialize - Prompt Workspaces.
+   *
+   * Discovers all package.json paths in the monorepo and lets the user assign a role, policy,
+   * name, and recipes to each workspace directory.
+   *
+   * @param {CliUtilityInitializePromptWorkspacesConfig} config - Config.
+   *
+   * @private
+   *
+   * @returns {CliUtilityInitializePromptWorkspacesReturns}
+   *
+   * @since 0.11.0
+   */
+  private static async promptWorkspaces(config: CliUtilityInitializePromptWorkspacesConfig): CliUtilityInitializePromptWorkspacesReturns {
+    const workspaces: CliUtilityInitializePromptWorkspaces = (config['workspaces'] !== undefined) ? { ...(config['workspaces']) } : {};
 
     // The "run" command already guarantees we run in the project root (called "checkPath"), so we can traverse forward directly.
-    const rawWorkspacePaths = await discoverPathsWithFile('package.json', 'forward');
-    const workspacePaths = rawWorkspacePaths.map((rawWorkspacePath) => {
-      const relativePath = relative(process.cwd(), rawWorkspacePath);
+    const rawWorkspacePaths: CliUtilityInitializePromptWorkspacesRawWorkspacePaths = await discoverPathsWithFile('package.json', 'forward');
+    const workspacePaths: CliUtilityInitializePromptWorkspacesWorkspacePaths = rawWorkspacePaths.map((rawWorkspacePath) => {
+      const currentWorkingDirectory: CliUtilityInitializePromptWorkspacesCurrentWorkingDirectory = process.cwd();
+      const relativePath: CliUtilityInitializePromptWorkspacesRelativePath = relative(currentWorkingDirectory, rawWorkspacePath);
 
       if (relativePath === '') {
         return './';
@@ -1100,25 +2361,25 @@ export class CLIUtilityInitialize {
     });
 
     Logger.customize({
-      name: 'CLIUtilityInitialize.promptWorkspaces',
+      name: 'CliUtilityInitialize.promptWorkspaces',
       purpose: 'paths',
     }).debug(workspacePaths);
 
     while (true) {
-      const choices = workspacePaths.map((workspacePath) => {
-        const workspace = workspaces[workspacePath];
-        const summaryParts: CLIUtilityInitializePromptWorkspacesSummaryParts = [];
+      const choices: CliUtilityInitializePromptWorkspacesChoices = workspacePaths.map((workspacePath) => {
+        const workspace: CliUtilityInitializePromptWorkspacesWorkspace = workspaces[workspacePath];
+        const summaryParts: CliUtilityInitializePromptWorkspacesSummaryParts = [];
 
-        if (workspace !== undefined && workspace.name !== undefined) {
-          summaryParts.push(workspace.name);
+        if (workspace !== undefined && workspace['name'] !== undefined) {
+          summaryParts.push(workspace['name']);
         }
 
-        if (workspace !== undefined && workspace.role !== undefined) {
-          summaryParts.push(workspace.role);
+        if (workspace !== undefined && workspace['role'] !== undefined) {
+          summaryParts.push(workspace['role']);
         }
 
-        if (workspace !== undefined && workspace.policy !== undefined) {
-          summaryParts.push(workspace.policy);
+        if (workspace !== undefined && workspace['policy'] !== undefined) {
+          summaryParts.push(workspace['policy']);
         }
 
         return {
@@ -1134,18 +2395,18 @@ export class CLIUtilityInitialize {
         value: 'back',
       });
 
-      const menuOutput = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesMenuOutputKey, CLIUtilityInitializePromptWorkspacesMenuOutputValue>({
+      const menuOutput: CliUtilityInitializePromptWorkspacesMenuOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesMenuOutputKey, CliUtilityInitializePromptWorkspacesMenuOutputValue>({
         type: 'select',
         name: 'workspacePath',
         message: 'Select a workspace to configure.',
         choices,
       });
 
-      if (menuOutput.cancelled) {
+      if (menuOutput['cancelled'] === true) {
         return 'back';
       }
 
-      const menuOutputResult = menuOutput.result;
+      const menuOutputResult: CliUtilityInitializePromptWorkspacesMenuOutputResult = menuOutput['result'];
 
       if (
         menuOutputResult.workspacePath === undefined
@@ -1154,43 +2415,47 @@ export class CLIUtilityInitialize {
         return 'back';
       }
 
-      const workspacePath = menuOutputResult.workspacePath;
-      const formResult = await CLIUtilityInitialize.promptWorkspacesForm({
+      const workspacePath: CliUtilityInitializePromptWorkspacesWorkspacePath = menuOutputResult.workspacePath;
+
+      const formResult: CliUtilityInitializePromptWorkspacesFormResult = await CliUtilityInitialize.promptWorkspacesForm({
         workspacePath,
         existingWorkspace: workspaces[workspacePath],
-        projectSlug: (config.project !== undefined && config.project.name !== undefined) ? config.project.name.slug : undefined,
+        projectSlug: (config['project'] !== undefined && config['project']['name'] !== undefined) ? config['project']['name']['slug'] : undefined,
       });
 
-      if (formResult.action === 'back') {
+      if (formResult['action'] === 'back') {
         continue;
       }
 
-      Reflect.set(workspaces, workspacePath, formResult.workspace);
+      Reflect.set(workspaces, workspacePath, formResult['workspace']);
 
       Object.assign(config, { workspaces });
 
       Logger.customize({
-        name: 'CLIUtilityInitialize.promptWorkspaces',
+        name: 'CliUtilityInitialize.promptWorkspaces',
         purpose: 'updated',
         padTop: 1,
         padBottom: 1,
-      }).info(`Updated workspace "${workspacePath}" → ${formResult.workspace.name} · ${formResult.workspace.role} · ${formResult.workspace.policy}`);
+      }).info(`Updated workspace "${workspacePath}" → ${formResult['workspace']['name']} · ${formResult['workspace']['role']} · ${formResult['workspace']['policy']}`);
     }
   }
 
   /**
-   * CLI Utility - Initialize - Prompt workspaces form.
+   * CLI - Utility - Initialize - Prompt Workspaces Form.
    *
-   * @param {CLIUtilityInitializePromptWorkspacesFormOptions} options - Options.
+   * Multi-step form for a single workspace. Prompts for role, policy, package name, recipe
+   * selection, and per-recipe settings in sequence.
+   *
+   * @param {CliUtilityInitializePromptWorkspacesFormOptions} options - Options.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptWorkspacesFormReturns}
+   * @returns {CliUtilityInitializePromptWorkspacesFormReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptWorkspacesForm(options: CLIUtilityInitializePromptWorkspacesFormOptions): CLIUtilityInitializePromptWorkspacesFormReturns {
-    const allowedRoles: CLIUtilityInitializePromptWorkspacesFormAllowedRoles = [
+  private static async promptWorkspacesForm(options: CliUtilityInitializePromptWorkspacesFormOptions): CliUtilityInitializePromptWorkspacesFormReturns {
+    const allowedRoles: CliUtilityInitializePromptWorkspacesFormAllowedRoles = [
       {
         title: 'Project Root',
         description: 'Monorepo root workspace (e.g., root package.json)',
@@ -1227,7 +2492,7 @@ export class CLIUtilityInitialize {
         value: 'template',
       },
     ];
-    const policy: CLIUtilityInitializePromptWorkspacesFormPolicy = {
+    const policy: CliUtilityInitializePromptWorkspacesFormPolicy = {
       freezable: {
         label: 'Freezable',
         description: 'Non-versioned (0.0.0) and never published (private: true)',
@@ -1243,91 +2508,98 @@ export class CLIUtilityInitialize {
     };
 
     /**
-     * CLI Utility - Initialize - Prompt workspaces form - Resolve name.
+     * CLI - Utility - Initialize - Prompt Workspaces Form - Resolve Name.
      *
-     * @param {CLIUtilityInitializePromptWorkspacesFormResolveNameRole} role - Role.
+     * Derives the package name from the selected role. Fixed roles like project and docs get an
+     * automatic name; other roles prompt for a descriptor.
      *
-     * @returns {CLIUtilityInitializePromptWorkspacesFormResolveNameReturns}
+     * @param {CliUtilityInitializePromptWorkspacesFormResolveNameRole} role - Role.
      *
-     * @since 1.0.0
+     * @returns {CliUtilityInitializePromptWorkspacesFormResolveNameReturns}
+     *
+     * @since 0.11.0
      */
-    const resolveName = async (role: CLIUtilityInitializePromptWorkspacesFormResolveNameRole): CLIUtilityInitializePromptWorkspacesFormResolveNameReturns => {
+    const resolveName: CliUtilityInitializePromptWorkspacesFormResolveName = async (role: CliUtilityInitializePromptWorkspacesFormResolveNameRole): CliUtilityInitializePromptWorkspacesFormResolveNameReturns => {
       // "project" (Project root) and "docs" always get a fixed name.
       if (role === 'project' || role === 'docs') {
-        if (options.projectSlug === undefined) {
+        if (options['projectSlug'] === undefined) {
           return (role === 'project') ? 'project' : 'docs';
         }
 
-        return `${options.projectSlug}-${role}`;
+        return `${options['projectSlug']}-${role}`;
       }
 
-      const base = (options.projectSlug !== undefined) ? `${options.projectSlug}-${role}` : role;
+      const base: CliUtilityInitializePromptWorkspacesFormResolveNameBase = (options['projectSlug'] !== undefined) ? `${options['projectSlug']}-${role}` : role;
 
       // If current workspace is not "project" or "docs", the workspace name would have a fixed prefix or simple slug.
-      const namePrompt = await CLIUtilityInitialize.promptWithCancel<'workspaceName', string>({
+      const namePrompt: CliUtilityInitializePromptWorkspacesFormResolveNameNamePrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormResolveNamePromptKey, CliUtilityInitializePromptWorkspacesFormResolveNamePromptValue>({
         type: 'text',
         name: 'workspaceName',
         message: 'Workspace package name',
-        initial: (options.existingWorkspace !== undefined) ? options.existingWorkspace.name ?? '' : '',
-        validate: (value: unknown) => CLIUtilityInitialize.normalizeWorkspaceName(value, role, base).result,
+        initial: (options['existingWorkspace'] !== undefined) ? options['existingWorkspace']['name'] ?? '' : '',
+        validate: (value: CliUtilityInitializePromptWorkspacesFormResolveNameValidateValue) => CliUtilityInitialize.normalizeWorkspaceName(value, role, base)['result'],
       });
 
-      if (namePrompt.cancelled) {
+      if (namePrompt['cancelled'] === true) {
         return undefined;
       }
 
-      return CLIUtilityInitialize.normalizeWorkspaceName(namePrompt.result.workspaceName, role, base).sanitized;
+      return CliUtilityInitialize.normalizeWorkspaceName(namePrompt['result'].workspaceName, role, base)['sanitized'];
     };
 
     // For each workspace, the user must select a role.
-    const rolePrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRolePromptKey, CLIUtilityInitializePromptWorkspacesFormRolePromptValue>({
+    const existingRoleIndex: CliUtilityInitializePromptWorkspacesFormExistingRoleIndex = allowedRoles.findIndex((allowedRole) => options['existingWorkspace'] !== undefined && allowedRole['value'] === options['existingWorkspace']['role']);
+
+    const rolePrompt: CliUtilityInitializePromptWorkspacesFormRolePrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormRolePromptKey, CliUtilityInitializePromptWorkspacesFormRolePromptValue>({
       type: 'select',
       name: 'workspaceRole',
-      message: `Select a role for "${options.workspacePath}"`,
+      message: `Select a role for "${options['workspacePath']}"`,
       choices: allowedRoles.map((allowedRole) => {
         return {
-          title: allowedRole.title,
-          description: allowedRole.description,
-          value: allowedRole.value,
+          title: allowedRole['title'],
+          description: allowedRole['description'],
+          value: allowedRole['value'],
         };
       }),
-      initial: Math.max(0, allowedRoles.findIndex((role) => options.existingWorkspace !== undefined && role.value === options.existingWorkspace.role)),
+      initial: Math.max(0, existingRoleIndex),
     });
 
-    if (rolePrompt.cancelled) {
+    if (rolePrompt['cancelled'] === true) {
       return {
         action: 'back',
       };
     }
 
-    const selectedRole = rolePrompt.result.workspaceRole;
-    const allowedPolicies = itemAllowedPoliciesByRole[selectedRole];
+    const selectedRole: CliUtilityInitializePromptWorkspacesFormSelectedRole = rolePrompt['result'].workspaceRole;
+    const allowedPolicies: CliUtilityInitializePromptWorkspacesFormAllowedPolicies = libItemAllowedPoliciesByRole[selectedRole];
 
     // Based on the selected role, list out allowed policy choices.
-    const policyPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormPolicyPromptKey, CLIUtilityInitializePromptWorkspacesFormPolicyPromptValue>({
+    const existingPolicyIndex: CliUtilityInitializePromptWorkspacesFormExistingPolicyIndex = allowedPolicies.findIndex((allowedPolicy) => options['existingWorkspace'] !== undefined && allowedPolicy === options['existingWorkspace']['policy']);
+
+    const policyPrompt: CliUtilityInitializePromptWorkspacesFormPolicyPrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormPolicyPromptKey, CliUtilityInitializePromptWorkspacesFormPolicyPromptValue>({
       type: 'select',
       name: 'workspacePolicy',
       message: 'Select a policy',
       choices: allowedPolicies.map((allowedPolicy) => {
-        const policyEntry = Reflect.get(policy, allowedPolicy);
+        const policyEntry: CliUtilityInitializePromptWorkspacesFormPolicyEntry = Reflect.get(policy, allowedPolicy);
 
         return {
-          title: policyEntry.label,
-          description: policyEntry.description,
+          title: policyEntry['label'],
+          description: policyEntry['description'],
           value: allowedPolicy,
         };
       }),
-      initial: Math.max(0, allowedPolicies.findIndex((allowedPolicy) => options.existingWorkspace !== undefined && allowedPolicy === options.existingWorkspace.policy)),
+      initial: Math.max(0, existingPolicyIndex),
     });
 
-    if (policyPrompt.cancelled) {
+    if (policyPrompt['cancelled'] === true) {
       return {
         action: 'back',
       };
     }
 
-    const selectedPolicy = policyPrompt.result.workspacePolicy;
-    const resolvedName = await resolveName(selectedRole);
+    const selectedPolicy: CliUtilityInitializePromptWorkspacesFormSelectedPolicy = policyPrompt['result'].workspacePolicy;
+    const resolvedName: CliUtilityInitializePromptWorkspacesFormResolvedName = await resolveName(selectedRole);
 
     if (resolvedName === undefined) {
       return {
@@ -1335,15 +2607,19 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const existingRecipes = (options.existingWorkspace !== undefined && options.existingWorkspace.recipes !== undefined) ? options.existingWorkspace.recipes : undefined;
+    const existingRecipes: CliUtilityInitializePromptWorkspacesFormExistingRecipes = (options['existingWorkspace'] !== undefined && options['existingWorkspace']['recipes'] !== undefined) ? options['existingWorkspace']['recipes'] : undefined;
 
-    const recipesPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipesPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipesPromptValue>({
+    const recipesPrompt: CliUtilityInitializePromptWorkspacesFormRecipesPrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormRecipesPromptKey, CliUtilityInitializePromptWorkspacesFormRecipesPromptValue>({
       type: 'multiselect',
       name: 'workspaceRecipes',
       message: 'Select recipes to enable',
-      choices: itemAllowedRecipes.map((recipe) => {
-        const recipeTuple = (existingRecipes !== undefined) ? Reflect.get(existingRecipes, recipe) : undefined;
-        const recipeSelected = (Array.isArray(recipeTuple) && recipeTuple.length > 0 && recipeTuple[0] === true);
+      choices: libItemAllowedRecipes.map((recipe) => {
+        const recipeTuple: CliUtilityInitializePromptWorkspacesFormRecipeTuple = (existingRecipes !== undefined) ? Reflect.get(existingRecipes, recipe) : undefined;
+        const recipeSelected: CliUtilityInitializePromptWorkspacesFormRecipeSelected = (
+          Array.isArray(recipeTuple)
+          && recipeTuple.length > 0
+          && recipeTuple[0] === true
+        );
 
         return {
           title: recipe,
@@ -1353,22 +2629,22 @@ export class CLIUtilityInitialize {
       }),
     });
 
-    if (recipesPrompt.cancelled) {
+    if (recipesPrompt['cancelled'] === true) {
       return {
         action: 'back',
       };
     }
 
-    const selectedRecipes = recipesPrompt.result.workspaceRecipes;
-    const recipes: CLIUtilityInitializePromptWorkspacesFormRecipes = {};
+    const selectedRecipes: CliUtilityInitializePromptWorkspacesFormSelectedRecipes = recipesPrompt['result'].workspaceRecipes;
+    const recipes: CliUtilityInitializePromptWorkspacesFormRecipes = {};
 
     for (const recipe of selectedRecipes) {
-      const existingTupleRaw = (existingRecipes !== undefined) ? Reflect.get(existingRecipes, recipe) : undefined;
-      const existingTuple = (Array.isArray(existingTupleRaw)) ? existingTupleRaw : undefined;
-      const existingSettings = (existingTuple !== undefined && existingTuple.length > 1) ? existingTuple[1] : undefined;
+      const existingTupleRaw: CliUtilityInitializePromptWorkspacesFormExistingTupleRaw = (existingRecipes !== undefined) ? Reflect.get(existingRecipes, recipe) : undefined;
+      const existingTuple: CliUtilityInitializePromptWorkspacesFormExistingTuple = (Array.isArray(existingTupleRaw) === true) ? existingTupleRaw : undefined;
+      const existingSettings: CliUtilityInitializePromptWorkspacesFormExistingSettings = (existingTuple !== undefined && existingTuple.length > 1) ? existingTuple[1] : undefined;
 
       if (recipe === 'sync-identity' && selectedPolicy === 'distributable') {
-        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+        const settingsPrompt: CliUtilityInitializePromptWorkspacesFormSettingsPrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'sync-identity: Select properties to sync',
@@ -1386,27 +2662,30 @@ export class CLIUtilityInitialize {
           ],
         });
 
-        if (settingsPrompt.cancelled) {
+        if (settingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+        const selectedSettings: CliUtilityInitializePromptWorkspacesFormSelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
 
         if (selectedSettings.length > 0) {
-          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+          const settings: CliUtilityInitializePromptWorkspacesFormRecipeSettings = {};
 
           for (const setting of selectedSettings) {
             Reflect.set(settings, setting, true);
           }
 
-          Reflect.set(recipes, recipe, [true, settings]);
+          Reflect.set(recipes, recipe, [
+            true,
+            settings,
+          ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
       } else if (recipe === 'sync-ownership' && selectedPolicy === 'distributable') {
-        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+        const settingsPrompt: CliUtilityInitializePromptWorkspacesFormSettingsPrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'sync-ownership: Select properties to sync',
@@ -1444,60 +2723,64 @@ export class CLIUtilityInitialize {
           ],
         });
 
-        if (settingsPrompt.cancelled) {
+        if (settingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+        const selectedSettings: CliUtilityInitializePromptWorkspacesFormSelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
 
         if (selectedSettings.length > 0) {
-          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+          const settings: CliUtilityInitializePromptWorkspacesFormRecipeSettings = {};
 
           for (const setting of selectedSettings) {
             Reflect.set(settings, setting, true);
           }
 
-          Reflect.set(recipes, recipe, [true, settings]);
+          Reflect.set(recipes, recipe, [
+            true,
+            settings,
+          ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
       } else if (recipe === 'sync-environment') {
-        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+        const settingsPrompt: CliUtilityInitializePromptWorkspacesFormSettingsPrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'sync-environment: Select settings',
-          choices: [
-            {
-              title: 'trackNodeLtsVersions',
-              value: 'trackNodeLtsVersions',
-              selected: existingSettings !== undefined && existingSettings['trackNodeLtsVersions'] === true,
-            },
-          ],
+          choices: [{
+            title: 'trackNodeLtsVersions',
+            value: 'trackNodeLtsVersions',
+            selected: existingSettings !== undefined && existingSettings['trackNodeLtsVersions'] === true,
+          }],
         });
 
-        if (settingsPrompt.cancelled) {
+        if (settingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+        const selectedSettings: CliUtilityInitializePromptWorkspacesFormSelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
 
         if (selectedSettings.length > 0) {
-          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+          const settings: CliUtilityInitializePromptWorkspacesFormRecipeSettings = {};
 
           for (const setting of selectedSettings) {
             Reflect.set(settings, setting, true);
           }
 
-          Reflect.set(recipes, recipe, [true, settings]);
+          Reflect.set(recipes, recipe, [
+            true,
+            settings,
+          ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
       } else if (recipe === 'cleanup') {
-        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+        const settingsPrompt: CliUtilityInitializePromptWorkspacesFormSettingsPrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'cleanup: Select settings',
@@ -1515,27 +2798,30 @@ export class CLIUtilityInitialize {
           ],
         });
 
-        if (settingsPrompt.cancelled) {
+        if (settingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+        const selectedSettings: CliUtilityInitializePromptWorkspacesFormSelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
 
         if (selectedSettings.length > 0) {
-          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+          const settings: CliUtilityInitializePromptWorkspacesFormRecipeSettings = {};
 
           for (const setting of selectedSettings) {
             Reflect.set(settings, setting, true);
           }
 
-          Reflect.set(recipes, recipe, [true, settings]);
+          Reflect.set(recipes, recipe, [
+            true,
+            settings,
+          ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
       } else if (recipe === 'normalize-dependencies') {
-        const settingsPrompt = await CLIUtilityInitialize.promptWithCancel<CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CLIUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
+        const settingsPrompt: CliUtilityInitializePromptWorkspacesFormSettingsPrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptKey, CliUtilityInitializePromptWorkspacesFormRecipeSettingsPromptValue>({
           type: 'multiselect',
           name: 'workspaceRecipeSettings',
           message: 'normalize-dependencies: Select settings',
@@ -1553,22 +2839,25 @@ export class CLIUtilityInitialize {
           ],
         });
 
-        if (settingsPrompt.cancelled) {
+        if (settingsPrompt['cancelled'] === true) {
           return {
             action: 'back',
           };
         }
 
-        const selectedSettings = settingsPrompt.result.workspaceRecipeSettings;
+        const selectedSettings: CliUtilityInitializePromptWorkspacesFormSelectedSettings = settingsPrompt['result'].workspaceRecipeSettings;
 
         if (selectedSettings.length > 0) {
-          const settings: CLIUtilityInitializePromptWorkspacesFormRecipeSettings = {};
+          const settings: CliUtilityInitializePromptWorkspacesFormRecipeSettings = {};
 
           for (const setting of selectedSettings) {
             Reflect.set(settings, setting, true);
           }
 
-          Reflect.set(recipes, recipe, [true, settings]);
+          Reflect.set(recipes, recipe, [
+            true,
+            settings,
+          ]);
         } else {
           Reflect.set(recipes, recipe, [true]);
         }
@@ -1589,28 +2878,31 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Prompt with cancel.
+   * CLI - Utility - Initialize - Prompt With Cancel.
    *
-   * @param {CLIUtilityInitializePromptWithCancelQuestions} questions - Questions.
+   * Thin wrapper around the prompts library that detects user cancellation (Ctrl-C) and
+   * returns a typed discriminated union of result.
+   *
+   * @param {CliUtilityInitializePromptWithCancelQuestions} questions - Questions.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializePromptWithCancelReturns}
+   * @returns {CliUtilityInitializePromptWithCancelReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async promptWithCancel<Keys extends string, Result>(questions: CLIUtilityInitializePromptWithCancelQuestions<Keys>): CLIUtilityInitializePromptWithCancelReturns<Keys, Result> {
-    let cancelled = false;
+  private static async promptWithCancel<Keys extends string, Result>(questions: CliUtilityInitializePromptWithCancelQuestions<Keys>): CliUtilityInitializePromptWithCancelReturns<Keys, Result> {
+    let cancelled: CliUtilityInitializePromptWithCancelCancelled = false;
 
-    const result = await prompts<Keys>(questions, {
-      onCancel: () => {
-        cancelled = true;
-
-        return false;
-      },
+    const result: CliUtilityInitializePromptWithCancelResult<Keys, Result> = await prompts<Keys>(questions, {
+      onCancel: () => false,
     });
 
-    if (cancelled) {
+    if (Object.keys(result).length === 0) {
+      cancelled = true;
+    }
+
+    if (cancelled === true) {
       return {
         cancelled: true,
       };
@@ -1623,59 +2915,69 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Check path.
+   * CLI - Utility - Initialize - Check Path.
    *
-   * @param {CLIUtilityInitializeCheckPathCurrentDirectory} currentDirectory - Current directory.
+   * Guards the run method by traversing backward
+   * from the working directory for package.json files.
+   * Returns true only when one exists at cwd.
+   *
+   * @param {CliUtilityInitializeCheckPathCurrentDirectory} currentDirectory - Current directory.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeCheckPathReturns}
+   * @returns {CliUtilityInitializeCheckPathReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static async checkPath(currentDirectory: CLIUtilityInitializeCheckPathCurrentDirectory): CLIUtilityInitializeCheckPathReturns {
-    const locations = await discoverPathsWithFile('package.json', 'backward');
+  private static async checkPath(currentDirectory: CliUtilityInitializeCheckPathCurrentDirectory): CliUtilityInitializeCheckPathReturns {
+    const locations: CliUtilityInitializeCheckPathLocations = await discoverPathsWithFile('package.json', 'backward');
 
     Logger.customize({
-      name: 'CLIUtilityInitialize.checkPath',
+      name: 'CliUtilityInitialize.checkPath',
       purpose: 'detectedLocations',
     }).debug(locations);
 
     // If command was ran outside of project root directory.
     if (locations.length < 1) {
-      Logger.customize({
-        name: 'CLIUtilityInitialize.checkPath',
-        purpose: 'lessThanOne',
-      }).error([
+      const lessThanOneMessage: CliUtilityInitializeCheckPathLessThanOneMessage = [
         'No "package.json" files were found. Re-run this command inside the project root directory.',
         `Current directory is "${currentDirectory}"`,
-      ].join('\n'));
+      ].join('\n');
+
+      Logger.customize({
+        name: 'CliUtilityInitialize.checkPath',
+        purpose: 'lessThanOne',
+      }).error(lessThanOneMessage);
 
       return false;
     }
 
     // If command was ran inside a monorepo package.
     if (locations.length > 1) {
-      Logger.customize({
-        name: 'CLIUtilityInitialize.checkPath',
-        purpose: 'greaterThanOne',
-      }).error([
+      const greaterThanOneMessage: CliUtilityInitializeCheckPathGreaterThanOneMessage = [
         'Multiple "package.json" files were found. Re-run this command inside the project root directory.',
         `Current directory is "${currentDirectory}"`,
-      ].join('\n'));
+      ].join('\n');
+
+      Logger.customize({
+        name: 'CliUtilityInitialize.checkPath',
+        purpose: 'greaterThanOne',
+      }).error(greaterThanOneMessage);
 
       return false;
     }
 
     // If command was ran outside the project root directory.
     if (locations.length === 1 && locations[0] !== currentDirectory) {
-      Logger.customize({
-        name: 'CLIUtilityInitialize.checkPath',
-        purpose: 'notProjectRootDir',
-      }).error([
+      const notProjectRootDirectoryMessage: CliUtilityInitializeCheckPathNotProjectRootDirectoryMessage = [
         'Must be run inside the project root directory.',
         `Current directory is "${currentDirectory}"`,
-      ].join('\n'));
+      ].join('\n');
+
+      Logger.customize({
+        name: 'CliUtilityInitialize.checkPath',
+        purpose: 'notProjectRootDirectory',
+      }).error(notProjectRootDirectoryMessage);
 
       return false;
     }
@@ -1684,17 +2986,20 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Normalize email.
+   * CLI - Utility - Initialize - Normalize Email.
    *
-   * @param {CLIUtilityInitializeNormalizeEmailValue} value - Value.
+   * Validates and trims an email address using the simple email regex. Blanks are allowed and
+   * return undefined so the field can be cleared.
+   *
+   * @param {CliUtilityInitializeNormalizeEmailValue} value - Value.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeNormalizeEmailReturns}
+   * @returns {CliUtilityInitializeNormalizeEmailReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static normalizeEmail(value: CLIUtilityInitializeNormalizeEmailValue): CLIUtilityInitializeNormalizeEmailReturns {
+  private static normalizeEmail(value: CliUtilityInitializeNormalizeEmailValue): CliUtilityInitializeNormalizeEmailReturns {
     if (typeof value !== 'string') {
       return {
         result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
@@ -1702,7 +3007,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const trimmedValue = value.trim();
+    const trimmedValue: CliUtilityInitializeNormalizeEmailTrimmedValue = value.trim();
 
     // Allow blanks.
     if (trimmedValue === '') {
@@ -1712,7 +3017,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    if (PATTERN_EMAIL_SIMPLE.test(trimmedValue) === false) {
+    if (LIB_REGEX_PATTERN_EMAIL_SIMPLE.test(trimmedValue) === false) {
       return {
         result: 'Enter a valid email address or leave blank.',
         sanitized: undefined,
@@ -1726,17 +3031,21 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Normalize project slug.
+   * CLI - Utility - Initialize - Normalize Project Slug.
    *
-   * @param {CLIUtilityInitializeNormalizeProjectSlugValue} value - Value.
+   * Validates a project slug against the simple
+   * slug regex and enforces the npm 214-character limit.
+   * Used as the validator for the slug prompt.
+   *
+   * @param {CliUtilityInitializeNormalizeProjectSlugValue} value - Value.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeNormalizeProjectSlugReturns}
+   * @returns {CliUtilityInitializeNormalizeProjectSlugReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static normalizeProjectSlug(value: CLIUtilityInitializeNormalizeProjectSlugValue): CLIUtilityInitializeNormalizeProjectSlugReturns {
+  private static normalizeProjectSlug(value: CliUtilityInitializeNormalizeProjectSlugValue): CliUtilityInitializeNormalizeProjectSlugReturns {
     if (typeof value !== 'string') {
       return {
         result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
@@ -1744,7 +3053,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const trimmedValue = value.trim();
+    const trimmedValue: CliUtilityInitializeNormalizeProjectSlugTrimmedValue = value.trim();
 
     // Allow blanks.
     if (trimmedValue === '') {
@@ -1756,7 +3065,7 @@ export class CLIUtilityInitialize {
 
     if (
       trimmedValue.length > 214
-      || new RegExp(PATTERN_SLUG_SIMPLE, 'i').test(trimmedValue) === false
+      || new RegExp(LIB_REGEX_PATTERN_SLUG_SIMPLE, 'i').test(trimmedValue) === false
     ) {
       return {
         result: 'Use only letters, numbers, hyphens, or underscores, and keep it at 214 characters or fewer.',
@@ -1771,18 +3080,22 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Normalize text.
+   * CLI - Utility - Initialize - Normalize Text.
    *
-   * @param {CLIUtilityInitializeNormalizeTextValue}     value     - Value.
-   * @param {CLIUtilityInitializeNormalizeTextMaxLength} maxLength - Max length.
+   * General-purpose text validator that trims
+   * whitespace and enforces a maximum character length.
+   * Called by most prompts and normalizeTextArray.
+   *
+   * @param {CliUtilityInitializeNormalizeTextValue}     value     - Value.
+   * @param {CliUtilityInitializeNormalizeTextMaxLength} maxLength - Max length.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeNormalizeTextReturns}
+   * @returns {CliUtilityInitializeNormalizeTextReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static normalizeText(value: CLIUtilityInitializeNormalizeTextValue, maxLength: CLIUtilityInitializeNormalizeTextMaxLength): CLIUtilityInitializeNormalizeTextReturns {
+  private static normalizeText(value: CliUtilityInitializeNormalizeTextValue, maxLength: CliUtilityInitializeNormalizeTextMaxLength): CliUtilityInitializeNormalizeTextReturns {
     if (typeof value !== 'string') {
       return {
         result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
@@ -1790,7 +3103,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const trimmedValue = value.trim();
+    const trimmedValue: CliUtilityInitializeNormalizeTextTrimmedValue = value.trim();
 
     // Allow blanks.
     if (trimmedValue === '') {
@@ -1814,18 +3127,21 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Normalize text array.
+   * CLI - Utility - Initialize - Normalize Text Array.
    *
-   * @param {CLIUtilityInitializeNormalizeTextArrayValue}            value            - Value.
-   * @param {CLIUtilityInitializeNormalizeTextArrayMaxLengthPerItem} maxLengthPerItem - Max length per item.
+   * Splits a comma-separated string into trimmed items and validates each against a per-item
+   * character limit via normalizeText. Used for keywords.
+   *
+   * @param {CliUtilityInitializeNormalizeTextArrayValue}            value            - Value.
+   * @param {CliUtilityInitializeNormalizeTextArrayMaxLengthPerItem} maxLengthPerItem - Max length per item.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeNormalizeTextArrayReturns}
+   * @returns {CliUtilityInitializeNormalizeTextArrayReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static normalizeTextArray(value: CLIUtilityInitializeNormalizeTextArrayValue, maxLengthPerItem: CLIUtilityInitializeNormalizeTextArrayMaxLengthPerItem): CLIUtilityInitializeNormalizeTextArrayReturns {
+  private static normalizeTextArray(value: CliUtilityInitializeNormalizeTextArrayValue, maxLengthPerItem: CliUtilityInitializeNormalizeTextArrayMaxLengthPerItem): CliUtilityInitializeNormalizeTextArrayReturns {
     if (typeof value !== 'string') {
       return {
         result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
@@ -1833,7 +3149,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const trimmedValue = value.trim();
+    const trimmedValue: CliUtilityInitializeNormalizeTextArrayTrimmedValue = value.trim();
 
     // Allow blanks.
     if (trimmedValue === '') {
@@ -1843,15 +3159,15 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const items = trimmedValue
+    const items: CliUtilityInitializeNormalizeTextArrayItems = trimmedValue
       .split(',')
       .map((item) => item.trim())
       .filter((item) => item !== '');
 
     for (let i = 0; i < items.length; i += 1) {
-      const normalizedText = CLIUtilityInitialize.normalizeText(items[i], maxLengthPerItem);
-      const result = normalizedText.result;
-      const sanitized = normalizedText.sanitized;
+      const normalizedText: CliUtilityInitializeNormalizeTextArrayNormalizedText = CliUtilityInitialize.normalizeText(items[i], maxLengthPerItem);
+      const result: CliUtilityInitializeNormalizeTextArrayResult = normalizedText['result'];
+      const sanitized: CliUtilityInitializeNormalizeTextArraySanitized = normalizedText['sanitized'];
 
       if (result !== true) {
         return {
@@ -1872,18 +3188,21 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Normalize url.
+   * CLI - Utility - Initialize - Normalize URL.
    *
-   * @param {CLIUtilityInitializeNormalizeUrlValue}    value    - Value.
-   * @param {CLIUtilityInitializeNormalizeUrlProtocol} protocol - Protocol.
+   * Parses and validates a single URL string, checking its protocol against a whitelist
+   * determined by the protocol mode (generic or repository).
+   *
+   * @param {CliUtilityInitializeNormalizeUrlValue}    value    - Value.
+   * @param {CliUtilityInitializeNormalizeUrlProtocol} protocol - Protocol.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeNormalizeUrlReturns}
+   * @returns {CliUtilityInitializeNormalizeUrlReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static normalizeUrl(value: CLIUtilityInitializeNormalizeUrlValue, protocol: CLIUtilityInitializeNormalizeUrlProtocol): CLIUtilityInitializeNormalizeUrlReturns {
+  private static normalizeUrl(value: CliUtilityInitializeNormalizeUrlValue, protocol: CliUtilityInitializeNormalizeUrlProtocol): CliUtilityInitializeNormalizeUrlReturns {
     if (typeof value !== 'string') {
       return {
         result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
@@ -1891,7 +3210,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const trimmedValue = value.trim();
+    const trimmedValue: CliUtilityInitializeNormalizeUrlTrimmedValue = value.trim();
 
     // Allow blanks.
     if (trimmedValue === '') {
@@ -1901,24 +3220,34 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const rules = {
+    const rules: CliUtilityInitializeNormalizeUrlRules = {
       generic: {
-        allowed: ['http:', 'https:'],
+        allowed: [
+          'http:',
+          'https:',
+        ],
         message: 'Enter a valid generic URL (e.g., https://) or leave blank.',
       },
       repository: {
-        allowed: ['git:', 'git+https:', 'git+ssh:', 'git+http:', 'http:', 'https:'],
+        allowed: [
+          'git:',
+          'git+https:',
+          'git+ssh:',
+          'git+http:',
+          'http:',
+          'https:',
+        ],
         message: 'Enter a valid repository URL (e.g., git+https://) or leave blank.',
       },
     };
 
-    const allowed = (protocol === 'repository') ? rules.repository.allowed : rules.generic.allowed;
-    const errorMessage = (protocol === 'repository') ? rules.repository.message : rules.generic.message;
+    const allowed: CliUtilityInitializeNormalizeUrlAllowed = (protocol === 'repository') ? rules['repository']['allowed'] : rules['generic']['allowed'];
+    const errorMessage: CliUtilityInitializeNormalizeUrlErrorMessage = (protocol === 'repository') ? rules['repository']['message'] : rules['generic']['message'];
 
     try {
-      const url = new URL(trimmedValue);
+      const url: CliUtilityInitializeNormalizeUrlUrl = new URL(trimmedValue);
 
-      if (allowed.includes(url.protocol)) {
+      if (allowed.includes(url.protocol) === true) {
         return {
           result: true,
           sanitized: url.toString(),
@@ -1935,18 +3264,21 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Normalize url array.
+   * CLI - Utility - Initialize - Normalize URL Array.
    *
-   * @param {CLIUtilityInitializeNormalizeUrlArrayValue}    value    - Value.
-   * @param {CLIUtilityInitializeNormalizeUrlArrayProtocol} protocol - Protocol.
+   * Splits a comma-separated string of URLs and validates each entry via normalizeUrl. Used
+   * for multi-value fields like funding sources.
+   *
+   * @param {CliUtilityInitializeNormalizeUrlArrayValue}    value    - Value.
+   * @param {CliUtilityInitializeNormalizeUrlArrayProtocol} protocol - Protocol.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeNormalizeUrlArrayReturns}
+   * @returns {CliUtilityInitializeNormalizeUrlArrayReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static normalizeUrlArray(value: CLIUtilityInitializeNormalizeUrlArrayValue, protocol: CLIUtilityInitializeNormalizeUrlArrayProtocol): CLIUtilityInitializeNormalizeUrlArrayReturns {
+  private static normalizeUrlArray(value: CliUtilityInitializeNormalizeUrlArrayValue, protocol: CliUtilityInitializeNormalizeUrlArrayProtocol): CliUtilityInitializeNormalizeUrlArrayReturns {
     if (typeof value !== 'string') {
       return {
         result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
@@ -1954,7 +3286,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const trimmedValue = value.trim();
+    const trimmedValue: CliUtilityInitializeNormalizeUrlArrayTrimmedValue = value.trim();
 
     // Allow blanks.
     if (trimmedValue === '') {
@@ -1964,22 +3296,22 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const items = trimmedValue
+    const items: CliUtilityInitializeNormalizeUrlArrayItems = trimmedValue
       .split(',')
       .map((item) => item.trim())
       .filter((item) => item !== '');
 
     for (let i = 0; i < items.length; i += 1) {
-      const normalizedUrl = CLIUtilityInitialize.normalizeUrl(items[i], protocol);
-      const result = normalizedUrl.result;
-      const sanitized = normalizedUrl.sanitized;
+      const normalizedUrl: CliUtilityInitializeNormalizeUrlArrayNormalizedUrl = CliUtilityInitialize.normalizeUrl(items[i], protocol);
+      const result: CliUtilityInitializeNormalizeUrlArrayResult = normalizedUrl['result'];
+      const sanitized: CliUtilityInitializeNormalizeUrlArraySanitized = normalizedUrl['sanitized'];
 
       if (result !== true) {
-        const errorMessages = {
+        const errorMessages: CliUtilityInitializeNormalizeUrlArrayErrorMessages = {
           generic: 'Enter a valid generic URL (e.g., https://) or remove entry.',
           repository: 'Enter a valid repository URL (e.g., git+https://) or remove entry.',
         };
-        const errorMessage = (protocol === 'repository') ? errorMessages.repository : errorMessages.generic;
+        const errorMessage: CliUtilityInitializeNormalizeUrlArrayErrorMessage = (protocol === 'repository') ? errorMessages['repository'] : errorMessages['generic'];
 
         return {
           result: `Invalid URL "${items[i]}": ${errorMessage}`,
@@ -1999,19 +3331,23 @@ export class CLIUtilityInitialize {
   }
 
   /**
-   * CLI Utility - Initialize - Normalize workspace name.
+   * CLI - Utility - Initialize - Normalize Workspace Name.
    *
-   * @param {CLIUtilityInitializeNormalizeWorkspaceNameValue} value - Value.
-   * @param {CLIUtilityInitializeNormalizeWorkspaceNameRole}  role  - Role.
-   * @param {CLIUtilityInitializeNormalizeWorkspaceNameBase}  base  - Base.
+   * Enforces naming rules per workspace role.
+   * Config, app, and tool roles require a prefixed slug
+   * while package roles accept scoped names.
+   *
+   * @param {CliUtilityInitializeNormalizeWorkspaceNameValue} value - Value.
+   * @param {CliUtilityInitializeNormalizeWorkspaceNameRole}  role  - Role.
+   * @param {CliUtilityInitializeNormalizeWorkspaceNameBase}  base  - Base.
    *
    * @private
    *
-   * @returns {CLIUtilityInitializeNormalizeWorkspaceNameReturns}
+   * @returns {CliUtilityInitializeNormalizeWorkspaceNameReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static normalizeWorkspaceName(value: CLIUtilityInitializeNormalizeWorkspaceNameValue, role: CLIUtilityInitializeNormalizeWorkspaceNameRole, base: CLIUtilityInitializeNormalizeWorkspaceNameBase): CLIUtilityInitializeNormalizeWorkspaceNameReturns {
+  private static normalizeWorkspaceName(value: CliUtilityInitializeNormalizeWorkspaceNameValue, role: CliUtilityInitializeNormalizeWorkspaceNameRole, base: CliUtilityInitializeNormalizeWorkspaceNameBase): CliUtilityInitializeNormalizeWorkspaceNameReturns {
     if (typeof value !== 'string') {
       return {
         result: `Unexpected type error. Expect type to be "string", got "${typeof value}".`,
@@ -2019,7 +3355,7 @@ export class CLIUtilityInitialize {
       };
     }
 
-    const trimmedValue = value.trim();
+    const trimmedValue: CliUtilityInitializeNormalizeWorkspaceNameTrimmedValue = value.trim();
 
     if (trimmedValue === '') {
       return {
@@ -2033,7 +3369,7 @@ export class CLIUtilityInitialize {
       case 'app':
       case 'tool': {
         // Base for "config", "app", and "tool" is either `${projectSlug}-${role}` or just `${role}`.
-        const expectedPrefix = `${base}-`;
+        const expectedPrefix: CliUtilityInitializeNormalizeWorkspaceNameExpectedPrefix = `${base}-`;
 
         if (trimmedValue.startsWith(expectedPrefix) === false) {
           return {
@@ -2042,7 +3378,7 @@ export class CLIUtilityInitialize {
           };
         }
 
-        const descriptor = trimmedValue.slice(expectedPrefix.length);
+        const descriptor: CliUtilityInitializeNormalizeWorkspaceNameDescriptor = trimmedValue.slice(expectedPrefix.length);
 
         if (descriptor.length === 0) {
           return {
@@ -2051,7 +3387,7 @@ export class CLIUtilityInitialize {
           };
         }
 
-        if (PATTERN_SLUG_SIMPLE.test(descriptor) === false) {
+        if (LIB_REGEX_PATTERN_SLUG_SIMPLE.test(descriptor) === false) {
           return {
             result: 'Descriptor must match the slug pattern (lowercase letters, numbers, hyphens, underscores).',
             sanitized: undefined,
@@ -2063,10 +3399,11 @@ export class CLIUtilityInitialize {
           sanitized: trimmedValue,
         };
       }
+
       case 'template':
       case 'package':
       default: {
-        if (PATTERN_SLUG_SIMPLE.test(trimmedValue) === true || PATTERN_SLUG_SCOPED.test(trimmedValue) === true) {
+        if (LIB_REGEX_PATTERN_SLUG_SIMPLE.test(trimmedValue) === true || LIB_REGEX_PATTERN_SLUG_SCOPED.test(trimmedValue) === true) {
           return {
             result: true,
             sanitized: trimmedValue,

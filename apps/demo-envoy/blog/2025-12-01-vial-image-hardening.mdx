@@ -1,0 +1,90 @@
+---
+title: "Hardening a 3MB Container Image for Production"
+authors: [tomas]
+tags: [vial, deployment, minimal]
+date: 2025-12-01
+---
+
+A 3MB container image is a good start. A 3MB container image that has been hardened for production is a different thing entirely. Small does not mean secure. Small means there is less to audit — but you still have to audit it.
+
+We spent two weeks hardening Envoy's Vial image after a security review found three issues that would have been obvious in a traditional container but were hidden by the "it is only 3MB, what could go wrong" mindset.
+
+{/* truncate */}
+
+## What the Security Review Found
+
+### Issue 1: Writable Root Filesystem
+
+The Vial image ran with a writable root filesystem. In a traditional container with a package manager and shell, a writable root means an attacker who gains code execution can install tools, modify binaries, or persist malware. Our image had no package manager and no shell — but a writable root still allowed an attacker to overwrite the Envoy binary itself.
+
+### Issue 2: Running as Root
+
+The Envoy process ran as UID 0. Not because it needed root privileges — it did not. We had simply never set a non-root user because "the image only has one binary." But UID 0 inside a container still maps to UID 0 on the host in many runtime configurations. A container escape from a root process is significantly more dangerous than from a non-root process.
+
+### Issue 3: No Resource Limits
+
+The Vial image had no default memory or CPU limits. At 3MB image size, the assumption was that resource usage would be minimal. But image size and runtime resource usage are unrelated. A 3MB binary can allocate gigabytes of memory if it processes large payloads or leaks memory over time.
+
+## The Hardening Checklist
+
+We applied twelve changes to the Vial image. The ones worth documenting:
+
+```text title="Vial image hardening — applied changes"
+ 1. Read-only root filesystem (--read-only)
+ 2. Non-root user (UID 10001, GID 10001)
+ 3. No new privileges (--security-opt=no-new-privileges)
+ 4. Drop all capabilities (--cap-drop=ALL)
+ 5. Memory limit: 512MB (--memory=512m)
+ 6. CPU limit: 1.0 core (--cpus=1.0)
+ 7. Temp directory: tmpfs mount at /tmp (64MB max)
+ 8. Health check: built-in HTTP endpoint, 10s interval
+ 9. Signal handling: SIGTERM triggers graceful drain
+10. No SUID/SGID binaries (verified at build time)
+11. Minimal /etc: only resolv.conf and nsswitch.conf
+12. Reproducible build: identical binary from identical source
+```
+
+The read-only root filesystem required one code change: Courier's Ledger writes, which previously used a file in the container's working directory, now write to the tmpfs mount at `/tmp`. The tmpfs is limited to 64MB, which is enough for the write-ahead log between flush intervals.
+
+## Before and After
+
+| Security Property  | Before          | After             |
+|--------------------|-----------------|-------------------|
+| Root filesystem    | Writable        | Read-only         |
+| Process user       | root (UID 0)    | envoy (UID 10001) |
+| Linux capabilities | All             | None              |
+| SUID/SGID binaries | 0 (by accident) | 0 (by policy)     |
+| Memory limit       | None            | 512MB             |
+| CPU limit          | None            | 1.0 core          |
+| Temp storage       | Container layer | tmpfs (64MB)      |
+| New privileges     | Allowed         | Blocked           |
+
+## The Reproducible Build
+
+Change 12 deserves its own section. A reproducible build means that compiling the same source code on any machine produces a byte-identical binary. This matters because it lets anyone verify that the binary inside the Vial image matches the published source code.
+
+We achieved this by pinning the Alloy compiler version, stripping all debug symbols and build paths, and setting the build timestamp to the git commit timestamp instead of the current time. The SHA-256 of the binary is published alongside every release.
+
+```text title="Reproducible build verification"
+$ sha256sum envoy
+a3f1c9d8e7b2... envoy
+
+$ curl -s https://releases.envoy.dev/v0.48.0/sha256
+a3f1c9d8e7b2... envoy
+
+# Match. The binary is what we published.
+```
+
+If the hashes do not match, the binary has been tampered with. No trust required. Verify it yourself.
+
+## The Cost
+
+Total image size after hardening: 3.1MB. The 100KB increase comes from the non-root user entry in `/etc/passwd` and the additional entries in `/etc/nsswitch.conf`. Cold start time is unchanged at under 200ms.
+
+Security added 100KB and zero latency. There is no reason not to do this for every container image, regardless of size.
+
+## The Lesson
+
+Small containers are not secure containers. They are auditable containers — which is better, but only if you actually audit them. Every assumption that "it is too small to be a risk" is an assumption an attacker will test.
+
+Harden it. Lock it down. Verify the build. The 3MB image is a feature. The hardened 3MB image is the product.

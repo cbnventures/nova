@@ -1,53 +1,98 @@
 import chalk from 'chalk';
 
-import { NodeReleases } from '@/api/node-releases.js';
-import { NovaConfig } from '@/lib/nova-config.js';
+import { ApiNodeReleases } from '../../../api/node-releases.js';
+import { LibNovaConfig } from '../../../lib/nova-config.js';
 import {
-  PATTERN_DIGITS,
-  PATTERN_NAME_AT_VERSION,
-  PATTERN_RANGE_GREATER_EQUAL_MAJOR,
-  PATTERN_RANGE_MAJOR,
-} from '@/lib/regex.js';
+  LIB_REGEX_PATTERN_DIGITS,
+  LIB_REGEX_PATTERN_NAME_AT_VERSION,
+  LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR,
+  LIB_REGEX_PATTERN_RANGE_MAJOR,
+} from '../../../lib/regex.js';
 import {
   isPlainObject,
   isProjectRoot,
   loadWorkspaceManifests,
   saveWorkspaceManifest,
-} from '@/lib/utility.js';
-import { Logger } from '@/toolkit/index.js';
+} from '../../../lib/utility.js';
+import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CLIRecipePackageJsonSyncEnvironmentHandleCorepackReturns,
-  CLIRecipePackageJsonSyncEnvironmentHandleCorepackWorkspace,
-  CLIRecipePackageJsonSyncEnvironmentHandleReturns,
-  CLIRecipePackageJsonSyncEnvironmentHandleWorkspace,
-  CLIRecipePackageJsonSyncEnvironmentIsEmptyReturns,
-  CLIRecipePackageJsonSyncEnvironmentIsEmptyValue,
-  CLIRecipePackageJsonSyncEnvironmentRunOptions,
-  CLIRecipePackageJsonSyncEnvironmentRunReturns,
-  CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintConstraint,
-  CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintReturns,
-  CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintWorkspace,
-} from '@/types/cli/recipe/package-json/sync-environment.d.ts';
+  CliRecipePackageJsonSyncEnvironmentHandleBranches,
+  CliRecipePackageJsonSyncEnvironmentHandleCorepackFileContents,
+  CliRecipePackageJsonSyncEnvironmentHandleCorepackManifest,
+  CliRecipePackageJsonSyncEnvironmentHandleCorepackPackageManager,
+  CliRecipePackageJsonSyncEnvironmentHandleCorepackReturns,
+  CliRecipePackageJsonSyncEnvironmentHandleCorepackWorkspace,
+  CliRecipePackageJsonSyncEnvironmentHandleCoversAll,
+  CliRecipePackageJsonSyncEnvironmentHandleExistingNode,
+  CliRecipePackageJsonSyncEnvironmentHandleFileContents,
+  CliRecipePackageJsonSyncEnvironmentHandleGeMatch,
+  CliRecipePackageJsonSyncEnvironmentHandleLtsConstraint,
+  CliRecipePackageJsonSyncEnvironmentHandleLtsMajors,
+  CliRecipePackageJsonSyncEnvironmentHandleLtsMatches,
+  CliRecipePackageJsonSyncEnvironmentHandleMajorMatch,
+  CliRecipePackageJsonSyncEnvironmentHandleManifest,
+  CliRecipePackageJsonSyncEnvironmentHandlePackageCpu,
+  CliRecipePackageJsonSyncEnvironmentHandlePackageDevEngines,
+  CliRecipePackageJsonSyncEnvironmentHandlePackageEngines,
+  CliRecipePackageJsonSyncEnvironmentHandlePackageLibc,
+  CliRecipePackageJsonSyncEnvironmentHandlePackageOs,
+  CliRecipePackageJsonSyncEnvironmentHandleRecipes,
+  CliRecipePackageJsonSyncEnvironmentHandleRecipeSettings,
+  CliRecipePackageJsonSyncEnvironmentHandleRecipeTuple,
+  CliRecipePackageJsonSyncEnvironmentHandleReturns,
+  CliRecipePackageJsonSyncEnvironmentHandleTrackNodeLtsVersions,
+  CliRecipePackageJsonSyncEnvironmentHandleWorkspace,
+  CliRecipePackageJsonSyncEnvironmentIsEmptyReturns,
+  CliRecipePackageJsonSyncEnvironmentIsEmptyValue,
+  CliRecipePackageJsonSyncEnvironmentRunCurrentDirectory,
+  CliRecipePackageJsonSyncEnvironmentRunEligibleWorkspaces,
+  CliRecipePackageJsonSyncEnvironmentRunIsAtProjectRoot,
+  CliRecipePackageJsonSyncEnvironmentRunIsDryRun,
+  CliRecipePackageJsonSyncEnvironmentRunIsReplaceFile,
+  CliRecipePackageJsonSyncEnvironmentRunOptions,
+  CliRecipePackageJsonSyncEnvironmentRunRecipeTupleFilter,
+  CliRecipePackageJsonSyncEnvironmentRunReplaceFileNotice,
+  CliRecipePackageJsonSyncEnvironmentRunReturns,
+  CliRecipePackageJsonSyncEnvironmentRunWorkingFile,
+  CliRecipePackageJsonSyncEnvironmentRunWorkingFileWorkspaces,
+  CliRecipePackageJsonSyncEnvironmentRunWorkspaceConfigFilter,
+  CliRecipePackageJsonSyncEnvironmentRunWorkspaceRecipesFilter,
+  CliRecipePackageJsonSyncEnvironmentRunWorkspaces,
+  CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintConstraint,
+  CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintCurrentNode,
+  CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintEngines,
+  CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintPrevious,
+  CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintReturns,
+  CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintWorkspace,
+} from '../../../types/cli/recipe/package-json/sync-environment.d.ts';
 
 /**
- * CLI Recipe - package.json - Sync Environment.
+ * CLI - Recipe - package.json - Sync Environment.
  *
- * @since 1.0.0
+ * Aligns engines, os, cpu, libc, devEngines, and
+ * packageManager fields across all workspace manifests.
+ * Called by the recipe registry during run-recipes.
+ *
+ * @since 0.14.0
  */
-export class CLIRecipePackageJsonSyncEnvironment {
+export class CliRecipePackageJsonSyncEnvironment {
   /**
-   * CLI Recipe - package.json - Sync Environment - Run.
+   * CLI - Recipe - package.json - Sync Environment - Run.
    *
-   * @param {CLIRecipePackageJsonSyncEnvironmentRunOptions} options - Options.
+   * Loads nova.config.json, filters eligible workspaces,
+   * then iterates each manifest to sync environment fields.
+   * Supports dry-run and replace-file modes.
    *
-   * @returns {CLIRecipePackageJsonSyncEnvironmentRunReturns}
+   * @param {CliRecipePackageJsonSyncEnvironmentRunOptions} options - Options.
    *
-   * @since 1.0.0
+   * @returns {CliRecipePackageJsonSyncEnvironmentRunReturns}
+   *
+   * @since 0.14.0
    */
-  public static async run(options: CLIRecipePackageJsonSyncEnvironmentRunOptions): CLIRecipePackageJsonSyncEnvironmentRunReturns {
-    const currentDirectory = process.cwd();
-    const isAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: CliRecipePackageJsonSyncEnvironmentRunOptions): CliRecipePackageJsonSyncEnvironmentRunReturns {
+    const currentDirectory: CliRecipePackageJsonSyncEnvironmentRunCurrentDirectory = process.cwd();
+    const isAtProjectRoot: CliRecipePackageJsonSyncEnvironmentRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -55,32 +100,31 @@ export class CLIRecipePackageJsonSyncEnvironment {
       return;
     }
 
-    const isDryRun = options.dryRun === true;
-    const isReplaceFile = options.replaceFile === true;
+    const isDryRun: CliRecipePackageJsonSyncEnvironmentRunIsDryRun = options['dryRun'] === true;
+    const isReplaceFile: CliRecipePackageJsonSyncEnvironmentRunIsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.run',
+        name: 'CliRecipePackageJsonSyncEnvironment.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice = (isDryRun) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: CliRecipePackageJsonSyncEnvironmentRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.run',
+        name: 'CliRecipePackageJsonSyncEnvironment.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const novaConfig = new NovaConfig();
-    const workingFile = await novaConfig.load();
-    const workingFileWorkspaces = Object.entries(workingFile.workspaces ?? {});
+    const workingFile: CliRecipePackageJsonSyncEnvironmentRunWorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: CliRecipePackageJsonSyncEnvironmentRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.run',
+        name: 'CliRecipePackageJsonSyncEnvironment.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-environment. No workspaces detected in the "nova.config.json" file.');
 
@@ -88,15 +132,15 @@ export class CLIRecipePackageJsonSyncEnvironment {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig = workspace[1];
-      const workspaceRecipes = workspaceConfig.recipes;
+    const eligibleWorkspaces: CliRecipePackageJsonSyncEnvironmentRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: CliRecipePackageJsonSyncEnvironmentRunWorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: CliRecipePackageJsonSyncEnvironmentRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple = workspaceRecipes['sync-environment'];
+      const recipeTuple: CliRecipePackageJsonSyncEnvironmentRunRecipeTupleFilter = workspaceRecipes['sync-environment'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -107,21 +151,21 @@ export class CLIRecipePackageJsonSyncEnvironment {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.run',
+        name: 'CliRecipePackageJsonSyncEnvironment.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-environment. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces = await loadWorkspaceManifests({
+    const workspaces: CliRecipePackageJsonSyncEnvironmentRunWorkspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.run',
+        name: 'CliRecipePackageJsonSyncEnvironment.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-environment. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -129,20 +173,20 @@ export class CLIRecipePackageJsonSyncEnvironment {
     }
 
     Logger.customize({
-      name: 'CLIRecipePackageJsonSyncEnvironment.run',
+      name: 'CliRecipePackageJsonSyncEnvironment.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for sync-environment.`);
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.run',
+        name: 'CliRecipePackageJsonSyncEnvironment.run',
         purpose: 'iteration',
-      }).info(`Running sync-environment for the "${workspace.manifest.name}" workspace ...`);
+      }).info(`Running sync-environment for the "${workspace['manifest']['name']}" workspace ...`);
 
-      CLIRecipePackageJsonSyncEnvironment.handleCorepack(workspace);
+      CliRecipePackageJsonSyncEnvironment.handleCorepack(workspace);
 
-      await CLIRecipePackageJsonSyncEnvironment.handle(workspace);
+      await CliRecipePackageJsonSyncEnvironment.handle(workspace);
 
       if (isDryRun === true) {
         continue;
@@ -150,92 +194,96 @@ export class CLIRecipePackageJsonSyncEnvironment {
 
       await saveWorkspaceManifest(workspace, isReplaceFile);
     }
+
+    return;
   }
 
   /**
-   * CLI Recipe - package.json - Sync Environment - Handle.
+   * CLI - Recipe - package.json - Sync Environment - Handle.
    *
-   * @param {CLIRecipePackageJsonSyncEnvironmentHandleWorkspace} workspace - Workspace.
+   * Processes a single workspace manifest to enforce
+   * engines, os, cpu, libc, and devEngines constraints.
+   * Fetches active LTS versions from the Node API.
+   *
+   * @param {CliRecipePackageJsonSyncEnvironmentHandleWorkspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CLIRecipePackageJsonSyncEnvironmentHandleReturns}
+   * @returns {CliRecipePackageJsonSyncEnvironmentHandleReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static async handle(workspace: CLIRecipePackageJsonSyncEnvironmentHandleWorkspace): CLIRecipePackageJsonSyncEnvironmentHandleReturns {
-    const fileContents = workspace.fileContents;
-    const manifest = workspace.manifest;
+  private static async handle(workspace: CliRecipePackageJsonSyncEnvironmentHandleWorkspace): CliRecipePackageJsonSyncEnvironmentHandleReturns {
+    const fileContents: CliRecipePackageJsonSyncEnvironmentHandleFileContents = workspace['fileContents'];
+    const manifest: CliRecipePackageJsonSyncEnvironmentHandleManifest = workspace['manifest'];
 
-    const packageEngines = fileContents['engines'];
-    const packageOs = fileContents['os'];
-    const packageCpu = fileContents['cpu'];
-    const packageLibc = fileContents['libc'];
-    const packageDevEngines = fileContents['devEngines'];
+    const packageEngines: CliRecipePackageJsonSyncEnvironmentHandlePackageEngines = fileContents['engines'];
+    const packageOs: CliRecipePackageJsonSyncEnvironmentHandlePackageOs = fileContents['os'];
+    const packageCpu: CliRecipePackageJsonSyncEnvironmentHandlePackageCpu = fileContents['cpu'];
+    const packageLibc: CliRecipePackageJsonSyncEnvironmentHandlePackageLibc = fileContents['libc'];
+    const packageDevEngines: CliRecipePackageJsonSyncEnvironmentHandlePackageDevEngines = fileContents['devEngines'];
 
     // Sync the "engines" field (Required).
-    const ltsConstraint = await NodeReleases.fetchLtsVersions();
+    const ltsConstraint: CliRecipePackageJsonSyncEnvironmentHandleLtsConstraint = await ApiNodeReleases.fetchLtsVersions();
 
     if (
       packageEngines === undefined // Package "engines" is missing.
     ) {
       if (ltsConstraint !== undefined) {
         Logger.customize({
-          name: 'CLIRecipePackageJsonSyncEnvironment.handle',
+          name: 'CliRecipePackageJsonSyncEnvironment.handle',
           purpose: 'engines',
-        }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Adding "engines" with "node" set to "${ltsConstraint}" ...`);
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "engines" with "node" set to "${ltsConstraint}" ...`);
 
         Reflect.set(fileContents, 'engines', {
           node: ltsConstraint,
         });
       } else {
         Logger.customize({
-          name: 'CLIRecipePackageJsonSyncEnvironment.handle',
+          name: 'CliRecipePackageJsonSyncEnvironment.handle',
           purpose: 'engines',
-        }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Adding "engines" as an empty object ...`);
+        }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "engines" as an empty object ...`);
 
         Reflect.set(fileContents, 'engines', {});
       }
-    } else {
-      if (
-        isPlainObject(packageEngines) // Package "engines" is an object.
-        && packageEngines['node'] === undefined // Package "engines.node" is missing.
-        && ltsConstraint !== undefined // LTS constraint is available.
-      ) {
-        Logger.customize({
-          name: 'CLIRecipePackageJsonSyncEnvironment.handle',
-          purpose: 'engines',
-        }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Adding "engines.node" set to "${ltsConstraint}" ...`);
+    } else if (
+      isPlainObject(packageEngines) === true // Package "engines" is an object.
+      && packageEngines['node'] === undefined // Package "engines.node" is missing.
+      && ltsConstraint !== undefined // LTS constraint is available.
+    ) {
+      Logger.customize({
+        name: 'CliRecipePackageJsonSyncEnvironment.handle',
+        purpose: 'engines',
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "engines.node" set to "${ltsConstraint}" ...`);
 
-        Reflect.set(packageEngines, 'node', ltsConstraint);
-      }
+      Reflect.set(packageEngines, 'node', ltsConstraint);
     }
 
     // Check if "trackNodeLtsVersions" is enabled in the recipe settings.
-    const recipes = manifest.recipes;
-    const recipeTuple = (recipes !== undefined) ? recipes['sync-environment'] : undefined;
-    const recipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
-    const trackNodeLtsVersions = (recipeSettings !== undefined && recipeSettings['trackNodeLtsVersions'] === true);
+    const recipes: CliRecipePackageJsonSyncEnvironmentHandleRecipes = manifest['recipes'];
+    const recipeTuple: CliRecipePackageJsonSyncEnvironmentHandleRecipeTuple = (recipes !== undefined) ? recipes['sync-environment'] : undefined;
+    const recipeSettings: CliRecipePackageJsonSyncEnvironmentHandleRecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
+    const trackNodeLtsVersions: CliRecipePackageJsonSyncEnvironmentHandleTrackNodeLtsVersions = (recipeSettings !== undefined && recipeSettings['trackNodeLtsVersions'] === true);
 
     // Warn if "engines.node" does not cover all active LTS versions (only when trackNodeLtsVersions is enabled).
     if (
       trackNodeLtsVersions === true // Workspace has opted into LTS engine tracking.
-      && isPlainObject(fileContents['engines']) // Package "engines" is an object.
+      && isPlainObject(fileContents['engines']) === true // Package "engines" is an object.
       && typeof fileContents['engines']['node'] === 'string' // Package "engines.node" is a string.
       && ltsConstraint !== undefined // LTS constraint is available.
     ) {
-      const existingNode = fileContents['engines']['node'];
-      const ltsMatches = [...ltsConstraint.matchAll(new RegExp(PATTERN_DIGITS.source, 'g'))];
+      const existingNode: CliRecipePackageJsonSyncEnvironmentHandleExistingNode = fileContents['engines']['node'];
+      const ltsMatches: CliRecipePackageJsonSyncEnvironmentHandleLtsMatches = [...ltsConstraint.matchAll(new RegExp(LIB_REGEX_PATTERN_DIGITS.source, 'g'))];
 
       if (ltsMatches.length > 0) {
-        const ltsMajors = ltsMatches.map((ltsMatch) => {
+        const ltsMajors: CliRecipePackageJsonSyncEnvironmentHandleLtsMajors = ltsMatches.map((ltsMatch) => {
           return parseInt(ltsMatch[0], 10);
         });
 
-        const branches = existingNode.split('||').map((branch) => branch.trim());
+        const branches: CliRecipePackageJsonSyncEnvironmentHandleBranches = existingNode.split('||').map((branch) => branch.trim());
 
         // Check if every active LTS major is covered by at least one branch.
-        const coversAll = ltsMajors.every((ltsMajor) => {
+        const coversAll: CliRecipePackageJsonSyncEnvironmentHandleCoversAll = ltsMajors.every((ltsMajor) => {
           return branches.some((branch) => {
             // Wildcard: covers everything.
             if (branch === '*') {
@@ -243,14 +291,14 @@ export class CLIRecipePackageJsonSyncEnvironment {
             }
 
             // >=N pattern: covers major if N <= major.
-            const geMatch = branch.match(PATTERN_RANGE_GREATER_EQUAL_MAJOR);
+            const geMatch: CliRecipePackageJsonSyncEnvironmentHandleGeMatch = branch.match(LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
 
             if (geMatch !== null) {
               return parseInt(geMatch[1] ?? '', 10) <= ltsMajor;
             }
 
             // ^N, ~N, or N.x pattern: covers major if N === major.
-            const majorMatch = branch.match(PATTERN_RANGE_MAJOR);
+            const majorMatch: CliRecipePackageJsonSyncEnvironmentHandleMajorMatch = branch.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
             if (majorMatch !== null) {
               return parseInt(majorMatch[1] ?? '', 10) === ltsMajor;
@@ -262,9 +310,9 @@ export class CLIRecipePackageJsonSyncEnvironment {
 
         if (coversAll !== true) {
           Logger.customize({
-            name: 'CLIRecipePackageJsonSyncEnvironment.handle',
+            name: 'CliRecipePackageJsonSyncEnvironment.handle',
             purpose: 'engines',
-          }).warn(`${chalk.magenta(`"${manifest.name}" workspace`)} → "engines.node" is "${existingNode}" but must cover all active LTS versions (${ltsMajors.join(', ')}). Run "nova recipe package-json sync-environment" with "trackNodeLtsVersions" enabled to update.`);
+          }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → "engines.node" is "${existingNode}" but must cover all active LTS versions (${ltsMajors.join(', ')}). Run "nova recipe package-json sync-environment" with "trackNodeLtsVersions" enabled to update.`);
         }
       }
     }
@@ -274,18 +322,18 @@ export class CLIRecipePackageJsonSyncEnvironment {
       trackNodeLtsVersions === true // Workspace has opted into LTS engine tracking.
       && ltsConstraint !== undefined // LTS constraint is available.
     ) {
-      CLIRecipePackageJsonSyncEnvironment.syncNodeConstraint(workspace, ltsConstraint);
+      CliRecipePackageJsonSyncEnvironment.syncNodeConstraint(workspace, ltsConstraint);
     }
 
     // Sync the "os" field (Conditional).
     if (
       packageOs !== undefined // Package "os" is defined.
-      && CLIRecipePackageJsonSyncEnvironment.isEmpty(packageOs) // Package "os" is empty.
+      && CliRecipePackageJsonSyncEnvironment.isEmpty(packageOs) === true // Package "os" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.handle',
+        name: 'CliRecipePackageJsonSyncEnvironment.handle',
         purpose: 'os',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "os" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "os" ...`);
 
       Reflect.deleteProperty(fileContents, 'os');
     }
@@ -293,12 +341,12 @@ export class CLIRecipePackageJsonSyncEnvironment {
     // Sync the "cpu" field (Conditional).
     if (
       packageCpu !== undefined // Package "cpu" is defined.
-      && CLIRecipePackageJsonSyncEnvironment.isEmpty(packageCpu) // Package "cpu" is empty.
+      && CliRecipePackageJsonSyncEnvironment.isEmpty(packageCpu) === true // Package "cpu" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.handle',
+        name: 'CliRecipePackageJsonSyncEnvironment.handle',
         purpose: 'cpu',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "cpu" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "cpu" ...`);
 
       Reflect.deleteProperty(fileContents, 'cpu');
     }
@@ -306,140 +354,146 @@ export class CLIRecipePackageJsonSyncEnvironment {
     // Sync the "libc" field (Conditional).
     if (
       packageLibc !== undefined // Package "libc" is defined.
-      && !(
-        Array.isArray(fileContents['os']) // Package "os" is an array.
-        && fileContents['os'].includes('linux') // Package "os" includes "linux".
+      && (
+        Array.isArray(fileContents['os']) === false // Package "os" is not an array.
+        || fileContents['os'].includes('linux') === false // Package "os" does not include "linux".
       )
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.handle',
+        name: 'CliRecipePackageJsonSyncEnvironment.handle',
         purpose: 'libc',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing "libc". Package "os" does not include "linux".`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "libc". Package "os" does not include "linux".`);
 
       Reflect.deleteProperty(fileContents, 'libc');
-    } else {
-      if (
-        packageLibc === undefined // Package "libc" is missing.
-        && (
-          Array.isArray(fileContents['os']) // Package "os" is an array.
-          && fileContents['os'].includes('linux') // Package "os" includes "linux".
-        )
-      ) {
-        Logger.customize({
-          name: 'CLIRecipePackageJsonSyncEnvironment.handle',
-          purpose: 'libc',
-        }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Adding "libc" as "glibc" ...`);
+    } else if (
+      packageLibc === undefined // Package "libc" is missing.
+      && (
+        Array.isArray(fileContents['os']) === true // Package "os" is an array.
+        && fileContents['os'].includes('linux') === true // Package "os" includes "linux".
+      )
+    ) {
+      Logger.customize({
+        name: 'CliRecipePackageJsonSyncEnvironment.handle',
+        purpose: 'libc',
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "libc" as "glibc" ...`);
 
-        Reflect.set(fileContents, 'libc', ['glibc']);
-      }
+      Reflect.set(fileContents, 'libc', ['glibc']);
     }
 
     // Sync the "devEngines" field (Conditional).
     if (
       packageDevEngines !== undefined // Package "devEngines" is defined.
-      && CLIRecipePackageJsonSyncEnvironment.isEmpty(packageDevEngines) // Package "devEngines" is empty.
+      && CliRecipePackageJsonSyncEnvironment.isEmpty(packageDevEngines) === true // Package "devEngines" is empty.
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.handle',
+        name: 'CliRecipePackageJsonSyncEnvironment.handle',
         purpose: 'devEngines',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing empty "devEngines" ...`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "devEngines" ...`);
 
       Reflect.deleteProperty(fileContents, 'devEngines');
     }
+
+    return;
   }
 
   /**
-   * CLI Recipe - package.json - Sync Environment - Handle corepack.
+   * CLI - Recipe - package.json - Sync Environment - Handle Corepack.
    *
-   * @param {CLIRecipePackageJsonSyncEnvironmentHandleCorepackWorkspace} workspace - Workspace.
+   * Validates the packageManager field for corepack compatibility. Only project-role
+   * workspaces may keep the field; all others have it removed.
+   *
+   * @param {CliRecipePackageJsonSyncEnvironmentHandleCorepackWorkspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CLIRecipePackageJsonSyncEnvironmentHandleCorepackReturns}
+   * @returns {CliRecipePackageJsonSyncEnvironmentHandleCorepackReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static handleCorepack(workspace: CLIRecipePackageJsonSyncEnvironmentHandleCorepackWorkspace): CLIRecipePackageJsonSyncEnvironmentHandleCorepackReturns {
-    const fileContents = workspace.fileContents;
-    const manifest = workspace.manifest;
+  private static handleCorepack(workspace: CliRecipePackageJsonSyncEnvironmentHandleCorepackWorkspace): CliRecipePackageJsonSyncEnvironmentHandleCorepackReturns {
+    const fileContents: CliRecipePackageJsonSyncEnvironmentHandleCorepackFileContents = workspace['fileContents'];
+    const manifest: CliRecipePackageJsonSyncEnvironmentHandleCorepackManifest = workspace['manifest'];
 
-    const packageManager = fileContents['packageManager'];
+    const packageManager: CliRecipePackageJsonSyncEnvironmentHandleCorepackPackageManager = fileContents['packageManager'];
 
     // Sync the "packageManager" field.
     if (
       packageManager !== undefined // Package "packageManager" is defined.
-      && manifest.role !== 'project' // Workspace role is not "project".
+      && manifest['role'] !== 'project' // Workspace role is not "project".
     ) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.handleCorepack',
+        name: 'CliRecipePackageJsonSyncEnvironment.handleCorepack',
         purpose: 'packageManager',
-      }).info(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing "packageManager". Workspace role "${manifest.role}" does not allow it.`);
+      }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "packageManager". Workspace role "${manifest['role']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'packageManager');
-    } else {
-      if (
-        manifest.role === 'project' // Workspace role is "project".
-        && packageManager !== undefined // Package "packageManager" is defined.
-        && (
-          typeof packageManager !== 'string' // Package "packageManager" is not a string.
-          || !PATTERN_NAME_AT_VERSION.test(packageManager) // Package "packageManager" is not valid format (<name>@<version>).
-        )
-      ) {
-        Logger.customize({
-          name: 'CLIRecipePackageJsonSyncEnvironment.handleCorepack',
-          purpose: 'packageManager',
-        }).warn(`${chalk.magenta(`"${manifest.name}" workspace`)} → Removing "packageManager". Invalid format detected.`);
+    } else if (
+      manifest['role'] === 'project' // Workspace role is "project".
+      && packageManager !== undefined // Package "packageManager" is defined.
+      && (
+        typeof packageManager !== 'string' // Package "packageManager" is not a string.
+        || LIB_REGEX_PATTERN_NAME_AT_VERSION.test(packageManager) === false // Package "packageManager" is not valid format (<name>@<version>).
+      )
+    ) {
+      Logger.customize({
+        name: 'CliRecipePackageJsonSyncEnvironment.handleCorepack',
+        purpose: 'packageManager',
+      }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "packageManager". Invalid format detected.`);
 
-        Reflect.deleteProperty(fileContents, 'packageManager');
-      }
+      Reflect.deleteProperty(fileContents, 'packageManager');
     }
+
+    return;
   }
 
   /**
-   * CLI Recipe - package.json - Sync Environment - Sync node constraint.
+   * CLI - Recipe - package.json - Sync Environment - Sync Node Constraint.
    *
-   * @param {CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintWorkspace}  workspace  - Workspace.
-   * @param {CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintConstraint} constraint - Constraint.
+   * Updates engines.node to match the computed LTS constraint. Only runs when
+   * trackNodeLtsVersions is enabled in the recipe settings.
+   *
+   * @param {CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintWorkspace}  workspace  - Workspace.
+   * @param {CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintConstraint} constraint - Constraint.
    *
    * @private
    *
-   * @returns {CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintReturns}
+   * @returns {CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static syncNodeConstraint(workspace: CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintWorkspace, constraint: CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintConstraint): CLIRecipePackageJsonSyncEnvironmentSyncNodeConstraintReturns {
-    const engines = workspace.fileContents['engines'];
+  private static syncNodeConstraint(workspace: CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintWorkspace, constraint: CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintConstraint): CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintReturns {
+    const engines: CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintEngines = workspace['fileContents']['engines'];
 
     // If "engines" does not exist, create it with the constraint.
     if (engines === undefined) {
-      Reflect.set(workspace.fileContents, 'engines', { node: constraint });
+      Reflect.set(workspace['fileContents'], 'engines', { node: constraint });
 
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.syncNodeConstraint',
+        name: 'CliRecipePackageJsonSyncEnvironment.syncNodeConstraint',
         purpose: 'engines',
-      }).info(`${chalk.magenta(`"${workspace.manifest.name}" workspace`)} → Created "engines.node" with "${constraint}".`);
+      }).info(`${chalk.magenta(`"${workspace['manifest']['name']}" workspace`)} → Created "engines.node" with "${constraint}".`);
 
       return;
     }
 
     // If "engines" exists but is not a plain object, warn and skip.
-    if (!isPlainObject(engines)) {
+    if (isPlainObject(engines) === false) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.syncNodeConstraint',
+        name: 'CliRecipePackageJsonSyncEnvironment.syncNodeConstraint',
         purpose: 'engines',
-      }).warn(`${chalk.magenta(`"${workspace.manifest.name}" workspace`)} → "engines" is not a plain object. Skipping.`);
+      }).warn(`${chalk.magenta(`"${workspace['manifest']['name']}" workspace`)} → "engines" is not a plain object. Skipping.`);
 
       return;
     }
 
-    const currentNode = engines['node'];
+    const currentNode: CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintCurrentNode = engines['node'];
 
     // If "engines.node" already matches the constraint, skip.
     if (currentNode === constraint) {
       Logger.customize({
-        name: 'CLIRecipePackageJsonSyncEnvironment.syncNodeConstraint',
+        name: 'CliRecipePackageJsonSyncEnvironment.syncNodeConstraint',
         purpose: 'engines',
-      }).info(`${chalk.magenta(`"${workspace.manifest.name}" workspace`)} → "engines.node" is already up to date.`);
+      }).info(`${chalk.magenta(`"${workspace['manifest']['name']}" workspace`)} → "engines.node" is already up to date.`);
 
       return;
     }
@@ -447,26 +501,32 @@ export class CLIRecipePackageJsonSyncEnvironment {
     // Update "engines.node" to the constraint.
     Reflect.set(engines, 'node', constraint);
 
-    const previous = (typeof currentNode === 'string') ? currentNode : String(currentNode ?? 'undefined');
+    const previous: CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintPrevious = (typeof currentNode === 'string') ? currentNode : String(currentNode ?? 'undefined');
 
     Logger.customize({
-      name: 'CLIRecipePackageJsonSyncEnvironment.syncNodeConstraint',
+      name: 'CliRecipePackageJsonSyncEnvironment.syncNodeConstraint',
       purpose: 'engines',
-    }).info(`${chalk.magenta(`"${workspace.manifest.name}" workspace`)} → Updated "engines.node" from "${previous}" to "${constraint}".`);
+    }).info(`${chalk.magenta(`"${workspace['manifest']['name']}" workspace`)} → Updated "engines.node" from "${previous}" to "${constraint}".`);
+
+    return;
   }
 
   /**
-   * CLI Recipe - package.json - Sync Environment - Is empty.
+   * CLI - Recipe - package.json - Sync Environment - Is Empty.
    *
-   * @param {CLIRecipePackageJsonSyncEnvironmentIsEmptyValue} value - Value.
+   * Checks whether a value is null, undefined, a blank
+   * string, an empty array, or an object with no keys.
+   * Used by handle to decide when to remove fields.
+   *
+   * @param {CliRecipePackageJsonSyncEnvironmentIsEmptyValue} value - Value.
    *
    * @private
    *
-   * @returns {CLIRecipePackageJsonSyncEnvironmentIsEmptyReturns}
+   * @returns {CliRecipePackageJsonSyncEnvironmentIsEmptyReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static isEmpty(value: CLIRecipePackageJsonSyncEnvironmentIsEmptyValue): CLIRecipePackageJsonSyncEnvironmentIsEmptyReturns {
+  private static isEmpty(value: CliRecipePackageJsonSyncEnvironmentIsEmptyValue): CliRecipePackageJsonSyncEnvironmentIsEmptyReturns {
     if (value === null || value === undefined) {
       return true;
     }
@@ -475,7 +535,7 @@ export class CLIRecipePackageJsonSyncEnvironment {
       return value.trim() === '';
     }
 
-    if (Array.isArray(value)) {
+    if (Array.isArray(value) === true) {
       return value.length === 0;
     }
 

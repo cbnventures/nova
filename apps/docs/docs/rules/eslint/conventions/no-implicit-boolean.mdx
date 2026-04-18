@@ -1,0 +1,146 @@
+---
+id: no-implicit-boolean
+title: No Implicit Boolean
+description: Require explicit boolean comparisons instead of relying on truthy/falsy coercion in conditions.
+keywords:
+  - nova
+  - eslint rule
+  - implicit boolean
+  - truthy falsy
+  - explicit comparison
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require explicit comparisons in conditions instead of relying on truthy/falsy coercion.
+
+## Summary
+
+The `no-implicit-boolean` rule reports bare identifiers, member expressions, call expressions, and their negations (`!value`, `!fn()`) when used as conditions in `if`, `while`, `do...while`, `for`, and ternary statements.
+
+For logical expressions (`&&`, `||`), each operand is checked independently.
+
+## Why Use This Rule?
+
+1. Prevents subtle bugs from truthy/falsy coercion (e.g., `0`, `""`, and `null` are all falsy).
+2. Makes the developer's intent explicit (`=== undefined`, `=== true`, `> 0`).
+3. Keeps conditions self-documenting so readers understand what is actually being checked.
+
+## Examples
+
+<Tabs groupId="no-implicit-boolean-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    if (value !== undefined) {}
+
+    if (Array.isArray(x) === false) {}
+
+    if (a !== undefined && b === true) {}
+
+    while (items.length > 0) {}
+
+    // Ternary with explicit comparison — passes the check.
+    const label = (isDryRun === true) ? 'skip' : 'apply';
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    if (value) {}
+
+    if (!value) {}
+
+    while (items.length) {}
+
+    if (value && other) {}
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-implicit-boolean-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoImplicitBoolean } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-implicit-boolean': NoImplicitBoolean.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-implicit-boolean': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoImplicitBoolean } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-implicit-boolean': NoImplicitBoolean.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-implicit-boolean': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on `!Array.isArray(x)`** — Use `Array.isArray(x) === false` instead. All negations of identifiers, member expressions, and call expressions are flagged.
+- **Warning fires on `if (value && other)`** — Each operand in a logical expression is checked independently. Both `value` and `other` need explicit comparisons.
+- **Warning fires on a ternary condition** — Ternary conditions are checked the same as `if` conditions. Use an explicit comparison like `(isDryRun === true) ? a : b`.

@@ -1,0 +1,52 @@
+/**
+ * Signal — Blog Archive Page visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* Year heading with left accent. */
+.nova-blog-archive section h3 {
+  padding-bottom: 0.375rem;
+  padding-left: 0.5rem;
+
+  font-size: 0.875rem;
+  color: var(--nova-color-neutral-800);
+
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+  border-left: 3px solid var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-blog-archive section h3 {
+  color: var(--nova-color-neutral-200);
+
+  border-bottom-color: var(--nova-color-neutral-800);
+  border-left-color: var(--nova-color-primary-400);
+}
+
+/* Archive links — compact with border reveal on hover. */
+.nova-blog-archive a {
+  padding: 0.125rem 0.375rem;
+
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-700);
+  border-left: 2px solid transparent;
+
+  transition: color 100ms ease,
+              border-left-color 100ms ease;
+}
+
+[data-theme="dark"] .nova-blog-archive a {
+  color: var(--nova-color-neutral-300);
+}
+
+.nova-blog-archive a:hover,
+.nova-blog-archive a:focus-visible {
+  color: var(--nova-color-primary-600);
+  border-left-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-blog-archive a:hover,
+[data-theme="dark"] .nova-blog-archive a:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-left-color: var(--nova-color-primary-400);
+}

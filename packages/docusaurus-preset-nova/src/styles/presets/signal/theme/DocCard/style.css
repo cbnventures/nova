@@ -1,0 +1,48 @@
+/**
+ * Signal — Doc Card visual styling.
+ *
+ * @since 0.15.0
+ */
+
+article[class*="nova-col"] > a {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+  transition: border-color 100ms ease;
+}
+
+article[class*="nova-col"] > a:hover,
+article[class*="nova-col"] > a:focus-visible {
+  border-color: var(--nova-color-primary-500);
+  text-decoration: none;
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a {
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a:hover,
+[data-theme="dark"] article[class*="nova-col"] > a:focus-visible {
+  border-color: var(--nova-color-primary-400);
+}
+
+article[class*="nova-col"] > a h2 {
+  font-size: 0.875rem;
+  color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a h2 {
+  color: var(--nova-color-neutral-200);
+}
+
+article[class*="nova-col"] > a h2 svg {
+  width: 14px;
+  height: 14px;
+  color: var(--nova-color-neutral-500);
+}
+
+article[class*="nova-col"] > a p {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--nova-color-neutral-400);
+}

@@ -1,0 +1,179 @@
+---
+id: bootstrap
+title: Bootstrap
+description: Resolve platform-aware directories, discover configuration files across search paths, and load .env files into the process environment.
+keywords:
+  - nova
+  - bootstrap
+  - env loading
+  - dotenv
+  - config discovery
+  - xdg directories
+  - cross platform
+  - cli setup
+  - environment variables
+  - appdata
+tags:
+  - toolkit
+  - environment
+  - cli
+  - configuration
+  - cross-platform
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Prepare <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> environments with platform-aware directory resolution, file discovery, and `.env` loading in a single utility.
+
+## Summary
+
+The `Bootstrap` battery resolves platform-specific directories (XDG on macOS and Linux, AppData on Windows), discovers configuration files across a prioritized search path, and loads `.env` files into `process.env` without overriding existing values.
+
+## Why Use This Battery?
+
+1. Eliminates duplicated path-resolution logic across projects by centralizing directory and file discovery in one place.
+2. Handles cross-platform differences automatically so <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> tools work on macOS, Linux, and Windows without conditional code.
+3. Loads `.env` files with a single call, supporting comments, quoted values, and non-destructive merging.
+
+## Capabilities
+
+- Resolves app-scoped directories for configuration, data, and cache storage across all major platforms.
+- Discovers files across a configurable search order using keywords like `cwd`, `config-dir`, `data-dir`, `cache-dir`, `home`, `temp`, and `project-root`.
+- Accepts absolute paths alongside keywords for custom search locations.
+- Creates directories automatically when accessed through app-scoped getter methods (`getConfigDir`, `getDataDir`, `getCacheDir`).
+- Logs `.env` loading activity through `Logger.debug` for development visibility.
+
+## Usage
+
+:::info Good to Know
+Examples use TypeScript, but the <Terminology title="application programming interface" to="/docs/quickstart/terminology#fundamentals" color={true}>API</Terminology> is identical in JavaScript (<Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology>-only).
+:::
+
+<Tabs groupId="bootstrap-usage">
+  <TabItem value="env" label="Loading .env" default>
+
+    ```ts
+    import { Bootstrap } from '@cbnventures/nova/toolkit';
+
+    // Find the directory containing .env
+    const envDir = Bootstrap.resolveFileDir(
+      'my-app',
+      '.env',
+      ['cwd', 'config-dir'],
+    );
+
+    // Load it (silently skips if not found)
+    if (envDir !== undefined) {
+      Bootstrap.loadEnv(envDir);
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="files" label="File discovery">
+
+    ```ts
+    import { Bootstrap } from '@cbnventures/nova/toolkit';
+
+    // First match
+    const configDir = Bootstrap.resolveFileDir(
+      'my-app',
+      'config.json',
+      ['cwd', 'config-dir'],
+    );
+    // -> '/Users/you/.config/my-app' or undefined
+
+    // All matches (for prompting the user)
+    const allConfigDirs = Bootstrap.resolveFileDirs(
+      'my-app',
+      'config.json',
+      ['cwd', 'config-dir'],
+    );
+    // -> ['/Users/you/project', '/Users/you/.config/my-app']
+    ```
+
+  </TabItem>
+  <TabItem value="dirs" label="Directory getters">
+
+    ```ts
+    import { Bootstrap } from '@cbnventures/nova/toolkit';
+
+    // App-scoped getters create the directory if it does not exist
+    const configDir = Bootstrap.getConfigDir('my-app');
+    // macOS/Linux: ~/.config/my-app
+    // Windows:     %APPDATA%/my-app
+
+    const dataDir = Bootstrap.getDataDir('my-app');
+    // macOS:   ~/Library/Application Support/my-app
+    // Linux:   ~/.local/share/my-app
+    // Windows: %APPDATA%/my-app
+
+    const cacheDir = Bootstrap.getCacheDir('my-app');
+    // macOS:   ~/Library/Caches/my-app
+    // Linux:   ~/.cache/my-app
+    // Windows: %LOCALAPPDATA%/Temp/my-app
+
+    const projectRoot = Bootstrap.getProjectRoot();
+    // Walks up from cwd to find a monorepo root (package.json with workspaces)
+    // Falls back to the nearest package.json directory
+    // -> '/Users/you/project' or undefined
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Search Keywords
+
+The `searchOrder` parameter in `resolveFileDir` and `resolveFileDirs` accepts these keywords alongside absolute path strings.
+
+| Keyword        | Resolves to                                            |
+|----------------|--------------------------------------------------------|
+| `cwd`          | Current working directory                              |
+| `config-dir`   | App-scoped configuration directory                     |
+| `data-dir`     | App-scoped data directory                              |
+| `cache-dir`    | App-scoped cache directory                             |
+| `home`         | User home directory                                    |
+| `temp`         | System temporary directory                             |
+| `project-root` | Monorepo root, nearest `package.json` parent, or `cwd` |
+
+App-scoped keywords (`config-dir`, `data-dir`, `cache-dir`) use the `appName` parameter to build the full path.
+
+## Cross-Platform Directories
+
+| Getter         | macOS                                 | Linux                  | Windows                     |
+|----------------|---------------------------------------|------------------------|-----------------------------|
+| `getConfigDir` | `~/.config/<app>`                     | `~/.config/<app>`      | `%APPDATA%/<app>`           |
+| `getDataDir`   | `~/Library/Application Support/<app>` | `~/.local/share/<app>` | `%APPDATA%/<app>`           |
+| `getCacheDir`  | `~/Library/Caches/<app>`              | `~/.cache/<app>`       | `%LOCALAPPDATA%/Temp/<app>` |
+
+`XDG_CONFIG_HOME` is respected on macOS and Linux. `XDG_DATA_HOME` and `XDG_CACHE_HOME` are respected on Linux only — macOS uses native `~/Library` paths. `APPDATA` and `LOCALAPPDATA` are respected on Windows.
+
+## .env File Format
+
+Supported syntax for files loaded by `loadEnv`.
+
+```ini
+# Comment lines are ignored
+KEY=value
+KEY="double quoted value"
+KEY='single quoted value'
+
+# Empty lines are ignored
+```
+
+Variables already present in `process.env` are not overridden.
+
+## Troubleshooting
+
+**`.env` is not being loaded**
+
+Confirm the file exists in the directory passed to `loadEnv`. Set `LOG_LEVEL=debug` to see the search output in the terminal.
+
+**Directory getters return unexpected paths**
+
+Check whether `XDG_CONFIG_HOME` (macOS and Linux), `XDG_DATA_HOME` (Linux only), or `XDG_CACHE_HOME` (Linux only) environment variables are set. These override the default paths shown in the table above.
+
+**File not found despite existing on disk**
+
+Verify the `searchOrder` includes the correct keyword or absolute path. Use `resolveFileDirs` to see all matching locations.

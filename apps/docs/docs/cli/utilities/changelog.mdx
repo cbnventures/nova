@@ -1,26 +1,24 @@
 ---
 id: changelog
 title: Changelog
-description: Record individual changes and release versioned changelogs with a guided flow that combines the record and release steps into a single beginner-friendly command.
+description: Record changes and release versioned changelogs with a guided flow that combines the record and release steps into a single beginner-friendly command.
 keywords:
   - nova
   - nova changelog
-  - nova utility changelog
   - changeset alternative
-  - changelog management
   - version bump
   - semver
   - release workflow
-  - ci cd changelog
 tags:
-  - changelog
   - cli
+  - changelog
   - utility
   - versioning
   - release
   - semver
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -33,29 +31,29 @@ The `changelog` command combines two workflows into one guided flow:
 - **Recording** a change (what happened).
 - **Releasing** accumulated changes (bump versions and write a `CHANGELOG.md`).
 
-In interactive mode, a menu lets you pick which action to take. In non-interactive mode, the `--record` and `--release` flags drive the same workflows from scripts and <Term title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling">CI/CD</Term> pipelines.
+In interactive mode, a menu lets you pick which action to take. In non-interactive mode, the `--record` and `--release` flags drive the same workflows from scripts and <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines.
 
-Recorded entries are stored as individual `.md` files in a `.changelog/` directory at the <Term title="project root" to="/docs/quickstart/terminology#git-and-workflow">monorepo root</Term>. When released, the entries are consumed, versions are bumped in each affected `package.json`, and a `CHANGELOG.md` is written (or updated) in the <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> directory.
+Recorded entries are stored as individual `.md` files in a `.changelog/` directory at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>. When released, the entries are consumed, versions are bumped in each affected `package.json`, and a `CHANGELOG.md` is written (or updated) in the <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> directory.
 
 ## Why Use This Command?
 
 - Combines the record-and-release lifecycle into one command instead of separate tools.
-- Interactive prompts guide you through package selection, category, description, and <Term title="semantic versioning" to="/docs/quickstart/terminology#fundamentals">SemVer</Term> bump type. No flags to memorize.
-- The `--record` and `--release` flags enable the same workflow in <Term title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling">CI/CD</Term> without prompts.
+- Interactive prompts guide you through package selection, category, description, and <Terminology title="semantic versioning" to="/docs/quickstart/terminology#fundamentals" color={true}>SemVer</Terminology> bump type. No flags to memorize.
+- The `--record` and `--release` flags enable the same workflow in <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> without prompts.
 - The **dry run** option lets you preview every change before any file is touched.
 
 ## Use Cases
 
 - **Solo projects** — Record a change and release it in the same session without learning a separate versioning tool.
 - **Team workflows** — Each contributor records changes in their PR. A maintainer runs the release step when ready.
-- **<Term title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling">CI/CD</Term> automation** — Use `--record` in a pipeline step to capture changes, then `--release` in a publish step to bump versions and write changelogs.
+- **<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> automation** — Use `--record` in a pipeline step to capture changes, then `--release` in a publish step to bump versions and write changelogs.
 - **Migration from Changesets** — Replace `changeset add` with `nova utility changelog --record` and `changeset version` with `nova utility changelog --release`.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> release with either the installed `nova` <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> or `npx`.
-- **Project root** — Run the command from the directory containing the top-level `package.json` (<Term title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow">monorepos</Term> included).
-- **Nova config** — A valid <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term> must exist with at least one non-<Term title="locked workspace" to="/docs/quickstart/terminology#nova-concepts">freezable</Term> workspace defined.
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- **Project root** — Run the command from the directory containing the top-level `package.json` (<Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepos</Terminology> included).
+- **Nova config** — A valid <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> must exist with at least one non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> workspace defined.
 
 ## Usage
 
@@ -106,7 +104,7 @@ You can run this command in two ways:
 
 ### Record Flow
 
-1. **Select package** — Auto-selects if only one non-<Term title="locked workspace" to="/docs/quickstart/terminology#nova-concepts">freezable</Term> <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> exists. Otherwise prompts.
+1. **Select package** — Auto-selects if only one non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> exists. Otherwise prompts.
 2. **Select category** — Choose from Updated, Fixed, Added, or Removed.
 3. **Enter description** — Free-text description of the change.
 4. **Select bump type** — Pre-selected based on category (Added/Updated = minor, Fixed = patch, Removed = major). Override if needed.
@@ -122,7 +120,7 @@ You can run this command in two ways:
 6. **Clean up** — Deletes consumed entry files from `.changelog/`.
 
 :::danger Non-Zero Exit Code
-The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). CI pipelines that use this command will fail the step on errors.
+The command exits with code **1** when validation fails (invalid flags, missing config, unknown package). <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on errors.
 :::
 
 ### Entry File Format
@@ -141,7 +139,9 @@ New ESLint rule for switch case blocks.
 
 ### CHANGELOG.md Format
 
-Released entries are written in the following format. Headings are ordered as UPDATED, FIXED, ADDED, REMOVED. Empty headings are omitted.
+Released entries are written in the following format. Headings are ordered as UPDATED, FIXED, ADDED, REMOVED.
+
+Empty headings are omitted.
 
 ```markdown title="packages/nova/CHANGELOG.md"
 # @cbnventures/nova
@@ -236,13 +236,13 @@ Released entries are written in the following format. Headings are ordered as UP
 
 For users migrating from the [Changesets](https://github.com/changesets/changesets) workflow, Nova provides equivalent flags under `nova utility changelog`:
 
-| Command                            | Equivalent          | What It Does                                      |
-|------------------------------------|---------------------|---------------------------------------------------|
-| `nova utility changelog --record`  | `changeset add`     | Record a change with `-p`, `-c`, `-b`, `-m` flags |
-| `nova utility changelog --release` | `changeset version` | Release accumulated changes and bump versions     |
+| Command                            | Equivalent          | What It Does                                       |
+|------------------------------------|---------------------|----------------------------------------------------|
+| `nova utility changelog --record`  | `changeset add`     | Record a change with `-p`, `-c`, `-b`, `-m` flags. |
+| `nova utility changelog --release` | `changeset version` | Release accumulated changes and bump versions.     |
 
 :::tip Shorten long commands with scripts
-Nova bundles many tools in one package, so commands can be verbose. Shorten them by adding aliases to the `"scripts"` field in your **root** `package.json` (the one at the <Term title="project root" to="/docs/quickstart/terminology#git-and-workflow">monorepo root</Term>):
+Nova bundles many tools in one package, so commands can be verbose. Shorten them by adding aliases to the `"scripts"` field in your **root** `package.json` (the one at the <Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>):
 
 ```json title="package.json"
 {
@@ -258,8 +258,8 @@ Then run `npm run changelog:record` or `npm run changelog:release`.
 
 ## Troubleshooting
 
-- **"No eligible (non-freezable) workspaces found"** — Confirm that <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term> has at least one <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> with a <Term title="private workspace" to="/docs/quickstart/terminology#nova-concepts">trackable</Term> or <Term title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts">distributable</Term> <Term title="workspace label" to="/docs/quickstart/terminology#nova-concepts">workspace policy</Term>.
+- **"No eligible (non-freezable) workspaces found"** — Confirm that <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> has at least one <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with a <Terminology title="private workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>trackable</Terminology> or <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> <Terminology title="workspace label" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace policy</Terminology>.
 - **"Cannot use --record and --release together"** — These flags are mutually exclusive. Run them as separate commands.
 - **"Non-interactive record requires --package, --category, --bump, and --message"** — All four flags are required when using `--record`. Omit `--record` for interactive mode.
 - **"No changelog entries found"** — The `.changelog/` directory is empty or does not exist. Record at least one change before releasing.
-- **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-<Term title="locked workspace" to="/docs/quickstart/terminology#nova-concepts">freezable</Term> <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> in <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>.
+- **"Package not found in nova.config.json"** — The `--package` value must match the `name` field of a non-<Terminology title="locked workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>freezable</Terminology> <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.

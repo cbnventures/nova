@@ -1,0 +1,81 @@
+/**
+ * Signal — App market download visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Section
+ * ============================ */
+
+/* ============================
+ * 2. Label
+ * ============================ */
+
+.nova-app-market-download-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-500);
+  margin-bottom: 0.75rem;
+}
+
+[data-theme="dark"] .nova-app-market-download-label {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 3. Button
+ * ============================ */
+
+.nova-app-market-download-button {
+  padding: 0.5rem 1rem;
+
+  color: var(--nova-color-neutral-50);
+
+  background-color: var(--nova-color-neutral-900);
+  border: 2px solid var(--nova-color-neutral-900);
+
+  transition: background-color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease;
+}
+
+.nova-app-market-download-button:hover,
+.nova-app-market-download-button:focus-visible {
+  color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-app-market-download-button {
+  color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-app-market-download-button:hover,
+[data-theme="dark"] .nova-app-market-download-button:focus-visible {
+  color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 4. Button Text
+ * ============================ */
+
+.nova-app-market-download-button-subtitle {
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  opacity: 0.8;
+}
+
+.nova-app-market-download-button-title {
+  font-family: var(--nova-font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+}

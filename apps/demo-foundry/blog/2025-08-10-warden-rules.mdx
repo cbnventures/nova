@@ -1,0 +1,169 @@
+---
+title: "The Warden Rules We Almost Did Not Ship"
+authors: [priya]
+tags: [warden, linting, opinions]
+---
+
+We wrote 440 Warden rules. We shipped 380. The 60 we threw away taught us more about developer tooling than the 380 we kept.
+
+{/* truncate */}
+
+## The Goal
+
+When we started Foundry, we wanted a linting layer that did not require configuration. You declare `warden = ["strict"]` in your manifest, and you get a complete rule set — conventions, formatting, patterns, safety, syntax, and type rules — with no further decisions.
+
+That meant we had to make every decision for you. And that meant arguments.
+
+## Three Rules That Almost Split the Team
+
+Out of 440 candidate rules, most were obvious. Nobody argues about banning `eval` or requiring explicit return types. But three rules generated weeks of debate. Here is what they do, why we almost cut them, and why they survived.
+
+### Rule 1: `warden/no-default-export`
+
+This rule bans default exports in library packages. Named exports only.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="on" label="Rule On" default>
+
+```alloy title="src/utils/format.al"
+// Passes — named export
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+// Passes — named re-export
+export { formatDate } from "./format.al"
+```
+
+</TabItem>
+<TabItem value="off" label="Rule Off">
+
+```alloy title="src/utils/format.al"
+// Allowed — default export (refactoring hazard)
+export default function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+// Allowed — anonymous default
+export default (timestamp: Numeric): Text => {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+```
+
+</TabItem>
+</Tabs>
+
+**Why it was controversial:** Default exports are idiomatic in many frameworks. Half the team argued that banning them would frustrate users migrating existing codebases. The other half argued that default exports are a refactoring hazard — they let consumers rename the import silently, which breaks grep-ability across the workspace.
+
+**Why it shipped:** We scoped it to library packages only. Application entry points and service handlers are exempt. The rule includes an auto-fix that converts `export default` to a named export using the file name as the identifier.
+
+### Rule 2: `warden/require-exhaustive-deps`
+
+This rule requires that every dependency used inside a function body is declared in the function signature or in the module scope.
+
+<Tabs>
+<TabItem value="on" label="Rule On" default>
+
+```alloy title="src/services/notify.al"
+// Passes — all dependencies are explicit
+function sendNotification(
+  client: NotifyClient,
+  message: Text,
+  channel: Text,
+): Outcome {
+  return client.send(channel, message)
+}
+```
+
+</TabItem>
+<TabItem value="off" label="Rule Off">
+
+```alloy title="src/services/notify.al"
+// Allowed — imports a global client implicitly
+import { globalClient } from "@app/globals"
+
+function sendNotification(message: Text, channel: Text): Outcome {
+  return globalClient.send(channel, message)
+}
+```
+
+</TabItem>
+</Tabs>
+
+**Why it was controversial:** This rule makes dependency injection mandatory. Every function must accept its collaborators as arguments. Some team members called it "Java-brain" and argued it adds boilerplate for no benefit in small projects.
+
+**Why it shipped:** Explicit dependencies make functions testable without mocking globals. In a 200-package workspace, implicit dependencies create invisible coupling that Tongs cannot track. The rule enforces what the architecture already demands.
+
+### Rule 3: `warden/no-barrel-files`
+
+This rule bans `index.al` files that re-export from other modules — commonly known as barrel files.
+
+<Tabs>
+<TabItem value="on" label="Rule On" default>
+
+```alloy title="Importing directly from the source"
+// Passes — direct import
+import { formatDate } from "@core/utils/format.al"
+import { sendNotification } from "@core/services/notify.al"
+```
+
+</TabItem>
+<TabItem value="off" label="Rule Off">
+
+```alloy title="Importing through a barrel file"
+// Allowed — barrel re-export
+// src/index.al
+export { formatDate } from "./utils/format.al"
+export { sendNotification } from "./services/notify.al"
+
+// Consumer uses the barrel
+import { formatDate, sendNotification } from "@core"
+```
+
+</TabItem>
+</Tabs>
+
+**Why it was controversial:** Barrel files are everywhere. They simplify import paths and give packages a clean public API. Banning them felt extreme.
+
+**Why it shipped:** Barrel files are the single biggest cause of circular dependencies in large workspaces. They also defeat tree-shaking — the Smelter cannot remove unused exports from a barrel because the barrel itself is always imported. We measured a 23% reduction in bundle size after removing barrels from our internal workspace. The rule includes a Warden auto-fix that rewrites barrel imports to direct imports.
+
+## The 60 We Threw Away
+
+Not every opinion survived. Here are three rules we wrote, tested, and ultimately deleted:
+
+- **`warden/max-function-length`** — We set the limit at 50 lines. Then we found that test setup functions, data transformation pipelines, and CLI command handlers routinely needed 80 to 120 lines. The rule generated more suppression comments than fixes. We killed it.
+
+- **`warden/require-jsdoc-on-exports`** — Every exported function had to have a documentation comment. In practice, this produced thousands of one-line comments that said "Formats a date" above a function called `formatDate`. The documentation added no information. We killed it.
+
+- **`warden/no-nested-ternary`** — Nested ternaries are hard to read. But banning them entirely forced developers into verbose if-else chains for simple three-way switches. We tried a `maxDepth: 2` variant, but the rule became too nuanced to explain in an error message. We killed it.
+
+## The Philosophy
+
+Ship opinions, not options.
+
+A linting tool with 380 rules and zero configuration knobs is more useful than a tool with 10 rules and a settings file. Every time you add a configuration option, you transfer a decision from the tool author to the tool user. And the tool user already has enough decisions to make.
+
+We made 380 decisions so you do not have to. If you disagree with one, override it in your manifest. But you should not have to think about it until you do.
+
+```text title="project.grain — overriding a single rule"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+
+  rules {
+    "warden/no-default-export" = "off"
+  }
+}
+```
+
+One line. The override is explicit, visible, and version-controlled. No hidden configuration file in a nested directory.
+
+## What We Learned
+
+The hardest part of building a linting tool is not writing the AST visitor. It is writing the error message that makes a developer think "that makes sense" instead of "let me add a suppression comment."
+
+Every rule we shipped has a clear, one-sentence rationale in the Warden documentation. If we could not explain why a rule exists in one sentence, we did not ship it.
+
+Read the full rule reference in the [Warden Rules](/docs/pipeline/warden-rules/) documentation.

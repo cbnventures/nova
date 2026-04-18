@@ -1,0 +1,140 @@
+---
+id: require-ternary-parens
+title: Require Ternary Parens
+description: Require parenthesized condition in ternary expressions.
+keywords:
+  - nova
+  - eslint rule
+  - ternary
+  - parentheses
+  - conditional expression
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require parentheses around the condition in ternary expressions so the test is visually distinct from the branches.
+
+## Summary
+
+The `require-ternary-parens` rule reports any `ConditionalExpression` where the test (condition) is not immediately preceded by an opening parenthesis `(`.
+
+## Why Use This Rule?
+
+1. Parentheses make the condition boundary explicit, preventing misreads about where the test ends and the consequent begins.
+2. Keeps ternary formatting consistent across the codebase.
+3. Improves readability when the condition is a complex expression.
+
+## Examples
+
+<Tabs groupId="require-ternary-parens-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    const label = (isDryRun === true) ? 'skip' : 'apply';
+
+    const value = (count > 0) ? count : fallback;
+
+    const result = (a === true && b === false) ? x : y;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const label = isDryRun === true ? 'skip' : 'apply';
+
+    const value = count > 0 ? count : fallback;
+
+    const result = a === true && b === false ? x : y;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-ternary-parens-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireTernaryParens } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-ternary-parens': RequireTernaryParens.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-ternary-parens': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireTernaryParens } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-ternary-parens': RequireTernaryParens.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-ternary-parens': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-ternary-parens: error'
+```
+
+## Troubleshooting
+
+- **Warning fires inside a JSX expression** — Ternary conditions inside JSX are checked the same way. Wrap the condition in parentheses: `{(isReady === true) ? <A /> : <B />}`.
+- **Nested ternaries are each flagged independently** — Each `ConditionalExpression` node is checked on its own. Both the outer and inner ternary need parenthesized conditions.

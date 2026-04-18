@@ -1,0 +1,179 @@
+---
+id: no-multiline-strings
+title: No Multiline Strings
+description: Disallow multiline string content including backslash continuation, visual newlines in template literals, and internal escape sequences.
+keywords:
+  - nova
+  - eslint rule
+  - multiline strings
+  - template literal
+  - newline
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Use `[].join('\n')` instead of multiline string content because backslash continuations, visual newlines, and internal `\n` escapes fragment string logic across lines.
+
+## Summary
+
+The `no-multiline-strings` rule reports three forms of multiline string content:
+
+- Backslash line continuation (`\` at end of line).
+- Visual newlines inside template literals.
+- Internal `\n` escape sequences inside string or template literals.
+
+Boundary `\n` at the start or end of a string is allowed — this is simple padding, not multiline content. Only `\n` between content (internal) is flagged.
+
+## Why Use This Rule?
+
+1. The `[].join('\n')` pattern keeps each line as its own string, making additions and removals easy to diff.
+2. Backslash continuation is fragile — trailing whitespace after `\` silently breaks the continuation.
+3. Visual newlines in template literals are invisible at a glance and make indentation ambiguous.
+
+## Examples
+
+<Tabs groupId="no-multiline-strings-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    const msg = [
+      'line one',
+      'line two',
+    ].join('\n');
+
+    // Template literal without multiline content is fine.
+    const greeting = `Hello ${name}!`;
+    const path = `${basePath}/files/${fileName}`;
+
+    // Boundary \n (padding) is allowed.
+    const padded = '\nhello\n';
+    const output = `\n${name}\n`;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Internal \n between content.
+    const msg = 'line one\nline two';
+
+    const msg = `line one\nline two`;
+
+    // Boundary \n does not excuse internal \n.
+    const msg = '\nline one\nline two\n';
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-multiline-strings-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoMultilineStrings } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-multiline-strings': NoMultilineStrings.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-multiline-strings': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="allow-escape-sequences" label="Allow Escape Sequences">
+
+    Allow strings that use escape sequences like `\n` for line breaks:
+
+    ```ts
+    import { NoMultilineStrings } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-multiline-strings': NoMultilineStrings.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-multiline-strings': ['error', {
+            allowEscapeSequences: true,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoMultilineStrings } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-multiline-strings': NoMultilineStrings.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-multiline-strings': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option                 | Type       | Default | Description                                              |
+|------------------------|------------|---------|----------------------------------------------------------|
+| `allowEscapeSequences` | `boolean`  | `false` | Skip checking internal `\n` escape sequences in strings. |
+| `ignoreFiles`          | `string[]` | `[]`    | File patterns to skip.                                   |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on `'\n'` in a join call** — The `'\n'` argument to `.join()` is a single-character string, not a multiline string. The rule should not flag it. If it does, check that the warning is on the correct node.
+- **Warning fires on boundary `\n` padding** — Only `\n` between content is flagged. Boundary `\n` at the start or end of a string (e.g., `'\nhello\n'`) is allowed. If the string also contains internal `\n`, the entire string is flagged.
+- **Template literal with expressions is flagged** — Only the newline content matters, not the expressions. A template literal like `` `${a}\n${b}` `` with internal `\n` between quasis is flagged. Boundary `\n` at the start of the first quasi or end of the last quasi is allowed.

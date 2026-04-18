@@ -1,0 +1,109 @@
+---
+id: features
+title: Features
+description: Grid layout for feature cards with optional icons, titles, and descriptions.
+sidebar_position: 2
+keywords:
+  - nova
+  - docusaurus facades
+  - features component
+  - feature grid
+  - feature cards
+  - landing page
+  - iconify icons
+tags:
+  - facades
+  - component
+  - features
+  - landing page
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Features
+
+Responsive grid of feature cards with optional icons, titles, and descriptions.
+
+Use it to showcase product capabilities on a landing page.
+
+## Summary
+
+The Features component renders a `<section>` containing a grid of cards. Each card can include an Iconify icon, a title, and a description. The grid adapts from one column on mobile to three columns on desktop.
+
+## Why Use This Component?
+
+- **Responsive grid** that adapts to screen width without custom breakpoint CSS.
+- **Iconify integration** — pass any Iconify icon identifier for visual variety.
+- **Preset-aware** — card styling, spacing, and typography adapt to the active preset.
+
+## Usage
+
+<Tabs groupId="features-usage">
+  <TabItem value="basic" label="Basic" default>
+
+```tsx title="src/pages/index.tsx"
+import { Features } from '@cbnventures/docusaurus-preset-nova/components';
+
+<Features
+  items={[
+    {
+      title: 'Strict Defaults',
+      description: 'Lower setup overhead and reduce drift.',
+    },
+    {
+      title: 'Guided Generators',
+      description: 'Scaffold and maintain project files.',
+    },
+    {
+      title: 'Predictable Builds',
+      description: 'Same inputs, same outputs, every time.',
+    },
+  ]}
+/>
+```
+
+  </TabItem>
+  <TabItem value="icons" label="With icons and heading">
+
+```tsx title="src/pages/index.tsx"
+import { Features } from '@cbnventures/docusaurus-preset-nova/components';
+
+<Features
+  heading="Why Nova?"
+  surface="alt"
+  items={[
+    {
+      icon: 'lucide:shield-check',
+      title: 'Strict Defaults',
+      description: 'Lower setup overhead and reduce drift.',
+    },
+    {
+      icon: 'lucide:wand-2',
+      title: 'Guided Generators',
+      description: 'Scaffold and maintain project files.',
+    },
+    {
+      icon: 'lucide:repeat',
+      title: 'Predictable Builds',
+      description: 'Same inputs, same outputs, every time.',
+    },
+  ]}
+/>
+```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Prop      | Type                                                                                       | Default     | Description                                             |
+|-----------|--------------------------------------------------------------------------------------------|-------------|---------------------------------------------------------|
+| `items`   | `Array<{ icon?: string \| IconifyIcon, title: string, description: string \| ReactNode }>` | —           | Feature card data. Required.                            |
+| `heading` | `string \| undefined`                                                                      | `undefined` | Optional section heading above the grid.                |
+| `surface` | `'alt' \| undefined`                                                                       | `undefined` | Set to `'alt'` to use the alternate surface background. |
+
+## Troubleshooting
+
+- **Icons not rendering** — The `icon` field is optional per item. If set, pass a valid Iconify identifier (e.g., `'lucide:rocket'`). The `@iconify/react` package must be available.
+- **Grid layout** — Items render in a 3-column grid on desktop. If fewer than 3 items are provided, the grid still uses 3 columns with empty space.

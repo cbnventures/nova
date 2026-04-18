@@ -15,6 +15,7 @@ tags:
   - code style
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,9 @@ Remove redundant `: unknown` annotations from catch clause variables because Typ
 
 ## Summary
 
-The `no-catch-unknown-annotation` rule reports any catch clause parameter that has an explicit `: unknown` type annotation. Since TypeScript 4.4+ defaults catch variables to `unknown` (when `useUnknownInCatchVariables` or `strict` is enabled), the annotation adds no value and should be removed for cleanliness.
+The `no-catch-unknown-annotation` rule reports any catch clause parameter that has an explicit `: unknown` type annotation.
+
+Since TypeScript 4.4+ defaults catch variables to `unknown` (when `useUnknownInCatchVariables` or `strict` is enabled), the annotation adds no value and should be removed for cleanliness.
 
 ## Why Use This Rule?
 
@@ -67,30 +70,81 @@ The `no-catch-unknown-annotation` rule reports any catch clause parameter that h
 
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+<Tabs groupId="no-catch-unknown-annotation-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { noCatchUnknownAnnotation } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
-export default [
-  {
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { NoCatchUnknownAnnotation } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-catch-unknown-annotation': NoCatchUnknownAnnotation.rule,
+            },
+          },
+        },
         rules: {
-          'no-catch-unknown-annotation': noCatchUnknownAnnotation,
+          '@cbnventures/nova/no-catch-unknown-annotation': ['error'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/no-catch-unknown-annotation': ['warn'],
-    },
-  },
-];
-```
+    ];
+    ```
 
-This rule has no additional options.
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoCatchUnknownAnnotation } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-catch-unknown-annotation': NoCatchUnknownAnnotation.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-catch-unknown-annotation': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/no-catch-unknown-annotation: error'
+```
 
 ## Troubleshooting
 
-- **Warning fires but you want to keep the annotation for documentation.** — It is recommended to remove it and rely on TypeScript's built-in default. The annotation is purely redundant.
-- **Using an older TypeScript version.** — If your project uses TypeScript below 4.4 (or does not enable `useUnknownInCatchVariables` / `strict`), this rule does not apply since catch variables default to `any` in that configuration.
+- **Warning fires but you want to keep the annotation for documentation** — It is recommended to remove it and rely on TypeScript's built-in default. The annotation is purely redundant.
+- **Using an older TypeScript version** — If your project uses TypeScript below 4.4 (or does not enable `useUnknownInCatchVariables` / `strict`), this rule does not apply since catch variables default to `any` in that configuration.

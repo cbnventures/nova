@@ -1,82 +1,123 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
+import { isIgnoredFile } from '../../../lib/utility.js';
+
 import type {
-  NoRegexLiteralsCheckLiteralNode,
-  NoRegexLiteralsCheckLiteralReturns,
-  NoRegexLiteralsDefaultOptionsAllowedFiles,
-} from '@/types/rules/eslint/regex/no-regex-literals.d.ts';
+  RulesEslintRegexNoRegexLiteralsCheckLiteralContext,
+  RulesEslintRegexNoRegexLiteralsCheckLiteralNode,
+  RulesEslintRegexNoRegexLiteralsCheckLiteralOptions,
+  RulesEslintRegexNoRegexLiteralsCheckLiteralReturns,
+  RulesEslintRegexNoRegexLiteralsRuleDefaultOptionsIgnoreFiles,
+  RulesEslintRegexNoRegexLiteralsRuleDefaultOptionsRegexFile,
+  RulesEslintRegexNoRegexLiteralsRuleOptions,
+} from '../../../types/rules/eslint/regex/no-regex-literals.d.ts';
 
 /**
- * No regex literals.
+ * Rules - ESLint - Regex - No Regex Literals.
  *
- * @since 1.0.0
+ * Forces all regex patterns into a centralized regex file so patterns are reusable,
+ * testable, and not scattered across the codebase as inline literals.
+ *
+ * @since 0.13.0
  */
-const noRegexLiterals = ESLintUtils.RuleCreator(() => '#')({
-  name: 'no-regex-literals',
-  meta: {
-    type: 'suggestion',
-    docs: {
-      description: 'Disallow regex literal expressions. Centralize patterns in a shared patterns file instead.',
-    },
-    messages: {
-      noRegexLiteral: 'Do not use regex literals inline. Centralize patterns in a shared patterns file and import from there.',
-    },
-    schema: [
-      {
+export class RulesEslintRegexNoRegexLiterals {
+  /**
+   * Rules - ESLint - Regex - No Regex Literals - Rule.
+   *
+   * Registered under the name no-regex-literals and
+   * exported through the rules index as NoRegexLiterals
+   * for preset consumption.
+   *
+   * @since 0.13.0
+   */
+  public static rule = ESLintUtils.RuleCreator(() => '#')({
+    name: 'no-regex-literals',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow regex literal expressions. Centralize patterns in a shared regex file instead.',
+      },
+      messages: {
+        noRegexLiteralWithFile: 'Move this regex literal to \'{{ regexFile }}\' and import from there.',
+        noRegexLiteralWithoutFile: 'Create a shared regex file and configure the \'regexFile\' option, then move this regex literal there.',
+      },
+      schema: [{
         type: 'object',
         properties: {
-          allowedFiles: {
+          ignoreFiles: {
             type: 'array',
             items: {
               type: 'string',
             },
           },
+          regexFile: {
+            type: 'string',
+          },
         },
         additionalProperties: false,
-      },
-    ],
-  },
-  defaultOptions: [{
-    allowedFiles: [] as NoRegexLiteralsDefaultOptionsAllowedFiles,
-  }],
-  create(context, [options]) {
-    const allowedFiles = options.allowedFiles;
-    const normalizedFilename = context.filename.replaceAll('\\', '/');
+      }],
+    },
+    defaultOptions: [{
+      ignoreFiles: [] as RulesEslintRegexNoRegexLiteralsRuleDefaultOptionsIgnoreFiles,
+      regexFile: '' as RulesEslintRegexNoRegexLiteralsRuleDefaultOptionsRegexFile,
+    }],
+    create(context, defaultOptions) {
+      const options: RulesEslintRegexNoRegexLiteralsRuleOptions = defaultOptions[0];
 
-    // Skip files that match an allowed pattern (exact match or path suffix).
-    const isAllowed = allowedFiles.some((allowedFile) => {
-      const normalizedAllowedFile = allowedFile.replaceAll('\\', '/');
+      // Skip ignored files.
+      if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
+        return {};
+      }
 
-      return normalizedFilename === normalizedAllowedFile
-        || normalizedFilename.endsWith(`/${normalizedAllowedFile}`);
-    });
+      // Skip the designated regex file.
+      if (options['regexFile'] !== '' && isIgnoredFile(context.filename, [options['regexFile']]) === true) {
+        return {};
+      }
 
-    if (isAllowed === true) {
-      return {};
-    }
+      return {
+        Literal(node) {
+          RulesEslintRegexNoRegexLiterals.checkLiteral(context, node, options);
 
-    /**
-     * No regex literals - Check literal.
-     *
-     * @param {NoRegexLiteralsCheckLiteralNode} node - Literal node.
-     *
-     * @returns {NoRegexLiteralsCheckLiteralReturns}
-     *
-     * @since 1.0.0
-     */
-    const checkLiteral = (node: NoRegexLiteralsCheckLiteralNode): NoRegexLiteralsCheckLiteralReturns => {
-      if ('regex' in node && node.regex !== undefined) {
+          return;
+        },
+      };
+    },
+  });
+
+  /**
+   * Rules - ESLint - Regex - No Regex Literals - Check Literal.
+   *
+   * Checks whether a literal node contains a regex value and reports it with the configured
+   * regexFile path when available, or a generic message otherwise.
+   *
+   * @private
+   *
+   * @param {RulesEslintRegexNoRegexLiteralsCheckLiteralContext} context - Context.
+   * @param {RulesEslintRegexNoRegexLiteralsCheckLiteralNode}    node    - Node.
+   * @param {RulesEslintRegexNoRegexLiteralsCheckLiteralOptions} options - Options.
+   *
+   * @returns {RulesEslintRegexNoRegexLiteralsCheckLiteralReturns}
+   *
+   * @since 0.13.0
+   */
+  private static checkLiteral(context: RulesEslintRegexNoRegexLiteralsCheckLiteralContext, node: RulesEslintRegexNoRegexLiteralsCheckLiteralNode, options: RulesEslintRegexNoRegexLiteralsCheckLiteralOptions): RulesEslintRegexNoRegexLiteralsCheckLiteralReturns {
+    if ('regex' in node && node.regex !== undefined) {
+      if (options['regexFile'] !== '') {
         context.report({
           node,
-          messageId: 'noRegexLiteral',
+          messageId: 'noRegexLiteralWithFile',
+          data: {
+            regexFile: options['regexFile'],
+          },
+        });
+      } else {
+        context.report({
+          node,
+          messageId: 'noRegexLiteralWithoutFile',
         });
       }
-    };
+    }
 
-    return {
-      Literal: checkLiteral,
-    };
-  },
-});
-
-export default noRegexLiterals;
+    return;
+  }
+}

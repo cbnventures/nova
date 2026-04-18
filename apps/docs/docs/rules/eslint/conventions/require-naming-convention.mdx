@@ -1,0 +1,201 @@
+---
+id: require-naming-convention
+title: Require Naming Convention
+description: Enforce context-aware naming conventions for identifiers based on their declaration type.
+keywords:
+  - nova
+  - eslint rule
+  - naming convention
+  - camelCase
+  - PascalCase
+  - UPPER_SNAKE_CASE
+  - linting
+tags:
+  - rules
+  - eslint
+  - conventions
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Enforce context-aware naming conventions because consistent casing per identifier type (camelCase for variables, PascalCase for classes, UPPER_SNAKE_CASE for constants) makes intent visible from the name alone.
+
+## Summary
+
+The `require-naming-convention` rule checks identifier names against the expected casing for their declaration context.
+
+`UPPER_SNAKE_CASE` is reserved for `const` declarations with immutable values (primitives and regex literals). Arrays, objects, instances, and function return values use `camelCase` even when declared with `const`.
+
+## Why Use This Rule?
+
+1. Casing tells the reader what kind of identifier it is — `MAX_RETRIES` is a constant, `maxRetries` is a variable, `MaxRetries` is a class.
+2. Prevents mixed conventions that make the codebase inconsistent and hard to scan.
+3. Catches common mistakes like `UPPER_SNAKE_CASE` on a mutable `let` or `camelCase` on a class.
+
+## Examples
+
+<Tabs groupId="require-naming-convention-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // UPPER_SNAKE_CASE — const with immutable value.
+    const MAX_RETRIES = 5;
+    const API_URL = 'https://api.example.com';
+    const IS_PRODUCTION = true;
+
+    // camelCase — const with mutable/non-primitive value.
+    const items = [1, 2, 3];
+    const config = { timeout: 30 };
+    const logger = new Logger();
+    const userName = getUserName();
+
+    // PascalCase — constructor variables (used with new).
+    const MarkConstructor = getConstructor();
+    const instance = new MarkConstructor(element);
+
+    // camelCase — let/var.
+    let retryCount = 0;
+
+    // camelCase — functions and parameters.
+    function processItems(inputData) {
+      return;
+    }
+
+    // PascalCase — classes, types, interfaces, enums.
+    class UserService {}
+    type RequestOptions = {};
+    interface ApiResponse {}
+    enum StatusCode { Ok, NotFound }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const max_retries = 3;
+    let MAX_RETRIES = 3;
+    function MyFunction() {}
+    class myClass {}
+    type myType = string;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-naming-convention-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireNamingConvention } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-naming-convention': RequireNamingConvention.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-naming-convention': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="override-enum-casing" label="Override Enum Casing">
+
+    Override the default casing for enum members:
+
+    ```ts
+    import { RequireNamingConvention } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-naming-convention': RequireNamingConvention.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-naming-convention': ['error', {
+            enumMember: 'UPPER_SNAKE_CASE',
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireNamingConvention } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-naming-convention': RequireNamingConvention.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-naming-convention': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option                | Type       | Default            | Description                             |
+|-----------------------|------------|--------------------|-----------------------------------------|
+| `classDeclaration`    | `string`   | `PascalCase`       | Casing for class names.                 |
+| `classMethod`         | `string`   | `camelCase`        | Casing for class methods.               |
+| `classProperty`       | `string`   | `camelCase`        | Casing for class properties.            |
+| `constructorVariable` | `string`   | `PascalCase`       | Casing for variables used with `new`.   |
+| `constant`            | `string`   | `UPPER_SNAKE_CASE` | Casing for const with immutable values. |
+| `enum`                | `string`   | `PascalCase`       | Casing for enum declarations.           |
+| `enumMember`          | `string`   | `PascalCase`       | Casing for enum members.                |
+| `function`            | `string`   | `camelCase`        | Casing for function declarations.       |
+| `ignoreFiles`         | `string[]` | `[]`               | File patterns to skip.                  |
+| `interface`           | `string`   | `PascalCase`       | Casing for interfaces.                  |
+| `parameter`           | `string`   | `camelCase`        | Casing for function parameters.         |
+| `reactComponent`      | `string`   | `PascalCase`       | Casing for React component functions.   |
+| `typeAlias`           | `string`   | `PascalCase`       | Casing for type aliases.                |
+| `variable`            | `string`   | `camelCase`        | Casing for let/var variables.           |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **`const` array is flagged for camelCase** — `UPPER_SNAKE_CASE` is only for `const` with immutable values (primitives and regex literals). Arrays, objects, and function return values use `camelCase` even when declared with `const`.
+- **Leading underscore is flagged** — Leading underscores (e.g., `_unused`) are permitted for unused variable prefixes and are not checked against casing rules.

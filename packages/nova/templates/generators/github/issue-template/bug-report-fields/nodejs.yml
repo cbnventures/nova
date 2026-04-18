@@ -1,0 +1,8 @@
+  - type: "input"
+    id: "node-version"
+    attributes:
+      label: "Node.js\xAE version"
+      description: "What version of Node.js\xAE are you using? It is recommended that you use versions under \"Long Term Support (LTS)\" as listed on the [Node.js\xAE](https://nodejs.org) homepage."
+      placeholder: "e.g. 24.13.1"
+    validations:
+      required: true

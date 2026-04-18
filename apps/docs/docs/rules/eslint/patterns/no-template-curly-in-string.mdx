@@ -1,0 +1,134 @@
+---
+id: no-template-curly-in-string
+title: No Template Curly in String
+description: Disallow template literal placeholder syntax in regular strings so missing backticks are caught before the expression appears literally in output.
+keywords:
+  - nova
+  - eslint rule
+  - template literal
+  - template string
+  - curly brace
+  - placeholder
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Catch `${...}` inside regular strings so missing backticks are found before the placeholder appears literally in output.
+
+## Summary
+
+The `no-template-curly-in-string` rule reports any regular string literal (`"..."` or `'...'`) that contains `${...}` syntax. This almost always means the developer intended to use a template literal but forgot the backticks.
+
+## Why Use This Rule?
+
+1. Prevents `${name}` from appearing literally in output when the developer meant to interpolate.
+2. Catches missing backticks at lint time instead of discovering wrong output at runtime.
+
+## Examples
+
+<Tabs groupId="no-template-curly-in-string-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    const greeting = `Hello ${name}!`;
+
+    const path = `${basePath}/files/${fileName}`;
+
+    const plain = 'no placeholders here';
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const greeting = "Hello ${name}!";
+
+    const path = '${basePath}/files/${fileName}';
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-template-curly-in-string-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoTemplateCurlyInString } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-template-curly-in-string': NoTemplateCurlyInString.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-template-curly-in-string': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoTemplateCurlyInString } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-template-curly-in-string': NoTemplateCurlyInString.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-template-curly-in-string': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Test files are flagged** — Add the test file patterns to the `ignoreFiles` option so the rule skips them.
+- **Template literals are flagged** — Only regular strings (`"..."` and `'...'`) are checked. Template literals with backticks are never flagged.

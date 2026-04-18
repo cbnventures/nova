@@ -1,52 +1,88 @@
-import type { Diagnostic, Program } from 'typescript';
+import type { Diagnostic, ParsedCommandLine, Program } from 'typescript';
 
 /**
- * CLI Utility - Type Check - Filter diagnostics.
+ * CLI - Utility - Type Check - Filter Diagnostics.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type CLIUtilityTypeCheckFilterDiagnosticsDiagnostics = readonly Diagnostic[];
+export type CliUtilityTypeCheckFilterDiagnosticsDiagnostics = readonly Diagnostic[];
 
-export type CLIUtilityTypeCheckFilterDiagnosticsReturns = Diagnostic[];
+export type CliUtilityTypeCheckFilterDiagnosticsReturns = Diagnostic[];
+
+export type CliUtilityTypeCheckFilterDiagnosticsCurrentDirectory = string;
+
+export type CliUtilityTypeCheckFilterDiagnosticsFileName = string;
 
 /**
- * CLI Utility - Type Check - Get config path.
+ * CLI - Utility - Type Check - Get Config Path.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type CLIUtilityTypeCheckGetConfigPathProject = string | undefined;
+export type CliUtilityTypeCheckGetConfigPathProject = string | undefined;
 
-export type CLIUtilityTypeCheckGetConfigPathReturns = string | undefined;
+export type CliUtilityTypeCheckGetConfigPathReturns = string | undefined;
+
+export type CliUtilityTypeCheckGetConfigPathCurrentDirectory = string;
+
+export type CliUtilityTypeCheckGetConfigPathResolved = string;
 
 /**
- * CLI Utility - Type Check - Get diagnostics.
+ * CLI - Utility - Type Check - Get Diagnostics.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type CLIUtilityTypeCheckGetDiagnosticsProgram = Program;
+export type CliUtilityTypeCheckGetDiagnosticsProgram = Program;
 
-export type CLIUtilityTypeCheckGetDiagnosticsReturns = readonly Diagnostic[];
+export type CliUtilityTypeCheckGetDiagnosticsReturns = readonly Diagnostic[];
 
 /**
- * CLI Utility - Type Check - Print diagnostics.
+ * CLI - Utility - Type Check - Print Diagnostics.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type CLIUtilityTypeCheckPrintDiagnosticsFiltered = Diagnostic[];
+export type CliUtilityTypeCheckPrintDiagnosticsFilteredDiagnostics = Diagnostic[];
 
-export type CLIUtilityTypeCheckPrintDiagnosticsReturns = void;
+export type CliUtilityTypeCheckPrintDiagnosticsReturns = void;
 
-export type CLIUtilityTypeCheckPrintDiagnosticsFileSet = Set<string>;
+export type CliUtilityTypeCheckPrintDiagnosticsFileSet = Set<string>;
+
+export type CliUtilityTypeCheckPrintDiagnosticsFileName = string;
+
+export type CliUtilityTypeCheckPrintDiagnosticsMessage = string;
+
+export type CliUtilityTypeCheckPrintDiagnosticsPosition = import('typescript').LineAndCharacter;
+
+export type CliUtilityTypeCheckPrintDiagnosticsLine = number;
+
+export type CliUtilityTypeCheckPrintDiagnosticsCharacter = number;
 
 /**
- * CLI Utility - Type Check - Run.
+ * CLI - Utility - Type Check - Run.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type CLIUtilityTypeCheckRunOptionsProject = string;
+export type CliUtilityTypeCheckRunOptionsProject = string;
 
-export type CLIUtilityTypeCheckRunOptions = {
-  project?: CLIUtilityTypeCheckRunOptionsProject;
+export type CliUtilityTypeCheckRunOptions = {
+  project?: CliUtilityTypeCheckRunOptionsProject;
 };
 
-export type CLIUtilityTypeCheckRunReturns = void;
+export type CliUtilityTypeCheckRunReturns = void;
+
+export type CliUtilityTypeCheckRunConfigPath = string | undefined;
+
+export type CliUtilityTypeCheckRunConfigResult = {
+  config?: unknown; error?: Diagnostic;
+};
+
+export type CliUtilityTypeCheckRunConfig = unknown;
+
+export type CliUtilityTypeCheckRunConfigDirectory = string;
+
+export type CliUtilityTypeCheckRunParsed = ParsedCommandLine;
+
+export type CliUtilityTypeCheckRunProgram = Program;
+
+export type CliUtilityTypeCheckRunDiagnostics = readonly Diagnostic[];
+
+export type CliUtilityTypeCheckRunFilteredDiagnostics = Diagnostic[];

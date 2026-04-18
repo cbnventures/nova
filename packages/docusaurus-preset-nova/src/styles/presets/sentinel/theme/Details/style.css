@@ -1,0 +1,77 @@
+/**
+ * Sentinel — Details/collapsible visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Details Container
+ * ============================ */
+
+.nova-details {
+  margin-bottom: 1rem;
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .nova-details {
+  border-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 2. Summary
+ * ============================ */
+
+.nova-details-summary {
+  padding: 0.625rem 0.75rem;
+  font-weight: 600;
+  color: var(--nova-color-neutral-800);
+  background-color: var(--nova-color-neutral-100);
+  transition: background-color var(--nova-motion-duration) ease;
+}
+
+.nova-details-summary:hover,
+.nova-details-summary:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+[data-theme="dark"] .nova-details-summary {
+  color: var(--nova-color-neutral-200);
+  background-color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-details-summary:hover,
+[data-theme="dark"] .nova-details-summary:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+[data-open="true"] > .nova-details-summary {
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] [data-open="true"] > .nova-details-summary {
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 3. Content
+ * ============================ */
+
+.nova-details-content-body {
+  padding: 0.625rem 0.75rem;
+}
+
+/* ============================
+ * 4. Responsive
+ * ============================ */
+
+@media (min-width: 768px) {
+  .nova-details-summary {
+    padding: 0.75rem 1rem;
+  }
+
+  .nova-details-content-body {
+    padding: 0.75rem 1rem;
+  }
+}

@@ -19,6 +19,7 @@ tags:
   - automation
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -26,21 +27,23 @@ import markdownTableBasic from './_assets_/markdown-table-1.png';
 import markdownTableAnsi from './_assets_/markdown-table-2.png';
 import markdownTableObjects from './_assets_/markdown-table-3.png';
 
-Generate copy-ready Markdown tables without juggling column widths or accidentally breaking <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term>-colored strings.
+Generate copy-ready Markdown tables without juggling column widths or accidentally breaking <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology>-colored strings.
 
 ## Summary
 
-The `MarkdownTable` battery turns rows of text into perfectly aligned Markdown tables. It returns a ready-to-print string you can drop into terminal logs, CI updates, or support runbooks without hand-tuning spacing.
+The `MarkdownTable` battery turns rows of text into perfectly aligned Markdown tables.
+
+It returns a ready-to-print string you can drop into terminal logs, <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> updates, or support runbooks without hand-tuning spacing.
 
 ## Why Use This Battery?
 
 1. Produces output that is easier to scan than raw JSON or console log dumps.
-2. Supports <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term> for terminals and produces clean, copy‑ready Markdown for docs.
+2. Supports <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology> for terminals and produces clean, copy-ready Markdown for docs.
 3. Keeps diffs tidy in Git, so reviewers spot row-level changes fast.
 
 ## Capabilities
 
-- Accounts for <Term title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser">ANSI</Term> colors and escapes special characters so tables align correctly and render cleanly.
+- Accounts for <Terminology title="escape codes defined by the American National Standards Institute" to="/docs/quickstart/terminology#runtime-and-browser" color={true}>ANSI</Terminology> colors and escapes special characters so tables align correctly and render cleanly.
 - Enforces header and row parity to prevent malformed tables from being generated.
 - Built-in minimum column sizing and optional padded separators create copy-paste-ready tables.
 - Chained row insertion lets automation pipelines stream data directly into reports with ease.
@@ -48,7 +51,7 @@ The `MarkdownTable` battery turns rows of text into perfectly aligned Markdown t
 ## Usage
 
 :::info Good to Know
-Examples use TypeScript, but the <Term title="application programming interface" to="/docs/quickstart/terminology#fundamentals">API</Term> is identical in JavaScript (<Term title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript">ESM</Term>-only).
+Examples use TypeScript, but the <Terminology title="application programming interface" to="/docs/quickstart/terminology#fundamentals" color={true}>API</Terminology> is identical in JavaScript (<Terminology title="ECMAScript Modules" to="/docs/quickstart/terminology#javascript-and-typescript" color={true}>ESM</Terminology>-only).
 :::
 
 <Tabs groupId="markdown-table-usage">
@@ -198,5 +201,5 @@ Pass these options into the `MarkdownTable` constructor to control column widths
 ## Troubleshooting
 
 - **`"headers" must be a non-empty array.`** — The constructor expects at least one header string.
-- **`Length of "rows" must equal length of "headers"`.** — Each row array must align with the number of headers; pad missing cells before calling `addRow`.
+- **`Length of "rows" must equal length of "headers"`** — Each row array must align with the number of headers; pad missing cells before calling `addRow`.
 - **Unexpected spacing?** — Increase `minimumColumnWidth` when cells contain long strings or disable delimiter padding by leaving `padDelimiterRow` at its default.

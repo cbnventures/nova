@@ -1,0 +1,196 @@
+---
+title: Manifests
+sidebar_position: 3
+tags:
+  - guides
+  - manifests
+---
+
+import Details from '@theme/Details';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Manifests
+
+The `.grain` manifest is the single source of truth for a Foundry workspace. It describes what your project is — languages, packages, dependencies, rules, and deployment targets — and Foundry generates everything else from it.
+
+## Workspace Declaration
+
+Every manifest begins with a `workspace` block. This is the root of the file.
+
+```text title="project.grain"
+workspace "my-app" {
+  lang   = "alloy"
+  target = "arcline"
+}
+```
+
+The workspace name must be unique. It becomes the prefix for all generated package identifiers and the namespace for Tongs dependency resolution.
+
+## Package Blocks
+
+Packages are declared inside the workspace. Each package has a name, a type, and optional directives.
+
+```text title="project.grain — packages"
+workspace "my-app" {
+  lang = "alloy"
+
+  packages {
+    core     { type = "library" }
+    api      { type = "service", depends = ["core"] }
+    web      { type = "app", depends = ["core"] }
+    cli      { type = "binary", depends = ["core"] }
+  }
+}
+```
+
+Supported package types:
+
+| Type      | Purpose                                 | Generates                                  |
+|-----------|-----------------------------------------|--------------------------------------------|
+| `library` | Shared code consumed by other packages. | Blueprint, Warden config, Alloy settings.  |
+| `service` | A long-running process with endpoints.  | All library artifacts plus Spoke config.   |
+| `app`     | A user-facing application.              | All library artifacts plus Smelter config. |
+| `binary`  | A standalone CLI tool.                  | All library artifacts plus entry point.    |
+
+## Dependency Expressions
+
+The `depends` directive accepts an array of package names. Foundry validates these against the workspace and builds the Tongs dependency graph.
+
+```text title="Dependency chain"
+packages {
+  core     { type = "library" }
+  auth     { type = "library", depends = ["core"] }
+  api      { type = "service", depends = ["core", "auth"] }
+}
+```
+
+:::info
+Circular dependencies are rejected at parse time. If `api` depends on `auth` and `auth` depends on `api`, Foundry will refuse to forge and print the cycle path.
+:::
+
+## Warden Presets
+
+The `warden` directive controls which linting rule presets are applied. You can specify one or more presets as an array.
+
+```text title="Warden preset configuration"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+}
+```
+
+Presets stack in order. Later presets override earlier ones when rules conflict. Available presets:
+
+| Preset        | Rules | Focus                                           |
+|---------------|-------|-------------------------------------------------|
+| `strict`      | 220   | Type safety, explicit returns, no implicit any. |
+| `conventions` | 95    | Naming, exports, file structure.                |
+| `formatting`  | 65    | Whitespace, comments, visual consistency.       |
+
+## Crucible Configuration
+
+The `crucible` directive controls automatic test scaffold generation.
+
+<Tabs>
+<TabItem value="auto" label="Auto" default>
+
+```text title="project.grain — auto mode"
+workspace "my-app" {
+  crucible = auto
+}
+```
+
+Crucible scans every exported type signature and generates a test file with assertion templates. The test files update on every forge.
+
+</TabItem>
+<TabItem value="manual" label="Manual">
+
+```text title="project.grain — manual mode"
+workspace "my-app" {
+  crucible = manual
+}
+```
+
+Crucible generates test stubs once on the first forge. Subsequent forges leave existing test files untouched.
+
+</TabItem>
+<TabItem value="off" label="Off">
+
+```text title="project.grain — disabled"
+workspace "my-app" {
+  crucible = off
+}
+```
+
+No test scaffolding. You manage test files entirely on your own.
+
+</TabItem>
+</Tabs>
+
+## Deployment Targets
+
+The `target` directive specifies where the workspace deploys. This controls which deployment artifacts Foundry generates.
+
+```text title="project.grain — deployment target"
+workspace "my-app" {
+  target = "arcline"
+
+  deploy {
+    region   = "us-east-1"
+    replicas = 3
+    scaling  = "auto"
+  }
+}
+```
+
+See [Deployment](/docs/reference/deployment/) for the full list of target options and deploy block directives.
+
+## Manifest Inheritance
+
+Use the `extend` keyword to share settings across multiple workspaces. A child manifest inherits everything from its parent and can override specific directives.
+
+```text title="base.grain — shared settings"
+workspace "base" {
+  lang    = "alloy"
+  warden  = ["strict", "conventions"]
+  crucible = auto
+}
+```
+
+```text title="project.grain — extending the base"
+extend "base.grain"
+
+workspace "my-app" {
+  target = "arcline"
+
+  packages {
+    core { type = "library" }
+    api  { type = "service", depends = ["core"] }
+  }
+}
+```
+
+The child workspace inherits `lang`, `warden`, and `crucible` from the base. Only `target` and `packages` are defined locally.
+
+<Details>
+<summary>Full directive reference</summary>
+
+| Directive  | Type     | Default      | Description                         |
+|------------|----------|--------------|-------------------------------------|
+| `lang`     | `Text`   | `"alloy"`    | Primary language for the workspace. |
+| `target`   | `Text`   | `"local"`    | Deployment target platform.         |
+| `warden`   | `[Text]` | `["strict"]` | Linting rule presets to apply.      |
+| `crucible` | `Enum`   | `auto`       | Test scaffold generation mode.      |
+| `smelter`  | `Text`   | `"standard"` | Bundler configuration profile.      |
+| `packages` | `Block`  | Required     | Package declarations.               |
+| `deploy`   | `Block`  | Optional     | Deployment configuration.           |
+| `rules`    | `Block`  | Optional     | Per-rule overrides for Warden.      |
+| `extend`   | `Text`   | Optional     | Path to a parent manifest.          |
+
+</Details>
+
+## Next Steps
+
+- [Workspace Management](/docs/guides/workspace-management/) — Managing dependencies across packages with Tongs.
+- [Build Pipeline](/docs/pipeline/build-pipeline/) — How Quench and Bellows turn manifests into build artifacts.
+- [Warden Rules](/docs/pipeline/warden-rules/) — Deep dive into the linting rule system.

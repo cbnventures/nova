@@ -1,8 +1,26 @@
 /**
- * CLI Utility - Transpile test.
+ * Tests - CLI - Utility - Transpile - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityTranspileTestOriginalCwd = string;
+export type TestsCliUtilityTranspileRunOriginalCwd = string;
 
-export type CLIUtilityTranspileTestSandboxRoot = string;
+export type TestsCliUtilityTranspileRunTemporaryDirectory = string;
+
+export type TestsCliUtilityTranspileRunTemporaryPrefix = string;
+
+export type TestsCliUtilityTranspileRunSandboxDirectory = string;
+
+export type TestsCliUtilityTranspileRunSandboxRoot = string;
+
+export type TestsCliUtilityTranspileRunProjectDirectory = string;
+
+export type TestsCliUtilityTranspileRunTsconfigPath = string;
+
+export type TestsCliUtilityTranspileRunTsconfigContents = string;
+
+export type TestsCliUtilityTranspileRunIndexPath = string;
+
+export type TestsCliUtilityTranspileRunOutputJsPath = string;
+
+export type TestsCliUtilityTranspileRunOutputExists = boolean;

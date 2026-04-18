@@ -1,0 +1,275 @@
+---
+title: API Reference
+sidebar_position: 1
+description: Full Spoke API reference for Sentinel — policy management, device queries, zone operations, and audit export endpoints.
+tags:
+  - reference
+  - api
+---
+
+import Details from '@theme/Details';
+
+# API Reference
+
+The Sentinel Spoke API provides programmatic access to all platform operations — policy management, device queries, zone operations, and audit export. All endpoints require a Cipher bearer token for authentication.
+
+## Authentication
+
+Every request must include a Cipher bearer token in the `Authorization` header:
+
+```bash title="Authenticated request"
+curl -X GET https://sentinel.yourcompany.internal/spoke/v1/policies \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json"
+```
+
+Generate tokens via the Sentinel dashboard or the CLI:
+
+```bash title="Generate API token"
+sentinel api tokens create \
+  --name "ci-pipeline" \
+  --scope "policies:read,policies:simulate,devices:read" \
+  --ttl 90d
+```
+
+:::note Token Scopes
+Tokens are scoped to specific operations. A token with `policies:read` cannot modify policies. A token with `devices:read` cannot enroll new devices. Always use the minimum scope required for your integration.
+:::
+
+## Policies
+
+| Method   | Path                              | Description                        |
+|----------|-----------------------------------|------------------------------------|
+| `GET`    | `/spoke/v1/policies`              | List all policies                  |
+| `GET`    | `/spoke/v1/policies/:id`          | Get a specific policy              |
+| `POST`   | `/spoke/v1/policies`              | Create a new policy                |
+| `PUT`    | `/spoke/v1/policies/:id`          | Update an existing policy          |
+| `DELETE` | `/spoke/v1/policies/:id`          | Delete a policy                    |
+| `POST`   | `/spoke/v1/policies/:id/evaluate` | Evaluate a policy against a device |
+| `POST`   | `/spoke/v1/policies/simulate`     | Simulate a policy change (Parapet) |
+
+### Create a Policy
+
+```bash title="POST /spoke/v1/policies"
+curl -X POST https://sentinel.yourcompany.internal/spoke/v1/policies \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "staging-access",
+    "resource": "staging-services",
+    "effect": "allow",
+    "priority": 100,
+    "conditions": {
+      "device.posture": { "gte": 70 },
+      "user.mfa": true,
+      "user.role": ["engineer", "qa"]
+    },
+    "on_failure": {
+      "action": "revoke",
+      "notify": "security-ops"
+    }
+  }'
+```
+
+<Details>
+<summary>Response schema</summary>
+
+```json title="201 Created"
+{
+  "id": "pol_8a3f7b2c9d1e",
+  "name": "staging-access",
+  "resource": "staging-services",
+  "effect": "allow",
+  "priority": 100,
+  "conditions": {
+    "device.posture": { "gte": 70 },
+    "user.mfa": true,
+    "user.role": ["engineer", "qa"]
+  },
+  "on_failure": {
+    "action": "revoke",
+    "notify": "security-ops"
+  },
+  "created_at": "2025-06-15T09:00:00Z",
+  "updated_at": "2025-06-15T09:00:00Z",
+  "status": "active"
+}
+```
+
+</Details>
+
+### Simulate a Policy Change
+
+```bash title="POST /spoke/v1/policies/simulate"
+curl -X POST https://sentinel.yourcompany.internal/spoke/v1/policies/simulate \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "proposed_changes": [{
+      "policy_id": "pol_8a3f7b2c9d1e",
+      "change": "update",
+      "fields": {
+        "conditions.device.posture.gte": 85
+      }
+    }],
+    "scope": "all_devices",
+    "mode": "dry-run"
+  }'
+```
+
+<Details>
+<summary>Response schema</summary>
+
+```json title="200 OK"
+{
+  "simulation_id": "sim_7f3a2b9c4e1d",
+  "mode": "dry-run",
+  "scope": "all_devices",
+  "results": {
+    "total_sessions": 1247,
+    "would_pass": 1089,
+    "would_fail": 158,
+    "failure_breakdown": {
+      "by_platform": {
+        "macos": 42,
+        "windows": 67,
+        "linux": 31,
+        "android": 18
+      },
+      "by_cause": {
+        "posture_below_threshold": 158
+      }
+    }
+  },
+  "created_at": "2025-06-15T09:05:00Z"
+}
+```
+
+</Details>
+
+## Devices
+
+| Method | Path                             | Description                    |
+|--------|----------------------------------|--------------------------------|
+| `GET`  | `/spoke/v1/devices`              | List all enrolled devices      |
+| `GET`  | `/spoke/v1/devices/:id`          | Get device details and posture |
+| `POST` | `/spoke/v1/devices/:id/enroll`   | Enroll a device                |
+| `POST` | `/spoke/v1/devices/:id/unenroll` | Remove a device from the fleet |
+| `GET`  | `/spoke/v1/devices/:id/posture`  | Get current posture breakdown  |
+| `GET`  | `/spoke/v1/devices/:id/history`  | Get posture history over time  |
+
+### Get Device Posture
+
+```bash title="GET /spoke/v1/devices/:id/posture"
+curl -X GET https://sentinel.yourcompany.internal/spoke/v1/devices/dev_a3b7c9d1/posture \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN"
+```
+
+<Details>
+<summary>Response schema</summary>
+
+```json title="200 OK"
+{
+  "device_id": "dev_a3b7c9d1",
+  "composite_score": 94,
+  "profile": "standard",
+  "last_check": "2025-06-15T14:30:00Z",
+  "categories": {
+    "os_integrity": { "score": 100, "weight": 25, "checks": { "version": "current", "patches": "current", "jailbreak": false } },
+    "encryption": { "score": 100, "weight": 20, "checks": { "enabled": true, "algorithm": "AES-256", "key_age_days": 12 } },
+    "network": { "score": 85, "weight": 15, "checks": { "firewall": true, "stealth_mode": false, "open_ports": 3 } },
+    "authentication": { "score": 90, "weight": 15, "checks": { "screen_lock": true, "timeout_seconds": 300, "biometric": true } },
+    "software": { "score": 95, "weight": 15, "checks": { "antivirus": true, "definitions_age_days": 1, "unauthorized": [] } },
+    "configuration": { "score": 90, "weight": 10, "checks": { "mdm_compliant": true, "cert_valid": true, "agent_version": "3.4.1" } }
+  }
+}
+```
+
+</Details>
+
+## Zones
+
+| Method | Path                            | Description                    |
+|--------|---------------------------------|--------------------------------|
+| `GET`  | `/spoke/v1/zones`               | List all Rampart zones         |
+| `GET`  | `/spoke/v1/zones/:id`           | Get zone details and workloads |
+| `POST` | `/spoke/v1/zones`               | Create a new zone              |
+| `PUT`  | `/spoke/v1/zones/:id`           | Update zone configuration      |
+| `GET`  | `/spoke/v1/zones/:id/crossings` | List crossing rules for a zone |
+| `POST` | `/spoke/v1/zones/crossings`     | Create a zone crossing rule    |
+
+## Audit
+
+| Method | Path                           | Description                        |
+|--------|--------------------------------|------------------------------------|
+| `GET`  | `/spoke/v1/audit/query`        | Query Spyglass events              |
+| `GET`  | `/spoke/v1/audit/sessions/:id` | Reconstruct a specific session     |
+| `POST` | `/spoke/v1/audit/export`       | Export compliance evidence package |
+| `GET`  | `/spoke/v1/audit/export/:id`   | Download a completed export        |
+
+### Query Audit Events
+
+```bash title="GET /spoke/v1/audit/query"
+curl -X GET "https://sentinel.yourcompany.internal/spoke/v1/audit/query?\
+event_type=access-decision&\
+result=revoke&\
+period=2025-06-01..2025-06-30&\
+resource=api-cluster-east" \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN"
+```
+
+<Details>
+<summary>Response schema</summary>
+
+```json title="200 OK"
+{
+  "query": {
+    "event_type": "access-decision",
+    "result": "revoke",
+    "period": "2025-06-01..2025-06-30",
+    "resource": "api-cluster-east"
+  },
+  "total": 4,
+  "events": [
+    {
+      "timestamp": "2025-06-04T10:22:00Z",
+      "user": "k.patel",
+      "device": "dev_b1a9c3e7",
+      "resource": "api-cluster-east",
+      "result": "revoke",
+      "reason": "device.posture < 80",
+      "remediation_time": "47m"
+    },
+    {
+      "timestamp": "2025-06-09T14:22:00Z",
+      "user": "m.torres",
+      "device": "dev_f8e2d4c6",
+      "resource": "api-cluster-east",
+      "result": "revoke",
+      "reason": "network.location anomaly",
+      "remediation_time": "12m"
+    }
+  ]
+}
+```
+
+</Details>
+
+## Rate Limits
+
+All Spoke API endpoints are rate-limited per token:
+
+| Scope           | Limit              |
+|-----------------|--------------------|
+| Read endpoints  | 1,000 requests/min |
+| Write endpoints | 100 requests/min   |
+| Simulation      | 10 requests/hour   |
+| Audit export    | 5 requests/hour    |
+
+Rate limit headers are included in every response: `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`.
+
+## Next Steps
+
+- [Trust Policies](/docs/trust/trust-policies/) — Policy grammar and condition reference.
+- [Audit & Forensics](/docs/operations/audit-forensics/) — CLI query syntax for Spyglass.
+- [Platform Overview](/docs/platform-overview/) — Architecture context for the API.

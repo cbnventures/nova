@@ -1,0 +1,12 @@
+/**
+ * Doc Category Generated Index Page — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* Match the visual breathing room of the TOC column on regular doc pages. */
+@media (min-width: 1024px) {
+  .nova-category-index {
+    padding-right: var(--nova-grid-padding);
+  }
+}

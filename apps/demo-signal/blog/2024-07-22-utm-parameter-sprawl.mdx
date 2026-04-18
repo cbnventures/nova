@@ -1,0 +1,74 @@
+---
+title: "UTM Parameter Sprawl Is Destroying Your Attribution Data"
+authors: [luca]
+tags: [utm, attribution, campaign, analytics]
+date: 2024-07-22
+---
+
+We audited the UTM parameters across a mid-market SaaS company's marketing stack. They had 847 unique `utm_campaign` values. Forty-three of them referred to the same product launch. The variations included `spring-launch`, `spring_launch`, `SpringLaunch`, `spring-launch-2024`, `spring-launch-v2`, and `spring-launch-final-FINAL`. Their attribution data was not wrong. It was unmergeable.
+
+UTM sprawl is not a minor annoyance. It is a data quality crisis that silently undermines every attribution model you run.
+
+{/* truncate */}
+
+## The Scale of the Problem
+
+We sampled UTM data from 200 Beacon-connected accounts and found consistent patterns:
+
+| Metric                              | Median | 90th Percentile |
+|-------------------------------------|--------|-----------------|
+| Unique `utm_campaign` values        | 312    | 1,840           |
+| Duplicate campaigns (spelling only) | 23%    | 41%             |
+| Orphaned UTMs (no owner)            | 34%    | 58%             |
+| UTMs with missing `utm_medium`      | 18%    | 29%             |
+
+Nearly a quarter of all campaign tags were duplicates caused by inconsistent naming. A third had no identifiable owner — nobody knew who created them or what they tracked.
+
+## Why Spreadsheets Do Not Fix This
+
+The standard advice is "maintain a UTM spreadsheet." In practice, spreadsheets fail because:
+
+1. **No enforcement.** Anyone can create a link with any UTM value. The spreadsheet is a suggestion, not a constraint.
+2. **No validation.** A misspelled `utm_source` looks identical to a correct one until you run a report and find a segment with three clicks.
+3. **No deduplication.** When two teams independently create `spring-launch` and `spring_launch`, nothing flags the collision.
+4. **No deprecation.** Old campaigns never get removed. The spreadsheet grows until nobody trusts it.
+
+## How Beacon Solves UTM Sprawl
+
+Beacon treats UTM parameters as structured metadata with validation rules:
+
+```json title="Campaign template with validation"
+{
+  "template": "product-launch-{quarter}-{year}",
+  "validation": {
+    "utm_source": ["email", "social", "paid", "organic", "partner"],
+    "utm_medium": ["newsletter", "post", "ad", "blog", "referral"],
+    "utm_campaign": {
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 40
+    }
+  },
+  "defaults": {
+    "utm_source": "email",
+    "utm_medium": "newsletter"
+  }
+}
+```
+
+When a team member creates a Beacon link, the UTM values are validated against the template. Invalid values are rejected at creation time, not discovered six weeks later in an analytics review. Defaults fill in missing fields so no link ships with incomplete attribution.
+
+## Normalization at Query Time
+
+For accounts with existing UTM sprawl, Prism applies normalization rules during attribution queries:
+
+- Case folding: `SpringLaunch` and `springlaunch` merge automatically.
+- Separator normalization: `spring-launch` and `spring_launch` resolve to the same campaign.
+- Alias mapping: Manual rules that merge `spring-launch-v2` and `spring-launch-final-FINAL` into a canonical campaign ID.
+
+The raw data is never modified. Normalization happens at query time, which means you can adjust the rules without reprocessing historical data.
+
+## The Real Cost
+
+We estimated the impact of UTM sprawl on attribution accuracy. For the median account in our sample, 23% of campaign data was fragmented across duplicate tags. That means nearly a quarter of the attribution signal was scattered into segments too small to act on. Campaigns that looked marginal in isolation were actually significant when their fragments were merged.
+
+Clean your UTMs or let Beacon enforce them. Either way, stop letting free-text fields determine where your budget goes.

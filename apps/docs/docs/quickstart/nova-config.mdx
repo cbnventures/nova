@@ -1,0 +1,239 @@
+---
+id: nova-config
+title: Nova Config Reference
+sidebar_position: 4
+description: Complete reference for every section and field in the nova.config.json configuration file.
+keywords:
+  - nova
+  - nova config
+  - nova.config.json
+  - project metadata
+  - entities
+  - workflows
+  - workspaces
+  - configuration reference
+tags:
+  - quickstart
+  - reference
+  - configuration
+  - nova-config
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+
+# Nova Config Reference
+
+The <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> file lives at the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root and drives every Nova command. This page documents each section and its fields.
+
+Use the [`nova utility initialize`](/docs/cli/utilities/initialize) wizard to create or update this file interactively.
+
+## `project`
+
+Describes the project identity, display info, and build metadata.
+
+| Field               | Type       | Description                                                                                         |
+|---------------------|------------|-----------------------------------------------------------------------------------------------------|
+| `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only (max 214 chars).       |
+| `name.title`        | `string`   | Human-readable project name for display.                                                            |
+| `description.short` | `string`   | One-line summary used in `package.json` and meta tags.                                              |
+| `description.long`  | `string`   | Extended description for README and documentation pages.                                            |
+| `keywords`          | `string[]` | Search keywords (max 50 characters each).                                                           |
+| `legalName`         | `string`   | Legal entity name used in LICENSE and copyright notices.                                            |
+| `pronouns`          | `string`   | Controls first-person wording in generated files: `"business"` (we/our) or `"individual"` (I/my).   |
+| `platforms`         | `string[]` | Supported platforms for bug report dropdowns (e.g., `"nodejs"`, `"macos"`, `"linux"`, `"windows"`). |
+| `startingYear`      | `number`   | Year the project began (integer >= 1970). Used in LICENSE copyright ranges.                         |
+| `license`           | `string`   | SPDX license identifier (e.g., `"MIT"`, `"Apache-2.0"`, `"Proprietary"`).                           |
+
+```json
+{
+  "project": {
+    "name": {
+      "slug": "example",
+      "title": "Example"
+    },
+    "description": {
+      "short": "A sample Nova project.",
+      "long": "Extended description for documentation and README files."
+    },
+    "keywords": ["example", "nova"],
+    "legalName": "Example Author LLC",
+    "pronouns": "business",
+    "platforms": ["nodejs", "macos", "linux", "windows"],
+    "startingYear": 2025,
+    "license": "MIT"
+  }
+}
+```
+
+## `entities`
+
+An array of people and organizations associated with the project.
+
+| Field   | Type       | Description                                                |
+|---------|------------|------------------------------------------------------------|
+| `name`  | `string`   | Display name.                                              |
+| `email` | `string`   | Contact email (must contain `@` and a domain).             |
+| `url`   | `string`   | Profile or organization URL (`http://` or `https://`).     |
+| `roles` | `string[]` | One or more of `"author"`, `"contributor"`, `"supporter"`. |
+
+```json
+{
+  "entities": [
+    {
+      "name": "Example Author",
+      "email": "author@example.com",
+      "url": "https://example.com/author",
+      "roles": ["author"]
+    },
+    {
+      "name": "Example Collaborator",
+      "email": "collab@example.com",
+      "url": "https://example.com/collaborator",
+      "roles": ["contributor", "supporter"]
+    }
+  ]
+}
+```
+
+## `emails`
+
+Canonical contact addresses referenced by tools and metadata.
+
+| Field  | Type     | Description                        |
+|--------|----------|------------------------------------|
+| `bugs` | `string` | Email for bug reports and support. |
+
+```json
+{
+  "emails": {
+    "bugs": "bugs@example.com"
+  }
+}
+```
+
+## `urls`
+
+Canonical links with validation and normalization.
+
+| Field           | Type       | Description                                                                                          |
+|-----------------|------------|------------------------------------------------------------------------------------------------------|
+| `homepage`      | `string`   | Project homepage URL.                                                                                |
+| `repository`    | `string`   | Source repository URL. Accepts `git:`, `git+https:`, `git+ssh:`, `git+http:`, `http://`, `https://`. |
+| `bugs`          | `string`   | Issue tracker URL.                                                                                   |
+| `license`       | `string`   | License file URL.                                                                                    |
+| `logo`          | `string`   | Project logo URL.                                                                                    |
+| `documentation` | `string`   | Documentation site URL.                                                                              |
+| `github`        | `string`   | GitHub repository URL.                                                                               |
+| `npm`           | `string`   | npm package page URL.                                                                                |
+| `fundSources`   | `string[]` | Funding URLs (entered comma-separated in the wizard, saved as a list).                               |
+| `privacyPolicy` | `string`   | Privacy policy URL. Appears in generated GitHub issue templates.                                     |
+| `termsOfUse`    | `string`   | Terms of use URL. Appears in generated GitHub issue templates.                                       |
+
+```json
+{
+  "urls": {
+    "homepage": "https://example.com",
+    "repository": "https://github.com/example/example-project",
+    "bugs": "https://github.com/example/example-project/issues",
+    "license": "https://github.com/example/example-project/blob/main/LICENSE",
+    "logo": "https://example.com/assets/logo.svg",
+    "documentation": "https://docs.example.com/project",
+    "github": "https://github.com/example/example-project",
+    "npm": "https://www.npmjs.com/package/example-project",
+    "fundSources": [
+      "https://github.com/sponsors/example",
+      "https://opencollective.com/example"
+    ],
+    "privacyPolicy": "https://example.com/privacy",
+    "termsOfUse": "https://example.com/terms"
+  }
+}
+```
+
+## `workspaces`
+
+A map of relative paths to <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> definitions. Each key is a path from the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root (e.g., `"./"`, `"./apps/docs"`, `"./packages/nova"`).
+
+| Field     | Type     | Description                                                                                                                                                                                                                                       |
+|-----------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`    | `string` | Package name for `package.json`.                                                                                                                                                                                                                  |
+| `role`    | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                          |
+| `policy`  | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                        |
+| `recipes` | `object` | Optional. Enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> and their settings, keyed by recipe name. Each value is a tuple: `[enabled]` or `[enabled, settings]`. |
+
+```json
+{
+  "workspaces": {
+    "./": {
+      "name": "example-project",
+      "role": "project",
+      "policy": "freezable",
+      "recipes": {
+        "cleanup": [true, { "removeUnknownKeys": true, "reorderKeys": true }],
+        "normalize-dependencies": [true, { "pinDependencyVersions": true }],
+        "sync-identity": [true],
+        "sync-ownership": [true]
+      }
+    },
+    "./packages/nova": {
+      "name": "@company/example",
+      "role": "package",
+      "policy": "distributable",
+      "recipes": {
+        "cleanup": [true, { "removeUnknownKeys": true, "reorderKeys": true }],
+        "sync-identity": [true, { "description": true, "keywords": true }],
+        "sync-ownership": [true, { "homepage": true, "bugs": true, "author": true }]
+      }
+    }
+  }
+}
+```
+
+## `workflows`
+
+An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
+
+| Field      | Type     | Description                                                                                             |
+|------------|----------|---------------------------------------------------------------------------------------------------------|
+| `template` | `string` | Name of a bundled workflow template (e.g., `"publish-to-npm"`, `"lock-inactive-issues"`).               |
+| `suffix`   | `string` | Optional label appended to the output filename. Required when the same template appears more than once. |
+| `settings` | `object` | Optional key-value pairs that configure variable placeholders in the template.                          |
+
+### Variable Formats
+
+Each template defines variables with one of three formats that determine how `settings` values are used:
+
+| Format    | What happens                                                                                              |
+|-----------|-----------------------------------------------------------------------------------------------------------|
+| `secret`  | Produces `${{ secrets.NAME }}` in the YAML. A setting value remaps the secret name.                       |
+| `var`     | Produces `${{ vars.NAME }}` in the YAML. A setting value remaps the variable name.                        |
+| `literal` | Replaces the placeholder with the exact string from `settings`. Must be provided or the entry is skipped. |
+
+### Output Filenames
+
+Generated files follow the pattern `nova-{template}.yml` or `nova-{template}-{suffix}.yml` and are written to `.github/workflows/`.
+
+```json
+{
+  "workflows": [
+    {
+      "template": "lock-inactive-issues"
+    },
+    {
+      "template": "publish-to-npm",
+      "settings": {
+        "ROOT_WORKING_DIR": "./",
+        "NPM_WORKING_DIR": "./packages/nova"
+      }
+    },
+    {
+      "template": "publish-to-npm",
+      "suffix": "preset",
+      "settings": {
+        "ROOT_WORKING_DIR": "./",
+        "NPM_WORKING_DIR": "./packages/preset"
+      }
+    }
+  ]
+}
+```

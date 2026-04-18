@@ -1,0 +1,197 @@
+---
+id: require-jsdoc-hierarchy
+title: Require JSDoc Hierarchy
+description: Require JSDoc summary lines to follow the hierarchy chain derived from the file path and method name.
+keywords:
+  - nova
+  - eslint rule
+  - jsdoc
+  - hierarchy
+  - summary line
+  - file path
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require JSDoc summary lines to follow the hierarchy chain derived from the file path and method name.
+
+## Summary
+
+The `require-jsdoc-hierarchy` rule reports any JSDoc summary line on a class or method that does not match the expected hierarchy string.
+
+The expected hierarchy is built from the file path segments after the first matching anchor directory (default: `src`), with each segment title-cased and separated by ` - `. For methods, the method name is appended as the final segment. Known abbreviations (e.g., `api` to `API`, `eslint` to `ESLint`) are applied automatically.
+
+## Why Use This Rule?
+
+1. Ensures every JSDoc summary line is consistent and predictable across the codebase.
+2. Makes it possible to locate a class or method in the file tree by reading its JSDoc summary.
+3. Eliminates subjective or inconsistent summary text by deriving it mechanically from the file path.
+
+## Examples
+
+<Tabs groupId="require-jsdoc-hierarchy-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // File: src/cli/utility/changelog.ts
+
+    /**
+     * CLI - Utility - Changelog.
+     *
+     * @since 1.0.0
+     */
+    export class CliUtilityChangelog {
+      /**
+       * CLI - Utility - Changelog - Generate.
+       *
+       * @since 1.0.0
+       */
+      public static generate() {
+        // ...
+      }
+    }
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // File: src/cli/utility/changelog.ts
+
+    /**
+     * Changelog utility class.
+     *
+     * @since 1.0.0
+     */
+    export class CliUtilityChangelog {
+      /**
+       * Generates a changelog.
+       *
+       * @since 1.0.0
+       */
+      public static generate() {
+        // ...
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-jsdoc-hierarchy-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireJsdocHierarchy } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-hierarchy': RequireJsdocHierarchy.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-hierarchy': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="add-anchor-directory" label="Add Anchor Directory">
+
+    Add additional directories as hierarchy anchors:
+
+    ```ts
+    import { RequireJsdocHierarchy } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-hierarchy': RequireJsdocHierarchy.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-hierarchy': ['error', {
+            anchorDirectories: ['src', 'utils'],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireJsdocHierarchy } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-jsdoc-hierarchy': RequireJsdocHierarchy.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-jsdoc-hierarchy': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option              | Type                     | Default     | Description                                         |
+|---------------------|--------------------------|-------------|-----------------------------------------------------|
+| `anchorDirectories` | `string[]`               | `['src']`   | Directory names that serve as path anchors.         |
+| `ignoreFiles`       | `string[]`               | `[]`        | File patterns to skip.                              |
+| `knownNames`        | `Record<string, string>` | `{}`        | Custom brand/abbreviation mappings for prettifying. |
+| `stripDirectories`  | `string[]`               | `['types']` | Directory names to filter out from path parts.      |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-jsdoc-hierarchy: error'
+```
+
+## Troubleshooting
+
+- **Warning fires even though the summary looks correct** — Check for extra or missing spaces around ` - ` separators, and verify that known abbreviations match exactly (e.g., `API` not `Api`, `ESLint` not `Eslint`).
+- **File is not under any anchor directory** — The rule tries each `anchorDirectories` entry in order. If none match, it falls back to using the filename stem as the hierarchy base (e.g., `sidebars.ts` becomes `Sidebars.`).
+- **Constructors are not checked** — The rule skips constructor methods intentionally.

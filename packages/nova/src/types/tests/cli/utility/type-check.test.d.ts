@@ -1,8 +1,22 @@
 /**
- * CLI Utility - Type Check test.
+ * Tests - CLI - Utility - Type Check - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityTypeCheckTestOriginalCwd = string;
+export type TestsCliUtilityTypeCheckRunOriginalCwd = string;
 
-export type CLIUtilityTypeCheckTestSandboxRoot = string;
+export type TestsCliUtilityTypeCheckRunTemporaryDirectory = string;
+
+export type TestsCliUtilityTypeCheckRunTemporaryPrefix = string;
+
+export type TestsCliUtilityTypeCheckRunSandboxDirectory = string;
+
+export type TestsCliUtilityTypeCheckRunSandboxRoot = string;
+
+export type TestsCliUtilityTypeCheckRunProjectDirectory = string;
+
+export type TestsCliUtilityTypeCheckRunTsconfigPath = string;
+
+export type TestsCliUtilityTypeCheckRunTsconfigContents = string;
+
+export type TestsCliUtilityTypeCheckRunIndexPath = string;

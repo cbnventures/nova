@@ -1,0 +1,117 @@
+---
+id: workers
+title: Cloudflare Workers
+description: Scaffold a Cloudflare Workers workspace with monorepo or workspace mode.
+keywords:
+  - nova
+  - nova scaffold
+  - workers
+  - cloudflare
+  - app
+  - edge
+tags:
+  - cli
+  - scaffold
+  - app
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **Cloudflare Workers** workspace with TypeScript.
+
+## Why Use This Command?
+
+- Installs Wrangler with Cloudflare Workers types and TypeScript so you can run `wrangler dev` against the edge runtime right away.
+- Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
+- Wires up `wrangler dev` and `wrangler deploy` scripts so the workspace is ready to iterate and ship to Cloudflare.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Empty directory** (monorepo mode) or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** (workspace mode) — The command auto-detects which mode to use.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold app workers
+
+    # Shorthand
+    nova scaf app workers
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold app workers
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf app workers
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                            |
+|---------------------------|----------------------------------------|
+| `-d, --dry-run`           | Preview changes without writing files. |
+| `--name <name>`           | Project or workspace name.             |
+| `--workspace-name <name>` | Workspace directory name.              |
+| `--output <dir>`          | Output directory.                      |
+
+## Output Structure
+
+```
+{project-slug}/
+├── package.json
+├── nova.config.json
+├── apps/
+│   └── {workspace-name}/
+│       ├── package.json
+│       ├── wrangler.toml
+│       ├── tsconfig.json
+│       └── src/
+│           └── index.ts
+└── packages/
+```
+
+## How It Works
+
+### Interactive Wizard
+
+When run without flags, the command walks you through an interactive wizard:
+
+**Monorepo mode** (no `package.json` found):
+
+1. **Project name** — Enter a slug for your monorepo (e.g. `my-worker`).
+2. **Workspace name** — Enter a slug for the workspace directory (default: `workers`).
+3. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
+4. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
+5. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+
+**Workspace mode** (`package.json` with `workspaces` found):
+
+1. **Package name** — Enter a slug for the workspace package (e.g. `my-worker`).
+2. **Workspace name** — Enter a slug for the workspace directory (default: `workers`).
+3. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+
+### Non-Interactive Mode
+
+Provide `--name`, `--workspace-name`, and `--output` to skip all prompts:
+
+```bash
+nova scaffold app workers --name my-worker --workspace-name workers --output ./my-worker
+```
+
+## Next Steps
+
+After scaffolding, consider running generators to add essential project files like `.editorconfig`, `.gitignore`, `LICENSE`, and `README.md`.

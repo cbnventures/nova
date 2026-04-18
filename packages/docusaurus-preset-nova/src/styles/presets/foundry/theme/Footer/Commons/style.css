@@ -1,0 +1,177 @@
+/**
+ * Foundry — Footer (Commons) visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Navigation Lists
+ * ============================ */
+
+.nova-footer-commons nav ul li a {
+  display: inline-block;
+}
+
+/* ============================
+ * 2. Footer Container
+ * ============================ */
+
+.nova-footer-commons {
+  background-color: var(--nova-color-neutral-950);
+  color: var(--nova-color-neutral-300);
+  padding-top: 2.5rem;
+  padding-bottom: 1.5rem;
+  margin-top: 2.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+@media (min-width: 768px) {
+  .nova-footer-commons {
+    padding-top: 3.5rem;
+    padding-bottom: 2rem;
+    margin-top: 0;
+  }
+}
+
+/* ============================
+ * 2. Sections
+ * ============================ */
+
+/* Footer sections use nova-container from TSX; grid for columns. */
+.nova-footer-commons-sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-footer-commons-sections {
+    gap: 2rem;
+  }
+}
+
+/* Tablet: two-column footer grid. */
+@media (min-width: 640px) {
+  .nova-footer-commons-sections {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: auto-fit footer columns. */
+@media (min-width: 768px) {
+  .nova-footer-commons-sections {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+.nova-footer-commons-sections nav h3 {
+  font-family: var(--nova-font-display);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-100);
+  margin-bottom: 1rem;
+}
+
+.nova-footer-commons-sections nav a {
+  padding: 0.3125rem 0;
+  font-size: 0.875rem;
+  color: var(--nova-color-neutral-400);
+  text-decoration: none;
+  transition: color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-footer-commons-sections nav a {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-footer-commons-sections nav a:hover,
+.nova-footer-commons-sections nav a:focus-visible {
+  color: var(--nova-color-neutral-50);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-footer-commons-sections nav a:hover,
+[data-theme="dark"] .nova-footer-commons-sections nav a:focus-visible {
+  color: var(--nova-color-neutral-50);
+  text-decoration: none;
+}
+
+/* ============================
+ * 3. Social Row
+ * ============================ */
+
+/* Social row uses nova-container from TSX. */
+.nova-footer-commons-social {
+  justify-content: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nova-footer-commons-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--nova-color-neutral-400);
+  border-radius: var(--nova-shape-radius);
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-footer-commons-social a {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-footer-commons-social a:hover,
+.nova-footer-commons-social a:focus-visible {
+  color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-footer-commons-social a:hover,
+[data-theme="dark"] .nova-footer-commons-social a:focus-visible {
+  color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 4. Legal Row
+ * ============================ */
+
+/* Legal row uses nova-container from TSX. */
+.nova-footer-commons-legal {
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.nova-footer-commons-legal p {
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-500);
+  margin: 0;
+}
+
+/* ============================
+ * 5. Animations
+ * ============================ */
+
+.nova-footer-commons-sections nav a {
+  position: relative;
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-footer-commons-social a {
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease,
+              transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-footer-commons-social a:hover,
+.nova-footer-commons-social a:focus-visible {
+  transform: scale(calc(1 + 0.1 * var(--nova-motion-hover-effects)));
+}

@@ -13,20 +13,34 @@ keywords:
   - private
   - publishConfig
 tags:
-  - normalize-artifacts
   - cli
+  - normalize-artifacts
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Normalize **files**, **bin**, **man**, **directories**, **private**, and **publishConfig** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Normalize **files**, **bin**, **man**, **directories**, **private**, and **publishConfig** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `normalize-artifacts` recipe ensures that publish and artifact-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` match the conventions defined by the workspace role and policy. It handles file inclusion lists, binary entry points, man pages, directory mappings, private flags, and publish configuration.
+The `normalize-artifacts` recipe ensures that publish and artifact-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` match the conventions defined by the workspace role and policy.
+
+It handles file inclusion lists, binary entry points, man pages, directory mappings, private flags, and publish configuration.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects artifact and publish fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+
+- **`files` (Conditional)** — Removed if the workspace role is not `package` or `tool`. If the role allows it but the array is empty, the field is also removed.
+- **`bin` (Conditional)** — Removed if the workspace role is not `package` or `tool`. If the role allows it and the value is a string, it is normalized into an object using the unscoped package name as the key (e.g., `"./cli.js"` becomes `{ "my-tool": "./cli.js" }`). If empty, the field is removed.
+- **`man` (Conditional)** — Removed if the workspace role is not `package` or `tool`. If the role allows it and the value is a string, it is normalized into a single-element array. If empty, the field is removed.
+- **`directories` (Conditional)** — Removed if the workspace role is not `package` or `tool`. If the role allows it but the object is empty, the field is removed.
+- **`private` (Required)** — Set to `false` when the workspace policy is `distributable`, and `true` for all other policies. Non-boolean values and mismatches are corrected.
+- **`publishConfig` (Conditional)** — Removed if the workspace policy is not `distributable`. If the policy is `distributable` but the object is empty, the field is also removed.
 
 ## Usage
 
@@ -49,7 +63,7 @@ The `normalize-artifacts` recipe ensures that publish and artifact-related field
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

@@ -1,0 +1,27 @@
+/**
+ * MDX Content — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+.nova-mdx-content blockquote p:first-child {
+  margin-top: 0;
+}
+
+.nova-mdx-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * ============================
+ * MDX Content — Table Overflow
+ * ============================
+ */
+
+.nova-table-scroll {
+  overflow-x: auto;
+}
+
+.nova-table-scroll table {
+  min-width: 0;
+}

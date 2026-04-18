@@ -1,0 +1,156 @@
+/**
+ * Signal — TOC Collapsible visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Trigger Button
+ * ============================ */
+
+.nova-toc-collapsible-trigger {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  color: var(--nova-color-neutral-500);
+
+  background-color: var(--nova-color-neutral-50);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: 0;
+
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-collapsible-trigger:hover,
+.nova-toc-collapsible-trigger:focus-visible {
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger {
+  color: var(--nova-color-neutral-400);
+
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger:hover,
+[data-theme="dark"] .nova-toc-collapsible-trigger:focus-visible {
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Overlay
+ * ============================ */
+
+.nova-toc-collapsible-overlay {
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: url(#nova-pixelate);
+  -webkit-backdrop-filter: url(#nova-pixelate);
+}
+
+/* ============================
+ * Panel
+ * ============================ */
+
+/* Monolith — always-floating, compact. Override base full-screen default. */
+.nova-toc-collapsible-panel {
+  width: calc(100% - 2rem);
+  max-width: 320px;
+  height: auto;
+  max-height: calc(100dvh - 4.5rem);
+  margin-top: 3.5rem;
+
+  background-color: var(--nova-color-neutral-50);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-top: 2px solid var(--nova-color-primary-600);
+  border-radius: 0;
+}
+
+@media (min-width: 576px) {
+  .nova-toc-collapsible-panel {
+    max-height: calc(100dvh - 4.5rem);
+    margin-top: 3.5rem;
+  }
+}
+
+[data-theme="dark"] .nova-toc-collapsible-panel {
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-800);
+  border-top-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * Header
+ * ============================ */
+
+.nova-toc-collapsible-header-title {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ============================
+ * Close Button
+ * ============================ */
+
+.nova-toc-collapsible-close {
+  color: var(--nova-color-neutral-500);
+  border-radius: 0;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-collapsible-close:hover,
+.nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-close {
+  color: var(--nova-color-neutral-500);
+  border-color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-close:hover,
+[data-theme="dark"] .nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Snappy Fade
+ * ============================ */
+
+@keyframes nova-toc-collapsible-snap {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nova-toc-collapsible-panel {
+  animation: nova-toc-collapsible-snap 150ms ease;
+}
+
+/* ============================
+ * TOC Links
+ * ============================ */
+
+.nova-toc-collapsible-content .nova-toc-link {
+  font-size: 0.75rem;
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-toc-collapsible-content .nova-toc-link:hover,
+.nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link:hover,
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-400);
+}

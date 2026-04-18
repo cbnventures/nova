@@ -1,0 +1,88 @@
+---
+title: "Zero-Downtime Deployments With Trellis and Vial"
+authors: [anders]
+tags: [deployment, scaling, vial]
+date: 2025-01-27
+---
+
+We deployed Envoy 47 times in January. Zero downtime. Zero dropped messages. Zero customer-visible impact. That was not always the case.
+
+In September, a deploy dropped 340 messages in a twelve-second window. This is the story of how we fixed it and what zero-downtime actually requires from a relay platform.
+
+{/* truncate */}
+
+## The September Incident
+
+Trellis manages Envoy's container lifecycle. When a new version is deployed, Trellis starts a new Vial instance, waits for its health check to pass, shifts traffic, and stops the old instance. Simple rolling deploy.
+
+The problem was the gap between "shift traffic" and "old instance finishes in-flight relays." Trellis was sending SIGTERM to the old instance immediately after the traffic shift. Any relay that was mid-delivery — TCP connection open, payload in transit, waiting for a response — was killed.
+
+```text title="Message loss during deploy — 2024-09-17"
+14:22:00  Deploy triggered for envoy v0.41.3
+14:22:03  New instance health check passes
+14:22:03  Traffic shifts to new instance
+14:22:03  SIGTERM sent to old instance
+14:22:03  Old instance begins shutdown
+14:22:04  127 in-flight relays terminated (TCP RST)
+14:22:04  213 queued relays lost (not yet persisted to Ledger)
+14:22:15  Old instance exits
+──────────────────────────────────────────────────
+Total messages lost: 340
+```
+
+340 messages. Some of them were payment confirmations. The customers noticed before we did.
+
+## Graceful Drain
+
+The fix has three phases:
+
+1. **Stop accepting.** When Trellis sends the shutdown signal, Courier stops accepting new relays. The health check endpoint starts returning 503, which tells Trellis to route new traffic elsewhere.
+2. **Drain in-flight.** Courier continues processing all relays that are already in the pipeline. Each relay gets up to 30 seconds to complete delivery and record the result in Ledger.
+3. **Persist the queue.** Any relays that arrived after the shutdown signal but before traffic fully shifted are written to a handoff file. The new instance reads this file on startup and processes them first.
+
+```text title="Graceful drain timeline"
+T+0.0s   SIGTERM received
+T+0.0s   Health check → 503 (stop new traffic)
+T+0.0s   Courier stops accepting new relays
+T+0.1s   In-flight relays continue processing
+T+0.1s   Late-arriving relays written to handoff file
+...
+T+8.4s   Last in-flight relay completes
+T+8.4s   Handoff file closed (12 relays persisted)
+T+8.5s   Old instance exits cleanly
+T+8.5s   New instance reads handoff file
+T+8.6s   12 handoff relays processed
+```
+
+The entire drain takes 8-10 seconds in practice. The maximum allowed is 30 seconds. If any relay has not completed by then, it is force-written to the handoff file for the new instance to retry.
+
+## The Health Check Contract
+
+The health check is not just "is the process running." It is a contract between Envoy and Trellis that communicates three states:
+
+| Health Check Response    | Meaning               | Trellis Action                  |
+|--------------------------|-----------------------|---------------------------------|
+| 200 OK                   | Ready for traffic     | Route traffic here              |
+| 200 OK + `X-Drain: true` | Draining, still alive | Stop routing, wait              |
+| 503 Service Unavailable  | Shutting down         | Stop routing, start replacement |
+| No response              | Dead                  | Kill and replace immediately    |
+
+The `X-Drain: true` header is critical. It tells Trellis that the instance is alive but winding down. Trellis will not route new traffic to it, but it also will not kill it. The instance gets to finish its work.
+
+## Results
+
+Since implementing graceful drain in October:
+
+- **47 deploys** in January alone
+- **0 dropped messages** across all deploys
+- **Average drain time:** 8.4 seconds
+- **Maximum drain time:** 22.1 seconds (during a traffic spike)
+- **Handoff relays per deploy:** 3-15 (depending on traffic volume)
+
+The 3MB Vial image helps here too. Cold start is under 200ms, so the new instance is ready before the old one finishes draining. There is never a gap where no instance is accepting traffic.
+
+## The Lesson
+
+Zero-downtime deployment is not about deploying faster. It is about shutting down slower. The new instance is easy — it starts, it accepts traffic, it works. The hard part is the old instance: it has state, it has in-flight work, and it needs time to finish.
+
+Give it that time. Drain the connections. Persist the queue. Let the process die with dignity. The messages will thank you.

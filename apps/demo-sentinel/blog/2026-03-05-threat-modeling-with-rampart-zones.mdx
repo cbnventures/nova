@@ -1,0 +1,109 @@
+---
+title: "Threat Modeling with Rampart Zone Maps"
+authors: [ingrid]
+tags: [rampart, threat-research, micro-segmentation]
+date: 2026-03-05
+---
+
+Traditional threat models describe attacks against a system architecture. They list assets, threats, and mitigations in a document that is accurate on the day it is written and increasingly stale afterward. We wanted a threat model that stays current — one that is computed from the live network topology, not authored in a slide deck.
+
+Rampart zone maps give us that. Every zone boundary is an explicit trust decision. Every zone-crossing rule is a documented data flow. The zone map is the threat model, and it updates every time a policy changes.
+
+{/* truncate */}
+
+## How We Threat Model Now
+
+Before Rampart, our threat modeling sessions looked like this:
+
+1. Gather architects, security engineers, and product owners in a room.
+2. Draw the system architecture on a whiteboard.
+3. Identify trust boundaries.
+4. List threats at each boundary.
+5. Document mitigations.
+6. File the document and never update it.
+
+The output was a PDF that described the network as it existed on one particular Thursday. By the following Monday, a new service had been deployed, a zone-crossing rule had been added, and the threat model was out of date.
+
+Now we generate the threat model from the live Rampart topology:
+
+```bash title="Generate threat model from live topology"
+sentinel rampart threat-model \
+  --output markdown \
+  --include-policies \
+  --include-traffic-stats
+```
+
+```text title="Threat model output (excerpt)"
+Rampart Zone Threat Model — Generated 2026-03-05T14:00:00Z
+
+Zone: payments (PCI-scoped)
+  Inbound connections from:
+    - api (policy: api-to-payments, unidirectional)
+    - auth (policy: auth-token-validation, unidirectional)
+  Outbound connections to:
+    - data-layer (policy: payments-to-db, unidirectional)
+    - external (policy: payment-processor-egress, unidirectional)
+  No connections to/from:
+    - edge, web, analytics, admin-tools, ci-cd, monitoring,
+      control-plane, staging, sandbox
+
+  Threat surface:
+    - Inbound: 2 zone-crossing rules from 2 zones
+    - Outbound: 2 zone-crossing rules to 2 zones
+    - Lateral movement: contained — no path to control-plane
+    - Data exfiltration: constrained to payment-processor-egress
+      (destination allowlist: 2 IPs)
+
+  Traffic statistics (last 30 days):
+    - Inbound: 4.2M connections, 99.7% from api zone
+    - Outbound: 1.1M connections, 89% to data-layer
+    - Denied: 847 connections (all from staging — misconfigured test)
+```
+
+Every zone gets this analysis. The threat surface is computed, not estimated. The traffic statistics validate whether the actual data flows match the intended data flows. The denied connections reveal misconfigurations that would otherwise go unnoticed.
+
+## What the Map Reveals
+
+The most valuable output is not the per-zone analysis — it is the connectivity matrix. The matrix shows, for every pair of zones, whether a path exists and how many hops it requires:
+
+```text title="Zone connectivity matrix"
+              edge  web  api  data  pay  auth  admin  ci   mon  ctrl
+    edge        -    1    -    -     -    -     -      -    -    -
+    web         -    -    1    -     -    1     -      -    -    -
+    api         -    -    -    1     1    1     -      -    -    -
+    data        -    -    -    -     -    -     -      -    -    -
+    payments    -    -    -    1     -    -     -      -    -    -
+    auth        -    -    -    -     -    -     -      -    -    -
+    admin       -    -    -    1     -    1     -      -    1    1
+    ci-cd       -    -    -    -     -    -     -      -    -    -
+    monitoring  -    -    -    -     -    -     -      -    -    1
+    control     -    -    -    -     -    -     -      -    -    -
+```
+
+This matrix makes two things immediately visible:
+
+- **Reachability.** From `edge`, you can reach `web` (1 hop), then `api` (2 hops), then `data-layer` (3 hops). That is the longest path from the internet to persistent data, and it crosses three trust boundaries with three policy evaluations.
+- **Isolation.** `ci-cd` has no outbound connections. A compromised build pipeline cannot reach any other zone. `data-layer` has no outbound connections. A compromised database cannot initiate connections anywhere.
+
+## Updating the Model
+
+The threat model updates automatically because it is generated from the policy set. When a security engineer adds a new zone-crossing rule, the threat model reflects it in the next generation cycle. When Parapet simulates a policy change, it generates a diff against the current threat model so the team can see exactly how the change affects the threat surface.
+
+```bash title="Threat model diff for a proposed policy change"
+sentinel rampart threat-model \
+  --diff draft:new-analytics-egress \
+  --output markdown
+```
+
+```text title="Diff output"
+Zone: analytics
+  + NEW outbound connection to: external
+    Policy: analytics-export-egress (draft)
+    Destination allowlist: 1 IP (data-warehouse.vendor.example)
+
+  Threat surface change:
+    - Data exfiltration: NEW path from analytics to external
+    - Recommendation: verify destination allowlist is minimal
+```
+
+The threat model is not a document. It is a query against the live topology. It cannot go stale because it does not exist as a static artifact. Every time you ask the question, you get the current answer.

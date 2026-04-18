@@ -1,0 +1,136 @@
+---
+title: Audit & Forensics
+sidebar_position: 2
+description: Spyglass session reconstruction, immutable log retention, audit queries, and compliance evidence export.
+tags:
+  - operations
+  - audit
+---
+
+import Details from '@theme/Details';
+
+# Audit & Forensics
+
+Spyglass is Sentinel's audit and forensics engine. It records every access decision, every policy evaluation, every zone crossing event, and every Filament tunnel connection — immutably, for seven years. The purpose is not just retention. It is reconstruction. Any session, any incident, any access pattern can be replayed step by step from the log data alone.
+
+## What Spyglass Records
+
+Every event in the Sentinel trust loop is captured by Spyglass:
+
+| Event Type        | Source     | Data Captured                                                     |
+|-------------------|------------|-------------------------------------------------------------------|
+| Policy evaluation | Watchtower | User, device, resource, conditions, score, result, timestamp      |
+| Access decision   | Drawbridge | Grant/narrow/revoke, policy ID, tunnel ID, duration               |
+| Zone crossing     | Rampart    | Source zone, target zone, crossing rule, policy evaluation result |
+| Posture check     | Garrison   | Device ID, all check categories, scores, pass/fail per category   |
+| Tunnel event      | Filament   | Tunnel ID, endpoints, duration, bytes transferred, close reason   |
+| Emergency access  | Admin      | User, justification, scope, duration, reviewer                    |
+
+All events are cryptographically signed and stored in append-only logs. Records cannot be modified or deleted — even by administrators.
+
+:::info Immutable by Design
+Spyglass logs are written to append-only storage with cryptographic chaining. Each record includes a hash of the previous record, forming a tamper-evident chain. Any modification to a historical record breaks the chain and triggers an integrity alert.
+:::
+
+## Session Reconstruction
+
+Spyglass can reconstruct an entire access session from its component events. This is the primary forensics tool for incident investigation:
+
+```bash title="Reconstruct a session"
+sentinel spyglass reconstruct \
+  --user j.chen \
+  --device dev_a3b7c9d1 \
+  --period "2025-06-15T09:00:00..2025-06-15T17:00:00"
+```
+
+```text title="Session reconstruction output"
+Session Reconstruction: j.chen @ dev_a3b7c9d1
+Period: 2025-06-15 09:00:00 — 17:00:00
+
+09:01:12  GARRISON   posture check: score 94
+09:01:12  WATCHTOWER evaluation: policy api-access → PASS
+09:01:12  DRAWBRIDGE grant: api-cluster-east (tunnel tun_8a3f)
+09:01:12  RAMPART    zone crossing: internal → api-services (allowed)
+09:15:00  FILAMENT   tunnel tun_8a3f: 2.4 MB transferred
+10:31:12  WATCHTOWER evaluation: policy api-access → PASS (score 94)
+12:01:12  WATCHTOWER evaluation: policy api-access → PASS (score 91)
+13:31:12  WATCHTOWER evaluation: policy api-access → PASS (score 91)
+14:22:47  GARRISON   posture check: score 78 (antivirus definitions stale)
+14:22:47  WATCHTOWER evaluation: policy api-access → FAIL (posture < 85)
+14:22:47  DRAWBRIDGE revoke: api-cluster-east (tunnel tun_8a3f closed)
+14:22:47  RAMPART    zone crossing revoked: internal → api-services
+14:22:48  NOTIFICATION sent to security-ops
+14:45:00  GARRISON   posture check: score 93 (antivirus updated)
+14:45:00  WATCHTOWER evaluation: policy api-access → PASS
+14:45:00  DRAWBRIDGE grant: api-cluster-east (tunnel tun_9b4g)
+
+Session summary:
+  Total evaluations: 8
+  Access grants: 2
+  Access revocations: 1
+  Revocation cause: antivirus definitions exceeded 3-day threshold
+  Time without access: 22 minutes 13 seconds
+```
+
+The reconstruction shows the complete lifecycle: initial grant, periodic re-evaluation, revocation when posture degraded, and re-grant after remediation.
+
+## Audit Queries
+
+Spyglass supports structured queries for searching across all event types:
+
+```bash title="Query by resource and time range"
+sentinel spyglass query \
+  --resource api-cluster-east \
+  --event-type access-decision \
+  --result revoke \
+  --period "2025-06-01..2025-06-30"
+```
+
+```text title="Query output"
+Spyglass Query Results: api-cluster-east (revocations, June 2025)
+
+DATE        USER        DEVICE           REASON                    DURATION
+2025-06-04  k.patel     dev_b1a9c3e7     posture < 80              47m
+2025-06-09  m.torres    dev_f8e2d4c6     location anomaly          12m
+2025-06-15  j.chen      dev_a3b7c9d1     antivirus stale           22m
+2025-06-22  r.kim       dev_c5d7e9f1     session age exceeded      immediate
+
+Total revocations: 4
+Mean time to remediation: 20m 15s
+```
+
+<Details>
+<summary>Full query parameter reference</summary>
+
+| Parameter      | Type   | Description                                                                              |
+|----------------|--------|------------------------------------------------------------------------------------------|
+| `--resource`   | String | Filter by resource name (supports wildcards)                                             |
+| `--user`       | String | Filter by user identity                                                                  |
+| `--device`     | String | Filter by device ID                                                                      |
+| `--event-type` | Enum   | `policy-evaluation`, `access-decision`, `zone-crossing`, `posture-check`, `tunnel-event` |
+| `--result`     | Enum   | `pass`, `fail`, `grant`, `narrow`, `revoke`                                              |
+| `--period`     | Range  | ISO 8601 date range (`start..end`)                                                       |
+| `--zone`       | String | Filter by Rampart zone name                                                              |
+| `--policy`     | String | Filter by policy name                                                                    |
+| `--sort`       | Enum   | `time`, `user`, `resource`, `score`                                                      |
+| `--format`     | Enum   | `table`, `json`, `csv`                                                                   |
+
+</Details>
+
+## Compliance Export
+
+Spyglass generates compliance evidence packages for standard frameworks:
+
+```bash title="Export compliance evidence"
+sentinel spyglass export --framework soc2 --period 2025-Q2
+sentinel spyglass export --framework hipaa --period 2025-Q2
+sentinel spyglass export --framework iso27001 --period 2025-Q2
+```
+
+Each export produces a structured evidence package containing policy evaluation summaries, access decision statistics, posture check distributions, and zone crossing logs — formatted for the specific compliance framework.
+
+## Next Steps
+
+- [Policy Simulation](/docs/operations/policy-simulation/) — Test policy changes against historical audit data.
+- [Micro-Segmentation](/docs/operations/micro-segmentation/) — Zone crossing events recorded by Spyglass.
+- [API Reference](/docs/reference/api-reference/) — Programmatic access to Spyglass query and export endpoints.

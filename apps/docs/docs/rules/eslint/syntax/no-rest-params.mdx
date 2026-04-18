@@ -1,0 +1,181 @@
+---
+id: no-rest-params
+title: No Rest Params
+description: Disallow rest parameters in function signatures so parameters are listed explicitly.
+keywords:
+  - nova
+  - eslint rule
+  - rest parameters
+  - function signature
+  - explicit parameters
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Ban `...args` rest parameters so function signatures list their parameters explicitly because rest parameters hide the expected arity.
+
+## Summary
+
+The `no-rest-params` rule reports any rest element (`...args`) in a function parameter list, including regular functions, arrow functions, and class methods.
+
+Spread syntax in function calls and array literals is not affected.
+
+## Why Use This Rule?
+
+1. Explicit parameters make the function signature self-documenting — callers see exactly what is expected.
+2. Rest parameters hide arity, making it unclear how many arguments are valid.
+3. Encourages passing arrays as a single typed parameter instead of variadic arguments.
+
+## Examples
+
+<Tabs groupId="no-rest-params-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    function log(message, level, context) {
+      console.log(message);
+
+      return;
+    }
+
+    function merge(objects) {
+      return Object.assign({}, ...objects);
+    }
+
+    const sum = (numbers) => {
+      return numbers.reduce((a, b) => a + b, 0);
+    };
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    function log(...args) {
+      console.log(args);
+
+      return;
+    }
+
+    function merge(...objects) {
+      return Object.assign({}, ...objects);
+    }
+
+    const sum = (...numbers) => {
+      return numbers.reduce((a, b) => a + b, 0);
+    };
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-rest-params-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoRestParams } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-rest-params': NoRestParams.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-rest-params': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="allow-specific-patterns" label="Allow Specific Patterns">
+
+    Allow rest parameters in specific classes or functions using glob patterns:
+
+    ```ts
+    import { NoRestParams } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-rest-params': NoRestParams.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-rest-params': ['error', {
+            allow: ['ToolkitLogger.*'],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoRestParams } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-rest-params': NoRestParams.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-rest-params': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                                                                                                                                                 |
+|---------------|------------|---------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `allow`       | `string[]` | `[]`    | Function or method names to exempt from the rule. Supports exact match (`'Logger.info'`), wildcard (`'Logger.*'`), and standalone function names (`'log'`). |
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                                                                                                                                      |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Spread in function calls is not flagged** — The rule only targets rest parameters in function definitions, not spread syntax in calls like `Math.max(...values)`.
+- **Wrapper around a variadic API** — If wrapping a third-party function that requires variadic arguments, accept an array parameter and spread it at the call site.

@@ -1,0 +1,118 @@
+/**
+ * Foundry — Typography: headings and responsive heading scales.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Headings (mobile-first)
+ * ============================ */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--nova-font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4 {
+  color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 {
+  color: var(--nova-color-neutral-400);
+}
+
+h1 {
+  font-size: 1.75rem;
+  line-height: 1.2;
+  margin-bottom: 1.25rem;
+}
+
+h2 {
+  font-size: 1.375rem;
+  line-height: 1.3;
+  margin-top: 2rem;
+  margin-bottom: 0.875rem;
+}
+
+h3 {
+  font-size: 1.125rem;
+  line-height: 1.4;
+  margin-top: 1.75rem;
+  margin-bottom: 0.625rem;
+}
+
+h4 {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+/* ============================
+ * 2. Responsive Typography
+ * ============================ */
+
+/* --- md (768px) — headings scale up from mobile base. --- */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 1.375rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 2.25rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-size: 1.1875rem;
+    margin-top: 1.875rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h4 {
+    font-size: 1.0625rem;
+    margin-top: 1.5rem;
+  }
+}
+
+/* --- lg (1024px) — desktop headings. --- */
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.625rem;
+    margin-top: 2.5rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+    margin-top: 2rem;
+  }
+}
+
+/* --- xl (1280px) — large headings for wide screens. --- */
+@media (min-width: 1280px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+}

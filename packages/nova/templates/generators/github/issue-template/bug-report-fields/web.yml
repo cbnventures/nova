@@ -1,0 +1,21 @@
+  - type: "dropdown"
+    id: "browser"
+    attributes:
+      label: "Browser"
+      description: "What browser are you using?"
+      options:
+        - "Google Chrome"
+        - "Mozilla Firefox"
+        - "Apple Safari"
+        - "Microsoft Edge"
+        - "Other"
+    validations:
+      required: true
+  - type: "input"
+    id: "browser-version"
+    attributes:
+      label: "Browser version"
+      description: "What version of the browser are you using?"
+      placeholder: "e.g. 145.0.7632.75"
+    validations:
+      required: true

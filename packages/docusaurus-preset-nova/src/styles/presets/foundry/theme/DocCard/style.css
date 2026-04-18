@@ -1,0 +1,53 @@
+/**
+ * Foundry — Doc Card visual styling.
+ *
+ * @since 0.15.0
+ */
+
+article[class*="nova-col"] > a {
+  padding: 1rem;
+  border: 1px solid var(--nova-foundry-border);
+  border-radius: var(--nova-shape-radius);
+  background-color: var(--nova-foundry-surface-raised);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: border-color var(--nova-motion-duration) ease,
+              box-shadow calc(var(--nova-motion-duration) * 1.5) ease;
+}
+
+article[class*="nova-col"] > a:hover,
+article[class*="nova-col"] > a:focus-visible {
+  border-color: var(--nova-color-primary-300);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a {
+  border-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--nova-foundry-surface-raised);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a:hover,
+[data-theme="dark"] article[class*="nova-col"] > a:focus-visible {
+  border-color: var(--nova-color-primary-700);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+article[class*="nova-col"] > a h2 {
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a h2 {
+  color: var(--nova-color-neutral-100);
+}
+
+article[class*="nova-col"] > a h2 svg {
+  color: var(--nova-color-primary-500);
+}
+
+article[class*="nova-col"] > a p {
+  color: var(--nova-color-neutral-600);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a p {
+  color: var(--nova-color-neutral-400);
+}

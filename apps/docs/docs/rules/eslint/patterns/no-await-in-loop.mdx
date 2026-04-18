@@ -1,0 +1,175 @@
+---
+id: no-await-in-loop
+title: No Await In Loop
+description: Disallow await inside loops so sequential calls that should be parallelized with Promise.all are caught early.
+keywords:
+  - nova
+  - eslint rule
+  - await in loop
+  - Promise.all
+  - parallelism
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Disallow `await` inside loops so sequential calls that should be parallelized with `Promise.all()` are caught early.
+
+## Summary
+
+The `no-await-in-loop` rule reports any `await` expression found inside a loop. By default, all loop types are disallowed.
+
+Use the configuration options to allow specific loop types (e.g., `for...of` for order-dependent iteration, `while` for pagination).
+
+## Why Use This Rule?
+
+1. Catches sequential network calls that should be parallelized for performance.
+2. Provides fine-grained control over which loop types are allowed to contain `await`.
+3. Keeps configuration centralized in the ESLint config rather than scattered across inline comments.
+
+## Examples
+
+<Tabs groupId="no-await-in-loop-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Parallelized with Promise.all().
+    const results = await Promise.all(urls.map((url) => fetch(url)));
+
+    // Await outside a loop is always fine.
+    const data = await fetchData();
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Disallowed: all loop types are flagged by default.
+    for (const url of urls) {
+      await fetch(url);
+    }
+
+    for (let i = 0; i < 10; i++) {
+      await doWork(i);
+    }
+
+    while (hasMore) {
+      await fetchNext();
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-await-in-loop-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoAwaitInLoop } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-await-in-loop': NoAwaitInLoop.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-await-in-loop': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="allow-for-of-loops" label="Allow For-Of Loops">
+
+    Allow `await` inside `for...of` loops where sequential iteration is intentional:
+
+    ```ts
+    import { NoAwaitInLoop } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-await-in-loop': NoAwaitInLoop.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-await-in-loop': ['error', {
+            allowForOf: true,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoAwaitInLoop } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-await-in-loop': NoAwaitInLoop.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-await-in-loop': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                                          |
+|---------------|------------|---------|------------------------------------------------------|
+| `allowFor`    | `boolean`  | `false` | Allow `await` inside C-style `for` loops.            |
+| `allowForIn`  | `boolean`  | `false` | Allow `await` inside `for...in` loops.               |
+| `allowForOf`  | `boolean`  | `false` | Allow `await` inside `for...of` loops.               |
+| `allowWhile`  | `boolean`  | `false` | Allow `await` inside `while` and `do...while` loops. |
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.                               |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Await in `for...of` is flagged** — By default, `allowForOf` is `false`. Set it to `true` if you want to allow `await` in `for...of` loops.
+- **Warning fires outside a loop** — The rule only checks `await` inside loop bodies. If the warning appears elsewhere, the `await` may be inside a nested loop you did not notice.

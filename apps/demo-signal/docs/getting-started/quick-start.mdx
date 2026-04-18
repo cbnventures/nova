@@ -1,0 +1,123 @@
+---
+title: Quick Start
+sidebar_position: 2
+tags:
+  - getting started
+  - tutorial
+---
+
+import Details from '@theme/Details';
+
+# Quick Start
+
+Mint your first Beacon link, open the Pulse live stream, and watch a click arrive in real time. The entire walkthrough takes sixty seconds.
+
+## Step 1: Mint a Beacon Link
+
+Create a Beacon link with campaign metadata embedded:
+
+```bash title="Create a Beacon link"
+signal beacon create \
+  --url "https://threadbare.example/blog/launch-post" \
+  --domain "go.signal.example" \
+  --campaign "product-launch" \
+  --channel "email" \
+  --variant "hero-cta"
+```
+
+Response:
+
+```json title="Beacon link response"
+{
+  "id": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "shortUrl": "https://go.signal.example/a7x9m2",
+  // highlight-start
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  },
+  // highlight-end
+  "destination": "https://threadbare.example/blog/launch-post",
+  "createdAt": "2025-02-20T09:15:00.000Z"
+}
+```
+
+The `attribution` object is embedded in the link itself. It does not depend on UTM parameters or referrer headers.
+
+## Step 2: Open Pulse
+
+In a separate terminal, open the Pulse live stream to watch clicks arrive:
+
+```bash title="Start Pulse live stream"
+signal pulse watch --campaign "product-launch"
+```
+
+Pulse opens a live feed filtered to your campaign. Leave it running.
+
+## Step 3: Click the Link
+
+Open `https://go.signal.example/a7x9m2` in a browser. Within two milliseconds, the redirect completes. Within one second, the Pulse stream shows:
+
+```json title="Pulse event"
+{
+  "event": "click",
+  "beacon": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "timestamp": "2025-02-20T09:16:42.318Z",
+  "geo": { "country": "US", "region": "CA", "city": "San Francisco" },
+  "device": { "type": "desktop", "os": "macOS", "browser": "Alloy Browser" },
+  "referrer": "direct",
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  }
+}
+```
+
+That is a fully attributed click — campaign, channel, variant, device, and geo — captured in real time without a single tracking pixel or page-side script.
+
+## Step 4: Check Attribution
+
+After the click, query Prism for the attribution path:
+
+```bash title="Query Prism"
+signal prism path --trace "trc_8f3a1b2c4d5e6f70"
+```
+
+<Details>
+<summary>Full Prism attribution output</summary>
+
+```json title="Prism attribution path"
+{
+  "trace": "trc_8f3a1b2c4d5e6f70",
+  "touchpoints": [
+    {
+      "order": 1,
+      "channel": "email",
+      "campaign": "product-launch",
+      "variant": "hero-cta",
+      "timestamp": "2025-02-20T09:16:42.318Z",
+      "weight": 1.0
+    }
+  ],
+  "model": "linear",
+  "status": "open"
+}
+```
+
+With only one touchpoint, the full weight is assigned to the email click. As the user interacts with more Beacon links across channels, Prism builds a richer attribution path.
+
+</Details>
+
+## What Just Happened
+
+You minted a Beacon link with embedded attribution metadata, watched a click arrive in the Pulse live stream, and queried the attribution path through Prism. No tracking pixels. No page-side scripts. No UTM parameters to strip. The attribution lives in the link.
+
+## Next Steps
+
+- [Branded Domains](/docs/features/branded-domains/) — Run Beacon links on your own domain.
+- [Click Attribution](/docs/features/click-attribution/) — Explore Prism's multi-touch attribution model.
+- [Campaign Management](/docs/features/campaign-management/) — Organize links into campaigns with Aperture snapshots.

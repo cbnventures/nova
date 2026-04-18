@@ -1,11 +1,80 @@
 ---
 id: funding
-title: Funding
-description: x
+title: Funding (FUNDING.yml)
+description: Generate a .github/FUNDING.yml file for GitHub sponsor links.
 keywords:
-  - x
+  - nova
+  - nova generate
+  - github
+  - funding
+  - sponsor
+  - FUNDING.yml
 tags:
-  - x
+  - cli
+  - generator
+  - github
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create a `.github/FUNDING.yml` populated with sponsor and funding links from the Nova config.
+
+## Why Use This Command?
+
+- Centralizes sponsor and donation links in a single config-driven file.
+- Enables the **Sponsor** button on your GitHub repository automatically.
+- Keeps funding sources consistent across projects managed by Nova.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> — A valid config file must exist at the project root with the fields listed below.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate github funding
+
+    # Shorthand
+    nova gen gh funding
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate github funding
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen gh funding
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Config Fields
+
+| Field              | Description                                                        |
+|--------------------|--------------------------------------------------------------------|
+| `urls.fundSources` | Array of sponsor and donation URLs used to populate `FUNDING.yml`. |
+
+## Output Files
+
+| File                  | Description                        |
+|-----------------------|------------------------------------|
+| `.github/FUNDING.yml` | GitHub sponsor and donation links. |

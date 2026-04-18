@@ -1,0 +1,165 @@
+/**
+ * Foundry — Hero section visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Hero Container
+ * ============================ */
+
+/* Hero uses nova-container on inner — no hardcoded max-width/centering needed. */
+.nova-hero {
+  margin: 3.5rem 0 2.5rem;
+  text-align: center;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .nova-hero {
+    margin: 5rem 0 3.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-hero {
+    margin: 6rem 0 4rem;
+  }
+}
+
+.nova-hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============================
+ * 2. Eyebrow
+ * ============================ */
+
+.nova-hero-eyebrow {
+  font-family: var(--nova-font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-600);
+  margin-bottom: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .nova-hero-eyebrow {
+    font-size: 0.8125rem;
+    margin-bottom: 1rem;
+  }
+}
+
+[data-theme="dark"] .nova-hero-eyebrow {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 3. Heading
+ * ============================ */
+
+.nova-hero-heading {
+  font-family: var(--nova-font-display);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--nova-color-neutral-900);
+  margin-bottom: 1.25rem;
+}
+
+[data-theme="dark"] .nova-hero-heading {
+  color: var(--nova-color-neutral-50);
+}
+
+@media (min-width: 768px) {
+  .nova-hero-heading {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* ============================
+ * 4. Tagline
+ * ============================ */
+
+.nova-hero-tagline {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--nova-color-neutral-500);
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+@media (min-width: 768px) {
+  .nova-hero-tagline {
+    font-size: 1.1875rem;
+    margin: 0 auto 2.5rem;
+  }
+}
+
+[data-theme="dark"] .nova-hero-tagline {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 5. Actions
+ * ============================ */
+
+.nova-hero-actions {
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .nova-hero-actions {
+    gap: 1rem;
+  }
+}
+
+/* ============================
+ * 6. Animations
+ * ============================ */
+
+/* Prevent Chrome scroll anchoring from shifting page during entrance animations. */
+.nova-hero {
+  overflow-anchor: none;
+}
+
+.nova-hero {
+  animation: foundry-fade-in-up calc(var(--nova-motion-duration) * 2.5) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(80ms * var(--nova-motion-staggered-reveals));
+}
+
+/* ============================
+ * 7. Doc Content Entrance
+ * ============================ */
+
+article {
+  animation: foundry-fade-in calc(var(--nova-motion-duration) * 2) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(100ms * var(--nova-motion-staggered-reveals));
+}
+
+/* ============================
+ * 8. Link Hover Effects
+ * ============================ */
+
+.nova-hero article a {
+  position: relative;
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-hero article a::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: currentColor;
+  transition: width calc(var(--nova-motion-duration) * 1.5) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-hero article a:hover::after {
+  width: calc(100% * var(--nova-motion-hover-effects));
+}

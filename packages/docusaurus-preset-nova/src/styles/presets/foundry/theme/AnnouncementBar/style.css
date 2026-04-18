@@ -1,0 +1,44 @@
+/**
+ * Foundry — Announcement bar visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-announcement-bar {
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: center;
+  color: var(--nova-color-neutral-50);
+  background: linear-gradient(135deg, var(--nova-color-primary-600), var(--nova-color-accent-600));
+  border: none;
+}
+
+.nova-announcement-bar a {
+  color: var(--nova-color-neutral-50);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.nova-announcement-bar a:hover,
+.nova-announcement-bar a:focus-visible {
+  opacity: 0.85;
+}
+
+/* ============================
+ * 3. Close Button
+ * ============================ */
+
+.nova-announcement-bar-close {
+  padding: 0.25rem;
+  color: var(--nova-color-neutral-50);
+
+  opacity: 0.7;
+  transition: opacity var(--nova-motion-duration) ease;
+}
+
+.nova-announcement-bar-close:hover,
+.nova-announcement-bar-close:focus-visible {
+  opacity: 1;
+}

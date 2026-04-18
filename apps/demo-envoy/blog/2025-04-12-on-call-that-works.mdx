@@ -1,0 +1,91 @@
+---
+title: "Designing an On-Call Rotation That Does Not Burn People Out"
+authors: [tomas]
+tags: [on-call, latency, reliability]
+date: 2025-04-12
+---
+
+Our first on-call rotation lasted three months before the first engineer quit. Not from the company — from the rotation. She said she could not sleep during on-call weeks because the alerts never stopped, and when they did stop, she lay awake waiting for the next one.
+
+We were not bad at operations. We were bad at on-call design.
+
+{/* truncate */}
+
+## The Original Rotation
+
+Three engineers, one-week shifts, 24/7 coverage. Every Glassboard alert went to the on-call phone. Every Canary escalation went to the on-call phone. Every customer-reported issue went to the on-call phone. The on-call engineer was the first responder for everything.
+
+During a typical on-call week:
+
+```text title="On-call week — engineer activity log (sample)"
+Mon 02:14  Alert: delivery latency p99 > 200ms (spoke://analytics)
+           Action: Checked dashboard. Latency dropped before investigation.
+           Resolution: None needed. Auto-resolved.
+           Time spent: 22 minutes (wake up, check, try to sleep again)
+
+Mon 08:47  Alert: error rate > 5/s (hook://payment-confirm)
+           Action: Destination was deploying. Errors cleared in 90s.
+           Resolution: None needed.
+           Time spent: 8 minutes
+
+Tue 03:31  Alert: queue depth > 1000 (canary://ops)
+           Action: Canary endpoint was slow. Queue drained after 4 minutes.
+           Resolution: None needed.
+           Time spent: 35 minutes
+
+Wed 14:22  Alert: dead-letter count > 10 (spoke://crm-sync)
+           Action: CRM endpoint changed auth scheme without notice.
+           Resolution: Updated Cipher config. Replayed dead-lettered messages.
+           Time spent: 2 hours 15 minutes
+```
+
+One real incident in three days. Three false alarms that each stole sleep or focus. That ratio — one actionable alert per three noise alerts — was destroying morale.
+
+## What Changed
+
+We made three changes simultaneously. None of them was sufficient alone. All three together transformed on-call from a burden into a manageable responsibility.
+
+### 1. Tiered Severity
+
+Not every alert needs a human at 3 AM. We introduced three tiers:
+
+- **P1 — Page immediately.** Service is down or data loss is occurring. The on-call engineer is woken up.
+- **P2 — Notify during business hours.** Service is degraded but functional. Message queued for morning.
+- **P3 — Log only.** Anomaly detected but no customer impact. Recorded in Glassboard for weekly review.
+
+```text title="Tier classification — automated by Glassboard"
+IF dead_letter_count > 50 AND duration > 5m    → P1 (page)
+IF error_rate > threshold AND duration > 2m     → P2 (business hours)
+IF latency_p99 > budget AND error_rate < 1/s    → P3 (log only)
+IF queue_depth > 1000 AND growing               → P2 (business hours)
+IF delivery_rate drops > 80% in 60s             → P1 (page)
+```
+
+### 2. Auto-Remediation
+
+Courier gained the ability to handle transient failures without human intervention. If a destination returns 503, Courier backs off and retries. If the destination recovers within the retry window, no alert fires. The alert only fires if the retry budget is exhausted — meaning the problem is real and persistent.
+
+Before auto-remediation: 312 alerts per month.
+After auto-remediation: 23 alerts per month.
+
+### 3. Two-Person Rotation
+
+We split primary and secondary. The primary handles P1 pages. The secondary handles P2 during business hours. P3 never pages anyone. The primary and secondary swap roles weekly, and each person gets a full week off before their next rotation.
+
+## The Numbers After Six Months
+
+| Metric                      | Before | After |
+|-----------------------------|--------|-------|
+| Alerts per on-call week     | 18-25  | 2-4   |
+| Night pages per week        | 4-7    | 0.3   |
+| Mean time to acknowledge    | 8 min  | 2 min |
+| On-call satisfaction (1-10) | 2.8    | 7.4   |
+| Engineers refusing rotation | 1      | 0     |
+
+The night page rate — 0.3 per week — means the on-call engineer gets woken up roughly once every three weeks. That is sustainable. That is a rotation people can stay on for years without burning out.
+
+## The Lesson
+
+On-call is not a technical problem. It is a human problem with technical solutions. The system has to be reliable enough that most failures resolve themselves. The alerting has to be accurate enough that every page is worth waking up for. And the rotation has to be structured enough that no single person bears the full weight.
+
+Build the system right, and the on-call rotation takes care of itself. Build it wrong, and no rotation design will save you.

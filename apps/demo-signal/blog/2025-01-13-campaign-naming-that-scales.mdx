@@ -1,0 +1,68 @@
+---
+title: "A Campaign Naming Convention That Actually Scales"
+authors: [amara]
+tags: [campaign, flare, utm, analytics]
+date: 2025-01-13
+---
+
+Every marketing team starts with good intentions. The first campaign gets a clean name. The second one follows the same pattern. By the fifteenth campaign, someone is in a hurry and names it `test-new-thing-v3`. By the fiftieth, the naming convention exists only in the memory of the person who left six months ago.
+
+We built Flare's campaign taxonomy system after watching this pattern repeat across hundreds of accounts. The goal was not to impose a rigid naming scheme — it was to make the right name easier to create than the wrong one.
+
+{/* truncate */}
+
+## The Taxonomy
+
+Flare enforces a four-segment campaign identifier:
+
+```
+{product}-{objective}-{audience}-{sequence}
+```
+
+Each segment has a constrained vocabulary defined by the team:
+
+- **Product**: The product or feature being promoted (`core`, `enterprise`, `addon-sso`).
+- **Objective**: The goal of the campaign (`awareness`, `activation`, `retention`, `expansion`).
+- **Audience**: The target segment (`prospect`, `trial`, `customer`, `churned`).
+- **Sequence**: A monotonically increasing number per product-objective-audience combination.
+
+A real campaign name looks like `core-activation-trial-003`. It is not beautiful. It does not need to be. It needs to be unambiguous, sortable, and mergeable.
+
+## Why Four Segments
+
+Three segments is not enough — you cannot distinguish between an awareness campaign for prospects and an awareness campaign for churned users. Five segments adds a dimension that teams cannot consistently fill. Four is the minimum that captures product, intent, audience, and sequence without requiring a lookup table.
+
+We tested three-segment, four-segment, and five-segment taxonomies across 40 accounts over six months:
+
+| Segments | Adoption Rate | Naming Collisions | Abandoned After 90 Days |
+|----------|---------------|-------------------|-------------------------|
+| 3        | 78%           | 14%               | 31%                     |
+| 4        | 82%           | 3%                | 12%                     |
+| 5        | 61%           | 1%                | 44%                     |
+
+Four segments hit the sweet spot: high adoption, low collisions, and low abandonment. Five segments had the fewest collisions but the highest abandonment rate — teams gave up on filling the fifth field consistently.
+
+## Flare Enforces the Convention
+
+When a team member creates a new campaign in Flare, the interface presents dropdown menus for each segment rather than a free-text field. New vocabulary terms require approval from a campaign admin. This eliminates the two most common failure modes:
+
+1. **Typos and variations.** You cannot misspell `activation` if you are selecting it from a list.
+2. **Unauthorized terms.** A new product name does not appear in the dropdown until someone adds it to the vocabulary.
+
+The sequence number is assigned automatically. Teams never need to check what number comes next.
+
+## Connecting Names to Attribution
+
+Campaign names flow directly into Beacon's attribution metadata. When Prism runs an attribution query, it can aggregate by any segment of the taxonomy:
+
+- "Show me all `activation` campaigns regardless of product or audience."
+- "Show me all campaigns targeting `churned` users across every objective."
+- "Show me the performance trend for `core` campaigns over the last four quarters."
+
+These queries are only possible when campaign names follow a consistent structure. With free-text naming, the same queries require manual mapping tables that are always out of date.
+
+## Start Early
+
+The best time to adopt a naming convention is before your first campaign. The second-best time is now. Flare can retroactively map existing campaign names to the taxonomy using alias rules, but the mapping is manual and error-prone for accounts with hundreds of legacy names.
+
+A naming convention is not overhead. It is infrastructure. Build it once and every downstream report, every attribution model, and every budget review becomes possible without a data cleaning sprint.

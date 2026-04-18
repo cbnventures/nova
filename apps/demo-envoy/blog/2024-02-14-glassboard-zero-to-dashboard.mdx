@@ -1,0 +1,64 @@
+---
+title: "Building Glassboard From a Grep Command and a Cron Job"
+authors: [tomas]
+tags: [monitoring, on-call, infrastructure]
+date: 2024-02-14
+---
+
+Before Glassboard existed, our monitoring was a `grep` command piped to `wc -l`, run by a cron job every five minutes. If the count exceeded a threshold, it wrote a line to a file. If someone remembered to check the file, they would know something was wrong.
+
+That was monitoring. That was the whole thing.
+
+{/* truncate */}
+
+## The Cron Job Era
+
+The setup looked like this: a Spark script ran every 300 seconds, grepped the Courier log for lines containing `status=5xx`, counted them, and compared against a hardcoded threshold of 50. If the count was higher, it appended a timestamp to `/var/log/relay-alerts.txt`. Nobody watched that file in real time. We checked it during morning standup.
+
+```text title="The original 'monitoring' — relay-monitor.spark"
+#!/usr/bin/env spark
+count=$(grep "status=5xx" /var/log/courier.log | wc -l)
+if [ "$count" -gt 50 ]; then
+  echo "$(date -u +%Y-%m-%dT%H:%M:%SZ) ALERT: $count failures in last 5m" >> /var/log/relay-alerts.txt
+fi
+```
+
+This had three problems. First, the 5-minute polling window meant failures could spike and recover without ever being detected. Second, the threshold was static — 50 errors during a traffic spike at noon meant something very different than 50 errors at 4 AM. Third, nobody was watching.
+
+## What We Needed
+
+We wrote down the requirements on a whiteboard during the post-mortem for incident #47 (a 90-minute outage that the cron job never caught because the error count peaked at 48):
+
+- **Real-time ingestion.** No polling. Events stream in as they happen.
+- **Rate-based thresholds.** Alert on error *rate*, not error *count*. 10 errors per second is a problem. 10 errors per hour is noise.
+- **Destination-aware grouping.** A spike in failures to one destination should not be diluted by healthy traffic to others.
+- **Push, not pull.** The dashboard pushes alerts out via webhook. Nobody should have to open a browser to know something is broken.
+
+## The First Build
+
+Glassboard v0.1 was 600 lines of Alloy. It consumed the Courier event stream via Spoke, computed a sliding-window error rate per destination, and rendered a terminal dashboard using ANSI escape codes. No web UI. No database. Just a terminal that showed red numbers when things were bad.
+
+```text title="Glassboard v0.1 — terminal output"
+┌─────────────────────────────────────────────────┐
+│  GLASSBOARD v0.1         2024-02-10T14:22:07Z   │
+├──────────────┬────────┬────────┬────────────────┤
+│ Destination  │ Rate/s │ Err/s  │ Status         │
+├──────────────┼────────┼────────┼────────────────┤
+│ canary://ops │  42.3  │  0.1   │ ● HEALTHY      │
+│ spoke://crm  │  18.7  │  12.4  │ ● DEGRADED     │
+│ hook://slack │  91.0  │  0.0   │ ● HEALTHY      │
+│ hook://pager │   3.2  │  3.2   │ ● DOWN         │
+└──────────────┴────────┴────────┴────────────────┘
+```
+
+We ran it on a second monitor. That was the dashboard. When `hook://pager` went red, someone leaned over and said "pager endpoint is down." That was the alerting system.
+
+It was absurd. But it was also the first time we had real-time visibility into relay health, and the improvement was immediate. Median detection time dropped from "whenever someone checks the log file" to "whenever someone glances at the second monitor."
+
+## The Webhook That Changed Everything
+
+The terminal dashboard lasted two weeks before we added webhook output. The irony was not lost on us — a webhook relay platform using a human eyeball as its alerting mechanism. So we added a single feature: when any destination's error rate exceeded its threshold for more than 30 seconds, Glassboard would fire a webhook through Courier to Canary.
+
+The relay platform monitored itself through itself. Courier delivered the alert about Courier's failures. If Courier itself was down, the alert would queue, retry, and eventually land in a dead-letter queue with its own escalation path.
+
+That recursive reliability loop is still the core of Glassboard today. The terminal UI is gone. The web dashboard arrived in v0.4. But the principle has not changed: monitoring infrastructure that cannot monitor itself is not monitoring infrastructure.

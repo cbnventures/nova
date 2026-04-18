@@ -1,0 +1,116 @@
+---
+title: QR & Deep Links
+sidebar_position: 1
+tags:
+  - advanced
+  - qr codes
+---
+
+# QR & Deep Links
+
+Flare generates QR codes and deep links that bridge physical and digital attribution. Every scan carries the full attribution chain — campaign, channel, variant, and trace — from a printed poster to a conversion event.
+
+## Why Flare
+
+A QR code on a conference banner is a click that starts in the physical world. Without Flare, that click is dark traffic — no referrer, no UTM parameters, no attribution. With Flare, the QR code is a Beacon link in visual form. It carries every piece of metadata a digital Beacon link carries.
+
+## Generating a Flare QR Code
+
+Create a Flare link and generate the QR code in one step:
+
+```bash title="Generate a Flare QR code"
+signal flare create \
+  --url "https://threadbare.example/register" \
+  --campaign "conf-2025" \
+  --channel "event" \
+  --variant "main-stage-banner" \
+  --format svg \
+  --size 1024 \
+  --output ./main-stage-qr.svg
+```
+
+```json title="Flare response"
+{
+  "id": "flr_01J9Q5S7T9U1V3W2X4Y6Z8A0",
+  "shortUrl": "https://go.signal.example/c2025ms",
+  "qrFile": "./main-stage-qr.svg",
+  "attribution": {
+    "campaign": "conf-2025",
+    "channel": "event",
+    "variant": "main-stage-banner",
+    "trace": "trc_4a7b3c8d9e0f1234"
+  },
+  "format": "svg",
+  "size": 1024
+}
+```
+
+The SVG file is ready for print at any resolution. The embedded Beacon link includes full attribution metadata.
+
+:::info[Print Resolution]
+For print materials, generate at 1024px or higher. Flare QR codes use error correction level H (high), which means up to 30% of the code can be obscured or damaged and still scan correctly. For billboards and large-format prints, use `--size 2048`.
+:::
+
+## Deep Links
+
+Flare also generates deep links for mobile apps. When a user scans a Flare QR code or taps a deep link, the app opens directly to the target screen with attribution metadata passed as parameters:
+
+```bash title="Generate a deep link"
+signal flare create \
+  --url "https://threadbare.example/register" \
+  --deep-link "signal://register?ref=conf-2025" \
+  --campaign "conf-2025" \
+  --channel "event" \
+  --variant "badge-scan"
+```
+
+```json title="Deep link response"
+{
+  "id": "flr_01J9R6T8U0V2W3X5Y7Z9A1B3",
+  "shortUrl": "https://go.signal.example/c2025bs",
+  "deepLink": "signal://register?ref=conf-2025",
+  "fallbackUrl": "https://threadbare.example/register",
+  "attribution": {
+    "campaign": "conf-2025",
+    "channel": "event",
+    "variant": "badge-scan",
+    "trace": "trc_5b8c4d9e0f1a2345"
+  }
+}
+```
+
+If the app is installed, the deep link opens it. If not, the user is redirected to the fallback URL. Attribution is preserved in both paths.
+
+## Scan Attribution
+
+When a Flare QR code is scanned, the attribution chain works identically to a digital Beacon click:
+
+1. User scans the QR code.
+2. The Beacon redirect fires (2ms latency).
+3. Pulse captures the click event with geo, device, and referrer data.
+4. The trace ID links this scan to any future touchpoints and conversions.
+
+Query scan data the same way you query any Beacon click:
+
+```bash title="Query Flare scans"
+signal pulse events --campaign "conf-2025" --channel "event"
+```
+
+## Bulk QR Generation
+
+Generate QR codes for an entire campaign in one command:
+
+```bash title="Bulk QR generation"
+signal flare batch \
+  --input ./conference-links.csv \
+  --format png \
+  --size 512 \
+  --output-dir ./qr-codes/
+```
+
+The CSV maps destinations to campaign metadata. Flare generates one QR code per row with unique Beacon links and trace IDs.
+
+## Next Steps
+
+- [Batch Operations](/docs/advanced/batch-operations/) — Import links in bulk via CSV or Spoke API.
+- [Click Attribution](/docs/features/click-attribution/) — See how Flare scans contribute to Prism attribution paths.

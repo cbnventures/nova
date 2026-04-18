@@ -7,76 +7,86 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIUtilityRunRecipes } from '@/cli/utility/run-recipes.js';
+import { afterAll, describe, it } from 'vitest';
+
+import { CliUtilityRunRecipes } from '../../../cli/utility/run-recipes.js';
 
 import type {
-  CLIUtilityRunRecipesTestOriginalCwd,
-  CLIUtilityRunRecipesTestSandboxRoot,
-} from '@/types/tests/cli/utility/run-recipes.test.d.ts';
+  TestsCliUtilityRunRecipesRunNovaConfigContents,
+  TestsCliUtilityRunRecipesRunNovaConfigPath,
+  TestsCliUtilityRunRecipesRunOriginalCwd,
+  TestsCliUtilityRunRecipesRunPackageJsonContents,
+  TestsCliUtilityRunRecipesRunPackageJsonPath,
+  TestsCliUtilityRunRecipesRunProjectDirectory,
+  TestsCliUtilityRunRecipesRunSandboxRoot,
+  TestsCliUtilityRunRecipesRunTemporaryDirectory,
+  TestsCliUtilityRunRecipesRunTemporaryPrefix,
+} from '../../../types/tests/cli/utility/run-recipes.test.d.ts';
 
 /**
- * CLI Utility - Run Recipes - Run.
+ * Tests - CLI - Utility - Run Recipes - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIUtilityRunRecipes.run', async (context) => {
-  const originalCwd: CLIUtilityRunRecipesTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIUtilityRunRecipesTestSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('CliUtilityRunRecipes.run', async () => {
+  const originalCwd: TestsCliUtilityRunRecipesRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliUtilityRunRecipesRunTemporaryDirectory = tmpdir();
+  const temporaryPrefix: TestsCliUtilityRunRecipesRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsCliUtilityRunRecipesRunSandboxRoot = await mkdtemp(temporaryPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('sets exit code when not at project root', async () => {
-    const projectDir = join(sandboxRoot, 'not-project-root');
+  it('sets exit code when not at project root', async () => {
+    const projectDirectory: TestsCliUtilityRunRecipesRunProjectDirectory = join(sandboxRoot, 'not-project-root');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    process.chdir(projectDir);
+    process.chdir(projectDirectory);
 
-    process.exitCode = undefined;
-
-    await CLIUtilityRunRecipes.run({});
+    await CliUtilityRunRecipes.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('skips when no workspaces are configured', async () => {
-    const projectDir = join(sandboxRoot, 'no-workspaces');
+  it('skips when no workspaces are configured', async () => {
+    const projectDirectory: TestsCliUtilityRunRecipesRunProjectDirectory = join(sandboxRoot, 'no-workspaces');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-no-workspaces',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityRunRecipesRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityRunRecipesRunPackageJsonContents = JSON.stringify({
+      name: 'test-no-workspaces',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({}, null, 2),
-      'utf-8',
-    );
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const novaConfigPath: TestsCliUtilityRunRecipesRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliUtilityRunRecipesRunNovaConfigContents = JSON.stringify({}, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    await CLIUtilityRunRecipes.run({
+    process.chdir(projectDirectory);
+
+    await CliUtilityRunRecipes.run({
       dryRun: true,
     });
 
     strictEqual(process.exitCode, undefined);
+
+    return;
   });
+
+  return;
 });

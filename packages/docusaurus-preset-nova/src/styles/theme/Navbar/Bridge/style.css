@@ -1,0 +1,210 @@
+/**
+ * ============================
+ * Navbar — Bridge — Bar Layout
+ * ============================
+ */
+
+.nova-navbar-bridge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nova-navbar-bridge-brand {
+  flex-shrink: 0;
+}
+
+.nova-navbar-bridge-items {
+  display: flex;
+  align-items: center;
+  gap: var(--nova-shape-gap);
+}
+
+.nova-navbar-bridge-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/**
+ * ============================
+ * Navbar — Bridge — Mobile Menu Overlay
+ * ============================
+ */
+
+.nova-navbar-bridge-menu-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 300;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/**
+ * ============================
+ * Navbar — Bridge — Mobile Menu Open/Close State
+ * ============================
+ */
+
+@keyframes nova-navbar-bridge-menu-open {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes nova-navbar-bridge-menu-close {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.nova-navbar-bridge-menu-open {
+  animation: nova-navbar-bridge-menu-open 200ms ease forwards;
+}
+
+.nova-navbar-bridge-menu-closing {
+  animation: nova-navbar-bridge-menu-close 200ms ease forwards;
+}
+
+/**
+ * ============================
+ * Navbar — Bridge — Mobile Menu Panel
+ * ============================
+ */
+
+.nova-navbar-bridge-menu-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 1rem;
+
+  overflow-y: auto;
+}
+
+/* Float mode: panel is a centered card below the navbar. */
+@media (min-width: 576px) {
+  .nova-navbar-bridge-menu-panel {
+    height: auto;
+    max-width: 480px;
+    max-height: calc(100dvh - 6rem);
+
+    margin-top: 4.5rem;
+  }
+}
+
+/**
+ * ============================
+ * Navbar — Bridge — Mobile Menu Header
+ * ============================
+ */
+
+.nova-navbar-bridge-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/**
+ * ============================
+ * Navbar — Bridge — Mobile Menu Brand
+ * ============================
+ */
+
+.nova-navbar-bridge-menu-brand a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  text-decoration: none;
+}
+
+.nova-navbar-bridge-menu-brand img {
+  height: 1.75rem;
+  width: auto;
+}
+
+/**
+ * ============================
+ * Navbar — Bridge — Mobile Menu Close
+ * ============================
+ */
+
+.nova-navbar-bridge-menu-close {
+  flex-shrink: 0;
+  margin-left: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+
+  background: none;
+  border: 1px solid var(--nova-color-neutral-300);
+  border-radius: 0.375rem;
+
+  cursor: pointer;
+}
+
+[data-theme="dark"] .nova-navbar-bridge-menu-close {
+  border-color: var(--nova-color-neutral-700);
+}
+
+/**
+ * ============================
+ * Navbar — Bridge — Mobile Menu Search
+ * ============================
+ */
+
+.nova-navbar-bridge-menu-search .nova-search-dropdown {
+  margin-top: 0.5rem;
+}
+
+.nova-navbar-bridge-menu-search:empty {
+  display: none;
+}
+
+/**
+ * ============================
+ * Navbar — Bridge — Mobile Menu Items
+ * ============================
+ */
+
+.nova-navbar-bridge-menu-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.nova-navbar-bridge-menu-item {
+  display: flex;
+  align-items: center;
+
+  padding: 0.75rem;
+
+  text-decoration: none;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.nova-navbar-bridge-menu-item:hover {
+  text-decoration: none;
+}

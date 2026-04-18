@@ -5,60 +5,67 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIUtilityVersion } from '@/cli/utility/version.js';
+import { afterAll, describe, it } from 'vitest';
+
+import { CliUtilityVersion } from '../../../cli/utility/version.js';
 
 import type {
-  CLIUtilityVersionTestOriginalCwd,
-  CLIUtilityVersionTestSandboxRoot,
-} from '@/types/tests/cli/utility/version.test.d.ts';
+  TestsCliUtilityVersionRunOriginalCwd,
+  TestsCliUtilityVersionRunSandboxRoot,
+  TestsCliUtilityVersionRunTemporaryDirectory,
+  TestsCliUtilityVersionRunTemporaryPrefix,
+} from '../../../types/tests/cli/utility/version.test.d.ts';
 
 /**
- * CLI Utility - Version - Run.
+ * Tests - CLI - Utility - Version - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIUtilityVersion.run', async (context) => {
-  const originalCwd: CLIUtilityVersionTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIUtilityVersionTestSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('CliUtilityVersion.run', async () => {
+  const originalCwd: TestsCliUtilityVersionRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliUtilityVersionRunTemporaryDirectory = tmpdir();
+  const temporaryPrefix: TestsCliUtilityVersionRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsCliUtilityVersionRunSandboxRoot = await mkdtemp(temporaryPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('runs with --node flag without error', async () => {
-    process.exitCode = undefined;
-
-    await CLIUtilityVersion.run({
+  it('runs with --node flag without error', async () => {
+    await CliUtilityVersion.run({
       node: true,
     });
 
     strictEqual(process.exitCode, undefined);
+
+    return;
   });
 
-  await context.test('runs with --all flag without error', async () => {
-    process.exitCode = undefined;
-
-    await CLIUtilityVersion.run({
+  it('runs with --all flag without error', async () => {
+    await CliUtilityVersion.run({
       all: true,
     });
 
     strictEqual(process.exitCode, undefined);
+
+    return;
   });
 
-  await context.test('runs with empty options without error', async () => {
-    process.exitCode = undefined;
-
-    await CLIUtilityVersion.run({});
+  it('runs with empty options without error', async () => {
+    await CliUtilityVersion.run({});
 
     strictEqual(process.exitCode, undefined);
+
+    return;
   });
+
+  return;
 });

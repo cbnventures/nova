@@ -1,0 +1,111 @@
+/**
+ * Envoy — Blog List Paginator visual styling.
+ *
+ * Pill style — glass surface with shadow lift on hover.
+ *
+ * @since 0.15.0
+ */
+
+/* Border top in envoy's neutral palette. */
+.nova-blog-list-paginator {
+  border-top-color: var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator {
+  border-top-color: var(--nova-envoy-border-dark);
+}
+
+/* Nav links — pill with glass surface. */
+.nova-blog-list-paginator-nav {
+  color: var(--nova-color-primary-600);
+  font-weight: 600;
+
+  background: var(--nova-envoy-surface-raised-light);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-soft);
+
+  transition: color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-nav {
+  color: var(--nova-color-primary-400);
+
+  background: var(--nova-envoy-surface-raised-dark);
+}
+
+.nova-blog-list-paginator-nav:hover,
+.nova-blog-list-paginator-nav:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  box-shadow: var(--nova-envoy-shadow-card);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-nav:hover,
+[data-theme="dark"] .nova-blog-list-paginator-nav:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* Page links — pill with glass surface. */
+.nova-blog-list-paginator-page {
+  color: var(--nova-color-primary-600);
+  font-weight: 600;
+
+  background: var(--nova-envoy-surface-raised-light);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-soft);
+
+  transition: color 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page {
+  color: var(--nova-color-primary-400);
+
+  background: var(--nova-envoy-surface-raised-dark);
+}
+
+.nova-blog-list-paginator-page:hover,
+.nova-blog-list-paginator-page:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  box-shadow: var(--nova-envoy-shadow-card);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page:hover,
+[data-theme="dark"] .nova-blog-list-paginator-page:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* Active page — filled pill. */
+.nova-blog-list-paginator-page-active {
+  color: var(--nova-color-neutral-50);
+  font-weight: 700;
+
+  background: var(--nova-color-primary-600);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-soft);
+
+  cursor: default;
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page-active {
+  color: var(--nova-color-neutral-50);
+
+  background: var(--nova-color-primary-500);
+}
+
+/* Ellipsis — muted. */
+.nova-blog-list-paginator-ellipsis {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-ellipsis {
+  color: var(--nova-color-neutral-600);
+}

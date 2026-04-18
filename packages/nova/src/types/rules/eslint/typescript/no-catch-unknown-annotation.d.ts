@@ -1,10 +1,30 @@
 import type { TSESTree } from '@typescript-eslint/utils';
+import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
- * No catch unknown annotation - Check catch clause.
+ * Rules - ESLint - TypeScript - No Catch Unknown Annotation - Check Catch Clause.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type NoCatchUnknownAnnotationCheckCatchClauseNode = TSESTree.CatchClause;
+export type RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseContext = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type NoCatchUnknownAnnotationCheckCatchClauseReturns = void;
+export type RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseNode = TSESTree.CatchClause;
+
+export type RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseReturns = void;
+
+export type RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseParam = TSESTree.BindingName | null;
+
+export type RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseTypeAnnotation = TSESTree.TSTypeAnnotation | undefined;
+
+/**
+ * Rules - ESLint - TypeScript - No Catch Unknown Annotation - Rule.
+ *
+ * @since 0.14.0
+ */
+export type RulesEslintTypescriptNoCatchUnknownAnnotationRuleDefaultOptionsIgnoreFiles = string[];
+
+export type RulesEslintTypescriptNoCatchUnknownAnnotationRuleOptionsIgnoreFiles = string[];
+
+export type RulesEslintTypescriptNoCatchUnknownAnnotationRuleOptions = Readonly<{
+  ignoreFiles: RulesEslintTypescriptNoCatchUnknownAnnotationRuleOptionsIgnoreFiles;
+}>;

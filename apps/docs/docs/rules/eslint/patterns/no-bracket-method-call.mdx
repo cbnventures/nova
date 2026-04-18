@@ -1,0 +1,173 @@
+---
+id: no-bracket-method-call
+title: No Bracket Method Call
+description: Disallow calling methods via bracket notation with a static string key when dot notation is available.
+keywords:
+  - nova
+  - eslint rule
+  - bracket notation
+  - method call
+  - dot notation
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Use dot notation to call methods because `obj['toString']()` hides the call behind bracket syntax when dot notation is available.
+
+## Summary
+
+The `no-bracket-method-call` rule reports any call expression where the callee uses computed member access with a static string literal key (e.g., `obj['method']()`).
+
+Bracket property access (reads without a call) and dynamic bracket calls (where the key is a variable) are not affected.
+
+## Why Use This Rule?
+
+1. Dot notation is the standard way to call methods and is immediately recognizable.
+2. Static bracket calls hide intent behind unnecessary indirection.
+3. Dynamic bracket calls (`obj[variable]()`) are exempt since they cannot use dot notation.
+
+## Examples
+
+<Tabs groupId="no-bracket-method-call-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    obj.toString();
+    arr.push(item);
+    element.addEventListener('click', handler);
+
+    // Bracket property access (not a call) is allowed.
+    const value = obj['some-key'];
+    const item = obj[dynamicKey];
+
+    // Dynamic bracket call (can't use dot) is allowed.
+    obj[methodName]();
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    obj['toString']();
+    obj['hasOwnProperty']('key');
+    arr['push'](item);
+    element['addEventListener']('click', handler);
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-bracket-method-call-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoBracketMethodCall } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-bracket-method-call': NoBracketMethodCall.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-bracket-method-call': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="allow-specific-methods" label="Allow Specific Methods">
+
+    Allow bracket notation for methods that require dynamic access:
+
+    ```ts
+    import { NoBracketMethodCall } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-bracket-method-call': NoBracketMethodCall.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-bracket-method-call': ['error', {
+            allowedMethods: ['getAttribute'],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoBracketMethodCall } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-bracket-method-call': NoBracketMethodCall.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-bracket-method-call': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option           | Type       | Default | Description                                                      |
+|------------------|------------|---------|------------------------------------------------------------------|
+| `allowedMethods` | `string[]` | `[]`    | Method names that are allowed to be called via bracket notation. |
+| `ignoreFiles`    | `string[]` | `[]`    | File patterns to skip.                                           |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/no-bracket-method-call: error'
+```
+
+## Troubleshooting
+
+- **Warning fires on a hyphenated method name** — If the method name contains characters that are not valid identifiers (e.g., hyphens), dot notation is not possible. Add the method name to `allowedMethods`.
+- **Dynamic key calls are not flagged** — The rule only flags static string literal keys. Variable keys like `obj[methodName]()` are exempt because dot notation is not an option.

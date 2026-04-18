@@ -10,144 +10,185 @@ import {
   sys,
 } from 'typescript';
 
-import { Logger } from '@/toolkit/index.js';
+import { Logger } from '../../toolkit/index.js';
 
 import type {
-  CLIUtilityTypeCheckFilterDiagnosticsDiagnostics,
-  CLIUtilityTypeCheckFilterDiagnosticsReturns,
-  CLIUtilityTypeCheckGetConfigPathProject,
-  CLIUtilityTypeCheckGetConfigPathReturns,
-  CLIUtilityTypeCheckGetDiagnosticsProgram,
-  CLIUtilityTypeCheckGetDiagnosticsReturns,
-  CLIUtilityTypeCheckPrintDiagnosticsFileSet,
-  CLIUtilityTypeCheckPrintDiagnosticsFiltered,
-  CLIUtilityTypeCheckPrintDiagnosticsReturns,
-  CLIUtilityTypeCheckRunOptions,
-  CLIUtilityTypeCheckRunReturns,
-} from '@/types/cli/utility/type-check.d.ts';
+  CliUtilityTypeCheckFilterDiagnosticsCurrentDirectory,
+  CliUtilityTypeCheckFilterDiagnosticsDiagnostics,
+  CliUtilityTypeCheckFilterDiagnosticsFileName,
+  CliUtilityTypeCheckFilterDiagnosticsReturns,
+  CliUtilityTypeCheckGetConfigPathCurrentDirectory,
+  CliUtilityTypeCheckGetConfigPathProject,
+  CliUtilityTypeCheckGetConfigPathResolved,
+  CliUtilityTypeCheckGetConfigPathReturns,
+  CliUtilityTypeCheckGetDiagnosticsProgram,
+  CliUtilityTypeCheckGetDiagnosticsReturns,
+  CliUtilityTypeCheckPrintDiagnosticsCharacter,
+  CliUtilityTypeCheckPrintDiagnosticsFileName,
+  CliUtilityTypeCheckPrintDiagnosticsFileSet,
+  CliUtilityTypeCheckPrintDiagnosticsFilteredDiagnostics,
+  CliUtilityTypeCheckPrintDiagnosticsLine,
+  CliUtilityTypeCheckPrintDiagnosticsMessage,
+  CliUtilityTypeCheckPrintDiagnosticsPosition,
+  CliUtilityTypeCheckPrintDiagnosticsReturns,
+  CliUtilityTypeCheckRunConfig,
+  CliUtilityTypeCheckRunConfigPath,
+  CliUtilityTypeCheckRunFilteredDiagnostics,
+  CliUtilityTypeCheckRunOptions,
+  CliUtilityTypeCheckRunParsed,
+  CliUtilityTypeCheckRunProgram,
+  CliUtilityTypeCheckRunReturns,
+} from '../../types/cli/utility/type-check.d.ts';
 
 /**
- * CLI Utility - Type Check.
+ * CLI - Utility - Type Check.
  *
- * @since 1.0.0
+ * Runs the TypeScript compiler in type-check-only mode and filters
+ * diagnostics to project-owned files, excluding node_modules.
+ *
+ * @since 0.13.0
  */
-export class CLIUtilityTypeCheck {
+export class CliUtilityTypeCheck {
   /**
-   * CLI Utility - Type Check - Run.
+   * CLI - Utility - Type Check - Run.
    *
-   * @param {CLIUtilityTypeCheckRunOptions} options - Options.
+   * Locates tsconfig.json, creates a TypeScript program, collects
+   * pre-emit diagnostics, filters them to project files, and prints errors found.
    *
-   * @returns {CLIUtilityTypeCheckRunReturns}
+   * @param {CliUtilityTypeCheckRunOptions} options - Options.
    *
-   * @since 1.0.0
+   * @returns {CliUtilityTypeCheckRunReturns}
+   *
+   * @since 0.13.0
    */
-  public static run(options: CLIUtilityTypeCheckRunOptions): CLIUtilityTypeCheckRunReturns {
-    const configPath = CLIUtilityTypeCheck.getConfigPath(options.project);
+  public static run(options: CliUtilityTypeCheckRunOptions): CliUtilityTypeCheckRunReturns {
+    const configPath: CliUtilityTypeCheckRunConfigPath = CliUtilityTypeCheck.getConfigPath(options['project']);
 
     if (configPath === undefined) {
       Logger.error('No tsconfig.json found. Use --project to specify a path.');
       return;
     }
 
-    const { config } = readConfigFile(configPath, sys.readFile);
-    const parsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
-    const program = createProgram(parsed.fileNames, parsed.options);
+    const config: CliUtilityTypeCheckRunConfig = readConfigFile(configPath, sys.readFile)['config'];
+    const parsed: CliUtilityTypeCheckRunParsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
+    const program: CliUtilityTypeCheckRunProgram = createProgram(parsed.fileNames, parsed.options);
+    const filteredDiagnostics: CliUtilityTypeCheckRunFilteredDiagnostics = CliUtilityTypeCheck.filterDiagnostics(CliUtilityTypeCheck.getDiagnostics(program));
 
-    const diagnostics = CLIUtilityTypeCheck.getDiagnostics(program);
-    const filtered = CLIUtilityTypeCheck.filterDiagnostics(diagnostics);
+    CliUtilityTypeCheck.printDiagnostics(filteredDiagnostics);
 
-    CLIUtilityTypeCheck.printDiagnostics(filtered);
-
-    if (filtered.length > 0) {
+    if (filteredDiagnostics.length > 0) {
       process.exitCode = 1;
     }
+
+    return;
   }
 
   /**
-   * CLI Utility - Type Check - Get config path.
+   * CLI - Utility - Type Check - Get Config Path.
    *
-   * @param {CLIUtilityTypeCheckGetConfigPathProject} project - Project.
+   * Resolves the tsconfig.json path from the --project flag or
+   * searches upward from the current directory. Returns undefined when not found.
+   *
+   * @param {CliUtilityTypeCheckGetConfigPathProject} project - Project.
    *
    * @private
    *
-   * @returns {CLIUtilityTypeCheckGetConfigPathReturns}
+   * @returns {CliUtilityTypeCheckGetConfigPathReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static getConfigPath(project: CLIUtilityTypeCheckGetConfigPathProject): CLIUtilityTypeCheckGetConfigPathReturns {
+  private static getConfigPath(project: CliUtilityTypeCheckGetConfigPathProject): CliUtilityTypeCheckGetConfigPathReturns {
+    const currentDirectory: CliUtilityTypeCheckGetConfigPathCurrentDirectory = process.cwd();
+
     if (project !== undefined) {
-      const resolved = resolve(process.cwd(), project);
-      return (sys.fileExists(resolved)) ? resolved : undefined;
+      const resolved: CliUtilityTypeCheckGetConfigPathResolved = resolve(currentDirectory, project);
+      return (sys.fileExists(resolved) === true) ? resolved : undefined;
     }
 
-    return findConfigFile(process.cwd(), sys.fileExists, 'tsconfig.json');
+    return findConfigFile(currentDirectory, sys.fileExists, 'tsconfig.json');
   }
 
   /**
-   * CLI Utility - Type Check - Get diagnostics.
+   * CLI - Utility - Type Check - Get Diagnostics.
    *
-   * @param {CLIUtilityTypeCheckGetDiagnosticsProgram} program - Program.
+   * Extracts all pre-emit diagnostics from the TypeScript program
+   * without emitting output files to disk. Wrapped for testability.
+   *
+   * @param {CliUtilityTypeCheckGetDiagnosticsProgram} program - Program.
    *
    * @private
    *
-   * @returns {CLIUtilityTypeCheckGetDiagnosticsReturns}
+   * @returns {CliUtilityTypeCheckGetDiagnosticsReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static getDiagnostics(program: CLIUtilityTypeCheckGetDiagnosticsProgram): CLIUtilityTypeCheckGetDiagnosticsReturns {
+  private static getDiagnostics(program: CliUtilityTypeCheckGetDiagnosticsProgram): CliUtilityTypeCheckGetDiagnosticsReturns {
     return getPreEmitDiagnostics(program);
   }
 
   /**
-   * CLI Utility - Type Check - Filter diagnostics.
+   * CLI - Utility - Type Check - Filter Diagnostics.
    *
-   * @param {CLIUtilityTypeCheckFilterDiagnosticsDiagnostics} diagnostics - Diagnostics.
+   * Keeps only diagnostics originating from files under the current working directory and
+   * excludes anything inside node_modules.
+   *
+   * @param {CliUtilityTypeCheckFilterDiagnosticsDiagnostics} diagnostics - Diagnostics.
    *
    * @private
    *
-   * @returns {CLIUtilityTypeCheckFilterDiagnosticsReturns}
+   * @returns {CliUtilityTypeCheckFilterDiagnosticsReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static filterDiagnostics(diagnostics: CLIUtilityTypeCheckFilterDiagnosticsDiagnostics): CLIUtilityTypeCheckFilterDiagnosticsReturns {
+  private static filterDiagnostics(diagnostics: CliUtilityTypeCheckFilterDiagnosticsDiagnostics): CliUtilityTypeCheckFilterDiagnosticsReturns {
+    const currentDirectory: CliUtilityTypeCheckFilterDiagnosticsCurrentDirectory = process.cwd();
+
     return diagnostics.filter((diagnostic) => {
-      const fileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : '';
-      return fileName.startsWith(process.cwd()) && !fileName.includes('node_modules');
+      const fileName: CliUtilityTypeCheckFilterDiagnosticsFileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : '';
+      return fileName.startsWith(currentDirectory) === true && fileName.includes('node_modules') === false;
     });
   }
 
   /**
-   * CLI Utility - Type Check - Print diagnostics.
+   * CLI - Utility - Type Check - Print Diagnostics.
    *
-   * @param {CLIUtilityTypeCheckPrintDiagnosticsFiltered} filtered - Filtered.
+   * Outputs each diagnostic with file, line, and column information
+   * via Logger.error, then prints a summary of total errors and affected files.
+   *
+   * @param {CliUtilityTypeCheckPrintDiagnosticsFilteredDiagnostics} filteredDiagnostics - Filtered diagnostics.
    *
    * @private
    *
-   * @returns {CLIUtilityTypeCheckPrintDiagnosticsReturns}
+   * @returns {CliUtilityTypeCheckPrintDiagnosticsReturns}
    *
-   * @since 1.0.0
+   * @since 0.13.0
    */
-  private static printDiagnostics(filtered: CLIUtilityTypeCheckPrintDiagnosticsFiltered): CLIUtilityTypeCheckPrintDiagnosticsReturns {
-    const fileSet: CLIUtilityTypeCheckPrintDiagnosticsFileSet = new Set();
+  private static printDiagnostics(filteredDiagnostics: CliUtilityTypeCheckPrintDiagnosticsFilteredDiagnostics): CliUtilityTypeCheckPrintDiagnosticsReturns {
+    const fileSet: CliUtilityTypeCheckPrintDiagnosticsFileSet = new Set();
 
-    for (const diagnostic of filtered) {
-      const fileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : 'unknown';
-      const message = flattenDiagnosticMessageText(diagnostic.messageText, '\n');
+    for (const filteredDiagnostic of filteredDiagnostics) {
+      const fileName: CliUtilityTypeCheckPrintDiagnosticsFileName = (filteredDiagnostic.file !== undefined) ? filteredDiagnostic.file.fileName : 'unknown';
+      const message: CliUtilityTypeCheckPrintDiagnosticsMessage = flattenDiagnosticMessageText(filteredDiagnostic.messageText, '\n');
 
       fileSet.add(fileName);
 
-      if (diagnostic.file !== undefined && diagnostic.start !== undefined) {
-        const { line, character } = diagnostic.file.getLineAndCharacterOfPosition(diagnostic.start);
+      if (filteredDiagnostic.file !== undefined && filteredDiagnostic.start !== undefined) {
+        const position: CliUtilityTypeCheckPrintDiagnosticsPosition = filteredDiagnostic.file.getLineAndCharacterOfPosition(filteredDiagnostic.start);
+        const line: CliUtilityTypeCheckPrintDiagnosticsLine = position.line;
+        const character: CliUtilityTypeCheckPrintDiagnosticsCharacter = position.character;
+
         Logger.error(`${fileName}:${line + 1}:${character + 1} - ${message}`);
       } else {
         Logger.error(message);
       }
     }
 
-    if (filtered.length > 0) {
-      Logger.info(`Found ${filtered.length} error(s) in ${fileSet.size} file(s).`);
+    if (filteredDiagnostics.length > 0) {
+      Logger.info(`Found ${filteredDiagnostics.length} error(s) in ${fileSet.size} file(s).`);
     } else {
       Logger.info('No type errors found.');
     }
+
+    return;
   }
 }

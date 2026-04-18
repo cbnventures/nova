@@ -1,17 +1,40 @@
 import type { TSESTree } from '@typescript-eslint/utils';
+import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
- * No regex literals - Check literal.
+ * Rules - ESLint - Regex - No Regex Literals - Check Literal.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type NoRegexLiteralsCheckLiteralNode = TSESTree.Literal;
+export type RulesEslintRegexNoRegexLiteralsCheckLiteralContext = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type NoRegexLiteralsCheckLiteralReturns = void;
+export type RulesEslintRegexNoRegexLiteralsCheckLiteralNode = TSESTree.Literal;
+
+export type RulesEslintRegexNoRegexLiteralsCheckLiteralOptionsIgnoreFiles = string[];
+
+export type RulesEslintRegexNoRegexLiteralsCheckLiteralOptionsRegexFile = string;
+
+export type RulesEslintRegexNoRegexLiteralsCheckLiteralOptions = Readonly<{
+  ignoreFiles: RulesEslintRegexNoRegexLiteralsCheckLiteralOptionsIgnoreFiles;
+  regexFile: RulesEslintRegexNoRegexLiteralsCheckLiteralOptionsRegexFile;
+}>;
+
+export type RulesEslintRegexNoRegexLiteralsCheckLiteralReturns = void;
 
 /**
- * No regex literals - Default options.
+ * Rules - ESLint - Regex - No Regex Literals - Rule.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type NoRegexLiteralsDefaultOptionsAllowedFiles = string[];
+export type RulesEslintRegexNoRegexLiteralsRuleDefaultOptionsIgnoreFiles = string[];
+
+export type RulesEslintRegexNoRegexLiteralsRuleDefaultOptionsRegexFile = string;
+
+export type RulesEslintRegexNoRegexLiteralsRuleOptionsIgnoreFiles = string[];
+
+export type RulesEslintRegexNoRegexLiteralsRuleOptionsRegexFile = string;
+
+export type RulesEslintRegexNoRegexLiteralsRuleOptions = Readonly<{
+  ignoreFiles: RulesEslintRegexNoRegexLiteralsRuleOptionsIgnoreFiles;
+  regexFile: RulesEslintRegexNoRegexLiteralsRuleOptionsRegexFile;
+}>;

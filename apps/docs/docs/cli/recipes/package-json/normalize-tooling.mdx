@@ -11,20 +11,32 @@ keywords:
   - config
   - workspaces
 tags:
-  - normalize-tooling
   - cli
+  - normalize-tooling
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Normalize **scripts**, **gypfile**, **config**, and **workspaces** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Normalize **scripts**, **gypfile**, **config**, and **workspaces** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `normalize-tooling` recipe handles tooling-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json`. It normalizes the `scripts` object, `gypfile` flag, `config` object, and `workspaces` field according to workspace role conventions.
+The `normalize-tooling` recipe handles tooling-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json`.
+
+It normalizes the `scripts` object, `gypfile` flag, `config` object, and `workspaces` field according to workspace role conventions.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects tooling-related fields and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+
+- **`scripts` (Required)** — If the field is missing, it is added as an empty object `{}`.
+- **`gypfile` (Required)** — If present but no `binding.gyp` file exists in the workspace directory, the field is removed. If missing but `binding.gyp` exists and neither `scripts.preinstall` nor `scripts.install` are defined, it is added as `true`.
+- **`config` (Conditional)** — Removed if the field is present but empty.
+- **`workspaces` (Required)** — Removed if the workspace role is not `project`. If the role is `project` and the field is missing, it is added as an empty array `[]`.
 
 ## Usage
 
@@ -47,7 +59,7 @@ The `normalize-tooling` recipe handles tooling-related fields in each <Term titl
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

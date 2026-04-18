@@ -1,0 +1,52 @@
+/**
+ * Reset — Universal box model, margin, and typography normalization.
+ *
+ * @since 0.15.0
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  scrollbar-gutter: stable;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--nova-layout-sticky-top, 5rem);
+}
+
+body {
+  margin: 0;
+  line-height: 1.5;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}

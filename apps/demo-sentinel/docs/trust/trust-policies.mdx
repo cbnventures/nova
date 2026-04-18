@@ -1,0 +1,129 @@
+---
+title: Trust Policies
+sidebar_position: 1
+description: Policy grammar, conditions, composability, inheritance chains, and evaluation order in the Sentinel trust engine.
+tags:
+  - trust
+  - policies
+---
+
+import Details from '@theme/Details';
+
+# Trust Policies
+
+Trust policies are the fundamental unit of access control in Sentinel. A policy defines what conditions must be true for access to be granted, and what happens when those conditions stop being true. Policies are written in `.grain` format, version-controlled, and evaluated by Watchtower every 90 seconds.
+
+## Policy Grammar
+
+Every policy consists of a declaration, a condition block, and a failure handler:
+
+```text title="policies/api-access.grain"
+policy "api-cluster-access" {
+  resource = "api-cluster-east"
+  effect   = "allow"
+  priority = 100
+
+  conditions {
+    device.posture   >= 85
+    user.mfa         = true
+    user.role        = ["engineer", "sre"]
+    network.location = ["office", "vpn"]
+    session.age      <= 7200
+  }
+
+  on_failure {
+    action  = "revoke"
+    notify  = "security-ops"
+    log     = "spyglass"
+    step_up = "mfa"
+  }
+}
+```
+
+The `effect` field is either `allow` or `deny`. Deny policies always take precedence over allow policies at the same priority level.
+
+## Condition Types
+
+| Condition           | Operator        | Values                    | Description                                     |
+|---------------------|-----------------|---------------------------|-------------------------------------------------|
+| `device.posture`    | `>=`, `<=`, `=` | 0-100                     | Composite posture score from Garrison.          |
+| `device.encryption` | `=`             | `true`, `false`           | Disk encryption status.                         |
+| `device.os`         | `=`             | Array of OS names         | Allowed operating systems.                      |
+| `user.mfa`          | `=`             | `true`, `false`           | Multi-factor authentication enrollment.         |
+| `user.role`         | `=`             | Array of role names       | Required user roles (any match).                |
+| `user.department`   | `=`             | Array of department names | Required departments (any match).               |
+| `network.location`  | `=`             | Array of location tags    | Allowed network locations.                      |
+| `network.ip_range`  | `=`             | Array of CIDR blocks      | Allowed source IP ranges.                       |
+| `behavior.score`    | `>=`, `<=`, `=` | 0-100                     | Behavioral anomaly score from Watchtower.       |
+| `session.age`       | `<=`            | Seconds                   | Maximum session duration before forced re-auth. |
+| `time.window`       | `=`             | Cron expression           | Time window during which the policy is active.  |
+
+All conditions in a policy must be satisfied simultaneously. There is no OR logic within a single policy — use policy composition for OR semantics.
+
+:::info Evaluation Order
+When multiple policies apply to the same resource, Sentinel evaluates them in priority order (lowest number first). The first matching policy determines the access decision. Deny policies at the same priority as an allow policy always win.
+:::
+
+## Policy Composition
+
+Policies can be composed through inheritance and chaining. A child policy inherits all conditions from its parent and can add or override specific conditions:
+
+```text title="policies/base-access.grain"
+policy "base-access" {
+  resource = "*"
+  effect   = "allow"
+
+  conditions {
+    device.posture >= 70
+    user.mfa       = true
+  }
+}
+```
+
+```text title="policies/production-access.grain"
+policy "production-access" {
+  // highlight-next-line
+  extends  = "base-access"
+  resource = "production-*"
+  priority = 50
+
+  conditions {
+    // highlight-start
+    device.posture   >= 90
+    network.location = ["office"]
+    session.age      <= 3600
+    // highlight-end
+  }
+}
+```
+
+The `production-access` policy inherits `user.mfa = true` from `base-access` and overrides the posture threshold from 70 to 90. It also adds location and session age restrictions that the parent does not have.
+
+## Evaluation Cycle
+
+Watchtower evaluates all active sessions against their applicable policies every 90 seconds:
+
+1. Garrison reports current device posture for every enrolled device.
+2. Watchtower collects posture data, user identity, network context, and behavioral signals.
+3. For each active session, Watchtower resolves the applicable policy chain (inheritance + priority).
+4. All conditions are evaluated. If any condition fails, the `on_failure` handler executes.
+5. Spyglass records the full evaluation — pass or fail — with timestamps and signal values.
+
+<Details>
+<summary>Full condition operator reference</summary>
+
+**Numeric operators** (`>=`, `<=`, `=`): Used for posture scores, behavior scores, and session age. Values are compared as integers.
+
+**Equality operator** (`=`): Used for booleans (MFA, encryption), arrays (roles, locations, OS names), and CIDR ranges. Array conditions use "any match" semantics — the condition passes if the actual value matches any element in the array.
+
+**Cron operator** (`=` with cron expression): Used for `time.window`. The condition passes only during the time window defined by the cron expression. Outside the window, the condition fails and the `on_failure` handler runs.
+
+**Negation**: Prefix any condition with `!` to invert it: `!network.location = ["public-wifi"]` denies access from public WiFi networks.
+
+</Details>
+
+## Next Steps
+
+- [Device Enrollment](/docs/trust/device-enrollment/) — How Garrison onboards devices and establishes posture baselines.
+- [Access Control](/docs/trust/access-control/) — Drawbridge rules, time-bound access, and emergency overrides.
+- [Policy Simulation](/docs/operations/policy-simulation/) — Test policies against real traffic before enforcement.

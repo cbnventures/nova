@@ -1,0 +1,23 @@
+  - type: "dropdown"
+    id: "device-type"
+    attributes:
+      label: "Device type"
+      description: "What type of Apple device are you using?"
+      options:
+        - "iPhone"
+        - "iPad"
+        - "Mac"
+        - "Apple Watch"
+        - "Apple TV"
+        - "Apple Vision Pro"
+        - "Other"
+    validations:
+      required: true
+  - type: "input"
+    id: "os-version"
+    attributes:
+      label: "Operating system version"
+      description: "What version of the operating system are you using? You can find this in __Settings > General > About__."
+      placeholder: "e.g. iOS 26.3, macOS 26.3"
+    validations:
+      required: true

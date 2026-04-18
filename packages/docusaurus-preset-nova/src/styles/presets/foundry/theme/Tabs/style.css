@@ -1,0 +1,77 @@
+/**
+ * Foundry — Tabs visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Tabs Container
+ * ============================ */
+
+.nova-tabs {
+  margin-bottom: 1.5rem;
+}
+
+/* ============================
+ * 2. Tab List
+ * ============================ */
+
+.nova-tabs-list {
+  border-bottom: 1px solid var(--nova-foundry-border);
+}
+
+[data-theme="dark"] .nova-tabs-list {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================
+ * 3. Tab Button
+ * ============================ */
+
+.nova-tabs-tab {
+  padding: 0.5rem 1rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--nova-color-neutral-500);
+
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+
+  transition: color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease;
+}
+
+.nova-tabs-tab:hover,
+.nova-tabs-tab:focus-visible {
+  color: var(--nova-color-neutral-900);
+}
+
+.nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-color-primary-600);
+  border-bottom-color: var(--nova-color-primary-600);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .nova-tabs-tab {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-tabs-tab:hover,
+[data-theme="dark"] .nova-tabs-tab:focus-visible {
+  color: var(--nova-color-neutral-100);
+}
+
+[data-theme="dark"] .nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-color-primary-400);
+  border-bottom-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Tab Panel
+ * ============================ */
+
+.nova-tabs-panel {
+  padding: 1rem 0;
+}

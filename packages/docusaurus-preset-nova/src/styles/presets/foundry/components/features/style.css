@@ -1,0 +1,176 @@
+/**
+ * Foundry — Features section visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Features Container
+ * ============================ */
+
+/* ============================
+ * 2. Feature Cards
+ * ============================ */
+
+/* Feature cards are nova-col-12 nova-col-md-4 (full mobile, 3-col md+). */
+.nova-feature-card {
+  padding: 1.25rem;
+  background-color: var(--nova-foundry-surface-raised);
+  border: 1px solid var(--nova-foundry-border);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: transform var(--nova-motion-duration) ease,
+              box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
+              border-color var(--nova-motion-duration) ease;
+}
+
+@media (min-width: 768px) {
+  .nova-feature-card {
+    padding: 1.75rem;
+  }
+}
+
+.nova-feature-card:hover {
+  transform: translateY(calc(-3px * var(--nova-motion-hover-effects)));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.04);
+  border-color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-feature-card {
+  background-color: rgba(255, 255, 255, 0.02);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .nova-feature-card:hover {
+  background-color: rgba(255, 255, 255, 0.04);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3),
+              0 0 1px rgba(255, 255, 255, 0.1);
+  border-color: var(--nova-color-primary-700);
+}
+
+/* ============================
+ * 3. Card Content
+ * ============================ */
+
+.nova-feature-card-title {
+  font-family: var(--nova-font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-feature-card-title {
+  color: var(--nova-color-neutral-50);
+}
+
+@media (min-width: 768px) {
+  .nova-feature-card-title {
+    font-size: 1.0625rem;
+    margin: 0 0 0.625rem 0;
+  }
+}
+
+.nova-feature-card-description {
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--nova-color-neutral-500);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .nova-feature-card-description {
+    font-size: 0.9375rem;
+  }
+}
+
+[data-theme="dark"] .nova-feature-card-description {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-feature-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--nova-color-primary-600);
+  background-color: var(--nova-foundry-glow-primary);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-feature-card-icon {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-features-heading {
+  text-align: center;
+}
+
+/* ============================
+ * 4. Animations
+ * ============================ */
+
+/* Prevent Chrome scroll anchoring from shifting page during entrance animations. */
+.nova-features {
+  overflow-anchor: none;
+}
+
+.nova-features {
+  animation: foundry-fade-in-up calc(var(--nova-motion-duration) * 2.5) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(360ms * var(--nova-motion-staggered-reveals));
+}
+
+.nova-feature-card:nth-child(1) {
+  animation: foundry-fade-in-up calc(var(--nova-motion-duration) * 2) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(420ms * var(--nova-motion-staggered-reveals));
+}
+
+.nova-feature-card:nth-child(2) {
+  animation: foundry-fade-in-up calc(var(--nova-motion-duration) * 2) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(490ms * var(--nova-motion-staggered-reveals));
+}
+
+.nova-feature-card:nth-child(3) {
+  animation: foundry-fade-in-up calc(var(--nova-motion-duration) * 2) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(560ms * var(--nova-motion-staggered-reveals));
+}
+
+.nova-feature-card:nth-child(4) {
+  animation: foundry-fade-in-up calc(var(--nova-motion-duration) * 2) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(630ms * var(--nova-motion-staggered-reveals));
+}
+
+.nova-feature-card:nth-child(5) {
+  animation: foundry-fade-in-up calc(var(--nova-motion-duration) * 2) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(700ms * var(--nova-motion-staggered-reveals));
+}
+
+.nova-feature-card:nth-child(6) {
+  animation: foundry-fade-in-up calc(var(--nova-motion-duration) * 2) cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(770ms * var(--nova-motion-staggered-reveals));
+}
+
+/* ============================
+ * 5. Feature Card Border Glow (Dark Mode)
+ * ============================ */
+
+[data-theme="dark"] .nova-feature-card {
+  transition: transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
+              border-color calc(var(--nova-motion-duration) * 1.5) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+/* ============================
+ * 6. Card Hover Effects
+ * ============================ */
+
+.card {
+  transition: transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
+              border-color var(--nova-motion-duration) ease;
+}
+
+.card:hover {
+  transform: translateY(calc(-2px * var(--nova-motion-hover-effects)));
+}

@@ -1,0 +1,67 @@
+---
+title: "How Crucible Changed the Way We Think About Tests"
+authors: [priya]
+tags: [testing, crucible, developer-experience, opinions]
+date: 2024-04-09
+---
+
+We used to write tests that verified implementation details. A function returns the right object. A method calls another method with the right arguments. A component renders the right number of divs. Then we refactored something, and half the test suite broke — not because behavior changed, but because internal wiring changed.
+
+Crucible forced us to rethink what a test is for. It is not a snapshot of the code. It is a contract between the package and its consumers.
+
+{/* truncate */}
+
+## The Problem with Implementation Tests
+
+Consider a utility function that formats a currency value. An implementation test might look like this:
+
+```alloy title="Implementation test — fragile"
+test("formatCurrency calls Intl.NumberFormat with USD") {
+  const spy = mock(Intl, "NumberFormat")
+  formatCurrency(42.5, "USD")
+  expect(spy).calledWith("en-US", { style: "currency", currency: "USD" })
+}
+```
+
+This test does not verify behavior. It verifies that the function uses `Intl.NumberFormat` internally. If someone rewrites the function to use a lookup table instead, the test breaks even though the output is identical.
+
+A Crucible contract test looks different:
+
+```alloy title="Contract test — stable"
+crucible("formatCurrency produces locale-correct output") {
+  assert formatCurrency(42.5, "USD") == "$42.50"
+  assert formatCurrency(1000, "EUR") == "EUR1,000.00" (locale: "de-DE")
+  assert formatCurrency(0, "GBP") == "GBP0.00"
+}
+```
+
+The contract test does not care how the function works. It cares what the function produces. Refactor the internals all you want — as long as the output matches, the test passes.
+
+## What Crucible Enforces
+
+Crucible is not just a test runner. It is an opinionated testing framework that enforces three constraints:
+
+- **No mocking of internal modules.** You can mock external services (HTTP, databases, file system), but you cannot mock other packages in the same workspace. If package A depends on package B, the tests run against the real package B. This catches integration bugs that mocked tests hide.
+- **No snapshot tests.** Snapshots are implementation tests disguised as golden files. They break on every UI change, train developers to update without reading, and provide zero confidence that behavior is correct. Crucible does not support them.
+- **Mandatory assertion messages.** Every `assert` call requires a human-readable description. If a test fails at 2 AM in CI, the message should explain what went wrong without reading the source.
+
+## The Pushback
+
+When we introduced these constraints internally, the reaction was immediate and negative. "No mocking?" "No snapshots?" "You want me to write a string for every assertion?"
+
+We ran both approaches side by side for eight weeks. The results settled the argument:
+
+| Metric                           | Before Crucible | After Crucible |
+|----------------------------------|-----------------|----------------|
+| Tests broken by refactoring      | 34%             | 6%             |
+| Mean time to diagnose CI failure | 18 min          | 4 min          |
+| Test coverage (line)             | 82%             | 79%            |
+| Test coverage (behavioral)       | Unknown         | 91%            |
+
+Line coverage dropped slightly because we deleted tests that verified mocking behavior instead of real behavior. Behavioral coverage — the percentage of public API surface exercised by contract tests — went up significantly.
+
+## When Crucible Is Wrong
+
+Crucible is not the right tool for every test. End-to-end tests that verify full user flows, visual regression tests that compare screenshots, and load tests that measure throughput all live outside Crucible. It is specifically for package-level contract testing — verifying that the public API of a package behaves as documented.
+
+We do not pretend it replaces your entire test strategy. We do argue it should replace the unit tests you write today.

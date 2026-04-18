@@ -1,0 +1,120 @@
+---
+title: Build Pipeline
+sidebar_position: 1
+tags:
+  - pipeline
+  - build
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Build Pipeline
+
+Foundry builds workspaces in five stages: resolve, cache check, compile, link, and verify. Two tools drive this pipeline — Quench handles caching, Bellows handles parallelism.
+
+## The Forge Lifecycle
+
+Every `foundry ignite` invocation follows the same sequence:
+
+1. **Resolve.** Tongs reads the manifest and builds the dependency graph.
+2. **Cache check.** Quench hashes every source file, dependency version, and manifest directive. If the hash matches a previous build, the package is skipped.
+3. **Compile.** Smelter compiles the source files for each package.
+4. **Link.** Cross-package references are resolved and import aliases are wired.
+5. **Verify.** Warden runs against the compiled output. Crucible runs generated tests if configured.
+
+## Quench Caching
+
+Quench is a content-addressable build cache. It does not use file timestamps — timestamps are unreliable across machines and after version control operations. Instead, Quench hashes three inputs:
+
+| Input               | Description                                                          |
+|---------------------|----------------------------------------------------------------------|
+| Source content      | SHA-256 of every file in the package `src/` directory.               |
+| Dependency versions | The resolved version string of every dependency in the Tongs graph.  |
+| Manifest directives | The Warden rules, Smelter config, and target from the `.grain` file. |
+
+If all three hashes match a cached build, Quench restores the artifacts and skips compilation entirely.
+
+```text title="Cache status output"
+$ foundry quench status
+  core       [HIT]  abc12f → cached 2m ago
+  auth       [HIT]  def34a → cached 2m ago
+  api        [MISS] ghi56b → source changed (src/routes/health.al)
+  web        [HIT]  jkl78c → cached 14m ago
+  gateway    [WAIT] depends on api (MISS), must rebuild
+```
+
+### Warm vs Cold Forges
+
+A cold forge runs with an empty cache. Every package compiles from scratch. A warm forge runs when most hashes match — only changed packages and their downstream dependents rebuild.
+
+| Workspace Size | Cold Forge | Warm Forge |
+|----------------|------------|------------|
+| 10 packages    | 8.1s       | 1.2s       |
+| 50 packages    | 14.7s      | 1.8s       |
+| 100 packages   | 28.3s      | 2.1s       |
+| 200 packages   | 52.6s      | 3.4s       |
+
+### Cache Maintenance
+
+Prune old cache entries to reclaim disk space:
+
+```bash title="Remove entries older than 7 days"
+foundry quench prune --older-than 7d
+```
+
+## Bellows Parallelism
+
+Bellows reads the Tongs dependency graph and schedules packages in waves. Independent packages build simultaneously. Dependent packages wait for their prerequisites.
+
+<Tabs>
+<TabItem value="local" label="Local Development" default>
+
+```bash title="Run a parallel forge locally"
+foundry ignite
+```
+
+Bellows auto-detects the number of CPU cores and fans work accordingly. Override with the `FOUNDRY_PARALLELISM` environment variable.
+
+</TabItem>
+<TabItem value="ci" label="Conduit (CI)">
+
+```bash title="Run a forge in Conduit"
+foundry ignite --ci
+```
+
+In CI mode, Foundry produces structured JSON output for pipeline integration, disables interactive prompts, and respects the `FOUNDRY_CACHE_DIR` variable for shared cache directories.
+
+</TabItem>
+</Tabs>
+
+### Execution Order
+
+Bellows groups packages into waves based on the dependency graph:
+
+```text title="Bellows execution log"
+$ foundry bellows build --verbose
+  Wave 1: core (no dependencies)
+  Wave 2: auth, cli, docs (depend on core)
+  Wave 3: api, web (depend on core + auth)
+  Wave 4: gateway (depends on api + auth)
+
+  Total: 4 waves, 7 packages, 3.4s (warm)
+```
+
+Packages within the same wave run in parallel. Waves execute sequentially. The total build time is the sum of the longest package in each wave — not the sum of all packages.
+
+## Build Strategies
+
+| Strategy       | Command                            | Use Case                                  |
+|----------------|------------------------------------|-------------------------------------------|
+| Full forge     | `foundry ignite`                   | Generate all artifacts from the manifest. |
+| Incremental    | `foundry ignite --incremental`     | Only rebuild changed packages.            |
+| Single package | `foundry bellows build --only api` | Build one package and its dependencies.   |
+| Dry run        | `foundry ignite --dry-run`         | Preview output without writing files.     |
+
+## Next Steps
+
+- [Warden Rules](/docs/pipeline/warden-rules/) — The linting layer that runs during the verify stage.
+- [Testing with Crucible](/docs/pipeline/testing-with-crucible/) — Test scaffold generation and execution.
+- [Deployment](/docs/reference/deployment/) — Shipping build artifacts to Arcline, Vial, or Trellis.

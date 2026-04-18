@@ -1,94 +1,27 @@
 import { fail, strictEqual, throws } from 'node:assert/strict';
-import { test } from 'node:test';
+
+import { describe, it } from 'vitest';
 
 import {
-  schemaNodeReleasesScheduleEntry,
-  schemaNodeReleasesSchedule,
-  schemaSpdxLicensesLicense,
-  schemaSpdxLicensesResponse,
-} from '@/lib/schema.js';
+  libSchemaNodeReleasesSchedule,
+  libSchemaSpdxLicensesResponse,
+} from '../../lib/schema.js';
+
+import type {
+  TestsLibSchemaNodeReleasesScheduleEntryOrUndefined,
+  TestsLibSchemaNodeReleasesScheduleResult,
+  TestsLibSchemaSpdxLicenseEntryOrUndefined,
+  TestsLibSchemaSpdxLicensesResult,
+} from '../../types/tests/lib/schema.test.d.ts';
 
 /**
- * Node releases schedule entry schema.
+ * Tests - Lib - Schema - Node Releases Schedule.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('schemaNodeReleasesScheduleEntry', async (context) => {
-  await context.test('accepts entry with lts and end', () => {
-    const result = schemaNodeReleasesScheduleEntry.parse({
-      lts: '2024-10-29',
-      end: '2027-04-30',
-    });
-
-    strictEqual(result.lts, '2024-10-29');
-    strictEqual(result.end, '2027-04-30');
-  });
-
-  await context.test('accepts entry without lts', () => {
-    const result = schemaNodeReleasesScheduleEntry.parse({
-      end: '2025-04-01',
-    });
-
-    strictEqual(result.lts, undefined);
-    strictEqual(result.end, '2025-04-01');
-  });
-
-  await context.test('strips unknown properties', () => {
-    const result = schemaNodeReleasesScheduleEntry.parse({
-      lts: '2024-10-29',
-      end: '2027-04-30',
-      maintenance: '2025-10-01',
-      start: '2024-04-01',
-    });
-
-    strictEqual(result.lts, '2024-10-29');
-    strictEqual(result.end, '2027-04-30');
-    strictEqual('maintenance' in result, false);
-    strictEqual('start' in result, false);
-  });
-
-  await context.test('rejects entry missing end', () => {
-    throws(() => {
-      schemaNodeReleasesScheduleEntry.parse({});
-    });
-  });
-
-  await context.test('rejects entry with non-string end', () => {
-    throws(() => {
-      schemaNodeReleasesScheduleEntry.parse({ end: 123 });
-    });
-  });
-
-  await context.test('rejects entry with non-string lts', () => {
-    throws(() => {
-      schemaNodeReleasesScheduleEntry.parse({
-        lts: 123,
-        end: '2027-04-30',
-      });
-    });
-  });
-
-  await context.test('rejects null', () => {
-    throws(() => {
-      schemaNodeReleasesScheduleEntry.parse(null);
-    });
-  });
-
-  await context.test('rejects non-object value', () => {
-    throws(() => {
-      schemaNodeReleasesScheduleEntry.parse('string');
-    });
-  });
-});
-
-/**
- * Node releases schedule schema.
- *
- * @since 1.0.0
- */
-test('schemaNodeReleasesSchedule', async (context) => {
-  await context.test('accepts schedule with multiple entries', () => {
-    const result = schemaNodeReleasesSchedule.parse({
+describe('libSchemaNodeReleasesSchedule', async () => {
+  it('accepts schedule with multiple entries', () => {
+    const result: TestsLibSchemaNodeReleasesScheduleResult = libSchemaNodeReleasesSchedule.parse({
       'v18': {
         lts: '2022-10-25',
         end: '2025-04-30',
@@ -102,9 +35,9 @@ test('schemaNodeReleasesSchedule', async (context) => {
 
     strictEqual(Object.keys(result).length, 3);
 
-    const v18 = result['v18'];
-    const v19 = result['v19'];
-    const v20 = result['v20'];
+    const v18: TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = result['v18'];
+    const v19: TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = result['v19'];
+    const v20: TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = result['v20'];
 
     if (v18 === undefined) {
       fail('Expected v18 to be defined');
@@ -118,19 +51,23 @@ test('schemaNodeReleasesSchedule', async (context) => {
       fail('Expected v20 to be defined');
     }
 
-    strictEqual(v18.lts, '2022-10-25');
-    strictEqual(v19.lts, undefined);
-    strictEqual(v20.end, '2026-04-30');
+    strictEqual(v18['lts'], '2022-10-25');
+    strictEqual(v19['lts'], undefined);
+    strictEqual(v20['end'], '2026-04-30');
+
+    return;
   });
 
-  await context.test('accepts empty schedule', () => {
-    const result = schemaNodeReleasesSchedule.parse({});
+  it('accepts empty schedule', () => {
+    const result: TestsLibSchemaNodeReleasesScheduleResult = libSchemaNodeReleasesSchedule.parse({});
 
     strictEqual(Object.keys(result).length, 0);
+
+    return;
   });
 
-  await context.test('accepts single entry', () => {
-    const result = schemaNodeReleasesSchedule.parse({
+  it('accepts single entry', () => {
+    const result: TestsLibSchemaNodeReleasesScheduleResult = libSchemaNodeReleasesSchedule.parse({
       'v22': {
         lts: '2024-10-29',
         end: '2027-04-30',
@@ -139,111 +76,84 @@ test('schemaNodeReleasesSchedule', async (context) => {
 
     strictEqual(Object.keys(result).length, 1);
 
-    const v22 = result['v22'];
+    const v22: TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = result['v22'];
 
     if (v22 === undefined) {
       fail('Expected v22 to be defined');
     }
 
-    strictEqual(v22.lts, '2024-10-29');
+    strictEqual(v22['lts'], '2024-10-29');
+
+    return;
   });
 
-  await context.test('rejects schedule with invalid entry value', () => {
+  it('rejects schedule with invalid entry value', () => {
     throws(() => {
-      schemaNodeReleasesSchedule.parse({
+      libSchemaNodeReleasesSchedule.parse({
         'v20': { lts: 123 },
       });
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects schedule with null entry value', () => {
+  it('rejects schedule with null entry value', () => {
     throws(() => {
-      schemaNodeReleasesSchedule.parse({
+      libSchemaNodeReleasesSchedule.parse({
         'v20': null,
       });
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects schedule with string entry value', () => {
+  it('rejects schedule with string entry value', () => {
     throws(() => {
-      schemaNodeReleasesSchedule.parse({
+      libSchemaNodeReleasesSchedule.parse({
         'v20': 'not-an-entry',
       });
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects null', () => {
+  it('rejects null', () => {
     throws(() => {
-      schemaNodeReleasesSchedule.parse(null);
+      libSchemaNodeReleasesSchedule.parse(null);
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects array', () => {
+  it('rejects array', () => {
     throws(() => {
-      schemaNodeReleasesSchedule.parse([]);
+      libSchemaNodeReleasesSchedule.parse([]);
+
+      return;
     });
+
+    return;
   });
+
+  return;
 });
 
 /**
- * SPDX licenses license schema.
+ * Tests - Lib - Schema - SPDX Licenses Response.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('schemaSpdxLicensesLicense', async (context) => {
-  await context.test('accepts valid license', () => {
-    const result = schemaSpdxLicensesLicense.parse({
-      licenseId: 'MIT',
-    });
-
-    strictEqual(result.licenseId, 'MIT');
-  });
-
-  await context.test('strips unknown properties', () => {
-    const result = schemaSpdxLicensesLicense.parse({
-      licenseId: 'Apache-2.0',
-      name: 'Apache License 2.0',
-      isOsiApproved: true,
-    });
-
-    strictEqual(result.licenseId, 'Apache-2.0');
-    strictEqual('name' in result, false);
-    strictEqual('isOsiApproved' in result, false);
-  });
-
-  await context.test('rejects license missing licenseId', () => {
-    throws(() => {
-      schemaSpdxLicensesLicense.parse({});
-    });
-  });
-
-  await context.test('rejects license with non-string licenseId', () => {
-    throws(() => {
-      schemaSpdxLicensesLicense.parse({ licenseId: 123 });
-    });
-  });
-
-  await context.test('rejects null', () => {
-    throws(() => {
-      schemaSpdxLicensesLicense.parse(null);
-    });
-  });
-
-  await context.test('rejects non-object value', () => {
-    throws(() => {
-      schemaSpdxLicensesLicense.parse('MIT');
-    });
-  });
-});
-
-/**
- * SPDX licenses response schema.
- *
- * @since 1.0.0
- */
-test('schemaSpdxLicensesResponse', async (context) => {
-  await context.test('accepts response with multiple licenses', () => {
-    const result = schemaSpdxLicensesResponse.parse({
+describe('libSchemaSpdxLicensesResponse', async () => {
+  it('accepts response with multiple licenses', () => {
+    const result: TestsLibSchemaSpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
       licenses: [
         { licenseId: 'MIT' },
         { licenseId: 'Apache-2.0' },
@@ -251,11 +161,11 @@ test('schemaSpdxLicensesResponse', async (context) => {
       ],
     });
 
-    strictEqual(result.licenses.length, 3);
+    strictEqual(result['licenses'].length, 3);
 
-    const license0 = result.licenses[0];
-    const license1 = result.licenses[1];
-    const license2 = result.licenses[2];
+    const license0: TestsLibSchemaSpdxLicenseEntryOrUndefined = result['licenses'][0];
+    const license1: TestsLibSchemaSpdxLicenseEntryOrUndefined = result['licenses'][1];
+    const license2: TestsLibSchemaSpdxLicenseEntryOrUndefined = result['licenses'][2];
 
     if (license0 === undefined) {
       fail('Expected license at index 0');
@@ -269,75 +179,107 @@ test('schemaSpdxLicensesResponse', async (context) => {
       fail('Expected license at index 2');
     }
 
-    strictEqual(license0.licenseId, 'MIT');
-    strictEqual(license1.licenseId, 'Apache-2.0');
-    strictEqual(license2.licenseId, 'GPL-3.0-only');
+    strictEqual(license0['licenseId'], 'MIT');
+    strictEqual(license1['licenseId'], 'Apache-2.0');
+    strictEqual(license2['licenseId'], 'GPL-3.0-only');
+
+    return;
   });
 
-  await context.test('accepts response with empty licenses array', () => {
-    const result = schemaSpdxLicensesResponse.parse({
+  it('accepts response with empty licenses array', () => {
+    const result: TestsLibSchemaSpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
       licenses: [],
     });
 
-    strictEqual(result.licenses.length, 0);
+    strictEqual(result['licenses'].length, 0);
+
+    return;
   });
 
-  await context.test('accepts response with single license', () => {
-    const result = schemaSpdxLicensesResponse.parse({
+  it('accepts response with single license', () => {
+    const result: TestsLibSchemaSpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
       licenses: [{ licenseId: 'ISC' }],
     });
 
-    strictEqual(result.licenses.length, 1);
+    strictEqual(result['licenses'].length, 1);
 
-    const license0 = result.licenses[0];
+    const license0: TestsLibSchemaSpdxLicenseEntryOrUndefined = result['licenses'][0];
 
     if (license0 === undefined) {
       fail('Expected license at index 0');
     }
 
-    strictEqual(license0.licenseId, 'ISC');
+    strictEqual(license0['licenseId'], 'ISC');
+
+    return;
   });
 
-  await context.test('rejects response missing licenses', () => {
+  it('rejects response missing licenses', () => {
     throws(() => {
-      schemaSpdxLicensesResponse.parse({});
+      libSchemaSpdxLicensesResponse.parse({});
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects response with non-array licenses', () => {
+  it('rejects response with non-array licenses', () => {
     throws(() => {
-      schemaSpdxLicensesResponse.parse({ licenses: 'not-array' });
+      libSchemaSpdxLicensesResponse.parse({ licenses: 'not-array' });
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects response with invalid license entry', () => {
+  it('rejects response with invalid license entry', () => {
     throws(() => {
-      schemaSpdxLicensesResponse.parse({
+      libSchemaSpdxLicensesResponse.parse({
         licenses: [{ licenseId: 123 }],
       });
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects response with mixed valid and invalid entries', () => {
+  it('rejects response with mixed valid and invalid entries', () => {
     throws(() => {
-      schemaSpdxLicensesResponse.parse({
+      libSchemaSpdxLicensesResponse.parse({
         licenses: [
           { licenseId: 'MIT' },
           { invalid: true },
         ],
       });
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects null', () => {
+  it('rejects null', () => {
     throws(() => {
-      schemaSpdxLicensesResponse.parse(null);
+      libSchemaSpdxLicensesResponse.parse(null);
+
+      return;
     });
+
+    return;
   });
 
-  await context.test('rejects non-object value', () => {
+  it('rejects non-object value', () => {
     throws(() => {
-      schemaSpdxLicensesResponse.parse(42);
+      libSchemaSpdxLicensesResponse.parse(42);
+
+      return;
     });
+
+    return;
   });
+
+  return;
 });

@@ -6,34 +6,56 @@ keywords:
   - nova
   - normalize-dependencies
   - package.json
-  - dependencies
   - devDependencies
   - pin versions
-  - bundleDependencies
 tags:
-  - normalize-dependencies
   - cli
+  - normalize-dependencies
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Normalize dependency fields and optionally **pin versions** in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Normalize dependency fields and optionally **pin versions** in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `normalize-dependencies` recipe handles all dependency-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json`. It normalizes `dependencies`, `devDependencies`, `peerDependencies`, `optionalDependencies`, `bundleDependencies` (merging from the deprecated `bundledDependencies` form), and `overrides`. When version pinning settings are enabled, it strips range prefixes (e.g., `^`, `~`) from dependency versions.
+The `normalize-dependencies` recipe handles all dependency-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json`.
+
+It normalizes `dependencies`, `devDependencies`, `peerDependencies`, `optionalDependencies`, `bundleDependencies` (merging from the deprecated `bundledDependencies` form), and `overrides`.
+
+When version pinning settings are enabled, it strips range prefixes (e.g., `^`, `~`) from dependency versions.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects every dependency-related field and applies the following rules. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+
+- **`dependencies` (Conditional)** — Removed if the field is present but empty.
+- **`devDependencies` (Conditional)** — Removed if the field is present but empty.
+- **`peerDependencies` (Conditional)** — Removed if the field is present but empty.
+- **`peerDependenciesMeta` (Conditional)** — Removed if the field is present but empty.
+- **`bundledDependencies` (Conditional)** — Merged into `bundleDependencies` (deduplicated), then deleted. If `bundleDependencies` is empty after the merge, it is also removed.
+- **`optionalDependencies` (Conditional)** — Removed if the field is present but empty.
+- **`overrides` (Conditional)** — Removed if the field is present but empty.
+
+When `pinDependencyVersions` or `pinDevDependencyVersions` is enabled, the recipe also processes each version string in the respective group:
+
+- **Range prefixes** — Characters like `^`, `~`, `>=`, `>`, `<=`, `<` are stripped so the version resolves to an exact match.
+- **`file:` references** — Left untouched.
+- **`*` and `latest`** — Flagged as unpinnable. An error is logged and the process exit code is set to `1`.
+- **Already pinned** — Versions that start with a digit or have no prefix are skipped.
 
 ## Settings
 
 Settings are configured per workspace in `nova.config.json` under the `recipes` key:
 
-| Setting                    | Type    | Description                                          |
-|----------------------------|---------|------------------------------------------------------|
-| `pinDependencyVersions`    | boolean | Strip range prefixes from `dependencies` versions    |
-| `pinDevDependencyVersions` | boolean | Strip range prefixes from `devDependencies` versions |
+| Setting                    | Type    | Description                                           |
+|----------------------------|---------|-------------------------------------------------------|
+| `pinDependencyVersions`    | boolean | Strip range prefixes from `dependencies` versions.    |
+| `pinDevDependencyVersions` | boolean | Strip range prefixes from `devDependencies` versions. |
 
 ## Usage
 
@@ -56,7 +78,7 @@ Settings are configured per workspace in `nova.config.json` under the `recipes` 
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

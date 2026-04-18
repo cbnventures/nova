@@ -1,0 +1,155 @@
+---
+id: require-import-order
+title: Require Import Order
+description: Require 6-group import ordering with regular imports first (Node built-ins, third-party, local) then type imports (Node built-ins, third-party, local).
+keywords:
+  - nova
+  - eslint rule
+  - import order
+  - import grouping
+  - alphabetical imports
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require 6-group import ordering: regular Node built-ins, regular third-party, regular local, then type Node built-ins, type third-party, type local — each group separated by a blank line and sorted alphabetically within.
+
+## Summary
+
+The `require-import-order` rule enforces a strict 6-group ordering:
+
+1. Regular Node built-ins
+2. Regular third-party
+3. Regular local
+4. Type Node built-ins
+5. Type third-party
+6. Type local
+
+Groups must be separated by blank lines, and imports within the same group must be in alphabetical order. Import specifiers within a single import statement must also be alphabetical.
+
+## Why Use This Rule?
+
+1. Consistent import ordering makes it easy to locate a specific import at a glance.
+2. Blank lines between groups visually separate concerns — platform, dependencies, and project code.
+3. Alphabetical ordering within groups eliminates merge conflicts from arbitrary insertion order.
+
+## Examples
+
+<Tabs groupId="require-import-order-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    import fs from 'node:fs';
+    import path from 'node:path';
+
+    import express from 'express';
+
+    import { handler } from '@/lib/handler.js';
+
+    import type { Config } from '@/types/config.d.ts';
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Wrong: local before third-party.
+    import { handler } from '@/lib/handler.js';
+    import express from 'express';
+
+    // Wrong: missing blank line between groups.
+    import fs from 'node:fs';
+    import express from 'express';
+
+    // Wrong: not alphabetical within the same group.
+    import path from 'node:path';
+    import fs from 'node:fs';
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-import-order-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireImportOrder } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-import-order': RequireImportOrder.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-import-order': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireImportOrder } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-import-order': RequireImportOrder.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-import-order': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on a type import before a local import** — Type imports always come after all regular imports. Move `import type` statements to the end of the import block.
+- **Warning says specifiers are not alphabetical** — Named specifiers inside `{ A, B, C }` must be sorted alphabetically. Reorder them to match.
+- **Bare Node built-in without `node:` prefix is flagged** — The rule recognizes bare built-in module names (e.g., `fs`, `path`) and treats them the same as `node:fs`. If it is flagged, the ordering issue is with the group, not the prefix.

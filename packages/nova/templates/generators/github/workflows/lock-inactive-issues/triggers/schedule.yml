@@ -1,0 +1,5 @@
+run-name: "Locking inactive issues[__WORKFLOW_ID__]${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}"
+publish-condition: "${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.dry-run) }}"
+trigger:
+  schedule:
+    - cron: "0 0 * * 0"

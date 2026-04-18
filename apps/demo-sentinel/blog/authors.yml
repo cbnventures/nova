@@ -1,0 +1,20 @@
+james:
+  name: James Okafor
+  title: Co-founder, Sentinel
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+
+ingrid:
+  name: Ingrid Holm
+  title: Threat Research, Sentinel
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+
+rafael:
+  name: Rafael Dominguez
+  title: Security Architecture, Sentinel
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true

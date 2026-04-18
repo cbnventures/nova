@@ -1,0 +1,72 @@
+---
+title: "Migrating a 90-Package Workspace from Lerna to Foundry"
+authors: [elena]
+tags: [migration, monorepo, workspace, anvil]
+date: 2024-10-03
+---
+
+Last quarter, we helped an enterprise team migrate a 90-package TypeScript workspace from Lerna to Foundry. The workspace had been running on Lerna for four years. It had custom scripts layered on top of custom scripts, a `postinstall` hook that took forty seconds, and a CI pipeline that nobody fully understood.
+
+The migration took three weeks. The first week was the scariest. The last two weeks were mechanical. Here is the full story, including the parts that went wrong.
+
+{/* truncate */}
+
+## Week One: Understanding the Graph
+
+Before touching any configuration, we ran `foundry anvil scan` against the existing workspace. Anvil can read `package.json` dependency fields and construct a dependency graph without a `.grain` manifest. This gave us a map of the workspace without changing any files.
+
+The scan revealed three things nobody expected:
+
+- **14 phantom dependencies.** Packages that imported from other workspace packages without declaring them as dependencies. They worked because npm hoisted the packages to the root, but they would have broken if published independently.
+- **3 circular dependency chains.** Package A depended on B, B depended on C, and C depended on A. Lerna allowed this because it does not validate the graph at resolve time. Foundry refuses to build a cyclic graph.
+- **22 unused dependencies.** Packages listed as dependencies in `package.json` but never imported by any source file. Dead weight that inflated install times.
+
+```text title="Anvil scan results"
+$ foundry anvil scan --format summary
+
+Packages scanned:   90
+Dependency edges:   347
+Phantom deps:       14
+Circular chains:    3 (involving 9 packages)
+Unused deps:        22
+Max depth:          7 (core → platform → auth → gateway → api → web → docs)
+```
+
+Fixing the circular dependencies was the hardest part of the entire migration. The three cycles had been there so long that breaking them required extracting shared types into new packages. We created two new packages — `shared-types` and `shared-constants` — and moved the cycled imports into them.
+
+## Week Two: Writing the Manifest
+
+With a clean dependency graph, writing the `.grain` manifest was mechanical. Each package block declares its type, its dependencies, and any overrides. We wrote a script that read every `package.json` and generated the initial manifest, then hand-tuned it.
+
+The manifest for 90 packages was 240 lines. The equivalent Lerna configuration — spread across `lerna.json`, root `package.json` workspaces, and per-package `tsconfig.json` project references — was over 1,800 lines.
+
+## Week Three: CI Pipeline
+
+The Lerna CI pipeline ran `lerna run build` followed by `lerna run test` followed by `lerna run lint`. Three serial passes over the entire workspace. Total CI time: 28 minutes.
+
+The Foundry pipeline runs `foundry ignite`, which orchestrates build, test, and lint in a single pass using Bellows. Packages build in parallel. Tests run as soon as their package finishes building. Linting runs alongside tests. Total CI time: 6 minutes and 40 seconds.
+
+| Phase     | Lerna       | Foundry    | Improvement |
+|-----------|-------------|------------|-------------|
+| Install   | 1m 42s      | 1m 38s     | ~same       |
+| Build     | 14m 10s     | 3m 22s     | 4.2x        |
+| Test      | 8m 30s      | 2m 14s     | 3.8x        |
+| Lint      | 3m 40s      | 1m 04s     | 3.4x        |
+| **Total** | **28m 02s** | **6m 40s** | **4.2x**    |
+
+The install phase was roughly the same because Foundry does not replace npm. The build, test, and lint phases improved because Bellows parallelizes them and Quench caches intermediate results.
+
+## What Went Wrong
+
+Two things:
+
+- **Custom Lerna scripts.** The team had 14 custom scripts in `lerna.json` that orchestrated deployment steps. These did not map to any Foundry concept. We had to rewrite them as shell scripts that called `foundry anvil list --format json` to get the package graph and then iterated over it manually.
+- **Root-level tests.** The team had integration tests at the workspace root that imported from multiple packages using relative paths. Foundry expects every test to live inside a package. We moved the integration tests into a new `integration-tests` package with explicit dependencies on the packages it tested.
+
+Neither of these was a Foundry limitation. They were migration friction caused by patterns that Lerna allowed and Foundry does not. In both cases, the Foundry approach was stricter and, in our opinion, more correct.
+
+## Was It Worth It
+
+CI time went from 28 minutes to under 7 minutes. Phantom dependencies went from 14 to zero. The team removed 1,560 lines of configuration and replaced them with a 240-line manifest.
+
+The team lead said it best: "We spent three weeks migrating, and we will save three weeks per quarter on CI alone." The math worked.

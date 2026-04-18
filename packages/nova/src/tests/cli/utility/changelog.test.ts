@@ -9,145 +9,170 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIUtilityChangelog } from '@/cli/utility/changelog.js';
+import { afterAll, describe, it } from 'vitest';
+
+import { CliUtilityChangelog } from '../../../cli/utility/changelog.js';
 
 import type {
-  CLIUtilityChangelogTestOriginalCwd,
-  CLIUtilityChangelogTestSandboxRoot,
-} from '@/types/tests/cli/utility/changelog.test.d.ts';
+  TestsCliUtilityChangelogRunChangelogContent,
+  TestsCliUtilityChangelogRunChangelogDirectory,
+  TestsCliUtilityChangelogRunChangelogPath,
+  TestsCliUtilityChangelogRunConfigContents,
+  TestsCliUtilityChangelogRunConfigPath,
+  TestsCliUtilityChangelogRunContent,
+  TestsCliUtilityChangelogRunEntryContents,
+  TestsCliUtilityChangelogRunEntryPath,
+  TestsCliUtilityChangelogRunFiles,
+  TestsCliUtilityChangelogRunHasBump,
+  TestsCliUtilityChangelogRunHasCategory,
+  TestsCliUtilityChangelogRunHasFeature,
+  TestsCliUtilityChangelogRunHasMessage,
+  TestsCliUtilityChangelogRunHasPackage,
+  TestsCliUtilityChangelogRunHasVersion,
+  TestsCliUtilityChangelogRunMdFile,
+  TestsCliUtilityChangelogRunMdFiles,
+  TestsCliUtilityChangelogRunOriginalCwd,
+  TestsCliUtilityChangelogRunPackageJson,
+  TestsCliUtilityChangelogRunPackageJsonContents,
+  TestsCliUtilityChangelogRunPackageJsonPath,
+  TestsCliUtilityChangelogRunPackageJsonRaw,
+  TestsCliUtilityChangelogRunProjectDirectory,
+  TestsCliUtilityChangelogRunRemainingFiles,
+  TestsCliUtilityChangelogRunRemainingMdFiles,
+  TestsCliUtilityChangelogRunSandboxPrefix,
+  TestsCliUtilityChangelogRunSandboxRoot,
+  TestsCliUtilityChangelogRunTemporaryDirectory,
+  TestsCliUtilityChangelogRunUpdatedPackagePath,
+  TestsCliUtilityChangelogRunWorkspaceDirectory,
+  TestsCliUtilityChangelogRunWorkspacePackageContents,
+  TestsCliUtilityChangelogRunWorkspacePackagePath,
+} from '../../../types/tests/cli/utility/changelog.test.d.ts';
 
 /**
- * CLI Utility - Changelog - Run.
+ * Tests - CLI - Utility - Changelog - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIUtilityChangelog.run', async (context) => {
-  const originalCwd: CLIUtilityChangelogTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIUtilityChangelogTestSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('CliUtilityChangelog.run', async () => {
+  const originalCwd: TestsCliUtilityChangelogRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliUtilityChangelogRunTemporaryDirectory = tmpdir();
+  const sandboxPrefix: TestsCliUtilityChangelogRunSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsCliUtilityChangelogRunSandboxRoot = await mkdtemp(sandboxPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('errors when --record and --release are both set', async () => {
-    const projectDir = join(sandboxRoot, 'both-flags');
+  it('errors when --record and --release are both set', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'both-flags');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-both-flags',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-both-flags',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(configPath, configContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIUtilityChangelog.run({
+    await CliUtilityChangelog.run({
       record: true,
       release: true,
     });
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('errors when partial non-interactive flags', async () => {
-    const projectDir = join(sandboxRoot, 'partial-flags');
+  it('errors when partial non-interactive flags', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'partial-flags');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-partial-flags',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-partial-flags',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(configPath, configContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIUtilityChangelog.run({
+    await CliUtilityChangelog.run({
       record: true,
       package: '@test/core',
     });
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('records entry in non-interactive mode', async () => {
-    const projectDir = join(sandboxRoot, 'record-entry');
+  it('records entry in non-interactive mode', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'record-entry');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-record-entry',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-record-entry',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(configPath, configContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIUtilityChangelog.run({
+    await CliUtilityChangelog.run({
       record: true,
       package: '@test/core',
       category: 'added',
@@ -157,52 +182,57 @@ test('CLIUtilityChangelog.run', async (context) => {
 
     strictEqual(process.exitCode, undefined);
 
-    const changelogDir = join(projectDir, '.changelog');
-    const files = await readdir(changelogDir);
-    const mdFiles = files.filter((file) => file.endsWith('.md') && file !== 'README.md');
+    const changelogDirectory: TestsCliUtilityChangelogRunChangelogDirectory = join(projectDirectory, '.changelog');
+    const files: TestsCliUtilityChangelogRunFiles = await readdir(changelogDirectory);
+    const mdFiles: TestsCliUtilityChangelogRunMdFiles = files.filter((file) => file.endsWith('.md') && file !== 'README.md');
 
     strictEqual(mdFiles.length, 1);
 
-    const content = await readFile(join(changelogDir, mdFiles[0] as string), 'utf-8');
+    const mdFile: TestsCliUtilityChangelogRunMdFile = mdFiles[0] as TestsCliUtilityChangelogRunMdFile;
+    const entryPath: TestsCliUtilityChangelogRunEntryPath = join(changelogDirectory, mdFile);
+    const content: TestsCliUtilityChangelogRunContent = await readFile(entryPath, 'utf-8');
 
-    strictEqual(content.includes('package: "@test/core"'), true);
-    strictEqual(content.includes('category: added'), true);
-    strictEqual(content.includes('bump: minor'), true);
-    strictEqual(content.includes('Added new feature'), true);
+    const hasPackage: TestsCliUtilityChangelogRunHasPackage = content.includes('package: "@test/core"');
+    const hasCategory: TestsCliUtilityChangelogRunHasCategory = content.includes('category: added');
+    const hasBump: TestsCliUtilityChangelogRunHasBump = content.includes('bump: minor');
+    const hasMessage: TestsCliUtilityChangelogRunHasMessage = content.includes('Added new feature');
+
+    strictEqual(hasPackage, true);
+    strictEqual(hasCategory, true);
+    strictEqual(hasBump, true);
+    strictEqual(hasMessage, true);
+
+    return;
   });
 
-  await context.test('errors when package is invalid', async () => {
-    const projectDir = join(sandboxRoot, 'invalid-package');
+  it('errors when package is invalid', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'invalid-package');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-invalid-package',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-invalid-package',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(configPath, configContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIUtilityChangelog.run({
+    await CliUtilityChangelog.run({
       record: true,
       package: '@test/nonexistent',
       category: 'added',
@@ -211,40 +241,38 @@ test('CLIUtilityChangelog.run', async (context) => {
     });
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('errors when category is invalid', async () => {
-    const projectDir = join(sandboxRoot, 'invalid-category');
+  it('errors when category is invalid', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'invalid-category');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-invalid-category',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-invalid-category',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(configPath, configContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIUtilityChangelog.run({
+    await CliUtilityChangelog.run({
       record: true,
       package: '@test/core',
       category: 'invalid-category',
@@ -253,40 +281,38 @@ test('CLIUtilityChangelog.run', async (context) => {
     });
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('errors when bump is invalid', async () => {
-    const projectDir = join(sandboxRoot, 'invalid-bump');
+  it('errors when bump is invalid', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'invalid-bump');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-invalid-bump',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-invalid-bump',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(configPath, configContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIUtilityChangelog.run({
+    await CliUtilityChangelog.run({
       record: true,
       package: '@test/core',
       category: 'added',
@@ -295,40 +321,38 @@ test('CLIUtilityChangelog.run', async (context) => {
     });
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('errors when message is empty', async () => {
-    const projectDir = join(sandboxRoot, 'empty-message');
+  it('errors when message is empty', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'empty-message');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-empty-message',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-empty-message',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(configPath, configContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIUtilityChangelog.run({
+    await CliUtilityChangelog.run({
       record: true,
       package: '@test/core',
       category: 'added',
@@ -337,123 +361,126 @@ test('CLIUtilityChangelog.run', async (context) => {
     });
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('releases and bumps version', async () => {
-    const projectDir = join(sandboxRoot, 'release-bump');
-    const workspaceDir = join(projectDir, 'packages', 'core');
-    const changelogDir = join(projectDir, '.changelog');
+  it('releases and bumps version', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'release-bump');
+    const workspaceDirectory: TestsCliUtilityChangelogRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const changelogDirectory: TestsCliUtilityChangelogRunChangelogDirectory = join(projectDirectory, '.changelog');
 
-    await mkdir(workspaceDir, { recursive: true });
-    await mkdir(changelogDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
+    await mkdir(changelogDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-release-bump',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-release-bump',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: '@test/core',
-        version: '1.0.0',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(configPath, configContents, 'utf-8');
 
-    await writeFile(
-      join(changelogDir, 'test-entry.md'),
-      [
-        '---',
-        'package: "@test/core"',
-        'category: added',
-        'bump: minor',
-        '---',
-        '',
-        'Added a new feature',
-        '',
-      ].join('\n'),
-      'utf-8',
-    );
+    const workspacePackagePath: TestsCliUtilityChangelogRunWorkspacePackagePath = join(workspaceDirectory, 'package.json');
+    const workspacePackageContents: TestsCliUtilityChangelogRunWorkspacePackageContents = JSON.stringify({
+      name: '@test/core',
+      version: '1.0.0',
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(workspacePackagePath, workspacePackageContents, 'utf-8');
 
-    process.exitCode = undefined;
+    const entryPath: TestsCliUtilityChangelogRunEntryPath = join(changelogDirectory, 'test-entry.md');
+    const entryContents: TestsCliUtilityChangelogRunEntryContents = [
+      '---',
+      'package: "@test/core"',
+      'category: added',
+      'bump: minor',
+      '---',
+      '',
+      'Added a new feature',
+      '',
+    ].join('\n');
 
-    await CLIUtilityChangelog.run({
+    await writeFile(entryPath, entryContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliUtilityChangelog.run({
       release: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const packageJsonRaw = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const packageJson = JSON.parse(packageJsonRaw);
+    const updatedPackagePath: TestsCliUtilityChangelogRunUpdatedPackagePath = join(workspaceDirectory, 'package.json');
+    const packageJsonRaw: TestsCliUtilityChangelogRunPackageJsonRaw = await readFile(updatedPackagePath, 'utf-8');
+    const packageJson: TestsCliUtilityChangelogRunPackageJson = JSON.parse(packageJsonRaw);
 
     strictEqual(packageJson['version'], '1.1.0');
 
-    const changelogContent = await readFile(join(workspaceDir, 'CHANGELOG.md'), 'utf-8');
+    const changelogPath: TestsCliUtilityChangelogRunChangelogPath = join(workspaceDirectory, 'CHANGELOG.md');
+    const changelogContent: TestsCliUtilityChangelogRunChangelogContent = await readFile(changelogPath, 'utf-8');
 
-    strictEqual(changelogContent.includes('## 1.1.0'), true);
-    strictEqual(changelogContent.includes('Added a new feature'), true);
+    const hasVersion: TestsCliUtilityChangelogRunHasVersion = changelogContent.includes('## 1.1.0');
+    const hasFeature: TestsCliUtilityChangelogRunHasFeature = changelogContent.includes('Added a new feature');
 
-    const remainingFiles = await readdir(changelogDir);
-    const remainingMdFiles = remainingFiles.filter((file) => file.endsWith('.md') && file !== 'README.md');
+    strictEqual(hasVersion, true);
+    strictEqual(hasFeature, true);
+
+    const remainingFiles: TestsCliUtilityChangelogRunRemainingFiles = await readdir(changelogDirectory);
+    const remainingMdFiles: TestsCliUtilityChangelogRunRemainingMdFiles = remainingFiles.filter((file) => file.endsWith('.md') && file !== 'README.md');
 
     strictEqual(remainingMdFiles.length, 0);
+
+    return;
   });
 
-  await context.test('skips release when no entries exist', async () => {
-    const projectDir = join(sandboxRoot, 'no-entries');
+  it('skips release when no entries exist', async () => {
+    const projectDirectory: TestsCliUtilityChangelogRunProjectDirectory = join(sandboxRoot, 'no-entries');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-no-entries',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliUtilityChangelogRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliUtilityChangelogRunPackageJsonContents = JSON.stringify({
+      name: 'test-no-entries',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const configPath: TestsCliUtilityChangelogRunConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsCliUtilityChangelogRunConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    process.chdir(projectDir);
+    await writeFile(configPath, configContents, 'utf-8');
 
-    process.exitCode = undefined;
+    process.chdir(projectDirectory);
 
-    await CLIUtilityChangelog.run({
+    await CliUtilityChangelog.run({
       release: true,
     });
 
     strictEqual(process.exitCode, undefined);
+
+    return;
   });
+
+  return;
 });

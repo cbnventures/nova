@@ -1,0 +1,140 @@
+---
+id: blog-preview
+title: Blog Preview
+description: Display recent blog post cards in a responsive grid with date, title, description, and read more link.
+sidebar_position: 6
+keywords:
+  - nova
+  - docusaurus facades
+  - blog preview component
+  - blog cards
+  - recent posts
+  - landing page
+tags:
+  - facades
+  - component
+  - blog preview
+  - landing page
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Blog Preview
+
+Responsive grid of blog post cards showing date, title, description, and a "Read more" link. Use it on a landing page to surface recent content.
+
+## Summary
+
+The Blog Preview component renders a `<section>` containing a heading, optional description, and a grid of post cards. Each card displays a formatted date, title, description, and a link to the full post.
+
+Dates are formatted using the site's current locale with the year, long month, and day.
+
+## Why Use This Component?
+
+- **Surface recent content** on your landing page without building a custom blog feed.
+- **Consistent card layout** across all presets — spacing, typography, and depth are preset-aware.
+- **Formatted dates** — pass a date string and the component handles locale-aware formatting.
+
+## Usage
+
+<Tabs groupId="blog-preview-usage">
+  <TabItem value="basic" label="Basic" default>
+
+```tsx title="src/pages/index.tsx"
+import { BlogPreview } from '@cbnventures/docusaurus-preset-nova/components';
+
+<BlogPreview
+  heading="Latest Posts"
+  posts={[
+    {
+      date: '2025-03-01',
+      title: 'Webhook Fails at 3 AM',
+      description: 'How we debugged a silent webhook failure.',
+      permalink: '/blog/2025/03/01/webhook-fails-at-3am',
+    },
+  ]}
+/>
+```
+
+  </TabItem>
+  <TabItem value="full" label="With description">
+
+```tsx title="src/pages/index.tsx"
+import { BlogPreview } from '@cbnventures/docusaurus-preset-nova/components';
+
+<BlogPreview
+  heading="From the Blog"
+  description="Lessons learned from building with Nova."
+  surface="alt"
+  posts={[
+    {
+      date: '2025-06-05',
+      title: 'Retry Logic Done Right',
+      description: 'Exponential backoff with jitter.',
+      permalink: '/blog/2025/06/05/retry-logic',
+    },
+    {
+      date: '2025-08-22',
+      title: 'The 3 MB Container',
+      description: 'How we shrank our container image.',
+      permalink: '/blog/2025/08/22/3mb-container',
+    },
+  ]}
+/>
+```
+
+  </TabItem>
+</Tabs>
+
+### Auto Mode
+
+When `auto` is set to `true`, the component automatically fetches blog posts from Docusaurus global data. No manual `posts` array is needed.
+
+<Tabs groupId="blog-preview-auto-usage">
+  <TabItem value="basic-auto" label="Basic" default>
+
+```tsx title="src/pages/index.tsx"
+import { BlogPreview } from '@cbnventures/docusaurus-preset-nova/components';
+
+<BlogPreview
+  heading="Latest Posts"
+  auto={true}
+/>
+```
+
+  </TabItem>
+  <TabItem value="with-options" label="With limit and sort">
+
+```tsx title="src/pages/index.tsx"
+import { BlogPreview } from '@cbnventures/docusaurus-preset-nova/components';
+
+<BlogPreview
+  heading="Recent Articles"
+  description="Our latest three posts."
+  auto={true}
+  limit={3}
+  sort="newest"
+/>
+```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Prop          | Type                                                                             | Default     | Description                                                                          |
+|---------------|----------------------------------------------------------------------------------|-------------|--------------------------------------------------------------------------------------|
+| `heading`     | `string`                                                                         | —           | Section heading text. Required.                                                      |
+| `posts`       | `Array<{ title: string, description: string, permalink: string, date: string }>` | `undefined` | Blog post data. Required when `auto` is not `true`.                                  |
+| `description` | `string \| undefined`                                                            | `undefined` | Optional description paragraph below the heading.                                    |
+| `surface`     | `'alt' \| undefined`                                                             | `undefined` | Set to `'alt'` to use the alternate surface background.                              |
+| `auto`        | `boolean \| undefined`                                                           | `undefined` | When `true`, fetches posts from Docusaurus global data. The `posts` prop is ignored. |
+| `limit`       | `number \| undefined`                                                            | `undefined` | Maximum number of posts to display. No limit by default.                             |
+| `sort`        | `'newest' \| 'oldest' \| undefined`                                              | `'newest'`  | Sort direction by date. Applies in both manual and auto mode.                        |
+
+## Troubleshooting
+
+- **Date format** — The `date` field is passed to `new Date()`. Use ISO 8601 format (`YYYY-MM-DD`) for consistent parsing.
+- **No posts placeholder** — When there are no posts (empty array in manual mode, or no blog posts in auto mode), the component shows a "No posts yet" message.
+- **Auto mode shows no posts** — Ensure the blog plugin is enabled in your Docusaurus config and that you have at least one published blog post.

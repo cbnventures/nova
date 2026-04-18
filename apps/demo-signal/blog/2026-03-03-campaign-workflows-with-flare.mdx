@@ -1,0 +1,91 @@
+---
+title: "How Flare Replaced Our 14-Step Campaign Launch Process"
+authors: [suki]
+tags: [flare, campaign, batch, utm]
+date: 2026-03-03
+---
+
+Launching a multi-channel campaign used to involve fourteen manual steps across five tools. Create the tracking links in one tool. Build the UTM spreadsheet in another. Set up the email variants. Configure the social posts. Wire up the analytics dashboards. Copy-paste link IDs between systems. Pray that nothing was misspelled.
+
+We mapped the process end to end and found that the median campaign launch took 4.5 hours of coordination work — not creative work, not strategy, just plumbing. Flare reduced that to 22 minutes.
+
+{/* truncate */}
+
+## The Old Process
+
+Here is what a five-channel campaign launch looked like before Flare:
+
+1. Draft campaign brief in a document.
+2. Create UTM parameters in a spreadsheet.
+3. Generate Beacon links for each channel-variant combination.
+4. Copy Beacon link IDs into the UTM spreadsheet.
+5. Create email templates with embedded Beacon links.
+6. Create social post drafts with embedded Beacon links.
+7. Configure paid ad URLs with the correct Beacon links.
+8. Set up QR codes for print placements.
+9. Build a Pulse dashboard for the campaign.
+10. Configure Pulse alerts.
+11. Create a Lens segment for the target audience.
+12. Submit links for compliance review.
+13. Schedule the campaign across each channel.
+14. Verify that all links resolve correctly.
+
+Steps 2 through 11 were pure coordination overhead. Each one involved switching tools, copy-pasting identifiers, and manually ensuring consistency across systems. A single typo in step 4 could send an entire channel's worth of clicks to the wrong attribution bucket.
+
+## What Flare Does
+
+Flare is a campaign orchestration layer that sits on top of Beacon, Prism, Pulse, Lens, and Relay. You define the campaign once, and Flare handles the link generation, UTM tagging, dashboard setup, alert configuration, and audience targeting:
+
+```json title="Flare campaign definition"
+{
+  "campaign": "core-activation-trial-004",
+  "channels": ["email", "social", "paid", "qr-print"],
+  "variants": {
+    "email": ["hero-cta", "sidebar-link", "footer-banner"],
+    "social": ["og-card", "thread-link"],
+    "paid": ["search-brand", "display-retarget"],
+    "qr-print": ["conference-badge", "booth-banner"]
+  },
+  "audience": {
+    "segment": "high-intent-evaluators",
+    "source": "lens"
+  },
+  "monitoring": {
+    "dashboard": true,
+    "alerts": [
+      { "metric": "ctr", "below": 0.015, "window": "1h" },
+      { "metric": "conversionRate", "below": 0.01, "window": "4h" }
+    ]
+  }
+}
+```
+
+From this definition, Flare generates:
+
+- **9 Beacon links** (one per channel-variant combination) with consistent UTM parameters.
+- **1 Pulse dashboard** preconfigured with all nine links, grouped by channel.
+- **2 Pulse alerts** with the thresholds defined in the campaign spec.
+- **1 Lens segment** query linked to the campaign for audience analysis.
+- **1 Relay job** ready to execute if bulk link modifications are needed mid-campaign.
+
+## Time Comparison
+
+| Step                | Manual       | Flare      |
+|---------------------|--------------|------------|
+| Link generation     | 35 min       | 0 min      |
+| UTM configuration   | 20 min       | 0 min      |
+| Dashboard setup     | 25 min       | 0 min      |
+| Alert configuration | 15 min       | 0 min      |
+| Audience targeting  | 20 min       | 0 min      |
+| Campaign definition | 0 min        | 12 min     |
+| Review and launch   | 45 min       | 10 min     |
+| Link verification   | 30 min       | 0 min      |
+| **Total**           | **4h 30min** | **22 min** |
+
+Flare does not eliminate the creative work. It eliminates the wiring. The 22 minutes that remain are spent on the campaign definition (which is the strategy) and the final review (which is the quality check).
+
+## Mid-Campaign Modifications
+
+The old process was even worse for mid-campaign changes. Updating a landing page URL across all nine links meant editing each one individually, verifying each redirect, and updating the tracking spreadsheet. Flare treats the campaign as a single object — a destination change propagates to every link in the campaign via Relay.
+
+A campaign is not a collection of links. It is a coordinated system. Flare treats it that way.

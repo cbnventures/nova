@@ -1,0 +1,89 @@
+/**
+ * Signal — Features grid visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Features Container
+ * ============================ */
+
+.nova-features-heading {
+  text-align: center;
+}
+
+/* ============================
+ * 2. Features Grid
+ * ============================ */
+
+/* Spreadsheet grid — 1px borders between cells. KEEP THIS. */
+.nova-features-grid {
+  gap: 1px;
+  background-color: var(--nova-color-neutral-200);
+  border: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-features-grid {
+  background-color: var(--nova-color-neutral-800);
+  border-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 3. Feature Card
+ * ============================ */
+
+.nova-feature-card {
+  padding: 1rem;
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-feature-card {
+  background-color: var(--nova-color-neutral-950);
+}
+
+.nova-feature-card-icon {
+  margin-bottom: 0.5rem;
+  color: var(--nova-color-primary-500);
+  font-size: 1.25rem;
+}
+
+[data-theme="dark"] .nova-feature-card-icon {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-feature-card-title {
+  font-family: var(--nova-font-display);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.25rem;
+  color: var(--nova-color-neutral-900);
+  border: none;
+  padding: 0;
+}
+
+[data-theme="dark"] .nova-feature-card-title {
+  color: var(--nova-color-neutral-50);
+}
+
+.nova-feature-card-description {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--nova-color-neutral-500);
+  margin: 0;
+}
+
+[data-theme="dark"] .nova-feature-card-description {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 4. Responsive
+ * ============================ */
+
+@media (min-width: 768px) {
+  .nova-feature-card {
+    padding: 1.25rem;
+  }
+}

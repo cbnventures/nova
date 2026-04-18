@@ -1,228 +1,369 @@
 import { ok, strictEqual } from 'node:assert/strict';
-import { test } from 'node:test';
+
+import { describe, it } from 'vitest';
 
 import {
-  itemAllowedPoliciesByRole,
-  itemAllowedRoles,
-  itemAllowedRecipes,
-  itemChangelogAdjectives,
-  itemChangelogCategoryBumpMap,
-  itemChangelogNouns,
-  itemChangelogValidBumps,
-  itemChangelogValidCategories,
-  itemChangelogVerbs,
-  itemPackageJsonKeysBundler,
-  itemPackageJsonKeysCorepack,
-  itemPackageJsonKeysNodeJs,
-  itemPackageJsonKeysNpm,
-  itemPackageJsonSortOrder,
-  itemPrettyNamesBrand,
-  itemPrettyNamesCategory,
-  itemPrettyNamesColumnTitle,
-  itemPrettyNamesType,
-} from '@/lib/item.js';
+  libItemAllowedPoliciesByRole,
+  libItemAllowedRecipes,
+  libItemAllowedRoles,
+  libItemBundlerKeys,
+  libItemChangelogAdjectives,
+  libItemChangelogCategoryBumpMap,
+  libItemChangelogNouns,
+  libItemChangelogValidBumps,
+  libItemChangelogValidCategories,
+  libItemChangelogVerbs,
+  libItemCorepackKeys,
+  libItemNodeJsKeys,
+  libItemNpmKeys,
+  libItemPrettyNamesBrand,
+  libItemPrettyNamesCategory,
+  libItemPrettyNamesColumnTitle,
+  libItemPrettyNamesType,
+  libItemSortOrderKeys,
+} from '../../lib/item.js';
+
+import type {
+  TestsLibItemBump,
+  TestsLibItemCategory,
+  TestsLibItemFound,
+  TestsLibItemIncludesAdded,
+  TestsLibItemIncludesApp,
+  TestsLibItemIncludesConfig,
+  TestsLibItemIncludesDependencies,
+  TestsLibItemIncludesDescription,
+  TestsLibItemIncludesDevDependencies,
+  TestsLibItemIncludesDocs,
+  TestsLibItemIncludesFixed,
+  TestsLibItemIncludesLicense,
+  TestsLibItemIncludesMajor,
+  TestsLibItemIncludesMinor,
+  TestsLibItemIncludesName,
+  TestsLibItemIncludesNormalizeDependencies,
+  TestsLibItemIncludesPackage,
+  TestsLibItemIncludesPatch,
+  TestsLibItemIncludesProject,
+  TestsLibItemIncludesRemoved,
+  TestsLibItemIncludesSyncEnvironment,
+  TestsLibItemIncludesSyncIdentity,
+  TestsLibItemIncludesTemplate,
+  TestsLibItemIncludesTool,
+  TestsLibItemIncludesUpdated,
+  TestsLibItemIncludesVersion,
+  TestsLibItemIsValidBump,
+  TestsLibItemKey,
+  TestsLibItemPolicyRoles,
+  TestsLibItemUnique,
+  TestsLibItemValue,
+} from '../../types/tests/lib/item.test.d.ts';
 
 /**
- * Allowed roles and policies.
+ * Tests - Lib - Item - Allowed Roles And Policies.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('allowed roles and policies', async (context) => {
-  await context.test('itemAllowedRoles contains expected roles', () => {
-    ok(itemAllowedRoles.includes('project'));
-    ok(itemAllowedRoles.includes('docs'));
-    ok(itemAllowedRoles.includes('config'));
-    ok(itemAllowedRoles.includes('app'));
-    ok(itemAllowedRoles.includes('package'));
-    ok(itemAllowedRoles.includes('tool'));
-    ok(itemAllowedRoles.includes('template'));
+describe('allowed roles and policies', async () => {
+  it('libItemAllowedRoles contains expected roles', () => {
+    const includesProject: TestsLibItemIncludesProject = libItemAllowedRoles.includes('project');
+    const includesDocs: TestsLibItemIncludesDocs = libItemAllowedRoles.includes('docs');
+    const includesConfig: TestsLibItemIncludesConfig = libItemAllowedRoles.includes('config');
+    const includesApp: TestsLibItemIncludesApp = libItemAllowedRoles.includes('app');
+    const includesPackage: TestsLibItemIncludesPackage = libItemAllowedRoles.includes('package');
+    const includesTool: TestsLibItemIncludesTool = libItemAllowedRoles.includes('tool');
+    const includesTemplate: TestsLibItemIncludesTemplate = libItemAllowedRoles.includes('template');
+
+    ok(includesProject);
+    ok(includesDocs);
+    ok(includesConfig);
+    ok(includesApp);
+    ok(includesPackage);
+    ok(includesTool);
+    ok(includesTemplate);
+
+    return;
   });
 
-  await context.test('itemAllowedRoles has no duplicates', () => {
-    const unique = new Set(itemAllowedRoles);
+  it('libItemAllowedRoles has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemAllowedRoles);
 
-    strictEqual(unique.size, itemAllowedRoles.length);
+    strictEqual(unique.size, libItemAllowedRoles.length);
+
+    return;
   });
 
-  await context.test('itemAllowedPoliciesByRole covers all roles', () => {
-    for (const role of itemAllowedRoles) {
-      ok(role in itemAllowedPoliciesByRole, `Missing policies for role "${role}"`);
+  it('libItemAllowedPoliciesByRole covers all roles', () => {
+    for (const role of libItemAllowedRoles) {
+      ok(role in libItemAllowedPoliciesByRole, `Missing policies for role "${role}"`);
     }
+
+    return;
   });
 
-  await context.test('itemAllowedPoliciesByRole has no extra roles', () => {
-    const policyRoles = Object.keys(itemAllowedPoliciesByRole);
+  it('libItemAllowedPoliciesByRole has no extra roles', () => {
+    const policyRoles: TestsLibItemPolicyRoles = Object.keys(libItemAllowedPoliciesByRole);
 
     for (const role of policyRoles) {
-      const found = itemAllowedRoles.find(
+      const found: TestsLibItemFound = libItemAllowedRoles.find(
         (allowedRole) => allowedRole === role,
       );
 
       ok(found !== undefined, `Unexpected role "${role}" in policies`);
     }
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Allowed recipes.
+ * Tests - Lib - Item - Allowed Recipes.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('itemAllowedRecipes', async (context) => {
-  await context.test('has no duplicates', () => {
-    const unique = new Set(itemAllowedRecipes);
+describe('libItemAllowedRecipes', async () => {
+  it('has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemAllowedRecipes);
 
-    strictEqual(unique.size, itemAllowedRecipes.length);
+    strictEqual(unique.size, libItemAllowedRecipes.length);
+
+    return;
   });
 
-  await context.test('contains expected recipes', () => {
-    ok(itemAllowedRecipes.includes('sync-identity'));
-    ok(itemAllowedRecipes.includes('normalize-dependencies'));
-    ok(itemAllowedRecipes.includes('sync-environment'));
+  it('contains expected recipes', () => {
+    const includesSyncIdentity: TestsLibItemIncludesSyncIdentity = libItemAllowedRecipes.includes('sync-identity');
+    const includesNormalizeDependencies: TestsLibItemIncludesNormalizeDependencies = libItemAllowedRecipes.includes('normalize-dependencies');
+    const includesSyncEnvironment: TestsLibItemIncludesSyncEnvironment = libItemAllowedRecipes.includes('sync-environment');
+
+    ok(includesSyncIdentity);
+    ok(includesNormalizeDependencies);
+    ok(includesSyncEnvironment);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Changelog constants.
+ * Tests - Lib - Item - Changelog Constants.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('changelog constants', async (context) => {
-  await context.test('itemChangelogValidBumps has no duplicates', () => {
-    const unique = new Set(itemChangelogValidBumps);
+describe('changelog constants', async () => {
+  it('libItemChangelogValidBumps has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemChangelogValidBumps);
 
-    strictEqual(unique.size, itemChangelogValidBumps.length);
+    strictEqual(unique.size, libItemChangelogValidBumps.length);
+
+    return;
   });
 
-  await context.test('itemChangelogValidBumps contains major, minor, patch', () => {
-    ok(itemChangelogValidBumps.includes('major'));
-    ok(itemChangelogValidBumps.includes('minor'));
-    ok(itemChangelogValidBumps.includes('patch'));
+  it('libItemChangelogValidBumps contains major, minor, patch', () => {
+    const includesMajor: TestsLibItemIncludesMajor = libItemChangelogValidBumps.includes('major');
+    const includesMinor: TestsLibItemIncludesMinor = libItemChangelogValidBumps.includes('minor');
+    const includesPatch: TestsLibItemIncludesPatch = libItemChangelogValidBumps.includes('patch');
+
+    ok(includesMajor);
+    ok(includesMinor);
+    ok(includesPatch);
+
+    return;
   });
 
-  await context.test('itemChangelogValidCategories has no duplicates', () => {
-    const unique = new Set(itemChangelogValidCategories);
+  it('libItemChangelogValidCategories has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemChangelogValidCategories);
 
-    strictEqual(unique.size, itemChangelogValidCategories.length);
+    strictEqual(unique.size, libItemChangelogValidCategories.length);
+
+    return;
   });
 
-  await context.test('itemChangelogValidCategories contains expected categories', () => {
-    ok(itemChangelogValidCategories.includes('added'));
-    ok(itemChangelogValidCategories.includes('updated'));
-    ok(itemChangelogValidCategories.includes('fixed'));
-    ok(itemChangelogValidCategories.includes('removed'));
+  it('libItemChangelogValidCategories contains expected categories', () => {
+    const includesAdded: TestsLibItemIncludesAdded = libItemChangelogValidCategories.includes('added');
+    const includesUpdated: TestsLibItemIncludesUpdated = libItemChangelogValidCategories.includes('updated');
+    const includesFixed: TestsLibItemIncludesFixed = libItemChangelogValidCategories.includes('fixed');
+    const includesRemoved: TestsLibItemIncludesRemoved = libItemChangelogValidCategories.includes('removed');
+
+    ok(includesAdded);
+    ok(includesUpdated);
+    ok(includesFixed);
+    ok(includesRemoved);
+
+    return;
   });
 
-  await context.test('itemChangelogCategoryBumpMap covers all categories', () => {
-    for (const category of itemChangelogValidCategories) {
-      ok(category in itemChangelogCategoryBumpMap, `Missing bump for category "${category}"`);
+  it('libItemChangelogCategoryBumpMap covers all categories', () => {
+    for (const category of libItemChangelogValidCategories) {
+      ok(category in libItemChangelogCategoryBumpMap, `Missing bump for category "${category}"`);
     }
+
+    return;
   });
 
-  await context.test('itemChangelogCategoryBumpMap values are valid bumps', () => {
-    for (const [category, bump] of Object.entries(itemChangelogCategoryBumpMap)) {
-      ok(itemChangelogValidBumps.includes(bump), `Invalid bump "${bump}" for category "${category}"`);
+  it('libItemChangelogCategoryBumpMap values are valid bumps', () => {
+    for (const categoryBumpEntry of Object.entries(libItemChangelogCategoryBumpMap)) {
+      const category: TestsLibItemCategory = categoryBumpEntry[0];
+      const bump: TestsLibItemBump = categoryBumpEntry[1];
+      const isValidBump: TestsLibItemIsValidBump = libItemChangelogValidBumps.includes(bump);
+
+      ok(isValidBump, `Invalid bump "${bump}" for category "${category}"`);
     }
+
+    return;
   });
 
-  await context.test('itemChangelogAdjectives has no duplicates', () => {
-    const unique = new Set(itemChangelogAdjectives);
+  it('libItemChangelogAdjectives has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemChangelogAdjectives);
 
-    strictEqual(unique.size, itemChangelogAdjectives.length);
+    strictEqual(unique.size, libItemChangelogAdjectives.length);
+
+    return;
   });
 
-  await context.test('itemChangelogNouns has no duplicates', () => {
-    const unique = new Set(itemChangelogNouns);
+  it('libItemChangelogNouns has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemChangelogNouns);
 
-    strictEqual(unique.size, itemChangelogNouns.length);
+    strictEqual(unique.size, libItemChangelogNouns.length);
+
+    return;
   });
 
-  await context.test('itemChangelogVerbs has no duplicates', () => {
-    const unique = new Set(itemChangelogVerbs);
+  it('libItemChangelogVerbs has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemChangelogVerbs);
 
-    strictEqual(unique.size, itemChangelogVerbs.length);
+    strictEqual(unique.size, libItemChangelogVerbs.length);
+
+    return;
   });
 
-  await context.test('word arrays have minimum length for sufficient combinations', () => {
-    ok(itemChangelogAdjectives.length >= 10);
-    ok(itemChangelogNouns.length >= 10);
-    ok(itemChangelogVerbs.length >= 10);
+  it('word arrays have minimum length for sufficient combinations', () => {
+    ok(libItemChangelogAdjectives.length >= 10);
+    ok(libItemChangelogNouns.length >= 10);
+    ok(libItemChangelogVerbs.length >= 10);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Package.json key arrays.
+ * Tests - Lib - Item - package.json Key Arrays.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('package.json key arrays', async (context) => {
-  await context.test('itemPackageJsonSortOrder has no duplicates', () => {
-    const unique = new Set(itemPackageJsonSortOrder);
+describe('package.json key arrays', async () => {
+  it('libItemSortOrderKeys has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemSortOrderKeys);
 
-    strictEqual(unique.size, itemPackageJsonSortOrder.length);
+    strictEqual(unique.size, libItemSortOrderKeys.length);
+
+    return;
   });
 
-  await context.test('itemPackageJsonSortOrder contains critical keys', () => {
-    ok(itemPackageJsonSortOrder.includes('name'));
-    ok(itemPackageJsonSortOrder.includes('version'));
-    ok(itemPackageJsonSortOrder.includes('description'));
-    ok(itemPackageJsonSortOrder.includes('license'));
-    ok(itemPackageJsonSortOrder.includes('dependencies'));
-    ok(itemPackageJsonSortOrder.includes('devDependencies'));
+  it('libItemSortOrderKeys contains critical keys', () => {
+    const includesName: TestsLibItemIncludesName = libItemSortOrderKeys.includes('name');
+    const includesVersion: TestsLibItemIncludesVersion = libItemSortOrderKeys.includes('version');
+    const includesDescription: TestsLibItemIncludesDescription = libItemSortOrderKeys.includes('description');
+    const includesLicense: TestsLibItemIncludesLicense = libItemSortOrderKeys.includes('license');
+    const includesDependencies: TestsLibItemIncludesDependencies = libItemSortOrderKeys.includes('dependencies');
+    const includesDevDependencies: TestsLibItemIncludesDevDependencies = libItemSortOrderKeys.includes('devDependencies');
+
+    ok(includesName);
+    ok(includesVersion);
+    ok(includesDescription);
+    ok(includesLicense);
+    ok(includesDependencies);
+    ok(includesDevDependencies);
+
+    return;
   });
 
-  await context.test('itemPackageJsonKeysNpm has no duplicates', () => {
-    const unique = new Set(itemPackageJsonKeysNpm);
+  it('libItemNpmKeys has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemNpmKeys);
 
-    strictEqual(unique.size, itemPackageJsonKeysNpm.length);
+    strictEqual(unique.size, libItemNpmKeys.length);
+
+    return;
   });
 
-  await context.test('itemPackageJsonKeysNodeJs has no duplicates', () => {
-    const unique = new Set(itemPackageJsonKeysNodeJs);
+  it('libItemNodeJsKeys has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemNodeJsKeys);
 
-    strictEqual(unique.size, itemPackageJsonKeysNodeJs.length);
+    strictEqual(unique.size, libItemNodeJsKeys.length);
+
+    return;
   });
 
-  await context.test('itemPackageJsonKeysBundler has no duplicates', () => {
-    const unique = new Set(itemPackageJsonKeysBundler);
+  it('libItemBundlerKeys has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemBundlerKeys);
 
-    strictEqual(unique.size, itemPackageJsonKeysBundler.length);
+    strictEqual(unique.size, libItemBundlerKeys.length);
+
+    return;
   });
 
-  await context.test('itemPackageJsonKeysCorepack has no duplicates', () => {
-    const unique = new Set(itemPackageJsonKeysCorepack);
+  it('libItemCorepackKeys has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemCorepackKeys);
 
-    strictEqual(unique.size, itemPackageJsonKeysCorepack.length);
+    strictEqual(unique.size, libItemCorepackKeys.length);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Pretty name maps.
+ * Tests - Lib - Item - Pretty Name Maps.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-test('pretty name maps', async (context) => {
-  await context.test('itemPrettyNamesBrand values are non-empty strings', () => {
-    for (const [key, value] of Object.entries(itemPrettyNamesBrand)) {
+describe('pretty name maps', async () => {
+  it('libItemPrettyNamesBrand values are non-empty strings', () => {
+    for (const brandEntry of Object.entries(libItemPrettyNamesBrand)) {
+      const key: TestsLibItemKey = brandEntry[0];
+      const value: TestsLibItemValue = brandEntry[1];
+
       ok(value.length > 0, `Empty value for brand key "${key}"`);
     }
+
+    return;
   });
 
-  await context.test('itemPrettyNamesCategory values are non-empty strings', () => {
-    for (const [key, value] of Object.entries(itemPrettyNamesCategory)) {
+  it('libItemPrettyNamesCategory values are non-empty strings', () => {
+    for (const categoryEntry of Object.entries(libItemPrettyNamesCategory)) {
+      const key: TestsLibItemKey = categoryEntry[0];
+      const value: TestsLibItemValue = categoryEntry[1];
+
       ok(value.length > 0, `Empty value for category key "${key}"`);
     }
+
+    return;
   });
 
-  await context.test('itemPrettyNamesColumnTitle values are non-empty strings', () => {
-    for (const [key, value] of Object.entries(itemPrettyNamesColumnTitle)) {
+  it('libItemPrettyNamesColumnTitle values are non-empty strings', () => {
+    for (const columnTitleEntry of Object.entries(libItemPrettyNamesColumnTitle)) {
+      const key: TestsLibItemKey = columnTitleEntry[0];
+      const value: TestsLibItemValue = columnTitleEntry[1];
+
       ok(value.length > 0, `Empty value for column title key "${key}"`);
     }
+
+    return;
   });
 
-  await context.test('itemPrettyNamesType values are non-empty strings', () => {
-    for (const [key, value] of Object.entries(itemPrettyNamesType)) {
+  it('libItemPrettyNamesType values are non-empty strings', () => {
+    for (const typeEntry of Object.entries(libItemPrettyNamesType)) {
+      const key: TestsLibItemKey = typeEntry[0];
+      const value: TestsLibItemValue = typeEntry[1];
+
       ok(value.length > 0, `Empty value for type key "${key}"`);
     }
+
+    return;
   });
+
+  return;
 });

@@ -13,33 +13,49 @@ keywords:
   - funding
   - repository
 tags:
-  - sync-ownership
   - cli
+  - sync-ownership
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Sync **homepage**, **bugs**, **author**, **contributors**, **funding**, and **repository** fields in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Sync **homepage**, **bugs**, **author**, **contributors**, **funding**, and **repository** fields in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `sync-ownership` recipe ensures that ownership-related fields in each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` match the values defined in <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>. For <Term title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts">distributable</Term> workspaces, each field can be individually enabled via recipe settings.
+The `sync-ownership` recipe ensures that ownership-related fields in each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` match the values defined in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+For <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspaces, each field can be individually enabled via recipe settings.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe inspects ownership fields and applies the following rules. Every field below is removed if the workspace policy is not `distributable`. See [Workspace Rules](/docs/quickstart/workspace-rules) for how tags are determined.
+
+For distributable workspaces with the respective setting enabled, the value is synced from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If the source value is not defined, the field is removed.
+
+- **`homepage` (Conditional)** — Synced from `urls.homepage`.
+- **`bugs` (Conditional)** — Synced as `{ "email": emails.bugs, "url": urls.bugs }`.
+- **`author` (Conditional)** — Synced from the first entity with the `author` role as `{ "name", "email", "url" }`.
+- **`contributors` (Conditional)** — Synced from all entities with the `contributor` role as an array of `{ "name", "email", "url" }`.
+- **`funding` (Conditional)** — Synced from `urls.fundSources`.
+- **`repository` (Conditional)** — Synced as `{ "type": "git", "url": urls.repository }`. A `directory` property is included when the workspace is not at the project root, using the relative path from the project root.
 
 ## Settings
 
 Settings are configured per workspace in `nova.config.json` under the `recipes` key:
 
-| Setting        | Type    | Description                                                   |
-|----------------|---------|---------------------------------------------------------------|
-| `homepage`     | boolean | Sync the `homepage` field (distributable workspaces only)     |
-| `bugs`         | boolean | Sync the `bugs` field (distributable workspaces only)         |
-| `author`       | boolean | Sync the `author` field (distributable workspaces only)       |
-| `contributors` | boolean | Sync the `contributors` field (distributable workspaces only) |
-| `funding`      | boolean | Sync the `funding` field (distributable workspaces only)      |
-| `repository`   | boolean | Sync the `repository` field (distributable workspaces only)   |
+| Setting        | Type    | Description                                                    |
+|----------------|---------|----------------------------------------------------------------|
+| `homepage`     | boolean | Sync the `homepage` field (distributable workspaces only).     |
+| `bugs`         | boolean | Sync the `bugs` field (distributable workspaces only).         |
+| `author`       | boolean | Sync the `author` field (distributable workspaces only).       |
+| `contributors` | boolean | Sync the `contributors` field (distributable workspaces only). |
+| `funding`      | boolean | Sync the `funding` field (distributable workspaces only).      |
+| `repository`   | boolean | Sync the `repository` field (distributable workspaces only).   |
 
 ## Usage
 
@@ -62,7 +78,7 @@ Settings are configured per workspace in `nova.config.json` under the `recipes` 
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |

@@ -1,0 +1,116 @@
+---
+id: preset-options
+title: Preset Options
+description: Full reference for the Nova Docusaurus preset options including preset selection, overrides, analytics, search, and progress bar.
+sidebar_position: 1
+keywords:
+  - nova
+  - docusaurus facades
+  - preset options
+  - configuration reference
+  - overrides
+  - analytics
+  - search config
+  - progress bar
+  - preset selection
+tags:
+  - facades
+  - reference
+  - preset options
+  - configuration
+---
+
+# Preset Options
+
+Full reference for the first argument passed to `@cbnventures/docusaurus-preset-nova` in `docusaurus.config.ts`. These options control which preset is active, what overrides are applied, and how plugins behave.
+
+## Top-Level Options
+
+```ts title="docusaurus.config.ts"
+presets: [[
+  '@cbnventures/docusaurus-preset-nova',
+  {
+    preset: 'envoy',
+    overrides: { /* ... */ },
+    plugins: { /* ... */ },
+    analytics: { /* ... */ },
+    search: { /* ... */ },
+    progressBar: true,
+  },
+]],
+```
+
+| Option        | Type                                             | Default | Description                                             |
+|---------------|--------------------------------------------------|---------|---------------------------------------------------------|
+| `preset`      | `'foundry' \| 'sentinel' \| 'signal' \| 'envoy'` | —       | Which visual preset to use. Required.                   |
+| `overrides`   | `object`                                         | `{}`    | Override individual preset values. See Overrides below. |
+| `plugins`     | `object`                                         | `{}`    | Plugin configuration. See Plugin Options reference.     |
+| `analytics`   | `object`                                         | `{}`    | Analytics integrations. See Analytics below.            |
+| `search`      | `object \| false`                                | `false` | Search configuration. `false` disables search entirely. |
+| `progressBar` | `boolean \| object`                              | `false` | Enable the NProgress loading bar.                       |
+
+## Overrides
+
+Override any visual property of the active preset. Unspecified values keep the preset defaults.
+
+### Colors
+
+| Option           | Type     | Default      | Description                |
+|------------------|----------|--------------|----------------------------|
+| `colors.primary` | `string` | Preset value | Primary brand color (hex). |
+| `colors.accent`  | `string` | Preset value | Accent color (hex).        |
+| `colors.neutral` | `string` | Preset value | Neutral/gray color (hex).  |
+
+### Fonts
+
+| Option          | Type     | Default      | Description                       |
+|-----------------|----------|--------------|-----------------------------------|
+| `fonts.display` | `string` | Preset value | Display/heading font family name. |
+| `fonts.body`    | `string` | Preset value | Body text font family name.       |
+| `fonts.code`    | `string` | Preset value | Code/monospace font family name.  |
+
+### Shape
+
+| Option          | Type                                       | Default      | Description          |
+|-----------------|--------------------------------------------|--------------|----------------------|
+| `shape.radius`  | `'sharp' \| 'rounded' \| 'pill'`           | Preset value | Border radius style. |
+| `shape.density` | `'compact' \| 'comfortable' \| 'spacious'` | Preset value | Spacing density.     |
+
+### Depth
+
+| Option             | Type                                 | Default      | Description                 |
+|--------------------|--------------------------------------|--------------|-----------------------------|
+| `depth.cards`      | `'flat' \| 'elevated' \| 'glass'`    | Preset value | Card depth treatment.       |
+| `depth.codeBlocks` | `'flat' \| 'bordered' \| 'elevated'` | Preset value | Code block depth treatment. |
+
+### Motion
+
+| Option                    | Type                                             | Default      | Description                         |
+|---------------------------|--------------------------------------------------|--------------|-------------------------------------|
+| `motion.speed`            | `'none' \| 'subtle' \| 'normal' \| 'expressive'` | Preset value | Animation speed.                    |
+| `motion.staggeredReveals` | `boolean`                                        | Preset value | Enable staggered reveal animations. |
+| `motion.hoverEffects`     | `boolean`                                        | Preset value | Enable hover effect animations.     |
+
+### Navbar and Footer
+
+| Option   | Type                                                | Default      | Description     |
+|----------|-----------------------------------------------------|--------------|-----------------|
+| `navbar` | `'bridge' \| 'canopy' \| 'monolith' \| 'compass'`   | Preset value | Navbar variant. |
+| `footer` | `'commons' \| 'embassy' \| 'ledger' \| 'launchpad'` | Preset value | Footer variant. |
+
+## Analytics
+
+| Option                      | Type                  | Default     | Description                               |
+|-----------------------------|-----------------------|-------------|-------------------------------------------|
+| `analytics.gtm`             | `object \| undefined` | `undefined` | Google Tag Manager configuration.         |
+| `analytics.gtm.containerId` | `string`              | —           | GTM container ID (e.g., `'GTM-XXXXXXX'`). |
+
+## Search
+
+See **[Search](/docs/facades/docusaurus-preset/systems/search)** for the full options table and explanation.
+
+## Progress Bar
+
+| Option        | Type                | Default | Description                                |
+|---------------|---------------------|---------|--------------------------------------------|
+| `progressBar` | `boolean \| object` | `false` | Set to `true` to enable the NProgress bar. |

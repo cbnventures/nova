@@ -1,0 +1,171 @@
+---
+id: no-numeric-literals
+title: No Numeric Literals
+description: Disallow binary, octal, and hexadecimal numeric literal forms and require parseInt with an explicit base instead.
+keywords:
+  - nova
+  - eslint rule
+  - numeric literals
+  - hexadecimal
+  - binary
+  - octal
+  - parseInt
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Use `parseInt()` with an explicit base instead of binary, octal, or hexadecimal literals because `parseInt()` makes the base visible at the call site.
+
+## Summary
+
+The `no-numeric-literals` rule reports any numeric literal that uses a binary (`0b`), octal (`0o`), or hexadecimal (`0x`) prefix.
+
+Regular decimal literals are not affected.
+
+## Why Use This Rule?
+
+1. `parseInt('FF', 16)` makes the base explicit at the call site — no need to remember prefix conventions.
+2. Keeps all non-decimal numbers in a consistent `parseInt()` form.
+3. Pairs with the `radix` rule that requires the base argument in `parseInt()`.
+
+## Examples
+
+<Tabs groupId="no-numeric-literals-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    const mask = parseInt('FF', 16);
+    const flags = parseInt('1010', 2);
+    const perms = parseInt('755', 8);
+    const color = parseInt('1A2B3C', 16);
+
+    // Regular decimals are fine.
+    const count = 42;
+    const ratio = 3.14;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    const mask = 0xFF;
+    const flags = 0b1010;
+    const perms = 0o755;
+    const color = 0x1A2B3C;
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-numeric-literals-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoNumericLiterals } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-numeric-literals': NoNumericLiterals.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-numeric-literals': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="allow-hex-literals" label="Allow Hex Literals">
+
+    Allow hexadecimal literals while still banning binary and octal:
+
+    ```ts
+    import { NoNumericLiterals } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-numeric-literals': NoNumericLiterals.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-numeric-literals': ['error', {
+            allowHex: true,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoNumericLiterals } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-numeric-literals': NoNumericLiterals.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-numeric-literals': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description                 |
+|---------------|------------|---------|-----------------------------|
+| `allowBinary` | `boolean`  | `false` | Allow binary literals.      |
+| `allowHex`    | `boolean`  | `false` | Allow hexadecimal literals. |
+| `allowOctal`  | `boolean`  | `false` | Allow octal literals.       |
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip.      |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Decimal numbers are not flagged** — Only `0b`, `0o`, and `0x` prefixed literals are banned. Regular decimals like `42` and `3.14` are fine.
+- **`parseInt` without radix** — Pair this rule with the built-in `radix` rule to ensure `parseInt()` always receives an explicit base argument.

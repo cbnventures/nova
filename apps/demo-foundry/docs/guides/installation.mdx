@@ -1,0 +1,108 @@
+---
+title: Installation
+sidebar_position: 1
+tags:
+  - guides
+  - installation
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Installation
+
+This guide walks you through installing Foundry and verifying your environment. The whole process takes under two minutes.
+
+## Prerequisites
+
+Before installing Foundry, ensure your environment meets these requirements:
+
+| Requirement | Version | Notes                                               |
+|-------------|---------|-----------------------------------------------------|
+| **Spark**   | `>=3.0` | The Foundry CLI is distributed through Spark.       |
+| **Alloy**   | `>=5.0` | Required for type-aware Warden rules and Crucible.  |
+| **Ferric**  | `>=1.8` | Optional. Only needed for Ferric workspace targets. |
+
+:::warning
+Foundry 2.x requires Alloy 5.0 or later. Earlier versions of Alloy do not support the type introspection API that Crucible uses to generate test scaffolds. If you are running Alloy 4.x, upgrade before installing Foundry.
+:::
+
+## Install Foundry
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+The recommended way to install Foundry is through Spark:
+
+```bash title="Global install via Spark"
+spark install foundry
+```
+
+This installs the `foundry` CLI binary and all sub-tools (Anvil, Tongs, Quench, Bellows, Crucible, and Slag) as a single package.
+
+</TabItem>
+<TabItem value="loom" label="Loom Registry">
+
+You can also install Foundry from the Loom Registry as a workspace dependency:
+
+```bash title="Workspace dependency via Loom"
+loom add --dev foundry
+```
+
+This is useful when you want to pin a specific Foundry version per workspace rather than using a global install.
+
+</TabItem>
+<TabItem value="vial" label="Vial Container">
+
+For Conduit pipelines and reproducible environments, use the official Vial image:
+
+```bash title="Pull the official Vial image"
+vial pull foundry/cli:latest
+vial run foundry/cli:latest foundry --version
+```
+
+The Vial image includes Spark, Alloy, and Foundry pre-installed. It is the recommended approach for Conduit stages that run `foundry ignite` as part of a deployment pipeline.
+
+</TabItem>
+</Tabs>
+
+## Verify Installation
+
+Confirm everything is working:
+
+```bash title="Check the installed version"
+foundry --version
+```
+
+Expected output:
+
+```text
+Foundry CLI v2.4.1
+  Anvil    2.4.1
+  Tongs    2.4.1
+  Quench   2.4.1
+  Bellows  2.4.1
+  Crucible 2.4.1
+  Slag     2.4.1
+```
+
+:::info
+All sub-tools ship at the same version as the main CLI. There is no version matrix to manage — one install, one version number, all tools aligned.
+:::
+
+## Post-Install Configuration
+
+Foundry does not require a global configuration file. All settings live in your workspace `.grain` manifest. However, you can set two optional environment variables:
+
+| Variable              | Purpose                               | Default          |
+|-----------------------|---------------------------------------|------------------|
+| `FOUNDRY_CACHE_DIR`   | Location of the Quench build cache.   | `.foundry/cache` |
+| `FOUNDRY_PARALLELISM` | Maximum concurrent tasks for Bellows. | Auto (CPU cores) |
+
+## What Comes Next
+
+With Foundry installed, you are ready to:
+
+1. [Create your first forge](/docs/guides/your-first-forge/) — a step-by-step walkthrough.
+2. [Learn the manifest format](/docs/guides/manifests/) — every directive explained.
+3. [Explore the CLI](/docs/reference/cli-reference/) — full command reference.

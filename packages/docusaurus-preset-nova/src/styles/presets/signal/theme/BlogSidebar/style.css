@@ -1,0 +1,74 @@
+/**
+ * Signal — Blog Sidebar visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Sidebar Title
+ * ============================ */
+
+/* Section label in code font. */
+.nova-blog-sidebar strong {
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-blog-sidebar strong {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 2. Year Headings
+ * ============================ */
+
+.nova-blog-sidebar h4 {
+  font-size: 0.75rem;
+
+  color: var(--nova-color-neutral-700);
+}
+
+[data-theme="dark"] .nova-blog-sidebar h4 {
+  color: var(--nova-color-neutral-300);
+}
+
+/* ============================
+ * 3. Sidebar Links
+ * ============================ */
+
+/* Compact links with left border indicator. */
+.nova-blog-sidebar a {
+  padding: 0.1875rem 0.5rem;
+
+  font-size: 0.75rem;
+  color: var(--nova-color-neutral-600);
+  border-left: 2px solid transparent;
+
+  transition: color 100ms ease,
+              border-left-color 100ms ease;
+}
+
+[data-theme="dark"] .nova-blog-sidebar a {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-blog-sidebar a:hover,
+.nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-primary-600);
+  border-left-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-blog-sidebar a:hover,
+[data-theme="dark"] .nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-left-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Sidebar Border
+ * ============================ */
+
+/* Aside border and padding inherited from DocSidebar preset (bare aside selector). */

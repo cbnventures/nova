@@ -1,11 +1,103 @@
 ---
 id: read-me
-title: Readme (README.md)
-description: x
+title: README (README.md)
+description: Generate a baseline README.md file populated with project metadata from nova.config.json.
 keywords:
-  - x
+  - nova
+  - nova generate
+  - readme
+  - project documentation
+  - badges
+  - shields
 tags:
-  - x
+  - cli
+  - generator
+  - must-haves
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create a baseline `README.md` populated with project name, description, dynamic badges, documentation links, and a credits section from the Nova config.
+
+## Why Use This Command?
+
+- Produces a consistent README with shields badges, documentation links, and correct pronoun usage without manual editing.
+- Dynamically generates platform badges based on `project.platforms` and funding badges from `urls.fundSources`.
+- Draws every value from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, so regenerating after a config change keeps the file in sync.
+- Automatically copies the generated file into each <Terminology title="publishable workspace" to="/docs/quickstart/terminology#nova-concepts" color={true}>distributable</Terminology> workspace.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+- <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> — A valid config file must exist at the project root with the fields listed below.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate must-haves read-me
+
+    # Shorthand
+    nova gen must read
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate must-haves read-me
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen must read
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Config Fields
+
+| Field                      | Description                                                           |
+|----------------------------|-----------------------------------------------------------------------|
+| `project.name.title`       | Display name used in the heading.                                     |
+| `project.description.long` | Long project description shown below the heading.                     |
+| `project.pronouns`         | `"personal"` or `"business"` — controls I/we, me/us, my/our usage.    |
+| `project.platforms`        | Determines which platform badges and language logo to include.        |
+| `urls.homepage`            | Project homepage URL linked from the logo.                            |
+| `urls.logo`                | Absolute URL to the project logo image.                               |
+| `urls.documentation`       | Documentation site URL used in the links section.                     |
+| `urls.github`              | GitHub repository URL used for release, language, and license badges. |
+| `urls.npm`                 | npm package URL — includes npm badges when `nodejs` is a platform.    |
+| `urls.docker`              | Docker Hub URL — includes Docker Pulls and Image Size badges.         |
+| `urls.fundSources`         | Array of funding URLs — generates badges and credits section.         |
+
+## Supported Funding Platforms
+
+| Platform        | Detected By                   |
+|-----------------|-------------------------------|
+| GitHub Sponsors | `github.com/sponsors/`        |
+| PayPal          | `paypal.com/` or `paypal.me/` |
+| Open Collective | `opencollective.com/`         |
+| Ko-fi           | `ko-fi.com/`                  |
+| Buy Me a Coffee | `buymeacoffee.com/`           |
+| Patreon         | `patreon.com/`                |
+| Liberapay       | `liberapay.com/`              |
+
+## Output Files
+
+| File        | Description                                         |
+|-------------|-----------------------------------------------------|
+| `README.md` | Project README with badges, links, and description. |

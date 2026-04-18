@@ -1,0 +1,71 @@
+/**
+ * ============================
+ * Navbar — Container Scoping
+ * ============================
+ */
+
+[class*="nova-navbar-"] {
+  --nova-grid-container-max: var(--nova-layout-navbar-max);
+}
+
+/**
+ * ============================
+ * Navbar — Hide on Scroll
+ * ============================
+ */
+
+.navbar {
+  position: relative;
+
+  transition: transform 300ms ease;
+}
+
+.nova-navbar-hidden {
+  transform: translateY(-100%);
+}
+
+/**
+ * ============================
+ * Navbar — Hamburger Toggle
+ * ============================
+ */
+
+.nova-hamburger-toggle {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+/* Extends touch target to 44px without changing visual size. */
+.nova-hamburger-toggle::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+
+/**
+ * ============================
+ * Navbar — Brand Dark Mode
+ * ============================
+ */
+
+.nova-brand-dark {
+  display: none;
+}
+
+[data-theme="dark"] .nova-brand-light {
+  display: none;
+}
+
+[data-theme="dark"] .nova-brand-dark {
+  display: inline;
+}

@@ -1,0 +1,52 @@
+---
+title: "Identity Is the New Perimeter (and It Leaks)"
+authors: [ingrid]
+tags: [identity, sso, device-enrollment]
+date: 2025-11-12
+---
+
+The security industry spent the last five years telling everyone that identity is the new perimeter. The slogan is catchy. It is also incomplete. Identity is part of the new perimeter — but identity alone, without device state and behavioral context, is a perimeter with gaps large enough to drive an incident through.
+
+We audited six enterprise environments in the last year. Every one of them had adopted identity-centric security. Every one of them had at least one class of vulnerability that identity alone could not address.
+
+{/* truncate */}
+
+## The Six Environments
+
+We cannot name the organizations, but we can describe the patterns:
+
+| Environment | Identity Provider | MFA | Device Management | Behavioral Analysis | Vulnerability Found                                     |
+|-------------|-------------------|-----|-------------------|---------------------|---------------------------------------------------------|
+| A           | Okta              | Yes | None              | None                | Compromised personal laptop accessed production via SSO |
+| B           | Azure AD          | Yes | Intune (partial)  | None                | Stale service accounts with admin privileges            |
+| C           | Ping Identity     | Yes | Jamf              | None                | Session tokens valid for 24 hours, no re-evaluation     |
+| D           | Okta              | Yes | None              | Basic UEBA          | UEBA alerts ignored due to false positive fatigue       |
+| E           | Google Workspace  | Yes | Chrome Enterprise | None                | Contractor accounts never deprovisioned                 |
+| F           | Azure AD          | Yes | Intune            | None                | VPN split-tunnel allowed unmonitored egress             |
+
+Every environment authenticated its users correctly. MFA was enabled everywhere. The identity layer worked as designed. The failures were in what came after authentication.
+
+## The Gap Between Identity and Trust
+
+Authentication answers "who are you?" Trust requires answering four additional questions that identity providers do not ask:
+
+1. **What device are you using?** A valid identity on a compromised device is a valid identity being wielded by an attacker. Environment A learned this when an engineer's personal laptop — unmanaged, unpatched, running a browser extension that exfiltrated session cookies — authenticated via Okta and accessed production databases.
+
+2. **What have you been doing?** A valid identity behaving anomalously is either a compromised account or an insider threat. Environment D had UEBA that could detect this, but the alert-to-noise ratio was so poor that the security team had stopped reading the alerts.
+
+3. **How long ago did you prove your identity?** A session token issued 23 hours ago is not the same level of assurance as one issued 30 seconds ago. Environment C issued 24-hour session tokens with no re-evaluation. An attacker who stole a token at hour 1 had 23 hours of uninterrupted access.
+
+4. **Has anything changed since you authenticated?** Network location, device posture, risk score — all of these change over the life of a session. No identity provider re-evaluates them after the initial authentication.
+
+## What Sentinel Adds
+
+Sentinel treats identity as one signal among many. The Citadel policy engine evaluates identity alongside device posture from Watchtower, behavioral baselines from Spyglass, and network context from Rampart. All five signals must satisfy the trust policy simultaneously, and they are re-evaluated every 90 seconds.
+
+The result is a perimeter that does not have the gaps we found in those six environments:
+
+- A compromised device fails posture checks and loses access, regardless of the identity.
+- A stale session triggers step-up MFA or revocation, regardless of the token TTL.
+- Anomalous behavior triggers a Spyglass alert that is actionable because it correlates with device and network signals, not just login times.
+- Contractor accounts that are never deprovisioned still lose access when their device enrollment expires.
+
+Identity is necessary. It is not sufficient. The perimeter is not identity — it is the continuous evaluation of identity, device, behavior, and context together. Anything less is a perimeter with gaps.

@@ -1,0 +1,64 @@
+/**
+ * ============================
+ * Stats — Section
+ * ============================
+ */
+
+.nova-stats {
+  margin-block: var(--nova-section-gap);
+}
+
+/**
+ * ============================
+ * Stats — Grid
+ * ============================
+ */
+
+.nova-stats-grid {
+  gap: 0;
+  text-align: center;
+}
+
+/**
+ * ============================
+ * Stats — Heading
+ * ============================
+ */
+
+.nova-stats-heading {
+  margin-block-start: calc(var(--nova-shape-gap) * 2);
+  margin-block-end: calc(var(--nova-shape-gap) * 1);
+  text-align: center;
+}
+
+/**
+ * ============================
+ * Stats — Description
+ * ============================
+ */
+
+.nova-stats-description {
+  margin-block-start: calc(var(--nova-shape-gap) * 1);
+  margin-block-end: calc(var(--nova-shape-gap) * 4);
+  text-align: center;
+}
+
+/**
+ * ============================
+ * Stats — Value
+ * ============================
+ */
+
+.nova-stat-value {
+  margin-block: calc(var(--nova-shape-gap) * 0.5);
+}
+
+/**
+ * ============================
+ * Stats — Label
+ * ============================
+ */
+
+.nova-stat-label {
+  margin: 0;
+}

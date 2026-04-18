@@ -1,89 +1,174 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
+import { isIgnoredFile } from '../../../lib/utility.js';
+
 import type {
-  NoAssignThenReturnCheckReturnNode,
-  NoAssignThenReturnCheckReturnReturns,
-} from '@/types/rules/eslint/patterns/no-assign-then-return.d.ts';
+  RulesEslintPatternsNoAssignThenReturnCheckReturnArgument,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnBody,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnContext,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnDeclarations,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnDeclarator,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnInitText,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnNode,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnNodeIndex,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnParent,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnPrevStatement,
+  RulesEslintPatternsNoAssignThenReturnCheckReturnReturns,
+  RulesEslintPatternsNoAssignThenReturnRuleDefaultOptionsIgnoreFiles,
+  RulesEslintPatternsNoAssignThenReturnRuleOptions,
+} from '../../../types/rules/eslint/patterns/no-assign-then-return.d.ts';
 
 /**
- * No assign then return.
+ * Rules - ESLint - Patterns - No Assign Then Return.
  *
- * @since 1.0.0
+ * Detects a const assignment immediately followed by returning that same variable. The fix
+ * inlines the expression into the return statement directly.
+ *
+ * @since 0.14.0
  */
-const noAssignThenReturn = ESLintUtils.RuleCreator(() => '#')({
-  name: 'no-assign-then-return',
-  meta: {
-    type: 'suggestion',
-    docs: {
-      description: 'Disallow assigning to a variable and immediately returning it.',
+export class RulesEslintPatternsNoAssignThenReturn {
+  /**
+   * Rules - ESLint - Patterns - No Assign Then Return - Rule.
+   *
+   * Registered under the name no-assign-then-return and exported through the rules index as
+   * NoAssignThenReturn for preset consumption.
+   *
+   * @since 0.14.0
+   */
+  public static rule = ESLintUtils.RuleCreator(() => '#')({
+    name: 'no-assign-then-return',
+    meta: {
+      type: 'suggestion',
+      docs: {
+        description: 'Disallow assigning to a variable and immediately returning it.',
+      },
+      fixable: 'code',
+      messages: {
+        returnDirectly: 'Return the expression directly instead of assigning to an intermediate variable.',
+      },
+      schema: [{
+        type: 'object',
+        properties: {
+          ignoreFiles: {
+            type: 'array',
+            items: {
+              type: 'string',
+            },
+          },
+        },
+        additionalProperties: false,
+      }],
     },
-    messages: {
-      returnDirectly: 'Return the expression directly instead of assigning to an intermediate variable.',
+    defaultOptions: [{
+      ignoreFiles: [] as RulesEslintPatternsNoAssignThenReturnRuleDefaultOptionsIgnoreFiles,
+    }],
+    create(context, defaultOptions) {
+      const options: RulesEslintPatternsNoAssignThenReturnRuleOptions = defaultOptions[0];
+
+      // Skip ignored files.
+      if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
+        return {};
+      }
+
+      return {
+        ReturnStatement(node) {
+          RulesEslintPatternsNoAssignThenReturn.checkReturn(context, node);
+
+          return;
+        },
+      };
     },
-    schema: [],
-  },
-  defaultOptions: [],
-  create(context) {
-    /**
-     * No assign then return - Check return.
-     *
-     * @param {NoAssignThenReturnCheckReturnNode} node - Return statement node.
-     *
-     * @returns {NoAssignThenReturnCheckReturnReturns}
-     *
-     * @since 1.0.0
-     */
-    const checkReturn = (node: NoAssignThenReturnCheckReturnNode): NoAssignThenReturnCheckReturnReturns => {
-      const argument = node.argument;
+  });
 
-      // Only check returns that return an identifier.
-      if (argument == null || argument.type !== 'Identifier') {
-        return;
-      }
+  /**
+   * Rules - ESLint - Patterns - No Assign Then Return - Check Return.
+   *
+   * Looks at the statement before a return to see if it declares a const whose identifier
+   * matches the return argument, then offers an auto-fix to inline it.
+   *
+   * @private
+   *
+   * @param {RulesEslintPatternsNoAssignThenReturnCheckReturnContext} context - Context.
+   * @param {RulesEslintPatternsNoAssignThenReturnCheckReturnNode}    node    - Node.
+   *
+   * @returns {RulesEslintPatternsNoAssignThenReturnCheckReturnReturns}
+   *
+   * @since 0.14.0
+   */
+  private static checkReturn(context: RulesEslintPatternsNoAssignThenReturnCheckReturnContext, node: RulesEslintPatternsNoAssignThenReturnCheckReturnNode): RulesEslintPatternsNoAssignThenReturnCheckReturnReturns {
+    const argument: RulesEslintPatternsNoAssignThenReturnCheckReturnArgument = node.argument;
 
-      const parent = node.parent;
+    // Only check returns that return an identifier.
+    if (
+      argument === undefined
+      || argument === null
+      || argument.type !== 'Identifier'
+    ) {
+      return;
+    }
 
-      if (parent == null || (parent.type !== 'BlockStatement' && parent.type !== 'Program')) {
-        return;
-      }
+    const parent: RulesEslintPatternsNoAssignThenReturnCheckReturnParent = node.parent;
 
-      const body = parent.body;
-      const nodeIndex = body.indexOf(node);
+    if (
+      parent === undefined
+      || parent === null
+      || (
+        parent.type !== 'BlockStatement'
+        && parent.type !== 'Program'
+      )
+    ) {
+      return;
+    }
 
-      if (nodeIndex < 1) {
-        return;
-      }
+    const body: RulesEslintPatternsNoAssignThenReturnCheckReturnBody = parent.body;
+    const nodeIndex: RulesEslintPatternsNoAssignThenReturnCheckReturnNodeIndex = body.indexOf(node);
 
-      const prevStatement = body[nodeIndex - 1];
+    if (nodeIndex < 1) {
+      return;
+    }
 
-      if (prevStatement === undefined || prevStatement.type !== 'VariableDeclaration' || prevStatement.kind !== 'const') {
-        return;
-      }
+    const prevStatement: RulesEslintPatternsNoAssignThenReturnCheckReturnPrevStatement = body[nodeIndex - 1];
 
-      const declarations = prevStatement.declarations;
+    if (
+      prevStatement === undefined
+      || prevStatement.type !== 'VariableDeclaration'
+      || prevStatement.kind !== 'const'
+    ) {
+      return;
+    }
 
-      if (declarations.length !== 1) {
-        return;
-      }
+    const declarations: RulesEslintPatternsNoAssignThenReturnCheckReturnDeclarations = prevStatement.declarations;
 
-      const declarator = declarations[0];
+    if (declarations.length !== 1) {
+      return;
+    }
 
-      if (declarator === undefined) {
-        return;
-      }
+    const declarator: RulesEslintPatternsNoAssignThenReturnCheckReturnDeclarator = declarations[0];
 
-      if (declarator.id.type === 'Identifier' && declarator.id.name === argument.name) {
-        context.report({
-          node,
-          messageId: 'returnDirectly',
-        });
-      }
-    };
+    if (declarator === undefined) {
+      return;
+    }
 
-    return {
-      ReturnStatement: checkReturn,
-    };
-  },
-});
+    if (
+      declarator.id.type === 'Identifier'
+      && declarator.id.name === argument.name
+      && declarator.init !== null
+      && declarator.init !== undefined
+    ) {
+      const initText: RulesEslintPatternsNoAssignThenReturnCheckReturnInitText = context.sourceCode.getText(declarator.init);
 
-export default noAssignThenReturn;
+      context.report({
+        node,
+        messageId: 'returnDirectly',
+        fix(fixer) {
+          return [
+            fixer.remove(prevStatement),
+            fixer.replaceText(argument, initText),
+          ];
+        },
+      });
+    }
+
+    return;
+  }
+}

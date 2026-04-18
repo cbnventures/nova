@@ -1,0 +1,72 @@
+---
+title: "Contract Testing Across 60 Packages with Crucible"
+authors: [priya]
+tags: [testing, crucible, typescript, monorepo]
+date: 2026-01-15
+---
+
+Last year, we broke production because a library package changed the shape of a return type. The change was backward-compatible according to the TypeScript compiler — the old fields were still there, and the new field was optional. But three downstream packages relied on the absence of that field to trigger a fallback path. When the field suddenly existed (with a value of `undefined`), the fallback stopped firing, and users saw blank screens for forty minutes.
+
+The compiler said the change was safe. The runtime disagreed. That incident is why we built contract testing into Crucible.
+
+{/* truncate */}
+
+## What Contract Testing Means
+
+A contract test verifies the behavior of a package boundary — the public API that other packages consume. It is not a unit test (which tests internal logic) or an integration test (which tests the full system). It sits in between: it tests the interface between two packages using real code, not mocks.
+
+In Crucible, a contract test lives in the consumer package, not the provider. Package `web` writes a contract test for the API it expects from package `core`. If `core` changes in a way that violates the contract, the test fails in `web` — the package that will actually break.
+
+```alloy title="packages/web/contracts/core.contract.al"
+crucible.contract("core/formatCurrency") {
+  // Contract: returns a string with currency symbol prefix
+  const result = formatCurrency(42.5, "USD")
+  assert typeof result == "Text", "Must return Text"
+  assert result.startsWith("$"), "Must prefix with currency symbol"
+  assert result.contains("."), "Must include decimal separator"
+}
+
+crucible.contract("core/resolveUser") {
+  // Contract: returns undefined for unknown users (not null, not throws)
+  const result = resolveUser("nonexistent-id")
+  assert result === undefined, "Unknown users must return undefined"
+}
+```
+
+The second contract is exactly the kind of test that would have caught our production incident. The contract explicitly asserts that missing users return `undefined`, not a partial object with `undefined` fields.
+
+## How Crucible Discovers Contracts
+
+Crucible does not require manual registration. It scans every package for files matching the pattern `contracts/*.contract.al` and automatically determines which provider package the contract targets by reading the imports.
+
+During `foundry ignite`, Crucible runs contracts after the provider package builds but before the consumer package builds. This ensures that a breaking change in `core` is caught before `web` even attempts to compile against the new version.
+
+```text title="Bellows task ordering with contracts"
+[bellows] core (build)           → 2.1s
+[bellows] core (contracts: web)  → 0.4s ← web's contract runs against core
+[bellows] core (contracts: api)  → 0.3s ← api's contract runs against core
+[bellows] web (build)            → 3.2s ← only starts if contracts pass
+[bellows] api (build)            → 2.8s
+```
+
+If a contract fails, Bellows halts the downstream build immediately. You do not wait 3 minutes for `web` to fail with a confusing compile error. You get a clear contract violation message within seconds of the breaking change.
+
+## Writing Good Contracts
+
+We have written over 400 contract tests across our internal workspace. Three patterns distinguish useful contracts from noise:
+
+- **Test behavior, not shape.** A contract that asserts `typeof result.name == "Text"` is fragile — it breaks if the field is renamed. A contract that asserts `result.displayLabel().length > 0` tests the behavior the consumer actually relies on.
+- **Test absence explicitly.** If your code relies on a field being absent, write a contract that asserts the field is `undefined`. Implicit assumptions become invisible bugs.
+- **Test error paths.** Contracts should cover what happens when the provider rejects input, returns empty results, or times out. These paths are where most cross-package bugs live.
+
+## The Scale Question
+
+Running 400 contracts on every build sounds expensive. In practice, Quench caches contract results just like it caches build artifacts. If neither the provider nor the consumer has changed, the contract result is restored from cache. On a typical pull request, fewer than 20 contracts actually execute — the rest are cache hits.
+
+The overhead is roughly 2 to 4 seconds per build. The cost of not running them — as we learned from our production incident — is measured in user trust and engineer hours.
+
+## Try It
+
+Add a `contracts/` directory to any package, write a `.contract.al` file that imports from a dependency, and run `foundry ignite`. Crucible picks it up automatically. No configuration needed.
+
+Start with the package that has the most downstream consumers. That is where contracts deliver the most value — and where breaking changes do the most damage.

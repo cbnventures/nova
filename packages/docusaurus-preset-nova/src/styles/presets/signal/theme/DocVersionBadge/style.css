@@ -1,0 +1,47 @@
+/**
+ * Signal — Version badge and banner visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Version Badge
+ * ============================ */
+
+.nova-version-badge {
+  font-family: var(--nova-font-code);
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1px 5px;
+  border: 1px solid var(--nova-color-neutral-300);
+  color: var(--nova-color-neutral-500);
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-version-badge {
+  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-neutral-500);
+  background-color: var(--nova-color-neutral-900);
+}
+
+/* ============================
+ * 2. Version Banner
+ * ============================ */
+
+.nova-version-banner {
+  background-color: var(--nova-color-neutral-100);
+  color: var(--nova-color-neutral-600);
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+[data-theme="dark"] .nova-version-banner {
+  background-color: var(--nova-color-neutral-900);
+  color: var(--nova-color-neutral-400);
+  border-bottom-color: var(--nova-color-neutral-800);
+}

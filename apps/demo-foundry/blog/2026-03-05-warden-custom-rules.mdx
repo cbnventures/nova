@@ -1,0 +1,130 @@
+---
+title: "Writing Custom Warden Rules for Your Team"
+authors: [priya]
+tags: [warden, linting, typescript, opinions]
+date: 2026-03-05
+---
+
+Warden ships 380 rules with no configuration. For most teams, that is enough. But some codebases have conventions that are too specific to ship in a general-purpose linter — naming patterns tied to your domain, import restrictions unique to your architecture, or banned API calls that only make sense in your context.
+
+Custom Warden rules let you encode team-specific conventions in the same enforcement layer as the built-in rules. They run in the same pass, produce the same error format, and support the same auto-fix mechanism. Here is how to write one.
+
+{/* truncate */}
+
+## Anatomy of a Rule
+
+A Warden rule is a function that receives an AST node and reports violations. The API is deliberately minimal — there are no configuration objects, no schema definitions, and no lifecycle hooks. You receive a node, you check a condition, and you report or stay silent.
+
+```alloy title="rules/no-console-log.rule.al"
+warden.rule("team/no-console-log") {
+  meta {
+    description = "Ban console.log in production code"
+    category    = "conventions"
+    fixable     = true
+  }
+
+  visit CallExpression(node) {
+    if node.callee.object?.name == "console"
+       && node.callee.property?.name == "log" {
+      report(node, "Use the Logger service instead of console.log") {
+        fix(node) {
+          replace node.callee with "Logger.info"
+        }
+      }
+    }
+  }
+}
+```
+
+The `visit` block declares which AST node type the rule inspects. Warden handles traversal — your rule only sees the nodes it asks for. The `fix` block is optional. If present, `foundry warden --fix` will apply it automatically.
+
+## Registration
+
+Custom rules live in a `rules/` directory at the workspace root. Warden discovers them automatically — no registration step, no plugin system, no configuration file.
+
+```text title="Workspace layout"
+my-workspace/
+  project.grain
+  rules/
+    no-console-log.rule.al
+    require-error-boundary.rule.al
+    no-direct-db-import.rule.al
+  packages/
+    ...
+```
+
+Every `.rule.al` file in the `rules/` directory is loaded into the Warden pipeline alongside the 380 built-in rules. Custom rules run in the same pass, at the same priority, with the same caching behavior.
+
+## Three Rules Every Team Should Write
+
+After helping dozens of teams write custom rules, we have found three categories that consistently deliver value:
+
+### 1. Domain-Specific Bans
+
+Every codebase has functions that should not be called directly. Maybe you wrapped `fetch` in a retry-aware client and want to ban raw `fetch` calls. Maybe you have a legacy API client that should not be used in new code.
+
+```alloy title="rules/no-raw-fetch.rule.al"
+warden.rule("team/no-raw-fetch") {
+  meta {
+    description = "Use HttpClient instead of raw fetch"
+    category    = "patterns"
+  }
+
+  visit CallExpression(node) {
+    if node.callee.name == "fetch" {
+      report(node, "Use HttpClient.request() instead of fetch()")
+    }
+  }
+}
+```
+
+### 2. Architectural Boundaries
+
+In a large workspace, certain packages should not import from certain other packages. A UI package should not import from the database layer. A shared library should not import from an application package.
+
+```alloy title="rules/no-cross-layer-import.rule.al"
+warden.rule("team/no-cross-layer-import") {
+  meta {
+    description = "Enforce layered architecture boundaries"
+    category    = "patterns"
+  }
+
+  const layers = ["ui", "service", "data"]
+
+  visit ImportDeclaration(node) {
+    const source = node.source.value
+    const currentLayer = getLayer(node.file)
+    const targetLayer = getLayer(source)
+
+    if layerIndex(currentLayer) < layerIndex(targetLayer) {
+      report(node, "${currentLayer} layer cannot import from ${targetLayer} layer")
+    }
+  }
+}
+```
+
+### 3. Consistency Enforcement
+
+If your team has agreed that all API response types must include a `status` field, or that all exported functions must use a specific naming pattern, a custom rule is the only way to enforce it automatically.
+
+## Testing Custom Rules
+
+Warden includes a rule testing utility that lets you verify your custom rules against sample code before deploying them to the workspace:
+
+```alloy title="rules/tests/no-console-log.test.al"
+warden.test("team/no-console-log") {
+  pass("Logger.info('hello')")
+  pass("Logger.warn('problem')")
+  fail("console.log('debug')")
+  fail("console.log('temp')")
+  fix("console.log('msg')", "Logger.info('msg')")
+}
+```
+
+Run `foundry warden test` to execute all rule tests. The test runner parses each code snippet, runs your rule against it, and verifies that the expected pass/fail/fix behavior matches.
+
+## The Philosophy
+
+Custom rules are not escape hatches. They are extensions. Warden's 380 built-in rules encode universal best practices. Your custom rules encode your team's specific decisions. Together, they form a complete enforcement layer that catches every convention violation before code review — so code review can focus on design, not style.
+
+Write rules for the things your team argues about in pull requests. If the same comment appears on three PRs, it should be a rule.

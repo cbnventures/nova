@@ -1,0 +1,86 @@
+---
+title: "Migrating 200 Webhook Integrations Off Zapier in a Weekend"
+authors: [anders]
+tags: [migration, payload, scaling, retry]
+date: 2026-03-08
+---
+
+A customer came to us on a Thursday afternoon. They had 200 webhook integrations running through Zapier. Their monthly bill had crossed $4,000. Their webhook volume had outgrown Zapier's rate limits. And they had a compliance audit in three weeks that required full delivery receipts for every webhook — something Zapier does not provide.
+
+They asked if we could migrate them by Monday. We said yes. Here is how.
+
+{/* truncate */}
+
+## The Inventory
+
+Step one was understanding what they had. We asked them to export their Zapier webhook configurations. Zapier does not have a bulk export, so they screen-grabbed each integration while we wrote a Spark script to parse the screenshots into a structured inventory. (We are not proud of this, but it worked.)
+
+```text title="Integration inventory — summary"
+Total integrations:           200
+Unique source providers:       14
+Unique destinations:           23
+Integrations with transforms:  87
+Integrations with filters:     34
+Integrations with multi-step:  12
+```
+
+The 12 multi-step integrations were the concern. Zapier's multi-step zaps chain multiple actions — "receive webhook, filter, transform, send to Slack, wait 5 minutes, send to CRM." Envoy does not chain actions with delays. Each relay is a single source-to-destination pipeline.
+
+## The Translation
+
+We wrote a converter that took the structured inventory and generated `.grain` and `.parcel` files for each integration. Single-step integrations mapped one-to-one. Multi-step integrations were decomposed into multiple relays with Trellis orchestration for sequencing.
+
+The converter handled four categories:
+
+| Category                    | Count | Conversion                            |
+|-----------------------------|-------|---------------------------------------|
+| Simple relay (no transform) | 79    | 1 `.grain` file each                  |
+| Relay with transform        | 87    | 1 `.grain` + 1 `.parcel` file each    |
+| Relay with filter           | 34    | 1 `.grain` file with filter block     |
+| Multi-step chain            | 12    | 2-4 `.grain` files + Trellis sequence |
+
+Total generated files: 312 `.grain` files and 87 `.parcel` files.
+
+## The Cutover
+
+We ran the migration in three phases:
+
+**Phase 1 (Friday evening): Shadow mode.** All 200 integrations ran in parallel — Zapier handled production traffic, Envoy received a copy. We compared delivery results between the two systems.
+
+```text title="Shadow mode results — Friday 18:00 to Saturday 06:00"
+Webhooks received (Zapier):     12,847
+Webhooks received (Envoy):      12,847   ✓ (parity)
+Successful deliveries (Zapier): 12,512
+Successful deliveries (Envoy):  12,841   ✓ (Envoy retried 329 that Zapier dropped)
+Payload mismatches:                  6   ✗ (transform differences)
+```
+
+Six payload mismatches. All six were date formatting differences — Zapier formatted dates as `MM/DD/YYYY`, our Parcel templates used `YYYY-MM-DD`. We updated the templates.
+
+**Phase 2 (Saturday morning): Dual-write with Envoy primary.** Traffic routed to Envoy first. Zapier ran as backup. Any relay that failed in Envoy was cross-checked against Zapier's result.
+
+**Phase 3 (Sunday evening): Zapier disabled.** All integrations running through Envoy only. Zapier integrations paused. We kept them paused (not deleted) for 7 days as a rollback safety net.
+
+## The Numbers
+
+After one week in production:
+
+- **Webhooks relayed:** 89,247
+- **Delivery success rate:** 100% (with retries)
+- **Mean relay latency:** 6.2ms (Zapier average was 340ms)
+- **Dead-lettered messages:** 3 (all due to destination downtime, replayed successfully)
+- **Monthly cost:** $0 (self-hosted Envoy on existing infrastructure)
+
+The latency improvement was the most dramatic. Zapier routes webhooks through their infrastructure, adds their processing overhead, and delivers from their IP range. Envoy runs on the customer's own infrastructure, processes in memory, and delivers directly. The 340ms-to-6.2ms improvement is the difference between intermediary routing and direct delivery.
+
+## What We Would Do Differently
+
+The screen-grab-to-inventory step was embarrassing. We have since built `envoy migrate`, a CLI tool that takes a Zapier export CSV (which Zapier added in late 2025) and generates the corresponding `.grain` and `.parcel` files automatically. The next migration will not require Spark scripts and screenshots.
+
+The multi-step decomposition also needs work. Twelve multi-step zaps became 38 individual relays with Trellis sequencing. That is correct but harder to reason about than the original Zapier representation. We are exploring a `chain` block in the relay grammar that would let operators express multi-step sequences in a single `.grain` file.
+
+## The Lesson
+
+Migration is not a technical challenge. It is an inventory challenge. The hard part is not writing the new configuration — it is understanding the old one completely enough to reproduce it faithfully. Shadow mode is non-negotiable. If you cannot run both systems in parallel and compare results, you are not migrating. You are gambling.
+
+Two hundred integrations. One weekend. Zero dropped messages. That is what a relay platform is for.

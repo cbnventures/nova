@@ -1,52 +1,90 @@
-import type { Diagnostic, EmitResult, Program } from 'typescript';
+import type {
+  Diagnostic, EmitResult, ParsedCommandLine, Program,
+} from 'typescript';
 
 /**
- * CLI Utility - Transpile - Emit files.
+ * CLI - Utility - Transpile - Emit Files.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityTranspileEmitFilesProgram = Program;
+export type CliUtilityTranspileEmitFilesProgram = Program;
 
-export type CLIUtilityTranspileEmitFilesReturns = EmitResult;
+export type CliUtilityTranspileEmitFilesReturns = EmitResult;
 
 /**
- * CLI Utility - Transpile - Filter diagnostics.
+ * CLI - Utility - Transpile - Filter Diagnostics.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityTranspileFilterDiagnosticsDiagnostics = readonly Diagnostic[];
+export type CliUtilityTranspileFilterDiagnosticsDiagnostics = readonly Diagnostic[];
 
-export type CLIUtilityTranspileFilterDiagnosticsReturns = Diagnostic[];
+export type CliUtilityTranspileFilterDiagnosticsReturns = Diagnostic[];
+
+export type CliUtilityTranspileFilterDiagnosticsCurrentDirectory = string;
+
+export type CliUtilityTranspileFilterDiagnosticsFileName = string;
 
 /**
- * CLI Utility - Transpile - Get config path.
+ * CLI - Utility - Transpile - Get Config Path.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityTranspileGetConfigPathProject = string | undefined;
+export type CliUtilityTranspileGetConfigPathProject = string | undefined;
 
-export type CLIUtilityTranspileGetConfigPathReturns = string | undefined;
+export type CliUtilityTranspileGetConfigPathReturns = string | undefined;
+
+export type CliUtilityTranspileGetConfigPathCurrentDirectory = string;
+
+export type CliUtilityTranspileGetConfigPathResolved = string;
 
 /**
- * CLI Utility - Transpile - Print diagnostics.
+ * CLI - Utility - Transpile - Print Diagnostics.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityTranspilePrintDiagnosticsFiltered = Diagnostic[];
+export type CliUtilityTranspilePrintDiagnosticsFilteredDiagnostics = Diagnostic[];
 
-export type CLIUtilityTranspilePrintDiagnosticsReturns = void;
+export type CliUtilityTranspilePrintDiagnosticsReturns = void;
 
-export type CLIUtilityTranspilePrintDiagnosticsFileSet = Set<string>;
+export type CliUtilityTranspilePrintDiagnosticsFileSet = Set<string>;
+
+export type CliUtilityTranspilePrintDiagnosticsFileName = string;
+
+export type CliUtilityTranspilePrintDiagnosticsMessage = string;
+
+export type CliUtilityTranspilePrintDiagnosticsPosition = import('typescript').LineAndCharacter;
+
+export type CliUtilityTranspilePrintDiagnosticsLine = number;
+
+export type CliUtilityTranspilePrintDiagnosticsCharacter = number;
 
 /**
- * CLI Utility - Transpile - Run.
+ * CLI - Utility - Transpile - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityTranspileRunOptionsProject = string;
+export type CliUtilityTranspileRunOptionsProject = string;
 
-export type CLIUtilityTranspileRunOptions = {
-  project?: CLIUtilityTranspileRunOptionsProject;
+export type CliUtilityTranspileRunOptions = {
+  project?: CliUtilityTranspileRunOptionsProject;
 };
 
-export type CLIUtilityTranspileRunReturns = void;
+export type CliUtilityTranspileRunReturns = void;
+
+export type CliUtilityTranspileRunConfigPath = string | undefined;
+
+export type CliUtilityTranspileRunConfigResult = {
+  config?: unknown; error?: Diagnostic;
+};
+
+export type CliUtilityTranspileRunConfig = unknown;
+
+export type CliUtilityTranspileRunConfigDirectory = string;
+
+export type CliUtilityTranspileRunParsed = ParsedCommandLine;
+
+export type CliUtilityTranspileRunProgram = Program;
+
+export type CliUtilityTranspileRunEmitResult = EmitResult;
+
+export type CliUtilityTranspileRunFilteredDiagnostics = Diagnostic[];

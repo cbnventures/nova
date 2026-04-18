@@ -1,35 +1,51 @@
 import type { z } from 'zod';
 
-import type { schemaNodeReleasesSchedule } from '@/lib/schema.ts';
+import type { libSchemaNodeReleasesSchedule } from '../../lib/schema.js';
 
 /**
- * Node Releases - Constraint.
+ * API - Node Releases - Constraint.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type NodeReleasesConstraint = string | undefined;
+export type ApiNodeReleasesConstraint = string | undefined;
 
 /**
- * Node Releases - Fetch LTS versions.
+ * API - Node Releases - Fetch LTS Versions.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type NodeReleasesFetchLtsVersionsReturns = Promise<string | undefined>;
+export type ApiNodeReleasesFetchLtsVersionsReturns = Promise<string | undefined>;
 
-export type NodeReleasesFetchLtsVersionsSchedule = z.infer<typeof schemaNodeReleasesSchedule>;
+export type ApiNodeReleasesFetchLtsVersionsResponse = Response;
 
-export type NodeReleasesFetchLtsVersionsActiveLtsMajors = number[];
+export type ApiNodeReleasesFetchLtsVersionsResponseData = unknown;
+
+export type ApiNodeReleasesFetchLtsVersionsSchedule = z.infer<typeof libSchemaNodeReleasesSchedule>;
+
+export type ApiNodeReleasesFetchLtsVersionsToday = string;
+
+export type ApiNodeReleasesFetchLtsVersionsActiveLtsMajors = number[];
+
+export type ApiNodeReleasesFetchLtsVersionsKey = string;
+
+export type ApiNodeReleasesFetchLtsVersionsEntry = ApiNodeReleasesFetchLtsVersionsSchedule[string];
+
+export type ApiNodeReleasesFetchLtsVersionsStrippedKey = string;
+
+export type ApiNodeReleasesFetchLtsVersionsMajor = number;
+
+export type ApiNodeReleasesFetchLtsVersionsErrorMessage = string;
 
 /**
- * Node Releases - Populated.
+ * API - Node Releases - Populated.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type NodeReleasesPopulated = boolean | undefined;
+export type ApiNodeReleasesPopulated = boolean | undefined;
 
 /**
- * Node Releases - Reset for testing.
+ * API - Node Releases - Reset For Testing.
  *
- * @since 1.0.0
+ * @since 0.13.0
  */
-export type NodeReleasesResetForTestingReturns = void;
+export type ApiNodeReleasesResetForTestingReturns = void;

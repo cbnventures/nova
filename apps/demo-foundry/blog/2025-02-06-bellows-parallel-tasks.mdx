@@ -1,0 +1,65 @@
+---
+title: "How Bellows Decides What Runs in Parallel"
+authors: [kofi]
+tags: [bellows, performance, ci-cd, monorepo]
+date: 2025-02-06
+---
+
+Bellows is Foundry's parallel task runner. It reads the dependency graph from Tongs, determines which packages can run simultaneously, and fans work across every available CPU core. Most teams see a 3x to 5x improvement in build times after switching to Bellows. But the scheduling algorithm is not as simple as "run independent packages in parallel."
+
+There are three constraints that make parallel task scheduling harder than it looks: memory pressure, task heterogeneity, and dependent-chain depth. Bellows handles all three, and understanding how it works will help you structure your workspace for maximum throughput.
+
+{/* truncate */}
+
+## Constraint 1: Memory Pressure
+
+The naive approach is to run as many packages as possible in parallel — if you have 8 cores, run 8 packages simultaneously. This works until one of those packages is a Smelter compilation that consumes 2 GB of RAM. Suddenly you have 8 compilations fighting for memory, the OS starts swapping, and the build is slower than serial.
+
+Bellows assigns a memory weight to each task type. Smelter compilations are heavy. Warden lint passes are light. Crucible test runs are medium. The scheduler keeps a running total of estimated memory usage and will not start a new task if it would push the total past 80% of available RAM.
+
+```text title="Bellows scheduler output"
+$ foundry ignite --verbose
+
+[bellows] Available cores: 8, Memory: 32GB, Limit: 25.6GB
+[bellows] Wave 1: core (build, 1.8GB), shared-types (build, 0.4GB),
+          utils (build, 0.6GB), constants (build, 0.2GB)
+          → 4 tasks, 3.0GB estimated
+[bellows] Wave 2: api (build, 2.1GB), web (build, 2.4GB),
+          core (test, 0.8GB), core (lint, 0.3GB)
+          → 4 tasks, 5.6GB estimated
+[bellows] Wave 3: gateway (build, 1.9GB), dashboard (build, 1.6GB),
+          api (test, 0.9GB), web (lint, 0.3GB)
+          → 4 tasks, 4.7GB estimated
+```
+
+Notice that Wave 2 starts the `core` test and lint tasks alongside the `api` and `web` builds. Bellows does not wait for all builds to finish before starting tests — it interleaves task types as soon as prerequisites are met.
+
+## Constraint 2: Task Heterogeneity
+
+Not all tasks take the same amount of time. A Smelter compilation might take 12 seconds for a large package and 0.3 seconds for a tiny constants package. If Bellows scheduled everything naively, the critical path would be dominated by the largest packages while small packages finish instantly and leave cores idle.
+
+Bellows uses a longest-processing-time-first (LPT) heuristic. It estimates the duration of each task based on historical data from Quench, then schedules the longest tasks first. This keeps cores busy throughout the build and minimizes tail latency — the gap between the last-to-finish task and the second-to-last.
+
+## Constraint 3: Dependent-Chain Depth
+
+In a workspace with deep dependency chains — A depends on B, B depends on C, C depends on D — the maximum parallelism is limited by the chain length, not the number of cores. If the chain is 7 levels deep, you will always have at least 7 sequential steps, no matter how many cores you throw at it.
+
+Bellows cannot break this constraint, but it can mitigate it. When a deep chain exists, Bellows prioritizes it — the packages on the critical path are always scheduled first, and shorter chains fill in around them. This is the same approach that project management tools use for critical path scheduling.
+
+## What You Can Do
+
+The workspace layout directly affects how much parallelism Bellows can extract. Three structural changes that consistently improve build times:
+
+- **Flatten the dependency graph.** If package A depends on B only for a single type, consider moving that type to a shared package that both A and B depend on. This removes a link from the chain and allows A and B to build in parallel.
+- **Split large packages.** A package that takes 30 seconds to compile is a bottleneck. If it contains independent modules, splitting it into two packages lets Bellows compile them simultaneously.
+- **Separate test dependencies.** If your test fixtures live in the same package as your production code, Bellows cannot start tests until the production build finishes. Move test fixtures to a separate package that builds in parallel with the main package.
+
+These are not Bellows-specific optimizations. They are good monorepo architecture. Bellows just makes the payoff visible because you can see the scheduling waves in the build output.
+
+## Measuring Parallelism
+
+Run `foundry ignite --profile` to generate a build profile. The profile shows every task, its start time, its duration, and which core it ran on. Import the profile into any trace viewer to see the scheduling waves visually.
+
+The metric we track is **parallel efficiency**: the ratio of total CPU time to wall-clock time. A perfectly parallel build with 8 cores would have a parallel efficiency of 8.0x. In practice, our 200-package workspace achieves 5.8x on 8 cores — the remaining 2.2x is lost to dependency chains and memory scheduling.
+
+That is good enough. A 5.8x improvement on an 8-core machine means Bellows is using 72% of available compute. The rest is waiting for the dependency graph, and no scheduler can eliminate that.

@@ -1,17 +1,43 @@
 import type { TSESTree } from '@typescript-eslint/utils';
+import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 /**
- * No shared type import - Check import.
+ * Rules - ESLint - TypeScript - No Shared Type Import - Check Import.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type NoSharedTypeImportCheckImportNode = TSESTree.ImportDeclaration;
+export type RulesEslintTypescriptNoSharedTypeImportCheckImportContext = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type NoSharedTypeImportCheckImportReturns = void;
+export type RulesEslintTypescriptNoSharedTypeImportCheckImportNode = TSESTree.ImportDeclaration;
+
+export type RulesEslintTypescriptNoSharedTypeImportCheckImportSharedFiles = string[];
+
+export type RulesEslintTypescriptNoSharedTypeImportCheckImportReturns = void;
+
+export type RulesEslintTypescriptNoSharedTypeImportCheckImportSource = string;
+
+export type RulesEslintTypescriptNoSharedTypeImportCheckImportNormalizedSource = string;
+
+export type RulesEslintTypescriptNoSharedTypeImportCheckImportIsShared = boolean;
+
+export type RulesEslintTypescriptNoSharedTypeImportCheckImportNormalizedSharedFile = string;
 
 /**
- * No shared type import - Default options.
+ * Rules - ESLint - TypeScript - No Shared Type Import - Rule.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type NoSharedTypeImportDefaultOptionsSharedFiles = string[];
+export type RulesEslintTypescriptNoSharedTypeImportRuleDefaultOptionsIgnoreFiles = string[];
+
+export type RulesEslintTypescriptNoSharedTypeImportRuleDefaultOptionsSharedFiles = string[];
+
+export type RulesEslintTypescriptNoSharedTypeImportRuleOptionsIgnoreFiles = string[];
+
+export type RulesEslintTypescriptNoSharedTypeImportRuleOptionsSharedFiles = string[];
+
+export type RulesEslintTypescriptNoSharedTypeImportRuleOptions = Readonly<{
+  ignoreFiles: RulesEslintTypescriptNoSharedTypeImportRuleOptionsIgnoreFiles;
+  sharedFiles: RulesEslintTypescriptNoSharedTypeImportRuleOptionsSharedFiles;
+}>;
+
+export type RulesEslintTypescriptNoSharedTypeImportRuleNormalizedFilename = string;

@@ -1,0 +1,55 @@
+---
+title: "Why We Built Anvil Instead of Using Existing Workspace Managers"
+authors: [elena]
+tags: [workspace, anvil, monorepo, philosophy]
+date: 2024-01-18
+---
+
+Every workspace manager we evaluated made the same mistake. They treated packages as independent projects that happen to share a directory. Anvil treats them as organs in the same body — connected, interdependent, and aware of each other from day one.
+
+We spent six months evaluating existing tools before deciding to build our own. The evaluation was thorough: we migrated a 40-package internal workspace to each tool, ran it for two weeks, and measured onboarding time, build correctness, and the number of "why is this broken" messages in our team channel.
+
+{/* truncate */}
+
+## What We Evaluated
+
+We tested four workspace managers. We are not naming them because the point is not to criticize specific tools — the point is to explain what we needed and why nothing fit.
+
+| Criteria               | Tool A | Tool B | Tool C | Tool D | Anvil |
+|------------------------|--------|--------|--------|--------|-------|
+| Dependency graph aware | Yes    | Yes    | No     | Yes    | Yes   |
+| Circular dep detection | No     | No     | No     | Yes    | Yes   |
+| Manifest-driven layout | No     | No     | No     | No     | Yes   |
+| Cross-package types    | Manual | Manual | Manual | Manual | Auto  |
+| Phantom dep detection  | No     | No     | No     | No     | Yes   |
+
+The last two rows are where the gap showed up. In a large TypeScript workspace, cross-package type resolution and phantom dependency detection are not nice-to-haves. They are the difference between "it builds on CI" and "it builds on CI and the types are actually correct."
+
+## Phantom Dependencies
+
+A phantom dependency is a package that works in your workspace but would fail if published independently. It happens when package A imports from package B, but package A never declares B as a dependency — it just happens to be hoisted to the root `node_modules` by the workspace manager.
+
+Every tool we evaluated allowed phantom dependencies to exist silently. Anvil catches them at manifest resolution time, before a single line of code compiles.
+
+```text title="Anvil phantom dependency check"
+$ foundry anvil check
+  ERROR  packages/api → imports "@core/utils" but does not declare
+         "@core" as a dependency in project.grain
+  FIX    Add depends = ["core"] to the api package block
+```
+
+## What Anvil Actually Does
+
+Anvil is not a package manager. It does not install dependencies, and it does not resolve versions from a registry. It does three things:
+
+- **Resolves the workspace graph.** It reads every package block in the manifest and builds a directed acyclic graph of dependencies.
+- **Validates the graph.** It checks for circular dependencies, phantom dependencies, and version conflicts between packages that depend on the same external library.
+- **Generates workspace metadata.** It writes the minimal set of configuration files that downstream tools need — Smelter project references, Warden scope boundaries, and Bellows execution order.
+
+Everything else — installing, linking, hoisting — is delegated to the package manager you already use. Anvil does not replace npm, it sits on top of it.
+
+## The Result
+
+After switching to Anvil, our phantom dependency count went from "we do not know" to zero. Circular dependency detection moved from "someone notices during code review" to "the CLI rejects the manifest before you can commit." And the workspace graph became a first-class artifact that Bellows, Quench, and Warden all consume.
+
+Build tooling should understand your workspace, not just iterate over directories in it.

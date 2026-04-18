@@ -1,0 +1,118 @@
+---
+id: docusaurus
+title: Docusaurus
+description: Scaffold a Docusaurus documentation workspace with monorepo or workspace mode.
+keywords:
+  - nova
+  - nova scaffold
+  - docusaurus
+  - docs
+  - documentation
+tags:
+  - cli
+  - scaffold
+  - docs
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Scaffold a **Docusaurus** documentation workspace.
+
+## Why Use This Command?
+
+- Installs Docusaurus with the Nova preset already applied so your documentation site matches the Nova look and behavior from day one.
+- Auto-detects monorepo or workspace mode so the same command works whether you're starting fresh or adding to an existing project.
+- Wires up `docusaurus start`, `docusaurus build`, and `docusaurus serve` scripts so the workspace runs without extra configuration.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Empty directory** (monorepo mode) or **<Terminology title="project root" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo root</Terminology>** (workspace mode) — The command auto-detects which mode to use.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova scaffold docs docusaurus
+
+    # Shorthand
+    nova scaf docs docusaurus
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest scaffold docs docusaurus
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest scaf docs docusaurus
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                      | Description                            |
+|---------------------------|----------------------------------------|
+| `-d, --dry-run`           | Preview changes without writing files. |
+| `--name <name>`           | Project or workspace name.             |
+| `--workspace-name <name>` | Workspace directory name.              |
+| `--output <dir>`          | Output directory.                      |
+
+## Output Structure
+
+```
+{project-slug}/
+├── package.json
+├── nova.config.json
+├── apps/
+│   └── {workspace-name}/
+│       ├── package.json
+│       ├── docusaurus.config.ts
+│       ├── tsconfig.json
+│       ├── sidebars.ts
+│       ├── docs/
+│       │   └── intro.md
+│       └── static/
+└── packages/
+```
+
+## How It Works
+
+### Interactive Wizard
+
+When run without flags, the command walks you through an interactive wizard:
+
+**Monorepo mode** (no `package.json` found):
+
+1. **Project name** — Enter a slug for your monorepo (e.g. `my-docs`).
+2. **Workspace name** — Enter a slug for the workspace directory (default: `docusaurus`).
+3. **Where should the project be created?** — Choose between creating a new directory or building in the current working directory.
+4. **Output directory** — If creating a new directory, confirm the path (default: `./{project-name}`).
+5. **Run generators** — Optionally run project-level generators (`.editorconfig`, `.gitignore`, `LICENSE`, etc.).
+
+**Workspace mode** (`package.json` with `workspaces` found):
+
+1. **Package name** — Enter a slug for the workspace package (e.g. `my-docs`).
+2. **Workspace name** — Enter a slug for the workspace directory (default: `docusaurus`).
+3. **Output directory** — Confirm the workspace path (default: `./apps/{workspace-name}`).
+
+### Non-Interactive Mode
+
+Provide `--name`, `--workspace-name`, and `--output` to skip all prompts:
+
+```bash
+nova scaffold docs docusaurus --name my-docs --workspace-name docusaurus --output ./my-docs
+```
+
+## Next Steps
+
+After scaffolding, consider running generators to add essential project files like `.editorconfig`, `.gitignore`, `LICENSE`, and `README.md`.

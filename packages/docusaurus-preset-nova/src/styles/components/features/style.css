@@ -1,0 +1,31 @@
+/**
+ * ============================
+ * Features — Section
+ * ============================
+ */
+
+.nova-features {
+  margin-block: var(--nova-section-gap);
+}
+
+/**
+ * ============================
+ * Features — Heading
+ * ============================
+ */
+
+.nova-features-heading {
+  margin-block: calc(var(--nova-shape-gap) * 3);
+}
+
+/**
+ * ============================
+ * Features — Card Icon
+ * ============================
+ */
+
+.nova-feature-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -16,6 +16,7 @@ tags:
   - code style
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -23,7 +24,13 @@ Require blank lines between specific statement patterns so code stays visually o
 
 ## Summary
 
-The `require-padding-lines` rule enforces blank lines in five situations: between `process.exitCode` assignments and `return`, before loop statements, around bare `await` expressions adjacent to declarations, between distinct expression-statement operations, and between non-empty switch cases.
+The `require-padding-lines` rule enforces blank lines in five situations:
+
+- Between `process.exitCode` assignments and `return`.
+- Before loop statements.
+- Around bare `await` expressions adjacent to declarations.
+- Between distinct expression-statement operations.
+- Between non-empty switch cases.
 
 ## Why Use This Rule?
 
@@ -56,6 +63,11 @@ The `require-padding-lines` rule enforces blank lines in five situations: betwee
     Runner.print(grouped);
 
     await Runner.writeOutput(data);
+
+    // Consecutive calls to the same function are allowed.
+    ok(result.status);
+    ok(result.data);
+    ok(result.timestamp);
 
     switch (action) {
       case 'start': {
@@ -119,40 +131,116 @@ The `require-padding-lines` rule enforces blank lines in five situations: betwee
 
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+<Tabs groupId="require-padding-lines-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { requirePaddingLines } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
-export default [
-  {
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { RequirePaddingLines } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-padding-lines': RequirePaddingLines.rule,
+            },
+          },
+        },
         rules: {
-          'require-padding-lines': requirePaddingLines,
+          '@cbnventures/nova/require-padding-lines': ['error'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/require-padding-lines': ['warn'],
-    },
-  },
-];
-```
+    ];
+    ```
 
-### Options
+  </TabItem>
+  <TabItem value="disable-loop-check" label="Disable Loop Check">
 
-| Option                 | Type      | Default | Description                                                             |
-|------------------------|-----------|---------|-------------------------------------------------------------------------|
-| `exitCodeBeforeReturn` | `boolean` | `true`  | Require a blank line between `process.exitCode = N` and `return`.       |
-| `beforeLoops`          | `boolean` | `true`  | Require a blank line before `for`/`while`/`do...while` loop statements. |
-| `bareAwait`            | `boolean` | `true`  | Require a blank line separating bare `await` from declarations.         |
-| `betweenOperations`    | `boolean` | `true`  | Require a blank line between distinct expression-statement operations.  |
-| `betweenSwitchCases`   | `boolean` | `true`  | Require a blank line between non-empty switch cases.                    |
+    Disable the blank-line requirement before loop statements:
+
+    ```ts
+    import { RequirePaddingLines } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-padding-lines': RequirePaddingLines.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-padding-lines': ['error', {
+            beforeLoops: false,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequirePaddingLines } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-padding-lines': RequirePaddingLines.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-padding-lines': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option                 | Type       | Default | Description                                                             |
+|------------------------|------------|---------|-------------------------------------------------------------------------|
+| `bareAwait`            | `boolean`  | `true`  | Require a blank line separating bare `await` from declarations.         |
+| `beforeLineComment`    | `boolean`  | `true`  | Require a blank line before `//` line comments preceded by code.        |
+| `beforeLoops`          | `boolean`  | `true`  | Require a blank line before `for`/`while`/`do...while` loop statements. |
+| `betweenOperations`    | `boolean`  | `true`  | Require a blank line between distinct expression-statement operations.  |
+| `betweenSwitchCases`   | `boolean`  | `true`  | Require a blank line between non-empty switch cases.                    |
+| `exitCodeBeforeReturn` | `boolean`  | `true`  | Require a blank line between `process.exitCode = N` and `return`.       |
+| `ignoreFiles`          | `string[]` | `[]`    | File patterns to skip.                                                  |
 
 Set any option to `false` to disable that specific check.
 
+## Autofix
+
+This rule provides automatic fixes for the `beforeLineComment` check. Other checks report errors that must be updated manually. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/require-padding-lines: error'
+```
+
 ## Troubleshooting
 
-- **Warning fires between two loops.** — The `beforeLoops` check only fires when a loop is preceded by a non-loop statement. Consecutive loops do not trigger a warning.
-- **Warning fires on an assigned await.** — The `bareAwait` check only targets `await` expressions that appear as standalone expression statements (no assignment). Assigned `await` like `const x = await fn()` is not affected.
+- **Warning fires between two loops** — The `beforeLoops` check only fires when a loop is preceded by a non-loop statement. Consecutive loops do not trigger a warning.
+- **Warning fires on an assigned await** — The `bareAwait` check only targets `await` expressions that appear as standalone expression statements (no assignment). Assigned `await` like `const x = await fn()` is not affected.
+- **No warning between repeated calls** — The `betweenOperations` check compares callee names. Consecutive calls to the same function (e.g., `ok(a); ok(b);`) are considered the same operation and do not require a blank line.

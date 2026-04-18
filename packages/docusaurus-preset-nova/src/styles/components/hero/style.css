@@ -1,0 +1,21 @@
+/**
+ * ============================
+ * Hero — Section
+ * ============================
+ */
+
+.nova-hero {
+  margin-block: 0;
+}
+
+/**
+ * ============================
+ * Hero — Actions
+ * ============================
+ */
+
+.nova-hero-actions {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}

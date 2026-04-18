@@ -1,0 +1,190 @@
+---
+id: require-multiline-condition-groups
+title: Require Multiline Condition Groups
+description: Require expanded formatting for parenthesized groups in mixed-operator logical expressions.
+keywords:
+  - nova
+  - eslint rule
+  - multiline condition groups
+  - logical expressions
+  - code style
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require expanded formatting for parenthesized groups in mixed-operator logical expressions.
+
+## Summary
+
+The `require-multiline-condition-groups` rule checks `LogicalExpression` nodes that mix operators (e.g., `&&` inside `||`). When a logical expression is a parenthesized group within a parent expression using a different operator, each operand in the group must start on its own line. No threshold — groups are always expanded.
+
+This covers every context — `if`, `while`, `do...while`, `for`, ternary, `return`, variable declarations, and standalone expressions.
+
+## Why Use This Rule?
+
+1. Parenthesized groups inside mixed-operator expressions compress multiple conditions into a single visual block, hiding logic.
+2. Expanding each operand onto its own line makes the group boundaries and individual conditions scannable at a glance.
+3. Consistent group formatting reduces cognitive load when reading complex boolean logic.
+
+## Examples
+
+<Tabs groupId="require-multiline-condition-groups-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Expanded groups — each operand on its own line.
+    if (
+      (
+        a
+        && b
+      )
+      || (
+        c
+        && d
+      )
+    ) {}
+
+    // No mixed operators — rule does not apply.
+    if (a && b && c) {}
+
+    // Single group expanded.
+    a || (
+      b
+      && c
+    )
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Compressed groups — operands share a line.
+    if ((a && b) || (c && d)) {}
+
+    // One group still compressed.
+    (a && b)
+    || (
+      c
+      && d
+    )
+
+    // Three operands in a compressed group.
+    (a && b && c) || d
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-multiline-condition-groups-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireMultilineConditionGroups } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-multiline-condition-groups': RequireMultilineConditionGroups.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-multiline-condition-groups': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireMultilineConditionGroups } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-multiline-condition-groups': RequireMultilineConditionGroups.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-multiline-condition-groups': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default                  | Description                                                                                       |
+|---------------|------------|--------------------------|---------------------------------------------------------------------------------------------------|
+| `groupStyle`  | `string`   | `"operator-before-open"` | Controls where the outer operator sits relative to the closing/opening parens of adjacent groups. |
+| `ignoreFiles` | `string[]` | `[]`                     | File patterns to skip.                                                                            |
+
+#### `groupStyle` Values
+
+<table>
+  <thead>
+    <tr>
+      <th>Value</th>
+      <th>Format</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>{'"operator-before-open"'}</code></td>
+      <td><code style={{display: 'block'}}>{') '}<br />{'|| ('}</code></td>
+      <td>Closing parenthesis alone, operator + opening parenthesis next line.</td>
+    </tr>
+    <tr>
+      <td><code>{'"operator-after-close"'}</code></td>
+      <td><code style={{display: 'block'}}>{') '}{'|| '}<br />{'('}</code></td>
+      <td>Closing parenthesis + operator together, opening parenthesis next line.</td>
+    </tr>
+    <tr>
+      <td><code>{'"operator-inline"'}</code></td>
+      <td><code>{') || ('}</code></td>
+      <td>All three on one line (operands within still multiline).</td>
+    </tr>
+  </tbody>
+</table>
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on a single-operator chain** — This rule only fires when operators are mixed (e.g., `&&` inside `||`). If all operators are the same, the rule does not apply.
+- **Group style error when operands are already expanded** — Check that the outer operator placement matches your configured `groupStyle` option.

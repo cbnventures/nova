@@ -15,6 +15,7 @@ tags:
   - code style
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -22,7 +23,9 @@ Return expressions directly instead of assigning to an intermediate variable tha
 
 ## Summary
 
-The `no-assign-then-return` rule reports a `return` statement that returns an identifier when the immediately preceding statement is a `const` declaration of that same identifier. It is recommended to return the expression directly.
+The `no-assign-then-return` rule reports a `return` statement that returns an identifier when the immediately preceding statement is a `const` declaration of that same identifier.
+
+It is recommended to return the expression directly.
 
 ## Why Use This Rule?
 
@@ -66,30 +69,81 @@ The `no-assign-then-return` rule reports a `return` statement that returns an id
 
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+<Tabs groupId="no-assign-then-return-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { noAssignThenReturn } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
-export default [
-  {
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { NoAssignThenReturn } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-assign-then-return': NoAssignThenReturn.rule,
+            },
+          },
+        },
         rules: {
-          'no-assign-then-return': noAssignThenReturn,
+          '@cbnventures/nova/no-assign-then-return': ['error'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/no-assign-then-return': ['warn'],
-    },
-  },
-];
-```
+    ];
+    ```
 
-This rule has no additional options.
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoAssignThenReturn } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-assign-then-return': NoAssignThenReturn.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-assign-then-return': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+This rule provides automatic fixes. Run ESLint with the `--fix` flag:
+
+```bash
+npx eslint --fix . --rule '@cbnventures/nova/no-assign-then-return: error'
+```
 
 ## Troubleshooting
 
-- **Warning fires but the variable name is descriptive.** — It is recommended to return the expression directly. If a descriptive name is important, consider adding a comment above the return statement instead.
-- **Only `const` declarations are checked.** — Reassignable variables (`let`) are skipped because they might be modified between declaration and return.
+- **Warning fires but the variable name is descriptive** — It is recommended to return the expression directly. If a descriptive name is important, consider adding a comment above the return statement instead.
+- **Only `const` declarations are checked** — Reassignable variables (`let`) are skipped because they might be modified between declaration and return.

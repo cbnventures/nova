@@ -1,36 +1,36 @@
-import type { NovaConfigWorkspaceRecipeName } from '@/types/shared.d.ts';
+import type { SharedNovaConfigWorkspaceRecipeName } from '../../shared.d.ts';
 
 /**
- * CLI Recipe - Registry entry.
+ * CLI - Recipe - Registry.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipeRegistryEntryName = NovaConfigWorkspaceRecipeName;
-
-export type CLIRecipeRegistryEntryRunOptionsDryRun = true;
-
-export type CLIRecipeRegistryEntryRunOptionsReplaceFile = true;
-
-export type CLIRecipeRegistryEntryRunOptions = {
-  dryRun?: CLIRecipeRegistryEntryRunOptionsDryRun;
-  replaceFile?: CLIRecipeRegistryEntryRunOptionsReplaceFile;
-};
-
-export type CLIRecipeRegistryEntryRunReturns = Promise<void>;
-
-export type CLIRecipeRegistryEntryRun = (options: CLIRecipeRegistryEntryRunOptions) => CLIRecipeRegistryEntryRunReturns;
-
-export type CLIRecipeRegistryEntryLabel = string;
-
-export type CLIRecipeRegistryEntry = {
-  name: CLIRecipeRegistryEntryName;
-  label: CLIRecipeRegistryEntryLabel;
-  run: CLIRecipeRegistryEntryRun;
-};
+export type CliRecipeRegistry = CliRecipeRegistryEntry[];
 
 /**
- * CLI Recipe - Registry.
+ * CLI - Recipe - Registry Entry.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipeRegistry = CLIRecipeRegistryEntry[];
+export type CliRecipeRegistryEntryName = SharedNovaConfigWorkspaceRecipeName;
+
+export type CliRecipeRegistryEntryRunOptionsDryRun = true;
+
+export type CliRecipeRegistryEntryRunOptionsReplaceFile = true;
+
+export type CliRecipeRegistryEntryRunOptions = {
+  dryRun?: CliRecipeRegistryEntryRunOptionsDryRun;
+  replaceFile?: CliRecipeRegistryEntryRunOptionsReplaceFile;
+};
+
+export type CliRecipeRegistryEntryRunReturns = Promise<void>;
+
+export type CliRecipeRegistryEntryRun = (options: CliRecipeRegistryEntryRunOptions) => CliRecipeRegistryEntryRunReturns;
+
+export type CliRecipeRegistryEntryLabel = string;
+
+export type CliRecipeRegistryEntry = {
+  name: CliRecipeRegistryEntryName;
+  label: CliRecipeRegistryEntryLabel;
+  run: CliRecipeRegistryEntryRun;
+};

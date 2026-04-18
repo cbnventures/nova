@@ -1,0 +1,127 @@
+/**
+ * Sentinel — Footer (Commons) variant visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Navigation Lists
+ * ============================ */
+
+.nova-footer-commons nav ul li a {
+  display: inline-block;
+}
+
+/* ============================
+ * 2. Footer Container
+ * ============================ */
+
+.nova-footer-commons {
+  background-color: var(--nova-sentinel-footer-bg, #030710);
+  color: var(--nova-color-neutral-300);
+  padding-top: 2.5rem;
+  padding-bottom: 1.5rem;
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--nova-color-neutral-800);
+}
+
+@media (min-width: 768px) {
+  .nova-footer-commons {
+    padding-top: 3.5rem;
+    padding-bottom: 2rem;
+    margin-top: 4rem;
+  }
+}
+
+/* ============================
+ * 3. Sections
+ * ============================ */
+
+.nova-footer-commons-sections {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-footer-commons-sections {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .nova-footer-commons-sections {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 2.5rem;
+  }
+}
+
+.nova-footer-commons-sections nav h3 {
+  font-family: var(--nova-font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nova-color-neutral-100);
+  margin-bottom: 1rem;
+}
+
+.nova-footer-commons-sections nav a {
+  padding: 0.3125rem 0;
+  font-size: 0.875rem;
+  color: var(--nova-color-neutral-400);
+  text-decoration: none;
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-footer-commons-sections nav a:hover,
+.nova-footer-commons-sections nav a:focus-visible {
+  color: var(--nova-color-primary-400);
+  text-decoration: none;
+}
+
+/* ============================
+ * 4. Social Row
+ * ============================ */
+
+.nova-footer-commons-social {
+  justify-content: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--nova-color-neutral-800);
+  border-bottom: 1px solid var(--nova-color-neutral-800);
+}
+
+.nova-footer-commons-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--nova-color-neutral-400);
+  border-radius: var(--nova-shape-radius);
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+.nova-footer-commons-social a:hover,
+.nova-footer-commons-social a:focus-visible {
+  color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 5. Legal Row
+ * ============================ */
+
+.nova-footer-commons-legal {
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.nova-footer-commons-legal p {
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-500);
+  margin: 0;
+}

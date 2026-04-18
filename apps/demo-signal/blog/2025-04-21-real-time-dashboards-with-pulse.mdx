@@ -1,0 +1,68 @@
+---
+title: "Why We Built Pulse: Real-Time Dashboards for Link Analytics"
+authors: [suki]
+tags: [pulse, analytics, engagement, campaign]
+date: 2025-04-21
+---
+
+Most analytics dashboards update every 24 hours. You launch a campaign on Monday morning, and you see the first meaningful data on Tuesday. By then, the underperforming variant has been burning budget for a full day. The high-performing variant has been throttled by an even split that should have shifted hours ago.
+
+Pulse was built to close that gap. It streams click, redirect, and conversion events in real time, so campaign decisions happen in minutes — not days.
+
+{/* truncate */}
+
+## The Latency Problem
+
+We measured the time between a campaign event occurring and the team acting on it across 120 marketing teams:
+
+| Analytics Cadence | Median Response Time | Budget Wasted on Underperformers |
+|-------------------|----------------------|----------------------------------|
+| Daily batches     | 26 hours             | 18% of daily spend               |
+| Hourly rollups    | 4.2 hours            | 7% of daily spend                |
+| Real-time stream  | 12 minutes           | 1.4% of daily spend              |
+
+The difference between daily and real-time is not incremental. Teams with real-time data waste 12x less budget on underperforming variants. The mechanism is simple: they see the problem sooner and act sooner.
+
+## What Pulse Shows
+
+Pulse organizes real-time data into three layers:
+
+- **Stream**: Raw event feed showing every click, redirect, and conversion as it happens. Useful for debugging and for the first few minutes after a campaign launches.
+- **Vitals**: Aggregated metrics updated every 30 seconds — click-through rate, conversion rate, bounce rate, and active sessions by channel.
+- **Alerts**: Threshold-based notifications that fire when a metric crosses a boundary you define.
+
+The alerts layer is where most teams spend their time. Rather than watching a dashboard, they configure rules like:
+
+```json title="Pulse alert configuration"
+{
+  "alert": "ctr-drop",
+  "metric": "clickThroughRate",
+  "condition": "below",
+  "threshold": 0.02,
+  "window": "15m",
+  "channels": ["slack", "email"],
+  "campaign": "core-activation-trial-003"
+}
+```
+
+This alert fires if the click-through rate for a specific campaign drops below 2% over any 15-minute window. The team gets a Slack notification and can pause or adjust the campaign before the next budget cycle.
+
+## Pulse vs Polling
+
+The traditional approach to "real-time" analytics is polling — querying your analytics database every few minutes and updating a dashboard. Polling has two problems:
+
+1. **Lag.** Even with a 5-minute poll interval, events that happen at minute 1 are not visible until minute 5. Over a campaign lifecycle, this adds up to hundreds of delayed decisions.
+2. **Load.** Frequent polling puts read pressure on your analytics database. At scale, the polling queries compete with the ingestion pipeline for resources.
+
+Pulse uses an event stream architecture. Beacon emits events at redirect time. Pulse consumes those events, computes running aggregates, and pushes updates to connected dashboards via WebSocket. There is no polling interval. The dashboard updates when the data changes.
+
+## When Real-Time Matters Most
+
+Real-time analytics is not equally valuable for every campaign. It matters most when:
+
+- **Budget is time-sensitive.** Paid campaigns with hourly spend caps benefit the most from fast feedback loops.
+- **Variants are being tested.** A/B tests converge faster when you can detect a winner in hours instead of days.
+- **Traffic is bursty.** Product launches, flash sales, and viral moments produce traffic spikes that need immediate attention.
+- **Errors are costly.** A broken redirect or a misconfigured landing page costs less when you catch it in 12 minutes instead of 26 hours.
+
+For evergreen content with steady traffic and no active spend, daily rollups are fine. Pulse is built for the campaigns where minutes matter.

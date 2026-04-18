@@ -1,0 +1,80 @@
+/**
+ * Foundry — Tag visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-tag {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-600);
+  background-color: var(--nova-color-neutral-100);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+  transition: border-color var(--nova-motion-duration) ease,
+              color var(--nova-motion-duration) ease;
+}
+
+.nova-tag:hover,
+.nova-tag:focus-visible {
+  color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-300);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-tag {
+  color: var(--nova-color-neutral-300);
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .nova-tag:hover,
+[data-theme="dark"] .nova-tag:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-700);
+}
+
+.nova-tag-count {
+  color: var(--nova-color-neutral-400);
+  font-size: 0.75rem;
+}
+
+.nova-blog-tags-list-link {
+  padding: 0.25rem 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--nova-color-neutral-600);
+  background-color: var(--nova-color-neutral-100);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-shape-radius);
+  text-decoration: none;
+  transition: border-color var(--nova-motion-duration) ease,
+              color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-tags-list-link:hover,
+.nova-blog-tags-list-link:focus-visible {
+  color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-300);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-tags-list-link {
+  color: var(--nova-color-neutral-300);
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .nova-blog-tags-list-link:hover,
+[data-theme="dark"] .nova-blog-tags-list-link:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-700);
+}
+
+.nova-blog-tags-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}

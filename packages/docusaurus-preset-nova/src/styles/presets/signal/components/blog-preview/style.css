@@ -1,0 +1,140 @@
+/**
+ * Signal — Blog preview visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Blog Preview Container
+ * ============================ */
+
+/* ============================
+ * 2. Blog Preview Heading
+ * ============================ */
+
+.nova-blog-preview-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--nova-color-neutral-900);
+}
+
+.nova-blog-preview-no-description .nova-blog-preview-heading {
+  margin-bottom: calc(var(--nova-shape-gap) * 2);
+}
+
+.nova-blog-preview-has-description .nova-blog-preview-heading {
+  margin-bottom: var(--nova-shape-gap);
+}
+
+[data-theme="dark"] .nova-blog-preview-heading {
+  color: var(--nova-color-neutral-50);
+}
+
+.nova-blog-preview-description {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--nova-color-neutral-500);
+  margin-bottom: calc(var(--nova-shape-gap) * 1.25);
+}
+
+[data-theme="dark"] .nova-blog-preview-description {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 3. Blog Preview Card
+ * ============================ */
+
+.nova-blog-preview-card {
+  padding: calc(var(--nova-shape-padding) * 2);
+  background-color: var(--nova-color-neutral-50);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-left: 3px solid var(--nova-color-primary-500);
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-blog-preview-card {
+  background-color: var(--nova-color-neutral-950);
+  border-color: var(--nova-color-neutral-800);
+  border-left-color: var(--nova-color-primary-400);
+}
+
+.nova-blog-preview-card:hover {
+  border-color: var(--nova-color-primary-500);
+  border-left-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover {
+  border-color: var(--nova-color-primary-400);
+  border-left-color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 4. Blog Preview Card Content
+ * ============================ */
+
+.nova-blog-preview-card time {
+  display: block;
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--nova-color-primary-500);
+  margin-bottom: calc(var(--nova-shape-gap) * 0.5);
+}
+
+[data-theme="dark"] .nova-blog-preview-card time {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-blog-preview-card h3 {
+  font-family: var(--nova-font-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin-bottom: calc(var(--nova-shape-gap) * 0.5);
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-blog-preview-card h3 {
+  color: var(--nova-color-neutral-50);
+}
+
+.nova-blog-preview-card p {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--nova-color-neutral-500);
+  margin-bottom: calc(var(--nova-shape-gap) * 0.75);
+}
+
+[data-theme="dark"] .nova-blog-preview-card p {
+  color: var(--nova-color-neutral-400);
+}
+
+.nova-blog-preview-card a {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-preview-card a {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-blog-preview-card a:hover,
+.nova-blog-preview-card a:focus-visible {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-blog-preview-card a:hover,
+[data-theme="dark"] .nova-blog-preview-card a:focus-visible {
+  color: var(--nova-color-primary-300);
+}

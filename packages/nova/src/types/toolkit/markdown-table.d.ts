@@ -1,117 +1,159 @@
-import type { MarkdownTable } from '@/toolkit/index.ts';
+import type { MarkdownTable } from '../../toolkit/index.js';
 
 /**
- * Markdown Table - Add row.
+ * Toolkit - Markdown Table - Add Row.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableAddRowRow = string[];
+export type ToolkitMarkdownTableAddRowRow = string[];
 
-export type MarkdownTableAddRowReturns = MarkdownTable;
+export type ToolkitMarkdownTableAddRowReturns = MarkdownTable;
 
 /**
- * Markdown Table - Compute column widths.
+ * Toolkit - Markdown Table - Compute Column Widths.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableComputeColumnWidthsReturns = number[];
+export type ToolkitMarkdownTableComputeColumnWidthsReturns = number[];
+
+export type ToolkitMarkdownTableComputeColumnWidthsColumnsLength = number;
+
+export type ToolkitMarkdownTableComputeColumnWidthsRow = string[];
+
+export type ToolkitMarkdownTableComputeColumnWidthsRows = ToolkitMarkdownTableComputeColumnWidthsRow[];
+
+export type ToolkitMarkdownTableComputeColumnWidthsColumnWidth = number;
+
+export type ToolkitMarkdownTableComputeColumnWidthsStrippedCell = string;
 
 /**
- * Markdown Table - Constructor.
+ * Toolkit - Markdown Table - Constructor.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableConstructorHeaders = string[];
+export type ToolkitMarkdownTableConstructorHeaders = string[];
 
-export type MarkdownTableConstructorOptionsMinimumColumnWidth = number;
+export type ToolkitMarkdownTableConstructorOptionsMinimumColumnWidth = number;
 
-export type MarkdownTableConstructorOptionsPadDelimiterRow = boolean;
+export type ToolkitMarkdownTableConstructorOptionsPadDelimiterRow = boolean;
 
-export type MarkdownTableConstructorOptions = {
-  minimumColumnWidth: MarkdownTableConstructorOptionsMinimumColumnWidth;
-  padDelimiterRow: MarkdownTableConstructorOptionsPadDelimiterRow;
+export type ToolkitMarkdownTableConstructorOptions = {
+  minimumColumnWidth: ToolkitMarkdownTableConstructorOptionsMinimumColumnWidth;
+  padDelimiterRow: ToolkitMarkdownTableConstructorOptionsPadDelimiterRow;
 };
 
 /**
- * Markdown Table - Escape cell.
+ * Toolkit - Markdown Table - Escape Cell.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableEscapeCellValue = string;
+export type ToolkitMarkdownTableEscapeCellValue = string;
 
-export type MarkdownTableEscapeCellReturns = string;
+export type ToolkitMarkdownTableEscapeCellReturns = string;
+
+export type ToolkitMarkdownTableEscapeCellPipePattern = RegExp;
+
+export type ToolkitMarkdownTableEscapeCellLinebreakPattern = RegExp;
 
 /**
- * Markdown Table - Format delimiter.
+ * Toolkit - Markdown Table - Format Delimiter.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableFormatDelimiterColumnWidths = number[];
+export type ToolkitMarkdownTableFormatDelimiterColumnWidths = number[];
 
-export type MarkdownTableFormatDelimiterReturns = string;
+export type ToolkitMarkdownTableFormatDelimiterReturns = string;
+
+export type ToolkitMarkdownTableFormatDelimiterMinimumWidth = number;
+
+export type ToolkitMarkdownTableFormatDelimiterUsePaddedDelimiter = boolean;
+
+export type ToolkitMarkdownTableFormatDelimiterColumnCells = string[];
+
+export type ToolkitMarkdownTableFormatDelimiterDelimiter = string;
+
+export type ToolkitMarkdownTableFormatDelimiterRowBody = string;
 
 /**
- * Markdown Table - Format row.
+ * Toolkit - Markdown Table - Format Row.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableFormatRowCells = string[];
+export type ToolkitMarkdownTableFormatRowCells = string[];
 
-export type MarkdownTableFormatRowWidths = number[];
+export type ToolkitMarkdownTableFormatRowWidths = number[];
 
-export type MarkdownTableFormatRowReturns = string;
+export type ToolkitMarkdownTableFormatRowReturns = string;
+
+export type ToolkitMarkdownTableFormatRowEscapedCells = string[];
+
+export type ToolkitMarkdownTableFormatRowEscapedCell = string;
 
 /**
- * Markdown Table - Headers.
+ * Toolkit - Markdown Table - Headers.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableHeaders = string[];
+export type ToolkitMarkdownTableHeaders = string[];
 
 /**
- * Markdown Table - Minimum column width.
+ * Toolkit - Markdown Table - Minimum Column Width.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableMinimumColumnWidth = number;
+export type ToolkitMarkdownTableMinimumColumnWidth = number;
 
 /**
- * Markdown Table - Pad cell.
+ * Toolkit - Markdown Table - Pad Cell.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTablePadCellString = string;
+export type ToolkitMarkdownTablePadCellString = string;
 
-export type MarkdownTablePadCellWidth = number;
+export type ToolkitMarkdownTablePadCellWidth = number;
 
-export type MarkdownTablePadCellReturns = string;
+export type ToolkitMarkdownTablePadCellReturns = string;
+
+export type ToolkitMarkdownTablePadCellPadding = number;
 
 /**
- * Markdown Table - Pad delimiter row.
+ * Toolkit - Markdown Table - Pad Delimiter Row.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTablePadDelimiterRow = boolean;
+export type ToolkitMarkdownTablePadDelimiterRow = boolean;
 
 /**
- * Markdown Table - Render.
+ * Toolkit - Markdown Table - Render.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableRenderReturns = string;
+export type ToolkitMarkdownTableRenderReturns = string;
+
+export type ToolkitMarkdownTableRenderColumnWidths = number[];
+
+export type ToolkitMarkdownTableRenderHeader = string;
+
+export type ToolkitMarkdownTableRenderDelimiter = string;
+
+export type ToolkitMarkdownTableRenderBody = string;
 
 /**
- * Markdown Table - Rows.
+ * Toolkit - Markdown Table - Rows.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableRows = string[][];
+export type ToolkitMarkdownTableRow = string[];
+
+export type ToolkitMarkdownTableRows = ToolkitMarkdownTableRow[];
 
 /**
- * Markdown Table - Strip ansi colors.
+ * Toolkit - Markdown Table - Strip ANSI Colors.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type MarkdownTableStripAnsiColorsString = string;
+export type ToolkitMarkdownTableStripAnsiColorsString = string;
 
-export type MarkdownTableStripAnsiColorsReturns = string;
+export type ToolkitMarkdownTableStripAnsiColorsReturns = string;
+
+export type ToolkitMarkdownTableStripAnsiColorsPattern = RegExp;

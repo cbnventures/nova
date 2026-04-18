@@ -1,0 +1,279 @@
+---
+title: API Reference
+sidebar_position: 1
+description: Full Spoke API reference for Envoy — relay management, health checks, topic CRUD, and delivery status.
+tags:
+  - reference
+  - api
+---
+
+import Details from '@theme/Details';
+
+# API Reference
+
+Envoy exposes a Spoke API for relay management, health monitoring, delivery inspection, and topic administration. All endpoints return JSON. Authentication uses the same Cipher mechanisms configured for relay endpoints.
+
+## Base URL
+
+```
+http://localhost:8090/api
+```
+
+All endpoints below are relative to this base URL.
+
+## Relay Endpoints
+
+### Send a Message
+
+```bash title="POST /api/relay/:topic"
+curl -X POST http://localhost:8090/api/relay/infra-alerts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${RELAY_TOKEN}" \
+  -d '{
+    "title": "Manual alert",
+    "body": "Triggered via API.",
+    "priority": 3
+  }'
+```
+
+```json title="Response — 200 OK"
+{
+  "id": "msg_a1b2c3d4",
+  "status": "delivered",
+  "relay": "manual",
+  "latency_ms": 2.8
+}
+```
+
+### Get Relay Status
+
+```bash title="GET /api/relay/:name/status"
+curl http://localhost:8090/api/relay/threadbare-pushes/status
+```
+
+```json title="Response — 200 OK"
+{
+  "relay": "threadbare-pushes",
+  "active": true,
+  "messages_today": 47,
+  "delivery_rate": 1.0,
+  "last_delivery": "2025-08-22T14:30:07Z",
+  "dead_lettered": 0
+}
+```
+
+## Health Endpoints
+
+### Health Check
+
+```bash title="GET /api/health"
+curl http://localhost:8090/api/health
+```
+
+```json title="Response — 200 OK"
+{
+  "status": "healthy",
+  "version": "2.1.0",
+  "uptime_seconds": 86412,
+  "components": {
+    "cipher": "ready",
+    "parcel": "ready",
+    "dispatch": "ready",
+    "courier": "ready",
+    "ledger": "ready",
+    "embassy": "ready"
+  }
+}
+```
+
+### Metrics
+
+```bash title="GET /api/health/metrics"
+curl http://localhost:8090/api/health/metrics
+```
+
+<Details>
+<summary>Full metrics response schema</summary>
+
+```json title="Response — 200 OK"
+{
+  "relay_count": 4,
+  "messages": {
+    "total": 12847,
+    "delivered": 12842,
+    "dead_lettered": 5,
+    "in_retry": 0
+  },
+  "latency": {
+    "p50_ms": 2.1,
+    "p95_ms": 4.3,
+    "p99_ms": 7.8
+  },
+  "uptime_seconds": 86412,
+  "memory_bytes": 8388608,
+  "goroutines": 24
+}
+```
+
+</Details>
+
+## Topic Endpoints
+
+### List Topics
+
+```bash title="GET /api/topics"
+curl http://localhost:8090/api/topics
+```
+
+```json title="Response — 200 OK"
+{
+  "topics": [
+    { "name": "ci-builds", "relays": 2, "messages_today": 31 },
+    { "name": "infra-alerts", "relays": 3, "messages_today": 12 },
+    { "name": "oncall-urgent", "relays": 1, "messages_today": 4 },
+    { "name": "monitoring", "relays": 2, "messages_today": 0 }
+  ]
+}
+```
+
+### Create Topic
+
+```bash title="POST /api/topics"
+curl -X POST http://localhost:8090/api/topics \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+  -d '{ "name": "deploy-alerts", "retention": "30d" }'
+```
+
+```json title="Response — 201 Created"
+{
+  "topic": "deploy-alerts",
+  "created": true,
+  "retention": "30d"
+}
+```
+
+### Update Topic
+
+```bash title="PATCH /api/topics/:name"
+curl -X PATCH http://localhost:8090/api/topics/deploy-alerts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+  -d '{ "retention": "90d" }'
+```
+
+### Delete Topic
+
+```bash title="DELETE /api/topics/:name"
+curl -X DELETE http://localhost:8090/api/topics/deploy-alerts \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}"
+```
+
+```json title="Response — 200 OK"
+{
+  "topic": "deploy-alerts",
+  "deleted": true
+}
+```
+
+## Delivery Endpoints
+
+### List Deliveries
+
+```bash title="GET /api/deliveries"
+curl "http://localhost:8090/api/deliveries?relay=threadbare-pushes&limit=5"
+```
+
+<Details>
+<summary>Full delivery list response schema</summary>
+
+```json title="Response — 200 OK"
+{
+  "deliveries": [
+    {
+      "id": "msg_f7a2b8c4",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 1,
+      "latency_ms": 3.1,
+      "timestamp": "2025-08-22T14:30:07Z"
+    },
+    {
+      "id": "msg_e6d5c4b3",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 2,
+      "latency_ms": 5.2,
+      "timestamp": "2025-08-22T14:28:41Z"
+    }
+  ],
+  "total": 47,
+  "limit": 5,
+  "offset": 0
+}
+```
+
+</Details>
+
+### Retry a Dead-Lettered Message
+
+```bash title="POST /api/deliveries/:id/retry"
+curl -X POST http://localhost:8090/api/deliveries/msg_a9b8c7d6/retry \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}"
+```
+
+```json title="Response — 202 Accepted"
+{
+  "id": "msg_a9b8c7d6",
+  "status": "pending",
+  "message": "Message re-queued for delivery."
+}
+```
+
+### Inspect a Delivery
+
+```bash title="GET /api/deliveries/:id"
+curl http://localhost:8090/api/deliveries/msg_f7a2b8c4
+```
+
+```json title="Response — 200 OK"
+{
+  "id": "msg_f7a2b8c4",
+  "relay": "threadbare-pushes",
+  "status": "delivered",
+  "source_ip": "203.0.113.42",
+  "cipher_mode": "hmac-sha256",
+  "attempts": [
+    {
+      "number": 1,
+      "timestamp": "2025-08-22T14:30:07Z",
+      "status_code": 200,
+      "latency_ms": 3.1,
+      "receipt": "confirmed"
+    }
+  ],
+  "payload_hash": "sha256:e3b0c44298fc1c14",
+  "destination": "canary://ci-builds"
+}
+```
+
+## Endpoint Summary
+
+| Method   | Path                        | Description                     |
+|----------|-----------------------------|---------------------------------|
+| `POST`   | `/api/relay/:topic`         | Send a message to a topic.      |
+| `GET`    | `/api/relay/:name/status`   | Get relay status and metrics.   |
+| `GET`    | `/api/health`               | Health check.                   |
+| `GET`    | `/api/health/metrics`       | Detailed platform metrics.      |
+| `GET`    | `/api/topics`               | List all topics.                |
+| `POST`   | `/api/topics`               | Create a new topic.             |
+| `PATCH`  | `/api/topics/:name`         | Update topic configuration.     |
+| `DELETE` | `/api/topics/:name`         | Delete a topic.                 |
+| `GET`    | `/api/deliveries`           | List deliveries with filtering. |
+| `POST`   | `/api/deliveries/:id/retry` | Retry a dead-lettered message.  |
+| `GET`    | `/api/deliveries/:id`       | Inspect a single delivery.      |
+
+## Next Steps
+
+- [Configuration](/docs/setup/configuration/) — Full relay manifest reference.
+- [Architecture](/docs/advanced/architecture/) — How each API endpoint maps to internal components.

@@ -10,22 +10,32 @@ keywords:
   - unknown-keys
   - sort
 tags:
-  - cleanup
   - cli
+  - cleanup
   - recipe
   - package-json
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-Remove unsupported keys and reorder remaining keys in <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> `package.json` files.
+Remove unsupported keys and reorder remaining keys in <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> `package.json` files.
 
 ## Summary
 
-The `cleanup` recipe finalizes each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s `package.json` by removing keys that are not in the known set of npm, Node.js, Corepack, or <Term title="build tool" to="/docs/quickstart/terminology#builds-and-tooling">bundler</Term> fields and reordering remaining keys to a canonical order. Behavior is controlled per-<Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> via recipe settings in <Term title="Nova config" to="/docs/quickstart/terminology#nova-concepts">`nova.config.json`</Term>.
+The `cleanup` recipe finalizes each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s `package.json` by removing keys that are not in the known set of npm, Node.js, Corepack, or <Terminology title="build tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundler</Terminology> fields and reordering remaining keys to a canonical order.
 
-## Recipe Settings
+Behavior is controlled per-<Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> via recipe settings in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Behavior
+
+For each eligible <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>, the recipe applies up to two operations in order:
+
+- **Remove unknown keys** — Every key in `package.json` is checked against a combined allowlist of npm, Node.js, Corepack, and <Terminology title="build tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundler</Terminology> fields. Keys not in the allowlist are logged as a warning and then deleted. Disable per-workspace by setting `removeUnknownKeys` to `false`.
+- **Reorder keys** — All remaining keys are reordered to a canonical sort order. Known keys are placed first in the defined order. Unknown keys (when `removeUnknownKeys` is `false`) are appended after known keys in their original relative order. If the key order already matches, no changes are made. Disable per-workspace by setting `reorderKeys` to `false`.
+
+## Settings
 
 | Setting             | Default | Description                                                        |
 |---------------------|---------|--------------------------------------------------------------------|
@@ -53,11 +63,13 @@ The `cleanup` recipe finalizes each <Term title="package" to="/docs/quickstart/t
 
 ## Options
 
-| Flag                 | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-d, --dry-run`      | Preview changes without modifying files.                  |
-| `-r, --replace-file` | Overwrite the original file instead of creating a backup. |
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview changes without modifying files.                               |
+| `-r, --replace-file` | Overwrite the original file instead of creating a `.nova-backup` copy. |
 
 ## Unsupported Keys
 
-During cleanup, this recipe removes any `package.json` keys that are not in the known set of npm, Node.js, Corepack, or <Term title="build tool" to="/docs/quickstart/terminology#builds-and-tooling">bundler</Term> fields. Disable this behavior per-<Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> by setting `removeUnknownKeys` to `false` in the recipe settings.
+During cleanup, this recipe removes any `package.json` keys that are not in the known set of npm, Node.js, Corepack, or <Terminology title="build tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundler</Terminology> fields.
+
+Disable this behavior per-<Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> by setting `removeUnknownKeys` to `false` in the recipe settings.

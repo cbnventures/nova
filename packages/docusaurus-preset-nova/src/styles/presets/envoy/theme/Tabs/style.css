@@ -1,0 +1,73 @@
+/**
+ * Envoy — Tabs visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Tabs Container
+ * ============================ */
+
+.nova-tabs {
+  margin-bottom: 1rem;
+}
+
+/* ============================
+ * 2. Tab List
+ * ============================ */
+
+.nova-tabs-list {
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-tabs-list {
+  border-bottom-color: var(--nova-envoy-border-dark);
+}
+
+/* ============================
+ * 3. Tab Button
+ * ============================ */
+
+.nova-tabs-tab {
+  padding: 0.5rem 1rem;
+
+  font-weight: 600;
+  color: var(--nova-color-neutral-500);
+
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-tabs-tab:hover,
+.nova-tabs-tab:focus-visible {
+  color: var(--nova-color-primary-600);
+}
+
+.nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-color-primary-600);
+  border-bottom-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-tabs-tab {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-tabs-tab:hover,
+[data-theme="dark"] .nova-tabs-tab:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-color-primary-400);
+  border-bottom-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Tab Panel
+ * ============================ */
+
+.nova-tabs-panel {
+  padding: 0.75rem 0;
+}

@@ -1,0 +1,156 @@
+---
+title: Your First Policy
+sidebar_position: 2
+description: Write a trust policy in .grain format, attach it to a resource, and watch Watchtower evaluate it in real time.
+tags:
+  - getting started
+  - tutorial
+---
+
+import Details from '@theme/Details';
+
+# Your First Policy
+
+A trust policy defines the conditions under which access is granted, the resource it protects, and what happens when conditions are no longer met. This guide walks through writing a policy from scratch, validating it, and watching Watchtower evaluate it.
+
+## Write the Policy
+
+Create a file called `web-access.grain` in your policy directory:
+
+```text title="policies/web-access.grain"
+policy "web-application-access" {
+  // highlight-next-line
+  resource = "web-app-production"
+  effect   = "allow"
+
+  conditions {
+    // highlight-start
+    device.posture   >= 80
+    user.mfa         = true
+    network.location = ["office", "vpn"]
+    // highlight-end
+  }
+
+  on_failure {
+    action = "revoke"
+    notify = "security-ops"
+    log    = "spyglass"
+  }
+}
+```
+
+Every policy has three sections:
+
+- **Resource and effect** — what the policy protects and whether it allows or denies access.
+- **Conditions** — the trust requirements that must all be true simultaneously.
+- **On failure** — what happens when conditions are no longer met during a session.
+
+## Validate Before Applying
+
+Always validate a policy before applying it to a live resource:
+
+```bash title="Validate the policy"
+sentinel policy validate policies/web-access.grain
+```
+
+```text title="Validation output"
+Validating: policies/web-access.grain
+  Syntax:     valid
+  Resource:   web-app-production (found, 3 active sessions)
+  Conditions: 3 rules, all supported
+  On failure: revoke + notify (security-ops channel configured)
+
+  Dry-run impact:
+    Current sessions:  3
+    Would pass:        2
+    Would fail:        1 (device posture score 74, threshold 80)
+
+Validation complete. No errors.
+```
+
+:::tip
+Run `sentinel policy validate --verbose` to see the full evaluation breakdown for every active session. This is the fastest way to understand how a new policy will affect currently connected users.
+:::
+
+## Apply the Policy
+
+Apply the validated policy to start enforcement:
+
+```bash title="Apply the policy"
+sentinel policy apply policies/web-access.grain
+```
+
+```text title="Application output"
+Applying policy: web-application-access
+  Resource:        web-app-production
+  Effect:          allow
+  Conditions:      3 rules
+  Enforcement:     active
+
+  Watchtower: first evaluation in 90s
+  Spyglass:   logging enabled for this policy
+```
+
+Watchtower begins evaluating all active sessions against the new policy within 90 seconds. Sessions that do not meet the conditions are revoked automatically.
+
+## Watch the Evaluation
+
+Monitor Watchtower evaluations in real time:
+
+```bash title="Watch live evaluations"
+sentinel watchtower watch --policy web-application-access
+```
+
+```text title="Live evaluation output"
+Watchtower — web-application-access (every 90s)
+  [14:30:00] dev_a3b7c9d1 user=j.chen    posture=92 mfa=true  net=office  → PASS
+  [14:30:00] dev_f8e2d4c6 user=m.torres  posture=88 mfa=true  net=vpn     → PASS
+  [14:30:00] dev_b1a9c3e7 user=k.patel   posture=74 mfa=true  net=office  → FAIL (posture < 80)
+    → Access revoked. Notification sent to security-ops.
+  [14:31:30] dev_a3b7c9d1 user=j.chen    posture=92 mfa=true  net=office  → PASS
+  [14:31:30] dev_f8e2d4c6 user=m.torres  posture=87 mfa=true  net=vpn     → PASS
+```
+
+The failed evaluation for `k.patel` triggered an immediate revocation. Drawbridge closed the Filament tunnel. The user must remediate the device posture issue and re-authenticate to regain access.
+
+## Policy Structure Reference
+
+<Details>
+<summary>Full policy schema</summary>
+
+```text title="Policy schema reference"
+policy "<name>" {
+  resource = "<resource-id>"
+  effect   = "allow" | "deny"
+  priority = <number>              # optional, default 100
+
+  conditions {
+    device.posture    >= | <= | = <number>
+    device.encryption = true | false
+    device.os         = ["<os-name>", ...]
+    user.mfa          = true | false
+    user.role         = ["<role>", ...]
+    user.department   = ["<dept>", ...]
+    network.location  = ["<location>", ...]
+    network.ip_range  = ["<cidr>", ...]
+    behavior.score    >= | <= | = <number>
+    session.age       <= <seconds>
+    time.window       = "<cron-expression>"
+  }
+
+  on_failure {
+    action  = "revoke" | "notify" | "log"
+    notify  = "<channel>"
+    log     = "spyglass"
+    step_up = "mfa"               # optional, request re-authentication
+  }
+}
+```
+
+</Details>
+
+## Next Steps
+
+- [Trust Policies](/docs/trust/trust-policies/) — Policy grammar, conditions, composability, and inheritance chains.
+- [Access Control](/docs/trust/access-control/) — Drawbridge rules, time-bound access, and revocation triggers.
+- [Policy Simulation](/docs/operations/policy-simulation/) — Test policies against real traffic before enforcing.

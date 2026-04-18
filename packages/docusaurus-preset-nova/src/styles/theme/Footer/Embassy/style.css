@@ -1,0 +1,30 @@
+/**
+ * ============================
+ * Embassy — Social Header
+ * ============================
+ */
+
+.nova-footer-embassy-social-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/**
+ * ============================
+ * Embassy — Directory
+ * ============================
+ */
+
+.nova-footer-embassy-directory {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .nova-footer-embassy-directory {
+    gap: 32px;
+  }
+}

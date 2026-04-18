@@ -1,0 +1,172 @@
+---
+title: Deployment
+sidebar_position: 1
+tags:
+  - reference
+  - deployment
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Deployment
+
+Foundry ships workspaces to three deployment targets: Arcline Cloud, Vial containers, and Trellis orchestration. Each target is configured in the manifest and executed with a single command.
+
+## Deployment Targets
+
+<Tabs>
+<TabItem value="arcline" label="Arcline Cloud" default>
+
+Arcline is a managed cloud platform. Foundry packages your service, provisions infrastructure, and deploys it with zero manual steps.
+
+```bash title="Deploy to Arcline"
+foundry deploy --target arcline
+```
+
+```text title="Output"
+→ Building api (service) for Arcline target
+→ Bundling with Smelter (production mode)
+→ Packaging deployment artifact (2.1 MB)
+→ Provisioning Arcline instance: us-east-1
+→ Deploying api@2.4.1 to arcline://platform-api.us-east-1
+→ Health check passed (200 OK in 340ms)
+→ Deployment complete. Live at https://api.platform.arcline.dev
+```
+
+</TabItem>
+<TabItem value="vial" label="Vial Container">
+
+Vial builds a container image from your service package. The image includes the compiled source, runtime dependencies, and a minimal base layer.
+
+```bash title="Build and push a Vial image"
+foundry deploy --target vial
+```
+
+```text title="Output"
+→ Building api (service) for Vial target
+→ Generating Vialfile from manifest
+→ Building image: foundry/platform-api:2.4.1
+→ Image size: 18.4 MB (3 layers)
+→ Pushing to registry.loom.dev/platform-api:2.4.1
+→ Push complete. Digest: sha256:a1b2c3d4...
+```
+
+</TabItem>
+<TabItem value="trellis" label="Trellis Orchestration">
+
+Trellis is a container orchestration platform. Foundry generates the deployment manifest and applies it to your Trellis cluster.
+
+```bash title="Deploy to Trellis"
+foundry deploy --target trellis
+```
+
+```text title="Output"
+→ Building api (service) for Trellis target
+→ Generating Trellis manifest (3 replicas, auto-scaling)
+→ Applying to cluster: production-us-east
+→ Rolling update: 0/3 → 1/3 → 2/3 → 3/3
+→ All replicas healthy. Service available at trellis://platform-api:8080
+```
+
+</TabItem>
+</Tabs>
+
+## Deploy Configuration
+
+The `deploy` block in your manifest controls deployment behavior:
+
+```text title="project.grain — deploy configuration"
+workspace "platform" {
+  target = "arcline"
+
+  deploy {
+    region   = "us-east-1"
+    replicas = 3
+    scaling  = "auto"
+    memory   = "512mb"
+    timeout  = "30s"
+  }
+
+  packages {
+    api { type = "service", depends = ["core"] }
+  }
+}
+```
+
+| Directive  | Type      | Default       | Description                                     |
+|------------|-----------|---------------|-------------------------------------------------|
+| `region`   | `Text`    | `"us-east-1"` | Deployment region.                              |
+| `replicas` | `Numeric` | `1`           | Number of running instances.                    |
+| `scaling`  | `Text`    | `"manual"`    | Scaling mode: `manual`, `auto`, or `scheduled`. |
+| `memory`   | `Text`    | `"256mb"`     | Memory allocation per instance.                 |
+| `timeout`  | `Text`    | `"30s"`       | Request timeout for health checks.              |
+| `env`      | `Block`   | Optional      | Environment variables injected at runtime.      |
+
+## Environment Variables
+
+Sensitive values should not live in the manifest. Use the `env` block with references to your secret store:
+
+```text title="project.grain — environment variables"
+deploy {
+  env {
+    DATABASE_URL = secret("platform/db-url")
+    API_KEY      = secret("platform/api-key")
+  }
+}
+```
+
+The `secret()` function resolves values from your deployment platform's secret store at deploy time. The manifest never contains raw credentials.
+
+:::danger
+Production deployments require the `--confirm` flag. Running `foundry deploy --target arcline` without `--confirm` will execute a dry run and print what would happen without actually deploying. This is a safety measure to prevent accidental production releases.
+:::
+
+:::note
+The `--confirm` flag is intentionally not configurable through the manifest. Every production deployment must be an explicit, conscious decision at the command line.
+:::
+
+## Multi-Package Deployment
+
+When a workspace has multiple service packages, Foundry deploys them in dependency order:
+
+```text title="Deploying a multi-service workspace"
+$ foundry deploy --target arcline --confirm
+
+→ Deployment plan:
+  1. core (library) — skip (libraries are not deployed)
+  2. auth (service) — deploy to arcline://auth.us-east-1
+  3. api (service) — deploy to arcline://api.us-east-1 (depends on auth)
+  4. gateway (service) — deploy to arcline://gateway.us-east-1 (depends on api, auth)
+
+→ Deploying auth@2.4.1...  ✓ (4.2s)
+→ Deploying api@2.4.1...   ✓ (3.8s)
+→ Deploying gateway@2.4.1... ✓ (5.1s)
+
+→ All services deployed. Total time: 13.1s
+```
+
+Library packages are never deployed directly. They are bundled into the service packages that depend on them.
+
+## Rollback
+
+If a deployment fails or a health check does not pass, Foundry rolls back automatically:
+
+```text title="Automatic rollback on failure"
+→ Deploying api@2.5.0...
+→ Health check failed (503 after 30s)
+→ Rolling back to api@2.4.1
+→ Rollback complete. Previous version restored.
+```
+
+For manual rollback, use the `--rollback` flag:
+
+```bash title="Manual rollback"
+foundry deploy --target arcline --rollback api@2.4.1 --confirm
+```
+
+## Next Steps
+
+- [CLI Reference](/docs/reference/cli-reference/) — Full flag reference for `foundry deploy`.
+- [Build Pipeline](/docs/pipeline/build-pipeline/) — How Foundry builds artifacts before deployment.
+- [Workspace Management](/docs/guides/workspace-management/) — Managing multi-package workspaces.

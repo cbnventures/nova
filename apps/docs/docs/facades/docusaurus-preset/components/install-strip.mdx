@@ -1,0 +1,91 @@
+---
+id: install-strip
+title: Install Strip
+description: Copyable installation command display with configurable copy target behavior.
+sidebar_position: 5
+keywords:
+  - nova
+  - docusaurus facades
+  - install strip component
+  - copy to clipboard
+  - installation command
+  - landing page
+tags:
+  - facades
+  - component
+  - install strip
+  - landing page
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Install Strip
+
+Copyable installation command display. Renders a code-styled command with a copy-to-clipboard button.
+
+Supports three copy target behaviors: block, icon, or text.
+
+## Summary
+
+The Install Strip component renders a `<section>` containing a command string and a copy button. When clicked, the command is copied to the clipboard and the button shows a confirmation state for two seconds.
+
+## Why Use This Component?
+
+- **One-click copy** — readers can copy installation commands without selecting text.
+- **Three copy styles** — whole block, icon button, or text button to match your page layout.
+- **Preset-aware** — code font, colors, and spacing adapt to the active preset.
+
+## Usage
+
+<Tabs groupId="install-strip-usage">
+  <TabItem value="icon" label="Icon (default)" default>
+
+```tsx title="src/pages/index.tsx"
+import { InstallStrip } from '@cbnventures/docusaurus-preset-nova/components';
+
+<InstallStrip command="npm install @cbnventures/nova" />
+```
+
+  </TabItem>
+  <TabItem value="block" label="Block">
+
+```tsx title="src/pages/index.tsx"
+import { InstallStrip } from '@cbnventures/docusaurus-preset-nova/components';
+
+<InstallStrip
+  label="Install Nova"
+  command="npm install @cbnventures/nova"
+  copyTarget="block"
+/>
+```
+
+  </TabItem>
+  <TabItem value="text" label="Text">
+
+```tsx title="src/pages/index.tsx"
+import { InstallStrip } from '@cbnventures/docusaurus-preset-nova/components';
+
+<InstallStrip
+  command="npm install @cbnventures/nova"
+  copyTarget="text"
+  surface="alt"
+/>
+```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Prop         | Type                          | Default     | Description                                                                                                            |
+|--------------|-------------------------------|-------------|------------------------------------------------------------------------------------------------------------------------|
+| `command`    | `string`                      | —           | The installation command to display. Required.                                                                         |
+| `label`      | `string \| undefined`         | `undefined` | Optional label text above the command.                                                                                 |
+| `copyTarget` | `'block' \| 'icon' \| 'text'` | `'icon'`    | Copy button style. `block`: whole area clickable. `icon`: separate icon button. `text`: button with COPY/COPIED label. |
+| `surface`    | `'alt' \| undefined`          | `undefined` | Set to `'alt'` to use the alternate surface background.                                                                |
+
+## Troubleshooting
+
+- **Copy not working** — The component uses the Clipboard API (`navigator.clipboard.writeText`). This requires a secure context (HTTPS or localhost).
+- **COPY/COPIED text** — Only visible when `copyTarget` is set to `'text'`. The icon variant shows a checkmark instead.

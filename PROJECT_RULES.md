@@ -16,20 +16,35 @@
 ## Repository Layout
 
 ```
-./                          → role: project, policy: freezable
+./                              → role: project, policy: freezable
 ├── apps/
-│   └── docs/               → role: docs, policy: freezable (Docusaurus)
+│   ├── demo-envoy/             → role: docs, policy: freezable (preset showcase)
+│   ├── demo-foundry/           → role: docs, policy: freezable (preset showcase)
+│   ├── demo-sentinel/          → role: docs, policy: freezable (preset showcase)
+│   ├── demo-signal/            → role: docs, policy: freezable (preset showcase)
+│   └── docs/                   → role: docs, policy: freezable (Docusaurus)
 ├── packages/
-│   └── nova/               → role: package, policy: distributable (@cbnventures/nova)
-├── nova.config.json        → source of truth for project metadata
-├── package.json            → monorepo root (owns lockfile + workspaces)
-└── VISION.md / AGENTS.md   → project vision and agent instructions
+│   ├── docusaurus-preset-nova/ → role: package, policy: distributable (@cbnventures/docusaurus-preset-nova)
+│   └── nova/                   → role: package, policy: distributable (@cbnventures/nova)
+├── nova.config.json            → source of truth for project metadata
+├── package.json                → monorepo root (owns lockfile + workspaces)
+└── VISION.md / AGENTS.md       → project vision and agent instructions
 ```
 
 - Every monorepo created with Nova should include a Docusaurus documentation workspace.
-- Programs should begin with port `3000`; docs should use port `3100`.
+- Local development uses [portless](https://portless.sh) for automatic port assignment and stable `.localhost` URLs:
+
+| Portless Name        | Workspace            | URL                                    |
+|----------------------|----------------------|----------------------------------------|
+| `nova-docs`          | `apps/docs`          | `https://nova-docs.localhost`          |
+| `nova-demo-envoy`    | `apps/demo-envoy`    | `https://nova-demo-envoy.localhost`    |
+| `nova-demo-foundry`  | `apps/demo-foundry`  | `https://nova-demo-foundry.localhost`  |
+| `nova-demo-sentinel` | `apps/demo-sentinel` | `https://nova-demo-sentinel.localhost` |
+| `nova-demo-signal`   | `apps/demo-signal`   | `https://nova-demo-signal.localhost`   |
 
 ## Source Structure
+
+### @cbnventures/nova
 
 ```
 src/
@@ -42,7 +57,7 @@ src/
 │   └── index.ts            → CLI entry point (Commander setup)
 ├── lib/                    → shared libraries (item.ts, nova-config.ts, regex.ts, schema.ts, utility.ts)
 ├── presets/
-│   ├── eslint/             → ESLint flat config presets (.mts source, .mjs build output)
+│   ├── eslint/             → ESLint flat config presets (.mjs, plain JavaScript)
 │   └── tsconfig/           → TSConfig JSON presets
 ├── rules/
 │   └── eslint/
@@ -64,23 +79,44 @@ src/
     └── shared.d.ts         → shared types (only imported by other .d.ts files)
 ```
 
+### @cbnventures/docusaurus-preset-nova
+
+```
+src/
+├── components/             → landing page components (Hero, Features, Stats, etc.)
+├── lib/                    → color pipeline, CSS generator, search, Shiki rehype
+│   └── search/             → client-side search (indexer, worker, hooks)
+├── presets/                → visual identity presets (envoy, foundry, sentinel, signal)
+├── scripts/                → client-side init scripts (color mode, announcement bar)
+├── styles/                 → three-layer CSS (base, component, preset)
+│   ├── components/         → structural component styles
+│   └── presets/            → per-preset visual identity styles
+├── theme/                  → Docusaurus theme component overrides (150+)
+├── tests/                  → preset and theme tests
+└── types/                  → all type definitions
+```
+
 ## Key Files
 
-| File                                      | Purpose                                  | When to modify                                          |
-|-------------------------------------------|------------------------------------------|---------------------------------------------------------|
-| `packages/nova/src/cli/index.ts`          | CLI entry point (Commander setup)        | Adding or changing CLI commands                         |
-| `packages/nova/src/cli/recipe/index.ts`   | Recipe entry point                       | Adding new recipe commands                              |
-| `packages/nova/src/lib/item.ts`           | Shared constants (roles, policies, etc.) | Adding new roles, policies, or category constants       |
-| `packages/nova/src/lib/nova-config.ts`    | NovaConfig loader and validator          | Changing how `nova.config.json` is read or validated    |
-| `packages/nova/src/lib/regex.ts`          | Shared regex patterns                    | Adding or modifying regex patterns used across modules  |
-| `packages/nova/src/rules/eslint/index.ts` | ESLint rule registry                     | Registering new custom ESLint rules                     |
-| `packages/nova/src/types/shared.d.ts`     | Shared type aliases                      | Adding types used across multiple `.d.ts` files         |
-| `nova.config.json`                        | Project metadata source of truth         | Changing project identity, entities, or workspaces      |
-| `package.json`                            | Monorepo root manifest                   | Adding dependencies, changing scripts, bumping version  |
-| `turbo.json`                              | Turborepo build orchestration            | Changing build pipeline, adding tasks, adjusting caches |
-| `apps/docs/sidebars.ts`                   | Docusaurus sidebar navigation            | Adding or reorganizing documentation pages              |
-| `apps/docs/docusaurus.config.ts`          | Docusaurus site configuration            | Changing site metadata, plugins, or theme settings      |
-| `{workspace}/CHANGELOG.md`                | Release notes (non-freezable only)       | Every user-facing change                                |
+| File                                                        | Purpose                                  | When to modify                                              |
+|-------------------------------------------------------------|------------------------------------------|-------------------------------------------------------------|
+| `packages/nova/src/cli/index.ts`                            | CLI entry point (Commander setup)        | Adding or changing CLI commands                             |
+| `packages/nova/src/cli/recipe/index.ts`                     | Recipe entry point                       | Adding new recipe commands                                  |
+| `packages/nova/src/lib/item.ts`                             | Shared constants (roles, policies, etc.) | Adding new roles, policies, or category constants           |
+| `packages/nova/src/lib/nova-config.ts`                      | NovaConfig loader and validator          | Changing how `nova.config.json` is read or validated        |
+| `packages/nova/src/lib/regex.ts`                            | Shared regex patterns                    | Adding or modifying regex patterns used across modules      |
+| `packages/nova/src/rules/eslint/index.ts`                   | ESLint rule registry                     | Registering new custom ESLint rules                         |
+| `packages/nova/src/types/shared.d.ts`                       | Shared type aliases                      | Adding types used across multiple `.d.ts` files             |
+| `packages/docusaurus-preset-nova/src/index.ts`              | Theme plugin entry point                 | Changing plugin lifecycle, client modules, or CSS injection |
+| `packages/docusaurus-preset-nova/src/preset.ts`             | Preset entry point                       | Changing how presets compose Docusaurus plugins             |
+| `packages/docusaurus-preset-nova/src/options.ts`            | Option schemas and defaults              | Adding or changing preset/plugin configuration options      |
+| `packages/docusaurus-preset-nova/src/get-swizzle-config.ts` | Swizzle safety config                    | Marking theme components as safe/unsafe for ejection        |
+| `nova.config.json`                                          | Project metadata source of truth         | Changing project identity, entities, or workspaces          |
+| `package.json`                                              | Monorepo root manifest                   | Adding dependencies, changing scripts, bumping version      |
+| `turbo.json`                                                | Turborepo build orchestration            | Changing build pipeline, adding tasks, adjusting caches     |
+| `apps/docs/sidebars.ts`                                     | Docusaurus sidebar navigation            | Adding or reorganizing documentation pages                  |
+| `apps/docs/docusaurus.config.ts`                            | Docusaurus site configuration            | Changing site metadata, plugins, or theme settings          |
+| `{workspace}/CHANGELOG.md`                                  | Release notes (non-freezable only)       | Every user-facing change                                    |
 
 ## Build and Tooling
 
@@ -93,7 +129,7 @@ src/
 
 ### Commands
 
-All commands must be run from the **monorepo root**. The `changelog` and `recipes` scripts call the `nova` CLI binary directly — if Nova isn't built, those commands fail. The `check` task in `turbo.json` depends on `build` because tests run via `node --test` on compiled JavaScript in `./build/`, and ESLint uses Nova's own compiled custom rules.
+All commands must be run from the **monorepo root**. The `changelog` and `recipes` scripts call the `nova` CLI binary directly — if Nova isn't built, those commands fail. The `check` task in `turbo.json` depends on `build` because ESLint uses Nova's own compiled custom rules from `./build/`. Tests run via Vitest directly on TypeScript source files and do not require a build step.
 
 | Command             | What it does                                               |
 |---------------------|------------------------------------------------------------|
@@ -230,7 +266,7 @@ API Layer (src/api/)
 ```
 Preset Composition:
 
-Consumer's eslint.config.mjs or tsconfig.json
+Consumer's eslint.config.ts or tsconfig.json
   │
   ▼
 Import + spread Nova preset arrays into flat config
@@ -285,7 +321,7 @@ Output (files, stdout, or exit code)
 #### Presets (consumed at build time)
 
 ```
-Consumer's config file (eslint.config.mjs or tsconfig.json)
+Consumer's config file (eslint.config.ts or tsconfig.json)
   │
   ▼
 Import + spread Nova preset arrays
@@ -322,6 +358,7 @@ apps/docs/
 ├── sidebars.ts           → Sidebar navigation structure
 ├── docs/
 │   ├── cli/              → CLI command documentation
+│   ├── facades/           → Facade package documentation
 │   ├── presets/           → Preset documentation (ESLint, TSConfig)
 │   ├── quickstart/        → Getting started guides
 │   ├── rules/             → ESLint rule documentation
@@ -329,11 +366,9 @@ apps/docs/
 ├── src/
 │   ├── components/        → React components for docs
 │   ├── lib/               → Shared library code
-│   ├── tests/             → Documentation tests
-│   └── theme/             → Theme overrides
+│   └── tests/             → Documentation tests
 └── static/
-    ├── images/            → Static images and logos
-    └── styles/            → Global CSS
+    └── images/            → Static images and logos
 ```
 
 ### Commands
@@ -356,17 +391,17 @@ apps/docs/
 
 ### CI/CD Workflows
 
-| Workflow file                            | Trigger           | What it does                          |
-|------------------------------------------|-------------------|---------------------------------------|
-| `check-sponsor-gated-issues.yml`         | Issue opened      | Gate issues behind sponsorship check  |
-| `lock-inactive-issues.yml`               | Weekly cron       | Lock issues inactive > 30 days        |
-| `publish-to-github-packages.yml`         | Release published | Build and publish to GitHub Packages  |
-| `publish-to-github-pages-docusaurus.yml` | Release published | Build and deploy docs to GitHub Pages |
-| `publish-to-npm.yml`                     | Release published | Build and publish to npm              |
+| Workflow file                                | Trigger           | What it does                              |
+|----------------------------------------------|-------------------|-------------------------------------------|
+| `check-sponsor-gated-issues.yml`             | Issue opened      | Gate issues behind sponsorship check      |
+| `lock-inactive-issues.yml`                   | Weekly cron       | Lock issues inactive > 30 days            |
+| `publish-to-github-packages.yml`             | Release published | Build and publish to GitHub Packages      |
+| `publish-to-cloudflare-pages-docusaurus.yml` | Release published | Build and deploy docs to Cloudflare Pages |
+| `publish-to-npm.yml`                         | Release published | Build and publish to npm                  |
 
 ### Environments
 
-| Environment  | URL / Identifier                                  | Purpose                 |
-|--------------|---------------------------------------------------|-------------------------|
-| npm          | `https://www.npmjs.com/package/@cbnventures/nova` | Public package registry |
-| GitHub Pages | `https://cbnventures.github.io/nova/`             | Documentation site      |
+| Environment      | URL / Identifier                                  | Purpose                 |
+|------------------|---------------------------------------------------|-------------------------|
+| npm              | `https://www.npmjs.com/package/@cbnventures/nova` | Public package registry |
+| Cloudflare Pages | `https://nova.cbnventures.io/`                    | Documentation site      |

@@ -1,0 +1,73 @@
+/**
+ * ============================
+ * Blog Preview — Section
+ * ============================
+ */
+
+.nova-blog-preview {
+  margin-block: var(--nova-section-gap);
+}
+
+/**
+ * ============================
+ * Blog Preview — Heading
+ * ============================
+ */
+
+.nova-blog-preview-heading {
+  margin-bottom: 1.5rem;
+}
+
+/**
+ * ============================
+ * Blog Preview — Description
+ * ============================
+ */
+
+.nova-blog-preview-description {
+  margin-top: 0;
+}
+
+/**
+ * ============================
+ * Blog Preview — Card Heading
+ * ============================
+ */
+
+.nova-blog-preview-card h3 {
+  margin-top: 0;
+  padding: 0;
+
+  border: none;
+}
+
+/**
+ * ============================
+ * Blog Preview — Card Time
+ * ============================
+ */
+
+/**
+ * ============================
+ * Blog Preview — No Posts
+ * ============================
+ */
+
+.nova-blog-preview-no-posts {
+  margin: 0;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-blog-preview-no-posts {
+  color: var(--nova-color-neutral-400);
+}
+
+/**
+ * ============================
+ * Blog Preview — Card Time
+ * ============================
+ */
+
+.nova-blog-preview-card time {
+  display: block;
+}

@@ -1,0 +1,8 @@
+  - type: "checkboxes"
+    id: "legal"
+    attributes:
+      label: "Legal Agreements"
+      description: "By submitting a new support request, you confirm that you have read, understood, and agree to the [__LEGAL_LINKS__]. If you have questions, feel free to contact [__OUR__] team."
+      options:
+        - label: "I agree to the [__LEGAL_LABEL__]"
+          required: true

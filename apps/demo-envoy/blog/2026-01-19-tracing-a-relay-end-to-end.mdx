@@ -1,0 +1,85 @@
+---
+title: "Tracing a Relay End to End With Ledger"
+authors: [nneka]
+tags: [observability, latency, infrastructure]
+date: 2026-01-19
+---
+
+A customer reported that their payment confirmation webhook was arriving 4.7 seconds late. Not failing — arriving. The webhook was delivered, the receipt was valid, the status in Glassboard was green. But the payment confirmation was appearing in their system 4.7 seconds after the event occurred, and their SLA required under 2 seconds.
+
+Finding where those 4.7 seconds went required tracing a single relay through every stage of the pipeline. This is what that looks like.
+
+{/* truncate */}
+
+## The Trace
+
+Every relay that passes through Courier gets a unique relay ID assigned at the receive stage. Ledger records a timestamped entry for every state transition that relay undergoes. To trace a relay, you query Ledger with the relay ID.
+
+```text title="ledger query — relay rel_c4a8f2d1"
+$ envoy ledger trace rel_c4a8f2d1
+
+Stage            Timestamp                Duration   Status
+─────────────────────────────────────────────────────────────
+Receive          2026-01-18T09:14:02.114Z    —       OK
+Authenticate     2026-01-18T09:14:02.117Z   3ms      OK (hmac-sha256)
+Transform        2026-01-18T09:14:02.118Z   1ms      OK (parcel: stripe)
+Route            2026-01-18T09:14:02.118Z   0ms      OK (dispatch: spoke://payments)
+Deliver [1]      2026-01-18T09:14:02.119Z   —        FAILED (503)
+Backoff [1]      2026-01-18T09:14:02.119Z   1.2s     —
+Deliver [2]      2026-01-18T09:14:03.319Z   —        FAILED (503)
+Backoff [2]      2026-01-18T09:14:03.320Z   3.1s     —
+Deliver [3]      2026-01-18T09:14:06.420Z   412ms    OK (200)
+Receipt          2026-01-18T09:14:06.832Z   —        VALID
+─────────────────────────────────────────────────────────────
+Total elapsed:   4.718s
+Delivery attempts: 3
+Final status:    DELIVERED
+```
+
+There it is. 4.718 seconds, and the breakdown is clear: the first two delivery attempts failed with 503, triggering two backoff periods (1.2s and 3.1s). The third attempt succeeded but took 412ms — well above the destination's usual 8ms response time.
+
+## Finding the Destination Problem
+
+The 503 errors pointed to the customer's payment processing endpoint, not Courier. Their endpoint was returning 503 because it was mid-deploy during a rolling update. The deploy window overlapped with the webhook delivery window.
+
+```text title="Destination timeline — customer's payment endpoint"
+09:14:00  Rolling deploy starts
+09:14:00  Pod 1 draining (returns 503 to new requests)
+09:14:02  Webhook arrives → routed to Pod 1 → 503
+09:14:03  Retry → routed to Pod 1 → 503 (still draining)
+09:14:05  Pod 2 starts accepting traffic
+09:14:06  Retry → routed to Pod 2 → 200 (success, but cold start adds latency)
+09:14:10  Rolling deploy complete
+```
+
+The customer's deploy took 10 seconds. Courier's retry window overlapped perfectly with the drain period. The third attempt succeeded because Pod 2 had started accepting traffic, but the 412ms response time reflected the cold start penalty on the fresh pod.
+
+## The Resolution
+
+The customer had two options:
+
+1. **Widen their deploy window.** Use a longer drain period so that old pods continue accepting requests until new pods are fully warm. This reduces the 503 window.
+2. **Configure Courier's retry to match.** Set the initial backoff to 5 seconds instead of 1 second, so the first retry lands after the deploy window closes.
+
+They chose option 1. Their deploy drain period went from 2 seconds to 15 seconds, and the 503 errors during deploys disappeared entirely.
+
+## What Ledger Records
+
+Every entry in the trace is a discrete record in Ledger. Each record contains:
+
+- **Relay ID** — unique identifier for the relay
+- **Stage** — which pipeline stage produced the record
+- **Timestamp** — nanosecond-precision wall clock time
+- **Duration** — time spent in the stage (where applicable)
+- **Status** — stage outcome (OK, FAILED, TIMEOUT, SKIPPED)
+- **Metadata** — stage-specific details (error codes, retry counts, response bodies)
+
+Ledger retains records for 30 days by default. Dead-lettered relays are retained for 90 days. All records are queryable via the Spoke API.
+
+The storage cost is approximately 1.2KB per relay (across all stages). At 30,000 relays per second, that is 3.1GB per day, or 93GB for the 30-day retention window. Ledger compresses cold data at a 4:1 ratio, bringing the actual disk footprint to roughly 23GB.
+
+## The Lesson
+
+Tracing is not debugging. Debugging is what you do when something is broken. Tracing is what you do when everything is working but not fast enough. The relay succeeded. The receipt was valid. Glassboard showed green. But 4.7 seconds is not 2 seconds, and without a per-stage trace, the customer would have blamed Courier instead of their own deploy process.
+
+Visibility into success is just as important as visibility into failure. Ledger provides both.

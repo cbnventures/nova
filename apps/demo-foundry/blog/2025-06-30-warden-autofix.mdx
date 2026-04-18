@@ -1,0 +1,61 @@
+---
+title: "Auto-fixing 12,000 Warden Violations Without Breaking a Single Test"
+authors: [priya]
+tags: [warden, linting, developer-experience, migration]
+date: 2025-06-30
+---
+
+When a new team adopts Foundry, the first thing they see is a wall of red. Warden ships 380 rules with zero configuration. Most codebases violate at least a third of them on day one. The team we worked with last month had 12,247 violations across 90 packages.
+
+They fixed all of them in a single afternoon. Not by hand — by running `foundry warden --fix`. Here is what the auto-fixer does, where it stops, and what we learned about building a fixer that developers trust.
+
+{/* truncate */}
+
+## What Auto-fix Means
+
+Of Warden's 380 rules, 214 include an auto-fix. An auto-fix is a deterministic code transformation that resolves the violation without changing runtime behavior. The fixer reads the AST, applies the transformation, and writes the modified file back to disk.
+
+The key constraint is **behavioral equivalence**. An auto-fix must produce code that behaves identically to the original. If a fix could change behavior — even in an edge case — we do not ship it. The fix is marked as "manual" and the developer resolves it by hand.
+
+Here is the breakdown for the 12,247 violations:
+
+| Category       | Violations | Auto-fixable | Manual    | Fix Rate |
+|----------------|------------|--------------|-----------|----------|
+| Formatting     | 4,812      | 4,812        | 0         | 100%     |
+| Conventions    | 3,291      | 2,847        | 444       | 86%      |
+| Patterns       | 2,108      | 1,622        | 486       | 77%      |
+| Type safety    | 1,204      | 640          | 564       | 53%      |
+| Import hygiene | 832        | 832          | 0         | 100%     |
+| **Total**      | **12,247** | **10,753**   | **1,494** | **88%**  |
+
+Formatting and import hygiene are 100% auto-fixable because they are purely syntactic. Type safety has the lowest fix rate because many violations require the developer to decide what the correct type should be — the fixer cannot infer intent.
+
+## The Three-Pass Strategy
+
+Warden does not apply all 214 fixers in a single pass. It runs three passes in sequence:
+
+1. **Import pass.** Rewrite imports first — sort them, convert default imports to named imports, add `type` modifiers. This ensures that the AST is stable for subsequent passes.
+2. **Structure pass.** Rename files, move declarations, extract types. These fixes can change the file path, so they run before content fixes.
+3. **Content pass.** Fix patterns, conventions, and formatting inside files. By this point, all files are in their final locations with correct imports.
+
+Running them in this order prevents conflicts. A content fix in pass 3 never has to worry about an import changing underneath it, because imports were already fixed in pass 1.
+
+## The Trust Problem
+
+The biggest barrier to auto-fix adoption is not technical — it is trust. Developers do not want a tool rewriting their code unless they are certain it will not break anything. We built three features specifically to address this:
+
+- **Dry-run mode.** `foundry warden --fix --dry-run` prints every change without writing any files. Developers can review the diff before committing.
+- **Fix-by-rule.** `foundry warden --fix --rule warden/no-default-export` applies a single rule's fixer. Teams can adopt fixes incrementally, one rule at a time.
+- **Test gating.** `foundry warden --fix --verify` runs the full Crucible test suite after applying fixes. If any test fails, all fixes are reverted and the fixer reports which rule caused the failure.
+
+The `--verify` flag is what made the 12,000-violation migration possible. The team ran `foundry warden --fix --verify`, watched 10,753 fixes apply, watched the test suite pass, and committed the result. The 1,494 manual violations were handled over the following week in 23 pull requests.
+
+## What We Do Not Fix
+
+Some violations are intentionally left manual:
+
+- **Type narrowing decisions.** When the fixer detects an `as` assertion on `unknown`, it cannot know what the correct type should be. It flags the violation and moves on.
+- **Architecture changes.** Rules like `no-barrel-files` require restructuring import paths across the workspace. The fixer can rewrite the imports, but the decision to restructure is a human one.
+- **Naming conventions.** Renaming a public export changes the API surface. The fixer will not rename an exported identifier unless the package is internal.
+
+The line we draw is simple: if the fix is a mechanical transformation with no judgment calls, automate it. If the fix requires understanding intent, leave it to the developer.

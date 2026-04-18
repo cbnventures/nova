@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "./src/presets/tsconfig/dx-essentials.json",
+    "./src/presets/tsconfig/dx-strict.json",
+    "./src/presets/tsconfig/runtime-node.json"
+  ],
+  "compilerOptions": {
+    "noEmit": true,
+    "types": [
+      "@commander-js/extra-typings",
+      "@types/eslint-plugin-jsx-a11y",
+      "@types/node",
+      "@types/prompts"
+    ]
+  },
+  "include": [
+    "./src/tests/**/*",
+    "./src/types/fetch-response.d.ts",
+    "./src/types/tests/**/*"
+  ]
+}

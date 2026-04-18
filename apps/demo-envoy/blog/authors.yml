@@ -1,0 +1,20 @@
+tomas:
+  name: "Tom\u00E1s Reyes"
+  title: Co-founder, Envoy
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+
+nneka:
+  name: Nneka Adeyemi
+  title: Infrastructure, Envoy
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+
+anders:
+  name: Anders Lindqvist
+  title: Platform Engineering, Envoy
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true

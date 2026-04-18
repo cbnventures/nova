@@ -1,0 +1,176 @@
+---
+id: no-complex-arrow-concise
+title: No Complex Arrow Concise
+description: Require arrow functions with complex concise bodies to use an explicit block body.
+keywords:
+  - nova
+  - eslint rule
+  - arrow function
+  - block body
+  - concise arrow
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require block body on complex concise arrows because chained or nested arrow expressions on a single line become unreadable.
+
+## Summary
+
+The `no-complex-arrow-concise` rule reports arrow functions with concise bodies (no block) that exceed either the nested arrow callback limit or the chained method call limit.
+
+Simple concise arrows are not affected.
+
+## Why Use This Rule?
+
+1. Prevents long chains of `.filter().map().sort()` from being crammed into a single concise arrow.
+2. Limits nested callbacks like `.filter((x) => items.map((y) => ...))` that lose readability.
+3. Keeps concise arrows for simple, single-expression cases where they improve readability.
+
+## Examples
+
+<Tabs groupId="no-complex-arrow-concise-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    // Simple concise body — fine.
+    const doubled = items.map((n) => n * 2);
+    const names = users.map((user) => user.name);
+    const isValid = (x) => x > 0;
+
+    // One chain — fine.
+    const upper = (s) => s.trim().toUpperCase();
+
+    // One nested arrow — fine.
+    const names = (items) => items.map((item) => item.name);
+
+    // Complex — refactored with block body.
+    const names = (items) => {
+      return items.filter((item) => item.active === true).map((item) => item.name);
+    };
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    // Two nested arrows — needs block body.
+    const names = (items) => items.filter((item) => item.active === true).map((item) => item.name);
+
+    // Long chain — needs block body.
+    const slug = (input) => input.trim().toLowerCase().split(' ').join('-');
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="no-complex-arrow-concise-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { NoComplexArrowConcise } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-complex-arrow-concise': NoComplexArrowConcise.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-complex-arrow-concise': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="increase-chain-limit" label="Increase Chain Limit">
+
+    Allow longer method chains in concise arrow bodies:
+
+    ```ts
+    import { NoComplexArrowConcise } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-complex-arrow-concise': NoComplexArrowConcise.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-complex-arrow-concise': ['error', {
+            maxChainLength: 3,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoComplexArrowConcise } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-complex-arrow-concise': NoComplexArrowConcise.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-complex-arrow-concise': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option            | Type       | Default | Description                                               |
+|-------------------|------------|---------|-----------------------------------------------------------|
+| `ignoreFiles`     | `string[]` | `[]`    | File patterns to skip.                                    |
+| `maxChainLength`  | `number`   | `2`     | Max chained method calls before block body is required.   |
+| `maxNestedArrows` | `number`   | `1`     | Max nested arrow callbacks before block body is required. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Simple arrow is flagged** — Check if the arrow has nested callbacks or chained calls that exceed the limits. A single `.map()` with a nested arrow counts as 1 nested arrow.
+- **Block body arrow is not flagged** — The rule only targets concise arrows (no braces). If the arrow already has a block body, it passes.

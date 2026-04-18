@@ -1,0 +1,196 @@
+---
+title: Integrations
+sidebar_position: 1
+description: Built-in translators for Threadbare, Glassboard, Canary, and custom sources. Payload formats, configuration, and examples.
+tags:
+  - advanced
+  - integrations
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Integrations
+
+Envoy ships with built-in translators for common infrastructure sources. Each translator understands the source's payload format, event types, and authentication scheme. Custom sources are supported through the generic translator.
+
+<Tabs>
+<TabItem value="threadbare" label="Threadbare" default>
+
+## Threadbare
+
+Threadbare is a source code hosting platform that fires webhooks on repository events. Envoy's Threadbare translator handles push events, pull request events, releases, and issue updates.
+
+### Supported Events
+
+| Event          | Payload Fields                                  | Default Topic     |
+|----------------|-------------------------------------------------|-------------------|
+| `push`         | `repo`, `branch`, `author`, `commits`, `count`  | `ci-builds`       |
+| `pull_request` | `repo`, `action`, `title`, `author`, `number`   | `ci-builds`       |
+| `release`      | `repo`, `tag`, `name`, `author`, `html_url`     | `deploy-alerts`   |
+| `issues`       | `repo`, `action`, `title`, `number`, `assignee` | `project-updates` |
+
+### Example
+
+```text title="relay.grain — Threadbare integration"
+relay "threadbare-pushes" {
+  source = "threadbare"
+  cipher = "hmac-sha256"
+
+  cipher_config {
+    header = "X-Threadbare-Signature-256"
+    secret = "${THREADBARE_SECRET}"
+  }
+
+  transform {
+    title = "[{{ repo }}] {{ count }} commit(s) to {{ branch }}"
+    body  = "{{ author }}: {{ commit_summary }}"
+  }
+
+  destination = "canary://ci-builds"
+}
+```
+
+**Incoming payload:**
+
+```json title="Threadbare push event"
+{
+  "ref": "refs/heads/main",
+  "repository": { "full_name": "acme/api" },
+  "pusher": { "name": "anders" },
+  "commits": [
+    { "id": "c3d2a1f", "message": "Add Courier health endpoint" }
+  ]
+}
+```
+
+**Transformed output:**
+
+```json title="Canary notification"
+{
+  "title": "[acme/api] 1 commit(s) to main",
+  "body": "anders: c3d2a1f — Add Courier health endpoint",
+  "priority": 3,
+  "tags": ["package"]
+}
+```
+
+</TabItem>
+<TabItem value="glassboard" label="Glassboard">
+
+## Glassboard
+
+Glassboard is a monitoring and dashboarding platform that fires webhooks on alert state changes. Envoy's Glassboard translator handles alert notifications and resolved events.
+
+### Supported Events
+
+| Event      | Payload Fields                                          | Default Topic  |
+|------------|---------------------------------------------------------|----------------|
+| `alerting` | `alertname`, `severity`, `instance`, `message`, `value` | `infra-alerts` |
+| `resolved` | `alertname`, `severity`, `instance`, `resolved_at`      | `infra-alerts` |
+
+### Severity Mapping
+
+| Glassboard Severity | Canary Priority | Routing Recommendation |
+|---------------------|-----------------|------------------------|
+| `critical`          | 5               | `oncall-urgent`        |
+| `high`              | 4               | `infra-alerts`         |
+| `warning`           | 3               | `infra-alerts`         |
+| `info`              | 2               | `infra-log`            |
+
+### Example
+
+```text title="relay.grain — Glassboard integration"
+relay "glassboard-critical" {
+  source = "glassboard"
+  cipher = "hmac-sha256"
+
+  filter { severity = "critical" }
+
+  transform {
+    title    = "[critical] {{ alertname }}"
+    body     = "{{ instance }} — {{ message }}"
+    priority = 5
+    tags     = ["rotating_light"]
+  }
+
+  destination = "canary://oncall-urgent"
+}
+```
+
+</TabItem>
+<TabItem value="canary" label="Canary">
+
+## Canary
+
+Canary is an uptime monitoring service that fires webhooks when monitored endpoints change state. Envoy's Canary translator handles down and recovery events.
+
+### Supported Events
+
+| Event            | Payload Fields                                    | Default Topic |
+|------------------|---------------------------------------------------|---------------|
+| `down`           | `monitor_name`, `url`, `status_code`, `timestamp` | `monitoring`  |
+| `up`             | `monitor_name`, `url`, `downtime_seconds`         | `monitoring`  |
+| `heartbeat_fail` | `monitor_name`, `expected_interval`, `last_seen`  | `monitoring`  |
+
+### Example
+
+```text title="relay.grain — Canary integration"
+relay "canary-down" {
+  source = "canary"
+  cipher = "bearer"
+
+  filter { event = "down" }
+
+  transform {
+    title    = "[DOWN] {{ monitor_name }}"
+    body     = "{{ url }} returned {{ status_code }} at {{ timestamp }}"
+    priority = 5
+    tags     = ["red_circle"]
+  }
+
+  destination = "canary://oncall-urgent"
+}
+```
+
+</TabItem>
+<TabItem value="custom" label="Custom Sources">
+
+## Custom Sources
+
+Any system that can send an HTTP POST with a JSON, XML, or form-data payload can integrate with Envoy using the generic translator.
+
+### Example
+
+```text title="relay.grain — custom source"
+relay "custom-deploy-hook" {
+  source = "generic"
+  cipher = "bearer"
+
+  cipher_config {
+    token = "${DEPLOY_WEBHOOK_TOKEN}"
+  }
+
+  transform {
+    title = "Deploy: {{ app }} → {{ environment }}"
+    body  = "Version {{ version }} deployed by {{ user }}"
+    priority = 3
+  }
+
+  destination = "canary://deploy-alerts"
+}
+```
+
+The generic translator extracts fields from the top-level JSON object. Nested fields use dot notation: `{{ server.hostname }}`.
+
+:::note
+Custom sources require explicit field mapping in the transform block. Unlike built-in integrations, there is no automatic payload normalization — you map exactly the fields you need.
+:::
+
+</TabItem>
+</Tabs>
+
+## Next Steps
+
+- [Protocol Translation](/docs/core/protocol-translation/) — How Parcel handles format conversion between source and destination.
+- [Authentication](/docs/core/authentication/) — Cipher configuration for each integration type.

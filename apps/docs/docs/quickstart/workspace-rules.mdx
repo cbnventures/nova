@@ -1,0 +1,114 @@
+---
+id: workspace-rules
+title: Workspace Rules
+sidebar_position: 5
+description: How Nova governs workspaces using roles, policies, and field handling rules that determine what each package.json recipe enforces.
+keywords:
+  - nova
+  - workspace role
+  - workspace policy
+  - required field
+  - conditional field
+  - project
+  - docs
+  - config
+  - app
+  - package
+  - tool
+  - template
+  - freezable
+  - trackable
+  - distributable
+tags:
+  - quickstart
+  - workspace
+  - rules
+  - roles
+  - policies
+  - reference
+  - nova
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+
+# Workspace Rules
+
+Every <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> in a Nova monorepo is classified by a **role** and a **policy**.
+
+These two properties, defined in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>, control how <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> read, create, modify, and remove fields in each workspace's `package.json`.
+
+## Roles
+
+A role describes what the workspace _is_. It determines which `package.json` fields are allowed, which are removed, and which are created when missing.
+
+| Role       | Purpose                                                                                                                                                           |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project`  | The monorepo root. Owns the `workspaces` array and the `packageManager` field.                                                                                    |
+| `docs`     | A documentation site (e.g., Docusaurus). Does not publish to a package registry.                                                                                  |
+| `config`   | A shared configuration package (e.g., ESLint presets, TSConfig presets).                                                                                          |
+| `app`      | An application workspace (e.g., a web app, an API server). Not intended for registry publishing.                                                                  |
+| `package`  | A publishable library. Retains artifact fields (`files`, `bin`, `man`, `directories`) and bundler convention fields (`types`, `module`, `sideEffects`, `esnext`). |
+| `tool`     | An internal CLI tool. Similar to `package` but does not retain `sideEffects` or `esnext`.                                                                         |
+| `template` | A template workspace used by scaffolding commands. Not intended for registry publishing.                                                                          |
+
+### Role-Gated Fields
+
+The following table shows which `package.json` fields are retained or removed based on role. Fields not listed here are handled independently of role.
+
+| Field         | Retained by       | Removed from all others |
+|---------------|-------------------|-------------------------|
+| `workspaces`  | `project`         | Yes                     |
+| `files`       | `package`, `tool` | Yes                     |
+| `bin`         | `package`, `tool` | Yes                     |
+| `man`         | `package`, `tool` | Yes                     |
+| `directories` | `package`, `tool` | Yes                     |
+| `types`       | `package`, `tool` | Yes                     |
+| `module`      | `package`, `tool` | Yes                     |
+| `sideEffects` | `package`         | Yes                     |
+| `esnext`      | `package`         | Yes                     |
+
+## Policies
+
+A policy describes how the workspace is **versioned and published**. It determines whether the workspace is locked, tracked, or released to a registry.
+
+| Policy          | Version behavior                        | Publishing               | `private` value |
+|-----------------|-----------------------------------------|--------------------------|-----------------|
+| `freezable`     | Locked at `0.0.0`. Never incremented.   | Never published.         | `true`          |
+| `trackable`     | Tracked via semver. Can be incremented. | Never published.         | `true`          |
+| `distributable` | Tracked via semver. Can be incremented. | Published to a registry. | `false`         |
+
+### Policy-Gated Fields
+
+The following table shows which `package.json` fields are retained or removed based on policy. Fields not listed here are handled independently of policy.
+
+| Field           | Retained by     | Removed from all others |
+|-----------------|-----------------|-------------------------|
+| `description`   | `distributable` | Yes                     |
+| `keywords`      | `distributable` | Yes                     |
+| `homepage`      | `distributable` | Yes                     |
+| `bugs`          | `distributable` | Yes                     |
+| `author`        | `distributable` | Yes                     |
+| `contributors`  | `distributable` | Yes                     |
+| `funding`       | `distributable` | Yes                     |
+| `repository`    | `distributable` | Yes                     |
+| `publishConfig` | `distributable` | Yes                     |
+
+## Required vs. Conditional
+
+Each field that a <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipe</Terminology> handles is classified as either **required** or **conditional**. This classification describes _when_ the recipe will act on the field.
+
+| Classification  | Meaning                                                                                                                                                                                                                    |
+|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Required**    | The recipe ensures the field exists. If missing, it is created with a computed or default value. If invalid, it is corrected.                                                                                              |
+| **Conditional** | The recipe only acts when the field is already present, or when a specific recipe setting, workspace role, or workspace policy triggers it. A conditional field is never created from nothing without an explicit trigger. |
+
+### How to Read Recipe Documentation
+
+In each recipe's **Behavior** section, every field is tagged with **(Required)** or **(Conditional)**:
+
+- **`name` (Required)** means the recipe guarantees this field will exist after it runs. If the field is missing, the recipe creates it.
+- **`description` (Conditional)** means the recipe will only touch this field if it is already present or if the workspace meets certain criteria (e.g., a specific policy and an enabled setting).
+
+This distinction matters because **required** fields are safe to omit from a new `package.json` — the recipe will create them automatically.
+
+**Conditional** fields, on the other hand, are only managed if they already exist or if you explicitly opt in through configuration.

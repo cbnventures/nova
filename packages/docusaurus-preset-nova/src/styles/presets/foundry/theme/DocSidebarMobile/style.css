@@ -1,0 +1,111 @@
+/**
+ * Foundry — Doc Sidebar Mobile visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Trigger Button
+ * ============================ */
+
+.nova-sidebar-mobile-trigger {
+  color: var(--nova-color-neutral-600);
+
+  background: var(--nova-foundry-surface);
+  border: 1px solid var(--nova-foundry-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-mobile-trigger:hover,
+.nova-sidebar-mobile-trigger:focus-visible {
+  border-color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-trigger {
+  color: var(--nova-color-neutral-400);
+
+  background: var(--nova-foundry-surface-raised);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-trigger:hover,
+[data-theme="dark"] .nova-sidebar-mobile-trigger:focus-visible {
+  border-color: var(--nova-color-primary-700);
+}
+
+/* ============================
+ * Overlay
+ * ============================ */
+
+.nova-sidebar-mobile-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================
+ * Panel
+ * ============================ */
+
+.nova-sidebar-mobile-panel {
+  background: var(--nova-foundry-surface-overlay);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+}
+
+@media (min-width: 576px) {
+  .nova-sidebar-mobile-panel {
+    border: 1px solid var(--nova-foundry-border-subtle);
+    border-radius: var(--nova-shape-radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  }
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-panel {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* ============================
+ * Header
+ * ============================ */
+
+.nova-sidebar-mobile-header-title {
+  font-family: var(--nova-font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--nova-color-neutral-900);
+  letter-spacing: -0.02em;
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-header-title {
+  color: var(--nova-color-neutral-50);
+}
+
+/* ============================
+ * Close Button
+ * ============================ */
+
+.nova-sidebar-mobile-close {
+  color: var(--nova-color-neutral-500);
+  border-radius: var(--nova-shape-radius);
+
+  transition: color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-mobile-close:hover,
+.nova-sidebar-mobile-close:focus-visible {
+  color: var(--nova-color-neutral-900);
+  background-color: var(--nova-color-neutral-50);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-close {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-close:hover,
+[data-theme="dark"] .nova-sidebar-mobile-close:focus-visible {
+  color: var(--nova-color-neutral-100);
+  background-color: rgba(255, 255, 255, 0.06);
+}

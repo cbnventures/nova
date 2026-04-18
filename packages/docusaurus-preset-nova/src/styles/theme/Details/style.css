@@ -1,0 +1,101 @@
+/**
+ * Details — Component structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Details — Summary Button
+ * ============================ */
+
+.nova-details-summary {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+
+  font: inherit;
+  text-align: left;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nova-details-summary:active {
+  transform: none;
+}
+
+/* ============================
+ * Details — Arrow
+ * ============================ */
+
+.nova-details-arrow {
+  flex-shrink: 0;
+
+  transition: transform var(--nova-motion-duration) ease;
+}
+
+[data-open="true"] > .nova-details-summary > .nova-details-arrow {
+  transform: rotate(90deg);
+}
+
+/* ============================
+ * Details — Label
+ * ============================ */
+
+.nova-details-label {
+  flex: 1;
+  min-width: 0;
+}
+
+.nova-details-label summary,
+.nova-details-label h1,
+.nova-details-label h2,
+.nova-details-label h3,
+.nova-details-label h4,
+.nova-details-label h5,
+.nova-details-label h6 {
+  display: inline;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.nova-details-label summary::-webkit-details-marker {
+  display: none;
+}
+
+/* ============================
+ * Details — Content (animated show/hide)
+ * ============================ */
+
+.nova-details-content {
+  display: grid;
+  grid-template-rows: 0fr;
+
+  transition: grid-template-rows var(--nova-motion-duration) ease;
+}
+
+[data-open="true"] > .nova-details-content {
+  grid-template-rows: 1fr;
+}
+
+.nova-details-content-inner {
+  overflow: hidden;
+}
+
+/* ============================
+ * Details — Content Body
+ * ============================ */
+
+.nova-details-content-body > :first-child {
+  margin-top: 0;
+}
+
+.nova-details-content-body > :last-child {
+  margin-bottom: 0;
+}

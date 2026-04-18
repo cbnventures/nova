@@ -17,8 +17,8 @@ keywords:
   - javascript
   - typescript
 tags:
-  - overview
   - toolkit
+  - overview
   - formatters
   - logging
   - automation
@@ -26,6 +26,7 @@ tags:
   - cli
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -37,7 +38,7 @@ Use **Nova Toolkit** to accelerate development across projects fast. Pick the pi
 
 If the package is not in your repo yet, go to **[Setup and Configure](/docs/quickstart/setup#choose-your-path)** and choose **Install into project**.
 
-:::caution Warning
+:::warning
 **Nova** must be installed **in your project** before importing batteries. This is because Node.js resolves imports from your project's `node_modules` folder.
 :::
 
@@ -47,7 +48,7 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
 
 ## Purpose and Scope
 
-<Tabs groupId="purpose">
+<Tabs groupId="toolkit-purpose">
   <TabItem value="what" label="What" default>
     <ul>
       <li><strong>Importable batteries</strong> (modular helpers) that accelerate routine work.</li>
@@ -78,6 +79,14 @@ If you wish, you can install Nova **globally** (into the system) and **locally**
 
 All items below are **modular**, **explicit**, and **safe to adopt**. Import only what you need. Outputs and behavior are **predictable**.
 
+### Environment
+
+Set up **<Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> environments** with cross-platform directory resolution, file discovery, and `.env` loading.
+
+| Battery                                          | Synopsis                                                                          |
+|--------------------------------------------------|-----------------------------------------------------------------------------------|
+| [Bootstrap](/docs/toolkit/environment/bootstrap) | Resolve platform-aware directories, discover config files, and load `.env` files. |
+
 ### Formatters
 
 Turn structured data into **stable, reviewable text** that fits anywhere in your pipeline.
@@ -90,7 +99,7 @@ Turn structured data into **stable, reviewable text** that fits anywhere in your
 
 Produce **consistent process messages** and lightweight **run context** that work in local development and automation.
 
-| Battery                                        | Synopsis                                                                                                     |
-|------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
-| [CLI Header](/docs/toolkit/logging/cli-header) | Present a simple and customizable banner for projects with [CLI](/docs/quickstart/terminology#fundamentals). |
-| [Logger](/docs/toolkit/logging/logger)         | Emit logs that are more customizable and safer than `console.log`.                                           |
+| Battery                                        | Synopsis                                                                                                                                                                              |
+|------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [CLI Header](/docs/toolkit/logging/cli-header) | Present a simple and customizable banner for projects with <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology>. |
+| [Logger](/docs/toolkit/logging/logger)         | Emit logs that are more customizable and safer than `console.log`.                                                                                                                    |

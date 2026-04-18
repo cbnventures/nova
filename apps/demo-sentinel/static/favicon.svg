@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>sentinel-logo-nobg</title>
+    <g id="sentinel-logo-nobg" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
+        <g id="Group" transform="translate(0, 78)">
+            <path d="M0,433 C0,433 236.307692,2.840657e-14 512,2.840657e-14 C787.692308,2.840657e-14 1024,433 1024,433 C1024,433 787.692308,866 512,866 C236.307692,866 0,433 0,433 Z" id="Path" fill="#0D9488"></path>
+            <ellipse id="Oval" fill="#134E4A" cx="512" cy="433" rx="216.615385" ry="216.5"></ellipse>
+            <ellipse id="Oval" fill="#5EEAD4" cx="512" cy="433" rx="98.4615385" ry="98.4090909"></ellipse>
+        </g>
+    </g>
+</svg>

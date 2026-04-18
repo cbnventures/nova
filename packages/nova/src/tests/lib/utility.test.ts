@@ -9,8 +9,8 @@ import {
 import {
   mkdir,
   mkdtemp,
-  readFile,
   readdir,
+  readFile,
   realpath,
   rm,
   stat,
@@ -23,7 +23,8 @@ import {
   relative,
   sep,
 } from 'node:path';
-import { test } from 'node:test';
+
+import { afterAll, describe, it } from 'vitest';
 
 import {
   currentTimestamp,
@@ -41,31 +42,144 @@ import {
   pathExists,
   renameFileWithDate,
   saveWorkspaceManifest,
-} from '@/lib/utility.js';
-import { Logger } from '@/toolkit/index.js';
+} from '../../lib/utility.js';
+import { Logger } from '../../toolkit/index.js';
 
 import type {
-  CurrentTimestampResults,
-  DiscoverPathsWithFileOriginalCwd,
-  DiscoverPathsWithFileSandboxRoot,
-  IsFileIdenticalSandboxRoot,
-  IsProjectRootOriginalCwd,
-  IsProjectRootSandboxRoot,
-  LoadWorkspaceManifestsSandboxRoot,
-  RenameFileWithDateSandboxRoot,
-  SaveWorkspaceManifestSandboxRoot,
-} from '@/types/tests/lib/utility.test.d.ts';
+  TestsLibUtilityCurrentTimestampEndsWithBracket,
+  TestsLibUtilityCurrentTimestampPattern,
+  TestsLibUtilityCurrentTimestampResult,
+  TestsLibUtilityCurrentTimestampResults,
+  TestsLibUtilityCurrentTimestampStartsWithBracket,
+  TestsLibUtilityCurrentTimestampTimestamp,
+  TestsLibUtilityDetectShellIsKnownShell,
+  TestsLibUtilityDetectShellKnownShells,
+  TestsLibUtilityDetectShellResult,
+  TestsLibUtilityDiscoverPathsWithFileAbsolutePaths,
+  TestsLibUtilityDiscoverPathsWithFileAppPackage,
+  TestsLibUtilityDiscoverPathsWithFileAppRoot,
+  TestsLibUtilityDiscoverPathsWithFileAppStuffRoot,
+  TestsLibUtilityDiscoverPathsWithFileDotHiddenPackage,
+  TestsLibUtilityDiscoverPathsWithFileDotHiddenRoot,
+  TestsLibUtilityDiscoverPathsWithFileNodePackage,
+  TestsLibUtilityDiscoverPathsWithFileNodeRoot,
+  TestsLibUtilityDiscoverPathsWithFileOriginalCwd,
+  TestsLibUtilityDiscoverPathsWithFilePackagePackage,
+  TestsLibUtilityDiscoverPathsWithFilePackageRoot,
+  TestsLibUtilityDiscoverPathsWithFileProjectPackage,
+  TestsLibUtilityDiscoverPathsWithFileProjectRoot,
+  TestsLibUtilityDiscoverPathsWithFileRealAppStuffRoot,
+  TestsLibUtilityDiscoverPathsWithFileRealProjectRoot,
+  TestsLibUtilityDiscoverPathsWithFileRelativePaths,
+  TestsLibUtilityDiscoverPathsWithFileSandboxPrefix,
+  TestsLibUtilityDiscoverPathsWithFileSandboxRoot,
+  TestsLibUtilityDiscoverPathsWithFileTemporaryDirectory,
+  TestsLibUtilityExecuteShellIncludesHello,
+  TestsLibUtilityExecuteShellResult,
+  TestsLibUtilityIsCommandExistsResult,
+  TestsLibUtilityIsExecuteShellErrorError,
+  TestsLibUtilityIsExecuteShellErrorResult,
+  TestsLibUtilityIsFileIdenticalContents,
+  TestsLibUtilityIsFileIdenticalContentsJson,
+  TestsLibUtilityIsFileIdenticalExistingContents,
+  TestsLibUtilityIsFileIdenticalExistingJson,
+  TestsLibUtilityIsFileIdenticalFilePath,
+  TestsLibUtilityIsFileIdenticalProposedContents,
+  TestsLibUtilityIsFileIdenticalResult,
+  TestsLibUtilityIsFileIdenticalSandboxPrefix,
+  TestsLibUtilityIsFileIdenticalSandboxRoot,
+  TestsLibUtilityIsFileIdenticalTemporaryDirectory,
+  TestsLibUtilityIsPlainObjectNullPrototypeObject,
+  TestsLibUtilityIsPlainObjectPlainObject,
+  TestsLibUtilityIsPlainObjectResult,
+  TestsLibUtilityIsProjectRootAppPackage,
+  TestsLibUtilityIsProjectRootAppRoot,
+  TestsLibUtilityIsProjectRootEmptyDirectory,
+  TestsLibUtilityIsProjectRootOriginalCwd,
+  TestsLibUtilityIsProjectRootPackageJsonPath,
+  TestsLibUtilityIsProjectRootProjectPackage,
+  TestsLibUtilityIsProjectRootProjectRoot,
+  TestsLibUtilityIsProjectRootRealAppRoot,
+  TestsLibUtilityIsProjectRootRealEmptyDirectory,
+  TestsLibUtilityIsProjectRootRealProjectRoot,
+  TestsLibUtilityIsProjectRootResult,
+  TestsLibUtilityIsProjectRootSandboxPrefix,
+  TestsLibUtilityIsProjectRootSandboxRoot,
+  TestsLibUtilityIsProjectRootTemporaryDirectory,
+  TestsLibUtilityLoadWorkspaceManifestsCorePackageJson,
+  TestsLibUtilityLoadWorkspaceManifestsCorePackagePath,
+  TestsLibUtilityLoadWorkspaceManifestsFirstWorkspace,
+  TestsLibUtilityLoadWorkspaceManifestsOnlyWorkspace,
+  TestsLibUtilityLoadWorkspaceManifestsPackageDirectory,
+  TestsLibUtilityLoadWorkspaceManifestsProjectRoot,
+  TestsLibUtilityLoadWorkspaceManifestsResult,
+  TestsLibUtilityLoadWorkspaceManifestsRootPackageJson,
+  TestsLibUtilityLoadWorkspaceManifestsRootPackagePath,
+  TestsLibUtilityLoadWorkspaceManifestsSandboxPrefix,
+  TestsLibUtilityLoadWorkspaceManifestsSandboxRoot,
+  TestsLibUtilityLoadWorkspaceManifestsSecondWorkspace,
+  TestsLibUtilityLoadWorkspaceManifestsTemporaryDirectory,
+  TestsLibUtilityParseLinuxOsReleaseTextResult,
+  TestsLibUtilityParseLinuxOsReleaseTextResultKeys,
+  TestsLibUtilityParseLinuxOsReleaseTextText,
+  TestsLibUtilityParseWindowsRegistryTextCurrentBuild,
+  TestsLibUtilityParseWindowsRegistryTextCurrentMajorVersionNumber,
+  TestsLibUtilityParseWindowsRegistryTextProductName,
+  TestsLibUtilityParseWindowsRegistryTextResult,
+  TestsLibUtilityParseWindowsRegistryTextResultKeys,
+  TestsLibUtilityParseWindowsRegistryTextText,
+  TestsLibUtilityPathExistsNonExistentPath,
+  TestsLibUtilityPathExistsResult,
+  TestsLibUtilityPathExistsSandboxDirectory,
+  TestsLibUtilityPathExistsTemporaryDirectory,
+  TestsLibUtilityPathExistsTemporaryFile,
+  TestsLibUtilityPathExistsTemporaryPrefix,
+  TestsLibUtilityRenameFileWithDateExistingFilePath,
+  TestsLibUtilityRenameFileWithDateExistingName,
+  TestsLibUtilityRenameFileWithDateFilePath,
+  TestsLibUtilityRenameFileWithDateFiles,
+  TestsLibUtilityRenameFileWithDateMatchesBackupPattern,
+  TestsLibUtilityRenameFileWithDateNow,
+  TestsLibUtilityRenameFileWithDateOriginalExists,
+  TestsLibUtilityRenameFileWithDateRenamedFile,
+  TestsLibUtilityRenameFileWithDateResult,
+  TestsLibUtilityRenameFileWithDateSandboxPrefix,
+  TestsLibUtilityRenameFileWithDateSandboxRoot,
+  TestsLibUtilityRenameFileWithDateSecondFile,
+  TestsLibUtilityRenameFileWithDateSubDirectory,
+  TestsLibUtilityRenameFileWithDateTemporaryDirectory,
+  TestsLibUtilityRenameFileWithDateTimestamp,
+  TestsLibUtilitySaveWorkspaceManifestBackupFile,
+  TestsLibUtilitySaveWorkspaceManifestContents,
+  TestsLibUtilitySaveWorkspaceManifestContentsJson,
+  TestsLibUtilitySaveWorkspaceManifestFileDirectory,
+  TestsLibUtilitySaveWorkspaceManifestFilePath,
+  TestsLibUtilitySaveWorkspaceManifestFiles,
+  TestsLibUtilitySaveWorkspaceManifestModified,
+  TestsLibUtilitySaveWorkspaceManifestOriginal,
+  TestsLibUtilitySaveWorkspaceManifestOriginalJson,
+  TestsLibUtilitySaveWorkspaceManifestSandboxPrefix,
+  TestsLibUtilitySaveWorkspaceManifestSandboxRoot,
+  TestsLibUtilitySaveWorkspaceManifestStatAfter,
+  TestsLibUtilitySaveWorkspaceManifestStatBefore,
+  TestsLibUtilitySaveWorkspaceManifestSubDirectory,
+  TestsLibUtilitySaveWorkspaceManifestTemporaryDirectory,
+  TestsLibUtilitySaveWorkspaceManifestWritten,
+  TestsLibUtilitySaveWorkspaceManifestWrittenRaw,
+} from '../../types/tests/lib/utility.test.d.ts';
 
 /**
- * Discover paths with file.
+ * Tests - Lib - Utility - Discover Paths With File.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('discoverPathsWithFile', async (context) => {
-  const originalCwd: DiscoverPathsWithFileOriginalCwd = process.cwd();
-  const sandboxRoot: DiscoverPathsWithFileSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('discoverPathsWithFile', async () => {
+  const originalCwd: TestsLibUtilityDiscoverPathsWithFileOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsLibUtilityDiscoverPathsWithFileTemporaryDirectory = tmpdir();
+  const sandboxPrefix: TestsLibUtilityDiscoverPathsWithFileSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsLibUtilityDiscoverPathsWithFileSandboxRoot = await mkdtemp(sandboxPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     // Reset the directory back to the current working directory.
     process.chdir(originalCwd);
 
@@ -73,14 +187,16 @@ test('discoverPathsWithFile', async (context) => {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('finds every package.json when traversing forward', async () => {
-    const projectRoot = join(sandboxRoot, 'forward');
-    const appRoot = join(projectRoot, 'apps', 'some-app');
-    const packageRoot = join(projectRoot, 'packages', 'some-package');
-    const nodeRoot = join(projectRoot, 'node_modules', 'ignore-me');
-    const dotHiddenRoot = join(projectRoot, '.hidden', 'ignore-me');
+  it('finds every package.json when traversing forward', async () => {
+    const projectRoot: TestsLibUtilityDiscoverPathsWithFileProjectRoot = join(sandboxRoot, 'forward');
+    const appRoot: TestsLibUtilityDiscoverPathsWithFileAppRoot = join(projectRoot, 'apps', 'some-app');
+    const packageRoot: TestsLibUtilityDiscoverPathsWithFilePackageRoot = join(projectRoot, 'packages', 'some-package');
+    const nodeRoot: TestsLibUtilityDiscoverPathsWithFileNodeRoot = join(projectRoot, 'node_modules', 'ignore-me');
+    const dotHiddenRoot: TestsLibUtilityDiscoverPathsWithFileDotHiddenRoot = join(projectRoot, '.hidden', 'ignore-me');
 
     // Create directories inside the project root.
     await Promise.all([
@@ -91,22 +207,28 @@ test('discoverPathsWithFile', async (context) => {
     ]);
 
     // Seed empty "package.json" files in all testing directories.
+    const projectPackage: TestsLibUtilityDiscoverPathsWithFileProjectPackage = join(projectRoot, 'package.json');
+    const appPackage: TestsLibUtilityDiscoverPathsWithFileAppPackage = join(appRoot, 'package.json');
+    const packagePackage: TestsLibUtilityDiscoverPathsWithFilePackagePackage = join(packageRoot, 'package.json');
+    const nodePackage: TestsLibUtilityDiscoverPathsWithFileNodePackage = join(nodeRoot, 'package.json');
+    const dotHiddenPackage: TestsLibUtilityDiscoverPathsWithFileDotHiddenPackage = join(dotHiddenRoot, 'package.json');
+
     await Promise.all([
-      writeFile(join(projectRoot, 'package.json'), '{}\n'),
-      writeFile(join(appRoot, 'package.json'), '{}\n'),
-      writeFile(join(packageRoot, 'package.json'), '{}\n'),
-      writeFile(join(nodeRoot, 'package.json'), '{}\n'),
-      writeFile(join(dotHiddenRoot, 'package.json'), '{}\n'),
+      writeFile(projectPackage, '{}\n'),
+      writeFile(appPackage, '{}\n'),
+      writeFile(packagePackage, '{}\n'),
+      writeFile(nodePackage, '{}\n'),
+      writeFile(dotHiddenPackage, '{}\n'),
     ]);
 
     // Resolve canonical directories now so symlink aliases do not break tests (because "join" skipped filesystem lookups).
-    const realProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: TestsLibUtilityDiscoverPathsWithFileRealProjectRoot = await realpath(projectRoot);
 
     // Change the current directory to the project root.
     process.chdir(realProjectRoot);
 
-    const absolutePaths = await discoverPathsWithFile('package.json', 'forward');
-    const relativePaths = absolutePaths.map((absolutePath) => relative(realProjectRoot, absolutePath).split(sep).join('/'));
+    const absolutePaths: TestsLibUtilityDiscoverPathsWithFileAbsolutePaths = await discoverPathsWithFile('package.json', 'forward');
+    const relativePaths: TestsLibUtilityDiscoverPathsWithFileRelativePaths = absolutePaths.map((absolutePath) => relative(realProjectRoot, absolutePath).split(sep).join('/'));
 
     Logger.customize({
       name: 'discoverPathsWithFile',
@@ -120,32 +242,41 @@ test('discoverPathsWithFile', async (context) => {
       purpose: 'forward-relativePaths',
     }).debug(relativePaths);
 
-    deepStrictEqual(relativePaths, ['', 'apps/some-app', 'packages/some-package']);
+    deepStrictEqual(relativePaths, [
+      '',
+      'apps/some-app',
+      'packages/some-package',
+    ]);
+
+    return;
   });
 
-  await context.test('climbs to parent package.json files when traversing backward', async () => {
-    const projectRoot = join(sandboxRoot, 'backward');
-    const appRoot = join(projectRoot, 'apps', 'some-app');
-    const appStuffRoot = join(appRoot, 'stuff');
+  it('climbs to parent package.json files when traversing backward', async () => {
+    const projectRoot: TestsLibUtilityDiscoverPathsWithFileProjectRoot = join(sandboxRoot, 'backward');
+    const appRoot: TestsLibUtilityDiscoverPathsWithFileAppRoot = join(projectRoot, 'apps', 'some-app');
+    const appStuffRoot: TestsLibUtilityDiscoverPathsWithFileAppStuffRoot = join(appRoot, 'stuff');
 
     // Create directories inside the project root.
     await mkdir(appStuffRoot, { recursive: true });
 
     // Seed empty "package.json" files in all testing directories.
+    const projectPackage: TestsLibUtilityDiscoverPathsWithFileProjectPackage = join(projectRoot, 'package.json');
+    const appPackage: TestsLibUtilityDiscoverPathsWithFileAppPackage = join(appRoot, 'package.json');
+
     await Promise.all([
-      writeFile(join(projectRoot, 'package.json'), '{}\n'),
-      writeFile(join(appRoot, 'package.json'), '{}\n'),
+      writeFile(projectPackage, '{}\n'),
+      writeFile(appPackage, '{}\n'),
     ]);
 
     // Resolve canonical directories now so symlink aliases do not break tests (because "join" skipped filesystem lookups).
-    const realProjectRoot = await realpath(projectRoot);
-    const realAppStuffRoot = await realpath(appStuffRoot);
+    const realProjectRoot: TestsLibUtilityDiscoverPathsWithFileRealProjectRoot = await realpath(projectRoot);
+    const realAppStuffRoot: TestsLibUtilityDiscoverPathsWithFileRealAppStuffRoot = await realpath(appStuffRoot);
 
     // Change the current directory to a "stuff" folder inside "some-app".
     process.chdir(realAppStuffRoot);
 
-    const absolutePaths = await discoverPathsWithFile('package.json', 'backward');
-    const relativePaths = absolutePaths.map((absolutePath) => relative(realProjectRoot, absolutePath).split(sep).join('/'));
+    const absolutePaths: TestsLibUtilityDiscoverPathsWithFileAbsolutePaths = await discoverPathsWithFile('package.json', 'backward');
+    const relativePaths: TestsLibUtilityDiscoverPathsWithFileRelativePaths = absolutePaths.map((absolutePath) => relative(realProjectRoot, absolutePath).split(sep).join('/'));
 
     Logger.customize({
       name: 'discoverPathsWithFile',
@@ -159,112 +290,206 @@ test('discoverPathsWithFile', async (context) => {
       purpose: 'backward-relativePaths',
     }).debug(relativePaths);
 
-    deepStrictEqual(relativePaths, ['apps/some-app', '']);
+    deepStrictEqual(relativePaths, [
+      'apps/some-app',
+      '',
+    ]);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Is plain object.
+ * Tests - Lib - Utility - Is Plain Object.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('isPlainObject', async (context) => {
-  await context.test('returns true for empty object literal', () => {
-    strictEqual(isPlainObject({}), true);
+describe('isPlainObject', async () => {
+  it('returns true for empty object literal', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject({});
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns true for object with properties', () => {
-    const obj = {
+  it('returns true for object with properties', () => {
+    const plainObject: TestsLibUtilityIsPlainObjectPlainObject = {
       a: 1,
       b: 2,
     };
 
-    strictEqual(isPlainObject(obj), true);
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(plainObject);
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns true for Object.create(null)', () => {
-    strictEqual(isPlainObject(Object.create(null)), true);
+  it('returns true for Object.create(null)', () => {
+    const nullPrototypeObject: TestsLibUtilityIsPlainObjectNullPrototypeObject = Object.create(null);
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(nullPrototypeObject);
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns false for null', () => {
-    strictEqual(isPlainObject(null), false);
+  it('returns false for null', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(null);
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for undefined', () => {
-    strictEqual(isPlainObject(undefined), false);
+  it('returns false for undefined', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(undefined);
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for string', () => {
-    strictEqual(isPlainObject('hello'), false);
+  it('returns false for string', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject('hello');
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for number', () => {
-    strictEqual(isPlainObject(42), false);
+  it('returns false for number', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(42);
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for boolean', () => {
-    strictEqual(isPlainObject(true), false);
+  it('returns false for boolean', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(true);
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for array', () => {
-    strictEqual(isPlainObject([1, 2, 3]), false);
+  it('returns false for array', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject([
+      1,
+      2,
+      3,
+    ]);
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for Date instance', () => {
-    strictEqual(isPlainObject(new Date()), false);
+  it('returns false for Date instance', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(new Date());
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for RegExp instance', () => {
-    strictEqual(isPlainObject(new RegExp('test')), false);
+  it('returns false for RegExp instance', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(new RegExp('test'));
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for Map instance', () => {
-    strictEqual(isPlainObject(new Map()), false);
+  it('returns false for Map instance', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(new Map());
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for Set instance', () => {
-    strictEqual(isPlainObject(new Set()), false);
+  it('returns false for Set instance', () => {
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(new Set());
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for class instance', () => {
+  it('returns false for class instance', () => {
     class Foo {}
 
-    strictEqual(isPlainObject(new Foo()), false);
+    const result: TestsLibUtilityIsPlainObjectResult = isPlainObject(new Foo());
+
+    strictEqual(result, false);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Is execute shell error.
+ * Tests - Lib - Utility - Is Execute Shell Error.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('isExecuteShellError', async (context) => {
-  await context.test('returns true for object with cmd property', () => {
-    strictEqual(isExecuteShellError({ cmd: 'echo hello' }), true);
+describe('isExecuteShellError', async () => {
+  it('returns true for object with cmd property', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({ cmd: 'echo hello' });
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns true for object with killed property', () => {
-    strictEqual(isExecuteShellError({ killed: false }), true);
+  it('returns true for object with killed property', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({ killed: false });
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns true for object with code property', () => {
-    strictEqual(isExecuteShellError({ code: 1 }), true);
+  it('returns true for object with code property', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({ code: 1 });
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns true for object with signal property', () => {
-    strictEqual(isExecuteShellError({ signal: 'SIGTERM' }), true);
+  it('returns true for object with signal property', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({ signal: 'SIGTERM' });
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns true for object with stdout property', () => {
-    strictEqual(isExecuteShellError({ stdout: 'output' }), true);
+  it('returns true for object with stdout property', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({ stdout: 'output' });
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns true for object with stderr property', () => {
-    strictEqual(isExecuteShellError({ stderr: 'error' }), true);
+  it('returns true for object with stderr property', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({ stderr: 'error' });
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns true for object with multiple exec properties', () => {
-    const error = {
+  it('returns true for object with multiple exec properties', () => {
+    const error: TestsLibUtilityIsExecuteShellErrorError = {
       cmd: 'test',
       killed: false,
       code: 1,
@@ -273,82 +498,127 @@ test('isExecuteShellError', async (context) => {
       stderr: 'failed',
     };
 
-    strictEqual(isExecuteShellError(error), true);
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError(error);
+
+    strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns false for null', () => {
-    strictEqual(isExecuteShellError(null), false);
+  it('returns false for null', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError(null);
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for undefined', () => {
-    strictEqual(isExecuteShellError(undefined), false);
+  it('returns false for undefined', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError(undefined);
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for string', () => {
-    strictEqual(isExecuteShellError('error'), false);
+  it('returns false for string', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError('error');
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for number', () => {
-    strictEqual(isExecuteShellError(42), false);
+  it('returns false for number', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError(42);
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for empty object', () => {
-    strictEqual(isExecuteShellError({}), false);
+  it('returns false for empty object', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({});
+
+    strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false for object with wrong property types', () => {
-    strictEqual(isExecuteShellError({ cmd: 123 }), false);
+  it('returns false for object with wrong property types', () => {
+    const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({ cmd: 123 });
+
+    strictEqual(result, false);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Current timestamp.
+ * Tests - Lib - Utility - Current Timestamp.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('currentTimestamp', async (context) => {
-  await context.test('returns a bracketed timestamp string', () => {
-    const result = currentTimestamp();
+describe('currentTimestamp', async () => {
+  it('returns a bracketed timestamp string', () => {
+    const result: TestsLibUtilityCurrentTimestampResult = currentTimestamp();
 
-    ok(result.startsWith('['));
-    ok(result.endsWith(']'));
+    const startsWithBracket: TestsLibUtilityCurrentTimestampStartsWithBracket = result.startsWith('[');
+    const endsWithBracket: TestsLibUtilityCurrentTimestampEndsWithBracket = result.endsWith(']');
+
+    ok(startsWithBracket);
+    ok(endsWithBracket);
+
+    return;
   });
 
-  await context.test('matches expected timestamp format', () => {
-    const result = currentTimestamp();
-    const pattern = new RegExp('^\\[\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} [+-]\\d{2}\\d{2}]$');
+  it('matches expected timestamp format', () => {
+    const result: TestsLibUtilityCurrentTimestampResult = currentTimestamp();
+    const pattern: TestsLibUtilityCurrentTimestampPattern = new RegExp('^\\[\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}\\.\\d{3} [+-]\\d{2}\\d{2}]$');
 
     match(result, pattern);
+
+    return;
   });
 
-  await context.test('produces different milliseconds on consecutive calls', () => {
-    const results: CurrentTimestampResults = new Set();
+  it('produces different milliseconds on consecutive calls', () => {
+    const results: TestsLibUtilityCurrentTimestampResults = new Set();
 
     for (let i = 0; i < 10; i += 1) {
-      results.add(currentTimestamp());
+      const timestamp: TestsLibUtilityCurrentTimestampTimestamp = currentTimestamp();
+
+      results.add(timestamp);
     }
 
     // At least some variation expected across 10 calls.
     ok(results.size >= 1);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Detect shell.
+ * Tests - Lib - Utility - Detect Shell.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('detectShell', async (context) => {
-  await context.test('returns a non-empty string', () => {
-    const result = detectShell();
+describe('detectShell', async () => {
+  it('returns a non-empty string', () => {
+    const result: TestsLibUtilityDetectShellResult = detectShell();
 
     strictEqual(typeof result, 'string');
     ok(result.length > 0);
+
+    return;
   });
 
-  await context.test('returns a known shell path', () => {
-    const result = detectShell();
-    const knownShells = [
+  it('returns a known shell path', () => {
+    const result: TestsLibUtilityDetectShellResult = detectShell();
+    const knownShells: TestsLibUtilityDetectShellKnownShells = [
       'cmd.exe',
       '/bin/zsh',
       '/bin/bash',
@@ -356,448 +626,564 @@ test('detectShell', async (context) => {
       '/bin/sh',
     ];
 
-    ok(knownShells.includes(result), `Unexpected shell: "${result}"`);
+    const isKnownShell: TestsLibUtilityDetectShellIsKnownShell = knownShells.includes(result);
+
+    ok(isKnownShell, `Unexpected shell: "${result}"`);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Path exists.
+ * Tests - Lib - Utility - Path Exists.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('pathExists', async (context) => {
-  await context.test('returns true for existing file', async () => {
-    const tempDir = await mkdtemp(join(tmpdir(), 'nova-pathExists-'));
-    const tempFile = join(tempDir, 'test.txt');
+describe('pathExists', async () => {
+  it('returns true for existing file', async () => {
+    const temporaryDirectory: TestsLibUtilityPathExistsTemporaryDirectory = tmpdir();
+    const temporaryPrefix: TestsLibUtilityPathExistsTemporaryPrefix = join(temporaryDirectory, 'nova-pathExists-');
+    const sandboxDirectory: TestsLibUtilityPathExistsSandboxDirectory = await mkdtemp(temporaryPrefix);
+    const temporaryFile: TestsLibUtilityPathExistsTemporaryFile = join(sandboxDirectory, 'test.txt');
 
-    await writeFile(tempFile, 'test');
+    await writeFile(temporaryFile, 'test');
 
-    const result = await pathExists(tempFile);
+    const result: TestsLibUtilityPathExistsResult = await pathExists(temporaryFile);
 
     strictEqual(result, true);
 
-    await rm(tempDir, {
+    await rm(sandboxDirectory, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('returns true for existing directory', async () => {
-    const tempDir = await mkdtemp(join(tmpdir(), 'nova-pathExists-'));
+  it('returns true for existing directory', async () => {
+    const temporaryDirectory: TestsLibUtilityPathExistsTemporaryDirectory = tmpdir();
+    const temporaryPrefix: TestsLibUtilityPathExistsTemporaryPrefix = join(temporaryDirectory, 'nova-pathExists-');
+    const sandboxDirectory: TestsLibUtilityPathExistsSandboxDirectory = await mkdtemp(temporaryPrefix);
 
-    const result = await pathExists(tempDir);
+    const result: TestsLibUtilityPathExistsResult = await pathExists(sandboxDirectory);
 
     strictEqual(result, true);
 
-    await rm(tempDir, {
+    await rm(sandboxDirectory, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('returns false for non-existent path', async () => {
-    const result = await pathExists(join(tmpdir(), 'nova-does-not-exist-xyz'));
+  it('returns false for non-existent path', async () => {
+    const temporaryDirectory: TestsLibUtilityPathExistsTemporaryDirectory = tmpdir();
+    const nonExistentPath: TestsLibUtilityPathExistsNonExistentPath = join(temporaryDirectory, 'nova-does-not-exist-xyz');
+    const result: TestsLibUtilityPathExistsResult = await pathExists(nonExistentPath);
 
     strictEqual(result, false);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Execute shell.
+ * Tests - Lib - Utility - Execute Shell.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('executeShell', async (context) => {
-  await context.test('runs a simple echo command', async () => {
-    const result = await executeShell('echo hello');
+describe('executeShell', async () => {
+  it('runs a simple echo command', async () => {
+    const result: TestsLibUtilityExecuteShellResult = await executeShell('echo hello');
 
-    strictEqual(result.code, 0);
-    ok(result.textOut.includes('hello'));
+    strictEqual(result['code'], 0);
+    const includesHello: TestsLibUtilityExecuteShellIncludesHello = result['textOut'].includes('hello');
+
+    ok(includesHello);
+
+    return;
   });
 
-  await context.test('returns non-zero code for failing command', async () => {
-    const result = await executeShell('nova-nonexistent-command-xyz-12345');
+  it('returns non-zero code for failing command', async () => {
+    const result: TestsLibUtilityExecuteShellResult = await executeShell('nova-nonexistent-command-xyz-12345');
 
-    notStrictEqual(result.code, 0);
+    notStrictEqual(result['code'], 0);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Is command exists.
+ * Tests - Lib - Utility - Is Command Exists.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('isCommandExists', async (context) => {
-  await context.test('returns true for an existing command', async () => {
-    const result = await isCommandExists('node');
+describe('isCommandExists', async () => {
+  it('returns true for an existing command', async () => {
+    const result: TestsLibUtilityIsCommandExistsResult = await isCommandExists('node');
 
     strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns false for a non-existent command', async () => {
-    const result = await isCommandExists('nova-nonexistent-command-xyz-12345');
+  it('returns false for a non-existent command', async () => {
+    const result: TestsLibUtilityIsCommandExistsResult = await isCommandExists('nova-nonexistent-command-xyz-12345');
 
     strictEqual(result, false);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Is file identical.
+ * Tests - Lib - Utility - Is File Identical.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('isFileIdentical', async (context) => {
-  const sandboxRoot: IsFileIdenticalSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('isFileIdentical', async () => {
+  const temporaryDirectory: TestsLibUtilityIsFileIdenticalTemporaryDirectory = tmpdir();
+  const sandboxPrefix: TestsLibUtilityIsFileIdenticalSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsLibUtilityIsFileIdenticalSandboxRoot = await mkdtemp(sandboxPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('returns true when string content matches file', async () => {
-    const filePath = join(sandboxRoot, 'string-match.txt');
+  it('returns true when string content matches file', async () => {
+    const filePath: TestsLibUtilityIsFileIdenticalFilePath = join(sandboxRoot, 'string-match.txt');
 
     await writeFile(filePath, 'hello world');
 
-    const result = await isFileIdentical(filePath, 'hello world');
+    const result: TestsLibUtilityIsFileIdenticalResult = await isFileIdentical(filePath, 'hello world');
 
     strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns false when string content differs from file', async () => {
-    const filePath = join(sandboxRoot, 'string-differ.txt');
+  it('returns false when string content differs from file', async () => {
+    const filePath: TestsLibUtilityIsFileIdenticalFilePath = join(sandboxRoot, 'string-differ.txt');
 
     await writeFile(filePath, 'hello world');
 
-    const result = await isFileIdentical(filePath, 'goodbye world');
+    const result: TestsLibUtilityIsFileIdenticalResult = await isFileIdentical(filePath, 'goodbye world');
 
     strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns true when object content matches JSON file', async () => {
-    const filePath = join(sandboxRoot, 'object-match.json');
-    const contents = {
+  it('returns true when object content matches JSON file', async () => {
+    const filePath: TestsLibUtilityIsFileIdenticalFilePath = join(sandboxRoot, 'object-match.json');
+    const contents: TestsLibUtilityIsFileIdenticalContents = {
       name: 'nova',
       version: '1.0.0',
     };
 
-    const contentsJson = JSON.stringify(contents, null, 2);
+    const contentsJson: TestsLibUtilityIsFileIdenticalContentsJson = JSON.stringify(contents, null, 2);
 
     await writeFile(filePath, `${contentsJson}\n`);
 
-    const result = await isFileIdentical(filePath, contents);
+    const result: TestsLibUtilityIsFileIdenticalResult = await isFileIdentical(filePath, contents);
 
     strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns false when object content differs from JSON file', async () => {
-    const filePath = join(sandboxRoot, 'object-differ.json');
-    const existingContents = {
+  it('returns false when object content differs from JSON file', async () => {
+    const filePath: TestsLibUtilityIsFileIdenticalFilePath = join(sandboxRoot, 'object-differ.json');
+    const existingContents: TestsLibUtilityIsFileIdenticalExistingContents = {
       name: 'nova',
       version: '1.0.0',
     };
-    const proposedContents = {
+    const proposedContents: TestsLibUtilityIsFileIdenticalProposedContents = {
       name: 'nova',
       version: '2.0.0',
     };
 
-    const existingJson = JSON.stringify(existingContents, null, 2);
+    const existingJson: TestsLibUtilityIsFileIdenticalExistingJson = JSON.stringify(existingContents, null, 2);
 
     await writeFile(filePath, `${existingJson}\n`);
 
-    const result = await isFileIdentical(filePath, proposedContents);
+    const result: TestsLibUtilityIsFileIdenticalResult = await isFileIdentical(filePath, proposedContents);
 
     strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false when file does not exist', async () => {
-    const filePath = join(sandboxRoot, 'does-not-exist.txt');
+  it('returns false when file does not exist', async () => {
+    const filePath: TestsLibUtilityIsFileIdenticalFilePath = join(sandboxRoot, 'does-not-exist.txt');
 
-    const result = await isFileIdentical(filePath, 'content');
+    const result: TestsLibUtilityIsFileIdenticalResult = await isFileIdentical(filePath, 'content');
 
     strictEqual(result, false);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Rename file with date.
+ * Tests - Lib - Utility - Rename File With Date.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('renameFileWithDate', async (context) => {
-  const sandboxRoot: RenameFileWithDateSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('renameFileWithDate', async () => {
+  const temporaryDirectory: TestsLibUtilityRenameFileWithDateTemporaryDirectory = tmpdir();
+  const sandboxPrefix: TestsLibUtilityRenameFileWithDateSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsLibUtilityRenameFileWithDateSandboxRoot = await mkdtemp(sandboxPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('renames a file with a date-stamped name', async () => {
-    const filePath = join(sandboxRoot, 'rename-test.txt');
+  it('renames a file with a date-stamped name', async () => {
+    const filePath: TestsLibUtilityRenameFileWithDateFilePath = join(sandboxRoot, 'rename-test.txt');
 
     await writeFile(filePath, 'test content');
 
-    const result = await renameFileWithDate(filePath, 'backup', 'txt');
+    const result: TestsLibUtilityRenameFileWithDateResult = await renameFileWithDate(filePath);
 
     strictEqual(result, true);
 
     // Original file should no longer exist.
-    const originalExists = await pathExists(filePath);
+    const originalExists: TestsLibUtilityRenameFileWithDateOriginalExists = await pathExists(filePath);
 
     strictEqual(originalExists, false);
 
     // A date-stamped file should exist in the same directory.
-    const files = await readdir(sandboxRoot);
-    const renamedFile = files.find((file) => file.startsWith('backup.'));
+    const files: TestsLibUtilityRenameFileWithDateFiles = await readdir(sandboxRoot);
+    const renamedFile: TestsLibUtilityRenameFileWithDateRenamedFile = files.find((file) => file.startsWith('rename-test.'));
 
     ok(renamedFile !== undefined, 'Renamed file should exist');
-    ok(new RegExp('^backup\\.\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.txt$').test(renamedFile));
+    const matchesBackupPattern: TestsLibUtilityRenameFileWithDateMatchesBackupPattern = new RegExp('^rename-test\\.\\d{4}-\\d{2}-\\d{2}_\\d{4}\\.nova-backup\\.txt$').test(renamedFile);
+
+    ok(matchesBackupPattern);
+
+    return;
   });
 
-  await context.test('returns false when source file does not exist', async () => {
-    const filePath = join(sandboxRoot, 'does-not-exist.txt');
+  it('returns false when source file does not exist', async () => {
+    const filePath: TestsLibUtilityRenameFileWithDateFilePath = join(sandboxRoot, 'does-not-exist.txt');
 
-    const result = await renameFileWithDate(filePath, 'backup', 'txt');
+    const result: TestsLibUtilityRenameFileWithDateResult = await renameFileWithDate(filePath);
 
     strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('increments counter when target file already exists', async () => {
-    const subDir = join(sandboxRoot, 'counter-test');
+  it('increments counter when target file already exists', async () => {
+    const subDirectory: TestsLibUtilityRenameFileWithDateSubDirectory = join(sandboxRoot, 'counter-test');
 
-    await mkdir(subDir);
+    await mkdir(subDirectory);
 
-    const filePath = join(subDir, 'original.txt');
+    const filePath: TestsLibUtilityRenameFileWithDateFilePath = join(subDirectory, 'original.txt');
 
     await writeFile(filePath, 'content');
 
     // Pre-create a file with the expected first counter value.
-    const now = new Date();
-    const timestamp = [
+    const now: TestsLibUtilityRenameFileWithDateNow = new Date();
+    const timestamp: TestsLibUtilityRenameFileWithDateTimestamp = [
       now.getUTCFullYear(),
       (now.getUTCMonth() + 1).toString().padStart(2, '0'),
       now.getUTCDate().toString().padStart(2, '0'),
     ].join('-');
-    const existingName = `backup.${timestamp}_0001.txt`;
+    const existingName: TestsLibUtilityRenameFileWithDateExistingName = `original.${timestamp}_0001.nova-backup.txt`;
 
-    await writeFile(join(subDir, existingName), 'existing');
+    const existingFilePath: TestsLibUtilityRenameFileWithDateExistingFilePath = join(subDirectory, existingName);
 
-    const result = await renameFileWithDate(filePath, 'backup', 'txt');
+    await writeFile(existingFilePath, 'existing');
+
+    const result: TestsLibUtilityRenameFileWithDateResult = await renameFileWithDate(filePath);
 
     strictEqual(result, true);
 
     // Should have counter 0002 since 0001 already exists.
-    const files = await readdir(subDir);
-    const secondFile = files.find((file) => file.includes('_0002'));
+    const files: TestsLibUtilityRenameFileWithDateFiles = await readdir(subDirectory);
+    const secondFile: TestsLibUtilityRenameFileWithDateSecondFile = files.find((file) => file.includes('_0002'));
 
     ok(secondFile !== undefined, 'File with incremented counter should exist');
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Is project root.
+ * Tests - Lib - Utility - Is Project Root.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('isProjectRoot', async (context) => {
-  const originalCwd: IsProjectRootOriginalCwd = process.cwd();
-  const sandboxRoot: IsProjectRootSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('isProjectRoot', async () => {
+  const originalCwd: TestsLibUtilityIsProjectRootOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsLibUtilityIsProjectRootTemporaryDirectory = tmpdir();
+  const sandboxPrefix: TestsLibUtilityIsProjectRootSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsLibUtilityIsProjectRootSandboxRoot = await mkdtemp(sandboxPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     process.chdir(originalCwd);
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('returns true when cwd is project root with single package.json', async () => {
-    const projectRoot = join(sandboxRoot, 'single');
+  it('returns true when cwd is project root with single package.json', async () => {
+    const projectRoot: TestsLibUtilityIsProjectRootProjectRoot = join(sandboxRoot, 'single');
 
     await mkdir(projectRoot, { recursive: true });
 
-    await writeFile(join(projectRoot, 'package.json'), '{}\n');
+    const packageJsonPath: TestsLibUtilityIsProjectRootPackageJsonPath = join(projectRoot, 'package.json');
 
-    const realProjectRoot = await realpath(projectRoot);
+    await writeFile(packageJsonPath, '{}\n');
+
+    const realProjectRoot: TestsLibUtilityIsProjectRootRealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
-    const result = await isProjectRoot(realProjectRoot);
+    const result: TestsLibUtilityIsProjectRootResult = await isProjectRoot(realProjectRoot);
 
     strictEqual(result, true);
+
+    return;
   });
 
-  await context.test('returns false when cwd has no package.json above', async () => {
-    const emptyDir = join(sandboxRoot, 'empty');
+  it('returns false when cwd has no package.json above', async () => {
+    const emptyDirectory: TestsLibUtilityIsProjectRootEmptyDirectory = join(sandboxRoot, 'empty');
 
-    await mkdir(emptyDir, { recursive: true });
+    await mkdir(emptyDirectory, { recursive: true });
 
-    const realEmptyDir = await realpath(emptyDir);
+    const realEmptyDirectory: TestsLibUtilityIsProjectRootRealEmptyDirectory = await realpath(emptyDirectory);
 
-    process.chdir(realEmptyDir);
+    process.chdir(realEmptyDirectory);
 
-    const result = await isProjectRoot(realEmptyDir);
+    const result: TestsLibUtilityIsProjectRootResult = await isProjectRoot(realEmptyDirectory);
 
     strictEqual(result, false);
+
+    return;
   });
 
-  await context.test('returns false when multiple package.json files found above', async () => {
-    const projectRoot = join(sandboxRoot, 'multi');
-    const appRoot = join(projectRoot, 'apps', 'my-app');
+  it('returns false when multiple package.json files found above', async () => {
+    const projectRoot: TestsLibUtilityIsProjectRootProjectRoot = join(sandboxRoot, 'multi');
+    const appRoot: TestsLibUtilityIsProjectRootAppRoot = join(projectRoot, 'apps', 'my-app');
 
     await mkdir(appRoot, { recursive: true });
 
+    const projectPackage: TestsLibUtilityIsProjectRootProjectPackage = join(projectRoot, 'package.json');
+    const appPackage: TestsLibUtilityIsProjectRootAppPackage = join(appRoot, 'package.json');
+
     await Promise.all([
-      writeFile(join(projectRoot, 'package.json'), '{}\n'),
-      writeFile(join(appRoot, 'package.json'), '{}\n'),
+      writeFile(projectPackage, '{}\n'),
+      writeFile(appPackage, '{}\n'),
     ]);
 
-    const realAppRoot = await realpath(appRoot);
+    const realAppRoot: TestsLibUtilityIsProjectRootRealAppRoot = await realpath(appRoot);
 
     process.chdir(realAppRoot);
 
-    const result = await isProjectRoot(realAppRoot);
+    const result: TestsLibUtilityIsProjectRootResult = await isProjectRoot(realAppRoot);
 
     strictEqual(result, false);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Load workspace manifests.
+ * Tests - Lib - Utility - Load Workspace Manifests.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('loadWorkspaceManifests', async (context) => {
-  const sandboxRoot: LoadWorkspaceManifestsSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('loadWorkspaceManifests', async () => {
+  const temporaryDirectory: TestsLibUtilityLoadWorkspaceManifestsTemporaryDirectory = tmpdir();
+  const sandboxPrefix: TestsLibUtilityLoadWorkspaceManifestsSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsLibUtilityLoadWorkspaceManifestsSandboxRoot = await mkdtemp(sandboxPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('loads package.json for configured workspaces', async () => {
-    const projectRoot = join(sandboxRoot, 'valid');
-    const pkgDir = join(projectRoot, 'packages', 'core');
+  it('loads package.json for configured workspaces', async () => {
+    const projectRoot: TestsLibUtilityLoadWorkspaceManifestsProjectRoot = join(sandboxRoot, 'valid');
+    const packageDirectory: TestsLibUtilityLoadWorkspaceManifestsPackageDirectory = join(projectRoot, 'packages', 'core');
 
-    await mkdir(pkgDir, { recursive: true });
+    await mkdir(packageDirectory, { recursive: true });
 
-    const rootPackageJson = JSON.stringify({ name: 'root' }, null, 2);
-    const corePackageJson = JSON.stringify({ name: '@test/core' }, null, 2);
+    const rootPackageJson: TestsLibUtilityLoadWorkspaceManifestsRootPackageJson = JSON.stringify({ name: 'root' }, null, 2);
+    const corePackageJson: TestsLibUtilityLoadWorkspaceManifestsCorePackageJson = JSON.stringify({ name: '@test/core' }, null, 2);
+    const rootPackagePath: TestsLibUtilityLoadWorkspaceManifestsRootPackagePath = join(projectRoot, 'package.json');
+    const corePackagePath: TestsLibUtilityLoadWorkspaceManifestsCorePackagePath = join(packageDirectory, 'package.json');
 
     await Promise.all([
-      writeFile(join(projectRoot, 'package.json'), rootPackageJson),
-      writeFile(join(pkgDir, 'package.json'), corePackageJson),
+      writeFile(rootPackagePath, rootPackageJson),
+      writeFile(corePackagePath, corePackageJson),
     ]);
 
-    const result = await loadWorkspaceManifests({
+    const result: TestsLibUtilityLoadWorkspaceManifestsResult = await loadWorkspaceManifests({
       projectRoot,
       workspaces: [
-        ['./', {
-          name: 'root',
-          role: 'project',
-          policy: 'freezable',
-        }],
-        ['./packages/core', {
-          name: '@test/core',
-          role: 'package',
-          policy: 'distributable',
-        }],
+        [
+          './',
+          {
+            name: 'root',
+            role: 'project',
+            policy: 'freezable',
+          },
+        ],
+        [
+          './packages/core',
+          {
+            name: '@test/core',
+            role: 'package',
+            policy: 'distributable',
+          },
+        ],
       ],
     });
 
     strictEqual(result.length, 2);
 
-    const firstWorkspace = result[0];
-    const secondWorkspace = result[1];
+    const firstWorkspace: TestsLibUtilityLoadWorkspaceManifestsFirstWorkspace = result[0];
+    const secondWorkspace: TestsLibUtilityLoadWorkspaceManifestsSecondWorkspace = result[1];
 
     ok(firstWorkspace !== undefined);
     ok(secondWorkspace !== undefined);
-    strictEqual(firstWorkspace.manifest.name, 'root');
-    strictEqual(firstWorkspace.fileContents['name'], 'root');
-    strictEqual(secondWorkspace.manifest.name, '@test/core');
-    strictEqual(secondWorkspace.fileContents['name'], '@test/core');
+    strictEqual(firstWorkspace['manifest']['name'], 'root');
+    strictEqual(firstWorkspace['fileContents']['name'], 'root');
+    strictEqual(secondWorkspace['manifest']['name'], '@test/core');
+    strictEqual(secondWorkspace['fileContents']['name'], '@test/core');
+
+    return;
   });
 
-  await context.test('skips workspace with missing package.json', async () => {
-    const projectRoot = join(sandboxRoot, 'missing');
+  it('skips workspace with missing package.json', async () => {
+    const projectRoot: TestsLibUtilityLoadWorkspaceManifestsProjectRoot = join(sandboxRoot, 'missing');
 
     await mkdir(projectRoot, { recursive: true });
 
-    const rootPackageJson = JSON.stringify({ name: 'root' }, null, 2);
+    const rootPackageJson: TestsLibUtilityLoadWorkspaceManifestsRootPackageJson = JSON.stringify({ name: 'root' }, null, 2);
+    const rootPackagePath: TestsLibUtilityLoadWorkspaceManifestsRootPackagePath = join(projectRoot, 'package.json');
 
-    await writeFile(join(projectRoot, 'package.json'), rootPackageJson);
+    await writeFile(rootPackagePath, rootPackageJson);
 
-    const result = await loadWorkspaceManifests({
+    const result: TestsLibUtilityLoadWorkspaceManifestsResult = await loadWorkspaceManifests({
       projectRoot,
       workspaces: [
-        ['./', {
-          name: 'root',
-          role: 'project',
-          policy: 'freezable',
-        }],
-        ['./packages/missing', {
-          name: '@test/missing',
-          role: 'package',
-          policy: 'distributable',
-        }],
+        [
+          './',
+          {
+            name: 'root',
+            role: 'project',
+            policy: 'freezable',
+          },
+        ],
+        [
+          './packages/missing',
+          {
+            name: '@test/missing',
+            role: 'package',
+            policy: 'distributable',
+          },
+        ],
       ],
     });
 
     strictEqual(result.length, 1);
 
-    const onlyWorkspace = result[0];
+    const onlyWorkspace: TestsLibUtilityLoadWorkspaceManifestsOnlyWorkspace = result[0];
 
     ok(onlyWorkspace !== undefined);
-    strictEqual(onlyWorkspace.manifest.name, 'root');
+    strictEqual(onlyWorkspace['manifest']['name'], 'root');
+
+    return;
   });
 
-  await context.test('returns empty array when no workspaces provided', async () => {
-    const result = await loadWorkspaceManifests({
+  it('returns empty array when no workspaces provided', async () => {
+    const result: TestsLibUtilityLoadWorkspaceManifestsResult = await loadWorkspaceManifests({
       projectRoot: sandboxRoot,
       workspaces: [],
     });
 
     strictEqual(result.length, 0);
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Save workspace manifest.
+ * Tests - Lib - Utility - Save Workspace Manifest.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('saveWorkspaceManifest', async (context) => {
-  const sandboxRoot: SaveWorkspaceManifestSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('saveWorkspaceManifest', async () => {
+  const temporaryDirectory: TestsLibUtilitySaveWorkspaceManifestTemporaryDirectory = tmpdir();
+  const sandboxPrefix: TestsLibUtilitySaveWorkspaceManifestSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsLibUtilitySaveWorkspaceManifestSandboxRoot = await mkdtemp(sandboxPrefix);
 
-  context.after(async () => {
+  afterAll(async () => {
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('writes changed file contents', async () => {
-    const filePath = join(sandboxRoot, 'write-test', 'package.json');
+  it('writes changed file contents', async () => {
+    const filePath: TestsLibUtilitySaveWorkspaceManifestFilePath = join(sandboxRoot, 'write-test', 'package.json');
 
-    await mkdir(dirname(filePath), { recursive: true });
+    const fileDirectory: TestsLibUtilitySaveWorkspaceManifestFileDirectory = dirname(filePath);
 
-    const original = {
+    await mkdir(fileDirectory, { recursive: true });
+
+    const original: TestsLibUtilitySaveWorkspaceManifestOriginal = {
       name: 'test',
       version: '1.0.0',
     };
 
-    const originalJson = JSON.stringify(original, null, 2);
+    const originalJson: TestsLibUtilitySaveWorkspaceManifestOriginalJson = JSON.stringify(original, null, 2);
 
     await writeFile(filePath, `${originalJson}\n`, 'utf-8');
 
-    const modified = {
+    const modified: TestsLibUtilitySaveWorkspaceManifestModified = {
       name: 'test',
       version: '2.0.0',
     };
@@ -812,26 +1198,31 @@ test('saveWorkspaceManifest', async (context) => {
       fileContents: modified,
     }, true);
 
-    const written = JSON.parse(await readFile(filePath, 'utf-8'));
+    const writtenRaw: TestsLibUtilitySaveWorkspaceManifestWrittenRaw = await readFile(filePath, 'utf-8');
+    const written: TestsLibUtilitySaveWorkspaceManifestWritten = JSON.parse(writtenRaw);
 
-    strictEqual(written.version, '2.0.0');
+    strictEqual(written['version'], '2.0.0');
+
+    return;
   });
 
-  await context.test('skips writing when file contents are identical', async () => {
-    const filePath = join(sandboxRoot, 'skip-test', 'package.json');
+  it('skips writing when file contents are identical', async () => {
+    const filePath: TestsLibUtilitySaveWorkspaceManifestFilePath = join(sandboxRoot, 'skip-test', 'package.json');
 
-    await mkdir(dirname(filePath), { recursive: true });
+    const fileDirectory: TestsLibUtilitySaveWorkspaceManifestFileDirectory = dirname(filePath);
 
-    const contents = {
+    await mkdir(fileDirectory, { recursive: true });
+
+    const contents: TestsLibUtilitySaveWorkspaceManifestContents = {
       name: 'test',
       version: '1.0.0',
     };
 
-    const contentsJson = JSON.stringify(contents, null, 2);
+    const contentsJson: TestsLibUtilitySaveWorkspaceManifestContentsJson = JSON.stringify(contents, null, 2);
 
     await writeFile(filePath, `${contentsJson}\n`, 'utf-8');
 
-    const statBefore = await stat(filePath);
+    const statBefore: TestsLibUtilitySaveWorkspaceManifestStatBefore = await stat(filePath);
 
     await saveWorkspaceManifest({
       manifest: {
@@ -843,27 +1234,29 @@ test('saveWorkspaceManifest', async (context) => {
       fileContents: contents,
     }, true);
 
-    const statAfter = await stat(filePath);
+    const statAfter: TestsLibUtilitySaveWorkspaceManifestStatAfter = await stat(filePath);
 
     strictEqual(statBefore.mtimeMs, statAfter.mtimeMs);
+
+    return;
   });
 
-  await context.test('creates backup when replaceFile is false', async () => {
-    const subDir = join(sandboxRoot, 'backup-test');
+  it('creates backup when replaceFile is false', async () => {
+    const subDirectory: TestsLibUtilitySaveWorkspaceManifestSubDirectory = join(sandboxRoot, 'backup-test');
 
-    await mkdir(subDir, { recursive: true });
+    await mkdir(subDirectory, { recursive: true });
 
-    const filePath = join(subDir, 'package.json');
-    const original = {
+    const filePath: TestsLibUtilitySaveWorkspaceManifestFilePath = join(subDirectory, 'package.json');
+    const original: TestsLibUtilitySaveWorkspaceManifestOriginal = {
       name: 'test',
       version: '1.0.0',
     };
 
-    const originalJson = JSON.stringify(original, null, 2);
+    const originalJson: TestsLibUtilitySaveWorkspaceManifestOriginalJson = JSON.stringify(original, null, 2);
 
     await writeFile(filePath, `${originalJson}\n`, 'utf-8');
 
-    const modified = {
+    const modified: TestsLibUtilitySaveWorkspaceManifestModified = {
       name: 'test',
       version: '2.0.0',
     };
@@ -878,26 +1271,31 @@ test('saveWorkspaceManifest', async (context) => {
       fileContents: modified,
     }, false);
 
-    const files = await readdir(subDir);
-    const backupFile = files.find((file) => file.startsWith('package.') && file !== 'package.json');
+    const files: TestsLibUtilitySaveWorkspaceManifestFiles = await readdir(subDirectory);
+    const backupFile: TestsLibUtilitySaveWorkspaceManifestBackupFile = files.find((file) => file.startsWith('package.') && file !== 'package.json');
 
     ok(backupFile !== undefined, 'Backup file should exist');
 
     // New file should have the modified contents.
-    const written = JSON.parse(await readFile(filePath, 'utf-8'));
+    const writtenRaw: TestsLibUtilitySaveWorkspaceManifestWrittenRaw = await readFile(filePath, 'utf-8');
+    const written: TestsLibUtilitySaveWorkspaceManifestWritten = JSON.parse(writtenRaw);
 
-    strictEqual(written.version, '2.0.0');
+    strictEqual(written['version'], '2.0.0');
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Parse linux os release text.
+ * Tests - Lib - Utility - Parse Linux OS Release Text.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('parseLinuxOsReleaseText', async (context) => {
-  await context.test('parses Ubuntu os-release text', () => {
-    const text = [
+describe('parseLinuxOsReleaseText', async () => {
+  it('parses Ubuntu os-release text', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = [
       'NAME="Ubuntu"',
       'VERSION="22.04.3 LTS (Jammy Jellyfish)"',
       'ID=ubuntu',
@@ -906,62 +1304,72 @@ test('parseLinuxOsReleaseText', async (context) => {
       'VERSION_ID="22.04"',
     ].join('\n');
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
     strictEqual(result['NAME'], 'Ubuntu');
     strictEqual(result['VERSION'], '22.04.3 LTS (Jammy Jellyfish)');
     strictEqual(result['ID'], 'ubuntu');
     strictEqual(result['ID_LIKE'], 'debian');
     strictEqual(result['VERSION_ID'], '22.04');
+
+    return;
   });
 
-  await context.test('parses Alpine os-release text', () => {
-    const text = [
+  it('parses Alpine os-release text', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = [
       'NAME="Alpine Linux"',
       'ID=alpine',
       'VERSION_ID=3.19.0',
       'PRETTY_NAME="Alpine Linux v3.19"',
     ].join('\n');
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
     strictEqual(result['NAME'], 'Alpine Linux');
     strictEqual(result['ID'], 'alpine');
     strictEqual(result['VERSION_ID'], '3.19.0');
+
+    return;
   });
 
-  await context.test('parses Debian os-release text', () => {
-    const text = [
+  it('parses Debian os-release text', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = [
       'PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"',
       'NAME="Debian GNU/Linux"',
       'VERSION_ID="12"',
       'ID=debian',
     ].join('\n');
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
     strictEqual(result['NAME'], 'Debian GNU/Linux');
     strictEqual(result['ID'], 'debian');
     strictEqual(result['VERSION_ID'], '12');
+
+    return;
   });
 
-  await context.test('skips comment lines', () => {
-    const text = [
+  it('skips comment lines', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = [
       '# This is a comment',
       'NAME="Test"',
       '# Another comment',
       'ID=test',
     ].join('\n');
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
-    strictEqual(Object.keys(result).length, 2);
+    const resultKeys: TestsLibUtilityParseLinuxOsReleaseTextResultKeys = Object.keys(result);
+
+    strictEqual(resultKeys.length, 2);
     strictEqual(result['NAME'], 'Test');
     strictEqual(result['ID'], 'test');
+
+    return;
   });
 
-  await context.test('skips empty lines', () => {
-    const text = [
+  it('skips empty lines', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = [
       '',
       'NAME="Test"',
       '',
@@ -970,103 +1378,127 @@ test('parseLinuxOsReleaseText', async (context) => {
       '',
     ].join('\n');
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
-    strictEqual(Object.keys(result).length, 2);
+    const resultKeys: TestsLibUtilityParseLinuxOsReleaseTextResultKeys = Object.keys(result);
+
+    strictEqual(resultKeys.length, 2);
+
+    return;
   });
 
-  await context.test('strips double-quoted values', () => {
-    const text = 'NAME="Ubuntu"';
+  it('strips double-quoted values', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = 'NAME="Ubuntu"';
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
     strictEqual(result['NAME'], 'Ubuntu');
+
+    return;
   });
 
-  await context.test('preserves unquoted values', () => {
-    const text = 'ID=ubuntu';
+  it('preserves unquoted values', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = 'ID=ubuntu';
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
     strictEqual(result['ID'], 'ubuntu');
+
+    return;
   });
 
-  await context.test('handles values containing equals sign', () => {
-    const text = 'BUG_REPORT_URL="https://example.com?a=1&b=2"';
+  it('handles values containing equals sign', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = 'BUG_REPORT_URL="https://example.com?a=1&b=2"';
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
     strictEqual(result['BUG_REPORT_URL'], 'https://example.com?a=1&b=2');
+
+    return;
   });
 
-  await context.test('returns empty object for empty string', () => {
-    const result = parseLinuxOsReleaseText('');
+  it('returns empty object for empty string', () => {
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText('');
 
     deepStrictEqual(result, {});
+
+    return;
   });
 
-  await context.test('handles CRLF line endings', () => {
-    const text = 'NAME="Test"\r\nID=test\r\nVERSION_ID="1.0"';
+  it('handles CRLF line endings', () => {
+    const text: TestsLibUtilityParseLinuxOsReleaseTextText = 'NAME="Test"\r\nID=test\r\nVERSION_ID="1.0"';
 
-    const result = parseLinuxOsReleaseText(text);
+    const result: TestsLibUtilityParseLinuxOsReleaseTextResult = parseLinuxOsReleaseText(text);
 
-    strictEqual(Object.keys(result).length, 3);
+    const resultKeys: TestsLibUtilityParseLinuxOsReleaseTextResultKeys = Object.keys(result);
+
+    strictEqual(resultKeys.length, 3);
     strictEqual(result['NAME'], 'Test');
     strictEqual(result['ID'], 'test');
     strictEqual(result['VERSION_ID'], '1.0');
+
+    return;
   });
+
+  return;
 });
 
 /**
- * Parse windows registry text.
+ * Tests - Lib - Utility - Parse Windows Registry Text.
  *
- * @since 1.0.0
+ * @since 0.12.0
  */
-test('parseWindowsRegistryText', async (context) => {
-  await context.test('parses REG_SZ values', () => {
-    const text = '    ProductName    REG_SZ    Windows 11 Pro';
+describe('parseWindowsRegistryText', async () => {
+  it('parses REG_SZ values', () => {
+    const text: TestsLibUtilityParseWindowsRegistryTextText = '    ProductName    REG_SZ    Windows 11 Pro';
 
-    const result = parseWindowsRegistryText(text);
+    const result: TestsLibUtilityParseWindowsRegistryTextResult = parseWindowsRegistryText(text);
 
-    const productName = result['ProductName'];
+    const productName: TestsLibUtilityParseWindowsRegistryTextProductName = result['ProductName'];
 
     if (productName === undefined) {
       fail('Expected ProductName to be defined');
     }
 
-    strictEqual(productName.type, 'REG_SZ');
-    strictEqual(productName.data, 'Windows 11 Pro');
+    strictEqual(productName['type'], 'REG_SZ');
+    strictEqual(productName['data'], 'Windows 11 Pro');
+
+    return;
   });
 
-  await context.test('parses REG_DWORD values', () => {
-    const text = '    CurrentMajorVersionNumber    REG_DWORD    0xa';
+  it('parses REG_DWORD values', () => {
+    const text: TestsLibUtilityParseWindowsRegistryTextText = '    CurrentMajorVersionNumber    REG_DWORD    0xa';
 
-    const result = parseWindowsRegistryText(text);
-    const currentMajorVersionNumber = result['CurrentMajorVersionNumber'];
+    const result: TestsLibUtilityParseWindowsRegistryTextResult = parseWindowsRegistryText(text);
+    const currentMajorVersionNumber: TestsLibUtilityParseWindowsRegistryTextCurrentMajorVersionNumber = result['CurrentMajorVersionNumber'];
 
     if (currentMajorVersionNumber === undefined) {
       fail('Expected CurrentMajorVersionNumber to be defined');
     }
 
-    strictEqual(currentMajorVersionNumber.type, 'REG_DWORD');
-    strictEqual(currentMajorVersionNumber.data, '0xa');
+    strictEqual(currentMajorVersionNumber['type'], 'REG_DWORD');
+    strictEqual(currentMajorVersionNumber['data'], '0xa');
+
+    return;
   });
 
-  await context.test('parses mixed registry types', () => {
-    const text = [
+  it('parses mixed registry types', () => {
+    const text: TestsLibUtilityParseWindowsRegistryTextText = [
       'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion',
       '    ProductName    REG_SZ    Windows 11 Pro',
       '    CurrentBuild    REG_SZ    22631',
       '    CurrentMajorVersionNumber    REG_DWORD    0xa',
     ].join('\n');
 
-    const result = parseWindowsRegistryText(text);
+    const result: TestsLibUtilityParseWindowsRegistryTextResult = parseWindowsRegistryText(text);
 
-    strictEqual(Object.keys(result).length, 3);
+    const resultKeys: TestsLibUtilityParseWindowsRegistryTextResultKeys = Object.keys(result);
 
-    const productName = result['ProductName'];
-    const currentBuild = result['CurrentBuild'];
-    const currentMajorVersionNumber = result['CurrentMajorVersionNumber'];
+    strictEqual(resultKeys.length, 3);
+
+    const productName: TestsLibUtilityParseWindowsRegistryTextProductName = result['ProductName'];
+    const currentBuild: TestsLibUtilityParseWindowsRegistryTextCurrentBuild = result['CurrentBuild'];
+    const currentMajorVersionNumber: TestsLibUtilityParseWindowsRegistryTextCurrentMajorVersionNumber = result['CurrentMajorVersionNumber'];
 
     if (productName === undefined) {
       fail('Expected ProductName to be defined');
@@ -1080,60 +1512,72 @@ test('parseWindowsRegistryText', async (context) => {
       fail('Expected CurrentMajorVersionNumber to be defined');
     }
 
-    strictEqual(productName.type, 'REG_SZ');
-    strictEqual(currentBuild.type, 'REG_SZ');
-    strictEqual(currentMajorVersionNumber.type, 'REG_DWORD');
+    strictEqual(productName['type'], 'REG_SZ');
+    strictEqual(currentBuild['type'], 'REG_SZ');
+    strictEqual(currentMajorVersionNumber['type'], 'REG_DWORD');
+
+    return;
   });
 
-  await context.test('returns empty object for empty string', () => {
-    const result = parseWindowsRegistryText('');
+  it('returns empty object for empty string', () => {
+    const result: TestsLibUtilityParseWindowsRegistryTextResult = parseWindowsRegistryText('');
 
     deepStrictEqual(result, {});
+
+    return;
   });
 
-  await context.test('skips non-matching lines', () => {
-    const text = [
+  it('skips non-matching lines', () => {
+    const text: TestsLibUtilityParseWindowsRegistryTextText = [
       'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion',
       '',
       '    ProductName    REG_SZ    Windows 11 Pro',
     ].join('\n');
 
-    const result = parseWindowsRegistryText(text);
+    const result: TestsLibUtilityParseWindowsRegistryTextResult = parseWindowsRegistryText(text);
 
-    strictEqual(Object.keys(result).length, 1);
+    const resultKeys: TestsLibUtilityParseWindowsRegistryTextResultKeys = Object.keys(result);
 
-    const productName = result['ProductName'];
+    strictEqual(resultKeys.length, 1);
 
-    if (productName === undefined) {
-      fail('Expected ProductName to be defined');
-    }
-
-    strictEqual(productName.data, 'Windows 11 Pro');
-  });
-
-  await context.test('trims trailing whitespace from data', () => {
-    const text = '    ProductName    REG_SZ    Windows 11 Pro   ';
-
-    const result = parseWindowsRegistryText(text);
-
-    const productName = result['ProductName'];
+    const productName: TestsLibUtilityParseWindowsRegistryTextProductName = result['ProductName'];
 
     if (productName === undefined) {
       fail('Expected ProductName to be defined');
     }
 
-    strictEqual(productName.data, 'Windows 11 Pro');
+    strictEqual(productName['data'], 'Windows 11 Pro');
+
+    return;
   });
 
-  await context.test('handles LF line endings', () => {
-    const text = '    ProductName    REG_SZ    Windows 11\n    CurrentBuild    REG_SZ    22631';
+  it('trims trailing whitespace from data', () => {
+    const text: TestsLibUtilityParseWindowsRegistryTextText = '    ProductName    REG_SZ    Windows 11 Pro   ';
 
-    const result = parseWindowsRegistryText(text);
+    const result: TestsLibUtilityParseWindowsRegistryTextResult = parseWindowsRegistryText(text);
 
-    strictEqual(Object.keys(result).length, 2);
+    const productName: TestsLibUtilityParseWindowsRegistryTextProductName = result['ProductName'];
 
-    const productName = result['ProductName'];
-    const currentBuild = result['CurrentBuild'];
+    if (productName === undefined) {
+      fail('Expected ProductName to be defined');
+    }
+
+    strictEqual(productName['data'], 'Windows 11 Pro');
+
+    return;
+  });
+
+  it('handles LF line endings', () => {
+    const text: TestsLibUtilityParseWindowsRegistryTextText = '    ProductName    REG_SZ    Windows 11\n    CurrentBuild    REG_SZ    22631';
+
+    const result: TestsLibUtilityParseWindowsRegistryTextResult = parseWindowsRegistryText(text);
+
+    const resultKeys: TestsLibUtilityParseWindowsRegistryTextResultKeys = Object.keys(result);
+
+    strictEqual(resultKeys.length, 2);
+
+    const productName: TestsLibUtilityParseWindowsRegistryTextProductName = result['ProductName'];
+    const currentBuild: TestsLibUtilityParseWindowsRegistryTextCurrentBuild = result['CurrentBuild'];
 
     if (productName === undefined) {
       fail('Expected ProductName to be defined');
@@ -1143,7 +1587,11 @@ test('parseWindowsRegistryText', async (context) => {
       fail('Expected CurrentBuild to be defined');
     }
 
-    strictEqual(productName.data, 'Windows 11');
-    strictEqual(currentBuild.data, '22631');
+    strictEqual(productName['data'], 'Windows 11');
+    strictEqual(currentBuild['data'], '22631');
+
+    return;
   });
+
+  return;
 });

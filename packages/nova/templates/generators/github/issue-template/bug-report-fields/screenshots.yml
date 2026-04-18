@@ -1,0 +1,7 @@
+  - type: "textarea"
+    id: "screenshots"
+    attributes:
+      label: "Screenshots"
+      description: "If applicable, add screenshots to help explain the problem. __Drag and drop images here.__"
+    validations:
+      required: false

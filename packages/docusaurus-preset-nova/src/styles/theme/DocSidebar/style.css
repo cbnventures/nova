@@ -1,0 +1,180 @@
+/**
+ * ============================
+ * Sidebar — Nav
+ * ============================
+ */
+
+.nova-sidebar {
+  padding-top: calc(var(--nova-section-gap) / 4);
+  padding-bottom: calc(var(--nova-section-gap) / 4);
+}
+
+@media (min-width: 1024px) {
+  .nova-sidebar {
+    position: sticky;
+    top: var(--nova-layout-sticky-top, 5rem);
+    max-height: calc(100vh - var(--nova-layout-sticky-top, 5rem));
+    overflow-y: auto;
+  }
+}
+
+/**
+ * ============================
+ * Sidebar — Collapse Toggle
+ * ============================
+ */
+
+.nova-sidebar-toggle {
+  position: absolute;
+  top: 8px;
+  right: -12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+
+  font-size: 14px;
+
+  background: var(--nova-color-neutral-50);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
+/**
+ * ============================
+ * Sidebar — Collapsed State
+ * ============================
+ */
+
+.nova-sidebar-collapsed {
+  display: none;
+}
+
+/**
+ * ============================
+ * Sidebar — List
+ * ============================
+ */
+
+.nova-sidebar-list {
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+.nova-sidebar-list .nova-sidebar-list {
+  padding-left: 1rem;
+}
+
+/**
+ * ============================
+ * Sidebar — Link
+ * ============================
+ */
+
+.nova-sidebar-link {
+  display: block;
+
+  text-decoration: none;
+}
+
+/* Reset structural styles when nested inside a category summary.
+   Negative margin + matching padding makes the link fill the full
+   summary click area so the entire row navigates, not just the text. */
+.nova-sidebar-category-summary .nova-sidebar-link {
+  display: block;
+  flex: 1;
+  margin: calc(-1 * var(--nova-sidebar-category-padding-block, 0.375rem)) calc(-1 * var(--nova-sidebar-category-padding-inline, 0.75rem));
+  padding: var(--nova-sidebar-category-padding-block, 0.375rem) var(--nova-sidebar-category-padding-inline, 0.75rem);
+
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+
+  background: none;
+  border: none;
+  border-radius: 0;
+}
+
+/* Links inside summary inherit from summary — no own background or hover. */
+.nova-sidebar-category-summary .nova-sidebar-link:hover {
+  color: inherit;
+  text-decoration: none;
+  background: none;
+}
+
+/* Active category link — summary handles the background; link just inherits color. */
+.nova-sidebar-category-summary .nova-sidebar-link[aria-current="page"] {
+  font-weight: 600;
+  color: inherit;
+  background: none;
+}
+
+/**
+ * ============================
+ * Sidebar — Category
+ * ============================
+ */
+
+.nova-sidebar-category-summary {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+
+  list-style: none;
+}
+
+.nova-sidebar-category-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-sidebar-category-summary::after {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: auto;
+
+  content: "";
+
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+
+  transition: transform 200ms ease;
+}
+
+.nova-sidebar-category-details[open] > .nova-sidebar-category-summary::after {
+  transform: rotate(90deg);
+}
+
+/**
+ * ============================
+ * Sidebar — Active Page
+ * ============================
+ */
+
+.nova-sidebar-link[aria-current="page"] {
+  font-weight: 600;
+}
+
+/**
+ * ============================
+ * Sidebar — Active Peek
+ * ============================
+ */
+
+.nova-sidebar-category-details[open] ~ .nova-sidebar-active-peek {
+  display: none;
+}
+
+.nova-sidebar-active-peek {
+  margin-left: 1rem;
+}

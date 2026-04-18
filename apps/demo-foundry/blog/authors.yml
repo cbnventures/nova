@@ -1,0 +1,20 @@
+elena:
+  name: Elena Vasquez
+  title: Co-founder, Foundry
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+
+kofi:
+  name: Kofi Mensah
+  title: Performance Lead, Foundry
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+
+priya:
+  name: Priya Nair
+  title: Developer Experience, Foundry
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true

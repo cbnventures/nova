@@ -1,7 +1,7 @@
 ---
 id: type-check
 title: Type Check
-description: Run full TypeScript type checking scoped to project-owned files, filtering out third-party diagnostics so strict configs like skipLibCheck false remain practical.
+description: Run full TypeScript type checking scoped to project-owned files, filtering out third-party diagnostics so strict configs remain practical.
 keywords:
   - nova
   - nova type-check
@@ -9,16 +9,16 @@ keywords:
   - skipLibCheck false
   - project diagnostics
   - tsconfig strict
-  - ci cd type checking
   - monorepo type safety
 tags:
-  - type-check
   - cli
+  - type-check
   - diagnostics
   - typescript
   - ci-cd
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -26,7 +26,9 @@ Run full TypeScript type checking while filtering diagnostics to only project-ow
 
 ## Summary
 
-The `type-check` command uses the TypeScript compiler <Term title="application programming interface" to="/docs/quickstart/terminology#fundamentals">API</Term> to run `getPreEmitDiagnostics` against a project, then filters the results to only include errors in files owned by the project. Third-party diagnostics (from `node_modules`) are excluded so that `skipLibCheck: false` can be used without surfacing errors in <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependencies</Term> the project maintainer cannot control.
+The `type-check` command runs full type diagnostics against a project, then filters the results to only include errors in files owned by the project.
+
+Third-party diagnostics (from `node_modules`) are excluded so that `skipLibCheck: false` can be used without surfacing errors in <Terminology title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependencies</Terminology> the project maintainer cannot control.
 
 :::tip Strict Without the Noise
 Setting `skipLibCheck: false` in a TSConfig preset catches more bugs, but it also surfaces errors inside third-party packages. This command gives you the strictness without the noise.
@@ -35,22 +37,22 @@ Setting `skipLibCheck: false` in a TSConfig preset catches more bugs, but it als
 ## Why Use This Command?
 
 - Catch type errors in project code that `skipLibCheck: true` would normally hide.
-- Keep `skipLibCheck: false` in shared TSConfig presets without blocking CI on third-party issues.
+- Keep `skipLibCheck: false` in shared TSConfig presets without blocking <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> on third-party issues.
 - Produce clear, file-scoped diagnostics with line and column numbers for quick navigation.
 - Replace manual `tsc --noEmit` invocations that may report uncontrollable errors.
 
 ## Use Cases
 
-- **<Term title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow">Monorepo</Term> maintenance** — Run type checks per <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> with each <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>'s own `tsconfig.json`.
-- **<Term title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling">CI/CD</Term> pipelines** — Add a type-check step that exits with code 1 on project errors while ignoring <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependency</Term> noise.
+- **<Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>Monorepo</Terminology> maintenance** — Run type checks per <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> with each <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>'s own `tsconfig.json`.
+- **<Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> pipelines** — Add a type-check step that exits with code 1 on project errors while ignoring <Terminology title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependency</Terminology> noise.
 - **Strict TSConfig adoption** — Migrate from `skipLibCheck: true` to `false` incrementally by surfacing only your own errors.
 - **Pre-commit checks** — Confirm type safety before committing without waiting for a full build.
 
 ## Requirements
 
-- **Node.js runtime** — Use any Node.js <Term title="long term support" to="/docs/quickstart/terminology#fundamentals">LTS</Term> release with either the installed `nova` <Term title="command line interface" to="/docs/quickstart/terminology#fundamentals">CLI</Term> or `npx`.
-- **TypeScript** — Must be installed as a <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependency</Term> (direct or peer) in the <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term>.
-- **tsconfig.json** — A valid TypeScript configuration file must exist in the <Term title="package" to="/docs/quickstart/terminology#nova-concepts">workspace</Term> (or be specified with `--project`).
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release with either the installed `nova` <Terminology title="command line interface" to="/docs/quickstart/terminology#fundamentals" color={true}>CLI</Terminology> or `npx`.
+- **TypeScript** — Must be installed as a <Terminology title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependency</Terminology> (direct or peer) in the <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology>.
+- **tsconfig.json** — A valid TypeScript configuration file must exist in the <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> (or be specified with `--project`).
 
 ## Usage
 
@@ -96,14 +98,14 @@ When `--project` is omitted, the command searches for `tsconfig.json` starting f
 ## How It Works
 
 1. **Resolve config** — Locate the `tsconfig.json` file from `--project` or by searching from the current directory.
-2. **Parse config** — Read and parse the TypeScript configuration using the compiler API.
-3. **Create program** — Build a full TypeScript program from the parsed file list and compiler options.
-4. **Collect diagnostics** — Run `getPreEmitDiagnostics` to gather all type errors, including those inside `node_modules`.
-5. **Filter** — Keep only diagnostics where the source file starts with the current working directory **and** does not contain `node_modules` in its path.
+2. **Parse config** — Read and parse the TypeScript configuration.
+3. **Set up the type-checker** — Prepare the full TypeScript project from the parsed file list and compiler options.
+4. **Collect diagnostics** — Gather all type errors across the project, including those inside `node_modules`.
+5. **Filter** — Keep only diagnostics from files owned by your project, excluding anything in `node_modules`.
 6. **Report** — Print each error with file path, line, column, and message, then exit with code 1 if any errors remain.
 
 :::danger Non-Zero Exit Code
-The command exits with code **1** when project-owned type errors are found. CI pipelines that use this command will fail the step on type errors.
+The command exits with code **1** when project-owned type errors are found. <Terminology title="continuous integration" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI</Terminology> pipelines that use this command will fail the step on type errors.
 :::
 
 ## Examples
@@ -166,6 +168,6 @@ The command exits with code **1** when project-owned type errors are found. CI p
 ## Troubleshooting
 
 - **No tsconfig.json found** — Confirm a `tsconfig.json` exists in the current directory, or pass the correct path with `--project`.
-- **TypeScript not installed** — The command requires TypeScript as a <Term title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies">dependency</Term>. Run `npm install typescript` if it is missing.
-- **Zero errors but build fails** — This command only checks types; build errors from <Term title="build tool" to="/docs/quickstart/terminology#builds-and-tooling">bundlers</Term> or other tools are not covered.
+- **TypeScript not installed** — The command requires TypeScript as a <Terminology title="runtime dependency" to="/docs/quickstart/terminology#packages-and-dependencies" color={true}>dependency</Terminology>. Run `npm install typescript` if it is missing.
+- **Zero errors but build fails** — This command only checks types; build errors from <Terminology title="build tool" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>bundlers</Terminology> or other tools are not covered.
 - **Errors in generated files** — If generated files (e.g., `.docusaurus`) appear in diagnostics, add them to the `exclude` array in your `tsconfig.json`.

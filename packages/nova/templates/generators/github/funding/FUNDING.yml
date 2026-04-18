@@ -1,0 +1,12 @@
+# ============================================================================
+# SETUP INSTRUCTIONS
+# ============================================================================
+#
+# Conditional content is injected automatically by the generator:
+#
+#   - GitHub sponsor ([__GITHUB_SPONSOR__]) from urls.fundSources.
+#   - Custom donations ([__CUSTOM_DONATION__]) from urls.fundSources.
+#
+# ============================================================================
+github: "[__GITHUB_SPONSOR__]"
+custom: "[__CUSTOM_DONATION__]"

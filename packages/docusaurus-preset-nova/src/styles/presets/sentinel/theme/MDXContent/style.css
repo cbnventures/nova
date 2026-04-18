@@ -1,0 +1,343 @@
+/**
+ * Sentinel — Typography: paragraphs, links, lists, inline code, blockquotes,
+ * admonitions, announcement bar, breadcrumbs, tabs, doc cards, TOC, tags,
+ * blog list, and doc content area.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Paragraphs and Inline Elements
+ * ============================ */
+
+strong {
+  font-weight: 700;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] strong {
+  color: var(--nova-color-neutral-100);
+}
+
+em {
+  font-style: italic;
+}
+
+small {
+  font-size: 0.875rem;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--nova-color-neutral-200);
+  margin: 2rem 0;
+}
+
+[data-theme="dark"] hr {
+  border-top-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 2. Lists
+ * ============================ */
+
+ul,
+ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================
+ * 4. Inline Code
+ * ============================ */
+
+:not(pre) > code {
+  font-family: var(--nova-font-code);
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  border-radius: calc(var(--nova-shape-radius) * 0.5);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  color: var(--nova-color-primary-700);
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  word-break: break-word;
+}
+
+[data-theme="dark"] :not(pre) > code {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  color: var(--nova-color-primary-300);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+}
+
+/* ============================
+ * 5. Blockquotes
+ * ============================ */
+
+blockquote {
+  margin: 1rem 0;
+  padding: 0.625rem 1rem;
+  border-left: 2px solid var(--nova-color-primary-500);
+  border-radius: 0;
+  color: var(--nova-color-neutral-600);
+  font-style: italic;
+}
+
+[data-theme="dark"] blockquote {
+  color: var(--nova-color-neutral-300);
+}
+
+@media (min-width: 768px) {
+  blockquote {
+    padding: 0.75rem 1.25rem;
+  }
+}
+
+/* ============================
+ * 6. Admonitions
+ * ============================ */
+
+.nova-admonition {
+  padding: var(--nova-shape-padding);
+  margin-bottom: 1.5rem;
+  border-left: 2px solid var(--nova-color-neutral-500);
+  border-radius: 0;
+  background-color: var(--nova-color-neutral-100);
+}
+
+[data-theme="dark"] .nova-admonition {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.nova-admonition-heading {
+  margin-bottom: 0.5rem;
+}
+
+.nova-admonition-heading strong {
+  font-family: var(--nova-font-display);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.nova-admonition[data-admonition-type="note"] {
+  border-left-color: var(--nova-color-neutral-400);
+}
+
+.nova-admonition[data-admonition-type="tip"] {
+  border-left-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+[data-theme="dark"] .nova-admonition[data-admonition-type="tip"] {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+.nova-admonition[data-admonition-type="info"] {
+  border-left-color: var(--nova-color-accent-500);
+  background-color: var(--nova-color-info-bg);
+}
+
+[data-theme="dark"] .nova-admonition[data-admonition-type="info"] {
+  background-color: var(--nova-color-info-bg-dark);
+}
+
+.nova-admonition[data-admonition-type="warning"],
+.nova-admonition[data-admonition-type="caution"] {
+  border-left-color: var(--nova-color-warning-500);
+  background-color: var(--nova-color-warning-bg);
+}
+
+[data-theme="dark"] .nova-admonition[data-admonition-type="warning"],
+[data-theme="dark"] .nova-admonition[data-admonition-type="caution"] {
+  background-color: var(--nova-color-warning-bg-dark);
+}
+
+.nova-admonition[data-admonition-type="danger"] {
+  border-left-color: var(--nova-color-danger-500);
+  background-color: var(--nova-color-danger-bg);
+}
+
+[data-theme="dark"] .nova-admonition[data-admonition-type="danger"] {
+  background-color: var(--nova-color-danger-bg-dark);
+}
+
+@media (min-width: 768px) {
+  .nova-admonition {
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* ============================
+ * 7. Breadcrumbs
+ * ============================ */
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+  font-size: 0.75rem;
+}
+
+.breadcrumbs a {
+  color: var(--nova-color-neutral-500);
+}
+
+.breadcrumbs a:hover,
+.breadcrumbs a:focus-visible {
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .breadcrumbs a:hover,
+[data-theme="dark"] .breadcrumbs a:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+.breadcrumbs span {
+  color: var(--nova-color-neutral-600);
+}
+
+@media (min-width: 768px) {
+  .breadcrumbs {
+    margin-bottom: 1.5rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ============================
+ * 10. Doc Cards
+ * ============================ */
+
+.nova-doc-card {
+  display: block;
+  padding: var(--nova-shape-padding);
+  border: var(--nova-depth-card-border);
+  border-left: 3px solid transparent;
+  border-radius: var(--nova-shape-radius);
+  backdrop-filter: var(--nova-depth-card-backdrop);
+  -webkit-backdrop-filter: var(--nova-depth-card-backdrop);
+  text-decoration: none;
+  border-color: var(--nova-color-neutral-200);
+  border-left-color: transparent;
+  transition:
+    border-left-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+.nova-doc-card:hover,
+.nova-doc-card:focus-visible {
+  border-left-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 97%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-doc-card:hover,
+[data-theme="dark"] .nova-doc-card:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+@media (min-width: 768px) {
+  .nova-doc-card {
+    padding: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-doc-card {
+    padding: 1.5rem;
+  }
+}
+
+/* ============================
+ * 13. Tags
+ * ============================ */
+
+.tag {
+  display: inline-block;
+  padding: 0.125rem 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: var(--nova-shape-radius);
+  background-color: var(--nova-color-accent-50);
+  color: var(--nova-color-accent-700);
+  text-decoration: none;
+  border: 1px solid var(--nova-color-accent-200);
+}
+
+.tag:hover,
+.tag:focus-visible {
+  background-color: var(--nova-color-primary-100);
+  color: var(--nova-color-primary-800);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .tag {
+  background-color: var(--nova-color-accent-900);
+  color: var(--nova-color-accent-300);
+  border-color: var(--nova-color-accent-800);
+}
+
+[data-theme="dark"] .tag:hover,
+[data-theme="dark"] .tag:focus-visible {
+  background-color: var(--nova-color-primary-800);
+  color: var(--nova-color-primary-200);
+}
+
+/* ============================
+ * 14. Blog List
+ * ============================ */
+
+.blog-list-item {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .blog-list-item {
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+/* ============================
+ * 15. Card and Admonition Transitions
+ * ============================ */
+
+.nova-card,
+.pagination-nav a,
+[data-admonition-type] {
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    border-left-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+@media (hover: hover) {
+  .nova-card:hover {
+    border-color: var(--nova-color-primary-700);
+  }
+}
+
+/* ============================
+ * 17. Tag Transitions
+ * ============================ */
+
+.tag {
+  transition:
+    background-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease;
+}
+
+/* ============================
+ * 18. Link Transitions
+ * ============================ */
+
+article a {
+  transition: color var(--nova-motion-duration) ease;
+}
+
+/* ============================
+ * 19. Focus Ring Transition
+ * ============================ */
+
+*:focus-visible {
+  transition: outline-offset 100ms ease;
+}

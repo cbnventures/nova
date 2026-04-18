@@ -1,0 +1,59 @@
+/**
+ * Envoy — Back to top button visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Back to Top Button
+ * ============================ */
+
+.nova-back-to-top {
+  bottom: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  color: var(--nova-color-neutral-600);
+  background-color: var(--nova-envoy-surface-raised-light);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-envoy-radius-generous);
+  transition:
+    background-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease,
+    box-shadow var(--nova-motion-duration) ease;
+}
+
+.nova-back-to-top:hover,
+.nova-back-to-top:focus-visible {
+  color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-color: var(--nova-color-primary-300);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-back-to-top {
+  color: var(--nova-color-neutral-300);
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-envoy-border-dark);
+}
+
+[data-theme="dark"] .nova-back-to-top:hover,
+[data-theme="dark"] .nova-back-to-top:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* ============================
+ * 2. Responsive
+ * ============================ */
+
+@media (min-width: 768px) {
+  .nova-back-to-top {
+    bottom: 2rem;
+    right: 2rem;
+    width: 40px;
+    height: 40px;
+  }
+}

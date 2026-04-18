@@ -1,0 +1,156 @@
+---
+title: Testing with Crucible
+sidebar_position: 3
+tags:
+  - pipeline
+  - testing
+---
+
+# Testing with Crucible
+
+Crucible generates test scaffolds from your type signatures. If you wrote the types, you already described the test contract. Crucible reads the contract and writes the boilerplate.
+
+## How It Works
+
+Crucible scans every exported type signature in your workspace packages. For each exported function, it generates a test file with:
+
+- An assertion template matching the function signature.
+- Fixture data derived from the parameter types.
+- A snapshot test that captures the output shape.
+
+```alloy title="src/utils/format.al — source"
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+export function formatCurrency(amount: Numeric, locale: Text): Text {
+  return Intl.currency(amount, locale)
+}
+```
+
+From these two exports, Crucible generates:
+
+```alloy title="tests/format.assay.al — generated scaffold"
+import { formatDate, formatCurrency } from "@my-app/core/utils/format"
+
+// highlight-start
+describe("formatDate", () => {
+  it("returns Text for a valid Numeric input", () => {
+    const result: Text = formatDate(1714780800)
+    expect(result).toMatchSnapshot()
+  })
+})
+// highlight-end
+
+describe("formatCurrency", () => {
+  it("returns Text for valid Numeric and Text inputs", () => {
+    const result: Text = formatCurrency(49.99, "en-US")
+    expect(result).toMatchSnapshot()
+  })
+})
+```
+
+The assertion templates use snapshot testing by default. The first run captures the output. Subsequent runs verify it has not changed.
+
+:::tip
+Override any generated test by editing the file directly. Crucible respects manual changes — it only regenerates tests for functions that have no existing test file. Set `crucible = manual` in your manifest to prevent all regeneration after the first scaffold.
+:::
+
+## Running Tests
+
+```bash title="Run all tests"
+foundry crucible run
+```
+
+```text title="Output"
+  core
+    ✓ format.assay.al (2 tests, 0.8ms)
+    ✓ validate.assay.al (3 tests, 1.2ms)
+    ✓ parse.assay.al (4 tests, 0.9ms)
+  api
+    ✓ routes.assay.al (5 tests, 2.1ms)
+    ✓ handlers.assay.al (4 tests, 1.8ms)
+
+  18 tests passed in 1.4s
+```
+
+## Watch Mode
+
+Crucible can watch for file changes and re-run affected tests:
+
+```bash title="Watch for changes"
+foundry crucible watch
+```
+
+In watch mode, Crucible monitors the Tongs dependency graph. When a source file changes, it re-runs tests for that file and all downstream dependents. A change in `core` triggers tests in `core`, `api`, and `web`.
+
+## Snapshot Testing
+
+Crucible's snapshot tests capture the output shape of a function. When the output changes, the test fails with a diff showing what changed.
+
+```text title="Snapshot failure output"
+  ✗ formatDate — snapshot mismatch
+
+  Expected:
+    "2025-05-04"
+
+  Received:
+    "2025/05/04"
+
+  Update snapshot? Run: foundry crucible run --update-snapshots
+```
+
+:::info
+Snapshot files are stored in a `__snapshots__` directory next to each test file. They are plain text and should be committed to version control. Reviewing snapshot diffs during code review catches unintended output changes.
+:::
+
+## Fixture Generation
+
+For functions with complex input types, Crucible generates fixture data automatically:
+
+```alloy title="src/services/order.al — source"
+export interface OrderRequest {
+  customerId: Text
+  items: List<OrderItem>
+  shipping: ShippingMethod
+}
+
+export function processOrder(request: OrderRequest): OrderResult {
+  // ...
+}
+```
+
+```alloy title="tests/order.assay.al — generated with fixtures"
+import { processOrder } from "@my-app/api/services/order"
+
+const fixture: OrderRequest = {
+  customerId: "cust_001",
+  items: [{ sku: "item_001", quantity: 1, price: 29.99 }],
+  shipping: ShippingMethod.Standard,
+}
+
+describe("processOrder", () => {
+  it("returns OrderResult for a valid OrderRequest", () => {
+    const result: OrderResult = processOrder(fixture)
+    expect(result).toMatchSnapshot()
+  })
+})
+```
+
+Crucible infers sensible default values for each field type — strings get identifiers, numbers get realistic values, enums get their first variant.
+
+## Configuration
+
+Crucible respects the `crucible` directive in your manifest:
+
+| Value    | Behavior                                                         |
+|----------|------------------------------------------------------------------|
+| `auto`   | Regenerates scaffolds on every forge for new or changed exports. |
+| `manual` | Generates once on first forge. Never overwrites.                 |
+| `off`    | No test scaffolding. You manage tests entirely.                  |
+
+## Next Steps
+
+- [Warden Rules](/docs/pipeline/warden-rules/) — Linting rules that pair with Crucible for full code quality coverage.
+- [Build Pipeline](/docs/pipeline/build-pipeline/) — Where Crucible fits in the forge lifecycle.
+- [Your First Forge](/docs/guides/your-first-forge/) — See Crucible in action during initial workspace setup.

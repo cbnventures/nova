@@ -1,0 +1,49 @@
+/**
+ * Sentinel — Breadcrumbs visual styling.
+ *
+ * @since 0.15.0
+ */
+
+.nova-breadcrumbs {
+  margin-bottom: 1.5rem;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nova-breadcrumbs-link {
+  color: var(--nova-color-neutral-400);
+  text-decoration: none;
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-breadcrumbs-link:hover,
+.nova-breadcrumbs-link:focus-visible {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-breadcrumbs-link {
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-breadcrumbs-link:hover,
+[data-theme="dark"] .nova-breadcrumbs-link:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-breadcrumbs-current {
+  color: var(--nova-color-neutral-700);
+  font-weight: 500;
+}
+
+[data-theme="dark"] .nova-breadcrumbs-current {
+  color: var(--nova-color-neutral-200);
+}
+
+.nova-breadcrumbs-item:not(:last-child)::after {
+  color: var(--nova-color-neutral-300);
+}
+
+[data-theme="dark"] .nova-breadcrumbs-item:not(:last-child)::after {
+  color: var(--nova-color-neutral-700);
+}

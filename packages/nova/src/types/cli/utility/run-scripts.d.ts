@@ -1,77 +1,133 @@
-/**
- * CLI Utility - Run Scripts - Get npm command.
- *
- * @since 1.0.0
- */
-export type CLIUtilityRunScriptsGetNpmCommandReturns = string;
+import type { ChildProcess, ChildProcessWithoutNullStreams } from 'child_process';
+
+import type { SharedLogQueueEntry, SharedRunScriptsOptions } from '../../shared.d.ts';
 
 /**
- * CLI Utility - Run Scripts - Match scripts.
+ * CLI - Utility - Run Scripts - Get npm Command.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityRunScriptsMatchScriptsScripts = Record<string, string>;
-
-export type CLIUtilityRunScriptsMatchScriptsPattern = string;
-
-export type CLIUtilityRunScriptsMatchScriptsReturns = string[];
+export type CliUtilityRunScriptsGetNpmCommandReturns = string;
 
 /**
- * CLI Utility - Run Scripts - Read package.json.
+ * CLI - Utility - Run Scripts - Match Scripts.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityRunScriptsReadPackageJsonReturns = Promise<CLIUtilityRunScriptsReadPackageJsonParsed | undefined>;
+export type CliUtilityRunScriptsMatchScriptsScripts = Record<string, string>;
 
-export type CLIUtilityRunScriptsReadPackageJsonParsed = Record<string, unknown>;
+export type CliUtilityRunScriptsMatchScriptsPattern = string;
+
+export type CliUtilityRunScriptsMatchScriptsReturns = string[];
+
+export type CliUtilityRunScriptsMatchScriptsPrefix = string;
 
 /**
- * CLI Utility - Run Scripts - Run.
+ * CLI - Utility - Run Scripts - Read package.json.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityRunScriptsRunOptionsPattern = string;
+export type CliUtilityRunScriptsReadPackageJsonReturns = Promise<CliUtilityRunScriptsReadPackageJsonParsed | undefined>;
 
-export type CLIUtilityRunScriptsRunOptionsSequential = true | undefined;
+export type CliUtilityRunScriptsReadPackageJsonParsed = Record<string, unknown>;
 
-export type CLIUtilityRunScriptsRunOptionsParallel = true | undefined;
+export type CliUtilityRunScriptsReadPackageJsonCurrentDirectory = string;
 
-export type CLIUtilityRunScriptsRunOptions = {
-  pattern?: CLIUtilityRunScriptsRunOptionsPattern;
-  sequential?: CLIUtilityRunScriptsRunOptionsSequential;
-  parallel?: CLIUtilityRunScriptsRunOptionsParallel;
-};
+export type CliUtilityRunScriptsReadPackageJsonPackageJsonPath = string;
 
-export type CLIUtilityRunScriptsRunScripts = Record<string, string> | undefined;
-
-export type CLIUtilityRunScriptsRunReturns = Promise<void>;
+export type CliUtilityRunScriptsReadPackageJsonRaw = string;
 
 /**
- * CLI Utility - Run Scripts - Spawn script.
+ * CLI - Utility - Run Scripts - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityRunScriptsSpawnScriptScript = string;
+export type CliUtilityRunScriptsRunOptions = SharedRunScriptsOptions;
 
-export type CLIUtilityRunScriptsSpawnScriptReturns = Promise<number>;
+export type CliUtilityRunScriptsRunReturns = Promise<void>;
+
+export type CliUtilityRunScriptsRunPattern = string;
+
+export type CliUtilityRunScriptsRunPackageJson = Record<string, unknown> | undefined;
+
+export type CliUtilityRunScriptsRunScripts = Record<string, string> | undefined;
+
+export type CliUtilityRunScriptsRunMatchedScripts = string[];
+
+export type CliUtilityRunScriptsRunExitCode = number;
+
+export type CliUtilityRunScriptsRunBufferMs = number;
 
 /**
- * CLI Utility - Run Scripts - Spawn script buffered.
+ * CLI - Utility - Run Scripts - Run Parallel.
  *
- * @since 1.0.0
+ * @since 0.15.0
  */
-export type CLIUtilityRunScriptsSpawnScriptBufferedScript = string;
+export type CliUtilityRunScriptsRunParallelMatchedScripts = string[];
 
-export type CLIUtilityRunScriptsSpawnScriptBufferedResultExitCode = number;
+export type CliUtilityRunScriptsRunParallelBufferMs = number;
 
-export type CLIUtilityRunScriptsSpawnScriptBufferedResultStdout = string;
+export type CliUtilityRunScriptsRunParallelReturns = Promise<void>;
 
-export type CLIUtilityRunScriptsSpawnScriptBufferedResultStderr = string;
+export type CliUtilityRunScriptsRunParallelNpmCommand = string;
 
-export type CLIUtilityRunScriptsSpawnScriptBufferedResult = {
-  exitCode: CLIUtilityRunScriptsSpawnScriptBufferedResultExitCode;
-  stdout: CLIUtilityRunScriptsSpawnScriptBufferedResultStdout;
-  stderr: CLIUtilityRunScriptsSpawnScriptBufferedResultStderr;
-};
+export type CliUtilityRunScriptsRunParallelColorFunctions = ((text: string) => string)[];
 
-export type CLIUtilityRunScriptsSpawnScriptBufferedReturns = Promise<CLIUtilityRunScriptsSpawnScriptBufferedResult>;
+export type CliUtilityRunScriptsRunParallelPrefixes = Map<string, string>;
+
+export type CliUtilityRunScriptsRunParallelColorIndex = number;
+
+export type CliUtilityRunScriptsRunParallelScript = string;
+
+export type CliUtilityRunScriptsRunParallelColorFunction = (text: string) => string;
+
+export type CliUtilityRunScriptsRunParallelColoredPrefix = string;
+
+export type CliUtilityRunScriptsRunParallelQueue = SharedLogQueueEntry[];
+
+export type CliUtilityRunScriptsRunParallelPartialLines = Map<string, string>;
+
+export type CliUtilityRunScriptsRunParallelChildren = ChildProcessWithoutNullStreams[];
+
+export type CliUtilityRunScriptsRunParallelExitPromises = Promise<number>[];
+
+export type CliUtilityRunScriptsRunParallelLastFlushedScript = string;
+
+export type CliUtilityRunScriptsRunParallelFlushQueue = () => void;
+
+export type CliUtilityRunScriptsRunParallelPrefix = string;
+
+export type CliUtilityRunScriptsRunParallelFormattedLine = string;
+
+export type CliUtilityRunScriptsRunParallelChild = ChildProcessWithoutNullStreams;
+
+export type CliUtilityRunScriptsRunParallelHandleData = (data: Buffer, stream: 'stdout' | 'stderr') => void;
+
+export type CliUtilityRunScriptsRunParallelText = string;
+
+export type CliUtilityRunScriptsRunParallelLines = string[];
+
+export type CliUtilityRunScriptsRunParallelPartial = string;
+
+export type CliUtilityRunScriptsRunParallelExitPromise = Promise<number>;
+
+export type CliUtilityRunScriptsRunParallelFlushInterval = ReturnType<typeof setInterval>;
+
+export type CliUtilityRunScriptsRunParallelForwardSignal = (signal: NodeJS.Signals) => void;
+
+export type CliUtilityRunScriptsRunParallelExitResults = PromiseSettledResult<number>[];
+
+export type CliUtilityRunScriptsRunParallelFailed = boolean;
+
+/**
+ * CLI - Utility - Run Scripts - Spawn Script.
+ *
+ * @since 0.14.0
+ */
+export type CliUtilityRunScriptsSpawnScriptScript = string;
+
+export type CliUtilityRunScriptsSpawnScriptReturns = Promise<number>;
+
+export type CliUtilityRunScriptsSpawnScriptNpmCommand = string;
+
+export type CliUtilityRunScriptsSpawnScriptChild = ChildProcess;

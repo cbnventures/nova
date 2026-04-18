@@ -1,0 +1,25 @@
+/**
+ * Back To Top Button — Component structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Back To Top — Button
+ * ============================ */
+
+.nova-back-to-top {
+  position: fixed;
+  z-index: 100;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: none;
+  cursor: pointer;
+}
+
+.nova-back-to-top:active {
+  transform: none;
+}

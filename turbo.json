@@ -16,6 +16,7 @@
     "prod": {
       "cache": false,
       "dependsOn": [
+        "check",
         "build"
       ],
       "inputs": [],
@@ -23,7 +24,7 @@
       "persistent": true
     },
     "build": {
-      "cache": false,
+      "cache": true,
       "dependsOn": [
         "^build"
       ],
@@ -38,9 +39,8 @@
       "persistent": false
     },
     "check": {
-      "cache": false,
+      "cache": true,
       "dependsOn": [
-        "build",
         "^build"
       ],
       "inputs": [
@@ -53,7 +53,10 @@
     },
     "deploy": {
       "cache": false,
-      "dependsOn": [],
+      "dependsOn": [
+        "check",
+        "build"
+      ],
       "inputs": [],
       "outputs": [],
       "persistent": false

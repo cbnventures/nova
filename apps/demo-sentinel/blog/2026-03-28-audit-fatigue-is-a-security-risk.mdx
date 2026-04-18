@@ -1,0 +1,102 @@
+---
+title: "Audit Fatigue Is a Security Risk"
+authors: [rafael]
+tags: [spyglass, audit, compliance]
+date: 2026-03-28
+---
+
+We talk to security teams that spend 40% of their time preparing for audits. Not responding to incidents. Not improving their security posture. Preparing evidence binders for auditors who will review them once and file them. The time spent on compliance preparation is time not spent on security — and that tradeoff is itself a security risk.
+
+Audit fatigue is not a morale problem. It is an attack surface.
+
+{/* truncate */}
+
+## The Cost of Manual Evidence Collection
+
+A typical SOC 2 Type II audit requires evidence across 60 to 80 control points. For each control, the security team must produce documentation showing that the control exists, that it is enforced, and that it has been operating correctly for the entire audit period. In most organizations, this evidence is collected manually:
+
+- Screenshots of access control configurations
+- Exports from identity provider dashboards
+- Spreadsheets mapping users to roles to resources
+- Log excerpts showing that monitoring is active
+- Change management records from ticketing systems
+- Signed attestations from system owners
+
+Each piece of evidence is a point-in-time snapshot. The screenshot shows the access control configuration as it existed on the day the screenshot was taken. It does not show whether the configuration was the same yesterday, or last month, or at any point during the audit period.
+
+The manual process takes our customers an average of 320 engineering hours per audit cycle. That is eight weeks of a senior engineer's time — time that produces zero security value.
+
+## What Spyglass Replaces
+
+Spyglass maintains a continuous, immutable record of every security-relevant event in the Sentinel platform. It does not collect evidence on demand. It records evidence continuously, as a byproduct of normal operation.
+
+Here is what the evidence collection process looks like with and without Spyglass:
+
+| Control Point         | Manual Process                                       | Spyglass Process                            |
+|-----------------------|------------------------------------------------------|---------------------------------------------|
+| Access control exists | Screenshot of IAM console                            | Continuous policy evaluation log            |
+| MFA is enforced       | Export from identity provider                        | Per-session MFA verification records        |
+| Logs are retained     | Storage bucket listing + retention policy screenshot | Immutable log with cryptographic chain      |
+| Monitoring is active  | Dashboard screenshot + alert configuration export    | Watchtower evaluation records (90s cadence) |
+| Changes are reviewed  | Jira ticket exports + approval screenshots           | Parapet simulation records for every change |
+| Encryption is enabled | Configuration file excerpts                          | Rampart tunnel key rotation records         |
+
+Every row in the right column is generated automatically. The security team does not prepare evidence. They run a query:
+
+```bash title="Generate complete SOC 2 evidence package"
+sentinel spyglass export \
+  --framework soc2-type2 \
+  --period "2025-07-01..2025-12-31" \
+  --format evidence-bundle
+```
+
+```text title="Evidence bundle output"
+SOC 2 Type II Evidence Bundle — 2025-H2
+  Generated: 2026-01-03T09:00:00Z
+  Period:    2025-07-01 to 2025-12-31 (184 days)
+
+  Control categories:
+    CC6: Logical and Physical Access    14 controls  PASS
+    CC7: System Operations              11 controls  PASS
+    CC8: Change Management               8 controls  PASS
+    CC9: Risk Mitigation                  6 controls  PASS
+
+  Evidence artifacts: 2,847,291 records
+  Cryptographic integrity: SHA-256 chain verified
+  Gaps detected: 0 (continuous coverage, no missing intervals)
+
+  Bundle size: 4.2 GB (compressed)
+  Export formats: PDF summary + JSON detail + raw log archive
+```
+
+320 engineering hours reduced to one command. The evidence is more complete — it covers every second of the audit period, not just the moments someone remembered to take a screenshot. And it is cryptographically verifiable, so the auditor can independently confirm that no records were modified after the fact.
+
+## The Real Risk
+
+The security risk is not that audits are tedious. The risk is that the time spent on audit preparation displaces the time available for actual security work. We tracked how one customer's security team spent their time before and after deploying Spyglass:
+
+```text title="Security team time allocation"
+Before Spyglass:
+  Audit preparation:     40%
+  Incident response:     15%
+  Policy review:         10%
+  Threat modeling:        5%
+  Tooling improvement:   10%
+  Meetings/coordination: 20%
+
+After Spyglass:
+  Audit preparation:      5%
+  Incident response:     20%
+  Policy review:         20%
+  Threat modeling:       15%
+  Tooling improvement:   20%
+  Meetings/coordination: 20%
+```
+
+The team did not get bigger. The same people are now spending 35% of their time on policy review, threat modeling, and tooling improvement instead of collecting screenshots. That is 35% of a security team's capacity redirected from compliance theater to actual defense.
+
+## The Principle
+
+Compliance evidence should be a byproduct of security operations, not a separate workstream. If you are doing security correctly — logging decisions, evaluating policies continuously, rotating keys on schedule, simulating changes before deployment — the audit evidence already exists. You just need a system that records it continuously and exports it on demand.
+
+That is what Spyglass does. Not because audits are important (they are), but because the alternative — a security team that spends 40% of its time on evidence collection — is a security team that is 40% less effective at its actual job.

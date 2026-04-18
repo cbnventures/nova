@@ -8,269 +8,297 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { test } from 'node:test';
 
-import { CLIRecipePackageJsonSyncIdentity } from '@/cli/recipe/package-json/sync-identity.js';
+import {
+  afterAll, afterEach, beforeEach, describe, it, vi,
+} from 'vitest';
+
+import { ApiSpdxLicenses } from '../../../../api/spdx-licenses.js';
+import { CliRecipePackageJsonSyncIdentity } from '../../../../cli/recipe/package-json/sync-identity.js';
 
 import type {
-  CLIRecipePackageJsonSyncIdentityTestOriginalCwd,
-  CLIRecipePackageJsonSyncIdentityTestSandboxRoot,
-} from '@/types/tests/cli/recipe/package-json/sync-identity.test.d.ts';
+  TestsCliRecipePackageJsonSyncIdentityRunNovaConfigContents,
+  TestsCliRecipePackageJsonSyncIdentityRunNovaConfigPath,
+  TestsCliRecipePackageJsonSyncIdentityRunOriginalCwd,
+  TestsCliRecipePackageJsonSyncIdentityRunOutput,
+  TestsCliRecipePackageJsonSyncIdentityRunPackageJsonContents,
+  TestsCliRecipePackageJsonSyncIdentityRunPackageJsonPath,
+  TestsCliRecipePackageJsonSyncIdentityRunParsed,
+  TestsCliRecipePackageJsonSyncIdentityRunProjectDirectory,
+  TestsCliRecipePackageJsonSyncIdentityRunSandboxPath,
+  TestsCliRecipePackageJsonSyncIdentityRunSandboxRoot,
+  TestsCliRecipePackageJsonSyncIdentityRunTemporaryDirectory,
+  TestsCliRecipePackageJsonSyncIdentityRunWorkspaceDirectory,
+  TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonContents,
+  TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonPath,
+} from '../../../../types/tests/cli/recipe/package-json/sync-identity.test.d.ts';
 
 /**
- * CLI Recipe - package.json - Sync Identity - Run.
+ * Tests - CLI - Recipe - package.json - Sync Identity - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-test('CLIRecipePackageJsonSyncIdentity.run', async (context) => {
-  const originalCwd: CLIRecipePackageJsonSyncIdentityTestOriginalCwd = process.cwd();
-  const sandboxRoot: CLIRecipePackageJsonSyncIdentityTestSandboxRoot = await mkdtemp(join(tmpdir(), `nova-${context.name}-`));
+describe('CliRecipePackageJsonSyncIdentity.run', async () => {
+  const originalCwd: TestsCliRecipePackageJsonSyncIdentityRunOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsCliRecipePackageJsonSyncIdentityRunTemporaryDirectory = tmpdir();
+  const sandboxPath: TestsCliRecipePackageJsonSyncIdentityRunSandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsCliRecipePackageJsonSyncIdentityRunSandboxRoot = await mkdtemp(sandboxPath);
 
-  context.after(async () => {
+  beforeEach(() => {
+    vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify({
+      licenses: [
+        { licenseId: 'MIT' },
+        { licenseId: 'Apache-2.0' },
+        { licenseId: 'ISC' },
+      ],
+    }))));
+
+    return;
+  });
+
+  afterEach(() => {
+    ApiSpdxLicenses.resetForTesting();
+
+    vi.restoreAllMocks();
+
+    return;
+  });
+
+  afterAll(async () => {
     process.chdir(originalCwd);
-
-    process.exitCode = undefined;
 
     await rm(sandboxRoot, {
       recursive: true,
       force: true,
     });
+
+    return;
   });
 
-  await context.test('sets exit code when not at project root', async () => {
-    const projectDir = join(sandboxRoot, 'not-project-root');
+  it('sets exit code when not at project root', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonSyncIdentityRunProjectDirectory = join(sandboxRoot, 'not-project-root');
 
-    await mkdir(projectDir, { recursive: true });
+    await mkdir(projectDirectory, { recursive: true });
 
-    process.chdir(projectDir);
+    process.chdir(projectDirectory);
 
-    process.exitCode = undefined;
-
-    await CLIRecipePackageJsonSyncIdentity.run({});
+    await CliRecipePackageJsonSyncIdentity.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
   });
 
-  await context.test('skips when no workspaces have the recipe enabled', async () => {
-    const projectDir = join(sandboxRoot, 'no-recipe');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('skips when no workspaces have the recipe enabled', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonSyncIdentityRunProjectDirectory = join(sandboxRoot, 'no-recipe');
+    const workspaceDirectory: TestsCliRecipePackageJsonSyncIdentityRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-no-recipe',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonSyncIdentityRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonSyncIdentityRunPackageJsonContents = JSON.stringify({
+      name: 'test-no-recipe',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-          },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonSyncIdentityRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonSyncIdentityRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: 'wrong-name',
-        version: '1.0.0',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonContents = JSON.stringify({
+      name: 'wrong-name',
+      version: '1.0.0',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonSyncIdentity.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
     // The name should not have been synced because the recipe is not enabled.
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonSyncIdentityRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonSyncIdentityRunParsed = JSON.parse(output);
 
     strictEqual(parsed['name'], 'wrong-name');
+
+    return;
   });
 
-  await context.test('syncs name from workspace manifest', async () => {
-    const projectDir = join(sandboxRoot, 'sync-name');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('syncs name from workspace manifest', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonSyncIdentityRunProjectDirectory = join(sandboxRoot, 'sync-name');
+    const workspaceDirectory: TestsCliRecipePackageJsonSyncIdentityRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-sync-name',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonSyncIdentityRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonSyncIdentityRunPackageJsonContents = JSON.stringify({
+      name: 'test-sync-name',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'sync-identity': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonSyncIdentityRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonSyncIdentityRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'sync-identity': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: 'wrong-name',
-        version: '1.0.0',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonContents = JSON.stringify({
+      name: 'wrong-name',
+      version: '1.0.0',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonSyncIdentity.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonSyncIdentityRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonSyncIdentityRunParsed = JSON.parse(output);
 
     strictEqual(parsed['name'], '@test/core');
+
+    return;
   });
 
-  await context.test('sets freezable workspace version to 0.0.0', async () => {
-    const projectDir = join(sandboxRoot, 'freezable-version');
-    const workspaceDir = join(projectDir, 'packages', 'config');
+  it('sets freezable workspace version to 0.0.0', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonSyncIdentityRunProjectDirectory = join(sandboxRoot, 'freezable-version');
+    const workspaceDirectory: TestsCliRecipePackageJsonSyncIdentityRunWorkspaceDirectory = join(projectDirectory, 'packages', 'config');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-freezable',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonSyncIdentityRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonSyncIdentityRunPackageJsonContents = JSON.stringify({
+      name: 'test-freezable',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/config': {
-            name: 'test-config',
-            role: 'config',
-            policy: 'freezable',
-            recipes: {
-              'sync-identity': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonSyncIdentityRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonSyncIdentityRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/config': {
+          name: 'config-test',
+          role: 'config',
+          policy: 'freezable',
+          recipes: {
+            'sync-identity': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-config',
-        version: '1.2.3',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonContents = JSON.stringify({
+      name: 'config-test',
+      version: '1.2.3',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonSyncIdentity.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
       replaceFile: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonSyncIdentityRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonSyncIdentityRunParsed = JSON.parse(output);
 
     strictEqual(parsed['version'], '0.0.0');
+
+    return;
   });
 
-  await context.test('does not modify files during dry run', async () => {
-    const projectDir = join(sandboxRoot, 'dry-run');
-    const workspaceDir = join(projectDir, 'packages', 'core');
+  it('does not modify files during dry run', async () => {
+    const projectDirectory: TestsCliRecipePackageJsonSyncIdentityRunProjectDirectory = join(sandboxRoot, 'dry-run');
+    const workspaceDirectory: TestsCliRecipePackageJsonSyncIdentityRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
-    await mkdir(workspaceDir, { recursive: true });
+    await mkdir(workspaceDirectory, { recursive: true });
 
-    await writeFile(
-      join(projectDir, 'package.json'),
-      JSON.stringify({
-        name: 'test-dry-run',
-      }, null, 2),
-      'utf-8',
-    );
+    const packageJsonPath: TestsCliRecipePackageJsonSyncIdentityRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: TestsCliRecipePackageJsonSyncIdentityRunPackageJsonContents = JSON.stringify({
+      name: 'test-dry-run',
+    }, null, 2);
 
-    await writeFile(
-      join(projectDir, 'nova.config.json'),
-      JSON.stringify({
-        workspaces: {
-          './packages/core': {
-            name: '@test/core',
-            role: 'package',
-            policy: 'distributable',
-            recipes: {
-              'sync-identity': [true],
-            },
+    await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
+
+    const novaConfigPath: TestsCliRecipePackageJsonSyncIdentityRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: TestsCliRecipePackageJsonSyncIdentityRunNovaConfigContents = JSON.stringify({
+      workspaces: {
+        './packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+          recipes: {
+            'sync-identity': [true],
           },
         },
-      }, null, 2),
-      'utf-8',
-    );
+      },
+    }, null, 2);
 
-    await writeFile(
-      join(workspaceDir, 'package.json'),
-      JSON.stringify({
-        name: 'wrong-name',
-        version: '1.0.0',
-      }, null, 2),
-      'utf-8',
-    );
+    await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    process.chdir(projectDir);
+    const workspacePackageJsonPath: TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonContents = JSON.stringify({
+      name: 'wrong-name',
+      version: '1.0.0',
+    }, null, 2);
 
-    process.exitCode = undefined;
+    await writeFile(workspacePackageJsonPath, workspacePackageJsonContents, 'utf-8');
 
-    await CLIRecipePackageJsonSyncIdentity.run({
+    process.chdir(projectDirectory);
+
+    await CliRecipePackageJsonSyncIdentity.run({
       dryRun: true,
     });
 
     strictEqual(process.exitCode, undefined);
 
     // The file should not have been modified.
-    const output = await readFile(join(workspaceDir, 'package.json'), 'utf-8');
-    const parsed = JSON.parse(output);
+    const output: TestsCliRecipePackageJsonSyncIdentityRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: TestsCliRecipePackageJsonSyncIdentityRunParsed = JSON.parse(output);
 
     strictEqual(parsed['name'], 'wrong-name');
+
+    return;
   });
+
+  return;
 });

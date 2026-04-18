@@ -1,0 +1,131 @@
+---
+title: Branded Domains
+sidebar_position: 1
+tags:
+  - features
+  - domains
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Branded Domains
+
+Run every Beacon link on your own domain. Custom domains, Ironclad certificate provisioning, and multi-domain routing — all managed through the CLI or Spoke API.
+
+## Why Branded Domains
+
+Generic short link services hide your brand behind someone else's domain. Beacon links on a branded domain are recognizable, trustworthy, and carry higher click-through rates:
+
+```
+https://go.yourcompany.com/launch     (branded — your domain, your trust)
+https://sho.rt/x9k2mP7                (generic — whose link is this?)
+```
+
+Every Beacon link on a branded domain still carries full attribution metadata. The domain is yours; the intelligence is Signal's.
+
+## DNS Setup
+
+<Tabs>
+<TabItem value="single" label="Single Domain" default>
+
+Point your branded subdomain to Signal's edge with a CNAME record:
+
+| Type  | Name                 | Target                    | Proxy |
+|-------|----------------------|---------------------------|-------|
+| CNAME | `go.yourcompany.com` | `edge.signal.example.dev` | Yes   |
+
+Then register the domain with Signal:
+
+```bash title="Register a branded domain"
+signal beacon domain add --domain "go.yourcompany.com"
+```
+
+Signal verifies DNS resolution and provisions an Ironclad certificate automatically.
+
+</TabItem>
+<TabItem value="multi" label="Multiple Domains">
+
+Serve multiple branded domains from a single Signal account. Register each one:
+
+```bash title="Register multiple domains"
+signal beacon domain add --domain "go.yourcompany.com"
+signal beacon domain add --domain "links.brand.io"
+signal beacon domain add --domain "l.campaign.dev"
+```
+
+Each domain operates as an isolated namespace. A Beacon link created on `go.yourcompany.com` is only accessible on `go.yourcompany.com`.
+
+| Domain               | Use Case            | Status  |
+|----------------------|---------------------|---------|
+| `go.yourcompany.com` | Primary brand links | Active  |
+| `links.brand.io`     | Partner campaigns   | Active  |
+| `l.campaign.dev`     | Internal testing    | Pending |
+
+</TabItem>
+<TabItem value="wildcard" label="Wildcard">
+
+For organizations with many teams, use a wildcard subdomain:
+
+| Type  | Name                   | Target                    |
+|-------|------------------------|---------------------------|
+| CNAME | `*.go.yourcompany.com` | `edge.signal.example.dev` |
+
+Then scope Beacon links to team subdomains:
+
+```bash
+signal beacon create --domain "marketing.go.yourcompany.com" --url "https://example.com"
+signal beacon create --domain "eng.go.yourcompany.com" --url "https://example.com"
+```
+
+</TabItem>
+</Tabs>
+
+## Ironclad Certificate Provisioning
+
+Signal provisions Ironclad TLS certificates automatically for every registered domain. No manual certificate management. Certificates auto-renew 30 days before expiration.
+
+```bash title="Check certificate status"
+signal beacon domain status --domain "go.yourcompany.com"
+```
+
+```json title="Domain status"
+{
+  "domain": "go.yourcompany.com",
+  "status": "active",
+  "certificate": {
+    "issuer": "Ironclad",
+    "validFrom": "2025-01-15T00:00:00Z",
+    "validUntil": "2025-04-15T23:59:59Z",
+    "autoRenew": true
+  },
+  "redirectLatency": "2ms"
+}
+```
+
+:::warning
+DNS changes can take up to 48 hours to propagate globally. During propagation, some regions may see certificate errors. Signal retries Ironclad provisioning every 15 minutes until DNS resolves cleanly across all 180+ regions.
+:::
+
+## Domain-Specific Defaults
+
+Configure per-domain defaults for redirect behavior and fallback URLs:
+
+```bash title="Set domain defaults"
+signal beacon domain config \
+  --domain "go.yourcompany.com" \
+  --redirect-code 301 \
+  --fallback-url "https://yourcompany.com" \
+  --slug-prefix "q1-"
+```
+
+| Setting         | Type   | Description                                      |
+|-----------------|--------|--------------------------------------------------|
+| `redirect-code` | number | HTTP status code for redirects (301 or 302).     |
+| `fallback-url`  | string | Destination for unresolved slugs on this domain. |
+| `slug-prefix`   | string | Auto-prepend a prefix to all new slugs.          |
+
+## Next Steps
+
+- [Click Attribution](/docs/features/click-attribution/) — Trace how branded links contribute to conversions.
+- [Campaign Management](/docs/features/campaign-management/) — Organize Beacon links into campaigns.

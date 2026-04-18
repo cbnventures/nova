@@ -1,0 +1,172 @@
+---
+id: sentinel
+title: Sentinel
+description: Teal and indigo preset with Unbounded, DM Sans, and JetBrains Mono fonts, rounded shapes, and flat card depth.
+sidebar_position: 2
+keywords:
+  - nova
+  - docusaurus facades
+  - sentinel preset
+  - teal theme
+  - unbounded font
+  - dm sans
+  - jetbrains mono
+  - rounded shapes
+  - flat cards
+  - canopy navbar
+  - embassy footer
+tags:
+  - facades
+  - preset
+  - sentinel
+  - docusaurus
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+import ThemedImage from '@theme/ThemedImage';
+
+import sentinelLight from './_assets_/sentinel-light.png';
+import sentinelDark from './_assets_/sentinel-dark.png';
+
+# Sentinel
+
+Teal and indigo tones paired with Unbounded headings, DM Sans body text, and JetBrains Mono for code blocks. Rounded shapes with comfortable spacing and flat cards with bordered code blocks.
+
+## Why Use This Preset?
+
+- Cool teal palette so security and compliance documentation feels authoritative and calm.
+- Unbounded display font so headings are distinctive and commanding without sacrificing readability.
+- Flat, borderless cards so the layout stays clean and scannable across long reference pages.
+
+## Preview
+
+<ThemedImage sources={{ light: sentinelLight, dark: sentinelDark }} alt="Sentinel preset preview" width={1280} height={900} style={{ maxWidth: '100%', height: 'auto' }} />
+
+## Summary
+
+Sentinel is designed for security and compliance documentation. The cool palette communicates trust while the flat card depth keeps the layout clean and scannable. Motion is set to subtle speed with staggered reveals disabled and hover effects enabled.
+
+## Configuration
+
+The full default configuration for the Sentinel preset:
+
+```ts
+{
+  preset: 'sentinel',
+  // Default values (no overrides needed):
+  // colors.primary:          '#0d9488'
+  // colors.accent:           '#6366f1'
+  // colors.neutral:          '#64748b'
+  // fonts.display:           'Unbounded'
+  // fonts.body:              'DM Sans'
+  // fonts.code:              'JetBrains Mono'
+  // shape.radius:            'rounded'
+  // shape.density:           'comfortable'
+  // depth.cards:             'flat'
+  // depth.codeBlocks:        'bordered'
+  // motion.speed:            'subtle'
+  // motion.staggeredReveals: false
+  // motion.hoverEffects:     true
+  // navbar:                  'canopy'
+  // footer:                  'embassy'
+}
+```
+
+## Overrides
+
+Override any category to customize the Sentinel identity. Unspecified values keep their defaults.
+
+<Tabs groupId="sentinel-overrides">
+  <TabItem value="colors" label="Colors" default>
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'sentinel',
+  overrides: {
+    colors: {
+      primary: '#059669',
+      accent: '#8b5cf6',
+      neutral: '#475569',
+    },
+  },
+}
+```
+
+Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+
+  </TabItem>
+  <TabItem value="fonts" label="Fonts">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'sentinel',
+  overrides: {
+    fonts: {
+      display: 'Outfit',
+      body: 'Source Sans 3',
+      code: 'Fira Code',
+    },
+  },
+}
+```
+
+Font families are set as CSS custom properties. Google Fonts are loaded automatically.
+
+  </TabItem>
+  <TabItem value="shape" label="Shape & Depth">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'sentinel',
+  overrides: {
+    shape: {
+      radius: 'sharp',
+      density: 'compact',
+    },
+    depth: {
+      cards: 'elevated',
+      codeBlocks: 'elevated',
+    },
+  },
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## Navbar and Footer
+
+Sentinel uses the **Canopy** navbar and **Embassy** footer.
+
+| Slot   | Variant   | Description                                      |
+|--------|-----------|--------------------------------------------------|
+| Navbar | `canopy`  | Navigation bar with canopy-style dropdown menus. |
+| Footer | `embassy` | Structured footer with categorized link groups.  |
+
+Override the variant in the preset options:
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'sentinel',
+  overrides: {
+    navbar: 'bridge',
+    footer: 'commons',
+  },
+}
+```
+
+Available navbar variants:
+
+- `bridge`
+- `canopy`
+- `monolith`
+- `compass`
+
+Available footer variants:
+
+- `commons`
+- `embassy`
+- `ledger`
+- `launchpad`

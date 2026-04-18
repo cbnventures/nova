@@ -16,6 +16,7 @@ tags:
   - code style
 ---
 
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -23,7 +24,13 @@ Require named type aliases instead of inline type annotations in code files so e
 
 ## Summary
 
-The `no-inline-type-annotation` rule reports any type annotation that is not a plain `TSTypeReference` without type arguments. Arrays, unions, intersections, object literals, tuples, generics, function types, and primitive keywords are all flagged. The rule skips `.d.ts` files where inline types are expected.
+The `no-inline-type-annotation` rule reports any type annotation or `as` assertion that is not a plain `TSTypeReference` without concrete type arguments.
+
+Arrays, unions, intersections, object literals, tuples, generics, function types, and primitive keywords are all flagged — both in the `: Type` annotation position and the `as Type` assertion position.
+
+Generic type arguments that reference enclosing type parameters (e.g., `as SomeType<T>` inside a `function f<T>()`) are allowed because the dependency is dynamic.
+
+The rule skips `.d.ts` files where inline types are expected.
 
 ## Why Use This Rule?
 
@@ -43,6 +50,14 @@ The `no-inline-type-annotation` rule reports any type annotation that is not a p
     const config: RunnerRunConfig = JSON.parse(raw);
 
     let selectedPackage: RunnerRunSelectedPackage;
+
+    // Named type in as-assertion.
+    const exports: ImportDocsExports = novaPackage['exports'] as ImportDocsExports;
+
+    // Dynamic type parameter dependency — allowed inline.
+    function fetch<T>(value: unknown) {
+      const result: FetchResult = value as ResponseType<T>;
+    }
     ```
 
   </TabItem>
@@ -58,6 +73,9 @@ The `no-inline-type-annotation` rule reports any type annotation that is not a p
     const name: string = '';
 
     const obj: { name: string } = { name: 'test' };
+
+    // Inline type in as-assertion.
+    const exports = novaPackage['exports'] as Record<string, unknown>;
     ```
 
   </TabItem>
@@ -65,30 +83,79 @@ The `no-inline-type-annotation` rule reports any type annotation that is not a p
 
 ## Configuration
 
-Enable the rule in your ESLint <Term title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling">flat config</Term>:
+<Tabs groupId="no-inline-type-annotation-config">
+  <TabItem value="default" label="Default" default>
 
-```ts
-import { noInlineTypeAnnotation } from '@cbnventures/nova/rules/eslint';
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
 
-export default [
-  {
-    plugins: {
-      '@cbnventures/nova': {
+    ```ts
+    import { NoInlineTypeAnnotation } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-inline-type-annotation': NoInlineTypeAnnotation.rule,
+            },
+          },
+        },
         rules: {
-          'no-inline-type-annotation': noInlineTypeAnnotation,
+          '@cbnventures/nova/no-inline-type-annotation': ['error'],
         },
       },
-    },
-    rules: {
-      '@cbnventures/nova/no-inline-type-annotation': ['warn'],
-    },
-  },
-];
-```
+    ];
+    ```
 
-This rule has no additional options.
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { NoInlineTypeAnnotation } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'no-inline-type-annotation': NoInlineTypeAnnotation.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/no-inline-type-annotation': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option        | Type       | Default | Description            |
+|---------------|------------|---------|------------------------|
+| `ignoreFiles` | `string[]` | `[]`    | File patterns to skip. |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Warning fires on a `.d.ts` file.** — The rule skips files ending in `.d.ts`. If the warning fires anyway, verify that the file extension is correct and that the filename reaches the rule.
-- **Simple type references like `: MyType` are allowed.** — Only plain `TSTypeReference` without type arguments passes. Generics like `: Map<K, V>` are still flagged because the type arguments are inline.
+- **Warning fires on a `.d.ts` file** — The rule skips files ending in `.d.ts`. If the warning fires anyway, verify that the file extension is correct and that the filename reaches the rule.
+- **Simple type references like `: MyType` are allowed** — Only plain `TSTypeReference` without type arguments passes. Generics like `: Map<K, V>` are still flagged because the type arguments are inline.
+- **`as const` is allowed** — The `as const` assertion is a plain type reference with no type arguments, so it passes.
+- **`as SomeType<T>` is allowed when `T` is a type parameter** — Generic type arguments that reference enclosing type parameters are considered dynamic dependencies and are not flagged.

@@ -1,0 +1,106 @@
+/**
+ * Envoy — Content Footer visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Section Label
+ * ============================ */
+
+.nova-content-footer-section-label {
+  color: var(--nova-envoy-text-muted-light);
+}
+
+[data-theme="dark"] .nova-content-footer-section-label {
+  color: var(--nova-envoy-text-muted-dark);
+}
+
+/* ============================
+ * Share Button
+ * ============================ */
+
+.nova-content-footer-share-button {
+  color: var(--nova-color-neutral-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+  border-color: var(--nova-color-neutral-200);
+  border-radius: var(--nova-envoy-radius-pill);
+
+  transition: color 200ms ease,
+              border-color 200ms ease,
+              background-color 200ms ease;
+}
+
+[data-theme="dark"] .nova-content-footer-share-button {
+  color: var(--nova-color-neutral-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-envoy-border-dark);
+}
+
+.nova-content-footer-share-button:hover,
+.nova-content-footer-share-button:focus-visible {
+  color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-content-footer-share-button:hover,
+[data-theme="dark"] .nova-content-footer-share-button:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* ============================
+ * Share Copied
+ * ============================ */
+
+.nova-content-footer-share-copied {
+  color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-content-footer-share-copied {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* ============================
+ * Edit This Page
+ * ============================ */
+
+.nova-content-footer-edit .nova-edit-this-page {
+  font-size: 0.875rem;
+  color: var(--nova-envoy-text-muted-light);
+  text-decoration: none;
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-content-footer-edit .nova-edit-this-page:hover,
+.nova-content-footer-edit .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page {
+  color: var(--nova-envoy-text-muted-dark);
+}
+
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:hover,
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Last Updated
+ * ============================ */
+
+.nova-content-footer-edit .nova-last-updated {
+  font-size: 0.8125rem;
+  color: var(--nova-envoy-text-muted-light);
+}
+
+[data-theme="dark"] .nova-content-footer-edit .nova-last-updated {
+  color: var(--nova-envoy-text-muted-dark);
+}

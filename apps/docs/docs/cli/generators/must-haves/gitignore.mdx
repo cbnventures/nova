@@ -1,11 +1,117 @@
 ---
 id: gitignore
 title: Gitignore (.gitignore)
-description: x
+description: Generate a .gitignore file with common patterns for Node.js, macOS, and editor artifacts.
 keywords:
-  - x
+  - nova
+  - nova generate
+  - gitignore
+  - git
+  - ignore patterns
+  - node_modules
 tags:
-  - x
+  - cli
+  - generator
+  - must-haves
 ---
 
-Coming soon
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Create a `.gitignore` file with pre-configured patterns for Node.js projects, covering build output, editor files, and OS artifacts.
+
+## Why Use This Command?
+
+- Prevents build artifacts, `node_modules`, and OS junk files from cluttering Git history.
+- Ships with sensible defaults so new projects start with a clean ignore list.
+- Supports adding custom ignore patterns interactively.
+
+## Requirements
+
+- **Node.js runtime** — Use any Node.js <Terminology title="long term support" to="/docs/quickstart/terminology#fundamentals" color={true}>LTS</Terminology> release.
+- **Project root** — Run the command from the directory containing the top-level `package.json`.
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    # Original
+    nova generate must-haves gitignore
+
+    # Shorthand
+    nova gen must gitignore
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    # Original
+    npx --yes @cbnventures/nova@latest generate must-haves gitignore
+
+    # Shorthand
+    npx --yes @cbnventures/nova@latest gen must gitignore
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag                 | Description                                                            |
+|----------------------|------------------------------------------------------------------------|
+| `-d, --dry-run`      | Preview the target file path without writing anything to disk.         |
+| `-r, --replace-file` | Overwrite the existing file instead of creating a `.nova-backup` copy. |
+
+## Output Files
+
+| File         | Description                                                        |
+|--------------|--------------------------------------------------------------------|
+| `.gitignore` | Git ignore rules for build output, editor files, and OS artifacts. |
+
+## How It Works
+
+### New File
+
+When `.gitignore` does not exist yet, the generator creates it from the built-in template. You are then prompted to add your own patterns to the Project Excludes section.
+
+### Existing File
+
+When `.gitignore` already exists, you are prompted to choose between:
+
+- **Manage existing patterns** — Reconstructs the file into the two-layer structure by separating template patterns from your custom patterns, then opens a menu where you can add, edit, or delete patterns in the Project Excludes section. Template patterns are read-only.
+- **Regenerate from template** — Replaces the file with a fresh copy from the template (a `.nova-backup` copy is created unless `--replace-file` is set).
+
+:::tip Overriding a File Inside an Ignored Directory
+
+Git does not allow negating a path inside a directory that is fully ignored with `dir/`. To track a specific file inside an ignored directory, add the following sequence to the **Project Excludes** section:
+
+```gitignore
+!node_modules/
+node_modules/*
+!node_modules/my-local-package
+```
+
+This first un-ignores the directory itself, then re-ignores its contents with a wildcard, and finally un-ignores the specific path you want tracked.
+
+:::
+
+### Manage Menu
+
+When managing existing patterns, the following actions are available:
+
+- **Add a pattern** — Enter an ignore pattern (e.g. `logs/`) or a negation pattern (e.g. `!.vscode/settings.json`) to override a template rule. Duplicate and reserved patterns are blocked.
+- **Edit a pattern** — Select a pattern from Project Excludes and replace it.
+- **Delete a pattern** — Select a pattern from Project Excludes to remove.
+- **Save & Exit** — Exit the manage menu.
+- **Back** — Return to the mode selection menu.
+
+### Regenerate Prompts
+
+When regenerating (or creating a new file), the generator prompts you to add custom ignore patterns:
+
+1. **Pattern to ignore** — Enter the pattern (e.g. `dist/`, `*.log`). Leave empty to finish.
+2. Repeat until you leave the pattern empty.

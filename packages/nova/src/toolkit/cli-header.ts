@@ -1,97 +1,159 @@
-import { PATTERN_ANSI, PATTERN_ANSI_START } from '@/lib/regex.js';
-import { Logger } from '@/toolkit/index.js';
+import { LIB_REGEX_PATTERN_ANSI, LIB_REGEX_PATTERN_ANSI_START } from '../lib/regex.js';
+import { Logger } from './index.js';
 
 import type {
-  CLIHeaderAlignAlign,
-  CLIHeaderAlignReturns,
-  CLIHeaderAlignString,
-  CLIHeaderAlignWidth,
-  CLIHeaderBorderCharsReturns,
-  CLIHeaderBorderCharsStyle,
-  CLIHeaderPadToWidthReturns,
-  CLIHeaderPadToWidthString,
-  CLIHeaderPadToWidthWidth,
-  CLIHeaderRenderContentStrings,
-  CLIHeaderRenderDisplayStrings,
-  CLIHeaderRenderOptions,
-  CLIHeaderRenderReturns,
-  CLIHeaderRenderTexts,
-  CLIHeaderStripAnsiReturns,
-  CLIHeaderStripAnsiString,
-  CLIHeaderTruncateMax,
-  CLIHeaderTruncateReturns,
-  CLIHeaderTruncateString,
-  CLIHeaderVisibleLengthReturns,
-  CLIHeaderVisibleLengthString,
-} from '@/types/toolkit/cli-header.d.ts';
+  ToolkitCliHeaderAlignAlign,
+  ToolkitCliHeaderAlignAvailableSpace,
+  ToolkitCliHeaderAlignLeftPadding,
+  ToolkitCliHeaderAlignReturns,
+  ToolkitCliHeaderAlignRightPadding,
+  ToolkitCliHeaderAlignString,
+  ToolkitCliHeaderAlignStringLength,
+  ToolkitCliHeaderAlignWidth,
+  ToolkitCliHeaderBorderCharactersReturns,
+  ToolkitCliHeaderBorderCharactersStyle,
+  ToolkitCliHeaderPadToWidthPaddingCount,
+  ToolkitCliHeaderPadToWidthReturns,
+  ToolkitCliHeaderPadToWidthString,
+  ToolkitCliHeaderPadToWidthVisibleLength,
+  ToolkitCliHeaderPadToWidthWidth,
+  ToolkitCliHeaderRenderAlign,
+  ToolkitCliHeaderRenderAlignedEmpty,
+  ToolkitCliHeaderRenderAlignedText,
+  ToolkitCliHeaderRenderBorderCharacters,
+  ToolkitCliHeaderRenderBorderlessWidth,
+  ToolkitCliHeaderRenderBottomBorder,
+  ToolkitCliHeaderRenderBottomMargin,
+  ToolkitCliHeaderRenderContentStrings,
+  ToolkitCliHeaderRenderContentWidth,
+  ToolkitCliHeaderRenderDisplayStrings,
+  ToolkitCliHeaderRenderInteractive,
+  ToolkitCliHeaderRenderMarginBottom,
+  ToolkitCliHeaderRenderMarginTop,
+  ToolkitCliHeaderRenderOptions,
+  ToolkitCliHeaderRenderPadded,
+  ToolkitCliHeaderRenderPaddedRow,
+  ToolkitCliHeaderRenderPaddingX,
+  ToolkitCliHeaderRenderPaddingY,
+  ToolkitCliHeaderRenderResolvedOptions,
+  ToolkitCliHeaderRenderReturns,
+  ToolkitCliHeaderRenderStyle,
+  ToolkitCliHeaderRenderTexts,
+  ToolkitCliHeaderRenderTopBorder,
+  ToolkitCliHeaderRenderTopMargin,
+  ToolkitCliHeaderRenderTruncatedText,
+  ToolkitCliHeaderRenderWidth,
+  ToolkitCliHeaderStripAnsiPattern,
+  ToolkitCliHeaderStripAnsiReturns,
+  ToolkitCliHeaderStripAnsiString,
+  ToolkitCliHeaderTruncateCharacter,
+  ToolkitCliHeaderTruncateCode,
+  ToolkitCliHeaderTruncateMatches,
+  ToolkitCliHeaderTruncateMax,
+  ToolkitCliHeaderTruncateNeedsEllipsis,
+  ToolkitCliHeaderTruncateOutput,
+  ToolkitCliHeaderTruncatePlain,
+  ToolkitCliHeaderTruncatePlainLength,
+  ToolkitCliHeaderTruncateRawIndex,
+  ToolkitCliHeaderTruncateRebuildAnsiMessage,
+  ToolkitCliHeaderTruncateRebuildVisibleMessage,
+  ToolkitCliHeaderTruncateReturns,
+  ToolkitCliHeaderTruncateSerializedEllipsis,
+  ToolkitCliHeaderTruncateSerializedEnd,
+  ToolkitCliHeaderTruncateSerializedInput,
+  ToolkitCliHeaderTruncateSerializedPlain,
+  ToolkitCliHeaderTruncateSerializedSecondPass,
+  ToolkitCliHeaderTruncateSerializedWidthInfo,
+  ToolkitCliHeaderTruncateSlice,
+  ToolkitCliHeaderTruncateString,
+  ToolkitCliHeaderTruncateStripAnsiMessage,
+  ToolkitCliHeaderTruncateStripVisibleMessage,
+  ToolkitCliHeaderTruncateVisibleIndex,
+  ToolkitCliHeaderTruncateVisibleWidth,
+  ToolkitCliHeaderVisibleLengthPattern,
+  ToolkitCliHeaderVisibleLengthReturns,
+  ToolkitCliHeaderVisibleLengthString,
+} from '../types/toolkit/cli-header.d.ts';
 
 /**
- * CLI Header.
+ * Toolkit - CLI Header.
  *
- * @since 1.0.0
+ * Renders bordered, ANSI-colored header banners for CLI output. Used by the main
+ * CLI entry point to display the Nova version and tagline on startup.
+ *
+ * @since 0.11.0
  */
-export default class CLIHeader {
+class ToolkitCliHeader {
   /**
-   * CLI Header - Render.
+   * Toolkit - CLI Header - Render.
    *
-   * @param {CLIHeaderRenderTexts}   texts     - Texts.
-   * @param {CLIHeaderRenderOptions} [options] - Options.
+   * Builds a bordered box around the given text lines with configurable alignment,
+   * padding, and style. Falls back to plain text in non-interactive shells.
    *
-   * @returns {CLIHeaderRenderReturns}
+   * @param {ToolkitCliHeaderRenderTexts}   texts     - Texts.
+   * @param {ToolkitCliHeaderRenderOptions} [options] - Options.
    *
-   * @since 1.0.0
+   * @returns {ToolkitCliHeaderRenderReturns}
+   *
+   * @since 0.11.0
    */
-  public static render(texts: CLIHeaderRenderTexts, options?: CLIHeaderRenderOptions): CLIHeaderRenderReturns {
-    const resolvedOptions = options ?? {};
-    const interactive = resolvedOptions.interactive ?? (process.stdout.isTTY === true);
+  public static render(texts: ToolkitCliHeaderRenderTexts, options?: ToolkitCliHeaderRenderOptions): ToolkitCliHeaderRenderReturns {
+    const resolvedOptions: ToolkitCliHeaderRenderResolvedOptions = options ?? {};
+    const interactive: ToolkitCliHeaderRenderInteractive = resolvedOptions['interactive'] ?? (process.stdout.isTTY === true);
 
     // Non-interactive mode outputs plain text without borders.
     if (interactive === false) {
-      return texts.map((text) => CLIHeader.stripAnsi(text)).join('\n');
+      return texts.map((text) => ToolkitCliHeader.stripAnsi(text)).join('\n');
     }
 
-    const align = resolvedOptions.align ?? 'center';
-    const marginTop = Math.max(0, resolvedOptions.marginTop ?? 0);
-    const marginBottom = Math.max(0, resolvedOptions.marginBottom ?? 0);
-    const paddingX = Math.max(0, resolvedOptions.paddingX ?? 0);
-    const paddingY = Math.max(0, resolvedOptions.paddingY ?? 0);
-    const style = resolvedOptions.style ?? 'box';
-    const width = Math.max(0, resolvedOptions.width ?? process.stdout.columns);
+    const align: ToolkitCliHeaderRenderAlign = resolvedOptions['align'] ?? 'center';
+    const marginTop: ToolkitCliHeaderRenderMarginTop = Math.max(0, resolvedOptions['marginTop'] ?? 0);
+    const marginBottom: ToolkitCliHeaderRenderMarginBottom = Math.max(0, resolvedOptions['marginBottom'] ?? 0);
+    const paddingX: ToolkitCliHeaderRenderPaddingX = Math.max(0, resolvedOptions['paddingX'] ?? 0);
+    const paddingY: ToolkitCliHeaderRenderPaddingY = Math.max(0, resolvedOptions['paddingY'] ?? 0);
+    const style: ToolkitCliHeaderRenderStyle = resolvedOptions['style'] ?? 'box';
+    const width: ToolkitCliHeaderRenderWidth = Math.max(0, resolvedOptions['width'] ?? process.stdout.columns);
 
-    const topMargin = '\n'.repeat(marginTop);
-    const bottomMargin = '\n'.repeat(marginBottom);
+    const topMargin: ToolkitCliHeaderRenderTopMargin = '\n'.repeat(marginTop);
+    const bottomMargin: ToolkitCliHeaderRenderBottomMargin = '\n'.repeat(marginBottom);
 
-    const borderChars = CLIHeader.borderChars(style);
-    const borderlessWidth = Math.max((2 * paddingX), width - 2);
-    const topBorder = `${borderChars.topLeft}${'─'.repeat(borderlessWidth)}${borderChars.topRight}`;
-    const bottomBorder = `${borderChars.bottomLeft}${'─'.repeat(borderlessWidth)}${borderChars.bottomRight}`;
-    const contentWidth = Math.max(0, borderlessWidth - (2 * paddingX));
+    const borderCharacters: ToolkitCliHeaderRenderBorderCharacters = ToolkitCliHeader.borderCharacters(style);
+    const borderlessWidth: ToolkitCliHeaderRenderBorderlessWidth = Math.max((2 * paddingX), width - 2);
+    const topBorder: ToolkitCliHeaderRenderTopBorder = `${borderCharacters['topLeft']}${'─'.repeat(borderlessWidth)}${borderCharacters['topRight']}`;
+    const bottomBorder: ToolkitCliHeaderRenderBottomBorder = `${borderCharacters['bottomLeft']}${'─'.repeat(borderlessWidth)}${borderCharacters['bottomRight']}`;
+    const contentWidth: ToolkitCliHeaderRenderContentWidth = Math.max(0, borderlessWidth - (2 * paddingX));
 
-    const contentStrings: CLIHeaderRenderContentStrings = [];
-    const displayStrings: CLIHeaderRenderDisplayStrings = [];
+    const contentStrings: ToolkitCliHeaderRenderContentStrings = [];
+    const displayStrings: ToolkitCliHeaderRenderDisplayStrings = [];
 
     // Text - Top vertical padding.
     for (let i = 0; i < paddingY; i += 1) {
-      contentStrings.push(CLIHeader.align('', contentWidth, align));
+      const alignedEmpty: ToolkitCliHeaderRenderAlignedEmpty = ToolkitCliHeader.align('', contentWidth, align);
+
+      contentStrings.push(alignedEmpty);
     }
 
     // Text - Content.
     for (const text of texts) {
-      const truncatedText = CLIHeader.truncate(text, contentWidth);
+      const truncatedText: ToolkitCliHeaderRenderTruncatedText = ToolkitCliHeader.truncate(text, contentWidth);
+      const alignedText: ToolkitCliHeaderRenderAlignedText = ToolkitCliHeader.align(truncatedText, contentWidth, align);
 
-      contentStrings.push(CLIHeader.align(truncatedText, contentWidth, align));
+      contentStrings.push(alignedText);
     }
 
     // Text - Bottom vertical padding.
     for (let i = 0; i < paddingY; i += 1) {
-      contentStrings.push(CLIHeader.align('', contentWidth, align));
+      const alignedEmpty: ToolkitCliHeaderRenderAlignedEmpty = ToolkitCliHeader.align('', contentWidth, align);
+
+      contentStrings.push(alignedEmpty);
     }
 
     // Build the displayable strings.
     for (const contentString of contentStrings) {
-      const padded = `${' '.repeat(paddingX)}${contentString}${' '.repeat(paddingX)}`;
+      const padded: ToolkitCliHeaderRenderPadded = `${' '.repeat(paddingX)}${contentString}${' '.repeat(paddingX)}`;
+      const paddedRow: ToolkitCliHeaderRenderPaddedRow = ToolkitCliHeader.padToWidth(padded, borderlessWidth);
 
-      displayStrings.push(`${borderChars.vertical}${CLIHeader.padToWidth(padded, borderlessWidth)}${borderChars.vertical}`);
+      displayStrings.push(`${borderCharacters['vertical']}${paddedRow}${borderCharacters['vertical']}`);
     }
 
     return [
@@ -102,17 +164,20 @@ export default class CLIHeader {
   }
 
   /**
-   * CLI Header - Border chars.
+   * Toolkit - CLI Header - Border Characters.
    *
-   * @param {CLIHeaderBorderCharsStyle} style - Style.
+   * Maps a style name to its Unicode box-drawing character set. Supports box, round,
+   * and thick border variants.
+   *
+   * @param {ToolkitCliHeaderBorderCharactersStyle} style - Style.
    *
    * @private
    *
-   * @returns {CLIHeaderBorderCharsReturns}
+   * @returns {ToolkitCliHeaderBorderCharactersReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static borderChars(style: CLIHeaderBorderCharsStyle): CLIHeaderBorderCharsReturns {
+  private static borderCharacters(style: ToolkitCliHeaderBorderCharactersStyle): ToolkitCliHeaderBorderCharactersReturns {
     switch (style) {
       case 'round': {
         return {
@@ -124,6 +189,7 @@ export default class CLIHeader {
           vertical: '│',
         };
       }
+
       case 'thick': {
         return {
           topLeft: '╔',
@@ -134,6 +200,7 @@ export default class CLIHeader {
           vertical: '║',
         };
       }
+
       case 'box':
       default: {
         return {
@@ -149,189 +216,216 @@ export default class CLIHeader {
   }
 
   /**
-   * CLI Header - Strip ANSI.
+   * Toolkit - CLI Header - Strip ANSI.
    *
-   * @param {CLIHeaderStripAnsiString} string - String.
+   * Removes all ANSI escape sequences from a string. Used in non-interactive mode to
+   * produce clean plain-text output without color codes.
+   *
+   * @param {ToolkitCliHeaderStripAnsiString} string - String.
    *
    * @private
    *
-   * @returns {CLIHeaderStripAnsiReturns}
+   * @returns {ToolkitCliHeaderStripAnsiReturns}
    *
-   * @since 1.0.0
+   * @since 0.14.0
    */
-  private static stripAnsi(string: CLIHeaderStripAnsiString): CLIHeaderStripAnsiReturns {
-    return string.replace(new RegExp(PATTERN_ANSI, 'g'), '');
+  private static stripAnsi(string: ToolkitCliHeaderStripAnsiString): ToolkitCliHeaderStripAnsiReturns {
+    const pattern: ToolkitCliHeaderStripAnsiPattern = new RegExp(LIB_REGEX_PATTERN_ANSI, 'g');
+
+    return string.replace(pattern, '');
   }
 
   /**
-   * CLI Header - Truncate.
+   * Toolkit - CLI Header - Truncate.
    *
-   * @param {CLIHeaderTruncateString} string - String.
-   * @param {CLIHeaderTruncateMax}    max    - Max.
+   * Clips a string to the given visible width while preserving ANSI escape sequences and
+   * appending an ellipsis when text is cut off.
+   *
+   * @param {ToolkitCliHeaderTruncateString} string - String.
+   * @param {ToolkitCliHeaderTruncateMax}    max    - Max.
    *
    * @private
    *
-   * @returns {CLIHeaderTruncateReturns}
+   * @returns {ToolkitCliHeaderTruncateReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static truncate(string: CLIHeaderTruncateString, max: CLIHeaderTruncateMax): CLIHeaderTruncateReturns {
+  private static truncate(string: ToolkitCliHeaderTruncateString, max: ToolkitCliHeaderTruncateMax): ToolkitCliHeaderTruncateReturns {
     if (max <= 0 || string === '') {
       return '';
     }
 
+    const serializedInput: ToolkitCliHeaderTruncateSerializedInput = JSON.stringify(string);
+
     Logger.customize({
-      name: 'CLIHeader.truncate',
+      name: 'ToolkitCliHeader.truncate',
       purpose: 'begin',
-    }).debug(JSON.stringify(string));
+    }).debug(serializedInput);
 
     // First pass: Strip ANSI, record them in order.
-    let rawIndex = 0;
-    let plain = '';
+    let rawIndex: ToolkitCliHeaderTruncateRawIndex = 0;
+    let plain: ToolkitCliHeaderTruncatePlain = '';
 
     while (rawIndex < string.length) {
-      const slice = string.slice(rawIndex);
-      const matches = slice.match(PATTERN_ANSI_START);
+      const slice: ToolkitCliHeaderTruncateSlice = string.slice(rawIndex);
+      const matches: ToolkitCliHeaderTruncateMatches = slice.match(LIB_REGEX_PATTERN_ANSI_START);
 
       // Skips the ANSI portion.
       if (matches !== null) {
-        const code = matches[0];
+        const code: ToolkitCliHeaderTruncateCode = matches[0];
+
+        const stripAnsiMessage: ToolkitCliHeaderTruncateStripAnsiMessage = [`ANSI at rawIndex=${rawIndex}: ${JSON.stringify(code)}`].join(', ');
 
         Logger.customize({
-          name: 'CLIHeader.truncate',
+          name: 'ToolkitCliHeader.truncate',
           purpose: 'strip',
-        }).debug([
-          `ANSI at rawIndex=${rawIndex}: ${JSON.stringify(code)}`,
-        ].join(', '));
+        }).debug(stripAnsiMessage);
 
         rawIndex += code.length;
 
         continue;
       }
 
-      const character = string[rawIndex]!;
+      const character: ToolkitCliHeaderTruncateCharacter = string[rawIndex]!;
 
       plain += character;
 
-      Logger.customize({
-        name: 'CLIHeader.truncate',
-        purpose: 'strip',
-      }).debug([
+      const stripVisibleMessage: ToolkitCliHeaderTruncateStripVisibleMessage = [
         `Visible at rawIndex=${rawIndex}: ${JSON.stringify(character)}`,
         `plain so far: ${JSON.stringify(plain)}`,
-      ].join(', '));
+      ].join(', ');
+
+      Logger.customize({
+        name: 'ToolkitCliHeader.truncate',
+        purpose: 'strip',
+      }).debug(stripVisibleMessage);
 
       rawIndex += 1;
     }
 
+    const serializedPlain: ToolkitCliHeaderTruncateSerializedPlain = JSON.stringify(plain);
+
     Logger.customize({
-      name: 'CLIHeader.truncate',
+      name: 'ToolkitCliHeader.truncate',
       purpose: 'first-pass',
-    }).debug(JSON.stringify(plain));
+    }).debug(serializedPlain);
 
-    const plainLength = plain.length;
-    const needsEllipsis = plainLength > max;
-    const visibleWidth = (needsEllipsis) ? Math.max(0, max - 1) : Math.min(max, plainLength);
+    const plainLength: ToolkitCliHeaderTruncatePlainLength = plain.length;
+    const needsEllipsis: ToolkitCliHeaderTruncateNeedsEllipsis = plainLength > max;
+    const visibleWidth: ToolkitCliHeaderTruncateVisibleWidth = (needsEllipsis === true) ? Math.max(0, max - 1) : Math.min(max, plainLength);
 
-    Logger.customize({
-      name: 'CLIHeader.truncate',
-      purpose: 'width',
-    }).debug(JSON.stringify({
+    const serializedWidthInfo: ToolkitCliHeaderTruncateSerializedWidthInfo = JSON.stringify({
       plainLength,
       needsEllipsis,
       visibleWidth,
-    }));
+    });
+
+    Logger.customize({
+      name: 'ToolkitCliHeader.truncate',
+      purpose: 'width',
+    }).debug(serializedWidthInfo);
 
     // Second pass: Rebuild truncated string, reinserting ANSI.
-    let visibleIndex = 0;
-    let output = '';
+    let visibleIndex: ToolkitCliHeaderTruncateVisibleIndex = 0;
+    let output: ToolkitCliHeaderTruncateOutput = '';
 
     rawIndex = 0;
 
     while (rawIndex < string.length && visibleIndex < visibleWidth) {
-      const slice = string.slice(rawIndex);
-      const matches = slice.match(PATTERN_ANSI_START);
+      const slice: ToolkitCliHeaderTruncateSlice = string.slice(rawIndex);
+      const matches: ToolkitCliHeaderTruncateMatches = slice.match(LIB_REGEX_PATTERN_ANSI_START);
 
       // Adds the ANSI portion back.
       if (matches !== null) {
-        const code = matches[0];
+        const code: ToolkitCliHeaderTruncateCode = matches[0];
 
         output += code;
 
+        const rebuildAnsiMessage: ToolkitCliHeaderTruncateRebuildAnsiMessage = [`ANSI at rawIndex=${rawIndex}: ${JSON.stringify(code)}`].join(', ');
+
         Logger.customize({
-          name: 'CLIHeader.truncate',
+          name: 'ToolkitCliHeader.truncate',
           purpose: 'rebuild',
-        }).debug([
-          `ANSI at rawIndex=${rawIndex}: ${JSON.stringify(code)}`,
-        ].join(', '));
+        }).debug(rebuildAnsiMessage);
 
         rawIndex += code.length;
 
         continue;
       }
 
-      const character = string[rawIndex]!;
+      const character: ToolkitCliHeaderTruncateCharacter = string[rawIndex]!;
 
       output += character;
 
       visibleIndex += 1;
 
-      Logger.customize({
-        name: 'CLIHeader.truncate',
-        purpose: 'rebuild',
-      }).debug([
+      const rebuildVisibleMessage: ToolkitCliHeaderTruncateRebuildVisibleMessage = [
         `Visible at rawIndex=${rawIndex}: ${JSON.stringify(character)}`,
         `visible count: ${JSON.stringify(visibleIndex)}`,
-      ].join(', '));
+      ].join(', ');
+
+      Logger.customize({
+        name: 'ToolkitCliHeader.truncate',
+        purpose: 'rebuild',
+      }).debug(rebuildVisibleMessage);
 
       rawIndex += 1;
     }
 
+    const serializedSecondPass: ToolkitCliHeaderTruncateSerializedSecondPass = JSON.stringify(output);
+
     Logger.customize({
-      name: 'CLIHeader.truncate',
+      name: 'ToolkitCliHeader.truncate',
       purpose: 'second-pass',
-    }).debug(JSON.stringify(output));
+    }).debug(serializedSecondPass);
 
     if (needsEllipsis === true) {
       output += '…';
 
+      const serializedEllipsis: ToolkitCliHeaderTruncateSerializedEllipsis = JSON.stringify(output);
+
       Logger.customize({
-        name: 'CLIHeader.truncate',
+        name: 'ToolkitCliHeader.truncate',
         purpose: 'ellipsis',
-      }).debug(JSON.stringify(output));
+      }).debug(serializedEllipsis);
     }
 
     // If ANSI is detected in the output, add a hard reset at the end.
-    if (output.includes('\x1b[')) {
+    if (output.includes('\x1b[') === true) {
       output += '\x1b[0m';
     }
 
+    const serializedEnd: ToolkitCliHeaderTruncateSerializedEnd = JSON.stringify(output);
+
     Logger.customize({
-      name: 'CLIHeader.truncate',
+      name: 'ToolkitCliHeader.truncate',
       purpose: 'end',
-    }).debug(JSON.stringify(output));
+    }).debug(serializedEnd);
 
     return output;
   }
 
   /**
-   * CLI Header - Align.
+   * Toolkit - CLI Header - Align.
    *
-   * @param {CLIHeaderAlignString} string - String.
-   * @param {CLIHeaderAlignWidth}  width  - Width.
-   * @param {CLIHeaderAlignAlign}  align  - Align.
+   * Pads a string with spaces to fit the target width using left, right, or center
+   * alignment. Measures visible length to handle ANSI-colored strings.
+   *
+   * @param {ToolkitCliHeaderAlignString} string - String.
+   * @param {ToolkitCliHeaderAlignWidth}  width  - Width.
+   * @param {ToolkitCliHeaderAlignAlign}  align  - Align.
    *
    * @private
    *
-   * @returns {CLIHeaderAlignReturns}
+   * @returns {ToolkitCliHeaderAlignReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static align(string: CLIHeaderAlignString, width: CLIHeaderAlignWidth, align: CLIHeaderAlignAlign): CLIHeaderAlignReturns {
-    const stringLength = CLIHeader.visibleLength(string);
-    const availableSpace = width - stringLength;
-    const leftPadding = Math.floor(availableSpace / 2);
-    const rightPadding = availableSpace - leftPadding;
+  private static align(string: ToolkitCliHeaderAlignString, width: ToolkitCliHeaderAlignWidth, align: ToolkitCliHeaderAlignAlign): ToolkitCliHeaderAlignReturns {
+    const stringLength: ToolkitCliHeaderAlignStringLength = ToolkitCliHeader.visibleLength(string);
+    const availableSpace: ToolkitCliHeaderAlignAvailableSpace = width - stringLength;
+    const leftPadding: ToolkitCliHeaderAlignLeftPadding = Math.floor(availableSpace / 2);
+    const rightPadding: ToolkitCliHeaderAlignRightPadding = availableSpace - leftPadding;
 
     // If string is aligned to the left.
     if (align === 'left') {
@@ -348,35 +442,47 @@ export default class CLIHeader {
   }
 
   /**
-   * CLI Header - Visible length.
+   * Toolkit - CLI Header - Visible Length.
    *
-   * @param {CLIHeaderVisibleLengthString} string - String.
+   * Returns the character count after stripping ANSI codes. Used by align and padToWidth
+   * to compute spacing without counting invisible escape bytes.
+   *
+   * @param {ToolkitCliHeaderVisibleLengthString} string - String.
    *
    * @private
    *
-   * @returns {CLIHeaderVisibleLengthReturns}
+   * @returns {ToolkitCliHeaderVisibleLengthReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static visibleLength(string: CLIHeaderVisibleLengthString): CLIHeaderVisibleLengthReturns {
-    return string.replace(new RegExp(PATTERN_ANSI, 'g'), '').length;
+  private static visibleLength(string: ToolkitCliHeaderVisibleLengthString): ToolkitCliHeaderVisibleLengthReturns {
+    const pattern: ToolkitCliHeaderVisibleLengthPattern = new RegExp(LIB_REGEX_PATTERN_ANSI, 'g');
+
+    return string.replace(pattern, '').length;
   }
 
   /**
-   * CLI Header - Pad to width.
+   * Toolkit - CLI Header - Pad To Width.
    *
-   * @param {CLIHeaderPadToWidthString} string - String.
-   * @param {CLIHeaderPadToWidthWidth}  width  - Width.
+   * Right-pads a string with spaces so it fills the full border width. Called on
+   * each content row before wrapping it with vertical border characters.
+   *
+   * @param {ToolkitCliHeaderPadToWidthString} string - String.
+   * @param {ToolkitCliHeaderPadToWidthWidth}  width  - Width.
    *
    * @private
    *
-   * @returns {CLIHeaderPadToWidthReturns}
+   * @returns {ToolkitCliHeaderPadToWidthReturns}
    *
-   * @since 1.0.0
+   * @since 0.11.0
    */
-  private static padToWidth(string: CLIHeaderPadToWidthString, width: CLIHeaderPadToWidthWidth): CLIHeaderPadToWidthReturns {
-    const visibleLength = CLIHeader.visibleLength(string);
+  private static padToWidth(string: ToolkitCliHeaderPadToWidthString, width: ToolkitCliHeaderPadToWidthWidth): ToolkitCliHeaderPadToWidthReturns {
+    const visibleLength: ToolkitCliHeaderPadToWidthVisibleLength = ToolkitCliHeader.visibleLength(string);
 
-    return `${string}${' '.repeat(Math.max(0, width - visibleLength))}`;
+    const paddingCount: ToolkitCliHeaderPadToWidthPaddingCount = Math.max(0, width - visibleLength);
+
+    return `${string}${' '.repeat(paddingCount)}`;
   }
 }
+
+export default ToolkitCliHeader;

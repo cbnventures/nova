@@ -1,84 +1,182 @@
 import type { Command, CommandUnknownOpts } from '@commander-js/extra-typings';
 import type { ChalkInstance } from 'chalk';
 
-/**
- * CLI - Execute command.
- *
- * @since 1.0.0
- */
-export type CLIExecuteCommandOptions<Options> = Partial<Options>;
-
-export type CLIExecuteCommandTarget<Options> = (options: CLIExecuteCommandOptions<Options>) => void | Promise<void>;
-
-export type CLIExecuteCommandReturns = Promise<void>;
+import type { SharedRunScriptsOptions } from '../shared.d.ts';
 
 /**
- * CLI - Get command usage.
+ * CLI - Constructor.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIGetCommandUsageCommand = CommandUnknownOpts;
-
-export type CLIGetCommandUsageReturns = string;
-
-export type CLIGetCommandUsageFullLine = string;
-
-export type CLIGetCommandUsageAliasLine = string;
-
-export type CLIGetCommandUsageFullLineStripped = string;
-
-export type CLIGetCommandUsageAliasLineStripped = string;
+export type CliConstructorHeaderText = string;
 
 /**
- * CLI - Get header.
+ * CLI - Env Dir.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIGetHeaderReturns = string;
+export type CliEnvDir = string | undefined;
 
 /**
- * CLI - Get subcommand term.
+ * CLI - Execute Command.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIGetSubcommandTermCommand = CommandUnknownOpts;
+export type CliExecuteCommandOptions<Options> = Partial<Options>;
 
-export type CLIGetSubcommandTermReturns = string;
+export type CliExecuteCommandTarget<Options> = (options: CliExecuteCommandOptions<Options>) => void | Promise<void>;
+
+export type CliExecuteCommandReturns = Promise<void>;
+
+export type CliExecuteCommandCommand = RegExpMatchArray | null;
+
+export type CliExecuteCommandCommandLabel = string;
 
 /**
- * CLI - Handle cli error.
+ * CLI - Get Command Usage.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIHandleCLIErrorText = string;
+export type CliGetCommandUsageCommand = CommandUnknownOpts;
 
-export type CLIHandleCLIErrorReturns = void;
+export type CliGetCommandUsageReturns = string;
+
+export type CliGetCommandUsageCommandName = string;
+
+export type CliGetCommandUsageCommandAliases = string[];
+
+export type CliGetCommandUsageCommandUsage = string;
+
+export type CliGetCommandUsageFullCommand = string[];
+
+export type CliGetCommandUsageUsagePipeSeparator = string;
+
+export type CliGetCommandUsageAliasCommand = string[];
+
+export type CliGetCommandUsageParentCommand = CommandUnknownOpts | null;
+
+export type CliGetCommandUsageParentCommandName = string;
+
+export type CliGetCommandUsageParentCommandAliases = string[];
+
+export type CliGetCommandUsageParentAliasSeparated = string;
+
+export type CliGetCommandUsageFullLine = string;
+
+export type CliGetCommandUsageAliasLine = string;
+
+export type CliGetCommandUsageFullLineStripped = string;
+
+export type CliGetCommandUsageAliasLineStripped = string;
+
+/**
+ * CLI - Get Header.
+ *
+ * @since 0.11.0
+ */
+export type CliGetHeaderReturns = string;
+
+/**
+ * CLI - Get Subcommand Term.
+ *
+ * @since 0.11.0
+ */
+export type CliGetSubcommandTermCommand = CommandUnknownOpts;
+
+export type CliGetSubcommandTermReturns = string;
+
+export type CliGetSubcommandTermCategory = 'commands' | 'subcommands';
+
+export type CliGetSubcommandTermCategoryPipeSeparator = string;
+
+export type CliGetSubcommandTermNames = string;
+
+export type CliGetSubcommandTermUsage = string;
+
+/**
+ * CLI - Handle CLI Error.
+ *
+ * @since 0.11.0
+ */
+export type CliHandleCliErrorText = string;
+
+export type CliHandleCliErrorReturns = void;
+
+export type CliHandleCliErrorProcessedText = string;
 
 /**
  * CLI - Program.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIProgram = Command;
+export type CliProgram = Command;
 
 /**
- * CLI - Register commands.
+ * CLI - Register Commands.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIRegisterCommandsReturns = void;
+export type CliRegisterCommandsReturns = void;
 
 /**
- * CLI - Style text.
+ * CLI - Register Commands - Generate.
  *
- * @since 1.0.0
+ * @since 0.11.0
  */
-export type CLIStyleTextType = 'commands' | 'description' | 'subcommands' | 'title' | 'usage';
+export type CliRegisterCommandsGenerateGenerate = Command;
 
-export type CLIStyleTextText = string;
+export type CliRegisterCommandsGenerateGenerateGitHub = Command;
 
-export type CLIStyleTextReturns = string;
+export type CliRegisterCommandsGenerateGenerateMustHaves = Command;
 
-export type CLIStyleTextCategoryStyles = Record<CLIStyleTextType, ChalkInstance[]>;
+/**
+ * CLI - Register Commands - Recipe.
+ *
+ * @since 0.11.0
+ */
+export type CliRegisterCommandsRecipeRecipe = Command;
 
-export type CLIStyleTextTitleStyles = Record<string, ChalkInstance[]>;
+export type CliRegisterCommandsRecipeRecipePackageJson = Command;
+
+/**
+ * CLI - Register Commands - Scaffold.
+ *
+ * @since 0.11.0
+ */
+export type CliRegisterCommandsScaffoldScaffold = Command;
+
+export type CliRegisterCommandsScaffoldScaffoldApp = Command;
+
+export type CliRegisterCommandsScaffoldScaffoldDocs = Command;
+
+export type CliRegisterCommandsScaffoldScaffoldStarter = Command;
+
+/**
+ * CLI - Register Commands - Utility.
+ *
+ * @since 0.11.0
+ */
+export type CliRegisterCommandsUtilityUtility = Command;
+
+export type CliRegisterCommandsUtilityRunScriptsOptions = SharedRunScriptsOptions;
+
+/**
+ * CLI - Style Text.
+ *
+ * @since 0.11.0
+ */
+export type CliStyleTextType = 'commands' | 'description' | 'subcommands' | 'title' | 'usage';
+
+export type CliStyleTextText = string;
+
+export type CliStyleTextReturns = string;
+
+export type CliStyleTextCategoryStyles = Record<CliStyleTextType, ChalkInstance[]>;
+
+export type CliStyleTextTitleStyles = Record<string, ChalkInstance[]>;
+
+export type CliStyleTextCategoryFunctions = ChalkInstance[];
+
+export type CliStyleTextTitleFunctions = ChalkInstance[];
+
+export type CliStyleTextColoredText = string;

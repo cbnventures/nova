@@ -1,0 +1,19 @@
+/**
+ * ============================
+ * Doc Content — Container
+ * ============================
+ */
+
+.nova-doc-content {
+  min-width: 0;
+}
+
+/**
+ * ============================
+ * Doc Content — Header
+ * ============================
+ */
+
+.nova-doc-content-header {
+  margin-bottom: 1.5rem;
+}

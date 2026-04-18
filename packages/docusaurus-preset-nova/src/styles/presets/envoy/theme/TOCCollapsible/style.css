@@ -1,0 +1,146 @@
+/**
+ * Envoy — TOC Collapsible visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * Trigger Button
+ * ============================ */
+
+.nova-toc-collapsible-trigger {
+  color: var(--nova-color-neutral-600);
+
+  background: var(--nova-envoy-surface-raised-light);
+  border: 1px solid var(--nova-envoy-border-light);
+  border-radius: var(--nova-envoy-radius-generous);
+
+  transition: border-color 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-toc-collapsible-trigger:hover,
+.nova-toc-collapsible-trigger:focus-visible {
+  border-color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger {
+  color: var(--nova-color-neutral-400);
+
+  background: var(--nova-envoy-surface-raised-dark);
+  border-color: var(--nova-envoy-border-dark);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger:hover,
+[data-theme="dark"] .nova-toc-collapsible-trigger:focus-visible {
+  border-color: var(--nova-color-primary-600);
+}
+
+/* ============================
+ * Overlay
+ * ============================ */
+
+.nova-toc-collapsible-overlay {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ============================
+ * Panel
+ * ============================ */
+
+/* Compass — always-floating, centered. Override base full-screen default. */
+.nova-toc-collapsible-overlay {
+  align-items: center;
+}
+
+.nova-toc-collapsible-panel {
+  width: calc(100% - 2rem);
+  max-width: 320px;
+  height: auto;
+  max-height: calc(100dvh - 2rem);
+
+  background: var(--nova-envoy-surface-light);
+  border: 1px solid var(--nova-envoy-border-light);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-panel {
+  background: var(--nova-envoy-surface-dark);
+  border-color: var(--nova-envoy-border-dark);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+@media (min-width: 576px) {
+  .nova-toc-collapsible-panel {
+    width: calc(100% - 4rem);
+    max-height: calc(100dvh - 2rem);
+    margin-top: 0;
+  }
+}
+
+/* ============================
+ * Header
+ * ============================ */
+
+.nova-toc-collapsible-header-title {
+  font-family: var(--nova-font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--nova-color-neutral-900);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-header-title {
+  color: var(--nova-color-neutral-50);
+}
+
+/* ============================
+ * Close Button
+ * ============================ */
+
+.nova-toc-collapsible-close {
+  color: var(--nova-color-neutral-600);
+  border-radius: var(--nova-envoy-radius-generous);
+
+  transition: color 200ms cubic-bezier(0.22, 1, 0.36, 1), background-color 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.nova-toc-collapsible-close:hover,
+.nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-close {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-close:hover,
+[data-theme="dark"] .nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-primary-400);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* ============================
+ * TOC Links
+ * ============================ */
+
+.nova-toc-collapsible-content .nova-toc-link {
+  font-size: 0.8125rem;
+  color: var(--nova-envoy-text-muted-light);
+  border-radius: var(--nova-shape-radius);
+}
+
+.nova-toc-collapsible-content .nova-toc-link:hover,
+.nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link {
+  color: var(--nova-envoy-text-muted-dark);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link:hover,
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-400);
+}

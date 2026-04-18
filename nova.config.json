@@ -1,8 +1,8 @@
 {
   "project": {
     "name": {
-      "slug": "nova",
-      "title": "Nova"
+      "title": "Nova",
+      "slug": "nova"
     },
     "description": {
       "short": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
@@ -19,11 +19,19 @@
       "code-style",
       "scripts",
       "templates",
+      "docusaurus-preset",
       "react",
       "nextjs",
       "node",
       "monorepo"
-    ]
+    ],
+    "legalName": "CBN Ventures LLC",
+    "pronouns": "business",
+    "platforms": [
+      "nodejs"
+    ],
+    "startingYear": 2025,
+    "license": "MIT"
   },
   "entities": [
     {
@@ -47,25 +55,287 @@
   "emails": {
     "bugs": "bugs@cbnventures.io"
   },
+  "workflows": [
+    {
+      "template": "check-sponsor-gated-issues",
+      "suffix": "project",
+      "triggers": [],
+      "settings": {
+        "PERSONAL_ACCESS_TOKEN": "PERSONAL_ACCESS_TOKEN"
+      }
+    },
+    {
+      "template": "lock-inactive-issues",
+      "suffix": "project",
+      "triggers": [
+        "schedule"
+      ]
+    },
+    {
+      "template": "publish-to-cloudflare-pages-docusaurus",
+      "suffix": "docs",
+      "triggers": [
+        "release"
+      ],
+      "settings": {
+        "DOCUSAURUS_WORKING_DIR": "./apps/docs",
+        "ROOT_WORKING_DIR": "./"
+      }
+    },
+    {
+      "template": "publish-to-github-packages",
+      "suffix": "docusaurus-preset-nova",
+      "triggers": [
+        "workflow-run-success"
+      ],
+      "depends-on": [
+        "publish-to-github-packages-nova"
+      ],
+      "settings": {
+        "NPM_WORKING_DIR": "./packages/docusaurus-preset-nova",
+        "ROOT_WORKING_DIR": "./"
+      }
+    },
+    {
+      "template": "publish-to-github-packages",
+      "suffix": "nova",
+      "triggers": [
+        "release"
+      ],
+      "settings": {
+        "NPM_WORKING_DIR": "./packages/nova",
+        "ROOT_WORKING_DIR": "./"
+      }
+    },
+    {
+      "template": "publish-to-npm",
+      "suffix": "docusaurus-preset-nova",
+      "triggers": [
+        "workflow-run-success"
+      ],
+      "depends-on": [
+        "publish-to-npm-nova"
+      ],
+      "settings": {
+        "NPM_TOKEN": "NPM_TOKEN",
+        "NPM_WORKING_DIR": "./packages/docusaurus-preset-nova",
+        "ROOT_WORKING_DIR": "./"
+      }
+    },
+    {
+      "template": "publish-to-npm",
+      "suffix": "nova",
+      "triggers": [
+        "release"
+      ],
+      "settings": {
+        "NPM_TOKEN": "NPM_TOKEN",
+        "NPM_WORKING_DIR": "./packages/nova",
+        "ROOT_WORKING_DIR": "./"
+      }
+    }
+  ],
   "urls": {
-    "homepage": "https://cbnventures.github.io/nova/",
+    "homepage": "https://nova.cbnventures.io/",
     "repository": "git+https://github.com/cbnventures/nova.git",
     "bugs": "https://github.com/cbnventures/nova/issues",
     "license": "https://github.com/cbnventures/nova/blob/HEAD/LICENSE",
-    "logo": "https://cbnventures.github.io/nova/images/logo.svg",
-    "documentation": "https://cbnventures.github.io/nova/",
+    "logo": "https://nova.cbnventures.io/images/logo.svg",
+    "documentation": "https://nova.cbnventures.io/",
     "github": "https://github.com/cbnventures/nova",
     "npm": "https://www.npmjs.com/package/@cbnventures/nova",
     "fundSources": [
       "https://github.com/sponsors/cbnventures",
       "https://www.paypal.com/biz/profile/cbnventures"
-    ]
+    ],
+    "privacyPolicy": "https://www.cbnventures.io/privacy/",
+    "termsOfUse": "https://www.cbnventures.io/terms/"
   },
   "workspaces": {
     "./": {
-      "name": "nova-project",
       "role": "project",
       "policy": "freezable",
+      "name": "nova-project",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
+    },
+    "./apps/demo-envoy": {
+      "role": "template",
+      "policy": "freezable",
+      "name": "demo-envoy",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
+    },
+    "./apps/demo-foundry": {
+      "role": "template",
+      "policy": "freezable",
+      "name": "demo-foundry",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
+    },
+    "./apps/demo-sentinel": {
+      "role": "template",
+      "policy": "freezable",
+      "name": "demo-sentinel",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
+    },
+    "./apps/demo-signal": {
+      "role": "template",
+      "policy": "freezable",
+      "name": "demo-signal",
       "recipes": {
         "cleanup": [
           true,
@@ -108,9 +378,9 @@
       }
     },
     "./apps/docs": {
-      "name": "nova-docs",
       "role": "docs",
       "policy": "freezable",
+      "name": "nova-docs",
       "recipes": {
         "cleanup": [
           true,
@@ -152,10 +422,67 @@
         ]
       }
     },
-    "./packages/nova": {
-      "name": "@cbnventures/nova",
+    "./packages/docusaurus-preset-nova": {
       "role": "package",
       "policy": "distributable",
+      "name": "@cbnventures/docusaurus-preset-nova",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true,
+          {
+            "description": true,
+            "keywords": true
+          }
+        ],
+        "sync-ownership": [
+          true,
+          {
+            "homepage": true,
+            "bugs": true,
+            "author": true,
+            "contributors": true,
+            "funding": true,
+            "repository": true
+          }
+        ]
+      }
+    },
+    "./packages/nova": {
+      "role": "package",
+      "policy": "distributable",
+      "name": "@cbnventures/nova",
       "recipes": {
         "cleanup": [
           true,

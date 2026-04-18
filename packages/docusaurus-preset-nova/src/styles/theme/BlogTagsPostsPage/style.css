@@ -1,0 +1,39 @@
+/**
+ * Blog Tags Posts Page — Shared structural styles.
+ *
+ * @since 0.15.0
+ */
+
+/* Header with title and "View All Tags" link. */
+.nova-blog-tags-posts-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem;
+
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+
+  border-bottom: 1px solid var(--nova-color-neutral-200);
+}
+
+[data-theme="dark"] .nova-blog-tags-posts-header {
+  border-bottom-color: var(--nova-color-neutral-800);
+}
+
+/* Title — utility scale heading. */
+.nova-blog-tags-posts-header .nova-heading {
+  margin: 0;
+
+  font-size: 1.125rem;
+}
+
+/* "View All Tags" link — secondary action pushed right. */
+.nova-blog-tags-posts-all-link {
+  font-size: 0.8125rem;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  margin-left: auto;
+}

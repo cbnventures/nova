@@ -1,8 +1,12 @@
 /**
- * CLI Utility - Version test.
+ * Tests - CLI - Utility - Version - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityVersionTestOriginalCwd = string;
+export type TestsCliUtilityVersionRunOriginalCwd = string;
 
-export type CLIUtilityVersionTestSandboxRoot = string;
+export type TestsCliUtilityVersionRunTemporaryDirectory = string;
+
+export type TestsCliUtilityVersionRunTemporaryPrefix = string;
+
+export type TestsCliUtilityVersionRunSandboxRoot = string;

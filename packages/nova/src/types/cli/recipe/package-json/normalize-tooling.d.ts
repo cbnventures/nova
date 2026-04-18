@@ -1,35 +1,89 @@
-import type { WorkspaceManifest } from '@/types/shared.d.ts';
+import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+
+import type {
+  SharedNovaConfigConfig,
+  SharedNovaConfigWorkspace,
+  SharedNovaConfigWorkspaceRecipes,
+  SharedNovaConfigWorkspaceRecipeTuple,
+  SharedWorkspaceManifest,
+} from '../../../shared.d.ts';
 
 /**
- * CLI Recipe - package.json - Normalize Tooling - Handle.
+ * CLI - Recipe - package.json - Normalize Tooling - Handle.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipePackageJsonNormalizeToolingHandleWorkspace = WorkspaceManifest;
+export type CliRecipePackageJsonNormalizeToolingHandleWorkspace = SharedWorkspaceManifest;
 
-export type CLIRecipePackageJsonNormalizeToolingHandleReturns = Promise<void>;
+export type CliRecipePackageJsonNormalizeToolingHandleReturns = Promise<void>;
+
+export type CliRecipePackageJsonNormalizeToolingHandleFileContents = Record<string, unknown>;
+
+export type CliRecipePackageJsonNormalizeToolingHandleFilePath = string;
+
+export type CliRecipePackageJsonNormalizeToolingHandleManifest = SharedNovaConfigWorkspace;
+
+export type CliRecipePackageJsonNormalizeToolingHandlePackageScripts = unknown;
+
+export type CliRecipePackageJsonNormalizeToolingHandlePackageGypfile = unknown;
+
+export type CliRecipePackageJsonNormalizeToolingHandlePackageConfig = unknown;
+
+export type CliRecipePackageJsonNormalizeToolingHandlePackageWorkspaces = unknown;
+
+export type CliRecipePackageJsonNormalizeToolingHandleWorkspaceDirectory = string;
+
+export type CliRecipePackageJsonNormalizeToolingHandleBindingGypPath = string;
+
+export type CliRecipePackageJsonNormalizeToolingHandleHasBindingGyp = boolean;
 
 /**
- * CLI Recipe - package.json - Normalize Tooling - Is empty.
+ * CLI - Recipe - package.json - Normalize Tooling - Is Empty.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipePackageJsonNormalizeToolingIsEmptyValue = unknown;
+export type CliRecipePackageJsonNormalizeToolingIsEmptyValue = unknown;
 
-export type CLIRecipePackageJsonNormalizeToolingIsEmptyReturns = boolean;
+export type CliRecipePackageJsonNormalizeToolingIsEmptyReturns = boolean;
 
 /**
- * CLI Recipe - package.json - Normalize Tooling - Run.
+ * CLI - Recipe - package.json - Normalize Tooling - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipePackageJsonNormalizeToolingRunOptionsDryRun = true;
+export type CliRecipePackageJsonNormalizeToolingRunOptionsDryRun = true;
 
-export type CLIRecipePackageJsonNormalizeToolingRunOptionsReplaceFile = true;
+export type CliRecipePackageJsonNormalizeToolingRunOptionsReplaceFile = true;
 
-export type CLIRecipePackageJsonNormalizeToolingRunOptions = {
-  dryRun?: CLIRecipePackageJsonNormalizeToolingRunOptionsDryRun;
-  replaceFile?: CLIRecipePackageJsonNormalizeToolingRunOptionsReplaceFile;
+export type CliRecipePackageJsonNormalizeToolingRunOptions = {
+  dryRun?: CliRecipePackageJsonNormalizeToolingRunOptionsDryRun;
+  replaceFile?: CliRecipePackageJsonNormalizeToolingRunOptionsReplaceFile;
 };
 
-export type CLIRecipePackageJsonNormalizeToolingRunReturns = Promise<void>;
+export type CliRecipePackageJsonNormalizeToolingRunReturns = Promise<void>;
+
+export type CliRecipePackageJsonNormalizeToolingRunCurrentDirectory = string;
+
+export type CliRecipePackageJsonNormalizeToolingRunIsAtProjectRoot = boolean;
+
+export type CliRecipePackageJsonNormalizeToolingRunIsDryRun = boolean;
+
+export type CliRecipePackageJsonNormalizeToolingRunIsReplaceFile = boolean;
+
+export type CliRecipePackageJsonNormalizeToolingRunReplaceFileNotice = string;
+
+export type CliRecipePackageJsonNormalizeToolingRunNovaConfig = LibNovaConfig;
+
+export type CliRecipePackageJsonNormalizeToolingRunWorkingFile = SharedNovaConfigConfig;
+
+export type CliRecipePackageJsonNormalizeToolingRunWorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+
+export type CliRecipePackageJsonNormalizeToolingRunEligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+
+export type CliRecipePackageJsonNormalizeToolingRunWorkspaceConfigFilter = SharedNovaConfigWorkspace;
+
+export type CliRecipePackageJsonNormalizeToolingRunWorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+
+export type CliRecipePackageJsonNormalizeToolingRunRecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+
+export type CliRecipePackageJsonNormalizeToolingRunWorkspaces = SharedWorkspaceManifest[];

@@ -1,0 +1,173 @@
+---
+title: Access Control
+sidebar_position: 3
+description: Drawbridge rules, context-aware access grants, time-bound access, emergency overrides, and revocation triggers.
+tags:
+  - trust
+  - access control
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Access Control
+
+Drawbridge is Sentinel's adaptive access gateway. It evaluates trust policies in real time and translates the result into a concrete access decision — grant, narrow, or revoke. Every Filament tunnel, every resource request, and every zone crossing passes through Drawbridge.
+
+## How Drawbridge Decides
+
+Drawbridge receives a trust evaluation from Watchtower and maps it to one of three outcomes:
+
+1. **Grant** — All policy conditions are met. The Filament tunnel to the requested resource is opened or maintained.
+2. **Narrow** — Some conditions are met but the trust score is borderline. Access is granted with restrictions (read-only, time-limited, or scoped to a subset of the resource).
+3. **Revoke** — One or more conditions have failed. The Filament tunnel is closed immediately. The user must remediate and re-authenticate.
+
+```text title="Drawbridge decision flow"
+Watchtower evaluation → trust score 92, all conditions pass
+  → Drawbridge: GRANT full access to api-cluster-east
+
+Watchtower evaluation → trust score 78, posture below threshold
+  → Drawbridge: NARROW access (read-only, 30-minute window)
+
+Watchtower evaluation → trust score 61, MFA expired
+  → Drawbridge: REVOKE — tunnel closed, re-authentication required
+```
+
+## Standard Access
+
+Standard access rules are the most common. They grant full access when all policy conditions are met:
+
+<Tabs>
+<TabItem value="standard" label="Standard Access" default>
+
+```text title="policies/standard-access.grain"
+policy "engineering-access" {
+  resource = "engineering-services"
+  effect   = "allow"
+
+  conditions {
+    device.posture   >= 80
+    user.mfa         = true
+    user.role        = ["engineer"]
+    network.location = ["office", "vpn"]
+  }
+
+  on_failure {
+    action = "revoke"
+    notify = "security-ops"
+    log    = "spyglass"
+  }
+}
+```
+
+When all conditions pass, Drawbridge grants full access. The Filament tunnel remains open until the next Watchtower evaluation. If any condition fails at the next 90-second check, access is revoked.
+
+</TabItem>
+<TabItem value="emergency" label="Emergency Access">
+
+```text title="policies/emergency-access.grain"
+policy "emergency-access" {
+  resource = "all-services"
+  effect   = "allow"
+  priority = 1
+
+  conditions {
+    user.role    = ["incident-commander"]
+    user.mfa     = true
+    // highlight-start
+    emergency    = true
+    session.age  <= 1800
+    // highlight-end
+  }
+
+  on_failure {
+    action = "revoke"
+    log    = "spyglass"
+  }
+
+  audit {
+    // highlight-start
+    level       = "critical"
+    notify      = ["security-ops", "executive-team"]
+    require_justification = true
+    // highlight-end
+  }
+}
+```
+
+Emergency access bypasses normal zone restrictions but requires an incident commander role, active MFA, and an explicit emergency flag. Sessions are limited to 30 minutes. Every action is logged at the critical audit level and the executive team is notified.
+
+</TabItem>
+</Tabs>
+
+:::danger Emergency Access Audit
+Every emergency access session is reconstructed by Spyglass and flagged for mandatory review. Emergency access is not a bypass — it is a carefully audited exception. Abuse triggers automatic role revocation.
+:::
+
+## Time-Bound Access
+
+Access can be scoped to a specific time window. Outside the window, the policy evaluates as failed and Drawbridge revokes access:
+
+```text title="policies/maintenance-window.grain"
+policy "maintenance-access" {
+  resource = "database-cluster"
+  effect   = "allow"
+
+  conditions {
+    user.role        = ["dba"]
+    device.posture   >= 90
+    // highlight-next-line
+    time.window      = "0 2-4 * * SAT"
+  }
+
+  on_failure {
+    action = "revoke"
+    log    = "spyglass"
+  }
+}
+```
+
+This policy grants database access only to DBAs, only on Saturdays between 02:00 and 04:00, and only when their device posture score is 90 or above. At 04:01, Drawbridge closes the tunnel regardless of what the DBA is doing.
+
+## Revocation Triggers
+
+Drawbridge revokes access immediately when any of the following occurs:
+
+| Trigger                             | Source     | Response                                    |
+|-------------------------------------|------------|---------------------------------------------|
+| Posture score drops below threshold | Watchtower | Tunnel closed, re-authentication required   |
+| MFA session expires                 | Watchtower | Step-up MFA prompt, tunnel suspended        |
+| Network location changes            | Watchtower | Policy re-evaluated with new location data  |
+| Device goes offline                 | Garrison   | Tunnel closed after 120s timeout            |
+| Emergency flag cleared              | Admin      | Emergency sessions terminated immediately   |
+| Session age exceeded                | Watchtower | Forced re-authentication                    |
+| Manual revocation                   | Admin API  | Immediate tunnel closure for specified user |
+
+Revocation is not graceful. When Drawbridge revokes access, the Filament tunnel is terminated immediately. In-flight requests to the protected resource will fail. This is intentional — a revoked session must not be allowed to complete any pending operations.
+
+:::note Narrow Before Revoke
+For non-critical resources, configure the `on_failure` handler to narrow access before revoking. This gives users a grace period to save work: `action = "narrow"` restricts to read-only for 5 minutes before escalating to full revocation.
+:::
+
+## Monitoring Access Decisions
+
+Query Drawbridge decisions in real time:
+
+```bash title="Watch access decisions"
+sentinel drawbridge watch --resource engineering-services
+```
+
+```text title="Live decision output"
+Drawbridge — engineering-services
+  [09:15:00] user=j.chen    device=dev_a3b7  → GRANT (score 92, all conditions pass)
+  [09:15:00] user=m.torres  device=dev_f8e2  → GRANT (score 88, all conditions pass)
+  [09:16:30] user=m.torres  device=dev_f8e2  → NARROW (score 79, posture below 80)
+    → Read-only access for 300s, then revoke
+  [09:21:30] user=m.torres  device=dev_f8e2  → REVOKE (grace period expired)
+```
+
+## Next Steps
+
+- [Micro-Segmentation](/docs/operations/micro-segmentation/) — How Rampart zones scope the access that Drawbridge grants.
+- [Audit & Forensics](/docs/operations/audit-forensics/) — Full session reconstruction of access decisions.
+- [Trust Policies](/docs/trust/trust-policies/) — The policy grammar that drives Drawbridge decisions.

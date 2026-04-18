@@ -1,59 +1,150 @@
-import type { WorkspaceManifest } from '@/types/shared.d.ts';
+import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+
+import type {
+  SharedNovaConfigConfig,
+  SharedNovaConfigWorkspace,
+  SharedNovaConfigWorkspaceRecipes,
+  SharedNovaConfigWorkspaceRecipeSettings,
+  SharedNovaConfigWorkspaceRecipeTuple,
+  SharedWorkspaceManifest,
+} from '../../../shared.d.ts';
 
 /**
- * CLI Recipe - package.json - Normalize Dependencies - Handle.
+ * CLI - Recipe - package.json - Normalize Dependencies - Handle.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipePackageJsonNormalizeDependenciesHandleWorkspace = WorkspaceManifest;
+export type CliRecipePackageJsonNormalizeDependenciesHandleWorkspace = SharedWorkspaceManifest;
 
-export type CLIRecipePackageJsonNormalizeDependenciesHandleReturns = Promise<void>;
+export type CliRecipePackageJsonNormalizeDependenciesHandleReturns = Promise<void>;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandleFileContents = Record<string, unknown>;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandleManifest = SharedNovaConfigWorkspace;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandlePackageDependencies = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandlePackageDevDependencies = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandlePackagePeerDependencies = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandlePackagePeerDependenciesMeta = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandlePackageBundleDependencies = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandlePackageBundledDependencies = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandlePackageOptionalDependencies = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandlePackageOverrides = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesHandleBundleDependencies = unknown[];
+
+export type CliRecipePackageJsonNormalizeDependenciesHandleBundledDependencies = unknown[];
+
+export type CliRecipePackageJsonNormalizeDependenciesHandleMergedBundleDependencies = unknown[];
 
 /**
- * CLI Recipe - package.json - Normalize Dependencies - Is empty.
+ * CLI - Recipe - package.json - Normalize Dependencies - Is Empty.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipePackageJsonNormalizeDependenciesIsEmptyValue = unknown;
+export type CliRecipePackageJsonNormalizeDependenciesIsEmptyValue = unknown;
 
-export type CLIRecipePackageJsonNormalizeDependenciesIsEmptyReturns = boolean;
+export type CliRecipePackageJsonNormalizeDependenciesIsEmptyReturns = boolean;
 
 /**
- * CLI Recipe - package.json - Normalize Dependencies - Pin dependencies.
+ * CLI - Recipe - package.json - Normalize Dependencies - Pin Dependencies.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace = WorkspaceManifest;
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace = SharedWorkspaceManifest;
 
-export type CLIRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions = boolean;
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions = boolean;
 
-export type CLIRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions = boolean;
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions = boolean;
 
-export type CLIRecipePackageJsonNormalizeDependenciesPinDependenciesReturns = number;
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesReturns = number;
 
-export type CLIRecipePackageJsonNormalizeDependenciesPinDependenciesDepGroups = string[];
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepGroups = string[];
+
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinned = number;
+
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesUnpinnable = number;
+
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDeps = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepEntries = [string, unknown][];
+
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepName = string;
+
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepVersion = unknown;
+
+export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesStripped = string | undefined;
 
 /**
- * CLI Recipe - package.json - Normalize Dependencies - Run.
+ * CLI - Recipe - package.json - Normalize Dependencies - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipePackageJsonNormalizeDependenciesRunOptionsDryRun = true;
+export type CliRecipePackageJsonNormalizeDependenciesRunOptionsDryRun = true;
 
-export type CLIRecipePackageJsonNormalizeDependenciesRunOptionsReplaceFile = true;
+export type CliRecipePackageJsonNormalizeDependenciesRunOptionsReplaceFile = true;
 
-export type CLIRecipePackageJsonNormalizeDependenciesRunOptions = {
-  dryRun?: CLIRecipePackageJsonNormalizeDependenciesRunOptionsDryRun;
-  replaceFile?: CLIRecipePackageJsonNormalizeDependenciesRunOptionsReplaceFile;
+export type CliRecipePackageJsonNormalizeDependenciesRunOptions = {
+  dryRun?: CliRecipePackageJsonNormalizeDependenciesRunOptionsDryRun;
+  replaceFile?: CliRecipePackageJsonNormalizeDependenciesRunOptionsReplaceFile;
 };
 
-export type CLIRecipePackageJsonNormalizeDependenciesRunReturns = Promise<void>;
+export type CliRecipePackageJsonNormalizeDependenciesRunReturns = Promise<void>;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunCurrentDirectory = string;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunIsAtProjectRoot = boolean;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunIsDryRun = boolean;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunIsReplaceFile = boolean;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunReplaceFileNotice = string;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunNovaConfig = LibNovaConfig;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunWorkingFile = SharedNovaConfigConfig;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunWorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+
+export type CliRecipePackageJsonNormalizeDependenciesRunEligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+
+export type CliRecipePackageJsonNormalizeDependenciesRunWorkspaceConfigFilter = SharedNovaConfigWorkspace;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunWorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunRecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunWorkspaces = SharedWorkspaceManifest[];
+
+export type CliRecipePackageJsonNormalizeDependenciesRunHasUnpinnable = boolean;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunRecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunRecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunPinDependencyVersions = boolean;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunPinDevDependencyVersions = boolean;
+
+export type CliRecipePackageJsonNormalizeDependenciesRunCount = number;
 
 /**
- * CLI Recipe - package.json - Normalize Dependencies - Strip prefix.
+ * CLI - Recipe - package.json - Normalize Dependencies - Strip Prefix.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIRecipePackageJsonNormalizeDependenciesStripPrefixVersion = string;
+export type CliRecipePackageJsonNormalizeDependenciesStripPrefixVersion = string;
 
-export type CLIRecipePackageJsonNormalizeDependenciesStripPrefixReturns = string | undefined;
+export type CliRecipePackageJsonNormalizeDependenciesStripPrefixReturns = string | undefined;
+
+export type CliRecipePackageJsonNormalizeDependenciesStripPrefixMatch = RegExpMatchArray | null;

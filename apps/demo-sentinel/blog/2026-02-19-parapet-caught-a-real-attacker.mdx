@@ -1,0 +1,83 @@
+---
+title: "The Day Parapet Caught a Real Attacker"
+authors: [james]
+tags: [parapet, simulation, incident-response]
+date: 2026-02-19
+---
+
+We have written about Parapet finding misconfigurations. We have written about it catching lateral movement paths in staging. Until February, every Parapet finding had been a policy error — something we did wrong that an attacker could have exploited. On February 11th, Parapet found something different. It found an active attacker.
+
+{/* truncate */}
+
+## The Alert
+
+Parapet runs continuous simulations against production traffic. Every six hours, it replays the latest traffic window against the current policy set and flags anomalies. The 06:00 UTC run on February 11th produced a finding we had never seen before:
+
+```text title="Parapet anomaly report — 2026-02-11T06:00Z"
+Parapet Continuous Simulation Report
+  Policy set:     production
+  Traffic window:  2026-02-10T18:00Z to 2026-02-11T06:00Z
+  Connections:     1,247,891
+
+  Anomalies detected: 1
+    ACCESS-PATTERN-ANOMALY
+    Identity:   svc-monitoring-agent
+    Pattern:    sequential resource enumeration
+    Resources:  47 endpoints accessed in alphabetical order
+    Time span:  02:17:04Z to 02:43:31Z (26 minutes)
+    Zone:       monitoring → data-layer, monitoring → api, monitoring → auth
+    Risk:       HIGH — pattern consistent with automated reconnaissance
+```
+
+A monitoring service account accessed 47 endpoints in alphabetical order over 26 minutes. Every individual access was permitted — the monitoring agent has broad read access by design. But the pattern was not monitoring. Monitoring agents poll the same endpoints in the same order on a fixed interval. This agent was enumerating endpoints it had never accessed before, in alphabetical order, which is the signature of an automated scanner using a discovered service registry.
+
+## The Investigation
+
+We pulled the Spyglass timeline for `svc-monitoring-agent`:
+
+```text title="Spyglass timeline (abbreviated)"
+02:15:22Z  Login from 10.8.3.44 (monitoring zone, Bastion-US-East-2)
+02:17:04Z  GET /healthz → analytics-aggregator.data-layer
+02:17:11Z  GET /healthz → analytics-db.data-layer
+02:17:18Z  GET /healthz → auth-gateway.auth
+02:17:25Z  GET /healthz → auth-provider.auth
+           ... (43 more endpoints, alphabetical order)
+02:43:31Z  GET /v1/users?limit=1 → user-service.api
+02:43:38Z  Connection terminated by Bastion (manual kill)
+```
+
+Two things stood out:
+
+1. The source IP `10.8.3.44` was a monitoring zone host, but it was not the host the monitoring agent normally runs on. The agent had been deployed to an additional node during a scaling event the previous week, and the old node had not been decommissioned.
+2. The final request was not a health check. It was a data query — `GET /v1/users?limit=1` — testing whether the monitoring credential could read user data from the API layer.
+
+The attacker had compromised the decommissioned monitoring node, found the `svc-monitoring-agent` credentials still present on disk, and was using them to enumerate accessible resources.
+
+## The Response
+
+The incident response timeline:
+
+| Time (UTC) | Action                                                       |
+|------------|--------------------------------------------------------------|
+| 06:01      | Parapet anomaly alert received by security-ops               |
+| 06:08      | On-call engineer reviews Spyglass timeline                   |
+| 06:14      | `svc-monitoring-agent` credentials rotated                   |
+| 06:14      | All sessions for old credentials terminated via Bastion      |
+| 06:22      | Decommissioned node isolated from Rampart monitoring zone    |
+| 06:35      | Forensic image captured from compromised node                |
+| 06:41      | Parapet re-simulation confirms no further anomalous patterns |
+| 07:00      | Incident declared contained                                  |
+
+Total time from detection to containment: 59 minutes. Total data exfiltrated: one health check response per endpoint. The `limit=1` user query was the last request before we killed the session — the attacker did not get a response because the Bastion connection was terminated mid-flight.
+
+## What We Learned
+
+The attacker had valid credentials and authorized access. Traditional monitoring would not have caught this because every individual request was permitted. What Parapet caught was the pattern — the sequential, alphabetical enumeration of endpoints that no legitimate monitoring agent would perform.
+
+We made three changes:
+
+- **Decommissioned nodes are now wiped immediately.** No credentials remain on disk after a node leaves the fleet.
+- **Parapet now runs hourly simulations**, not every six hours. The detection window matters.
+- **Monitoring service accounts now have explicit endpoint lists**, not zone-wide access. The monitoring agent accesses 12 specific endpoints. It no longer has the ability to enumerate resources it does not monitor.
+
+Parapet was designed to find policy mistakes. It turns out that the same pattern analysis that finds misconfigurations also finds attackers. The difference is intent, but the signal is the same: access patterns that do not match history.

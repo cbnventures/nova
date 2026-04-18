@@ -1,0 +1,74 @@
+---
+title: "SSO Is Not Zero Trust (and Never Was)"
+authors: [ingrid]
+tags: [sso, identity, access-control]
+date: 2024-04-09
+---
+
+Single sign-on solved an authentication problem. It did not solve an authorization problem. The conflation of the two is one of the most persistent misconceptions in enterprise security, and it leads to architectures that feel secure but are not.
+
+We see this pattern in nearly every environment we assess: an organization deploys an SSO provider, integrates it with every internal application, enables MFA, and declares the identity problem solved. Then a contractor's session token gets stolen from a browser extension, and the attacker has access to every application the contractor could reach — because SSO gave them a single key that opens every door.
+
+{/* truncate */}
+
+## What SSO Actually Does
+
+SSO centralizes authentication. It answers one question: "Is this person who they claim to be?" It does this well. A properly configured SSO provider with hardware-bound MFA is a strong authentication mechanism.
+
+But authentication is not authorization. Knowing who someone is does not answer:
+
+- What resources should they access right now?
+- Is their device in a healthy state?
+- Has their behavior changed since they authenticated?
+- Should their access be reduced because they are connecting from an unfamiliar network?
+
+SSO cannot answer these questions because it evaluates the user once, at login time, and then issues a token that remains valid until it expires. Between issuance and expiry, the token is a bearer credential. Whoever holds it has access.
+
+## The Session Token Problem
+
+Here is what a typical SSO session lifecycle looks like:
+
+```text title="SSO session lifecycle"
+T=0m   User authenticates → SSO issues session token (TTL: 8 hours)
+T=1m   User accesses App A → token accepted
+T=30m  User accesses App B → token accepted
+T=2h   User's device fails a patch check → token still valid
+T=4h   User connects from a new country → token still valid
+T=6h   User's behavior score drops to 30 → token still valid
+T=8h   Token expires → user re-authenticates
+```
+
+For eight hours, the token is a skeleton key. Nothing re-evaluates the user's risk posture. Nothing checks whether the device is still compliant. Nothing notices that the user is now connecting from a country they have never visited.
+
+## How Sentinel Differs
+
+Sentinel does not replace SSO. It layers continuous evaluation on top of it. When a user authenticates through an SSO provider, Sentinel accepts the identity assertion but does not inherit the trust assumption. Instead, it evaluates a trust policy every 90 seconds:
+
+```text title="trust-policy.grain — continuous evaluation"
+policy "app-access" {
+  resource = "internal-apps"
+  effect   = "allow"
+
+  conditions {
+    identity.provider  = "okta"
+    identity.mfa       = true
+    device.posture     >= 80
+    session.age        <= 3600
+    behavior.score     >= 70
+    network.reputation >= "medium"
+  }
+
+  on_failure {
+    action = "step-up-mfa"
+    fallback = "revoke"
+  }
+}
+```
+
+If the device posture drops, access is revoked. If the session ages past an hour, step-up MFA is required. If the behavior score falls, the session ends. The SSO token is still valid, but Sentinel no longer trusts it.
+
+## The Recommendation
+
+Use SSO for what it is good at: centralizing authentication and reducing password fatigue. But do not confuse authentication with authorization, and do not treat a session token as proof of ongoing trust.
+
+Identity is one input to a trust decision. It is not the decision itself. The decision requires device state, behavior analysis, network context, and continuous re-evaluation. SSO provides none of those. Sentinel provides all of them.

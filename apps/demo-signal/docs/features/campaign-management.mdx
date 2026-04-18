@@ -1,0 +1,177 @@
+---
+title: Campaign Management
+sidebar_position: 3
+tags:
+  - features
+  - campaigns
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Campaign Management
+
+Aperture captures point-in-time snapshots of campaign performance. Compare snapshots across time windows. Run A/B link variants. See exactly what changed and when.
+
+## Creating Campaigns
+
+Group Beacon links into campaigns for organized tracking:
+
+```bash title="Create a campaign"
+signal campaign create \
+  --name "product-launch" \
+  --description "Q1 product launch across email, social, and paid channels" \
+  --start "2025-02-01" \
+  --end "2025-03-31"
+```
+
+```json title="Campaign response"
+{
+  "id": "cmp_01J9L2M8N4P6Q7R3S5T0U1V9",
+  "name": "product-launch",
+  "description": "Q1 product launch across email, social, and paid channels",
+  "window": {
+    "start": "2025-02-01T00:00:00Z",
+    "end": "2025-03-31T23:59:59Z"
+  },
+  "beacons": 0,
+  "clicks": 0,
+  "status": "active"
+}
+```
+
+Every Beacon link created with `--campaign "product-launch"` is automatically associated with this campaign.
+
+## Aperture Snapshots
+
+Aperture captures the state of a campaign at a specific moment. Snapshots are immutable — they record metrics as they were, not as they are now.
+
+```bash title="Take a snapshot"
+signal aperture snapshot --campaign "product-launch" --label "week-2"
+```
+
+```json title="Aperture snapshot"
+{
+  "id": "snap_01J9M3N5P7Q8R4S6T2U0V3W1",
+  "campaign": "product-launch",
+  "label": "week-2",
+  "capturedAt": "2025-02-14T18:00:00Z",
+  "metrics": {
+    "totalBeacons": 24,
+    "totalClicks": 12847,
+    "uniqueVisitors": 9210,
+    "conversionRate": 0.034,
+    "topChannel": "email",
+    "topVariant": "hero-cta"
+  }
+}
+```
+
+## Comparing Snapshots
+
+Compare two snapshots to see what changed between time windows:
+
+```bash title="Compare snapshots"
+signal aperture compare --from "week-1" --to "week-2" --campaign "product-launch"
+```
+
+```json title="Comparison output"
+{
+  "campaign": "product-launch",
+  "from": "week-1",
+  "to": "week-2",
+  "deltas": {
+    "totalClicks": { "from": 5420, "to": 12847, "change": "+136.8%" },
+    "uniqueVisitors": { "from": 3890, "to": 9210, "change": "+136.8%" },
+    "conversionRate": { "from": 0.021, "to": 0.034, "change": "+61.9%" },
+    "topChannel": { "from": "social", "to": "email", "changed": true }
+  }
+}
+```
+
+## A/B Link Variants
+
+Create multiple Beacon link variants for the same destination to test messaging:
+
+<Tabs>
+<TabItem value="single" label="Single Campaign" default>
+
+```bash title="Create A/B variants"
+signal beacon create \
+  --url "https://threadbare.example/pricing" \
+  --campaign "product-launch" \
+  --channel "email" \
+  --variant "pricing-direct"
+
+signal beacon create \
+  --url "https://threadbare.example/pricing" \
+  --campaign "product-launch" \
+  --channel "email" \
+  --variant "pricing-soft-sell"
+```
+
+Query variant performance within the campaign:
+
+```bash title="Compare variants"
+signal aperture variants --campaign "product-launch" --channel "email"
+```
+
+```json title="Variant comparison"
+{
+  "channel": "email",
+  "variants": [
+    { "variant": "pricing-direct", "clicks": 1842, "conversions": 73, "rate": 0.040 },
+    { "variant": "pricing-soft-sell", "clicks": 1956, "conversions": 41, "rate": 0.021 }
+  ]
+}
+```
+
+</TabItem>
+<TabItem value="cross" label="Cross-Campaign">
+
+Compare the same variant across multiple campaigns:
+
+```bash title="Cross-campaign variant query"
+signal aperture variants \
+  --variant "hero-cta" \
+  --campaigns "product-launch,summer-sale,year-end"
+```
+
+```json title="Cross-campaign output"
+{
+  "variant": "hero-cta",
+  "campaigns": [
+    { "campaign": "product-launch", "clicks": 4210, "conversions": 143, "rate": 0.034 },
+    { "campaign": "summer-sale", "clicks": 6890, "conversions": 289, "rate": 0.042 },
+    { "campaign": "year-end", "clicks": 3150, "conversions": 98, "rate": 0.031 }
+  ]
+}
+```
+
+</TabItem>
+</Tabs>
+
+## Time-Windowed Analysis
+
+Restrict queries to specific time ranges:
+
+```bash title="Query a time window"
+signal aperture metrics \
+  --campaign "product-launch" \
+  --from "2025-02-10" \
+  --to "2025-02-14" \
+  --granularity "day"
+```
+
+| Date       | Clicks | Unique Visitors | Conversions | Rate |
+|------------|--------|-----------------|-------------|------|
+| 2025-02-10 | 1,240  | 890             | 28          | 3.1% |
+| 2025-02-11 | 1,680  | 1,210           | 42          | 3.5% |
+| 2025-02-12 | 2,150  | 1,540           | 61          | 4.0% |
+| 2025-02-13 | 1,890  | 1,350           | 48          | 3.6% |
+| 2025-02-14 | 1,520  | 1,090           | 34          | 3.1% |
+
+## Next Steps
+
+- [Audience Analysis](/docs/features/audience-analysis/) — Detect where campaign audiences overlap.
+- [Batch Operations](/docs/advanced/batch-operations/) — Create thousands of Beacon links in one call.

@@ -1,0 +1,205 @@
+/**
+ * ============================
+ * Navbar — Compass — Bar Layout
+ * ============================
+ */
+
+.nova-navbar-compass {
+  display: flex;
+  align-items: center;
+}
+
+.nova-navbar-compass-brand {
+  margin-right: auto;
+}
+
+.nova-navbar-compass-items {
+  display: flex;
+  align-items: center;
+  gap: var(--nova-shape-gap);
+}
+
+.nova-navbar-compass-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 0.75rem;
+}
+
+/**
+ * ============================
+ * Navbar — Compass — Mobile Menu Overlay
+ * ============================
+ */
+
+.nova-navbar-compass-menu-overlay {
+  position: fixed;
+  inset: 0;
+
+  z-index: 300;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/**
+ * ============================
+ * Navbar — Compass — Mobile Menu Open/Close State
+ * ============================
+ */
+
+@keyframes nova-navbar-compass-menu-open {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes nova-navbar-compass-menu-close {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.nova-navbar-compass-menu-open {
+  animation: nova-navbar-compass-menu-open 200ms ease forwards;
+}
+
+.nova-navbar-compass-menu-closing {
+  animation: nova-navbar-compass-menu-close 200ms ease forwards;
+}
+
+/**
+ * ============================
+ * Navbar — Compass — Mobile Menu Panel
+ * ============================
+ */
+
+.nova-navbar-compass-menu-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  width: calc(100% - 2rem);
+  max-width: 480px;
+  max-height: calc(100dvh - 2rem);
+  padding: 1rem;
+
+  overflow-y: auto;
+}
+
+@media (min-width: 576px) {
+  .nova-navbar-compass-menu-panel {
+    width: calc(100% - 4rem);
+  }
+}
+
+/**
+ * ============================
+ * Navbar — Compass — Mobile Menu Header
+ * ============================
+ */
+
+.nova-navbar-compass-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/**
+ * ============================
+ * Navbar — Compass — Mobile Menu Brand
+ * ============================
+ */
+
+.nova-navbar-compass-menu-brand a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  text-decoration: none;
+}
+
+.nova-navbar-compass-menu-brand img {
+  height: 1.75rem;
+  width: auto;
+}
+
+/**
+ * ============================
+ * Navbar — Compass — Mobile Menu Close
+ * ============================
+ */
+
+.nova-navbar-compass-menu-close {
+  flex-shrink: 0;
+  margin-left: auto;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+
+  background: none;
+  border: 1px solid var(--nova-color-neutral-300);
+  border-radius: 0.375rem;
+
+  cursor: pointer;
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-close {
+  border-color: var(--nova-color-neutral-700);
+}
+
+/**
+ * ============================
+ * Navbar — Compass — Mobile Menu Search
+ * ============================
+ */
+
+.nova-navbar-compass-menu-search .nova-search-dropdown {
+  margin-top: 0.5rem;
+}
+
+.nova-navbar-compass-menu-search:empty {
+  display: none;
+}
+
+/**
+ * ============================
+ * Navbar — Compass — Mobile Menu Items
+ * ============================
+ */
+
+.nova-navbar-compass-menu-items {
+  display: flex;
+  flex-direction: column;
+}
+
+.nova-navbar-compass-menu-item {
+  display: flex;
+  align-items: center;
+
+  padding: 0.75rem;
+
+  text-decoration: none;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.nova-navbar-compass-menu-item:hover {
+  text-decoration: none;
+}

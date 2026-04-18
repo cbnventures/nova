@@ -1,0 +1,243 @@
+---
+id: require-explicit-return
+title: Require Explicit Return
+description: Require an explicit return statement at the end of void function bodies so every function signals its exit point.
+keywords:
+  - nova
+  - eslint rule
+  - explicit return
+  - void function
+  - code style
+  - linting
+tags:
+  - rules
+  - eslint
+  - code style
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Require an explicit `return;` at the end of void function bodies so every function signals its exit point.
+
+## Summary
+
+The `require-explicit-return` rule reports any function, method, constructor, setter, or arrow function (with a block body) that has a void return and does not end with an explicit `return;` statement.
+
+Functions that already return a value and concise arrow functions (no block body) are not affected.
+
+## Why Use This Rule?
+
+1. Makes the exit point of every function visible without scanning for implicit fall-through.
+2. Keeps void functions consistent with functions that return values — both have an explicit return.
+3. Prevents accidental omission where a return was intended but forgotten.
+
+## Examples
+
+<Tabs groupId="require-explicit-return-examples">
+  <TabItem value="correct" label="Correct" default>
+
+    ```ts
+    function greet(name) {
+      console.log(name);
+
+      return;
+    }
+
+    const save = (user) => {
+      db.insert(user);
+
+      return;
+    };
+
+    class User {
+      constructor(name) {
+        this.name = name;
+
+        return;
+      }
+
+      public save() {
+        this.db.insert(this);
+
+        return;
+      }
+
+      set name(value) {
+        this._name = value;
+
+        return;
+      }
+    }
+
+    // Not affected — already returns a value.
+    function add(a, b) {
+      return a + b;
+    }
+
+    // Not affected — concise arrow.
+    const double = (n) => n * 2;
+    ```
+
+  </TabItem>
+  <TabItem value="incorrect" label="Incorrect">
+
+    ```ts
+    function greet(name) {
+      console.log(name);
+    }
+
+    const save = (user) => {
+      db.insert(user);
+    };
+
+    class User {
+      constructor(name) {
+        this.name = name;
+      }
+
+      public save() {
+        this.db.insert(this);
+      }
+
+      set name(value) {
+        this._name = value;
+      }
+    }
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Configuration
+
+<Tabs groupId="require-explicit-return-config">
+  <TabItem value="default" label="Default" default>
+
+    Enable the rule in your ESLint <Terminology title="single-file config" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>flat config</Terminology>:
+
+    ```ts
+    import { RequireExplicitReturn } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-explicit-return': RequireExplicitReturn.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-explicit-return': ['error'],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-constructors" label="Skip Constructors">
+
+    Exclude constructors from the rule:
+
+    ```ts
+    import { RequireExplicitReturn } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-explicit-return': RequireExplicitReturn.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-explicit-return': ['error', {
+            excludeConstructors: true,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-arrow-functions" label="Skip Arrow Functions">
+
+    Exclude arrow functions from the rule:
+
+    ```ts
+    import { RequireExplicitReturn } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-explicit-return': RequireExplicitReturn.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-explicit-return': ['error', {
+            excludeArrowFunctions: true,
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+  <TabItem value="skip-files" label="Skip Files">
+
+    Exclude specific files or patterns with the `ignoreFiles` option:
+
+    ```ts
+    import { RequireExplicitReturn } from '@cbnventures/nova/rules/eslint';
+
+    export default [
+      {
+        plugins: {
+          '@cbnventures/nova': {
+            rules: {
+              'require-explicit-return': RequireExplicitReturn.rule,
+            },
+          },
+        },
+        rules: {
+          '@cbnventures/nova/require-explicit-return': ['error', {
+            ignoreFiles: [
+              '**/*.test.ts',
+              './src/generated/**',
+            ],
+          }],
+        },
+      },
+    ];
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+:::warning
+`ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
+:::
+
+| Option                  | Type       | Default | Description                      |
+|-------------------------|------------|---------|----------------------------------|
+| `excludeArrowFunctions` | `boolean`  | `false` | Skip arrow function expressions. |
+| `excludeConstructors`   | `boolean`  | `false` | Skip class constructors.         |
+| `excludeSetters`        | `boolean`  | `false` | Skip setter methods.             |
+| `ignoreFiles`           | `string[]` | `[]`    | File patterns to skip.           |
+
+## Autofix
+
+Autofix is not available for this rule. Flagged code must be updated manually.
+
+## Troubleshooting
+
+- **Warning fires on a function that returns a value in some branches** — The rule scans the entire function body for any `return` with a value. If found, the function is treated as non-void and the rule does not fire. Mixed-return functions (some branches return a value, others do not) are skipped.
+- **Concise arrows are not flagged** — Arrow functions without a block body (e.g., `(n) => n * 2`) have an implicit return value and are not void.

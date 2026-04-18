@@ -1,8 +1,14 @@
 /**
- * CLI Utility - Initialize test.
+ * Tests - CLI - Utility - Initialize - Run.
  *
- * @since 1.0.0
+ * @since 0.14.0
  */
-export type CLIUtilityInitializeTestOriginalCwd = string;
+export type TestsCliUtilityInitializeRunOriginalCwd = string;
 
-export type CLIUtilityInitializeTestSandboxRoot = string;
+export type TestsCliUtilityInitializeRunTemporaryDirectory = string;
+
+export type TestsCliUtilityInitializeRunTemporaryPrefix = string;
+
+export type TestsCliUtilityInitializeRunSandboxRoot = string;
+
+export type TestsCliUtilityInitializeRunProjectDirectory = string;

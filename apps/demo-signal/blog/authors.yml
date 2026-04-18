@@ -1,0 +1,20 @@
+amara:
+  name: Amara Osei
+  title: Head of Insights, Signal
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+
+luca:
+  name: Luca Ferretti
+  title: Data Engineering, Signal
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+
+suki:
+  name: Suki Tanaka
+  title: Product, Signal
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true

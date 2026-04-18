@@ -1,0 +1,19 @@
+/**
+ * Sentinel — Table visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Table Container
+ * ============================ */
+
+.nova-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+}
+
+.nova-table-wrapper + * {
+  margin-top: 0;
+}

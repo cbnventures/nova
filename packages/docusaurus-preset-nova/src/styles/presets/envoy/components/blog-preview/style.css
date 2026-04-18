@@ -1,0 +1,147 @@
+/**
+ * Envoy — Blog preview visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Blog Preview Section
+ * ============================ */
+
+/* Section heading with comfortable spacing below. */
+.nova-blog-preview-no-description .nova-blog-preview-heading {
+  margin-bottom: calc(var(--nova-shape-gap) * 2);
+}
+
+.nova-blog-preview-has-description .nova-blog-preview-heading {
+  margin-bottom: var(--nova-shape-gap);
+}
+
+.nova-blog-preview-description {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-color-neutral-500);
+  margin-bottom: calc(var(--nova-shape-gap) * 1.5);
+}
+
+[data-theme="dark"] .nova-blog-preview-description {
+  color: var(--nova-color-neutral-400);
+}
+
+/* ============================
+ * 2. Blog Preview Cards
+ * ============================ */
+
+/* Elevated glass card with violet border and premium shadow. */
+.nova-blog-preview-card {
+  padding: var(--nova-shape-padding);
+
+  background-color: var(--nova-envoy-surface-raised-light);
+  border: 1px solid var(--nova-color-neutral-200);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-card);
+
+  transition: transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1),
+    border-color var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (min-width: 768px) {
+  .nova-blog-preview-card {
+    padding: calc(var(--nova-shape-padding) * 1.5);
+  }
+}
+
+/* Hover: lifts with violet-tinted shadow and accent border. */
+.nova-blog-preview-card:hover {
+  border-color: var(--nova-color-primary-300);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+
+  transform: translateY(calc(-3px * var(--nova-motion-hover-effects)));
+}
+
+/* Dark mode: glass-like card surface with violet glow. */
+[data-theme="dark"] .nova-blog-preview-card {
+  background-color: var(--nova-envoy-surface-raised-dark);
+  border-color: var(--nova-envoy-border-dark);
+  box-shadow: var(--nova-envoy-shadow-dark-card);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover {
+  border-color: var(--nova-color-primary-600);
+  box-shadow: var(--nova-envoy-shadow-dark-card-hover);
+}
+
+/* ============================
+ * 3. Card Content
+ * ============================ */
+
+/* Date label in small violet accent type. */
+.nova-blog-preview-card time {
+  display: block;
+  margin-bottom: calc(var(--nova-shape-gap) * 0.5);
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+[data-theme="dark"] .nova-blog-preview-card time {
+  color: var(--nova-color-primary-400);
+}
+
+/* Card title styled with display font. */
+.nova-blog-preview-card h3 {
+  margin-bottom: calc(var(--nova-shape-gap) * 0.5);
+
+  font-family: var(--nova-font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: var(--nova-color-neutral-800);
+}
+
+[data-theme="dark"] .nova-blog-preview-card h3 {
+  color: var(--nova-color-neutral-100);
+}
+
+/* Description in neutral muted tone. */
+.nova-blog-preview-card p {
+  margin-bottom: calc(var(--nova-shape-gap) * 0.75);
+
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--nova-color-neutral-500);
+}
+
+[data-theme="dark"] .nova-blog-preview-card p {
+  color: var(--nova-color-neutral-400);
+}
+
+/* Read-more link with violet accent. */
+.nova-blog-preview-card a {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-preview-card a:hover,
+.nova-blog-preview-card a:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .nova-blog-preview-card a {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-blog-preview-card a:hover,
+[data-theme="dark"] .nova-blog-preview-card a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
