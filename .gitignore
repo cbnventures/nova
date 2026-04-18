@@ -177,3 +177,4 @@ firebase-debug.log
 ##########################
 #### Project Excludes ####
 ##########################
+!packages/nova/bin/

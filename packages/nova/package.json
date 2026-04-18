@@ -69,10 +69,11 @@
   },
   "type": "module",
   "files": [
+    "./bin",
     "./build"
   ],
   "bin": {
-    "nova": "build/src/cli/index.js"
+    "nova": "bin/nova.mjs"
   },
   "private": false,
   "scripts": {
