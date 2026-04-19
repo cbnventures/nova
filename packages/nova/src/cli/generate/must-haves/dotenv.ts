@@ -51,6 +51,8 @@ import type {
   CliGenerateMustHavesDotenvPromptManageMenuAddUpdatedEnv,
   CliGenerateMustHavesDotenvPromptManageMenuAddUpdatedSample,
   CliGenerateMustHavesDotenvPromptManageMenuAddValidateValue,
+  CliGenerateMustHavesDotenvPromptManageMenuBufferEnv,
+  CliGenerateMustHavesDotenvPromptManageMenuBufferEnvSample,
   CliGenerateMustHavesDotenvPromptManageMenuChoices,
   CliGenerateMustHavesDotenvPromptManageMenuDeletableEntries,
   CliGenerateMustHavesDotenvPromptManageMenuDeleteChoices,
@@ -83,6 +85,7 @@ import type {
   CliGenerateMustHavesDotenvPromptManageMenuEnvSampleContent,
   CliGenerateMustHavesDotenvPromptManageMenuEnvSampleEntries,
   CliGenerateMustHavesDotenvPromptManageMenuEnvSamplePath,
+  CliGenerateMustHavesDotenvPromptManageMenuHasPendingChanges,
   CliGenerateMustHavesDotenvPromptManageMenuIsDryRun,
   CliGenerateMustHavesDotenvPromptManageMenuIsReplaceFile,
   CliGenerateMustHavesDotenvPromptManageMenuMenuOutput,
@@ -128,8 +131,6 @@ import type {
   CliGenerateMustHavesDotenvRunEnvSamplePath,
   CliGenerateMustHavesDotenvRunEnvSamplePathExists,
   CliGenerateMustHavesDotenvRunEnvVars,
-  CliGenerateMustHavesDotenvRunFileExists,
-  CliGenerateMustHavesDotenvRunFiles,
   CliGenerateMustHavesDotenvRunIsAtProjectRoot,
   CliGenerateMustHavesDotenvRunIsDryRun,
   CliGenerateMustHavesDotenvRunIsReplaceFile,
@@ -144,10 +145,7 @@ import type {
   CliGenerateMustHavesDotenvRunResult,
   CliGenerateMustHavesDotenvRunReturns,
   CliGenerateMustHavesDotenvRunSelectedMode,
-  CliGenerateMustHavesDotenvRunTargetPath,
-  CliGenerateMustHavesDotenvRunTemplateContent,
   CliGenerateMustHavesDotenvRunTemplateDirectory,
-  CliGenerateMustHavesDotenvRunTemplateFilePath,
   CliGenerateMustHavesDotenvUpdateEnvLineContent,
   CliGenerateMustHavesDotenvUpdateEnvLineKey,
   CliGenerateMustHavesDotenvUpdateEnvLineLines,
@@ -184,7 +182,7 @@ export class CliGenerateMustHavesDotenv {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateMustHavesDotenvRunIsDryRun = options['dryRun'] === true;
@@ -207,10 +205,6 @@ export class CliGenerateMustHavesDotenv {
     }
 
     const templateDirectory: CliGenerateMustHavesDotenvRunTemplateDirectory = resolveTemplatePath(import.meta.url, 'generators/must-haves/dotenv');
-    const files: CliGenerateMustHavesDotenvRunFiles = [
-      '.env',
-      '.env.sample',
-    ];
     const envPath: CliGenerateMustHavesDotenvRunEnvPath = join(currentDirectory, '.env');
     const envSamplePath: CliGenerateMustHavesDotenvRunEnvSamplePath = join(currentDirectory, '.env.sample');
 
@@ -257,46 +251,17 @@ export class CliGenerateMustHavesDotenv {
         });
 
         if (modeOutput['cancelled'] === true) {
-          return;
+          return 'cancelled';
         }
 
         const modeOutputResult: CliGenerateMustHavesDotenvRunModeOutputResult = modeOutput['result'];
         const selectedMode: CliGenerateMustHavesDotenvRunSelectedMode = modeOutputResult.mode;
 
         if (selectedMode === undefined) {
-          return;
+          return 'cancelled';
         }
 
         if (selectedMode === 'manage') {
-          // Ensure both files exist before entering manage mode.
-          for (const fileName of files) {
-            const targetPath: CliGenerateMustHavesDotenvRunTargetPath = (fileName === '.env') ? envPath : envSamplePath;
-            const fileExists: CliGenerateMustHavesDotenvRunFileExists = (fileName === '.env') ? envPathExists : envSamplePathExists;
-
-            if (fileExists !== true) {
-              Logger.customize({
-                name: 'CliGenerateMustHavesDotenv.run',
-                purpose: 'create',
-              }).info(`"${fileName}" does not exist. Creating from template ...`);
-
-              if (isDryRun !== true) {
-                try {
-                  const templateFilePath: CliGenerateMustHavesDotenvRunTemplateFilePath = join(templateDirectory, fileName);
-                  const templateContent: CliGenerateMustHavesDotenvRunTemplateContent = await fs.readFile(templateFilePath, 'utf-8');
-
-                  await saveGeneratedFile(targetPath, templateContent, isReplaceFile);
-                } catch {
-                  Logger.customize({
-                    name: 'CliGenerateMustHavesDotenv.run',
-                    purpose: 'error',
-                  }).error(`Failed to create "${fileName}" from template.`);
-
-                  return;
-                }
-              }
-            }
-          }
-
           const manageResult: CliGenerateMustHavesDotenvRunManageResult = await CliGenerateMustHavesDotenv.promptManageMenu({
             templateDirectory,
             envPath,
@@ -306,7 +271,7 @@ export class CliGenerateMustHavesDotenv {
           });
 
           if (manageResult === 'exit') {
-            return;
+            return 'completed';
           }
 
           // "Back" from manage menu returns here, loop back to mode selection.
@@ -325,19 +290,19 @@ export class CliGenerateMustHavesDotenv {
           continue;
         }
 
-        return;
+        return 'completed';
       }
     }
 
     // No files exist — go straight to regenerate.
-    await CliGenerateMustHavesDotenv.promptRegenerate({
+    const result: CliGenerateMustHavesDotenvRunResult = await CliGenerateMustHavesDotenv.promptRegenerate({
       templateDirectory,
       currentDirectory,
       isDryRun,
       isReplaceFile,
     });
 
-    return;
+    return (result === 'cancelled') ? 'cancelled' : 'completed';
   }
 
   /**
@@ -633,22 +598,38 @@ export class CliGenerateMustHavesDotenv {
     const templateContent: CliGenerateMustHavesDotenvPromptManageMenuTemplateContent = await fs.readFile(templateFilePath, 'utf-8');
     const reservedKeys: CliGenerateMustHavesDotenvPromptManageMenuReservedKeys = new Set(CliGenerateMustHavesDotenv.parseEnvFile(templateContent).map((entry) => entry['key']));
 
+    // Initialize in-memory buffers from existing files or templates.
+    let bufferEnv: CliGenerateMustHavesDotenvPromptManageMenuBufferEnv = '';
+    let bufferEnvSample: CliGenerateMustHavesDotenvPromptManageMenuBufferEnvSample = '';
+
+    try {
+      bufferEnv = await fs.readFile(envPath, 'utf-8');
+    } catch {
+      // File does not exist — use template as initial buffer.
+      try {
+        bufferEnv = await fs.readFile(join(templateDirectory, '.env'), 'utf-8');
+      } catch {
+        // Template also missing.
+      }
+    }
+
+    try {
+      bufferEnvSample = await fs.readFile(envSamplePath, 'utf-8');
+    } catch {
+      // File does not exist — use template as initial buffer.
+      try {
+        bufferEnvSample = await fs.readFile(join(templateDirectory, '.env.sample'), 'utf-8');
+      } catch {
+        // Template also missing.
+      }
+    }
+
+    let hasPendingChanges: CliGenerateMustHavesDotenvPromptManageMenuHasPendingChanges = false;
+
     while (true) {
-      // Read both files fresh each iteration.
-      let envContent: CliGenerateMustHavesDotenvPromptManageMenuEnvContent = '';
-      let envSampleContent: CliGenerateMustHavesDotenvPromptManageMenuEnvSampleContent = '';
-
-      try {
-        envContent = await fs.readFile(envPath, 'utf-8');
-      } catch {
-        // File may not exist in dry-run mode.
-      }
-
-      try {
-        envSampleContent = await fs.readFile(envSamplePath, 'utf-8');
-      } catch {
-        // File may not exist in dry-run mode.
-      }
+      // Use in-memory buffers instead of reading from disk.
+      const envContent: CliGenerateMustHavesDotenvPromptManageMenuEnvContent = bufferEnv;
+      const envSampleContent: CliGenerateMustHavesDotenvPromptManageMenuEnvSampleContent = bufferEnvSample;
 
       const envEntries: CliGenerateMustHavesDotenvPromptManageMenuEnvEntries = CliGenerateMustHavesDotenv.parseEnvFile(envContent);
       const envSampleEntries: CliGenerateMustHavesDotenvPromptManageMenuEnvSampleEntries = CliGenerateMustHavesDotenv.parseEnvFile(envSampleContent);
@@ -709,6 +690,11 @@ export class CliGenerateMustHavesDotenv {
       }
 
       if (action === 'exit') {
+        if (hasPendingChanges === true && isDryRun !== true) {
+          await saveGeneratedFile(envPath, bufferEnv, isReplaceFile);
+          await saveGeneratedFile(envSamplePath, bufferEnvSample, isReplaceFile);
+        }
+
         return 'exit';
       }
 
@@ -770,10 +756,9 @@ export class CliGenerateMustHavesDotenv {
         const updatedEnv: CliGenerateMustHavesDotenvPromptManageMenuAddUpdatedEnv = CliGenerateMustHavesDotenv.addEnvLine(envContent, trimmedKeyName, '');
         const updatedSample: CliGenerateMustHavesDotenvPromptManageMenuAddUpdatedSample = CliGenerateMustHavesDotenv.addEnvLine(envSampleContent, trimmedKeyName, trimmedDefaultValue);
 
-        if (isDryRun !== true) {
-          await saveGeneratedFile(envPath, updatedEnv, isReplaceFile);
-          await saveGeneratedFile(envSamplePath, updatedSample, isReplaceFile);
-        }
+        bufferEnv = updatedEnv;
+        bufferEnvSample = updatedSample;
+        hasPendingChanges = true;
 
         Logger.customize({
           name: 'CliGenerateMustHavesDotenv.promptManageMenu',
@@ -840,10 +825,9 @@ export class CliGenerateMustHavesDotenv {
         const updatedEnv: CliGenerateMustHavesDotenvPromptManageMenuEditUpdatedEnv = CliGenerateMustHavesDotenv.updateEnvLine(envContent, selectedKey, newEnvValue);
         const updatedSample: CliGenerateMustHavesDotenvPromptManageMenuEditUpdatedSample = CliGenerateMustHavesDotenv.updateEnvLine(envSampleContent, selectedKey, newSampleValue);
 
-        if (isDryRun !== true) {
-          await saveGeneratedFile(envPath, updatedEnv, isReplaceFile);
-          await saveGeneratedFile(envSamplePath, updatedSample, isReplaceFile);
-        }
+        bufferEnv = updatedEnv;
+        bufferEnvSample = updatedSample;
+        hasPendingChanges = true;
 
         Logger.customize({
           name: 'CliGenerateMustHavesDotenv.promptManageMenu',
@@ -881,10 +865,9 @@ export class CliGenerateMustHavesDotenv {
         const updatedEnv: CliGenerateMustHavesDotenvPromptManageMenuDeleteUpdatedEnv = CliGenerateMustHavesDotenv.deleteEnvLine(envContent, selectedKey);
         const updatedSample: CliGenerateMustHavesDotenvPromptManageMenuDeleteUpdatedSample = CliGenerateMustHavesDotenv.deleteEnvLine(envSampleContent, selectedKey);
 
-        if (isDryRun !== true) {
-          await saveGeneratedFile(envPath, updatedEnv, isReplaceFile);
-          await saveGeneratedFile(envSamplePath, updatedSample, isReplaceFile);
-        }
+        bufferEnv = updatedEnv;
+        bufferEnvSample = updatedSample;
+        hasPendingChanges = true;
 
         Logger.customize({
           name: 'CliGenerateMustHavesDotenv.promptManageMenu',

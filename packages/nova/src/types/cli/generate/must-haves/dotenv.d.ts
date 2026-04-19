@@ -3,6 +3,7 @@ import type { Answers, PromptObject } from 'prompts';
 import type {
   SharedEnvEntries,
   SharedEnvEntry,
+  SharedGeneratorRunResult,
   SharedPromptWithCancelReject,
   SharedPromptWithCancelResolved,
 } from '../../../shared.d.ts';
@@ -96,6 +97,12 @@ export type CliGenerateMustHavesDotenvPromptManageMenuTemplateFilePath = string;
 export type CliGenerateMustHavesDotenvPromptManageMenuTemplateContent = string;
 
 export type CliGenerateMustHavesDotenvPromptManageMenuReservedKeys = Set<string>;
+
+export type CliGenerateMustHavesDotenvPromptManageMenuBufferEnv = string;
+
+export type CliGenerateMustHavesDotenvPromptManageMenuBufferEnvSample = string;
+
+export type CliGenerateMustHavesDotenvPromptManageMenuHasPendingChanges = boolean;
 
 export type CliGenerateMustHavesDotenvPromptManageMenuEnvContent = string;
 
@@ -326,7 +333,7 @@ export type CliGenerateMustHavesDotenvRunOptions = {
   replaceFile?: CliGenerateMustHavesDotenvRunOptionsReplaceFile;
 };
 
-export type CliGenerateMustHavesDotenvRunReturns = Promise<void>;
+export type CliGenerateMustHavesDotenvRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateMustHavesDotenvRunCurrentDirectory = string;
 

@@ -1,6 +1,6 @@
 import type { PromptObject } from 'prompts';
 
-import type { SharedMonorepoContext, SharedScaffoldConfig } from '../shared.d.ts';
+import type { SharedGeneratorRunResult, SharedMonorepoContext, SharedScaffoldConfig } from '../shared.d.ts';
 
 /**
  * Lib - Scaffold - Collect Files.
@@ -101,7 +101,7 @@ export type LibScaffoldLoadGeneratorName = string;
 
 export type LibScaffoldLoadGeneratorReturns = Promise<((options: {
   replaceFile: true;
-}) => Promise<void>) | undefined>;
+}) => Promise<SharedGeneratorRunResult>) | undefined>;
 
 export type LibScaffoldLoadGeneratorEditorconfigModule = typeof import('../../cli/generate/must-haves/editorconfig.js');
 
@@ -154,7 +154,9 @@ export type LibScaffoldPromptPostScaffoldGeneratorsOriginalCwd = string;
 
 export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorModule = ((options: {
   replaceFile: true;
-}) => Promise<void>) | undefined;
+}) => Promise<SharedGeneratorRunResult>) | undefined;
+
+export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorResult = SharedGeneratorRunResult;
 
 /**
  * Lib - Scaffold - Prompt Scaffold Options.

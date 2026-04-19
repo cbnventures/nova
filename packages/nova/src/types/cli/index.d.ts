@@ -1,7 +1,7 @@
 import type { Command, CommandUnknownOpts } from '@commander-js/extra-typings';
 import type { ChalkInstance } from 'chalk';
 
-import type { SharedRunScriptsOptions } from '../shared.d.ts';
+import type { SharedGeneratorRunResult, SharedRunScriptsOptions } from '../shared.d.ts';
 
 /**
  * CLI - Constructor.
@@ -24,7 +24,7 @@ export type CliEnvDir = string | undefined;
  */
 export type CliExecuteCommandOptions<Options> = Partial<Options>;
 
-export type CliExecuteCommandTarget<Options> = (options: CliExecuteCommandOptions<Options>) => void | Promise<void>;
+export type CliExecuteCommandTarget<Options> = (options: CliExecuteCommandOptions<Options>) => void | Promise<void> | Promise<SharedGeneratorRunResult>;
 
 export type CliExecuteCommandReturns = Promise<void>;
 

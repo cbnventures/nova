@@ -182,6 +182,13 @@ export type SharedFundPlatform = {
 };
 
 /**
+ * Shared - Generator Run Result.
+ *
+ * @since 0.15.0
+ */
+export type SharedGeneratorRunResult = 'completed' | 'cancelled';
+
+/**
  * Shared - Item Pretty Names.
  *
  * @since 0.11.0

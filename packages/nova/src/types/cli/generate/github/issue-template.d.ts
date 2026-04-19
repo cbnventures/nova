@@ -1,6 +1,6 @@
 import type { LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { SharedNovaConfig } from '../../../shared.d.ts';
+import type { SharedGeneratorRunResult, SharedNovaConfig } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - GitHub - Issue Template - Run.
@@ -16,7 +16,7 @@ export type CliGenerateGithubIssueTemplateRunOptions = {
   replaceFile?: CliGenerateGithubIssueTemplateRunOptionsReplaceFile;
 };
 
-export type CliGenerateGithubIssueTemplateRunReturns = Promise<void>;
+export type CliGenerateGithubIssueTemplateRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateGithubIssueTemplateRunCurrentDirectory = string;
 

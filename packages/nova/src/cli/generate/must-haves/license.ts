@@ -62,7 +62,7 @@ export class CliGenerateMustHavesLicense {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateMustHavesLicenseRunIsDryRun = options['dryRun'] === true;
@@ -175,7 +175,7 @@ export class CliGenerateMustHavesLicense {
       const selectedLicense: CliGenerateMustHavesLicenseRunLicenseOutputValue = licenseOutput['licenseId'] as CliGenerateMustHavesLicenseRunLicenseOutputValue;
 
       if (selectedLicense === undefined) {
-        return;
+        return 'cancelled';
       }
 
       licenseId = selectedLicense;
@@ -188,11 +188,11 @@ export class CliGenerateMustHavesLicense {
     const targetPath: CliGenerateMustHavesLicenseRunTargetPath = join(currentDirectory, 'LICENSE');
 
     if (isDryRun === true) {
-      return;
+      return 'completed';
     }
 
     await saveGeneratedFile(targetPath, content, isReplaceFile);
 
-    return;
+    return 'completed';
   }
 }

@@ -102,7 +102,7 @@ export class CliGenerateGithubIssueTemplate {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateGithubIssueTemplateRunIsDryRun = options['dryRun'] === true;
@@ -262,7 +262,7 @@ export class CliGenerateGithubIssueTemplate {
     }
 
     if (cancelled === true) {
-      return;
+      return 'cancelled';
     }
 
     const selectedFiles: CliGenerateGithubIssueTemplateRunSelectedFiles = answers['bugReportFields'] as CliGenerateGithubIssueTemplateRunSelectedFiles;
@@ -395,6 +395,6 @@ export class CliGenerateGithubIssueTemplate {
       await saveGeneratedFile(targetPath, content, isReplaceFile);
     }
 
-    return;
+    return 'completed';
   }
 }

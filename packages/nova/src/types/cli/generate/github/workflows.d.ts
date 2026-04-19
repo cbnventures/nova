@@ -1,3 +1,5 @@
+import type { SharedGeneratorRunResult } from '../../../shared.d.ts';
+
 /**
  * CLI - Generate - GitHub - Workflows - Build Merged Jobs Condition.
  *
@@ -140,7 +142,7 @@ export type CliGenerateGithubWorkflowsRunOptions = {
   replaceFile?: CliGenerateGithubWorkflowsRunOptionsReplaceFile;
 };
 
-export type CliGenerateGithubWorkflowsRunReturns = Promise<void>;
+export type CliGenerateGithubWorkflowsRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateGithubWorkflowsRunCurrentDirectory = string;
 

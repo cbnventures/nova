@@ -70,69 +70,6 @@
       "triggers": [
         "schedule"
       ]
-    },
-    {
-      "template": "publish-to-cloudflare-pages-docusaurus",
-      "suffix": "docs",
-      "triggers": [
-        "release"
-      ],
-      "settings": {
-        "DOCUSAURUS_WORKING_DIR": "./apps/docs",
-        "ROOT_WORKING_DIR": "./"
-      }
-    },
-    {
-      "template": "publish-to-github-packages",
-      "suffix": "docusaurus-preset-nova",
-      "triggers": [
-        "workflow-run-success"
-      ],
-      "depends-on": [
-        "publish-to-github-packages-nova"
-      ],
-      "settings": {
-        "NPM_WORKING_DIR": "./packages/docusaurus-preset-nova",
-        "ROOT_WORKING_DIR": "./"
-      }
-    },
-    {
-      "template": "publish-to-github-packages",
-      "suffix": "nova",
-      "triggers": [
-        "release"
-      ],
-      "settings": {
-        "NPM_WORKING_DIR": "./packages/nova",
-        "ROOT_WORKING_DIR": "./"
-      }
-    },
-    {
-      "template": "publish-to-npm",
-      "suffix": "docusaurus-preset-nova",
-      "triggers": [
-        "workflow-run-success"
-      ],
-      "depends-on": [
-        "publish-to-npm-nova"
-      ],
-      "settings": {
-        "NPM_TOKEN": "NPM_TOKEN",
-        "NPM_WORKING_DIR": "./packages/docusaurus-preset-nova",
-        "ROOT_WORKING_DIR": "./"
-      }
-    },
-    {
-      "template": "publish-to-npm",
-      "suffix": "nova",
-      "triggers": [
-        "release"
-      ],
-      "settings": {
-        "NPM_TOKEN": "NPM_TOKEN",
-        "NPM_WORKING_DIR": "./packages/nova",
-        "ROOT_WORKING_DIR": "./"
-      }
     }
   ],
   "urls": {

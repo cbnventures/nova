@@ -1,6 +1,6 @@
 import type { LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { SharedNovaConfig } from '../../../shared.d.ts';
+import type { SharedGeneratorRunResult, SharedNovaConfig } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - GitHub - Funding - Run.
@@ -16,7 +16,7 @@ export type CliGenerateGithubFundingRunOptions = {
   replaceFile?: CliGenerateGithubFundingRunOptionsReplaceFile;
 };
 
-export type CliGenerateGithubFundingRunReturns = Promise<void>;
+export type CliGenerateGithubFundingRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateGithubFundingRunCurrentDirectory = string;
 

@@ -1,6 +1,6 @@
 import type { PromptObject } from 'prompts';
 
-import type { SharedPromptWithCancelReject, SharedPromptWithCancelResolved } from '../../../shared.d.ts';
+import type { SharedGeneratorRunResult, SharedPromptWithCancelReject, SharedPromptWithCancelResolved } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Add Pattern.
@@ -124,6 +124,8 @@ export type CliGenerateMustHavesGitignorePromptManageMenuCurrentPatterns = strin
 export type CliGenerateMustHavesGitignorePromptManageMenuUserPatterns = string[];
 
 export type CliGenerateMustHavesGitignorePromptManageMenuReconstructed = string;
+
+export type CliGenerateMustHavesGitignorePromptManageMenuHasPendingChanges = boolean;
 
 export type CliGenerateMustHavesGitignorePromptManageMenuContent = string;
 
@@ -302,7 +304,7 @@ export type CliGenerateMustHavesGitignoreRunOptions = {
   replaceFile?: CliGenerateMustHavesGitignoreRunOptionsReplaceFile;
 };
 
-export type CliGenerateMustHavesGitignoreRunReturns = Promise<void>;
+export type CliGenerateMustHavesGitignoreRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateMustHavesGitignoreRunCurrentDirectory = string;
 

@@ -1,6 +1,6 @@
 import type { LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { SharedNovaConfig, SharedNovaConfigProjectLicense } from '../../../shared.d.ts';
+import type { SharedGeneratorRunResult, SharedNovaConfig, SharedNovaConfigProjectLicense } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - License - Run.
@@ -16,7 +16,7 @@ export type CliGenerateMustHavesLicenseRunOptions = {
   replaceFile?: CliGenerateMustHavesLicenseRunOptionsReplaceFile;
 };
 
-export type CliGenerateMustHavesLicenseRunReturns = Promise<void>;
+export type CliGenerateMustHavesLicenseRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateMustHavesLicenseRunCurrentDirectory = string;
 

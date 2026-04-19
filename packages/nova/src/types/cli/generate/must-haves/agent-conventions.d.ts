@@ -1,3 +1,5 @@
+import type { SharedGeneratorRunResult } from '../../../shared.d.ts';
+
 /**
  * CLI - Generate - Must Haves - Agent Conventions - Run.
  *
@@ -12,7 +14,7 @@ export type CliGenerateMustHavesAgentConventionsRunOptions = {
   replaceFile?: CliGenerateMustHavesAgentConventionsRunOptionsReplaceFile;
 };
 
-export type CliGenerateMustHavesAgentConventionsRunReturns = Promise<void>;
+export type CliGenerateMustHavesAgentConventionsRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateMustHavesAgentConventionsRunCurrentDirectory = string;
 

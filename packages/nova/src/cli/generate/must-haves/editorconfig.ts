@@ -45,7 +45,7 @@ export class CliGenerateMustHavesEditorconfig {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateMustHavesEditorconfigRunIsDryRun = options['dryRun'] === true;
@@ -71,11 +71,11 @@ export class CliGenerateMustHavesEditorconfig {
     const targetPath: CliGenerateMustHavesEditorconfigRunTargetPath = join(currentDirectory, '.editorconfig');
 
     if (isDryRun === true) {
-      return;
+      return 'completed';
     }
 
     await saveGeneratedFile(targetPath, content, isReplaceFile);
 
-    return;
+    return 'completed';
   }
 }

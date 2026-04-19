@@ -117,7 +117,7 @@ export class CliGenerateMustHavesReadMe {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateMustHavesReadMeRunIsDryRun = options['dryRun'] === true;
@@ -203,7 +203,7 @@ export class CliGenerateMustHavesReadMe {
     }
 
     if (isDryRun === true) {
-      return;
+      return 'completed';
     }
 
     await saveGeneratedFile(targetPath, content, isReplaceFile);
@@ -212,7 +212,7 @@ export class CliGenerateMustHavesReadMe {
       await saveGeneratedFile(distributablePath, content, isReplaceFile);
     }
 
-    return;
+    return 'completed';
   }
 
   /**

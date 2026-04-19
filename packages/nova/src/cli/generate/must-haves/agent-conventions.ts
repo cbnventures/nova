@@ -59,7 +59,7 @@ export class CliGenerateMustHavesAgentConventions {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateMustHavesAgentConventionsRunIsDryRun = options['dryRun'] === true;
@@ -178,6 +178,6 @@ export class CliGenerateMustHavesAgentConventions {
       padBottom: 1,
     }).info(nextStepsMessage);
 
-    return;
+    return 'completed';
   }
 }

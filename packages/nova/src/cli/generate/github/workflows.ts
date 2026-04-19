@@ -174,7 +174,7 @@ export class CliGenerateGithubWorkflows {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateGithubWorkflowsRunIsDryRun = options['dryRun'] === true;
@@ -206,7 +206,7 @@ export class CliGenerateGithubWorkflows {
         purpose: 'skip',
       }).info('No workflows configured.');
 
-      return;
+      return 'completed';
     }
 
     const templateDirectory: CliGenerateGithubWorkflowsRunTemplateDirectory = resolveTemplatePath(import.meta.url, 'generators/github/workflows');
@@ -234,7 +234,7 @@ export class CliGenerateGithubWorkflows {
     if (hasDuplicateError === true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     // Detect circular depends-on references.
@@ -246,7 +246,7 @@ export class CliGenerateGithubWorkflows {
 
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const generatedSet: CliGenerateGithubWorkflowsRunGeneratedSet = new Set();
@@ -654,7 +654,7 @@ export class CliGenerateGithubWorkflows {
       }).info(setupMessage);
     }
 
-    return;
+    return 'completed';
   }
 
   /**

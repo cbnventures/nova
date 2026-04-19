@@ -62,6 +62,7 @@ import type {
   CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputKey,
   CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputValue,
   CliGenerateMustHavesGitignorePromptManageMenuExistingPatterns,
+  CliGenerateMustHavesGitignorePromptManageMenuHasPendingChanges,
   CliGenerateMustHavesGitignorePromptManageMenuIsDryRun,
   CliGenerateMustHavesGitignorePromptManageMenuIsReplaceFile,
   CliGenerateMustHavesGitignorePromptManageMenuMenuOutput,
@@ -155,7 +156,7 @@ export class CliGenerateMustHavesGitignore {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateMustHavesGitignoreRunIsDryRun = options['dryRun'] === true;
@@ -214,14 +215,14 @@ export class CliGenerateMustHavesGitignore {
         });
 
         if (modeOutput['cancelled'] === true) {
-          return;
+          return 'cancelled';
         }
 
         const modeOutputResult: CliGenerateMustHavesGitignoreRunModeOutputResult = modeOutput['result'];
         const selectedMode: CliGenerateMustHavesGitignoreRunModeOutputValue = modeOutputResult.mode;
 
         if (selectedMode === undefined) {
-          return;
+          return 'cancelled';
         }
 
         if (selectedMode === 'manage') {
@@ -233,7 +234,7 @@ export class CliGenerateMustHavesGitignore {
           });
 
           if (manageResult === 'exit') {
-            return;
+            return 'completed';
           }
 
           // "Back" from manage menu returns here, loop back to mode selection.
@@ -252,19 +253,19 @@ export class CliGenerateMustHavesGitignore {
           continue;
         }
 
-        return;
+        return 'completed';
       }
     }
 
     // No file exists — go straight to regenerate.
-    await CliGenerateMustHavesGitignore.promptRegenerate({
+    const result: CliGenerateMustHavesGitignoreRunResult = await CliGenerateMustHavesGitignore.promptRegenerate({
       templateDirectory,
       currentDirectory,
       isDryRun,
       isReplaceFile,
     });
 
-    return;
+    return (result === 'cancelled') ? 'cancelled' : 'completed';
   }
 
   /**
@@ -564,39 +565,31 @@ export class CliGenerateMustHavesGitignore {
     const templateContent: CliGenerateMustHavesGitignorePromptManageMenuTemplateContent = await fs.readFile(templateFilePath, 'utf-8');
     const reservedPatterns: CliGenerateMustHavesGitignorePromptManageMenuReservedPatterns = new Set(CliGenerateMustHavesGitignore.parseAllPatterns(templateContent));
 
-    // Reconstruct file: template + user's custom patterns under Project Excludes.
-    if (isDryRun !== true) {
-      let currentContent: CliGenerateMustHavesGitignorePromptManageMenuCurrentContent = '';
+    // Reconstruct file in memory: template + user's custom patterns under Project Excludes.
+    let currentContent: CliGenerateMustHavesGitignorePromptManageMenuCurrentContent = '';
 
-      try {
-        currentContent = await fs.readFile(targetPath, 'utf-8');
-      } catch {
-        // File may not exist.
-      }
-
-      const currentPatterns: CliGenerateMustHavesGitignorePromptManageMenuCurrentPatterns = CliGenerateMustHavesGitignore.parseAllPatterns(currentContent);
-      const userPatterns: CliGenerateMustHavesGitignorePromptManageMenuUserPatterns = currentPatterns.filter(
-        (pattern) => reservedPatterns.has(pattern) !== true,
-      );
-
-      let reconstructed: CliGenerateMustHavesGitignorePromptManageMenuReconstructed = templateContent;
-
-      if (userPatterns.length > 0) {
-        reconstructed += `${userPatterns.join('\n')}\n`;
-      }
-
-      await saveGeneratedFile(targetPath, reconstructed, isReplaceFile);
+    try {
+      currentContent = await fs.readFile(targetPath, 'utf-8');
+    } catch {
+      // File may not exist.
     }
 
-    while (true) {
-      // Read file fresh each iteration.
-      let content: CliGenerateMustHavesGitignorePromptManageMenuContent = '';
+    const currentPatterns: CliGenerateMustHavesGitignorePromptManageMenuCurrentPatterns = CliGenerateMustHavesGitignore.parseAllPatterns(currentContent);
+    const userPatterns: CliGenerateMustHavesGitignorePromptManageMenuUserPatterns = currentPatterns.filter(
+      (pattern) => reservedPatterns.has(pattern) !== true,
+    );
 
-      try {
-        content = await fs.readFile(targetPath, 'utf-8');
-      } catch {
-        // File may not exist in dry-run mode.
-      }
+    let reconstructed: CliGenerateMustHavesGitignorePromptManageMenuReconstructed = templateContent;
+
+    if (userPatterns.length > 0) {
+      reconstructed += `${userPatterns.join('\n')}\n`;
+    }
+
+    let hasPendingChanges: CliGenerateMustHavesGitignorePromptManageMenuHasPendingChanges = false;
+
+    while (true) {
+      // Use in-memory buffer instead of reading from disk.
+      const content: CliGenerateMustHavesGitignorePromptManageMenuContent = reconstructed;
 
       const allPatterns: CliGenerateMustHavesGitignorePromptManageMenuAllPatterns = CliGenerateMustHavesGitignore.parseAllPatterns(content);
       const projectExcludes: CliGenerateMustHavesGitignorePromptManageMenuProjectExcludes = CliGenerateMustHavesGitignore.parseProjectExcludes(content);
@@ -654,6 +647,10 @@ export class CliGenerateMustHavesGitignore {
       }
 
       if (action === 'exit') {
+        if (hasPendingChanges === true && isDryRun !== true) {
+          await saveGeneratedFile(targetPath, reconstructed, isReplaceFile);
+        }
+
         return 'exit';
       }
 
@@ -701,9 +698,8 @@ export class CliGenerateMustHavesGitignore {
         const trimmedPatternName: CliGenerateMustHavesGitignorePromptManageMenuTrimmedPatternName = patternName.trim();
         const updatedContent: CliGenerateMustHavesGitignorePromptManageMenuUpdatedContent = CliGenerateMustHavesGitignore.addPattern(content, trimmedPatternName);
 
-        if (isDryRun !== true) {
-          await saveGeneratedFile(targetPath, updatedContent, isReplaceFile);
-        }
+        reconstructed = updatedContent;
+        hasPendingChanges = true;
 
         Logger.customize({
           name: 'CliGenerateMustHavesGitignore.promptManageMenu',
@@ -768,9 +764,8 @@ export class CliGenerateMustHavesGitignore {
         const trimmedNewPattern: CliGenerateMustHavesGitignorePromptManageMenuTrimmedNewPattern = newPattern.trim();
         const updatedContent: CliGenerateMustHavesGitignorePromptManageMenuUpdatedContent = CliGenerateMustHavesGitignore.editPattern(content, selectedPattern, trimmedNewPattern);
 
-        if (isDryRun !== true) {
-          await saveGeneratedFile(targetPath, updatedContent, isReplaceFile);
-        }
+        reconstructed = updatedContent;
+        hasPendingChanges = true;
 
         Logger.customize({
           name: 'CliGenerateMustHavesGitignore.promptManageMenu',
@@ -806,9 +801,8 @@ export class CliGenerateMustHavesGitignore {
 
         const updatedContent: CliGenerateMustHavesGitignorePromptManageMenuUpdatedContent = CliGenerateMustHavesGitignore.deletePattern(content, selectedPattern);
 
-        if (isDryRun !== true) {
-          await saveGeneratedFile(targetPath, updatedContent, isReplaceFile);
-        }
+        reconstructed = updatedContent;
+        hasPendingChanges = true;
 
         Logger.customize({
           name: 'CliGenerateMustHavesGitignore.promptManageMenu',

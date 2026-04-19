@@ -1,3 +1,5 @@
+import type { SharedGeneratorRunResult } from '../../../shared.d.ts';
+
 /**
  * CLI - Generate - Must Haves - Editorconfig - Run.
  *
@@ -12,7 +14,7 @@ export type CliGenerateMustHavesEditorconfigRunOptions = {
   replaceFile?: CliGenerateMustHavesEditorconfigRunOptionsReplaceFile;
 };
 
-export type CliGenerateMustHavesEditorconfigRunReturns = Promise<void>;
+export type CliGenerateMustHavesEditorconfigRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateMustHavesEditorconfigRunCurrentDirectory = string;
 

@@ -50,6 +50,7 @@ import type {
   LibScaffoldPromptPostScaffoldGeneratorsCancelled,
   LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoices,
   LibScaffoldPromptPostScaffoldGeneratorsGeneratorModule,
+  LibScaffoldPromptPostScaffoldGeneratorsGeneratorResult,
   LibScaffoldPromptPostScaffoldGeneratorsOriginalCwd,
   LibScaffoldPromptPostScaffoldGeneratorsOutputDirectory,
   LibScaffoldPromptPostScaffoldGeneratorsReturns,
@@ -662,7 +663,16 @@ export async function promptPostScaffoldGenerators(outputDirectory: LibScaffoldP
       const generatorModule: LibScaffoldPromptPostScaffoldGeneratorsGeneratorModule = await loadGenerator(generatorName);
 
       if (generatorModule !== undefined) {
-        await generatorModule({ replaceFile: true });
+        const generatorResult: LibScaffoldPromptPostScaffoldGeneratorsGeneratorResult = await generatorModule({ replaceFile: true });
+
+        if (generatorResult === 'cancelled') {
+          Logger.customize({
+            name: 'promptPostScaffoldGenerators',
+            purpose: 'cancelled',
+          }).info('Generator cancelled. Skipping remaining generators.');
+
+          break;
+        }
       }
     } catch (error) {
       Logger.customize({

@@ -2,6 +2,7 @@ import type { LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
   SharedFundPlatform,
+  SharedGeneratorRunResult,
   SharedNovaConfigConfig,
   SharedNovaConfigEntities,
   SharedNovaConfigEntity,
@@ -88,7 +89,7 @@ export type CliGenerateMustHavesReadMeRunOptions = {
   replaceFile?: CliGenerateMustHavesReadMeRunOptionsReplaceFile;
 };
 
-export type CliGenerateMustHavesReadMeRunReturns = Promise<void>;
+export type CliGenerateMustHavesReadMeRunReturns = Promise<SharedGeneratorRunResult>;
 
 export type CliGenerateMustHavesReadMeRunCurrentDirectory = string;
 

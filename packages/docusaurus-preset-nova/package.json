@@ -84,7 +84,7 @@
     "node": "^20 || ^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "^0.15.0",
+    "@cbnventures/nova": "0.15.1",
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/plugin-content-blog": "3.10.0",
     "@docusaurus/plugin-content-docs": "3.10.0",

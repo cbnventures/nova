@@ -1,5 +1,13 @@
 # @cbnventures/nova
 
+## 0.15.1 - 2026-04-19
+
+### UPDATED
+- Consolidate publishing workflows (Cloudflare Pages, GitHub Packages, npm) out of the generator-managed workflow configuration — these workflows are too complex for the generator to handle and are maintained manually for the nova project only
+
+### FIXED
+- Fix generators writing files before user confirms — gitignore and dotenv manage menus now buffer changes in memory and only persist to disk on Save & Exit; all generators return completed/cancelled status; scaffold post-scaffold loop stops when a generator is cancelled
+
 ## 0.15.0 - 2026-04-18
 
 ### UPDATED

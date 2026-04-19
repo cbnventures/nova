@@ -61,7 +61,7 @@ export class CliGenerateGithubFunding {
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
 
-      return;
+      return 'cancelled';
     }
 
     const isDryRun: CliGenerateGithubFundingRunIsDryRun = options['dryRun'] === true;
@@ -116,15 +116,15 @@ export class CliGenerateGithubFunding {
         purpose: 'validate',
       }).error('Generated YAML for "FUNDING.yml" is invalid. Skipping ...');
 
-      return;
+      return 'cancelled';
     }
 
     if (isDryRun === true) {
-      return;
+      return 'completed';
     }
 
     await saveGeneratedFile(targetPath, content, isReplaceFile);
 
-    return;
+    return 'completed';
   }
 }
