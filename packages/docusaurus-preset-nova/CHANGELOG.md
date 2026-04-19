@@ -1,5 +1,10 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.15.2 - 2026-04-19
+
+### FIXED
+- Preset logo assets missing from published npm package
+
 ## 0.15.0 - 2026-04-18
 
 ### ADDED

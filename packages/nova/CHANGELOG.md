@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.15.2 - 2026-04-19
+
+### FIXED
+- GitHub Packages workflow template setting registry before npm install, causing cross-repo scoped dependencies to fail with 401
+
 ## 0.15.1 - 2026-04-19
 
 ### UPDATED

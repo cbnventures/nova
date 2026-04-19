@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/docusaurus-preset-nova",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -54,6 +54,7 @@
     "./types/config": "./nova-config.d.ts"
   },
   "files": [
+    "./assets",
     "./build",
     "./nova-config.d.ts",
     "./nova-theme.d.ts"
