@@ -1,5 +1,12 @@
 # @cbnventures/nova
 
+## 0.15.3 - 2026-04-19
+
+### UPDATED
+- Workflow templates now run check before build in all publish workflows
+- Cloudflare Pages workflow template deploys to default branch instead of detached HEAD
+- Workflow templates scope secrets to step-level env instead of top-level for least-privilege access
+
 ## 0.15.2 - 2026-04-19
 
 ### FIXED
