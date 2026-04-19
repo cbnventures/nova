@@ -7,6 +7,7 @@
 
 ### FIXED
 - Fix generators writing files before user confirms — gitignore and dotenv manage menus now buffer changes in memory and only persist to disk on Save & Exit; all generators return completed/cancelled status; scaffold post-scaffold loop stops when a generator is cancelled
+- Fix CLI bin entry point changed from build artifact to source wrapper for reliable PATH resolution in CI environments
 
 ## 0.15.0 - 2026-04-18
 
