@@ -110,6 +110,8 @@ export type IndexDocusaurusThemeNovaDefaultReturnsPostBuild = (postBuildArgs: In
 
 export type IndexDocusaurusThemeNovaDefaultReturnsContentLoaded = (contentLoadedArgs: IndexDocusaurusThemeNovaDefaultContentLoadedArgs) => Promise<void>;
 
+export type IndexDocusaurusThemeNovaDefaultReturnsAllContentLoaded = (allContentLoadedArgs: IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs) => Promise<void>;
+
 export type IndexDocusaurusThemeNovaDefaultReturns = {
   name: IndexDocusaurusThemeNovaDefaultReturnsName;
   getThemePath: IndexDocusaurusThemeNovaDefaultReturnsGetThemePath;
@@ -123,6 +125,7 @@ export type IndexDocusaurusThemeNovaDefaultReturns = {
   translateThemeConfig: IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfig;
   postBuild: IndexDocusaurusThemeNovaDefaultReturnsPostBuild;
   contentLoaded: IndexDocusaurusThemeNovaDefaultReturnsContentLoaded;
+  allContentLoaded: IndexDocusaurusThemeNovaDefaultReturnsAllContentLoaded;
 };
 
 export type IndexDocusaurusThemeNovaDefaultResolvedPreset = SharedPreset;
@@ -239,6 +242,65 @@ export type IndexDocusaurusThemeNovaDefaultNprogressCssPath = string;
 export type IndexDocusaurusThemeNovaDefaultSearchConfig = OptionsPluginOptionsSearch | undefined;
 
 /**
+ * Index - Docusaurus Theme Nova - Default - All Content Loaded.
+ *
+ * @since 0.15.0
+ */
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedArgsAllContent = IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedArgsActions = Record<string, unknown>;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs = {
+  allContent: IndexDocusaurusThemeNovaDefaultAllContentLoadedArgsAllContent;
+  actions: IndexDocusaurusThemeNovaDefaultAllContentLoadedArgsActions;
+  [key: string]: unknown;
+};
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent = Record<string, Record<string, unknown>>;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginData = Record<string, unknown> | undefined;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContentLoadedVersions = IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersions;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContent = {
+  loadedVersions?: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContentLoadedVersions;
+  [key: string]: unknown;
+} | undefined;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersionDocs = IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDocs;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersion = {
+  docs?: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersionDocs;
+  [key: string]: unknown;
+};
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersions = IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersion[];
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDoc = Record<string, unknown>;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDocs = IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDoc[];
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginData = Record<string, unknown> | undefined;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContentBlogPosts = IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPosts;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContent = {
+  blogPosts?: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContentBlogPosts;
+  [key: string]: unknown;
+} | undefined;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPostMetadata = IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPostMetadata;
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPost = {
+  metadata?: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPostMetadata;
+  [key: string]: unknown;
+};
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPosts = IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPost[];
+
+export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPostMetadata = Record<string, unknown>;
+
+/**
  * Index - Docusaurus Theme Nova - Default - Configure Post Css.
  *
  * @since 0.15.0
@@ -311,24 +373,6 @@ export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalData = {
 
 export type IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions = Record<string, string>;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataDirectory = string;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFiles = string[];
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedIsJsonFile = boolean;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFilePath = string;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFileContent = string;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFileParsed = Record<string, unknown>;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedHasPermalink = boolean;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedHasDescription = boolean;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedIsNotEmpty = boolean;
-
 export type IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue = string;
 
 export type IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue = string;
@@ -339,27 +383,7 @@ export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenPostPermalinks =
 
 export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthors = IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthor[];
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataDirectory = string;
-
 export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenAuthorKeys = Set<string>;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFiles = string[];
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFilePath = string;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFileContent = string;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFileParsed = Record<string, unknown>;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasPermalink = boolean;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasDescription = boolean;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogIsNotEmpty = boolean;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasTitle = boolean;
-
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasDate = boolean;
 
 export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue = string;
 

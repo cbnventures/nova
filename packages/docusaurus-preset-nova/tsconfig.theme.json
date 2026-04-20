@@ -25,11 +25,13 @@
     "./src/lib/search/perform-search.ts",
     "./src/lib/search/use-search-worker.ts",
     "./src/lib/search/use-search-highlight.ts",
+    "./src/lib/toc.ts",
     "./src/types/lib/mermaid.d.ts",
     "./src/types/lib/rehype-shiki.d.ts",
     "./src/types/lib/search/worker.d.ts",
     "./src/types/lib/search/use-search-worker.d.ts",
     "./src/types/lib/search/use-search-highlight.d.ts",
+    "./src/types/lib/toc.d.ts",
     "./src/theme/**/*",
     "./src/types/theme/Root/icons.d.ts",
     "./src/tests/**/*"

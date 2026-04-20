@@ -100,8 +100,15 @@ export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
   const isDark: LibMermaidUseMermaidConfigIsDark = colorMode === 'dark';
   const fontFamily: LibMermaidUseMermaidConfigFontFamily = getCssVariable('--nova-font-body');
 
+  /*
+   * securityLevel: 'loose' matches @docusaurus/theme-mermaid's default.
+   * The stricter level runs DOMPurify over the SVG and strips HTML
+   * children of foreignObject, which erases every node label in
+   * flowcharts with htmlLabels enabled.
+   */
   return {
     startOnLoad: false,
+    securityLevel: 'loose',
     theme: 'base',
     colorMode,
     themeVariables: {

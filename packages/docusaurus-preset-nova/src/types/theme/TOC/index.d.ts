@@ -1,15 +1,23 @@
+import type {
+  SharedTocHeading,
+  SharedTocHeadingChildren,
+  SharedTocHeadingId,
+  SharedTocHeadingLevel,
+  SharedTocHeadingValue,
+} from '../../shared.d.ts';
+
 /**
  * Theme - Toc.
  *
  * @since 0.15.0
  */
-export type ThemeTocPropsToc = ThemeTocListItem[];
+export type ThemeTocPropsToc = SharedTocHeading[];
 
 export type ThemeTocPropsClassName = string | undefined;
 
-export type ThemeTocPropsMinHeadingLevel = number | undefined;
+export type ThemeTocPropsMinHeadingLevel = number;
 
-export type ThemeTocPropsMaxHeadingLevel = number | undefined;
+export type ThemeTocPropsMaxHeadingLevel = number;
 
 export type ThemeTocProps = {
   toc: ThemeTocPropsToc;
@@ -19,28 +27,29 @@ export type ThemeTocProps = {
   [key: string]: unknown;
 };
 
-export type ThemeTocItems = ThemeTocListItem[];
+export type ThemeTocItems = SharedTocHeading[];
+
+export type ThemeTocMinHeadingLevel = number;
+
+export type ThemeTocMaxHeadingLevel = number;
+
+export type ThemeTocTocAriaLabel = string;
+
+export type ThemeTocTreeItems = SharedTocHeading[];
 
 /**
  * Theme - Toc - List.
  *
  * @since 0.15.0
  */
-export type ThemeTocListItems = ThemeTocListItem[];
+export type ThemeTocListItems = SharedTocHeading[];
 
-export type ThemeTocListItemValue = string;
+export type ThemeTocListItemValue = SharedTocHeadingValue;
 
-export type ThemeTocListItemId = string;
+export type ThemeTocListItemId = SharedTocHeadingId;
 
-export type ThemeTocListItemLevel = number;
+export type ThemeTocListItemLevel = SharedTocHeadingLevel;
 
-export type ThemeTocListItemChildren = ThemeTocListItem[];
+export type ThemeTocListItemChildren = SharedTocHeadingChildren;
 
-export type ThemeTocListItem = {
-  value: ThemeTocListItemValue;
-  id: ThemeTocListItemId;
-  level: ThemeTocListItemLevel;
-  children: ThemeTocListItemChildren;
-};
-
-export type ThemeTocTocAriaLabel = string;
+export type ThemeTocListItem = SharedTocHeading;

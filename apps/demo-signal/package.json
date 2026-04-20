@@ -5,9 +5,9 @@
   "private": true,
   "scripts": {
     "dev": "node ../../scripts/run-scripts.mjs --parallel 'dev:*'",
-    "dev:start": "PORTLESS_PORT=3000 portless nova-demo-signal docusaurus start --host 0.0.0.0 --no-open",
+    "dev:start": "PORTLESS_PORT=3000 portless dev-nova-demo-signal docusaurus start --host 0.0.0.0 --no-open",
     "prod": "node ../../scripts/run-scripts.mjs --sequential 'prod:*'",
-    "prod:serve": "PORTLESS_PORT=3000 portless nova-demo-signal docusaurus serve --host 0.0.0.0 --no-open",
+    "prod:serve": "PORTLESS_PORT=3000 portless prod-nova-demo-signal docusaurus serve --host 0.0.0.0 --no-open",
     "build": "node ../../scripts/run-scripts.mjs --sequential 'build:*'",
     "build:build": "docusaurus build",
     "build:transpile-app": "nova utility transpile --project tsconfig.app.json",

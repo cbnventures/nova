@@ -1,5 +1,4 @@
 import {
-  existsSync,
   mkdirSync,
   readdirSync,
   readFileSync,
@@ -28,6 +27,16 @@ import type {
   IndexDocusaurusThemeNovaBuildGoogleFontsUrlSpacePattern,
   IndexDocusaurusThemeNovaDefaultActiveFooterPrefix,
   IndexDocusaurusThemeNovaDefaultActiveNavbarPrefix,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContent,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginData,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPosts,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPostMetadata,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersions,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContent,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginData,
+  IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDocs,
   IndexDocusaurusThemeNovaDefaultAnnouncementBar,
   IndexDocusaurusThemeNovaDefaultConfigurePostCssPostCssOptions,
   IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPlugin,
@@ -41,20 +50,10 @@ import type {
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthors,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataDirectory,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFileContent,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFileParsed,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFilePath,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFiles,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthor,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasDate,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasDescription,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasPermalink,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasTitle,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogIsNotEmpty,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogPost,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogPosts,
@@ -63,15 +62,6 @@ import type {
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue,
   IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue,
   IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions,
-  IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataDirectory,
-  IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFileContent,
-  IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFileParsed,
-  IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFilePath,
-  IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFiles,
-  IndexDocusaurusThemeNovaDefaultContentLoadedHasDescription,
-  IndexDocusaurusThemeNovaDefaultContentLoadedHasPermalink,
-  IndexDocusaurusThemeNovaDefaultContentLoadedIsJsonFile,
-  IndexDocusaurusThemeNovaDefaultContentLoadedIsNotEmpty,
   IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue,
   IndexDocusaurusThemeNovaDefaultContext,
   IndexDocusaurusThemeNovaDefaultCssAccessibilityPath,
@@ -537,129 +527,113 @@ export class DocusaurusThemeNova {
           });
         }
 
-        // Build a permalink-to-description map by reading generated doc JSON
-        // files from the docs plugin. The docs plugin's contentLoaded runs before
-        // the theme's, so these files are already written to .docusaurus.
+        return;
+      },
+
+      /**
+       * Index - Docusaurus Theme Nova - Default - All Content Loaded.
+       *
+       * Aggregates doc descriptions, blog posts, and blog authors from
+       * the in-memory content of the docs and blog plugins, then writes
+       * the combined global data used by theme components.
+       *
+       * @param {IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs} allContentLoadedArgs - All content loaded args.
+       *
+       * @returns {Promise<void>}
+       *
+       * @since 0.15.0
+       */
+      async allContentLoaded(allContentLoadedArgs: IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs) {
+        const allContent: IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent = allContentLoadedArgs['allContent'];
+        const actions: IndexDocusaurusThemeNovaDefaultContentLoadedActions = allContentLoadedArgs['actions'] as IndexDocusaurusThemeNovaDefaultContentLoadedActions;
+
+        // Build a permalink-to-description map from the docs plugin's
+        // in-memory loaded versions.
         const docDescriptions: IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions = {};
-        const docsDataDirectory: IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataDirectory = resolve(siteDirectory, '.docusaurus/docusaurus-plugin-content-docs/default');
+        const docsPluginData: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginData = allContent['docusaurus-plugin-content-docs'];
+        const docsPluginContent: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContent = (docsPluginData !== undefined) ? docsPluginData['default'] as IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContent : undefined;
+        const docsLoadedVersions: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersions = (docsPluginContent !== undefined && docsPluginContent['loadedVersions'] !== undefined) ? docsPluginContent['loadedVersions'] : [];
 
-        if (existsSync(docsDataDirectory) === true) {
-          const docsDataFiles: IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFiles = readdirSync(docsDataDirectory);
+        for (const docsLoadedVersion of docsLoadedVersions) {
+          const docsVersionDocs: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDocs = (docsLoadedVersion['docs'] !== undefined) ? docsLoadedVersion['docs'] : [];
 
-          for (const docsDataFile of docsDataFiles) {
-            const isJsonFile: IndexDocusaurusThemeNovaDefaultContentLoadedIsJsonFile = docsDataFile.startsWith('site-') && docsDataFile.endsWith('.json');
-
-            if (isJsonFile === false) {
-              continue;
-            }
-
-            const docsDataFilePath: IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFilePath = resolve(docsDataDirectory, docsDataFile);
-            const docsDataFileContent: IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFileContent = readFileSync(docsDataFilePath, 'utf-8');
-
-            if (docsDataFileContent === '') {
-              continue;
-            }
-
-            const docsDataFileParsed: IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFileParsed = JSON.parse(docsDataFileContent) as IndexDocusaurusThemeNovaDefaultContentLoadedDocsDataFileParsed;
-            const hasPermalink: IndexDocusaurusThemeNovaDefaultContentLoadedHasPermalink = docsDataFileParsed['permalink'] !== undefined;
-            const hasDescription: IndexDocusaurusThemeNovaDefaultContentLoadedHasDescription = docsDataFileParsed['description'] !== undefined;
-            const isNotEmpty: IndexDocusaurusThemeNovaDefaultContentLoadedIsNotEmpty = docsDataFileParsed['description'] !== '';
+          for (const docEntry of docsVersionDocs) {
+            const permalinkValue: IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue = docEntry['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue;
+            const descriptionValue: IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue = docEntry['description'] as IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue;
 
             if (
-              hasPermalink === true
-              && hasDescription === true
-              && isNotEmpty === true
+              permalinkValue !== undefined
+              && descriptionValue !== undefined
+              && descriptionValue !== ''
             ) {
-              const permalinkValue: IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue = docsDataFileParsed['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue;
-              const descriptionValue: IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue = docsDataFileParsed['description'] as IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue;
-
               Reflect.set(docDescriptions, permalinkValue, descriptionValue);
             }
           }
         }
 
         // Build a blog posts array and unique authors list
-        // by reading generated blog JSON files from the blog plugin.
+        // from the blog plugin's in-memory posts.
         const blogPosts: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPosts = [];
         const blogSeenPostPermalinks: IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenPostPermalinks = new Set();
         const blogAuthors: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthors = [];
-        const blogDataDirectory: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataDirectory = resolve(siteDirectory, '.docusaurus/docusaurus-plugin-content-blog/default');
         const blogSeenAuthorKeys: IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenAuthorKeys = new Set();
 
-        if (existsSync(blogDataDirectory) === true) {
-          const blogDataFiles: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFiles = readdirSync(blogDataDirectory) as IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFiles;
+        const blogPluginData: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginData = allContent['docusaurus-plugin-content-blog'];
+        const blogPluginContent: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContent = (blogPluginData !== undefined) ? blogPluginData['default'] as IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContent : undefined;
+        const blogPluginPosts: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPosts = (blogPluginContent !== undefined && blogPluginContent['blogPosts'] !== undefined) ? blogPluginContent['blogPosts'] : [];
 
-          for (const blogDataFile of blogDataFiles) {
-            if (blogDataFile.startsWith('site-') === false || blogDataFile.endsWith('.json') === false) {
+        for (const blogPluginPost of blogPluginPosts) {
+          const blogPostMetadata: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPostMetadata = (blogPluginPost['metadata'] !== undefined) ? blogPluginPost['metadata'] : {};
+          const blogTitleValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue = blogPostMetadata['title'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue;
+          const blogPermalinkValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue = blogPostMetadata['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue;
+          const blogDescriptionValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue = blogPostMetadata['description'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue;
+          const blogDateValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue = blogPostMetadata['date'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue;
+
+          if (
+            blogTitleValue !== undefined
+            && blogPermalinkValue !== undefined
+            && blogDescriptionValue !== undefined
+            && blogDescriptionValue !== ''
+            && blogDateValue !== undefined
+            && blogSeenPostPermalinks.has(blogPermalinkValue) === false
+          ) {
+            blogSeenPostPermalinks.add(blogPermalinkValue);
+
+            const blogPost: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPost = {
+              title: blogTitleValue,
+              description: blogDescriptionValue,
+              permalink: blogPermalinkValue,
+              date: blogDateValue,
+            };
+
+            blogPosts.push(blogPost);
+          }
+
+          const blogPostAuthors: IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors = (blogPostMetadata['authors'] !== undefined) ? blogPostMetadata['authors'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors : [];
+
+          for (const blogPostAuthor of blogPostAuthors) {
+            const authorRaw: IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthor = blogPostAuthor;
+            const authorKey: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey = authorRaw['key'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey;
+
+            if (authorKey === undefined || blogSeenAuthorKeys.has(authorKey) === true) {
               continue;
             }
 
-            const blogDataFilePath: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFilePath = resolve(blogDataDirectory, blogDataFile);
-            const blogDataFileContent: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFileContent = readFileSync(blogDataFilePath, 'utf-8');
+            blogSeenAuthorKeys.add(authorKey);
 
-            if (blogDataFileContent === '') {
-              continue;
-            }
+            const authorName: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName = authorRaw['name'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName;
+            const authorImageUrl: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl = authorRaw['imageURL'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl;
+            const authorPage: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage = authorRaw['page'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage;
+            const authorPermalink: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink = (authorPage !== undefined && authorPage !== null) ? authorPage['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink : undefined;
 
-            const blogDataFileParsed: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFileParsed = JSON.parse(blogDataFileContent) as IndexDocusaurusThemeNovaDefaultContentLoadedBlogDataFileParsed;
-            const blogHasPermalink: IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasPermalink = blogDataFileParsed['permalink'] !== undefined;
-            const blogHasDescription: IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasDescription = blogDataFileParsed['description'] !== undefined;
-            const blogIsNotEmpty: IndexDocusaurusThemeNovaDefaultContentLoadedBlogIsNotEmpty = blogDataFileParsed['description'] !== '';
-            const blogHasTitle: IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasTitle = blogDataFileParsed['title'] !== undefined;
-            const blogHasDate: IndexDocusaurusThemeNovaDefaultContentLoadedBlogHasDate = blogDataFileParsed['date'] !== undefined;
+            const blogAuthor: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthor = {
+              imageURL: authorImageUrl,
+              key: authorKey,
+              name: authorName,
+              permalink: authorPermalink,
+            };
 
-            if (
-              blogHasPermalink === true
-              && blogHasDescription === true
-              && blogIsNotEmpty === true
-              && blogHasTitle === true
-              && blogHasDate === true
-            ) {
-              const blogTitleValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue = blogDataFileParsed['title'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue;
-              const blogPermalinkValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue = blogDataFileParsed['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue;
-              const blogDescriptionValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue = blogDataFileParsed['description'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue;
-              const blogDateValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue = blogDataFileParsed['date'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue;
-
-              if (blogSeenPostPermalinks.has(blogPermalinkValue) === false) {
-                blogSeenPostPermalinks.add(blogPermalinkValue);
-
-                const blogPost: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPost = {
-                  title: blogTitleValue,
-                  description: blogDescriptionValue,
-                  permalink: blogPermalinkValue,
-                  date: blogDateValue,
-                };
-
-                blogPosts.push(blogPost);
-              }
-            }
-
-            const blogFileAuthors: IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors = (blogDataFileParsed['authors'] ?? []) as IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors;
-
-            for (const blogFileAuthor of blogFileAuthors) {
-              const authorRaw: IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthor = blogFileAuthor;
-              const authorKey: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey = authorRaw['key'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey;
-
-              if (authorKey === undefined || blogSeenAuthorKeys.has(authorKey) === true) {
-                continue;
-              }
-
-              blogSeenAuthorKeys.add(authorKey);
-
-              const authorName: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName = authorRaw['name'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName;
-              const authorImageUrl: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl = authorRaw['imageURL'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl;
-              const authorPage: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage = authorRaw['page'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage;
-              const authorPermalink: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink = (authorPage !== undefined && authorPage !== null) ? authorPage['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink : undefined;
-
-              const blogAuthor: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthor = {
-                imageURL: authorImageUrl,
-                key: authorKey,
-                name: authorName,
-                permalink: authorPermalink,
-              };
-
-              blogAuthors.push(blogAuthor);
-            }
+            blogAuthors.push(blogAuthor);
           }
         }
 

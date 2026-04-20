@@ -383,3 +383,23 @@ export type SharedShadeLevel = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 80
  * @since 0.15.0
  */
 export type SharedSurface = 'alt';
+
+/**
+ * Shared - Toc Heading.
+ *
+ * @since 0.15.0
+ */
+export type SharedTocHeadingValue = string;
+
+export type SharedTocHeadingId = string;
+
+export type SharedTocHeadingLevel = number;
+
+export type SharedTocHeadingChildren = SharedTocHeading[];
+
+export type SharedTocHeading = {
+  value: SharedTocHeadingValue;
+  id: SharedTocHeadingId;
+  level: SharedTocHeadingLevel;
+  children: SharedTocHeadingChildren;
+};

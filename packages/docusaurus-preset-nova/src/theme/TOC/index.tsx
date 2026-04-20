@@ -1,11 +1,16 @@
 import { translate } from '@docusaurus/Translate';
 
+import { filterToc, treeifyToc } from '../../lib/toc.js';
+
 import type {
   ThemeTocItems,
   ThemeTocListItem,
   ThemeTocListItems,
+  ThemeTocMaxHeadingLevel,
+  ThemeTocMinHeadingLevel,
   ThemeTocProps,
   ThemeTocTocAriaLabel,
+  ThemeTocTreeItems,
 } from '../../types/theme/TOC/index.d.ts';
 
 /**
@@ -57,6 +62,8 @@ function TocList(items: ThemeTocListItems) {
  */
 function TOC(props: ThemeTocProps) {
   const items: ThemeTocItems = props['toc'];
+  const minHeadingLevel: ThemeTocMinHeadingLevel = (props['minHeadingLevel'] !== undefined) ? props['minHeadingLevel'] : 2;
+  const maxHeadingLevel: ThemeTocMaxHeadingLevel = (props['maxHeadingLevel'] !== undefined) ? props['maxHeadingLevel'] : 3;
   const ariaLabel: ThemeTocTocAriaLabel = translate({
     id: 'theme.TOC.ariaLabel',
     message: 'Table of contents',
@@ -67,9 +74,15 @@ function TOC(props: ThemeTocProps) {
     return undefined;
   }
 
+  const treeItems: ThemeTocTreeItems = filterToc(treeifyToc(items), minHeadingLevel, maxHeadingLevel);
+
+  if (treeItems['length'] === 0) {
+    return undefined;
+  }
+
   return (
     <nav className="nova-toc" aria-label={ariaLabel}>
-      {TocList(items)}
+      {TocList(treeItems)}
     </nav>
   );
 }

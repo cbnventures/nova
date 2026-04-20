@@ -1,9 +1,24 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.15.4 - 2026-04-19
+
+### FIXED
+- Mermaid flowchart node labels were blank because the default strict security level let DOMPurify strip HTML inside foreignObject; the render config now sets securityLevel to loose, matching @docusaurus/theme-mermaid
+- Table of contents rendered every heading at the top level because the flat MDX headings were never treeified; the component now builds a heading tree and filters by minHeadingLevel / maxHeadingLevel before rendering
+- BlogPreview on the homepage was empty after a cold production build because the preset read docs and blog data from .docusaurus/ before those plugins had finished writing it; data is now sourced in allContentLoaded
+
+## 0.15.3 - 2026-04-19
+
+No changes
+
 ## 0.15.2 - 2026-04-19
 
 ### FIXED
 - Preset logo assets missing from published npm package
+
+## 0.15.1 - 2026-04-19
+
+No changes
 
 ## 0.15.0 - 2026-04-18
 
