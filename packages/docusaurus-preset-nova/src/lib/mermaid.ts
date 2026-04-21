@@ -111,6 +111,7 @@ export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
     securityLevel: 'loose',
     theme: 'base',
     colorMode,
+    htmlLabels: true,
     themeVariables: {
       primaryColor: getCssVariable(isDark === true ? '--nova-color-primary-800' : '--nova-color-primary-100'),
       primaryTextColor: getCssVariable(isDark === true ? '--nova-color-primary-100' : '--nova-color-primary-900'),
@@ -154,7 +155,6 @@ export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
         top: 16,
         bottom: 8,
       },
-      htmlLabels: true,
       useMaxWidth: false,
     },
   };

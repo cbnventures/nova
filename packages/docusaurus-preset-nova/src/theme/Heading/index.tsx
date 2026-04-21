@@ -1,8 +1,11 @@
+import { translate } from '@docusaurus/Translate';
 import useBrokenLinks from '@docusaurus/useBrokenLinks';
 import { createElement } from 'react';
 
 import type {
   ThemeHeadingBrokenLinks,
+  ThemeHeadingHashLink,
+  ThemeHeadingHashLinkLabel,
   ThemeHeadingId,
   ThemeHeadingProps,
 } from '../../types/theme/Heading/index.d.ts';
@@ -10,9 +13,9 @@ import type {
 /**
  * Theme - Heading.
  *
- * Renders a plain heading element at the specified level, collecting anchor
- * identifiers through Docusaurus broken-link tracking without any hash-link
- * or anchor icon decoration.
+ * Renders a heading element at the specified level with an anchor hash link
+ * revealed on hover or keyboard focus, collecting anchor identifiers through
+ * Docusaurus broken-link tracking.
  *
  * @param {ThemeHeadingProps} props - Props.
  *
@@ -28,6 +31,25 @@ function Heading(props: ThemeHeadingProps) {
     brokenLinks.collectAnchor(id);
   }
 
+  const hashLinkLabel: ThemeHeadingHashLinkLabel = translate({
+    id: 'theme.common.headingLinkTitle',
+    message: 'Direct link to heading',
+    description: 'Title and aria-label for the hash-link anchor revealed on heading hover or focus',
+  });
+
+  let hashLink: ThemeHeadingHashLink = null;
+
+  if (props['as'] !== 'h1' && id !== undefined) {
+    hashLink = (
+      <a
+        className="nova-heading-hash-link"
+        href={`#${id}`}
+        aria-label={hashLinkLabel}
+        title={hashLinkLabel}
+      />
+    );
+  }
+
   return createElement(
     props['as'],
     {
@@ -35,6 +57,7 @@ function Heading(props: ThemeHeadingProps) {
       className: (props['className'] !== undefined) ? `nova-heading ${props['className']}` : 'nova-heading',
     },
     props['children'],
+    hashLink,
   );
 }
 

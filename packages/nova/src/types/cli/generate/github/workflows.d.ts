@@ -1,6 +1,23 @@
 import type { SharedGeneratorRunResult } from '../../../shared.d.ts';
 
 /**
+ * CLI - Generate - GitHub - Workflows - Build Command.
+ *
+ * @since 0.16.0
+ */
+export type CliGenerateGithubWorkflowsBuildCommandScriptName = 'check' | 'build';
+
+export type CliGenerateGithubWorkflowsBuildCommandWorkspaceNames = string[];
+
+export type CliGenerateGithubWorkflowsBuildCommandUseTurbo = boolean;
+
+export type CliGenerateGithubWorkflowsBuildCommandReturns = string;
+
+export type CliGenerateGithubWorkflowsBuildCommandFlag = string;
+
+export type CliGenerateGithubWorkflowsBuildCommandFlags = CliGenerateGithubWorkflowsBuildCommandFlag[];
+
+/**
  * CLI - Generate - GitHub - Workflows - Build Merged Jobs Condition.
  *
  * @since 0.21.0
@@ -89,6 +106,8 @@ export type CliGenerateGithubWorkflowsBuildMergedRunNameTriggerData = {
   jobsCondition: CliGenerateGithubWorkflowsBuildMergedRunNameTriggerDataJobsCondition;
 };
 
+export type CliGenerateGithubWorkflowsBuildMergedRunNameNeedsManuallyFallback = boolean;
+
 export type CliGenerateGithubWorkflowsBuildMergedRunNameReturns = string;
 
 export type CliGenerateGithubWorkflowsBuildMergedRunNameContextExpressions = string[];
@@ -104,6 +123,10 @@ export type CliGenerateGithubWorkflowsBuildMergedRunNameRunNameMatch = RegExpMat
 export type CliGenerateGithubWorkflowsBuildMergedRunNameRunNamePrefix = string;
 
 export type CliGenerateGithubWorkflowsBuildMergedRunNameRunNameSuffix = string;
+
+export type CliGenerateGithubWorkflowsBuildMergedRunNameHasEmptyFallback = boolean;
+
+export type CliGenerateGithubWorkflowsBuildMergedRunNameShouldAppendFallback = boolean;
 
 export type CliGenerateGithubWorkflowsBuildMergedRunNameMergedContextExpression = string;
 
@@ -127,6 +150,72 @@ export type CliGenerateGithubWorkflowsDetectCircularDependsOnCurrentId = string;
 export type CliGenerateGithubWorkflowsDetectCircularDependsOnCurrentEntry = import('../../../shared.d.ts').SharedNovaConfigWorkflow | undefined;
 
 export type CliGenerateGithubWorkflowsDetectCircularDependsOnKey = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows - Detect Turbo.
+ *
+ * @since 0.16.0
+ */
+export type CliGenerateGithubWorkflowsDetectTurboProjectDirectory = string;
+
+export type CliGenerateGithubWorkflowsDetectTurboReturns = Promise<boolean>;
+
+export type CliGenerateGithubWorkflowsDetectTurboTurboConfigPath = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows - Render Artifact Paths.
+ *
+ * @since 0.16.0
+ */
+export type CliGenerateGithubWorkflowsRenderArtifactPathsTargets = CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntry[];
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntryArtifactPath = string;
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntryArtifactPaths = CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntryArtifactPath[];
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntry = {
+  artifactPaths: CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntryArtifactPaths;
+};
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadata = Record<string, CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntry>;
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsReturns = string;
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsSeen = Set<string>;
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsPaths = CliGenerateGithubWorkflowsRenderArtifactPathsPath[];
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntryType = string;
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntryWorkingDir = string;
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntry = {
+  type: CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntryType;
+  workingDir: CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntryWorkingDir;
+};
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsMetadata = CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntry | undefined;
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsPath = string;
+
+export type CliGenerateGithubWorkflowsRenderArtifactPathsLines = string[];
+
+/**
+ * CLI - Generate - GitHub - Workflows - Resolve Workspace Name.
+ *
+ * @since 0.16.0
+ */
+export type CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspacesEntry = {
+  name?: string;
+};
+
+export type CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspaces = Record<string, CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspacesEntry>;
+
+export type CliGenerateGithubWorkflowsResolveWorkspaceNameReturns = string | undefined;
+
+export type CliGenerateGithubWorkflowsResolveWorkspaceNamePath = string;
+
+export type CliGenerateGithubWorkflowsResolveWorkspaceNameEntry = CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspacesEntry | undefined;
 
 /**
  * CLI - Generate - GitHub - Workflows - Run.
@@ -282,6 +371,8 @@ export type CliGenerateGithubWorkflowsRunIndentedTriggerLines = string[];
 
 export type CliGenerateGithubWorkflowsRunIndentedTriggerYaml = string;
 
+export type CliGenerateGithubWorkflowsRunNeedsManuallyFallback = boolean;
+
 export type CliGenerateGithubWorkflowsRunMergedRunName = string;
 
 export type CliGenerateGithubWorkflowsRunMergedPublishCondition = string;
@@ -289,6 +380,82 @@ export type CliGenerateGithubWorkflowsRunMergedPublishCondition = string;
 export type CliGenerateGithubWorkflowsRunMergedJobsCondition = string;
 
 export type CliGenerateGithubWorkflowsRunJobsConditionLine = string;
+
+export type CliGenerateGithubWorkflowsRunSupportsScopes = boolean;
+
+export type CliGenerateGithubWorkflowsRunSupportsTargets = boolean;
+
+export type CliGenerateGithubWorkflowsRunEntryScopes = import('../../../shared.d.ts').SharedNovaConfigWorkflowScopes;
+
+export type CliGenerateGithubWorkflowsRunEntryTargets = import('../../../shared.d.ts').SharedNovaConfigWorkflowTargets;
+
+export type CliGenerateGithubWorkflowsRunHasPublishValidationError = boolean;
+
+export type CliGenerateGithubWorkflowsRunTargetsMetadata = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesTargets;
+
+export type CliGenerateGithubWorkflowsRunTargetTupleSet = Set<string>;
+
+export type CliGenerateGithubWorkflowsRunTargetType = string;
+
+export type CliGenerateGithubWorkflowsRunTargetWorkingDir = string;
+
+export type CliGenerateGithubWorkflowsRunTargetTupleKey = string;
+
+export type CliGenerateGithubWorkflowsRunResolvedWorkspaceNames = string[];
+
+export type CliGenerateGithubWorkflowsRunEntryScope = import('../../../shared.d.ts').SharedNovaConfigWorkflowScope;
+
+export type CliGenerateGithubWorkflowsRunResolvedWorkspaceName = string;
+
+export type CliGenerateGithubWorkflowsRunUseTurbo = boolean;
+
+export type CliGenerateGithubWorkflowsRunCheckCommand = string;
+
+export type CliGenerateGithubWorkflowsRunBuildCommand = string;
+
+export type CliGenerateGithubWorkflowsRunArtifactPathsBlock = string;
+
+export type CliGenerateGithubWorkflowsRunUploadArtifactStep = string;
+
+export type CliGenerateGithubWorkflowsRunUploadArtifactStepLines = string[];
+
+export type CliGenerateGithubWorkflowsRunResolvedTargetFragment = string;
+
+export type CliGenerateGithubWorkflowsRunResolvedTargetFragments = CliGenerateGithubWorkflowsRunResolvedTargetFragment[];
+
+export type CliGenerateGithubWorkflowsRunEntryTarget = import('../../../shared.d.ts').SharedNovaConfigWorkflowTarget;
+
+export type CliGenerateGithubWorkflowsRunTargetFragmentPath = string;
+
+export type CliGenerateGithubWorkflowsRunTargetFragmentExists = boolean;
+
+export type CliGenerateGithubWorkflowsRunTargetFragmentRawContent = string;
+
+export type CliGenerateGithubWorkflowsRunTargetId = string;
+
+export type CliGenerateGithubWorkflowsRunTargetFragmentResolvedContent = string;
+
+export type CliGenerateGithubWorkflowsRunTargetNeeds = import('../../../shared.d.ts').SharedNovaConfigWorkflowTargetNeeds;
+
+export type CliGenerateGithubWorkflowsRunTargetNeedsJobIds = CliGenerateGithubWorkflowsRunTargetNeedsJobId[];
+
+export type CliGenerateGithubWorkflowsRunTargetNeedWorkingDir = string;
+
+export type CliGenerateGithubWorkflowsRunTargetNeedsJobId = string;
+
+export type CliGenerateGithubWorkflowsRunTargetNeedsValue = string;
+
+export type CliGenerateGithubWorkflowsRunTargetJobsConditionLine = string;
+
+export type CliGenerateGithubWorkflowsRunTargetMetadata = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesTarget | undefined;
+
+export type CliGenerateGithubWorkflowsRunMergedVariables = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesVariables;
+
+export type CliGenerateGithubWorkflowsRunIndentedFragmentLines = string[];
+
+export type CliGenerateGithubWorkflowsRunIndentedFragment = string;
+
+export type CliGenerateGithubWorkflowsRunAppendedFragments = string;
 
 export type CliGenerateGithubWorkflowsRunSubstituted = string;
 
@@ -309,6 +476,17 @@ export type CliGenerateGithubWorkflowsRunIsBackup = boolean;
 export type CliGenerateGithubWorkflowsRunOrphanPath = string;
 
 export type CliGenerateGithubWorkflowsRunSetupMessage = string;
+
+/**
+ * CLI - Generate - GitHub - Workflows - Slugify Working Dir.
+ *
+ * @since 0.16.0
+ */
+export type CliGenerateGithubWorkflowsSlugifyWorkingDirInput = string;
+
+export type CliGenerateGithubWorkflowsSlugifyWorkingDirReturns = string;
+
+export type CliGenerateGithubWorkflowsSlugifyWorkingDirTrimmed = string;
 
 /**
  * CLI - Generate - GitHub - Workflows - Substitute Variables.

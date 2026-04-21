@@ -1,8 +1,0 @@
-run-name: "Publishing ${{ github.event.workflow_run.head_branch || 'manually' }} to npm[__WORKFLOW_ID__]${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}"
-publish-condition: "${{ github.event_name == 'workflow_run' || (github.event_name == 'workflow_dispatch' && !inputs.dry-run) }}"
-depends-on: true
-trigger:
-  workflow_run:
-    workflows: [ "[__DEPENDS_ON__]" ]
-    types: [ "completed" ]
-jobs-condition: "${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'failure' }}"

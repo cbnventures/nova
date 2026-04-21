@@ -1,0 +1,45 @@
+publish-vercel-nextjs-[__TARGET_ID__]:
+  needs: [__NEEDS__]
+  runs-on: "ubuntu-latest"
+  timeout-minutes: 15
+  permissions:
+    contents: "read"
+[__JOBS_CONDITION__]
+  steps:
+    - name: "Checkout repository"
+      uses: "actions/checkout@v6"
+
+    - name: "Setup Node.js"
+      uses: "actions/setup-node@v6"
+      with:
+        node-version-file: "${{ env.ROOT_DIR }}/package.json"
+        package-manager-cache: false
+
+    - name: "Download build artifacts"
+      uses: "actions/download-artifact@v4"
+      with:
+        name: "build-output"
+
+    - name: "Install Vercel CLI"
+      if: "${{ env.PUBLISH == 'true' }}"
+      run: npm install -g vercel@latest
+
+    - name: "Pull Vercel environment"
+      if: "${{ env.PUBLISH == 'true' }}"
+      env:
+        VERCEL_TOKEN: "${{ secrets.VERCEL_TOKEN }}"
+        VERCEL_ORG_ID: "${{ vars.VERCEL_ORG_ID }}"
+        VERCEL_PROJECT_ID: "${{ vars.VERCEL_PROJECT_ID }}"
+      run: |
+        vercel pull --yes --environment=production --token="${VERCEL_TOKEN}"
+      working-directory: "[__WORKING_DIR__]"
+
+    - name: "Deploy to Vercel"
+      if: "${{ env.PUBLISH == 'true' }}"
+      env:
+        VERCEL_TOKEN: "${{ secrets.VERCEL_TOKEN }}"
+        VERCEL_ORG_ID: "${{ vars.VERCEL_ORG_ID }}"
+        VERCEL_PROJECT_ID: "${{ vars.VERCEL_PROJECT_ID }}"
+      run: |
+        vercel deploy --prebuilt --prod --token="${VERCEL_TOKEN}"
+      working-directory: "[__WORKING_DIR__]"

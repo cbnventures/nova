@@ -1,11 +1,10 @@
 name: "Lock Inactive Issues (project)"
 
-run-name: "Locking inactive issues (project)${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' || 'manually' }}"
+run-name: "Locking inactive issues (project)${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}"
 
 on:
   schedule:
     - cron: "0 0 * * 0"
-
   workflow_dispatch:
     inputs:
       dry-run:
@@ -23,7 +22,6 @@ concurrency:
 
 env:
   DRY_RUN: "${{ github.event_name == 'workflow_dispatch' && inputs.dry-run || 'false' }}"
-  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
 jobs:
   lock-inactive-issues:
@@ -32,6 +30,8 @@ jobs:
     steps:
       - name: "Lock inactive threads"
         uses: "mrjackyliang/lock-inactive-threads@v1"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
         with:
           GITHUB_TOKEN: "${{ env.GITHUB_TOKEN }}"
           ISSUE_COMMENT: "Due to inactivity, this issue will be locked and marked as resolved. If you have any further questions or inquiries, please feel free to open a new issue."

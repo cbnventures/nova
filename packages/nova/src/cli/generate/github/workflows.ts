@@ -9,6 +9,10 @@ import {
 
 import { LibNovaConfig } from '../../../lib/nova-config.js';
 import {
+  LIB_REGEX_PATTERN_LEADING_DOT_SLASH,
+  LIB_REGEX_PATTERN_TRAILING_NEWLINES,
+  LIB_REGEX_PATTERN_TRAILING_NEWLINES_OR_NONE,
+  LIB_REGEX_PATTERN_TRAILING_SLASH,
   LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_EXPRESSION,
   LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_SEPARATOR,
   LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_WRAPPER_END,
@@ -27,6 +31,11 @@ import { libWorkflowTemplatesMetadata } from '../../../lib/workflow-templates.js
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  CliGenerateGithubWorkflowsBuildCommandFlags,
+  CliGenerateGithubWorkflowsBuildCommandReturns,
+  CliGenerateGithubWorkflowsBuildCommandScriptName,
+  CliGenerateGithubWorkflowsBuildCommandUseTurbo,
+  CliGenerateGithubWorkflowsBuildCommandWorkspaceNames,
   CliGenerateGithubWorkflowsBuildMergedJobsConditionJobsConditionLine,
   CliGenerateGithubWorkflowsBuildMergedJobsConditionReturns,
   CliGenerateGithubWorkflowsBuildMergedJobsConditionTriggerDataList,
@@ -40,11 +49,14 @@ import type {
   CliGenerateGithubWorkflowsBuildMergedRunNameContextInner,
   CliGenerateGithubWorkflowsBuildMergedRunNameContextMatch,
   CliGenerateGithubWorkflowsBuildMergedRunNameContextParts,
+  CliGenerateGithubWorkflowsBuildMergedRunNameHasEmptyFallback,
   CliGenerateGithubWorkflowsBuildMergedRunNameMergedContextExpression,
+  CliGenerateGithubWorkflowsBuildMergedRunNameNeedsManuallyFallback,
   CliGenerateGithubWorkflowsBuildMergedRunNameReturns,
   CliGenerateGithubWorkflowsBuildMergedRunNameRunNameMatch,
   CliGenerateGithubWorkflowsBuildMergedRunNameRunNamePrefix,
   CliGenerateGithubWorkflowsBuildMergedRunNameRunNameSuffix,
+  CliGenerateGithubWorkflowsBuildMergedRunNameShouldAppendFallback,
   CliGenerateGithubWorkflowsBuildMergedRunNameTriggerDataList,
   CliGenerateGithubWorkflowsDetectCircularDependsOnCurrentEntry,
   CliGenerateGithubWorkflowsDetectCircularDependsOnCurrentId,
@@ -54,8 +66,28 @@ import type {
   CliGenerateGithubWorkflowsDetectCircularDependsOnReturns,
   CliGenerateGithubWorkflowsDetectCircularDependsOnVisited,
   CliGenerateGithubWorkflowsDetectCircularDependsOnWorkflows,
+  CliGenerateGithubWorkflowsDetectTurboProjectDirectory,
+  CliGenerateGithubWorkflowsDetectTurboReturns,
+  CliGenerateGithubWorkflowsDetectTurboTurboConfigPath,
+  CliGenerateGithubWorkflowsRenderArtifactPathsLines,
+  CliGenerateGithubWorkflowsRenderArtifactPathsMetadata,
+  CliGenerateGithubWorkflowsRenderArtifactPathsPath,
+  CliGenerateGithubWorkflowsRenderArtifactPathsPaths,
+  CliGenerateGithubWorkflowsRenderArtifactPathsReturns,
+  CliGenerateGithubWorkflowsRenderArtifactPathsSeen,
+  CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntry,
+  CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadata,
+  CliGenerateGithubWorkflowsRenderArtifactPathsTargets,
+  CliGenerateGithubWorkflowsResolveWorkspaceNameEntry,
+  CliGenerateGithubWorkflowsResolveWorkspaceNamePath,
+  CliGenerateGithubWorkflowsResolveWorkspaceNameReturns,
+  CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspaces,
+  CliGenerateGithubWorkflowsRunAppendedFragments,
+  CliGenerateGithubWorkflowsRunArtifactPathsBlock,
   CliGenerateGithubWorkflowsRunBaseContent,
   CliGenerateGithubWorkflowsRunBasePath,
+  CliGenerateGithubWorkflowsRunBuildCommand,
+  CliGenerateGithubWorkflowsRunCheckCommand,
   CliGenerateGithubWorkflowsRunConfig,
   CliGenerateGithubWorkflowsRunContent,
   CliGenerateGithubWorkflowsRunCurrentDirectory,
@@ -74,13 +106,20 @@ import type {
   CliGenerateGithubWorkflowsRunDuplicateKey,
   CliGenerateGithubWorkflowsRunDuplicateSet,
   CliGenerateGithubWorkflowsRunEntryLabel,
+  CliGenerateGithubWorkflowsRunEntryScope,
+  CliGenerateGithubWorkflowsRunEntryScopes,
+  CliGenerateGithubWorkflowsRunEntryTarget,
+  CliGenerateGithubWorkflowsRunEntryTargets,
   CliGenerateGithubWorkflowsRunExistingEntries,
   CliGenerateGithubWorkflowsRunExistingEntry,
   CliGenerateGithubWorkflowsRunGeneratedSet,
   CliGenerateGithubWorkflowsRunHasDependsOnError,
   CliGenerateGithubWorkflowsRunHasDuplicateError,
+  CliGenerateGithubWorkflowsRunHasPublishValidationError,
   CliGenerateGithubWorkflowsRunHasTriggerError,
   CliGenerateGithubWorkflowsRunHasTriggers,
+  CliGenerateGithubWorkflowsRunIndentedFragment,
+  CliGenerateGithubWorkflowsRunIndentedFragmentLines,
   CliGenerateGithubWorkflowsRunIndentedTriggerLines,
   CliGenerateGithubWorkflowsRunIndentedTriggerYaml,
   CliGenerateGithubWorkflowsRunIsAtProjectRoot,
@@ -93,20 +132,44 @@ import type {
   CliGenerateGithubWorkflowsRunMergedPublishCondition,
   CliGenerateGithubWorkflowsRunMergedRunName,
   CliGenerateGithubWorkflowsRunMergedTriggerBlock,
+  CliGenerateGithubWorkflowsRunMergedVariables,
   CliGenerateGithubWorkflowsRunMetadataEntry,
   CliGenerateGithubWorkflowsRunMissingLiterals,
   CliGenerateGithubWorkflowsRunNeedsDependsOn,
+  CliGenerateGithubWorkflowsRunNeedsManuallyFallback,
   CliGenerateGithubWorkflowsRunOptions,
   CliGenerateGithubWorkflowsRunOrphanPath,
   CliGenerateGithubWorkflowsRunOutputFileName,
   CliGenerateGithubWorkflowsRunOutputFileNames,
   CliGenerateGithubWorkflowsRunReplaceFileNotice,
   CliGenerateGithubWorkflowsRunResolvedName,
+  CliGenerateGithubWorkflowsRunResolvedTargetFragments,
+  CliGenerateGithubWorkflowsRunResolvedWorkspaceName,
+  CliGenerateGithubWorkflowsRunResolvedWorkspaceNames,
   CliGenerateGithubWorkflowsRunReturns,
   CliGenerateGithubWorkflowsRunSetupLines,
   CliGenerateGithubWorkflowsRunSetupMessage,
   CliGenerateGithubWorkflowsRunSubstituted,
+  CliGenerateGithubWorkflowsRunSupportsScopes,
+  CliGenerateGithubWorkflowsRunSupportsTargets,
+  CliGenerateGithubWorkflowsRunTargetFragmentExists,
+  CliGenerateGithubWorkflowsRunTargetFragmentPath,
+  CliGenerateGithubWorkflowsRunTargetFragmentRawContent,
+  CliGenerateGithubWorkflowsRunTargetFragmentResolvedContent,
+  CliGenerateGithubWorkflowsRunTargetId,
+  CliGenerateGithubWorkflowsRunTargetJobsConditionLine,
+  CliGenerateGithubWorkflowsRunTargetMetadata,
+  CliGenerateGithubWorkflowsRunTargetNeeds,
+  CliGenerateGithubWorkflowsRunTargetNeedsJobId,
+  CliGenerateGithubWorkflowsRunTargetNeedsJobIds,
+  CliGenerateGithubWorkflowsRunTargetNeedsValue,
+  CliGenerateGithubWorkflowsRunTargetNeedWorkingDir,
   CliGenerateGithubWorkflowsRunTargetPath,
+  CliGenerateGithubWorkflowsRunTargetsMetadata,
+  CliGenerateGithubWorkflowsRunTargetTupleKey,
+  CliGenerateGithubWorkflowsRunTargetTupleSet,
+  CliGenerateGithubWorkflowsRunTargetType,
+  CliGenerateGithubWorkflowsRunTargetWorkingDir,
   CliGenerateGithubWorkflowsRunTemplateDirectory,
   CliGenerateGithubWorkflowsRunTemplateDirExists,
   CliGenerateGithubWorkflowsRunTemplateDirPath,
@@ -125,12 +188,18 @@ import type {
   CliGenerateGithubWorkflowsRunTriggerRawContent,
   CliGenerateGithubWorkflowsRunTriggers,
   CliGenerateGithubWorkflowsRunTriggerYaml,
+  CliGenerateGithubWorkflowsRunUploadArtifactStep,
+  CliGenerateGithubWorkflowsRunUploadArtifactStepLines,
+  CliGenerateGithubWorkflowsRunUseTurbo,
   CliGenerateGithubWorkflowsRunVariableMeta,
   CliGenerateGithubWorkflowsRunVariableName,
   CliGenerateGithubWorkflowsRunWorkflowEntry,
   CliGenerateGithubWorkflowsRunWorkflows,
   CliGenerateGithubWorkflowsRunWorkflowsDirectory,
   CliGenerateGithubWorkflowsRunWorkflowSuffix,
+  CliGenerateGithubWorkflowsSlugifyWorkingDirInput,
+  CliGenerateGithubWorkflowsSlugifyWorkingDirReturns,
+  CliGenerateGithubWorkflowsSlugifyWorkingDirTrimmed,
   CliGenerateGithubWorkflowsSubstituteVariablesContent,
   CliGenerateGithubWorkflowsSubstituteVariablesRegex,
   CliGenerateGithubWorkflowsSubstituteVariablesReplacement,
@@ -513,10 +582,11 @@ export class CliGenerateGithubWorkflows {
         const indentedTriggerLines: CliGenerateGithubWorkflowsRunIndentedTriggerLines = triggerYaml.split('\n').map(
           (line) => (line.trim() === '') ? '' : `  ${line}`,
         );
-        const indentedTriggerYaml: CliGenerateGithubWorkflowsRunIndentedTriggerYaml = indentedTriggerLines.join('\n');
+        const indentedTriggerYaml: CliGenerateGithubWorkflowsRunIndentedTriggerYaml = indentedTriggerLines.join('\n').replace(LIB_REGEX_PATTERN_TRAILING_NEWLINES, '');
 
         // Build merged run-name.
-        const mergedRunName: CliGenerateGithubWorkflowsRunMergedRunName = CliGenerateGithubWorkflows.buildMergedRunName(triggerDataList);
+        const needsManuallyFallback: CliGenerateGithubWorkflowsRunNeedsManuallyFallback = metadataEntry['needsManuallyFallback'] ?? true;
+        const mergedRunName: CliGenerateGithubWorkflowsRunMergedRunName = CliGenerateGithubWorkflows.buildMergedRunName(triggerDataList, needsManuallyFallback);
 
         // Build merged publish condition.
         const mergedPublishCondition: CliGenerateGithubWorkflowsRunMergedPublishCondition = CliGenerateGithubWorkflows.buildMergedPublishCondition(triggerDataList);
@@ -530,6 +600,275 @@ export class CliGenerateGithubWorkflows {
         content = content.replace('[__TRIGGERS__]', indentedTriggerYaml);
         content = content.replace('[__PUBLISH_CONDITION__]', mergedPublishCondition);
         content = content.replace('[__JOBS_CONDITION__]\n', jobsConditionLine);
+
+        // Compose publish-template-specific placeholders (scopes, targets, artifacts).
+        const supportsScopes: CliGenerateGithubWorkflowsRunSupportsScopes = metadataEntry['supportsScopes'];
+        const supportsTargets: CliGenerateGithubWorkflowsRunSupportsTargets = metadataEntry['supportsTargets'];
+        const entryScopes: CliGenerateGithubWorkflowsRunEntryScopes = entry['scopes'] ?? [];
+        const entryTargets: CliGenerateGithubWorkflowsRunEntryTargets = entry['targets'] ?? [];
+
+        // Validate scope/target configuration against template capabilities.
+        let hasPublishValidationError: CliGenerateGithubWorkflowsRunHasPublishValidationError = false;
+
+        if (supportsTargets !== true && entryTargets.length > 0) {
+          Logger.customize({
+            name: 'CliGenerateGithubWorkflows.run',
+            purpose: 'validate',
+          }).error(`Template ${chalk.cyan(`"${templateName}"`)} does not support targets but the workflow entry declares targets. Skipping.`);
+
+          hasPublishValidationError = true;
+        }
+
+        if (supportsScopes !== true && entryScopes.length > 0) {
+          Logger.customize({
+            name: 'CliGenerateGithubWorkflows.run',
+            purpose: 'validate',
+          }).error(`Template ${chalk.cyan(`"${templateName}"`)} does not support scopes but the workflow entry declares scopes. Skipping.`);
+
+          hasPublishValidationError = true;
+        }
+
+        if (hasPublishValidationError === true) {
+          continue;
+        }
+
+        const configWorkspaces: CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspaces = (config['workspaces'] ?? {}) as CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspaces;
+        const targetsMetadata: CliGenerateGithubWorkflowsRunTargetsMetadata = metadataEntry['targets'] ?? {};
+
+        // Validate targets when the template supports them.
+        if (supportsTargets === true && entryTargets.length > 0) {
+          const targetTupleSet: CliGenerateGithubWorkflowsRunTargetTupleSet = new Set();
+
+          for (const entryTarget of entryTargets) {
+            const targetType: CliGenerateGithubWorkflowsRunTargetType = entryTarget['type'];
+            const targetWorkingDir: CliGenerateGithubWorkflowsRunTargetWorkingDir = entryTarget['workingDir'];
+
+            if (targetsMetadata[targetType] === undefined) {
+              Logger.customize({
+                name: 'CliGenerateGithubWorkflows.run',
+                purpose: 'validate',
+              }).error(`Target type ${chalk.cyan(`"${targetType}"`)} is not supported by template ${chalk.cyan(`"${templateName}"`)}. Skipping.`);
+
+              hasPublishValidationError = true;
+
+              break;
+            }
+
+            const targetTupleKey: CliGenerateGithubWorkflowsRunTargetTupleKey = `${targetType}::${targetWorkingDir}`;
+
+            if (targetTupleSet.has(targetTupleKey) === true) {
+              Logger.customize({
+                name: 'CliGenerateGithubWorkflows.run',
+                purpose: 'validate',
+              }).error(`Duplicate target ${chalk.cyan(`"${targetType}"`)} at ${chalk.cyan(`"${targetWorkingDir}"`)}. Each target type and working directory pair must be unique. Skipping.`);
+
+              hasPublishValidationError = true;
+
+              break;
+            }
+
+            targetTupleSet.add(targetTupleKey);
+
+            if (configWorkspaces[targetWorkingDir] === undefined) {
+              Logger.customize({
+                name: 'CliGenerateGithubWorkflows.run',
+                purpose: 'validate',
+              }).error(`Target working directory ${chalk.cyan(`"${targetWorkingDir}"`)} is not a registered workspace. Skipping.`);
+
+              hasPublishValidationError = true;
+
+              break;
+            }
+          }
+        }
+
+        if (hasPublishValidationError === true) {
+          continue;
+        }
+
+        // Validate scopes and resolve to workspace names when the template supports them.
+        const resolvedWorkspaceNames: CliGenerateGithubWorkflowsRunResolvedWorkspaceNames = [];
+
+        if (supportsScopes === true && entryScopes.length > 0) {
+          for (const entryScope of entryScopes) {
+            const scopePath: CliGenerateGithubWorkflowsRunEntryScope = entryScope;
+            const resolvedWorkspaceName: CliGenerateGithubWorkflowsResolveWorkspaceNameReturns = CliGenerateGithubWorkflows.resolveWorkspaceName(configWorkspaces, scopePath);
+
+            if (resolvedWorkspaceName === undefined) {
+              Logger.customize({
+                name: 'CliGenerateGithubWorkflows.run',
+                purpose: 'validate',
+              }).error(`Scope ${chalk.cyan(`"${scopePath}"`)} is not a registered workspace. Skipping.`);
+
+              hasPublishValidationError = true;
+
+              break;
+            }
+
+            const resolvedName: CliGenerateGithubWorkflowsRunResolvedWorkspaceName = resolvedWorkspaceName;
+
+            resolvedWorkspaceNames.push(resolvedName);
+          }
+        }
+
+        if (hasPublishValidationError === true) {
+          continue;
+        }
+
+        // Compose publish-specific placeholders when the template supports targets.
+        if (supportsTargets === true) {
+          // Build check and build commands.
+          const useTurbo: CliGenerateGithubWorkflowsRunUseTurbo = await CliGenerateGithubWorkflows.detectTurbo(currentDirectory);
+          const checkCommand: CliGenerateGithubWorkflowsRunCheckCommand = CliGenerateGithubWorkflows.buildCommand('check', resolvedWorkspaceNames, useTurbo);
+          const buildCommand: CliGenerateGithubWorkflowsRunBuildCommand = CliGenerateGithubWorkflows.buildCommand('build', resolvedWorkspaceNames, useTurbo);
+
+          content = content.replace('[__CHECK_COMMAND__]', checkCommand);
+          content = content.replace('[__BUILD_COMMAND__]', buildCommand);
+
+          // Build upload-artifact step when targets produce artifact paths.
+          const artifactPathsBlock: CliGenerateGithubWorkflowsRunArtifactPathsBlock = CliGenerateGithubWorkflows.renderArtifactPaths(entryTargets, targetsMetadata);
+          let uploadArtifactStep: CliGenerateGithubWorkflowsRunUploadArtifactStep = '';
+
+          if (artifactPathsBlock !== '') {
+            const uploadArtifactStepLines: CliGenerateGithubWorkflowsRunUploadArtifactStepLines = [
+              '      - name: "Upload build artifacts"',
+              '        uses: "actions/upload-artifact@v4"',
+              '        with:',
+              '          name: "build-output"',
+              '          retention-days: 1',
+              '          path: |',
+              artifactPathsBlock,
+            ];
+
+            uploadArtifactStep = uploadArtifactStepLines.join('\n');
+          }
+
+          content = content.replace('[__UPLOAD_ARTIFACT_STEP__]', uploadArtifactStep);
+
+          // Compose target fragments into merged jobs map.
+          const resolvedTargetFragments: CliGenerateGithubWorkflowsRunResolvedTargetFragments = [];
+          let hasTargetFragmentError: CliGenerateGithubWorkflowsRunHasPublishValidationError = false;
+
+          for (const entryTarget of entryTargets) {
+            const currentEntryTarget: CliGenerateGithubWorkflowsRunEntryTarget = entryTarget;
+            const targetType: CliGenerateGithubWorkflowsRunTargetType = currentEntryTarget['type'];
+            const targetWorkingDir: CliGenerateGithubWorkflowsRunTargetWorkingDir = currentEntryTarget['workingDir'];
+            const targetFragmentPath: CliGenerateGithubWorkflowsRunTargetFragmentPath = join(templateDirPath, 'targets', `${targetType}.yml`);
+            const targetFragmentExists: CliGenerateGithubWorkflowsRunTargetFragmentExists = await pathExists(targetFragmentPath);
+
+            if (targetFragmentExists !== true) {
+              Logger.customize({
+                name: 'CliGenerateGithubWorkflows.run',
+                purpose: 'validate',
+              }).error(`Target fragment ${chalk.cyan(`"${targetType}.yml"`)} not found for template ${chalk.cyan(`"${templateName}"`)}. Skipping.`);
+
+              hasTargetFragmentError = true;
+
+              break;
+            }
+
+            let targetFragmentRawContent: CliGenerateGithubWorkflowsRunTargetFragmentRawContent = '';
+
+            try {
+              targetFragmentRawContent = await fs.readFile(targetFragmentPath, 'utf-8');
+            } catch {
+              Logger.customize({
+                name: 'CliGenerateGithubWorkflows.run',
+                purpose: 'read',
+              }).error(`Failed to read target fragment ${chalk.cyan(`"${targetType}.yml"`)}. Skipping.`);
+
+              hasTargetFragmentError = true;
+
+              break;
+            }
+
+            // Substitute target-specific placeholders before YAML parsing.
+            const targetId: CliGenerateGithubWorkflowsRunTargetId = CliGenerateGithubWorkflows.slugifyWorkingDir(targetWorkingDir);
+            let targetFragmentResolvedContent: CliGenerateGithubWorkflowsRunTargetFragmentResolvedContent = targetFragmentRawContent;
+
+            targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__TARGET_ID__]', targetId);
+            targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__WORKING_DIR__]', targetWorkingDir);
+
+            // Build the needs list. Always starts with "build"; same-type target
+            // workingDirs declared in `needs` are appended as job ids so the generated
+            // workflow serializes nova → preset, etc.
+            const targetNeeds: CliGenerateGithubWorkflowsRunTargetNeeds = currentEntryTarget['needs'] ?? [];
+            const targetNeedsJobIds: CliGenerateGithubWorkflowsRunTargetNeedsJobIds = targetNeeds.map(
+              (targetNeedWorkingDir: CliGenerateGithubWorkflowsRunTargetNeedWorkingDir) => `publish-${targetType}-${CliGenerateGithubWorkflows.slugifyWorkingDir(targetNeedWorkingDir)}`,
+            );
+            const targetNeedsValue: CliGenerateGithubWorkflowsRunTargetNeedsValue = (targetNeedsJobIds.length === 0) ? '"build"' : `["build", ${targetNeedsJobIds.map((targetNeedsJobId: CliGenerateGithubWorkflowsRunTargetNeedsJobId) => `"${targetNeedsJobId}"`).join(', ')}]`;
+
+            targetFragmentResolvedContent = targetFragmentResolvedContent.replace('[__NEEDS__]', targetNeedsValue);
+
+            // Apply jobs-condition replacement at job-key-child indent (2 spaces).
+            const targetJobsConditionLine: CliGenerateGithubWorkflowsRunTargetJobsConditionLine = (mergedJobsCondition !== '') ? `  if: "${mergedJobsCondition}"\n` : '';
+
+            targetFragmentResolvedContent = targetFragmentResolvedContent.replace('[__JOBS_CONDITION__]\n', targetJobsConditionLine);
+
+            // Resolve target-specific variables by merging template-level + target-level.
+            const targetMetadata: CliGenerateGithubWorkflowsRunTargetMetadata = targetsMetadata[targetType];
+            const mergedVariables: CliGenerateGithubWorkflowsRunMergedVariables = {
+              ...metadataEntry['variables'],
+              ...(targetMetadata !== undefined) ? targetMetadata['variables'] : {},
+            };
+
+            targetFragmentResolvedContent = CliGenerateGithubWorkflows.substituteVariables(
+              targetFragmentResolvedContent,
+              mergedVariables,
+              entry['settings'],
+            );
+
+            // Validate fragment parses; discard result. We inject text, not parsed objects.
+            try {
+              parseYaml(targetFragmentResolvedContent);
+            } catch {
+              Logger.customize({
+                name: 'CliGenerateGithubWorkflows.run',
+                purpose: 'validate',
+              }).error(`Target fragment ${chalk.cyan(`"${targetType}.yml"`)} produced invalid YAML. Skipping.`);
+
+              hasTargetFragmentError = true;
+
+              break;
+            }
+
+            // Indent every line by 2 spaces so the top-level job key sits under `jobs:`.
+            const indentedLines: CliGenerateGithubWorkflowsRunIndentedFragmentLines = targetFragmentResolvedContent.split('\n').map(
+              (line) => (line === '') ? '' : `  ${line}`,
+            );
+            const indentedFragment: CliGenerateGithubWorkflowsRunIndentedFragment = indentedLines.join('\n');
+
+            resolvedTargetFragments.push(indentedFragment);
+          }
+
+          if (hasTargetFragmentError === true) {
+            continue;
+          }
+
+          // Append target fragments directly to the base content (text-based injection
+          // preserves multi-line block literals, unlike YAML re-serialization).
+          if (resolvedTargetFragments.length > 0) {
+            const appendedFragments: CliGenerateGithubWorkflowsRunAppendedFragments = resolvedTargetFragments.join('\n');
+
+            content = [
+              content.replace(LIB_REGEX_PATTERN_TRAILING_NEWLINES_OR_NONE, ''),
+              '',
+              appendedFragments,
+            ].join('\n');
+
+            // Validate final content parses.
+            try {
+              parseYaml(content);
+            } catch {
+              Logger.customize({
+                name: 'CliGenerateGithubWorkflows.run',
+                purpose: 'validate',
+              }).error(`Base template for ${chalk.cyan(`"${templateName}"`)} produced invalid YAML after target injection. Skipping.`);
+
+              continue;
+            }
+          }
+        }
       }
 
       // Replace workflow ID placeholder (suffix in parentheses, or empty string).
@@ -661,9 +1000,11 @@ export class CliGenerateGithubWorkflows {
    * CLI - Generate - GitHub - Workflows - Build Merged Run Name.
    *
    * Extracts context expressions from each trigger's run-name, deduplicates
-   * them, and reconstructs a single run-name with combined fallback chains.
+   * them, and reconstructs a single run-name. Appends a `'manually'` fallback
+   * when the template opts in and no empty-string fallback is already present.
    *
-   * @param {CliGenerateGithubWorkflowsBuildMergedRunNameTriggerDataList} triggerDataList - Trigger data list.
+   * @param {CliGenerateGithubWorkflowsBuildMergedRunNameTriggerDataList}        triggerDataList        - Trigger data list.
+   * @param {CliGenerateGithubWorkflowsBuildMergedRunNameNeedsManuallyFallback}  needsManuallyFallback  - Needs manually fallback.
    *
    * @private
    *
@@ -671,7 +1012,7 @@ export class CliGenerateGithubWorkflows {
    *
    * @since 0.21.0
    */
-  private static buildMergedRunName(triggerDataList: CliGenerateGithubWorkflowsBuildMergedRunNameTriggerDataList): CliGenerateGithubWorkflowsBuildMergedRunNameReturns {
+  private static buildMergedRunName(triggerDataList: CliGenerateGithubWorkflowsBuildMergedRunNameTriggerDataList, needsManuallyFallback: CliGenerateGithubWorkflowsBuildMergedRunNameNeedsManuallyFallback): CliGenerateGithubWorkflowsBuildMergedRunNameReturns {
     const contextExpressions: CliGenerateGithubWorkflowsBuildMergedRunNameContextExpressions = [];
 
     // Extract context expressions from each trigger's run-name.
@@ -702,11 +1043,17 @@ export class CliGenerateGithubWorkflows {
     const runNamePrefix: CliGenerateGithubWorkflowsBuildMergedRunNameRunNamePrefix = (runNameMatch !== null && runNameMatch[1] !== undefined) ? runNameMatch[1] : '';
     const runNameSuffix: CliGenerateGithubWorkflowsBuildMergedRunNameRunNameSuffix = (runNameMatch !== null && runNameMatch[2] !== undefined) ? runNameMatch[2] : '';
 
-    // Reconstruct the merged run-name.
-    const mergedContextExpression: CliGenerateGithubWorkflowsBuildMergedRunNameMergedContextExpression = [
+    // Reconstruct the merged run-name. Skip the 'manually' fallback when the
+    // template opts out via metadata, or when a trigger already supplies an
+    // empty-string fallback (appending would wrongly produce "manually" for
+    // events like schedule where the earlier expression evaluates to '').
+    const hasEmptyFallback: CliGenerateGithubWorkflowsBuildMergedRunNameHasEmptyFallback = contextExpressions.includes('\'\'') || contextExpressions.includes('""');
+    const shouldAppendFallback: CliGenerateGithubWorkflowsBuildMergedRunNameShouldAppendFallback = needsManuallyFallback === true && hasEmptyFallback === false;
+    const contextExpressionsWithFallback: CliGenerateGithubWorkflowsBuildMergedRunNameContextExpressions = (shouldAppendFallback === true) ? [
       ...contextExpressions,
       '\'manually\'',
-    ].join(' || ');
+    ] : contextExpressions;
+    const mergedContextExpression: CliGenerateGithubWorkflowsBuildMergedRunNameMergedContextExpression = contextExpressionsWithFallback.join(' || ');
 
     return `${runNamePrefix}\${{ ${mergedContextExpression} }}${runNameSuffix}`;
   }
@@ -895,5 +1242,164 @@ export class CliGenerateGithubWorkflows {
     }
 
     return result;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows - Slugify Working Dir.
+   *
+   * Strips the leading `./` prefix and trailing `/` suffix from a workspace
+   * path, then replaces remaining `/` separators with `-` to produce a slug
+   * safe for GitHub Actions job names. Returns `"root"` for empty strings.
+   *
+   * @param {CliGenerateGithubWorkflowsSlugifyWorkingDirInput} input - Input.
+   *
+   * @private
+   *
+   * @returns {CliGenerateGithubWorkflowsSlugifyWorkingDirReturns}
+   *
+   * @since 0.16.0
+   */
+  public static slugifyWorkingDir(input: CliGenerateGithubWorkflowsSlugifyWorkingDirInput): CliGenerateGithubWorkflowsSlugifyWorkingDirReturns {
+    const trimmed: CliGenerateGithubWorkflowsSlugifyWorkingDirTrimmed = input
+      .replace(LIB_REGEX_PATTERN_LEADING_DOT_SLASH, '')
+      .replace(LIB_REGEX_PATTERN_TRAILING_SLASH, '');
+
+    if (trimmed === '') {
+      return 'root';
+    }
+
+    return trimmed.replaceAll('/', '-');
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows - Resolve Workspace Name.
+   *
+   * Looks up a workspace path key in the provided workspaces map and returns
+   * the workspace's `name` field. Returns `undefined` when the path is not
+   * found in the map or when the matched entry does not define a name.
+   *
+   * @param {CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspaces} workspaces - Workspaces.
+   * @param {CliGenerateGithubWorkflowsResolveWorkspaceNamePath}       path       - Path.
+   *
+   * @private
+   *
+   * @returns {CliGenerateGithubWorkflowsResolveWorkspaceNameReturns}
+   *
+   * @since 0.16.0
+   */
+  public static resolveWorkspaceName(workspaces: CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspaces, path: CliGenerateGithubWorkflowsResolveWorkspaceNamePath): CliGenerateGithubWorkflowsResolveWorkspaceNameReturns {
+    const entry: CliGenerateGithubWorkflowsResolveWorkspaceNameEntry = workspaces[path];
+
+    if (entry === undefined) {
+      return undefined;
+    }
+
+    return entry['name'];
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows - Detect Turbo.
+   *
+   * Checks whether a `turbo.json` file exists at the given project directory.
+   * Returns `true` when the file is present, `false` otherwise. Used to
+   * decide whether to emit turbo filter flags or npm `-w` workspace flags.
+   *
+   * @param {CliGenerateGithubWorkflowsDetectTurboProjectDirectory} projectDirectory - Project directory.
+   *
+   * @private
+   *
+   * @returns {CliGenerateGithubWorkflowsDetectTurboReturns}
+   *
+   * @since 0.16.0
+   */
+  public static async detectTurbo(projectDirectory: CliGenerateGithubWorkflowsDetectTurboProjectDirectory): CliGenerateGithubWorkflowsDetectTurboReturns {
+    const turboConfigPath: CliGenerateGithubWorkflowsDetectTurboTurboConfigPath = join(projectDirectory, 'turbo.json');
+
+    return pathExists(turboConfigPath);
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows - Build Command.
+   *
+   * Emits the shell command string for a "check" or "build" step. When
+   * `useTurbo` is true, generates a `npx turbo run` invocation with filter
+   * flags; otherwise generates an `npm run` invocation with `-w` flags.
+   *
+   * @param {CliGenerateGithubWorkflowsBuildCommandScriptName}     scriptName     - Script name.
+   * @param {CliGenerateGithubWorkflowsBuildCommandWorkspaceNames} workspaceNames - Workspace names.
+   * @param {CliGenerateGithubWorkflowsBuildCommandUseTurbo}       useTurbo       - Use turbo.
+   *
+   * @private
+   *
+   * @returns {CliGenerateGithubWorkflowsBuildCommandReturns}
+   *
+   * @since 0.16.0
+   */
+  public static buildCommand(scriptName: CliGenerateGithubWorkflowsBuildCommandScriptName, workspaceNames: CliGenerateGithubWorkflowsBuildCommandWorkspaceNames, useTurbo: CliGenerateGithubWorkflowsBuildCommandUseTurbo): CliGenerateGithubWorkflowsBuildCommandReturns {
+    if (useTurbo === true) {
+      const flags: CliGenerateGithubWorkflowsBuildCommandFlags = workspaceNames.map(
+        (name) => `--filter=${name}`,
+      );
+
+      return `npx turbo run ${scriptName} ${flags.join(' ')} --concurrency=2`;
+    }
+
+    const flags: CliGenerateGithubWorkflowsBuildCommandFlags = workspaceNames.map(
+      (name) => `-w ${name}`,
+    );
+
+    return `npm run ${scriptName} ${flags.join(' ')}`;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows - Render Artifact Paths.
+   *
+   * Unions and deduplicates artifact paths across the selected targets,
+   * substitutes `{workingDir}` with the stripped path, and emits YAML list
+   * items indented with 12 spaces. Returns an empty string when none resolve.
+   *
+   * @param {CliGenerateGithubWorkflowsRenderArtifactPathsTargets}        targets         - Targets.
+   * @param {CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadata} targetsMetadata - Targets metadata.
+   *
+   * @private
+   *
+   * @returns {CliGenerateGithubWorkflowsRenderArtifactPathsReturns}
+   *
+   * @since 0.16.0
+   */
+  public static renderArtifactPaths(targets: CliGenerateGithubWorkflowsRenderArtifactPathsTargets, targetsMetadata: CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadata): CliGenerateGithubWorkflowsRenderArtifactPathsReturns {
+    const seen: CliGenerateGithubWorkflowsRenderArtifactPathsSeen = new Set();
+    const paths: CliGenerateGithubWorkflowsRenderArtifactPathsPaths = [];
+
+    for (const target of targets) {
+      const targetEntry: CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntry = target;
+      const metadata: CliGenerateGithubWorkflowsRenderArtifactPathsMetadata = targetsMetadata[targetEntry['type']];
+
+      if (metadata === undefined) {
+        continue;
+      }
+
+      const strippedDir: CliGenerateGithubWorkflowsRenderArtifactPathsPath = targetEntry['workingDir'].replace(LIB_REGEX_PATTERN_LEADING_DOT_SLASH, '');
+
+      for (const template of metadata['artifactPaths']) {
+        const resolved: CliGenerateGithubWorkflowsRenderArtifactPathsPath = template.replaceAll('{workingDir}', strippedDir);
+
+        if (seen.has(resolved) === false) {
+          seen.add(resolved);
+
+          paths.push(resolved);
+        }
+      }
+    }
+
+    if (paths.length === 0) {
+      return '';
+    }
+
+    const lines: CliGenerateGithubWorkflowsRenderArtifactPathsLines = paths.map(
+      (path) => `            ${path}`,
+    );
+
+    return lines.join('\n');
   }
 }

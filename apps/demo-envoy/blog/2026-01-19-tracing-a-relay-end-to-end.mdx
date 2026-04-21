@@ -1,8 +1,12 @@
 ---
 title: "Tracing a Relay End to End With Ledger"
-authors: [nneka]
-tags: [observability, latency, infrastructure]
-date: 2026-01-19
+authors:
+  - "nneka"
+tags:
+  - "observability"
+  - "latency"
+  - "infrastructure"
+date: "2026-01-19"
 ---
 
 A customer reported that their payment confirmation webhook was arriving 4.7 seconds late. Not failing — arriving. The webhook was delivered, the receipt was valid, the status in Glassboard was green. But the payment confirmation was appearing in their system 4.7 seconds after the event occurred, and their SLA required under 2 seconds.

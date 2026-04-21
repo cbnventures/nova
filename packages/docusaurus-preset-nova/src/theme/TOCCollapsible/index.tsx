@@ -9,6 +9,8 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 
+import { filterToc, treeifyToc } from '../../lib/toc.js';
+
 import type {
   ThemeTocCollapsibleTocCollapsibleAnimationEvent,
   ThemeTocCollapsibleTocCollapsibleCloseAriaLabel,
@@ -24,6 +26,8 @@ import type {
   ThemeTocCollapsibleTocCollapsibleIsOpen,
   ThemeTocCollapsibleTocCollapsibleIsOpenState,
   ThemeTocCollapsibleTocCollapsibleItems,
+  ThemeTocCollapsibleTocCollapsibleMaxHeadingLevel,
+  ThemeTocCollapsibleTocCollapsibleMinHeadingLevel,
   ThemeTocCollapsibleTocCollapsibleOpenAriaLabel,
   ThemeTocCollapsibleTocCollapsibleOverlayClassName,
   ThemeTocCollapsibleTocCollapsiblePanelRef,
@@ -31,6 +35,7 @@ import type {
   ThemeTocCollapsibleTocCollapsibleProps,
   ThemeTocCollapsibleTocCollapsibleSetIsClosing,
   ThemeTocCollapsibleTocCollapsibleSetIsOpen,
+  ThemeTocCollapsibleTocCollapsibleTreeItems,
   ThemeTocCollapsibleTocCollapsibleTriggerLabel,
   ThemeTocCollapsibleTocListItem,
   ThemeTocCollapsibleTocListItems,
@@ -61,9 +66,7 @@ function TocList(items: ThemeTocCollapsibleTocListItems, onLinkClick: ThemeTocCo
       {
         items.map((item: ThemeTocCollapsibleTocListItem) => (
           <li className="nova-toc-item" key={item['id']}>
-            <a className="nova-toc-link" href={`#${item['id']}`} onClick={onLinkClick}>
-              {item['value']}
-            </a>
+            <a className="nova-toc-link" href={`#${item['id']}`} onClick={onLinkClick} dangerouslySetInnerHTML={{ __html: item['value'] }} />
             {TocList(item['children'], onLinkClick)}
           </li>
         ))
@@ -87,6 +90,8 @@ function TocList(items: ThemeTocCollapsibleTocListItems, onLinkClick: ThemeTocCo
  */
 function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
   const items: ThemeTocCollapsibleTocCollapsibleItems = props['toc'];
+  const minHeadingLevel: ThemeTocCollapsibleTocCollapsibleMinHeadingLevel = (props['minHeadingLevel'] !== undefined) ? props['minHeadingLevel'] : 2;
+  const maxHeadingLevel: ThemeTocCollapsibleTocCollapsibleMaxHeadingLevel = (props['maxHeadingLevel'] !== undefined) ? props['maxHeadingLevel'] : 3;
   const pathname: ThemeTocCollapsibleTocCollapsiblePathname = useLocation()['pathname'];
 
   const isOpenState: ThemeTocCollapsibleTocCollapsibleIsOpenState = useState<ThemeTocCollapsibleTocCollapsibleIsOpen>(false);
@@ -196,6 +201,12 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
     return undefined;
   }
 
+  const treeItems: ThemeTocCollapsibleTocCollapsibleTreeItems = filterToc(treeifyToc(items), minHeadingLevel, maxHeadingLevel);
+
+  if (treeItems['length'] === 0) {
+    return undefined;
+  }
+
   return (
     <>
       <button
@@ -257,7 +268,7 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
                 </button>
               </div>
               <div className="nova-toc-collapsible-content">
-                {TocList(items, () => {
+                {TocList(treeItems, () => {
                   setIsClosing(true);
 
                   return undefined;

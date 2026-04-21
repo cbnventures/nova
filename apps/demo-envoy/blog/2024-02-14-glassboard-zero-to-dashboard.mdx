@@ -1,8 +1,12 @@
 ---
 title: "Building Glassboard From a Grep Command and a Cron Job"
-authors: [tomas]
-tags: [monitoring, on-call, infrastructure]
-date: 2024-02-14
+authors:
+  - "tomas"
+tags:
+  - "monitoring"
+  - "on-call"
+  - "infrastructure"
+date: "2024-02-14"
 ---
 
 Before Glassboard existed, our monitoring was a `grep` command piped to `wc -l`, run by a cron job every five minutes. If the count exceeded a threshold, it wrote a line to a file. If someone remembered to check the file, they would know something was wrong.

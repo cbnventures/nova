@@ -1,8 +1,12 @@
 ---
 title: "What Happens When a Bastion Gateway Hits 50,000 Connections"
-authors: [rafael]
-tags: [bastion, access-control, network]
-date: 2025-03-06
+authors:
+  - "rafael"
+tags:
+  - "bastion"
+  - "access-control"
+  - "network"
+date: "2025-03-06"
 ---
 
 Bastion is the access gateway layer in Sentinel. Every connection from an enrolled device to a protected resource flows through a Bastion node. The node enforces the trust decision from Citadel, terminates the encrypted tunnel from the device agent, and proxies the connection to the target resource. It is the chokepoint by design. That means it has to survive being a chokepoint.

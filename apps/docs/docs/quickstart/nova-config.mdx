@@ -1,22 +1,22 @@
 ---
-id: nova-config
-title: Nova Config Reference
+id: "nova-config"
+title: "Nova Config Reference"
 sidebar_position: 4
-description: Complete reference for every section and field in the nova.config.json configuration file.
+description: "Complete reference for every section and field in the nova.config.json configuration file."
 keywords:
-  - nova
-  - nova config
-  - nova.config.json
-  - project metadata
-  - entities
-  - workflows
-  - workspaces
-  - configuration reference
+  - "nova"
+  - "nova config"
+  - "nova.config.json"
+  - "project metadata"
+  - "entities"
+  - "workflows"
+  - "workspaces"
+  - "configuration reference"
 tags:
-  - quickstart
-  - reference
-  - configuration
-  - nova-config
+  - "quickstart"
+  - "reference"
+  - "configuration"
+  - "nova-config"
 ---
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
@@ -111,6 +111,88 @@ Canonical contact addresses referenced by tools and metadata.
 }
 ```
 
+## `workflows`
+
+An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
+
+| Field        | Type       | Description                                                                                                      |
+|--------------|------------|------------------------------------------------------------------------------------------------------------------|
+| `template`   | `string`   | Name of a bundled workflow template: `"publish"`, `"lock-inactive-issues"`, or `"check-sponsor-gated-issues"`.   |
+| `suffix`     | `string`   | Label appended to the output filename and workflow name. Required when the same template appears more than once. |
+| `triggers`   | `string[]` | Trigger names from the template's `triggers/` folder. Use an empty array for templates with baked-in triggers.   |
+| `depends-on` | `string[]` | Optional. Workflow references as `"{template}-{suffix}"`. Required for `workflow-run-*` triggers.                |
+| `scopes`     | `string[]` | Optional. Workspace paths (keys from `workspaces`) that the `check` / `build` step should filter to.             |
+| `targets`    | `object[]` | Optional. Publish destinations for the `publish` template. Each target has `type`, `workingDir`, and `needs`.    |
+| `settings`   | `object`   | Optional. Key-value pairs that remap secret / variable names or supply values for literal template variables.    |
+
+### Target Fields
+
+Each entry in the `targets` array pins one publish destination to a workspace.
+
+| Field        | Type       | Description                                                                                                                                                              |
+|--------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `type`       | `string`   | One of: `"npm"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages-docusaurus"`, `"github-pages-docusaurus"`, `"aws-amplify-nextjs"`, `"vercel-nextjs"`. |
+| `workingDir` | `string`   | Path to the workspace that owns the target (e.g., `"./packages/nova"`).                                                                                                  |
+| `needs`      | `string[]` | Optional. Working directories of other same-type targets that must finish publishing before this one starts.                                                             |
+
+### Variable Formats
+
+Each template declares variables with one of three formats. The format determines how values in `settings` are used:
+
+| Format    | What happens                                                                                              |
+|-----------|-----------------------------------------------------------------------------------------------------------|
+| `secret`  | Produces `${{ secrets.NAME }}` in the YAML. A setting value remaps the secret name.                       |
+| `var`     | Produces `${{ vars.NAME }}` in the YAML. A setting value remaps the variable name.                        |
+| `literal` | Replaces the placeholder with the exact string from `settings`. Must be provided or the entry is skipped. |
+
+### Output Filenames
+
+Generated files follow the pattern `nova-{template}-{suffix}.yml` under `.github/workflows/`.
+
+```json
+{
+  "workflows": [
+    {
+      "template": "lock-inactive-issues",
+      "suffix": "project",
+      "triggers": ["schedule-weekly"]
+    },
+    {
+      "template": "publish",
+      "suffix": "project",
+      "triggers": ["release"],
+      "scopes": [
+        "./packages/core",
+        "./packages/preset",
+        "./apps/docs"
+      ],
+      "targets": [
+        {
+          "type": "npm",
+          "workingDir": "./packages/core"
+        },
+        {
+          "type": "npm",
+          "workingDir": "./packages/preset",
+          "needs": ["./packages/core"]
+        },
+        {
+          "type": "cloudflare-pages-docusaurus",
+          "workingDir": "./apps/docs"
+        }
+      ],
+      "settings": {
+        "CLOUDFLARE_ACCOUNT_ID": "CLOUDFLARE_ACCOUNT_ID",
+        "CLOUDFLARE_API_TOKEN": "CLOUDFLARE_API_TOKEN",
+        "CLOUDFLARE_PROJECT_NAME": "CLOUDFLARE_PROJECT_NAME",
+        "NPM_TOKEN": "NPM_TOKEN",
+        "ROOT_WORKING_DIR": "./"
+      }
+    }
+  ]
+}
+```
+
 ## `urls`
 
 Canonical links with validation and normalization.
@@ -189,51 +271,3 @@ A map of relative paths to <Terminology title="package" to="/docs/quickstart/ter
 }
 ```
 
-## `workflows`
-
-An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
-
-| Field      | Type     | Description                                                                                             |
-|------------|----------|---------------------------------------------------------------------------------------------------------|
-| `template` | `string` | Name of a bundled workflow template (e.g., `"publish-to-npm"`, `"lock-inactive-issues"`).               |
-| `suffix`   | `string` | Optional label appended to the output filename. Required when the same template appears more than once. |
-| `settings` | `object` | Optional key-value pairs that configure variable placeholders in the template.                          |
-
-### Variable Formats
-
-Each template defines variables with one of three formats that determine how `settings` values are used:
-
-| Format    | What happens                                                                                              |
-|-----------|-----------------------------------------------------------------------------------------------------------|
-| `secret`  | Produces `${{ secrets.NAME }}` in the YAML. A setting value remaps the secret name.                       |
-| `var`     | Produces `${{ vars.NAME }}` in the YAML. A setting value remaps the variable name.                        |
-| `literal` | Replaces the placeholder with the exact string from `settings`. Must be provided or the entry is skipped. |
-
-### Output Filenames
-
-Generated files follow the pattern `nova-{template}.yml` or `nova-{template}-{suffix}.yml` and are written to `.github/workflows/`.
-
-```json
-{
-  "workflows": [
-    {
-      "template": "lock-inactive-issues"
-    },
-    {
-      "template": "publish-to-npm",
-      "settings": {
-        "ROOT_WORKING_DIR": "./",
-        "NPM_WORKING_DIR": "./packages/nova"
-      }
-    },
-    {
-      "template": "publish-to-npm",
-      "suffix": "preset",
-      "settings": {
-        "ROOT_WORKING_DIR": "./",
-        "NPM_WORKING_DIR": "./packages/preset"
-      }
-    }
-  ]
-}
-```

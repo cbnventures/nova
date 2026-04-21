@@ -1,7 +1,11 @@
 ---
 title: "We Traced a Viral Campaign to a Single Link in a Tuesday Newsletter"
-authors: [amara]
-tags: [attribution, case-study, prism]
+authors:
+  - "amara"
+tags:
+  - "attribution"
+  - "case-study"
+  - "prism"
 ---
 
 We ran a product launch across four channels — social, paid search, email, and retargeting. On day twelve, conversions spiked 40%. We traced the spike to a single Beacon link. It was embedded in a Tuesday newsletter that nobody on the marketing team had flagged as important.

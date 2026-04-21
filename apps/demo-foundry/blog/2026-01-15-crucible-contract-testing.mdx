@@ -1,8 +1,13 @@
 ---
 title: "Contract Testing Across 60 Packages with Crucible"
-authors: [priya]
-tags: [testing, crucible, typescript, monorepo]
-date: 2026-01-15
+authors:
+  - "priya"
+tags:
+  - "testing"
+  - "crucible"
+  - "typescript"
+  - "monorepo"
+date: "2026-01-15"
 ---
 
 Last year, we broke production because a library package changed the shape of a return type. The change was backward-compatible according to the TypeScript compiler — the old fields were still there, and the new field was optional. But three downstream packages relied on the absence of that field to trigger a fallback path. When the field suddenly existed (with a value of `undefined`), the fallback stopped firing, and users saw blank screens for forty minutes.

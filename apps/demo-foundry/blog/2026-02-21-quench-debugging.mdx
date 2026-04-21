@@ -1,8 +1,13 @@
 ---
 title: "Debugging a Quench Cache Miss That Should Not Have Happened"
-authors: [kofi]
-tags: [caching, quench, performance, developer-experience]
-date: 2026-02-21
+authors:
+  - "kofi"
+tags:
+  - "caching"
+  - "quench"
+  - "performance"
+  - "developer-experience"
+date: "2026-02-21"
 ---
 
 Last Tuesday, a developer on our team opened a ticket: "Quench says `core` is a cache miss, but I have not changed anything in `core`." She was right. No source files had changed. No dependencies had updated. The manifest was identical. But Quench was rebuilding `core` on every run, turning a 3-second warm build into a 14-second cold build.

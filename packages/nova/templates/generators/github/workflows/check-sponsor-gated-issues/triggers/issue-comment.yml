@@ -1,0 +1,5 @@
+run-name: "${{ github.event_name == 'issues' && format('Analyzing issue #{0}', github.event.issue.number) || format('Analyzing comment on issue #{0}', github.event.issue.number) }}"
+publish-condition: ""
+trigger:
+  issue_comment:
+    types: [ "created", "edited" ]

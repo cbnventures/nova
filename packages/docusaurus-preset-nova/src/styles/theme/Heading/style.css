@@ -3,3 +3,38 @@
  *
  * @since 0.15.0
  */
+
+/*
+ * Hash-link anchor revealed on heading hover or keyboard focus. Rendered as
+ * a bare <a> child by @theme/Heading; the "#" glyph lives in the ::before
+ * pseudo so the element stays empty in the DOM tree and only presents to
+ * screen readers via its aria-label.
+ */
+.nova-heading-hash-link {
+  margin-inline-start: 0.25em;
+  opacity: 0;
+  color: var(--nova-color-neutral-500);
+  text-decoration: none !important;
+  transition: opacity 120ms ease, color 120ms ease;
+}
+
+.nova-heading-hash-link::before {
+  content: "#";
+}
+
+.nova-heading:hover .nova-heading-hash-link,
+.nova-heading-hash-link:focus-visible {
+  opacity: 1;
+}
+
+.nova-heading-hash-link:hover {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-heading-hash-link {
+  color: var(--nova-color-neutral-400);
+}
+
+[data-theme="dark"] .nova-heading-hash-link:hover {
+  color: var(--nova-color-primary-400);
+}

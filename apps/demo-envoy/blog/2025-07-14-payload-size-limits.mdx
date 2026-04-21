@@ -1,8 +1,12 @@
 ---
 title: "Why We Cap Payloads at 256KB and What Happens When You Hit It"
-authors: [nneka]
-tags: [payload, protocol, courier]
-date: 2025-07-14
+authors:
+  - "nneka"
+tags:
+  - "payload"
+  - "protocol"
+  - "courier"
+date: "2025-07-14"
 ---
 
 A customer tried to relay a 47MB webhook payload through Courier last Tuesday. It was a CI/CD system sending the entire build log as a JSON blob in the webhook body. The relay failed. The customer opened a support ticket asking us to raise the limit.

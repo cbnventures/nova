@@ -1,7 +1,10 @@
 ---
 title: "The Day We Stopped Trusting the Network"
-authors: [james]
-tags: [philosophy, zero-trust]
+authors:
+  - "james"
+tags:
+  - "philosophy"
+  - "zero-trust"
 ---
 
 We spent the first half of our careers building walls. Firewalls, perimeter defenses, gateway appliances — all predicated on a single assumption: the network has an inside and an outside, and the inside is safe.

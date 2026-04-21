@@ -1,0 +1,32 @@
+publish-aws-amplify-nextjs-[__TARGET_ID__]:
+  needs: [__NEEDS__]
+  runs-on: "ubuntu-latest"
+  timeout-minutes: 15
+  permissions:
+    contents: "read"
+[__JOBS_CONDITION__]
+  steps:
+    - name: "Checkout repository"
+      uses: "actions/checkout@v6"
+
+    - name: "Download build artifacts"
+      uses: "actions/download-artifact@v4"
+      with:
+        name: "build-output"
+
+    - name: "Configure AWS credentials"
+      if: "${{ env.PUBLISH == 'true' }}"
+      uses: "aws-actions/configure-aws-credentials@v4"
+      with:
+        aws-access-key-id: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+        aws-secret-access-key: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+        aws-region: "${{ vars.AWS_REGION }}"
+
+    - name: "Trigger Amplify deployment"
+      if: "${{ env.PUBLISH == 'true' }}"
+      run: |
+        aws amplify start-job \
+          --app-id "${{ vars.AMPLIFY_APP_ID }}" \
+          --branch-name "${{ vars.AMPLIFY_BRANCH_NAME }}" \
+          --job-type RELEASE
+      working-directory: "[__WORKING_DIR__]"

@@ -269,6 +269,16 @@ export const LIB_REGEX_PATTERN_KEBAB_CASE_FILENAME = /^[a-z][a-z0-9]*(-[a-z0-9]+
 export const LIB_REGEX_PATTERN_LEADING_DOT = /^\./;
 
 /**
+ * Lib - Regex - Pattern Leading Dot Slash.
+ *
+ * Matches a leading `./` path prefix. Used by the workflow generator's
+ * slugifyWorkingDir helper to strip the prefix before slug conversion.
+ *
+ * @since 0.16.0
+ */
+export const LIB_REGEX_PATTERN_LEADING_DOT_SLASH = /^\.\//;
+
+/**
  * Lib - Regex - Pattern Leading Newlines.
  *
  * Strips one or more newlines from the start of a string. Used by the changelog
@@ -437,6 +447,38 @@ export const LIB_REGEX_PATTERN_SLUG_SCOPED = /^@[a-z0-9]+(?:[a-z0-9-_]*[a-z0-9])
  * @since 0.11.0
  */
 export const LIB_REGEX_PATTERN_SLUG_SIMPLE = /^[a-z0-9]+(?:[a-z0-9-_]*[a-z0-9])?$/;
+
+/**
+ * Lib - Regex - Pattern Trailing Slash.
+ *
+ * Matches a trailing `/` path suffix. Used by the workflow generator's
+ * slugifyWorkingDir helper to strip the suffix before slug conversion.
+ *
+ * @since 0.16.0
+ */
+export const LIB_REGEX_PATTERN_TRAILING_SLASH = /\/$/;
+
+/**
+ * Lib - Regex - Pattern Trailing Newlines.
+ *
+ * Matches one or more newline characters at the end of a string. Used by
+ * the workflow generator to strip trailing newlines from indented trigger
+ * YAML before placeholder substitution.
+ *
+ * @since 0.16.0
+ */
+export const LIB_REGEX_PATTERN_TRAILING_NEWLINES = /\n+$/;
+
+/**
+ * Lib - Regex - Pattern Trailing Newlines Or None.
+ *
+ * Matches zero or more newline characters at the end of a string. Used by
+ * the workflows generator to strip trailing newlines before appending target
+ * fragment blocks to base template content.
+ *
+ * @since 0.16.0
+ */
+export const LIB_REGEX_PATTERN_TRAILING_NEWLINES_OR_NONE = /\n*$/;
 
 /**
  * Lib - Regex - Pattern Whitespace.

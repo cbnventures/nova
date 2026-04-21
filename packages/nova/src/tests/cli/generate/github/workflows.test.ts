@@ -13,10 +13,14 @@ import { join } from 'node:path';
 import { afterAll, describe, it } from 'vitest';
 
 import { CliGenerateGithubWorkflows } from '../../../../cli/generate/github/workflows.js';
+import { pathExists } from '../../../../lib/utility.js';
 
 import type {
   TestsCliGenerateGithubWorkflowsRunBackupFiles,
   TestsCliGenerateGithubWorkflowsRunContent,
+  TestsCliGenerateGithubWorkflowsRunContentLines,
+  TestsCliGenerateGithubWorkflowsRunCoreJobIndex,
+  TestsCliGenerateGithubWorkflowsRunCoreNeedsLine,
   TestsCliGenerateGithubWorkflowsRunEntries,
   TestsCliGenerateGithubWorkflowsRunExists,
   TestsCliGenerateGithubWorkflowsRunGitignorePath,
@@ -26,6 +30,8 @@ import type {
   TestsCliGenerateGithubWorkflowsRunOrphanFiles,
   TestsCliGenerateGithubWorkflowsRunPackageJson,
   TestsCliGenerateGithubWorkflowsRunPackageJsonPath,
+  TestsCliGenerateGithubWorkflowsRunPresetJobIndex,
+  TestsCliGenerateGithubWorkflowsRunPresetNeedsLine,
   TestsCliGenerateGithubWorkflowsRunProjectDirectory,
   TestsCliGenerateGithubWorkflowsRunSandboxRoot,
   TestsCliGenerateGithubWorkflowsRunTemporaryDirectory,
@@ -77,21 +83,21 @@ describe('CliGenerateGithubWorkflows.run', async () => {
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
     await writeFile(gitignorePath, 'node_modules\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       project: { name: { slug: 'test' } },
-    }, null, 2);
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
@@ -116,41 +122,53 @@ describe('CliGenerateGithubWorkflows.run', async () => {
   it('generates workflow file with literal substitution', async () => {
     const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'literal-substitution');
 
-    await mkdir(projectDirectory, { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'my-package'), { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+    const myPackagePackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'my-package' };
+    const myPackagePackageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'packages', 'my-package', 'package.json');
+
+    await writeFile(myPackagePackageJsonPath, JSON.stringify(myPackagePackageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
     await writeFile(gitignorePath, 'node_modules\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [{
-        template: 'publish-to-npm',
+        template: 'publish',
         suffix: 'my-pkg',
         triggers: ['release'],
+        scopes: ['./packages/my-package'],
+        targets: [{
+          type: 'npm', workingDir: './packages/my-package',
+        }],
         settings: {
           'ROOT_WORKING_DIR': './',
-          'NPM_WORKING_DIR': './packages/my-package',
         },
       }],
-    }, null, 2);
+      workspaces: {
+        './packages/my-package': {
+          role: 'package', policy: 'distributable', name: 'my-package', recipes: {},
+        },
+      },
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
     await CliGenerateGithubWorkflows.run({});
 
-    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-to-npm-my-pkg.yml');
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-my-pkg.yml');
     const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(workflowPath, 'utf-8');
 
     // Literal vars should be replaced with raw values.
-    strictEqual(content.includes('"./packages/my-package"'), true);
     strictEqual(content.includes('"./"'), true);
 
     // Secrets should remain as expressions.
@@ -160,7 +178,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     ].join('')), true);
 
     // Workflow ID placeholder should be fully resolved in name and run-name.
-    strictEqual(content.includes('Publish to npm (my-pkg)'), true);
+    strictEqual(content.includes('Publish (my-pkg)'), true);
     strictEqual(content.includes('[__WORKFLOW_ID__]'), false);
 
     return;
@@ -169,38 +187,51 @@ describe('CliGenerateGithubWorkflows.run', async () => {
   it('generates workflow file with secret remapping', async () => {
     const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'secret-remap');
 
-    await mkdir(projectDirectory, { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'core'), { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+    const corePackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'core' };
+    const corePackageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'packages', 'core', 'package.json');
+
+    await writeFile(corePackageJsonPath, JSON.stringify(corePackageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
     await writeFile(gitignorePath, 'node_modules\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [{
-        template: 'publish-to-npm',
+        template: 'publish',
         suffix: 'core',
         triggers: ['release'],
+        scopes: ['./packages/core'],
+        targets: [{
+          type: 'npm', workingDir: './packages/core',
+        }],
         settings: {
           'NPM_TOKEN': 'NPM_TOKEN_CORE',
           'ROOT_WORKING_DIR': './',
-          'NPM_WORKING_DIR': './packages/core',
         },
       }],
-    }, null, 2);
+      workspaces: {
+        './packages/core': {
+          role: 'package', policy: 'distributable', name: 'core', recipes: {},
+        },
+      },
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
     await CliGenerateGithubWorkflows.run({});
 
-    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-to-npm-core.yml');
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-core.yml');
     const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(workflowPath, 'utf-8');
 
     // Secret should be remapped.
@@ -221,28 +252,26 @@ describe('CliGenerateGithubWorkflows.run', async () => {
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
     await writeFile(gitignorePath, 'node_modules\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [{
-        template: 'publish-to-npm',
+        template: 'publish',
         suffix: 'incomplete',
         triggers: ['release'],
-        settings: {
-          'ROOT_WORKING_DIR': './',
-        },
+        settings: {},
       }],
-    }, null, 2);
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
@@ -252,7 +281,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     let exists: TestsCliGenerateGithubWorkflowsRunExists = true;
 
     try {
-      const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-to-npm-incomplete.yml');
+      const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-incomplete.yml');
 
       await readFile(workflowPath, 'utf-8');
     } catch {
@@ -269,10 +298,10 @@ describe('CliGenerateGithubWorkflows.run', async () => {
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
@@ -285,16 +314,16 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     // Create an orphan file.
     await writeFile(join(workflowsDirectory, 'nova-old-workflow.yml'), 'name: old\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [{
         template: 'lock-inactive-issues',
         suffix: 'default',
         triggers: ['schedule'],
       }],
-    }, null, 2);
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
@@ -313,10 +342,10 @@ describe('CliGenerateGithubWorkflows.run', async () => {
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
@@ -329,16 +358,16 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     // Create a backup file that should NOT be cleaned up.
     await writeFile(join(workflowsDirectory, 'nova-old-workflow.2026-04-17_0001.nova-backup.yml'), 'name: backup\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [{
         template: 'lock-inactive-issues',
         suffix: 'default',
         triggers: ['schedule'],
       }],
-    }, null, 2);
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
@@ -355,60 +384,85 @@ describe('CliGenerateGithubWorkflows.run', async () => {
   it('generates workflow with workflow-run-success trigger and depends-on', async () => {
     const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'depends-on-test');
 
-    await mkdir(projectDirectory, { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'core'), { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'utils'), { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+    const corePackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'core' };
+    const corePackageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'packages', 'core', 'package.json');
+
+    await writeFile(corePackageJsonPath, JSON.stringify(corePackageJson, null, 2));
+
+    const utilsPackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'utils' };
+    const utilsPackageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'packages', 'utils', 'package.json');
+
+    await writeFile(utilsPackageJsonPath, JSON.stringify(utilsPackageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
     await writeFile(gitignorePath, 'node_modules\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [
         {
-          template: 'publish-to-npm',
+          template: 'publish',
           suffix: 'primary',
           triggers: ['release'],
+          scopes: ['./packages/core'],
+          targets: [{
+            type: 'npm', workingDir: './packages/core',
+          }],
           settings: {
             'ROOT_WORKING_DIR': './',
-            'NPM_WORKING_DIR': './packages/core',
           },
         },
         {
-          'template': 'publish-to-npm',
+          'template': 'publish',
           'suffix': 'secondary',
           'triggers': ['workflow-run-success'],
-          'depends-on': ['publish-to-npm-primary'],
+          'depends-on': ['publish-primary'],
+          'scopes': ['./packages/utils'],
+          'targets': [{
+            type: 'npm', workingDir: './packages/utils',
+          }],
           'settings': {
             'ROOT_WORKING_DIR': './',
-            'NPM_WORKING_DIR': './packages/utils',
           },
         },
       ],
-    }, null, 2);
+      workspaces: {
+        './packages/core': {
+          role: 'package', policy: 'distributable', name: 'core', recipes: {},
+        },
+        './packages/utils': {
+          role: 'package', policy: 'distributable', name: 'utils', recipes: {},
+        },
+      },
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
     await CliGenerateGithubWorkflows.run({});
 
     // Primary workflow should exist.
-    const primaryPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-to-npm-primary.yml');
+    const primaryPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-primary.yml');
     const primaryContent: TestsCliGenerateGithubWorkflowsRunContent = await readFile(primaryPath, 'utf-8');
 
     strictEqual(primaryContent.includes('release:'), true);
 
     // Secondary workflow should exist and reference the primary.
-    const secondaryPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-to-npm-secondary.yml');
+    const secondaryPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-secondary.yml');
     const secondaryContent: TestsCliGenerateGithubWorkflowsRunContent = await readFile(secondaryPath, 'utf-8');
 
     strictEqual(secondaryContent.includes('workflow_run:'), true);
-    strictEqual(secondaryContent.includes('Publish to npm (primary)'), true);
+    strictEqual(secondaryContent.includes('Publish (primary)'), true);
 
     return;
   });
@@ -416,57 +470,75 @@ describe('CliGenerateGithubWorkflows.run', async () => {
   it('generates workflow with multiple triggers', async () => {
     const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'multiple-triggers');
 
-    await mkdir(projectDirectory, { recursive: true });
+    await mkdir(join(projectDirectory, 'apps', 'docs'), { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
+
+    const docsPackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'docs' };
+    const docsPackageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'apps', 'docs', 'package.json');
+
+    await writeFile(docsPackageJsonPath, JSON.stringify(docsPackageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
     await writeFile(gitignorePath, 'node_modules\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [
         {
-          template: 'publish-to-npm',
+          template: 'publish',
           suffix: 'primary',
           triggers: ['release'],
+          scopes: ['./apps/docs'],
+          targets: [{
+            type: 'cloudflare-pages-docusaurus', workingDir: './apps/docs',
+          }],
           settings: {
             'ROOT_WORKING_DIR': './',
-            'NPM_WORKING_DIR': './packages/core',
+            'CLOUDFLARE_PROJECT_NAME': 'my-docs',
           },
         },
         {
-          template: 'publish-to-cloudflare-pages-docusaurus',
-          suffix: 'multi',
-          triggers: [
-            'push',
+          'template': 'publish',
+          'suffix': 'multi',
+          'triggers': [
             'release',
+            'workflow-run-success',
           ],
-          settings: {
+          'depends-on': ['publish-primary'],
+          'scopes': ['./apps/docs'],
+          'targets': [{
+            type: 'cloudflare-pages-docusaurus', workingDir: './apps/docs',
+          }],
+          'settings': {
             'ROOT_WORKING_DIR': './',
-            'DOCUSAURUS_WORKING_DIR': './apps/docs',
             'CLOUDFLARE_PROJECT_NAME': 'my-docs',
           },
         },
       ],
-    }, null, 2);
+      workspaces: {
+        './apps/docs': {
+          role: 'docs', policy: 'freezable', name: 'docs', recipes: {},
+        },
+      },
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
     await CliGenerateGithubWorkflows.run({});
 
-    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-to-cloudflare-pages-docusaurus-multi.yml');
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-multi.yml');
     const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(workflowPath, 'utf-8');
 
     // Should contain both trigger types.
-    strictEqual(content.includes('push:'), true);
     strictEqual(content.includes('release:'), true);
+    strictEqual(content.includes('workflow_run:'), true);
 
     return;
   });
@@ -476,40 +548,38 @@ describe('CliGenerateGithubWorkflows.run', async () => {
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
     await writeFile(gitignorePath, 'node_modules\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [
         {
-          template: 'publish-to-npm',
+          template: 'publish',
           suffix: 'same-suffix',
           triggers: ['release'],
           settings: {
             'ROOT_WORKING_DIR': './',
-            'NPM_WORKING_DIR': './packages/a',
           },
         },
         {
-          template: 'publish-to-npm',
+          template: 'publish',
           suffix: 'same-suffix',
           triggers: ['release'],
           settings: {
             'ROOT_WORKING_DIR': './',
-            'NPM_WORKING_DIR': './packages/b',
           },
         },
       ],
-    }, null, 2);
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
@@ -540,30 +610,29 @@ describe('CliGenerateGithubWorkflows.run', async () => {
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = { name: 'test' };
     const packageJsonPath: TestsCliGenerateGithubWorkflowsRunPackageJsonPath = join(projectDirectory, 'package.json');
 
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+    await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
 
     const gitignorePath: TestsCliGenerateGithubWorkflowsRunGitignorePath = join(projectDirectory, '.gitignore');
 
     await writeFile(gitignorePath, 'node_modules\n', 'utf-8');
 
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = JSON.stringify({
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
       workflows: [{
-        'template': 'publish-to-npm',
+        'template': 'publish',
         'suffix': 'orphan',
         'triggers': ['workflow-run-success'],
         'depends-on': ['non-existent'],
         'settings': {
           'ROOT_WORKING_DIR': './',
-          'NPM_WORKING_DIR': './packages/core',
         },
       }],
-    }, null, 2);
+    };
     const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
 
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
 
     process.chdir(projectDirectory);
 
@@ -573,7 +642,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     let exists: TestsCliGenerateGithubWorkflowsRunExists = true;
 
     try {
-      const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-to-npm-orphan.yml');
+      const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-orphan.yml');
 
       await readFile(workflowPath, 'utf-8');
     } catch {
@@ -581,6 +650,302 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     }
 
     strictEqual(exists, false);
+
+    return;
+  });
+
+  it('generates unified publish workflow with npm + github-packages targets and build artifact', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'publish-sandbox');
+
+    await mkdir(join(projectDirectory, 'packages', 'pkg-a'), { recursive: true });
+    await mkdir(join(projectDirectory, '.github', 'workflows'), { recursive: true });
+
+    const rootPackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = {
+      name: 'sandbox-project',
+      version: '0.0.0',
+      private: true,
+      workspaces: ['./packages/*'],
+    };
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify(rootPackageJson, null, 2));
+
+    const pkgJson: TestsCliGenerateGithubWorkflowsRunPackageJson = {
+      name: 'pkg-a',
+      version: '1.0.0',
+      scripts: {
+        build: 'echo build', check: 'echo check',
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'packages', 'pkg-a', 'package.json'), JSON.stringify(pkgJson, null, 2));
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: {
+          title: 'Sandbox', slug: 'sandbox',
+        },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'release',
+        triggers: ['release'],
+        scopes: ['./packages/pkg-a'],
+        targets: [
+          {
+            type: 'npm', workingDir: './packages/pkg-a',
+          },
+          {
+            type: 'github-packages', workingDir: './packages/pkg-a',
+          },
+        ],
+        settings: {
+          NPM_TOKEN: 'NPM_TOKEN', ROOT_WORKING_DIR: './',
+        },
+      }],
+      workspaces: {
+        './packages/pkg-a': {
+          role: 'package', policy: 'distributable', name: 'pkg-a', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({
+      replaceFile: true,
+    });
+
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-release.yml');
+    const exists: TestsCliGenerateGithubWorkflowsRunExists = await pathExists(workflowPath);
+
+    strictEqual(exists, true, 'Expected nova-publish-release.yml to exist');
+
+    const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(workflowPath, 'utf-8');
+
+    strictEqual(content.includes('publish-npm-packages-pkg-a:'), true, 'Expected npm target job');
+    strictEqual(content.includes('publish-github-packages-packages-pkg-a:'), true, 'Expected github-packages job');
+    strictEqual(content.includes('needs: "build"') || content.includes('needs: build'), true, 'Expected needs: build');
+    strictEqual(content.includes('build-output'), true, 'Expected artifact name');
+    strictEqual(content.includes('packages/pkg-a/build'), true, 'Expected artifact path');
+    strictEqual(content.includes('npm run check -w pkg-a'), true, 'Expected npm workspaces check command');
+
+    return;
+  });
+
+  it('reproduces nova publish workflow from config entry', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'nova-mock');
+
+    await mkdir(join(projectDirectory, 'packages', 'nova'), { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'docusaurus-preset-nova'), { recursive: true });
+    await mkdir(join(projectDirectory, 'apps', 'docs'), { recursive: true });
+    await mkdir(join(projectDirectory, '.github', 'workflows'), { recursive: true });
+
+    const rootPackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = {
+      name: 'nova-project',
+      version: '0.0.0',
+      private: true,
+      workspaces: [
+        './apps/*',
+        './packages/*',
+      ],
+      scripts: {
+        build: 'turbo run build', check: 'turbo run check',
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify(rootPackageJson, null, 2));
+
+    await writeFile(join(projectDirectory, 'turbo.json'), JSON.stringify({
+      tasks: {
+        build: {}, check: {},
+      },
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, 'packages', 'nova', 'package.json'), JSON.stringify({
+      name: '@cbnventures/nova', version: '0.0.0',
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'docusaurus-preset-nova', 'package.json'), JSON.stringify({
+      name: '@cbnventures/docusaurus-preset-nova', version: '0.0.0',
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'docs', 'package.json'), JSON.stringify({
+      name: 'nova-docs', version: '0.0.0', private: true,
+    }, null, 2));
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: {
+          title: 'Nova', slug: 'nova',
+        },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'release',
+        triggers: ['release'],
+        scopes: [
+          './packages/nova',
+          './packages/docusaurus-preset-nova',
+          './apps/docs',
+        ],
+        targets: [
+          {
+            type: 'npm', workingDir: './packages/nova',
+          },
+          {
+            type: 'npm', workingDir: './packages/docusaurus-preset-nova',
+          },
+          {
+            type: 'github-packages', workingDir: './packages/nova',
+          },
+          {
+            type: 'github-packages', workingDir: './packages/docusaurus-preset-nova',
+          },
+          {
+            type: 'cloudflare-pages-docusaurus', workingDir: './apps/docs',
+          },
+        ],
+        settings: {
+          NPM_TOKEN: 'NPM_TOKEN',
+          CLOUDFLARE_API_TOKEN: 'CLOUDFLARE_API_TOKEN',
+          CLOUDFLARE_ACCOUNT_ID: 'CLOUDFLARE_ACCOUNT_ID',
+          CLOUDFLARE_PROJECT_NAME: 'CLOUDFLARE_PROJECT_NAME',
+          ROOT_WORKING_DIR: './',
+        },
+      }],
+      workspaces: {
+        './packages/nova': {
+          role: 'package', policy: 'distributable', name: '@cbnventures/nova', recipes: {},
+        },
+        './packages/docusaurus-preset-nova': {
+          role: 'package', policy: 'distributable', name: '@cbnventures/docusaurus-preset-nova', recipes: {},
+        },
+        './apps/docs': {
+          role: 'docs', policy: 'freezable', name: 'nova-docs', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({
+      replaceFile: true,
+    });
+
+    const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(join(projectDirectory, '.github', 'workflows', 'nova-publish-release.yml'), 'utf-8');
+
+    strictEqual(content.includes('build:'), true, 'build job missing');
+    strictEqual(content.includes('npx turbo run check --filter=@cbnventures/nova --filter=@cbnventures/docusaurus-preset-nova --filter=nova-docs --concurrency=2'), true, 'turbo check command missing');
+    strictEqual(content.includes('npx turbo run build --filter=@cbnventures/nova --filter=@cbnventures/docusaurus-preset-nova --filter=nova-docs --concurrency=2'), true, 'turbo build command missing');
+
+    strictEqual(content.includes('publish-npm-packages-nova:'), true);
+    strictEqual(content.includes('publish-npm-packages-docusaurus-preset-nova:'), true);
+    strictEqual(content.includes('publish-github-packages-packages-nova:'), true);
+    strictEqual(content.includes('publish-github-packages-packages-docusaurus-preset-nova:'), true);
+    strictEqual(content.includes('publish-cloudflare-pages-docusaurus-apps-docs:'), true);
+
+    strictEqual(content.includes('packages/nova/build'), true);
+    strictEqual(content.includes('packages/docusaurus-preset-nova/build'), true);
+    strictEqual(content.includes('apps/docs/build'), true);
+
+    strictEqual(content.includes('npm publish --provenance'), true);
+
+    return;
+  });
+
+  it('serializes dependent publish targets via needs', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'needs-mock');
+
+    await mkdir(join(projectDirectory, 'packages', 'core'), { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'preset'), { recursive: true });
+    await mkdir(join(projectDirectory, '.github', 'workflows'), { recursive: true });
+
+    const rootPackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = {
+      name: 'needs-project',
+      version: '0.0.0',
+      private: true,
+      workspaces: ['./packages/*'],
+      scripts: {
+        build: 'turbo run build', check: 'turbo run check',
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify(rootPackageJson, null, 2));
+
+    await writeFile(join(projectDirectory, 'turbo.json'), JSON.stringify({
+      tasks: {
+        build: {}, check: {},
+      },
+    }, null, 2));
+
+    await writeFile(join(projectDirectory, 'packages', 'core', 'package.json'), JSON.stringify({
+      name: '@scope/core', version: '0.0.0',
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'preset', 'package.json'), JSON.stringify({
+      name: '@scope/preset', version: '0.0.0',
+    }, null, 2));
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: {
+          title: 'Needs', slug: 'needs',
+        },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'release',
+        triggers: ['release'],
+        scopes: [
+          './packages/core',
+          './packages/preset',
+        ],
+        targets: [
+          {
+            type: 'npm', workingDir: './packages/core',
+          },
+          {
+            type: 'npm', workingDir: './packages/preset', needs: ['./packages/core'],
+          },
+        ],
+        settings: {
+          NPM_TOKEN: 'NPM_TOKEN', ROOT_WORKING_DIR: './',
+        },
+      }],
+      workspaces: {
+        './packages/core': {
+          role: 'package', policy: 'distributable', name: '@scope/core', recipes: {},
+        },
+        './packages/preset': {
+          role: 'package', policy: 'distributable', name: '@scope/preset', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({
+      replaceFile: true,
+    });
+
+    const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(join(projectDirectory, '.github', 'workflows', 'nova-publish-release.yml'), 'utf-8');
+
+    strictEqual(content.includes('publish-npm-packages-core:'), true, 'core job missing');
+    strictEqual(content.includes('publish-npm-packages-preset:'), true, 'preset job missing');
+
+    const lines: TestsCliGenerateGithubWorkflowsRunContentLines = content.split('\n');
+    const coreJobIndex: TestsCliGenerateGithubWorkflowsRunCoreJobIndex = lines.findIndex((line) => line.includes('publish-npm-packages-core:'));
+    const coreNeedsLine: TestsCliGenerateGithubWorkflowsRunCoreNeedsLine = (coreJobIndex >= 0 && coreJobIndex + 1 < lines.length) ? lines[coreJobIndex + 1] as TestsCliGenerateGithubWorkflowsRunCoreNeedsLine : '';
+
+    strictEqual(coreNeedsLine.trim(), 'needs: "build"', 'core needs should be plain build');
+
+    const presetJobIndex: TestsCliGenerateGithubWorkflowsRunPresetJobIndex = lines.findIndex((line) => line.includes('publish-npm-packages-preset:'));
+    const presetNeedsLine: TestsCliGenerateGithubWorkflowsRunPresetNeedsLine = (presetJobIndex >= 0 && presetJobIndex + 1 < lines.length) ? lines[presetJobIndex + 1] as TestsCliGenerateGithubWorkflowsRunPresetNeedsLine : '';
+
+    strictEqual(presetNeedsLine.trim(), 'needs: ["build", "publish-npm-packages-core"]', 'preset needs should include core job id');
 
     return;
   });

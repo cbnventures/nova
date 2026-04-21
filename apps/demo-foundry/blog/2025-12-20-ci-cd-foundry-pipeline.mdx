@@ -1,8 +1,13 @@
 ---
 title: "Replacing 300 Lines of CI YAML with foundry ignite"
-authors: [kofi]
-tags: [ci-cd, bellows, performance, quench]
-date: 2025-12-20
+authors:
+  - "kofi"
+tags:
+  - "ci-cd"
+  - "bellows"
+  - "performance"
+  - "quench"
+date: "2025-12-20"
 ---
 
 We audited our GitHub Actions workflow last month. It was 312 lines of YAML spread across four files. It installed dependencies, built packages in a hand-coded dependency order, ran tests with a custom matrix strategy, ran linting in a separate job, and uploaded artifacts. It took 22 minutes on average and broke at least once a month when someone added a package and forgot to update the build order.

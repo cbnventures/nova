@@ -4,7 +4,9 @@ import type { LibNovaConfig } from '../../../lib/nova-config.js';
 
 import type {
   LibWorkflowTemplatesEntry,
+  LibWorkflowTemplatesTargets,
   LibWorkflowTemplatesVariable,
+  LibWorkflowTemplatesVariables,
 } from '../../lib/workflow-templates.d.ts';
 
 import type {
@@ -33,6 +35,11 @@ import type {
   SharedNovaConfigWorkflow,
   SharedNovaConfigWorkflowDependsOn,
   SharedNovaConfigWorkflows,
+  SharedNovaConfigWorkflowScope,
+  SharedNovaConfigWorkflowScopes,
+  SharedNovaConfigWorkflowTarget,
+  SharedNovaConfigWorkflowTargetNeeds,
+  SharedNovaConfigWorkflowTargets,
   SharedNovaConfigWorkflowTrigger,
   SharedNovaConfigWorkflowTriggers,
   SharedNovaConfigWorkspace,
@@ -799,6 +806,8 @@ export type CliUtilityInitializePromptWorkflowsFormMode = 'create' | 'update';
 
 export type CliUtilityInitializePromptWorkflowsFormWorkflows = SharedNovaConfigWorkflows;
 
+export type CliUtilityInitializePromptWorkflowsFormConfig = SharedNovaConfig;
+
 export type CliUtilityInitializePromptWorkflowsFormReturnsApplyAction = 'apply';
 
 export type CliUtilityInitializePromptWorkflowsFormReturnsApplyWorkflow = SharedNovaConfigWorkflow;
@@ -835,6 +844,10 @@ export type CliUtilityInitializePromptWorkflowsFormExistingSuffix = string;
 export type CliUtilityInitializePromptWorkflowsFormExistingTriggers = SharedNovaConfigWorkflowTriggers;
 
 export type CliUtilityInitializePromptWorkflowsFormExistingDependsOn = SharedNovaConfigWorkflowDependsOn;
+
+export type CliUtilityInitializePromptWorkflowsFormExistingTargets = SharedNovaConfigWorkflowTargets;
+
+export type CliUtilityInitializePromptWorkflowsFormExistingScopes = SharedNovaConfigWorkflowScopes;
 
 export type CliUtilityInitializePromptWorkflowsFormTemplateChoices = CliUtilityInitializePromptWorkflowsFormTemplateChoice[];
 
@@ -900,6 +913,8 @@ export type CliUtilityInitializePromptWorkflowsFormTriggersOutput = SharedPrompt
 
 export type CliUtilityInitializePromptWorkflowsFormTriggersOutputResultValue = Record<CliUtilityInitializePromptWorkflowsFormTriggersOutputKey, CliUtilityInitializePromptWorkflowsFormTriggersOutputResult>;
 
+export type CliUtilityInitializePromptWorkflowsFormScheduleVariants = string[];
+
 export type CliUtilityInitializePromptWorkflowsFormSelectedDependsOn = string[] | undefined;
 
 export type CliUtilityInitializePromptWorkflowsFormDependsOnChoiceTitle = string;
@@ -926,7 +941,208 @@ export type CliUtilityInitializePromptWorkflowsFormDependsOnOutputResultValue = 
 
 export type CliUtilityInitializePromptWorkflowsFormMatchedMetadata = LibWorkflowTemplatesEntry | undefined;
 
+export type CliUtilityInitializePromptWorkflowsFormWorkspaceKeys = string[];
+
+export type CliUtilityInitializePromptWorkflowsFormSelectedTargets = SharedNovaConfigWorkflowTargets;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetsMetadata = LibWorkflowTemplatesTargets;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetAvailableTypes = string[];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceTitle = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueAddKind = 'add';
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueAdd = {
+  kind: CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueAddKind;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueEditKind = 'edit';
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueEditIndex = number;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueEdit = {
+  kind: CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueEditKind;
+  index: CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueEditIndex;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueRemoveKind = 'remove';
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueRemoveIndex = number;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueRemove = {
+  kind: CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueRemoveKind;
+  index: CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueRemoveIndex;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueDoneKind = 'done';
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueDone = {
+  kind: CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueDoneKind;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValue =
+  CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueAdd
+  | CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueEdit
+  | CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueRemove
+  | CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValueDone;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoice = {
+  title: CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceTitle;
+  value: CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValue;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuChoices = CliUtilityInitializePromptWorkflowsFormTargetMenuChoice[];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTarget = SharedNovaConfigWorkflowTarget | undefined;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTargetType = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTargetWorkingDir = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuOutputKey = 'targetAction';
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResult = CliUtilityInitializePromptWorkflowsFormTargetMenuChoiceValue;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptWorkflowsFormTargetMenuOutputKey, CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResult> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResultValue = Record<CliUtilityInitializePromptWorkflowsFormTargetMenuOutputKey, CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResult>;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetToRemoveIndex = number;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetEditIndex = number;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetToEdit = SharedNovaConfigWorkflowTarget | undefined;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeInitial = number;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeChoiceTitle = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeChoiceValue = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeChoice = {
+  title: CliUtilityInitializePromptWorkflowsFormTargetTypeChoiceTitle;
+  value: CliUtilityInitializePromptWorkflowsFormTargetTypeChoiceValue;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeChoices = CliUtilityInitializePromptWorkflowsFormTargetTypeChoice[];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeOutputKey = 'targetType';
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResult = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptWorkflowsFormTargetTypeOutputKey, CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResult> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResultValue = Record<CliUtilityInitializePromptWorkflowsFormTargetTypeOutputKey, CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResult>;
+
+export type CliUtilityInitializePromptWorkflowsFormSelectedTargetType = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirInitial = number;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoiceTitle = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoiceValue = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoice = {
+  title: CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoiceTitle;
+  value: CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoiceValue;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoices = CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoice[];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputKey = 'targetWorkingDir';
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputResult = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputKey, CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputResult> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputResultValue = Record<CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputKey, CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputResult>;
+
+export type CliUtilityInitializePromptWorkflowsFormSelectedTargetWorkingDir = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetIsDuplicate = boolean;
+
+export type CliUtilityInitializePromptWorkflowsFormSelectedTargetNeeds = SharedNovaConfigWorkflowTargetNeeds | undefined;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetToEditExistingNeeds = SharedNovaConfigWorkflowTargetNeeds;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsChoiceTitle = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsChoiceValue = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsChoiceSelected = boolean;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsChoice = {
+  title: CliUtilityInitializePromptWorkflowsFormTargetNeedsChoiceTitle;
+  value: CliUtilityInitializePromptWorkflowsFormTargetNeedsChoiceValue;
+  selected: CliUtilityInitializePromptWorkflowsFormTargetNeedsChoiceSelected;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsChoices = CliUtilityInitializePromptWorkflowsFormTargetNeedsChoice[];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputKey = 'targetNeeds';
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputResult = string[];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputKey, CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputResult> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputResultValue = Record<CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputKey, CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputResult>;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetEntryType = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetEntryWorkingDir = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetEntryNeeds = SharedNovaConfigWorkflowTargetNeeds;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetEntry = {
+  type: CliUtilityInitializePromptWorkflowsFormTargetEntryType;
+  workingDir: CliUtilityInitializePromptWorkflowsFormTargetEntryWorkingDir;
+  needs?: CliUtilityInitializePromptWorkflowsFormTargetEntryNeeds;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormSelectedScopes = SharedNovaConfigWorkflowScopes;
+
+export type CliUtilityInitializePromptWorkflowsFormLockedPaths = Set<string>;
+
+export type CliUtilityInitializePromptWorkflowsFormExtraWorkspaceKeys = string[];
+
+export type CliUtilityInitializePromptWorkflowsFormScopeChoiceTitle = string;
+
+export type CliUtilityInitializePromptWorkflowsFormScopeChoiceValue = string;
+
+export type CliUtilityInitializePromptWorkflowsFormScopeChoiceSelected = boolean;
+
+export type CliUtilityInitializePromptWorkflowsFormScopeChoice = {
+  title: CliUtilityInitializePromptWorkflowsFormScopeChoiceTitle;
+  value: CliUtilityInitializePromptWorkflowsFormScopeChoiceValue;
+  selected: CliUtilityInitializePromptWorkflowsFormScopeChoiceSelected;
+};
+
+export type CliUtilityInitializePromptWorkflowsFormScopeChoices = CliUtilityInitializePromptWorkflowsFormScopeChoice[];
+
+export type CliUtilityInitializePromptWorkflowsFormScopesOutputKey = 'scopes';
+
+export type CliUtilityInitializePromptWorkflowsFormScopesOutputResult = SharedNovaConfigWorkflowScope[];
+
+export type CliUtilityInitializePromptWorkflowsFormScopesOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptWorkflowsFormScopesOutputKey, CliUtilityInitializePromptWorkflowsFormScopesOutputResult> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptWorkflowsFormScopesOutputResultValue = Record<CliUtilityInitializePromptWorkflowsFormScopesOutputKey, CliUtilityInitializePromptWorkflowsFormScopesOutputResult>;
+
 export type CliUtilityInitializePromptWorkflowsFormSettings = Record<string, string>;
+
+export type CliUtilityInitializePromptWorkflowsFormMergedVariables = LibWorkflowTemplatesVariables;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetVariables = LibWorkflowTemplatesVariables;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetVariableEntry = [string, LibWorkflowTemplatesVariable];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetVariableEntries = CliUtilityInitializePromptWorkflowsFormTargetVariableEntry[];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetVariableKey = string;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetVariableValue = LibWorkflowTemplatesVariable;
+
+export type CliUtilityInitializePromptWorkflowsFormMergedVariableEntries = [string, LibWorkflowTemplatesVariable][];
 
 export type CliUtilityInitializePromptWorkflowsFormVariableEntries = [string, LibWorkflowTemplatesVariable][];
 

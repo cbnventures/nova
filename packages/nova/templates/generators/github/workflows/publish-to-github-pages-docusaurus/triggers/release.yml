@@ -1,5 +1,0 @@
-run-name: "Publishing ${{ github.event.release.tag_name || 'manually' }} to GitHub Pages / Docusaurus[__WORKFLOW_ID__]${{ github.event_name == 'workflow_dispatch' && inputs.dry-run && ' (dry run)' || '' }}"
-publish-condition: "${{ github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && !inputs.dry-run) }}"
-trigger:
-  release:
-    types: [ "published" ]

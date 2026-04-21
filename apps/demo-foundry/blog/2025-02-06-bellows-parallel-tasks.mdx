@@ -1,8 +1,13 @@
 ---
 title: "How Bellows Decides What Runs in Parallel"
-authors: [kofi]
-tags: [bellows, performance, ci-cd, monorepo]
-date: 2025-02-06
+authors:
+  - "kofi"
+tags:
+  - "bellows"
+  - "performance"
+  - "ci-cd"
+  - "monorepo"
+date: "2025-02-06"
 ---
 
 Bellows is Foundry's parallel task runner. It reads the dependency graph from Tongs, determines which packages can run simultaneously, and fans work across every available CPU core. Most teams see a 3x to 5x improvement in build times after switching to Bellows. But the scheduling algorithm is not as simple as "run independent packages in parallel."

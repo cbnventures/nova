@@ -1,8 +1,12 @@
 ---
 title: "Translating Between Webhook Protocols Without Losing Your Mind"
-authors: [tomas]
-tags: [protocol, payload, architecture]
-date: 2024-11-03
+authors:
+  - "tomas"
+tags:
+  - "protocol"
+  - "payload"
+  - "architecture"
+date: "2024-11-03"
 ---
 
 Every webhook provider invents their own format. GitHub sends a JSON body with an `X-Hub-Signature-256` header. Stripe sends a JSON body with a `Stripe-Signature` header and a completely different signing scheme. Twilio sends form-encoded data with an `X-Twilio-Signature` that signs the full URL including query parameters.

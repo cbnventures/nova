@@ -1,6 +1,6 @@
 {
   "name": "@cbnventures/docusaurus-preset-nova",
-  "version": "0.15.4",
+  "version": "0.16.0",
   "description": "Scripts, templates, and project configuration for the common JavaScript and TypeScript developer",
   "keywords": [
     "eslint",
@@ -85,14 +85,14 @@
     "node": "^20 || ^22 || ^24"
   },
   "dependencies": {
-    "@cbnventures/nova": "0.15.1",
+    "@cbnventures/nova": "0.16.0",
     "@codesandbox/sandpack-react": "2.20.0",
     "@docusaurus/plugin-content-blog": "3.10.0",
     "@docusaurus/plugin-content-docs": "3.10.0",
     "@docusaurus/plugin-content-pages": "3.10.0",
     "@docusaurus/plugin-google-tag-manager": "3.10.0",
     "@docusaurus/plugin-sitemap": "3.10.0",
-    "mermaid": "11.0.0",
+    "mermaid": "11.14.0",
     "@docusaurus/plugin-svgr": "3.10.0",
     "@docusaurus/theme-common": "3.10.0",
     "@docusaurus/theme-translations": "3.10.0",

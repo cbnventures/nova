@@ -1,21 +1,21 @@
 ---
-id: initialize
-title: Initialize Config
-description: Interactive wizard that loads, edits, and saves the Nova config file with project details, entities, and canonical URLs straight from the terminal.
+id: "initialize"
+title: "Initialize Config"
+description: "Interactive wizard that loads, edits, and saves the Nova config file with project details, entities, and canonical URLs straight from the terminal."
 keywords:
-  - nova
-  - nova initialize
-  - nova utility init
-  - nova config wizard
-  - project metadata
-  - nova config json
-  - entity roles
-  - project urls
+  - "nova"
+  - "nova initialize"
+  - "nova utility init"
+  - "nova config wizard"
+  - "project metadata"
+  - "nova config json"
+  - "entity roles"
+  - "project urls"
 tags:
-  - cli
-  - utility
-  - configuration
-  - nova-config
+  - "cli"
+  - "utility"
+  - "configuration"
+  - "nova-config"
 ---
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
@@ -364,16 +364,22 @@ The interactive prompt is single-line. To include line breaks in a setting value
   "workflows": [
     {
       "template": "lock-inactive-issues",
-      "suffix": "weekly",
-      "triggers": ["schedule"]
+      "suffix": "project",
+      "triggers": ["schedule-weekly"]
     },
     {
-      "template": "publish-to-npm",
-      "suffix": "my-package",
+      "template": "publish",
+      "suffix": "project",
       "triggers": ["release"],
+      "scopes": ["./packages/my-package"],
+      "targets": [
+        {
+          "type": "npm",
+          "workingDir": "./packages/my-package"
+        }
+      ],
       "settings": {
         "NPM_TOKEN": "NPM_TOKEN",
-        "NPM_WORKING_DIR": "./packages/my-package",
         "ROOT_WORKING_DIR": "./"
       }
     }

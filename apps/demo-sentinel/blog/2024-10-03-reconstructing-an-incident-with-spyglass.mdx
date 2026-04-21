@@ -1,8 +1,12 @@
 ---
 title: "Reconstructing an Incident We Almost Missed"
-authors: [james]
-tags: [spyglass, incident-response, audit]
-date: 2024-10-03
+authors:
+  - "james"
+tags:
+  - "spyglass"
+  - "incident-response"
+  - "audit"
+date: "2024-10-03"
 ---
 
 At 2:14 AM on a Thursday, a service account in our production environment made a request to an endpoint it had never accessed before. The request succeeded. Watchtower did not alert because the access was permitted by policy. The service account had legitimate credentials, a passing posture score, and the target resource was within its Rampart zone.

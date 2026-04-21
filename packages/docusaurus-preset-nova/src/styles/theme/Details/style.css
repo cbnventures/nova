@@ -56,7 +56,9 @@
 .nova-details-label h4,
 .nova-details-label h5,
 .nova-details-label h6 {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   list-style: none;
   padding: 0;
   margin: 0;

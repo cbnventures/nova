@@ -1,20 +1,20 @@
 ---
-id: workflows
-title: Workflows
-description: Generate GitHub Actions workflow files from nova.config.json for CI/CD automation.
+id: "workflows"
+title: "Workflows"
+description: "Generate GitHub Actions workflow files from nova.config.json for CI/CD automation."
 keywords:
-  - nova
-  - nova generate
-  - github
-  - workflows
-  - github actions
-  - CI/CD
-  - nova config
-  - workflow templates
+  - "nova"
+  - "nova generate"
+  - "github"
+  - "workflows"
+  - "github actions"
+  - "CI/CD"
+  - "nova config"
+  - "workflow templates"
 tags:
-  - cli
-  - generator
-  - github
+  - "cli"
+  - "generator"
+  - "github"
 ---
 
 import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
@@ -23,14 +23,14 @@ import TabItem from '@theme/TabItem';
 
 Generate GitHub Actions workflow files under `.github/workflows/` from the `"workflows"` array in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
 
-The generator reads each entry, substitutes variables from the template metadata, validates the output YAML, and writes the result to disk.
+The generator reads each entry, validates triggers and targets, substitutes variables from the template metadata, validates the output YAML, and writes the result to disk.
 
 ## Why Use This Command?
 
 - Bootstraps a full set of <Terminology title="continuous integration and deployment" to="/docs/quickstart/terminology#builds-and-tooling" color={true}>CI/CD</Terminology> workflows without writing YAML by hand.
-- Covers common automation scenarios like publishing, issue management, and deployments.
+- Publishes one project to multiple destinations (npm, GitHub Packages, Docker, hosting) from a single build, instead of each destination running its own pipeline from scratch.
+- Serializes dependent publishes (e.g., preset waits for its core dependency to be on the registry) via `needs` on publish targets.
 - Keeps workflow definitions consistent across Nova-managed repositories.
-- Supports multiple instances of the same template (e.g., two Cloudflare Pages deployments) via suffixes.
 
 ## Requirements
 
@@ -76,114 +76,163 @@ The generator reads each entry, substitutes variables from the template metadata
 
 Each entry in the `"workflows"` array maps to one output file. An entry contains:
 
-| Field        | Required | Description                                                                                                                                          |
-|--------------|----------|------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `template`   | Yes      | The name of a bundled workflow template (e.g., `"publish-to-npm"`).                                                                                  |
-| `suffix`     | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.                                                  |
-| `triggers`   | Yes      | An array of trigger names (e.g., `["release"]`). Available triggers depend on the template. Use an empty array for templates with baked-in triggers. |
-| `depends-on` | No       | An array of workflow references in `{template}-{suffix}` format. Required when using `workflow-run-*` triggers.                                      |
-| `settings`   | No       | Key-value pairs that override variable placeholders in the template.                                                                                 |
+| Field        | Required | Description                                                                                                     |
+|--------------|----------|-----------------------------------------------------------------------------------------------------------------|
+| `template`   | Yes      | The name of a bundled workflow template (see [Available Templates](#available-templates)).                      |
+| `suffix`     | Yes      | A label appended to the output filename and workflow name. Must be unique within the same template.             |
+| `triggers`   | Yes      | An array of trigger names (see [Available Triggers](#available-triggers)). Use an empty array to omit triggers. |
+| `depends-on` | No       | An array of workflow references in `{template}-{suffix}` format. Required when using `workflow-run-*` triggers. |
+| `scopes`     | No       | An array of workspace paths (keys from `workspaces`) to include in the `check` / `build` step filter.           |
+| `targets`    | No       | An array of publish destinations for the `publish` template. See [Target Fields](#target-fields).               |
+| `settings`   | No       | Key-value pairs that remap secret / variable names or supply values for literal template variables.             |
+
+### Target Fields
+
+Each entry in the `targets` array pins one publish destination to a workspace.
+
+| Field        | Required | Description                                                                                        |
+|--------------|----------|----------------------------------------------------------------------------------------------------|
+| `type`       | Yes      | One of the 8 target types (see [Available Target Types](#available-target-types)).                 |
+| `workingDir` | Yes      | Path to the workspace that owns the target (e.g., `"./packages/nova"`).                            |
+| `needs`      | No       | Working directories of other same-type targets that must finish publishing before this one starts. |
 
 ### Config Examples
 
-**Template with a single trigger:**
+**Publish a single package to npm:**
 
 ```json
 {
-  "template": "lock-inactive-issues",
-  "suffix": "weekly",
-  "triggers": ["schedule"]
-}
-```
-
-**Template with literal settings:**
-
-```json
-{
-  "template": "publish-to-npm",
-  "suffix": "my-package",
+  "template": "publish",
+  "suffix": "project",
   "triggers": ["release"],
+  "scopes": ["./packages/core"],
+  "targets": [
+    {
+      "type": "npm",
+      "workingDir": "./packages/core"
+    }
+  ],
   "settings": {
     "NPM_TOKEN": "NPM_TOKEN",
-    "ROOT_WORKING_DIR": "./",
-    "NPM_WORKING_DIR": "./packages/my-package"
+    "ROOT_WORKING_DIR": "./"
   }
 }
 ```
 
-**Ordered publishing with `depends-on`:**
+**Serialize dependent publishes with `needs`:**
 
 ```json
-[
-  {
-    "template": "publish-to-npm",
-    "suffix": "core",
-    "triggers": ["release"],
-    "settings": {
-      "NPM_TOKEN": "NPM_TOKEN",
-      "ROOT_WORKING_DIR": "./",
-      "NPM_WORKING_DIR": "./packages/core"
+{
+  "template": "publish",
+  "suffix": "project",
+  "triggers": ["release"],
+  "scopes": [
+    "./packages/core",
+    "./packages/preset"
+  ],
+  "targets": [
+    {
+      "type": "npm",
+      "workingDir": "./packages/core"
+    },
+    {
+      "type": "npm",
+      "workingDir": "./packages/preset",
+      "needs": ["./packages/core"]
     }
-  },
-  {
-    "template": "publish-to-npm",
-    "suffix": "preset",
-    "triggers": ["workflow-run-success"],
-    "depends-on": ["publish-to-npm-core"],
-    "settings": {
-      "NPM_TOKEN": "NPM_TOKEN",
-      "ROOT_WORKING_DIR": "./",
-      "NPM_WORKING_DIR": "./packages/preset"
-    }
+  ],
+  "settings": {
+    "NPM_TOKEN": "NPM_TOKEN",
+    "ROOT_WORKING_DIR": "./"
   }
-]
+}
 ```
 
-In the second entry, `depends-on` references `"publish-to-npm-core"` (the `{template}-{suffix}` of the first workflow). The preset only publishes after the core package succeeds.
+The `preset` target waits for `core` to finish publishing before it starts, so consumers that pull `preset@x.y.z` can always resolve its declared dependency on `core@x.y.z`.
 
-**Multiple instances with suffix and secret remapping:**
+**Publish to multiple destinations from one build:**
 
 ```json
-[
-  {
-    "template": "publish-to-cloudflare-pages-docusaurus",
-    "suffix": "project-docs",
-    "triggers": ["release"],
-    "settings": {
-      "CLOUDFLARE_PROJECT_NAME": "project-docs",
-      "ROOT_WORKING_DIR": "./",
-      "DOCUSAURUS_WORKING_DIR": "./apps/docs"
+{
+  "template": "publish",
+  "suffix": "project",
+  "triggers": ["release"],
+  "scopes": [
+    "./packages/sdk",
+    "./apps/docs"
+  ],
+  "targets": [
+    {
+      "type": "npm",
+      "workingDir": "./packages/sdk"
+    },
+    {
+      "type": "github-packages",
+      "workingDir": "./packages/sdk"
+    },
+    {
+      "type": "cloudflare-pages-docusaurus",
+      "workingDir": "./apps/docs"
     }
-  },
-  {
-    "template": "publish-to-cloudflare-pages-docusaurus",
-    "suffix": "marketing-site",
-    "triggers": ["release"],
-    "settings": {
-      "CLOUDFLARE_API_TOKEN": "MARKETING_CF_TOKEN",
-      "CLOUDFLARE_ACCOUNT_ID": "MARKETING_CF_ACCOUNT",
-      "CLOUDFLARE_PROJECT_NAME": "marketing-site",
-      "ROOT_WORKING_DIR": "./",
-      "DOCUSAURUS_WORKING_DIR": "./apps/marketing"
-    }
+  ],
+  "settings": {
+    "CLOUDFLARE_ACCOUNT_ID": "CLOUDFLARE_ACCOUNT_ID",
+    "CLOUDFLARE_API_TOKEN": "CLOUDFLARE_API_TOKEN",
+    "CLOUDFLARE_PROJECT_NAME": "CLOUDFLARE_PROJECT_NAME",
+    "NPM_TOKEN": "NPM_TOKEN",
+    "ROOT_WORKING_DIR": "./"
   }
-]
+}
 ```
 
-In the second entry above, `CLOUDFLARE_API_TOKEN` is remapped from its default secret name to `MARKETING_CF_TOKEN`, and `CLOUDFLARE_ACCOUNT_ID` is remapped from its default variable name to `MARKETING_CF_ACCOUNT`. This lets each instance reference distinct GitHub secrets and variables.
+Each target becomes its own publish job. Jobs run in parallel off a shared `build` job, except where `needs` declares an explicit ordering.
+
+### Available Templates
+
+The generator currently bundles three templates, each with its own trigger set.
+
+| Template                     | Description                                   | Notes                                                                                |
+|------------------------------|-----------------------------------------------|--------------------------------------------------------------------------------------|
+| `publish`                    | Build once and publish to one or more targets | Requires `targets`. Each target declares its own secret / variable setup.            |
+| `lock-inactive-issues`       | Lock stale issues and pull requests           | No manual setup needed (uses automatic `GITHUB_TOKEN`). Pick a cadence via triggers. |
+| `check-sponsor-gated-issues` | Gate issues by GitHub sponsor status          | Requires `PERSONAL_ACCESS_TOKEN` secret plus several literal settings.               |
+
+### Available Target Types
+
+The `publish` template supports the following `type` values for each entry in `targets`. Each type has its own template under `targets/` and declares its own secrets and variables.
+
+| Type                          | Description                                         |
+|-------------------------------|-----------------------------------------------------|
+| `npm`                         | Publish a package to npm                            |
+| `github-packages`             | Publish a package to GitHub Packages                |
+| `docker-hub`                  | Publish a Docker image to Docker Hub                |
+| `ghcr`                        | Publish a Docker image to GitHub Container Registry |
+| `cloudflare-pages-docusaurus` | Deploy a Docusaurus site to Cloudflare Pages        |
+| `github-pages-docusaurus`     | Deploy a Docusaurus site to GitHub Pages            |
+| `aws-amplify-nextjs`          | Deploy a Next.js app to AWS Amplify                 |
+| `vercel-nextjs`               | Deploy a Next.js app to Vercel                      |
 
 ### Available Triggers
 
 Each template supports a specific set of triggers. The generator reads the available triggers from the template's `triggers/` folder.
 
-| Trigger                | Description                                         | Requires `depends-on` |
-|------------------------|-----------------------------------------------------|-----------------------|
-| `release`              | Runs when a GitHub release is published             | No                    |
-| `push`                 | Runs when code is pushed to the main branch         | No                    |
-| `schedule`             | Runs on a weekly cron schedule                      | No                    |
-| `workflow-run-success` | Runs after another workflow completes successfully  | Yes                   |
-| `workflow-run-failure` | Runs after another workflow fails                   | Yes                   |
-| `workflow-run-any`     | Runs after another workflow completes (any outcome) | Yes                   |
+| Template                     | Triggers                                                                      |
+|------------------------------|-------------------------------------------------------------------------------|
+| `publish`                    | `release`, `workflow-run-success`, `workflow-run-failure`, `workflow-run-any` |
+| `lock-inactive-issues`       | `schedule-daily`, `schedule-weekly`, `schedule-monthly`                       |
+| `check-sponsor-gated-issues` | `issues`, `issue-comment`                                                     |
+
+| Trigger                | Requires `depends-on` |
+|------------------------|-----------------------|
+| `release`              | No                    |
+| `schedule-daily`       | No                    |
+| `schedule-weekly`      | No                    |
+| `schedule-monthly`     | No                    |
+| `issues`               | No                    |
+| `issue-comment`        | No                    |
+| `workflow-run-success` | Yes                   |
+| `workflow-run-failure` | Yes                   |
+| `workflow-run-any`     | Yes                   |
 
 All templates also include `workflow_dispatch` (manual trigger with dry-run option) automatically.
 
@@ -202,27 +251,13 @@ Each template declares variables with one of three formats. The format determine
 Generated files are written to `.github/workflows/` with the naming pattern:
 
 ```
-nova-{template}.yml              # without suffix
-nova-{template}-{suffix}.yml     # with suffix
+nova-{template}-{suffix}.yml
 ```
 
 **Examples:**
-- `nova-lock-inactive-issues.yml`
-- `nova-publish-to-npm-nova.yml`
-- `nova-publish-to-cloudflare-pages-docusaurus-project-docs.yml`
-
-## Available Templates
-
-| Template                                 | Description                            | Notes                                                                                                                         |
-|------------------------------------------|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| `check-sponsor-gated-issues`             | Gate issues by GitHub sponsor status   | Requires `PERSONAL_ACCESS_TOKEN` secret and multiple literal settings.                                                        |
-| `lock-inactive-issues`                   | Lock inactive issues and pull requests | No manual setup needed (uses automatic `GITHUB_TOKEN`).                                                                       |
-| `publish-to-aws-amplify-nextjs`          | Deploy Next.js to AWS Amplify          | Requires AWS secrets plus `AMPLIFY_APP_ID` variable and literal settings. **Disable auto-build in Amplify Console.**          |
-| `publish-to-cloudflare-pages-docusaurus` | Deploy Docusaurus to Cloudflare Pages  | Requires `CLOUDFLARE_API_TOKEN` secret, `CLOUDFLARE_ACCOUNT_ID` variable, and literal settings.                               |
-| `publish-to-docker-hub`                  | Publish Docker images to Docker Hub    | Requires `DOCKERHUB_TOKEN` secret and `DOCKERHUB_USERNAME` variable.                                                          |
-| `publish-to-github-packages`             | Publish packages to GitHub Packages    | Requires literal `ROOT_WORKING_DIR` and `NPM_WORKING_DIR` settings.                                                           |
-| `publish-to-github-pages-docusaurus`     | Deploy Docusaurus to GitHub Pages      | Requires literal `ROOT_WORKING_DIR` and `DOCUSAURUS_WORKING_DIR` settings.                                                    |
-| `publish-to-npm`                         | Publish packages to npm                | Requires literal `ROOT_WORKING_DIR` and `NPM_WORKING_DIR` settings. Optionally `NPM_TOKEN` secret for token-based publishing. |
+- `nova-lock-inactive-issues-project.yml`
+- `nova-publish-project.yml`
+- `nova-check-sponsor-gated-issues-project.yml`
 
 ## How It Works
 
@@ -239,14 +274,17 @@ Before generating each file, the generator checks:
 3. Each trigger in `triggers` has a corresponding file in the template's `triggers/` folder.
 4. When a trigger requires `depends-on`, the config entry provides it and the referenced workflow exists.
 5. Circular `depends-on` references are detected and rejected.
-6. All `literal`-format variables have a corresponding entry in `settings`.
-7. No two entries produce the same output filename.
+6. Each target's `type` has a matching target template.
+7. Each target's `workingDir` exists as a workspace key.
+8. Each entry in a target's `needs` array references a same-type target defined in the same workflow.
+9. All `literal`-format variables have a corresponding entry in `settings`.
+10. No two entries produce the same output filename.
 
 If any check fails, the entry is skipped with an error message.
 
 ### File Generation
 
-Each valid entry produces one YAML file under `.github/workflows/`. Variable placeholders are substituted based on the template metadata and the entry's `settings`.
+Each valid entry produces one YAML file under `.github/workflows/`. The generator composes the template's `base.yml` with the resolved triggers and targets, substitutes variable placeholders based on the template metadata and the entry's `settings`, and emits `needs: ["build", ...]` on each target job that declares dependencies.
 
 If the target file already exists, a `.nova-backup` copy is created unless `--replace-file` is set.
 

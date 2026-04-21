@@ -23,6 +23,10 @@ export type ThemeTocCollapsibleTocCollapsibleProps = {
 
 export type ThemeTocCollapsibleTocCollapsibleItems = ThemeTocCollapsibleTocListItem[];
 
+export type ThemeTocCollapsibleTocCollapsibleMinHeadingLevel = number;
+
+export type ThemeTocCollapsibleTocCollapsibleMaxHeadingLevel = number;
+
 export type ThemeTocCollapsibleTocCollapsiblePathname = string;
 
 export type ThemeTocCollapsibleTocCollapsibleIsOpenState = [boolean, ThemeTocCollapsibleTocCollapsibleSetIsOpen];
@@ -46,6 +50,8 @@ export type ThemeTocCollapsibleTocCollapsibleTriggerLabel = string;
 export type ThemeTocCollapsibleTocCollapsibleDialogAriaLabel = string;
 
 export type ThemeTocCollapsibleTocCollapsibleCloseAriaLabel = string;
+
+export type ThemeTocCollapsibleTocCollapsibleTreeItems = ThemeTocCollapsibleTocListItem[];
 
 export type ThemeTocCollapsibleTocCollapsibleOverlayClassName = string;
 

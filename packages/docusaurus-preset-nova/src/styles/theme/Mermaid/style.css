@@ -5,3 +5,45 @@
 .docusaurus-mermaid-container > svg {
   display: block;
 }
+
+/*
+ * Mermaid wraps nodes with a `click` directive in an <a> element. By default
+ * Docusaurus applies its generic link color and underline to those anchors,
+ * which reads as hyperlinked body text inside a node graph. We strip both so
+ * clickable nodes inherit their node styling and remain indistinguishable
+ * from non-clickable ones visually — the cursor and tooltip already indicate
+ * interactivity.
+ */
+.docusaurus-mermaid-container a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+/*
+ * Mermaid appends <div class="mermaidTooltip"> to <body> for diagrams that
+ * use click-callback tooltips. Top/left are set without !important so they
+ * apply idly (preventing scroll inflation from the 6x6 idle element) but
+ * lose to mermaid's inline d3 positioning on hover.
+ */
+div.mermaidTooltip {
+  top: 0;
+  left: 0;
+  max-width: 240px !important;
+  padding: 6px 10px !important;
+  text-align: left !important;
+  background: var(--nova-color-neutral-50) !important;
+  color: var(--nova-color-neutral-900) !important;
+  border: 1px solid var(--nova-color-neutral-200) !important;
+  border-radius: var(--nova-shape-radius) !important;
+  font-family: var(--nova-font-body) !important;
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08) !important;
+}
+
+[data-theme="dark"] div.mermaidTooltip {
+  background: var(--nova-color-neutral-900) !important;
+  color: var(--nova-color-neutral-50) !important;
+  border-color: var(--nova-color-neutral-800) !important;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.3) !important;
+}

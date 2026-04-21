@@ -1,16 +1,16 @@
 ---
 title: "Composable ESLint Presets: Layers Instead of Inheritance"
-description: How Nova's ESLint presets use independent layers — language, environment, and framework — to replace brittle config inheritance with predictable composition.
-slug: composable-eslint-presets
+description: "How Nova's ESLint presets use independent layers — language, environment, and framework — to replace brittle config inheritance with predictable composition."
+slug: "composable-eslint-presets"
 authors:
-  - mrjackyliang
+  - "mrjackyliang"
 tags:
-  - nova
-  - eslint
-  - presets
-  - typescript
-  - monorepo
-  - configuration
+  - "nova"
+  - "eslint"
+  - "presets"
+  - "typescript"
+  - "monorepo"
+  - "configuration"
 ---
 
 Most ESLint flat configs start the same way. You spread a popular shared config into your array, add your overrides, and move on. But as the project grows — more workspaces, more file types, more framework-specific needs — the config grows with it. You end up with a single array where language rules, environment globals, and framework conventions are tangled together, and figuring out which object added which rule means reading the whole thing top to bottom.

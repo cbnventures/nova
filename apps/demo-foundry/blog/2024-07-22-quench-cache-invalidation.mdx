@@ -1,8 +1,13 @@
 ---
 title: "Cache Invalidation Is Not Hard (If You Hash Everything)"
-authors: [kofi]
-tags: [caching, quench, performance, bellows]
-date: 2024-07-22
+authors:
+  - "kofi"
+tags:
+  - "caching"
+  - "quench"
+  - "performance"
+  - "bellows"
+date: "2024-07-22"
 ---
 
 There is a famous quote about the two hard problems in computer science: cache invalidation, naming things, and off-by-one errors. We solved the first one by refusing to invalidate anything. Quench does not invalidate cache entries. It creates new ones. Old entries expire. The cache is append-only and immutable.

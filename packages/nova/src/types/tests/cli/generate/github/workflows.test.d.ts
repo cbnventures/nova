@@ -13,13 +13,13 @@ export type TestsCliGenerateGithubWorkflowsRunSandboxRoot = string;
 
 export type TestsCliGenerateGithubWorkflowsRunProjectDirectory = string;
 
-export type TestsCliGenerateGithubWorkflowsRunPackageJson = string;
+export type TestsCliGenerateGithubWorkflowsRunPackageJson = Record<string, unknown>;
 
 export type TestsCliGenerateGithubWorkflowsRunPackageJsonPath = string;
 
 export type TestsCliGenerateGithubWorkflowsRunGitignorePath = string;
 
-export type TestsCliGenerateGithubWorkflowsRunNovaConfig = string;
+export type TestsCliGenerateGithubWorkflowsRunNovaConfig = Record<string, unknown>;
 
 export type TestsCliGenerateGithubWorkflowsRunNovaConfigPath = string;
 
@@ -36,3 +36,13 @@ export type TestsCliGenerateGithubWorkflowsRunEntries = string[];
 export type TestsCliGenerateGithubWorkflowsRunOrphanFiles = string[];
 
 export type TestsCliGenerateGithubWorkflowsRunBackupFiles = string[];
+
+export type TestsCliGenerateGithubWorkflowsRunContentLines = string[];
+
+export type TestsCliGenerateGithubWorkflowsRunCoreJobIndex = number;
+
+export type TestsCliGenerateGithubWorkflowsRunCoreNeedsLine = string;
+
+export type TestsCliGenerateGithubWorkflowsRunPresetJobIndex = number;
+
+export type TestsCliGenerateGithubWorkflowsRunPresetNeedsLine = string;

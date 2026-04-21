@@ -14,7 +14,11 @@ import type {
   SharedNovaConfigUrls,
   SharedNovaConfigWorkflow,
   SharedNovaConfigWorkflows,
+  SharedNovaConfigWorkflowScopes,
   SharedNovaConfigWorkflowSettings,
+  SharedNovaConfigWorkflowTarget,
+  SharedNovaConfigWorkflowTargetNeeds,
+  SharedNovaConfigWorkflowTargets,
   SharedNovaConfigWorkspaceName,
   SharedNovaConfigWorkspacePolicy,
   SharedNovaConfigWorkspaceRecipeName,
@@ -303,6 +307,26 @@ export type LibNovaConfigParseWorkflowsTriggerValue = string | undefined;
 export type LibNovaConfigParseWorkflowsRawDependsOn = unknown;
 
 export type LibNovaConfigParseWorkflowsDependsOn = string[];
+
+export type LibNovaConfigParseWorkflowsRawScopes = unknown;
+
+export type LibNovaConfigParseWorkflowsScopes = SharedNovaConfigWorkflowScopes;
+
+export type LibNovaConfigParseWorkflowsRawTargets = unknown;
+
+export type LibNovaConfigParseWorkflowsTargets = SharedNovaConfigWorkflowTargets;
+
+export type LibNovaConfigParseWorkflowsRawTarget = unknown;
+
+export type LibNovaConfigParseWorkflowsTargetType = string | undefined;
+
+export type LibNovaConfigParseWorkflowsTargetWorkingDir = string | undefined;
+
+export type LibNovaConfigParseWorkflowsTargetRawNeeds = unknown;
+
+export type LibNovaConfigParseWorkflowsTargetNeeds = SharedNovaConfigWorkflowTargetNeeds;
+
+export type LibNovaConfigParseWorkflowsTarget = SharedNovaConfigWorkflowTarget;
 
 export type LibNovaConfigParseWorkflowsSettings = unknown;
 

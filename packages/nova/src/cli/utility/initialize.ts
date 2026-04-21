@@ -243,6 +243,7 @@ import type {
   CliUtilityInitializePromptWorkflowsDeleteFormReturns,
   CliUtilityInitializePromptWorkflowsDescription,
   CliUtilityInitializePromptWorkflowsFormCompositeKey,
+  CliUtilityInitializePromptWorkflowsFormConfig,
   CliUtilityInitializePromptWorkflowsFormDependsOnChoices,
   CliUtilityInitializePromptWorkflowsFormDependsOnOutput,
   CliUtilityInitializePromptWorkflowsFormDependsOnOutputKey,
@@ -250,19 +251,36 @@ import type {
   CliUtilityInitializePromptWorkflowsFormDependsOnOutputResultValue,
   CliUtilityInitializePromptWorkflowsFormEditIndex,
   CliUtilityInitializePromptWorkflowsFormExistingDependsOn,
+  CliUtilityInitializePromptWorkflowsFormExistingScopes,
   CliUtilityInitializePromptWorkflowsFormExistingSuffix,
+  CliUtilityInitializePromptWorkflowsFormExistingTargets,
   CliUtilityInitializePromptWorkflowsFormExistingTemplate,
   CliUtilityInitializePromptWorkflowsFormExistingTriggers,
+  CliUtilityInitializePromptWorkflowsFormExtraWorkspaceKeys,
   CliUtilityInitializePromptWorkflowsFormFoundIndex,
   CliUtilityInitializePromptWorkflowsFormInitialValue,
   CliUtilityInitializePromptWorkflowsFormIsDuplicate,
+  CliUtilityInitializePromptWorkflowsFormLockedPaths,
   CliUtilityInitializePromptWorkflowsFormMatchedMetadata,
+  CliUtilityInitializePromptWorkflowsFormMergedVariableEntries,
+  CliUtilityInitializePromptWorkflowsFormMergedVariables,
   CliUtilityInitializePromptWorkflowsFormMode,
   CliUtilityInitializePromptWorkflowsFormPromptMessage,
   CliUtilityInitializePromptWorkflowsFormResolvedWorkflow,
   CliUtilityInitializePromptWorkflowsFormReturns,
+  CliUtilityInitializePromptWorkflowsFormScheduleVariants,
+  CliUtilityInitializePromptWorkflowsFormScopeChoices,
+  CliUtilityInitializePromptWorkflowsFormScopesOutput,
+  CliUtilityInitializePromptWorkflowsFormScopesOutputKey,
+  CliUtilityInitializePromptWorkflowsFormScopesOutputResult,
+  CliUtilityInitializePromptWorkflowsFormScopesOutputResultValue,
   CliUtilityInitializePromptWorkflowsFormSelectedDependsOn,
+  CliUtilityInitializePromptWorkflowsFormSelectedScopes,
   CliUtilityInitializePromptWorkflowsFormSelectedSuffix,
+  CliUtilityInitializePromptWorkflowsFormSelectedTargetNeeds,
+  CliUtilityInitializePromptWorkflowsFormSelectedTargets,
+  CliUtilityInitializePromptWorkflowsFormSelectedTargetType,
+  CliUtilityInitializePromptWorkflowsFormSelectedTargetWorkingDir,
   CliUtilityInitializePromptWorkflowsFormSelectedTemplate,
   CliUtilityInitializePromptWorkflowsFormSelectedTriggers,
   CliUtilityInitializePromptWorkflowsFormSettings,
@@ -275,6 +293,43 @@ import type {
   CliUtilityInitializePromptWorkflowsFormSuffixOutputKey,
   CliUtilityInitializePromptWorkflowsFormSuffixOutputResult,
   CliUtilityInitializePromptWorkflowsFormSuffixOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormTargetAvailableTypes,
+  CliUtilityInitializePromptWorkflowsFormTargetEditIndex,
+  CliUtilityInitializePromptWorkflowsFormTargetEntry,
+  CliUtilityInitializePromptWorkflowsFormTargetIsDuplicate,
+  CliUtilityInitializePromptWorkflowsFormTargetMenuChoices,
+  CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTarget,
+  CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTargetType,
+  CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTargetWorkingDir,
+  CliUtilityInitializePromptWorkflowsFormTargetMenuOutput,
+  CliUtilityInitializePromptWorkflowsFormTargetMenuOutputKey,
+  CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResult,
+  CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormTargetNeedsChoices,
+  CliUtilityInitializePromptWorkflowsFormTargetNeedsOutput,
+  CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputKey,
+  CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputResult,
+  CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormTargetsMetadata,
+  CliUtilityInitializePromptWorkflowsFormTargetToEdit,
+  CliUtilityInitializePromptWorkflowsFormTargetToEditExistingNeeds,
+  CliUtilityInitializePromptWorkflowsFormTargetToRemoveIndex,
+  CliUtilityInitializePromptWorkflowsFormTargetTypeChoices,
+  CliUtilityInitializePromptWorkflowsFormTargetTypeInitial,
+  CliUtilityInitializePromptWorkflowsFormTargetTypeOutput,
+  CliUtilityInitializePromptWorkflowsFormTargetTypeOutputKey,
+  CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResult,
+  CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResultValue,
+  CliUtilityInitializePromptWorkflowsFormTargetVariableEntries,
+  CliUtilityInitializePromptWorkflowsFormTargetVariableKey,
+  CliUtilityInitializePromptWorkflowsFormTargetVariables,
+  CliUtilityInitializePromptWorkflowsFormTargetVariableValue,
+  CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoices,
+  CliUtilityInitializePromptWorkflowsFormTargetWorkingDirInitial,
+  CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutput,
+  CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputKey,
+  CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputResult,
+  CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputResultValue,
   CliUtilityInitializePromptWorkflowsFormTemplateChoices,
   CliUtilityInitializePromptWorkflowsFormTemplateInitialIndex,
   CliUtilityInitializePromptWorkflowsFormTemplateOutput,
@@ -292,10 +347,10 @@ import type {
   CliUtilityInitializePromptWorkflowsFormTriggersOutputResultValue,
   CliUtilityInitializePromptWorkflowsFormVariableConfig,
   CliUtilityInitializePromptWorkflowsFormVariableDescriptionParts,
-  CliUtilityInitializePromptWorkflowsFormVariableEntries,
   CliUtilityInitializePromptWorkflowsFormVariableName,
   CliUtilityInitializePromptWorkflowsFormWorkflow,
   CliUtilityInitializePromptWorkflowsFormWorkflows,
+  CliUtilityInitializePromptWorkflowsFormWorkspaceKeys,
   CliUtilityInitializePromptWorkflowsLabel,
   CliUtilityInitializePromptWorkflowsMenuOutput,
   CliUtilityInitializePromptWorkflowsMenuOutputKey,
@@ -1916,7 +1971,7 @@ export class CliUtilityInitialize {
 
       // If user wants to add a workflow.
       if (menuOutputResult.action['kind'] === 'add') {
-        const result: CliUtilityInitializePromptWorkflowsResult = await CliUtilityInitialize.promptWorkflowsForm(undefined, 'create', workflows);
+        const result: CliUtilityInitializePromptWorkflowsResult = await CliUtilityInitialize.promptWorkflowsForm(undefined, 'create', workflows, config);
 
         if (result['action'] === 'back') {
           continue;
@@ -1949,7 +2004,7 @@ export class CliUtilityInitialize {
 
         const workflowToEdit: CliUtilityInitializePromptWorkflowsWorkflowToEdit = workflows[workflowIndex];
 
-        const workflowResult: CliUtilityInitializePromptWorkflowsResult = await CliUtilityInitialize.promptWorkflowsForm(workflowToEdit, 'update', workflows);
+        const workflowResult: CliUtilityInitializePromptWorkflowsResult = await CliUtilityInitialize.promptWorkflowsForm(workflowToEdit, 'update', workflows, config);
 
         if (workflowResult['action'] === 'back') {
           continue;
@@ -2023,12 +2078,13 @@ export class CliUtilityInitialize {
    * CLI - Utility - Initialize - Prompt Workflows Form.
    *
    * Shared form for creating or editing a workflow. Prompts
-   * for template, suffix, triggers, depends-on, and settings,
-   * then returns the assembled workflow or back.
+   * for template, suffix, triggers, depends-on, targets, scopes,
+   * and settings, then returns the assembled workflow or back.
    *
    * @param {CliUtilityInitializePromptWorkflowsFormWorkflow}  workflow  - Workflow.
    * @param {CliUtilityInitializePromptWorkflowsFormMode}      mode      - Mode.
    * @param {CliUtilityInitializePromptWorkflowsFormWorkflows} workflows - Workflows.
+   * @param {CliUtilityInitializePromptWorkflowsFormConfig}    config    - Config.
    *
    * @private
    *
@@ -2036,11 +2092,13 @@ export class CliUtilityInitialize {
    *
    * @since 0.15.0
    */
-  private static async promptWorkflowsForm(workflow: CliUtilityInitializePromptWorkflowsFormWorkflow, mode: CliUtilityInitializePromptWorkflowsFormMode, workflows: CliUtilityInitializePromptWorkflowsFormWorkflows): CliUtilityInitializePromptWorkflowsFormReturns {
+  private static async promptWorkflowsForm(workflow: CliUtilityInitializePromptWorkflowsFormWorkflow, mode: CliUtilityInitializePromptWorkflowsFormMode, workflows: CliUtilityInitializePromptWorkflowsFormWorkflows, config: CliUtilityInitializePromptWorkflowsFormConfig): CliUtilityInitializePromptWorkflowsFormReturns {
     const existingTemplate: CliUtilityInitializePromptWorkflowsFormExistingTemplate = (workflow !== undefined && typeof workflow['template'] === 'string') ? workflow['template'] : '';
     const existingSuffix: CliUtilityInitializePromptWorkflowsFormExistingSuffix = (workflow !== undefined && typeof workflow['suffix'] === 'string') ? workflow['suffix'] : '';
     const existingTriggers: CliUtilityInitializePromptWorkflowsFormExistingTriggers = (workflow !== undefined && Array.isArray(workflow['triggers']) === true) ? workflow['triggers'] : [];
     const existingDependsOn: CliUtilityInitializePromptWorkflowsFormExistingDependsOn = (workflow !== undefined && Array.isArray(workflow['depends-on']) === true) ? workflow['depends-on'] : [];
+    const existingTargets: CliUtilityInitializePromptWorkflowsFormExistingTargets = (workflow !== undefined && Array.isArray(workflow['targets']) === true) ? workflow['targets'] : [];
+    const existingScopes: CliUtilityInitializePromptWorkflowsFormExistingScopes = (workflow !== undefined && Array.isArray(workflow['scopes']) === true) ? workflow['scopes'] : [];
 
     // Build template choices from metadata.
     const templateChoices: CliUtilityInitializePromptWorkflowsFormTemplateChoices = libWorkflowTemplatesMetadata.map((entry) => ({
@@ -2153,6 +2211,22 @@ export class CliUtilityInitialize {
 
       const triggersOutputResult: CliUtilityInitializePromptWorkflowsFormTriggersOutputResultValue = triggersOutput['result'];
       selectedTriggers = (Array.isArray(triggersOutputResult.triggers) === true) ? triggersOutputResult.triggers : [];
+
+      // Validate that at most one schedule-* variant was selected.
+      const scheduleVariants: CliUtilityInitializePromptWorkflowsFormScheduleVariants = selectedTriggers.filter((trigger) => trigger.startsWith('schedule-'));
+
+      if (scheduleVariants.length > 1) {
+        Logger.customize({
+          name: 'CliUtilityInitialize.promptWorkflowsForm',
+          purpose: 'validation',
+          padTop: 1,
+          padBottom: 1,
+        }).error(`Only one ${chalk.cyan('schedule-*')} trigger may be selected. Please try again.`);
+
+        return {
+          action: 'back',
+        };
+      }
     }
 
     // Prompt for depends-on if any selected trigger starts with "workflow-run".
@@ -2197,11 +2271,280 @@ export class CliUtilityInitialize {
     // Find the matched metadata for the selected template.
     const matchedMetadata: CliUtilityInitializePromptWorkflowsFormMatchedMetadata = libWorkflowTemplatesMetadata.find((entry) => entry['name'] === selectedTemplate);
 
+    // Collect available workspace keys for target and scope prompts.
+    const workspaceKeys: CliUtilityInitializePromptWorkflowsFormWorkspaceKeys = Object.keys(config['workspaces'] ?? {});
+
+    // Prompt for targets if the template supports them.
+    const selectedTargets: CliUtilityInitializePromptWorkflowsFormSelectedTargets = [...existingTargets];
+
+    if (matchedMetadata !== undefined && matchedMetadata['supportsTargets'] === true) {
+      const targetsMetadata: CliUtilityInitializePromptWorkflowsFormTargetsMetadata = matchedMetadata['targets'] ?? {};
+      const availableTargetTypes: CliUtilityInitializePromptWorkflowsFormTargetAvailableTypes = Object.keys(targetsMetadata);
+
+      while (true) {
+        const targetMenuChoices: CliUtilityInitializePromptWorkflowsFormTargetMenuChoices = [];
+
+        for (let i = 0; i < selectedTargets.length; i += 1) {
+          const currentTarget: CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTarget = selectedTargets[i];
+
+          if (currentTarget === undefined) {
+            continue;
+          }
+
+          const currentTargetType: CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTargetType = currentTarget['type'];
+          const currentTargetWorkingDir: CliUtilityInitializePromptWorkflowsFormTargetMenuCurrentTargetWorkingDir = currentTarget['workingDir'];
+
+          targetMenuChoices.push({
+            title: `${chalk.yellow.bold('[EDIT]')} ${currentTargetType} → ${currentTargetWorkingDir}`,
+            value: {
+              kind: 'edit',
+              index: i,
+            },
+          });
+
+          targetMenuChoices.push({
+            title: `${chalk.red.bold('[REMOVE]')} ${currentTargetType} → ${currentTargetWorkingDir}`,
+            value: {
+              kind: 'remove',
+              index: i,
+            },
+          });
+        }
+
+        targetMenuChoices.push({
+          title: 'Add target',
+          value: {
+            kind: 'add',
+          },
+        });
+
+        targetMenuChoices.push({
+          title: 'Done',
+          value: {
+            kind: 'done',
+          },
+        });
+
+        const targetMenuOutput: CliUtilityInitializePromptWorkflowsFormTargetMenuOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormTargetMenuOutputKey, CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResult>({
+          type: 'select',
+          name: 'targetAction',
+          message: (selectedTargets.length > 0) ? 'Select a target to manage.' : 'No targets added yet. Choose an option.',
+          choices: targetMenuChoices,
+        });
+
+        if (targetMenuOutput['cancelled'] === true) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const targetMenuOutputResult: CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResultValue = targetMenuOutput['result'];
+        const targetMenuAction: CliUtilityInitializePromptWorkflowsFormTargetMenuOutputResult = targetMenuOutputResult.targetAction;
+
+        // Done: exit target loop.
+        if (targetMenuAction['kind'] === 'done') {
+          break;
+        }
+
+        // Remove: remove target from list.
+        if (targetMenuAction['kind'] === 'remove') {
+          const targetToRemoveIndex: CliUtilityInitializePromptWorkflowsFormTargetToRemoveIndex = targetMenuAction['index'];
+
+          if (targetToRemoveIndex >= 0 && targetToRemoveIndex < selectedTargets.length) {
+            selectedTargets.splice(targetToRemoveIndex, 1);
+          }
+
+          continue;
+        }
+
+        // Add or Edit: prompt for type, workingDir, and needs.
+        // When editing, the prompts are prefilled with the existing values
+        // and the target is replaced in place on apply.
+        if (targetMenuAction['kind'] === 'add' || targetMenuAction['kind'] === 'edit') {
+          const targetEditIndex: CliUtilityInitializePromptWorkflowsFormTargetEditIndex = (targetMenuAction['kind'] === 'edit') ? targetMenuAction['index'] : -1;
+          const targetToEdit: CliUtilityInitializePromptWorkflowsFormTargetToEdit = (targetEditIndex >= 0) ? selectedTargets[targetEditIndex] : undefined;
+          const targetTypeInitial: CliUtilityInitializePromptWorkflowsFormTargetTypeInitial = (targetToEdit !== undefined) ? availableTargetTypes.indexOf(targetToEdit['type']) : 0;
+          const targetTypeChoices: CliUtilityInitializePromptWorkflowsFormTargetTypeChoices = availableTargetTypes.map((availableTargetType) => ({
+            title: availableTargetType,
+            value: availableTargetType,
+          }));
+
+          const targetTypeOutput: CliUtilityInitializePromptWorkflowsFormTargetTypeOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormTargetTypeOutputKey, CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResult>({
+            type: 'select',
+            name: 'targetType',
+            message: 'Select a target type.',
+            choices: targetTypeChoices,
+            initial: (targetTypeInitial >= 0) ? targetTypeInitial : 0,
+          });
+
+          if (targetTypeOutput['cancelled'] === true) {
+            continue;
+          }
+
+          const targetTypeOutputResult: CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResultValue = targetTypeOutput['result'];
+          const selectedTargetType: CliUtilityInitializePromptWorkflowsFormSelectedTargetType = targetTypeOutputResult.targetType;
+
+          const targetWorkingDirInitial: CliUtilityInitializePromptWorkflowsFormTargetWorkingDirInitial = (targetToEdit !== undefined) ? workspaceKeys.indexOf(targetToEdit['workingDir']) : 0;
+          const targetWorkingDirChoices: CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoices = workspaceKeys.map((workspaceKey) => ({
+            title: workspaceKey,
+            value: workspaceKey,
+          }));
+
+          const targetWorkingDirOutput: CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputKey, CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputResult>({
+            type: 'select',
+            name: 'targetWorkingDir',
+            message: 'Select a working directory.',
+            choices: targetWorkingDirChoices,
+            initial: (targetWorkingDirInitial >= 0) ? targetWorkingDirInitial : 0,
+          });
+
+          if (targetWorkingDirOutput['cancelled'] === true) {
+            continue;
+          }
+
+          const targetWorkingDirOutputResult: CliUtilityInitializePromptWorkflowsFormTargetWorkingDirOutputResultValue = targetWorkingDirOutput['result'];
+          const selectedTargetWorkingDir: CliUtilityInitializePromptWorkflowsFormSelectedTargetWorkingDir = targetWorkingDirOutputResult.targetWorkingDir;
+
+          // Validate tuple uniqueness. When editing, exclude the current entry.
+          const targetIsDuplicate: CliUtilityInitializePromptWorkflowsFormTargetIsDuplicate = selectedTargets.some((selectedTarget, selectedTargetIndex) => {
+            if (selectedTargetIndex === targetEditIndex) {
+              return false;
+            }
+
+            return selectedTarget['type'] === selectedTargetType && selectedTarget['workingDir'] === selectedTargetWorkingDir;
+          });
+
+          if (targetIsDuplicate === true) {
+            Logger.customize({
+              name: 'CliUtilityInitialize.promptWorkflowsForm',
+              purpose: 'validation',
+              padTop: 1,
+              padBottom: 1,
+            }).error(`Target ${chalk.cyan(`${selectedTargetType} → ${selectedTargetWorkingDir}`)} already exists.`);
+
+            continue;
+          }
+
+          // Prompt for needs. Offer same-type targets, excluding the one being
+          // edited so a target cannot list itself as a prerequisite.
+          let selectedTargetNeeds: CliUtilityInitializePromptWorkflowsFormSelectedTargetNeeds = undefined;
+          const targetToEditExistingNeeds: CliUtilityInitializePromptWorkflowsFormTargetToEditExistingNeeds = (targetToEdit !== undefined && Array.isArray(targetToEdit['needs']) === true) ? targetToEdit['needs'] : [];
+          const targetNeedsChoices: CliUtilityInitializePromptWorkflowsFormTargetNeedsChoices = selectedTargets
+            .filter((candidate, candidateIndex) => {
+              return candidate['type'] === selectedTargetType
+                && candidateIndex !== targetEditIndex
+                && candidate['workingDir'] !== selectedTargetWorkingDir;
+            })
+            .map((candidate) => ({
+              title: candidate['workingDir'],
+              value: candidate['workingDir'],
+              selected: targetToEditExistingNeeds.includes(candidate['workingDir']),
+            }));
+
+          if (targetNeedsChoices.length > 0) {
+            const targetNeedsOutput: CliUtilityInitializePromptWorkflowsFormTargetNeedsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputKey, CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputResult>({
+              type: 'multiselect',
+              name: 'targetNeeds',
+              message: 'Select targets this must wait for before publishing (optional).',
+              choices: targetNeedsChoices,
+            });
+
+            if (targetNeedsOutput['cancelled'] === true) {
+              continue;
+            }
+
+            const targetNeedsOutputResult: CliUtilityInitializePromptWorkflowsFormTargetNeedsOutputResultValue = targetNeedsOutput['result'];
+
+            selectedTargetNeeds = (Array.isArray(targetNeedsOutputResult.targetNeeds) === true && targetNeedsOutputResult.targetNeeds.length > 0) ? targetNeedsOutputResult.targetNeeds : undefined;
+          }
+
+          const newTarget: CliUtilityInitializePromptWorkflowsFormTargetEntry = {
+            type: selectedTargetType,
+            workingDir: selectedTargetWorkingDir,
+          };
+
+          if (selectedTargetNeeds !== undefined) {
+            Reflect.set(newTarget, 'needs', selectedTargetNeeds);
+          }
+
+          if (targetEditIndex >= 0) {
+            Reflect.set(selectedTargets, targetEditIndex, newTarget);
+          } else {
+            selectedTargets.push(newTarget);
+          }
+
+          continue;
+        }
+      }
+    }
+
+    // Prompt for scopes if the template supports them.
+    let selectedScopes: CliUtilityInitializePromptWorkflowsFormSelectedScopes = [];
+
+    if (matchedMetadata !== undefined && matchedMetadata['supportsScopes'] === true) {
+      const lockedPaths: CliUtilityInitializePromptWorkflowsFormLockedPaths = new Set(selectedTargets.map((selectedTarget) => selectedTarget['workingDir']));
+      const extraWorkspaceKeys: CliUtilityInitializePromptWorkflowsFormExtraWorkspaceKeys = workspaceKeys.filter((workspaceKey) => lockedPaths.has(workspaceKey) === false);
+
+      // Pre-populate with the locked target workingDirs; extras get appended from the prompt.
+      selectedScopes = [...lockedPaths];
+
+      // Only prompt when there are non-target workspaces available to add.
+      if (extraWorkspaceKeys.length > 0) {
+        const scopeChoices: CliUtilityInitializePromptWorkflowsFormScopeChoices = extraWorkspaceKeys.map((workspaceKey) => ({
+          title: workspaceKey,
+          value: workspaceKey,
+          selected: existingScopes.includes(workspaceKey),
+        }));
+
+        const scopesOutput: CliUtilityInitializePromptWorkflowsFormScopesOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkflowsFormScopesOutputKey, CliUtilityInitializePromptWorkflowsFormScopesOutputResult>({
+          type: 'multiselect',
+          name: 'scopes',
+          message: 'Select any EXTRA workspaces to check and build for this workflow.',
+          choices: scopeChoices,
+        });
+
+        if (scopesOutput['cancelled'] === true) {
+          return {
+            action: 'back',
+          };
+        }
+
+        const scopesOutputResult: CliUtilityInitializePromptWorkflowsFormScopesOutputResultValue = scopesOutput['result'];
+        const extraScopes: CliUtilityInitializePromptWorkflowsFormScopesOutputResult = (Array.isArray(scopesOutputResult.scopes) === true) ? scopesOutputResult.scopes : [];
+
+        for (const extraScope of extraScopes) {
+          if (selectedScopes.includes(extraScope) === false) {
+            selectedScopes.push(extraScope);
+          }
+        }
+      }
+    }
+
     // Build the settings from variable prompts.
     const settings: CliUtilityInitializePromptWorkflowsFormSettings = {};
 
     if (matchedMetadata !== undefined) {
-      const variableEntries: CliUtilityInitializePromptWorkflowsFormVariableEntries = Object.entries(matchedMetadata['variables']);
+      // Build merged variable map: template variables + per-target variables (first-seen wins).
+      const mergedVariables: CliUtilityInitializePromptWorkflowsFormMergedVariables = { ...matchedMetadata['variables'] };
+
+      for (const selectedTarget of selectedTargets) {
+        const targetType: CliUtilityInitializePromptWorkflowsFormSelectedTargetType = selectedTarget['type'];
+        const targetMetadata: CliUtilityInitializePromptWorkflowsFormTargetsMetadata = matchedMetadata['targets'] ?? {};
+        const targetVariables: CliUtilityInitializePromptWorkflowsFormTargetVariables = (targetMetadata[targetType] !== undefined) ? targetMetadata[targetType]['variables'] : {};
+
+        const targetVarEntries: CliUtilityInitializePromptWorkflowsFormTargetVariableEntries = Object.entries(targetVariables);
+
+        for (const entry of targetVarEntries) {
+          const targetVarKey: CliUtilityInitializePromptWorkflowsFormTargetVariableKey = entry[0];
+          const targetVarValue: CliUtilityInitializePromptWorkflowsFormTargetVariableValue = entry[1];
+
+          if (mergedVariables[targetVarKey] === undefined) {
+            Reflect.set(mergedVariables, targetVarKey, targetVarValue);
+          }
+        }
+      }
+
+      const variableEntries: CliUtilityInitializePromptWorkflowsFormMergedVariableEntries = Object.entries(mergedVariables);
 
       for (const variableEntry of variableEntries) {
         const variableName: CliUtilityInitializePromptWorkflowsFormVariableName = variableEntry[0];
@@ -2279,6 +2622,16 @@ export class CliUtilityInitialize {
     // Workflow - Depends On.
     if (selectedDependsOn !== undefined) {
       Reflect.set(resolvedWorkflow, 'depends-on', selectedDependsOn);
+    }
+
+    // Workflow - Targets.
+    if (selectedTargets.length > 0) {
+      Reflect.set(resolvedWorkflow, 'targets', selectedTargets);
+    }
+
+    // Workflow - Scopes.
+    if (selectedScopes.length > 0) {
+      Reflect.set(resolvedWorkflow, 'scopes', selectedScopes);
     }
 
     // Workflow - Settings.

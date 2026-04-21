@@ -1,7 +1,10 @@
 ---
 title: "Why We Stopped Writing Configuration Files"
-authors: [elena]
-tags: [philosophy, manifests]
+authors:
+  - "elena"
+tags:
+  - "philosophy"
+  - "manifests"
 ---
 
 We have been building multi-package workspaces for the better part of a decade. And for the better part of a decade, we have been drowning in configuration files that nobody maintains.

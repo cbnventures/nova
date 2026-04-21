@@ -33,3 +33,7 @@ export type ThemeHeadingBrokenLinks = {
   collectAnchor: ThemeHeadingBrokenLinksCollectAnchorValue;
   [key: string]: unknown;
 };
+
+export type ThemeHeadingHashLinkLabel = string;
+
+export type ThemeHeadingHashLink = ReactNode;

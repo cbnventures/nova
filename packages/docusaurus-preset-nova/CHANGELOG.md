@@ -1,5 +1,18 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.16.0 - 2026-04-20
+
+### FIXED
+- Mermaid labels containing list markers (lines starting with `-`, `*`, or `+`) no longer render as the literal text "Unsupported markdown: list"; upgrading mermaid from 11.0.0 to 11.14.0 adopts the upstream fallback that shows the original label text instead
+- Mermaid hover tooltips (used by diagrams with `click` callbacks) now render in Nova's design language with light and dark variants, and no longer add a stray invisible element to the bottom of the page that inflated scroll height
+- Clickable mermaid nodes (declared via `click` directives) no longer render with a hyperlink underline and primary color; they now inherit their node styling so the diagram reads consistently, with the cursor and tooltip signaling interactivity
+- Mobile table of contents now nests sub-headings under their parent headings and respects `toc_min_heading_level` / `toc_max_heading_level` front matter, matching the desktop TOC behavior shipped in 0.15.4
+- Table of contents (desktop and mobile) now renders JSX and HTML inside heading values as HTML instead of literal text, so headings with inline components show the component's inner text in the TOC instead of the raw `<Component>` tags
+- Details summary icon and text now render on the same row when the summary mixes an SVG with text; previously an SVG's default block display forced the text onto the next line
+
+### ADDED
+- Headings now show a `#` hash-link on hover or keyboard focus; clicking it copies a direct URL to the section, matching the familiar Docusaurus convention
+
 ## 0.15.4 - 2026-04-19
 
 ### FIXED

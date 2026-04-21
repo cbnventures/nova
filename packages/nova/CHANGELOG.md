@@ -1,5 +1,34 @@
 # @cbnventures/nova
 
+## 0.16.0 - 2026-04-20
+
+### UPDATED
+- Publish workflows only check and build the specific packages being released, not the entire monorepo — the generator auto-detects turbo.json and uses --filter, or falls back to npm workspace -w flags
+- Init TUI no longer asks about workspaces already covered by your publish targets in the scopes prompt — only optional extra workspaces appear
+- Init TUI skips re-prompting for the same secret or variable when multiple publish targets share it (for example GITHUB_TOKEN used by both GitHub Packages and ghcr)
+- Sponsor gate workflow now lets you pick which issue events to listen to (issues opened/closed, comments created/edited) from the init TUI, matching the pattern used by every other workflow template
+- One unified publish workflow builds your project once and publishes to multiple destinations (npm, GitHub Packages, Cloudflare Pages, etc.) in parallel, instead of each destination running its own full build pipeline from scratch
+- Generated workflows declare the minimum required GitHub token permissions explicitly at both workflow and job level, with contents: read as the restrictive baseline instead of inheriting repo defaults
+- Inactive issue lock workflow schedule now offers daily, weekly, and monthly presets in the init TUI instead of a single hardcoded cron expression
+- Shell scripts in generated workflows render as clean multi-line run: | blocks instead of collapsed double-quoted strings with escape sequences
+
+### FIXED
+- Scheduled workflow runs no longer show "manually" appended to the run name in the GitHub Actions UI when no manual dispatch occurred
+- Init TUI target Edit action now actually edits the target in place — prompts are prefilled with the current type, workingDir, and needs, and the entry is replaced at the same index; previously the action silently removed the target and required the user to re-add it from scratch
+- SharedNovaConfig type key order now matches serialized nova.config.json output (project, entities, emails, workflows, urls, workspaces) — previously workflows sat at the end of the type definition even though the JSON layout placed it between emails and urls
+
+### ADDED
+- nova.config.json workflow entries gained a targets array (each with type and workingDir) and a scopes array (workspace paths to check and build)
+- Publish targets gained an optional needs array (list of same-type target workingDirs) so dependent packages wait for their prerequisites — the generator emits needs: ["build", "publish-<type>-<id>", ...] on the dependent job, serializing publishes that would otherwise race (for example, a preset that depends on a core package publishing first to the registry)
+- Init TUI prompts for target needs via a multiselect of other same-type targets when adding or editing a publish target, pre-selecting existing needs on edit
+- Published npm packages and Docker images now ship with signed build provenance attestations by default (via --provenance on npm publish and actions/attest-build-provenance@v2 for Docker images)
+- 8 publish target types: npm, GitHub Packages, Docker Hub, GitHub Container Registry, Cloudflare Pages (Docusaurus), GitHub Pages (Docusaurus), AWS Amplify (Next.js), and Vercel (Next.js) — combine any of them in a single workflow
+- Init TUI rejects selecting multiple schedule variants (like daily plus weekly) on the same workflow to prevent overlapping cron runs
+- Init TUI target menu with Add, Edit, Remove, and Done options for composing multi-destination publish workflows
+
+### REMOVED
+- Legacy per-target publish templates replaced by the unified publish template: publish-to-npm, publish-to-github-packages, publish-to-docker-hub, publish-to-cloudflare-pages-docusaurus, publish-to-github-pages-docusaurus, publish-to-aws-amplify-nextjs — existing workflow config entries using these must be rebuilt via nova util init
+
 ## 0.15.4 - 2026-04-19
 
 No changes

@@ -1,8 +1,12 @@
 ---
 title: "Encrypting East-West Traffic Without Killing Throughput"
-authors: [rafael]
-tags: [encryption, micro-segmentation, rampart]
-date: 2024-07-22
+authors:
+  - "rafael"
+tags:
+  - "encryption"
+  - "micro-segmentation"
+  - "rampart"
+date: "2024-07-22"
 ---
 
 Most organizations encrypt traffic at the edge. TLS terminates at the load balancer, and everything behind it travels in plaintext. The assumption is that internal traffic is safe because it never leaves the data center. That assumption is wrong, and it has been wrong for a long time.

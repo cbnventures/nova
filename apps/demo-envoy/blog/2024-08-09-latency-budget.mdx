@@ -1,8 +1,12 @@
 ---
 title: "Your Webhook Has a Latency Budget and You Are Blowing It"
-authors: [anders]
-tags: [latency, incident-response, courier]
-date: 2024-08-09
+authors:
+  - "anders"
+tags:
+  - "latency"
+  - "incident-response"
+  - "courier"
+date: "2024-08-09"
 ---
 
 A webhook that takes 300ms to deliver is not "a bit slow." It is a webhook that will miss its SLA during the next traffic spike. Every millisecond in your relay pipeline is borrowed time, and most teams have no idea where they are spending it.

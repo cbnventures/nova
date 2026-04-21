@@ -1,8 +1,12 @@
 ---
 title: "Rotating Encryption Keys Across 14 Rampart Zones"
-authors: [rafael]
-tags: [encryption, compliance, policy]
-date: 2026-01-08
+authors:
+  - "rafael"
+tags:
+  - "encryption"
+  - "compliance"
+  - "policy"
+date: "2026-01-08"
 ---
 
 Our compliance framework requires encryption key rotation every 90 days. That sounds simple until you realize that "encryption keys" in a Sentinel deployment means WireGuard tunnel keys for every Rampart zone boundary, TLS certificates for every Bastion gateway, and device enrollment keys for every endpoint agent. Rotating all of them without disrupting production traffic is a coordination problem that took us three quarters to get right.

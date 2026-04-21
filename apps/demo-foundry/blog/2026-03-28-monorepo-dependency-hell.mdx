@@ -1,8 +1,13 @@
 ---
 title: "We Deleted 40% of Our Dependencies and Nothing Broke"
-authors: [elena]
-tags: [monorepo, workspace, anvil, caching]
-date: 2026-03-28
+authors:
+  - "elena"
+tags:
+  - "monorepo"
+  - "workspace"
+  - "anvil"
+  - "caching"
+date: "2026-03-28"
 ---
 
 Our workspace had 847 dependencies. We ran `foundry anvil audit` and discovered that 339 of them were unused, duplicated, or pulled in transitively by packages we no longer needed. We deleted them over two days. The build still passed. The tests still passed. The bundle size dropped by 31%.

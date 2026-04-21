@@ -554,6 +554,26 @@ export type SharedNovaConfigWorkflowTriggers = SharedNovaConfigWorkflowTrigger[]
 
 export type SharedNovaConfigWorkflowDependsOn = string[];
 
+export type SharedNovaConfigWorkflowScope = string;
+
+export type SharedNovaConfigWorkflowScopes = SharedNovaConfigWorkflowScope[];
+
+export type SharedNovaConfigWorkflowTargetType = string;
+
+export type SharedNovaConfigWorkflowTargetWorkingDir = string;
+
+export type SharedNovaConfigWorkflowTargetNeedsEntry = string;
+
+export type SharedNovaConfigWorkflowTargetNeeds = SharedNovaConfigWorkflowTargetNeedsEntry[];
+
+export type SharedNovaConfigWorkflowTarget = {
+  type: SharedNovaConfigWorkflowTargetType;
+  workingDir: SharedNovaConfigWorkflowTargetWorkingDir;
+  needs?: SharedNovaConfigWorkflowTargetNeeds;
+};
+
+export type SharedNovaConfigWorkflowTargets = SharedNovaConfigWorkflowTarget[];
+
 export type SharedNovaConfigWorkflowSettingsKey = string;
 
 export type SharedNovaConfigWorkflowSettingsValue = string;
@@ -567,6 +587,8 @@ export type SharedNovaConfigWorkflow = {
   'suffix': SharedNovaConfigWorkflowSuffix;
   'triggers': SharedNovaConfigWorkflowTriggers;
   'depends-on'?: SharedNovaConfigWorkflowDependsOn;
+  'scopes'?: SharedNovaConfigWorkflowScopes;
+  'targets'?: SharedNovaConfigWorkflowTargets;
   'settings'?: SharedNovaConfigWorkflowSettings;
 };
 
@@ -576,9 +598,9 @@ export type SharedNovaConfig = {
   project?: SharedNovaConfigProject;
   entities?: SharedNovaConfigEntities;
   emails?: SharedNovaConfigEmails;
+  workflows?: SharedNovaConfigWorkflows;
   urls?: SharedNovaConfigUrls;
   workspaces?: SharedNovaConfigWorkspaces;
-  workflows?: SharedNovaConfigWorkflows;
 };
 
 export type SharedNovaConfigConfig = SharedNovaConfig;
@@ -711,6 +733,86 @@ export type SharedWindowsRegistryKey = {
 
 export type SharedWindowsRegistryKeys = {
   [key: string]: SharedWindowsRegistryKey;
+};
+
+/**
+ * Shared - Workflow Template Permission.
+ *
+ * @since 0.20.0
+ */
+export type SharedWorkflowTemplatePermissionRead = 'read';
+
+export type SharedWorkflowTemplatePermissionWrite = 'write';
+
+export type SharedWorkflowTemplatePermission = SharedWorkflowTemplatePermissionRead | SharedWorkflowTemplatePermissionWrite;
+
+export type SharedWorkflowTemplatePermissionKey = string;
+
+export type SharedWorkflowTemplatePermissions = {
+  [key: SharedWorkflowTemplatePermissionKey]: SharedWorkflowTemplatePermission;
+};
+
+/**
+ * Shared - Workflow Template Target.
+ *
+ * @since 0.20.0
+ */
+export type SharedWorkflowTemplateTargetDescription = string;
+
+export type SharedWorkflowTemplateTargetArtifactPath = string;
+
+export type SharedWorkflowTemplateTargetArtifactPaths = SharedWorkflowTemplateTargetArtifactPath[];
+
+export type SharedWorkflowTemplateTargetVariables = SharedWorkflowTemplateVariables;
+
+export type SharedWorkflowTemplateTargetPermissions = SharedWorkflowTemplatePermissions;
+
+export type SharedWorkflowTemplateTarget = {
+  description: SharedWorkflowTemplateTargetDescription;
+  artifactPaths: SharedWorkflowTemplateTargetArtifactPaths;
+  variables: SharedWorkflowTemplateTargetVariables;
+  permissions: SharedWorkflowTemplateTargetPermissions;
+};
+
+export type SharedWorkflowTemplateTargetType = string;
+
+export type SharedWorkflowTemplateTargets = {
+  [key: SharedWorkflowTemplateTargetType]: SharedWorkflowTemplateTarget;
+};
+
+/**
+ * Shared - Workflow Template Variable.
+ *
+ * @since 0.20.0
+ */
+export type SharedWorkflowTemplateVariableFormatSecret = 'secret';
+
+export type SharedWorkflowTemplateVariableFormatVar = 'var';
+
+export type SharedWorkflowTemplateVariableFormatLiteral = 'literal';
+
+export type SharedWorkflowTemplateVariableFormat = SharedWorkflowTemplateVariableFormatSecret | SharedWorkflowTemplateVariableFormatVar | SharedWorkflowTemplateVariableFormatLiteral;
+
+export type SharedWorkflowTemplateVariableDefault = string;
+
+export type SharedWorkflowTemplateVariableAuto = true;
+
+export type SharedWorkflowTemplateVariableDescription = string;
+
+export type SharedWorkflowTemplateVariableExample = string;
+
+export type SharedWorkflowTemplateVariable = {
+  format: SharedWorkflowTemplateVariableFormat;
+  default?: SharedWorkflowTemplateVariableDefault;
+  auto?: SharedWorkflowTemplateVariableAuto;
+  description?: SharedWorkflowTemplateVariableDescription;
+  example?: SharedWorkflowTemplateVariableExample;
+};
+
+export type SharedWorkflowTemplateVariableName = string;
+
+export type SharedWorkflowTemplateVariables = {
+  [key: SharedWorkflowTemplateVariableName]: SharedWorkflowTemplateVariable;
 };
 
 /**

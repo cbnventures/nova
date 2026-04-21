@@ -1,0 +1,60 @@
+publish-npm-[__TARGET_ID__]:
+  needs: [__NEEDS__]
+  runs-on: "ubuntu-latest"
+  timeout-minutes: 10
+  permissions:
+    contents: "read"
+    id-token: "write"
+[__JOBS_CONDITION__]
+  steps:
+    - name: "Checkout repository"
+      uses: "actions/checkout@v6"
+
+    - name: "Setup Node.js"
+      uses: "actions/setup-node@v6"
+      with:
+        node-version-file: "${{ env.ROOT_DIR }}/package.json"
+        package-manager-cache: false
+        registry-url: "https://registry.npmjs.org"
+
+    - name: "Remove deprecated .npmrc entries"
+      run: |
+        npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
+
+        if [ -f "$npmrc" ]; then
+          sed -i '/^always-auth=/d' "$npmrc"
+        fi
+
+    - name: "Download build artifacts"
+      uses: "actions/download-artifact@v4"
+      with:
+        name: "build-output"
+
+    - name: "Configure authentication"
+      env:
+        NPM_TOKEN: "${{ secrets.NPM_TOKEN }}"
+      run: |
+        if [ -n "${NPM_TOKEN}" ]; then
+          echo "[Auth] Using NPM_TOKEN (token-based)."
+          echo "NODE_AUTH_TOKEN=${NPM_TOKEN}" >> "$GITHUB_ENV"
+        else
+          echo "[Auth] Using trusted publishing (OIDC)."
+
+          npmrc="${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}"
+
+          if [ -f "$npmrc" ]; then
+            sed -i '/^\/\/registry\.npmjs\.org\/:_authToken/d' "$npmrc"
+            echo "[Auth] Removed _authToken entry from .npmrc."
+          fi
+        fi
+
+    - name: "Publish package to npm"
+      run: |
+        if [ "${PUBLISH}" = "true" ]; then
+          echo "[Publish] Production."
+          npm publish --provenance
+        else
+          echo "[Publish] Dry run."
+          npm publish --dry-run
+        fi
+      working-directory: "[__WORKING_DIR__]"

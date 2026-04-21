@@ -46,7 +46,7 @@ export const PATTERN_DOCS_PREFIX = /^\/docs\//;
  *
  * @since 0.14.0
  */
-export const PATTERN_DESCRIPTION_LINE = /^description:\s*(.+)$/;
+export const PATTERN_DESCRIPTION_LINE = /^description:\s*"?([^"]+?)"?\s*$/;
 
 /**
  * Lib - Regex - Pattern Export Dot Slash.
@@ -106,7 +106,7 @@ export const PATTERN_HTML_TAGS = /<[^>]+>/;
  *
  * @since 0.14.0
  */
-export const PATTERN_ID_LINE = /^id:\s*(.+)$/;
+export const PATTERN_ID_LINE = /^id:\s*"?([^"]+?)"?\s*$/;
 
 /**
  * Lib - Regex - Pattern Import Specifier.

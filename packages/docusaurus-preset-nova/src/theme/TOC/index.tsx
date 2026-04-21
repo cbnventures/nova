@@ -36,9 +36,7 @@ function TocList(items: ThemeTocListItems) {
       {
         items.map((item: ThemeTocListItem) => (
           <li className="nova-toc-item" key={item['id']}>
-            <a className="nova-toc-link" href={`#${item['id']}`}>
-              {item['value']}
-            </a>
+            <a className="nova-toc-link" href={`#${item['id']}`} dangerouslySetInnerHTML={{ __html: item['value'] }} />
             {TocList(item['children'])}
           </li>
         ))

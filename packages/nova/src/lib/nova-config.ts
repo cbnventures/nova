@@ -104,8 +104,12 @@ import type {
   LibNovaConfigParseWorkflowsItem,
   LibNovaConfigParseWorkflowsParsedSettings,
   LibNovaConfigParseWorkflowsRawDependsOn,
+  LibNovaConfigParseWorkflowsRawScopes,
+  LibNovaConfigParseWorkflowsRawTarget,
+  LibNovaConfigParseWorkflowsRawTargets,
   LibNovaConfigParseWorkflowsRawTriggers,
   LibNovaConfigParseWorkflowsReturns,
+  LibNovaConfigParseWorkflowsScopes,
   LibNovaConfigParseWorkflowsSettings,
   LibNovaConfigParseWorkflowsSettingsKey,
   LibNovaConfigParseWorkflowsSettingsValue,
@@ -114,6 +118,12 @@ import type {
   LibNovaConfigParseWorkflowsSortSuffixB,
   LibNovaConfigParseWorkflowsSortTemplateCompare,
   LibNovaConfigParseWorkflowsSuffix,
+  LibNovaConfigParseWorkflowsTarget,
+  LibNovaConfigParseWorkflowsTargetNeeds,
+  LibNovaConfigParseWorkflowsTargetRawNeeds,
+  LibNovaConfigParseWorkflowsTargets,
+  LibNovaConfigParseWorkflowsTargetType,
+  LibNovaConfigParseWorkflowsTargetWorkingDir,
   LibNovaConfigParseWorkflowsTemplate,
   LibNovaConfigParseWorkflowsTriggers,
   LibNovaConfigParseWorkflowsTriggerValue,
@@ -877,9 +887,45 @@ export class LibNovaConfig {
 
       const rawDependsOn: LibNovaConfigParseWorkflowsRawDependsOn = castItem['depends-on'];
       const dependsOn: LibNovaConfigParseWorkflowsDependsOn = (Array.isArray(rawDependsOn) === true) ? rawDependsOn.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as LibNovaConfigParseWorkflowsDependsOn : [];
+      const rawScopes: LibNovaConfigParseWorkflowsRawScopes = castItem['scopes'];
+      const scopes: LibNovaConfigParseWorkflowsScopes = (Array.isArray(rawScopes) === true) ? rawScopes.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as LibNovaConfigParseWorkflowsScopes : [];
+      const rawTargets: LibNovaConfigParseWorkflowsRawTargets = castItem['targets'];
+      const targets: LibNovaConfigParseWorkflowsTargets = [];
+
+      if (Array.isArray(rawTargets) === true) {
+        for (const rawTarget of rawTargets) {
+          const rawTargetValue: LibNovaConfigParseWorkflowsRawTarget = rawTarget;
+
+          if (isPlainObject(rawTargetValue) === false) {
+            continue;
+          }
+
+          const targetType: LibNovaConfigParseWorkflowsTargetType = this.getNonEmptyString(rawTargetValue['type']);
+          const targetWorkingDir: LibNovaConfigParseWorkflowsTargetWorkingDir = this.getNonEmptyString(rawTargetValue['workingDir']);
+
+          if (targetType === undefined || targetWorkingDir === undefined) {
+            continue;
+          }
+
+          const rawTargetNeeds: LibNovaConfigParseWorkflowsTargetRawNeeds = rawTargetValue['needs'];
+          const targetNeeds: LibNovaConfigParseWorkflowsTargetNeeds = (Array.isArray(rawTargetNeeds) === true) ? rawTargetNeeds.filter((entry) => typeof entry === 'string' && entry.trim() !== '') as LibNovaConfigParseWorkflowsTargetNeeds : [];
+
+          const target: LibNovaConfigParseWorkflowsTarget = {
+            type: targetType,
+            workingDir: targetWorkingDir,
+          };
+
+          if (targetNeeds.length > 0) {
+            Reflect.set(target, 'needs', targetNeeds);
+          }
+
+          targets.push(target);
+        }
+      }
+
       const settings: LibNovaConfigParseWorkflowsSettings = castItem['settings'];
 
-      // Build workflow object with properties in type-definition order: template, suffix, triggers, depends-on, settings.
+      // Build workflow object with properties in type-definition order: template, suffix, triggers, depends-on, scopes, targets, settings.
       const workflow: LibNovaConfigParseWorkflowsWorkflow = {
         template,
         suffix,
@@ -888,6 +934,14 @@ export class LibNovaConfig {
 
       if (dependsOn.length > 0) {
         Reflect.set(workflow, 'depends-on', dependsOn);
+      }
+
+      if (scopes.length > 0) {
+        Reflect.set(workflow, 'scopes', scopes);
+      }
+
+      if (targets.length > 0) {
+        Reflect.set(workflow, 'targets', targets);
       }
 
       if (isPlainObject(settings) === true) {
