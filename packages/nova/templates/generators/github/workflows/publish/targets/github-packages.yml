@@ -70,7 +70,7 @@ publish-github-packages-[__TARGET_ID__]:
       run: |
         if [ "${PUBLISH}" = "true" ]; then
           echo "[Publish] Production."
-          npm publish --provenance
+          npm publish
         else
           echo "[Publish] Dry run."
           npm publish --dry-run

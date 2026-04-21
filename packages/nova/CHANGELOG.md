@@ -1,5 +1,10 @@
 # @cbnventures/nova
 
+## 0.16.1 - 2026-04-21
+
+### FIXED
+- Generator's publish workflow no longer fails with npm EUSAGE when publishing scoped packages — npm targets now pass --access public alongside --provenance (required when both are used), and GitHub Packages targets omit --provenance (unsupported by the registry)
+
 ## 0.16.0 - 2026-04-20
 
 ### UPDATED

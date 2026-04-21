@@ -850,7 +850,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     strictEqual(content.includes('packages/docusaurus-preset-nova/build'), true);
     strictEqual(content.includes('apps/docs/build'), true);
 
-    strictEqual(content.includes('npm publish --provenance'), true);
+    strictEqual(content.includes('npm publish --provenance --access public'), true);
 
     return;
   });
