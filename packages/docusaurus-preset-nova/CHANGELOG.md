@@ -1,5 +1,17 @@
 # @cbnventures/docusaurus-preset-nova
 
+## 0.16.2 - 2026-04-21
+
+### FIXED
+- Code segments inside mermaid node and edge labels (written with backticks in the diagram source) now render in the site's `fonts.code` family; previously they used the body font
+- Mermaid node and cluster corner radius now follows the site's `shape.radius` preset config (`sharp`, `rounded`, `pill`); previously the radius was hardcoded to 8px on nodes and 12px on clusters regardless of the active preset or user overrides
+- Mermaid flowchart spacing — padding between node borders and labels, horizontal node spacing, and rank spacing — now scales with the site's `shape.density` preset config; previously every density rendered at the comfortable default
+- Mermaid cluster titles (subgraph headers) now render in the site's `fonts.display` family; previously they fell back to the body font, ignoring any display font override
+
+### ADDED
+- Mermaid diagrams now center horizontally within their container when narrower than the content column; wider diagrams still scroll horizontally as before
+- Mermaid diagrams now render with consistent vertical spacing above and below so they no longer butt up against adjacent paragraphs or headings
+
 ## 0.16.1 - 2026-04-21
 
 No changes

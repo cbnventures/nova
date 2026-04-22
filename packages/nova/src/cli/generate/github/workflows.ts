@@ -36,6 +36,11 @@ import type {
   CliGenerateGithubWorkflowsBuildCommandScriptName,
   CliGenerateGithubWorkflowsBuildCommandUseTurbo,
   CliGenerateGithubWorkflowsBuildCommandWorkspaceNames,
+  CliGenerateGithubWorkflowsBuildEntrySetupLinesEntry,
+  CliGenerateGithubWorkflowsBuildEntrySetupLinesLines,
+  CliGenerateGithubWorkflowsBuildEntrySetupLinesMetadataEntry,
+  CliGenerateGithubWorkflowsBuildEntrySetupLinesOutputFileName,
+  CliGenerateGithubWorkflowsBuildEntrySetupLinesReturns,
   CliGenerateGithubWorkflowsBuildMergedJobsConditionJobsConditionLine,
   CliGenerateGithubWorkflowsBuildMergedJobsConditionReturns,
   CliGenerateGithubWorkflowsBuildMergedJobsConditionTriggerDataList,
@@ -108,6 +113,7 @@ import type {
   CliGenerateGithubWorkflowsRunEntryLabel,
   CliGenerateGithubWorkflowsRunEntryScope,
   CliGenerateGithubWorkflowsRunEntryScopes,
+  CliGenerateGithubWorkflowsRunEntrySetupLines,
   CliGenerateGithubWorkflowsRunEntryTarget,
   CliGenerateGithubWorkflowsRunEntryTargets,
   CliGenerateGithubWorkflowsRunExistingEntries,
@@ -895,27 +901,10 @@ export class CliGenerateGithubWorkflows {
 
       generatedSet.add(outputFileName);
 
-      // Build setup instructions for non-auto secrets and vars.
-      for (const variableEntry of Object.entries(metadataEntry['variables'])) {
-        const variableName: CliGenerateGithubWorkflowsRunVariableName = variableEntry[0];
-        const variableMeta: CliGenerateGithubWorkflowsRunVariableMeta = variableEntry[1];
+      // Build setup instructions for non-auto secrets and vars (template + targets).
+      const entrySetupLines: CliGenerateGithubWorkflowsRunEntrySetupLines = CliGenerateGithubWorkflows.buildEntrySetupLines(entry, metadataEntry, outputFileName);
 
-        if (variableMeta['auto'] === true) {
-          continue;
-        }
-
-        if (variableMeta['format'] === 'secret') {
-          const resolvedName: CliGenerateGithubWorkflowsRunResolvedName = (entry['settings'] !== undefined && entry['settings'][variableName] !== undefined) ? entry['settings'][variableName] : (variableMeta['default'] ?? variableName);
-
-          setupLines.push(` - ${chalk.cyan(outputFileName)}: Secret ${chalk.yellow(resolvedName)}`);
-        }
-
-        if (variableMeta['format'] === 'var') {
-          const resolvedName: CliGenerateGithubWorkflowsRunResolvedName = (entry['settings'] !== undefined && entry['settings'][variableName] !== undefined) ? entry['settings'][variableName] : (variableMeta['default'] ?? variableName);
-
-          setupLines.push(` - ${chalk.cyan(outputFileName)}: Variable ${chalk.yellow(resolvedName)}`);
-        }
-      }
+      setupLines.push(...entrySetupLines);
 
       if (isDryRun === true) {
         const displayPath: CliGenerateGithubWorkflowsRunDisplayPath = `.github/workflows/${outputFileName}`;
@@ -1188,6 +1177,87 @@ export class CliGenerateGithubWorkflows {
     }
 
     return false;
+  }
+
+  /**
+   * CLI - Generate - GitHub - Workflows - Build Entry Setup Lines.
+   *
+   * Walks template-level variables and each target's variables for a
+   * workflow entry, returning setup lines for non-auto secrets and vars.
+   *
+   * @param {CliGenerateGithubWorkflowsBuildEntrySetupLinesEntry}          entry          - Entry.
+   * @param {CliGenerateGithubWorkflowsBuildEntrySetupLinesMetadataEntry}  metadataEntry  - Metadata entry.
+   * @param {CliGenerateGithubWorkflowsBuildEntrySetupLinesOutputFileName} outputFileName - Output file name.
+   *
+   * @returns {CliGenerateGithubWorkflowsBuildEntrySetupLinesReturns}
+   *
+   * @since 0.16.2
+   */
+  public static buildEntrySetupLines(entry: CliGenerateGithubWorkflowsBuildEntrySetupLinesEntry, metadataEntry: CliGenerateGithubWorkflowsBuildEntrySetupLinesMetadataEntry, outputFileName: CliGenerateGithubWorkflowsBuildEntrySetupLinesOutputFileName): CliGenerateGithubWorkflowsBuildEntrySetupLinesReturns {
+    const lines: CliGenerateGithubWorkflowsBuildEntrySetupLinesLines = [];
+
+    if (metadataEntry === undefined) {
+      return lines;
+    }
+
+    // Template-level non-auto secrets and vars.
+    for (const variableEntry of Object.entries(metadataEntry['variables'])) {
+      const variableName: CliGenerateGithubWorkflowsRunVariableName = variableEntry[0];
+      const variableMeta: CliGenerateGithubWorkflowsRunVariableMeta = variableEntry[1];
+
+      if (variableMeta['auto'] === true) {
+        continue;
+      }
+
+      if (variableMeta['format'] === 'secret') {
+        const resolvedName: CliGenerateGithubWorkflowsRunResolvedName = (entry['settings'] !== undefined && entry['settings'][variableName] !== undefined) ? entry['settings'][variableName] : (variableMeta['default'] ?? variableName);
+
+        lines.push(` - ${chalk.cyan(outputFileName)}: Secret ${chalk.yellow(resolvedName)}`);
+      }
+
+      if (variableMeta['format'] === 'var') {
+        const resolvedName: CliGenerateGithubWorkflowsRunResolvedName = (entry['settings'] !== undefined && entry['settings'][variableName] !== undefined) ? entry['settings'][variableName] : (variableMeta['default'] ?? variableName);
+
+        lines.push(` - ${chalk.cyan(outputFileName)}: Variable ${chalk.yellow(resolvedName)}`);
+      }
+    }
+
+    // Target-level non-auto secrets and vars (for templates with targets).
+    if (entry['targets'] !== undefined && metadataEntry['targets'] !== undefined) {
+      const entryTargetsMetadata: CliGenerateGithubWorkflowsRunTargetsMetadata = metadataEntry['targets'];
+
+      for (const setupTarget of entry['targets']) {
+        const setupTargetType: CliGenerateGithubWorkflowsRunTargetType = setupTarget['type'];
+        const setupTargetMetadata: CliGenerateGithubWorkflowsRunTargetMetadata = entryTargetsMetadata[setupTargetType];
+
+        if (setupTargetMetadata === undefined) {
+          continue;
+        }
+
+        for (const targetVariableEntry of Object.entries(setupTargetMetadata['variables'])) {
+          const targetVariableName: CliGenerateGithubWorkflowsRunVariableName = targetVariableEntry[0];
+          const targetVariableMeta: CliGenerateGithubWorkflowsRunVariableMeta = targetVariableEntry[1];
+
+          if (targetVariableMeta['auto'] === true) {
+            continue;
+          }
+
+          if (targetVariableMeta['format'] === 'secret') {
+            const targetResolvedName: CliGenerateGithubWorkflowsRunResolvedName = (entry['settings'] !== undefined && entry['settings'][targetVariableName] !== undefined) ? entry['settings'][targetVariableName] : (targetVariableMeta['default'] ?? targetVariableName);
+
+            lines.push(` - ${chalk.cyan(outputFileName)}: Secret ${chalk.yellow(targetResolvedName)}`);
+          }
+
+          if (targetVariableMeta['format'] === 'var') {
+            const targetResolvedName: CliGenerateGithubWorkflowsRunResolvedName = (entry['settings'] !== undefined && entry['settings'][targetVariableName] !== undefined) ? entry['settings'][targetVariableName] : (targetVariableMeta['default'] ?? targetVariableName);
+
+            lines.push(` - ${chalk.cyan(outputFileName)}: Variable ${chalk.yellow(targetResolvedName)}`);
+          }
+        }
+      }
+    }
+
+    return lines;
   }
 
   /**

@@ -13,9 +13,16 @@ import { join } from 'node:path';
 import { afterAll, describe, it } from 'vitest';
 
 import { CliGenerateGithubWorkflows } from '../../../../cli/generate/github/workflows.js';
+import { LIB_REGEX_PATTERN_ANSI } from '../../../../lib/regex.js';
 import { pathExists } from '../../../../lib/utility.js';
+import { libWorkflowTemplatesMetadata } from '../../../../lib/workflow-templates.js';
 
 import type {
+  TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesEntry,
+  TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesJoined,
+  TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesPublishMetadata,
+  TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesSetupLines,
+  TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesStripAnsiPattern,
   TestsCliGenerateGithubWorkflowsRunBackupFiles,
   TestsCliGenerateGithubWorkflowsRunContent,
   TestsCliGenerateGithubWorkflowsRunContentLines,
@@ -30,6 +37,7 @@ import type {
   TestsCliGenerateGithubWorkflowsRunOrphanFiles,
   TestsCliGenerateGithubWorkflowsRunPackageJson,
   TestsCliGenerateGithubWorkflowsRunPackageJsonPath,
+  TestsCliGenerateGithubWorkflowsRunPathOccurrences,
   TestsCliGenerateGithubWorkflowsRunPresetJobIndex,
   TestsCliGenerateGithubWorkflowsRunPresetNeedsLine,
   TestsCliGenerateGithubWorkflowsRunProjectDirectory,
@@ -946,6 +954,124 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     const presetNeedsLine: TestsCliGenerateGithubWorkflowsRunPresetNeedsLine = (presetJobIndex >= 0 && presetJobIndex + 1 < lines.length) ? lines[presetJobIndex + 1] as TestsCliGenerateGithubWorkflowsRunPresetNeedsLine : '';
 
     strictEqual(presetNeedsLine.trim(), 'needs: ["build", "publish-npm-packages-core"]', 'preset needs should include core job id');
+
+    return;
+  });
+
+  it('generates download-artifact step with workspace build path for docusaurus deploy targets', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'download-artifact-path');
+
+    await mkdir(join(projectDirectory, 'apps', 'docs'), { recursive: true });
+    await mkdir(join(projectDirectory, '.github', 'workflows'), { recursive: true });
+
+    const rootPackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = {
+      name: 'sandbox-project',
+      version: '0.0.0',
+      private: true,
+      workspaces: ['./apps/*'],
+    };
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify(rootPackageJson, null, 2));
+
+    const docsPackageJson: TestsCliGenerateGithubWorkflowsRunPackageJson = {
+      name: 'sandbox-docs',
+      version: '1.0.0',
+      scripts: {
+        build: 'echo build', check: 'echo check',
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'apps', 'docs', 'package.json'), JSON.stringify(docsPackageJson, null, 2));
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: {
+          title: 'Sandbox', slug: 'sandbox',
+        },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'release',
+        triggers: ['release'],
+        scopes: ['./apps/docs'],
+        targets: [
+          {
+            type: 'cloudflare-pages-docusaurus', workingDir: './apps/docs',
+          },
+          {
+            type: 'github-pages-docusaurus', workingDir: './apps/docs',
+          },
+        ],
+        settings: {
+          CLOUDFLARE_ACCOUNT_ID: 'CLOUDFLARE_ACCOUNT_ID',
+          CLOUDFLARE_API_TOKEN: 'CLOUDFLARE_API_TOKEN',
+          CLOUDFLARE_PROJECT_NAME: 'CLOUDFLARE_PROJECT_NAME',
+          ROOT_WORKING_DIR: './',
+        },
+      }],
+      workspaces: {
+        './apps/docs': {
+          role: 'docs', policy: 'freezable', name: 'sandbox-docs', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({
+      replaceFile: true,
+    });
+
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-release.yml');
+    const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(workflowPath, 'utf-8');
+    const pathOccurrences: TestsCliGenerateGithubWorkflowsRunPathOccurrences = content.split('path: "./apps/docs/build"').length - 1;
+
+    // 3 expected: 1 upload-artifact path in the shared build job + 1 download-artifact
+    // path per docusaurus target (cloudflare-pages + github-pages).
+    strictEqual(pathOccurrences, 3, 'Expected build upload + both docusaurus target downloads to carry path: "./apps/docs/build"');
+
+    return;
+  });
+
+  it('buildEntrySetupLines includes target-level secrets and variables for publish template', () => {
+    const entry: TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesEntry = {
+      template: 'publish',
+      suffix: 'project',
+      triggers: ['release'],
+      scopes: [
+        './packages/pkg-a',
+        './apps/docs',
+      ],
+      targets: [
+        {
+          type: 'npm', workingDir: './packages/pkg-a',
+        },
+        {
+          type: 'cloudflare-pages-docusaurus', workingDir: './apps/docs',
+        },
+      ],
+      settings: {
+        CLOUDFLARE_ACCOUNT_ID: 'CLOUDFLARE_ACCOUNT_ID',
+        CLOUDFLARE_API_TOKEN: 'CLOUDFLARE_API_TOKEN',
+        CLOUDFLARE_PROJECT_NAME: 'CLOUDFLARE_PROJECT_NAME',
+        NPM_TOKEN: 'NPM_TOKEN',
+        ROOT_WORKING_DIR: './',
+      },
+    };
+    const publishMetadata: TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesPublishMetadata = libWorkflowTemplatesMetadata.find((candidate) => candidate['name'] === 'publish');
+
+    strictEqual(publishMetadata !== undefined, true, 'publish metadata entry must exist');
+
+    const setupLines: TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesSetupLines = CliGenerateGithubWorkflows.buildEntrySetupLines(entry, publishMetadata, 'nova-publish-project.yml');
+    const stripAnsiPattern: TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesStripAnsiPattern = new RegExp(LIB_REGEX_PATTERN_ANSI, 'g');
+    const joined: TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesJoined = setupLines.join('\n').replace(stripAnsiPattern, '');
+
+    strictEqual(joined.includes('Secret NPM_TOKEN'), true, 'Expected NPM_TOKEN secret in setup lines');
+    strictEqual(joined.includes('Secret CLOUDFLARE_API_TOKEN'), true, 'Expected CLOUDFLARE_API_TOKEN secret in setup lines');
+    strictEqual(joined.includes('Variable CLOUDFLARE_ACCOUNT_ID'), true, 'Expected CLOUDFLARE_ACCOUNT_ID variable in setup lines');
+    strictEqual(joined.includes('Variable CLOUDFLARE_PROJECT_NAME'), true, 'Expected CLOUDFLARE_PROJECT_NAME variable in setup lines');
 
     return;
   });

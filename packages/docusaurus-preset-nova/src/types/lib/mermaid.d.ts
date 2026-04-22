@@ -22,6 +22,15 @@ export type LibMermaidGetCssVariableReturns = string;
 export type LibMermaidGetCssVariableComputedStyle = CSSStyleDeclaration;
 
 /**
+ * Lib - Mermaid - Get Density Multiplier.
+ *
+ * @since 0.16.2
+ */
+export type LibMermaidGetDensityMultiplierReturns = number;
+
+export type LibMermaidGetDensityMultiplierPadding = string;
+
+/**
  * Lib - Mermaid - Load Mermaid.
  *
  * @since 0.15.0
@@ -51,6 +60,12 @@ export type LibMermaidUseMermaidConfigColorMode = string;
 export type LibMermaidUseMermaidConfigIsDark = boolean;
 
 export type LibMermaidUseMermaidConfigFontFamily = string;
+
+export type LibMermaidUseMermaidConfigDisplayFontFamily = string;
+
+export type LibMermaidUseMermaidConfigCodeFontFamily = string;
+
+export type LibMermaidUseMermaidConfigDensityMultiplier = number;
 
 export type LibMermaidUseMermaidConfigConfigStartOnLoad = boolean;
 

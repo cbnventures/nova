@@ -1,5 +1,12 @@
 # @cbnventures/nova
 
+## 0.16.2 - 2026-04-21
+
+### FIXED
+- Setup instructions from nova generate github workflows now list every required GitHub secret and variable across publish targets (NPM_TOKEN, CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_PROJECT_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AMPLIFY_APP_ID, VERCEL_TOKEN, DOCKERHUB_TOKEN, etc.) — previously only template-level variables were listed and per-target publish credentials were silently omitted
+- Cloudflare Pages and GitHub Pages docusaurus deployments failed because the generated workflows downloaded the build artifact to the workspace root instead of the working directory; download-artifact now specifies the correct path in both publish target templates so wrangler and the Pages upload action find the build output.
+- Generated README.md no longer emits broken HTML or empty sections when fields are missing from nova.config.json. Each section now renders only when its source value exists: the centered header block omits the `<picture>` when `urls.logo` is missing, drops the `<a href>` wrapping when `urls.homepage` is missing, and skips entirely when `project.name.title` is missing; the `## Introduction` section is omitted when `project.description.long` is missing; the `## Documentation` section is omitted when `urls.documentation` is missing (previously left a broken `[]()` markdown link).
+
 ## 0.16.1 - 2026-04-21
 
 ### FIXED

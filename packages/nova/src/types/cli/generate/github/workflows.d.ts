@@ -18,6 +18,21 @@ export type CliGenerateGithubWorkflowsBuildCommandFlag = string;
 export type CliGenerateGithubWorkflowsBuildCommandFlags = CliGenerateGithubWorkflowsBuildCommandFlag[];
 
 /**
+ * CLI - Generate - GitHub - Workflows - Build Entry Setup Lines.
+ *
+ * @since 0.16.2
+ */
+export type CliGenerateGithubWorkflowsBuildEntrySetupLinesEntry = import('../../../shared.d.ts').SharedNovaConfigWorkflow;
+
+export type CliGenerateGithubWorkflowsBuildEntrySetupLinesMetadataEntry = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesEntry | undefined;
+
+export type CliGenerateGithubWorkflowsBuildEntrySetupLinesOutputFileName = string;
+
+export type CliGenerateGithubWorkflowsBuildEntrySetupLinesReturns = string[];
+
+export type CliGenerateGithubWorkflowsBuildEntrySetupLinesLines = string[];
+
+/**
  * CLI - Generate - GitHub - Workflows - Build Merged Jobs Condition.
  *
  * @since 0.21.0
@@ -459,7 +474,7 @@ export type CliGenerateGithubWorkflowsRunAppendedFragments = string;
 
 export type CliGenerateGithubWorkflowsRunSubstituted = string;
 
-export type CliGenerateGithubWorkflowsRunResolvedName = string;
+export type CliGenerateGithubWorkflowsRunEntrySetupLines = string[];
 
 export type CliGenerateGithubWorkflowsRunDisplayPath = string;
 
@@ -476,6 +491,8 @@ export type CliGenerateGithubWorkflowsRunIsBackup = boolean;
 export type CliGenerateGithubWorkflowsRunOrphanPath = string;
 
 export type CliGenerateGithubWorkflowsRunSetupMessage = string;
+
+export type CliGenerateGithubWorkflowsRunResolvedName = string;
 
 /**
  * CLI - Generate - GitHub - Workflows - Slugify Working Dir.

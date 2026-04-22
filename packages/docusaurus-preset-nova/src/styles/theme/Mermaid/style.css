@@ -1,9 +1,11 @@
 .docusaurus-mermaid-container {
   overflow-x: auto;
+  margin-block: 1.5rem;
 }
 
 .docusaurus-mermaid-container > svg {
   display: block;
+  margin-inline: auto;
 }
 
 /*

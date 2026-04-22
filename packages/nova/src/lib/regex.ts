@@ -671,16 +671,6 @@ export const LIB_REGEX_PLACEHOLDER_PRIVACY_POLICY = /\[__PRIVACY_POLICY__\]/;
 export const LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION = /\[__PROJECT_DESCRIPTION__\]/;
 
 /**
- * Lib - Regex - Placeholder Project Documentation URL.
- *
- * Matches "[__PROJECT_DOCUMENTATION_URL__]" in the README template. Used by the
- * read-me generator to insert the docs site link.
- *
- * @since 0.11.0
- */
-export const LIB_REGEX_PLACEHOLDER_PROJECT_DOCUMENTATION_URL = /\[__PROJECT_DOCUMENTATION_URL__\]/;
-
-/**
  * Lib - Regex - Placeholder Project Homepage.
  *
  * Matches the "[__PROJECT_HOMEPAGE__]" token in template files. Reserved for generators

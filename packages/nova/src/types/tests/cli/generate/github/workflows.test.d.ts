@@ -46,3 +46,15 @@ export type TestsCliGenerateGithubWorkflowsRunCoreNeedsLine = string;
 export type TestsCliGenerateGithubWorkflowsRunPresetJobIndex = number;
 
 export type TestsCliGenerateGithubWorkflowsRunPresetNeedsLine = string;
+
+export type TestsCliGenerateGithubWorkflowsRunPathOccurrences = number;
+
+export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesEntry = import('../../../../cli/generate/github/workflows.d.ts').CliGenerateGithubWorkflowsRunWorkflowEntry;
+
+export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesPublishMetadata = import('../../../../cli/generate/github/workflows.d.ts').CliGenerateGithubWorkflowsRunMetadataEntry;
+
+export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesSetupLines = string[];
+
+export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesStripAnsiPattern = RegExp;
+
+export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesJoined = string;

@@ -369,6 +369,7 @@ jobs:
         uses: "actions/download-artifact@v4"
         with:
           name: "build-output"
+          path: "./apps/docs/build"
 
       - name: "Deploy to Cloudflare Pages"
         if: "${{ env.PUBLISH == 'true' }}"

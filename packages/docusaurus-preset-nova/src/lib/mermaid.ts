@@ -5,9 +5,14 @@ import type {
   LibMermaidGetCssVariableComputedStyle,
   LibMermaidGetCssVariableName,
   LibMermaidGetCssVariableReturns,
+  LibMermaidGetDensityMultiplierPadding,
+  LibMermaidGetDensityMultiplierReturns,
   LibMermaidLoadMermaidReturns,
   LibMermaidPromise,
+  LibMermaidUseMermaidConfigCodeFontFamily,
   LibMermaidUseMermaidConfigColorMode,
+  LibMermaidUseMermaidConfigDensityMultiplier,
+  LibMermaidUseMermaidConfigDisplayFontFamily,
   LibMermaidUseMermaidConfigFontFamily,
   LibMermaidUseMermaidConfigIsDark,
   LibMermaidUseMermaidConfigReturns,
@@ -57,6 +62,31 @@ function getCssVariable(name: LibMermaidGetCssVariableName): LibMermaidGetCssVar
 }
 
 /**
+ * Lib - Mermaid - Get Density Multiplier.
+ *
+ * Reads the shape density CSS variable and returns a scalar
+ * that scales mermaid spacing values — 0.5 for compact, 1.5
+ * for spacious, 1 for the comfortable default.
+ *
+ * @returns {LibMermaidGetDensityMultiplierReturns}
+ *
+ * @since 0.16.2
+ */
+function getDensityMultiplier(): LibMermaidGetDensityMultiplierReturns {
+  const padding: LibMermaidGetDensityMultiplierPadding = getCssVariable('--nova-shape-padding');
+
+  if (padding === '0.5rem') {
+    return 0.5;
+  }
+
+  if (padding === '1.5rem') {
+    return 1.5;
+  }
+
+  return 1;
+}
+
+/**
  * Lib - Mermaid - Promise.
  *
  * Module-level memoization variable for the lazy-loaded mermaid
@@ -99,6 +129,9 @@ export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
   const colorMode: LibMermaidUseMermaidConfigColorMode = (typeof document !== 'undefined') ? (document.documentElement.getAttribute('data-theme') ?? 'light') : 'light';
   const isDark: LibMermaidUseMermaidConfigIsDark = colorMode === 'dark';
   const fontFamily: LibMermaidUseMermaidConfigFontFamily = getCssVariable('--nova-font-body');
+  const displayFontFamily: LibMermaidUseMermaidConfigDisplayFontFamily = getCssVariable('--nova-font-display');
+  const codeFontFamily: LibMermaidUseMermaidConfigCodeFontFamily = getCssVariable('--nova-font-code');
+  const densityMultiplier: LibMermaidUseMermaidConfigDensityMultiplier = getDensityMultiplier();
 
   /*
    * securityLevel: 'loose' matches @docusaurus/theme-mermaid's default.
@@ -133,27 +166,28 @@ export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
       fontSize: '14px',
     },
     themeCSS: [
-      '.node rect, .node circle, .node polygon, .node ellipse, .node .basic { rx: 8px; ry: 8px; stroke-width: 1.5px; }',
+      '.node rect, .node circle, .node polygon, .node ellipse, .node .basic { rx: var(--nova-shape-radius); ry: var(--nova-shape-radius); stroke-width: 1.5px; }',
       '.node .label { font-weight: 500; letter-spacing: -0.01em; }',
       '.edgePath path.path { stroke-width: 1.5px; }',
       '.edgeLabel { font-size: 12px; }',
-      '.cluster rect { rx: 12px; ry: 12px; stroke-width: 1.5px; }',
-      '.cluster text { font-weight: 600; font-size: 13px; letter-spacing: -0.01em; }',
+      '.cluster rect { rx: calc(var(--nova-shape-radius) * 1.5); ry: calc(var(--nova-shape-radius) * 1.5); stroke-width: 1.5px; }',
+      `.cluster text { font-weight: 600; font-size: 13px; letter-spacing: -0.01em; font-family: ${displayFontFamily}; }`,
       `.label { font-family: ${fontFamily}; }`,
       `.nodeLabel { font-family: ${fontFamily}; }`,
       `.edgeLabel { font-family: ${fontFamily}; }`,
+      `code { font-family: ${codeFontFamily}; }`,
       '.label foreignObject { overflow: visible; }',
       `.node.muted rect, .node.muted path, .node.muted .basic { fill: ${getCssVariable(isDark === true ? '--nova-color-neutral-800' : '--nova-color-neutral-100')} !important; stroke: ${getCssVariable(isDark === true ? '--nova-color-neutral-600' : '--nova-color-neutral-300')} !important; }`,
       `.node.muted .label, .node.muted .nodeLabel { color: ${getCssVariable(isDark === true ? '--nova-color-neutral-400' : '--nova-color-neutral-500')} !important; }`,
     ].join('\n'),
     flowchart: {
       curve: 'basis',
-      padding: 16,
-      nodeSpacing: 50,
-      rankSpacing: 60,
+      padding: Math.round(16 * densityMultiplier),
+      nodeSpacing: Math.round(50 * densityMultiplier),
+      rankSpacing: Math.round(60 * densityMultiplier),
       subGraphTitleMargin: {
-        top: 16,
-        bottom: 8,
+        top: Math.round(16 * densityMultiplier),
+        bottom: Math.round(8 * densityMultiplier),
       },
       useMaxWidth: false,
     },

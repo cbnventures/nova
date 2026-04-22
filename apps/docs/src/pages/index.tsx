@@ -124,7 +124,7 @@ function Home() {
         <title>Nova - Your Config Is Technical Debt</title>
       </Head>
       <Hero
-        eyebrow="ES and Beyond"
+        eyebrow="ESM and Beyond"
         heading={(
           <Typewriter>
             <Typewriter.Prefix>Your config is </Typewriter.Prefix>

@@ -1,14 +1,7 @@
-import { promises as fs } from 'fs';
 import { join } from 'path';
 
 import { LibNovaConfig } from '../../../lib/nova-config.js';
 import {
-  LIB_REGEX_PLACEHOLDER_PLATFORM_BADGES,
-  LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION,
-  LIB_REGEX_PLACEHOLDER_PROJECT_DOCUMENTATION_URL,
-  LIB_REGEX_PLACEHOLDER_PROJECT_LINK,
-  LIB_REGEX_PLACEHOLDER_PROJECT_LOGO_URL,
-  LIB_REGEX_PLACEHOLDER_PROJECT_NAME,
   LIB_REGEX_URL_PREFIX_BUY_ME_A_COFFEE,
   LIB_REGEX_URL_PREFIX_DOCKER_HUB,
   LIB_REGEX_URL_PREFIX_GITHUB,
@@ -20,7 +13,7 @@ import {
   LIB_REGEX_URL_PREFIX_PATREON,
   LIB_REGEX_URL_PREFIX_PAYPAL,
 } from '../../../lib/regex.js';
-import { isProjectRoot, resolveTemplatePath, saveGeneratedFile } from '../../../lib/utility.js';
+import { isProjectRoot, saveGeneratedFile } from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
@@ -44,6 +37,16 @@ import type {
   CliGenerateMustHavesReadMeBuildCreditsSectionPronounUs,
   CliGenerateMustHavesReadMeBuildCreditsSectionReturns,
   CliGenerateMustHavesReadMeBuildCreditsSectionSections,
+  CliGenerateMustHavesReadMeBuildDocumentationSectionDocumentationUrl,
+  CliGenerateMustHavesReadMeBuildDocumentationSectionReturns,
+  CliGenerateMustHavesReadMeBuildHeaderSectionBadges,
+  CliGenerateMustHavesReadMeBuildHeaderSectionHomepageUrl,
+  CliGenerateMustHavesReadMeBuildHeaderSectionLines,
+  CliGenerateMustHavesReadMeBuildHeaderSectionLogoUrl,
+  CliGenerateMustHavesReadMeBuildHeaderSectionProjectName,
+  CliGenerateMustHavesReadMeBuildHeaderSectionReturns,
+  CliGenerateMustHavesReadMeBuildIntroductionSectionProjectDescription,
+  CliGenerateMustHavesReadMeBuildIntroductionSectionReturns,
   CliGenerateMustHavesReadMeDetectFundPlatformReturns,
   CliGenerateMustHavesReadMeDetectFundPlatformUrl,
   CliGenerateMustHavesReadMeRunBadges,
@@ -55,12 +58,15 @@ import type {
   CliGenerateMustHavesReadMeRunDistributableReadmePath,
   CliGenerateMustHavesReadMeRunDockerImage,
   CliGenerateMustHavesReadMeRunDockerUrl,
+  CliGenerateMustHavesReadMeRunDocumentationSection,
   CliGenerateMustHavesReadMeRunDocumentationUrl,
   CliGenerateMustHavesReadMeRunEntities,
   CliGenerateMustHavesReadMeRunFundSources,
   CliGenerateMustHavesReadMeRunGithubRepo,
   CliGenerateMustHavesReadMeRunGithubUrl,
+  CliGenerateMustHavesReadMeRunHeaderSection,
   CliGenerateMustHavesReadMeRunHomepageUrl,
+  CliGenerateMustHavesReadMeRunIntroductionSection,
   CliGenerateMustHavesReadMeRunIsAtProjectRoot,
   CliGenerateMustHavesReadMeRunIsDryRun,
   CliGenerateMustHavesReadMeRunIsReplaceFile,
@@ -80,6 +86,7 @@ import type {
   CliGenerateMustHavesReadMeRunReplaceFileNotice,
   CliGenerateMustHavesReadMeRunReturns,
   CliGenerateMustHavesReadMeRunRoles,
+  CliGenerateMustHavesReadMeRunSections,
   CliGenerateMustHavesReadMeRunTargetPath,
   CliGenerateMustHavesReadMeRunUrls,
   CliGenerateMustHavesReadMeRunWorkingFile,
@@ -171,19 +178,30 @@ export class CliGenerateMustHavesReadMe {
     });
 
     const badges: CliGenerateMustHavesReadMeRunBadges = CliGenerateMustHavesReadMe.buildBadges(githubRepo, npmPackage, dockerImage, projectPlatforms, fundSources);
+    const headerSection: CliGenerateMustHavesReadMeRunHeaderSection = CliGenerateMustHavesReadMe.buildHeaderSection(projectName, homepageUrl, logoUrl, badges);
+    const introductionSection: CliGenerateMustHavesReadMeRunIntroductionSection = CliGenerateMustHavesReadMe.buildIntroductionSection(projectDescription);
+    const documentationSection: CliGenerateMustHavesReadMeRunDocumentationSection = CliGenerateMustHavesReadMe.buildDocumentationSection(documentationUrl);
     const creditsSection: CliGenerateMustHavesReadMeRunCreditsSection = CliGenerateMustHavesReadMe.buildCreditsSection(fundSources, contributorsAndSupporters, pronounUs, pronounOur);
 
-    let content: CliGenerateMustHavesReadMeRunContent = (await fs.readFile(join(resolveTemplatePath(import.meta.url, 'generators/must-haves/read-me'), 'README.md'), 'utf-8'))
-      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_PROJECT_NAME.source, 'g'), projectName)
-      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_PROJECT_LINK.source, 'g'), homepageUrl)
-      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_PROJECT_LOGO_URL.source, 'g'), logoUrl)
-      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_PROJECT_DESCRIPTION.source, 'g'), projectDescription)
-      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_PROJECT_DOCUMENTATION_URL.source, 'g'), documentationUrl)
-      .replace(new RegExp(LIB_REGEX_PLACEHOLDER_PLATFORM_BADGES.source, 'g'), badges);
+    const sections: CliGenerateMustHavesReadMeRunSections = [];
+
+    if (headerSection !== '') {
+      sections.push(headerSection);
+    }
+
+    if (introductionSection !== '') {
+      sections.push(introductionSection);
+    }
+
+    if (documentationSection !== '') {
+      sections.push(documentationSection);
+    }
 
     if (creditsSection !== '') {
-      content += creditsSection;
+      sections.push(creditsSection);
     }
+
+    const content: CliGenerateMustHavesReadMeRunContent = `${sections.join('\n\n')}\n`;
 
     const targetPath: CliGenerateMustHavesReadMeRunTargetPath = join(currentDirectory, 'README.md');
 
@@ -313,7 +331,7 @@ export class CliGenerateMustHavesReadMe {
       return '';
     }
 
-    const sections: CliGenerateMustHavesReadMeBuildCreditsSectionSections = ['\n## Credits and Appreciation'];
+    const sections: CliGenerateMustHavesReadMeBuildCreditsSectionSections = ['## Credits and Appreciation'];
 
     if (fundSources.length > 0) {
       const fundLines: CliGenerateMustHavesReadMeBuildCreditsSectionFundLines = [];
@@ -401,9 +419,118 @@ export class CliGenerateMustHavesReadMe {
       }
     }
 
-    sections.push('');
-
     return sections.join('\n');
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Read Me - Build Documentation Section.
+   *
+   * Builds the `## Documentation` section markdown. Returns an empty string
+   * when `documentationUrl` is missing so the section can be omitted entirely.
+   *
+   * @param {CliGenerateMustHavesReadMeBuildDocumentationSectionDocumentationUrl} documentationUrl - Documentation url.
+   *
+   * @private
+   *
+   * @returns {CliGenerateMustHavesReadMeBuildDocumentationSectionReturns}
+   *
+   * @since 0.16.2
+   */
+  private static buildDocumentationSection(documentationUrl: CliGenerateMustHavesReadMeBuildDocumentationSectionDocumentationUrl): CliGenerateMustHavesReadMeBuildDocumentationSectionReturns {
+    if (documentationUrl === '') {
+      return '';
+    }
+
+    return [
+      '## Documentation',
+      '',
+      `To get started, visit [${documentationUrl}](${documentationUrl}) to view the full documentation.`,
+    ].join('\n');
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Read Me - Build Header Section.
+   *
+   * Builds the centered header block with optional logo, homepage link,
+   * title, and badges. Each piece appears only when its source value exists.
+   *
+   * @param {CliGenerateMustHavesReadMeBuildHeaderSectionProjectName} projectName - Project name.
+   * @param {CliGenerateMustHavesReadMeBuildHeaderSectionHomepageUrl} homepageUrl - Homepage url.
+   * @param {CliGenerateMustHavesReadMeBuildHeaderSectionLogoUrl}     logoUrl     - Logo url.
+   * @param {CliGenerateMustHavesReadMeBuildHeaderSectionBadges}      badges      - Badges.
+   *
+   * @private
+   *
+   * @returns {CliGenerateMustHavesReadMeBuildHeaderSectionReturns}
+   *
+   * @since 0.16.2
+   */
+  private static buildHeaderSection(projectName: CliGenerateMustHavesReadMeBuildHeaderSectionProjectName, homepageUrl: CliGenerateMustHavesReadMeBuildHeaderSectionHomepageUrl, logoUrl: CliGenerateMustHavesReadMeBuildHeaderSectionLogoUrl, badges: CliGenerateMustHavesReadMeBuildHeaderSectionBadges): CliGenerateMustHavesReadMeBuildHeaderSectionReturns {
+    if (projectName === '') {
+      return '';
+    }
+
+    const lines: CliGenerateMustHavesReadMeBuildHeaderSectionLines = ['<div align="center">'];
+
+    if (logoUrl !== '' && homepageUrl !== '') {
+      lines.push(
+        `  <a href="${homepageUrl}">`,
+        '    <picture>',
+        `      <img alt="${projectName}" src="${logoUrl}" height="128">`,
+        '    </picture>',
+        '  </a>',
+        `  <h1>${projectName}</h1>`,
+      );
+    } else if (logoUrl !== '') {
+      lines.push(
+        '  <picture>',
+        `    <img alt="${projectName}" src="${logoUrl}" height="128">`,
+        '  </picture>',
+        `  <h1>${projectName}</h1>`,
+      );
+    } else if (homepageUrl !== '') {
+      lines.push(
+        `  <a href="${homepageUrl}">`,
+        `    <h1>${projectName}</h1>`,
+        '  </a>',
+      );
+    } else {
+      lines.push(`  <h1>${projectName}</h1>`);
+    }
+
+    if (badges !== '') {
+      lines.push(badges);
+    }
+
+    lines.push('</div>');
+
+    return lines.join('\n');
+  }
+
+  /**
+   * CLI - Generate - Must Haves - Read Me - Build Introduction Section.
+   *
+   * Builds the `## Introduction` section markdown. Returns an empty string
+   * when `projectDescription` is missing so the section can be omitted entirely.
+   *
+   * @param {CliGenerateMustHavesReadMeBuildIntroductionSectionProjectDescription} projectDescription - Project description.
+   *
+   * @private
+   *
+   * @returns {CliGenerateMustHavesReadMeBuildIntroductionSectionReturns}
+   *
+   * @since 0.16.2
+   */
+  private static buildIntroductionSection(projectDescription: CliGenerateMustHavesReadMeBuildIntroductionSectionProjectDescription): CliGenerateMustHavesReadMeBuildIntroductionSectionReturns {
+    if (projectDescription === '') {
+      return '';
+    }
+
+    return [
+      '## Introduction',
+      '',
+      projectDescription,
+    ].join('\n');
   }
 
   /**

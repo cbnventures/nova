@@ -24,3 +24,17 @@ export type TestsCliGenerateMustHavesReadMeRunNovaConfigPath = string;
 export type TestsCliGenerateMustHavesReadMeRunExists = boolean;
 
 export type TestsCliGenerateMustHavesReadMeRunReadmePath = string;
+
+export type TestsCliGenerateMustHavesReadMeRunReadmeContent = string;
+
+export type TestsCliGenerateMustHavesReadMeRunHasDocumentationSection = boolean;
+
+export type TestsCliGenerateMustHavesReadMeRunHasBrokenLink = boolean;
+
+export type TestsCliGenerateMustHavesReadMeRunHasIntroductionSection = boolean;
+
+export type TestsCliGenerateMustHavesReadMeRunHasPictureBlock = boolean;
+
+export type TestsCliGenerateMustHavesReadMeRunHasHeaderBlock = boolean;
+
+export type TestsCliGenerateMustHavesReadMeRunHasAnchorWrapping = boolean;

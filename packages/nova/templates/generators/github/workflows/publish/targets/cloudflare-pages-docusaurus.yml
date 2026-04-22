@@ -13,6 +13,7 @@ publish-cloudflare-pages-docusaurus-[__TARGET_ID__]:
       uses: "actions/download-artifact@v4"
       with:
         name: "build-output"
+        path: "[__WORKING_DIR__]/build"
 
     - name: "Deploy to Cloudflare Pages"
       if: "${{ env.PUBLISH == 'true' }}"

@@ -67,6 +67,41 @@ export type CliGenerateMustHavesReadMeBuildCreditsSectionEntityName = string;
 export type CliGenerateMustHavesReadMeBuildCreditsSectionEntityUrl = string;
 
 /**
+ * CLI - Generate - Must Haves - Read Me - Build Documentation Section.
+ *
+ * @since 0.16.2
+ */
+export type CliGenerateMustHavesReadMeBuildDocumentationSectionDocumentationUrl = string;
+
+export type CliGenerateMustHavesReadMeBuildDocumentationSectionReturns = string;
+
+/**
+ * CLI - Generate - Must Haves - Read Me - Build Header Section.
+ *
+ * @since 0.16.2
+ */
+export type CliGenerateMustHavesReadMeBuildHeaderSectionProjectName = string;
+
+export type CliGenerateMustHavesReadMeBuildHeaderSectionHomepageUrl = string;
+
+export type CliGenerateMustHavesReadMeBuildHeaderSectionLogoUrl = string;
+
+export type CliGenerateMustHavesReadMeBuildHeaderSectionBadges = string;
+
+export type CliGenerateMustHavesReadMeBuildHeaderSectionReturns = string;
+
+export type CliGenerateMustHavesReadMeBuildHeaderSectionLines = string[];
+
+/**
+ * CLI - Generate - Must Haves - Read Me - Build Introduction Section.
+ *
+ * @since 0.16.2
+ */
+export type CliGenerateMustHavesReadMeBuildIntroductionSectionProjectDescription = string;
+
+export type CliGenerateMustHavesReadMeBuildIntroductionSectionReturns = string;
+
+/**
  * CLI - Generate - Must Haves - Read Me - Detect Fund Platform.
  *
  * @since 0.15.0
@@ -153,13 +188,15 @@ export type CliGenerateMustHavesReadMeRunRoles = SharedNovaConfigEntityRoles;
 
 export type CliGenerateMustHavesReadMeRunBadges = string;
 
+export type CliGenerateMustHavesReadMeRunHeaderSection = string;
+
+export type CliGenerateMustHavesReadMeRunIntroductionSection = string;
+
+export type CliGenerateMustHavesReadMeRunDocumentationSection = string;
+
 export type CliGenerateMustHavesReadMeRunCreditsSection = string;
 
-export type CliGenerateMustHavesReadMeRunTemplateDirectory = string;
-
-export type CliGenerateMustHavesReadMeRunTemplatePath = string;
-
-export type CliGenerateMustHavesReadMeRunTemplate = string;
+export type CliGenerateMustHavesReadMeRunSections = string[];
 
 export type CliGenerateMustHavesReadMeRunContent = string;
 
