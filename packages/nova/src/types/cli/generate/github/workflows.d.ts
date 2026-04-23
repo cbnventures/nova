@@ -1,6 +1,17 @@
 import type { SharedGeneratorRunResult } from '../../../shared.d.ts';
 
 /**
+ * CLI - Generate - GitHub - Workflows - Build Artifact Name.
+ *
+ * @since 0.16.3
+ */
+export type CliGenerateGithubWorkflowsBuildArtifactNameTargetType = string;
+
+export type CliGenerateGithubWorkflowsBuildArtifactNameTargetId = string;
+
+export type CliGenerateGithubWorkflowsBuildArtifactNameReturns = string;
+
+/**
  * CLI - Generate - GitHub - Workflows - Build Command.
  *
  * @since 0.16.0
@@ -178,42 +189,48 @@ export type CliGenerateGithubWorkflowsDetectTurboReturns = Promise<boolean>;
 export type CliGenerateGithubWorkflowsDetectTurboTurboConfigPath = string;
 
 /**
- * CLI - Generate - GitHub - Workflows - Render Artifact Paths.
+ * CLI - Generate - GitHub - Workflows - Render Upload Artifact Steps.
  *
- * @since 0.16.0
+ * @since 0.16.3
  */
-export type CliGenerateGithubWorkflowsRenderArtifactPathsTargets = CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntry[];
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargets = CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetEntry[];
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntryArtifactPath = string;
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadataEntryArtifactPath = string;
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntryArtifactPaths = CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntryArtifactPath[];
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadataEntryArtifactPaths = CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadataEntryArtifactPath[];
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntry = {
-  artifactPaths: CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntryArtifactPaths;
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadataEntry = {
+  artifactPaths: CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadataEntryArtifactPaths;
 };
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadata = Record<string, CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntry>;
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadata = Record<string, CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadataEntry>;
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsReturns = string;
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsReturns = string;
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsSeen = Set<string>;
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetEntryType = string;
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsPaths = CliGenerateGithubWorkflowsRenderArtifactPathsPath[];
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetEntryWorkingDir = string;
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntryType = string;
-
-export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntryWorkingDir = string;
-
-export type CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntry = {
-  type: CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntryType;
-  workingDir: CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntryWorkingDir;
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetEntry = {
+  type: CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetEntryType;
+  workingDir: CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetEntryWorkingDir;
 };
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsMetadata = CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadataEntry | undefined;
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsSteps = string[];
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsPath = string;
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsMetadata = CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadataEntry | undefined;
 
-export type CliGenerateGithubWorkflowsRenderArtifactPathsLines = string[];
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsStrippedDir = string;
+
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetId = string;
+
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsArtifactName = string;
+
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsPathLines = string[];
+
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsResolvedPath = string;
+
+export type CliGenerateGithubWorkflowsRenderUploadArtifactStepsStepLines = string[];
 
 /**
  * CLI - Generate - GitHub - Workflows - Resolve Workspace Name.
@@ -428,11 +445,7 @@ export type CliGenerateGithubWorkflowsRunCheckCommand = string;
 
 export type CliGenerateGithubWorkflowsRunBuildCommand = string;
 
-export type CliGenerateGithubWorkflowsRunArtifactPathsBlock = string;
-
 export type CliGenerateGithubWorkflowsRunUploadArtifactStep = string;
-
-export type CliGenerateGithubWorkflowsRunUploadArtifactStepLines = string[];
 
 export type CliGenerateGithubWorkflowsRunResolvedTargetFragment = string;
 
@@ -449,6 +462,8 @@ export type CliGenerateGithubWorkflowsRunTargetFragmentRawContent = string;
 export type CliGenerateGithubWorkflowsRunTargetId = string;
 
 export type CliGenerateGithubWorkflowsRunTargetFragmentResolvedContent = string;
+
+export type CliGenerateGithubWorkflowsRunArtifactName = string;
 
 export type CliGenerateGithubWorkflowsRunTargetNeeds = import('../../../shared.d.ts').SharedNovaConfigWorkflowTargetNeeds;
 

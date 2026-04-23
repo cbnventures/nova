@@ -1,5 +1,19 @@
 # @cbnventures/nova
 
+## 0.17.0 - 2026-04-23
+
+### UPDATED
+- ESLint dx-ignore preset now ignores Next.js .next/ build output
+- License generator errors out instead of falling back to an interactive picker when project.license is missing from nova.config.json — set the license declaratively in the config.
+
+### FIXED
+- Generated publish workflow uses per-target named artifacts (build-${targetType}-${targetId}) instead of one shared build-output; multi-target projects (like an npm package plus a docs site) previously bundled every target's output into one artifact, so Cloudflare Pages and GitHub Pages publish jobs deployed everything — npm package files AND docs — instead of just the docs. npm and github-packages download steps also gained the missing path: [__WORKING_DIR__]/build line needed for single-target consumers.
+- Next.js publish workflows upload from build/ instead of .next/, matching the nova build/-folder convention that Docusaurus follows by default; the Next.js scaffold's next.config.mjs now sets distDir: 'build' so new apps match the convention without manual edits.
+- dx-ignore ESLint preset now ignores next-env.d.ts — Next.js regenerates this type shim on every build, so linting it is pointless.
+
+### ADDED
+- Generators now prepend a 'do not edit manually' header to .editorconfig, .gitignore, .env, .env.sample, README.md, and all .github/*.yml outputs — .env gets a fillable variant since nova owns the keys (managed via nova.config.json) but consumers fill in the values.
+
 ## 0.16.2 - 2026-04-21
 
 ### FIXED

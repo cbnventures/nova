@@ -44,23 +44,6 @@ export type CliGenerateMustHavesLicenseRunYearRange = string;
 
 export type CliGenerateMustHavesLicenseRunLicenseId = SharedNovaConfigProjectLicense | undefined;
 
-export type CliGenerateMustHavesLicenseRunLicenseChoiceTitle = string;
-
-export type CliGenerateMustHavesLicenseRunLicenseChoiceValue = SharedNovaConfigProjectLicense;
-
-export type CliGenerateMustHavesLicenseRunLicenseChoice = {
-  title: CliGenerateMustHavesLicenseRunLicenseChoiceTitle;
-  value: CliGenerateMustHavesLicenseRunLicenseChoiceValue;
-};
-
-export type CliGenerateMustHavesLicenseRunLicenseChoices = CliGenerateMustHavesLicenseRunLicenseChoice[];
-
-export type CliGenerateMustHavesLicenseRunLicenseOutputKey = 'licenseId';
-
-export type CliGenerateMustHavesLicenseRunLicenseOutput = Record<string, unknown>;
-
-export type CliGenerateMustHavesLicenseRunLicenseOutputValue = SharedNovaConfigProjectLicense | undefined;
-
 export type CliGenerateMustHavesLicenseRunTemplateDirectory = string;
 
 export type CliGenerateMustHavesLicenseRunTemplatePath = string;

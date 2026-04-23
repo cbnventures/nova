@@ -20,3 +20,7 @@ export type TestsCliGenerateMustHavesEditorconfigRunPackageJsonPath = string;
 export type TestsCliGenerateMustHavesEditorconfigRunExists = boolean;
 
 export type TestsCliGenerateMustHavesEditorconfigRunEditorconfigPath = string;
+
+export type TestsCliGenerateMustHavesEditorconfigRunWritten = string;
+
+export type TestsCliGenerateMustHavesEditorconfigRunExpectedBanner = string;

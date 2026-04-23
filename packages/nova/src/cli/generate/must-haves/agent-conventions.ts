@@ -3,6 +3,7 @@ import { join } from 'path';
 
 import chalk from 'chalk';
 
+import { LIB_CONSTANTS_DOCS_BASE_URL } from '../../../lib/constants.js';
 import {
   isFileIdentical,
   isProjectRoot,
@@ -168,7 +169,7 @@ export class CliGenerateMustHavesAgentConventions {
       `Fill out ${chalk.cyan('VISION.md')} and ${chalk.cyan('PROJECT_RULES.md')} to complete your agent conventions setup.`,
       '',
       'For the full workshop guide, visit:',
-      'https://nova.cbnventures.io/docs/cli/generators/must-haves/agent-conventions#vision-and-rules-workshop',
+      `${LIB_CONSTANTS_DOCS_BASE_URL}/docs/cli/generators/must-haves/agent-conventions#vision-and-rules-workshop`,
     ].join('\n');
 
     Logger.customize({

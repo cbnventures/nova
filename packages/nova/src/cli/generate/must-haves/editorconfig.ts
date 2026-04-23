@@ -74,7 +74,11 @@ export class CliGenerateMustHavesEditorconfig {
       return 'completed';
     }
 
-    await saveGeneratedFile(targetPath, content, isReplaceFile);
+    await saveGeneratedFile(targetPath, content, isReplaceFile, {
+      command: 'nova generate must-haves editorconfig',
+      docsSlug: 'cli/generators/must-haves/editorconfig',
+      mode: 'strict',
+    });
 
     return 'completed';
   }

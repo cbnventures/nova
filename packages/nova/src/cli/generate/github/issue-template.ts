@@ -73,6 +73,7 @@ import type {
   CliGenerateGithubIssueTemplateRunWe,
   CliGenerateGithubIssueTemplateRunWorkingFile,
 } from '../../../types/cli/generate/github/issue-template.d.ts';
+import type { LibUtilitySaveGeneratedFileHeader } from '../../../types/lib/utility.d.ts';
 
 /**
  * CLI - Generate - GitHub - Issue Template.
@@ -305,6 +306,12 @@ export class CliGenerateGithubIssueTemplate {
       'SUPPORT-REQUEST.yml',
     ];
 
+    const headerOptions: LibUtilitySaveGeneratedFileHeader = {
+      command: 'nova generate github issue-template',
+      docsSlug: 'cli/generators/github/issue-template',
+      mode: 'strict',
+    };
+
     for (const fileName of files) {
       const templatePath: CliGenerateGithubIssueTemplateRunTemplatePath = join(templateDirectory, fileName);
       const targetPath: CliGenerateGithubIssueTemplateRunTargetPath = join(currentDirectory, '.github', 'ISSUE_TEMPLATE', fileName);
@@ -392,7 +399,7 @@ export class CliGenerateGithubIssueTemplate {
         continue;
       }
 
-      await saveGeneratedFile(targetPath, content, isReplaceFile);
+      await saveGeneratedFile(targetPath, content, isReplaceFile, headerOptions);
     }
 
     return 'completed';

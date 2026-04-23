@@ -26,6 +26,13 @@ const config: PresetsEslintDxIgnoreConfigConfig = [
       '**/__generated__/**',
     ],
   },
+  {
+    name: 'nova/dx-ignore/next',
+    ignores: [
+      '**/.next/**',
+      '**/next-env.d.ts',
+    ],
+  },
 ];
 
 export default config;

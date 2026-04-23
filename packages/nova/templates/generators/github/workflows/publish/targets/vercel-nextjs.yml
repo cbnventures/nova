@@ -18,7 +18,7 @@ publish-vercel-nextjs-[__TARGET_ID__]:
     - name: "Download build artifacts"
       uses: "actions/download-artifact@v4"
       with:
-        name: "build-output"
+        name: "[__ARTIFACT_NAME__]"
 
     - name: "Install Vercel CLI"
       if: "${{ env.PUBLISH == 'true' }}"

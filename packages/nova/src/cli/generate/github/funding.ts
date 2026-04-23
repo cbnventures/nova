@@ -123,7 +123,11 @@ export class CliGenerateGithubFunding {
       return 'completed';
     }
 
-    await saveGeneratedFile(targetPath, content, isReplaceFile);
+    await saveGeneratedFile(targetPath, content, isReplaceFile, {
+      command: 'nova generate github funding',
+      docsSlug: 'cli/generators/github/funding',
+      mode: 'strict',
+    });
 
     return 'completed';
   }

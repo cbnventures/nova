@@ -9,6 +9,15 @@ import type {
 } from '../../shared.d.ts';
 
 /**
+ * Tests - Lib - Utility - Build Generated File Header.
+ *
+ * @since 0.16.3
+ */
+export type TestsLibUtilityBuildGeneratedFileHeaderResult = string;
+
+export type TestsLibUtilityBuildGeneratedFileHeaderThrew = boolean;
+
+/**
  * Tests - Lib - Utility - Current Timestamp.
  *
  * @since 0.12.0
@@ -283,6 +292,39 @@ export type TestsLibUtilityRenameFileWithDateExistingName = string;
 export type TestsLibUtilityRenameFileWithDateExistingFilePath = string;
 
 export type TestsLibUtilityRenameFileWithDateSecondFile = string | undefined;
+
+/**
+ * Tests - Lib - Utility - SaveGeneratedFile (with Header).
+ *
+ * @since 0.16.3
+ */
+export type TestsLibUtilitySaveGeneratedFileWithHeaderOriginalCwd = string;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderSandboxRoot = string;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderProjectDirectory = string;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderTargetPath = string;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderWritten = string;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderExpectedHeader = string;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsCommand = string;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsDocsSlug = string;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsMode = 'strict' | 'fillable';
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptions = {
+  command: TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsCommand;
+  docsSlug: TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsDocsSlug;
+  mode: TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsMode;
+};
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderFirstWrite = Stats;
+
+export type TestsLibUtilitySaveGeneratedFileWithHeaderSecondWrite = Stats;
 
 /**
  * Tests - Lib - Utility - Save Workspace Manifest.

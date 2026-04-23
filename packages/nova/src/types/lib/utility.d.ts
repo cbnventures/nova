@@ -12,6 +12,42 @@ import type {
 } from '../shared.d.ts';
 
 /**
+ * Lib - Utility - Build Generated File Header.
+ *
+ * @since 0.16.3
+ */
+export type LibUtilityBuildGeneratedFileHeaderOptionsCommand = string;
+
+export type LibUtilityBuildGeneratedFileHeaderOptionsDocsSlug = string;
+
+export type LibUtilityBuildGeneratedFileHeaderOptionsTargetPath = string;
+
+export type LibUtilityBuildGeneratedFileHeaderOptionsMode = 'strict' | 'fillable';
+
+export type LibUtilityBuildGeneratedFileHeaderOptions = {
+  command: LibUtilityBuildGeneratedFileHeaderOptionsCommand;
+  docsSlug: LibUtilityBuildGeneratedFileHeaderOptionsDocsSlug;
+  targetPath: LibUtilityBuildGeneratedFileHeaderOptionsTargetPath;
+  mode: LibUtilityBuildGeneratedFileHeaderOptionsMode;
+};
+
+export type LibUtilityBuildGeneratedFileHeaderReturns = string;
+
+export type LibUtilityBuildGeneratedFileHeaderBaseName = string;
+
+export type LibUtilityBuildGeneratedFileHeaderExtension = string;
+
+export type LibUtilityBuildGeneratedFileHeaderDocsUrl = string;
+
+export type LibUtilityBuildGeneratedFileHeaderRuleLine = string;
+
+export type LibUtilityBuildGeneratedFileHeaderIsHashStyle = boolean;
+
+export type LibUtilityBuildGeneratedFileHeaderIsMarkdownStyle = boolean;
+
+export type LibUtilityBuildGeneratedFileHeaderLines = string[];
+
+/**
  * Lib - Utility - Current Timestamp.
  *
  * @since 0.11.0
@@ -462,6 +498,18 @@ export type LibUtilitySaveGeneratedFileContents = string;
 
 export type LibUtilitySaveGeneratedFileReplaceFile = boolean;
 
+export type LibUtilitySaveGeneratedFileHeaderCommand = string;
+
+export type LibUtilitySaveGeneratedFileHeaderDocsSlug = string;
+
+export type LibUtilitySaveGeneratedFileHeaderMode = 'strict' | 'fillable';
+
+export type LibUtilitySaveGeneratedFileHeader = {
+  command: LibUtilitySaveGeneratedFileHeaderCommand;
+  docsSlug: LibUtilitySaveGeneratedFileHeaderDocsSlug;
+  mode: LibUtilitySaveGeneratedFileHeaderMode;
+};
+
 export type LibUtilitySaveGeneratedFileReturns = Promise<void>;
 
 export type LibUtilitySaveGeneratedFileParentDirectory = string;
@@ -469,6 +517,10 @@ export type LibUtilitySaveGeneratedFileParentDirectory = string;
 export type LibUtilitySaveGeneratedFileCurrentDirectory = string;
 
 export type LibUtilitySaveGeneratedFileDisplayName = string;
+
+export type LibUtilitySaveGeneratedFilePrefixedContents = string | undefined;
+
+export type LibUtilitySaveGeneratedFileHeaderBanner = string;
 
 /**
  * Lib - Utility - Save Workspace Manifest.

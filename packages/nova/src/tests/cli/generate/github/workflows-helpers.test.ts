@@ -8,15 +8,17 @@ import { describe, it } from 'vitest';
 import { CliGenerateGithubWorkflows } from '../../../../cli/generate/github/workflows.js';
 
 import type {
+  TestsCliGenerateGithubWorkflowsHelpersBuildArtifactNameResult,
   TestsCliGenerateGithubWorkflowsHelpersBuildCommandResult,
   TestsCliGenerateGithubWorkflowsHelpersDetectTurboPrefix,
   TestsCliGenerateGithubWorkflowsHelpersDetectTurboProjectDirectory,
   TestsCliGenerateGithubWorkflowsHelpersDetectTurboResult,
   TestsCliGenerateGithubWorkflowsHelpersDetectTurboTemporaryDirectory,
   TestsCliGenerateGithubWorkflowsHelpersDetectTurboTurboConfigPath,
-  TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsResult,
-  TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsTargetMetadata,
-  TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsTargets,
+  TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected,
+  TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsResult,
+  TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadata,
+  TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargets,
   TestsCliGenerateGithubWorkflowsHelpersResolveWorkspaceNameResult,
   TestsCliGenerateGithubWorkflowsHelpersResolveWorkspaceNameWorkspaces,
   TestsCliGenerateGithubWorkflowsHelpersSlugifyWorkingDirResult,
@@ -207,69 +209,154 @@ describe('CliGenerateGithubWorkflows.buildCommand', () => {
 });
 
 /**
- * Tests - CLI - Generate - GitHub - Workflows Helpers - Render Artifact Paths.
+ * Tests - CLI - Generate - GitHub - Workflows Helpers - Render Upload Artifact Steps.
  *
- * @since 0.16.0
+ * @since 0.16.3
  */
-describe('CliGenerateGithubWorkflows.renderArtifactPaths', () => {
-  const targetsMetadata: TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsTargetMetadata = {
+describe('CliGenerateGithubWorkflows.renderUploadArtifactSteps', () => {
+  const targetsMetadata: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadata = {
     'npm': { artifactPaths: ['{workingDir}/build'] },
     'github-packages': { artifactPaths: ['{workingDir}/build'] },
     'docker-hub': { artifactPaths: [] },
     'aws-amplify-nextjs': {
       artifactPaths: [
-        '{workingDir}/.next',
+        '{workingDir}/build',
         '{workingDir}/public',
       ],
     },
+    'cloudflare-pages-docusaurus': { artifactPaths: ['{workingDir}/build'] },
   };
 
-  it('dedupes paths across multiple targets for the same workingDir', () => {
-    const targets: TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsTargets = [
+  it('emits one upload step per target without deduping shared workingDirs', () => {
+    const targets: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargets = [
       {
         type: 'npm', workingDir: './packages/nova',
       },
       {
         type: 'github-packages', workingDir: './packages/nova',
       },
-      {
-        type: 'npm', workingDir: './packages/docusaurus-preset-nova',
-      },
     ];
 
-    const result: TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsResult = helpers.renderArtifactPaths(targets, targetsMetadata);
+    const result: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsResult = helpers.renderUploadArtifactSteps(targets, targetsMetadata);
 
-    strictEqual(result, [
+    const expected: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected = [
+      '      - name: "Upload build artifacts (npm/packages-nova)"',
+      '        uses: "actions/upload-artifact@v4"',
+      '        with:',
+      '          name: "build-npm-packages-nova"',
+      '          retention-days: 1',
+      '          path: |',
       '            packages/nova/build',
-      '            packages/docusaurus-preset-nova/build',
-    ].join('\n'));
+      '',
+      '      - name: "Upload build artifacts (github-packages/packages-nova)"',
+      '        uses: "actions/upload-artifact@v4"',
+      '        with:',
+      '          name: "build-github-packages-packages-nova"',
+      '          retention-days: 1',
+      '          path: |',
+      '            packages/nova/build',
+    ].join('\n');
+
+    strictEqual(result, expected);
 
     return;
   });
 
-  it('returns empty string when all targets have no artifact paths', () => {
-    const targets: TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsTargets = [{
+  it('returns empty string when all targets have empty artifactPaths', () => {
+    const targets: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargets = [{
       type: 'docker-hub', workingDir: './',
     }];
 
-    const result: TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsResult = helpers.renderArtifactPaths(targets, targetsMetadata);
+    const result: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsResult = helpers.renderUploadArtifactSteps(targets, targetsMetadata);
 
     strictEqual(result, '');
 
     return;
   });
 
-  it('emits two indented lines for aws-amplify-nextjs', () => {
-    const targets: TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsTargets = [{
+  it('skips targets with empty artifactPaths but emits steps for the rest', () => {
+    const targets: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargets = [
+      {
+        type: 'docker-hub', workingDir: './',
+      },
+      {
+        type: 'npm', workingDir: './packages/nova',
+      },
+    ];
+
+    const result: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsResult = helpers.renderUploadArtifactSteps(targets, targetsMetadata);
+
+    const expected: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected = [
+      '      - name: "Upload build artifacts (npm/packages-nova)"',
+      '        uses: "actions/upload-artifact@v4"',
+      '        with:',
+      '          name: "build-npm-packages-nova"',
+      '          retention-days: 1',
+      '          path: |',
+      '            packages/nova/build',
+    ].join('\n');
+
+    strictEqual(result, expected);
+
+    return;
+  });
+
+  it('emits two indented path lines for aws-amplify-nextjs', () => {
+    const targets: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargets = [{
       type: 'aws-amplify-nextjs', workingDir: './apps/web',
     }];
 
-    const result: TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsResult = helpers.renderArtifactPaths(targets, targetsMetadata);
+    const result: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsResult = helpers.renderUploadArtifactSteps(targets, targetsMetadata);
 
-    strictEqual(result, [
-      '            apps/web/.next',
+    const expected: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected = [
+      '      - name: "Upload build artifacts (aws-amplify-nextjs/apps-web)"',
+      '        uses: "actions/upload-artifact@v4"',
+      '        with:',
+      '          name: "build-aws-amplify-nextjs-apps-web"',
+      '          retention-days: 1',
+      '          path: |',
+      '            apps/web/build',
       '            apps/web/public',
-    ].join('\n'));
+    ].join('\n');
+
+    strictEqual(result, expected);
+
+    return;
+  });
+
+  it('skips targets whose type is missing from targetsMetadata', () => {
+    const targets: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargets = [{
+      type: 'unknown-type', workingDir: './packages/x',
+    }];
+
+    const result: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsResult = helpers.renderUploadArtifactSteps(targets, targetsMetadata);
+
+    strictEqual(result, '');
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Generate - GitHub - Workflows Helpers - Build Artifact Name.
+ *
+ * @since 0.16.3
+ */
+describe('CliGenerateGithubWorkflows.buildArtifactName', () => {
+  it('joins build prefix, targetType, and targetId with dashes', () => {
+    const result: TestsCliGenerateGithubWorkflowsHelpersBuildArtifactNameResult = helpers.buildArtifactName('npm', 'packages-nova');
+
+    strictEqual(result, 'build-npm-packages-nova');
+
+    return;
+  });
+
+  it('preserves nested-slug targetIds verbatim', () => {
+    const result: TestsCliGenerateGithubWorkflowsHelpersBuildArtifactNameResult = helpers.buildArtifactName('cloudflare-pages-docusaurus', 'apps-docs');
+
+    strictEqual(result, 'build-cloudflare-pages-docusaurus-apps-docs');
 
     return;
   });

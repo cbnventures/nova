@@ -12,3 +12,9 @@ export type TestsCliGenerateMustHavesGitignoreRunTemporaryPrefix = string;
 export type TestsCliGenerateMustHavesGitignoreRunSandboxRoot = string;
 
 export type TestsCliGenerateMustHavesGitignoreRunProjectDirectory = string;
+
+export type TestsCliGenerateMustHavesGitignoreRunGitignorePath = string;
+
+export type TestsCliGenerateMustHavesGitignoreRunWritten = string;
+
+export type TestsCliGenerateMustHavesGitignoreRunExpectedBanner = string;

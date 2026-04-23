@@ -36,7 +36,8 @@ publish-github-packages-[__TARGET_ID__]:
     - name: "Download build artifacts"
       uses: "actions/download-artifact@v4"
       with:
-        name: "build-output"
+        name: "[__ARTIFACT_NAME__]"
+        path: "[__WORKING_DIR__]/build"
 
     - name: "Change to scoped package name"
       run: |

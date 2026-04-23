@@ -31,6 +31,9 @@ import { libWorkflowTemplatesMetadata } from '../../../lib/workflow-templates.js
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  CliGenerateGithubWorkflowsBuildArtifactNameReturns,
+  CliGenerateGithubWorkflowsBuildArtifactNameTargetId,
+  CliGenerateGithubWorkflowsBuildArtifactNameTargetType,
   CliGenerateGithubWorkflowsBuildCommandFlags,
   CliGenerateGithubWorkflowsBuildCommandReturns,
   CliGenerateGithubWorkflowsBuildCommandScriptName,
@@ -74,21 +77,23 @@ import type {
   CliGenerateGithubWorkflowsDetectTurboProjectDirectory,
   CliGenerateGithubWorkflowsDetectTurboReturns,
   CliGenerateGithubWorkflowsDetectTurboTurboConfigPath,
-  CliGenerateGithubWorkflowsRenderArtifactPathsLines,
-  CliGenerateGithubWorkflowsRenderArtifactPathsMetadata,
-  CliGenerateGithubWorkflowsRenderArtifactPathsPath,
-  CliGenerateGithubWorkflowsRenderArtifactPathsPaths,
-  CliGenerateGithubWorkflowsRenderArtifactPathsReturns,
-  CliGenerateGithubWorkflowsRenderArtifactPathsSeen,
-  CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntry,
-  CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadata,
-  CliGenerateGithubWorkflowsRenderArtifactPathsTargets,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsArtifactName,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsMetadata,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsPathLines,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsResolvedPath,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsReturns,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsStepLines,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsSteps,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsStrippedDir,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetId,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadata,
+  CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargets,
   CliGenerateGithubWorkflowsResolveWorkspaceNameEntry,
   CliGenerateGithubWorkflowsResolveWorkspaceNamePath,
   CliGenerateGithubWorkflowsResolveWorkspaceNameReturns,
   CliGenerateGithubWorkflowsResolveWorkspaceNameWorkspaces,
   CliGenerateGithubWorkflowsRunAppendedFragments,
-  CliGenerateGithubWorkflowsRunArtifactPathsBlock,
+  CliGenerateGithubWorkflowsRunArtifactName,
   CliGenerateGithubWorkflowsRunBaseContent,
   CliGenerateGithubWorkflowsRunBasePath,
   CliGenerateGithubWorkflowsRunBuildCommand,
@@ -195,7 +200,6 @@ import type {
   CliGenerateGithubWorkflowsRunTriggers,
   CliGenerateGithubWorkflowsRunTriggerYaml,
   CliGenerateGithubWorkflowsRunUploadArtifactStep,
-  CliGenerateGithubWorkflowsRunUploadArtifactStepLines,
   CliGenerateGithubWorkflowsRunUseTurbo,
   CliGenerateGithubWorkflowsRunVariableMeta,
   CliGenerateGithubWorkflowsRunVariableName,
@@ -731,23 +735,8 @@ export class CliGenerateGithubWorkflows {
           content = content.replace('[__CHECK_COMMAND__]', checkCommand);
           content = content.replace('[__BUILD_COMMAND__]', buildCommand);
 
-          // Build upload-artifact step when targets produce artifact paths.
-          const artifactPathsBlock: CliGenerateGithubWorkflowsRunArtifactPathsBlock = CliGenerateGithubWorkflows.renderArtifactPaths(entryTargets, targetsMetadata);
-          let uploadArtifactStep: CliGenerateGithubWorkflowsRunUploadArtifactStep = '';
-
-          if (artifactPathsBlock !== '') {
-            const uploadArtifactStepLines: CliGenerateGithubWorkflowsRunUploadArtifactStepLines = [
-              '      - name: "Upload build artifacts"',
-              '        uses: "actions/upload-artifact@v4"',
-              '        with:',
-              '          name: "build-output"',
-              '          retention-days: 1',
-              '          path: |',
-              artifactPathsBlock,
-            ];
-
-            uploadArtifactStep = uploadArtifactStepLines.join('\n');
-          }
+          // Build per-target upload-artifact steps when targets produce artifact paths.
+          const uploadArtifactStep: CliGenerateGithubWorkflowsRunUploadArtifactStep = CliGenerateGithubWorkflows.renderUploadArtifactSteps(entryTargets, targetsMetadata);
 
           content = content.replace('[__UPLOAD_ARTIFACT_STEP__]', uploadArtifactStep);
 
@@ -794,6 +783,10 @@ export class CliGenerateGithubWorkflows {
 
             targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__TARGET_ID__]', targetId);
             targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__WORKING_DIR__]', targetWorkingDir);
+
+            const artifactName: CliGenerateGithubWorkflowsRunArtifactName = CliGenerateGithubWorkflows.buildArtifactName(targetType, targetId);
+
+            targetFragmentResolvedContent = targetFragmentResolvedContent.replaceAll('[__ARTIFACT_NAME__]', artifactName);
 
             // Build the needs list. Always starts with "build"; same-type target
             // workingDirs declared in `needs` are appended as job ids so the generated
@@ -919,7 +912,11 @@ export class CliGenerateGithubWorkflows {
 
       const targetPath: CliGenerateGithubWorkflowsRunTargetPath = join(workflowsDirectory, outputFileName);
 
-      await saveGeneratedFile(targetPath, substituted, isReplaceFile);
+      await saveGeneratedFile(targetPath, substituted, isReplaceFile, {
+        command: 'nova generate github workflows',
+        docsSlug: 'cli/generators/github/workflows',
+        mode: 'strict',
+      });
     }
 
     // Clean up orphans.
@@ -1315,6 +1312,25 @@ export class CliGenerateGithubWorkflows {
   }
 
   /**
+   * CLI - Generate - GitHub - Workflows - Build Artifact Name.
+   *
+   * Composes the per-target artifact name from the build- prefix, the
+   * target type, and the slugified working dir (already computed elsewhere).
+   *
+   * @param {CliGenerateGithubWorkflowsBuildArtifactNameTargetType} targetType - Target type.
+   * @param {CliGenerateGithubWorkflowsBuildArtifactNameTargetId}   targetId   - Target id.
+   *
+   * @private
+   *
+   * @returns {CliGenerateGithubWorkflowsBuildArtifactNameReturns}
+   *
+   * @since 0.16.3
+   */
+  public static buildArtifactName(targetType: CliGenerateGithubWorkflowsBuildArtifactNameTargetType, targetId: CliGenerateGithubWorkflowsBuildArtifactNameTargetId): CliGenerateGithubWorkflowsBuildArtifactNameReturns {
+    return `build-${targetType}-${targetId}`;
+  }
+
+  /**
    * CLI - Generate - GitHub - Workflows - Slugify Working Dir.
    *
    * Strips the leading `./` prefix and trailing `/` suffix from a workspace
@@ -1422,54 +1438,60 @@ export class CliGenerateGithubWorkflows {
   }
 
   /**
-   * CLI - Generate - GitHub - Workflows - Render Artifact Paths.
+   * CLI - Generate - GitHub - Workflows - Render Upload Artifact Steps.
    *
-   * Unions and deduplicates artifact paths across the selected targets,
-   * substitutes `{workingDir}` with the stripped path, and emits YAML list
-   * items indented with 12 spaces. Returns an empty string when none resolve.
+   * Emits one upload-artifact step per target with a non-empty
+   * artifactPaths metadata. Each step has a unique artifact name keyed by
+   * targetType + slugified workingDir so publish jobs can fetch only their own.
    *
-   * @param {CliGenerateGithubWorkflowsRenderArtifactPathsTargets}        targets         - Targets.
-   * @param {CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadata} targetsMetadata - Targets metadata.
+   * @param {CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargets}        targets         - Targets.
+   * @param {CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadata} targetsMetadata - Targets metadata.
    *
    * @private
    *
-   * @returns {CliGenerateGithubWorkflowsRenderArtifactPathsReturns}
+   * @returns {CliGenerateGithubWorkflowsRenderUploadArtifactStepsReturns}
    *
-   * @since 0.16.0
+   * @since 0.16.3
    */
-  public static renderArtifactPaths(targets: CliGenerateGithubWorkflowsRenderArtifactPathsTargets, targetsMetadata: CliGenerateGithubWorkflowsRenderArtifactPathsTargetMetadata): CliGenerateGithubWorkflowsRenderArtifactPathsReturns {
-    const seen: CliGenerateGithubWorkflowsRenderArtifactPathsSeen = new Set();
-    const paths: CliGenerateGithubWorkflowsRenderArtifactPathsPaths = [];
+  public static renderUploadArtifactSteps(targets: CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargets, targetsMetadata: CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetMetadata): CliGenerateGithubWorkflowsRenderUploadArtifactStepsReturns {
+    const steps: CliGenerateGithubWorkflowsRenderUploadArtifactStepsSteps = [];
 
     for (const target of targets) {
-      const targetEntry: CliGenerateGithubWorkflowsRenderArtifactPathsTargetEntry = target;
-      const metadata: CliGenerateGithubWorkflowsRenderArtifactPathsMetadata = targetsMetadata[targetEntry['type']];
+      const metadata: CliGenerateGithubWorkflowsRenderUploadArtifactStepsMetadata = targetsMetadata[target['type']];
 
       if (metadata === undefined) {
         continue;
       }
 
-      const strippedDir: CliGenerateGithubWorkflowsRenderArtifactPathsPath = targetEntry['workingDir'].replace(LIB_REGEX_PATTERN_LEADING_DOT_SLASH, '');
-
-      for (const template of metadata['artifactPaths']) {
-        const resolved: CliGenerateGithubWorkflowsRenderArtifactPathsPath = template.replaceAll('{workingDir}', strippedDir);
-
-        if (seen.has(resolved) === false) {
-          seen.add(resolved);
-
-          paths.push(resolved);
-        }
+      if (metadata['artifactPaths'].length === 0) {
+        continue;
       }
+
+      const strippedDir: CliGenerateGithubWorkflowsRenderUploadArtifactStepsStrippedDir = target['workingDir'].replace(LIB_REGEX_PATTERN_LEADING_DOT_SLASH, '');
+      const targetId: CliGenerateGithubWorkflowsRenderUploadArtifactStepsTargetId = CliGenerateGithubWorkflows.slugifyWorkingDir(target['workingDir']);
+      const artifactName: CliGenerateGithubWorkflowsRenderUploadArtifactStepsArtifactName = CliGenerateGithubWorkflows.buildArtifactName(target['type'], targetId);
+
+      const pathLines: CliGenerateGithubWorkflowsRenderUploadArtifactStepsPathLines = metadata['artifactPaths'].map(
+        (template: CliGenerateGithubWorkflowsRenderUploadArtifactStepsResolvedPath) => `            ${template.replaceAll('{workingDir}', strippedDir)}`,
+      );
+
+      const stepLines: CliGenerateGithubWorkflowsRenderUploadArtifactStepsStepLines = [
+        `      - name: "Upload build artifacts (${target['type']}/${targetId})"`,
+        '        uses: "actions/upload-artifact@v4"',
+        '        with:',
+        `          name: "${artifactName}"`,
+        '          retention-days: 1',
+        '          path: |',
+        ...pathLines,
+      ];
+
+      steps.push(stepLines.join('\n'));
     }
 
-    if (paths.length === 0) {
+    if (steps.length === 0) {
       return '';
     }
 
-    const lines: CliGenerateGithubWorkflowsRenderArtifactPathsLines = paths.map(
-      (path) => `            ${path}`,
-    );
-
-    return lines.join('\n');
+    return steps.join('\n\n');
   }
 }

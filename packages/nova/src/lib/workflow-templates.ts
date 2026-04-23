@@ -202,7 +202,7 @@ export const libWorkflowTemplatesMetadata: LibWorkflowTemplatesMetadata = [
       'aws-amplify-nextjs': {
         description: 'Deploy Next.js to AWS Amplify',
         artifactPaths: [
-          '{workingDir}/.next',
+          '{workingDir}/build',
           '{workingDir}/public',
         ],
         variables: {
@@ -234,7 +234,7 @@ export const libWorkflowTemplatesMetadata: LibWorkflowTemplatesMetadata = [
       'vercel-nextjs': {
         description: 'Deploy Next.js to Vercel',
         artifactPaths: [
-          '{workingDir}/.next',
+          '{workingDir}/build',
           '{workingDir}/public',
         ],
         variables: {

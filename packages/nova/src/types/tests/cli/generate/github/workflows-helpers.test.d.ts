@@ -1,4 +1,11 @@
 /**
+ * Tests - CLI - Generate - GitHub - Workflows Helpers - Build Artifact Name.
+ *
+ * @since 0.16.3
+ */
+export type TestsCliGenerateGithubWorkflowsHelpersBuildArtifactNameResult = string;
+
+/**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Build Command.
  *
  * @since 0.16.0
@@ -21,19 +28,34 @@ export type TestsCliGenerateGithubWorkflowsHelpersDetectTurboTurboConfigPath = s
 export type TestsCliGenerateGithubWorkflowsHelpersDetectTurboResult = boolean;
 
 /**
- * Tests - CLI - Generate - GitHub - Workflows Helpers - Render Artifact Paths.
+ * Tests - CLI - Generate - GitHub - Workflows Helpers - Render Upload Artifact Steps.
  *
- * @since 0.16.0
+ * @since 0.16.3
  */
-export type TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsTargetMetadata = Record<string, {
-  artifactPaths: string[];
-}>;
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntryArtifactPath = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsTargets = Array<{
-  type: string; workingDir: string;
-}>;
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntryArtifactPaths = TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntryArtifactPath[];
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderArtifactPathsResult = string;
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntry = {
+  artifactPaths: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntryArtifactPaths;
+};
+
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadata = Record<string, TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntry>;
+
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetType = string;
+
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetWorkingDir = string;
+
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTarget = {
+  type: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetType;
+  workingDir: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetWorkingDir;
+};
+
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargets = TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTarget[];
+
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsResult = string;
+
+export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected = string;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Resolve Workspace Name.

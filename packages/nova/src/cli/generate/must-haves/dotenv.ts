@@ -450,7 +450,11 @@ export class CliGenerateMustHavesDotenv {
         continue;
       }
 
-      await saveGeneratedFile(targetPath, content, isReplaceFile);
+      await saveGeneratedFile(targetPath, content, isReplaceFile, {
+        command: 'nova generate must-haves dotenv',
+        docsSlug: 'cli/generators/must-haves/dotenv',
+        mode: (fileName === '.env') ? 'fillable' : 'strict',
+      });
     }
 
     return 'completed';
@@ -691,8 +695,16 @@ export class CliGenerateMustHavesDotenv {
 
       if (action === 'exit') {
         if (hasPendingChanges === true && isDryRun !== true) {
-          await saveGeneratedFile(envPath, bufferEnv, isReplaceFile);
-          await saveGeneratedFile(envSamplePath, bufferEnvSample, isReplaceFile);
+          await saveGeneratedFile(envPath, bufferEnv, isReplaceFile, {
+            command: 'nova generate must-haves dotenv',
+            docsSlug: 'cli/generators/must-haves/dotenv',
+            mode: 'fillable',
+          });
+          await saveGeneratedFile(envSamplePath, bufferEnvSample, isReplaceFile, {
+            command: 'nova generate must-haves dotenv',
+            docsSlug: 'cli/generators/must-haves/dotenv',
+            mode: 'strict',
+          });
         }
 
         return 'exit';

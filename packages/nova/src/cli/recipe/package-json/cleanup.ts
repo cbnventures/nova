@@ -1,5 +1,6 @@
 import chalk from 'chalk';
 
+import { LIB_CONSTANTS_DOCS_BASE_URL } from '../../../lib/constants.js';
 import {
   libItemBundlerKeys,
   libItemCorepackKeys,
@@ -344,7 +345,7 @@ export class CliRecipePackageJsonCleanup {
       'The unsupported keys are:',
       formattedUnknownKeys,
       'Review the references below:',
-      '- https://nova.cbnventures.io/docs/cli/recipes/package-json/cleanup#unsupported-keys',
+      `- ${LIB_CONSTANTS_DOCS_BASE_URL}/docs/cli/recipes/package-json/cleanup#unsupported-keys`,
     ].join('\n');
 
     Logger.customize({

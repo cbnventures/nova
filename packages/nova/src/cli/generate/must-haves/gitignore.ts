@@ -349,7 +349,11 @@ export class CliGenerateMustHavesGitignore {
       return 'completed';
     }
 
-    await saveGeneratedFile(targetPath, finalContent, isReplaceFile);
+    await saveGeneratedFile(targetPath, finalContent, isReplaceFile, {
+      command: 'nova generate must-haves gitignore',
+      docsSlug: 'cli/generators/must-haves/gitignore',
+      mode: 'strict',
+    });
 
     return 'completed';
   }
@@ -648,7 +652,11 @@ export class CliGenerateMustHavesGitignore {
 
       if (action === 'exit') {
         if (hasPendingChanges === true && isDryRun !== true) {
-          await saveGeneratedFile(targetPath, reconstructed, isReplaceFile);
+          await saveGeneratedFile(targetPath, reconstructed, isReplaceFile, {
+            command: 'nova generate must-haves gitignore',
+            docsSlug: 'cli/generators/must-haves/gitignore',
+            mode: 'strict',
+          });
         }
 
         return 'exit';

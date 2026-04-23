@@ -24,3 +24,5 @@ export type TestsCliGenerateMustHavesLicenseRunNovaConfigPath = string;
 export type TestsCliGenerateMustHavesLicenseRunExists = boolean;
 
 export type TestsCliGenerateMustHavesLicenseRunLicensePath = string;
+
+export type TestsCliGenerateMustHavesLicenseRunResult = 'cancelled' | 'completed';

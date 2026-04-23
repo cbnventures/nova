@@ -80,7 +80,7 @@ export default [
     },
   },
   {
-    name: 'custom-rules',
+    name: 'nova-rules',
     files: [
       '**/*.js',
       '**/*.ts',
@@ -416,7 +416,10 @@ export default [
       '@cbnventures/nova/require-jsdoc-hierarchy': [
         'error',
         {
-          anchorDirectories: ['src'],
+          anchorDirectories: [
+            'src',
+            'utils',
+          ],
           ignoreFiles: [
             './eslint.config.ts',
             './vitest.config.ts',

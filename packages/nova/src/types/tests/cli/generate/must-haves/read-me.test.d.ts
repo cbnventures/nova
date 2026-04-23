@@ -25,6 +25,10 @@ export type TestsCliGenerateMustHavesReadMeRunExists = boolean;
 
 export type TestsCliGenerateMustHavesReadMeRunReadmePath = string;
 
+export type TestsCliGenerateMustHavesReadMeRunBannerWritten = string;
+
+export type TestsCliGenerateMustHavesReadMeRunBannerExpected = string;
+
 export type TestsCliGenerateMustHavesReadMeRunReadmeContent = string;
 
 export type TestsCliGenerateMustHavesReadMeRunHasDocumentationSection = boolean;

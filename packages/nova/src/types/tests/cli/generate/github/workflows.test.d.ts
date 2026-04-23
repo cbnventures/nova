@@ -31,6 +31,8 @@ export type TestsCliGenerateGithubWorkflowsRunWorkflowPath = string;
 
 export type TestsCliGenerateGithubWorkflowsRunContent = string;
 
+export type TestsCliGenerateGithubWorkflowsRunExpectedBanner = string;
+
 export type TestsCliGenerateGithubWorkflowsRunEntries = string[];
 
 export type TestsCliGenerateGithubWorkflowsRunOrphanFiles = string[];

@@ -24,3 +24,7 @@ export type TestsCliGenerateGithubFundingRunNovaConfigPath = string;
 export type TestsCliGenerateGithubFundingRunExists = boolean;
 
 export type TestsCliGenerateGithubFundingRunFundingYmlPath = string;
+
+export type TestsCliGenerateGithubFundingRunWritten = string;
+
+export type TestsCliGenerateGithubFundingRunExpectedBanner = string;

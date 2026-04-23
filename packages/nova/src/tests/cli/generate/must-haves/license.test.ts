@@ -22,6 +22,7 @@ import type {
   TestsCliGenerateMustHavesLicenseRunPackageJson,
   TestsCliGenerateMustHavesLicenseRunPackageJsonPath,
   TestsCliGenerateMustHavesLicenseRunProjectDirectory,
+  TestsCliGenerateMustHavesLicenseRunResult,
   TestsCliGenerateMustHavesLicenseRunSandboxRoot,
   TestsCliGenerateMustHavesLicenseRunTemporaryDirectory,
   TestsCliGenerateMustHavesLicenseRunTemporaryPrefix,
@@ -135,6 +136,52 @@ describe('CliGenerateMustHavesLicense.run', async () => {
     const licensePath: TestsCliGenerateMustHavesLicenseRunLicensePath = join(projectDirectory, 'LICENSE');
 
     await access(licensePath);
+
+    return;
+  });
+
+  it('errors when project.license is missing from nova.config.json', async () => {
+    const projectDirectory: TestsCliGenerateMustHavesLicenseRunProjectDirectory = join(sandboxRoot, 'missing-license');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const packageJson: TestsCliGenerateMustHavesLicenseRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+
+    const packageJsonPath: TestsCliGenerateMustHavesLicenseRunPackageJsonPath = join(projectDirectory, 'package.json');
+
+    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+    const novaConfig: TestsCliGenerateMustHavesLicenseRunNovaConfig = JSON.stringify({
+      project: {
+        legalName: 'Test Corp',
+        startingYear: 2024,
+      },
+    }, null, 2);
+
+    const novaConfigPath: TestsCliGenerateMustHavesLicenseRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
+
+    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    process.exitCode = 0;
+
+    const result: TestsCliGenerateMustHavesLicenseRunResult = await CliGenerateMustHavesLicense.run({});
+
+    strictEqual(result, 'cancelled');
+    strictEqual(process.exitCode, 1);
+
+    let exists: TestsCliGenerateMustHavesLicenseRunExists = true;
+
+    try {
+      const licensePath: TestsCliGenerateMustHavesLicenseRunLicensePath = join(projectDirectory, 'LICENSE');
+
+      await access(licensePath);
+    } catch {
+      exists = false;
+    }
+
+    strictEqual(exists, false);
 
     return;
   });

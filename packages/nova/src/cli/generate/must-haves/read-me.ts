@@ -95,6 +95,8 @@ import type {
   CliGenerateMustHavesReadMeRunWorkspaces,
 } from '../../../types/cli/generate/must-haves/read-me.d.ts';
 
+import type { LibUtilitySaveGeneratedFileHeader } from '../../../types/lib/utility.d.ts';
+
 /**
  * CLI - Generate - Must Haves - Read Me.
  *
@@ -224,10 +226,16 @@ export class CliGenerateMustHavesReadMe {
       return 'completed';
     }
 
-    await saveGeneratedFile(targetPath, content, isReplaceFile);
+    const headerOptions: LibUtilitySaveGeneratedFileHeader = {
+      command: 'nova generate must-haves read-me',
+      docsSlug: 'cli/generators/must-haves/read-me',
+      mode: 'strict' as const,
+    };
+
+    await saveGeneratedFile(targetPath, content, isReplaceFile, headerOptions);
 
     for (const distributablePath of distributablePaths) {
-      await saveGeneratedFile(distributablePath, content, isReplaceFile);
+      await saveGeneratedFile(distributablePath, content, isReplaceFile, headerOptions);
     }
 
     return 'completed';

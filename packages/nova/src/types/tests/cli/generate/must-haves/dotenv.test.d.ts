@@ -12,3 +12,15 @@ export type TestsCliGenerateMustHavesDotenvRunTemporaryPrefix = string;
 export type TestsCliGenerateMustHavesDotenvRunSandboxRoot = string;
 
 export type TestsCliGenerateMustHavesDotenvRunProjectDirectory = string;
+
+export type TestsCliGenerateMustHavesDotenvRunEnvPath = string;
+
+export type TestsCliGenerateMustHavesDotenvRunEnvSamplePath = string;
+
+export type TestsCliGenerateMustHavesDotenvRunEnvWritten = string;
+
+export type TestsCliGenerateMustHavesDotenvRunEnvSampleWritten = string;
+
+export type TestsCliGenerateMustHavesDotenvRunExpectedEnvBanner = string;
+
+export type TestsCliGenerateMustHavesDotenvRunExpectedSampleBanner = string;
