@@ -67,7 +67,7 @@ export class CliGenerateMustHavesEditorconfig {
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const content: CliGenerateMustHavesEditorconfigRunContent = await fs.readFile(join(resolveTemplatePath(import.meta.url, 'generators/must-haves/editorconfig'), '.editorconfig'), 'utf-8');
+    const content: CliGenerateMustHavesEditorconfigRunContent = await fs.readFile(join(resolveTemplatePath(import.meta.url, 'generators/must-haves/editorconfig'), 'editorconfig'), 'utf-8');
     const targetPath: CliGenerateMustHavesEditorconfigRunTargetPath = join(currentDirectory, '.editorconfig');
 
     if (isDryRun === true) {

@@ -322,7 +322,7 @@ export class CliGenerateMustHavesGitignore {
       return 'cancelled';
     }
 
-    const templatePath: CliGenerateMustHavesGitignorePromptRegenerateTemplatePath = join(templateDirectory, '.gitignore');
+    const templatePath: CliGenerateMustHavesGitignorePromptRegenerateTemplatePath = join(templateDirectory, 'gitignore');
     const targetPath: CliGenerateMustHavesGitignorePromptRegenerateTargetPath = join(currentDirectory, '.gitignore');
 
     let content: CliGenerateMustHavesGitignorePromptRegenerateContent = undefined;
@@ -565,7 +565,7 @@ export class CliGenerateMustHavesGitignore {
     const isDryRun: CliGenerateMustHavesGitignorePromptManageMenuIsDryRun = options['isDryRun'];
     const isReplaceFile: CliGenerateMustHavesGitignorePromptManageMenuIsReplaceFile = options['isReplaceFile'];
 
-    const templateFilePath: CliGenerateMustHavesGitignorePromptManageMenuTemplateFilePath = join(templateDirectory, '.gitignore');
+    const templateFilePath: CliGenerateMustHavesGitignorePromptManageMenuTemplateFilePath = join(templateDirectory, 'gitignore');
     const templateContent: CliGenerateMustHavesGitignorePromptManageMenuTemplateContent = await fs.readFile(templateFilePath, 'utf-8');
     const reservedPatterns: CliGenerateMustHavesGitignorePromptManageMenuReservedPatterns = new Set(CliGenerateMustHavesGitignore.parseAllPatterns(templateContent));
 

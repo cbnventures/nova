@@ -19,6 +19,7 @@ import {
 } from 'vitest';
 
 import { CliGenerateGithubWorkflows } from '../../../../cli/generate/github/workflows.js';
+import { LibNovaConfig } from '../../../../lib/nova-config.js';
 import { LIB_REGEX_PATTERN_ANSI } from '../../../../lib/regex.js';
 import * as utility from '../../../../lib/utility.js';
 import { pathExists } from '../../../../lib/utility.js';
@@ -39,6 +40,8 @@ import type {
   TestsCliGenerateGithubWorkflowsRunExists,
   TestsCliGenerateGithubWorkflowsRunGitignorePath,
   TestsCliGenerateGithubWorkflowsRunHeaderArg,
+  TestsCliGenerateGithubWorkflowsRunIsProjectRootSpy,
+  TestsCliGenerateGithubWorkflowsRunLoadSpy,
   TestsCliGenerateGithubWorkflowsRunNovaConfig,
   TestsCliGenerateGithubWorkflowsRunNovaConfigPath,
   TestsCliGenerateGithubWorkflowsRunOriginalCwd,
@@ -1195,14 +1198,8 @@ describe('CliGenerateGithubWorkflows.run', async () => {
   });
 
   it('passes the correct header metadata to saveGeneratedFile for each generated workflow', async () => {
-    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'header-metadata');
-
-    await mkdir(join(projectDirectory, 'packages', 'my-package'), { recursive: true });
-    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }));
-    await writeFile(join(projectDirectory, 'packages', 'my-package', 'package.json'), JSON.stringify({ name: 'my-package' }));
-    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
-
-    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+    const isProjectRootSpy: TestsCliGenerateGithubWorkflowsRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: TestsCliGenerateGithubWorkflowsRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       workflows: [{
         template: 'publish',
         suffix: 'my-pkg',
@@ -1212,7 +1209,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
           type: 'npm', workingDir: './packages/my-package',
         }],
         settings: {
-          'ROOT_WORKING_DIR': './',
+          ROOT_WORKING_DIR: './',
         },
       }],
       workspaces: {
@@ -1220,13 +1217,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
           role: 'package', policy: 'distributable', name: 'my-package', recipes: {},
         },
       },
-    };
-    const novaConfigPath: TestsCliGenerateGithubWorkflowsRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-
-    await writeFile(novaConfigPath, JSON.stringify(novaConfig, null, 2));
-
-    process.chdir(projectDirectory);
-
+    });
     const saveSpy: TestsCliGenerateGithubWorkflowsRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubWorkflows.run({ replaceFile: true });
@@ -1244,6 +1235,12 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     strictEqual(headerArg['command'], 'nova generate github workflows');
     strictEqual(headerArg['docsSlug'], 'cli/generators/github/workflows');
     strictEqual(headerArg['mode'], 'strict');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    saveSpy.mockRestore();
 
     return;
   });

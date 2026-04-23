@@ -3,15 +3,7 @@
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateMustHavesDotenvRunOriginalCwd = string;
-
-export type TestsCliGenerateMustHavesDotenvRunTemporaryDirectory = string;
-
-export type TestsCliGenerateMustHavesDotenvRunTemporaryPrefix = string;
-
-export type TestsCliGenerateMustHavesDotenvRunSandboxRoot = string;
-
-export type TestsCliGenerateMustHavesDotenvRunProjectDirectory = string;
+export type TestsCliGenerateMustHavesDotenvRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
 export type TestsCliGenerateMustHavesDotenvRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 

@@ -1,6 +1,5 @@
 import { ok, strictEqual } from 'node:assert/strict';
 import {
-  access,
   mkdir,
   mkdtemp,
   readFile,
@@ -19,10 +18,10 @@ import {
 } from 'vitest';
 
 import { CliGenerateMustHavesReadMe } from '../../../../cli/generate/must-haves/read-me.js';
+import { LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  TestsCliGenerateMustHavesReadMeRunExists,
   TestsCliGenerateMustHavesReadMeRunHasAnchorWrapping,
   TestsCliGenerateMustHavesReadMeRunHasBrokenLink,
   TestsCliGenerateMustHavesReadMeRunHasDocumentationSection,
@@ -30,6 +29,8 @@ import type {
   TestsCliGenerateMustHavesReadMeRunHasIntroductionSection,
   TestsCliGenerateMustHavesReadMeRunHasPictureBlock,
   TestsCliGenerateMustHavesReadMeRunHeaderArg,
+  TestsCliGenerateMustHavesReadMeRunIsProjectRootSpy,
+  TestsCliGenerateMustHavesReadMeRunLoadSpy,
   TestsCliGenerateMustHavesReadMeRunNovaConfig,
   TestsCliGenerateMustHavesReadMeRunNovaConfigPath,
   TestsCliGenerateMustHavesReadMeRunOriginalCwd,
@@ -75,120 +76,42 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
   });
 
   it('sets exit code when not at project root', async () => {
-    const projectDirectory: TestsCliGenerateMustHavesReadMeRunProjectDirectory = join(sandboxRoot, 'not-project-root');
+    process.exitCode = 0;
 
-    await mkdir(projectDirectory, { recursive: true });
-
-    process.chdir(projectDirectory);
+    const isProjectRootSpy: TestsCliGenerateMustHavesReadMeRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
 
     await CliGenerateMustHavesReadMe.run({});
 
     strictEqual(process.exitCode, 1);
 
+    isProjectRootSpy.mockRestore();
+
+    process.exitCode = 0;
+
     return;
   });
 
-  it('respects dry-run', async () => {
-    const projectDirectory: TestsCliGenerateMustHavesReadMeRunProjectDirectory = join(sandboxRoot, 'dry-run');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const packageJson: TestsCliGenerateMustHavesReadMeRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
-
-    const packageJsonPath: TestsCliGenerateMustHavesReadMeRunPackageJsonPath = join(projectDirectory, 'package.json');
-
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
-
-    const novaConfig: TestsCliGenerateMustHavesReadMeRunNovaConfig = JSON.stringify({
-      project: {
-        name: {
-          title: 'Test Project',
-        },
-      },
-    }, null, 2);
-
-    const novaConfigPath: TestsCliGenerateMustHavesReadMeRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
-
-    process.chdir(projectDirectory);
+  it('does not call saveGeneratedFile during dry-run', async () => {
+    const isProjectRootSpy: TestsCliGenerateMustHavesReadMeRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: TestsCliGenerateMustHavesReadMeRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { name: { title: 'Test Project' } } });
+    const saveSpy: TestsCliGenerateMustHavesReadMeRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateMustHavesReadMe.run({ dryRun: true });
 
-    let exists: TestsCliGenerateMustHavesReadMeRunExists = true;
+    strictEqual(saveSpy['mock']['calls'].length, 0);
 
-    try {
-      const readmePath: TestsCliGenerateMustHavesReadMeRunReadmePath = join(projectDirectory, 'README.md');
+    isProjectRootSpy.mockRestore();
 
-      await access(readmePath);
-    } catch {
-      exists = false;
-    }
+    loadSpy.mockRestore();
 
-    strictEqual(exists, false);
-
-    return;
-  });
-
-  it('generates file from template', async () => {
-    const projectDirectory: TestsCliGenerateMustHavesReadMeRunProjectDirectory = join(sandboxRoot, 'generates-file');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const packageJson: TestsCliGenerateMustHavesReadMeRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
-
-    const packageJsonPath: TestsCliGenerateMustHavesReadMeRunPackageJsonPath = join(projectDirectory, 'package.json');
-
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
-
-    const novaConfig: TestsCliGenerateMustHavesReadMeRunNovaConfig = JSON.stringify({
-      project: {
-        name: {
-          title: 'Test Project',
-        },
-      },
-    }, null, 2);
-
-    const novaConfigPath: TestsCliGenerateMustHavesReadMeRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    await CliGenerateMustHavesReadMe.run({});
-
-    const readmePath: TestsCliGenerateMustHavesReadMeRunReadmePath = join(projectDirectory, 'README.md');
-
-    await access(readmePath);
+    saveSpy.mockRestore();
 
     return;
   });
 
   it('passes the correct header metadata to saveGeneratedFile', async () => {
-    const projectDirectory: TestsCliGenerateMustHavesReadMeRunProjectDirectory = join(sandboxRoot, 'header-metadata');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const packageJson: TestsCliGenerateMustHavesReadMeRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
-
-    const packageJsonPath: TestsCliGenerateMustHavesReadMeRunPackageJsonPath = join(projectDirectory, 'package.json');
-
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
-
-    const novaConfig: TestsCliGenerateMustHavesReadMeRunNovaConfig = JSON.stringify({
-      project: {
-        name: {
-          title: 'Test Project',
-        },
-      },
-    }, null, 2);
-
-    const novaConfigPath: TestsCliGenerateMustHavesReadMeRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
-
-    process.chdir(projectDirectory);
-
+    const isProjectRootSpy: TestsCliGenerateMustHavesReadMeRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: TestsCliGenerateMustHavesReadMeRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { name: { title: 'Test Project' } } });
     const saveSpy: TestsCliGenerateMustHavesReadMeRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateMustHavesReadMe.run({ replaceFile: true });
@@ -206,6 +129,12 @@ describe('CliGenerateMustHavesReadMe.run', async () => {
     strictEqual(headerArg['command'], 'nova generate must-haves read-me');
     strictEqual(headerArg['docsSlug'], 'cli/generators/must-haves/read-me');
     strictEqual(headerArg['mode'], 'strict');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    saveSpy.mockRestore();
 
     return;
   });

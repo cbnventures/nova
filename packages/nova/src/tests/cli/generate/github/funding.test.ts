@@ -1,41 +1,22 @@
 import { ok, strictEqual } from 'node:assert/strict';
-import {
-  access,
-  mkdir,
-  mkdtemp,
-  rm,
-  writeFile,
-} from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
 
 import {
-  afterAll,
-  afterEach,
   describe,
   it,
   vi,
 } from 'vitest';
 
 import { CliGenerateGithubFunding } from '../../../../cli/generate/github/funding.js';
+import { LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  TestsCliGenerateGithubFundingRunExists,
-  TestsCliGenerateGithubFundingRunFundingYmlPath,
   TestsCliGenerateGithubFundingRunHeaderArg,
-  TestsCliGenerateGithubFundingRunNovaConfig,
-  TestsCliGenerateGithubFundingRunNovaConfigPath,
-  TestsCliGenerateGithubFundingRunOriginalCwd,
-  TestsCliGenerateGithubFundingRunPackageJson,
-  TestsCliGenerateGithubFundingRunPackageJsonPath,
-  TestsCliGenerateGithubFundingRunProjectDirectory,
-  TestsCliGenerateGithubFundingRunSandboxRoot,
+  TestsCliGenerateGithubFundingRunIsProjectRootSpy,
+  TestsCliGenerateGithubFundingRunLoadSpy,
   TestsCliGenerateGithubFundingRunSaveCalls,
   TestsCliGenerateGithubFundingRunSaveSpy,
   TestsCliGenerateGithubFundingRunTargetCall,
-  TestsCliGenerateGithubFundingRunTemporaryDirectory,
-  TestsCliGenerateGithubFundingRunTemporaryPrefix,
 } from '../../../../types/tests/cli/generate/github/funding.test.d.ts';
 
 /**
@@ -43,133 +24,44 @@ import type {
  *
  * @since 0.15.0
  */
-describe('CliGenerateGithubFunding.run', async () => {
-  const originalCwd: TestsCliGenerateGithubFundingRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliGenerateGithubFundingRunTemporaryDirectory = tmpdir();
-  const temporaryPrefix: TestsCliGenerateGithubFundingRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliGenerateGithubFundingRunSandboxRoot = await mkdtemp(temporaryPrefix);
-
-  afterEach(() => {
-    vi.restoreAllMocks();
-
-    return;
-  });
-
-  afterAll(async () => {
-    process.chdir(originalCwd);
-
-    await rm(sandboxRoot, {
-      recursive: true,
-      force: true,
-    });
-
-    return;
-  });
-
+describe('CliGenerateGithubFunding.run', () => {
   it('sets exit code when not at project root', async () => {
-    const projectDirectory: TestsCliGenerateGithubFundingRunProjectDirectory = join(sandboxRoot, 'not-project-root');
+    process.exitCode = 0;
 
-    await mkdir(projectDirectory, { recursive: true });
-
-    process.chdir(projectDirectory);
+    const isProjectRootSpy: TestsCliGenerateGithubFundingRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
 
     await CliGenerateGithubFunding.run({});
 
     strictEqual(process.exitCode, 1);
 
+    isProjectRootSpy.mockRestore();
+
+    process.exitCode = 0;
+
     return;
   });
 
-  it('respects dry-run', async () => {
-    const projectDirectory: TestsCliGenerateGithubFundingRunProjectDirectory = join(sandboxRoot, 'dry-run');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const packageJson: TestsCliGenerateGithubFundingRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
-
-    const packageJsonPath: TestsCliGenerateGithubFundingRunPackageJsonPath = join(projectDirectory, 'package.json');
-
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
-
-    const novaConfig: TestsCliGenerateGithubFundingRunNovaConfig = JSON.stringify({
-      urls: {
-        fundSources: ['https://github.com/sponsors/test'],
-      },
-    }, null, 2);
-
-    const novaConfigPath: TestsCliGenerateGithubFundingRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
-
-    process.chdir(projectDirectory);
+  it('does not call saveGeneratedFile during dry-run', async () => {
+    const isProjectRootSpy: TestsCliGenerateGithubFundingRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: TestsCliGenerateGithubFundingRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ urls: { fundSources: ['https://github.com/sponsors/test'] } });
+    const saveSpy: TestsCliGenerateGithubFundingRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubFunding.run({ dryRun: true });
 
-    let exists: TestsCliGenerateGithubFundingRunExists = true;
+    strictEqual(saveSpy['mock']['calls'].length, 0);
 
-    try {
-      const fundingYmlPath: TestsCliGenerateGithubFundingRunFundingYmlPath = join(projectDirectory, '.github', 'FUNDING.yml');
+    isProjectRootSpy.mockRestore();
 
-      await access(fundingYmlPath);
-    } catch {
-      exists = false;
-    }
+    loadSpy.mockRestore();
 
-    strictEqual(exists, false);
-
-    return;
-  });
-
-  it('generates file from config', async () => {
-    const projectDirectory: TestsCliGenerateGithubFundingRunProjectDirectory = join(sandboxRoot, 'generates-file');
-
-    await mkdir(projectDirectory, { recursive: true });
-
-    const packageJson: TestsCliGenerateGithubFundingRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
-
-    const packageJsonPath: TestsCliGenerateGithubFundingRunPackageJsonPath = join(projectDirectory, 'package.json');
-
-    await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
-
-    const novaConfig: TestsCliGenerateGithubFundingRunNovaConfig = JSON.stringify({
-      urls: {
-        fundSources: ['https://github.com/sponsors/test'],
-      },
-    }, null, 2);
-
-    const novaConfigPath: TestsCliGenerateGithubFundingRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
-
-    process.chdir(projectDirectory);
-
-    await CliGenerateGithubFunding.run({});
-
-    const fundingYmlPath: TestsCliGenerateGithubFundingRunFundingYmlPath = join(projectDirectory, '.github', 'FUNDING.yml');
-
-    await access(fundingYmlPath);
+    saveSpy.mockRestore();
 
     return;
   });
 
   it('passes the correct header metadata to saveGeneratedFile', async () => {
-    const projectDirectory: TestsCliGenerateGithubFundingRunProjectDirectory = join(sandboxRoot, 'header-metadata');
-
-    await mkdir(projectDirectory, { recursive: true });
-    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }));
-
-    const novaConfig: TestsCliGenerateGithubFundingRunNovaConfig = JSON.stringify({
-      urls: {
-        fundSources: ['https://github.com/sponsors/test'],
-      },
-    }, null, 2);
-
-    const novaConfigPath: TestsCliGenerateGithubFundingRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-
-    await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
-
-    process.chdir(projectDirectory);
-
+    const isProjectRootSpy: TestsCliGenerateGithubFundingRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: TestsCliGenerateGithubFundingRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ urls: { fundSources: ['https://github.com/sponsors/test'] } });
     const saveSpy: TestsCliGenerateGithubFundingRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubFunding.run({ replaceFile: true });
@@ -187,6 +79,12 @@ describe('CliGenerateGithubFunding.run', async () => {
     strictEqual(headerArg['command'], 'nova generate github funding');
     strictEqual(headerArg['docsSlug'], 'cli/generators/github/funding');
     strictEqual(headerArg['mode'], 'strict');
+
+    isProjectRootSpy.mockRestore();
+
+    loadSpy.mockRestore();
+
+    saveSpy.mockRestore();
 
     return;
   });

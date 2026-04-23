@@ -11,6 +11,18 @@ export type TestsCliGenerateMustHavesReadMeRunTemporaryPrefix = string;
 
 export type TestsCliGenerateMustHavesReadMeRunSandboxRoot = string;
 
+export type TestsCliGenerateMustHavesReadMeRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type TestsCliGenerateMustHavesReadMeRunLoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type TestsCliGenerateMustHavesReadMeRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type TestsCliGenerateMustHavesReadMeRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+
+export type TestsCliGenerateMustHavesReadMeRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+
+export type TestsCliGenerateMustHavesReadMeRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
+
 export type TestsCliGenerateMustHavesReadMeRunProjectDirectory = string;
 
 export type TestsCliGenerateMustHavesReadMeRunPackageJson = string;
@@ -21,17 +33,7 @@ export type TestsCliGenerateMustHavesReadMeRunNovaConfig = string;
 
 export type TestsCliGenerateMustHavesReadMeRunNovaConfigPath = string;
 
-export type TestsCliGenerateMustHavesReadMeRunExists = boolean;
-
 export type TestsCliGenerateMustHavesReadMeRunReadmePath = string;
-
-export type TestsCliGenerateMustHavesReadMeRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
-
-export type TestsCliGenerateMustHavesReadMeRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
-
-export type TestsCliGenerateMustHavesReadMeRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
-
-export type TestsCliGenerateMustHavesReadMeRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
 
 export type TestsCliGenerateMustHavesReadMeRunReadmeContent = string;
 

@@ -59,6 +59,10 @@ export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesStripAnsiPattern 
 
 export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesJoined = string;
 
+export type TestsCliGenerateGithubWorkflowsRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type TestsCliGenerateGithubWorkflowsRunLoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
 export type TestsCliGenerateGithubWorkflowsRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
 export type TestsCliGenerateGithubWorkflowsRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];

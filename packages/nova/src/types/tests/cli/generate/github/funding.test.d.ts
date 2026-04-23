@@ -3,27 +3,9 @@
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateGithubFundingRunOriginalCwd = string;
+export type TestsCliGenerateGithubFundingRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubFundingRunTemporaryDirectory = string;
-
-export type TestsCliGenerateGithubFundingRunTemporaryPrefix = string;
-
-export type TestsCliGenerateGithubFundingRunSandboxRoot = string;
-
-export type TestsCliGenerateGithubFundingRunProjectDirectory = string;
-
-export type TestsCliGenerateGithubFundingRunPackageJson = string;
-
-export type TestsCliGenerateGithubFundingRunPackageJsonPath = string;
-
-export type TestsCliGenerateGithubFundingRunNovaConfig = string;
-
-export type TestsCliGenerateGithubFundingRunNovaConfigPath = string;
-
-export type TestsCliGenerateGithubFundingRunExists = boolean;
-
-export type TestsCliGenerateGithubFundingRunFundingYmlPath = string;
+export type TestsCliGenerateGithubFundingRunLoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
 export type TestsCliGenerateGithubFundingRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 

@@ -34,6 +34,8 @@ export type CliGenerateMustHavesAgentConventionsRunUserEditedFiles = Set<string>
 
 export type CliGenerateMustHavesAgentConventionsRunConventionFiles = string[];
 
+export type CliGenerateMustHavesAgentConventionsRunTemplateFileName = string;
+
 export type CliGenerateMustHavesAgentConventionsRunTemplatePath = string;
 
 export type CliGenerateMustHavesAgentConventionsRunTargetPath = string;

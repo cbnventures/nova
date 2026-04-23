@@ -7,6 +7,7 @@ import {
   LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE,
   LIB_REGEX_PATTERN_ENV_VAR_KEY,
   LIB_REGEX_PATTERN_ENV_VAR_KEY_SCREAMING_SNAKE,
+  LIB_REGEX_PATTERN_LEADING_DOT,
 } from '../../../lib/regex.js';
 import {
   isProjectRoot,
@@ -117,6 +118,7 @@ import type {
   CliGenerateMustHavesDotenvPromptRegenerateSampleLines,
   CliGenerateMustHavesDotenvPromptRegenerateTargetPath,
   CliGenerateMustHavesDotenvPromptRegenerateTemplateDirectory,
+  CliGenerateMustHavesDotenvPromptRegenerateTemplateFileName,
   CliGenerateMustHavesDotenvPromptRegenerateTemplatePath,
   CliGenerateMustHavesDotenvPromptRegenerateTrimmedValue,
   CliGenerateMustHavesDotenvPromptRegenerateValidateValue,
@@ -423,7 +425,8 @@ export class CliGenerateMustHavesDotenv {
     }
 
     for (const fileName of files) {
-      const templatePath: CliGenerateMustHavesDotenvPromptRegenerateTemplatePath = join(templateDirectory, fileName);
+      const templateFileName: CliGenerateMustHavesDotenvPromptRegenerateTemplateFileName = fileName.replace(LIB_REGEX_PATTERN_LEADING_DOT, '');
+      const templatePath: CliGenerateMustHavesDotenvPromptRegenerateTemplatePath = join(templateDirectory, templateFileName);
       const targetPath: CliGenerateMustHavesDotenvPromptRegenerateTargetPath = join(currentDirectory, fileName);
 
       let content: CliGenerateMustHavesDotenvPromptRegenerateContent = undefined;
@@ -598,7 +601,7 @@ export class CliGenerateMustHavesDotenv {
     const isDryRun: CliGenerateMustHavesDotenvPromptManageMenuIsDryRun = options['isDryRun'];
     const isReplaceFile: CliGenerateMustHavesDotenvPromptManageMenuIsReplaceFile = options['isReplaceFile'];
 
-    const templateFilePath: CliGenerateMustHavesDotenvPromptManageMenuTemplateFilePath = join(templateDirectory, '.env');
+    const templateFilePath: CliGenerateMustHavesDotenvPromptManageMenuTemplateFilePath = join(templateDirectory, 'env');
     const templateContent: CliGenerateMustHavesDotenvPromptManageMenuTemplateContent = await fs.readFile(templateFilePath, 'utf-8');
     const reservedKeys: CliGenerateMustHavesDotenvPromptManageMenuReservedKeys = new Set(CliGenerateMustHavesDotenv.parseEnvFile(templateContent).map((entry) => entry['key']));
 
@@ -611,7 +614,7 @@ export class CliGenerateMustHavesDotenv {
     } catch {
       // File does not exist — use template as initial buffer.
       try {
-        bufferEnv = await fs.readFile(join(templateDirectory, '.env'), 'utf-8');
+        bufferEnv = await fs.readFile(join(templateDirectory, 'env'), 'utf-8');
       } catch {
         // Template also missing.
       }
@@ -622,7 +625,7 @@ export class CliGenerateMustHavesDotenv {
     } catch {
       // File does not exist — use template as initial buffer.
       try {
-        bufferEnvSample = await fs.readFile(join(templateDirectory, '.env.sample'), 'utf-8');
+        bufferEnvSample = await fs.readFile(join(templateDirectory, 'env.sample'), 'utf-8');
       } catch {
         // Template also missing.
       }

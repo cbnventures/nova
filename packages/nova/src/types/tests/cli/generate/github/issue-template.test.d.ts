@@ -3,23 +3,9 @@
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateGithubIssueTemplateRunOriginalCwd = string;
+export type TestsCliGenerateGithubIssueTemplateRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubIssueTemplateRunTemporaryDirectory = string;
-
-export type TestsCliGenerateGithubIssueTemplateRunTemporaryPrefix = string;
-
-export type TestsCliGenerateGithubIssueTemplateRunSandboxRoot = string;
-
-export type TestsCliGenerateGithubIssueTemplateRunProjectDirectory = string;
-
-export type TestsCliGenerateGithubIssueTemplateRunPackageJson = Record<string, unknown>;
-
-export type TestsCliGenerateGithubIssueTemplateRunPackageJsonPath = string;
-
-export type TestsCliGenerateGithubIssueTemplateRunNovaConfig = Record<string, unknown>;
-
-export type TestsCliGenerateGithubIssueTemplateRunNovaConfigPath = string;
+export type TestsCliGenerateGithubIssueTemplateRunLoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
 export type TestsCliGenerateGithubIssueTemplateRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 

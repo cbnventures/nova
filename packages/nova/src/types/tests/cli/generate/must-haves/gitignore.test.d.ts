@@ -3,15 +3,7 @@
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateMustHavesGitignoreRunOriginalCwd = string;
-
-export type TestsCliGenerateMustHavesGitignoreRunTemporaryDirectory = string;
-
-export type TestsCliGenerateMustHavesGitignoreRunTemporaryPrefix = string;
-
-export type TestsCliGenerateMustHavesGitignoreRunSandboxRoot = string;
-
-export type TestsCliGenerateMustHavesGitignoreRunProjectDirectory = string;
+export type TestsCliGenerateMustHavesGitignoreRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
 export type TestsCliGenerateMustHavesGitignoreRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 

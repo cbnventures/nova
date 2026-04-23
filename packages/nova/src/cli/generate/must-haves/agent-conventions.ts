@@ -4,6 +4,7 @@ import { join } from 'path';
 import chalk from 'chalk';
 
 import { LIB_CONSTANTS_DOCS_BASE_URL } from '../../../lib/constants.js';
+import { LIB_REGEX_PATTERN_LEADING_DOT } from '../../../lib/regex.js';
 import {
   isFileIdentical,
   isProjectRoot,
@@ -28,6 +29,7 @@ import type {
   CliGenerateMustHavesAgentConventionsRunRootFiles,
   CliGenerateMustHavesAgentConventionsRunTargetPath,
   CliGenerateMustHavesAgentConventionsRunTemplateDirectory,
+  CliGenerateMustHavesAgentConventionsRunTemplateFileName,
   CliGenerateMustHavesAgentConventionsRunTemplatePath,
   CliGenerateMustHavesAgentConventionsRunUserEditedFiles,
 } from '../../../types/cli/generate/must-haves/agent-conventions.d.ts';
@@ -111,7 +113,8 @@ export class CliGenerateMustHavesAgentConventions {
     ];
 
     for (const rootFile of rootFiles) {
-      const templatePath: CliGenerateMustHavesAgentConventionsRunTemplatePath = join(templateDirectory, rootFile);
+      const templateFileName: CliGenerateMustHavesAgentConventionsRunTemplateFileName = rootFile.replace(LIB_REGEX_PATTERN_LEADING_DOT, '');
+      const templatePath: CliGenerateMustHavesAgentConventionsRunTemplatePath = join(templateDirectory, templateFileName);
       const targetPath: CliGenerateMustHavesAgentConventionsRunTargetPath = join(currentDirectory, rootFile);
 
       if (isDryRun === true) {

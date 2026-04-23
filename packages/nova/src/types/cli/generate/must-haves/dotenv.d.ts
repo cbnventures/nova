@@ -298,6 +298,8 @@ export type CliGenerateMustHavesDotenvPromptRegenerateEnvLines = string[];
 
 export type CliGenerateMustHavesDotenvPromptRegenerateSampleLines = string[];
 
+export type CliGenerateMustHavesDotenvPromptRegenerateTemplateFileName = string;
+
 export type CliGenerateMustHavesDotenvPromptRegenerateTemplatePath = string;
 
 export type CliGenerateMustHavesDotenvPromptRegenerateTargetPath = string;
