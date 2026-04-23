@@ -21,6 +21,10 @@ export type TestsCliGenerateMustHavesEditorconfigRunExists = boolean;
 
 export type TestsCliGenerateMustHavesEditorconfigRunEditorconfigPath = string;
 
-export type TestsCliGenerateMustHavesEditorconfigRunWritten = string;
+export type TestsCliGenerateMustHavesEditorconfigRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesEditorconfigRunExpectedBanner = string;
+export type TestsCliGenerateMustHavesEditorconfigRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+
+export type TestsCliGenerateMustHavesEditorconfigRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+
+export type TestsCliGenerateMustHavesEditorconfigRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;

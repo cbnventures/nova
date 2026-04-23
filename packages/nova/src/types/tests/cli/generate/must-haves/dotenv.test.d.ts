@@ -13,14 +13,14 @@ export type TestsCliGenerateMustHavesDotenvRunSandboxRoot = string;
 
 export type TestsCliGenerateMustHavesDotenvRunProjectDirectory = string;
 
-export type TestsCliGenerateMustHavesDotenvRunEnvPath = string;
+export type TestsCliGenerateMustHavesDotenvRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesDotenvRunEnvSamplePath = string;
+export type TestsCliGenerateMustHavesDotenvRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
 
-export type TestsCliGenerateMustHavesDotenvRunEnvWritten = string;
+export type TestsCliGenerateMustHavesDotenvRunEnvTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
 
-export type TestsCliGenerateMustHavesDotenvRunEnvSampleWritten = string;
+export type TestsCliGenerateMustHavesDotenvRunEnvHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
 
-export type TestsCliGenerateMustHavesDotenvRunExpectedEnvBanner = string;
+export type TestsCliGenerateMustHavesDotenvRunSampleTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
 
-export type TestsCliGenerateMustHavesDotenvRunExpectedSampleBanner = string;
+export type TestsCliGenerateMustHavesDotenvRunSampleHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;

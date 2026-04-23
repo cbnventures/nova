@@ -21,8 +21,10 @@ export type TestsCliGenerateGithubIssueTemplateRunNovaConfig = Record<string, un
 
 export type TestsCliGenerateGithubIssueTemplateRunNovaConfigPath = string;
 
-export type TestsCliGenerateGithubIssueTemplateRunIssueTemplatePath = string;
+export type TestsCliGenerateGithubIssueTemplateRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubIssueTemplateRunWritten = string;
+export type TestsCliGenerateGithubIssueTemplateRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
 
-export type TestsCliGenerateGithubIssueTemplateRunExpectedBanner = string;
+export type TestsCliGenerateGithubIssueTemplateRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+
+export type TestsCliGenerateGithubIssueTemplateRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;

@@ -25,9 +25,13 @@ export type TestsCliGenerateMustHavesReadMeRunExists = boolean;
 
 export type TestsCliGenerateMustHavesReadMeRunReadmePath = string;
 
-export type TestsCliGenerateMustHavesReadMeRunBannerWritten = string;
+export type TestsCliGenerateMustHavesReadMeRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesReadMeRunBannerExpected = string;
+export type TestsCliGenerateMustHavesReadMeRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+
+export type TestsCliGenerateMustHavesReadMeRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+
+export type TestsCliGenerateMustHavesReadMeRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
 
 export type TestsCliGenerateMustHavesReadMeRunReadmeContent = string;
 

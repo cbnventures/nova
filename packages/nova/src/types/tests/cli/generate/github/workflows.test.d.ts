@@ -31,8 +31,6 @@ export type TestsCliGenerateGithubWorkflowsRunWorkflowPath = string;
 
 export type TestsCliGenerateGithubWorkflowsRunContent = string;
 
-export type TestsCliGenerateGithubWorkflowsRunExpectedBanner = string;
-
 export type TestsCliGenerateGithubWorkflowsRunEntries = string[];
 
 export type TestsCliGenerateGithubWorkflowsRunOrphanFiles = string[];
@@ -60,3 +58,11 @@ export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesSetupLines = stri
 export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesStripAnsiPattern = RegExp;
 
 export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesJoined = string;
+
+export type TestsCliGenerateGithubWorkflowsRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+
+export type TestsCliGenerateGithubWorkflowsRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+
+export type TestsCliGenerateGithubWorkflowsRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+
+export type TestsCliGenerateGithubWorkflowsRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
