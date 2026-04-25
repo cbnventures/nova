@@ -173,7 +173,11 @@ export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorToken = st
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSlashIndex = number;
 
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySafeExtensionPattern = RegExp;
+
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyFilenameStem = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyNormalizedStem = string;
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyPrettySegments = string[];
 
@@ -183,9 +187,42 @@ export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAllParts = strin
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRelativePath = string;
 
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyStripped = string;
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRawSegments = string[];
 
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyParts = string[];
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSegmentIndex = number;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyParts = ReadonlyArray<string>;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Invalid Prefix Diagnostic.
+ *
+ * @since 0.17.1
+ */
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFilename = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticOptions = SharedJsdocHierarchyCreateOptions;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticParts = ReadonlyArray<string>;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFirstSegment = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticPrefix = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturns = {
+  segment: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFirstSegment;
+  prefix: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticPrefix;
+} | null;
+
+/**
+ * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Path Parts.
+ *
+ * @since 0.17.1
+ */
+export type RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsFilename = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsOptions = SharedJsdocHierarchyCreateOptions;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsReturns = ReadonlyArray<string>;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Extract Describe String.

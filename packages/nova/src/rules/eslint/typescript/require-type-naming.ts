@@ -1,7 +1,7 @@
 import { ESLintUtils } from '@typescript-eslint/utils';
 
 import { LIB_REGEX_PATTERN_CAMEL_CASE_WORDS } from '../../../lib/regex.js';
-import { isIgnoredFile } from '../../../lib/utility.js';
+import { isIgnoredFile, normalizeRouteSegment } from '../../../lib/utility.js';
 
 import type {
   RulesEslintTypescriptRequireTypeNamingCheckTypeAliasContext,
@@ -9,13 +9,20 @@ import type {
   RulesEslintTypescriptRequireTypeNamingCheckTypeAliasNode,
   RulesEslintTypescriptRequireTypeNamingCheckTypeAliasReturns,
   RulesEslintTypescriptRequireTypeNamingCheckTypeAliasTypeName,
+  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticFilename,
+  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticOffendingSegment,
+  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticPrefix,
+  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns,
+  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticSegments,
   RulesEslintTypescriptRequireTypeNamingDerivePrefixFilename,
-  RulesEslintTypescriptRequireTypeNamingDerivePrefixNormalizedFilename,
-  RulesEslintTypescriptRequireTypeNamingDerivePrefixRelativePath,
   RulesEslintTypescriptRequireTypeNamingDerivePrefixReturns,
   RulesEslintTypescriptRequireTypeNamingDerivePrefixSegments,
-  RulesEslintTypescriptRequireTypeNamingDerivePrefixTypesIndex,
   RulesEslintTypescriptRequireTypeNamingDerivePrefixWords,
+  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsFilename,
+  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsNormalizedFilename,
+  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsRelativePath,
+  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsReturns,
+  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsTypesIndex,
   RulesEslintTypescriptRequireTypeNamingRuleDefaultOptionsIgnoreFiles,
   RulesEslintTypescriptRequireTypeNamingRuleNormalizedFilename,
   RulesEslintTypescriptRequireTypeNamingRuleOptions,
@@ -46,6 +53,7 @@ export class RulesEslintTypescriptRequireTypeNaming {
         description: 'Require type alias names in .d.ts files to start with the class name prefix derived from the file path.',
       },
       messages: {
+        invalidIdentifierPrefix: 'Directory segment `{{ segment }}` produces an invalid TypeScript identifier prefix `{{ prefix }}`. Rename the directory to start with a letter.',
         typeNamingPrefix: 'Type alias \'{{ typeName }}\' must start with \'{{ expectedPrefix }}\'.',
       },
       schema: [{
@@ -78,6 +86,25 @@ export class RulesEslintTypescriptRequireTypeNaming {
         return {};
       }
 
+      const diagnostic = RulesEslintTypescriptRequireTypeNaming.deriveInvalidPrefixDiagnostic(context.filename);
+
+      if (diagnostic !== null) {
+        return {
+          Program(node) {
+            context.report({
+              node,
+              messageId: 'invalidIdentifierPrefix',
+              data: {
+                segment: diagnostic['segment'],
+                prefix: diagnostic['prefix'],
+              },
+            });
+
+            return;
+          },
+        };
+      }
+
       return {
         TSTypeAliasDeclaration(node) {
           RulesEslintTypescriptRequireTypeNaming.checkTypeAlias(context, node);
@@ -87,6 +114,46 @@ export class RulesEslintTypescriptRequireTypeNaming {
       };
     },
   });
+
+  /**
+   * Rules - ESLint - TypeScript - Require Type Naming - Normalized Path Segments.
+   *
+   * Produces the normalized segment list shared by derivePrefix and the invalid
+   * prefix diagnostic. Returns an empty list when the filename lacks the
+   * expected `/types/` anchor so callers can skip enforcement.
+   *
+   * @private
+   *
+   * @param {RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsFilename} filename - Filename.
+   *
+   * @returns {RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsReturns}
+   *
+   * @since 0.17.1
+   */
+  private static normalizedPathSegments(filename: RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsFilename): RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsReturns {
+    const normalizedFilename: RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsNormalizedFilename = filename.replaceAll('\\', '/');
+    const typesIndex: RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsTypesIndex = normalizedFilename.indexOf('/types/');
+
+    if (typesIndex < 0) {
+      return [];
+    }
+
+    let relativePath: RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsRelativePath = normalizedFilename.slice(typesIndex + '/types/'.length);
+
+    if (relativePath.endsWith('.test.d.ts') === true) {
+      relativePath = relativePath.slice(0, relativePath.length - '.test.d.ts'.length);
+    }
+
+    if (relativePath.endsWith('.d.ts') === true) {
+      relativePath = relativePath.slice(0, relativePath.length - '.d.ts'.length);
+    }
+
+    return relativePath
+      .split('/')
+      .filter((segment) => segment !== 'index')
+      .map((segment) => normalizeRouteSegment(segment))
+      .filter((segment) => segment !== '');
+  }
 
   /**
    * Rules - ESLint - TypeScript - Require Type Naming - Derive Prefix.
@@ -103,31 +170,11 @@ export class RulesEslintTypescriptRequireTypeNaming {
    * @since 0.15.0
    */
   private static derivePrefix(filename: RulesEslintTypescriptRequireTypeNamingDerivePrefixFilename): RulesEslintTypescriptRequireTypeNamingDerivePrefixReturns {
-    const normalizedFilename: RulesEslintTypescriptRequireTypeNamingDerivePrefixNormalizedFilename = filename.replaceAll('\\', '/');
+    const segments: RulesEslintTypescriptRequireTypeNamingDerivePrefixSegments = RulesEslintTypescriptRequireTypeNaming.normalizedPathSegments(filename);
 
-    // Find the types/ directory anchor.
-    const typesIndex: RulesEslintTypescriptRequireTypeNamingDerivePrefixTypesIndex = normalizedFilename.indexOf('/types/');
-
-    if (typesIndex < 0) {
+    if (segments.length === 0) {
       return '';
     }
-
-    // Extract the path after /types/.
-    let relativePath: RulesEslintTypescriptRequireTypeNamingDerivePrefixRelativePath = normalizedFilename.slice(typesIndex + '/types/'.length);
-
-    // Strip the .test.d.ts or .d.ts extension.
-    if (relativePath.endsWith('.test.d.ts') === true) {
-      relativePath = relativePath.slice(0, relativePath.length - '.test.d.ts'.length);
-    }
-
-    if (relativePath.endsWith('.d.ts') === true) {
-      relativePath = relativePath.slice(0, relativePath.length - '.d.ts'.length);
-    }
-
-    // Split into segments, skip "index" filenames, and convert to PascalCase.
-    const segments: RulesEslintTypescriptRequireTypeNamingDerivePrefixSegments = relativePath.split('/').filter(
-      (segment) => segment !== 'index',
-    );
 
     return segments.map((segment) => {
       // PascalCase filenames (e.g., MDXComponents) — normalize abbreviations.
@@ -148,6 +195,46 @@ export class RulesEslintTypescriptRequireTypeNaming {
         })
         .join('');
     }).join('');
+  }
+
+  /**
+   * Rules - ESLint - TypeScript - Require Type Naming - Derive Invalid Prefix Diagnostic.
+   *
+   * Inspects the derived prefix and returns the offending segment plus the
+   * resulting prefix when the first character would be a digit. Null otherwise
+   * so the caller can proceed with normal naming enforcement.
+   *
+   * @private
+   *
+   * @param {RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticFilename} filename - Filename.
+   *
+   * @returns {RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns}
+   *
+   * @since 0.17.1
+   */
+  private static deriveInvalidPrefixDiagnostic(filename: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticFilename): RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns {
+    const segments: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticSegments = RulesEslintTypescriptRequireTypeNaming.normalizedPathSegments(filename);
+
+    if (segments.length === 0) {
+      return null;
+    }
+
+    const offendingSegment: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticOffendingSegment = segments[0] ?? '';
+
+    if (new RegExp('^[0-9]').test(offendingSegment) === false) {
+      return null;
+    }
+
+    const prefix: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticPrefix = segments.map((segment) => {
+      return segment.split('-').map((part) => {
+        return part.charAt(0).toUpperCase() + part.slice(1);
+      }).join('');
+    }).join('');
+
+    return {
+      segment: offendingSegment,
+      prefix,
+    };
   }
 
   /**

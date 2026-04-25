@@ -367,6 +367,66 @@ export type LibUtilityLoadWorkspaceManifestsParsedFile = SharedWorkspaceManifest
 export type LibUtilityLoadWorkspaceManifestsLoadErrorMessage = string;
 
 /**
+ * Lib - Utility - Normalize Route Segment - Inner.
+ *
+ * Intermediate value after unwrapping a framework-specific pattern, before
+ * non-identifier characters are replaced. Equals input when no pattern matched.
+ *
+ * @since 0.17.1
+ */
+export type LibUtilityNormalizeRouteSegmentInner = string;
+
+/**
+ * Lib - Utility - Normalize Route Segment - Match.
+ *
+ * Result of matching a route-syntax pattern against a raw segment. Null when
+ * none of the Phase 1 patterns applied to the input.
+ *
+ * @since 0.17.1
+ */
+export type LibUtilityNormalizeRouteSegmentMatch = RegExpMatchArray | null;
+
+/**
+ * Lib - Utility - Normalize Route Segment - Patterns.
+ *
+ * Ordered list of routing-syntax unwrap patterns. Order matters: optional
+ * catch-all must precede catch-all, which must precede the bare dynamic form.
+ *
+ * @since 0.17.1
+ */
+export type LibUtilityNormalizeRouteSegmentPatterns = ReadonlyArray<RegExp>;
+
+/**
+ * Lib - Utility - Normalize Route Segment - Returns.
+ *
+ * PascalCase-friendly segment ready for downstream hyphen-split title-casing.
+ * Empty when input has no alphanumeric or underscore characters after scrubbing.
+ *
+ * @since 0.17.1
+ */
+export type LibUtilityNormalizeRouteSegmentReturns = string;
+
+/**
+ * Lib - Utility - Normalize Route Segment - Scrubbed.
+ *
+ * Result of replacing every non-identifier character with a hyphen. Consumed
+ * by the empty-signal check and returned to the caller when non-empty.
+ *
+ * @since 0.17.1
+ */
+export type LibUtilityNormalizeRouteSegmentScrubbed = string;
+
+/**
+ * Lib - Utility - Normalize Route Segment - Segment.
+ *
+ * Raw path segment as split from a filename on `/`. May contain framework
+ * routing syntax like `[...name]`, `(group)`, or `@slot`.
+ *
+ * @since 0.17.1
+ */
+export type LibUtilityNormalizeRouteSegmentSegment = string;
+
+/**
  * Lib - Utility - Parse Linux OS Release File.
  *
  * @since 0.13.0

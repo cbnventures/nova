@@ -9,7 +9,7 @@ import {
   LIB_REGEX_PATTERN_EXTENSION,
   LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX,
 } from '../../../lib/regex.js';
-import { isIgnoredFile } from '../../../lib/utility.js';
+import { isIgnoredFile, normalizeRouteSegment } from '../../../lib/utility.js';
 
 import type {
   RulesEslintJsdocRequireJsdocHierarchyBuildFixedCommentCommentValue,
@@ -74,16 +74,28 @@ import type {
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorToken,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyFilename,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyFilenameStem,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSegmentIndex,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSlashIndex,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyNormalizedStem,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyOptions,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyParts,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyPrettyParts,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyPrettySegments,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRawSegments,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRelativePath,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyReturns,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySafeExtensionPattern,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySegments,
   RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySrcIndex,
-  RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyStripped,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFilename,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFirstSegment,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticOptions,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticParts,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticPrefix,
+  RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturns,
+  RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsFilename,
+  RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsOptions,
+  RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsReturns,
   RulesEslintJsdocRequireJsdocHierarchyExtractDescribeStringFirstArg,
   RulesEslintJsdocRequireJsdocHierarchyExtractDescribeStringIsDescribe,
   RulesEslintJsdocRequireJsdocHierarchyExtractDescribeStringNode,
@@ -144,6 +156,7 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
       fixable: 'code',
       messages: {
         hierarchyMismatch: 'JSDoc summary must follow the hierarchy chain: \'{{ expected }}\'.',
+        invalidIdentifierPrefix: 'Directory segment `{{ segment }}` produces an invalid TypeScript identifier prefix `{{ prefix }}`. Rename the directory to start with a letter.',
       },
       schema: [{
         type: 'object',
@@ -188,6 +201,25 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
         return {};
+      }
+
+      const diagnostic = RulesEslintJsdocRequireJsdocHierarchy.deriveInvalidPrefixDiagnostic(context.filename, options);
+
+      if (diagnostic !== null) {
+        return {
+          Program(node) {
+            context.report({
+              node,
+              messageId: 'invalidIdentifierPrefix',
+              data: {
+                segment: diagnostic['segment'],
+                prefix: diagnostic['prefix'],
+              },
+            });
+
+            return;
+          },
+        };
       }
 
       // Merge built-in names with user-provided knownNames.
@@ -919,6 +951,100 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
   }
 
   /**
+   * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Path Parts.
+   *
+   * Produces the normalized segment list shared by deriveHierarchy and the invalid
+   * prefix diagnostic. Returns an empty array when the filename lacks an anchor
+   * directory so callers can handle the missing-anchor case independently.
+   *
+   * @private
+   *
+   * @param {RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsFilename} filename - Filename.
+   * @param {RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsOptions}  options  - Options.
+   *
+   * @returns {RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsReturns}
+   *
+   * @since 0.17.1
+   */
+  private static derivePathParts(filename: RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsFilename, options: RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsOptions): RulesEslintJsdocRequireJsdocHierarchyDerivePathPartsReturns {
+    let srcIndex: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySrcIndex = -1;
+    let anchorIndex: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorIndex = -1;
+
+    for (const dir of options['anchorDirectories']) {
+      const anchorToken: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorToken = `/${dir}/`;
+
+      anchorIndex = filename.lastIndexOf(anchorToken);
+
+      if (anchorIndex !== -1) {
+        srcIndex = anchorIndex + anchorToken.length;
+
+        break;
+      }
+    }
+
+    if (srcIndex === -1) {
+      return [];
+    }
+
+    const relativePath: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRelativePath = filename.slice(srcIndex);
+    const rawSegments: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRawSegments = relativePath.split('/');
+    const lastSegmentIndex: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSegmentIndex = rawSegments.length - 1;
+
+    return rawSegments
+      .map((part, index) => {
+        if (index === lastSegmentIndex) {
+          return part.replace(LIB_REGEX_PATTERN_EXTENSION, '').replace(LIB_REGEX_PATTERN_EXTENSION, '').replace(LIB_REGEX_PATTERN_EXTENSION, '');
+        }
+
+        return part;
+      })
+      .filter((part) => part !== 'index' && options['stripDirectories'].includes(part) === false)
+      .map((part) => normalizeRouteSegment(part))
+      .filter((part) => part !== '');
+  }
+
+  /**
+   * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Invalid Prefix Diagnostic.
+   *
+   * Inspects the first normalized path segment and returns the offending segment plus the
+   * resulting prefix when the first character would be a digit. Null otherwise so the
+   * caller can proceed with normal hierarchy enforcement.
+   *
+   * @private
+   *
+   * @param {RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFilename} filename - Filename.
+   * @param {RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticOptions}  options  - Options.
+   *
+   * @returns {RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturns}
+   *
+   * @since 0.17.1
+   */
+  private static deriveInvalidPrefixDiagnostic(filename: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFilename, options: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticOptions): RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturns {
+    const parts: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticParts = RulesEslintJsdocRequireJsdocHierarchy.derivePathParts(filename, options);
+
+    if (parts.length === 0) {
+      return null;
+    }
+
+    const firstSegment: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFirstSegment = parts[0] ?? '';
+
+    if (new RegExp('^[0-9]').test(firstSegment) === false) {
+      return null;
+    }
+
+    const prefix: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticPrefix = parts.map((part) => {
+      return part.split('-').map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }).join('');
+    }).join('');
+
+    return {
+      segment: firstSegment,
+      prefix,
+    };
+  }
+
+  /**
    * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Hierarchy.
    *
    * Builds the full expected summary string from the file path relative
@@ -935,31 +1061,20 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
    * @since 0.15.0
    */
   private static deriveHierarchy(filename: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyFilename, segments: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySegments, options: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyOptions): RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyReturns {
-    let srcIndex: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySrcIndex = -1;
-    let anchorIndex: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorIndex = -1;
-
-    for (const dir of options['anchorDirectories']) {
-      const anchorToken: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorToken = `/${dir}/`;
-
-      anchorIndex = filename.lastIndexOf(anchorToken);
-
-      if (anchorIndex !== -1) {
-        srcIndex = anchorIndex + anchorToken.length;
-
-        break;
-      }
-    }
+    const parts: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyParts = RulesEslintJsdocRequireJsdocHierarchy.derivePathParts(filename, options);
 
     // No anchor directory found in path. Use the filename stem as the sole hierarchy base.
-    if (srcIndex === -1) {
+    if (parts.length === 0) {
       const lastSlashIndex: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSlashIndex = filename.lastIndexOf('/');
-      const filenameStem: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyFilenameStem = filename.slice(lastSlashIndex + 1).replace(LIB_REGEX_PATTERN_EXTENSION, '').replace(LIB_REGEX_PATTERN_EXTENSION, '').replace(LIB_REGEX_PATTERN_EXTENSION, '');
+      const safeExtensionPattern: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySafeExtensionPattern = new RegExp('\\.[a-zA-Z0-9]+$');
+      const filenameStem: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyFilenameStem = filename.slice(lastSlashIndex + 1).replace(safeExtensionPattern, '').replace(safeExtensionPattern, '').replace(safeExtensionPattern, '');
+      const normalizedStem: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyNormalizedStem = normalizeRouteSegment(filenameStem);
 
       const prettySegments: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyPrettySegments = segments.map((segment) => {
         return RulesEslintJsdocRequireJsdocHierarchy.prettyMethodName(segment);
       });
 
-      const prettyParts: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyPrettyParts = [RulesEslintJsdocRequireJsdocHierarchy.prettySegment(filenameStem)];
+      const prettyParts: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyPrettyParts = [RulesEslintJsdocRequireJsdocHierarchy.prettySegment(normalizedStem)];
       const allParts: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAllParts = [
         ...prettyParts,
         ...prettySegments,
@@ -967,12 +1082,6 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
 
       return `${allParts.join(' - ')}.`;
     }
-
-    const relativePath: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRelativePath = filename.slice(srcIndex);
-    const stripped: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyStripped = relativePath.replace(LIB_REGEX_PATTERN_EXTENSION, '').replace(LIB_REGEX_PATTERN_EXTENSION, '').replace(LIB_REGEX_PATTERN_EXTENSION, '');
-    const parts: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyParts = stripped.split('/').filter(
-      (part) => part !== 'index' && options['stripDirectories'].includes(part) === false,
-    );
 
     const prettySegments: RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyPrettySegments = segments.map((segment) => {
       return RulesEslintJsdocRequireJsdocHierarchy.prettyMethodName(segment);

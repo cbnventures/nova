@@ -150,6 +150,12 @@ import type {
   LibUtilityLoadWorkspaceManifestsReturns,
   LibUtilityLoadWorkspaceManifestsWorkspaceManifest,
   LibUtilityLoadWorkspaceManifestsWorkspaces,
+  LibUtilityNormalizeRouteSegmentInner,
+  LibUtilityNormalizeRouteSegmentMatch,
+  LibUtilityNormalizeRouteSegmentPatterns,
+  LibUtilityNormalizeRouteSegmentReturns,
+  LibUtilityNormalizeRouteSegmentScrubbed,
+  LibUtilityNormalizeRouteSegmentSegment,
   LibUtilityParseLinuxOsReleaseFileReturns,
   LibUtilityParseLinuxOsReleaseTextKey,
   LibUtilityParseLinuxOsReleaseTextLines,
@@ -939,6 +945,50 @@ export async function loadWorkspaceManifests(options: LibUtilityLoadWorkspaceMan
   }
 
   return packageJsons;
+}
+
+/**
+ * Lib - Utility - Normalize Route Segment.
+ *
+ * Cleans a single path segment so it can be fed to downstream hyphen-split
+ * title-casing. Unwraps Next.js-style routing patterns (dynamic, catch-all,
+ * optional catch-all, route groups, parallel routes) and replaces any
+ * remaining non-identifier characters with hyphens so word boundaries survive.
+ *
+ * @param {LibUtilityNormalizeRouteSegmentSegment} segment - Segment.
+ *
+ * @returns {LibUtilityNormalizeRouteSegmentReturns}
+ *
+ * @since 0.17.1
+ */
+export function normalizeRouteSegment(segment: LibUtilityNormalizeRouteSegmentSegment): LibUtilityNormalizeRouteSegmentReturns {
+  const patterns: LibUtilityNormalizeRouteSegmentPatterns = [
+    new RegExp('^\\[\\[\\.\\.\\.(.+)\\]\\]$'),
+    new RegExp('^\\[\\.\\.\\.(.+)\\]$'),
+    new RegExp('^\\[(.+)\\]$'),
+    new RegExp('^\\((.+)\\)$'),
+    new RegExp('^@(.+)$'),
+  ];
+
+  let inner: LibUtilityNormalizeRouteSegmentInner = segment;
+
+  for (const pattern of patterns) {
+    const match: LibUtilityNormalizeRouteSegmentMatch = inner.match(pattern);
+
+    if (match !== null && match[1] !== undefined) {
+      inner = match[1];
+
+      break;
+    }
+  }
+
+  const scrubbed: LibUtilityNormalizeRouteSegmentScrubbed = inner.replace(new RegExp('[^A-Za-z0-9_-]', 'g'), '-');
+
+  if (new RegExp('[A-Za-z0-9_]').test(scrubbed) === false) {
+    return '';
+  }
+
+  return scrubbed;
 }
 
 /**

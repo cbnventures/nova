@@ -52,6 +52,32 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
       code: 'export type ThemeLayoutConfig = string;',
       filename: '/project/src/types/theme/Layout.d.ts',
     },
+
+    // Next.js catch-all route segment — unwrapped to "not-found".
+    {
+      code: 'export type AppNotFoundLayoutProps = string;',
+      filename: '/project/src/types/app/[...not-found]/layout.d.ts',
+    },
+    // Next.js dynamic segment.
+    {
+      code: 'export type AppIdProfileReturns = void;',
+      filename: '/project/src/types/app/[id]/profile.d.ts',
+    },
+    // Next.js optional catch-all.
+    {
+      code: 'export type AppSlugPageProps = string;',
+      filename: '/project/src/types/app/[[...slug]]/page.d.ts',
+    },
+    // Next.js route group — contributes to hierarchy.
+    {
+      code: 'export type AppMarketingLandingProps = string;',
+      filename: '/project/src/types/app/(marketing)/landing.d.ts',
+    },
+    // Next.js parallel route — contributes to hierarchy.
+    {
+      code: 'export type AppModalSettingsProps = string;',
+      filename: '/project/src/types/app/@modal/settings.d.ts',
+    },
   ],
   invalid: [
     {
@@ -70,6 +96,26 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
       code: 'export type ThemeMDXComponentsOverrides = string;',
       filename: '/project/src/types/theme/MDXComponents.d.ts',
       errors: [{ messageId: 'typeNamingPrefix' }],
+    },
+
+    // Catch-all with wrong prefix — should error.
+    {
+      code: 'export type WrongPrefix = string;',
+      filename: '/project/src/types/app/[...not-found]/layout.d.ts',
+      errors: [{ messageId: 'typeNamingPrefix' }],
+    },
+
+    // Digit-leading directory — dedicated diagnostic, prefix is never valid.
+    {
+      code: 'export type _2faAuth = string;',
+      filename: '/project/src/types/2fa/auth.d.ts',
+      errors: [{
+        messageId: 'invalidIdentifierPrefix',
+        data: {
+          segment: '2fa',
+          prefix: '2faAuth',
+        },
+      }],
     },
   ],
 });

@@ -320,6 +320,22 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
       filename: '/project/src/lib/internal/utility.ts',
     },
 
+    // Next.js catch-all route segment (e.g., [...not-found]).
+    {
+      code: [
+        '/**',
+        ' * App - Not Found - Layout.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function Layout() {}',
+      ].join('\n'),
+      options: [{
+        anchorDirectories: ['src'], ignoreFiles: [], knownNames: {}, stripDirectories: ['types'],
+      }],
+      filename: '/project/src/app/[...not-found]/layout.tsx',
+    },
+
     // LAST: ignoreFiles test.
     {
       code: [
@@ -587,6 +603,55 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
       }],
       filename: '/project/src/cli/utility/myapp.ts',
       errors: [{ messageId: 'hierarchyMismatch' }],
+    },
+
+    // Next.js catch-all route segment produces mangled text without normalization.
+    {
+      code: [
+        '/**',
+        ' * App - [.. - Layout.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function Layout() {}',
+      ].join('\n'),
+      output: [
+        '/**',
+        ' * App - Not Found - Layout.',
+        ' *',
+        ' * @since 0.15.0',
+        ' */',
+        'function Layout() {}',
+      ].join('\n'),
+      options: [{
+        anchorDirectories: ['src'], ignoreFiles: [], knownNames: {}, stripDirectories: ['types'],
+      }],
+      filename: '/project/src/app/[...not-found]/layout.tsx',
+      errors: [{ messageId: 'hierarchyMismatch' }],
+    },
+
+    // Directory segment starting with a digit produces an invalid identifier prefix.
+    {
+      code: [
+        '/**',
+        ' * Something - Something - Function.',
+        ' *',
+        ' * Body line one long enough to satisfy the rule\'s body paragraph requirement.',
+        ' * Body line two of the body paragraph.',
+        ' *',
+        ' * @since 1.0.0',
+        ' */',
+        'export function myFunc() { return null; }',
+      ].join('\n'),
+      filename: '/project/src/2fa/auth.tsx',
+      options: [{ anchorDirectories: ['src'], ignoreFiles: [], knownNames: {}, stripDirectories: ['types'] }],
+      errors: [{
+        messageId: 'invalidIdentifierPrefix',
+        data: {
+          segment: '2fa',
+          prefix: '2faAuth',
+        },
+      }],
     },
   ],
 });

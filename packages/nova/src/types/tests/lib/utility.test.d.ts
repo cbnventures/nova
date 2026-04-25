@@ -214,6 +214,45 @@ export type TestsLibUtilityLoadWorkspaceManifestsSecondWorkspace = SharedWorkspa
 export type TestsLibUtilityLoadWorkspaceManifestsOnlyWorkspace = SharedWorkspaceManifest | undefined;
 
 /**
+ * Tests - Lib - Utility - Normalize Route Segment - Input.
+ *
+ * @since 0.17.1
+ */
+export type TestsLibUtilityNormalizeRouteSegmentInput = string;
+
+/**
+ * Tests - Lib - Utility - Normalize Route Segment - Result.
+ *
+ * @since 0.17.1
+ */
+export type TestsLibUtilityNormalizeRouteSegmentResult = string;
+
+/**
+ * Tests - Lib - Utility - Normalize Route Segment - Expected.
+ *
+ * @since 0.17.1
+ */
+export type TestsLibUtilityNormalizeRouteSegmentExpected = string;
+
+/**
+ * Tests - Lib - Utility - Normalize Route Segment - Case.
+ *
+ * @since 0.17.1
+ */
+export type TestsLibUtilityNormalizeRouteSegmentCase = {
+  input: TestsLibUtilityNormalizeRouteSegmentInput;
+  expected: TestsLibUtilityNormalizeRouteSegmentExpected;
+  description: string;
+};
+
+/**
+ * Tests - Lib - Utility - Normalize Route Segment - Cases.
+ *
+ * @since 0.17.1
+ */
+export type TestsLibUtilityNormalizeRouteSegmentCases = ReadonlyArray<TestsLibUtilityNormalizeRouteSegmentCase>;
+
+/**
  * Tests - Lib - Utility - Parse Linux OS Release Text.
  *
  * @since 0.12.0
