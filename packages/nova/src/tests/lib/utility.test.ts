@@ -124,7 +124,6 @@ import type {
   TestsLibUtilityLoadWorkspaceManifestsSandboxRoot,
   TestsLibUtilityLoadWorkspaceManifestsSecondWorkspace,
   TestsLibUtilityLoadWorkspaceManifestsTemporaryDirectory,
-  TestsLibUtilityNormalizeRouteSegmentCase,
   TestsLibUtilityNormalizeRouteSegmentCases,
   TestsLibUtilityNormalizeRouteSegmentResult,
   TestsLibUtilityParseLinuxOsReleaseTextResult,
@@ -1877,32 +1876,80 @@ describe('saveGeneratedFile (with header)', async () => {
  */
 describe('normalizeRouteSegment', () => {
   const cases: TestsLibUtilityNormalizeRouteSegmentCases = [
+
     // Phase 1 — unwrap framework patterns.
-    { input: '[id]', expected: 'id', description: 'dynamic segment' },
-    { input: '[slug]', expected: 'slug', description: 'dynamic segment with longer name' },
-    { input: '[...name]', expected: 'name', description: 'catch-all segment' },
-    { input: '[...not-found]', expected: 'not-found', description: 'catch-all with hyphen preserved' },
-    { input: '[[...name]]', expected: 'name', description: 'optional catch-all segment' },
-    { input: '[[...rest]]', expected: 'rest', description: 'optional catch-all with different name' },
-    { input: '(group)', expected: 'group', description: 'route group' },
-    { input: '(marketing)', expected: 'marketing', description: 'route group with name' },
-    { input: '@modal', expected: 'modal', description: 'parallel route slot' },
-    { input: '@slot', expected: 'slot', description: 'parallel route with short name' },
+    {
+      input: '[id]', expected: 'id', description: 'dynamic segment',
+    },
+    {
+      input: '[slug]', expected: 'slug', description: 'dynamic segment with longer name',
+    },
+    {
+      input: '[...name]', expected: 'name', description: 'catch-all segment',
+    },
+    {
+      input: '[...not-found]', expected: 'not-found', description: 'catch-all with hyphen preserved',
+    },
+    {
+      input: '[[...name]]', expected: 'name', description: 'optional catch-all segment',
+    },
+    {
+      input: '[[...rest]]', expected: 'rest', description: 'optional catch-all with different name',
+    },
+    {
+      input: '(group)', expected: 'group', description: 'route group',
+    },
+    {
+      input: '(marketing)', expected: 'marketing', description: 'route group with name',
+    },
+    {
+      input: '@modal', expected: 'modal', description: 'parallel route slot',
+    },
+    {
+      input: '@slot', expected: 'slot', description: 'parallel route with short name',
+    },
+
     // Pass-through.
-    { input: 'components', expected: 'components', description: 'plain kebab-case pass-through' },
-    { input: 'package-json', expected: 'package-json', description: 'hyphen preserved' },
-    { input: 'MDXComponents', expected: 'MDXComponents', description: 'PascalCase preserved' },
+    {
+      input: 'components', expected: 'components', description: 'plain kebab-case pass-through',
+    },
+    {
+      input: 'package-json', expected: 'package-json', description: 'hyphen preserved',
+    },
+    {
+      input: 'MDXComponents', expected: 'MDXComponents', description: 'PascalCase preserved',
+    },
+
     // Phase 2 — dash-replace non-identifier chars.
-    { input: 'foo$bar', expected: 'foo-bar', description: 'dollar replaced with hyphen' },
-    { input: 'hello.world', expected: 'hello-world', description: 'dot replaced with hyphen' },
-    { input: 'hello world', expected: 'hello-world', description: 'space replaced with hyphen' },
-    { input: 'hello..world', expected: 'hello--world', description: 'multiple dots become multiple hyphens' },
+    {
+      input: 'foo$bar', expected: 'foo-bar', description: 'dollar replaced with hyphen',
+    },
+    {
+      input: 'hello.world', expected: 'hello-world', description: 'dot replaced with hyphen',
+    },
+    {
+      input: 'hello world', expected: 'hello-world', description: 'space replaced with hyphen',
+    },
+    {
+      input: 'hello..world', expected: 'hello--world', description: 'multiple dots become multiple hyphens',
+    },
+
     // Empty-signal cases.
-    { input: '', expected: '', description: 'empty string returns empty' },
-    { input: '   ', expected: '', description: 'whitespace-only returns empty' },
-    { input: '@@@', expected: '', description: 'no alphanumeric returns empty' },
-    { input: '[]', expected: '', description: 'empty brackets return empty' },
-    { input: '[.]', expected: '', description: 'only punctuation returns empty' },
+    {
+      input: '', expected: '', description: 'empty string returns empty',
+    },
+    {
+      input: '   ', expected: '', description: 'whitespace-only returns empty',
+    },
+    {
+      input: '@@@', expected: '', description: 'no alphanumeric returns empty',
+    },
+    {
+      input: '[]', expected: '', description: 'empty brackets return empty',
+    },
+    {
+      input: '[.]', expected: '', description: 'only punctuation returns empty',
+    },
   ];
 
   for (const testCase of cases) {

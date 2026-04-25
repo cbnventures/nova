@@ -644,7 +644,9 @@ ruleTester.run('requireJsdocHierarchy', RequireJsdocHierarchy['rule'], {
         'export function myFunc() { return null; }',
       ].join('\n'),
       filename: '/project/src/2fa/auth.tsx',
-      options: [{ anchorDirectories: ['src'], ignoreFiles: [], knownNames: {}, stripDirectories: ['types'] }],
+      options: [{
+        anchorDirectories: ['src'], ignoreFiles: [], knownNames: {}, stripDirectories: ['types'],
+      }],
       errors: [{
         messageId: 'invalidIdentifierPrefix',
         data: {

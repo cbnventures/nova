@@ -203,7 +203,7 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
         return {};
       }
 
-      const diagnostic = RulesEslintJsdocRequireJsdocHierarchy.deriveInvalidPrefixDiagnostic(context.filename, options);
+      const diagnostic: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturns = RulesEslintJsdocRequireJsdocHierarchy.deriveInvalidPrefixDiagnostic(context.filename, options);
 
       if (diagnostic !== null) {
         return {

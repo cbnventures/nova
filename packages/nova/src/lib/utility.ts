@@ -950,10 +950,9 @@ export async function loadWorkspaceManifests(options: LibUtilityLoadWorkspaceMan
 /**
  * Lib - Utility - Normalize Route Segment.
  *
- * Cleans a single path segment so it can be fed to downstream hyphen-split
- * title-casing. Unwraps Next.js-style routing patterns (dynamic, catch-all,
- * optional catch-all, route groups, parallel routes) and replaces any
- * remaining non-identifier characters with hyphens so word boundaries survive.
+ * Cleans a single path segment for downstream hyphen-split title-casing.
+ * Unwraps Next.js-style routing patterns (dynamic, catch-all, route groups,
+ * parallel routes) and dash-replaces residual non-identifier characters.
  *
  * @param {LibUtilityNormalizeRouteSegmentSegment} segment - Segment.
  *

@@ -58,21 +58,25 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
       code: 'export type AppNotFoundLayoutProps = string;',
       filename: '/project/src/types/app/[...not-found]/layout.d.ts',
     },
+
     // Next.js dynamic segment.
     {
       code: 'export type AppIdProfileReturns = void;',
       filename: '/project/src/types/app/[id]/profile.d.ts',
     },
+
     // Next.js optional catch-all.
     {
       code: 'export type AppSlugPageProps = string;',
       filename: '/project/src/types/app/[[...slug]]/page.d.ts',
     },
+
     // Next.js route group — contributes to hierarchy.
     {
       code: 'export type AppMarketingLandingProps = string;',
       filename: '/project/src/types/app/(marketing)/landing.d.ts',
     },
+
     // Next.js parallel route — contributes to hierarchy.
     {
       code: 'export type AppModalSettingsProps = string;',

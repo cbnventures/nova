@@ -86,7 +86,7 @@ export class RulesEslintTypescriptRequireTypeNaming {
         return {};
       }
 
-      const diagnostic = RulesEslintTypescriptRequireTypeNaming.deriveInvalidPrefixDiagnostic(context.filename);
+      const diagnostic: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns = RulesEslintTypescriptRequireTypeNaming.deriveInvalidPrefixDiagnostic(context.filename);
 
       if (diagnostic !== null) {
         return {
