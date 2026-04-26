@@ -504,6 +504,8 @@ export type SharedNovaConfigUrls = {
 
 export type SharedNovaConfigWorkspaceName = string;
 
+export type SharedNovaConfigWorkspaceDisplayName = string;
+
 export type SharedNovaConfigWorkspaceRole = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
 
 export type SharedNovaConfigWorkspacePolicy = 'freezable' | 'trackable' | 'distributable';
@@ -535,6 +537,7 @@ export type SharedNovaConfigWorkspaceRecipes = {
 
 export type SharedNovaConfigWorkspace = {
   name: SharedNovaConfigWorkspaceName;
+  displayName?: SharedNovaConfigWorkspaceDisplayName;
   role: SharedNovaConfigWorkspaceRole;
   policy: SharedNovaConfigWorkspacePolicy;
   recipes?: SharedNovaConfigWorkspaceRecipes;

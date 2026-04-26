@@ -1313,6 +1313,16 @@ export type CliUtilityInitializePromptWorkspacesFormSelectedPolicy = SharedNovaC
 
 export type CliUtilityInitializePromptWorkspacesFormResolvedName = string | undefined;
 
+export type CliUtilityInitializePromptWorkspacesFormDisplayNamePromptKey = 'workspaceDisplayName';
+
+export type CliUtilityInitializePromptWorkspacesFormDisplayNamePromptValue = string;
+
+export type CliUtilityInitializePromptWorkspacesFormDisplayNamePrompt = SharedPromptWithCancelResolved<CliUtilityInitializePromptWorkspacesFormDisplayNamePromptKey, CliUtilityInitializePromptWorkspacesFormDisplayNamePromptValue> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptWorkspacesFormDisplayNameValidateValue = unknown;
+
+export type CliUtilityInitializePromptWorkspacesFormWorkspaceDisplayNameInput = SharedNormalizedResultSanitized<string>;
+
 export type CliUtilityInitializePromptWorkspacesFormExistingRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
 
 export type CliUtilityInitializePromptWorkspacesFormRecipesPromptKey = 'workspaceRecipes';

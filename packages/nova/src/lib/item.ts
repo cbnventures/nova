@@ -11,6 +11,7 @@ import type {
   LibItemChangelogValidCategories,
   LibItemChangelogVerbs,
   LibItemCorepackKeys,
+  LibItemEcosystemKeys,
   LibItemEmailFields,
   LibItemGenericProtocols,
   LibItemNodeJsKeys,
@@ -443,7 +444,7 @@ export const libItemUrlFields: LibItemUrlFields = [
 /**
  * Lib - Item - Bundler Keys.
  *
- * Package.json fields owned by bundler tooling such as TypeScript, Rollup, and webpack.
+ * Package.json fields read by bundler tooling such as TypeScript, Rollup, and webpack.
  * The cleanup recipe includes these in the allowed-keys set.
  *
  * @since 0.11.0
@@ -466,18 +467,29 @@ export const libItemBundlerKeys: LibItemBundlerKeys = [
 /**
  * Lib - Item - Corepack Keys.
  *
- * Package.json fields managed by Node.js Corepack. The cleanup recipe includes these in
- * the allowed-keys set to avoid flagging them as unknown.
+ * Package.json fields read by Node.js Corepack.
+ * The cleanup recipe includes these in the allowed-keys set.
  *
  * @since 0.11.0
  */
 export const libItemCorepackKeys: LibItemCorepackKeys = ['packageManager'];
 
 /**
+ * Lib - Item - Ecosystem Keys.
+ *
+ * Package.json fields adopted by ecosystems outside the npm specification, such as
+ * Homebridge plugins and VS Code extensions. The cleanup recipe includes these in the
+ * allowed-keys set.
+ *
+ * @since 0.18.0
+ */
+export const libItemEcosystemKeys: LibItemEcosystemKeys = ['displayName'];
+
+/**
  * Lib - Item - Node Js Keys.
  *
- * Package.json fields defined by the Node.js runtime for module resolution and entry
- * points. The cleanup recipe includes these in the allowed-keys set.
+ * Package.json fields read by the Node.js runtime for module resolution and entry points.
+ * The cleanup recipe includes these in the allowed-keys set.
  *
  * @since 0.11.0
  */
@@ -497,7 +509,7 @@ export const libItemNodeJsKeys: LibItemNodeJsKeys = [
  * Lib - Item - npm Keys.
  *
  * Package.json fields defined by the npm registry specification. The cleanup recipe
- * combines these with bundler, Corepack, and Node.js keys.
+ * combines these with bundler, Corepack, ecosystem, and Node.js keys.
  *
  * @since 0.11.0
  */
@@ -567,8 +579,13 @@ export const libItemNpmKeys: LibItemNpmKeys = [
  */
 export const libItemSortOrderKeys: LibItemSortOrderKeys = [
 
-  // Identity.
+  // Identity (part 1).
   'name',
+
+  // Ecosystem.
+  'displayName',
+
+  // Identity (part 2).
   'version',
   'description',
   'keywords',

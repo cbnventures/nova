@@ -133,6 +133,7 @@ import type {
   LibNovaConfigParseWorkspaces,
   LibNovaConfigParseWorkspacesAllowedPolicies,
   LibNovaConfigParseWorkspacesAllowedRecipes,
+  LibNovaConfigParseWorkspacesDisplayNameCandidate,
   LibNovaConfigParseWorkspacesEnabled,
   LibNovaConfigParseWorkspacesIsNameAllowed,
   LibNovaConfigParseWorkspacesIsNameAllowedBase,
@@ -717,6 +718,7 @@ export class LibNovaConfig {
       }
 
       const nameCandidate: LibNovaConfigParseWorkspacesNameCandidate = this.getNonEmptyString(options['name']);
+      const displayNameCandidate: LibNovaConfigParseWorkspacesDisplayNameCandidate = this.getNonEmptyString(options['displayName']);
       const roleCandidate: LibNovaConfigParseWorkspacesRoleCandidate = this.getNonEmptyString(options['role']);
       const policyCandidate: LibNovaConfigParseWorkspacesPolicyCandidate = this.getNonEmptyString(options['policy']);
 
@@ -807,6 +809,7 @@ export class LibNovaConfig {
         role,
         policy,
         name: nameCandidate,
+        ...(displayNameCandidate !== undefined) ? { displayName: displayNameCandidate } : {},
         ...(recipes !== undefined) ? { recipes } : {},
       });
     }

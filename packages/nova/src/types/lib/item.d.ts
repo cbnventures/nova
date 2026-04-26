@@ -292,6 +292,15 @@ export type LibItemCorepackKeys = readonly [
 ];
 
 /**
+ * Lib - Item - Ecosystem Keys.
+ *
+ * @since 0.18.0
+ */
+export type LibItemEcosystemKeys = readonly [
+  'displayName',
+];
+
+/**
  * Lib - Item - Email Fields.
  *
  * @since 0.11.0
@@ -451,6 +460,7 @@ export type LibItemSkipDirectories = readonly [
  */
 export type LibItemSortOrderKeys = readonly [
   'name',
+  'displayName',
   'version',
   'description',
   'keywords',
