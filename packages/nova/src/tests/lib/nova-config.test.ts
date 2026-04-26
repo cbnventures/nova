@@ -599,6 +599,113 @@ describe('SharedNovaConfig load', async () => {
     return;
   });
 
+  it('load parses displayName from workspace config', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'display-name');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+      workspaces: {
+        '.': {
+          name: 'project',
+          displayName: 'Display Project',
+          role: 'project',
+          policy: 'freezable',
+        },
+        'packages/core': {
+          name: '@test/core',
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+
+    const loadedWorkspaces: TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
+
+    if (loadedWorkspaces === undefined) {
+      fail('Expected workspaces to be defined');
+    }
+
+    const rootWorkspace: TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
+
+    if (rootWorkspace === undefined) {
+      fail('Expected root workspace to be defined');
+    }
+
+    const coreWorkspace: TestsLibNovaConfigSharednovaconfigLoadCoreWorkspace = loadedWorkspaces['packages/core'];
+
+    if (coreWorkspace === undefined) {
+      fail('Expected packages/core workspace to be defined');
+    }
+
+    strictEqual(rootWorkspace['displayName'], 'Display Project');
+    strictEqual(coreWorkspace['displayName'], undefined);
+
+    return;
+  });
+
+  it('load drops invalid displayName from workspace config', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'display-name-invalid');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+      workspaces: {
+        '.': {
+          name: 'project',
+          displayName: '',
+          role: 'project',
+          policy: 'freezable',
+        },
+        'packages/core': {
+          name: '@test/core',
+          displayName: 42,
+          role: 'package',
+          policy: 'distributable',
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+
+    const loadedWorkspaces: TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
+
+    if (loadedWorkspaces === undefined) {
+      fail('Expected workspaces to be defined');
+    }
+
+    const rootWorkspace: TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
+
+    if (rootWorkspace === undefined) {
+      fail('Expected root workspace to be defined');
+    }
+
+    const coreWorkspace: TestsLibNovaConfigSharednovaconfigLoadCoreWorkspace = loadedWorkspaces['packages/core'];
+
+    if (coreWorkspace === undefined) {
+      fail('Expected packages/core workspace to be defined');
+    }
+
+    strictEqual(rootWorkspace['displayName'], undefined);
+    strictEqual(coreWorkspace['displayName'], undefined);
+
+    return;
+  });
+
   it('load ignores invalid recipe tuples', async () => {
     const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes-invalid');
 

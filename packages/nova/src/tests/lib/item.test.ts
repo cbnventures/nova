@@ -14,6 +14,7 @@ import {
   libItemChangelogValidCategories,
   libItemChangelogVerbs,
   libItemCorepackKeys,
+  libItemEcosystemKeys,
   libItemNodeJsKeys,
   libItemNpmKeys,
   libItemPrettyNamesBrand,
@@ -308,6 +309,14 @@ describe('package.json key arrays', async () => {
     const unique: TestsLibItemUnique = new Set(libItemCorepackKeys);
 
     strictEqual(unique.size, libItemCorepackKeys.length);
+
+    return;
+  });
+
+  it('libItemEcosystemKeys has no duplicates', () => {
+    const unique: TestsLibItemUnique = new Set(libItemEcosystemKeys);
+
+    strictEqual(unique.size, libItemEcosystemKeys.length);
 
     return;
   });

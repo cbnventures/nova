@@ -365,6 +365,8 @@ export type LibNovaConfigParseWorkspacesOptions = unknown;
 
 export type LibNovaConfigParseWorkspacesNameCandidate = string | undefined;
 
+export type LibNovaConfigParseWorkspacesDisplayNameCandidate = string | undefined;
+
 export type LibNovaConfigParseWorkspacesRoleCandidate = string | undefined;
 
 export type LibNovaConfigParseWorkspacesPolicyCandidate = string | undefined;

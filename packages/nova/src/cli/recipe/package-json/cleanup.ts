@@ -4,6 +4,7 @@ import { LIB_CONSTANTS_DOCS_BASE_URL } from '../../../lib/constants.js';
 import {
   libItemBundlerKeys,
   libItemCorepackKeys,
+  libItemEcosystemKeys,
   libItemNodeJsKeys,
   libItemNpmKeys,
   libItemSortOrderKeys,
@@ -311,7 +312,7 @@ export class CliRecipePackageJsonCleanup {
    * CLI - Recipe - package.json - Cleanup - Handle Unknown.
    *
    * Detects and removes keys not present in the allowed set built from bundler, corepack,
-   * Node.js, and npm key lists from the lib/item module.
+   * ecosystem, Node.js, and npm key lists from the lib/item module.
    *
    * @param {CliRecipePackageJsonCleanupHandleUnknownWorkspace} workspace - Workspace.
    *
@@ -325,6 +326,7 @@ export class CliRecipePackageJsonCleanup {
     const allowedKeys: CliRecipePackageJsonCleanupHandleUnknownAllowedKeys = new Set([
       ...libItemBundlerKeys,
       ...libItemCorepackKeys,
+      ...libItemEcosystemKeys,
       ...libItemNodeJsKeys,
       ...libItemNpmKeys,
     ]);

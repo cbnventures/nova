@@ -384,6 +384,10 @@ import type {
   CliUtilityInitializePromptWorkspacesCurrentWorkingDirectory,
   CliUtilityInitializePromptWorkspacesFormAllowedPolicies,
   CliUtilityInitializePromptWorkspacesFormAllowedRoles,
+  CliUtilityInitializePromptWorkspacesFormDisplayNamePrompt,
+  CliUtilityInitializePromptWorkspacesFormDisplayNamePromptKey,
+  CliUtilityInitializePromptWorkspacesFormDisplayNamePromptValue,
+  CliUtilityInitializePromptWorkspacesFormDisplayNameValidateValue,
   CliUtilityInitializePromptWorkspacesFormExistingPolicyIndex,
   CliUtilityInitializePromptWorkspacesFormExistingRecipes,
   CliUtilityInitializePromptWorkspacesFormExistingRoleIndex,
@@ -424,6 +428,7 @@ import type {
   CliUtilityInitializePromptWorkspacesFormSelectedRole,
   CliUtilityInitializePromptWorkspacesFormSelectedSettings,
   CliUtilityInitializePromptWorkspacesFormSettingsPrompt,
+  CliUtilityInitializePromptWorkspacesFormWorkspaceDisplayNameInput,
   CliUtilityInitializePromptWorkspacesMenuOutput,
   CliUtilityInitializePromptWorkspacesMenuOutputKey,
   CliUtilityInitializePromptWorkspacesMenuOutputResult,
@@ -2796,8 +2801,8 @@ export class CliUtilityInitialize {
   /**
    * CLI - Utility - Initialize - Prompt Workspaces Form.
    *
-   * Multi-step form for a single workspace. Prompts for role, policy, package name, recipe
-   * selection, and per-recipe settings in sequence.
+   * Multi-step form for a single workspace. Prompts for role, policy, package name, display
+   * name, recipe selection, and per-recipe settings in sequence.
    *
    * @param {CliUtilityInitializePromptWorkspacesFormOptions} options - Options.
    *
@@ -2959,6 +2964,23 @@ export class CliUtilityInitialize {
         action: 'back',
       };
     }
+
+    // Optional human-readable display name. Surfaces in tooling that reads package.json's displayName.
+    const displayNamePrompt: CliUtilityInitializePromptWorkspacesFormDisplayNamePrompt = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptWorkspacesFormDisplayNamePromptKey, CliUtilityInitializePromptWorkspacesFormDisplayNamePromptValue>({
+      type: 'text',
+      name: 'workspaceDisplayName',
+      message: 'Workspace display name (optional)',
+      initial: (options['existingWorkspace'] !== undefined) ? options['existingWorkspace']['displayName'] ?? '' : '',
+      validate: (value: CliUtilityInitializePromptWorkspacesFormDisplayNameValidateValue) => CliUtilityInitialize.normalizeText(value, Infinity)['result'],
+    });
+
+    if (displayNamePrompt['cancelled'] === true) {
+      return {
+        action: 'back',
+      };
+    }
+
+    const workspaceDisplayNameInput: CliUtilityInitializePromptWorkspacesFormWorkspaceDisplayNameInput = CliUtilityInitialize.normalizeText(displayNamePrompt['result'].workspaceDisplayName, Infinity)['sanitized'];
 
     const existingRecipes: CliUtilityInitializePromptWorkspacesFormExistingRecipes = (options['existingWorkspace'] !== undefined && options['existingWorkspace']['recipes'] !== undefined) ? options['existingWorkspace']['recipes'] : undefined;
 
@@ -3223,6 +3245,7 @@ export class CliUtilityInitialize {
       action: 'apply',
       workspace: {
         name: resolvedName,
+        ...(workspaceDisplayNameInput !== undefined) ? { displayName: workspaceDisplayNameInput } : {},
         role: selectedRole,
         policy: selectedPolicy,
         ...(Object.keys(recipes).length > 0) ? { recipes } : {},
