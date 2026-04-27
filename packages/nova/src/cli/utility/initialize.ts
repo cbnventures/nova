@@ -28,6 +28,8 @@ import type {
   CliUtilityInitializeCheckPathLocations,
   CliUtilityInitializeCheckPathNotProjectRootDirectoryMessage,
   CliUtilityInitializeCheckPathReturns,
+  CliUtilityInitializeIsNonEmptyLiteralInputReturns,
+  CliUtilityInitializeIsNonEmptyLiteralInputValue,
   CliUtilityInitializeNormalizeEmailReturns,
   CliUtilityInitializeNormalizeEmailTrimmedValue,
   CliUtilityInitializeNormalizeEmailValue,
@@ -250,6 +252,9 @@ import type {
   CliUtilityInitializePromptWorkflowsFormDependsOnOutputResult,
   CliUtilityInitializePromptWorkflowsFormDependsOnOutputResultValue,
   CliUtilityInitializePromptWorkflowsFormEditIndex,
+  CliUtilityInitializePromptWorkflowsFormExampleRaw,
+  CliUtilityInitializePromptWorkflowsFormExampleResolved,
+  CliUtilityInitializePromptWorkflowsFormExampleWorkingDir,
   CliUtilityInitializePromptWorkflowsFormExistingDependsOn,
   CliUtilityInitializePromptWorkflowsFormExistingScopes,
   CliUtilityInitializePromptWorkflowsFormExistingSuffix,
@@ -322,6 +327,8 @@ import type {
   CliUtilityInitializePromptWorkflowsFormTargetTypeOutputResultValue,
   CliUtilityInitializePromptWorkflowsFormTargetVariableEntries,
   CliUtilityInitializePromptWorkflowsFormTargetVariableKey,
+  CliUtilityInitializePromptWorkflowsFormTargetVariableNameKey,
+  CliUtilityInitializePromptWorkflowsFormTargetVariableNames,
   CliUtilityInitializePromptWorkflowsFormTargetVariables,
   CliUtilityInitializePromptWorkflowsFormTargetVariableValue,
   CliUtilityInitializePromptWorkflowsFormTargetWorkingDirChoices,
@@ -348,6 +355,7 @@ import type {
   CliUtilityInitializePromptWorkflowsFormVariableConfig,
   CliUtilityInitializePromptWorkflowsFormVariableDescriptionParts,
   CliUtilityInitializePromptWorkflowsFormVariableName,
+  CliUtilityInitializePromptWorkflowsFormVariableNameToTargetWorkingDir,
   CliUtilityInitializePromptWorkflowsFormWorkflow,
   CliUtilityInitializePromptWorkflowsFormWorkflows,
   CliUtilityInitializePromptWorkflowsFormWorkspaceKeys,
@@ -524,6 +532,27 @@ export class CliUtilityInitialize {
     await novaConfig.save(isReplaceFile);
 
     return;
+  }
+
+  /**
+   * CLI - Utility - Initialize - Is Non Empty Literal Input.
+   *
+   * Validator for literal variable prompts. Rejects empty and whitespace-only
+   * input so the user cannot skip a required literal and fail later at
+   * workflow generation time.
+   *
+   * @param {CliUtilityInitializeIsNonEmptyLiteralInputValue} value - Value.
+   *
+   * @returns {CliUtilityInitializeIsNonEmptyLiteralInputReturns}
+   *
+   * @since 0.18.0
+   */
+  public static isNonEmptyLiteralInput(value: CliUtilityInitializeIsNonEmptyLiteralInputValue): CliUtilityInitializeIsNonEmptyLiteralInputReturns {
+    if (typeof value === 'string' && value.trim() !== '') {
+      return true;
+    }
+
+    return 'This field is required.';
   }
 
   /**
@@ -2526,9 +2555,11 @@ export class CliUtilityInitialize {
     if (matchedMetadata !== undefined) {
       // Build merged variable map: template variables + per-target variables (first-seen wins).
       const mergedVariables: CliUtilityInitializePromptWorkflowsFormMergedVariables = { ...matchedMetadata['variables'] };
+      const variableNameToTargetWorkingDir: CliUtilityInitializePromptWorkflowsFormVariableNameToTargetWorkingDir = {};
 
       for (const selectedTarget of selectedTargets) {
         const targetType: CliUtilityInitializePromptWorkflowsFormSelectedTargetType = selectedTarget['type'];
+        const targetWorkingDir: CliUtilityInitializePromptWorkflowsFormSelectedTargetWorkingDir = selectedTarget['workingDir'];
         const targetMetadata: CliUtilityInitializePromptWorkflowsFormTargetsMetadata = matchedMetadata['targets'] ?? {};
         const targetVariables: CliUtilityInitializePromptWorkflowsFormTargetVariables = (targetMetadata[targetType] !== undefined) ? targetMetadata[targetType]['variables'] : {};
 
@@ -2540,6 +2571,17 @@ export class CliUtilityInitialize {
 
           if (mergedVariables[targetVarKey] === undefined) {
             Reflect.set(mergedVariables, targetVarKey, targetVarValue);
+          }
+        }
+
+        // Record which target's workingDir owns each variable name (first-target wins for duplicates).
+        const targetVariableNames: CliUtilityInitializePromptWorkflowsFormTargetVariableNames = Object.keys(targetVariables);
+
+        for (const targetVariableName of targetVariableNames) {
+          const targetVariableNameKey: CliUtilityInitializePromptWorkflowsFormTargetVariableNameKey = targetVariableName;
+
+          if (variableNameToTargetWorkingDir[targetVariableNameKey] === undefined) {
+            Reflect.set(variableNameToTargetWorkingDir, targetVariableNameKey, targetWorkingDir);
           }
         }
       }
@@ -2573,8 +2615,18 @@ export class CliUtilityInitialize {
           parts.push(variableConfig['description']);
         }
 
-        if (typeof variableConfig['example'] === 'string') {
-          parts.push(`e.g. ${variableConfig['example']}`);
+        // Resolve {workingDir} in the example using the target that declared the variable.
+        // Template-level variables (no target context) leave the placeholder unchanged.
+        const exampleRaw: CliUtilityInitializePromptWorkflowsFormExampleRaw = variableConfig['example'];
+        const exampleWorkingDir: CliUtilityInitializePromptWorkflowsFormExampleWorkingDir = variableNameToTargetWorkingDir[variableName];
+        let exampleResolved: CliUtilityInitializePromptWorkflowsFormExampleResolved = exampleRaw;
+
+        if (typeof exampleResolved === 'string' && typeof exampleWorkingDir === 'string') {
+          exampleResolved = exampleResolved.replaceAll('{workingDir}', exampleWorkingDir);
+        }
+
+        if (typeof exampleResolved === 'string') {
+          parts.push(`e.g. ${exampleResolved}`);
         }
 
         if (parts.length > 0) {
@@ -2595,6 +2647,7 @@ export class CliUtilityInitialize {
           name: 'settingValue',
           message: promptMessage,
           initial: initialValue,
+          validate: (variableConfig['format'] === 'literal') ? CliUtilityInitialize['isNonEmptyLiteralInput'] : undefined,
         });
 
         if (settingsOutput['cancelled'] === true) {

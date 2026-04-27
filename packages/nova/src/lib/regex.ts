@@ -915,6 +915,28 @@ export const LIB_REGEX_PATTERN_WORKFLOW_CONTEXT_WRAPPER_START = /^\$\{\{\s*/;
 export const LIB_REGEX_PATTERN_WORKFLOW_NAME = /^name:\s*"(.+)"/;
 
 /**
+ * Lib - Regex - Pattern Workflow On Block.
+ *
+ * Matches a top-level `on:` line at the start of any line in a GitHub Actions
+ * YAML document. Used by the workflows test to assert that coexisting target
+ * jobs share a single trigger block.
+ *
+ * @since 0.21.0
+ */
+export const LIB_REGEX_PATTERN_WORKFLOW_ON_BLOCK = /^on:/;
+
+/**
+ * Lib - Regex - Pattern Workflow Placeholder.
+ *
+ * Matches any `[__NAME__]` placeholder token in generated workflow YAML. Used
+ * by the workflows test to assert that no unsubstituted template placeholders
+ * leak into the emitted output.
+ *
+ * @since 0.21.0
+ */
+export const LIB_REGEX_PATTERN_WORKFLOW_PLACEHOLDER = /\[__\w+__\]/;
+
+/**
  * Lib - Regex - Pattern Workflow Run Name Capture.
  *
  * Captures the prefix and suffix surrounding a `${{ ... }}` expression in

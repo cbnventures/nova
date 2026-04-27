@@ -55,11 +55,16 @@ export type LibWorkflowTemplatesTargetVariables = LibWorkflowTemplatesVariables;
 
 export type LibWorkflowTemplatesTargetPermissions = LibWorkflowTemplatesPermissions;
 
+export type LibWorkflowTemplatesTargetUniquenessKeyEntry = LibWorkflowTemplatesVariableName;
+
+export type LibWorkflowTemplatesTargetUniquenessKey = LibWorkflowTemplatesTargetUniquenessKeyEntry[];
+
 export type LibWorkflowTemplatesTarget = {
   description: LibWorkflowTemplatesTargetDescription;
   artifactPaths: LibWorkflowTemplatesTargetArtifactPaths;
   variables: LibWorkflowTemplatesTargetVariables;
   permissions: LibWorkflowTemplatesTargetPermissions;
+  uniquenessKey?: LibWorkflowTemplatesTargetUniquenessKey;
 };
 
 export type LibWorkflowTemplatesTargetType = string;

@@ -12,6 +12,7 @@ import { afterAll, describe, it } from 'vitest';
 import { CliUtilityInitialize } from '../../../cli/utility/initialize.js';
 
 import type {
+  TestsCliUtilityInitializeIsNonEmptyLiteralInputResult,
   TestsCliUtilityInitializeRunOriginalCwd,
   TestsCliUtilityInitializeRunProjectDirectory,
   TestsCliUtilityInitializeRunSandboxRoot,
@@ -51,6 +52,47 @@ describe('CliUtilityInitialize.run', async () => {
     await CliUtilityInitialize.run({});
 
     strictEqual(process.exitCode, 1);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - CLI - Utility - Initialize - Is Non Empty Literal Input.
+ *
+ * @since 0.18.0
+ */
+describe('CliUtilityInitialize.isNonEmptyLiteralInput', () => {
+  it('returns the error message for an empty string', () => {
+    const result: TestsCliUtilityInitializeIsNonEmptyLiteralInputResult = CliUtilityInitialize.isNonEmptyLiteralInput('');
+
+    strictEqual(result, 'This field is required.');
+
+    return;
+  });
+
+  it('returns the error message for whitespace-only input', () => {
+    const result: TestsCliUtilityInitializeIsNonEmptyLiteralInputResult = CliUtilityInitialize.isNonEmptyLiteralInput('   ');
+
+    strictEqual(result, 'This field is required.');
+
+    return;
+  });
+
+  it('returns true for a non-empty string', () => {
+    const result: TestsCliUtilityInitializeIsNonEmptyLiteralInputResult = CliUtilityInitialize.isNonEmptyLiteralInput('./action.yml');
+
+    strictEqual(result, true);
+
+    return;
+  });
+
+  it('returns the error message for non-string input', () => {
+    const result: TestsCliUtilityInitializeIsNonEmptyLiteralInputResult = CliUtilityInitialize.isNonEmptyLiteralInput(undefined);
+
+    strictEqual(result, 'This field is required.');
 
     return;
   });

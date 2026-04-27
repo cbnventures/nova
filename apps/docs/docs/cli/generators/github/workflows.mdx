@@ -92,7 +92,7 @@ Each entry in the `targets` array pins one publish destination to a workspace.
 
 | Field        | Required | Description                                                                                        |
 |--------------|----------|----------------------------------------------------------------------------------------------------|
-| `type`       | Yes      | One of the 8 target types (see [Available Target Types](#available-target-types)).                 |
+| `type`       | Yes      | One of the 9 target types (see [Available Target Types](#available-target-types)).                 |
 | `workingDir` | Yes      | Path to the workspace that owns the target (e.g., `"./packages/nova"`).                            |
 | `needs`      | No       | Working directories of other same-type targets that must finish publishing before this one starts. |
 
@@ -204,6 +204,7 @@ The `publish` template supports the following `type` values for each entry in `t
 | Type                          | Description                                         |
 |-------------------------------|-----------------------------------------------------|
 | `npm`                         | Publish a package to npm                            |
+| `github-action`               | Publish a JavaScript GitHub Action via orphan tags  |
 | `github-packages`             | Publish a package to GitHub Packages                |
 | `docker-hub`                  | Publish a Docker image to Docker Hub                |
 | `ghcr`                        | Publish a Docker image to GitHub Container Registry |
@@ -295,3 +296,142 @@ After generation, the generator scans `.github/workflows/` for existing `nova-*.
 ### Setup Instructions
 
 After all files are generated, the generator prints a summary of secrets and variables that need to be configured on GitHub. This covers every non-automatic `secret` and `var` format variable across all generated workflows.
+
+## Publishing GitHub Actions
+
+The `github-action` target distributes a JavaScript GitHub Action by maintaining an orphan `releases` branch whose commits contain only the runtime files needed by consumers. Each release is tagged with its semver (e.g., `v2.1.0`), and the floating major tag (`v2`) is force-moved to the latest release commit. Older frozen major tags (e.g., `v1`) are never touched.
+
+### Expected Repo Shape
+
+- `action.yml` at the repo root (top-level, not inside a workspace).
+- `packages/<action-name>/` — action source (role: `app`, policy: `trackable`).
+- `apps/docs/` — Docusaurus docs (role: `docs`).
+- Build output in the workspace's `build/` directory, following the standard Nova convention.
+
+### Release Tree Contents
+
+What lands on the `releases` branch for each release:
+
+**Required** (publish fails if missing):
+- `action.yml`
+- `action/` — the built output (renamed from the workspace's `build/` directory during publish).
+
+**Optional** (copied if present at repo root, skipped silently if not):
+- `README.md`
+- `LICENSE`
+- `SECURITY.md`
+- `NOTICE`
+- `CHANGELOG.md`
+
+### Example `nova.config.json` Entry
+
+```json
+{
+  "workflows": [{
+    "template": "publish",
+    "suffix": "release",
+    "triggers": ["release"],
+    "targets": [
+      { "type": "github-action", "workingDir": "./packages/my-action" }
+    ],
+    "settings": {
+      "ACTION_ENTRY_POINT": "index.js",
+      "ACTION_OUTPUT_PATH": "./packages/my-action/build",
+      "ACTION_YML_PATH": "./action.yml",
+      "RELEASE_BRANCH_NAME": "releases",
+      "ROOT_WORKING_DIR": "./"
+    }
+  }]
+}
+```
+
+All four override settings are **required**. Defaults aren't auto-applied — `nova utility initialize` prompts for each one, showing the suggested value as an example.
+
+| Setting               | Description                                                                                          |
+|-----------------------|------------------------------------------------------------------------------------------------------|
+| `ACTION_ENTRY_POINT`  | Filename of the bundled action entry script (relative to `ACTION_OUTPUT_PATH`). Example: `index.js`. |
+| `ACTION_OUTPUT_PATH`  | Path to the built action output directory.                                                           |
+| `ACTION_YML_PATH`     | Path to the `action.yml` file from repo root.                                                        |
+| `RELEASE_BRANCH_NAME` | Branch name for the orphan release history.                                                          |
+
+### Release Mechanics
+
+When a GitHub Release is published:
+
+1. The base `build` job runs the workspace's build command (`turbo run build` if a `turbo.json` is present at repo root, otherwise `npm run build`), producing output in the workspace's `build/` directory.
+2. The `publish-github-action-*` job spins up a separate git workspace at `$RUNNER_TEMP/release`, initialized with the release branch name.
+3. If the release branch already exists remotely, the workspace fetches and resets to it. Otherwise it stays as a fresh orphan branch.
+4. The release tree is staged: `action.yml`, the optional files above, and the built output copied into `action/` (renaming `build/` → `action/`).
+5. The staged tree is committed as `Release <tag>` and force-pushed to the release branch.
+6. The semver tag (e.g., `v2.1.0`) is force-retagged onto the new orphan commit. GitHub creates this tag on `main`'s HEAD when you publish the release; this step moves it to point at the orphan commit so `uses: owner/repo@v2.1.0` resolves correctly.
+7. The floating major tag (e.g., `v2`) is force-moved to the same commit.
+8. A SLSA build-provenance attestation is emitted on the resolved entry script (`ACTION_OUTPUT_PATH`/`ACTION_ENTRY_POINT`) via `actions/attest-build-provenance`.
+
+The `main` branch is never rewritten — the release branch is a parallel, orphan history that mirrors only what consumers receive via `uses: owner/repo@<ref>`.
+
+### Implications of the orphan-branch design
+
+A few non-obvious consequences worth knowing:
+
+- **`main` and the release branch share no history.** Running `git log main` will never show release commits. Running `git log <release-branch>` shows only release commits, never source commits. To find which `main` commit produced a given release, use `git log` with the release's authoring date or look at the release's GitHub UI metadata.
+- **Checking out a tag yields the runtime tree, not the source.** `git checkout v2.1.0` puts you in a working tree containing only `action.yml`, `action/index.js`, and the optional community files. The original source that produced this release is at the parent main commit at the time of release publication.
+- **Force-retagging breaks reproducibility from a tag.** Once `v2.1.0` is moved from `main`'s HEAD to the orphan commit, the original `main` commit that triggered the release is no longer reachable via that tag. Keep release notes that reference the original commit SHA if you need that traceability.
+- **Older frozen major tags stay put.** A `v1` tag from a prior major line is never touched by this workflow. Only the floating major matching the released `v<N>.x.y` (e.g., `v2` for a `v2.1.0` release) gets force-moved.
+
+### Multiple actions in one repo
+
+If a repo ships more than one GitHub Action (rare), each `github-action` target must declare a distinct `RELEASE_BRANCH_NAME` across the entire `nova.config.json`. Two `github-action` targets sharing the same release branch will race on push — both jobs run in parallel and force-push to the same branch, so the second writer overwrites the first.
+
+Nova validates destination uniqueness across the entire `workflows[]` array, not just within a single workflow: declaring two `github-action` targets anywhere in your config — same workflow or separate workflows — with overlapping `RELEASE_BRANCH_NAME` values fails the generator with a clear error message and rejects both colliding workflows. To ship two actions from one repo, use distinct `RELEASE_BRANCH_NAME` values (e.g., `releases-primary`, `releases-secondary`) — typically each in its own workflow with its own `suffix`. Example layout:
+
+```json
+{
+  "workflows": [
+    {
+      "template": "publish",
+      "suffix": "primary",
+      "triggers": ["release"],
+      "targets": [{ "type": "github-action", "workingDir": "./packages/primary-action" }],
+      "settings": {
+        "ACTION_ENTRY_POINT": "index.js",
+        "ACTION_OUTPUT_PATH": "./packages/primary-action/build",
+        "ACTION_YML_PATH": "./action.yml",
+        "RELEASE_BRANCH_NAME": "releases-primary",
+        "ROOT_WORKING_DIR": "./"
+      }
+    },
+    {
+      "template": "publish",
+      "suffix": "secondary",
+      "triggers": ["release"],
+      "targets": [{ "type": "github-action", "workingDir": "./packages/secondary-action" }],
+      "settings": {
+        "ACTION_ENTRY_POINT": "index.js",
+        "ACTION_OUTPUT_PATH": "./packages/secondary-action/build",
+        "ACTION_YML_PATH": "./packages/secondary-action/action.yml",
+        "RELEASE_BRANCH_NAME": "releases-secondary",
+        "ROOT_WORKING_DIR": "./"
+      }
+    }
+  ]
+}
+```
+
+Each action gets its own publish workflow with a distinct `RELEASE_BRANCH_NAME`, and the GitHub Releases for each action use a uniquely-prefixed tag (e.g., `primary-v1.2.3`, `secondary-v1.0.0`). Nova's force-retag step is prefix-aware: the floating major derivation matches an optional alphanumeric prefix before the `v` (so `primary-v1.2.3` → `primary-v1`, `v2.1.3` → `v2`). Consumers reference each action via its prefixed tag: `uses: owner/repo@primary-v1`, `uses: owner/repo@secondary-v1`.
+
+Similarly, only one `github-pages-docusaurus` target may be declared across all workflows in your `nova.config.json` — GitHub Pages is repo-scoped, so two deployments would overwrite each other regardless of whether they live in the same workflow or separate ones. Nova validates this at workflow-generation time.
+
+The same cross-workflow uniqueness check applies to these other publish targets:
+
+| Target                        | Uniqueness check                                                                  |
+|-------------------------------|-----------------------------------------------------------------------------------|
+| `aws-amplify-nextjs`          | `AMPLIFY_APP_ID` + `AMPLIFY_BRANCH_NAME` must not be duplicated across workflows. |
+| `cloudflare-pages-docusaurus` | `CLOUDFLARE_PROJECT_NAME` must not be duplicated across workflows.                |
+| `vercel-nextjs`               | `VERCEL_ORG_ID` + `VERCEL_PROJECT_ID` must not be duplicated across workflows.    |
+| `github-action`               | `RELEASE_BRANCH_NAME` must not be duplicated across workflows.                    |
+| `github-pages-docusaurus`     | At most one target across all workflows (GitHub Pages is repo-scoped).            |
+
+:::note Tag protection rules
+
+The force-retag steps require permission to overwrite existing tags. If the consuming repo has [tag protection rules](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-security/managing-repository-settings/configuring-tag-protection-rules) covering the `v*` pattern, the workflow's default `GITHUB_TOKEN` will be denied — even with `contents: write` permission. Either disable tag protection for the patterns you ship, or replace `GITHUB_TOKEN` with a [GitHub App token](https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/about-authentication-with-a-github-app) that has the required maintain-permission scope.
+:::

@@ -70,3 +70,7 @@ export type TestsCliGenerateGithubWorkflowsRunSaveCalls = [string, string, boole
 export type TestsCliGenerateGithubWorkflowsRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
 
 export type TestsCliGenerateGithubWorkflowsRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
+
+export type TestsCliGenerateGithubWorkflowsRunPlaceholderPattern = RegExp;
+
+export type TestsCliGenerateGithubWorkflowsRunOnMatches = RegExpMatchArray | null;

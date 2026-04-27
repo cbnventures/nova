@@ -1,0 +1,121 @@
+publish-github-action-[__TARGET_ID__]:
+  needs: [__NEEDS__]
+  runs-on: "ubuntu-latest"
+  timeout-minutes: 10
+  permissions:
+    contents: "write"
+    id-token: "write"
+    attestations: "write"
+[__JOBS_CONDITION__]
+  steps:
+    - name: "Checkout repository"
+      uses: "actions/checkout@v6"
+      with:
+        persist-credentials: false
+
+    - name: "Download build artifacts"
+      uses: "actions/download-artifact@v8"
+      with:
+        name: "[__ARTIFACT_NAME__]"
+        path: "${{ vars.ACTION_OUTPUT_PATH }}"
+
+    - name: "Configure git identity"
+      if: "${{ env.PUBLISH == 'true' }}"
+      run: |
+        set -euo pipefail
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+    - name: "Verify release context"
+      if: "${{ env.PUBLISH == 'true' }}"
+      env:
+        TAG_NAME: "${{ github.event.release.tag_name }}"
+      run: |
+        set -euo pipefail
+        if [ -z "$TAG_NAME" ]; then
+          echo "::error::The github-action target requires a release.published event with a tag name. Manual workflow_dispatch with dry-run=false is not supported."
+          exit 1
+        fi
+
+    - name: "Initialize release workspace"
+      if: "${{ env.PUBLISH == 'true' }}"
+      env:
+        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+      run: |
+        set -euo pipefail
+        rm -rf "$RUNNER_TEMP/release"
+        mkdir -p "$RUNNER_TEMP/release"
+        cd "$RUNNER_TEMP/release"
+        git init -b "${{ vars.RELEASE_BRANCH_NAME }}"
+        git remote add origin "https://github.com/${{ github.repository }}.git"
+        git config --local http.https://github.com/.extraheader "Authorization: basic $(printf 'x-access-token:%s' "$GITHUB_TOKEN" | base64 | tr -d '\n')"
+
+        # If the release branch exists remotely, fetch and reset to it so the new commit lands on top.
+        if git ls-remote --exit-code --heads origin "${{ vars.RELEASE_BRANCH_NAME }}" > /dev/null; then
+          git fetch origin "${{ vars.RELEASE_BRANCH_NAME }}"
+          git reset --hard "origin/${{ vars.RELEASE_BRANCH_NAME }}"
+          git rm -rf . > /dev/null 2>&1 || true
+        fi
+
+    - name: "Stage release tree"
+      if: "${{ env.PUBLISH == 'true' }}"
+      run: |
+        set -euo pipefail
+        cd "$GITHUB_WORKSPACE"
+        STAGE="$RUNNER_TEMP/release"
+
+        # Required: action.yml and the built action directory.
+        cp "${{ vars.ACTION_YML_PATH }}" "$STAGE/action.yml"
+        mkdir -p "$STAGE/action"
+        cp -R "${{ vars.ACTION_OUTPUT_PATH }}/." "$STAGE/action/"
+
+        # Optional: common community-repo files. Copy if present on main, skip silently if not.
+        for optional in README.md LICENSE SECURITY.md NOTICE CHANGELOG.md; do
+          if [ -f "$optional" ]; then
+            cp "$optional" "$STAGE/$optional"
+          fi
+        done
+
+    - name: "Commit and push release"
+      if: "${{ env.PUBLISH == 'true' }}"
+      env:
+        TAG_NAME: "${{ github.event.release.tag_name }}"
+      run: |
+        set -euo pipefail
+        cd "$RUNNER_TEMP/release"
+        git add -A
+        git commit -m "Release $TAG_NAME"
+        git push origin "${{ vars.RELEASE_BRANCH_NAME }}" --force
+
+    - name: "Force-retag semver and floating major"
+      if: "${{ env.PUBLISH == 'true' }}"
+      env:
+        TAG_NAME: "${{ github.event.release.tag_name }}"
+        IS_PRERELEASE: "${{ github.event.release.prerelease }}"
+      run: |
+        set -euo pipefail
+        cd "$RUNNER_TEMP/release"
+
+        # Re-point the semver tag onto the orphan commit (GitHub created it on main; we move it).
+        git tag -f "$TAG_NAME"
+        git push origin "refs/tags/$TAG_NAME" --force
+
+        # Derive floating major (e.g., v2.1.3 -> v2; primary-v1.2.3 -> primary-v1).
+        # Skips the major retag when the tag isn't <prefix->v<digits> shaped or when
+        # the release is marked as a prerelease — the floating major should only
+        # track stable releases.
+        MAJOR="$(printf '%s' "$TAG_NAME" | sed -E 's/^(([a-zA-Z][a-zA-Z0-9_-]*-)?v[0-9]+).*/\1/')"
+        if [ "$IS_PRERELEASE" = "true" ]; then
+          echo "Release $TAG_NAME is marked as a prerelease; skipping floating major retag."
+        elif [ "$MAJOR" = "$TAG_NAME" ]; then
+          echo "Tag $TAG_NAME is not v-prefixed semver; skipping floating major retag."
+        else
+          git tag -f "$MAJOR"
+          git push origin "refs/tags/$MAJOR" --force
+        fi
+
+    - name: "Attest build provenance"
+      if: "${{ env.PUBLISH == 'true' }}"
+      uses: "actions/attest-build-provenance@v2"
+      with:
+        subject-path: "${{ vars.ACTION_OUTPUT_PATH }}/${{ vars.ACTION_ENTRY_POINT }}"

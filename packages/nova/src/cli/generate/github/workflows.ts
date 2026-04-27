@@ -120,7 +120,9 @@ import type {
   CliGenerateGithubWorkflowsRunEntryScopes,
   CliGenerateGithubWorkflowsRunEntrySetupLines,
   CliGenerateGithubWorkflowsRunEntryTarget,
+  CliGenerateGithubWorkflowsRunEntryTargetForUniqueness,
   CliGenerateGithubWorkflowsRunEntryTargets,
+  CliGenerateGithubWorkflowsRunEntryTargetsForValidation,
   CliGenerateGithubWorkflowsRunExistingEntries,
   CliGenerateGithubWorkflowsRunExistingEntry,
   CliGenerateGithubWorkflowsRunGeneratedSet,
@@ -139,6 +141,7 @@ import type {
   CliGenerateGithubWorkflowsRunIsOrphan,
   CliGenerateGithubWorkflowsRunIsReplaceFile,
   CliGenerateGithubWorkflowsRunJobsConditionLine,
+  CliGenerateGithubWorkflowsRunLiteralValue,
   CliGenerateGithubWorkflowsRunMergedJobsCondition,
   CliGenerateGithubWorkflowsRunMergedPublishCondition,
   CliGenerateGithubWorkflowsRunMergedRunName,
@@ -160,6 +163,7 @@ import type {
   CliGenerateGithubWorkflowsRunReturns,
   CliGenerateGithubWorkflowsRunSetupLines,
   CliGenerateGithubWorkflowsRunSetupMessage,
+  CliGenerateGithubWorkflowsRunSkippedWorkflowKeys,
   CliGenerateGithubWorkflowsRunSubstituted,
   CliGenerateGithubWorkflowsRunSupportsScopes,
   CliGenerateGithubWorkflowsRunSupportsTargets,
@@ -170,6 +174,8 @@ import type {
   CliGenerateGithubWorkflowsRunTargetId,
   CliGenerateGithubWorkflowsRunTargetJobsConditionLine,
   CliGenerateGithubWorkflowsRunTargetMetadata,
+  CliGenerateGithubWorkflowsRunTargetMetadataForUniqueness,
+  CliGenerateGithubWorkflowsRunTargetMetadataForValidation,
   CliGenerateGithubWorkflowsRunTargetNeeds,
   CliGenerateGithubWorkflowsRunTargetNeedsJobId,
   CliGenerateGithubWorkflowsRunTargetNeedsJobIds,
@@ -177,9 +183,12 @@ import type {
   CliGenerateGithubWorkflowsRunTargetNeedWorkingDir,
   CliGenerateGithubWorkflowsRunTargetPath,
   CliGenerateGithubWorkflowsRunTargetsMetadata,
+  CliGenerateGithubWorkflowsRunTargetsMetadataForValidation,
   CliGenerateGithubWorkflowsRunTargetTupleKey,
   CliGenerateGithubWorkflowsRunTargetTupleSet,
   CliGenerateGithubWorkflowsRunTargetType,
+  CliGenerateGithubWorkflowsRunTargetTypeForUniqueness,
+  CliGenerateGithubWorkflowsRunTargetTypeForValidation,
   CliGenerateGithubWorkflowsRunTargetWorkingDir,
   CliGenerateGithubWorkflowsRunTemplateDirectory,
   CliGenerateGithubWorkflowsRunTemplateDirExists,
@@ -199,6 +208,24 @@ import type {
   CliGenerateGithubWorkflowsRunTriggerRawContent,
   CliGenerateGithubWorkflowsRunTriggers,
   CliGenerateGithubWorkflowsRunTriggerYaml,
+  CliGenerateGithubWorkflowsRunUniquenessEntryTargets,
+  CliGenerateGithubWorkflowsRunUniquenessErrors,
+  CliGenerateGithubWorkflowsRunUniquenessIsSameWorkflow,
+  CliGenerateGithubWorkflowsRunUniquenessKeyComposite,
+  CliGenerateGithubWorkflowsRunUniquenessKeyDetailEntries,
+  CliGenerateGithubWorkflowsRunUniquenessKeyDetailEntry,
+  CliGenerateGithubWorkflowsRunUniquenessKeyExisting,
+  CliGenerateGithubWorkflowsRunUniquenessKeyForTarget,
+  CliGenerateGithubWorkflowsRunUniquenessKeyMap,
+  CliGenerateGithubWorkflowsRunUniquenessKeyMapValue,
+  CliGenerateGithubWorkflowsRunUniquenessKeyResolvedValue,
+  CliGenerateGithubWorkflowsRunUniquenessKeyResolvedValues,
+  CliGenerateGithubWorkflowsRunUniquenessKeySettingValue,
+  CliGenerateGithubWorkflowsRunUniquenessKeyVariableMeta,
+  CliGenerateGithubWorkflowsRunUniquenessKeyVariableName,
+  CliGenerateGithubWorkflowsRunUniquenessKeyWorkflowKey,
+  CliGenerateGithubWorkflowsRunUniquenessMetadataEntry,
+  CliGenerateGithubWorkflowsRunUniquenessTargetsMetadata,
   CliGenerateGithubWorkflowsRunUploadArtifactStep,
   CliGenerateGithubWorkflowsRunUseTurbo,
   CliGenerateGithubWorkflowsRunVariableMeta,
@@ -328,6 +355,198 @@ export class CliGenerateGithubWorkflows {
       return 'cancelled';
     }
 
+    // Track workflows that should be skipped during the main generation loop.
+    // Populated by Phase 1 (literal validation) and Phase 2 (uniqueness pre-pass).
+    const skippedWorkflowKeys: CliGenerateGithubWorkflowsRunSkippedWorkflowKeys = new Set();
+
+    // Phase 1: per-workflow literal validation pre-pass.
+    // Runs before the uniqueness pre-pass so workflows missing required literals
+    // are flagged with the accurate "missing required literal settings" error
+    // instead of being mis-reported as a "destination collision" by Phase 2
+    // (which would otherwise fall back to the variable NAME as the resolved
+    // value when a literal setting is absent).
+    for (const literalWorkflowEntry of workflows) {
+      const literalEntry: CliGenerateGithubWorkflowsRunWorkflowEntry = literalWorkflowEntry;
+      const literalTemplateName: CliGenerateGithubWorkflowsRunTemplateName = literalEntry['template'];
+      const literalSuffix: CliGenerateGithubWorkflowsRunWorkflowSuffix = literalEntry['suffix'];
+      const literalWorkflowKey: CliGenerateGithubWorkflowsRunUniquenessKeyWorkflowKey = (literalSuffix !== undefined) ? `${literalTemplateName}-${literalSuffix}` : literalTemplateName;
+      const literalMetadataEntry: CliGenerateGithubWorkflowsRunMetadataEntry = libWorkflowTemplatesMetadata.find(
+        (m) => m['name'] === literalTemplateName,
+      );
+
+      // Unknown templates surface their error in the main loop where the full
+      // "Unknown template" diagnostic lives; skip them here so Phase 1 does not
+      // emit a misleading "missing literal" error for an unknown template.
+      if (literalMetadataEntry === undefined) {
+        continue;
+      }
+
+      const missingLiterals: CliGenerateGithubWorkflowsRunMissingLiterals = [];
+
+      for (const variableEntry of Object.entries(literalMetadataEntry['variables'])) {
+        const variableName: CliGenerateGithubWorkflowsRunVariableName = variableEntry[0];
+        const variableMeta: CliGenerateGithubWorkflowsRunVariableMeta = variableEntry[1];
+
+        if (variableMeta['format'] === 'literal') {
+          const literalValue: CliGenerateGithubWorkflowsRunLiteralValue = (literalEntry['settings'] !== undefined) ? literalEntry['settings'][variableName] : undefined;
+
+          if (typeof literalValue !== 'string' || literalValue.trim() === '') {
+            missingLiterals.push(variableName);
+          }
+        }
+      }
+
+      // Also iterate target-level literals for every declared target.
+      const targetsMetadataForValidation: CliGenerateGithubWorkflowsRunTargetsMetadataForValidation = literalMetadataEntry['targets'] ?? {};
+      const entryTargetsForValidation: CliGenerateGithubWorkflowsRunEntryTargetsForValidation = literalEntry['targets'] ?? [];
+
+      for (const entryTargetForValidation of entryTargetsForValidation) {
+        const targetTypeForValidation: CliGenerateGithubWorkflowsRunTargetTypeForValidation = entryTargetForValidation['type'];
+        const targetMetadataForValidation: CliGenerateGithubWorkflowsRunTargetMetadataForValidation = targetsMetadataForValidation[targetTypeForValidation];
+
+        if (targetMetadataForValidation === undefined) {
+          continue;
+        }
+
+        for (const variableEntry of Object.entries(targetMetadataForValidation['variables'])) {
+          const variableName: CliGenerateGithubWorkflowsRunVariableName = variableEntry[0];
+          const variableMeta: CliGenerateGithubWorkflowsRunVariableMeta = variableEntry[1];
+
+          if (variableMeta['format'] === 'literal') {
+            const literalValue: CliGenerateGithubWorkflowsRunLiteralValue = (literalEntry['settings'] !== undefined) ? literalEntry['settings'][variableName] : undefined;
+
+            if (typeof literalValue !== 'string' || literalValue.trim() === '') {
+              if (missingLiterals.includes(variableName) === false) {
+                missingLiterals.push(variableName);
+              }
+            }
+          }
+        }
+      }
+
+      if (missingLiterals.length > 0) {
+        Logger.customize({
+          name: 'CliGenerateGithubWorkflows.run',
+          purpose: 'validate',
+        }).error(`Workflow ${chalk.cyan(`"${literalWorkflowKey}"`)} is missing required literal settings: ${missingLiterals.join(', ')}. Skipping.`);
+
+        skippedWorkflowKeys.add(literalWorkflowKey);
+      }
+    }
+
+    // Phase 2: cross-workflow uniqueness pre-pass.
+    // Walks every workflow + target before generation begins so a destination
+    // collision (e.g., two github-action targets pointing at the same release
+    // branch across separate workflows) is rejected fail-loud instead of
+    // silently racing at deploy time. Workflows already in skippedWorkflowKeys
+    // (from Phase 1) are skipped here so unresolvable literals don't trigger
+    // false collisions.
+    const globalUniquenessMap: CliGenerateGithubWorkflowsRunUniquenessKeyMap = new Map();
+    const uniquenessErrors: CliGenerateGithubWorkflowsRunUniquenessErrors = [];
+
+    for (const uniquenessWorkflowEntry of workflows) {
+      const uniquenessEntry: CliGenerateGithubWorkflowsRunWorkflowEntry = uniquenessWorkflowEntry;
+      const uniquenessTemplateName: CliGenerateGithubWorkflowsRunTemplateName = uniquenessEntry['template'];
+      const uniquenessSuffix: CliGenerateGithubWorkflowsRunWorkflowSuffix = uniquenessEntry['suffix'];
+      const uniquenessWorkflowKey: CliGenerateGithubWorkflowsRunUniquenessKeyWorkflowKey = (uniquenessSuffix !== undefined) ? `${uniquenessTemplateName}-${uniquenessSuffix}` : uniquenessTemplateName;
+
+      if (skippedWorkflowKeys.has(uniquenessWorkflowKey) === true) {
+        continue;
+      }
+
+      const uniquenessMetadataEntry: CliGenerateGithubWorkflowsRunUniquenessMetadataEntry = libWorkflowTemplatesMetadata.find(
+        (m) => m['name'] === uniquenessTemplateName,
+      );
+
+      if (uniquenessMetadataEntry === undefined) {
+        continue;
+      }
+
+      const uniquenessTargetsMetadata: CliGenerateGithubWorkflowsRunUniquenessTargetsMetadata = uniquenessMetadataEntry['targets'] ?? {};
+      const uniquenessEntryTargets: CliGenerateGithubWorkflowsRunUniquenessEntryTargets = uniquenessEntry['targets'] ?? [];
+
+      for (const uniquenessTarget of uniquenessEntryTargets) {
+        const entryTargetForUniqueness: CliGenerateGithubWorkflowsRunEntryTargetForUniqueness = uniquenessTarget;
+        const targetTypeForUniqueness: CliGenerateGithubWorkflowsRunTargetTypeForUniqueness = entryTargetForUniqueness['type'];
+        const targetMetadataForUniqueness: CliGenerateGithubWorkflowsRunTargetMetadataForUniqueness = uniquenessTargetsMetadata[targetTypeForUniqueness];
+
+        if (targetMetadataForUniqueness === undefined) {
+          continue;
+        }
+
+        const uniquenessKeyForTarget: CliGenerateGithubWorkflowsRunUniquenessKeyForTarget = targetMetadataForUniqueness['uniquenessKey'];
+
+        if (uniquenessKeyForTarget === undefined) {
+          continue;
+        }
+
+        // Resolve each variable name to its value: settings override default.
+        const uniquenessKeyResolvedValues: CliGenerateGithubWorkflowsRunUniquenessKeyResolvedValues = [];
+        const uniquenessKeyDetailEntries: CliGenerateGithubWorkflowsRunUniquenessKeyDetailEntries = [];
+
+        for (const uniquenessKeyVariableName of uniquenessKeyForTarget) {
+          const variableName: CliGenerateGithubWorkflowsRunUniquenessKeyVariableName = uniquenessKeyVariableName;
+          const variableMeta: CliGenerateGithubWorkflowsRunUniquenessKeyVariableMeta = targetMetadataForUniqueness['variables'][variableName];
+          const settingValue: CliGenerateGithubWorkflowsRunUniquenessKeySettingValue = (uniquenessEntry['settings'] !== undefined) ? uniquenessEntry['settings'][variableName] : undefined;
+          const resolvedValue: CliGenerateGithubWorkflowsRunUniquenessKeyResolvedValue = settingValue
+            ?? (variableMeta !== undefined ? variableMeta['default'] : undefined)
+            ?? variableName;
+          const uniquenessKeyDetailEntry: CliGenerateGithubWorkflowsRunUniquenessKeyDetailEntry = `${variableName}=${resolvedValue}`;
+
+          uniquenessKeyResolvedValues.push(resolvedValue);
+
+          uniquenessKeyDetailEntries.push(uniquenessKeyDetailEntry);
+        }
+
+        const uniquenessKeyComposite: CliGenerateGithubWorkflowsRunUniquenessKeyComposite = [
+          targetTypeForUniqueness,
+          ...uniquenessKeyResolvedValues,
+        ].join('::');
+        const uniquenessKeyExisting: CliGenerateGithubWorkflowsRunUniquenessKeyExisting = globalUniquenessMap.get(uniquenessKeyComposite);
+
+        if (uniquenessKeyExisting !== undefined) {
+          // Both the previously-recorded workflow and the current workflow are
+          // marked for skip so neither emits a partial output for a destination
+          // that nova cannot disambiguate.
+          skippedWorkflowKeys.add(uniquenessKeyExisting['workflowKey']);
+          skippedWorkflowKeys.add(uniquenessWorkflowKey);
+
+          const isSameWorkflow: CliGenerateGithubWorkflowsRunUniquenessIsSameWorkflow = uniquenessKeyExisting['workflowKey'] === uniquenessWorkflowKey;
+
+          if (uniquenessKeyDetailEntries.length === 0) {
+            if (isSameWorkflow === true) {
+              uniquenessErrors.push(`Singleton target violation: workflow "${uniquenessWorkflowKey}" declares multiple "${targetTypeForUniqueness}" targets, but only one is allowed.`);
+            } else {
+              uniquenessErrors.push(`Singleton target collision: only one "${targetTypeForUniqueness}" target may be declared across all workflows. Found in workflow "${uniquenessKeyExisting['workflowKey']}" and again in workflow "${uniquenessWorkflowKey}".`);
+            }
+          } else if (isSameWorkflow === true) {
+            uniquenessErrors.push(`Destination collision in workflow "${uniquenessWorkflowKey}": multiple "${targetTypeForUniqueness}" targets declare the same destination (${uniquenessKeyDetailEntries.join(', ')}). Each destination must be declared in only one target.`);
+          } else {
+            uniquenessErrors.push(`Cross-workflow destination collision: target "${targetTypeForUniqueness}" with destination (${uniquenessKeyDetailEntries.join(', ')}) is declared in workflow "${uniquenessKeyExisting['workflowKey']}" and again in workflow "${uniquenessWorkflowKey}". Each destination must be declared in only one workflow.`);
+          }
+
+          continue;
+        }
+
+        const uniquenessKeyMapValue: CliGenerateGithubWorkflowsRunUniquenessKeyMapValue = {
+          workflowKey: uniquenessWorkflowKey,
+          targetType: targetTypeForUniqueness,
+          detailEntries: uniquenessKeyDetailEntries,
+        };
+
+        globalUniquenessMap.set(uniquenessKeyComposite, uniquenessKeyMapValue);
+      }
+    }
+
+    if (uniquenessErrors.length > 0) {
+      for (const uniquenessError of uniquenessErrors) {
+        Logger.customize({
+          name: 'CliGenerateGithubWorkflows.run',
+          purpose: 'validate',
+        }).error(uniquenessError);
+      }
+    }
+
     const generatedSet: CliGenerateGithubWorkflowsRunGeneratedSet = new Set();
     const outputFileNames: CliGenerateGithubWorkflowsRunOutputFileNames = new Set();
     const setupLines: CliGenerateGithubWorkflowsRunSetupLines = [];
@@ -335,6 +554,16 @@ export class CliGenerateGithubWorkflows {
     for (const workflowEntry of workflows) {
       const entry: CliGenerateGithubWorkflowsRunWorkflowEntry = workflowEntry;
       const templateName: CliGenerateGithubWorkflowsRunTemplateName = entry['template'];
+      const workflowSuffix: CliGenerateGithubWorkflowsRunWorkflowSuffix = entry['suffix'];
+      const entryWorkflowKey: CliGenerateGithubWorkflowsRunUniquenessKeyWorkflowKey = (workflowSuffix !== undefined) ? `${templateName}-${workflowSuffix}` : templateName;
+
+      // Skip workflows flagged by the cross-workflow uniqueness pre-pass.
+      // The error was already logged when the collision was detected; this
+      // check just ensures a partial output is not written for either side
+      // of the collision.
+      if (skippedWorkflowKeys.has(entryWorkflowKey) === true) {
+        continue;
+      }
 
       // Validate template name against metadata.
       const metadataEntry: CliGenerateGithubWorkflowsRunMetadataEntry = libWorkflowTemplatesMetadata.find(
@@ -363,31 +592,12 @@ export class CliGenerateGithubWorkflows {
         continue;
       }
 
-      // Validate all literal variables are present in settings.
-      const missingLiterals: CliGenerateGithubWorkflowsRunMissingLiterals = [];
-
-      for (const variableEntry of Object.entries(metadataEntry['variables'])) {
-        const variableName: CliGenerateGithubWorkflowsRunVariableName = variableEntry[0];
-        const variableMeta: CliGenerateGithubWorkflowsRunVariableMeta = variableEntry[1];
-
-        if (variableMeta['format'] === 'literal') {
-          if (entry['settings'] === undefined || entry['settings'][variableName] === undefined) {
-            missingLiterals.push(variableName);
-          }
-        }
-      }
-
-      if (missingLiterals.length > 0) {
-        Logger.customize({
-          name: 'CliGenerateGithubWorkflows.run',
-          purpose: 'validate',
-        }).error(`Template ${chalk.cyan(`"${templateName}"`)} is missing required literal settings: ${missingLiterals.join(', ')}. Skipping.`);
-
-        continue;
-      }
+      // Literal-variable validation runs in the Phase 1 pre-pass before the
+      // uniqueness pre-pass. By this point in the main loop a workflow with
+      // missing literals is already in skippedWorkflowKeys and was filtered
+      // out at the top of this loop, so no inline validation is needed here.
 
       // Build output filename.
-      const workflowSuffix: CliGenerateGithubWorkflowsRunWorkflowSuffix = entry['suffix'];
       const outputFileName: CliGenerateGithubWorkflowsRunOutputFileName = (workflowSuffix !== undefined) ? `nova-${templateName}-${workflowSuffix}.yml` : `nova-${templateName}.yml`;
 
       // Check for duplicate output filenames.
@@ -1304,7 +1514,7 @@ export class CliGenerateGithubWorkflows {
       if (variableMeta['format'] === 'literal') {
         const replacement: CliGenerateGithubWorkflowsSubstituteVariablesReplacement = (settingValue ?? '').replaceAll('\n', '\\n');
 
-        result = result.replace(regex, replacement);
+        result = result.replace(regex, () => replacement);
       }
     }
 
@@ -1477,7 +1687,7 @@ export class CliGenerateGithubWorkflows {
 
       const stepLines: CliGenerateGithubWorkflowsRenderUploadArtifactStepsStepLines = [
         `      - name: "Upload build artifacts (${target['type']}/${targetId})"`,
-        '        uses: "actions/upload-artifact@v4"',
+        '        uses: "actions/upload-artifact@v7"',
         '        with:',
         `          name: "${artifactName}"`,
         '          retention-days: 1',

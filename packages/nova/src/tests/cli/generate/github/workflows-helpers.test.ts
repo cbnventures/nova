@@ -241,7 +241,7 @@ describe('CliGenerateGithubWorkflows.renderUploadArtifactSteps', () => {
 
     const expected: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected = [
       '      - name: "Upload build artifacts (npm/packages-nova)"',
-      '        uses: "actions/upload-artifact@v4"',
+      '        uses: "actions/upload-artifact@v7"',
       '        with:',
       '          name: "build-npm-packages-nova"',
       '          retention-days: 1',
@@ -249,7 +249,7 @@ describe('CliGenerateGithubWorkflows.renderUploadArtifactSteps', () => {
       '            packages/nova/build',
       '',
       '      - name: "Upload build artifacts (github-packages/packages-nova)"',
-      '        uses: "actions/upload-artifact@v4"',
+      '        uses: "actions/upload-artifact@v7"',
       '        with:',
       '          name: "build-github-packages-packages-nova"',
       '          retention-days: 1',
@@ -288,7 +288,7 @@ describe('CliGenerateGithubWorkflows.renderUploadArtifactSteps', () => {
 
     const expected: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected = [
       '      - name: "Upload build artifacts (npm/packages-nova)"',
-      '        uses: "actions/upload-artifact@v4"',
+      '        uses: "actions/upload-artifact@v7"',
       '        with:',
       '          name: "build-npm-packages-nova"',
       '          retention-days: 1',
@@ -310,7 +310,7 @@ describe('CliGenerateGithubWorkflows.renderUploadArtifactSteps', () => {
 
     const expected: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected = [
       '      - name: "Upload build artifacts (aws-amplify-nextjs/apps-web)"',
-      '        uses: "actions/upload-artifact@v4"',
+      '        uses: "actions/upload-artifact@v7"',
       '        with:',
       '          name: "build-aws-amplify-nextjs-apps-web"',
       '          retention-days: 1',
