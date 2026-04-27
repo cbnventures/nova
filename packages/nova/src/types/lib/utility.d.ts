@@ -5,6 +5,7 @@ import type { ParsedPath } from 'path';
 import type {
   SharedLinuxOsReleaseEntries,
   SharedNovaConfigWorkspace,
+  SharedNovaConfigWorkspaces,
   SharedShellOutput,
   SharedWindowsRegistryKeys,
   SharedWorkspaceManifest,
@@ -46,6 +47,29 @@ export type LibUtilityBuildGeneratedFileHeaderIsHashStyle = boolean;
 export type LibUtilityBuildGeneratedFileHeaderIsMarkdownStyle = boolean;
 
 export type LibUtilityBuildGeneratedFileHeaderLines = string[];
+
+/**
+ * Lib - Utility - Collect Consumer Workspace Paths.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCollectConsumerWorkspacePathsCurrentDirectory = string;
+
+export type LibUtilityCollectConsumerWorkspacePathsWorkspaces = SharedNovaConfigWorkspaces | undefined;
+
+export type LibUtilityCollectConsumerWorkspacePathsFilename = string;
+
+export type LibUtilityCollectConsumerWorkspacePathsReturns = string[];
+
+export type LibUtilityCollectConsumerWorkspacePathsPaths = string[];
+
+export type LibUtilityCollectConsumerWorkspacePathsSafeWorkspaces = SharedNovaConfigWorkspaces;
+
+export type LibUtilityCollectConsumerWorkspacePathsWorkspacePath = string;
+
+export type LibUtilityCollectConsumerWorkspacePathsWorkspace = SharedNovaConfigWorkspaces[string];
+
+export type LibUtilityCollectConsumerWorkspacePathsPath = string;
 
 /**
  * Lib - Utility - Current Timestamp.

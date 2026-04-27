@@ -6,10 +6,16 @@ import {
   LIB_REGEX_PLACEHOLDER_ENTITY_NAME,
   LIB_REGEX_PLACEHOLDER_YEAR_RANGE,
 } from '../../../lib/regex.js';
-import { isProjectRoot, resolveTemplatePath, saveGeneratedFile } from '../../../lib/utility.js';
+import {
+  collectConsumerWorkspacePaths,
+  isProjectRoot,
+  resolveTemplatePath,
+  saveGeneratedFile,
+} from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
+  CliGenerateMustHavesLicenseRunConsumerWorkspacePaths,
   CliGenerateMustHavesLicenseRunContent,
   CliGenerateMustHavesLicenseRunCurrentDirectory,
   CliGenerateMustHavesLicenseRunCurrentYear,
@@ -31,7 +37,8 @@ import type {
 /**
  * CLI - Generate - Must Haves - License.
  *
- * Generates the root LICENSE file from bundled SPDX templates. Substitutes the legal entity
+ * Generates the root LICENSE file from bundled SPDX templates and copies it into each
+ * consumer-facing workspace (app, package, tool, config). Substitutes the legal entity
  * name and year range from nova.config.json.
  *
  * @since 0.15.0
@@ -110,11 +117,18 @@ export class CliGenerateMustHavesLicense {
 
     const targetPath: CliGenerateMustHavesLicenseRunTargetPath = join(currentDirectory, 'LICENSE');
 
+    // Consumer workspace copies.
+    const consumerWorkspacePaths: CliGenerateMustHavesLicenseRunConsumerWorkspacePaths = collectConsumerWorkspacePaths(currentDirectory, workingFile['workspaces'], 'LICENSE');
+
     if (isDryRun === true) {
       return 'completed';
     }
 
     await saveGeneratedFile(targetPath, content, isReplaceFile);
+
+    for (const consumerWorkspacePath of consumerWorkspacePaths) {
+      await saveGeneratedFile(consumerWorkspacePath, content, isReplaceFile);
+    }
 
     return 'completed';
   }

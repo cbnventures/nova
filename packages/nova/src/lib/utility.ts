@@ -37,6 +37,15 @@ import type {
   LibUtilityBuildGeneratedFileHeaderOptions,
   LibUtilityBuildGeneratedFileHeaderReturns,
   LibUtilityBuildGeneratedFileHeaderRuleLine,
+  LibUtilityCollectConsumerWorkspacePathsCurrentDirectory,
+  LibUtilityCollectConsumerWorkspacePathsFilename,
+  LibUtilityCollectConsumerWorkspacePathsPath,
+  LibUtilityCollectConsumerWorkspacePathsPaths,
+  LibUtilityCollectConsumerWorkspacePathsReturns,
+  LibUtilityCollectConsumerWorkspacePathsSafeWorkspaces,
+  LibUtilityCollectConsumerWorkspacePathsWorkspace,
+  LibUtilityCollectConsumerWorkspacePathsWorkspacePath,
+  LibUtilityCollectConsumerWorkspacePathsWorkspaces,
   LibUtilityCurrentTimestampDay,
   LibUtilityCurrentTimestampHour,
   LibUtilityCurrentTimestampMillisecond,
@@ -204,6 +213,47 @@ import type {
   LibUtilitySaveWorkspaceManifestReturns,
   LibUtilitySaveWorkspaceManifestWorkspace,
 } from '../types/lib/utility.d.ts';
+
+/**
+ * Lib - Utility - Collect Consumer Workspace Paths.
+ *
+ * Iterates the workspaces map and returns one absolute file path per consumer-facing
+ * workspace (role in 'app', 'package', 'tool', 'config'). Used by must-have generators
+ * to fan out a single template into every workspace that ships to consumers.
+ *
+ * @param {LibUtilityCollectConsumerWorkspacePathsCurrentDirectory} currentDirectory - Current directory.
+ * @param {LibUtilityCollectConsumerWorkspacePathsWorkspaces}       workspaces       - Workspaces.
+ * @param {LibUtilityCollectConsumerWorkspacePathsFilename}         filename         - Filename.
+ *
+ * @returns {LibUtilityCollectConsumerWorkspacePathsReturns}
+ *
+ * @since 0.18.0
+ */
+export function collectConsumerWorkspacePaths(currentDirectory: LibUtilityCollectConsumerWorkspacePathsCurrentDirectory, workspaces: LibUtilityCollectConsumerWorkspacePathsWorkspaces, filename: LibUtilityCollectConsumerWorkspacePathsFilename): LibUtilityCollectConsumerWorkspacePathsReturns {
+  const paths: LibUtilityCollectConsumerWorkspacePathsPaths = [];
+  const safeWorkspaces: LibUtilityCollectConsumerWorkspacePathsSafeWorkspaces = workspaces ?? {};
+
+  for (const workspacesEntry of Object.entries(safeWorkspaces)) {
+    const workspacePath: LibUtilityCollectConsumerWorkspacePathsWorkspacePath = workspacesEntry[0];
+    const workspace: LibUtilityCollectConsumerWorkspacePathsWorkspace = workspacesEntry[1];
+
+    if (
+      [
+        'app',
+        'package',
+        'tool',
+        'config',
+      ].includes(workspace['role']) === true
+      && workspacePath !== './'
+    ) {
+      const path: LibUtilityCollectConsumerWorkspacePathsPath = join(currentDirectory, workspacePath, filename);
+
+      paths.push(path);
+    }
+  }
+
+  return paths;
+}
 
 /**
  * Lib - Utility - Current Timestamp.

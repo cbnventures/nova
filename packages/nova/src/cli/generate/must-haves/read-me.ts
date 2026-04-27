@@ -13,7 +13,7 @@ import {
   LIB_REGEX_URL_PREFIX_PATREON,
   LIB_REGEX_URL_PREFIX_PAYPAL,
 } from '../../../lib/regex.js';
-import { isProjectRoot, saveGeneratedFile } from '../../../lib/utility.js';
+import { collectConsumerWorkspacePaths, isProjectRoot, saveGeneratedFile } from '../../../lib/utility.js';
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
@@ -50,12 +50,11 @@ import type {
   CliGenerateMustHavesReadMeDetectFundPlatformReturns,
   CliGenerateMustHavesReadMeDetectFundPlatformUrl,
   CliGenerateMustHavesReadMeRunBadges,
+  CliGenerateMustHavesReadMeRunConsumerWorkspacePaths,
   CliGenerateMustHavesReadMeRunContent,
   CliGenerateMustHavesReadMeRunContributorsAndSupporters,
   CliGenerateMustHavesReadMeRunCreditsSection,
   CliGenerateMustHavesReadMeRunCurrentDirectory,
-  CliGenerateMustHavesReadMeRunDistributablePaths,
-  CliGenerateMustHavesReadMeRunDistributableReadmePath,
   CliGenerateMustHavesReadMeRunDockerImage,
   CliGenerateMustHavesReadMeRunDockerUrl,
   CliGenerateMustHavesReadMeRunDocumentationSection,
@@ -90,9 +89,6 @@ import type {
   CliGenerateMustHavesReadMeRunTargetPath,
   CliGenerateMustHavesReadMeRunUrls,
   CliGenerateMustHavesReadMeRunWorkingFile,
-  CliGenerateMustHavesReadMeRunWorkspace,
-  CliGenerateMustHavesReadMeRunWorkspacePath,
-  CliGenerateMustHavesReadMeRunWorkspaces,
 } from '../../../types/cli/generate/must-haves/read-me.d.ts';
 
 import type { LibUtilitySaveGeneratedFileHeader } from '../../../types/lib/utility.d.ts';
@@ -102,7 +98,7 @@ import type { LibUtilitySaveGeneratedFileHeader } from '../../../types/lib/utili
  *
  * Generates the root README.md from a bundled template
  * and nova.config.json data. Also copies the file into
- * distributable workspace directories.
+ * each consumer-facing workspace (app, package, tool, config).
  *
  * @since 0.15.0
  */
@@ -207,20 +203,8 @@ export class CliGenerateMustHavesReadMe {
 
     const targetPath: CliGenerateMustHavesReadMeRunTargetPath = join(currentDirectory, 'README.md');
 
-    // Distributable workspace copies.
-    const workspaces: CliGenerateMustHavesReadMeRunWorkspaces = workingFile['workspaces'] ?? {};
-    const distributablePaths: CliGenerateMustHavesReadMeRunDistributablePaths = [];
-
-    for (const workspacesEntry of Object.entries(workspaces)) {
-      const workspacePath: CliGenerateMustHavesReadMeRunWorkspacePath = workspacesEntry[0];
-      const workspace: CliGenerateMustHavesReadMeRunWorkspace = workspacesEntry[1];
-
-      if (workspace['policy'] === 'distributable' && workspacePath !== './') {
-        const distributableReadmePath: CliGenerateMustHavesReadMeRunDistributableReadmePath = join(currentDirectory, workspacePath, 'README.md');
-
-        distributablePaths.push(distributableReadmePath);
-      }
-    }
+    // Consumer workspace copies.
+    const consumerWorkspacePaths: CliGenerateMustHavesReadMeRunConsumerWorkspacePaths = collectConsumerWorkspacePaths(currentDirectory, workingFile['workspaces'], 'README.md');
 
     if (isDryRun === true) {
       return 'completed';
@@ -234,8 +218,8 @@ export class CliGenerateMustHavesReadMe {
 
     await saveGeneratedFile(targetPath, content, isReplaceFile, headerOptions);
 
-    for (const distributablePath of distributablePaths) {
-      await saveGeneratedFile(distributablePath, content, isReplaceFile, headerOptions);
+    for (const consumerWorkspacePath of consumerWorkspacePaths) {
+      await saveGeneratedFile(consumerWorkspacePath, content, isReplaceFile, headerOptions);
     }
 
     return 'completed';

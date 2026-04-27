@@ -1,4 +1,25 @@
 /**
+ * Tests - CLI - Generate - Must Haves - Read Me - Create Role Matrix Sandbox.
+ *
+ * @since 0.18.0
+ */
+export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxSandboxRoot = string;
+
+export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxName = string;
+
+export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxReturns = Promise<string>;
+
+export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxProjectDirectory = string;
+
+export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxPackageJson = string;
+
+export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxPackageJsonPath = string;
+
+export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxNovaConfig = string;
+
+export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxNovaConfigPath = string;
+
+/**
  * Tests - CLI - Generate - Must Haves - Read Me - Run.
  *
  * @since 0.15.0
@@ -48,3 +69,11 @@ export type TestsCliGenerateMustHavesReadMeRunHasPictureBlock = boolean;
 export type TestsCliGenerateMustHavesReadMeRunHasHeaderBlock = boolean;
 
 export type TestsCliGenerateMustHavesReadMeRunHasAnchorWrapping = boolean;
+
+export type TestsCliGenerateMustHavesReadMeRunReadContent = string;
+
+export type TestsCliGenerateMustHavesReadMeRunExists = boolean;
+
+export type TestsCliGenerateMustHavesReadMeRunStaleContent = string;
+
+export type TestsCliGenerateMustHavesReadMeRunHasStaleContent = boolean;
