@@ -116,6 +116,38 @@ export const libWorkflowTemplatesMetadata: LibWorkflowTemplatesMetadata = [
           'id-token': 'write',
         },
       },
+      'github-action': {
+        description: 'Publish JavaScript GitHub Action via orphan-branch tags',
+        artifactPaths: ['{workingDir}/build'],
+        variables: {
+          'ACTION_ENTRY_POINT': {
+            format: 'literal',
+            description: 'Filename of the bundled action entry script (relative to ACTION_OUTPUT_PATH)',
+            example: 'index.js',
+          },
+          'ACTION_OUTPUT_PATH': {
+            format: 'literal',
+            description: 'Path to the built action output directory',
+            example: '{workingDir}/build',
+          },
+          'ACTION_YML_PATH': {
+            format: 'literal',
+            description: 'Path to the action.yml file from repo root',
+            example: './action.yml',
+          },
+          'RELEASE_BRANCH_NAME': {
+            format: 'literal',
+            description: 'Branch name for the orphan release history',
+            example: 'releases',
+          },
+        },
+        permissions: {
+          'contents': 'write',
+          'attestations': 'write',
+          'id-token': 'write',
+        },
+        uniquenessKey: ['RELEASE_BRANCH_NAME'],
+      },
       'github-packages': {
         description: 'Publish package to GitHub Packages',
         artifactPaths: ['{workingDir}/build'],
@@ -184,6 +216,7 @@ export const libWorkflowTemplatesMetadata: LibWorkflowTemplatesMetadata = [
         permissions: {
           contents: 'read',
         },
+        uniquenessKey: ['CLOUDFLARE_PROJECT_NAME'],
       },
       'github-pages-docusaurus': {
         description: 'Deploy Docusaurus to GitHub Pages',
@@ -198,6 +231,7 @@ export const libWorkflowTemplatesMetadata: LibWorkflowTemplatesMetadata = [
           'pages': 'write',
           'id-token': 'write',
         },
+        uniquenessKey: [],
       },
       'aws-amplify-nextjs': {
         description: 'Deploy Next.js to AWS Amplify',
@@ -230,6 +264,10 @@ export const libWorkflowTemplatesMetadata: LibWorkflowTemplatesMetadata = [
         permissions: {
           contents: 'read',
         },
+        uniquenessKey: [
+          'AMPLIFY_APP_ID',
+          'AMPLIFY_BRANCH_NAME',
+        ],
       },
       'vercel-nextjs': {
         description: 'Deploy Next.js to Vercel',
@@ -254,6 +292,10 @@ export const libWorkflowTemplatesMetadata: LibWorkflowTemplatesMetadata = [
         permissions: {
           contents: 'read',
         },
+        uniquenessKey: [
+          'VERCEL_ORG_ID',
+          'VERCEL_PROJECT_ID',
+        ],
       },
     },
   },

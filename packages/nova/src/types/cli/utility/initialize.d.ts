@@ -73,6 +73,15 @@ export type CliUtilityInitializeCheckPathGreaterThanOneMessage = string;
 export type CliUtilityInitializeCheckPathNotProjectRootDirectoryMessage = string;
 
 /**
+ * CLI - Utility - Initialize - Is Non Empty Literal Input.
+ *
+ * @since 0.18.0
+ */
+export type CliUtilityInitializeIsNonEmptyLiteralInputValue = unknown;
+
+export type CliUtilityInitializeIsNonEmptyLiteralInputReturns = true | string;
+
+/**
  * CLI - Utility - Initialize - Normalize Email.
  *
  * @since 0.11.0
@@ -1132,6 +1141,8 @@ export type CliUtilityInitializePromptWorkflowsFormSettings = Record<string, str
 
 export type CliUtilityInitializePromptWorkflowsFormMergedVariables = LibWorkflowTemplatesVariables;
 
+export type CliUtilityInitializePromptWorkflowsFormVariableNameToTargetWorkingDir = Record<string, string>;
+
 export type CliUtilityInitializePromptWorkflowsFormTargetVariables = LibWorkflowTemplatesVariables;
 
 export type CliUtilityInitializePromptWorkflowsFormTargetVariableEntry = [string, LibWorkflowTemplatesVariable];
@@ -1141,6 +1152,10 @@ export type CliUtilityInitializePromptWorkflowsFormTargetVariableEntries = CliUt
 export type CliUtilityInitializePromptWorkflowsFormTargetVariableKey = string;
 
 export type CliUtilityInitializePromptWorkflowsFormTargetVariableValue = LibWorkflowTemplatesVariable;
+
+export type CliUtilityInitializePromptWorkflowsFormTargetVariableNames = string[];
+
+export type CliUtilityInitializePromptWorkflowsFormTargetVariableNameKey = string;
 
 export type CliUtilityInitializePromptWorkflowsFormMergedVariableEntries = [string, LibWorkflowTemplatesVariable][];
 
@@ -1157,6 +1172,12 @@ export type CliUtilityInitializePromptWorkflowsFormPromptMessage = string;
 export type CliUtilityInitializePromptWorkflowsFormInitialValue = string;
 
 export type CliUtilityInitializePromptWorkflowsFormVariableDescriptionParts = string[];
+
+export type CliUtilityInitializePromptWorkflowsFormExampleRaw = LibWorkflowTemplatesVariable['example'];
+
+export type CliUtilityInitializePromptWorkflowsFormExampleWorkingDir = string | undefined;
+
+export type CliUtilityInitializePromptWorkflowsFormExampleResolved = LibWorkflowTemplatesVariable['example'];
 
 export type CliUtilityInitializePromptWorkflowsFormSettingsOutputKey = 'settingValue';
 

@@ -1,5 +1,6 @@
 import { ok, strictEqual } from 'node:assert/strict';
 import {
+  access,
   mkdir,
   mkdtemp,
   readdir,
@@ -20,7 +21,11 @@ import {
 
 import { CliGenerateGithubWorkflows } from '../../../../cli/generate/github/workflows.js';
 import { LibNovaConfig } from '../../../../lib/nova-config.js';
-import { LIB_REGEX_PATTERN_ANSI } from '../../../../lib/regex.js';
+import {
+  LIB_REGEX_PATTERN_ANSI,
+  LIB_REGEX_PATTERN_WORKFLOW_ON_BLOCK,
+  LIB_REGEX_PATTERN_WORKFLOW_PLACEHOLDER,
+} from '../../../../lib/regex.js';
 import * as utility from '../../../../lib/utility.js';
 import { pathExists } from '../../../../lib/utility.js';
 import { libWorkflowTemplatesMetadata } from '../../../../lib/workflow-templates.js';
@@ -44,11 +49,13 @@ import type {
   TestsCliGenerateGithubWorkflowsRunLoadSpy,
   TestsCliGenerateGithubWorkflowsRunNovaConfig,
   TestsCliGenerateGithubWorkflowsRunNovaConfigPath,
+  TestsCliGenerateGithubWorkflowsRunOnMatches,
   TestsCliGenerateGithubWorkflowsRunOriginalCwd,
   TestsCliGenerateGithubWorkflowsRunOrphanFiles,
   TestsCliGenerateGithubWorkflowsRunPackageJson,
   TestsCliGenerateGithubWorkflowsRunPackageJsonPath,
   TestsCliGenerateGithubWorkflowsRunPathOccurrences,
+  TestsCliGenerateGithubWorkflowsRunPlaceholderPattern,
   TestsCliGenerateGithubWorkflowsRunPresetJobIndex,
   TestsCliGenerateGithubWorkflowsRunPresetNeedsLine,
   TestsCliGenerateGithubWorkflowsRunProjectDirectory,
@@ -526,7 +533,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
           }],
           settings: {
             'ROOT_WORKING_DIR': './',
-            'CLOUDFLARE_PROJECT_NAME': 'my-docs',
+            'CLOUDFLARE_PROJECT_NAME': 'my-docs-primary',
           },
         },
         {
@@ -543,7 +550,7 @@ describe('CliGenerateGithubWorkflows.run', async () => {
           }],
           'settings': {
             'ROOT_WORKING_DIR': './',
-            'CLOUDFLARE_PROJECT_NAME': 'my-docs',
+            'CLOUDFLARE_PROJECT_NAME': 'my-docs-multi',
           },
         },
       ],
@@ -1241,6 +1248,1078 @@ describe('CliGenerateGithubWorkflows.run', async () => {
     loadSpy.mockRestore();
 
     saveSpy.mockRestore();
+
+    return;
+  });
+
+  it('skips workflow when a target-level literal is missing from settings', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-action-missing-literal');
+
+    await mkdir(join(projectDirectory, 'packages', 'my-action'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'my-action', 'package.json'), JSON.stringify({
+      name: 'my-action', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: { name: { slug: 'test' } },
+      workflows: [{
+        template: 'publish',
+        suffix: 'my-action',
+        triggers: ['release'],
+        targets: [{
+          type: 'github-action', workingDir: './packages/my-action',
+        }],
+        settings: {
+          'ACTION_ENTRY_POINT': 'index.js',
+          'ACTION_OUTPUT_PATH': './packages/my-action/build',
+
+          // ACTION_YML_PATH intentionally missing.
+          'RELEASE_BRANCH_NAME': 'releases',
+          'ROOT_WORKING_DIR': './',
+        },
+      }],
+      workspaces: {
+        './packages/my-action': {
+          role: 'app', policy: 'trackable', name: 'test-app-my-action', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-my-action.yml');
+
+    let workflowExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(workflowPath);
+    } catch {
+      workflowExists = false;
+    }
+
+    strictEqual(workflowExists, false, 'Workflow should NOT be generated when a target-level literal is missing from settings.');
+
+    return;
+  });
+
+  it('generates workflow file for github-action target with user-supplied literals', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-action-minimal');
+
+    await mkdir(join(projectDirectory, 'packages', 'my-action'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'my-action', 'package.json'), JSON.stringify({
+      name: 'test-app-my-action', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'my-action',
+        triggers: ['release'],
+        targets: [{
+          type: 'github-action', workingDir: './packages/my-action',
+        }],
+        settings: {
+          'ACTION_ENTRY_POINT': 'index.js',
+          'ACTION_OUTPUT_PATH': './packages/my-action/build',
+          'ACTION_YML_PATH': './action.yml',
+          'RELEASE_BRANCH_NAME': 'releases',
+          'ROOT_WORKING_DIR': './',
+        },
+      }],
+      workspaces: {
+        './packages/my-action': {
+          role: 'app', policy: 'trackable', name: 'test-app-my-action', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-my-action.yml');
+    const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(workflowPath, 'utf-8');
+
+    // Job header correctly slugified.
+    strictEqual(content.includes('publish-github-action-packages-my-action:'), true);
+
+    // Permissions set as expected.
+    strictEqual(content.includes('contents: "write"'), true);
+    strictEqual(content.includes('id-token: "write"'), true);
+    strictEqual(content.includes('attestations: "write"'), true);
+
+    // Literal values substituted from settings.
+    strictEqual(content.includes('./action.yml'), true);
+    strictEqual(content.includes('./packages/my-action/build'), true);
+    strictEqual(content.includes('"releases"'), true);
+
+    // Orphan-branch bootstrap: both branches of the conditional are present in the emitted shell.
+    strictEqual(content.includes('git init -b'), true);
+    strictEqual(content.includes('git ls-remote --exit-code --heads origin'), true);
+    strictEqual(content.includes('git fetch origin'), true);
+    strictEqual(content.includes('git reset --hard'), true);
+    strictEqual(content.includes('git push origin "releases" --force'), true);
+
+    // Force-retag semver + floating major.
+    strictEqual(content.includes('git tag -f "$TAG_NAME"'), true);
+    strictEqual(content.includes('git push origin "refs/tags/$TAG_NAME" --force'), true);
+    strictEqual(content.includes('git tag -f "$MAJOR"'), true);
+    strictEqual(content.includes('git push origin "refs/tags/$MAJOR" --force'), true);
+
+    // Prefix-aware floating-major derivation (matches plain `v1.2.3` and prefixed `primary-v1.2.3`).
+    strictEqual(content.includes('sed -E \'s/^(([a-zA-Z][a-zA-Z0-9_-]*-)?v[0-9]+).*/\\1/\''), true);
+
+    // SLSA attestation on the built artifact.
+    strictEqual(content.includes('actions/attest-build-provenance@v2'), true);
+    strictEqual(content.includes('subject-path: "./packages/my-action/build/index.js"'), true);
+
+    // Optional files loop present.
+    strictEqual(content.includes('for optional in README.md LICENSE SECURITY.md NOTICE CHANGELOG.md'), true);
+
+    // All placeholders and vars references are resolved.
+    strictEqual(content.includes('[__TARGET_ID__]'), false);
+    strictEqual(content.includes('[__NEEDS__]'), false);
+    strictEqual(content.includes('[__ARTIFACT_NAME__]'), false);
+    strictEqual(content.includes([
+      '$',
+      '{{ vars.ACTION_YML_PATH }}',
+    ].join('')), false);
+    strictEqual(content.includes([
+      '$',
+      '{{ vars.ACTION_OUTPUT_PATH }}',
+    ].join('')), false);
+    strictEqual(content.includes([
+      '$',
+      '{{ vars.ACTION_ENTRY_POINT }}',
+    ].join('')), false);
+    strictEqual(content.includes([
+      '$',
+      '{{ vars.RELEASE_BRANCH_NAME }}',
+    ].join('')), false);
+
+    // Sweeping check: no [__...]  placeholder may leak into generated YAML.
+    const placeholderPattern: TestsCliGenerateGithubWorkflowsRunPlaceholderPattern = LIB_REGEX_PATTERN_WORKFLOW_PLACEHOLDER;
+
+    strictEqual(placeholderPattern.test(content), false, 'Generated YAML should have no unsubstituted [__...] placeholders');
+
+    return;
+  });
+
+  it('generates workflow file for github-action target with non-default overrides', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-action-overrides');
+
+    await mkdir(join(projectDirectory, 'packages', 'my-action'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'my-action', 'package.json'), JSON.stringify({
+      name: 'test-app-my-action', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'my-action',
+        triggers: ['release'],
+        targets: [{
+          type: 'github-action', workingDir: './packages/my-action',
+        }],
+        settings: {
+          'ACTION_ENTRY_POINT': 'main.js',
+          'ACTION_OUTPUT_PATH': './dist/bundle',
+          'ACTION_YML_PATH': './nonstandard.action.yml',
+          'RELEASE_BRANCH_NAME': 'custom-releases',
+          'ROOT_WORKING_DIR': './',
+        },
+      }],
+      workspaces: {
+        './packages/my-action': {
+          role: 'app', policy: 'trackable', name: 'test-app-my-action', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-my-action.yml');
+    const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(workflowPath, 'utf-8');
+
+    // Non-default literal values flow through every reference site.
+    strictEqual(content.includes('./nonstandard.action.yml'), true);
+    strictEqual(content.includes('./dist/bundle'), true);
+    strictEqual(content.includes('"custom-releases"'), true);
+    strictEqual(content.includes('subject-path: "./dist/bundle/main.js"'), true);
+
+    // The defaults from Task 4's test are NOT present — user overrides fully replaced them.
+    strictEqual(content.includes('"./action.yml"'), false);
+    strictEqual(content.includes('"releases"'), false);
+    strictEqual(content.includes('./packages/my-action/build'), false);
+    strictEqual(content.includes('/index.js'), false);
+
+    return;
+  });
+
+  it('generates workflow with github-action and github-pages-docusaurus coexisting', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-action-coexist');
+
+    await mkdir(join(projectDirectory, 'apps', 'docs'), { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'my-action'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'docs', 'package.json'), JSON.stringify({
+      name: 'test-docs', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'my-action', 'package.json'), JSON.stringify({
+      name: 'test-app-my-action', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'release',
+        triggers: ['release'],
+        targets: [
+          {
+            type: 'github-action', workingDir: './packages/my-action',
+          },
+          {
+            type: 'github-pages-docusaurus', workingDir: './apps/docs',
+          },
+        ],
+        settings: {
+          'ACTION_ENTRY_POINT': 'index.js',
+          'ACTION_OUTPUT_PATH': './packages/my-action/build',
+          'ACTION_YML_PATH': './action.yml',
+          'RELEASE_BRANCH_NAME': 'releases',
+          'ROOT_WORKING_DIR': './',
+        },
+      }],
+      workspaces: {
+        './apps/docs': {
+          role: 'docs', policy: 'trackable', name: 'test-docs', recipes: {},
+        },
+        './packages/my-action': {
+          role: 'app', policy: 'trackable', name: 'test-app-my-action', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-release.yml');
+    const content: TestsCliGenerateGithubWorkflowsRunContent = await readFile(workflowPath, 'utf-8');
+
+    // Both target jobs emit, each with correctly-slugified working dir in the job name.
+    strictEqual(content.includes('publish-github-action-packages-my-action:'), true);
+    strictEqual(content.includes('publish-github-pages-docusaurus-apps-docs:'), true);
+
+    // Both targets depend on the shared build job (accept either string or array form).
+    strictEqual(
+      content.includes('needs: "build"') || content.includes('needs: ["build"]'),
+      true,
+    );
+
+    // Base workflow has exactly one top-level "on:" block shared across both targets.
+    const onMatches: TestsCliGenerateGithubWorkflowsRunOnMatches = content.match(new RegExp(LIB_REGEX_PATTERN_WORKFLOW_ON_BLOCK, 'gm'));
+
+    strictEqual((onMatches ?? []).length, 1);
+
+    return;
+  });
+
+  it('rejects workflow when two github-action targets collide on the same RELEASE_BRANCH_NAME', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-action-collision');
+
+    await mkdir(join(projectDirectory, 'packages', 'action-alpha'), { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'action-beta'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'action-alpha', 'package.json'), JSON.stringify({
+      name: 'test-app-action-alpha', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'action-beta', 'package.json'), JSON.stringify({
+      name: 'test-app-action-beta', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'release',
+        triggers: ['release'],
+        targets: [
+          {
+            type: 'github-action', workingDir: './packages/action-alpha',
+          },
+          {
+            type: 'github-action', workingDir: './packages/action-beta',
+          },
+        ],
+        settings: {
+          'ACTION_ENTRY_POINT': 'index.js',
+          'ACTION_OUTPUT_PATH': './packages/action-alpha/build',
+          'ACTION_YML_PATH': './action.yml',
+          'RELEASE_BRANCH_NAME': 'releases',
+          'ROOT_WORKING_DIR': './',
+        },
+      }],
+      workspaces: {
+        './packages/action-alpha': {
+          role: 'app', policy: 'trackable', name: 'test-app-action-alpha', recipes: {},
+        },
+        './packages/action-beta': {
+          role: 'app', policy: 'trackable', name: 'test-app-action-beta', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-release.yml');
+
+    let workflowExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(workflowPath);
+    } catch {
+      workflowExists = false;
+    }
+
+    strictEqual(workflowExists, false, 'Workflow should NOT be generated when two github-action targets share the same RELEASE_BRANCH_NAME.');
+
+    return;
+  });
+
+  it('generates workflows for two github-action targets with distinct RELEASE_BRANCH_NAME values', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-action-distinct-keys');
+
+    await mkdir(join(projectDirectory, 'packages', 'action-alpha'), { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'action-beta'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'action-alpha', 'package.json'), JSON.stringify({
+      name: 'test-app-action-alpha', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'action-beta', 'package.json'), JSON.stringify({
+      name: 'test-app-action-beta', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [
+        {
+          template: 'publish',
+          suffix: 'alpha',
+          triggers: ['release'],
+          targets: [{
+            type: 'github-action', workingDir: './packages/action-alpha',
+          }],
+          settings: {
+            'ACTION_ENTRY_POINT': 'index.js',
+            'ACTION_OUTPUT_PATH': './packages/action-alpha/build',
+            'ACTION_YML_PATH': './packages/action-alpha/action.yml',
+            'RELEASE_BRANCH_NAME': 'releases-alpha',
+            'ROOT_WORKING_DIR': './',
+          },
+        },
+        {
+          template: 'publish',
+          suffix: 'beta',
+          triggers: ['release'],
+          targets: [{
+            type: 'github-action', workingDir: './packages/action-beta',
+          }],
+          settings: {
+            'ACTION_ENTRY_POINT': 'index.js',
+            'ACTION_OUTPUT_PATH': './packages/action-beta/build',
+            'ACTION_YML_PATH': './packages/action-beta/action.yml',
+            'RELEASE_BRANCH_NAME': 'releases-beta',
+            'ROOT_WORKING_DIR': './',
+          },
+        },
+      ],
+      workspaces: {
+        './packages/action-alpha': {
+          role: 'app', policy: 'trackable', name: 'test-app-action-alpha', recipes: {},
+        },
+        './packages/action-beta': {
+          role: 'app', policy: 'trackable', name: 'test-app-action-beta', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const alphaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-alpha.yml');
+    const betaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-beta.yml');
+    const alphaContent: TestsCliGenerateGithubWorkflowsRunContent = await readFile(alphaWorkflowPath, 'utf-8');
+    const betaContent: TestsCliGenerateGithubWorkflowsRunContent = await readFile(betaWorkflowPath, 'utf-8');
+
+    // Both workflow files exist.
+    strictEqual(alphaContent.includes('publish-github-action-packages-action-alpha:'), true);
+    strictEqual(betaContent.includes('publish-github-action-packages-action-beta:'), true);
+
+    // Each workflow uses its own distinct RELEASE_BRANCH_NAME.
+    strictEqual(alphaContent.includes('"releases-alpha"'), true);
+    strictEqual(betaContent.includes('"releases-beta"'), true);
+
+    return;
+  });
+
+  it('supports multi-action repos via prefixed tags (primary-v1, secondary-v1)', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-action-multi-prefixed-tags');
+
+    await mkdir(join(projectDirectory, 'packages', 'primary-action'), { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'secondary-action'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'primary-action', 'package.json'), JSON.stringify({
+      name: 'test-app-primary-action', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'secondary-action', 'package.json'), JSON.stringify({
+      name: 'test-app-secondary-action', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [
+        {
+          template: 'publish',
+          suffix: 'primary',
+          triggers: ['release'],
+          targets: [{
+            type: 'github-action', workingDir: './packages/primary-action',
+          }],
+          settings: {
+            'ACTION_ENTRY_POINT': 'index.js',
+            'ACTION_OUTPUT_PATH': './packages/primary-action/build',
+            'ACTION_YML_PATH': './packages/primary-action/action.yml',
+            'RELEASE_BRANCH_NAME': 'releases-primary',
+            'ROOT_WORKING_DIR': './',
+          },
+        },
+        {
+          template: 'publish',
+          suffix: 'secondary',
+          triggers: ['release'],
+          targets: [{
+            type: 'github-action', workingDir: './packages/secondary-action',
+          }],
+          settings: {
+            'ACTION_ENTRY_POINT': 'index.js',
+            'ACTION_OUTPUT_PATH': './packages/secondary-action/build',
+            'ACTION_YML_PATH': './packages/secondary-action/action.yml',
+            'RELEASE_BRANCH_NAME': 'releases-secondary',
+            'ROOT_WORKING_DIR': './',
+          },
+        },
+      ],
+      workspaces: {
+        './packages/primary-action': {
+          role: 'app', policy: 'trackable', name: 'test-app-primary-action', recipes: {},
+        },
+        './packages/secondary-action': {
+          role: 'app', policy: 'trackable', name: 'test-app-secondary-action', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const primaryWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-primary.yml');
+    const secondaryWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-secondary.yml');
+
+    // Both workflow files exist.
+    let primaryExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+    let secondaryExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(primaryWorkflowPath);
+    } catch {
+      primaryExists = false;
+    }
+
+    try {
+      await access(secondaryWorkflowPath);
+    } catch {
+      secondaryExists = false;
+    }
+
+    strictEqual(primaryExists, true, 'Primary workflow should be generated.');
+    strictEqual(secondaryExists, true, 'Secondary workflow should be generated.');
+
+    const primaryContent: TestsCliGenerateGithubWorkflowsRunContent = await readFile(primaryWorkflowPath, 'utf-8');
+    const secondaryContent: TestsCliGenerateGithubWorkflowsRunContent = await readFile(secondaryWorkflowPath, 'utf-8');
+
+    // Both emitted YAMLs use the prefix-aware floating-major regex so consumers
+    // ship `primary-v1.2.3 -> primary-v1` and `secondary-v1.0.0 -> secondary-v1`.
+    strictEqual(primaryContent.includes('sed -E \'s/^(([a-zA-Z][a-zA-Z0-9_-]*-)?v[0-9]+).*/\\1/\''), true);
+    strictEqual(secondaryContent.includes('sed -E \'s/^(([a-zA-Z][a-zA-Z0-9_-]*-)?v[0-9]+).*/\\1/\''), true);
+
+    // Each workflow's release-push step references its own RELEASE_BRANCH_NAME.
+    strictEqual(primaryContent.includes('git push origin "releases-primary" --force'), true);
+    strictEqual(secondaryContent.includes('git push origin "releases-secondary" --force'), true);
+
+    return;
+  });
+
+  it('skips workflow when two github-pages-docusaurus targets coexist (singleton)', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-pages-docusaurus-singleton');
+
+    await mkdir(join(projectDirectory, 'apps', 'docs-1'), { recursive: true });
+    await mkdir(join(projectDirectory, 'apps', 'docs-2'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'docs-1', 'package.json'), JSON.stringify({
+      name: 'test-app-docs-1', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'docs-2', 'package.json'), JSON.stringify({
+      name: 'test-app-docs-2', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [{
+        template: 'publish',
+        suffix: 'release',
+        triggers: ['release'],
+        targets: [
+          {
+            type: 'github-pages-docusaurus', workingDir: './apps/docs-1',
+          },
+          {
+            type: 'github-pages-docusaurus', workingDir: './apps/docs-2',
+          },
+        ],
+        settings: {
+          'ROOT_WORKING_DIR': './',
+        },
+      }],
+      workspaces: {
+        './apps/docs-1': {
+          role: 'app', policy: 'trackable', name: 'test-app-docs-1', recipes: {},
+        },
+        './apps/docs-2': {
+          role: 'app', policy: 'trackable', name: 'test-app-docs-2', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const workflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-release.yml');
+
+    let workflowExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(workflowPath);
+    } catch {
+      workflowExists = false;
+    }
+
+    strictEqual(workflowExists, false, 'Workflow should NOT be generated when two github-pages-docusaurus targets coexist (singleton constraint).');
+
+    return;
+  });
+
+  it('rejects workflows when two github-action targets across separate workflows collide on the same RELEASE_BRANCH_NAME', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-action-cross-workflow-collision');
+
+    await mkdir(join(projectDirectory, 'packages', 'action-alpha'), { recursive: true });
+    await mkdir(join(projectDirectory, 'packages', 'action-beta'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'action-alpha', 'package.json'), JSON.stringify({
+      name: 'test-app-action-alpha', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'packages', 'action-beta', 'package.json'), JSON.stringify({
+      name: 'test-app-action-beta', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [
+        {
+          template: 'publish',
+          suffix: 'alpha',
+          triggers: ['release'],
+          targets: [{
+            type: 'github-action', workingDir: './packages/action-alpha',
+          }],
+          settings: {
+            'ACTION_ENTRY_POINT': 'index.js',
+            'ACTION_OUTPUT_PATH': './packages/action-alpha/build',
+            'ACTION_YML_PATH': './packages/action-alpha/action.yml',
+            'RELEASE_BRANCH_NAME': 'releases',
+            'ROOT_WORKING_DIR': './',
+          },
+        },
+        {
+          template: 'publish',
+          suffix: 'beta',
+          triggers: ['release'],
+          targets: [{
+            type: 'github-action', workingDir: './packages/action-beta',
+          }],
+          settings: {
+            'ACTION_ENTRY_POINT': 'index.js',
+            'ACTION_OUTPUT_PATH': './packages/action-beta/build',
+            'ACTION_YML_PATH': './packages/action-beta/action.yml',
+            'RELEASE_BRANCH_NAME': 'releases',
+            'ROOT_WORKING_DIR': './',
+          },
+        },
+      ],
+      workspaces: {
+        './packages/action-alpha': {
+          role: 'app', policy: 'trackable', name: 'test-app-action-alpha', recipes: {},
+        },
+        './packages/action-beta': {
+          role: 'app', policy: 'trackable', name: 'test-app-action-beta', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const alphaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-alpha.yml');
+    const betaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-beta.yml');
+
+    let alphaExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+    let betaExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(alphaWorkflowPath);
+    } catch {
+      alphaExists = false;
+    }
+
+    try {
+      await access(betaWorkflowPath);
+    } catch {
+      betaExists = false;
+    }
+
+    // Cross-workflow validation rejects both colliding workflows so neither
+    // emits a partial output for a destination nova cannot disambiguate.
+    strictEqual(alphaExists, false, 'Alpha workflow should NOT be generated when two github-action targets across workflows share the same RELEASE_BRANCH_NAME.');
+    strictEqual(betaExists, false, 'Beta workflow should NOT be generated when two github-action targets across workflows share the same RELEASE_BRANCH_NAME.');
+
+    return;
+  });
+
+  it('rejects workflows when two github-pages-docusaurus targets are declared across separate workflows (singleton)', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'github-pages-docusaurus-cross-workflow-singleton');
+
+    await mkdir(join(projectDirectory, 'apps', 'docs-1'), { recursive: true });
+    await mkdir(join(projectDirectory, 'apps', 'docs-2'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'docs-1', 'package.json'), JSON.stringify({
+      name: 'test-app-docs-1', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'docs-2', 'package.json'), JSON.stringify({
+      name: 'test-app-docs-2', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [
+        {
+          template: 'publish',
+          suffix: 'docs-1',
+          triggers: ['release'],
+          targets: [{
+            type: 'github-pages-docusaurus', workingDir: './apps/docs-1',
+          }],
+          settings: {
+            'ROOT_WORKING_DIR': './',
+          },
+        },
+        {
+          template: 'publish',
+          suffix: 'docs-2',
+          triggers: ['release'],
+          targets: [{
+            type: 'github-pages-docusaurus', workingDir: './apps/docs-2',
+          }],
+          settings: {
+            'ROOT_WORKING_DIR': './',
+          },
+        },
+      ],
+      workspaces: {
+        './apps/docs-1': {
+          role: 'app', policy: 'trackable', name: 'test-app-docs-1', recipes: {},
+        },
+        './apps/docs-2': {
+          role: 'app', policy: 'trackable', name: 'test-app-docs-2', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const docs1WorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-docs-1.yml');
+    const docs2WorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-docs-2.yml');
+
+    let docs1Exists: TestsCliGenerateGithubWorkflowsRunExists = true;
+    let docs2Exists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(docs1WorkflowPath);
+    } catch {
+      docs1Exists = false;
+    }
+
+    try {
+      await access(docs2WorkflowPath);
+    } catch {
+      docs2Exists = false;
+    }
+
+    // GitHub Pages is repo-scoped — only one github-pages-docusaurus target
+    // may be declared across the entire config. Both workflows are rejected
+    // when the singleton constraint is violated.
+    strictEqual(docs1Exists, false, 'docs-1 workflow should NOT be generated when two github-pages-docusaurus targets are declared across workflows (singleton).');
+    strictEqual(docs2Exists, false, 'docs-2 workflow should NOT be generated when two github-pages-docusaurus targets are declared across workflows (singleton).');
+
+    return;
+  });
+
+  it('rejects workflows when two aws-amplify-nextjs targets across separate workflows share the same AMPLIFY_APP_ID and AMPLIFY_BRANCH_NAME', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'aws-amplify-nextjs-cross-workflow-collision');
+
+    await mkdir(join(projectDirectory, 'apps', 'app-alpha'), { recursive: true });
+    await mkdir(join(projectDirectory, 'apps', 'app-beta'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'app-alpha', 'package.json'), JSON.stringify({
+      name: 'test-app-app-alpha', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'app-beta', 'package.json'), JSON.stringify({
+      name: 'test-app-app-beta', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [
+        {
+          template: 'publish',
+          suffix: 'alpha',
+          triggers: ['release'],
+          targets: [{
+            type: 'aws-amplify-nextjs', workingDir: './apps/app-alpha',
+          }],
+          settings: {
+            'ROOT_WORKING_DIR': './',
+            'AMPLIFY_APP_ID': 'AMPLIFY_APP_ID',
+            'AMPLIFY_BRANCH_NAME': 'AMPLIFY_BRANCH_NAME',
+          },
+        },
+        {
+          template: 'publish',
+          suffix: 'beta',
+          triggers: ['release'],
+          targets: [{
+            type: 'aws-amplify-nextjs', workingDir: './apps/app-beta',
+          }],
+          settings: {
+            'ROOT_WORKING_DIR': './',
+            'AMPLIFY_APP_ID': 'AMPLIFY_APP_ID',
+            'AMPLIFY_BRANCH_NAME': 'AMPLIFY_BRANCH_NAME',
+          },
+        },
+      ],
+      workspaces: {
+        './apps/app-alpha': {
+          role: 'app', policy: 'trackable', name: 'test-app-app-alpha', recipes: {},
+        },
+        './apps/app-beta': {
+          role: 'app', policy: 'trackable', name: 'test-app-app-beta', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const alphaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-alpha.yml');
+    const betaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-beta.yml');
+
+    let alphaExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+    let betaExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(alphaWorkflowPath);
+    } catch {
+      alphaExists = false;
+    }
+
+    try {
+      await access(betaWorkflowPath);
+    } catch {
+      betaExists = false;
+    }
+
+    // Cross-workflow validation rejects both colliding workflows so neither
+    // emits a partial output for a destination nova cannot disambiguate.
+    strictEqual(alphaExists, false, 'Alpha workflow should NOT be generated when two aws-amplify-nextjs targets across workflows share the same AMPLIFY_APP_ID and AMPLIFY_BRANCH_NAME.');
+    strictEqual(betaExists, false, 'Beta workflow should NOT be generated when two aws-amplify-nextjs targets across workflows share the same AMPLIFY_APP_ID and AMPLIFY_BRANCH_NAME.');
+
+    return;
+  });
+
+  it('rejects workflows when two cloudflare-pages-docusaurus targets across separate workflows share the same CLOUDFLARE_PROJECT_NAME', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'cloudflare-pages-docusaurus-cross-workflow-collision');
+
+    await mkdir(join(projectDirectory, 'apps', 'docs-alpha'), { recursive: true });
+    await mkdir(join(projectDirectory, 'apps', 'docs-beta'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'docs-alpha', 'package.json'), JSON.stringify({
+      name: 'test-app-docs-alpha', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'docs-beta', 'package.json'), JSON.stringify({
+      name: 'test-app-docs-beta', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [
+        {
+          template: 'publish',
+          suffix: 'alpha',
+          triggers: ['release'],
+          targets: [{
+            type: 'cloudflare-pages-docusaurus', workingDir: './apps/docs-alpha',
+          }],
+          settings: {
+            'ROOT_WORKING_DIR': './',
+            'CLOUDFLARE_PROJECT_NAME': 'CLOUDFLARE_PROJECT_NAME',
+          },
+        },
+        {
+          template: 'publish',
+          suffix: 'beta',
+          triggers: ['release'],
+          targets: [{
+            type: 'cloudflare-pages-docusaurus', workingDir: './apps/docs-beta',
+          }],
+          settings: {
+            'ROOT_WORKING_DIR': './',
+            'CLOUDFLARE_PROJECT_NAME': 'CLOUDFLARE_PROJECT_NAME',
+          },
+        },
+      ],
+      workspaces: {
+        './apps/docs-alpha': {
+          role: 'app', policy: 'trackable', name: 'test-app-docs-alpha', recipes: {},
+        },
+        './apps/docs-beta': {
+          role: 'app', policy: 'trackable', name: 'test-app-docs-beta', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const alphaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-alpha.yml');
+    const betaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-beta.yml');
+
+    let alphaExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+    let betaExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(alphaWorkflowPath);
+    } catch {
+      alphaExists = false;
+    }
+
+    try {
+      await access(betaWorkflowPath);
+    } catch {
+      betaExists = false;
+    }
+
+    // Cross-workflow validation rejects both colliding workflows so neither
+    // emits a partial output for a destination nova cannot disambiguate.
+    strictEqual(alphaExists, false, 'Alpha workflow should NOT be generated when two cloudflare-pages-docusaurus targets across workflows share the same CLOUDFLARE_PROJECT_NAME.');
+    strictEqual(betaExists, false, 'Beta workflow should NOT be generated when two cloudflare-pages-docusaurus targets across workflows share the same CLOUDFLARE_PROJECT_NAME.');
+
+    return;
+  });
+
+  it('rejects workflows when two vercel-nextjs targets across separate workflows share the same VERCEL_ORG_ID and VERCEL_PROJECT_ID', async () => {
+    const projectDirectory: TestsCliGenerateGithubWorkflowsRunProjectDirectory = join(sandboxRoot, 'vercel-nextjs-cross-workflow-collision');
+
+    await mkdir(join(projectDirectory, 'apps', 'app-alpha'), { recursive: true });
+    await mkdir(join(projectDirectory, 'apps', 'app-beta'), { recursive: true });
+
+    await writeFile(join(projectDirectory, 'package.json'), JSON.stringify({ name: 'test' }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'app-alpha', 'package.json'), JSON.stringify({
+      name: 'test-app-app-alpha', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, 'apps', 'app-beta', 'package.json'), JSON.stringify({
+      name: 'test-app-app-beta', private: true,
+    }, null, 2));
+    await writeFile(join(projectDirectory, '.gitignore'), 'node_modules\n', 'utf-8');
+
+    const novaConfig: TestsCliGenerateGithubWorkflowsRunNovaConfig = {
+      project: {
+        name: { slug: 'test' },
+      },
+      workflows: [
+        {
+          template: 'publish',
+          suffix: 'alpha',
+          triggers: ['release'],
+          targets: [{
+            type: 'vercel-nextjs', workingDir: './apps/app-alpha',
+          }],
+          settings: {
+            'ROOT_WORKING_DIR': './',
+            'VERCEL_ORG_ID': 'VERCEL_ORG_ID',
+            'VERCEL_PROJECT_ID': 'VERCEL_PROJECT_ID',
+          },
+        },
+        {
+          template: 'publish',
+          suffix: 'beta',
+          triggers: ['release'],
+          targets: [{
+            type: 'vercel-nextjs', workingDir: './apps/app-beta',
+          }],
+          settings: {
+            'ROOT_WORKING_DIR': './',
+            'VERCEL_ORG_ID': 'VERCEL_ORG_ID',
+            'VERCEL_PROJECT_ID': 'VERCEL_PROJECT_ID',
+          },
+        },
+      ],
+      workspaces: {
+        './apps/app-alpha': {
+          role: 'app', policy: 'trackable', name: 'test-app-app-alpha', recipes: {},
+        },
+        './apps/app-beta': {
+          role: 'app', policy: 'trackable', name: 'test-app-app-beta', recipes: {},
+        },
+      },
+    };
+
+    await writeFile(join(projectDirectory, 'nova.config.json'), JSON.stringify(novaConfig, null, 2));
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateGithubWorkflows.run({});
+
+    const alphaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-alpha.yml');
+    const betaWorkflowPath: TestsCliGenerateGithubWorkflowsRunWorkflowPath = join(projectDirectory, '.github', 'workflows', 'nova-publish-beta.yml');
+
+    let alphaExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+    let betaExists: TestsCliGenerateGithubWorkflowsRunExists = true;
+
+    try {
+      await access(alphaWorkflowPath);
+    } catch {
+      alphaExists = false;
+    }
+
+    try {
+      await access(betaWorkflowPath);
+    } catch {
+      betaExists = false;
+    }
+
+    // Cross-workflow validation rejects both colliding workflows so neither
+    // emits a partial output for a destination nova cannot disambiguate.
+    strictEqual(alphaExists, false, 'Alpha workflow should NOT be generated when two vercel-nextjs targets across workflows share the same VERCEL_ORG_ID and VERCEL_PROJECT_ID.');
+    strictEqual(betaExists, false, 'Beta workflow should NOT be generated when two vercel-nextjs targets across workflows share the same VERCEL_ORG_ID and VERCEL_PROJECT_ID.');
 
     return;
   });

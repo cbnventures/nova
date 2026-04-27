@@ -6,6 +6,13 @@ import type {
 } from '../../../cli/utility/initialize.d.ts';
 
 /**
+ * Tests - CLI - Utility - Initialize - Is Non Empty Literal Input.
+ *
+ * @since 0.18.0
+ */
+export type TestsCliUtilityInitializeIsNonEmptyLiteralInputResult = true | string;
+
+/**
  * Tests - CLI - Utility - Initialize - Prompt Workspaces Form Display Name Capture.
  *
  * @since 0.18.0

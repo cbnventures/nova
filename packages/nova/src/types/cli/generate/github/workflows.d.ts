@@ -289,21 +289,17 @@ export type CliGenerateGithubWorkflowsRunHasDuplicateError = boolean;
 
 export type CliGenerateGithubWorkflowsRunDuplicateKey = string;
 
-export type CliGenerateGithubWorkflowsRunGeneratedSet = Set<string>;
-
-export type CliGenerateGithubWorkflowsRunOutputFileNames = Set<string>;
-
-export type CliGenerateGithubWorkflowsRunSetupLines = string[];
+export type CliGenerateGithubWorkflowsRunSkippedWorkflowKeys = Set<CliGenerateGithubWorkflowsRunUniquenessKeyWorkflowKey>;
 
 export type CliGenerateGithubWorkflowsRunWorkflowEntry = import('../../../shared.d.ts').SharedNovaConfigWorkflow;
 
 export type CliGenerateGithubWorkflowsRunTemplateName = string;
 
+export type CliGenerateGithubWorkflowsRunWorkflowSuffix = string | undefined;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyWorkflowKey = string;
+
 export type CliGenerateGithubWorkflowsRunMetadataEntry = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesEntry | undefined;
-
-export type CliGenerateGithubWorkflowsRunTemplateDirPath = string;
-
-export type CliGenerateGithubWorkflowsRunTemplateDirExists = boolean;
 
 export type CliGenerateGithubWorkflowsRunMissingLiterals = string[];
 
@@ -311,7 +307,75 @@ export type CliGenerateGithubWorkflowsRunVariableName = string;
 
 export type CliGenerateGithubWorkflowsRunVariableMeta = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesVariable;
 
-export type CliGenerateGithubWorkflowsRunWorkflowSuffix = string | undefined;
+export type CliGenerateGithubWorkflowsRunLiteralValue = string | undefined;
+
+export type CliGenerateGithubWorkflowsRunTargetsMetadataForValidation = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesTargets;
+
+export type CliGenerateGithubWorkflowsRunEntryTargetsForValidation = import('../../../shared.d.ts').SharedNovaConfigWorkflowTarget[];
+
+export type CliGenerateGithubWorkflowsRunTargetTypeForValidation = string;
+
+export type CliGenerateGithubWorkflowsRunTargetMetadataForValidation = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesTarget | undefined;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyMap = Map<string, CliGenerateGithubWorkflowsRunUniquenessKeyMapValue>;
+
+export type CliGenerateGithubWorkflowsRunUniquenessErrors = string[];
+
+export type CliGenerateGithubWorkflowsRunUniquenessMetadataEntry = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesEntry | undefined;
+
+export type CliGenerateGithubWorkflowsRunUniquenessTargetsMetadata = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesTargets;
+
+export type CliGenerateGithubWorkflowsRunUniquenessEntryTargets = import('../../../shared.d.ts').SharedNovaConfigWorkflowTarget[];
+
+export type CliGenerateGithubWorkflowsRunEntryTargetForUniqueness = import('../../../shared.d.ts').SharedNovaConfigWorkflowTarget;
+
+export type CliGenerateGithubWorkflowsRunTargetTypeForUniqueness = string;
+
+export type CliGenerateGithubWorkflowsRunTargetMetadataForUniqueness = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesTarget | undefined;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyForTarget = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesTargetUniquenessKey | undefined;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyResolvedValues = CliGenerateGithubWorkflowsRunUniquenessKeyResolvedValue[];
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyDetailEntries = CliGenerateGithubWorkflowsRunUniquenessKeyDetailEntry[];
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyVariableName = string;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyVariableMeta = import('../../../lib/workflow-templates.d.ts').LibWorkflowTemplatesVariable | undefined;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeySettingValue = string | undefined;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyResolvedValue = string;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyDetailEntry = string;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyComposite = string;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyExisting = CliGenerateGithubWorkflowsRunUniquenessKeyMapValue | undefined;
+
+export type CliGenerateGithubWorkflowsRunUniquenessIsSameWorkflow = boolean;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyMapValueWorkflowKey = CliGenerateGithubWorkflowsRunUniquenessKeyWorkflowKey;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyMapValueTargetType = CliGenerateGithubWorkflowsRunTargetTypeForUniqueness;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyMapValueDetailEntries = CliGenerateGithubWorkflowsRunUniquenessKeyDetailEntries;
+
+export type CliGenerateGithubWorkflowsRunUniquenessKeyMapValue = {
+  workflowKey: CliGenerateGithubWorkflowsRunUniquenessKeyMapValueWorkflowKey;
+  targetType: CliGenerateGithubWorkflowsRunUniquenessKeyMapValueTargetType;
+  detailEntries: CliGenerateGithubWorkflowsRunUniquenessKeyMapValueDetailEntries;
+};
+
+export type CliGenerateGithubWorkflowsRunGeneratedSet = Set<string>;
+
+export type CliGenerateGithubWorkflowsRunOutputFileNames = Set<string>;
+
+export type CliGenerateGithubWorkflowsRunSetupLines = string[];
+
+export type CliGenerateGithubWorkflowsRunTemplateDirPath = string;
+
+export type CliGenerateGithubWorkflowsRunTemplateDirExists = boolean;
 
 export type CliGenerateGithubWorkflowsRunOutputFileName = string;
 
