@@ -461,6 +461,50 @@ export type SharedNovaConfigEmails = {
   bugs?: SharedNovaConfigEmailsBugs;
 };
 
+export type SharedNovaConfigGithubOwner = string;
+
+export type SharedNovaConfigGithubRepo = string;
+
+export type SharedNovaConfigGithubRecipeName =
+  'sync-features'
+  | 'sync-identity'
+  | 'sync-policies';
+
+export type SharedNovaConfigGithubRecipes = {
+  [K in SharedNovaConfigGithubRecipeName]?: boolean;
+};
+
+export type SharedNovaConfigGithubTopics = string[];
+
+export type SharedNovaConfigGithubFeatures = {
+  issues?: boolean;
+  wiki?: boolean;
+  projects?: boolean;
+  discussions?: boolean;
+};
+
+export type SharedNovaConfigGithubPoliciesMergeMethods = {
+  merge?: boolean;
+  squash?: boolean;
+  rebase?: boolean;
+};
+
+export type SharedNovaConfigGithubPolicies = {
+  visibility?: 'public' | 'private' | 'internal';
+  defaultBranch?: string;
+  mergeMethods?: SharedNovaConfigGithubPoliciesMergeMethods;
+  autoDeleteHeadBranch?: boolean;
+};
+
+export type SharedNovaConfigGithub = {
+  owner?: SharedNovaConfigGithubOwner;
+  repo?: SharedNovaConfigGithubRepo;
+  recipes?: SharedNovaConfigGithubRecipes;
+  topics?: SharedNovaConfigGithubTopics;
+  features?: SharedNovaConfigGithubFeatures;
+  policies?: SharedNovaConfigGithubPolicies;
+};
+
 export type SharedNovaConfigUrlsHomepage = string;
 
 export type SharedNovaConfigUrlsRepository = string;
@@ -474,8 +518,6 @@ export type SharedNovaConfigUrlsLogo = string;
 export type SharedNovaConfigUrlsDocker = string;
 
 export type SharedNovaConfigUrlsDocumentation = string;
-
-export type SharedNovaConfigUrlsGitHub = string;
 
 export type SharedNovaConfigUrlsNpm = string;
 
@@ -495,7 +537,6 @@ export type SharedNovaConfigUrls = {
   logo?: SharedNovaConfigUrlsLogo;
   docker?: SharedNovaConfigUrlsDocker;
   documentation?: SharedNovaConfigUrlsDocumentation;
-  github?: SharedNovaConfigUrlsGitHub;
   npm?: SharedNovaConfigUrlsNpm;
   fundSources?: SharedNovaConfigUrlsFundSources;
   privacyPolicy?: SharedNovaConfigUrlsPrivacyPolicy;
@@ -511,15 +552,15 @@ export type SharedNovaConfigWorkspaceRole = 'project' | 'docs' | 'config' | 'app
 export type SharedNovaConfigWorkspacePolicy = 'freezable' | 'trackable' | 'distributable';
 
 export type SharedNovaConfigWorkspaceRecipeName =
-  'sync-identity'
-  | 'sync-ownership'
-  | 'normalize-modules'
+  'cleanup'
   | 'normalize-artifacts'
-  | 'sync-environment'
-  | 'normalize-dependencies'
   | 'normalize-bundler'
+  | 'normalize-dependencies'
+  | 'normalize-modules'
   | 'normalize-tooling'
-  | 'cleanup';
+  | 'sync-environment'
+  | 'sync-identity'
+  | 'sync-ownership';
 
 export type SharedNovaConfigWorkspaceRecipeEnabled = boolean;
 
@@ -601,6 +642,7 @@ export type SharedNovaConfig = {
   project?: SharedNovaConfigProject;
   entities?: SharedNovaConfigEntities;
   emails?: SharedNovaConfigEmails;
+  github?: SharedNovaConfigGithub;
   workflows?: SharedNovaConfigWorkflows;
   urls?: SharedNovaConfigUrls;
   workspaces?: SharedNovaConfigWorkspaces;
@@ -613,7 +655,7 @@ export type SharedNovaConfigConfig = SharedNovaConfig;
  *
  * @since 0.11.0
  */
-export type SharedNovaConfigCategory = 'project' | 'entities' | 'emails' | 'urls' | 'workspaces' | 'workflows';
+export type SharedNovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows';
 
 /**
  * Shared - Prompt With Cancel.

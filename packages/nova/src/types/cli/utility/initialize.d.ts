@@ -21,6 +21,12 @@ import type {
   SharedNovaConfigEntity,
   SharedNovaConfigEntityRole,
   SharedNovaConfigEntityRoles,
+  SharedNovaConfigGithub,
+  SharedNovaConfigGithubFeatures,
+  SharedNovaConfigGithubPolicies,
+  SharedNovaConfigGithubPoliciesMergeMethods,
+  SharedNovaConfigGithubRecipes,
+  SharedNovaConfigGithubTopics,
   SharedNovaConfigProjectDescription,
   SharedNovaConfigProjectKeywords,
   SharedNovaConfigProjectLegalName,
@@ -458,6 +464,183 @@ export type CliUtilityInitializePromptFlowCategoryKey = SharedNovaConfigCategory
 export type CliUtilityInitializePromptFlowCategoryHandler = CliUtilityInitializePromptFlowCategoryTypeHandler;
 
 /**
+ * CLI - Utility - Initialize - Prompt GitHub.
+ *
+ * @since 0.16.0
+ */
+export type CliUtilityInitializePromptGithubConfig = SharedNovaConfig;
+
+export type CliUtilityInitializePromptGithubReturns = Promise<Extract<SharedDialogAction, 'back'>>;
+
+export type CliUtilityInitializePromptGithubExistingGithub = SharedNovaConfigGithub | undefined;
+
+export type CliUtilityInitializePromptGithubGithub = Partial<SharedNovaConfigGithub>;
+
+export type CliUtilityInitializePromptGithubOwnerOutput = SharedPromptWithCancelResolved<'githubOwner', string> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubValidateValue = unknown;
+
+export type CliUtilityInitializePromptGithubOwnerTrimmed = string;
+
+export type CliUtilityInitializePromptGithubOwnerOutputResult = Record<'githubOwner', string>;
+
+export type CliUtilityInitializePromptGithubOwnerInput = string;
+
+export type CliUtilityInitializePromptGithubRepoOutput = SharedPromptWithCancelResolved<'githubRepo', string> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubRepoTrimmed = string;
+
+export type CliUtilityInitializePromptGithubRepoOutputResult = Record<'githubRepo', string>;
+
+export type CliUtilityInitializePromptGithubRepoInput = string;
+
+export type CliUtilityInitializePromptGithubExistingRecipes = SharedNovaConfigGithubRecipes | undefined;
+
+export type CliUtilityInitializePromptGithubSyncIdentityInitial = boolean;
+
+export type CliUtilityInitializePromptGithubSyncFeaturesInitial = boolean;
+
+export type CliUtilityInitializePromptGithubSyncPoliciesInitial = boolean;
+
+export type CliUtilityInitializePromptGithubRecipesOutputKey =
+  'githubRecipeSyncIdentity'
+  | 'githubRecipeSyncFeatures'
+  | 'githubRecipeSyncPolicies';
+
+export type CliUtilityInitializePromptGithubRecipesOutputValue = boolean;
+
+export type CliUtilityInitializePromptGithubRecipesOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptGithubRecipesOutputKey, CliUtilityInitializePromptGithubRecipesOutputValue> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubRecipesOutputResult = Record<CliUtilityInitializePromptGithubRecipesOutputKey, CliUtilityInitializePromptGithubRecipesOutputValue>;
+
+export type CliUtilityInitializePromptGithubRecipesInput = SharedNovaConfigGithubRecipes;
+
+export type CliUtilityInitializePromptGithubExistingTopics = SharedNovaConfigGithubTopics | undefined;
+
+export type CliUtilityInitializePromptGithubTopicsHasExisting = boolean;
+
+export type CliUtilityInitializePromptGithubTopicsTitle = string;
+
+export type CliUtilityInitializePromptGithubTopicsValue = SharedNovaConfigGithubTopics | CliUtilityInitializePromptGithubTopicsSkip;
+
+export type CliUtilityInitializePromptGithubTopicsInitial = number;
+
+export type CliUtilityInitializePromptGithubTopicsOutputKey = 'githubTopics';
+
+export type CliUtilityInitializePromptGithubTopicsOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptGithubTopicsOutputKey, CliUtilityInitializePromptGithubTopicsValue> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubTopicsSkip = 'skip';
+
+export type CliUtilityInitializePromptGithubTopicsOutputResult = Record<CliUtilityInitializePromptGithubTopicsOutputKey, CliUtilityInitializePromptGithubTopicsValue>;
+
+export type CliUtilityInitializePromptGithubTopicsInput = SharedNovaConfigGithubTopics | undefined;
+
+export type CliUtilityInitializePromptGithubTopicsText = string;
+
+export type CliUtilityInitializePromptGithubTopicsParsed = string[];
+
+export type CliUtilityInitializePromptGithubExistingFeatures = SharedNovaConfigGithubFeatures | undefined;
+
+export type CliUtilityInitializePromptGithubFeatureIssuesInitial = number;
+
+export type CliUtilityInitializePromptGithubFeatureWikiInitial = number;
+
+export type CliUtilityInitializePromptGithubFeatureProjectsInitial = number;
+
+export type CliUtilityInitializePromptGithubFeatureDiscussionsInitial = number;
+
+export type CliUtilityInitializePromptGithubFeaturesValue = boolean | CliUtilityInitializePromptGithubFeaturesSkip;
+
+export type CliUtilityInitializePromptGithubFeaturesOutputKey =
+  'githubFeaturesIssues'
+  | 'githubFeaturesWiki'
+  | 'githubFeaturesProjects'
+  | 'githubFeaturesDiscussions';
+
+export type CliUtilityInitializePromptGithubFeaturesOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptGithubFeaturesOutputKey, CliUtilityInitializePromptGithubFeaturesValue> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubFeaturesSkip = 'skip';
+
+export type CliUtilityInitializePromptGithubFeaturesOutputResult = Record<CliUtilityInitializePromptGithubFeaturesOutputKey, CliUtilityInitializePromptGithubFeaturesValue>;
+
+export type CliUtilityInitializePromptGithubFeaturesInput = SharedNovaConfigGithubFeatures | undefined;
+
+export type CliUtilityInitializePromptGithubExistingPolicies = SharedNovaConfigGithubPolicies | undefined;
+
+export type CliUtilityInitializePromptGithubExistingVisibility = string | undefined;
+
+export type CliUtilityInitializePromptGithubVisibilityOrder = string[];
+
+export type CliUtilityInitializePromptGithubVisibilityInitial = number;
+
+export type CliUtilityInitializePromptGithubPoliciesVisibilityValue = 'public' | 'private' | 'internal' | CliUtilityInitializePromptGithubPoliciesVisibilitySkip;
+
+export type CliUtilityInitializePromptGithubPoliciesVisibilityOutputKey = 'githubPoliciesVisibility';
+
+export type CliUtilityInitializePromptGithubPoliciesVisibilityOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptGithubPoliciesVisibilityOutputKey, CliUtilityInitializePromptGithubPoliciesVisibilityValue> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubPoliciesVisibilitySkip = 'skip';
+
+export type CliUtilityInitializePromptGithubPoliciesVisibilityOutputResult = Record<CliUtilityInitializePromptGithubPoliciesVisibilityOutputKey, CliUtilityInitializePromptGithubPoliciesVisibilityValue>;
+
+export type CliUtilityInitializePromptGithubExistingDefaultBranch = string | undefined;
+
+export type CliUtilityInitializePromptGithubDefaultBranchTitle = string;
+
+export type CliUtilityInitializePromptGithubPoliciesDefaultBranchValue = string | CliUtilityInitializePromptGithubPoliciesDefaultBranchSkip;
+
+export type CliUtilityInitializePromptGithubDefaultBranchInitial = number;
+
+export type CliUtilityInitializePromptGithubPoliciesDefaultBranchOutputKey = 'githubPoliciesDefaultBranch';
+
+export type CliUtilityInitializePromptGithubPoliciesDefaultBranchOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptGithubPoliciesDefaultBranchOutputKey, CliUtilityInitializePromptGithubPoliciesDefaultBranchValue> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubPoliciesDefaultBranchSkip = 'skip';
+
+export type CliUtilityInitializePromptGithubPoliciesDefaultBranchOutputResult = Record<CliUtilityInitializePromptGithubPoliciesDefaultBranchOutputKey, CliUtilityInitializePromptGithubPoliciesDefaultBranchValue>;
+
+export type CliUtilityInitializePromptGithubDefaultBranchRaw = string;
+
+export type CliUtilityInitializePromptGithubExistingMergeMethodsObj = SharedNovaConfigGithubPoliciesMergeMethods | undefined;
+
+export type CliUtilityInitializePromptGithubMergeMethodMergeInitial = number;
+
+export type CliUtilityInitializePromptGithubMergeMethodSquashInitial = number;
+
+export type CliUtilityInitializePromptGithubMergeMethodRebaseInitial = number;
+
+export type CliUtilityInitializePromptGithubPoliciesMergeMethodsValue = boolean | CliUtilityInitializePromptGithubPoliciesMergeMethodsSkip;
+
+export type CliUtilityInitializePromptGithubPoliciesMergeMethodsOutputKey =
+  'githubPoliciesMergeMethodsMerge'
+  | 'githubPoliciesMergeMethodsSquash'
+  | 'githubPoliciesMergeMethodsRebase';
+
+export type CliUtilityInitializePromptGithubPoliciesMergeMethodsOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptGithubPoliciesMergeMethodsOutputKey, CliUtilityInitializePromptGithubPoliciesMergeMethodsValue> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubPoliciesMergeMethodsSkip = 'skip';
+
+export type CliUtilityInitializePromptGithubPoliciesMergeMethodsOutputResult = Record<CliUtilityInitializePromptGithubPoliciesMergeMethodsOutputKey, CliUtilityInitializePromptGithubPoliciesMergeMethodsValue>;
+
+export type CliUtilityInitializePromptGithubPoliciesMergeMethodsInput = SharedNovaConfigGithubPoliciesMergeMethods | undefined;
+
+export type CliUtilityInitializePromptGithubExistingAutoDelete = boolean | undefined;
+
+export type CliUtilityInitializePromptGithubAutoDeleteInitial = number;
+
+export type CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchValue = boolean | CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchSkip;
+
+export type CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutputKey = 'githubPoliciesAutoDeleteHeadBranch';
+
+export type CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutput = SharedPromptWithCancelResolved<CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutputKey, CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchValue> | SharedPromptWithCancelReject;
+
+export type CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchSkip = 'skip';
+
+export type CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutputResult = Record<CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutputKey, CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchValue>;
+
+export type CliUtilityInitializePromptGithubPoliciesInput = SharedNovaConfigGithubPolicies | undefined;
+
+/**
  * CLI - Utility - Initialize - Prompt Project.
  *
  * @since 0.11.0
@@ -626,7 +809,6 @@ export type CliUtilityInitializePromptUrlsQuestionsOutputKey =
   | 'urlsLicense'
   | 'urlsLogo'
   | 'urlsDocumentation'
-  | 'urlsGithub'
   | 'urlsNpm'
   | 'urlsDocker'
   | 'urlsFundSources'
@@ -652,8 +834,6 @@ export type CliUtilityInitializePromptUrlsUrlsLicenseInput = SharedNormalizedRes
 export type CliUtilityInitializePromptUrlsUrlsLogoInput = SharedNormalizedResultSanitized<string>;
 
 export type CliUtilityInitializePromptUrlsUrlsDocumentationInput = SharedNormalizedResultSanitized<string>;
-
-export type CliUtilityInitializePromptUrlsUrlsGithubInput = SharedNormalizedResultSanitized<string>;
 
 export type CliUtilityInitializePromptUrlsUrlsNpmInput = SharedNormalizedResultSanitized<string>;
 

@@ -19,6 +19,9 @@ import { Logger } from '../toolkit/index.js';
 import { LIB_CONSTANTS_DOCS_BASE_URL } from './constants.js';
 import { libItemSkipDirectories } from './item.js';
 import {
+  LIB_REGEX_CHARACTER_BACKSLASH,
+  LIB_REGEX_CHARACTER_BACKTICK,
+  LIB_REGEX_CHARACTER_DOLLAR,
   LIB_REGEX_CHARACTER_DOUBLE_QUOTE,
   LIB_REGEX_CHARACTER_SINGLE_QUOTE,
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
@@ -37,6 +40,14 @@ import type {
   LibUtilityBuildGeneratedFileHeaderOptions,
   LibUtilityBuildGeneratedFileHeaderReturns,
   LibUtilityBuildGeneratedFileHeaderRuleLine,
+  LibUtilityCompareSemverA,
+  LibUtilityCompareSemverB,
+  LibUtilityCompareSemverLength,
+  LibUtilityCompareSemverPartsA,
+  LibUtilityCompareSemverPartsB,
+  LibUtilityCompareSemverReturns,
+  LibUtilityCompareSemverValA,
+  LibUtilityCompareSemverValB,
   LibUtilityCurrentTimestampDay,
   LibUtilityCurrentTimestampHour,
   LibUtilityCurrentTimestampMillisecond,
@@ -209,7 +220,44 @@ import type {
   LibUtilitySaveWorkspaceManifestReplaceFile,
   LibUtilitySaveWorkspaceManifestReturns,
   LibUtilitySaveWorkspaceManifestWorkspace,
+  LibUtilityShellQuoteBackslashPattern,
+  LibUtilityShellQuoteBacktickPattern,
+  LibUtilityShellQuoteDollarPattern,
+  LibUtilityShellQuoteDoubleQuotePattern,
+  LibUtilityShellQuoteEscaped,
+  LibUtilityShellQuoteReturns,
+  LibUtilityShellQuoteValue,
 } from '../types/lib/utility.d.ts';
+
+/**
+ * Lib - Utility - Compare Semver.
+ *
+ * Returns negative when a < b, positive when a > b, zero when equal.
+ * Compares dot-separated version strings numerically (e.g., "2.40.0" vs "2.5.1").
+ *
+ * @param {LibUtilityCompareSemverA} a - A.
+ * @param {LibUtilityCompareSemverB} b - B.
+ *
+ * @returns {LibUtilityCompareSemverReturns}
+ *
+ * @since 0.18.0
+ */
+export function compareSemver(a: LibUtilityCompareSemverA, b: LibUtilityCompareSemverB): LibUtilityCompareSemverReturns {
+  const partsA: LibUtilityCompareSemverPartsA = a.split('.').map((part) => parseInt(part, 10));
+  const partsB: LibUtilityCompareSemverPartsB = b.split('.').map((part) => parseInt(part, 10));
+  const length: LibUtilityCompareSemverLength = Math.max(partsA.length, partsB.length);
+
+  for (let i = 0; i < length; i += 1) {
+    const valA: LibUtilityCompareSemverValA = partsA[i] ?? 0;
+    const valB: LibUtilityCompareSemverValB = partsB[i] ?? 0;
+
+    if (valA !== valB) {
+      return valA - valB;
+    }
+  }
+
+  return 0;
+}
 
 /**
  * Lib - Utility - Current Timestamp.
@@ -1379,4 +1427,31 @@ export async function saveWorkspaceManifest(workspace: LibUtilitySaveWorkspaceMa
   );
 
   return;
+}
+
+/**
+ * Lib - Utility - Shell Quote.
+ *
+ * Wraps a value in double quotes and escapes embedded double quotes,
+ * making it safe to interpolate into a shell command string.
+ *
+ * @param {LibUtilityShellQuoteValue} value - Value.
+ *
+ * @returns {LibUtilityShellQuoteReturns}
+ *
+ * @since 0.18.0
+ */
+export function shellQuote(value: LibUtilityShellQuoteValue): LibUtilityShellQuoteReturns {
+  const backslashPattern: LibUtilityShellQuoteBackslashPattern = new RegExp(LIB_REGEX_CHARACTER_BACKSLASH.source, 'g');
+  const backtickPattern: LibUtilityShellQuoteBacktickPattern = new RegExp(LIB_REGEX_CHARACTER_BACKTICK.source, 'g');
+  const dollarPattern: LibUtilityShellQuoteDollarPattern = new RegExp(LIB_REGEX_CHARACTER_DOLLAR.source, 'g');
+  const doubleQuotePattern: LibUtilityShellQuoteDoubleQuotePattern = new RegExp(LIB_REGEX_CHARACTER_DOUBLE_QUOTE.source, 'g');
+
+  const escaped: LibUtilityShellQuoteEscaped = value
+    .replace(backslashPattern, '\\\\')
+    .replace(backtickPattern, '\\`')
+    .replace(dollarPattern, '\\$')
+    .replace(doubleQuotePattern, '\\"');
+
+  return `"${escaped}"`;
 }

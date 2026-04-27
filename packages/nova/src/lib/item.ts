@@ -434,7 +434,6 @@ export const libItemUrlFields: LibItemUrlFields = [
   'license',
   'logo',
   'documentation',
-  'github',
   'npm',
   'docker',
   'privacyPolicy',

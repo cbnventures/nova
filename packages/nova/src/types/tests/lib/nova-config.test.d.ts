@@ -4,6 +4,12 @@ import type {
   SharedNovaConfigConfig,
   SharedNovaConfigEntities,
   SharedNovaConfigEntity,
+  SharedNovaConfigGithub,
+  SharedNovaConfigGithubFeatures,
+  SharedNovaConfigGithubPolicies,
+  SharedNovaConfigGithubPoliciesMergeMethods,
+  SharedNovaConfigGithubRecipes,
+  SharedNovaConfigGithubTopics,
   SharedNovaConfigProject,
   SharedNovaConfigProjectLicense,
   SharedNovaConfigProjectName,
@@ -14,6 +20,41 @@ import type {
   SharedNovaConfigWorkspaceRecipes,
   SharedNovaConfigWorkspaces,
 } from '../../shared.d.ts';
+
+/**
+ * Tests - Lib - Nova Config - ParseGithub (via Load).
+ *
+ * @since 0.22.0
+ */
+export type TestsLibNovaConfigSharednovaconfigParseGithubOriginalCwd = string;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubTemporaryDirectory = string;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubSandboxPrefix = string;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubSandboxRoot = string;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = string;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = string;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = string;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubConfig = LibNovaConfig;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubLoaded = SharedNovaConfigConfig;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = SharedNovaConfigGithub | undefined;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubRecipes = SharedNovaConfigGithubRecipes | undefined;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubTopics = SharedNovaConfigGithubTopics | undefined;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubFeatures = SharedNovaConfigGithubFeatures | undefined;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPolicies = SharedNovaConfigGithubPolicies | undefined;
+
+export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods = SharedNovaConfigGithubPoliciesMergeMethods | undefined;
 
 /**
  * Tests - Lib - Nova Config - parseWorkflows (via load).

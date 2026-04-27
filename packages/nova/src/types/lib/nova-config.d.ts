@@ -5,6 +5,12 @@ import type {
   SharedNovaConfigEntities,
   SharedNovaConfigEntity,
   SharedNovaConfigEntityRole,
+  SharedNovaConfigGithub,
+  SharedNovaConfigGithubFeatures,
+  SharedNovaConfigGithubPolicies,
+  SharedNovaConfigGithubPoliciesMergeMethods,
+  SharedNovaConfigGithubRecipes,
+  SharedNovaConfigGithubTopics,
   SharedNovaConfigProject,
   SharedNovaConfigProjectDescription,
   SharedNovaConfigProjectLicense,
@@ -89,6 +95,89 @@ export type LibNovaConfigGetEmailReturns = string | undefined;
 export type LibNovaConfigGetEmailEmail = string | undefined;
 
 /**
+ * Lib - Nova Config - Get GitHub Features.
+ *
+ * @since 0.22.0
+ */
+export type LibNovaConfigGetGithubFeaturesValue = unknown;
+
+export type LibNovaConfigGetGithubFeaturesReturns = SharedNovaConfigGithubFeatures | undefined;
+
+export type LibNovaConfigGetGithubFeaturesResult = SharedNovaConfigGithubFeatures;
+
+export type LibNovaConfigGetGithubFeaturesIssues = boolean | undefined;
+
+export type LibNovaConfigGetGithubFeaturesWiki = boolean | undefined;
+
+export type LibNovaConfigGetGithubFeaturesProjects = boolean | undefined;
+
+export type LibNovaConfigGetGithubFeaturesDiscussions = boolean | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Policies.
+ *
+ * @since 0.22.0
+ */
+export type LibNovaConfigGetGithubPoliciesValue = unknown;
+
+export type LibNovaConfigGetGithubPoliciesReturns = SharedNovaConfigGithubPolicies | undefined;
+
+export type LibNovaConfigGetGithubPoliciesResult = SharedNovaConfigGithubPolicies;
+
+export type LibNovaConfigGetGithubPoliciesVisibility = 'public' | 'private' | 'internal' | undefined;
+
+export type LibNovaConfigGetGithubPoliciesDefaultBranch = string | undefined;
+
+export type LibNovaConfigGetGithubPoliciesMergeMethods = SharedNovaConfigGithubPoliciesMergeMethods | undefined;
+
+export type LibNovaConfigGetGithubPoliciesAutoDeleteHeadBranch = boolean | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Policies Merge Methods.
+ *
+ * @since 0.22.0
+ */
+export type LibNovaConfigGetGithubPoliciesMergeMethodsValue = unknown;
+
+export type LibNovaConfigGetGithubPoliciesMergeMethodsReturns = SharedNovaConfigGithubPoliciesMergeMethods | undefined;
+
+export type LibNovaConfigGetGithubPoliciesMergeMethodsResult = SharedNovaConfigGithubPoliciesMergeMethods;
+
+export type LibNovaConfigGetGithubPoliciesMergeMethodsMerge = boolean | undefined;
+
+export type LibNovaConfigGetGithubPoliciesMergeMethodsSquash = boolean | undefined;
+
+export type LibNovaConfigGetGithubPoliciesMergeMethodsRebase = boolean | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Recipes.
+ *
+ * @since 0.22.0
+ */
+export type LibNovaConfigGetGithubRecipesValue = unknown;
+
+export type LibNovaConfigGetGithubRecipesReturns = SharedNovaConfigGithubRecipes | undefined;
+
+export type LibNovaConfigGetGithubRecipesResult = SharedNovaConfigGithubRecipes;
+
+export type LibNovaConfigGetGithubRecipesSyncIdentity = boolean | undefined;
+
+export type LibNovaConfigGetGithubRecipesSyncFeatures = boolean | undefined;
+
+export type LibNovaConfigGetGithubRecipesSyncPolicies = boolean | undefined;
+
+/**
+ * Lib - Nova Config - Get GitHub Topics.
+ *
+ * @since 0.22.0
+ */
+export type LibNovaConfigGetGithubTopicsValue = unknown;
+
+export type LibNovaConfigGetGithubTopicsReturns = SharedNovaConfigGithubTopics | undefined;
+
+export type LibNovaConfigGetGithubTopicsTypeGuard = string;
+
+/**
  * Lib - Nova Config - Get Non Empty String.
  *
  * @since 0.11.0
@@ -161,6 +250,8 @@ export type LibNovaConfigParseEntities = SharedNovaConfigEntities | undefined;
 
 export type LibNovaConfigParseEmails = SharedNovaConfigEmails | undefined;
 
+export type LibNovaConfigParseGithub = SharedNovaConfigGithub | undefined;
+
 export type LibNovaConfigParseWorkflows = SharedNovaConfigWorkflows | undefined;
 
 export type LibNovaConfigParseUrls = SharedNovaConfigUrls | undefined;
@@ -208,6 +299,33 @@ export type LibNovaConfigParseEntitiesParsedRoles = SharedNovaConfigEntityRole[]
 export type LibNovaConfigParseEntitiesSortNameA = string;
 
 export type LibNovaConfigParseEntitiesSortNameB = string;
+
+/**
+ * Lib - Nova Config - Parse GitHub.
+ *
+ * @since 0.22.0
+ */
+export type LibNovaConfigParseGithubValue = unknown;
+
+export type LibNovaConfigParseGithubReturns = SharedNovaConfigGithub | undefined;
+
+export type LibNovaConfigParseGithubResult = SharedNovaConfigGithub;
+
+export type LibNovaConfigParseGithubOwnerCandidate = string | undefined;
+
+export type LibNovaConfigParseGithubOwner = string | undefined;
+
+export type LibNovaConfigParseGithubRepoCandidate = string | undefined;
+
+export type LibNovaConfigParseGithubRepo = string | undefined;
+
+export type LibNovaConfigParseGithubRecipes = SharedNovaConfigGithubRecipes | undefined;
+
+export type LibNovaConfigParseGithubTopics = SharedNovaConfigGithubTopics | undefined;
+
+export type LibNovaConfigParseGithubFeatures = SharedNovaConfigGithubFeatures | undefined;
+
+export type LibNovaConfigParseGithubPolicies = SharedNovaConfigGithubPolicies | undefined;
 
 /**
  * Lib - Nova Config - Parse Project.

@@ -1,3 +1,5 @@
+import type { CliRecipeRegistryCategory } from '../../../cli/recipe/index.d.ts';
+
 /**
  * Tests - CLI - Utility - Run Recipes - Run.
  *
@@ -20,3 +22,7 @@ export type TestsCliUtilityRunRecipesRunPackageJsonContents = string;
 export type TestsCliUtilityRunRecipesRunNovaConfigPath = string;
 
 export type TestsCliUtilityRunRecipesRunNovaConfigContents = string;
+
+export type TestsCliUtilityRunRecipesRunExitCode = string | number | null | undefined;
+
+export type TestsCliUtilityRunRecipesRunUnknownCategory = CliRecipeRegistryCategory;

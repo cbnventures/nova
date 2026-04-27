@@ -4,7 +4,6 @@ import { LibNovaConfig } from '../../../lib/nova-config.js';
 import {
   LIB_REGEX_URL_PREFIX_BUY_ME_A_COFFEE,
   LIB_REGEX_URL_PREFIX_DOCKER_HUB,
-  LIB_REGEX_URL_PREFIX_GITHUB,
   LIB_REGEX_URL_PREFIX_GITHUB_SPONSORS,
   LIB_REGEX_URL_PREFIX_KOFI,
   LIB_REGEX_URL_PREFIX_LIBERAPAY,
@@ -62,8 +61,10 @@ import type {
   CliGenerateMustHavesReadMeRunDocumentationUrl,
   CliGenerateMustHavesReadMeRunEntities,
   CliGenerateMustHavesReadMeRunFundSources,
+  CliGenerateMustHavesReadMeRunGithub,
+  CliGenerateMustHavesReadMeRunGithubOwner,
   CliGenerateMustHavesReadMeRunGithubRepo,
-  CliGenerateMustHavesReadMeRunGithubUrl,
+  CliGenerateMustHavesReadMeRunGithubRepoName,
   CliGenerateMustHavesReadMeRunHeaderSection,
   CliGenerateMustHavesReadMeRunHomepageUrl,
   CliGenerateMustHavesReadMeRunIntroductionSection,
@@ -158,11 +159,13 @@ export class CliGenerateMustHavesReadMe {
     const projectPronouns: CliGenerateMustHavesReadMeRunProjectPronouns = (project !== undefined) ? (project['pronouns'] ?? 'business') : 'business';
     const projectPlatforms: CliGenerateMustHavesReadMeRunProjectPlatforms = (project !== undefined) ? (project['platforms'] ?? []) : [];
     const urls: CliGenerateMustHavesReadMeRunUrls = workingFile['urls'];
+    const github: CliGenerateMustHavesReadMeRunGithub = workingFile['github'];
     const homepageUrl: CliGenerateMustHavesReadMeRunHomepageUrl = (urls !== undefined) ? (urls['homepage'] ?? '') : '';
     const logoUrl: CliGenerateMustHavesReadMeRunLogoUrl = (urls !== undefined) ? (urls['logo'] ?? '') : '';
     const documentationUrl: CliGenerateMustHavesReadMeRunDocumentationUrl = (urls !== undefined) ? (urls['documentation'] ?? '') : '';
-    const githubUrl: CliGenerateMustHavesReadMeRunGithubUrl = (urls !== undefined) ? (urls['github'] ?? '') : '';
-    const githubRepo: CliGenerateMustHavesReadMeRunGithubRepo = githubUrl.replace(LIB_REGEX_URL_PREFIX_GITHUB, '');
+    const githubOwner: CliGenerateMustHavesReadMeRunGithubOwner = (github !== undefined) ? (github['owner'] ?? '') : '';
+    const githubRepoName: CliGenerateMustHavesReadMeRunGithubRepoName = (github !== undefined) ? (github['repo'] ?? '') : '';
+    const githubRepo: CliGenerateMustHavesReadMeRunGithubRepo = (githubOwner !== '' && githubRepoName !== '') ? `${githubOwner}/${githubRepoName}` : '';
     const npmUrl: CliGenerateMustHavesReadMeRunNpmUrl = (urls !== undefined) ? (urls['npm'] ?? '') : '';
     const npmPackage: CliGenerateMustHavesReadMeRunNpmPackage = npmUrl.replace(LIB_REGEX_URL_PREFIX_NPM_PACKAGE, '');
     const dockerUrl: CliGenerateMustHavesReadMeRunDockerUrl = (urls !== undefined) ? (urls['docker'] ?? '') : '';

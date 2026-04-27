@@ -1,4 +1,4 @@
-import type { LibConstantsDocsBaseUrl } from '../types/lib/constants.d.ts';
+import type { LibConstantsDocsBaseUrl, LibConstantsGhMinVersion } from '../types/lib/constants.d.ts';
 
 /**
  * Lib - Constants - Docs Base URL.
@@ -9,3 +9,14 @@ import type { LibConstantsDocsBaseUrl } from '../types/lib/constants.d.ts';
  * @since 0.16.3
  */
 export const LIB_CONSTANTS_DOCS_BASE_URL: LibConstantsDocsBaseUrl = 'https://nova.cbnventures.io';
+
+/**
+ * Lib - Constants - Lib Gh Min Version.
+ *
+ * Minimum supported version of the gh CLI for github recipes. 2.40.0 is the
+ * lowest version where every flag the recipes use is available — `--enable-discussions`
+ * was added in gh 2.40 (late 2023). All other flags have been stable since 2.0.x.
+ *
+ * @since 0.18.0
+ */
+export const LIB_GH_MIN_VERSION: LibConstantsGhMinVersion = '2.40.0';

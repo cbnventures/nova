@@ -19,6 +19,9 @@ import { CliGenerateMustHavesEditorconfig } from './generate/must-haves/editorco
 import { CliGenerateMustHavesGitignore } from './generate/must-haves/gitignore.js';
 import { CliGenerateMustHavesLicense } from './generate/must-haves/license.js';
 import { CliGenerateMustHavesReadMe } from './generate/must-haves/read-me.js';
+import { CliRecipeGithubSyncFeatures } from './recipe/github/sync-features.js';
+import { CliRecipeGithubSyncIdentity } from './recipe/github/sync-identity.js';
+import { CliRecipeGithubSyncPolicies } from './recipe/github/sync-policies.js';
 import { CliRecipePackageJsonCleanup } from './recipe/package-json/cleanup.js';
 import { CliRecipePackageJsonNormalizeArtifacts } from './recipe/package-json/normalize-artifacts.js';
 import { CliRecipePackageJsonNormalizeBundler } from './recipe/package-json/normalize-bundler.js';
@@ -81,12 +84,15 @@ import type {
   CliRegisterCommandsGenerateGenerateGitHub,
   CliRegisterCommandsGenerateGenerateMustHaves,
   CliRegisterCommandsRecipeRecipe,
+  CliRegisterCommandsRecipeRecipeGithub,
+  CliRegisterCommandsRecipeRecipeGithubOptions,
   CliRegisterCommandsRecipeRecipePackageJson,
   CliRegisterCommandsReturns,
   CliRegisterCommandsScaffoldScaffold,
   CliRegisterCommandsScaffoldScaffoldApp,
   CliRegisterCommandsScaffoldScaffoldDocs,
   CliRegisterCommandsScaffoldScaffoldStarter,
+  CliRegisterCommandsUtilityRunRecipesOptions,
   CliRegisterCommandsUtilityRunScriptsOptions,
   CliRegisterCommandsUtilityUtility,
   CliStyleTextCategoryFunctions,
@@ -472,6 +478,61 @@ class CLI {
       .option('-r, --replace-file', 'Replace the original file without creating a backup')
       .action(async (options) => {
         await this.executeCommand<typeof options>(options, CliRecipePackageJsonSyncOwnership['run']);
+
+        return;
+      });
+
+    const recipeGithub: CliRegisterCommandsRecipeRecipeGithub = recipe
+      .command('github')
+      .alias('gh')
+      .usage('[subcommand] [options]')
+      .description('Run all GitHub recipes')
+      .commandsGroup('Subcommands:')
+      .helpCommand(false)
+      .option('-d, --dry-run', 'Preview changes without executing gh commands')
+      .action(async (options) => {
+        const runRecipesOptions: CliRegisterCommandsUtilityRunRecipesOptions = {
+          ...(options as CliRegisterCommandsRecipeRecipeGithubOptions),
+          category: 'github',
+        };
+
+        await this.executeCommand<CliRegisterCommandsUtilityRunRecipesOptions>(runRecipesOptions, CliUtilityRunRecipes['run']);
+
+        return;
+      });
+
+    recipeGithub
+      .command('sync-features')
+      .alias('sync-feat')
+      .usage('[options]')
+      .description('Sync repository feature flags (issues, wiki, projects, discussions) to GitHub')
+      .option('-d, --dry-run', 'Preview changes without executing gh commands')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeGithubSyncFeatures['run']);
+
+        return;
+      });
+
+    recipeGithub
+      .command('sync-identity')
+      .alias('sync-id')
+      .usage('[options]')
+      .description('Sync repository identity (description, homepage URL, topics) to GitHub')
+      .option('-d, --dry-run', 'Preview changes without executing gh commands')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeGithubSyncIdentity['run']);
+
+        return;
+      });
+
+    recipeGithub
+      .command('sync-policies')
+      .alias('sync-pol')
+      .usage('[options]')
+      .description('Sync repository policies (visibility, merge methods, branch settings) to GitHub')
+      .option('-d, --dry-run', 'Preview changes without executing gh commands')
+      .action(async (options) => {
+        await this.executeCommand<typeof options>(options, CliRecipeGithubSyncPolicies['run']);
 
         return;
       });

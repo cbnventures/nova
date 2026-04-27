@@ -1,4 +1,34 @@
 /**
+ * Lib - Regex - Character Backslash.
+ *
+ * Used by shellQuote to escape backslashes before other metacharacter escapes,
+ * preventing double-escaping in double-quoted shell strings.
+ *
+ * @since 0.18.0
+ */
+export const LIB_REGEX_CHARACTER_BACKSLASH = /\\/;
+
+/**
+ * Lib - Regex - Character Backtick.
+ *
+ * Used by shellQuote to escape backticks in values passed to gh commands,
+ * preventing command substitution inside double-quoted shell strings.
+ *
+ * @since 0.18.0
+ */
+export const LIB_REGEX_CHARACTER_BACKTICK = /`/;
+
+/**
+ * Lib - Regex - Character Dollar.
+ *
+ * Used by shellQuote to escape dollar signs in values passed to gh commands,
+ * preventing variable expansion inside double-quoted shell strings.
+ *
+ * @since 0.18.0
+ */
+export const LIB_REGEX_CHARACTER_DOLLAR = /\$/;
+
+/**
  * Lib - Regex - Character Double Quote.
  *
  * Used by shell quoting on Windows to escape double quotes in command arguments
@@ -781,16 +811,6 @@ export const LIB_REGEX_URL_PREFIX_BUY_ME_A_COFFEE = /^https?:\/\/(?:www\.)?buyme
 export const LIB_REGEX_URL_PREFIX_DOCKER_HUB = /^https?:\/\/hub\.docker\.com\/r\//;
 
 /**
- * Lib - Regex - URL Prefix GitHub.
- *
- * Tests and strips a GitHub URL prefix. Used by the read-me and issue-template generators
- * to extract the "org/repo" slug from the full URL.
- *
- * @since 0.11.0
- */
-export const LIB_REGEX_URL_PREFIX_GITHUB = /^https?:\/\/github\.com\//;
-
-/**
  * Lib - Regex - URL Prefix GitHub Sponsors.
  *
  * Tests and strips a GitHub Sponsors URL prefix. Used by funding, issue-template,
@@ -976,3 +996,94 @@ export const LIB_REGEX_PATTERN_WORKFLOW_SECRET_REFERENCE = /\$\{\{\s*secrets\.(\
  * @since 0.20.0
  */
 export const LIB_REGEX_PATTERN_WORKFLOW_VAR_REFERENCE = /\$\{\{\s*vars\.(\w+)\s*\}\}/;
+
+/**
+ * Lib - Regex - Pattern Gh Version.
+ *
+ * Captures the version string from `gh --version` output. Used by sync-identity
+ * to verify the installed gh CLI meets the minimum required version.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_GH_VERSION = /^gh version (\d+\.\d+\.\d+)/;
+
+/**
+ * Lib - Regex - Pattern GitHub Owner.
+ *
+ * Validates a GitHub owner (user or organization) name. Used by parseGithub
+ * to reject values containing shell metacharacters before interpolating into
+ * gh command strings.
+ *
+ * @since 0.18.0
+ */
+export const LIB_REGEX_PATTERN_GITHUB_OWNER = /^[A-Za-z0-9-]+$/;
+
+/**
+ * Lib - Regex - Pattern GitHub Repo.
+ *
+ * Validates a GitHub repository name. Used by parseGithub to reject values
+ * containing shell metacharacters before interpolating into gh command strings.
+ *
+ * @since 0.18.0
+ */
+export const LIB_REGEX_PATTERN_GITHUB_REPO = /^[A-Za-z0-9._-]+$/;
+
+/**
+ * Lib - Regex - Pattern Leading Or Trailing Hyphen.
+ *
+ * Strips leading or trailing hyphens from a string. Used by sync-identity's
+ * topic normalizer to clean up topic slugs after character removal.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_LEADING_OR_TRAILING_HYPHEN = /^-+|-+$/;
+
+/**
+ * Lib - Regex - Pattern Non Topic Char.
+ *
+ * Matches any character that is not a lowercase letter, digit, or hyphen. Used
+ * by sync-identity's topic normalizer to strip invalid GitHub topic characters.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_NON_TOPIC_CHAR = /[^a-z0-9-]/;
+
+/**
+ * Lib - Regex - Pattern Rate Limit Reset.
+ *
+ * Captures the Unix epoch timestamp from an `X-RateLimit-Reset` header in GitHub
+ * API error output. Used by sync-identity to report when the rate limit resets.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_RATE_LIMIT_RESET = /X-RateLimit-Reset:\s*(\d+)/;
+
+/**
+ * Lib - Regex - Pattern Whitespace Or Underscore.
+ *
+ * Matches one or more whitespace characters or underscores. Used by sync-identity's
+ * topic normalizer to replace word separators with hyphens.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_WHITESPACE_OR_UNDERSCORE = /[\s_]+/;
+
+/**
+ * Lib - Regex - Pattern Topic Flag.
+ *
+ * Matches a `-f names[]=` flag segment in a gh api topics command. Used by
+ * sync-identity tests to count the number of topic flags in the command string.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_TOPIC_FLAG = /-f names\[\]=/;
+
+/**
+ * Lib - Regex - Pattern Topic TypeScript.
+ *
+ * Matches the literal word "typescript" anywhere in a string. Used by
+ * sync-identity tests to verify topic normalization of keyword input.
+ *
+ * @since 0.22.0
+ */
+export const LIB_REGEX_PATTERN_TOPIC_TYPESCRIPT = /typescript/;

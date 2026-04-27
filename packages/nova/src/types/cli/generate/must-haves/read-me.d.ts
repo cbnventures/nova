@@ -7,6 +7,7 @@ import type {
   SharedNovaConfigEntities,
   SharedNovaConfigEntity,
   SharedNovaConfigEntityRoles,
+  SharedNovaConfigGithub,
   SharedNovaConfigProject,
   SharedNovaConfigProjectDescription,
   SharedNovaConfigProjectName,
@@ -156,15 +157,21 @@ export type CliGenerateMustHavesReadMeRunProjectPlatforms = SharedNovaConfigProj
 
 export type CliGenerateMustHavesReadMeRunUrls = SharedNovaConfigUrls | undefined;
 
+export type CliGenerateMustHavesReadMeRunGithub = SharedNovaConfigGithub | undefined;
+
 export type CliGenerateMustHavesReadMeRunHomepageUrl = string;
 
 export type CliGenerateMustHavesReadMeRunLogoUrl = string;
 
 export type CliGenerateMustHavesReadMeRunDocumentationUrl = string;
 
-export type CliGenerateMustHavesReadMeRunGithubUrl = string;
+export type CliGenerateMustHavesReadMeRunGithubOwner = string;
+
+export type CliGenerateMustHavesReadMeRunGithubRepoName = string;
 
 export type CliGenerateMustHavesReadMeRunGithubRepo = string;
+
+export type CliGenerateMustHavesReadMeRunGithubUrl = string;
 
 export type CliGenerateMustHavesReadMeRunNpmUrl = string;
 

@@ -28,6 +28,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import {
   buildGeneratedFileHeader,
+  compareSemver,
   currentTimestamp,
   detectShell,
   discoverPathsWithFile,
@@ -45,6 +46,7 @@ import {
   renameFileWithDate,
   saveGeneratedFile,
   saveWorkspaceManifest,
+  shellQuote,
 } from '../../lib/utility.js';
 import { Logger } from '../../toolkit/index.js';
 
@@ -565,6 +567,112 @@ describe('isExecuteShellError', async () => {
     const result: TestsLibUtilityIsExecuteShellErrorResult = isExecuteShellError({ cmd: 123 });
 
     strictEqual(result, false);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Utility - Compare Semver.
+ *
+ * @since 0.18.0
+ */
+describe('compareSemver', () => {
+  it('returns negative when first version is lower', () => {
+    strictEqual(compareSemver('2.30.0', '2.40.0') < 0, true);
+    strictEqual(compareSemver('1.0.0', '2.0.0') < 0, true);
+
+    return;
+  });
+
+  it('returns positive when first version is higher', () => {
+    strictEqual(compareSemver('2.50.0', '2.40.0') > 0, true);
+    strictEqual(compareSemver('3.0.0', '2.99.0') > 0, true);
+
+    return;
+  });
+
+  it('returns zero when versions are equal', () => {
+    strictEqual(compareSemver('2.40.0', '2.40.0'), 0);
+
+    return;
+  });
+
+  it('treats missing parts as zero', () => {
+    strictEqual(compareSemver('2.40', '2.40.0'), 0);
+    strictEqual(compareSemver('2', '2.0.0'), 0);
+
+    return;
+  });
+
+  it('compares numerically not lexically', () => {
+    // "2.10.0" > "2.9.0" numerically, but "2.10.0" < "2.9.0" lexically
+    strictEqual(compareSemver('2.10.0', '2.9.0') > 0, true);
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Utility - Shell Quote.
+ *
+ * @since 0.18.0
+ */
+describe('shellQuote', () => {
+  it('wraps plain values in double quotes', () => {
+    strictEqual(shellQuote('hello'), '"hello"');
+
+    return;
+  });
+
+  it('preserves spaces inside the quoted value', () => {
+    strictEqual(shellQuote('hello world'), '"hello world"');
+
+    return;
+  });
+
+  it('escapes embedded double quotes with backslash', () => {
+    strictEqual(shellQuote('say "hi"'), '"say \\"hi\\""');
+
+    return;
+  });
+
+  it('preserves single quotes unchanged', () => {
+    strictEqual(shellQuote('it\'s'), '"it\'s"');
+
+    return;
+  });
+
+  it('handles an empty string', () => {
+    strictEqual(shellQuote(''), '""');
+
+    return;
+  });
+
+  it('escapes backslash with double backslash', () => {
+    strictEqual(shellQuote('a\\b'), '"a\\\\b"');
+
+    return;
+  });
+
+  it('escapes dollar sign to prevent variable expansion', () => {
+    strictEqual(shellQuote('$VAR'), '"\\$VAR"');
+
+    return;
+  });
+
+  it('escapes backticks to prevent command substitution', () => {
+    strictEqual(shellQuote('`cmd`'), '"\\`cmd\\`"');
+
+    return;
+  });
+
+  it('escapes a command-substitution payload safely', () => {
+    strictEqual(shellQuote('$(rm -rf /)'), '"\\$(rm -rf /)"');
 
     return;
   });

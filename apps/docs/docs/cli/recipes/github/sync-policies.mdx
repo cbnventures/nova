@@ -1,0 +1,86 @@
+---
+id: "sync-policies"
+title: "Sync Policies"
+description: "Sync GitHub repository policies (visibility, default branch, merge methods, and auto-delete head branch) using nova.config.json as the source of truth."
+keywords:
+  - "nova"
+  - "sync-policies"
+  - "github"
+  - "visibility"
+  - "default branch"
+  - "merge methods"
+  - "auto-delete"
+tags:
+  - "cli"
+  - "sync-policies"
+  - "recipe"
+  - "github"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync **repository policies** to GitHub from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-policies` recipe pushes repository governance settings from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub using `gh repo edit`. It controls repository visibility, the default branch, which merge strategies are allowed, and whether head branches are auto-deleted after a pull request is merged.
+
+If the `github.policies` block is missing entirely, or all policy fields are undefined, the recipe no-ops and emits a warning.
+
+## Prerequisites
+
+- **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
+- **Repository write access** — The authenticated user must have write access to the target repository.
+- **`github.owner` and `github.repo`** — Both fields must be set in `nova.config.json` to identify the target repository.
+
+## Behavior
+
+Each policy field is independently optional. When a field is defined, the recipe passes the corresponding flag to `gh repo edit`. When a field is undefined, that flag is omitted entirely and GitHub's current value is preserved.
+
+- **`github.policies.visibility`** — Repository visibility. Emits `--visibility=<value>` (`public`, `private`, or `internal`) when defined.
+- **`github.policies.defaultBranch`** — The default branch name. Emits `--default-branch=<value>` when defined.
+- **`github.policies.mergeMethods.merge`** — Allow merge commits. Emits `--enable-merge-commit=<bool>` when defined.
+- **`github.policies.mergeMethods.squash`** — Allow squash merges. Emits `--enable-squash-merge=<bool>` when defined.
+- **`github.policies.mergeMethods.rebase`** — Allow rebase merges. Emits `--enable-rebase-merge=<bool>` when defined.
+- **`github.policies.autoDeleteHeadBranch`** — Automatically delete head branches after merge. Emits `--delete-branch-on-merge=<bool>` when defined.
+
+## Settings
+
+Settings are configured per workspace in `nova.config.json` under the `recipes` key. The `sync-policies` recipe is controlled by a single boolean toggle:
+
+```json
+{
+  "github": {
+    "recipes": {
+      "sync-policies": true
+    }
+  }
+}
+```
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe github sync-policies [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe github sync-policies [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                      |
+|-----------------|----------------------------------|
+| `-d, --dry-run` | Preview changes without pushing. |

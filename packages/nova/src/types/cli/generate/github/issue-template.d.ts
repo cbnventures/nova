@@ -44,7 +44,11 @@ export type CliGenerateGithubIssueTemplateRunOur = string;
 
 export type CliGenerateGithubIssueTemplateRunUrls = SharedNovaConfig['urls'];
 
-export type CliGenerateGithubIssueTemplateRunUrlsGithub = string;
+export type CliGenerateGithubIssueTemplateRunGithub = SharedNovaConfig['github'];
+
+export type CliGenerateGithubIssueTemplateRunGithubOwner = string;
+
+export type CliGenerateGithubIssueTemplateRunGithubRepoName = string;
 
 export type CliGenerateGithubIssueTemplateRunGithubRepo = string;
 

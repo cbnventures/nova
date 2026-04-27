@@ -21,18 +21,24 @@ export type RulesEslintTypescriptRequireTypeNamingCheckTypeAliasTypeName = strin
  *
  * @since 0.17.1
  */
+export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObjectSegment = string;
+
+export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObjectPrefix = string;
+
+export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObject = {
+  segment: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObjectSegment;
+  prefix: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObjectPrefix;
+};
+
+export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns = RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObject | null;
+
 export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticFilename = string;
+
+export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticSegments = ReadonlyArray<string>;
 
 export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticOffendingSegment = string;
 
 export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticPrefix = string;
-
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticSegments = ReadonlyArray<string>;
-
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns = {
-  segment: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticOffendingSegment;
-  prefix: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticPrefix;
-} | null;
 
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Derive Prefix.
@@ -54,13 +60,13 @@ export type RulesEslintTypescriptRequireTypeNamingDerivePrefixWords = string[] |
  */
 export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsFilename = string;
 
-export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsNormalizedFilename = string;
-
-export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsRelativePath = string;
-
 export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsReturns = ReadonlyArray<string>;
 
+export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsNormalizedFilename = string;
+
 export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsTypesIndex = number;
+
+export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsRelativePath = string;
 
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Rule.
