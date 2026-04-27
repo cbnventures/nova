@@ -53,3 +53,5 @@ export type CliGenerateMustHavesLicenseRunTemplate = string;
 export type CliGenerateMustHavesLicenseRunContent = string;
 
 export type CliGenerateMustHavesLicenseRunTargetPath = string;
+
+export type CliGenerateMustHavesLicenseRunConsumerWorkspacePaths = string[];

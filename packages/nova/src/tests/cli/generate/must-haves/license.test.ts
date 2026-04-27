@@ -3,6 +3,7 @@ import {
   access,
   mkdir,
   mkdtemp,
+  readFile,
   rm,
   writeFile,
 } from 'node:fs/promises';
@@ -14,7 +15,16 @@ import { afterAll, describe, it } from 'vitest';
 import { CliGenerateMustHavesLicense } from '../../../../cli/generate/must-haves/license.js';
 
 import type {
+  TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxName,
+  TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxNovaConfig,
+  TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxNovaConfigPath,
+  TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxPackageJson,
+  TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxPackageJsonPath,
+  TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxProjectDirectory,
+  TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxReturns,
+  TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxSandboxRoot,
   TestsCliGenerateMustHavesLicenseRunExists,
+  TestsCliGenerateMustHavesLicenseRunHasStaleContent,
   TestsCliGenerateMustHavesLicenseRunLicensePath,
   TestsCliGenerateMustHavesLicenseRunNovaConfig,
   TestsCliGenerateMustHavesLicenseRunNovaConfigPath,
@@ -22,11 +32,83 @@ import type {
   TestsCliGenerateMustHavesLicenseRunPackageJson,
   TestsCliGenerateMustHavesLicenseRunPackageJsonPath,
   TestsCliGenerateMustHavesLicenseRunProjectDirectory,
+  TestsCliGenerateMustHavesLicenseRunReadContent,
   TestsCliGenerateMustHavesLicenseRunResult,
   TestsCliGenerateMustHavesLicenseRunSandboxRoot,
+  TestsCliGenerateMustHavesLicenseRunStaleContent,
   TestsCliGenerateMustHavesLicenseRunTemporaryDirectory,
   TestsCliGenerateMustHavesLicenseRunTemporaryPrefix,
 } from '../../../../types/tests/cli/generate/must-haves/license.test.d.ts';
+
+/**
+ * Tests - CLI - Generate - Must Haves - License - Create Role Matrix Sandbox.
+ *
+ * Creates the 7-workspace directory tree, writes package.json and nova.config.json
+ * with the full role-matrix fixture so each fan-out test can start in 3 lines.
+ *
+ * @param {TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxSandboxRoot} sandboxRoot - Sandbox root.
+ * @param {TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxName}        name        - Name.
+ *
+ * @returns {TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxReturns}
+ *
+ * @since 0.18.0
+ */
+async function createRoleMatrixSandbox(sandboxRoot: TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxSandboxRoot, name: TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxName): TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxReturns {
+  const projectDirectory: TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxProjectDirectory = join(sandboxRoot, name);
+
+  await mkdir(projectDirectory, { recursive: true });
+  await mkdir(join(projectDirectory, 'apps', 'web'), { recursive: true });
+  await mkdir(join(projectDirectory, 'apps', 'docs-site'), { recursive: true });
+  await mkdir(join(projectDirectory, 'packages', 'lib-a'), { recursive: true });
+  await mkdir(join(projectDirectory, 'packages', 'cli-a'), { recursive: true });
+  await mkdir(join(projectDirectory, 'packages', 'preset-a'), { recursive: true });
+  await mkdir(join(projectDirectory, 'packages', 'template-a'), { recursive: true });
+
+  const packageJson: TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+  const packageJsonPath: TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxPackageJsonPath = join(projectDirectory, 'package.json');
+
+  await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
+
+  const novaConfig: TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxNovaConfig = JSON.stringify({
+    project: {
+      license: 'MIT',
+      legalName: 'Test Corp',
+      startingYear: 2024,
+      name: {
+        slug: 'test', title: 'Test',
+      },
+    },
+    workspaces: {
+      './': {
+        name: 'test-project', role: 'project', policy: 'freezable',
+      },
+      './apps/web': {
+        name: 'test-app-web', role: 'app', policy: 'trackable',
+      },
+      './apps/docs-site': {
+        name: 'test-docs', role: 'docs', policy: 'freezable',
+      },
+      './packages/lib-a': {
+        name: 'lib-a', role: 'package', policy: 'distributable',
+      },
+      './packages/cli-a': {
+        name: 'test-tool-cli-a', role: 'tool', policy: 'trackable',
+      },
+      './packages/preset-a': {
+        name: 'test-config-preset-a', role: 'config', policy: 'trackable',
+      },
+      './packages/template-a': {
+        name: 'template-a', role: 'template', policy: 'freezable',
+      },
+    },
+  }, null, 2);
+
+  const novaConfigPath: TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxNovaConfigPath = join(projectDirectory, 'nova.config.json');
+
+  await writeFile(novaConfigPath, `${novaConfig}\n`, 'utf-8');
+
+  return projectDirectory;
+}
 
 /**
  * Tests - CLI - Generate - Must Haves - License - Run.
@@ -182,6 +264,167 @@ describe('CliGenerateMustHavesLicense.run', async () => {
     }
 
     strictEqual(exists, false);
+
+    return;
+  });
+
+  it('fans out to consumer-facing roles', async () => {
+    const projectDirectory: TestsCliGenerateMustHavesLicenseRunProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'role-matrix');
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateMustHavesLicense.run({});
+
+    // Included roles (app, package, tool, config) — LICENSE present with content.
+    const rootContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'LICENSE'), 'utf-8');
+
+    strictEqual(rootContent.includes('MIT License') === true, true);
+
+    const webContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'apps', 'web', 'LICENSE'), 'utf-8');
+
+    strictEqual(webContent.includes('MIT License') === true, true);
+
+    const libContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'packages', 'lib-a', 'LICENSE'), 'utf-8');
+
+    strictEqual(libContent.includes('MIT License') === true, true);
+
+    const cliContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'packages', 'cli-a', 'LICENSE'), 'utf-8');
+
+    strictEqual(cliContent.includes('MIT License') === true, true);
+
+    const presetContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'packages', 'preset-a', 'LICENSE'), 'utf-8');
+
+    strictEqual(presetContent.includes('MIT License') === true, true);
+
+    // Excluded roles (docs, template) — LICENSE absent.
+    let docsExists: TestsCliGenerateMustHavesLicenseRunExists = true;
+
+    try {
+      await access(join(projectDirectory, 'apps', 'docs-site', 'LICENSE'));
+    } catch {
+      docsExists = false;
+    }
+
+    strictEqual(docsExists, false);
+
+    let templateExists: TestsCliGenerateMustHavesLicenseRunExists = true;
+
+    try {
+      await access(join(projectDirectory, 'packages', 'template-a', 'LICENSE'));
+    } catch {
+      templateExists = false;
+    }
+
+    strictEqual(templateExists, false);
+
+    return;
+  });
+
+  it('dry-run skips workspace fan-out writes', async () => {
+    const projectDirectory: TestsCliGenerateMustHavesLicenseRunProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'dry-run-fan-out');
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateMustHavesLicense.run({ dryRun: true });
+
+    // Root file must be absent.
+    let rootExists: TestsCliGenerateMustHavesLicenseRunExists = true;
+
+    try {
+      const licensePath: TestsCliGenerateMustHavesLicenseRunLicensePath = join(projectDirectory, 'LICENSE');
+
+      await access(licensePath);
+    } catch {
+      rootExists = false;
+    }
+
+    strictEqual(rootExists, false);
+
+    // Consumer workspace files must be absent.
+    let webExists: TestsCliGenerateMustHavesLicenseRunExists = true;
+
+    try {
+      const licensePath: TestsCliGenerateMustHavesLicenseRunLicensePath = join(projectDirectory, 'apps', 'web', 'LICENSE');
+
+      await access(licensePath);
+    } catch {
+      webExists = false;
+    }
+
+    strictEqual(webExists, false);
+
+    let libExists: TestsCliGenerateMustHavesLicenseRunExists = true;
+
+    try {
+      const licensePath: TestsCliGenerateMustHavesLicenseRunLicensePath = join(projectDirectory, 'packages', 'lib-a', 'LICENSE');
+
+      await access(licensePath);
+    } catch {
+      libExists = false;
+    }
+
+    strictEqual(libExists, false);
+
+    let cliExists: TestsCliGenerateMustHavesLicenseRunExists = true;
+
+    try {
+      const licensePath: TestsCliGenerateMustHavesLicenseRunLicensePath = join(projectDirectory, 'packages', 'cli-a', 'LICENSE');
+
+      await access(licensePath);
+    } catch {
+      cliExists = false;
+    }
+
+    strictEqual(cliExists, false);
+
+    let presetExists: TestsCliGenerateMustHavesLicenseRunExists = true;
+
+    try {
+      const licensePath: TestsCliGenerateMustHavesLicenseRunLicensePath = join(projectDirectory, 'packages', 'preset-a', 'LICENSE');
+
+      await access(licensePath);
+    } catch {
+      presetExists = false;
+    }
+
+    strictEqual(presetExists, false);
+
+    return;
+  });
+
+  it('replaceFile mode overwrites existing fan-out files', async () => {
+    const projectDirectory: TestsCliGenerateMustHavesLicenseRunProjectDirectory = await createRoleMatrixSandbox(sandboxRoot, 'replace-fan-out');
+
+    const staleContent: TestsCliGenerateMustHavesLicenseRunStaleContent = 'STALE-CONTENT';
+
+    await writeFile(join(projectDirectory, 'apps', 'web', 'LICENSE'), staleContent, 'utf-8');
+    await writeFile(join(projectDirectory, 'packages', 'lib-a', 'LICENSE'), staleContent, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    await CliGenerateMustHavesLicense.run({ replaceFile: true });
+
+    // Pre-existing files must have been replaced.
+    const webContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'apps', 'web', 'LICENSE'), 'utf-8');
+    const webHasStaleContent: TestsCliGenerateMustHavesLicenseRunHasStaleContent = webContent.includes('STALE-CONTENT');
+
+    strictEqual(webHasStaleContent, false);
+    strictEqual(webContent.includes('MIT License') === true, true);
+
+    const libContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'packages', 'lib-a', 'LICENSE'), 'utf-8');
+    const libHasStaleContent: TestsCliGenerateMustHavesLicenseRunHasStaleContent = libContent.includes('STALE-CONTENT');
+
+    strictEqual(libHasStaleContent, false);
+    strictEqual(libContent.includes('MIT License') === true, true);
+
+    // Other consumer workspaces must also have files written.
+    const cliContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'packages', 'cli-a', 'LICENSE'), 'utf-8');
+
+    strictEqual(cliContent.includes('MIT License') === true, true);
+
+    const presetContent: TestsCliGenerateMustHavesLicenseRunReadContent = await readFile(join(projectDirectory, 'packages', 'preset-a', 'LICENSE'), 'utf-8');
+
+    strictEqual(presetContent.includes('MIT License') === true, true);
 
     return;
   });

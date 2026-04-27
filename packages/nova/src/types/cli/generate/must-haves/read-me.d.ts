@@ -14,7 +14,6 @@ import type {
   SharedNovaConfigProjectPlatforms,
   SharedNovaConfigProjectPronouns,
   SharedNovaConfigUrls,
-  SharedNovaConfigWorkspaces,
 } from '../../../shared.d.ts';
 
 /**
@@ -209,12 +208,4 @@ export type CliGenerateMustHavesReadMeRunContent = string;
 
 export type CliGenerateMustHavesReadMeRunTargetPath = string;
 
-export type CliGenerateMustHavesReadMeRunWorkspaces = SharedNovaConfigWorkspaces;
-
-export type CliGenerateMustHavesReadMeRunDistributablePaths = string[];
-
-export type CliGenerateMustHavesReadMeRunWorkspacePath = string;
-
-export type CliGenerateMustHavesReadMeRunWorkspace = SharedNovaConfigWorkspaces[string];
-
-export type CliGenerateMustHavesReadMeRunDistributableReadmePath = string;
+export type CliGenerateMustHavesReadMeRunConsumerWorkspacePaths = string[];
