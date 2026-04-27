@@ -1,0 +1,89 @@
+---
+id: "sync-identity"
+title: "Sync Identity"
+description: "Sync description, homepage URL, and topics to a GitHub repository using nova.config.json as the source of truth."
+keywords:
+  - "nova"
+  - "sync-identity"
+  - "github"
+  - "description"
+  - "homepage"
+  - "topics"
+tags:
+  - "cli"
+  - "sync-identity"
+  - "recipe"
+  - "github"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync **description**, **homepage URL**, and **topics** to a GitHub repository from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-identity` recipe pushes repository identity fields from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub using `gh repo edit` and `gh api -X PUT /repos/.../topics`. It acts as the authoritative source for the repository's public description, homepage, and topic tags.
+
+If all three fields (`description`, `homepage`, and `topics`) are undefined in the config, the recipe no-ops and emits a warning.
+
+## Prerequisites
+
+- **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
+- **Repository write access** — The authenticated user must have write access to the target repository.
+- **`github.owner` and `github.repo`** — Both fields must be set in `nova.config.json` to identify the target repository.
+
+## Behavior
+
+- **`description`** — Sourced from `project.description.short` in <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>. If undefined, the field is skipped.
+- **`homepage`** — Sourced from `urls.homepage`. If undefined, the field is skipped.
+- **`topics`** — Sourced from `github.topics` if set. If `github.topics` is not defined, topics are derived from `project.keywords` using the normalization rules below. If `github.topics` is set to an empty array (`[]`), all topics are cleared on GitHub.
+
+Topic normalization rules applied to `project.keywords` when `github.topics` is not set:
+
+- Converted to lowercase.
+- Spaces and underscores replaced with hyphens.
+- Characters outside `[a-z0-9-]` are stripped.
+- Duplicates are removed.
+- Topics longer than 50 characters are dropped and a warning is emitted.
+- Capped at 20 topics.
+
+## Settings
+
+Settings are configured per workspace in `nova.config.json` under the `recipes` key. The `sync-identity` recipe is controlled by a single boolean toggle:
+
+```json
+{
+  "github": {
+    "recipes": {
+      "sync-identity": true
+    }
+  }
+}
+```
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe github sync-identity [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe github sync-identity [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                      |
+|-----------------|----------------------------------|
+| `-d, --dry-run` | Preview changes without pushing. |

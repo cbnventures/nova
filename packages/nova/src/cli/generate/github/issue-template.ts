@@ -18,7 +18,6 @@ import {
   LIB_REGEX_PLACEHOLDER_TERMS_OF_USE,
   LIB_REGEX_PLACEHOLDER_US,
   LIB_REGEX_PLACEHOLDER_WE,
-  LIB_REGEX_URL_PREFIX_GITHUB,
   LIB_REGEX_URL_PREFIX_GITHUB_SPONSORS,
 } from '../../../lib/regex.js';
 import { isProjectRoot, resolveTemplatePath, saveGeneratedFile } from '../../../lib/utility.js';
@@ -33,7 +32,10 @@ import type {
   CliGenerateGithubIssueTemplateRunFile,
   CliGenerateGithubIssueTemplateRunFiles,
   CliGenerateGithubIssueTemplateRunFundSources,
+  CliGenerateGithubIssueTemplateRunGithub,
+  CliGenerateGithubIssueTemplateRunGithubOwner,
   CliGenerateGithubIssueTemplateRunGithubRepo,
+  CliGenerateGithubIssueTemplateRunGithubRepoName,
   CliGenerateGithubIssueTemplateRunGithubSponsor,
   CliGenerateGithubIssueTemplateRunIsAtProjectRoot,
   CliGenerateGithubIssueTemplateRunIsDryRun,
@@ -68,7 +70,6 @@ import type {
   CliGenerateGithubIssueTemplateRunTemplatePath,
   CliGenerateGithubIssueTemplateRunTermsOfUse,
   CliGenerateGithubIssueTemplateRunUrls,
-  CliGenerateGithubIssueTemplateRunUrlsGithub,
   CliGenerateGithubIssueTemplateRunUs,
   CliGenerateGithubIssueTemplateRunWe,
   CliGenerateGithubIssueTemplateRunWorkingFile,
@@ -133,8 +134,10 @@ export class CliGenerateGithubIssueTemplate {
     const us: CliGenerateGithubIssueTemplateRunUs = (pronouns === 'personal') ? 'me' : 'us';
     const our: CliGenerateGithubIssueTemplateRunOur = (pronouns === 'personal') ? 'my' : 'our';
     const urls: CliGenerateGithubIssueTemplateRunUrls = workingFile['urls'];
-    const urlsGithub: CliGenerateGithubIssueTemplateRunUrlsGithub = (urls !== undefined) ? (urls['github'] ?? '') : '';
-    const githubRepo: CliGenerateGithubIssueTemplateRunGithubRepo = urlsGithub.replace(LIB_REGEX_URL_PREFIX_GITHUB, '');
+    const github: CliGenerateGithubIssueTemplateRunGithub = workingFile['github'];
+    const githubOwner: CliGenerateGithubIssueTemplateRunGithubOwner = (github !== undefined) ? (github['owner'] ?? '') : '';
+    const githubRepoName: CliGenerateGithubIssueTemplateRunGithubRepoName = (github !== undefined) ? (github['repo'] ?? '') : '';
+    const githubRepo: CliGenerateGithubIssueTemplateRunGithubRepo = (githubOwner !== '' && githubRepoName !== '') ? `${githubOwner}/${githubRepoName}` : '';
     const privacyPolicy: CliGenerateGithubIssueTemplateRunPrivacyPolicy = (urls !== undefined) ? (urls['privacyPolicy'] ?? '') : '';
     const termsOfUse: CliGenerateGithubIssueTemplateRunTermsOfUse = (urls !== undefined) ? (urls['termsOfUse'] ?? '') : '';
 

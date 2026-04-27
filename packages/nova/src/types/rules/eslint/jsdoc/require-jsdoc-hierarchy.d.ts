@@ -157,6 +157,18 @@ export type RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixPrettyName 
  *
  * @since 0.15.0
  */
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySrcIndex = number;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorIndex = number;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorToken = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRelativePath = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRawSegments = string[];
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSegmentIndex = number;
+
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyFilename = string;
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySegments = string[];
@@ -165,11 +177,7 @@ export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyOptions = Shared
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyReturns = string;
 
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchySrcIndex = number;
-
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorIndex = number;
-
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAnchorToken = string;
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyParts = ReadonlyArray<string>;
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSlashIndex = number;
 
@@ -185,19 +193,22 @@ export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyPrettyParts = st
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyAllParts = string[];
 
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRelativePath = string;
-
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyRawSegments = string[];
-
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyLastSegmentIndex = number;
-
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveHierarchyParts = ReadonlyArray<string>;
-
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Invalid Prefix Diagnostic.
  *
  * @since 0.17.1
  */
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturnsObjectSegment = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturnsObjectPrefix = string;
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturnsObject = {
+  segment: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturnsObjectSegment;
+  prefix: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturnsObjectPrefix;
+};
+
+export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturns = RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturnsObject | null;
+
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFilename = string;
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticOptions = SharedJsdocHierarchyCreateOptions;
@@ -207,11 +218,6 @@ export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticPa
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFirstSegment = string;
 
 export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticPrefix = string;
-
-export type RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticReturns = {
-  segment: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticFirstSegment;
-  prefix: RulesEslintJsdocRequireJsdocHierarchyDeriveInvalidPrefixDiagnosticPrefix;
-} | null;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Hierarchy - Derive Path Parts.

@@ -10,7 +10,13 @@ import {
   libItemRepositoryProtocols,
   libItemUrlFields,
 } from './item.js';
-import { LIB_REGEX_PATTERN_EMAIL_SIMPLE, LIB_REGEX_PATTERN_SLUG_SCOPED, LIB_REGEX_PATTERN_SLUG_SIMPLE } from './regex.js';
+import {
+  LIB_REGEX_PATTERN_EMAIL_SIMPLE,
+  LIB_REGEX_PATTERN_GITHUB_OWNER,
+  LIB_REGEX_PATTERN_GITHUB_REPO,
+  LIB_REGEX_PATTERN_SLUG_SCOPED,
+  LIB_REGEX_PATTERN_SLUG_SIMPLE,
+} from './regex.js';
 import { isFileIdentical, isPlainObject, renameFileWithDate } from './utility.js';
 
 import type {
@@ -27,6 +33,35 @@ import type {
   LibNovaConfigGetEmailEmail,
   LibNovaConfigGetEmailReturns,
   LibNovaConfigGetEmailValue,
+  LibNovaConfigGetGithubFeaturesDiscussions,
+  LibNovaConfigGetGithubFeaturesIssues,
+  LibNovaConfigGetGithubFeaturesProjects,
+  LibNovaConfigGetGithubFeaturesResult,
+  LibNovaConfigGetGithubFeaturesReturns,
+  LibNovaConfigGetGithubFeaturesValue,
+  LibNovaConfigGetGithubFeaturesWiki,
+  LibNovaConfigGetGithubPoliciesAutoDeleteHeadBranch,
+  LibNovaConfigGetGithubPoliciesDefaultBranch,
+  LibNovaConfigGetGithubPoliciesMergeMethods,
+  LibNovaConfigGetGithubPoliciesMergeMethodsMerge,
+  LibNovaConfigGetGithubPoliciesMergeMethodsRebase,
+  LibNovaConfigGetGithubPoliciesMergeMethodsResult,
+  LibNovaConfigGetGithubPoliciesMergeMethodsReturns,
+  LibNovaConfigGetGithubPoliciesMergeMethodsSquash,
+  LibNovaConfigGetGithubPoliciesMergeMethodsValue,
+  LibNovaConfigGetGithubPoliciesResult,
+  LibNovaConfigGetGithubPoliciesReturns,
+  LibNovaConfigGetGithubPoliciesValue,
+  LibNovaConfigGetGithubPoliciesVisibility,
+  LibNovaConfigGetGithubRecipesResult,
+  LibNovaConfigGetGithubRecipesReturns,
+  LibNovaConfigGetGithubRecipesSyncFeatures,
+  LibNovaConfigGetGithubRecipesSyncIdentity,
+  LibNovaConfigGetGithubRecipesSyncPolicies,
+  LibNovaConfigGetGithubRecipesValue,
+  LibNovaConfigGetGithubTopicsReturns,
+  LibNovaConfigGetGithubTopicsTypeGuard,
+  LibNovaConfigGetGithubTopicsValue,
   LibNovaConfigGetNonEmptyStringReturns,
   LibNovaConfigGetNonEmptyStringString,
   LibNovaConfigGetNonEmptyStringValue,
@@ -63,6 +98,18 @@ import type {
   LibNovaConfigParseEntitiesSortNameB,
   LibNovaConfigParseEntitiesUrl,
   LibNovaConfigParseEntitiesValue,
+  LibNovaConfigParseGithub,
+  LibNovaConfigParseGithubFeatures,
+  LibNovaConfigParseGithubOwner,
+  LibNovaConfigParseGithubOwnerCandidate,
+  LibNovaConfigParseGithubPolicies,
+  LibNovaConfigParseGithubRecipes,
+  LibNovaConfigParseGithubRepo,
+  LibNovaConfigParseGithubRepoCandidate,
+  LibNovaConfigParseGithubResult,
+  LibNovaConfigParseGithubReturns,
+  LibNovaConfigParseGithubTopics,
+  LibNovaConfigParseGithubValue,
   LibNovaConfigParseProject,
   LibNovaConfigParseProjectAllowedLicenses,
   LibNovaConfigParseProjectAllowedPlatforms,
@@ -313,6 +360,7 @@ export class LibNovaConfig {
     const project: LibNovaConfigParseProject = this.parseProject(value['project']);
     const entities: LibNovaConfigParseEntities = this.parseEntities(value['entities']);
     const emails: LibNovaConfigParseEmails = this.parseEmails(value['emails']);
+    const github: LibNovaConfigParseGithub = this.parseGithub(value['github']);
     const workflows: LibNovaConfigParseWorkflows = this.parseWorkflows(value['workflows']);
     const urls: LibNovaConfigParseUrls = this.parseUrls(value['urls']);
     const workspaces: LibNovaConfigParseWorkspaces = this.parseWorkspaces(
@@ -330,6 +378,10 @@ export class LibNovaConfig {
 
     if (emails !== undefined) {
       result.emails = emails;
+    }
+
+    if (github !== undefined) {
+      result.github = github;
     }
 
     if (workflows !== undefined) {
@@ -989,6 +1041,280 @@ export class LibNovaConfig {
     });
 
     return workflows;
+  }
+
+  /**
+   * Lib - Nova Config - Parse GitHub.
+   *
+   * Parses the github block from the config, extracting owner, repo, recipes,
+   * topics, features, and policies. Returns undefined when the block is absent or
+   * not a plain object.
+   *
+   * @param {LibNovaConfigParseGithubValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {LibNovaConfigParseGithubReturns}
+   *
+   * @since 0.22.0
+   */
+  private parseGithub(value: LibNovaConfigParseGithubValue): LibNovaConfigParseGithubReturns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: LibNovaConfigParseGithubResult = {};
+
+    const ownerCandidate: LibNovaConfigParseGithubOwnerCandidate = this.getNonEmptyString(value['owner']);
+    const owner: LibNovaConfigParseGithubOwner = (ownerCandidate !== undefined && LIB_REGEX_PATTERN_GITHUB_OWNER.test(ownerCandidate) === true) ? ownerCandidate : undefined;
+
+    if (owner !== undefined) {
+      result.owner = owner;
+    }
+
+    const repoCandidate: LibNovaConfigParseGithubRepoCandidate = this.getNonEmptyString(value['repo']);
+    const repo: LibNovaConfigParseGithubRepo = (repoCandidate !== undefined && LIB_REGEX_PATTERN_GITHUB_REPO.test(repoCandidate) === true) ? repoCandidate : undefined;
+
+    if (repo !== undefined) {
+      result.repo = repo;
+    }
+
+    const recipes: LibNovaConfigParseGithubRecipes = this.getGithubRecipes(value['recipes']);
+
+    if (recipes !== undefined) {
+      result.recipes = recipes;
+    }
+
+    const topics: LibNovaConfigParseGithubTopics = this.getGithubTopics(value['topics']);
+
+    if (topics !== undefined) {
+      result.topics = topics;
+    }
+
+    const features: LibNovaConfigParseGithubFeatures = this.getGithubFeatures(value['features']);
+
+    if (features !== undefined) {
+      result.features = features;
+    }
+
+    const policies: LibNovaConfigParseGithubPolicies = this.getGithubPolicies(value['policies']);
+
+    if (policies !== undefined) {
+      result.policies = policies;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Features.
+   *
+   * Parses the github.features block for boolean feature flags: issues, wiki,
+   * projects, and discussions. Returns undefined when the input is not a plain object.
+   *
+   * @param {LibNovaConfigGetGithubFeaturesValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {LibNovaConfigGetGithubFeaturesReturns}
+   *
+   * @since 0.22.0
+   */
+  private getGithubFeatures(value: LibNovaConfigGetGithubFeaturesValue): LibNovaConfigGetGithubFeaturesReturns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: LibNovaConfigGetGithubFeaturesResult = {};
+
+    const issues: LibNovaConfigGetGithubFeaturesIssues = (typeof value['issues'] === 'boolean') ? value['issues'] : undefined;
+
+    if (issues !== undefined) {
+      result.issues = issues;
+    }
+
+    const wiki: LibNovaConfigGetGithubFeaturesWiki = (typeof value['wiki'] === 'boolean') ? value['wiki'] : undefined;
+
+    if (wiki !== undefined) {
+      result.wiki = wiki;
+    }
+
+    const projects: LibNovaConfigGetGithubFeaturesProjects = (typeof value['projects'] === 'boolean') ? value['projects'] : undefined;
+
+    if (projects !== undefined) {
+      result.projects = projects;
+    }
+
+    const discussions: LibNovaConfigGetGithubFeaturesDiscussions = (typeof value['discussions'] === 'boolean') ? value['discussions'] : undefined;
+
+    if (discussions !== undefined) {
+      result.discussions = discussions;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Policies.
+   *
+   * Parses the github.policies block for visibility, defaultBranch, mergeMethods,
+   * and autoDeleteHeadBranch. Returns undefined when the input is not a plain object.
+   *
+   * @param {LibNovaConfigGetGithubPoliciesValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {LibNovaConfigGetGithubPoliciesReturns}
+   *
+   * @since 0.22.0
+   */
+  private getGithubPolicies(value: LibNovaConfigGetGithubPoliciesValue): LibNovaConfigGetGithubPoliciesReturns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: LibNovaConfigGetGithubPoliciesResult = {};
+
+    let visibility: LibNovaConfigGetGithubPoliciesVisibility = undefined;
+
+    if (
+      value['visibility'] === 'public'
+      || value['visibility'] === 'private'
+      || value['visibility'] === 'internal'
+    ) {
+      visibility = value['visibility'];
+    }
+
+    if (visibility !== undefined) {
+      result.visibility = visibility;
+    }
+
+    const defaultBranch: LibNovaConfigGetGithubPoliciesDefaultBranch = this.getNonEmptyString(value['defaultBranch']);
+
+    if (defaultBranch !== undefined) {
+      result.defaultBranch = defaultBranch;
+    }
+
+    const mergeMethods: LibNovaConfigGetGithubPoliciesMergeMethods = this.getGithubPoliciesMergeMethods(value['mergeMethods']);
+
+    if (mergeMethods !== undefined) {
+      result.mergeMethods = mergeMethods;
+    }
+
+    const autoDeleteHeadBranch: LibNovaConfigGetGithubPoliciesAutoDeleteHeadBranch = (typeof value['autoDeleteHeadBranch'] === 'boolean') ? value['autoDeleteHeadBranch'] : undefined;
+
+    if (autoDeleteHeadBranch !== undefined) {
+      result.autoDeleteHeadBranch = autoDeleteHeadBranch;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Policies Merge Methods.
+   *
+   * Parses the github.policies.mergeMethods block for merge, squash, and rebase
+   * boolean flags. Returns undefined when the input is not a plain object.
+   *
+   * @param {LibNovaConfigGetGithubPoliciesMergeMethodsValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {LibNovaConfigGetGithubPoliciesMergeMethodsReturns}
+   *
+   * @since 0.22.0
+   */
+  private getGithubPoliciesMergeMethods(value: LibNovaConfigGetGithubPoliciesMergeMethodsValue): LibNovaConfigGetGithubPoliciesMergeMethodsReturns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: LibNovaConfigGetGithubPoliciesMergeMethodsResult = {};
+
+    const merge: LibNovaConfigGetGithubPoliciesMergeMethodsMerge = (typeof value['merge'] === 'boolean') ? value['merge'] : undefined;
+
+    if (merge !== undefined) {
+      result.merge = merge;
+    }
+
+    const squash: LibNovaConfigGetGithubPoliciesMergeMethodsSquash = (typeof value['squash'] === 'boolean') ? value['squash'] : undefined;
+
+    if (squash !== undefined) {
+      result.squash = squash;
+    }
+
+    const rebase: LibNovaConfigGetGithubPoliciesMergeMethodsRebase = (typeof value['rebase'] === 'boolean') ? value['rebase'] : undefined;
+
+    if (rebase !== undefined) {
+      result.rebase = rebase;
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Recipes.
+   *
+   * Parses the github.recipes block for sync-identity, sync-features, and
+   * sync-policies boolean flags. Returns undefined when the input is not a plain object.
+   *
+   * @param {LibNovaConfigGetGithubRecipesValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {LibNovaConfigGetGithubRecipesReturns}
+   *
+   * @since 0.22.0
+   */
+  private getGithubRecipes(value: LibNovaConfigGetGithubRecipesValue): LibNovaConfigGetGithubRecipesReturns {
+    if (isPlainObject(value) === false) {
+      return undefined;
+    }
+
+    const result: LibNovaConfigGetGithubRecipesResult = {};
+
+    const syncIdentity: LibNovaConfigGetGithubRecipesSyncIdentity = (typeof value['sync-identity'] === 'boolean') ? value['sync-identity'] : undefined;
+
+    if (syncIdentity !== undefined) {
+      Reflect.set(result, 'sync-identity', syncIdentity);
+    }
+
+    const syncFeatures: LibNovaConfigGetGithubRecipesSyncFeatures = (typeof value['sync-features'] === 'boolean') ? value['sync-features'] : undefined;
+
+    if (syncFeatures !== undefined) {
+      Reflect.set(result, 'sync-features', syncFeatures);
+    }
+
+    const syncPolicies: LibNovaConfigGetGithubRecipesSyncPolicies = (typeof value['sync-policies'] === 'boolean') ? value['sync-policies'] : undefined;
+
+    if (syncPolicies !== undefined) {
+      Reflect.set(result, 'sync-policies', syncPolicies);
+    }
+
+    return (Object.keys(result).length > 0) ? result : undefined;
+  }
+
+  /**
+   * Lib - Nova Config - Get GitHub Topics.
+   *
+   * Filters an array down to string-only entries for the github.topics field.
+   * Returns undefined when the input is not an array; returns the filtered array
+   * even when empty because an empty topics list is meaningful.
+   *
+   * @param {LibNovaConfigGetGithubTopicsValue} value - Value.
+   *
+   * @private
+   *
+   * @returns {LibNovaConfigGetGithubTopicsReturns}
+   *
+   * @since 0.22.0
+   */
+  private getGithubTopics(value: LibNovaConfigGetGithubTopicsValue): LibNovaConfigGetGithubTopicsReturns {
+    if (Array.isArray(value) === false) {
+      return undefined;
+    }
+
+    return value.filter((item): item is LibNovaConfigGetGithubTopicsTypeGuard => typeof item === 'string');
   }
 
   /**

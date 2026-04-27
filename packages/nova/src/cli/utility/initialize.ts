@@ -150,6 +150,87 @@ import type {
   CliUtilityInitializePromptFlowReturns,
   CliUtilityInitializePromptFlowSelectMenuOutputKey,
   CliUtilityInitializePromptFlowSelectMenuOutputResult,
+  CliUtilityInitializePromptGithubAutoDeleteInitial,
+  CliUtilityInitializePromptGithubConfig,
+  CliUtilityInitializePromptGithubDefaultBranchInitial,
+  CliUtilityInitializePromptGithubDefaultBranchRaw,
+  CliUtilityInitializePromptGithubDefaultBranchTitle,
+  CliUtilityInitializePromptGithubExistingAutoDelete,
+  CliUtilityInitializePromptGithubExistingDefaultBranch,
+  CliUtilityInitializePromptGithubExistingFeatures,
+  CliUtilityInitializePromptGithubExistingGithub,
+  CliUtilityInitializePromptGithubExistingMergeMethodsObj,
+  CliUtilityInitializePromptGithubExistingPolicies,
+  CliUtilityInitializePromptGithubExistingRecipes,
+  CliUtilityInitializePromptGithubExistingTopics,
+  CliUtilityInitializePromptGithubExistingVisibility,
+  CliUtilityInitializePromptGithubFeatureDiscussionsInitial,
+  CliUtilityInitializePromptGithubFeatureIssuesInitial,
+  CliUtilityInitializePromptGithubFeatureProjectsInitial,
+  CliUtilityInitializePromptGithubFeaturesInput,
+  CliUtilityInitializePromptGithubFeaturesOutput,
+  CliUtilityInitializePromptGithubFeaturesOutputKey,
+  CliUtilityInitializePromptGithubFeaturesOutputResult,
+  CliUtilityInitializePromptGithubFeaturesSkip,
+  CliUtilityInitializePromptGithubFeaturesValue,
+  CliUtilityInitializePromptGithubFeatureWikiInitial,
+  CliUtilityInitializePromptGithubGithub,
+  CliUtilityInitializePromptGithubMergeMethodMergeInitial,
+  CliUtilityInitializePromptGithubMergeMethodRebaseInitial,
+  CliUtilityInitializePromptGithubMergeMethodSquashInitial,
+  CliUtilityInitializePromptGithubOwnerInput,
+  CliUtilityInitializePromptGithubOwnerOutput,
+  CliUtilityInitializePromptGithubOwnerOutputResult,
+  CliUtilityInitializePromptGithubOwnerTrimmed,
+  CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutput,
+  CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutputKey,
+  CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutputResult,
+  CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchSkip,
+  CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchValue,
+  CliUtilityInitializePromptGithubPoliciesDefaultBranchOutput,
+  CliUtilityInitializePromptGithubPoliciesDefaultBranchOutputKey,
+  CliUtilityInitializePromptGithubPoliciesDefaultBranchOutputResult,
+  CliUtilityInitializePromptGithubPoliciesDefaultBranchSkip,
+  CliUtilityInitializePromptGithubPoliciesDefaultBranchValue,
+  CliUtilityInitializePromptGithubPoliciesInput,
+  CliUtilityInitializePromptGithubPoliciesMergeMethodsInput,
+  CliUtilityInitializePromptGithubPoliciesMergeMethodsOutput,
+  CliUtilityInitializePromptGithubPoliciesMergeMethodsOutputKey,
+  CliUtilityInitializePromptGithubPoliciesMergeMethodsOutputResult,
+  CliUtilityInitializePromptGithubPoliciesMergeMethodsSkip,
+  CliUtilityInitializePromptGithubPoliciesMergeMethodsValue,
+  CliUtilityInitializePromptGithubPoliciesVisibilityOutput,
+  CliUtilityInitializePromptGithubPoliciesVisibilityOutputKey,
+  CliUtilityInitializePromptGithubPoliciesVisibilityOutputResult,
+  CliUtilityInitializePromptGithubPoliciesVisibilitySkip,
+  CliUtilityInitializePromptGithubPoliciesVisibilityValue,
+  CliUtilityInitializePromptGithubRecipesInput,
+  CliUtilityInitializePromptGithubRecipesOutput,
+  CliUtilityInitializePromptGithubRecipesOutputKey,
+  CliUtilityInitializePromptGithubRecipesOutputResult,
+  CliUtilityInitializePromptGithubRecipesOutputValue,
+  CliUtilityInitializePromptGithubRepoInput,
+  CliUtilityInitializePromptGithubRepoOutput,
+  CliUtilityInitializePromptGithubRepoOutputResult,
+  CliUtilityInitializePromptGithubRepoTrimmed,
+  CliUtilityInitializePromptGithubReturns,
+  CliUtilityInitializePromptGithubSyncFeaturesInitial,
+  CliUtilityInitializePromptGithubSyncIdentityInitial,
+  CliUtilityInitializePromptGithubSyncPoliciesInitial,
+  CliUtilityInitializePromptGithubTopicsHasExisting,
+  CliUtilityInitializePromptGithubTopicsInitial,
+  CliUtilityInitializePromptGithubTopicsInput,
+  CliUtilityInitializePromptGithubTopicsOutput,
+  CliUtilityInitializePromptGithubTopicsOutputKey,
+  CliUtilityInitializePromptGithubTopicsOutputResult,
+  CliUtilityInitializePromptGithubTopicsParsed,
+  CliUtilityInitializePromptGithubTopicsSkip,
+  CliUtilityInitializePromptGithubTopicsText,
+  CliUtilityInitializePromptGithubTopicsTitle,
+  CliUtilityInitializePromptGithubTopicsValue,
+  CliUtilityInitializePromptGithubValidateValue,
+  CliUtilityInitializePromptGithubVisibilityInitial,
+  CliUtilityInitializePromptGithubVisibilityOrder,
   CliUtilityInitializePromptProjectConfig,
   CliUtilityInitializePromptProjectCurrentLabel,
   CliUtilityInitializePromptProjectCurrentSlug,
@@ -221,7 +302,6 @@ import type {
   CliUtilityInitializePromptUrlsUrlsDockerInput,
   CliUtilityInitializePromptUrlsUrlsDocumentationInput,
   CliUtilityInitializePromptUrlsUrlsFundSourcesInput,
-  CliUtilityInitializePromptUrlsUrlsGithubInput,
   CliUtilityInitializePromptUrlsUrlsHomepageInput,
   CliUtilityInitializePromptUrlsUrlsLicenseInput,
   CliUtilityInitializePromptUrlsUrlsLogoInput,
@@ -590,6 +670,11 @@ export class CliUtilityInitialize {
         label: 'Emails',
         description: 'Configure project emails (bugs, etc.).',
         handler: CliUtilityInitialize['promptEmails'],
+      },
+      github: {
+        label: 'GitHub',
+        description: 'Configure GitHub repository settings, recipes, and policies.',
+        handler: CliUtilityInitialize['promptGithub'],
       },
       workflows: {
         label: 'Workflows',
@@ -1592,6 +1677,583 @@ export class CliUtilityInitialize {
   }
 
   /**
+   * CLI - Utility - Initialize - Prompt GitHub.
+   *
+   * Collects GitHub repository settings including owner, repo,
+   * recipe toggles, topics, features, and policies.
+   *
+   * @param {CliUtilityInitializePromptGithubConfig} config - Config.
+   *
+   * @private
+   *
+   * @returns {CliUtilityInitializePromptGithubReturns}
+   *
+   * @since 0.16.0
+   */
+  private static async promptGithub(config: CliUtilityInitializePromptGithubConfig): CliUtilityInitializePromptGithubReturns {
+    const existingGithub: CliUtilityInitializePromptGithubExistingGithub = config['github'];
+
+    const github: CliUtilityInitializePromptGithubGithub = (existingGithub !== undefined) ? { ...existingGithub } : {};
+
+    // Prompt 1: owner (required).
+    const ownerOutput: CliUtilityInitializePromptGithubOwnerOutput = await CliUtilityInitialize.promptWithCancel<'githubOwner', string>({
+      type: 'text',
+      name: 'githubOwner',
+      message: 'GitHub owner (organization or user)',
+      initial: (github['owner'] !== undefined) ? github['owner'] : '',
+      validate: (value: CliUtilityInitializePromptGithubValidateValue) => {
+        const trimmed: CliUtilityInitializePromptGithubOwnerTrimmed = (typeof value === 'string') ? value.trim() : '';
+
+        if (trimmed === '') {
+          return 'Owner is required.';
+        }
+
+        return true;
+      },
+    });
+
+    if (ownerOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const ownerOutputResult: CliUtilityInitializePromptGithubOwnerOutputResult = ownerOutput['result'];
+    const githubOwnerInput: CliUtilityInitializePromptGithubOwnerInput = ownerOutputResult.githubOwner.trim();
+
+    // Prompt 2: repo (required).
+    const repoOutput: CliUtilityInitializePromptGithubRepoOutput = await CliUtilityInitialize.promptWithCancel<'githubRepo', string>({
+      type: 'text',
+      name: 'githubRepo',
+      message: 'GitHub repository name',
+      initial: (github['repo'] !== undefined) ? github['repo'] : '',
+      validate: (value: CliUtilityInitializePromptGithubValidateValue) => {
+        const trimmed: CliUtilityInitializePromptGithubRepoTrimmed = (typeof value === 'string') ? value.trim() : '';
+
+        if (trimmed === '') {
+          return 'Repository name is required.';
+        }
+
+        return true;
+      },
+    });
+
+    if (repoOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const repoOutputResult: CliUtilityInitializePromptGithubRepoOutputResult = repoOutput['result'];
+    const githubRepoInput: CliUtilityInitializePromptGithubRepoInput = repoOutputResult.githubRepo.trim();
+
+    // Prompts 3–5: recipe toggles (required booleans).
+    const existingRecipes: CliUtilityInitializePromptGithubExistingRecipes = github['recipes'];
+
+    const syncIdentityInitial: CliUtilityInitializePromptGithubSyncIdentityInitial = (existingRecipes !== undefined && existingRecipes['sync-identity'] !== undefined) ? existingRecipes['sync-identity'] : true;
+    const syncFeaturesInitial: CliUtilityInitializePromptGithubSyncFeaturesInitial = (existingRecipes !== undefined && existingRecipes['sync-features'] !== undefined) ? existingRecipes['sync-features'] : false;
+    const syncPoliciesInitial: CliUtilityInitializePromptGithubSyncPoliciesInitial = (existingRecipes !== undefined && existingRecipes['sync-policies'] !== undefined) ? existingRecipes['sync-policies'] : false;
+
+    const recipesOutput: CliUtilityInitializePromptGithubRecipesOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptGithubRecipesOutputKey, CliUtilityInitializePromptGithubRecipesOutputValue>([
+      {
+        type: 'confirm',
+        name: 'githubRecipeSyncIdentity',
+        message: 'Enable sync-identity recipe?',
+        initial: syncIdentityInitial,
+      },
+      {
+        type: 'confirm',
+        name: 'githubRecipeSyncFeatures',
+        message: 'Enable sync-features recipe?',
+        initial: syncFeaturesInitial,
+      },
+      {
+        type: 'confirm',
+        name: 'githubRecipeSyncPolicies',
+        message: 'Enable sync-policies recipe?',
+        initial: syncPoliciesInitial,
+      },
+    ]);
+
+    if (recipesOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const recipesOutputResult: CliUtilityInitializePromptGithubRecipesOutputResult = recipesOutput['result'];
+
+    const githubRecipesInput: CliUtilityInitializePromptGithubRecipesInput = {
+      'sync-identity': recipesOutputResult.githubRecipeSyncIdentity,
+      'sync-features': recipesOutputResult.githubRecipeSyncFeatures,
+      'sync-policies': recipesOutputResult.githubRecipeSyncPolicies,
+    };
+
+    // Prompt 6: topics (optional — skip omits field).
+    const existingTopics: CliUtilityInitializePromptGithubExistingTopics = github['topics'];
+
+    const topicsHasExisting: CliUtilityInitializePromptGithubTopicsHasExisting = (existingTopics !== undefined) && existingTopics.length > 0;
+    const topicsTitle: CliUtilityInitializePromptGithubTopicsTitle = (existingTopics !== undefined && topicsHasExisting === true) ? `Keep existing: ${existingTopics.join(', ')}` : 'Enter topics (comma-separated)';
+    const topicsValue: CliUtilityInitializePromptGithubTopicsValue = (existingTopics !== undefined) ? existingTopics : [];
+    const topicsInitial: CliUtilityInitializePromptGithubTopicsInitial = (existingTopics !== undefined) ? 1 : 0;
+
+    const topicsOutput: CliUtilityInitializePromptGithubTopicsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptGithubTopicsOutputKey, CliUtilityInitializePromptGithubTopicsValue>({
+      type: 'select',
+      name: 'githubTopics',
+      message: 'GitHub topics (sync this field?)',
+      choices: [
+        {
+          title: 'Skip (don\'t sync this field)',
+          value: 'skip' as CliUtilityInitializePromptGithubTopicsSkip,
+        },
+        {
+          title: topicsTitle,
+          value: topicsValue,
+        },
+      ],
+      initial: topicsInitial,
+    });
+
+    if (topicsOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const topicsOutputResult: CliUtilityInitializePromptGithubTopicsOutputResult = topicsOutput['result'];
+    let githubTopicsInput: CliUtilityInitializePromptGithubTopicsInput = undefined;
+
+    if (topicsOutputResult.githubTopics !== 'skip') {
+      if (existingTopics !== undefined && existingTopics.length > 0) {
+        // User kept existing value.
+        githubTopicsInput = existingTopics;
+      } else {
+        // Prompt for text input.
+        const topicsTextOutput: CliUtilityInitializePromptGithubOwnerOutput = await CliUtilityInitialize.promptWithCancel<'githubOwner', string>({
+          type: 'text',
+          name: 'githubOwner',
+          message: 'Topics (comma-separated)',
+          initial: '',
+        });
+
+        if (topicsTextOutput['cancelled'] === true) {
+          return 'back';
+        }
+
+        const rawTopics: CliUtilityInitializePromptGithubTopicsText = topicsTextOutput['result'].githubOwner;
+        const parsedTopics: CliUtilityInitializePromptGithubTopicsParsed = rawTopics.split(',').map((t) => t.trim()).filter((t) => t !== '');
+
+        if (parsedTopics.length > 0) {
+          githubTopicsInput = parsedTopics;
+        }
+      }
+    }
+
+    // Prompts 7–10: features (optional booleans — skip omits field).
+    const existingFeatures: CliUtilityInitializePromptGithubExistingFeatures = github['features'];
+
+    let featuresIssuesInitial: CliUtilityInitializePromptGithubFeatureIssuesInitial = 0;
+
+    if (existingFeatures !== undefined && existingFeatures['issues'] !== undefined) {
+      featuresIssuesInitial = (existingFeatures['issues'] === true) ? 1 : 2;
+    }
+
+    let featuresWikiInitial: CliUtilityInitializePromptGithubFeatureWikiInitial = 0;
+
+    if (existingFeatures !== undefined && existingFeatures['wiki'] !== undefined) {
+      featuresWikiInitial = (existingFeatures['wiki'] === true) ? 1 : 2;
+    }
+
+    let featuresProjectsInitial: CliUtilityInitializePromptGithubFeatureProjectsInitial = 0;
+
+    if (existingFeatures !== undefined && existingFeatures['projects'] !== undefined) {
+      featuresProjectsInitial = (existingFeatures['projects'] === true) ? 1 : 2;
+    }
+
+    let featuresDiscussionsInitial: CliUtilityInitializePromptGithubFeatureDiscussionsInitial = 0;
+
+    if (existingFeatures !== undefined && existingFeatures['discussions'] !== undefined) {
+      featuresDiscussionsInitial = (existingFeatures['discussions'] === true) ? 1 : 2;
+    }
+
+    const featuresOutput: CliUtilityInitializePromptGithubFeaturesOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptGithubFeaturesOutputKey, CliUtilityInitializePromptGithubFeaturesValue>([
+      {
+        type: 'select',
+        name: 'githubFeaturesIssues',
+        message: 'GitHub features.issues (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip' as CliUtilityInitializePromptGithubFeaturesSkip,
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: featuresIssuesInitial,
+      },
+      {
+        type: 'select',
+        name: 'githubFeaturesWiki',
+        message: 'GitHub features.wiki (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip' as CliUtilityInitializePromptGithubFeaturesSkip,
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: featuresWikiInitial,
+      },
+      {
+        type: 'select',
+        name: 'githubFeaturesProjects',
+        message: 'GitHub features.projects (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip' as CliUtilityInitializePromptGithubFeaturesSkip,
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: featuresProjectsInitial,
+      },
+      {
+        type: 'select',
+        name: 'githubFeaturesDiscussions',
+        message: 'GitHub features.discussions (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip' as CliUtilityInitializePromptGithubFeaturesSkip,
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: featuresDiscussionsInitial,
+      },
+    ]);
+
+    if (featuresOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const featuresOutputResult: CliUtilityInitializePromptGithubFeaturesOutputResult = featuresOutput['result'];
+
+    let githubFeaturesInput: CliUtilityInitializePromptGithubFeaturesInput = undefined;
+
+    const featuresIssuesValue: CliUtilityInitializePromptGithubFeaturesValue = featuresOutputResult.githubFeaturesIssues;
+    const featuresWikiValue: CliUtilityInitializePromptGithubFeaturesValue = featuresOutputResult.githubFeaturesWiki;
+    const featuresProjectsValue: CliUtilityInitializePromptGithubFeaturesValue = featuresOutputResult.githubFeaturesProjects;
+    const featuresDiscussionsValue: CliUtilityInitializePromptGithubFeaturesValue = featuresOutputResult.githubFeaturesDiscussions;
+
+    if (
+      featuresIssuesValue !== 'skip'
+      || featuresWikiValue !== 'skip'
+      || featuresProjectsValue !== 'skip'
+      || featuresDiscussionsValue !== 'skip'
+    ) {
+      githubFeaturesInput = {
+        ...((featuresIssuesValue !== 'skip') ? { issues: featuresIssuesValue } : {}),
+        ...((featuresWikiValue !== 'skip') ? { wiki: featuresWikiValue } : {}),
+        ...((featuresProjectsValue !== 'skip') ? { projects: featuresProjectsValue } : {}),
+        ...((featuresDiscussionsValue !== 'skip') ? { discussions: featuresDiscussionsValue } : {}),
+      };
+    }
+
+    // Prompt 11: policies.visibility (optional enum — skip omits field).
+    const existingPolicies: CliUtilityInitializePromptGithubExistingPolicies = github['policies'];
+
+    const existingVisibility: CliUtilityInitializePromptGithubExistingVisibility = (existingPolicies !== undefined) ? existingPolicies['visibility'] : undefined;
+    const visibilityOrder: CliUtilityInitializePromptGithubVisibilityOrder = [
+      'public',
+      'private',
+      'internal',
+    ];
+    const visibilityInitial: CliUtilityInitializePromptGithubVisibilityInitial = (existingVisibility !== undefined) ? (visibilityOrder.indexOf(existingVisibility) + 1) : 0;
+
+    const visibilityOutput: CliUtilityInitializePromptGithubPoliciesVisibilityOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptGithubPoliciesVisibilityOutputKey, CliUtilityInitializePromptGithubPoliciesVisibilityValue>({
+      type: 'select',
+      name: 'githubPoliciesVisibility',
+      message: 'GitHub policies.visibility (sync this field?)',
+      choices: [
+        {
+          title: 'Skip (don\'t sync this field)',
+          value: 'skip' as CliUtilityInitializePromptGithubPoliciesVisibilitySkip,
+        },
+        {
+          title: 'Public',
+          value: 'public',
+        },
+        {
+          title: 'Private',
+          value: 'private',
+        },
+        {
+          title: 'Internal',
+          value: 'internal',
+        },
+      ],
+      initial: visibilityInitial,
+    });
+
+    if (visibilityOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const visibilityOutputResult: CliUtilityInitializePromptGithubPoliciesVisibilityOutputResult = visibilityOutput['result'];
+    const githubPoliciesVisibilityValue: CliUtilityInitializePromptGithubPoliciesVisibilityValue = visibilityOutputResult.githubPoliciesVisibility;
+
+    // Prompt 12: policies.defaultBranch (optional text — skip omits field).
+    const existingDefaultBranch: CliUtilityInitializePromptGithubExistingDefaultBranch = (existingPolicies !== undefined) ? existingPolicies['defaultBranch'] : undefined;
+    const defaultBranchTitle: CliUtilityInitializePromptGithubDefaultBranchTitle = (existingDefaultBranch !== undefined) ? `Keep existing: ${existingDefaultBranch}` : 'Enter default branch name';
+    const defaultBranchChoiceValue: CliUtilityInitializePromptGithubPoliciesDefaultBranchValue = (existingDefaultBranch !== undefined) ? existingDefaultBranch : 'enter';
+    const defaultBranchInitial: CliUtilityInitializePromptGithubDefaultBranchInitial = (existingDefaultBranch !== undefined) ? 1 : 0;
+
+    const defaultBranchOutput: CliUtilityInitializePromptGithubPoliciesDefaultBranchOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptGithubPoliciesDefaultBranchOutputKey, CliUtilityInitializePromptGithubPoliciesDefaultBranchValue>({
+      type: 'select',
+      name: 'githubPoliciesDefaultBranch',
+      message: 'GitHub policies.defaultBranch (sync this field?)',
+      choices: [
+        {
+          title: 'Skip (don\'t sync this field)',
+          value: 'skip' as CliUtilityInitializePromptGithubPoliciesDefaultBranchSkip,
+        },
+        {
+          title: defaultBranchTitle,
+          value: defaultBranchChoiceValue,
+        },
+      ],
+      initial: defaultBranchInitial,
+    });
+
+    if (defaultBranchOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const defaultBranchOutputResult: CliUtilityInitializePromptGithubPoliciesDefaultBranchOutputResult = defaultBranchOutput['result'];
+    let githubPoliciesDefaultBranchValue: CliUtilityInitializePromptGithubPoliciesDefaultBranchValue = defaultBranchOutputResult.githubPoliciesDefaultBranch;
+
+    if (githubPoliciesDefaultBranchValue === 'enter') {
+      // Prompt for text input.
+      const defaultBranchTextOutput: CliUtilityInitializePromptGithubRepoOutput = await CliUtilityInitialize.promptWithCancel<'githubRepo', string>({
+        type: 'text',
+        name: 'githubRepo',
+        message: 'Default branch name',
+        initial: '',
+      });
+
+      if (defaultBranchTextOutput['cancelled'] === true) {
+        return 'back';
+      }
+
+      const rawDefaultBranch: CliUtilityInitializePromptGithubDefaultBranchRaw = defaultBranchTextOutput['result'].githubRepo.trim();
+
+      githubPoliciesDefaultBranchValue = (rawDefaultBranch !== '') ? rawDefaultBranch : 'skip';
+    }
+
+    // Prompts 13–15: policies.mergeMethods (optional booleans — skip omits field).
+    const existingMergeMethods: CliUtilityInitializePromptGithubExistingPolicies = github['policies'];
+    const existingMergeMethodsObj: CliUtilityInitializePromptGithubExistingMergeMethodsObj = (existingMergeMethods !== undefined) ? existingMergeMethods['mergeMethods'] : undefined;
+
+    let mergeInitial: CliUtilityInitializePromptGithubMergeMethodMergeInitial = 0;
+
+    if (existingMergeMethodsObj !== undefined && existingMergeMethodsObj['merge'] !== undefined) {
+      mergeInitial = (existingMergeMethodsObj['merge'] === true) ? 1 : 2;
+    }
+
+    let squashInitial: CliUtilityInitializePromptGithubMergeMethodSquashInitial = 0;
+
+    if (existingMergeMethodsObj !== undefined && existingMergeMethodsObj['squash'] !== undefined) {
+      squashInitial = (existingMergeMethodsObj['squash'] === true) ? 1 : 2;
+    }
+
+    let rebaseInitial: CliUtilityInitializePromptGithubMergeMethodRebaseInitial = 0;
+
+    if (existingMergeMethodsObj !== undefined && existingMergeMethodsObj['rebase'] !== undefined) {
+      rebaseInitial = (existingMergeMethodsObj['rebase'] === true) ? 1 : 2;
+    }
+
+    const mergeMethodsOutput: CliUtilityInitializePromptGithubPoliciesMergeMethodsOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptGithubPoliciesMergeMethodsOutputKey, CliUtilityInitializePromptGithubPoliciesMergeMethodsValue>([
+      {
+        type: 'select',
+        name: 'githubPoliciesMergeMethodsMerge',
+        message: 'GitHub policies.mergeMethods.merge (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip' as CliUtilityInitializePromptGithubPoliciesMergeMethodsSkip,
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: mergeInitial,
+      },
+      {
+        type: 'select',
+        name: 'githubPoliciesMergeMethodsSquash',
+        message: 'GitHub policies.mergeMethods.squash (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip' as CliUtilityInitializePromptGithubPoliciesMergeMethodsSkip,
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: squashInitial,
+      },
+      {
+        type: 'select',
+        name: 'githubPoliciesMergeMethodsRebase',
+        message: 'GitHub policies.mergeMethods.rebase (sync this field?)',
+        choices: [
+          {
+            title: 'Skip (don\'t sync this field)',
+            value: 'skip' as CliUtilityInitializePromptGithubPoliciesMergeMethodsSkip,
+          },
+          {
+            title: 'Enable',
+            value: true,
+          },
+          {
+            title: 'Disable',
+            value: false,
+          },
+        ],
+        initial: rebaseInitial,
+      },
+    ]);
+
+    if (mergeMethodsOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const mergeMethodsOutputResult: CliUtilityInitializePromptGithubPoliciesMergeMethodsOutputResult = mergeMethodsOutput['result'];
+
+    let githubPoliciesMergeMethodsInput: CliUtilityInitializePromptGithubPoliciesMergeMethodsInput = undefined;
+
+    const mergeMethodsMergeValue: CliUtilityInitializePromptGithubPoliciesMergeMethodsValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsMerge;
+    const mergeMethodsSquashValue: CliUtilityInitializePromptGithubPoliciesMergeMethodsValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsSquash;
+    const mergeMethodsRebaseValue: CliUtilityInitializePromptGithubPoliciesMergeMethodsValue = mergeMethodsOutputResult.githubPoliciesMergeMethodsRebase;
+
+    if (
+      mergeMethodsMergeValue !== 'skip'
+      || mergeMethodsSquashValue !== 'skip'
+      || mergeMethodsRebaseValue !== 'skip'
+    ) {
+      githubPoliciesMergeMethodsInput = {
+        ...((mergeMethodsMergeValue !== 'skip') ? { merge: mergeMethodsMergeValue } : {}),
+        ...((mergeMethodsSquashValue !== 'skip') ? { squash: mergeMethodsSquashValue } : {}),
+        ...((mergeMethodsRebaseValue !== 'skip') ? { rebase: mergeMethodsRebaseValue } : {}),
+      };
+    }
+
+    // Prompt 16: policies.autoDeleteHeadBranch (optional boolean — skip omits field).
+    const existingAutoDelete: CliUtilityInitializePromptGithubExistingAutoDelete = (existingPolicies !== undefined) ? existingPolicies['autoDeleteHeadBranch'] : undefined;
+    let autoDeleteInitial: CliUtilityInitializePromptGithubAutoDeleteInitial = 0;
+
+    if (existingAutoDelete !== undefined) {
+      autoDeleteInitial = (existingAutoDelete === true) ? 1 : 2;
+    }
+
+    const autoDeleteOutput: CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutput = await CliUtilityInitialize.promptWithCancel<CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutputKey, CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchValue>({
+      type: 'select',
+      name: 'githubPoliciesAutoDeleteHeadBranch',
+      message: 'GitHub policies.autoDeleteHeadBranch (sync this field?)',
+      choices: [
+        {
+          title: 'Skip (don\'t sync this field)',
+          value: 'skip' as CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchSkip,
+        },
+        {
+          title: 'Enable',
+          value: true,
+        },
+        {
+          title: 'Disable',
+          value: false,
+        },
+      ],
+      initial: autoDeleteInitial,
+    });
+
+    if (autoDeleteOutput['cancelled'] === true) {
+      return 'back';
+    }
+
+    const autoDeleteOutputResult: CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchOutputResult = autoDeleteOutput['result'];
+    const githubPoliciesAutoDeleteValue: CliUtilityInitializePromptGithubPoliciesAutoDeleteHeadBranchValue = autoDeleteOutputResult.githubPoliciesAutoDeleteHeadBranch;
+
+    // Build the policies object (only if at least one non-skip field exists).
+    let githubPoliciesInput: CliUtilityInitializePromptGithubPoliciesInput = undefined;
+
+    if (
+      githubPoliciesVisibilityValue !== 'skip'
+      || githubPoliciesDefaultBranchValue !== 'skip'
+      || githubPoliciesMergeMethodsInput !== undefined
+      || githubPoliciesAutoDeleteValue !== 'skip'
+    ) {
+      githubPoliciesInput = {
+        ...((githubPoliciesVisibilityValue !== 'skip') ? { visibility: githubPoliciesVisibilityValue } : {}),
+        ...((githubPoliciesDefaultBranchValue !== 'skip') ? { defaultBranch: githubPoliciesDefaultBranchValue } : {}),
+        ...(githubPoliciesMergeMethodsInput !== undefined ? { mergeMethods: githubPoliciesMergeMethodsInput } : {}),
+        ...((githubPoliciesAutoDeleteValue !== 'skip') ? { autoDeleteHeadBranch: githubPoliciesAutoDeleteValue } : {}),
+      };
+    }
+
+    // Build the github config object in schema declaration order.
+    const githubConfig: CliUtilityInitializePromptGithubGithub = {
+      owner: githubOwnerInput,
+      repo: githubRepoInput,
+      recipes: githubRecipesInput,
+      ...(githubTopicsInput !== undefined ? { topics: githubTopicsInput } : {}),
+      ...(githubFeaturesInput !== undefined ? { features: githubFeaturesInput } : {}),
+      ...(githubPoliciesInput !== undefined ? { policies: githubPoliciesInput } : {}),
+    };
+
+    Object.assign(config, { github: githubConfig });
+
+    Logger.customize({
+      name: 'CliUtilityInitialize.promptGithub',
+      purpose: 'updated',
+      padTop: 1,
+      padBottom: 1,
+    }).info('GitHub settings updated.');
+
+    return 'back';
+  }
+
+  /**
    * CLI - Utility - Initialize - Prompt URLs.
    *
    * Collects all project URLs including homepage,
@@ -1656,13 +2318,6 @@ export class CliUtilityInitialize {
       },
       {
         type: 'text',
-        name: 'urlsGithub',
-        message: 'GitHub URL',
-        initial: urls['github'] ?? '',
-        validate: (value: CliUtilityInitializePromptUrlsValidateValue) => CliUtilityInitialize.normalizeUrl(value, 'generic')['result'],
-      },
-      {
-        type: 'text',
         name: 'urlsNpm',
         message: 'npm package URL',
         initial: urls['npm'] ?? '',
@@ -1710,7 +2365,6 @@ export class CliUtilityInitialize {
     const urlsLicenseInput: CliUtilityInitializePromptUrlsUrlsLicenseInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsLicense, 'generic')['sanitized'];
     const urlsLogoInput: CliUtilityInitializePromptUrlsUrlsLogoInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsLogo, 'generic')['sanitized'];
     const urlsDocumentationInput: CliUtilityInitializePromptUrlsUrlsDocumentationInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsDocumentation, 'generic')['sanitized'];
-    const urlsGithubInput: CliUtilityInitializePromptUrlsUrlsGithubInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsGithub, 'generic')['sanitized'];
     const urlsNpmInput: CliUtilityInitializePromptUrlsUrlsNpmInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsNpm, 'generic')['sanitized'];
     const urlsDockerInput: CliUtilityInitializePromptUrlsUrlsDockerInput = CliUtilityInitialize.normalizeUrl(questionsOutputResult.urlsDocker, 'generic')['sanitized'];
     const urlsFundSourcesInput: CliUtilityInitializePromptUrlsUrlsFundSourcesInput = CliUtilityInitialize.normalizeUrlArray(questionsOutputResult.urlsFundSources, 'generic')['sanitized'];
@@ -1757,13 +2411,6 @@ export class CliUtilityInitialize {
       urls.documentation = urlsDocumentationInput;
     } else {
       Reflect.deleteProperty(urls, 'documentation');
-    }
-
-    // URLs - Github.
-    if (urlsGithubInput !== undefined) {
-      urls.github = urlsGithubInput;
-    } else {
-      Reflect.deleteProperty(urls, 'github');
     }
 
     // URLs - Npm.

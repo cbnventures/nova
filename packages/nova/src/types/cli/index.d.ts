@@ -2,6 +2,7 @@ import type { Command, CommandUnknownOpts } from '@commander-js/extra-typings';
 import type { ChalkInstance } from 'chalk';
 
 import type { SharedGeneratorRunResult, SharedRunScriptsOptions } from '../shared.d.ts';
+import type { CliUtilityRunRecipesRunOptions } from './utility/run-recipes.d.ts';
 
 /**
  * CLI - Constructor.
@@ -138,6 +139,12 @@ export type CliRegisterCommandsRecipeRecipe = Command;
 
 export type CliRegisterCommandsRecipeRecipePackageJson = Command;
 
+export type CliRegisterCommandsRecipeRecipeGithub = Command;
+
+export type CliRegisterCommandsRecipeRecipeGithubOptions = {
+  dryRun?: true;
+};
+
 /**
  * CLI - Register Commands - Scaffold.
  *
@@ -156,6 +163,8 @@ export type CliRegisterCommandsScaffoldScaffoldStarter = Command;
  *
  * @since 0.11.0
  */
+export type CliRegisterCommandsUtilityRunRecipesOptions = CliUtilityRunRecipesRunOptions;
+
 export type CliRegisterCommandsUtilityUtility = Command;
 
 export type CliRegisterCommandsUtilityRunScriptsOptions = SharedRunScriptsOptions;

@@ -531,7 +531,6 @@ export type LibItemUrlFields = readonly [
   'license',
   'logo',
   'documentation',
-  'github',
   'npm',
   'docker',
   'privacyPolicy',

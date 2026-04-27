@@ -1,0 +1,84 @@
+---
+id: "sync-features"
+title: "Sync Features"
+description: "Sync GitHub repository feature toggles (issues, wiki, projects, discussions) using nova.config.json as the source of truth."
+keywords:
+  - "nova"
+  - "sync-features"
+  - "github"
+  - "issues"
+  - "wiki"
+  - "projects"
+  - "discussions"
+tags:
+  - "cli"
+  - "sync-features"
+  - "recipe"
+  - "github"
+---
+
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+Sync **repository feature toggles** to GitHub from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology>.
+
+## Summary
+
+The `sync-features` recipe pushes repository feature enable/disable settings from <Terminology title="Nova config" to="/docs/quickstart/terminology#nova-concepts" color={true}>`nova.config.json`</Terminology> to GitHub using `gh repo edit`. It controls which GitHub features are active on the repository — issues, wiki, projects, and discussions.
+
+If the `github.features` block is missing entirely, or all four feature fields are undefined, the recipe no-ops and emits a warning.
+
+## Prerequisites
+
+- **`gh` CLI ≥ 2.40.0** — The GitHub CLI must be installed and authenticated.
+- **Repository write access** — The authenticated user must have write access to the target repository.
+- **`github.owner` and `github.repo`** — Both fields must be set in `nova.config.json` to identify the target repository.
+
+## Behavior
+
+Each feature field is independently optional. When a field is defined, the recipe passes the corresponding flag to `gh repo edit`. When a field is undefined, that flag is omitted entirely and GitHub's current value is preserved.
+
+- **`github.features.issues`** — Controls the Issues tab. Emits `--enable-issues=<bool>` when defined.
+- **`github.features.wiki`** — Controls the Wiki tab. Emits `--enable-wiki=<bool>` when defined.
+- **`github.features.projects`** — Controls the Projects tab. Emits `--enable-projects=<bool>` when defined.
+- **`github.features.discussions`** — Controls the Discussions tab. Emits `--enable-discussions=<bool>` when defined.
+
+## Settings
+
+Settings are configured per workspace in `nova.config.json` under the `recipes` key. The `sync-features` recipe is controlled by a single boolean toggle:
+
+```json
+{
+  "github": {
+    "recipes": {
+      "sync-features": true
+    }
+  }
+}
+```
+
+## Usage
+
+<Tabs groupId="install-state">
+  <TabItem value="nova" label="nova (installed)" default>
+
+    ```bash
+    nova recipe github sync-features [options]
+    ```
+
+  </TabItem>
+  <TabItem value="npx" label="npx (no install)">
+
+    ```bash
+    npx --yes @cbnventures/nova@latest recipe github sync-features [options]
+    ```
+
+  </TabItem>
+</Tabs>
+
+## Options
+
+| Flag            | Description                      |
+|-----------------|----------------------------------|
+| `-d, --dry-run` | Preview changes without pushing. |

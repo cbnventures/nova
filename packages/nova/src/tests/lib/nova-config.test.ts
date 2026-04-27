@@ -41,6 +41,21 @@ import type {
   TestsLibNovaConfigSharednovaconfigLoadSandboxPrefix,
   TestsLibNovaConfigSharednovaconfigLoadSandboxRoot,
   TestsLibNovaConfigSharednovaconfigLoadTemporaryDirectory,
+  TestsLibNovaConfigSharednovaconfigParseGithubConfig,
+  TestsLibNovaConfigSharednovaconfigParseGithubConfigContents,
+  TestsLibNovaConfigSharednovaconfigParseGithubConfigPath,
+  TestsLibNovaConfigSharednovaconfigParseGithubLoaded,
+  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub,
+  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubFeatures,
+  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPolicies,
+  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods,
+  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubRecipes,
+  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubTopics,
+  TestsLibNovaConfigSharednovaconfigParseGithubOriginalCwd,
+  TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory,
+  TestsLibNovaConfigSharednovaconfigParseGithubSandboxPrefix,
+  TestsLibNovaConfigSharednovaconfigParseGithubSandboxRoot,
+  TestsLibNovaConfigSharednovaconfigParseGithubTemporaryDirectory,
   TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig,
   TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents,
   TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath,
@@ -2021,6 +2036,380 @@ describe('parseWorkflows (via load)', async () => {
     deepStrictEqual(firstWorkflow['settings'], {
       region: 'us-east-1',
     });
+
+    return;
+  });
+
+  return;
+});
+
+/**
+ * Tests - Lib - Nova Config - ParseGithub (via Load).
+ *
+ * @since 0.22.0
+ */
+describe('parseGithub (via load)', async () => {
+  const originalCwd: TestsLibNovaConfigSharednovaconfigParseGithubOriginalCwd = process.cwd();
+  const temporaryDirectory: TestsLibNovaConfigSharednovaconfigParseGithubTemporaryDirectory = tmpdir();
+  const sandboxPrefix: TestsLibNovaConfigSharednovaconfigParseGithubSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: TestsLibNovaConfigSharednovaconfigParseGithubSandboxRoot = await mkdtemp(sandboxPrefix);
+
+  afterAll(async () => {
+    process.chdir(originalCwd);
+
+    await rm(sandboxRoot, {
+      recursive: true,
+      force: true,
+    });
+
+    return;
+  });
+
+  it('returns undefined for missing github block', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-missing');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+      project: {
+        name: {
+          slug: 'test',
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+
+    strictEqual(loaded['github'], undefined);
+
+    return;
+  });
+
+  it('parses full github block with all fields', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-full');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+      github: {
+        owner: 'acme-org',
+        repo: 'my-repo',
+        recipes: {
+          'sync-identity': true,
+          'sync-features': false,
+          'sync-policies': true,
+        },
+        topics: [
+          'typescript',
+          'cli',
+          'nova',
+        ],
+        features: {
+          issues: true,
+          wiki: false,
+          projects: true,
+          discussions: false,
+        },
+        policies: {
+          visibility: 'public',
+          defaultBranch: 'main',
+          mergeMethods: {
+            merge: false,
+            squash: true,
+            rebase: true,
+          },
+          autoDeleteHeadBranch: true,
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+
+    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+
+    if (loadedGithub === undefined) {
+      fail('Expected github to be defined');
+    }
+
+    strictEqual(loadedGithub['owner'], 'acme-org');
+    strictEqual(loadedGithub['repo'], 'my-repo');
+
+    const loadedRecipes: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubRecipes = loadedGithub['recipes'];
+
+    if (loadedRecipes === undefined) {
+      fail('Expected github.recipes to be defined');
+    }
+
+    strictEqual(loadedRecipes['sync-identity'], true);
+    strictEqual(loadedRecipes['sync-features'], false);
+    strictEqual(loadedRecipes['sync-policies'], true);
+
+    const loadedTopics: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubTopics = loadedGithub['topics'];
+
+    if (loadedTopics === undefined) {
+      fail('Expected github.topics to be defined');
+    }
+
+    deepStrictEqual(loadedTopics, [
+      'typescript',
+      'cli',
+      'nova',
+    ]);
+
+    const loadedFeatures: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubFeatures = loadedGithub['features'];
+
+    if (loadedFeatures === undefined) {
+      fail('Expected github.features to be defined');
+    }
+
+    strictEqual(loadedFeatures['issues'], true);
+    strictEqual(loadedFeatures['wiki'], false);
+    strictEqual(loadedFeatures['projects'], true);
+    strictEqual(loadedFeatures['discussions'], false);
+
+    const loadedPolicies: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPolicies = loadedGithub['policies'];
+
+    if (loadedPolicies === undefined) {
+      fail('Expected github.policies to be defined');
+    }
+
+    strictEqual(loadedPolicies['visibility'], 'public');
+    strictEqual(loadedPolicies['defaultBranch'], 'main');
+    strictEqual(loadedPolicies['autoDeleteHeadBranch'], true);
+
+    const loadedMergeMethods: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods = loadedPolicies['mergeMethods'];
+
+    if (loadedMergeMethods === undefined) {
+      fail('Expected github.policies.mergeMethods to be defined');
+    }
+
+    strictEqual(loadedMergeMethods['merge'], false);
+    strictEqual(loadedMergeMethods['squash'], true);
+    strictEqual(loadedMergeMethods['rebase'], true);
+
+    return;
+  });
+
+  it('parses partial github block with missing owner and repo', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-partial');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+      github: {
+        topics: ['typescript'],
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+
+    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+
+    if (loadedGithub === undefined) {
+      fail('Expected github to be defined');
+    }
+
+    strictEqual(loadedGithub['owner'], undefined);
+    strictEqual(loadedGithub['repo'], undefined);
+
+    const loadedTopics: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubTopics = loadedGithub['topics'];
+
+    if (loadedTopics === undefined) {
+      fail('Expected github.topics to be defined');
+    }
+
+    deepStrictEqual(loadedTopics, ['typescript']);
+
+    return;
+  });
+
+  it('drops malformed field values and keeps valid ones', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+      github: {
+        owner: 42,
+        repo: 'valid-repo',
+        features: {
+          issues: 'yes',
+          wiki: true,
+        },
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+
+    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+
+    if (loadedGithub === undefined) {
+      fail('Expected github to be defined');
+    }
+
+    strictEqual(loadedGithub['owner'], undefined);
+    strictEqual(loadedGithub['repo'], 'valid-repo');
+
+    const loadedFeatures: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubFeatures = loadedGithub['features'];
+
+    if (loadedFeatures === undefined) {
+      fail('Expected github.features to be defined');
+    }
+
+    strictEqual(loadedFeatures['issues'], undefined);
+    strictEqual(loadedFeatures['wiki'], true);
+
+    return;
+  });
+
+  it('ignores stale urls.github field silently', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-stale-url');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+      urls: {
+        homepage: 'https://example.com',
+        github: 'https://github.com/acme-org/my-repo',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+
+    const loadedUrls: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['urls'] as TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub;
+
+    if (loadedUrls === undefined) {
+      fail('Expected urls to be defined');
+    }
+
+    strictEqual('github' in loadedUrls, false);
+    strictEqual(loaded['github'], undefined);
+
+    return;
+  });
+
+  it('rejects malformed owner with shell metacharacters', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed-owner');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+      github: {
+        owner: 'evil; rm -rf ~',
+        repo: 'valid-repo',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+
+    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+
+    if (loadedGithub === undefined) {
+      fail('Expected github to be defined');
+    }
+
+    strictEqual(loadedGithub['owner'], undefined);
+    strictEqual(loadedGithub['repo'], 'valid-repo');
+
+    return;
+  });
+
+  it('rejects malformed repo with path traversal', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed-repo');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+      github: {
+        owner: 'valid-owner',
+        repo: '../etc',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+
+    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+
+    if (loadedGithub === undefined) {
+      fail('Expected github to be defined');
+    }
+
+    strictEqual(loadedGithub['owner'], 'valid-owner');
+    strictEqual(loadedGithub['repo'], undefined);
+
+    return;
+  });
+
+  it('accepts valid owner and repo with hyphens, dots, and underscores', async () => {
+    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-valid-chars');
+
+    await mkdir(projectDirectory, { recursive: true });
+
+    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+      github: {
+        owner: 'cbn-ventures',
+        repo: 'nova.docs_v2',
+      },
+    }, null, 2);
+
+    await writeFile(configPath, configContents, 'utf-8');
+
+    process.chdir(projectDirectory);
+
+    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+
+    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+
+    if (loadedGithub === undefined) {
+      fail('Expected github to be defined');
+    }
+
+    strictEqual(loadedGithub['owner'], 'cbn-ventures');
+    strictEqual(loadedGithub['repo'], 'nova.docs_v2');
 
     return;
   });

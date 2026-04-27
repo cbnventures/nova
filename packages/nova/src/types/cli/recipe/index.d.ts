@@ -1,18 +1,26 @@
-import type { SharedNovaConfigWorkspaceRecipeName } from '../../shared.d.ts';
+import type {
+  SharedNovaConfigGithubRecipeName,
+  SharedNovaConfigWorkspaceRecipeName,
+} from '../../shared.d.ts';
 
 /**
  * CLI - Recipe - Registry.
  *
  * @since 0.14.0
  */
-export type CliRecipeRegistry = CliRecipeRegistryEntry[];
+export type CliRecipeRegistry = {
+  'github': CliRecipeRegistryEntry[];
+  'package-json': CliRecipeRegistryEntry[];
+};
+
+export type CliRecipeRegistryCategory = keyof CliRecipeRegistry;
 
 /**
  * CLI - Recipe - Registry Entry.
  *
  * @since 0.14.0
  */
-export type CliRecipeRegistryEntryName = SharedNovaConfigWorkspaceRecipeName;
+export type CliRecipeRegistryEntryName = SharedNovaConfigGithubRecipeName | SharedNovaConfigWorkspaceRecipeName;
 
 export type CliRecipeRegistryEntryRunOptionsDryRun = true;
 
@@ -27,10 +35,7 @@ export type CliRecipeRegistryEntryRunReturns = Promise<void>;
 
 export type CliRecipeRegistryEntryRun = (options: CliRecipeRegistryEntryRunOptions) => CliRecipeRegistryEntryRunReturns;
 
-export type CliRecipeRegistryEntryLabel = string;
-
 export type CliRecipeRegistryEntry = {
   name: CliRecipeRegistryEntryName;
-  label: CliRecipeRegistryEntryLabel;
   run: CliRecipeRegistryEntryRun;
 };

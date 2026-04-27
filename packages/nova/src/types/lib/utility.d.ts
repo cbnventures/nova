@@ -48,6 +48,68 @@ export type LibUtilityBuildGeneratedFileHeaderIsMarkdownStyle = boolean;
 export type LibUtilityBuildGeneratedFileHeaderLines = string[];
 
 /**
+ * Lib - Utility - Compare Semver.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * Lib - Utility - Compare Semver - A.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCompareSemverA = string;
+
+/**
+ * Lib - Utility - Compare Semver - B.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCompareSemverB = string;
+
+/**
+ * Lib - Utility - Compare Semver - Length.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCompareSemverLength = number;
+
+/**
+ * Lib - Utility - Compare Semver - Parts A.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCompareSemverPartsA = number[];
+
+/**
+ * Lib - Utility - Compare Semver - Parts B.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCompareSemverPartsB = number[];
+
+/**
+ * Lib - Utility - Compare Semver - Returns.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCompareSemverReturns = number;
+
+/**
+ * Lib - Utility - Compare Semver - Val A.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCompareSemverValA = number;
+
+/**
+ * Lib - Utility - Compare Semver - Val B.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityCompareSemverValB = number;
+
+/**
  * Lib - Utility - Current Timestamp.
  *
  * @since 0.11.0
@@ -367,64 +429,21 @@ export type LibUtilityLoadWorkspaceManifestsParsedFile = SharedWorkspaceManifest
 export type LibUtilityLoadWorkspaceManifestsLoadErrorMessage = string;
 
 /**
- * Lib - Utility - Normalize Route Segment - Inner.
- *
- * Intermediate value after unwrapping a framework-specific pattern, before
- * non-identifier characters are replaced. Equals input when no pattern matched.
- *
- * @since 0.17.1
- */
-export type LibUtilityNormalizeRouteSegmentInner = string;
-
-/**
- * Lib - Utility - Normalize Route Segment - Match.
- *
- * Result of matching a route-syntax pattern against a raw segment. Null when
- * none of the Phase 1 patterns applied to the input.
- *
- * @since 0.17.1
- */
-export type LibUtilityNormalizeRouteSegmentMatch = RegExpMatchArray | null;
-
-/**
- * Lib - Utility - Normalize Route Segment - Patterns.
- *
- * Ordered list of routing-syntax unwrap patterns. Order matters: optional
- * catch-all must precede catch-all, which must precede the bare dynamic form.
- *
- * @since 0.17.1
- */
-export type LibUtilityNormalizeRouteSegmentPatterns = ReadonlyArray<RegExp>;
-
-/**
- * Lib - Utility - Normalize Route Segment - Returns.
- *
- * PascalCase-friendly segment ready for downstream hyphen-split title-casing.
- * Empty when input has no alphanumeric or underscore characters after scrubbing.
- *
- * @since 0.17.1
- */
-export type LibUtilityNormalizeRouteSegmentReturns = string;
-
-/**
- * Lib - Utility - Normalize Route Segment - Scrubbed.
- *
- * Result of replacing every non-identifier character with a hyphen. Consumed
- * by the empty-signal check and returned to the caller when non-empty.
- *
- * @since 0.17.1
- */
-export type LibUtilityNormalizeRouteSegmentScrubbed = string;
-
-/**
- * Lib - Utility - Normalize Route Segment - Segment.
- *
- * Raw path segment as split from a filename on `/`. May contain framework
- * routing syntax like `[...name]`, `(group)`, or `@slot`.
+ * Lib - Utility - Normalize Route Segment.
  *
  * @since 0.17.1
  */
 export type LibUtilityNormalizeRouteSegmentSegment = string;
+
+export type LibUtilityNormalizeRouteSegmentReturns = string;
+
+export type LibUtilityNormalizeRouteSegmentPatterns = ReadonlyArray<RegExp>;
+
+export type LibUtilityNormalizeRouteSegmentInner = string;
+
+export type LibUtilityNormalizeRouteSegmentMatch = RegExpMatchArray | null;
+
+export type LibUtilityNormalizeRouteSegmentScrubbed = string;
 
 /**
  * Lib - Utility - Parse Linux OS Release File.
@@ -596,3 +615,65 @@ export type LibUtilitySaveWorkspaceManifestReturns = Promise<void>;
 export type LibUtilitySaveWorkspaceManifestPackageJson = string;
 
 export type LibUtilitySaveWorkspaceManifestPackageContents = string;
+
+/**
+ * Lib - Utility - Shell Quote.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * Lib - Utility - Shell Quote - Backslash Pattern.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityShellQuoteBackslashPattern = RegExp;
+
+/**
+ * Lib - Utility - Shell Quote - Backtick Pattern.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityShellQuoteBacktickPattern = RegExp;
+
+/**
+ * Lib - Utility - Shell Quote - Dollar Pattern.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityShellQuoteDollarPattern = RegExp;
+
+/**
+ * Lib - Utility - Shell Quote - Double Quote Pattern.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityShellQuoteDoubleQuotePattern = RegExp;
+
+/**
+ * Lib - Utility - Shell Quote - Escaped.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityShellQuoteEscaped = string;
+
+/**
+ * Lib - Utility - Shell Quote - Pattern.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityShellQuotePattern = RegExp;
+
+/**
+ * Lib - Utility - Shell Quote - Returns.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityShellQuoteReturns = string;
+
+/**
+ * Lib - Utility - Shell Quote - Value.
+ *
+ * @since 0.18.0
+ */
+export type LibUtilityShellQuoteValue = string;

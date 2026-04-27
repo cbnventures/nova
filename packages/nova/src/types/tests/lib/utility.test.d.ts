@@ -18,6 +18,12 @@ export type TestsLibUtilityBuildGeneratedFileHeaderResult = string;
 export type TestsLibUtilityBuildGeneratedFileHeaderThrew = boolean;
 
 /**
+ * Tests - Lib - Utility - Compare Semver.
+ *
+ * @since 0.18.0
+ */
+
+/**
  * Tests - Lib - Utility - Current Timestamp.
  *
  * @since 0.12.0
@@ -214,43 +220,25 @@ export type TestsLibUtilityLoadWorkspaceManifestsSecondWorkspace = SharedWorkspa
 export type TestsLibUtilityLoadWorkspaceManifestsOnlyWorkspace = SharedWorkspaceManifest | undefined;
 
 /**
- * Tests - Lib - Utility - Normalize Route Segment - Input.
+ * Tests - Lib - Utility - Normalize Route Segment.
  *
  * @since 0.17.1
  */
-export type TestsLibUtilityNormalizeRouteSegmentInput = string;
+export type TestsLibUtilityNormalizeRouteSegmentCaseInput = string;
 
-/**
- * Tests - Lib - Utility - Normalize Route Segment - Result.
- *
- * @since 0.17.1
- */
-export type TestsLibUtilityNormalizeRouteSegmentResult = string;
+export type TestsLibUtilityNormalizeRouteSegmentCaseExpected = string;
 
-/**
- * Tests - Lib - Utility - Normalize Route Segment - Expected.
- *
- * @since 0.17.1
- */
-export type TestsLibUtilityNormalizeRouteSegmentExpected = string;
+export type TestsLibUtilityNormalizeRouteSegmentCaseDescription = string;
 
-/**
- * Tests - Lib - Utility - Normalize Route Segment - Case.
- *
- * @since 0.17.1
- */
 export type TestsLibUtilityNormalizeRouteSegmentCase = {
-  input: TestsLibUtilityNormalizeRouteSegmentInput;
-  expected: TestsLibUtilityNormalizeRouteSegmentExpected;
-  description: string;
+  input: TestsLibUtilityNormalizeRouteSegmentCaseInput;
+  expected: TestsLibUtilityNormalizeRouteSegmentCaseExpected;
+  description: TestsLibUtilityNormalizeRouteSegmentCaseDescription;
 };
 
-/**
- * Tests - Lib - Utility - Normalize Route Segment - Cases.
- *
- * @since 0.17.1
- */
 export type TestsLibUtilityNormalizeRouteSegmentCases = ReadonlyArray<TestsLibUtilityNormalizeRouteSegmentCase>;
+
+export type TestsLibUtilityNormalizeRouteSegmentResult = string;
 
 /**
  * Tests - Lib - Utility - Parse Linux OS Release Text.
@@ -403,3 +391,9 @@ export type TestsLibUtilitySaveWorkspaceManifestSubDirectory = string;
 export type TestsLibUtilitySaveWorkspaceManifestFiles = string[];
 
 export type TestsLibUtilitySaveWorkspaceManifestBackupFile = string | undefined;
+
+/**
+ * Tests - Lib - Utility - Shell Quote.
+ *
+ * @since 0.18.0
+ */
