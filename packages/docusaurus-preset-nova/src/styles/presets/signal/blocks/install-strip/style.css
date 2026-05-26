@@ -1,0 +1,152 @@
+/**
+ * Signal - Install strip visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Install Strip Container
+ * ============================ */
+
+/* ============================
+ * 2. Block Variant - Unified Card
+ * ============================ */
+
+/* Block variant - dark terminal block, sharp corners, hard border. */
+.nova-install-strip-command-block {
+  gap: 0;
+
+  background-color: var(--nova-color-text);
+  border: 1px solid var(--nova-color-text);
+
+  transition: border-color var(--nova-motion-duration) ease;
+}
+
+.nova-install-strip-command-block:hover,
+.nova-install-strip-command-block:focus-visible {
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block:hover,
+[data-theme="dark"] .nova-install-strip-command-block:focus-visible {
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 3. Icon Variant - Two Floating Blocks
+ * ============================ */
+
+/* Code block - dark slab, heavy border, no hover. */
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+  padding-right: 0.875rem;
+
+  background-color: var(--nova-color-text);
+  border: 1px solid var(--nova-color-text);
+}
+
+@media (min-width: 640px) {
+  .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+    padding-right: 1rem;
+  }
+}
+
+/* Copy button - same dark slab as the code block, flips to primary on hover. */
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy {
+  color: var(--nova-color-background);
+
+  background-color: var(--nova-color-text);
+  border: 1px solid var(--nova-color-text);
+
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease;
+}
+
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:hover,
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:focus-visible {
+  background-color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:hover,
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:focus-visible {
+  color: var(--nova-color-text-inverse);
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 4. Code Display
+ * ============================ */
+
+/* Code element - monospace with rose dollar prefix. */
+.nova-install-strip .nova-install-strip-code {
+  padding: 0.5rem 0 0.5rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  color: var(--nova-color-background);
+}
+
+.nova-install-strip .nova-install-strip-code::before {
+  content: "$";
+
+  margin-right: 0.5rem;
+
+  color: var(--nova-color-primary-500);
+  font-weight: 700;
+}
+
+[data-theme="dark"] .nova-install-strip .nova-install-strip-code::before {
+  color: var(--nova-color-primary-400);
+}
+
+@media (min-width: 640px) {
+  .nova-install-strip .nova-install-strip-code {
+    padding: 0.5rem 0 0.5rem 1.25rem;
+    font-size: 0.8125rem;
+  }
+}
+
+/* ============================
+ * 5. Block Variant Copy Icon
+ * ============================ */
+
+/* Block copy button - paired with code text color; brightens on parent hover.
+   Signal's slab is inverted (dark bg in light mode, light bg in dark mode), so the
+   icon picks up the same neutral-50/900 the code text uses. */
+.nova-install-strip-command-block .nova-install-strip-copy {
+  padding: 0.5rem 0.875rem;
+  color: var(--nova-color-background);
+
+  transition: color var(--nova-motion-duration) var(--nova-motion-easing);
+}
+
+.nova-install-strip-command-block:hover .nova-install-strip-copy,
+.nova-install-strip-command-block:focus-visible .nova-install-strip-copy {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block:hover .nova-install-strip-copy,
+[data-theme="dark"] .nova-install-strip-command-block:focus-visible .nova-install-strip-copy {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 6. Label
+ * ============================ */
+
+/* Label - uppercase monospace descriptor. */
+.nova-install-strip-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  color: var(--nova-color-text-muted);
+
+  margin-bottom: 0.375rem;
+}
+

@@ -1,4 +1,5 @@
 import type { IconifyIcon } from '@iconify/react/offline';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Footer - Ledger.
@@ -26,6 +27,17 @@ export type ThemeFooterLedgerIndexCopyright = string;
 
 export type ThemeFooterLedgerIndexCredit = boolean;
 
+export type ThemeFooterLedgerIndexCtaObjectLabel = string;
+
+export type ThemeFooterLedgerIndexCtaObjectHref = string;
+
+export type ThemeFooterLedgerIndexCtaObject = {
+  label: ThemeFooterLedgerIndexCtaObjectLabel;
+  href: ThemeFooterLedgerIndexCtaObjectHref;
+};
+
+export type ThemeFooterLedgerIndexCta = string | ThemeFooterLedgerIndexCtaObject | undefined;
+
 export type ThemeFooterLedgerIndexLedgerPropsSections = ThemeFooterLedgerIndexSections;
 
 export type ThemeFooterLedgerIndexLedgerPropsLayout = ThemeFooterLedgerIndexLayout;
@@ -36,12 +48,24 @@ export type ThemeFooterLedgerIndexLedgerPropsCopyright = ThemeFooterLedgerIndexC
 
 export type ThemeFooterLedgerIndexLedgerPropsCredit = ThemeFooterLedgerIndexCredit;
 
+export type ThemeFooterLedgerIndexLedgerPropsCta = ThemeFooterLedgerIndexCta;
+
+export type ThemeFooterLedgerIndexLedgerPropsCtaContained = boolean;
+
+export type ThemeFooterLedgerIndexLedgerPropsClassName = string | undefined;
+
+export type ThemeFooterLedgerIndexLedgerPropsStyle = CSSProperties | undefined;
+
 export type ThemeFooterLedgerIndexLedgerProps = {
   sections: ThemeFooterLedgerIndexLedgerPropsSections;
   layout: ThemeFooterLedgerIndexLedgerPropsLayout;
   socialLinks: ThemeFooterLedgerIndexLedgerPropsSocialLinks;
   copyright: ThemeFooterLedgerIndexLedgerPropsCopyright;
   credit: ThemeFooterLedgerIndexLedgerPropsCredit;
+  cta?: ThemeFooterLedgerIndexLedgerPropsCta;
+  ctaContained: ThemeFooterLedgerIndexLedgerPropsCtaContained;
+  className?: ThemeFooterLedgerIndexLedgerPropsClassName;
+  style?: ThemeFooterLedgerIndexLedgerPropsStyle;
 };
 
 export type ThemeFooterLedgerIndexLedgerReturns = React.JSX.Element;
@@ -56,11 +80,17 @@ export type ThemeFooterLedgerIndexLedgerCopyright = ThemeFooterLedgerIndexCopyri
 
 export type ThemeFooterLedgerIndexLedgerCredit = ThemeFooterLedgerIndexCredit;
 
+export type ThemeFooterLedgerIndexLedgerCta = ThemeFooterLedgerIndexCta;
+
+export type ThemeFooterLedgerIndexLedgerCtaContained = boolean;
+
 export type ThemeFooterLedgerIndexLedgerFooterClassName = string;
 
 export type ThemeFooterLedgerIndexLedgerFooterLinksAriaLabel = string;
 
 export type ThemeFooterLedgerIndexLedgerSocialLinksAriaLabel = string;
+
+export type ThemeFooterLedgerIndexLedgerExternalLinkAriaLabel = string;
 
 export type ThemeFooterLedgerIndexLedgerFirstLayoutSlot = ThemeFooterLedgerIndexLayoutSlot | undefined;
 
@@ -88,3 +118,5 @@ export type ThemeFooterLedgerIndexSocialLink = {
   href: ThemeFooterLedgerIndexSocialLinkHref;
   label: ThemeFooterLedgerIndexSocialLinkLabel;
 };
+
+export type ThemeFooterLedgerIndexLedgerSocialLinkLabel = string;

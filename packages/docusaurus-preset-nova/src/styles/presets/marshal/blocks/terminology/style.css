@@ -1,0 +1,67 @@
+/**
+ * Marshal - `terminology` component overlay.
+ *
+ * Inline glossary term - dotted hairline underline reads as a marginal
+ * gloss in the ledger. Hover and the explicit `colored` variant lift
+ * the term into seal-red, matching the section-sign marker palette.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Terminology - dotted gloss
+ * ============================
+ */
+
+.nova-terminology {
+  text-decoration: underline dotted var(--nova-marshal-border);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+
+  transition: color var(--nova-marshal-transition), text-decoration-color var(--nova-marshal-transition);
+}
+
+[data-theme="dark"] .nova-terminology {
+  text-decoration-color: var(--nova-color-text-muted);
+}
+
+/**
+ * ============================
+ * 2. Hover and `colored` variant - seal-red mark
+ * ============================
+ */
+
+.nova-terminology:hover,
+.nova-terminology:focus-visible,
+.nova-terminology-colored {
+  color: var(--nova-color-accent-700);
+  text-decoration-color: var(--nova-color-accent-600);
+}
+
+[data-theme="dark"] .nova-terminology:hover,
+[data-theme="dark"] .nova-terminology:focus-visible,
+[data-theme="dark"] .nova-terminology-colored {
+  color: var(--nova-color-accent-500);
+  text-decoration-color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 3. Linked variant - keep ledger underline
+ * ============================
+ */
+
+a.nova-terminology {
+  color: inherit;
+}
+
+a.nova-terminology:hover,
+a.nova-terminology:focus-visible {
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] a.nova-terminology:hover,
+[data-theme="dark"] a.nova-terminology:focus-visible {
+  color: var(--nova-color-accent-500);
+}

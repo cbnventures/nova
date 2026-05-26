@@ -1,5 +1,9 @@
 /**
- * Sentinel — Back to top button visual styling.
+ * Sentinel - `BackToTopButton` theme overlay.
+ *
+ * A cool neutral tile anchored bottom-right. Hairline at rest; on hover it
+ * shifts to a primary-50 surface with a primary-500 border -
+ * observability-clean, no glow.
  *
  * @since 0.15.0
  */
@@ -13,11 +17,13 @@
   right: 1rem;
   width: 36px;
   height: 36px;
-  background-color: var(--nova-color-neutral-50);
-  color: var(--nova-color-neutral-600);
-  border: 1px solid var(--nova-color-neutral-300);
+  background-color: var(--nova-color-surface-raised);
+  color: var(--nova-color-text-muted);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-shape-radius);
   transition:
+    opacity var(--nova-motion-duration) ease,
+    transform var(--nova-motion-duration) ease,
     background-color var(--nova-motion-duration) ease,
     color var(--nova-motion-duration) ease,
     border-color var(--nova-motion-duration) ease;
@@ -30,16 +36,10 @@
   border-color: var(--nova-color-primary-500);
 }
 
-[data-theme="dark"] .nova-back-to-top {
-  background-color: var(--nova-color-neutral-800);
-  border-color: var(--nova-color-neutral-700);
-  color: var(--nova-color-neutral-300);
-}
-
 [data-theme="dark"] .nova-back-to-top:hover,
 [data-theme="dark"] .nova-back-to-top:focus-visible {
   background-color: var(--nova-color-primary-800);
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
   border-color: var(--nova-color-primary-600);
 }
 
@@ -47,7 +47,6 @@
  * 2. Responsive
  * ============================ */
 
-/* md — 768px and above */
 @media (min-width: 768px) {
   .nova-back-to-top {
     bottom: 2rem;

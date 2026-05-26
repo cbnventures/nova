@@ -1,4 +1,4 @@
-import { strictEqual } from 'node:assert/strict';
+import { deepStrictEqual, strictEqual } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
@@ -19,9 +19,18 @@ describe('presetsFoundryPresetFoundry', async () => {
   it('has correct color values', () => {
     const foundry: TestsPresetsFoundryPresetFoundry = presetsFoundryPresetFoundry;
 
-    strictEqual(foundry['colors']['primary'], '#ea580c');
-    strictEqual(foundry['colors']['accent'], '#fbbf24');
-    strictEqual(foundry['colors']['neutral'], '#78716c');
+    deepStrictEqual(foundry['colors']['primary'], {
+      light: '#ea580c', dark: '#ea580c',
+    });
+    deepStrictEqual(foundry['colors']['accent'], {
+      light: '#fbbf24', dark: '#fbbf24',
+    });
+    deepStrictEqual(foundry['colors']['text'], {
+      light: '#1c1917', dark: '#e7e5e4',
+    });
+    deepStrictEqual(foundry['colors']['border'], {
+      light: '#d6d3d1', dark: '#57534e',
+    });
 
     return;
   });

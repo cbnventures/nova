@@ -1,0 +1,166 @@
+---
+title: "قواعد Warden"
+sidebar_position: 2
+description: "Warden هو محرّك التدقيق في Foundry — أكثر من 380 قاعدة عبر ست فئات، كلها مُفعَّلة افتراضيًا بصفر إعداد."
+tags:
+  - "pipeline"
+  - "linting"
+---
+
+# قواعد Warden
+
+Warden هو محرّك التدقيق في Foundry. يأتي بأكثر من 380 قاعدة عبر ست فئات، كلها مُفعَّلة افتراضيًا حين تُعلن `warden = ["strict"]` في بيانك. لا ملف إعداد. لا إرهاق قرار. مجموعة واحدة، كل القواعد.
+
+## فئات القواعد
+
+| الفئة      | القواعد | قابلة للإصلاح | التركيز                                       |
+|------------|---------|---------------|-----------------------------------------------|
+| الاتفاقيات | 68      | 12            | التسمية، والتصديرات، وبنية الملف، والخصوصية.  |
+| التنسيق    | 55      | 55            | المسافات، والتعليقات، والاتّساق البصري.       |
+| الأنماط    | 72      | 8             | تدفق المنطق، والتعيينات، وهياكل التحكم.       |
+| الأمان     | 45      | 0             | أنماط زمن التشغيل الخطرة، والتحويل الضمني.    |
+| الصياغة    | 60      | 15            | تقييدات سمات اللغة، والتوافق.                 |
+| الأنواع    | 80      | 24            | تعليقات الأنواع، والمعمّمات، وحدود الاستنتاج. |
+
+## المجموعات المسبقة
+
+المجموعات المسبقة هي مجموعات مُسمّاة من القواعد. تكدّسها في البيان، والمجموعات المتأخرة تتجاوز السابقة عند تعارض القواعد.
+
+```text title="project.grain"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+}
+```
+
+| المجموعة      | القواعد | الوصف                                   |
+|---------------|---------|-----------------------------------------|
+| `strict`      | 220     | قواعد الأمان والأنواع الأساسية. الأساس. |
+| `conventions` | 95      | أنماط التسمية والتصديرات والبنية.       |
+| `formatting`  | 65      | المسافات، وطول السطر، وأسلوب التعليقات. |
+
+:::warning
+تُفعِّل المجموعة `strict` قواعد ترفض `any` الضمني وتشترط أنواع عودة صريحة على كل الدوال المُصدَّرة. إن كنت تُهاجر قاعدة شيفرة قائمة، ابدأ بـ `conventions` وأضِف `strict` حين تتجاوز تغطية أنواعك 90%.
+:::
+
+## مستويات الخطورة
+
+لكل قاعدة أحد ثلاثة مستويات خطورة:
+
+| الخطورة | السلوك                                |
+|---------|---------------------------------------|
+| `error` | يُفشِل الطَرق. يجب إصلاحه قبل الشحن.  |
+| `warn`  | يطبع تحذيرًا. لا يُفشِل الطَرق.       |
+| `info`  | معلوماتي. يظهر فقط في الخرج التفصيلي. |
+
+## القواعد المخصّصة
+
+يمكنك تعديل قواعد بعينها في كتلة `rules` بالبيان:
+
+```text title="project.grain — overriding a rule"
+workspace "my-app" {
+  warden = ["strict"]
+
+  rules {
+    "warden/no-default-export" = "off"
+    "warden/max-params"        = ["error", { max = 5 }]
+  }
+}
+```
+
+التجاوزات صريحة، ومحفوظة بالتحكم في الإصدار، ومرئية في البيان. لا ملفات إعداد مخفية.
+
+## أمثلة على القواعد
+
+### رصد المخالفات
+
+يُبلِّغ Warden عن المخالفات باسم القاعدة ومسار الملف ورقم السطر وشرح من جملة واحدة:
+
+```text title="Warden output"
+$ foundry warden check
+
+  src/utils/format.al
+    12:1  error  warden/no-default-export   Default exports are banned in library packages.
+    34:5  warn   warden/no-shadow           Variable "result" shadows a variable in the outer scope.
+
+  src/services/notify.al
+    8:1   error  warden/require-explicit-return  Exported functions must declare a return type.
+
+  3 problems (2 errors, 1 warning)
+```
+
+### تمييز الفروق
+
+هنا قاعدة ترصد مخالفة وتُصلحها:
+
+```alloy title="Before — implicit return type"
+// remove-start
+export function formatDate(timestamp: Numeric) {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+// remove-end
+// add-start
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+// add-end
+```
+
+للقاعدة `warden/require-explicit-return` إصلاح تلقائي يستنتج نوع العودة من جسم الدالة ويُضيفه إلى التوقيع.
+
+<details>
+<summary>قائمة القواعد الكاملة حسب الفئة</summary>
+
+**الاتفاقيات (68 قاعدة)**
+
+| القاعدة                   | قابلة للإصلاح | الوصف                                           |
+|---------------------------|---------------|-------------------------------------------------|
+| `no-default-export`       | نعم           | يحظر التصديرات الافتراضية في حزم المكتبات.      |
+| `no-barrel-files`         | نعم           | يحظر ملفات فهرس إعادة التصدير.                  |
+| `require-exhaustive-deps` | لا            | يجب أن تكون كل تبعيات الدالة صريحة.             |
+| `consistent-naming`       | لا            | يفرض camelCase للمتغيّرات وPascalCase للأنواع.  |
+| `file-name-case`          | لا            | يجب أن تطابق أسماء الملفات اسم التصدير الأساسي. |
+| ...                       |               | *65 قاعدة إضافية في هذه الفئة.*                 |
+
+**الأمان (45 قاعدة)**
+
+| القاعدة                 | قابلة للإصلاح | الوصف                                        |
+|-------------------------|---------------|----------------------------------------------|
+| `no-eval`               | لا            | يحظر `eval` وبانية `Function`.               |
+| `no-implicit-coercion`  | نعم           | يشترط تحويلات أنواع صريحة.                   |
+| `no-prototype-builtins` | لا            | يحظر استدعاءات طرق النموذج الأولي المباشرة.  |
+| `no-unsafe-assignment`  | لا            | يمنع تعيين `any` لمتغيّرات مُعرَّفة الأنواع. |
+| ...                     |               | *41 قاعدة إضافية في هذه الفئة.*              |
+
+**الأنواع (80 قاعدة)**
+
+| القاعدة                   | قابلة للإصلاح | الوصف                                        |
+|---------------------------|---------------|----------------------------------------------|
+| `require-explicit-return` | نعم           | يجب أن تُعلِن الدوال المُصدَّرة أنواع عودة.  |
+| `no-implicit-any`         | لا            | يحظر `any` الضمني في كل المواضع.             |
+| `consistent-type-imports` | نعم           | يفرض `import type` للاستيراد المخصص للأنواع. |
+| `no-unnecessary-generics` | لا            | يحظر معمّمات يمكن استنتاجها.                 |
+| ...                       |               | *76 قاعدة إضافية في هذه الفئة.*              |
+
+</details>
+
+## تشغيل Warden
+
+يعمل Warden تلقائيًا أثناء مرحلة التحقق من كل طَرق. يمكنك تشغيله مستقلًا أيضًا:
+
+```bash title="Check the entire workspace"
+foundry warden check
+```
+
+```bash title="Auto-fix all fixable violations"
+foundry warden fix
+```
+
+```bash title="Check a single package"
+foundry warden check --only api
+```
+
+## الخطوات التالية
+
+- [الاختبار مع Crucible](/docs/pipeline/testing-with-crucible/) — هياكل اختبار تُكمِل قواعد Warden.
+- [خط إنتاج البناء](/docs/pipeline/build-pipeline/) — أين يقع Warden في دورة حياة Forge.
+- [مرجع CLI](/docs/reference/cli-reference/) — مرجع كامل للأوامر لـ `foundry warden`.

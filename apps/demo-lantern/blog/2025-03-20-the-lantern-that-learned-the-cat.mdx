@@ -1,0 +1,58 @@
+---
+title: "The lantern that learned the cat"
+authors:
+  - "noor"
+tags:
+  - "motion"
+  - "modes"
+---
+
+There is a lantern in the hallway that has watched the cat for three years. It knows the route — kitchen counter at 6am, sunroom by noon, hallway runner from four until dusk. The lantern dimmed itself to match.
+
+{/* truncate */}
+
+We did not teach it. It learned by being looked at. Every motion event is an answer to a question the lamp keeps quietly asking — *was that you again?* The cat does not answer, but the lamp learns anyway.
+
+The pattern holds for the household, too. The hallway light brightens by 5pm in winter. By 7pm in June. The sunroom switches off when the kitchen comes alive — they are never on at the same time, because nobody is ever in both at once.
+
+A house is a series of patterns the household never noticed. Lantern noticed.
+
+The cat's pattern took six weeks to settle. The first month the hallway lamp flickered every time the cat passed — a brief brighten, then a dim, the way an unfamiliar guest gets a half-second of attention. By the third week the brighten was shorter. By the fifth it was gone. The cat had moved into the lamp's mental model the way it had already moved into the kitchen counter and the sunroom and the runner. The lamp stopped reacting because the lamp had decided the cat was the lamp's idea of normal.
+
+A learned pattern is not a rule. It is a soft expectation. The lamp will still notice the cat — the history will still write the row, the confidence band will still fire — but it will not raise its voice. If the cat skipped the runner for a week, the lamp would notice that, too, and quietly tell the dashboard. *The cat has not used the runner since Monday.* That is the kind of question we built history to answer.
+
+The lamp keeps its expectations in a file the household never edits. It writes its own.
+
+```yaml title="lantern.events.yml"
+learned:
+  hallway-runner:
+    cat:
+      first-seen:    2022-03-08
+      events:        148,221
+      typical-window: 16:00–dusk
+      typical-band:  low-floor-drift
+      anomaly-rate:  0.4%
+  kitchen-counter:
+    cat:
+      first-seen:    2022-03-09
+      events:         62,940
+      typical-window: 06:00–07:00, 21:00–22:00
+      typical-band:  low-counter-jump
+      anomaly-rate:  1.1%
+```
+
+The numbers are the lamp's diary. We read them sometimes the way you read a household calendar — to remember what you already knew. The cat has been on the counter sixty-two thousand times. The cat has been on the runner one hundred and forty-eight thousand. The cat is not a guest in this house. The lamp learned that long before we admitted it.
+
+When the household wants the lamp's diary in a hurry, the command is short and the answer is shorter:
+
+```bash
+$ lantern history --learned --subject cat
+zone              first-seen   events    typical-window     anomaly-rate
+hallway-runner    2022-03-08   148,221   16:00–dusk         0.4%
+kitchen-counter   2022-03-09    62,940   06:00–07:00,       1.1%
+                                         21:00–22:00
+sunroom-floor     2022-04-12    41,108   11:00–13:00        0.2%
+bedroom-window    2024-08-21       217   midnight (rare)    8.6%
+```
+
+The bedroom-window row is the one that surprised us. The cat had been getting onto the bedroom window sill in the middle of the night, briefly, for over a year before we noticed. The lamp had been writing the row the whole time. The anomaly rate is high because the events are rare — the cat does it about once a fortnight, on warm nights, when the sash is open a half-inch. The lamp learned the pattern and never raised its voice. The household learned about it on a Sunday afternoon, with a cup of coffee, by reading the diary the lamp had been keeping all along.

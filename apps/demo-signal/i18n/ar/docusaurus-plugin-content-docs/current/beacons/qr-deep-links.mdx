@@ -1,0 +1,117 @@
+---
+title: "QR والروابط العميقة"
+sidebar_position: 2
+description: "يُنشئ Flare رموز QR وروابط عميقة تجسر بين الإسناد المادي والرقمي. كل مسح ضوئي يحمل سلسلة الإسناد الكاملة."
+tags:
+  - "beacons"
+  - "qr codes"
+---
+
+# QR والروابط العميقة
+
+يُنشئ Flare رموز QR وروابط عميقة تجسر بين الإسناد المادي والرقمي. كل مسح ضوئي يحمل سلسلة الإسناد الكاملة، الحملة والقناة والصيغة والأثر، من ملصق مطبوع إلى حدث تحويل.
+
+## لماذا Flare
+
+رمز QR على لافتة مؤتمر هو نقرة تبدأ في العالم المادي. بدون Flare، تكون تلك النقرة حركة مظلمة، لا مُحيل ولا معاملات UTM ولا إسناد. مع Flare، يصبح رمز QR رابط Beacon في شكل بصري. يحمل كل قطعة بيانات يحملها رابط Beacon رقمي.
+
+## إنشاء رمز QR من Flare
+
+أنشئ رابط Flare وولّد رمز QR في خطوة واحدة:
+
+```bash title="توليد رمز QR من Flare"
+signal flare create \
+  --url "https://threadbare.example/register" \
+  --campaign "conf-2025" \
+  --channel "event" \
+  --variant "main-stage-banner" \
+  --format svg \
+  --size 1024 \
+  --output ./main-stage-qr.svg
+```
+
+```json title="استجابة Flare"
+{
+  "id": "flr_01J9Q5S7T9U1V3W2X4Y6Z8A0",
+  "shortUrl": "https://go.signal.example/c2025ms",
+  "qrFile": "./main-stage-qr.svg",
+  "attribution": {
+    "campaign": "conf-2025",
+    "channel": "event",
+    "variant": "main-stage-banner",
+    "trace": "trc_4a7b3c8d9e0f1234"
+  },
+  "format": "svg",
+  "size": 1024
+}
+```
+
+ملف SVG جاهز للطباعة بأي دقة. ويتضمن رابط Beacon المضمَّن بيانات الإسناد الكاملة.
+
+:::info[دقة الطباعة]
+للمواد المطبوعة، ولّد بدقة 1024 بكسل أو أعلى. تستخدم رموز QR من Flare مستوى تصحيح الأخطاء H (مرتفع)، وهذا يعني أن نسبة تصل إلى 30% من الرمز يمكن أن تكون محجوبة أو متضررة ويظل المسح ناجحاً. للوحات الإعلانات والمطبوعات الكبيرة، استخدم `--size 2048`.
+:::
+
+## الروابط العميقة
+
+يُنشئ Flare أيضاً روابط عميقة لتطبيقات الهاتف. حين يمسح المستخدم رمز QR من Flare أو يضغط رابطاً عميقاً، يفتح التطبيق مباشرةً على الشاشة المستهدفة مع تمرير بيانات الإسناد كمعاملات:
+
+```bash title="توليد رابط عميق"
+signal flare create \
+  --url "https://threadbare.example/register" \
+  --deep-link "signal://register?ref=conf-2025" \
+  --campaign "conf-2025" \
+  --channel "event" \
+  --variant "badge-scan"
+```
+
+```json title="استجابة الرابط العميق"
+{
+  "id": "flr_01J9R6T8U0V2W3X5Y7Z9A1B3",
+  "shortUrl": "https://go.signal.example/c2025bs",
+  "deepLink": "signal://register?ref=conf-2025",
+  "fallbackUrl": "https://threadbare.example/register",
+  "attribution": {
+    "campaign": "conf-2025",
+    "channel": "event",
+    "variant": "badge-scan",
+    "trace": "trc_5b8c4d9e0f1a2345"
+  }
+}
+```
+
+إذا كان التطبيق مثبتاً، يفتحه الرابط العميق. وإن لم يكن، يُعاد توجيه المستخدم إلى عنوان URL الاحتياطي. يُحفظ الإسناد في كلا المسارين.
+
+## إسناد المسح الضوئي
+
+حين يُمسَح رمز QR من Flare، تعمل سلسلة الإسناد بشكل مطابق لنقرة Beacon رقمية:
+
+1. يمسح المستخدم رمز QR.
+2. تنطلق إعادة توجيه Beacon (زمن استجابة 2 ميلي ثانية).
+3. يلتقط Pulse حدث النقرة مع بيانات الموقع الجغرافي والجهاز والمُحيل.
+4. يربط معرّف الأثر هذا المسح بأي نقاط تماس وتحويلات مستقبلية.
+
+استعلم عن بيانات المسح بالطريقة نفسها التي تستعلم بها عن أي نقرة Beacon:
+
+```bash title="استعلام مسحات Flare"
+signal pulse events --campaign "conf-2025" --channel "event"
+```
+
+## توليد QR بالجملة
+
+ولِّد رموز QR لحملة كاملة بأمر واحد:
+
+```bash title="توليد QR بالجملة"
+signal flare batch \
+  --input ./conference-links.csv \
+  --format png \
+  --size 512 \
+  --output-dir ./qr-codes/
+```
+
+يربط ملف CSV الوجهات ببيانات الحملة. يُولِّد Flare رمز QR واحداً لكل صف بروابط Beacon ومعرّفات أثر فريدة.
+
+## الخطوات التالية
+
+- [العمليات بالجملة](/docs/beacons/batch-operations/) — استورد الروابط بالجملة عبر CSV أو Spoke API.
+- [إسناد النقرات](/docs/attribution/click-attribution/) — انظر كيف تسهم مسحات Flare في مسارات إسناد Prism.

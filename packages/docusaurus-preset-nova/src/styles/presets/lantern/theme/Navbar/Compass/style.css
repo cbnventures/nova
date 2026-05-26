@@ -1,0 +1,401 @@
+/**
+ * Lantern - `Navbar/Compass` theme overlay.
+ *
+ * Sticky warm cream awning with the italic Fraunces brand wordmark left,
+ * mono uppercase carved navigation labels flowing beside it, and amber
+ * utility actions at the far right.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Bar layout - items left-grouped beside brand, actions floated right
+ * ============================ */
+
+.nova-navbar-compass > .nova-container {
+  gap: var(--nova-shape-gap);
+}
+
+.nova-navbar-compass-items {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nova-navbar-compass-items {
+    display: flex;
+  }
+}
+
+/* ============================
+ * 2. Container - sticky warm cream awning
+ * ============================ */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+
+  padding-block: 0.75rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border-bottom: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .navbar {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+}
+
+/* ============================
+ * 3. Brand wordmark - italic Fraunces
+ * ============================ */
+
+.nova-navbar-compass-brand {
+  display: flex;
+  align-items: center;
+}
+
+.nova-navbar-compass-brand a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: "opsz" 36;
+  font-size: 1.125rem;
+  color: var(--nova-lantern-ink);
+
+  transition: color var(--nova-lantern-transition);
+}
+
+.nova-navbar-compass-brand img {
+  height: 1.75rem;
+  width: auto;
+}
+
+.nova-navbar-compass-brand a:hover,
+.nova-navbar-compass-brand a:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-compass-brand a:hover,
+[data-theme="dark"] .nova-navbar-compass-brand a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 4. Nav items - mono uppercase carved labels
+ * ============================ */
+
+.nova-navbar-compass-items a,
+.nova-navbar-compass-items .nova-navbar-more-summary {
+  min-height: 2.25rem;
+  padding: 0.375rem 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nova-lantern-ink-muted);
+  text-decoration: none;
+  border-radius: 6px;
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):hover,
+.nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
+.nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
+.nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
+.nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  text-decoration: none;
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):hover,
+[data-theme="dark"] .nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+}
+
+/* ============================
+ * 5. Active link - amber pin (filled tint + ink color)
+ *
+ * Matches `.nova-locale-dropdown-item--active` chrome so the navbar items,
+ * More popover, and locale popover all read the same on hover/active.
+ * `:has()` promotes the More trigger when an item inside is the current
+ * page.
+ * ============================ */
+
+.nova-navbar-compass-items a[aria-current="page"],
+.nova-navbar-compass-items a.navbar__link--active,
+.nova-navbar-compass-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
+.nova-navbar-compass-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+  font-weight: 600;
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+[data-theme="dark"] .nova-navbar-compass-items a[aria-current="page"],
+[data-theme="dark"] .nova-navbar-compass-items a.navbar__link--active,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 76%);
+}
+
+/* ============================
+ * 6. Hamburger toggle - cream-tinted button (mobile only)
+ * ============================ */
+
+.nova-navbar-compass .nova-hamburger-toggle {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-navbar-compass .nova-hamburger-toggle:hover,
+.nova-navbar-compass .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow);
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-navbar-compass .nova-hamburger-toggle {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-navbar-compass .nova-hamburger-toggle:hover,
+[data-theme="dark"] .nova-navbar-compass .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+@media (min-width: 1024px) {
+  .nova-navbar-compass .nova-hamburger-toggle {
+    display: none;
+  }
+}
+
+/* ============================
+ * 7. Color mode toggle - cream-tinted button
+ * ============================ */
+
+.nova-navbar-compass .nova-color-mode-toggle {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-navbar-compass .nova-color-mode-toggle:hover,
+.nova-navbar-compass .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow);
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-navbar-compass .nova-color-mode-toggle {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-navbar-compass .nova-color-mode-toggle:hover,
+[data-theme="dark"] .nova-navbar-compass .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 8. Mobile menu overlay - warm dark backdrop with blur
+ * ============================ */
+
+.nova-navbar-compass-menu-overlay {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  background-color: color-mix(in srgb, var(--nova-color-text), transparent 40%);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-overlay {
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--nova-color-background), #000000 8%), transparent 30%);
+}
+
+/* ============================
+ * 9. Mobile menu panel - warm cream paper card
+ * ============================ */
+
+.nova-navbar-compass-menu-panel {
+  background-color: var(--nova-lantern-bg);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--nova-color-primary-700), transparent 80%);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-panel {
+  border-color: var(--nova-lantern-border);
+  box-shadow: 0 12px 32px color-mix(in srgb, color-mix(in srgb, var(--nova-color-background), #000000 8%), transparent 50%);
+  background-blend-mode: overlay;
+}
+
+/* ============================
+ * 10. Mobile menu brand wordmark
+ * ============================ */
+
+.nova-navbar-compass-menu-brand a {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: "opsz" 36;
+  font-size: 1.15rem;
+  color: var(--nova-lantern-ink);
+}
+
+/* ============================
+ * 12. Mobile menu close - cream-tinted button
+ * ============================ */
+
+.nova-navbar-compass-menu-close {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-color: var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition);
+}
+
+.nova-navbar-compass-menu-close:hover,
+.nova-navbar-compass-menu-close:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-close {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-close:hover,
+[data-theme="dark"] .nova-navbar-compass-menu-close:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 13. Mobile menu items - mono uppercase carved labels
+ * ============================ */
+
+.nova-navbar-compass-menu-item {
+  gap: 0.75rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: "opsz" 36;
+  font-size: 1rem;
+  color: var(--nova-lantern-ink);
+  border-radius: 6px;
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition);
+}
+
+/* External-link arrow - tint amber to match the Lantern voice */
+.nova-navbar-compass-menu-panel .nova-navbar-compass-menu-items a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-panel .nova-navbar-compass-menu-items a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-400);
+}
+
+.nova-navbar-compass-menu-item:hover,
+.nova-navbar-compass-menu-item:focus-visible {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-item:hover,
+[data-theme="dark"] .nova-navbar-compass-menu-item:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+/* Active item - amber tint background */
+.nova-navbar-compass-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 76%);
+}
+
+/* Inline icon glyph - amber tint */
+.nova-navbar-compass-menu-item svg {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-item svg {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Mobile Menu - Staggered Reveal
+ *
+ * Reuses preset-level `lantern-fade-in-up`. Items stagger 50ms -
+ * preset declares `motion.staggeredReveals: true`.
+ * ============================ */
+
+.nova-navbar-compass-menu-item {
+  opacity: 0;
+
+  animation: lantern-fade-in-up var(--nova-lantern-transition) forwards;
+  animation-delay: calc(var(--nova-item-index, 0) * 50ms + 50ms);
+}
+

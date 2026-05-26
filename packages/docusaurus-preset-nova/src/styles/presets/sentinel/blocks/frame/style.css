@@ -1,0 +1,29 @@
+/**
+ * Sentinel - `frame` component overlay.
+ *
+ * Thin accent-tinted border with a soft console-card shadow -
+ * monitoring-panel aesthetic. Caption uses Plex Display for the
+ * sentinel UI continuity.
+ *
+ * @since 0.18.0
+ */
+
+.nova-frame-media {
+  border: 1px solid var(--nova-color-accent-300);
+
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.04), 0 4px 12px rgb(0 0 0 / 0.06);
+}
+
+[data-theme="dark"] .nova-frame-media {
+  border-color: var(--nova-color-accent-700);
+
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.2), 0 8px 24px rgb(0 0 0 / 0.15);
+}
+
+.nova-frame-caption {
+  margin-top: 0.75rem;
+
+  font-family: var(--nova-font-display);
+  font-size: 0.875rem;
+  color: var(--nova-sentinel-text-muted);
+}

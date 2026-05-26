@@ -1,0 +1,46 @@
+---
+title: "Your First Watch"
+sidebar_position: 2
+description: "Discover the hub, name a zone, and arm a single device. The smallest possible perimeter, in three steps."
+tags:
+  - "setup"
+  - "tutorial"
+---
+
+# Your First Watch
+
+A first watch is the smallest possible perimeter: one zone, one device, one quiet evening.
+
+## Step 1: Discover the Hub
+
+```bash
+lantern hub discover
+```
+
+Lantern locates the HomeKit Home Hub on the network and pairs without a fuss.
+
+## Step 2: Name a Zone
+
+```bash
+lantern zone create perimeter --device front-door
+```
+
+A zone with one device is still a zone. Lantern treats it the same way it treats the whole house.
+
+## Step 3: Arm It
+
+```bash
+lantern arm perimeter
+```
+
+The front door is watched. Lantern says nothing until something happens, and even then, gently.
+
+## What Just Happened
+
+You discovered a hub, named a zone, and armed it. The porch is now part of the watch.
+
+## Next Steps
+
+- [Zones](/docs/zones/overview/) — Add more zones beyond the porch.
+- [Events](/docs/events/overview/) — Watch the event stream as the household moves.
+- [Handoffs](/docs/zones/handoffs/) — Hand off arm/disarm to someone you trust.

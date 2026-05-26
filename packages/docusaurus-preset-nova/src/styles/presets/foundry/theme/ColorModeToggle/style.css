@@ -1,0 +1,24 @@
+/**
+ * Foundry - `ColorModeToggle` theme overlay.
+ *
+ * Tiny-surface fallback baseline for the light/dark switch icon. Variant
+ * overlays already scope this inside the active navbar variant; this
+ * wrapper provides defaults for any consumer who renders the toggle
+ * outside a variant.
+ *
+ * @since 0.18.0
+ */
+
+.nova-color-mode-toggle {
+  color: var(--nova-color-text-muted);
+}
+
+.nova-color-mode-toggle:hover,
+.nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-color-mode-toggle:hover,
+[data-theme="dark"] .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-400);
+}

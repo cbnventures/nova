@@ -1,11 +1,18 @@
 /**
- * Back To Top Button — Component structural styles.
+ * Back To Top Button - Shared structural styles.
+ *
+ * The button is always mounted but toggles via `data-visible` so the show/hide
+ * motion can animate cleanly (instead of popping in/out via React mount).
+ * Color/surface/border/shape identity lives in each preset's overlay; the
+ * fade + slide-in motion lives here, tokenized so per-preset can opt out
+ * (e.g. Marshal sets `--nova-back-to-top-transform-hidden: none` for
+ * opacity-only motion).
  *
  * @since 0.15.0
  */
 
 /* ============================
- * Back To Top — Button
+ * Back To Top - Button
  * ============================ */
 
 .nova-back-to-top {
@@ -18,6 +25,19 @@
 
   border: none;
   cursor: pointer;
+
+  opacity: 0;
+  pointer-events: none;
+  transform: var(--nova-back-to-top-transform-hidden, translateY(8px));
+  transition:
+    opacity var(--nova-back-to-top-transition-duration, 220ms) var(--nova-back-to-top-transition-easing, var(--nova-motion-easing)),
+    transform var(--nova-back-to-top-transition-duration, 220ms) var(--nova-back-to-top-transition-easing, var(--nova-motion-easing));
+}
+
+.nova-back-to-top[data-visible="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: var(--nova-back-to-top-transform-shown, translateY(0));
 }
 
 .nova-back-to-top:active {

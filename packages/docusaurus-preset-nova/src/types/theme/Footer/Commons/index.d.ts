@@ -1,4 +1,5 @@
 import type { IconifyIcon } from '@iconify/react/offline';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Footer - Commons.
@@ -26,6 +27,17 @@ export type ThemeFooterCommonsIndexCopyright = string;
 
 export type ThemeFooterCommonsIndexCredit = boolean;
 
+export type ThemeFooterCommonsIndexCtaObjectLabel = string;
+
+export type ThemeFooterCommonsIndexCtaObjectHref = string;
+
+export type ThemeFooterCommonsIndexCtaObject = {
+  label: ThemeFooterCommonsIndexCtaObjectLabel;
+  href: ThemeFooterCommonsIndexCtaObjectHref;
+};
+
+export type ThemeFooterCommonsIndexCta = string | ThemeFooterCommonsIndexCtaObject | undefined;
+
 export type ThemeFooterCommonsIndexCommonsPropsSections = ThemeFooterCommonsIndexSections;
 
 export type ThemeFooterCommonsIndexCommonsPropsLayout = ThemeFooterCommonsIndexLayout;
@@ -36,12 +48,24 @@ export type ThemeFooterCommonsIndexCommonsPropsCopyright = ThemeFooterCommonsInd
 
 export type ThemeFooterCommonsIndexCommonsPropsCredit = ThemeFooterCommonsIndexCredit;
 
+export type ThemeFooterCommonsIndexCommonsPropsCta = ThemeFooterCommonsIndexCta;
+
+export type ThemeFooterCommonsIndexCommonsPropsCtaContained = boolean;
+
+export type ThemeFooterCommonsIndexCommonsPropsClassName = string | undefined;
+
+export type ThemeFooterCommonsIndexCommonsPropsStyle = CSSProperties | undefined;
+
 export type ThemeFooterCommonsIndexCommonsProps = {
   sections: ThemeFooterCommonsIndexCommonsPropsSections;
   layout: ThemeFooterCommonsIndexCommonsPropsLayout;
   socialLinks: ThemeFooterCommonsIndexCommonsPropsSocialLinks;
   copyright: ThemeFooterCommonsIndexCommonsPropsCopyright;
   credit: ThemeFooterCommonsIndexCommonsPropsCredit;
+  cta?: ThemeFooterCommonsIndexCommonsPropsCta;
+  ctaContained: ThemeFooterCommonsIndexCommonsPropsCtaContained;
+  className?: ThemeFooterCommonsIndexCommonsPropsClassName;
+  style?: ThemeFooterCommonsIndexCommonsPropsStyle;
 };
 
 export type ThemeFooterCommonsIndexCommonsReturns = React.JSX.Element;
@@ -56,11 +80,17 @@ export type ThemeFooterCommonsIndexCommonsCopyright = ThemeFooterCommonsIndexCop
 
 export type ThemeFooterCommonsIndexCommonsCredit = ThemeFooterCommonsIndexCredit;
 
+export type ThemeFooterCommonsIndexCommonsCta = ThemeFooterCommonsIndexCta;
+
+export type ThemeFooterCommonsIndexCommonsCtaContained = boolean;
+
 export type ThemeFooterCommonsIndexCommonsFooterClassName = string;
 
 export type ThemeFooterCommonsIndexCommonsLayoutEntries = [string, ThemeFooterCommonsIndexLayoutSlot][];
 
 export type ThemeFooterCommonsIndexCommonsSocialLinksAriaLabel = string;
+
+export type ThemeFooterCommonsIndexCommonsExternalLinkAriaLabel = string;
 
 export type ThemeFooterCommonsIndexCommonsLayoutEntry = [string, ThemeFooterCommonsIndexLayoutSlot];
 
@@ -86,3 +116,5 @@ export type ThemeFooterCommonsIndexSocialLink = {
   href: ThemeFooterCommonsIndexSocialLinkHref;
   label: ThemeFooterCommonsIndexSocialLinkLabel;
 };
+
+export type ThemeFooterCommonsIndexCommonsSocialLinkLabel = string;

@@ -130,7 +130,7 @@ export class RulesEslintTypescriptRequireTypeNaming {
     );
 
     return segments.map((segment) => {
-      // PascalCase filenames (e.g., MDXComponents) — normalize abbreviations.
+      // PascalCase filenames (e.g., MDXComponents) - normalize abbreviations.
       if (segment.includes('-') === false && segment.charAt(0) === segment.charAt(0).toUpperCase()) {
         const words: RulesEslintTypescriptRequireTypeNamingDerivePrefixWords = segment.match(new RegExp(LIB_REGEX_PATTERN_CAMEL_CASE_WORDS.source, 'g'));
 

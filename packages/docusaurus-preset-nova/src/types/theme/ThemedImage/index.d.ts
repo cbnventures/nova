@@ -22,12 +22,15 @@ export type ThemeThemedImageThemedImagePropsHeight = string | number | undefined
 
 export type ThemeThemedImageThemedImagePropsStyle = React.CSSProperties | undefined;
 
+export type ThemeThemedImageThemedImagePropsClassName = string | undefined;
+
 export type ThemeThemedImageThemedImageProps = {
   alt?: ThemeThemedImageThemedImagePropsAlt;
   sources: ThemeThemedImageThemedImagePropsSources;
   width?: ThemeThemedImageThemedImagePropsWidth;
   height?: ThemeThemedImageThemedImagePropsHeight;
   style?: ThemeThemedImageThemedImagePropsStyle;
+  className?: ThemeThemedImageThemedImagePropsClassName;
   [key: string]: unknown;
 };
 

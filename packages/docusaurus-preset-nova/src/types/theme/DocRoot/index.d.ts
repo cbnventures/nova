@@ -1,13 +1,23 @@
 import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
 import type { Props as DocRootModuleProps } from '@theme/DocRoot';
-import type { ReactNode } from 'react';
+import type {
+  CSSProperties,
+  ReactNode,
+} from 'react';
 
 /**
  * Theme - Doc Root - Doc Root.
  *
  * @since 0.15.0
  */
-export type ThemeDocRootDocRootProps = DocRootModuleProps;
+export type ThemeDocRootDocRootPropsClassName = string | undefined;
+
+export type ThemeDocRootDocRootPropsStyle = CSSProperties | undefined;
+
+export type ThemeDocRootDocRootProps = DocRootModuleProps & {
+  className?: ThemeDocRootDocRootPropsClassName;
+  style?: ThemeDocRootDocRootPropsStyle;
+};
 
 export type ThemeDocRootDocRootRouteMetadataDocElement = ReactNode;
 
@@ -21,3 +31,5 @@ export type ThemeDocRootDocRootRouteMetadata = {
   sidebarItems: ThemeDocRootDocRootRouteMetadataSidebarItems;
   [key: string]: unknown;
 } | null;
+
+export type ThemeDocRootDocRootMergedClassName = string;

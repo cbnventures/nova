@@ -1,0 +1,45 @@
+---
+title: "API 参考"
+sidebar_position: 1
+description: "Lantern 的 Spoke API——列出分区、布防 / 撤防、回放事件、读取历史。刻意做得很小。"
+tags:
+  - "参考"
+  - "api"
+---
+
+# API 参考
+
+Lantern 的 Spoke API 是刻意做得小巧的。大多数家庭根本用不到它。
+
+## 基址
+
+```
+https://lantern.local/api
+```
+
+## 端点
+
+| 方法     | 路径                        | 说明                    |
+|--------|---------------------------|-----------------------|
+| `GET`  | `/api/zones`              | 列出 Lantern 正在看守的所有分区。 |
+| `POST` | `/api/zones/:name/arm`    | 按名称为分区布防。             |
+| `POST` | `/api/zones/:name/disarm` | 按名称为分区撤防。             |
+| `GET`  | `/api/events`             | 回放事件流。                |
+| `GET`  | `/api/history`            | 读取传感器历史账册。            |
+| `GET`  | `/api/mode`               | 获取当前家庭模式。             |
+| `POST` | `/api/mode`               | 设置旅行、睡前或常规模式。         |
+
+## 示例
+
+```bash
+curl https://lantern.local/api/zones \
+  -H "Authorization: Bearer $LANTERN_TOKEN"
+```
+
+返回会列出每个分区、其设备，以及它当前是否处于布防状态。仅此而已，绝不喧哗。
+
+## 下一步
+
+- [事件](/docs/events/overview/) — API 回放的那道事件流。
+- [传感器历史](/docs/events/sensor-history/) — API 读取的那本账册。
+- [集成](/docs/zones/integrations/) — 使用 Spoke API 的自定义集成。

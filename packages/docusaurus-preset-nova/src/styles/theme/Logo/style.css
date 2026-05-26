@@ -1,0 +1,9 @@
+/**
+ * Logo - Shared structural styles.
+ *
+ * Brand `<img>`/`<span>` shared by navbar variants. Visual identity (sizing,
+ * filter, hover) lives in the navbar variant overlays - this file is a
+ * placeholder for any structural rules common to every preset.
+ *
+ * @since 0.18.0
+ */

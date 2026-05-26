@@ -1,0 +1,104 @@
+/**
+ * Marshal - `features` component overlay.
+ *
+ * Hairline-bordered ledger cards arranged on a paper field. Card
+ * surface and hover are declared in preset.css; this file supplies
+ * the inner section rhythm, icon swatch, title voice, and description
+ * tone. Card icons render as a small accent-red bookplate.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Features - section rhythm
+ * ============================
+ */
+
+.nova-features-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/**
+ * ============================
+ * 2. Heading - ledger title
+ * ============================
+ */
+
+.nova-features-heading {
+  margin: 0 0 2rem;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .nova-features-heading {
+    margin-bottom: 3rem;
+  }
+}
+
+/**
+ * ============================
+ * 3. Card icon - bookplate swatch
+ * ============================
+ */
+
+.nova-feature-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: 0.75rem;
+
+  color: var(--nova-color-accent-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 92%);
+  border: 1px solid color-mix(in srgb, var(--nova-color-accent-500), transparent 80%);
+  border-radius: 2px;
+}
+
+[data-theme="dark"] .nova-feature-card-icon {
+  color: var(--nova-color-accent-500);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 86%);
+  border-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 70%);
+}
+
+/**
+ * ============================
+ * 4. Card title - Plex Serif
+ * ============================
+ */
+
+.nova-feature-card-title {
+  margin: 0 0 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+}
+
+@media (min-width: 768px) {
+  .nova-feature-card-title {
+    font-size: 1.125rem;
+  }
+}
+
+/**
+ * ============================
+ * 5. Card description
+ * ============================
+ */
+
+.nova-feature-card-description {
+  margin: 0;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--nova-marshal-ink-muted);
+}

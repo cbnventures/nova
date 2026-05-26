@@ -1,0 +1,28 @@
+/**
+ * Marshal - `DocItem/Content` theme overlay.
+ *
+ * Article-rhythm rules (paragraphs, lists, blockquotes, hr, tables, strong,
+ * em) live in the `MDXContent` overlay scoped to `.nova-mdx-content` so
+ * they apply uniformly across docs, blog posts, and standalone MDX pages.
+ * This file is reserved for rules that are truly specific to the doc
+ * article shell - currently the synthetic title-row divider that DocItem
+ * renders above the MDX body, which has no analog in blog or page contexts.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Synthetic title header - DocItem-only divider
+ * ============================
+ */
+
+.nova-doc-content-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-doc-content-header {
+  border-bottom-color: var(--nova-marshal-border);
+}

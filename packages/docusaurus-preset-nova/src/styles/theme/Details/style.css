@@ -1,11 +1,43 @@
 /**
- * Details — Component structural styles.
+ * Details - Component structural styles.
  *
  * @since 0.15.0
  */
 
 /* ============================
- * Details — Summary Button
+ * Details - Tokens
+ *
+ * Component-tier defaults for the disclosure surface
+ * (HTML <details> element). Three bg facets express
+ * default / hover / strong intensity. Preset overlays
+ * re-bind to preset identity primitives.
+ * ============================ */
+
+:root {
+  --nova-disclosure-bg: var(--nova-color-background);
+  --nova-disclosure-bg-hover: var(--nova-color-surface-raised);
+  --nova-disclosure-bg-strong: rgba(255, 255, 255, 0.95);
+}
+
+[data-theme="dark"] {
+  --nova-disclosure-bg-strong: rgba(0, 0, 0, 0.85);
+}
+
+/* ============================
+ * Details - Container rhythm
+ *
+ * `margin-bottom`-only because the disclosure is typically preceded by a
+ * paragraph or list whose own bottom margin handles the top gap via
+ * margin-collapse. Per-preset Details overlays override
+ * `--nova-details-margin-block-end` via the rename+alias chain.
+ * ============================ */
+
+.nova-details {
+  margin-bottom: var(--nova-details-margin-block-end, 1rem);
+}
+
+/* ============================
+ * Details - Summary Button
  * ============================ */
 
 .nova-details-summary {
@@ -27,7 +59,7 @@
 }
 
 /* ============================
- * Details — Arrow
+ * Details - Arrow
  * ============================ */
 
 .nova-details-arrow {
@@ -41,7 +73,7 @@
 }
 
 /* ============================
- * Details — Label
+ * Details - Label
  * ============================ */
 
 .nova-details-label {
@@ -62,6 +94,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  color: inherit;
   font-size: inherit;
   font-weight: inherit;
   line-height: inherit;
@@ -72,7 +105,7 @@
 }
 
 /* ============================
- * Details — Content (animated show/hide)
+ * Details - Content (animated show/hide)
  * ============================ */
 
 .nova-details-content {
@@ -91,7 +124,7 @@
 }
 
 /* ============================
- * Details — Content Body
+ * Details - Content Body
  * ============================ */
 
 .nova-details-content-body > :first-child {

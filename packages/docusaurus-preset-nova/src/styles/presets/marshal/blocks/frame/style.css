@@ -1,0 +1,26 @@
+/**
+ * Marshal - `frame` component overlay.
+ *
+ * Clean rectangular frame with a warm beige hairline border on all four
+ * sides plus inner padding - reads as an archival print held in a paper
+ * mat. Caption uses mono uppercase tracking for a filed-record stamp
+ * continuity. Border token auto-flips with mode (no dark override needed).
+ *
+ * @since 0.18.0
+ */
+
+.nova-frame-media {
+  padding: 0.5rem;
+
+  border: 1px solid var(--nova-marshal-border);
+}
+
+.nova-frame-caption {
+  margin-top: 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+}

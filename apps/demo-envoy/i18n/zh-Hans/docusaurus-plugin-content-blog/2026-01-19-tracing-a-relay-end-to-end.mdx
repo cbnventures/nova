@@ -1,0 +1,89 @@
+---
+title: "用 Ledger 端到端追踪一条中继"
+authors:
+  - "nneka"
+tags:
+  - "observability"
+  - "latency"
+  - "infrastructure"
+date: "2026-01-19"
+---
+
+一位客户反映他们的支付确认 webhook 迟到了 4.7 秒。不是失败——是延迟到达。webhook 投递成功、回执有效、Glassboard 的状态是绿色。但支付确认却在事件发生后 4.7 秒才出现在他们的系统里，而 SLA 要求是 2 秒以内。
+
+要找出这 4.7 秒花在了哪里，得把一条中继沿着流水线每个阶段端到端追一遍。下面是这个过程的样子。
+
+{/* truncate */}
+
+## 追踪
+
+每一条通过 Courier 的中继都会在接收阶段获得唯一的中继 ID。Ledger 会为该中继的每一次状态转换写下一条带时间戳的记录。要追踪某条中继，只需以中继 ID 查询 Ledger。
+
+```text title="ledger 查询 — 中继 rel_c4a8f2d1"
+$ envoy ledger trace rel_c4a8f2d1
+
+Stage            Timestamp                Duration   Status
+─────────────────────────────────────────────────────────────
+Receive          2026-01-18T09:14:02.114Z    —       OK
+Authenticate     2026-01-18T09:14:02.117Z   3ms      OK (hmac-sha256)
+Transform        2026-01-18T09:14:02.118Z   1ms      OK (parcel: stripe)
+Route            2026-01-18T09:14:02.118Z   0ms      OK (dispatch: spoke://payments)
+Deliver [1]      2026-01-18T09:14:02.119Z   —        FAILED (503)
+Backoff [1]      2026-01-18T09:14:02.119Z   1.2s     —
+Deliver [2]      2026-01-18T09:14:03.319Z   —        FAILED (503)
+Backoff [2]      2026-01-18T09:14:03.320Z   3.1s     —
+Deliver [3]      2026-01-18T09:14:06.420Z   412ms    OK (200)
+Receipt          2026-01-18T09:14:06.832Z   —        VALID
+─────────────────────────────────────────────────────────────
+Total elapsed:   4.718s
+Delivery attempts: 3
+Final status:    DELIVERED
+```
+
+一目了然。4.718 秒，构成清楚：前两次投递返回 503，触发两次退避（1.2 秒与 3.1 秒）；第三次投递成功，但耗时 412ms——远高于该目的地通常 8ms 的响应时间。
+
+## 找到目的地侧的问题
+
+503 错误指向了客户的支付处理端点，而不是 Courier。他们的端点正在做滚动更新，处于切换中途，会对新请求返回 503——而这段切换窗口恰好与 webhook 投递窗口重叠。
+
+```text title="目的地时间线 — 客户的支付端点"
+09:14:00  Rolling deploy starts
+09:14:00  Pod 1 draining (returns 503 to new requests)
+09:14:02  Webhook arrives → routed to Pod 1 → 503
+09:14:03  Retry → routed to Pod 1 → 503 (still draining)
+09:14:05  Pod 2 starts accepting traffic
+09:14:06  Retry → routed to Pod 2 → 200 (success, but cold start adds latency)
+09:14:10  Rolling deploy complete
+```
+
+客户的部署花了 10 秒，Courier 的重试窗口与排空期完美重叠。第三次尝试成功是因为 Pod 2 开始接客了，而 412ms 的响应时间反映出新 Pod 的冷启动开销。
+
+## 解决方案
+
+客户面前有两条路：
+
+1. **拉长部署窗口。** 让旧 Pod 继续接客的时间更久，直到新 Pod 完全预热——以此压缩 503 窗口。
+2. **匹配 Courier 的重试节奏。** 把初始退避从 1 秒改为 5 秒，让第一次重试落在部署窗口关闭之后。
+
+他们选了第一条。把部署的 drain 时间从 2 秒延长到 15 秒后，部署期间的 503 错误彻底消失。
+
+## Ledger 记录什么
+
+追踪中每一行都对应 Ledger 里一条独立记录。每条记录包含：
+
+- **中继 ID** — 中继的唯一标识
+- **阶段** — 产生该记录的流水线阶段
+- **时间戳** — 纳秒精度的墙钟时间
+- **耗时** — 该阶段所花时间（适用时）
+- **状态** — 阶段结果（OK、FAILED、TIMEOUT、SKIPPED）
+- **元数据** — 阶段相关的细节（错误码、重试计数、响应正文）
+
+Ledger 默认保留 30 天的记录，死信中继的记录会保留 90 天，所有记录都可通过 Spoke API 查询。
+
+存储成本约为每条中继 1.2KB（覆盖所有阶段）。30000 RPS 下，每天大约 3.1GB，30 天保留窗口下约 93GB。Ledger 对冷数据按 4:1 压缩，实际磁盘占用约 23GB。
+
+## 教训
+
+追踪不是调试。调试是东西坏了的时候做的事，追踪是东西看似都好、却不够快时做的事。中继成功了，回执有效，Glassboard 显示绿色——但 4.7 秒不是 2 秒；若没有逐阶段追踪，客户大概率会把锅扣给 Courier，而不是他们自己的部署流程。
+
+对成功路径的可见性，与对失败路径的可见性同样重要。Ledger 同时提供两者。

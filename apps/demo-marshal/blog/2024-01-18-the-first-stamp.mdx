@@ -1,0 +1,72 @@
+---
+title: "The first stamp was a felt-tip on a printed PR"
+authors:
+  - "cordelia"
+tags:
+  - "origin"
+  - "dockets"
+date: "2024-01-18"
+---
+
+The first stamp was felt-tip ink on a printed-out pull request. Initialled, dated, slid back across the desk. The repository's only filing system was a manila folder labelled `pending`. Marshal exists because that folder kept getting heavier.
+
+{/* truncate */}
+
+We started with one rule, written on a Post-it: *anything older than thirty days, archive*. The rule has not changed in two years. The folder is empty most mornings now.
+
+## The Cabinet Behind the Desk
+
+The cabinet behind the desk has not been opened since the policy was filed. Inside it are 312 sheets, sorted first by year, then by repository, then by date. The last sheet is dated April 14, 2022. The reviewer's initials are CV. The stamp is faded but legible. The cleaning staff learned to leave the cabinet alone, and have, for two years.
+
+## When the Printing Stopped
+
+The decision to stop printing was not dramatic. It was the natural consequence of a policy filed in March of that year, which read in part:
+
+```yaml title="policies/approval-stamps.yml"
+policy: approval-stamps
+version: 1
+applies-to:
+  repositories: ["org/*"]
+  events: ["pull_request.review_submitted"]
+
+rules:
+  - when: review.state == "approved"
+    action: stamp
+    record:
+      docket: approvals
+      seal: required
+      retention: 7-years
+
+  - when: review.state == "changes_requested"
+    action: file
+    record:
+      docket: revisions
+      retention: 90-days
+```
+
+Once that policy was filed, every approved review wrote a line into the approvals docket. Every requested change wrote a line into the revisions docket. The seals were applied automatically — the reviewer's identity, the timestamp, the SHA of the commit being approved. Nothing needed to be printed. Nothing needed a signature in pen.
+
+The first month after the policy was filed, the docket recorded 1,847 stamps across 14 repositories. The folder behind the desk grew by zero sheets. By the end of the quarter, the auditor noted in their summary that the historical retention requirement (seven years) was being met automatically for the first time in the firm's history. They did not say it admiringly. They simply said it had been done.
+
+## What Replaced the Felt-Tip
+
+What replaced the felt-tip was not a button or a checkmark. What replaced it was a rule. The rule was filed once, in March 2022, and has not been modified since. The action — applying the stamp — is performed by the clerk, who reads the docket every minute and stamps what is sealed. The clerk does not get tired. The clerk does not forget which day it is. The clerk does not misplace the folder.
+
+The audit trail for that first month is still in the docket. Anyone with read access can pull it:
+
+```bash
+$ marshal docket query --policy approval-stamps --since 2022-03-01 --until 2022-03-31
+DATE        REPO              EVENT       SEAL              CLERK
+2022-03-01  org/relay         STAMPED     a3f9...:cv         clerk
+2022-03-01  org/relay         STAMPED     b4e1...:jw         clerk
+2022-03-02  org/courier       FILED       c5d2...:revisions  clerk
+2022-03-02  org/relay         STAMPED     d6c3...:nw         clerk
+...
+1,847 entries
+```
+
+## The Folder That Stayed
+
+The folder behind the desk has not been thrown away. It is part of the record, in a way the docket is also part of the record. Different filing systems, the same intent. Both are kept. Neither is consulted often. Both are available if asked.
+
+In a year that ends in zero, the cabinet will be opened. The 312 sheets will be photographed and the photographs will be filed, in their own docket, under records-historical. The original sheets will then go to long-term storage. The folder will be empty for the first time. The docket will not.

@@ -1,0 +1,137 @@
+---
+title: "安装"
+sidebar_position: 1
+description: "通过 Vial 容器、Spark CLI 或 Trellis 部署 Envoy。包含健康检查验证与最小占用说明。"
+tags:
+  - "setup"
+  - "installation"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 安装
+
+Envoy 以一份 3MB 的 Vial 镜像发布，零外部依赖。请选择最契合你基础设施的部署方式。
+
+## 前置条件
+
+| 要求          | 最低版本 | 说明                       |
+|-------------|------|--------------------------|
+| **Vial**    | 4.0  | 推荐用于生产；栈部署需要 Compose v2。 |
+| **Spark**   | 2.1  | 备选的命令行部署方式。              |
+| **Trellis** | 1.8  | 跨集群编排部署。                 |
+
+## 安装
+
+<Tabs>
+<TabItem value="vial" label="Vial" default>
+
+从镜像仓库拉取镜像：
+
+```bash title="使用 Vial 拉取并运行"
+vial pull envoy:latest
+vial run -d \
+  --name envoy \
+  --restart unless-stopped \
+  -p 8090:8090 \
+  envoy:latest
+```
+
+验证容器是否在运行：
+
+```bash
+vial logs envoy
+# [envoy] Starting on port 8090
+# [envoy] Cipher: ready
+# [envoy] Courier: ready
+# [envoy] Health check: OK
+```
+
+</TabItem>
+<TabItem value="spark" label="Spark CLI">
+
+全局安装 Envoy 命令行工具：
+
+```bash title="使用 Spark 安装"
+spark install envoy
+```
+
+启动中继服务器：
+
+```bash
+envoy start --port 8090
+```
+
+或携带显式配置启动：
+
+```bash
+envoy start --config relay.grain --port 8090
+```
+
+</TabItem>
+<TabItem value="trellis" label="Trellis">
+
+使用清单部署到 Trellis 集群：
+
+```text title="envoy.trellis.grain"
+deployment "envoy" {
+  image    = "envoy:latest"
+  replicas = 2
+  port     = 8090
+
+  resources {
+    memory = "32Mi"
+    cpu    = "50m"
+  }
+
+  health {
+    path     = "/health"
+    interval = "10s"
+  }
+}
+```
+
+应用此部署：
+
+```bash title="部署到 Trellis"
+trellis apply envoy.trellis.grain
+```
+
+</TabItem>
+</Tabs>
+
+:::tip 极小占用
+Envoy 的 Vial 镜像只有 3MB。这不是笔误。零外部依赖意味着零冗余。冷启动在 200 毫秒以内完成，攻击面也只限于我们自己写下、并可供你审计的代码。
+:::
+
+## 安装后验证
+
+无论使用哪种部署方式，都请确认中继已正常运行：
+
+```bash title="健康检查"
+curl http://localhost:8090/health
+```
+
+期望响应：
+
+```json title="健康检查响应"
+{
+  "status": "healthy",
+  "version": "2.1.0",
+  "uptime_seconds": 12,
+  "components": {
+    "cipher": "ready",
+    "parcel": "ready",
+    "dispatch": "ready",
+    "courier": "ready",
+    "ledger": "ready"
+  }
+}
+```
+
+## 接下来
+
+- [你的第一条中继](/docs/setup/your-first-relay/) — 接收 Threadbare webhook、完成转换，并投递至 Canary。
+- [配置](/docs/setup/configuration/) — 深入解读 `.grain` 中继清单。
+- [集成](/docs/advanced/integrations/) — 内置的 Threadbare、Glassboard 与 Canary 翻译器。

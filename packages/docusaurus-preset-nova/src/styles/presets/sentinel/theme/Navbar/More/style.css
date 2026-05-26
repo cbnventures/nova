@@ -1,0 +1,10 @@
+/**
+ * Sentinel - `Navbar/More` theme overlay.
+ *
+ * The popover menu, item link, and active-item styling are grouped with
+ * `.nova-locale-dropdown-menu` / `.nova-version-dropdown-menu` in this
+ * preset's `Navbar/style.css` so all three navbar dropdowns share one
+ * surface treatment. No per-component overrides needed here.
+ *
+ * @since 0.18.0
+ */

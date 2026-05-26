@@ -1,5 +1,9 @@
 /**
- * Signal — Breadcrumbs visual styling.
+ * Signal - `DocBreadcrumbs` theme overlay.
+ *
+ * Filed-under trail - mono-code uppercase crumbs in tight tracking,
+ * a terminal command-line voice. Links warm to primary on hover; current
+ * crumb in muted neutral; separator dot in neutral-300.
  *
  * @since 0.15.0
  */
@@ -13,7 +17,7 @@
 }
 
 .nova-breadcrumbs-link {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
   text-decoration: none;
   transition: color var(--nova-motion-duration) ease;
 }
@@ -23,23 +27,28 @@
   color: var(--nova-color-primary-500);
 }
 
+[data-theme="dark"] .nova-breadcrumbs-link {
+  color: var(--nova-color-text-muted);
+}
+
 [data-theme="dark"] .nova-breadcrumbs-link:hover,
 [data-theme="dark"] .nova-breadcrumbs-link:focus-visible {
   color: var(--nova-color-primary-400);
 }
 
 .nova-breadcrumbs-current {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text);
+  font-weight: 600;
 }
 
-[data-theme="dark"] .nova-breadcrumbs-current {
-  color: var(--nova-color-neutral-300);
+.nova-breadcrumbs-text {
+  color: var(--nova-color-text-muted);
 }
 
 .nova-breadcrumbs-item:not(:last-child)::after {
-  color: var(--nova-color-neutral-300);
+  color: var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-breadcrumbs-item:not(:last-child)::after {
-  color: var(--nova-color-neutral-700);
+  color: var(--nova-color-border);
 }

@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Content Footer - Content Footer.
  *
@@ -28,6 +30,10 @@ export type ThemeContentFooterContentFooterPropsLastUpdatedAt = number | undefin
 
 export type ThemeContentFooterContentFooterPropsLastUpdatedBy = string | undefined;
 
+export type ThemeContentFooterContentFooterPropsClassName = string | undefined;
+
+export type ThemeContentFooterContentFooterPropsStyle = CSSProperties | undefined;
+
 export type ThemeContentFooterContentFooterProps = {
   tags?: ThemeContentFooterContentFooterPropsTags;
   sharePlatforms?: ThemeContentFooterContentFooterPropsSharePlatforms;
@@ -35,6 +41,8 @@ export type ThemeContentFooterContentFooterProps = {
   editUrl?: ThemeContentFooterContentFooterPropsEditUrl;
   lastUpdatedAt?: ThemeContentFooterContentFooterPropsLastUpdatedAt;
   lastUpdatedBy?: ThemeContentFooterContentFooterPropsLastUpdatedBy;
+  className?: ThemeContentFooterContentFooterPropsClassName;
+  style?: ThemeContentFooterContentFooterPropsStyle;
   [key: string]: unknown;
 };
 
@@ -45,35 +53,3 @@ export type ThemeContentFooterContentFooterCanDisplayShare = boolean;
 export type ThemeContentFooterContentFooterCanDisplayEdit = boolean;
 
 export type ThemeContentFooterContentFooterCanDisplayFooter = boolean;
-
-export type ThemeContentFooterContentFooterShareUrl = string;
-
-export type ThemeContentFooterContentFooterCopiedState = [ThemeContentFooterContentFooterCopied, ThemeContentFooterContentFooterSetCopied];
-
-export type ThemeContentFooterContentFooterCopied = boolean;
-
-export type ThemeContentFooterContentFooterSetCopied = (value: ThemeContentFooterContentFooterCopied) => void;
-
-export type ThemeContentFooterContentFooterTagsLabel = string;
-
-export type ThemeContentFooterContentFooterShareLabel = string;
-
-export type ThemeContentFooterContentFooterEditLabel = string;
-
-export type ThemeContentFooterContentFooterShareLinkCopied = string;
-
-export type ThemeContentFooterContentFooterShareCopyLink = string;
-
-export type ThemeContentFooterContentFooterShareCopiedText = string;
-
-export type ThemeContentFooterContentFooterLastUpdatedSpread = Record<string, unknown>;
-
-export type ThemeContentFooterContentFooterTag = ThemeContentFooterContentFooterPropsTag;
-
-export type ThemeContentFooterContentFooterSharePlatform = string;
-
-export type ThemeContentFooterContentFooterShareHref = string;
-
-export type ThemeContentFooterContentFooterPlatformLabel = string;
-
-export type ThemeContentFooterContentFooterShareOnPlatform = string;

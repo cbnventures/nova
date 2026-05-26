@@ -1,0 +1,12 @@
+/**
+ * Foundry - `DocSidebarItem` theme overlay.
+ *
+ * Sidebar item wrapper baseline - vertical rhythm. Link/Category/Html
+ * sub-overlays handle the per-element styling.
+ *
+ * @since 0.18.0
+ */
+
+.nova-sidebar-item {
+  margin-block: 0.125rem;
+}

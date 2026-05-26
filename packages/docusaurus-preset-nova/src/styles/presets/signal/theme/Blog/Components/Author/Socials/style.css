@@ -1,0 +1,33 @@
+/**
+ * Signal - `Blog/Components/Author/Socials` theme overlay.
+ *
+ * Sharp square: signal chrome surface, primary rose-pink border on hover.
+ *
+ * @since 0.18.0
+ */
+
+.nova-blog-author-social-link {
+  background-color: var(--nova-signal-bg);
+  border: 1px solid var(--nova-signal-chrome-border);
+  border-radius: var(--nova-signal-radius-sharp);
+  color: var(--nova-color-text);
+}
+
+.nova-blog-author-social-link:hover,
+.nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-signal-bg) 92%);
+  border-color: var(--nova-color-primary-500);
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link {
+  background-color: var(--nova-signal-bg);
+  color: var(--nova-color-text-muted);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link:hover,
+[data-theme="dark"] .nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-signal-bg) 82%);
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-300);
+}

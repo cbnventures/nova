@@ -1,17 +1,21 @@
+import { useVersions } from '@docusaurus/plugin-content-docs/client';
 import { translate } from '@docusaurus/Translate';
 import DocSidebarItems from '@theme/DocSidebarItems';
+
+import DocsVersionDropdownNavbarItem from '../NavbarItem/docs-version-dropdown-navbar-item.js';
 
 import type {
   ThemeDocSidebarDocSidebarNavAriaLabel,
   ThemeDocSidebarDocSidebarProps,
+  ThemeDocSidebarDocSidebarVersions,
 } from '../../types/theme/DocSidebar/index.d.ts';
 
 /**
  * Theme - Doc Sidebar - Doc Sidebar.
  *
  * Renders a plain sidebar navigation wrapping an unordered list of sidebar
- * items with no desktop/mobile split, no logo, and no collapse
- * button decoration.
+ * items, with no desktop/mobile split, no logo, and no collapse decoration.
+ * The version switcher only renders when more than one version is configured.
  *
  * @param {ThemeDocSidebarDocSidebarProps} props - Props.
  *
@@ -25,9 +29,21 @@ function DocSidebar(props: ThemeDocSidebarDocSidebarProps) {
     message: 'Docs sidebar',
     description: 'The ARIA label for the docs sidebar navigation',
   });
+  const versions: ThemeDocSidebarDocSidebarVersions = useVersions(undefined);
 
   return (
-    <nav className="nova-sidebar" aria-label={navAriaLabel}>
+    <nav
+      className={(props['className'] !== undefined) ? `nova-sidebar ${props['className']}` : 'nova-sidebar'}
+      style={props['style']}
+      aria-label={navAriaLabel}
+    >
+      {
+        (versions.length > 1) ? (
+          <div className="nova-sidebar-version-switcher">
+            <DocsVersionDropdownNavbarItem />
+          </div>
+        ) : null
+      }
       <ul className="nova-sidebar-list">
         <DocSidebarItems
           items={props['sidebar']}

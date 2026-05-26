@@ -1,0 +1,139 @@
+---
+title: "你的第一条中继"
+sidebar_position: 2
+description: "接收一条 Threadbare webhook，用 Parcel 转换，并投递至 Canary。从零到运行的逐步演练。"
+tags:
+  - "setup"
+  - "tutorial"
+---
+
+import Details from '@theme/Details';
+
+# 你的第一条中继
+
+本演练带你从一份全新的 Envoy 安装出发，搭起一条能接收 Threadbare 代码推送 webhook、把它转换成可读通知、并投递至 Canary 的中继。
+
+## 第一步：编写中继清单
+
+在工作目录中创建一个 `relay.grain` 文件。该清单声明了一条中继：将 Threadbare 推送事件路由到一个 Canary 主题。
+
+```text title="relay.grain"
+relay "threadbare-pushes" {
+  source = "threadbare"
+  // highlight-next-line
+  cipher = "hmac-sha256"
+
+  transform {
+    // highlight-start
+    title = "[{{ repo }}] {{ count }} new commit(s) to {{ branch }}"
+    body  = "{{ author }} pushed to {{ branch }}:\n{{ commit_summary }}"
+    // highlight-end
+    priority = 3
+    tags     = ["package"]
+  }
+
+  destination = "canary://ci-builds"
+
+  retry {
+    strategy = "exponential"
+    max      = 5
+  }
+}
+```
+
+`cipher` 指令告诉 Envoy 使用 HMAC-SHA256 签名校验来访的 webhook。Threadbare 会用你在其侧配置的共享密钥为每一条 webhook 载荷签名。
+
+## 第二步：启动中继
+
+携带清单启动 Envoy：
+
+```bash title="启动 Envoy"
+envoy start --config relay.grain --port 8090
+```
+
+Envoy 会读取清单、以 HMAC 模式初始化 Cipher、编译 Parcel 转换模板，并注册 Dispatch 路由。
+
+## 第三步：配置来源
+
+在 Threadbare 仓库设置中添加一个 webhook：
+
+- **Payload URL：** `https://your-envoy-host:8090/relay/threadbare`
+- **内容类型：** `application/json`
+- **Secret：** 与 Envoy 用于 HMAC 校验的密钥保持一致
+- **事件：** 选择 "Just the push event"
+
+## 第四步：推送一次提交
+
+向仓库推送一次提交。Threadbare 触发 webhook，Envoy 收到它：
+
+```json title="来自 Threadbare 的载荷"
+{
+  "ref": "refs/heads/main",
+  "repository": { "full_name": "acme/web-app" },
+  "pusher": { "name": "nneka" },
+  "commits": [
+    { "id": "a7f3c9d", "message": "Fix rate limiter edge case" },
+    { "id": "b2e8f1a", "message": "Update Courier retry defaults" }
+  ]
+}
+```
+
+Parcel 把它转换为 Canary 的格式：
+
+```json title="转换后的 Canary 通知"
+{
+  "title": "[acme/web-app] 2 new commit(s) to main",
+  "body": "nneka pushed to main:\n- a7f3c9d: Fix rate limiter edge case\n- b2e8f1a: Update Courier retry defaults",
+  "priority": 3,
+  "tags": ["package"]
+}
+```
+
+Courier 把它投递到 `ci-builds` 这个 Canary 主题，并在 Ledger 中写入投递回执。
+
+<Details>
+<summary>本次事务的完整中继日志</summary>
+
+```text title="Envoy 中继日志"
+[cipher]   threadbare-pushes  HMAC-SHA256 valid (source: 203.0.113.42)
+[parcel]   threadbare-pushes  Transformed: 2 fields mapped, 0 dropped
+[dispatch] threadbare-pushes  Routed to: canary://ci-builds
+[courier]  threadbare-pushes  Attempt 1/5 — 200 OK (3.1ms)
+[courier]  threadbare-pushes  Delivery receipt: confirmed
+[ledger]   threadbare-pushes  Recorded: msg_f7a2b8c4 → delivered
+```
+
+</Details>
+
+## 第五步：在 Ledger 中验证
+
+查询 Ledger，确认投递结果：
+
+```bash title="查询 Ledger"
+curl http://localhost:8090/api/deliveries?relay=threadbare-pushes&limit=1
+```
+
+```json title="Ledger 响应"
+{
+  "deliveries": [
+    {
+      "id": "msg_f7a2b8c4",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 1,
+      "latency_ms": 3.1,
+      "timestamp": "2025-03-01T14:22:07Z"
+    }
+  ]
+}
+```
+
+:::tip
+在 CLI 中运行 `envoy status` 可以查看所有活跃中继的实时摘要，包括它们的投递速率，以及当前处于重试或死信状态的消息。
+:::
+
+## 下一步
+
+- [配置](/docs/setup/configuration/) — 完整的 `.grain` 中继清单参考与全部指令。
+- [协议翻译](/docs/core/protocol-translation/) — Parcel 转换流水线的深度解读。
+- [路由与分发](/docs/core/routing-dispatch/) — 基于内容的路由、严重程度升级与主题分发。

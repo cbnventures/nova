@@ -1,5 +1,10 @@
 import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
-import type { SyntheticEvent } from 'react';
+import type {
+  CSSProperties,
+  Dispatch,
+  SetStateAction,
+  SyntheticEvent,
+} from 'react';
 
 /**
  * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category.
@@ -29,10 +34,16 @@ export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsActivePath = s
 
 export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsLevel = number;
 
+export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsClassName = string | undefined;
+
+export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryProps = {
   item: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItem;
   activePath: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsActivePath;
   level: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsLevel;
+  className?: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsClassName;
+  style?: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsStyle;
   [key: string]: unknown;
 };
 
@@ -70,7 +81,22 @@ export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsActive = boolean;
 
 export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryStoredState = boolean | undefined;
 
+export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryInitialOpenValue = boolean;
+
+export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryOpenState = [
+  ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue,
+  ThemeDocSidebarItemCategoryDocSidebarItemCategorySetIsOpenValue,
+];
+
 export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue = boolean;
+
+export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySetIsOpenValue = Dispatch<SetStateAction<ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue>>;
+
+export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryCollapseCategoryAriaLabel = string;
+
+export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryExpandCategoryAriaLabel = string;
+
+export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryAriaLabel = string;
 
 /**
  * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Contains Active Path.

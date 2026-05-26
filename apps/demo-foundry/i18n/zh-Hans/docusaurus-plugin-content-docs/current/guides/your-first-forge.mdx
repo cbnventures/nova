@@ -1,0 +1,162 @@
+---
+title: "你的第一次锻造"
+sidebar_position: 2
+description: "从零开始走完一个工作空间——编写清单、运行 foundry ignite，并检查生成的产物。"
+tags:
+  - "指南"
+  - "教程"
+---
+
+import Details from '@theme/Details';
+
+# 你的第一次锻造
+
+本指南带你使用 Foundry 从零创建一个工作空间。你将编写一份 `.grain` 清单、运行你的第一次锻造，并查看输出。
+
+## 第 1 步：创建项目目录
+
+从一个空目录开始：
+
+```bash
+mkdir my-project && cd my-project
+```
+
+## 第 2 步：编写清单
+
+在根目录创建一个 `project.grain` 文件。这是 Foundry 唯一需要的文件。
+
+```text title="project.grain"
+# 一份包含两个包的最简工作空间。
+workspace "my-project" {
+  lang    = "alloy"
+  target  = "arcline"
+  warden  = ["strict", "conventions"]
+  // highlight-start
+  crucible = auto
+  // highlight-end
+
+  packages {
+    core { type = "library" }
+    api  { type = "service", depends = ["core"] }
+  }
+}
+```
+
+第 6 行是关键指令。设置 `crucible = auto` 告诉 Foundry，从你的类型签名自动生成测试脚手架。如果你更愿意手写测试，也可以把它设置为 `manual`。
+
+## 第 3 步：运行锻造
+
+执行 `foundry ignite` 命令：
+
+```bash title="锻造工作空间"
+foundry ignite
+```
+
+Foundry 会读取清单、解析依赖图、生成配置产物，并为每个包搭建脚手架。
+
+```text title="终端输出"
+→ 读取 project.grain
+→ 已解析工作空间 "my-project"，包含 2 个包
+→ 依赖图：core → api
+→ 锻造包：core (library)
+    ✓ 已生成 blueprint.grain
+    ✓ 已生成 .wardenrc.grain (strict + conventions)
+    ✓ 已生成 alloy.config.grain
+    ✓ Crucible 已从 4 个类型导出生成 4 个测试文件
+→ 锻造包：api (service)
+    ✓ 已生成 blueprint.grain
+    ✓ 已生成 .wardenrc.grain (strict + conventions)
+    ✓ 已生成 alloy.config.grain
+    ✓ 已生成 spoke.config.grain (服务目标)
+    ✓ Crucible 已从 6 个类型导出生成 6 个测试文件
+→ 用时 3.8 秒
+```
+
+## 第 4 步：查看输出
+
+锻造完成后，你的目录看起来是这样：
+
+```text title="生成的工作空间结构"
+my-project/
+  project.grain
+  packages/
+    core/
+      blueprint.grain
+      .wardenrc.grain
+      alloy.config.grain
+      src/
+      tests/
+        format.assay.al
+        validate.assay.al
+        parse.assay.al
+        transform.assay.al
+    api/
+      blueprint.grain
+      .wardenrc.grain
+      alloy.config.grain
+      spoke.config.grain
+      src/
+      tests/
+        routes.assay.al
+        handlers.assay.al
+        middleware.assay.al
+        auth.assay.al
+        response.assay.al
+        errors.assay.al
+```
+
+每一份配置文件都由清单生成。`tests/` 目录下的测试文件，则是 Crucible 根据 `src/` 中发现的类型签名所搭建的脚手架。
+
+:::tip
+运行 `foundry ignite --dry-run` 可在不写入任何文件的情况下预览完整输出。这有助于在提交前验证新清单。
+:::
+
+## 第 5 步：构建与测试
+
+工作空间锻造完成后，你可以立刻进行构建与测试：
+
+```bash title="构建所有包"
+foundry bellows build
+```
+
+```bash title="运行所有测试"
+foundry crucible run
+```
+
+Bellows 会遵循 Tongs 依赖图，因此 `core` 会先于 `api` 构建。Crucible 会运行已搭建的脚手架测试——在你填上实现之前，它们会以占位断言通过。
+
+<Details>
+<summary>带详细日志的完整锻造输出</summary>
+
+```text
+$ foundry ignite --verbose
+[00:00.000] 正在加载清单：project.grain
+[00:00.012] 已解析工作空间 "my-project"（2 个包，1 条依赖边）
+[00:00.014] 正在解析 Tongs 依赖图……
+[00:00.015]   core → (无依赖)
+[00:00.015]   api → [core]
+[00:00.016] 依赖图解析完成。2 个节点，1 条边，0 个环。
+[00:00.018] 锻造包：core
+[00:00.024]   写入 blueprint.grain (1.2 KB)
+[00:00.026]   写入 .wardenrc.grain (380 条规则，2 个预设)
+[00:00.031]   写入 alloy.config.grain (strict 模式)
+[00:00.045]   Crucible：扫描 src/ 中 4 个导出类型
+[00:00.052]   Crucible：已生成 4 个测试文件 (format、validate、parse、transform)
+[00:00.054] 锻造包：api
+[00:00.058]   写入 blueprint.grain (1.4 KB)
+[00:00.060]   写入 .wardenrc.grain (380 条规则，2 个预设)
+[00:00.064]   写入 alloy.config.grain (strict 模式)
+[00:00.068]   写入 spoke.config.grain (服务目标，Arcline 部署)
+[00:00.082]   Crucible：扫描 src/ 中 6 个导出类型
+[00:00.091]   Crucible：已生成 6 个测试文件 (routes、handlers、middleware、auth、response、errors)
+[00:00.093] 锻造完成。2 个包，写入 14 个文件。
+[00:03.800] 总用时：3.8 秒（含 Warden 规则生成）
+```
+
+</Details>
+
+## 下一步
+
+- [清单](/docs/guides/manifests/) — 学习 `.grain` 文件中每一条可用指令。
+- [工作空间管理](/docs/guides/workspace-management/) — 跨数十个包管理依赖。
+- [构建流水线](/docs/pipeline/build-pipeline/) — 理解 Quench 缓存与 Bellows 并行的工作方式。

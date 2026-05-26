@@ -1,0 +1,6 @@
+{
+  "content": {
+    "message": "هل كان جهاز الإنذار مفعّلاً عند الساعة الثانية فجراً؟ Lantern يحتفظ لك بالإجابة.",
+    "description": "The announcement bar content (may contain HTML)"
+  }
+}

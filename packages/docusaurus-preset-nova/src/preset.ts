@@ -16,6 +16,7 @@ import type {
   PresetPresetMergedDocsOptionsBeforeDefaultRehypePlugins,
   PresetPresetMergedPagesOptions,
   PresetPresetMergedPagesOptionsBeforeDefaultRehypePlugins,
+  PresetPresetMermaidTooltipPlugin,
   PresetPresetNovaTheme,
   PresetPresetOptions,
   PresetPresetPagesPlugin,
@@ -48,6 +49,12 @@ import type {
 function preset(_context: PresetPresetContext, options: PresetPresetOptions): PresetPresetReturns {
   const plugins: PresetPresetPlugins = [];
   const themes: PresetPresetThemes = [];
+
+  // Resolve the directory of this compiled preset module so local plugin and
+  // theme paths can be constructed without `require.resolve`, which performs
+  // a runtime file-existence check that fails in TypeScript test runners
+  // where the `.js` build output has not been emitted yet.
+  const currentDirectory: PresetPresetThemePath = dirname(__filename);
 
   // Resolve Shiki themes and create the rehype plugin config.
   const shikiThemes: PresetPresetShikiThemes = getShikiThemes(options['preset']);
@@ -126,6 +133,14 @@ function preset(_context: PresetPresetContext, options: PresetPresetOptions): Pr
 
   plugins.push(svgrPlugin);
 
+  // Mermaid runtime tooltip handler (always included). Adds the small
+  // client-side script that turns the `title` attribute Mermaid emits on
+  // clickable nodes into the styled `div.mermaidTooltip` on hover, matching
+  // the styling already provided by `theme/Mermaid/style.css`.
+  const mermaidTooltipPlugin: PresetPresetMermaidTooltipPlugin = resolve(currentDirectory, 'plugins/mermaid-tooltip/index.js');
+
+  plugins.push(mermaidTooltipPlugin);
+
   // Google Tag Manager plugin (if gtm option provided).
   if (options['analytics']['gtm'] !== undefined) {
     const gtmPlugin: PresetPresetGtmPlugin = [
@@ -143,7 +158,6 @@ function preset(_context: PresetPresetContext, options: PresetPresetOptions): Pr
     progressBar: options['progressBar'],
     search: options['search'],
   };
-  const currentDirectory: PresetPresetThemePath = dirname(__filename);
   const themePath: PresetPresetThemePath = resolve(currentDirectory, 'index.js');
   const novaTheme: PresetPresetNovaTheme = [
     themePath,

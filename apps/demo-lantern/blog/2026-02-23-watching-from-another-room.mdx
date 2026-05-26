@@ -1,0 +1,45 @@
+---
+title: "Watching from another room without the house knowing"
+authors:
+  - "noor"
+tags:
+  - "zones"
+  - "integrations"
+date: "2026-02-23"
+---
+
+A household member upstairs should be able to know the front door is closed without sending the dog a notification. Lantern routes events by audience, not by event type.
+
+{/* truncate */}
+
+The porch tells the hub. The hub tells the room. The room dims its own light to acknowledge — a quiet bow between fixtures. Nobody downstairs notices. Nobody upstairs has to ask.
+
+The request that started this came from upstairs. Someone reading in the bedroom wanted to know the porch was empty before going down to make tea. They did not want a chime. They did not want a phone. They certainly did not want the dog to wake up. What they wanted was the bedroom lamp to dim a quarter, briefly, the way a candle bows when a window opens. A small, private signal. The kind a household uses without naming.
+
+So we wrote audience routing. An event has a who-did-it column, but it now also has a who-should-know column. The porch fires *door-closed*; the event walks through the routing layer; the routing layer asks, *which fixtures in the house care about door-closed right now?* The bedroom lamp upstairs cares because the household member upstairs has a saved preference. The kitchen tile does not care because nobody is in the kitchen. The dog's automatic feeder definitely does not care, because the dog is asleep and the feeder is not subscribed.
+
+The audience-by-event configuration is short, because the routing layer is doing the work.
+
+```yaml title="lantern.events.yml"
+routing:
+  front-door.closed:
+    audience:
+      - fixture:   bedroom-lamp
+        when:      household-presence: bedroom
+        signal:    dim-quarter, hold-2s, restore
+      - fixture:   kitchen-tile
+        when:      household-presence: kitchen
+        signal:    icon-flip
+      - fixture:   dashboard
+        signal:    log-only
+    not-audience:
+      - dog-feeder
+      - bedside-speaker
+      - phones-after: 22:00
+```
+
+The list has both an audience and a not-audience. We added the second list after a long week of small surprises — the speaker in the corner of the bedroom announcing things in the middle of the night, the phone on the nightstand vibrating about a contact-window event at 1am. The household needed a place to say *no, this fixture should never know.* The not-audience is that place. The phones-after-10pm rule alone has made more nights peaceful than any other change we have shipped.
+
+The bow between fixtures is a phrase one of us used in a meeting and we have not stopped using since. The porch knows the door closed; the porch tells the hub; the hub tells the bedroom lamp; the lamp dims a quarter for two seconds, and the household member upstairs finishes the page they were reading and walks downstairs to put the kettle on. Nothing chimed. Nothing vibrated. The dog did not move. The household held the conversation in light.
+
+Audience routing is the part of Lantern that respects who is in the room. A house full of fixtures should not be a house full of broadcasters. The bedroom lamp talks to the porch; the porch talks back; the kitchen does not need to be in the conversation. The signal travels exactly as far as it needs to, and stops.

@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "博客",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "司署快报——立卷归档的政策、加盖印章的案卷、记录在案的司管工作。",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "近期文章",
+    "description": "The label for the left sidebar"
+  }
+}

@@ -1,0 +1,53 @@
+/**
+ * Lantern - `DocVersionBanner` theme overlay.
+ *
+ * Lit cream stripe - soft amber glow shadow underneath, no hard rails.
+ * Italic Fraunces voice with a four-point-star ornament prefix that reads as a sealed
+ * announcement rather than a flat alert. Warm cream tinted background blends
+ * with lantern's paper aesthetic.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Version banner - lit cream stripe with amber glow
+ * ============================
+ */
+
+.nova-version-banner {
+  padding: 0.875rem 1.5rem;
+
+  color: var(--nova-lantern-ink);
+  text-align: center;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+
+  box-shadow: 0 6px 22px -10px color-mix(in srgb, var(--nova-color-primary-500), transparent 55%);
+}
+
+.nova-version-banner p {
+  margin: 0;
+
+  font-family: var(--nova-font-display);
+  font-size: 0.95rem;
+  font-style: italic;
+  font-weight: 500;
+}
+
+.nova-version-banner p::before {
+  content: "✦ ";
+
+  color: var(--nova-color-primary-700);
+  font-style: normal;
+}
+
+[data-theme="dark"] .nova-version-banner {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+
+  box-shadow: 0 8px 26px -10px color-mix(in srgb, var(--nova-color-primary-400), transparent 55%);
+}
+
+[data-theme="dark"] .nova-version-banner p::before {
+  color: var(--nova-color-primary-400);
+}

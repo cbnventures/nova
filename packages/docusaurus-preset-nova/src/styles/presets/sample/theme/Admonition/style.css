@@ -1,0 +1,33 @@
+/**
+ * Sample - `Admonition` theme component overlay scaffold.
+ *
+ * @internal Reference template only. The shared structural CSS for this
+ *           Docusaurus theme component lives at:
+ *           theme/Admonition/style.css
+ *
+ * Section headers below establish the canonical layout each preset adopts.
+ * Fill bodies with identity-specific rules - see preset.css for tokens and
+ * conventions.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================ */
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Admonition
+ * ============================ */
+
+/* ============================
+ * 1. Container
+ * ============================ */
+
+/* ============================
+ * 2. Heading
+ * ============================ */
+
+/* ============================
+ * 3. Type variants
+ * ============================ */

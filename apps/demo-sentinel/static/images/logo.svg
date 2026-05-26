@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="1024px" height="1024px" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>sentinel-logo-nobg</title>
-    <g id="sentinel-logo-nobg" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
-        <g id="Group" transform="translate(0, 78)">
-            <path d="M0,433 C0,433 236.307692,2.840657e-14 512,2.840657e-14 C787.692308,2.840657e-14 1024,433 1024,433 C1024,433 787.692308,866 512,866 C236.307692,866 0,433 0,433 Z" id="Path" fill="#0D9488"></path>
-            <ellipse id="Oval" fill="#134E4A" cx="512" cy="433" rx="216.615385" ry="216.5"></ellipse>
-            <ellipse id="Oval" fill="#5EEAD4" cx="512" cy="433" rx="98.4615385" ry="98.4090909"></ellipse>
+<svg width="512px" height="512px" viewBox="0 0 512 512" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>sentinel-logo</title>
+    <g id="sentinel-logo" stroke="none" fill="none">
+        <g id="logo" transform="translate(320, 237)"></g>
+        <g id="Group" stroke-width="1" fill-rule="evenodd" transform="translate(0, 39)">
+            <path d="M0,216.5 C0,216.5 118.153846,1.4203285e-14 256,1.4203285e-14 C393.846154,1.4203285e-14 512,216.5 512,216.5 C512,216.5 393.846154,433 256,433 C118.153846,433 0,216.5 0,216.5 Z" id="Path" fill="#0D9488"></path>
+            <ellipse id="Oval" fill="#134E4A" cx="256" cy="216.5" rx="108.307692" ry="108.25"></ellipse>
+            <ellipse id="Oval" fill="#5EEAD4" cx="256" cy="216.5" rx="49.2307692" ry="49.2045455"></ellipse>
         </g>
     </g>
 </svg>

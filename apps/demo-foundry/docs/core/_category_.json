@@ -1,0 +1,10 @@
+{
+  "label": "Core",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "How Foundry models a build — the `.grain` workspace manifest, the Tongs dependency graph, the Anvil content-addressed cache, and Crucible incremental re-runs."
+  }
+}

@@ -193,7 +193,11 @@ function BlogListPaginator(props: ThemeBlogListPaginatorBlogListPaginatorProps) 
   });
 
   return (
-    <nav className="nova-blog-list-paginator" aria-label={navAriaLabel}>
+    <nav
+      className={(props['className'] !== undefined) ? `nova-blog-list-paginator ${props['className']}` : 'nova-blog-list-paginator'}
+      style={props['style']}
+      aria-label={navAriaLabel}
+    >
       {(page > 1) && (
         <>
           <Link className="nova-blog-list-paginator-nav" to={getPageUrl(basePath, 1)}>

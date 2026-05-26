@@ -280,7 +280,7 @@ export class CliGenerateMustHavesDotenv {
           continue;
         }
 
-        // "Regenerate" selected — run regenerate flow.
+        // "Regenerate" selected - run regenerate flow.
         const result: CliGenerateMustHavesDotenvRunResult = await CliGenerateMustHavesDotenv.promptRegenerate({
           templateDirectory,
           currentDirectory,
@@ -296,7 +296,7 @@ export class CliGenerateMustHavesDotenv {
       }
     }
 
-    // No files exist — go straight to regenerate.
+    // No files exist - go straight to regenerate.
     const result: CliGenerateMustHavesDotenvRunResult = await CliGenerateMustHavesDotenv.promptRegenerate({
       templateDirectory,
       currentDirectory,
@@ -612,7 +612,7 @@ export class CliGenerateMustHavesDotenv {
     try {
       bufferEnv = await fs.readFile(envPath, 'utf-8');
     } catch {
-      // File does not exist — use template as initial buffer.
+      // File does not exist - use template as initial buffer.
       try {
         bufferEnv = await fs.readFile(join(templateDirectory, 'env'), 'utf-8');
       } catch {
@@ -623,7 +623,7 @@ export class CliGenerateMustHavesDotenv {
     try {
       bufferEnvSample = await fs.readFile(envSamplePath, 'utf-8');
     } catch {
-      // File does not exist — use template as initial buffer.
+      // File does not exist - use template as initial buffer.
       try {
         bufferEnvSample = await fs.readFile(join(templateDirectory, 'env.sample'), 'utf-8');
       } catch {

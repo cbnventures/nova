@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "博客",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "来自门廊灯下——更新、模式，以及来自这间屋子的安静笔记。",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "近期文章",
+    "description": "The label for the left sidebar"
+  }
+}

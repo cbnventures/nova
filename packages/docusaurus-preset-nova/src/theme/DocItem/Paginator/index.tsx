@@ -7,6 +7,8 @@ import type {
   ThemeDocItemPaginatorDocItemPaginatorDoc,
   ThemeDocItemPaginatorDocItemPaginatorDocDescriptions,
   ThemeDocItemPaginatorDocItemPaginatorGlobalData,
+  ThemeDocItemPaginatorDocItemPaginatorMergedClassName,
+  ThemeDocItemPaginatorDocItemPaginatorProps,
   ThemeDocItemPaginatorDocItemPaginatorSpread,
 } from '../../../types/theme/DocItem/Paginator/index.d.ts';
 
@@ -17,11 +19,13 @@ import type {
  * by reading pagination metadata from the current doc context
  * and resolving descriptions from the theme global data.
  *
+ * @param {ThemeDocItemPaginatorDocItemPaginatorProps} props - Props.
+ *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocItemPaginator() {
+function DocItemPaginator(props: ThemeDocItemPaginatorDocItemPaginatorProps) {
   const doc: ThemeDocItemPaginatorDocItemPaginatorDoc = useDoc();
   const globalData: ThemeDocItemPaginatorDocItemPaginatorGlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as ThemeDocItemPaginatorDocItemPaginatorGlobalData;
   const docDescriptions: ThemeDocItemPaginatorDocItemPaginatorDocDescriptions = (globalData['docDescriptions'] ?? {}) as ThemeDocItemPaginatorDocItemPaginatorDocDescriptions;
@@ -47,8 +51,12 @@ function DocItemPaginator() {
     });
   }
 
+  const mergedClassName: ThemeDocItemPaginatorDocItemPaginatorMergedClassName = (props['className'] !== undefined) ? `nova-doc-item-paginator ${props['className']}` : 'nova-doc-item-paginator';
+
   return (
     <DocPaginator
+      className={mergedClassName}
+      style={props['style']}
       {...paginatorSpread}
     />
   );

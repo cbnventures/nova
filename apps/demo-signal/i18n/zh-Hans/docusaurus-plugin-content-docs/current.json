@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "当前版本",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "入门指南",
+    "description": "The label for category 'Getting Started' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Beacons": {
+    "message": "Beacon",
+    "description": "The label for category 'Beacons' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Attribution": {
+    "message": "归因",
+    "description": "The label for category 'Attribution' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Campaigns": {
+    "message": "营销活动",
+    "description": "The label for category 'Campaigns' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "参考文档",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  }
+}

@@ -1,5 +1,185 @@
 /**
- * Doc Tag Doc List Page — Shared structural styles.
+ * Doc Tag Doc List Page - Shared structural styles.
+ *
+ * Each tagged-doc item renders inside `<article class="nova-col-12">` -
+ * matches the `article[class*="nova-col"] > a` selector pattern that
+ * @theme/DocCard's shared and per-preset CSS already targets, so the
+ * card identity (padding, border, background, hover lift, dark mode)
+ * comes "for free" from the DocCard cascade. The list lays out as a
+ * single full-width column at every viewport (one card per row), more
+ * BlogPostItem-vertical-stack than DocCardList-3up-grid.
  *
  * @since 0.15.0
  */
+
+/*
+ * Page padding - symmetric default scaled to each preset's section-gap
+ * pacing (defined in preset.css at three breakpoints). Presets whose
+ * identity calls for asymmetric breath (e.g. polished-SaaS Envoy with
+ * its gradient CTA, hands-on-industrial Foundry) override `padding-bottom`
+ * in their own theme/DocTagDocListPage/style.css overlay; presets whose
+ * identity reads as balanced inherit the symmetric default.
+ */
+.nova-doc-tag-doc-list-page {
+  padding-block: var(--nova-section-gap);
+}
+
+/*
+ * Page header - grid layout puts h1 on the left and the view-all link on
+ * the right, vertically centered (>=768px). Description, when present,
+ * wraps below as a full-width row. Layout collapses to a single row when
+ * there's no description so empty grid tracks don't leak vertical gap.
+ */
+.nova-doc-tag-doc-list-page-header {
+  display: grid;
+  grid-template-areas:
+    "title"
+    "view-all";
+  gap: 0.75rem;
+
+  margin-bottom: 1.5rem;
+}
+
+.nova-doc-tag-doc-list-page-header:has(> .nova-doc-tag-doc-list-page-description) {
+  grid-template-areas:
+    "title"
+    "description"
+    "view-all";
+}
+
+.nova-doc-tag-doc-list-page-header > .nova-heading {
+  grid-area: title;
+  margin-block: 0;
+}
+
+.nova-doc-tag-doc-list-page-header > .nova-doc-tag-doc-list-page-description {
+  grid-area: description;
+  margin: 0;
+}
+
+.nova-doc-tag-doc-list-page-header > .nova-doc-tag-doc-list-page-all-link {
+  grid-area: view-all;
+  justify-self: start;
+}
+
+@media (min-width: 768px) {
+  .nova-doc-tag-doc-list-page-header {
+    grid-template-areas: "title view-all";
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    column-gap: 1rem;
+  }
+
+  .nova-doc-tag-doc-list-page-header:has(> .nova-doc-tag-doc-list-page-description) {
+    grid-template-areas:
+      "title       view-all"
+      "description description";
+  }
+
+  .nova-doc-tag-doc-list-page-header > .nova-doc-tag-doc-list-page-all-link {
+    justify-self: end;
+  }
+}
+
+.nova-doc-tag-doc-list-page-description {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: var(--nova-color-text-muted);
+}
+
+/* "View All Tags" - small button (mirrors `.nova-blog-tags-posts-all-link`
+   and `.nova-blog-author-posts-view-all`). Built locally, token-driven
+   primary tint that auto-adapts per preset. */
+.nova-doc-tag-doc-list-page-all-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+
+  padding: 0.375rem 0.875rem;
+
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.4;
+
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+
+  background-color: transparent;
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 70%);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    background-color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease;
+}
+
+.nova-doc-tag-doc-list-page-all-link:hover,
+.nova-doc-tag-doc-list-page-all-link:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-color-background) 88%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
+}
+
+[data-theme="dark"] .nova-doc-tag-doc-list-page-all-link {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-doc-tag-doc-list-page-all-link:hover,
+[data-theme="dark"] .nova-doc-tag-doc-list-page-all-link:focus-visible {
+  color: var(--nova-color-primary-200);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-color-background) 80%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-400), transparent 40%);
+}
+
+/*
+ * Items list - vertical stack of full-width cards (1-up grid). The cards
+ * themselves are styled by @theme/DocCard's `article[class*="nova-col"] > a`
+ * selector cascade, light + dark + hover already wired per-preset.
+ */
+.nova-doc-tag-doc-list-page-items {
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .nova-doc-tag-doc-list-page-items {
+    gap: 1.25rem;
+  }
+}
+
+/*
+ * Section eyebrow - a derived breadcrumb above the card title showing the
+ * doc's parent path (e.g. id `setup/installation` -> "Setup"). Renders
+ * only when the doc has a parent path; root-level docs skip it.
+ */
+.nova-doc-tag-doc-list-page-item-section {
+  margin: 0 0 0.5rem;
+
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--nova-color-text-muted);
+}
+
+/*
+ * Read-article affordance - bottom-of-card CTA that mirrors the
+ * BlogPostItem listing's "Read more" footer. Decorative arrow stays
+ * outside the translated label so localizers don't have to relocate it.
+ */
+.nova-doc-tag-doc-list-page-item-read {
+  display: block;
+  margin-top: 0.5rem;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-doc-tag-doc-list-page-item-read {
+  color: var(--nova-color-primary-400);
+}

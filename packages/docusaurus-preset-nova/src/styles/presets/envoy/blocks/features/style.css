@@ -1,0 +1,206 @@
+/**
+ * Envoy - Features section visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Features Container
+ * ============================ */
+
+.nova-features-heading {
+  text-align: center;
+}
+
+/* ============================
+ * 2. Feature Card
+ * ============================ */
+
+/* Individual feature card with elevated styling and top-border accent. */
+.nova-feature-card {
+  position: relative;
+
+  padding: var(--nova-shape-padding);
+
+  background-color: var(--nova-envoy-surface-raised);
+  border: 1px solid var(--nova-color-border);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-card);
+
+  transition: transform var(--nova-motion-duration) var(--nova-motion-easing),
+    box-shadow var(--nova-motion-duration) var(--nova-motion-easing),
+    border-color var(--nova-motion-duration) var(--nova-motion-easing);
+}
+
+.nova-feature-card::before {
+  position: absolute;
+  top: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+
+  height: 2px;
+
+  content: "";
+
+  background: var(--nova-envoy-gradient-hero);
+  border-radius: 0 0 2px 2px;
+
+  opacity: 0;
+
+  transition: opacity var(--nova-motion-duration) var(--nova-motion-easing);
+}
+
+.nova-feature-card:hover {
+  border-color: var(--nova-color-primary-300);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+
+  transform: translateY(-3px);
+}
+
+.nova-feature-card:hover::before {
+  opacity: 1;
+}
+
+[data-theme="dark"] .nova-feature-card {
+  border-color: var(--nova-envoy-border);
+}
+
+[data-theme="dark"] .nova-feature-card:hover {
+  border-color: var(--nova-color-primary-600);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+}
+
+[data-theme="dark"] .nova-feature-card::before {
+  background: var(--nova-envoy-gradient-hero);
+}
+
+.nova-feature-card-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0.75rem;
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-feature-card-icon {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-feature-card-title {
+  margin-bottom: 0.625rem;
+
+  font-family: var(--nova-font-display);
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--nova-color-text);
+}
+
+.nova-feature-card-description {
+  margin: 0;
+
+  font-size: 0.9rem;
+  line-height: 1.65;
+  color: var(--nova-color-text-muted);
+}
+
+/* ============================
+ * 3. Animations
+ * ============================ */
+
+/* Content sections animate in on scroll with increasing delay. */
+main > section {
+  opacity: 0;
+
+  animation: envoy-fade-in-up 600ms var(--nova-motion-easing) both;
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 100ms);
+}
+
+main > section:nth-child(1) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 80ms);
+}
+
+main > section:nth-child(2) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 200ms);
+}
+
+main > section:nth-child(3) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 320ms);
+}
+
+main > section:nth-child(4) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 440ms);
+}
+
+main > section:nth-child(5) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 560ms);
+}
+
+main > section:nth-child(6) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 680ms);
+}
+
+/* Feature cards stagger within their grid with scale-in + fade. */
+.nova-feature-card {
+  opacity: 0;
+
+  animation: envoy-scale-in 500ms var(--nova-motion-easing) both;
+}
+
+.nova-feature-card:nth-child(1) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 100ms);
+}
+
+.nova-feature-card:nth-child(2) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 200ms);
+}
+
+.nova-feature-card:nth-child(3) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 300ms);
+}
+
+.nova-feature-card:nth-child(4) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 400ms);
+}
+
+.nova-feature-card:nth-child(5) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 500ms);
+}
+
+.nova-feature-card:nth-child(6) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 600ms);
+}
+
+/* Stat values stagger in with a scale entrance. */
+.nova-stat {
+  opacity: 0;
+
+  animation: envoy-scale-in 500ms var(--nova-motion-easing) both;
+}
+
+.nova-stat:nth-child(1) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 100ms);
+}
+
+.nova-stat:nth-child(2) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 200ms);
+}
+
+.nova-stat:nth-child(3) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 300ms);
+}
+
+.nova-stat:nth-child(4) {
+  animation-delay: calc(var(--nova-motion-staggered-reveals) * 400ms);
+}
+
+/* Feature card hover - lifts higher with violet-tinted shadow. */
+.nova-feature-card:hover {
+  transform: translateY(calc(var(--nova-motion-hover-effects) * -6px));
+
+  border-color: var(--nova-color-primary-300);
+  box-shadow: 0 12px 36px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%), 0 4px 12px rgb(0 0 0 / 0.05);
+}
+
+[data-theme="dark"] .nova-feature-card:hover {
+  border-color: var(--nova-color-primary-600);
+  box-shadow: 0 12px 36px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%), 0 4px 16px rgb(0 0 0 / 0.2);
+}

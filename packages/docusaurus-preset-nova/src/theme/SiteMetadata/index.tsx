@@ -75,7 +75,6 @@ function SiteMetadata() {
 
       <Head>
         <meta property="og:url" content={canonicalUrl} />
-        <meta name="twitter:card" content="summary_large_image" />
         <link rel="canonical" href={canonicalUrl} />
         {siteMetadata.map((metadataEntry) => {
           const metadataEntryName: ThemeSiteMetadataIndexMetadataEntryName = metadataEntry['name'];

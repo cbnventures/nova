@@ -1,0 +1,134 @@
+---
+title: "التوجيه والإرسال"
+sidebar_position: 2
+description: "التوجيه القائم على المحتوى، وتصعيد درجات الخطورة، وتشتيت المواضيع، وقواعد التسليم الشرطية."
+tags:
+  - "core"
+  - "routing"
+---
+
+# التوجيه والإرسال
+
+Dispatch هو محرّك التوجيه في Envoy. بعد أن يحوّل Parcel الحمولة، يقرّر Dispatch إلى أين تذهب. تستند قرارات التوجيه إلى المحتوى، أو هوية المصدر، أو درجة الخطورة، أو قواعد مخصّصة مُعلَنة في بيان الترحيل.
+
+## التوجيه القائم على المحتوى
+
+أبسط استراتيجيات التوجيه: افحص الحمولة ووجّه بناءً على محتواها. يُقيّم Dispatch كتلة `filter` في كلّ مُرحِّل بترتيب الإعلان. والمطابقة الأولى تفوز.
+
+```text title="relay.grain — content-based routing"
+relay "critical-alerts" {
+  source = "glassboard"
+  filter { severity = "critical" }
+  destination = "canary://oncall-urgent"
+  transform { priority = 5 }
+}
+
+relay "warning-alerts" {
+  source = "glassboard"
+  filter { severity = "warning" }
+  destination = "canary://infra-alerts"
+  transform { priority = 3 }
+}
+
+relay "info-alerts" {
+  source = "glassboard"
+  destination = "canary://infra-log"
+  transform { priority = 1 }
+}
+```
+
+تنبيه Glassboard حرج يُوجَّه إلى `oncall-urgent`. وتنبيه تحذيري إلى `infra-alerts`. وما عدا ذلك يسقط إلى `infra-log`.
+
+## تصعيد درجات الخطورة
+
+يستطيع Dispatch تصعيد الرسائل بناءً على عتبات الخطورة. حين يُطلق مصدر تنبيهات متكرّرة ضمن نافذة زمنية، تتضاعف درجة الخطورة الفعلية ويتغيّر التوجيه.
+
+```text title="Escalation rules"
+escalation {
+  source   = "glassboard"
+  window   = "5m"
+  thresholds {
+    3  = "warning"     # 3 alerts in 5 minutes → escalate to warning
+    10 = "critical"    # 10 alerts in 5 minutes → escalate to critical
+  }
+}
+```
+
+| عدد التنبيهات (نافذة 5m) | درجة الخطورة الأصلية | درجة الخطورة الفعلية | يُوجَّه إلى            |
+|--------------------------|----------------------|----------------------|------------------------|
+| 1                        | info                 | info                 | canary://infra-log     |
+| 3                        | info                 | warning              | canary://infra-alerts  |
+| 10                       | info                 | critical             | canary://oncall-urgent |
+
+:::warning
+يُعدّل التصعيد درجة الخطورة الفعلية لأغراض التوجيه فقط. وتبقى درجة الخطورة الأصلية في الحمولة محفوظة في Ledger. يضمن هذا دقّة التدقيق مع الإبقاء على مرونة التوجيه.
+:::
+
+## تشتيت المواضيع
+
+يمكن تسليم رسالة واردة واحدة إلى وجهات متعدّدة. أعلن قائمة `fanout` بدلًا من `destination` واحدة.
+
+```text title="relay.grain — fanout"
+relay "deploy-notifications" {
+  source = "threadbare"
+  filter { event = "release" }
+
+  // highlight-start
+  fanout = [
+    "canary://deploy-alerts",
+    "canary://team-general",
+    "spoke://dashboard.internal/webhook"
+  ]
+  // highlight-end
+
+  transform {
+    title = "[{{ repo }}] Release {{ tag }}"
+    body  = "{{ author }} published {{ tag }}"
+  }
+}
+```
+
+يسلّم Courier إلى كلّ وجهة باستقلال. فشل في إحداها لا يحجب البقيّة. كلّ تسليم يحصل على جدول إعادة محاولاته الخاصّ وإدخاله في Ledger.
+
+## التسليم الشرطي
+
+وجّه الرسائل بشكل مختلف وفقًا لساعات اليوم أو أيّام الأسبوع. مفيد لتصعيد ما بعد ساعات العمل.
+
+```text title="Time-based routing"
+relay "after-hours-critical" {
+  source = "glassboard"
+  filter {
+    severity = "critical"
+    // highlight-next-line
+    schedule = "weekdays 18:00-08:00, weekends *"
+  }
+  destination = "canary://oncall-emergency"
+  transform { priority = 5 }
+}
+
+relay "business-hours-critical" {
+  source = "glassboard"
+  filter {
+    severity = "critical"
+    schedule = "weekdays 08:00-18:00"
+  }
+  destination = "canary://oncall-urgent"
+  transform { priority = 5 }
+}
+```
+
+## استراتيجيات التوجيه
+
+| الاستراتيجية     | حالة الاستخدام                    | الإعداد                             |
+|------------------|-----------------------------------|-------------------------------------|
+| قائم على المحتوى | التوجيه بحسب حقول الحمولة         | `filter { field = "value" }`        |
+| قائم على المصدر  | التوجيه بحسب هوية المنشأ          | `source = "glassboard"`             |
+| تصعيد الخطورة    | زيادة الاستعجال تحت الحجم العالي  | `escalation { thresholds { ... } }` |
+| تشتيت المواضيع   | التسليم إلى وجهات متعدّدة         | `fanout = ["a", "b", "c"]`          |
+| قائم على الوقت   | توجيه مختلف بحسب الجدول           | `filter { schedule = "..." }`       |
+| الاحتياطي        | احتجاز جامع للرسائل غير المطابِقة | آخر مُرحِّل بلا فلتر                |
+
+## الخطوات التالية
+
+- [المصادقة](/docs/core/authentication/) — كيف يتحقّق Cipher من هوية المصدر قبل أن يعالج Dispatch الرسالة.
+- [البنية المعمارية](/docs/advanced/architecture/) — منظور على مستوى النظام لكيفية تفاعل Dispatch وCourier وEmbassy.

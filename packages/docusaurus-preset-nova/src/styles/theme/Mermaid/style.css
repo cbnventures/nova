@@ -1,11 +1,59 @@
-.docusaurus-mermaid-container {
+.nova-mermaid-container {
   overflow-x: auto;
   margin-block: 1.5rem;
 }
 
-.docusaurus-mermaid-container > svg {
+.nova-mermaid-container > svg {
   display: block;
   margin-inline: auto;
+  max-width: 100%;
+  height: auto;
+  /*
+   * Mermaid emits cluster-label positions as `transform="translate(X, 8)"` where
+   * X assumes `text-anchor: start` resolves to the LEFT edge. Under RTL page
+   * direction the SVG inherits `direction: rtl`, which flips `text-anchor: start`
+   * to the RIGHT edge - the label then slides left by its full text width and
+   * sits outside the cluster center. Pinning the SVG to `direction: ltr` keeps
+   * the coordinate interpretation consistent with what Mermaid emitted at
+   * pre-render time. Node-internal text labels still center via `text-anchor: middle`
+   * which is direction-agnostic.
+   *
+   * The /*rtl:ignore*\/ directive prevents Docusaurus's rtlcss post-processor
+   * from auto-flipping this declaration to `direction: rtl` in the RTL bundle -
+   * which is exactly the wrong thing here.
+   */
+  /*rtl:ignore*/
+  direction: ltr;
+}
+
+/*
+ * Mermaid bakes themeVariables.lineColor into the SVG marker (arrowhead)
+ * paths and only the edgePath line is overridden by per-preset themeCSS.
+ * Override the markers here too so arrowheads track each preset's edge
+ * stroke token at runtime and swap correctly on [data-theme="dark"].
+ */
+.nova-mermaid-container marker path {
+  fill: var(--nova-mermaid-edge-stroke) !important;
+  stroke: var(--nova-mermaid-edge-stroke) !important;
+}
+
+/*
+ * Cluster labels are emitted by Mermaid (htmlLabels: false) with text sitting
+ * at y=-10.1 inside a label group translated to the rect's top edge, so the
+ * baseline lands ~0.5 px below the cluster border - text crosses the stroke
+ * with no breathing room. Mermaid's accompanying `<rect class="background">`
+ * is left at 0x0 by createFormattedText (it only sizes the rect when
+ * `addBackground: true`, which is not passed for cluster labels), so there's
+ * no punch-through mask either. Shift the label group down by 8 px so text
+ * sits cleanly inside the rect with padding from the top border.
+ *
+ * The `translate` shorthand (CSS Transform Level 2 individual property) is
+ * used instead of `transform: translateY(8px)` so it composes with Mermaid's
+ * `transform="translate(X, 8)"` SVG attribute. A CSS `transform` would
+ * override that attribute and reset the label's X position to 0.
+ */
+.nova-mermaid-container .cluster-label {
+  translate: 0 8px;
 }
 
 /*
@@ -13,39 +61,53 @@
  * Docusaurus applies its generic link color and underline to those anchors,
  * which reads as hyperlinked body text inside a node graph. We strip both so
  * clickable nodes inherit their node styling and remain indistinguishable
- * from non-clickable ones visually — the cursor and tooltip already indicate
+ * from non-clickable ones visually - the cursor and tooltip already indicate
  * interactivity.
  */
-.docusaurus-mermaid-container a {
+.nova-mermaid-container a {
   color: inherit !important;
   text-decoration: none !important;
 }
 
 /*
- * Mermaid appends <div class="mermaidTooltip"> to <body> for diagrams that
- * use click-callback tooltips. Top/left are set without !important so they
- * apply idly (preventing scroll inflation from the 6x6 idle element) but
- * lose to mermaid's inline d3 positioning on hover.
+ * Mermaid library's `setupToolTips` appends a `<div class="mermaidTooltip">`
+ * to <body> on every render and never cleans it up. The element persists
+ * across SPA navigations and shows on hover of any `g.node` with a `title`,
+ * fighting the runtime tooltip our plugin provides. Hide it outright -
+ * our `.nova-mermaid-tooltip` below is the only tooltip we surface.
  */
 div.mermaidTooltip {
-  top: 0;
-  left: 0;
-  max-width: 240px !important;
-  padding: 6px 10px !important;
-  text-align: left !important;
-  background: var(--nova-color-neutral-50) !important;
-  color: var(--nova-color-neutral-900) !important;
-  border: 1px solid var(--nova-color-neutral-200) !important;
-  border-radius: var(--nova-shape-radius) !important;
-  font-family: var(--nova-font-body) !important;
-  font-size: 12px !important;
-  line-height: 1.4 !important;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08) !important;
+  display: none !important;
 }
 
-[data-theme="dark"] div.mermaidTooltip {
-  background: var(--nova-color-neutral-900) !important;
-  color: var(--nova-color-neutral-50) !important;
-  border-color: var(--nova-color-neutral-800) !important;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.3) !important;
+/*
+ * Runtime tooltip surfaced by `plugins/mermaid-tooltip/client.ts` for any
+ * mermaid node with a `click` directive. Top/left are pinned to 0 so the
+ * hidden element idles at the top-left of the document (no scroll
+ * inflation), and the client sets inline `top`/`left` via `pageX`/`pageY`
+ * on hover. The /*rtl:ignore*\/ directive prevents Docusaurus's rtlcss
+ * post-processor from auto-flipping `left: 0` to `right: 0` in the RTL
+ * bundle - otherwise the CSS-derived `right: 0` would collide with the
+ * JS-set `left: Xpx` and the `max-width` clamp would pin the tooltip to
+ * the viewport's right edge.
+ */
+div.nova-mermaid-tooltip {
+  top: 0;
+  /*rtl:ignore*/
+  left: 0;
+  max-width: 240px;
+  padding: 6px 10px;
+  text-align: left;
+  background: var(--nova-color-surface-raised);
+  color: var(--nova-color-text);
+  border: 1px solid var(--nova-color-border);
+  border-radius: var(--nova-mermaid-node-radius);
+  font-family: var(--nova-font-body);
+  font-size: 12px;
+  line-height: 1.4;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.08);
+}
+
+[data-theme="dark"] div.nova-mermaid-tooltip {
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.3);
 }

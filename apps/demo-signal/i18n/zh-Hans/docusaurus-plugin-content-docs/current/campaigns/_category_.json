@@ -1,0 +1,10 @@
+{
+  "label": "营销活动",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "随时间追踪活动表现——Aperture 捕捉时间点快照、在不同时间窗口之间对比，并运行 A/B 链接变体，看看什么在起作用。"
+  }
+}

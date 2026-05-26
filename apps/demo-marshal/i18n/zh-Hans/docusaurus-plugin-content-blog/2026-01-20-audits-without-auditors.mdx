@@ -1,0 +1,67 @@
+---
+title: "在审计之前的那段时间里，无审计员的审计"
+authors:
+  - "yuki"
+tags:
+  - "audit"
+  - "scheduled-stewardship"
+date: "2026-01-20"
+---
+
+审计员将在三月到来。届时，那次审计将是走形式。Marshal 已经为这个仓库审计了两年——每一夜一次。轨迹早已成形。
+
+{/* truncate */}
+
+审计员会从 docket 里读三行，然后问一个问题。第四行会回答那个问题。然后 Marshal 会提议为审计员的存档打印一份封印副本。
+
+预审以 policy 的形态立卷，节奏是每夜，每次运行产生一条 docket 条目。条目包含被检视记录的计数、被核验封印的计数、被交叉引用的 policy 计数，以及这次审计本身的封印。一位在审计 docket 中滚动的读者看到一列形态相同的行，每夜一行，回溯到这份 policy 第一次被封印的那天。这一列从未中断。审计员会读最近的一条，再读一年前的同一条，再读两年前的同一条，三条条目所反映的流程会彼此一致。这就是审计的概要。
+
+这一流程已封印两年，看起来是这样的：
+
+```yaml title="policies/pre-audit-nightly.yml"
+policy: pre-audit-nightly
+version: 2
+sealed: true
+sealed-by: cordelia
+sealed-at: 2024-01-15T09:00:00Z
+
+schedule:
+  cadence: nightly
+  window: 04:00-04:30 UTC
+
+procedure:
+  - inspect: docket/*
+    verify:
+      - seal-chain-intact
+      - policy-refs-resolve
+      - retention-deadlines-honoured
+  - inspect: policies/*
+    verify:
+      - sealed-by-authorised-maintainer
+      - version-monotonic
+      - no-silent-amendments
+  - report:
+      docket: audit
+      stamp: VERIFIED
+      seal: required
+      retention: permanent
+  - on-discrepancy:
+      stamp: DISCREPANCY
+      escalate: registrar
+      seal: required
+      retention: permanent
+```
+
+自该流程被封印以来的 752 次夜间运行中，审计 docket 包含 752 条 `VERIFIED` 条目和零条 `DISCREPANCY` 条目。这并非因为流程宽松。而是因为系统的其他部分本就是被设计成不会产生不符的。一份不能被悄然修订的 policy，不会产生"悄然修订"的标记。一份仅可追加的 docket，无法通过编辑而破坏其留存截止日期。实际上，这种核验是在记录一种"不存在"——*又一次没发现不符，连续 752 个夜晚。*
+
+审计员三月来访时所走的，实质上是同一流程。审计员从审计 docket 中抽出三条样本条目，索取产生它们的 policy，读那条 policy，并手动核验其中一条条目的封印。审计员的核验会与 docket 的核验一致。然后审计员会在自己的存档里立一份本次到访的摘要，用正式措辞写明*流程已遵循，记录互相佐证*。这份摘要将是一页。
+
+```bash
+$ marshal audit run --report-only --since 2024-01-15
+RUNS-INSPECTED  VERIFIED  DISCREPANCIES  OLDEST-ENTRY  NEWEST-ENTRY
+752             752       0              2024-01-16    2026-01-20
+```
+
+上面那一行就是这次审计的概要。审计员会打印、签字、归档。事务员并不要求审计员的签字，但作为礼貌接受。这一签字本身也是审计 docket 中的一条条目，钤为 `COUNTERSIGNED`，并与其连署的那条条目一同封印。
+
+审计员的到访是三月的一个星期二。这次到访所确认的工作，已在此之前的两年里以每夜小步增量的方式完成了。到访不产生轨迹；到访只是阅读轨迹。轨迹自己生成自己。

@@ -1,5 +1,5 @@
 /**
- * Envoy — Code block visual styling.
+ * Envoy - Code block visual styling.
  *
  * @since 0.15.0
  */
@@ -8,20 +8,18 @@
  * 1. Code Blocks
  * ============================ */
 
-/* Elevated code blocks with shadow and generous rounded corners. */
+/* Elevated code blocks with shadow and generous rounded corners.
+ * Block-margin flows from shared theme/CodeBlock via the canonical
+ * `--nova-code-block-margin-block` token (envoy inherits the 1.5rem
+ * baseline so no preset+component override is defined). */
 .nova-code-block {
-  margin: 1.5rem 0;
-
   border: var(--nova-depth-code-border);
   border-radius: var(--nova-envoy-radius-generous);
   box-shadow: var(--nova-envoy-shadow-card);
-
-  overflow: hidden;
 }
 
 [data-theme="dark"] .nova-code-block {
-  border-color: var(--nova-envoy-border-dark);
-  box-shadow: var(--nova-envoy-shadow-dark-card);
+  border-color: var(--nova-envoy-border);
 }
 
 /* Code block title bar with subtle violet tint. */
@@ -30,18 +28,15 @@
 
   font-family: var(--nova-font-code);
   font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
 
-  background-color: var(--nova-color-neutral-50);
-  border-bottom: 1px solid var(--nova-color-neutral-200);
+  background-color: var(--nova-color-surface-raised);
+  border-bottom: 1px solid var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-code-block-title {
-  color: var(--nova-color-neutral-400);
-
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
-  border-bottom-color: var(--nova-envoy-border-dark);
+  border-bottom-color: var(--nova-envoy-border);
 }
 
 /* Pre element inside code blocks. */
@@ -79,11 +74,15 @@
  * ============================ */
 
 .nova-code-block-toolbar {
-  border-bottom: 1px solid var(--nova-color-neutral-200);
+  padding: 0.625rem 0.5rem 0.625rem 1.25rem;
+
+  background-color: var(--nova-color-surface-raised);
+  border-bottom: 1px solid var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-code-block-toolbar {
-  border-bottom-color: var(--nova-envoy-border-dark);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-bottom-color: var(--nova-envoy-border);
 }
 
 /* ============================
@@ -92,12 +91,12 @@
 
 .nova-code-block-copy {
   background: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
-  border: 1px solid var(--nova-color-neutral-200);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-envoy-radius-generous);
-  color: var(--nova-envoy-text-muted-light);
+  color: var(--nova-envoy-text-muted);
   padding: 0.25rem 0.5rem;
-  transition: color 200ms ease,
-              border-color 200ms ease;
+  transition: color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease;
 }
 
 .nova-code-block-copy:active {
@@ -122,8 +121,7 @@
 
 [data-theme="dark"] .nova-code-block-copy {
   background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
-  border-color: var(--nova-envoy-border-dark);
-  color: var(--nova-envoy-text-muted-dark);
+  border-color: var(--nova-envoy-border);
 }
 
 [data-theme="dark"] .nova-code-block-copy:active {
@@ -152,13 +150,12 @@
 
 .nova-code-block-wrap {
   background: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
-  border: 1px solid var(--nova-color-neutral-200);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-envoy-radius-generous);
-  color: var(--nova-envoy-text-muted-light);
-  font-size: 0.75rem;
+  color: var(--nova-envoy-text-muted);
   padding: 0.25rem 0.5rem;
-  transition: color 200ms ease,
-              border-color 200ms ease;
+  transition: color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease;
 }
 
 .nova-code-block-wrap:active,
@@ -184,8 +181,7 @@
 
 [data-theme="dark"] .nova-code-block-wrap {
   background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
-  border-color: var(--nova-envoy-border-dark);
-  color: var(--nova-envoy-text-muted-dark);
+  border-color: var(--nova-envoy-border);
 }
 
 [data-theme="dark"] .nova-code-block-wrap:active,
@@ -214,17 +210,15 @@
  * ============================ */
 
 .nova-code-block-expand {
-  background-color: var(--nova-color-neutral-50);
-  color: var(--nova-envoy-text-muted-light);
-  border: none;
-  border-top: 1px solid var(--nova-color-neutral-200);
-  transition: color 200ms ease;
+  background-color: var(--nova-color-surface-raised);
+  color: var(--nova-envoy-text-muted);
+  border-top: 1px solid var(--nova-color-border);
+  transition: color var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-code-block-expand {
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
-  color: var(--nova-envoy-text-muted-dark);
-  border-top-color: var(--nova-envoy-border-dark);
+  border-top-color: var(--nova-envoy-border);
 }
 
 .nova-code-block-expand:active {

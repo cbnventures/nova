@@ -1,4 +1,5 @@
 import type {
+  CSSProperties,
   Dispatch,
   ReactNode,
   RefObject,
@@ -22,6 +23,10 @@ export type ThemeCodeBlockCodeBlockPropsLive = boolean | undefined;
 
 export type ThemeCodeBlockCodeBlockPropsMetastring = string | undefined;
 
+export type ThemeCodeBlockCodeBlockPropsClassName = string | undefined;
+
+export type ThemeCodeBlockCodeBlockPropsStyle = CSSProperties | undefined;
+
 export type ThemeCodeBlockCodeBlockProps = {
   children: ThemeCodeBlockCodeBlockPropsChildren;
   language?: ThemeCodeBlockCodeBlockPropsLanguage;
@@ -29,6 +34,8 @@ export type ThemeCodeBlockCodeBlockProps = {
   showLineNumbers?: ThemeCodeBlockCodeBlockPropsShowLineNumbers;
   live?: ThemeCodeBlockCodeBlockPropsLive;
   metastring?: ThemeCodeBlockCodeBlockPropsMetastring;
+  className?: ThemeCodeBlockCodeBlockPropsClassName;
+  style?: ThemeCodeBlockCodeBlockPropsStyle;
   [key: string]: unknown;
 };
 
@@ -65,6 +72,7 @@ export type ThemeCodeBlockCodeBlockShouldCollapse = boolean;
  *
  * @since 0.15.0
  */
+export type ThemeCodeBlockCodeBlockHandleCopyTextarea = HTMLTextAreaElement;
 
 /**
  * Theme - Code Block - Code Block - Toggle Collapse.

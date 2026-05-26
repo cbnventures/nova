@@ -1,0 +1,45 @@
+---
+title: "审计轨迹"
+sidebar_position: 2
+description: "审计轨迹就是 docket 从头到尾的通读。每一次钤章、每一条立卷、每一项覆盖——按时间顺序，并附事务员签名。"
+tags:
+  - "dockets"
+  - "audit"
+---
+
+# 审计轨迹
+
+审计轨迹就是 docket 从头到尾的通读。每一次钤章、每一条立卷、每一项覆盖——按发生顺序排列，并附事务员签名。
+
+## 阅读轨迹
+
+```bash
+marshal audit --since 90d --format ledger
+```
+
+输出是单一的时间顺序栏。没有摘要，没有汇总。轨迹设计来供人通读，而非略读。
+
+## 轨迹捕获什么
+
+| 字段          | 说明                                          |
+|-------------|---------------------------------------------|
+| `timestamp` | Marshal 操作的精确时间，精确到秒。                       |
+| `clerk`     | 处理该条目的是哪一个 Marshal 实例。                      |
+| `action`    | FILED、STAMPED、RECEIVED、ARCHIVED、OVERRIDDEN。 |
+| `policy`    | 授权该操作的 policy。                              |
+| `subject`   | 该操作所适用的仓库与线程。                               |
+| `seal`      | 将本条目与前一条目相连的签名哈希。                           |
+
+## 导出以供复核
+
+```bash
+marshal audit --export quarterly-2026-q1.pdf
+```
+
+Marshal 生成一份可打印的 PDF，每页顶部都印有官署封印。适合存档归卷。
+
+## 下一步
+
+- [Dockets](/docs/dockets/overview/) — 轨迹所读取的那本仅可追加的记录。
+- [多仓库](/docs/stewardship/multi-repo/) — 跨仓库联合的轨迹。
+- [API 参考](/docs/reference/api-reference/) — 通过 Spoke 导出轨迹。

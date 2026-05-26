@@ -1,0 +1,69 @@
+---
+title: "一式三份立卷，但只有一份盖章"
+authors:
+  - "dimitri"
+tags:
+  - "policies"
+  - "dockets"
+date: "2024-04-15"
+---
+
+每一次 Marshal 操作都会立卷到三处——policy 日志、docket 与审计轨迹。只有一处盖上封印。这枚封印就是真相之源。其余两处，是给来问的人留的礼貌。
+
+{/* truncate */}
+
+一式三份不是冗余。它是为了让 2027 年的审计员有地方去查，而不必来问我们。
+
+## 三种记录，三种读者
+
+policy 日志记录意图。docket 记录行为。审计轨迹记录把两者连起来的那条链。一位想知道某事*应该*怎么运作的读者，去读 policy 日志。一位想知道某个下午*实际发生过*什么的读者，去读 docket。一位必须以书面形式*解释*行为如何依循意图的读者，去读审计轨迹。三者服务三种读者，他们可能不是同一个人，也可能彼此相隔数年才到来。
+
+## 只有 docket 盖了封印
+
+只有 docket 盖了封印。这枚封印是该条目、时间戳与生成它的 policy 版本的哈希。如果 docket 条目事后被改动，封印就不再吻合，而登记员会在下一次审计的早晨汇总里报告这一不符。policy 日志与审计轨迹不盖封印，是因为它们可以从 docket 中重建。反向并不成立。docket 一旦销毁，记录就被销毁。审计轨迹销毁了，docket 一夜之间可以重建它。
+
+一次典型的立卷在 docket 中是这样的：
+
+```yaml title="dockets/approvals/2024-04-15.yml"
+- id: APR-2024-04-15-0381
+  timestamp: 2024-04-15T14:22:01Z
+  policy: approval-stamps@v1
+  event: pull_request.review_submitted
+  subject: org/relay#1842
+  reviewer: cv@org
+  action: STAMPED
+  seal: sha256:a3f9b4e1c5d26f8e9c3b7a1f4e8d2b5c
+  retention: 7-years
+
+- id: APR-2024-04-15-0382
+  timestamp: 2024-04-15T14:22:47Z
+  policy: approval-stamps@v1
+  event: pull_request.review_submitted
+  subject: org/courier#0934
+  reviewer: nw@org
+  action: FILED
+  seal: sha256:b4e1c5d26f8e9c3b7a1f4e8d2b5c0a3f
+  retention: 90-days
+```
+
+封印是条目定稿时写入的最后一个字段。封印一旦写入，条目即告关闭。任何后续编辑都不会被接受；尝试编辑会在登记员次晨的汇总里产生一则驳回通告。登记员不会进一步调查。这则通告本身就是一条 docket 条目。
+
+## 审计员的确认
+
+自从一式三份立卷被采用的两年里，审计员恰好查阅过这三份记录一次——不是因为有不符，而是为了确认流程确实如所记述那样运作。它确实如此。审计员的总结把这次确认记入了第四种记录，那是一份我们自己不维护的记录：审计员的档案。当外人来读时，一式三份便成了一式四份。这在我们意料之中。封印随条目同行。任何读 docket 的人，都能核验该条目自封印那一刻起就未被触动过。审计员不需要我们的配合；docket 替我们配合。
+
+## 手动核验
+
+任何一位读者，若想确认任何单条条目的封印，都可以手动完成。流程并非特权。登记员在封印时计算的同一个哈希，正是读者在核验时计算的那个哈希。如果条目未被改动，两者会吻合。若不吻合，读者就发现了一次不符——这本会在登记员的夜间审计于次晨浮出水面——并被要求把这次不符立卷到审计 docket，使这次发现本身留在记录里。
+
+```bash
+$ marshal docket verify --entry APR-2024-04-15-0381
+ENTRY      APR-2024-04-15-0381
+DOCKET     approvals
+POLICY     approval-stamps@v1
+SEAL       sha256:a3f9b4e1c5d26f8e9c3b7a1f4e8d2b5c
+COMPUTED   sha256:a3f9b4e1c5d26f8e9c3b7a1f4e8d2b5c
+STATUS     VERIFIED
+```
+
+一式三份已立卷；封印已读出；契约成立。policy 日志和审计轨迹是礼貌。封印才是契约。

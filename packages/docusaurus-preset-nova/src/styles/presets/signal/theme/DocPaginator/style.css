@@ -1,5 +1,10 @@
 /**
- * Signal — Doc Paginator visual styling.
+ * Signal - `DocPaginator` theme overlay.
+ *
+ * Previous/next-page navigation - mono-code uppercase heading and
+ * direction labels (tight tracking), hover lifts the link with a 2px
+ * primary-rose left rail and a neutral-50 fill. Title color shifts to
+ * primary on hover.
  *
  * @since 0.15.0
  */
@@ -7,11 +12,11 @@
 .nova-doc-paginator {
   margin-top: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--nova-color-neutral-200);
+  border-top: 1px solid var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-doc-paginator {
-  border-top-color: var(--nova-color-neutral-800);
+  border-top-color: var(--nova-color-border);
 }
 
 /* ============================
@@ -24,11 +29,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-doc-paginator-heading {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
 }
 
 /* ============================
@@ -45,16 +46,20 @@
     background-color var(--nova-motion-duration) ease;
 }
 
+[data-theme="dark"] .nova-doc-paginator-link {
+  color: var(--nova-color-text);
+}
+
 .nova-doc-paginator-link:hover,
 .nova-doc-paginator-link:focus-visible {
   border-left-color: var(--nova-color-primary-500);
-  background-color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-surface-raised);
 }
 
 [data-theme="dark"] .nova-doc-paginator-link:hover,
 [data-theme="dark"] .nova-doc-paginator-link:focus-visible {
   border-left-color: var(--nova-color-primary-400);
-  background-color: var(--nova-color-neutral-900);
+  background-color: var(--nova-color-text);
 }
 
 /* ============================
@@ -66,7 +71,7 @@
   font-size: 0.625rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 /* ============================
@@ -76,11 +81,7 @@
 .nova-doc-paginator-title {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-doc-paginator-title {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
 }
 
 .nova-doc-paginator-link:hover .nova-doc-paginator-title,
@@ -99,10 +100,6 @@
 
 .nova-doc-paginator-excerpt {
   font-size: 0.8125rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   line-height: 1.5;
-}
-
-[data-theme="dark"] .nova-doc-paginator-excerpt {
-  color: var(--nova-color-neutral-400);
 }

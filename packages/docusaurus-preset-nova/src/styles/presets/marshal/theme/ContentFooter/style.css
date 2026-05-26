@@ -1,0 +1,117 @@
+/**
+ * Marshal - `ContentFooter` theme overlay.
+ *
+ * The article colophon - tags row, share row, edit-this-page row.
+ * Section labels are mono uppercase seal-red eyebrows; share buttons
+ * are flat ledger plates. Last-updated metadata reads as a clerk's
+ * stamp in muted mono.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section label - mono uppercase seal-red
+ * ============================
+ */
+
+.nova-content-footer-section-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-content-footer-section-label {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 2. Share button - flat ledger plate
+ * ============================
+ */
+
+.nova-content-footer-share-button {
+  color: var(--nova-marshal-ink-muted);
+
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-content-footer-share-button:hover,
+.nova-content-footer-share-button:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-content-footer-share-button {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-content-footer-share-button:hover,
+[data-theme="dark"] .nova-content-footer-share-button:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 3. Share copied - confirmation seal
+ * ============================
+ */
+
+.nova-content-footer-share-copied {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-content-footer-share-copied {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Edit this page link
+ * ============================
+ */
+
+.nova-content-footer-edit .nova-edit-this-page {
+  font-size: 0.875rem;
+  color: var(--nova-color-primary-800);
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-content-footer-edit .nova-edit-this-page:hover,
+.nova-content-footer-edit .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-900);
+}
+
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:hover,
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-200);
+}
+
+/**
+ * ============================
+ * 5. Last updated stamp
+ * ============================
+ */
+
+.nova-content-footer-edit .nova-last-updated {
+  font-size: 0.875rem;
+  color: var(--nova-marshal-ink-muted);
+}

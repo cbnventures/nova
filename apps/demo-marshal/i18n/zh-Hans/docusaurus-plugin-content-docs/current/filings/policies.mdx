@@ -1,0 +1,29 @@
+---
+title: "Policies"
+sidebar_position: 1
+description: "Policy 是关于 Marshal 如何处理某一类事件的成文规则——陈旧 issue、逾期 PR、按层级提供的支持。"
+tags:
+  - "filings"
+  - "policies"
+---
+
+# Policies
+
+Policy 是关于 Marshal 如何在一个仓库上处理某一类事件的成文规则——陈旧 issue、逾期 PR、按层级处理的支持请求、按计划的接续。
+
+## 默认 policies
+
+- **线程归档** — 关闭并封存静默超过 N 天的线程
+- **访问层级** — 按 sponsor / contributor / public 路由新到来的工作
+- **计划 stewardship** — 按 cron 运行清理、审计与接续
+- **钤章 ledger** — 每一次 Marshal 操作都在公开记录里写下自己的一行
+
+## 提交 policy
+
+每一份 policy 都是一段 YAML 块，底部署名，由 Marshal 在下一个整点立卷。Marshal 只读已提交的内容，只钤章已封印的内容。
+
+## 下一步
+
+- [Dockets](/docs/dockets/overview/) — 已提交的 policy 在哪里留下印章。
+- [访问层级](/docs/filings/access-tiers/) — 把基于层级的路由作为一项 policy。
+- [多仓库](/docs/stewardship/multi-repo/) — 跨多个仓库提交 policy。

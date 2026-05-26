@@ -1,5 +1,5 @@
 /**
- * Foundry — Blog Post Paginator visual styling.
+ * Foundry - Blog Post Paginator visual styling.
  *
  * @since 0.15.0
  */
@@ -28,11 +28,7 @@
 .nova-blog-post-paginator-heading {
   font-family: var(--nova-font-display);
   font-size: 1.125rem;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-blog-post-paginator-heading {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
 }
 
 /* ============================
@@ -49,12 +45,12 @@
 
 .nova-blog-post-paginator-link:hover,
 .nova-blog-post-paginator-link:focus-visible {
-  background-color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-surface-raised);
 }
 
 [data-theme="dark"] .nova-blog-post-paginator-link:hover,
 [data-theme="dark"] .nova-blog-post-paginator-link:focus-visible {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--nova-foundry-glow-primary);
 }
 
 /* ============================
@@ -66,11 +62,7 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-blog-post-paginator-label {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 /* ============================
@@ -92,10 +84,6 @@
  * ============================ */
 
 .nova-blog-post-paginator-excerpt {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   line-height: 1.6;
-}
-
-[data-theme="dark"] .nova-blog-post-paginator-excerpt {
-  color: var(--nova-color-neutral-400);
 }

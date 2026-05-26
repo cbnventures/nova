@@ -1,0 +1,10 @@
+{
+  "label": "النواة",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "كيف يمثّل Foundry عملية البناء — بيان مساحة العمل `.grain`، ومخطّط التبعيات Tongs، وذاكرة Anvil المعنونة بالمحتوى، وإعادة تشغيل Crucible التزايدية."
+  }
+}

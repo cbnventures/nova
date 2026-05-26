@@ -1,0 +1,39 @@
+---
+title: "Six months of perimeter motion, in one picture"
+authors:
+  - "noor"
+tags:
+  - "zones"
+  - "motion"
+  - "sensor-history"
+date: "2026-04-10"
+---
+
+A motion sensor on the front porch fires forty times a day. Most of those are squirrels. Some of them are the cat. Lantern's history view is the place where the squirrels become a pattern instead of a parade.
+
+{/* truncate */}
+
+We added zone-aware filtering and a quiet diff against the previous week. The dashboard now shows what changed before it shows what happened.
+
+Six months on the porch, in one column, is about seven thousand events. That is a lot of rows for a household to read at noon. The first version of the perimeter view showed all seven thousand and let the household scroll. We watched the household never scroll. So we put the diff first. The view now opens with a small block at the top — *this week, compared to last week* — and the column of rows sits below it for anyone who wants the detail. Most weeks the diff is the only thing the household reads. Some weeks it is the only thing worth reading.
+
+The diff is short on purpose. It does not list every event. It lists what was different. *The cat was here twenty percent more often, mostly in the afternoons. The mail came eleven minutes earlier on average. The wisteria-wind events fell to half — the wisteria has finished blooming. The squirrels were within two percent of the previous week.* Four lines, four contexts. The household reads it in ten seconds and moves on with their Sunday.
+
+```bash
+$ lantern history --zone porch --since "1 week ago" --diff
+zone   regular            this-week   last-week   delta    note
+porch  cat                  102           85       +20%   afternoons heavier
+porch  mail                  11           11        0      11 min earlier on avg
+porch  squirrel-maple        38           39       -3%
+porch  squirrel-fence        31           30       +3%
+porch  squirrel-third         8            7
+porch  wisteria-wind         18           34       -47%   bloom ending
+porch  neighbor-dog           4            5
+porch  unknown                2            0       +2     1 brief, 1 false
+```
+
+The unknown row is the one we look at first. Most weeks it is zero. Some weeks it is one or two — a delivery driver who is not the regular delivery driver, a friend who came to the door, a leaf big enough to land in the *person* band by accident. The row is short. The detail link below it shows the timestamp and the camera frame. The household can decide if it was worth knowing about, or not, in about thirty seconds.
+
+What we did not expect was how much the diff changed the household's relationship to the dashboard. The view used to be a place you went when you wanted to be reassured about something specific — *was the back gate quiet last night?* Now it is a place you can glance at on a Sunday morning, with no question in mind, and come away with a small picture of what the perimeter has been doing. The household reads it the way you would read the weather page in the paper. Not because anything is wrong, but because it is pleasant to know.
+
+Six months becomes seven thousand rows becomes a four-line diff. The rows are still there if the question is bigger than the diff. Most weeks it is not. The porch holds the long memory; the diff holds the short one; the household holds the Sunday.

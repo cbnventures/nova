@@ -1,0 +1,98 @@
+/**
+ * Envoy - `error-surface` umbrella overlay.
+ *
+ * Premium SaaS error surface (404 / per-page crash / top-level boundary).
+ * Display Inter heading with violet hero gradient, elevated card retry button
+ * with violet hover wash and lift. Mirrors the SearchPage heading + result
+ * card chrome so error pages read as a continuation of the site voice rather
+ * than a default fallback.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Heading
+ * ============================ */
+
+.nova-error-surface h1 {
+  font-family: var(--nova-font-display);
+  font-weight: 700;
+  background: var(--nova-envoy-gradient-hero);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="dark"] .nova-error-surface h1 {
+  background: var(--nova-envoy-gradient-hero);
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+/* ============================
+ * 2. Body Copy
+ * ============================ */
+
+.nova-error-surface p {
+  font-family: var(--nova-font-body);
+  color: var(--nova-envoy-text-muted);
+}
+
+[data-theme="dark"] .nova-error-surface p {
+  color: var(--nova-envoy-text-muted);
+}
+
+/* ============================
+ * 3. Retry Button - Elevated Card
+ * ============================ */
+
+.nova-error-surface button {
+  font-family: var(--nova-font-body);
+  font-weight: 500;
+
+  color: var(--nova-color-text);
+  background-color: var(--nova-envoy-surface);
+  border-color: var(--nova-envoy-border);
+  border-radius: var(--nova-envoy-radius-generous);
+  box-shadow: var(--nova-envoy-shadow-card);
+
+  transition: background-color var(--nova-envoy-transition),
+              border-color var(--nova-envoy-transition),
+              box-shadow var(--nova-envoy-transition),
+              transform var(--nova-envoy-transition);
+}
+
+[data-theme="dark"] .nova-error-surface button {
+  color: var(--nova-color-text);
+  background-color: var(--nova-envoy-surface);
+  border-color: var(--nova-envoy-border);
+  box-shadow: var(--nova-envoy-shadow-card);
+}
+
+.nova-error-surface button:hover,
+.nova-error-surface button:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-envoy-surface) 96%);
+  border-color: var(--nova-color-primary-300);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .nova-error-surface button:hover,
+[data-theme="dark"] .nova-error-surface button:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-envoy-surface) 92%);
+  border-color: var(--nova-color-primary-600);
+  box-shadow: var(--nova-envoy-shadow-card-hover);
+}
+
+/* ============================
+ * 4. Horizontal Rule
+ * ============================ */
+
+.nova-error-surface hr {
+  border-top-color: var(--nova-envoy-border);
+}
+
+[data-theme="dark"] .nova-error-surface hr {
+  border-top-color: var(--nova-envoy-border);
+}

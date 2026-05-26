@@ -1,0 +1,95 @@
+/**
+ * Envoy - `Admonition` theme overlay.
+ *
+ * Inline notice blocks. Colorful but not aggressive - soft tinted bg with
+ * type-keyed left rail (tip=violet, info=cyan, warning=amber, danger=red).
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned rhythm tokens
+ *
+ * 1.5rem block margin = envoy's generous-spacing identity (matches the
+ * preset's `--nova-section-gap / 4` breathing room used elsewhere).
+ * Symmetric so the callout sits cleanly between paragraphs.
+ * ============================ */
+
+:root {
+  --nova-envoy-admonition-margin-block: 1.5rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Admonition
+ * ============================ */
+
+:root {
+  --nova-admonition-margin-block: var(--nova-envoy-admonition-margin-block);
+}
+
+/* ============================
+ * 1. Container
+ * ============================ */
+
+/* Colorful but not aggressive admonition blocks. Block-margin flows from
+ * the shared component rule via `--nova-admonition-margin-block`. */
+.nova-admonition {
+  padding: var(--nova-shape-padding);
+
+  border-left: 4px solid var(--nova-color-border);
+  border-radius: 0 var(--nova-envoy-radius-generous) var(--nova-envoy-radius-generous) 0;
+
+  background-color: var(--nova-color-surface-raised);
+}
+
+[data-theme="dark"] .nova-admonition {
+  background-color: color-mix(in srgb, var(--nova-color-text-muted), transparent 92%);
+  border-left-color: var(--nova-color-text-muted);
+}
+
+/* ============================
+ * 2. Heading
+ * ============================ */
+
+/* Admonition title styling. */
+.nova-admonition-heading strong {
+  font-family: var(--nova-font-display);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+/* ============================
+ * 3. Type variants
+ *
+ * Per-type rail + fill consume component-tier --nova-admonition-{type}-{facet}
+ * tokens; per-preset values + light/dark swaps live in envoy/preset.css.
+ * ============================ */
+
+/* Tip admonitions use violet. */
+.nova-admonition[data-admonition-type="tip"] {
+  border-left-color: var(--nova-admonition-tip-rail);
+
+  background-color: var(--nova-admonition-tip-fill);
+}
+
+/* Info admonitions use cyan. */
+.nova-admonition[data-admonition-type="info"] {
+  border-left-color: var(--nova-admonition-info-rail);
+
+  background-color: var(--nova-admonition-info-fill);
+}
+
+/* Warning admonitions use amber. */
+.nova-admonition[data-admonition-type="warning"],
+.nova-admonition[data-admonition-type="caution"] {
+  border-left-color: var(--nova-admonition-warning-rail);
+
+  background-color: var(--nova-admonition-warning-fill);
+}
+
+/* Danger admonitions use red. */
+.nova-admonition[data-admonition-type="danger"] {
+  border-left-color: var(--nova-admonition-danger-rail);
+
+  background-color: var(--nova-admonition-danger-fill);
+}

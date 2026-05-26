@@ -1,0 +1,173 @@
+---
+title: "访问控制"
+sidebar_position: 3
+description: "Drawbridge 规则、上下文感知的访问授予、时段限定访问、紧急覆盖与撤销触发条件。"
+tags:
+  - "trust"
+  - "访问控制"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 访问控制
+
+Drawbridge 是 Sentinel 的自适应访问网关。它实时评估信任策略，并将结果转化为具体的访问决策——授予、收窄或撤销。每一条 Filament 隧道、每一次资源请求、每一次区域跨越都会经过 Drawbridge。
+
+## Drawbridge 如何决策
+
+Drawbridge 接收来自 Watchtower 的信任评估结果，并将其映射为以下三种结果之一：
+
+1. **授予** — 所有策略条件均满足。通往目标资源的 Filament 隧道会被打开或继续保持。
+2. **收窄** — 部分条件满足，但信任评分处于临界水平。访问被授予但带有限制（只读、限时，或仅限资源的一部分）。
+3. **撤销** — 一个或多个条件失败。Filament 隧道被立即关闭。用户必须先修复问题并重新认证。
+
+```text title="Drawbridge 决策流"
+Watchtower 评估 → 信任评分 92，所有条件通过
+  → Drawbridge：GRANT，授予对 api-cluster-east 的完整访问
+
+Watchtower 评估 → 信任评分 78，态势低于阈值
+  → Drawbridge：NARROW，访问受限（只读，30 分钟窗口）
+
+Watchtower 评估 → 信任评分 61，MFA 已过期
+  → Drawbridge：REVOKE — 隧道已关闭，需重新认证
+```
+
+## 标准访问
+
+标准访问规则最为常见。当所有策略条件均满足时，授予完整访问：
+
+<Tabs>
+<TabItem value="standard" label="标准访问" default>
+
+```text title="policies/standard-access.grain"
+policy "engineering-access" {
+  resource = "engineering-services"
+  effect   = "allow"
+
+  conditions {
+    device.posture   >= 80
+    user.mfa         = true
+    user.role        = ["engineer"]
+    network.location = ["office", "vpn"]
+  }
+
+  on_failure {
+    action = "revoke"
+    notify = "security-ops"
+    log    = "spyglass"
+  }
+}
+```
+
+当所有条件通过时，Drawbridge 授予完整访问。Filament 隧道保持开启直到下一次 Watchtower 评估。如果在下一次 90 秒检查时任一条件失败，访问将被撤销。
+
+</TabItem>
+<TabItem value="emergency" label="紧急访问">
+
+```text title="policies/emergency-access.grain"
+policy "emergency-access" {
+  resource = "all-services"
+  effect   = "allow"
+  priority = 1
+
+  conditions {
+    user.role    = ["incident-commander"]
+    user.mfa     = true
+    // highlight-start
+    emergency    = true
+    session.age  <= 1800
+    // highlight-end
+  }
+
+  on_failure {
+    action = "revoke"
+    log    = "spyglass"
+  }
+
+  audit {
+    // highlight-start
+    level       = "critical"
+    notify      = ["security-ops", "executive-team"]
+    require_justification = true
+    // highlight-end
+  }
+}
+```
+
+紧急访问会绕过常规区域限制，但要求事件指挥官角色、活跃的 MFA 与显式的紧急标志。会话被限制在 30 分钟内。所有操作都以关键级别记录审计日志，并通知高管团队。
+
+</TabItem>
+</Tabs>
+
+:::danger 紧急访问审计
+每一次紧急访问会话都会被 Spyglass 完整还原并标记为需强制复核。紧急访问不是"绕过"——而是一次受严密审计的例外。滥用将触发角色的自动吊销。
+:::
+
+## 时段限定访问
+
+访问可限定在特定的时间窗口内。窗口之外，策略评估为失败，Drawbridge 会撤销访问：
+
+```text title="policies/maintenance-window.grain"
+policy "maintenance-access" {
+  resource = "database-cluster"
+  effect   = "allow"
+
+  conditions {
+    user.role        = ["dba"]
+    device.posture   >= 90
+    // highlight-next-line
+    time.window      = "0 2-4 * * SAT"
+  }
+
+  on_failure {
+    action = "revoke"
+    log    = "spyglass"
+  }
+}
+```
+
+这条策略仅允许 DBA 在周六 02:00 至 04:00 之间、且设备态势评分达到 90 及以上时访问数据库。一到 04:01，无论 DBA 当时在做什么，Drawbridge 都会关闭隧道。
+
+## 撤销触发条件
+
+发生以下任一情况时，Drawbridge 会立即撤销访问：
+
+| 触发条件     | 来源         | 响应             |
+|----------|------------|----------------|
+| 态势评分跌破阈值 | Watchtower | 关闭隧道，要求重新认证    |
+| MFA 会话过期 | Watchtower | 提示升级 MFA，挂起隧道  |
+| 网络位置变化   | Watchtower | 基于新的位置数据重新评估策略 |
+| 设备离线     | Garrison   | 120 秒超时后关闭隧道   |
+| 紧急标志被清除  | 管理员        | 立即终止紧急会话       |
+| 会话时长超限   | Watchtower | 强制重新认证         |
+| 人工撤销     | 管理 API     | 立即为指定用户关闭隧道    |
+
+撤销并非优雅断开。Drawbridge 撤销访问时，Filament 隧道会立即终止；通往受保护资源的在途请求会失败。这是有意为之——一个已被撤销的会话绝不应被允许完成任何待处理的操作。
+
+:::note 先收窄后撤销
+对于非关键资源，可将 `on_failure` 处理器配置为先收窄后撤销。这样可给用户一段宽限期来保存工作：`action = "narrow"` 会限制为只读 5 分钟，再升级为彻底撤销。
+:::
+
+## 监控访问决策
+
+实时查询 Drawbridge 决策：
+
+```bash title="观察访问决策"
+sentinel drawbridge watch --resource engineering-services
+```
+
+```text title="实时决策输出"
+Drawbridge — engineering-services
+  [09:15:00] user=j.chen    device=dev_a3b7  → GRANT（评分 92，所有条件通过）
+  [09:15:00] user=m.torres  device=dev_f8e2  → GRANT（评分 88，所有条件通过）
+  [09:16:30] user=m.torres  device=dev_f8e2  → NARROW（评分 79，态势低于 80）
+    → 只读访问 300 秒，随后撤销
+  [09:21:30] user=m.torres  device=dev_f8e2  → REVOKE（宽限期已过）
+```
+
+## 下一步
+
+- [微隔离](/docs/operations/micro-segmentation/) — Rampart 区域如何为 Drawbridge 授予的访问设定范围。
+- [审计与取证](/docs/operations/audit-forensics/) — 完整还原访问决策的会话流程。
+- [信任策略](/docs/trust/trust-policies/) — 驱动 Drawbridge 决策的策略语法。

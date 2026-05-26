@@ -52,7 +52,11 @@ function DocPaginator(props: ThemeDocPaginatorDocPaginatorProps) {
   });
 
   return (
-    <nav className="nova-doc-paginator" aria-label={navAriaLabel}>
+    <nav
+      className={(props['className'] !== undefined) ? `nova-doc-paginator ${props['className']}` : 'nova-doc-paginator'}
+      style={props['style']}
+      aria-label={navAriaLabel}
+    >
       <div className="nova-doc-paginator-heading">{heading}</div>
       <div className="nova-doc-paginator-links">
         {(props['previous'] !== undefined) && (() => {

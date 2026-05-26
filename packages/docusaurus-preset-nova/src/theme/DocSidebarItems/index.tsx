@@ -34,6 +34,8 @@ function DocSidebarItems(props: ThemeDocSidebarItemsDocSidebarItemsProps) {
             activePath={props['activePath']}
             level={props['level']}
             index={index}
+            className={(props['className'] !== undefined) ? `${props['className']}` : undefined}
+            style={props['style']}
           />
         ))
       }

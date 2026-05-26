@@ -1,0 +1,33 @@
+---
+title: "Sensor History"
+sidebar_position: 2
+description: "Sensor history is the quiet ledger of every motion, contact, and zone change Lantern has seen. Read it at noon."
+tags:
+  - "events"
+  - "sensor-history"
+---
+
+# Sensor History
+
+Sensor history is the quiet ledger of every motion, contact, and zone change Lantern has seen. Read it at noon. Read it after a long weekend. The lantern keeps the page open.
+
+## What history captures
+
+- **Motion arcs** — direction, confidence, time of day
+- **Contact dwell** — how long the back door was held
+- **Arm and disarm cadence** — who armed when, who disarmed when
+- **Quiet stretches** — the spaces between
+
+## Reading the ledger
+
+```bash
+lantern history --zone perimeter --since 7d
+```
+
+The output is a single column of times and gentle verbs. Nothing is summarized away.
+
+## Next Steps
+
+- [Events](/docs/events/overview/) — The stream that fills the ledger.
+- [API Reference](/docs/reference/api-reference/) — Read history programmatically.
+- [Zones](/docs/zones/overview/) — Filter history by zone.

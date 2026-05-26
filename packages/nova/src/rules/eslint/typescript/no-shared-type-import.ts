@@ -71,7 +71,7 @@ export class RulesEslintTypescriptNoSharedTypeImport {
       const options: RulesEslintTypescriptNoSharedTypeImportRuleOptions = defaultOptions[0];
       const normalizedFilename: RulesEslintTypescriptNoSharedTypeImportRuleNormalizedFilename = context.filename.replaceAll('\\', '/');
 
-      // Skip .d.ts files — they are allowed to import shared types.
+      // Skip .d.ts files - they are allowed to import shared types.
       if (normalizedFilename.endsWith('.d.ts') === true) {
         return {};
       }

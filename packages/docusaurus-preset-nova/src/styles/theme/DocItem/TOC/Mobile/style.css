@@ -1,22 +1,10 @@
 /**
- * DocItem TOC Mobile — Shared structural styles.
+ * DocItem TOC Mobile - Shared structural styles.
+ *
+ * No rules - mobile/desktop visibility is handled by:
+ *  - `theme/TOCCollapsible/style.css` hides the trigger at `min-width: 1024px`.
+ *  - `theme/TOC/style.css` keeps `.nova-toc { display: none }` baseline and
+ *    flips it to `display: block` at `min-width: 1024px`.
  *
  * @since 0.15.0
  */
-
-/**
- * ============================
- * TOC Mobile — Desktop Visibility
- * ============================
- *
- * The mobile TOC (TOCCollapsible) and desktop TOC (TOC) both render
- * unconditionally. CSS controls which one is visible per viewport.
- * The desktop TOC is hidden on mobile via preset DocSidebar CSS.
- * This rule hides the mobile TOC on desktop.
- */
-
-@media (min-width: 1024px) {
-  .nova-toc-collapsible {
-    display: none;
-  }
-}

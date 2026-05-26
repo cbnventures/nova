@@ -1,0 +1,95 @@
+---
+title: "التثبيت"
+sidebar_position: 1
+description: "ثبّت Signal CLI عبر Spark أو Loom Registry أو Vial. واضبط مفتاح API خلال أقل من دقيقتين."
+tags:
+  - "getting started"
+  - "installation"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# التثبيت
+
+ثبّت Signal CLI واضبط مفتاح API الخاص بك. يستغرق الإعداد كاملاً أقل من دقيقتين.
+
+## المتطلبات الأساسية
+
+| المتطلب          | الإصدار | ملاحظات                                        |
+|------------------|---------|------------------------------------------------|
+| Spark            | ^3.0    | بيئة تشغيل CLI لـ Signal وأدواته الفرعية.      |
+| Alloy            | ^5.0    | مطلوب لكتابة سكربتات مخصصة لنماذج إسناد Prism. |
+| مفتاح Signal API | —       | أنشئه من لوحة Signal أو عبر Spoke API.         |
+
+## التثبيت
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+```bash title="التثبيت عبر Spark"
+spark install signal-cli
+```
+
+يُثبِّت هذا أمر `signal` بشكل عام. تحقق من التثبيت:
+
+```bash
+signal --version
+```
+
+</TabItem>
+<TabItem value="loom" label="Loom Registry">
+
+```bash title="التثبيت عبر Loom"
+loom add --global signal-cli
+```
+
+يحل Loom التبعيات من Loom Registry ويربط الملف التنفيذي `signal` بالمسار لديك.
+
+</TabItem>
+<TabItem value="vial" label="Vial Container">
+
+```bash title="التشغيل عبر Vial"
+vial pull signal/cli:latest
+vial run signal/cli:latest -- signal --version
+```
+
+تتضمن صورة Vial واجهة الأوامر وجميع الأدوات الفرعية. لا تتطلب أي تبعيات على المضيف.
+
+</TabItem>
+</Tabs>
+
+## ضبط مفتاح API
+
+بعد التثبيت، صادق باستخدام مفتاح Signal API:
+
+```bash title="المصادقة"
+signal auth login --key sk_live_your_api_key_here
+```
+
+يحفظ Signal المفتاح في `~/.signal/credentials.grain`. ويُستخدم المفتاح لجميع استدعاءات Spoke API، بما في ذلك إنشاء روابط Beacon واستعلامات Prism.
+
+:::tip
+لخطوط أنابيب CI/CD التي تعمل عبر Conduit، عيِّن متغير البيئة `SIGNAL_API_KEY` بدلاً من تسجيل الدخول التفاعلي. تقرأ واجهة الأوامر المتغير تلقائياً حين لا يوجد ملف اعتماد.
+:::
+
+## التحقق
+
+أنشئ رابط Beacon تجريبياً للتأكد من أن كل شيء متصل:
+
+```bash
+signal beacon create --url "https://example.com" --campaign "install-test"
+```
+
+إن أعاد الأمر رابطاً قصيراً، فقد اكتمل التثبيت.
+
+## الاستضافة الذاتية أم السحابة
+
+يعمل Signal كخدمة مُدارة افتراضياً. تجري جميع عمليات إعادة توجيه Beacon والتقاط أحداث Pulse ومعالجة إسناد Prism على بنية Signal التحتية عبر أكثر من 180 منطقة.
+
+للفرق التي تحتاج إلى إبقاء بيانات الإسناد على بنيتها التحتية، يُشحن Signal أيضاً كتطبيق ذاتي الاستضافة عبر Vial. راجع تبويب تثبيت Vial أعلاه ودليل النشر على [Arcline Cloud](https://nova.cbnventures.io) للتفاصيل.
+
+## الخطوات التالية
+
+- [البداية السريعة](/docs/getting-started/quick-start/) — أنشئ أول رابط Beacon وراقب وصول نقرة.
+- [النطاقات المُوسَمة](/docs/beacons/branded-domains/) — اضبط نطاقات مخصصة لروابط Beacon لديك.

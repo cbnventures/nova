@@ -1,0 +1,139 @@
+---
+title: "أوّل مُرحِّل لك"
+sidebar_position: 2
+description: "استقبل خطّاف ويب من Threadbare، وحوِّله باستخدام Parcel، وسلّمه إلى Canary. شرح خطوة بخطوة من الصفر إلى مُرحِّل يعمل."
+tags:
+  - "setup"
+  - "tutorial"
+---
+
+import Details from '@theme/Details';
+
+# أوّل مُرحِّل لك
+
+ينقلك هذا الشرح من تثبيت Envoy جديد إلى مُرحِّل يعمل، يستقبل خطّاف ويب لدفع شيفرة من Threadbare، ويحوّله إلى إشعار قابل للقراءة، ويسلّمه إلى Canary.
+
+## الخطوة 1: اكتب بيان الترحيل
+
+أنشئ ملف `relay.grain` في مجلّد العمل. يُعرّف هذا البيان مُرحِّلًا واحدًا: أحداث دفع Threadbare توجَّه إلى موضوع Canary.
+
+```text title="relay.grain"
+relay "threadbare-pushes" {
+  source = "threadbare"
+  // highlight-next-line
+  cipher = "hmac-sha256"
+
+  transform {
+    // highlight-start
+    title = "[{{ repo }}] {{ count }} new commit(s) to {{ branch }}"
+    body  = "{{ author }} pushed to {{ branch }}:\n{{ commit_summary }}"
+    // highlight-end
+    priority = 3
+    tags     = ["package"]
+  }
+
+  destination = "canary://ci-builds"
+
+  retry {
+    strategy = "exponential"
+    max      = 5
+  }
+}
+```
+
+يخبر توجيه `cipher` Envoy بأن يتحقّق من خطّاف الويب الوارد باستخدام توقيعات HMAC-SHA256. يوقّع Threadbare كلّ حمولة خطّاف ويب بالسرّ الذي تُعدّه من جانبه.
+
+## الخطوة 2: ابدأ المُرحِّل
+
+ابدأ Envoy مع البيان:
+
+```bash title="Start Envoy"
+envoy start --config relay.grain --port 8090
+```
+
+يقرأ Envoy البيان، ويُهيّئ Cipher بوضع تحقّق HMAC، ويترجم قالب تحويل Parcel، ويُسجّل مسار Dispatch.
+
+## الخطوة 3: أعدّ المصدر
+
+في إعدادات مستودع Threadbare لديك، أضف خطّاف ويب:
+
+- **عنوان الحمولة:** `https://your-envoy-host:8090/relay/threadbare`
+- **نوع المحتوى:** `application/json`
+- **السرّ:** السرّ ذاته الذي يستخدمه Envoy للتحقّق عبر HMAC
+- **الأحداث:** اختر "حدث الدفع فقط"
+
+## الخطوة 4: ادفع التزامًا
+
+ادفع التزامًا إلى المستودع. يُطلق Threadbare خطّاف الويب. يستقبله Envoy:
+
+```json title="Incoming Threadbare payload"
+{
+  "ref": "refs/heads/main",
+  "repository": { "full_name": "acme/web-app" },
+  "pusher": { "name": "nneka" },
+  "commits": [
+    { "id": "a7f3c9d", "message": "Fix rate limiter edge case" },
+    { "id": "b2e8f1a", "message": "Update Courier retry defaults" }
+  ]
+}
+```
+
+يحوّله Parcel إلى صيغة Canary:
+
+```json title="Transformed Canary notification"
+{
+  "title": "[acme/web-app] 2 new commit(s) to main",
+  "body": "nneka pushed to main:\n- a7f3c9d: Fix rate limiter edge case\n- b2e8f1a: Update Courier retry defaults",
+  "priority": 3,
+  "tags": ["package"]
+}
+```
+
+يُسلّمه Courier إلى موضوع Canary `ci-builds` ويُسجّل إيصال تسليم في Ledger.
+
+<Details>
+<summary>سجلّ المُرحِّل الكامل لهذه المعاملة</summary>
+
+```text title="Envoy relay log"
+[cipher]   threadbare-pushes  HMAC-SHA256 valid (source: 203.0.113.42)
+[parcel]   threadbare-pushes  Transformed: 2 fields mapped, 0 dropped
+[dispatch] threadbare-pushes  Routed to: canary://ci-builds
+[courier]  threadbare-pushes  Attempt 1/5 — 200 OK (3.1ms)
+[courier]  threadbare-pushes  Delivery receipt: confirmed
+[ledger]   threadbare-pushes  Recorded: msg_f7a2b8c4 → delivered
+```
+
+</Details>
+
+## الخطوة 5: تحقّق في Ledger
+
+استعلم Ledger لتأكيد التسليم:
+
+```bash title="Query Ledger"
+curl http://localhost:8090/api/deliveries?relay=threadbare-pushes&limit=1
+```
+
+```json title="Ledger response"
+{
+  "deliveries": [
+    {
+      "id": "msg_f7a2b8c4",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 1,
+      "latency_ms": 3.1,
+      "timestamp": "2025-03-01T14:22:07Z"
+    }
+  ]
+}
+```
+
+:::tip
+شغّل `envoy status` من واجهة الأوامر لرؤية ملخّص حيّ لكلّ المُرحِّلات النشطة، ومعدّلات تسليمها، وأيّ رسائل في وضع إعادة المحاولة أو الرسائل الميّتة.
+:::
+
+## الخطوات التالية
+
+- [الإعداد](/docs/setup/configuration/) — مرجع بيان الترحيل الكامل بصيغة `.grain` بكلّ التوجيهات.
+- [ترجمة البروتوكولات](/docs/core/protocol-translation/) — غوص عميق في خطوط تحويل Parcel.
+- [التوجيه والإرسال](/docs/core/routing-dispatch/) — التوجيه القائم على المحتوى، وتصعيد الخطورة، وتشتيت المواضيع.

@@ -1,0 +1,95 @@
+---
+title: "安装"
+sidebar_position: 1
+description: "通过 Spark、Loom Registry 或 Vial 安装 Signal CLI，并在两分钟内配置好你的 API 密钥。"
+tags:
+  - "入门"
+  - "安装"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 安装
+
+安装 Signal CLI 并配置你的 API 密钥。整个过程用时不到两分钟。
+
+## 前置条件
+
+| 要求            | 版本   | 说明                             |
+|---------------|------|--------------------------------|
+| Spark         | ^3.0 | Signal 及其子工具的 CLI 运行时。         |
+| Alloy         | ^5.0 | 编写自定义 Prism 归因模型脚本时需要。         |
+| Signal API 密钥 | —    | 在 Signal 仪表盘或通过 Spoke API 中生成。 |
+
+## 安装
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+```bash title="通过 Spark 安装"
+spark install signal-cli
+```
+
+这会全局安装 `signal` 命令。确认安装：
+
+```bash
+signal --version
+```
+
+</TabItem>
+<TabItem value="loom" label="Loom Registry">
+
+```bash title="通过 Loom 安装"
+loom add --global signal-cli
+```
+
+Loom 会从 Loom Registry 解析依赖，并将 `signal` 二进制链接到你的 PATH 中。
+
+</TabItem>
+<TabItem value="vial" label="Vial Container">
+
+```bash title="通过 Vial 运行"
+vial pull signal/cli:latest
+vial run signal/cli:latest -- signal --version
+```
+
+Vial 镜像内含 CLI 与所有子工具，无需任何宿主机依赖。
+
+</TabItem>
+</Tabs>
+
+## 配置 API 密钥
+
+安装完成后，用 Signal API 密钥进行认证：
+
+```bash title="登录认证"
+signal auth login --key sk_live_your_api_key_here
+```
+
+Signal 会将密钥保存在 `~/.signal/credentials.grain` 中。该密钥用于所有 Spoke API 调用，包括 Beacon 链接创建与 Prism 查询。
+
+:::tip
+对于运行在 Conduit 上的 CI/CD 流水线，请改为设置 `SIGNAL_API_KEY` 环境变量，而不是使用交互式登录。当不存在凭据文件时，CLI 会自动读取该变量。
+:::
+
+## 验证
+
+创建一条测试用的 Beacon 链接，确认一切连通：
+
+```bash
+signal beacon create --url "https://example.com" --campaign "install-test"
+```
+
+如果命令返回了一个短链 URL，安装就完成了。
+
+## 自托管与云服务
+
+Signal 默认以托管服务形式运行。所有 Beacon 重定向、Pulse 事件采集与 Prism 归因处理都跑在 Signal 自家分布于 180+ 区域的基础设施上。
+
+对于需要把归因数据保留在自有基础设施上的团队，Signal 也提供以 Vial 部署的自托管形态。具体可参见上文 Vial 安装标签页，以及 [Arcline Cloud](https://nova.cbnventures.io) 上的部署指南。
+
+## 下一步
+
+- [快速开始](/docs/getting-started/quick-start/) — 铸造你的第一条 Beacon 链接，看着一次点击到达。
+- [品牌域名](/docs/beacons/branded-domains/) — 为 Beacon 链接配置自定义域名。

@@ -1,0 +1,156 @@
+---
+title: "你的第一条策略"
+sidebar_position: 2
+description: "以 .grain 格式编写一条信任策略，将其绑定到资源，并实时观察 Watchtower 的评估过程。"
+tags:
+  - "快速入门"
+  - "教程"
+---
+
+import Details from '@theme/Details';
+
+# 你的第一条策略
+
+一条信任策略定义了在何种条件下才授予访问、它保护的是哪个资源，以及当条件不再满足时会发生什么。本指南将带你从零开始编写一条策略，对它进行校验，并观察 Watchtower 对它的评估过程。
+
+## 编写策略
+
+在你的策略目录下创建一个名为 `web-access.grain` 的文件：
+
+```text title="policies/web-access.grain"
+policy "web-application-access" {
+  // highlight-next-line
+  resource = "web-app-production"
+  effect   = "allow"
+
+  conditions {
+    // highlight-start
+    device.posture   >= 80
+    user.mfa         = true
+    network.location = ["office", "vpn"]
+    // highlight-end
+  }
+
+  on_failure {
+    action = "revoke"
+    notify = "security-ops"
+    log    = "spyglass"
+  }
+}
+```
+
+每条策略都包含三个部分：
+
+- **资源与效果** — 策略保护的是什么，以及是允许还是拒绝访问。
+- **条件** — 必须同时全部为真的信任要求。
+- **失败处理** — 当会话期间条件不再满足时所做的处置。
+
+## 在应用前先校验
+
+在将策略应用到线上资源之前，请务必先校验：
+
+```bash title="校验策略"
+sentinel policy validate policies/web-access.grain
+```
+
+```text title="校验输出"
+正在校验：policies/web-access.grain
+  语法：       有效
+  资源：       web-app-production（已找到，3 个活跃会话）
+  条件：       3 条规则，全部支持
+  失败处理：   revoke + notify（已配置 security-ops 通道）
+
+  试运行影响：
+    当前会话：       3
+    将通过：         2
+    将不通过：       1（设备态势评分 74，阈值 80）
+
+校验完成，无错误。
+```
+
+:::tip
+运行 `sentinel policy validate --verbose` 可查看每个活跃会话的完整评估明细。这是了解新策略将如何影响当前已连接用户的最快方式。
+:::
+
+## 应用策略
+
+应用已校验的策略以开始执行：
+
+```bash title="应用策略"
+sentinel policy apply policies/web-access.grain
+```
+
+```text title="应用输出"
+正在应用策略：web-application-access
+  资源：           web-app-production
+  效果：           allow
+  条件：           3 条规则
+  执行状态：       已激活
+
+  Watchtower：90 秒后进行首次评估
+  Spyglass：  已为该策略启用日志记录
+```
+
+Watchtower 会在 90 秒内开始针对新策略评估所有活跃会话。不满足条件的会话会被自动撤销。
+
+## 观察评估
+
+实时监控 Watchtower 的评估：
+
+```bash title="实时观察评估"
+sentinel watchtower watch --policy web-application-access
+```
+
+```text title="实时评估输出"
+Watchtower — web-application-access（每 90 秒）
+  [14:30:00] dev_a3b7c9d1 user=j.chen    posture=92 mfa=true  net=office  → PASS
+  [14:30:00] dev_f8e2d4c6 user=m.torres  posture=88 mfa=true  net=vpn     → PASS
+  [14:30:00] dev_b1a9c3e7 user=k.patel   posture=74 mfa=true  net=office  → FAIL（posture < 80）
+    → 访问已撤销。已通知 security-ops。
+  [14:31:30] dev_a3b7c9d1 user=j.chen    posture=92 mfa=true  net=office  → PASS
+  [14:31:30] dev_f8e2d4c6 user=m.torres  posture=87 mfa=true  net=vpn     → PASS
+```
+
+`k.patel` 的失败评估触发了即时撤销。Drawbridge 关闭了 Filament 隧道。该用户必须先修复设备态势问题并重新认证，才能恢复访问。
+
+## 策略结构参考
+
+<Details>
+<summary>完整策略 schema</summary>
+
+```text title="策略 schema 参考"
+policy "<name>" {
+  resource = "<resource-id>"
+  effect   = "allow" | "deny"
+  priority = <number>              # 可选，默认 100
+
+  conditions {
+    device.posture    >= | <= | = <number>
+    device.encryption = true | false
+    device.os         = ["<os-name>", ...]
+    user.mfa          = true | false
+    user.role         = ["<role>", ...]
+    user.department   = ["<dept>", ...]
+    network.location  = ["<location>", ...]
+    network.ip_range  = ["<cidr>", ...]
+    behavior.score    >= | <= | = <number>
+    session.age       <= <seconds>
+    time.window       = "<cron-expression>"
+  }
+
+  on_failure {
+    action  = "revoke" | "notify" | "log"
+    notify  = "<channel>"
+    log     = "spyglass"
+    step_up = "mfa"               # 可选，要求重新认证
+  }
+}
+```
+
+</Details>
+
+## 下一步
+
+- [信任策略](/docs/trust/trust-policies/) — 策略语法、条件、可组合性与继承链。
+- [访问控制](/docs/trust/access-control/) — Drawbridge 规则、时段限定访问与撤销触发条件。
+- [策略仿真](/docs/operations/policy-simulation/) — 在执行前用真实流量测试策略。

@@ -1,0 +1,132 @@
+---
+title: "品牌域名"
+sidebar_position: 1
+description: "让每一条 Beacon 链接都跑在你自己的域名上。自定义域名、Ironclad 证书自动签发与多域名路由——通过 CLI 管理。"
+tags:
+  - "beacons"
+  - "域名"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 品牌域名
+
+让每一条 Beacon 链接都跑在你自己的域名上。自定义域名、Ironclad 证书自动签发与多域名路由——全部通过 CLI 或 Spoke API 管理。
+
+## 为什么要用品牌域名
+
+通用短链服务把你的品牌藏在了别人的域名后面。跑在品牌域名上的 Beacon 链接更容易被识别、更值得信任，点击率也更高：
+
+```
+https://go.yourcompany.com/launch     (品牌——你的域名，你的信誉)
+https://sho.rt/x9k2mP7                (通用——这是谁的链接？)
+```
+
+跑在品牌域名上的 Beacon 链接依然携带完整的归因元数据。域名是你的；智能则是 Signal 的。
+
+## DNS 配置
+
+<Tabs>
+<TabItem value="single" label="单一域名" default>
+
+用一条 CNAME 记录把你的品牌子域名指向 Signal 的边缘节点：
+
+| 类型    | 名称                   | 目标                        | 代理  |
+|-------|----------------------|---------------------------|-----|
+| CNAME | `go.yourcompany.com` | `edge.signal.example.dev` | 是   |
+
+然后向 Signal 注册该域名：
+
+```bash title="注册一个品牌域名"
+signal beacon domain add --domain "go.yourcompany.com"
+```
+
+Signal 会验证 DNS 解析并自动签发一份 Ironclad 证书。
+
+</TabItem>
+<TabItem value="multi" label="多域名">
+
+一个 Signal 账户可以服务多个品牌域名。逐个注册即可：
+
+```bash title="注册多个域名"
+signal beacon domain add --domain "go.yourcompany.com"
+signal beacon domain add --domain "links.brand.io"
+signal beacon domain add --domain "l.campaign.dev"
+```
+
+每个域名都是一个相互隔离的命名空间。在 `go.yourcompany.com` 上创建的 Beacon 链接，只能在 `go.yourcompany.com` 上访问。
+
+| 域名                   | 用途       | 状态      |
+|----------------------|----------|---------|
+| `go.yourcompany.com` | 主品牌链接    | Active  |
+| `links.brand.io`     | 合作伙伴营销活动 | Active  |
+| `l.campaign.dev`     | 内部测试     | Pending |
+
+</TabItem>
+<TabItem value="wildcard" label="通配符">
+
+对于有许多团队的组织，可以使用通配符子域名：
+
+| 类型    | 名称                     | 目标                        |
+|-------|------------------------|---------------------------|
+| CNAME | `*.go.yourcompany.com` | `edge.signal.example.dev` |
+
+随后将 Beacon 链接按团队分配到子域名：
+
+```bash
+signal beacon create --domain "marketing.go.yourcompany.com" --url "https://example.com"
+signal beacon create --domain "eng.go.yourcompany.com" --url "https://example.com"
+```
+
+</TabItem>
+</Tabs>
+
+## Ironclad 证书自动签发
+
+Signal 会为每一个已注册的域名自动签发 Ironclad TLS 证书。无需人工管理证书。证书在到期前 30 天自动续期。
+
+```bash title="检查证书状态"
+signal beacon domain status --domain "go.yourcompany.com"
+```
+
+```json title="域名状态"
+{
+  "domain": "go.yourcompany.com",
+  "status": "active",
+  "certificate": {
+    "issuer": "Ironclad",
+    "validFrom": "2025-01-15T00:00:00Z",
+    "validUntil": "2025-04-15T23:59:59Z",
+    "autoRenew": true
+  },
+  "redirectLatency": "2ms"
+}
+```
+
+:::warning
+DNS 变更在全球范围内传播可能需要长达 48 小时。在传播过程中，部分地区可能出现证书错误。Signal 会每 15 分钟重试一次 Ironclad 签发，直到 DNS 在全部 180+ 区域都解析干净为止。
+:::
+
+## 按域名设置默认值
+
+可以为每个域名分别配置重定向行为与回退 URL：
+
+```bash title="设置域名默认值"
+signal beacon domain config \
+  --domain "go.yourcompany.com" \
+  --redirect-code 301 \
+  --fallback-url "https://yourcompany.com" \
+  --slug-prefix "q1-"
+```
+
+| 设置项             | 类型     | 说明                          |
+|-----------------|--------|-----------------------------|
+| `redirect-code` | number | 重定向使用的 HTTP 状态码（301 或 302）。 |
+| `fallback-url`  | string | 该域名上未能解析的 slug 的回退目的地。      |
+| `slug-prefix`   | string | 自动为所有新生成的 slug 加上前缀。        |
+
+## 下一步
+
+- [点击归因](/docs/attribution/click-attribution/) — 追踪品牌链接如何对转化做出贡献。
+- [营销活动管理](/docs/campaigns/campaign-management/) — 把 Beacon 链接组织成营销活动。

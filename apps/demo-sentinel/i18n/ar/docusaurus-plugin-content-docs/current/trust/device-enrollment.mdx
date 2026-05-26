@@ -1,0 +1,142 @@
+---
+title: "تسجيل الجهاز"
+sidebar_position: 2
+description: "استقبال وكيل Garrison، والوضع الأمني الأساسي، ومُلفّات الامتثال، والمراقبة المستمرّة لصحّة الجهاز."
+tags:
+  - "trust"
+  - "devices"
+---
+
+# تسجيل الجهاز
+
+يجب أن يُسجَّل كلّ جهاز يشارك في حلقة تقييم الثقة في Sentinel عبر Garrison. يُنشئ التسجيل وضعاً أمنياً أساسياً، اللقطة الأوّلية لصحّة الجهاز التي تُقاس عليها جميع التقييمات اللاحقة.
+
+## تدفّق التسجيل
+
+التسجيل عمليّة من ثلاث خطوات، تثبيت الوكيل، والمصادقة مع مستوى التحكّم، والتقاط الوضع الأمني الأساسي.
+
+```bash title="تسجيل جهاز"
+sentinel-agent enroll \
+  --control-plane sentinel.yourcompany.internal \
+  --token $ENROLLMENT_TOKEN \
+  --profile standard
+```
+
+```text title="مخرجات التسجيل"
+Enrolling device with Sentinel control plane...
+  Device ID:         dev_7f3a2b9c4e1d
+  Platform:          macOS 15.2 (arm64)
+  Agent version:     3.4.1
+
+  Posture baseline captured:
+    OS version:      15.2 (current)
+    Disk encryption: FileVault enabled (AES-256)
+    Firewall:        active (stealth mode)
+    Patch level:     current (0 pending)
+    Screen lock:     enabled (5 min timeout)
+    Antivirus:       active (definitions current)
+
+  Compliance profile: standard (applied)
+  Filament tunnel:    established (UDP 51820)
+  First Watchtower evaluation: 90s
+
+Enrollment complete.
+```
+
+الوضع الأمني الأساسي غير قابل للتعديل. يعمل بوصفه المرجع لفحوصات الامتثال المستمرّة في Garrison. وإن تدهور الوضع الأمني للجهاز دون عتبات الأساس المُحدّدة في مُلفّ الامتثال الخاصّ به، يُبلَّغ Watchtower ويُعدّل Drawbridge الوصول وفقاً لذلك.
+
+## فئات فحص الوضع الأمني
+
+يُقيّم Garrison الفئات التالية أثناء التسجيل وفي كلّ فحص لاحق:
+
+| الفئة                  | الفحوصات                                                                | الوزن |
+|------------------------|-------------------------------------------------------------------------|-------|
+| **سلامة نظام التشغيل** | حداثة الإصدار، ومستوى ترقيعات الأمان، وكشف كسر الحماية                  | 25%   |
+| **التشفير**            | تشفير كامل للقرص مُفعَّل، وقوّة الخوارزمية، وعمر المفتاح                | 20%   |
+| **الشبكة**             | جدار الحماية فعّال، ووضع التخفّي، وعدد المنافذ المفتوحة                 | 15%   |
+| **المصادقة**           | قفل الشاشة مُفعَّل، ومدّة المهلة، وتسجيل القياسات الحيويّة              | 15%   |
+| **البرمجيات**          | مكافحة الفيروسات فعّالة، وحداثة التعريفات، والبرمجيات غير المُصرَّح بها | 15%   |
+| **التهيئة**            | امتثال مُلفّ MDM، وصلاحيّة الشهادة، وإصدار الوكيل                       | 10%   |
+
+درجة الوضع الأمني المركّبة هي المجموع الموزون لجميع درجات الفئات. تعني درجة 100 أنّ كلّ فحص في كلّ فئة قد نجح. وتُحرّك الدرجة التي تقلّ عن عتبة السياسة معالج `on_failure`.
+
+:::tip انحراف الأساس
+بعد التسجيل، يتتبّع Garrison كيف ينحرف كلّ فحص عن الأساس. الجهاز الذي سُجّل بدرجة وضع أمني 95 وانخفض إلى 82 يُعلَّم بشكل مختلف عن الجهاز الذي سُجّل بدرجة 82. وفي كثير من البيئات، يكون انحراف الأساس إشارة أقوى من الدرجة المطلقة.
+:::
+
+## مُلفّات الامتثال
+
+تُحدّد مُلفّات الامتثال الحدّ الأدنى من متطلّبات الوضع الأمني لمجموعة من الأجهزة. يُربط كلّ جهاز مسجّل بمُلفّ واحد:
+
+```text title="profiles/standard.grain"
+profile "standard" {
+  posture_minimum = 80
+
+  requirements {
+    os.patch_age     <= 30       # days since last patch
+    encryption       = true
+    firewall         = true
+    screen_lock      = true
+    screen_timeout   <= 300      # seconds
+    antivirus        = true
+  }
+}
+```
+
+```text title="profiles/high-security.grain"
+profile "high-security" {
+  posture_minimum = 95
+
+  requirements {
+    os.patch_age     <= 7
+    encryption       = true
+    encryption.algo  = "AES-256"
+    firewall         = true
+    firewall.stealth = true
+    screen_lock      = true
+    screen_timeout   <= 60
+    antivirus        = true
+    antivirus.defs   <= 1        # days since last definition update
+    biometric        = true
+  }
+}
+```
+
+:::warning تغييرات المُلفّات
+يُؤدّي تغيير مُلفّ امتثال إلى إعادة تقييم بأثر رجعي لجميع الأجهزة المرتبطة بذلك المُلفّ. الأجهزة التي لم تعد تستوفي المتطلّبات الجديدة ستُخفق في تقييم Watchtower التالي وتفقد الوصول. شغّل دائماً محاكاة Parapet قبل تشديد متطلّبات المُلفّ.
+:::
+
+## إعادة التسجيل
+
+يجب إعادة تسجيل الأجهزة في الحالات التالية:
+
+- إعادة تثبيت نظام التشغيل أو ترقيته بإصدار رئيسي.
+- إعادة تثبيت وكيل Sentinel.
+- إلغاء رمز التسجيل من قِبَل مسؤول.
+- بقاء الجهاز دون اتصال لمدّة أطول من `max_offline` المُحدّدة في المُلفّ (الافتراضي 30 يوماً).
+
+تلتقط إعادة التسجيل وضعاً أمنياً أساسياً جديداً وتُعيد ضبط تتبّع انحراف الأساس.
+
+## مراقبة الأجهزة المسجّلة
+
+استعلم عن الأجهزة المسجّلة ووضعها الأمني الحالي:
+
+```bash title="عرض الأجهزة المسجّلة"
+sentinel garrison list --profile standard --sort posture
+```
+
+```text title="مخرجات قائمة الأجهزة"
+DEVICE ID         PLATFORM        POSTURE  PROFILE        LAST CHECK
+dev_7f3a2b9c4e1d  macOS 15.2      94       standard       2m ago
+dev_b2c8d4e6f1a3  Windows 11      91       standard       1m ago
+dev_e5f7a1b3c9d2  Ubuntu 24.04    87       standard       45s ago
+dev_a9c1e3f5b7d4  macOS 15.1      76       standard       30s ago  (!)
+
+(!) Below profile minimum (80). Access restricted.
+```
+
+## الخطوات التالية
+
+- [سياسات الثقة](/docs/trust/trust-policies/)، كيف تُغذّي درجات الوضع الأمني تقييم السياسات.
+- [التحكّم في الوصول](/docs/trust/access-control/)، كيف يستخدم Drawbridge بيانات الوضع الأمني لمنح الوصول أو إلغائه.
+- [التجزئة الدقيقة](/docs/operations/micro-segmentation/)، عزل على مستوى المناطق استناداً إلى الوضع الأمني للجهاز وأعباء العمل.

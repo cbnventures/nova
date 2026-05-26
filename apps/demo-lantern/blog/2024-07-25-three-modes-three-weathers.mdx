@@ -1,0 +1,63 @@
+---
+title: "Three modes for three weather patterns"
+authors:
+  - "theo"
+tags:
+  - "travel-mode"
+  - "bedtime"
+  - "modes"
+date: "2024-07-25"
+---
+
+A house has three weathers. There is the weather of when everyone is home. The weather of when the lights go out. And the weather of when the front door has not opened in three days.
+
+{/* truncate */}
+
+Lantern reads each one differently. Quiet zones loosen at bedtime. Watch zones tighten when the family is travelling. The porch knows the difference between July and February without being told.
+
+## Everyone Home
+
+The first weather is the loudest. Everyone home, the kitchen on, the back door open to the yard. Lantern sleeps through most of it on purpose. The hallway light does not need to announce that someone walked past it at 4pm on a Saturday. The watch zones are dialed back; the quiet zones are practically off. Travel-mode rules are suspended. The porch is the only sensor still doing real work, because the porch is the boundary between the household and everyone else.
+
+## After the Last Light
+
+The second weather happens an hour after the last light upstairs goes off. Lantern listens for it. The kitchen falling silent, the bathroom fan switching off, the door from the bedroom to the hallway closing for the night. The watch zones tighten. The quiet zones loosen — they are allowed to ignore more, because the household is asleep and does not want to be told about the cat on the counter unless the counter is on fire.
+
+## When the Door Goes Quiet
+
+The third weather is a slow one. It begins on the second day with the porch sensor still quiet, and it deepens on the third. By then the house has decided to behave differently. The hallway lights stop their evening dim. The kitchen lights skip their morning routine. Travel mode arms the watch zones at full sensitivity, and the porch starts reporting differently — a person at the door is now a person worth knowing about, not a routine arrival.
+
+## Modes in One File
+
+The transitions are written into a single file, because a house with three weathers should be able to describe all of them in one place:
+
+```yaml title="lantern.modes.yml"
+modes:
+  home:
+    triggers:
+      - household-presence: any
+    zones:
+      watch:  passive
+      quiet:  off
+      porch:  gentle
+  bedtime:
+    triggers:
+      - upstairs-quiet: 60min
+      - bedroom-door:   closed
+    zones:
+      watch:  alert
+      quiet:  quiet
+      porch:  gentle
+  travel:
+    triggers:
+      - front-door-quiet: 48h
+      - household-presence: none
+    zones:
+      watch:  alert
+      quiet:  quiet
+      porch:  alert
+```
+
+Every mode has a way in and a way out. None of the transitions are buttons. Travel mode does not begin because someone announced a trip; it begins because the front door went quiet for two days. Bedtime does not begin at 10pm; it begins when the upstairs has been quiet for an hour and the bedroom door is closed.
+
+The porch is the only zone that lives in all three weathers. It is always on, always gentle in the first two, alert in the third. The hallway, the kitchen, the bedroom — those rotate. The porch holds the shape of the house while the rest of it changes its mind.

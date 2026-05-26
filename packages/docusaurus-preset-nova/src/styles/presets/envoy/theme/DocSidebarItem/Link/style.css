@@ -1,0 +1,59 @@
+/**
+ * Envoy - `DocSidebarItem/Link` theme overlay.
+ *
+ * Top-level sidebar link styling - neutral ink with violet hover and a
+ * rounded violet left-rail indicator on the active page. Inner-summary
+ * links inherit from the canonical category-summary rules in shared
+ * `theme/DocSidebar/style.css`, which override these bare-class rules
+ * via higher specificity.
+ *
+ * @since 0.18.0
+ */
+
+.nova-sidebar-link {
+  display: block;
+  padding: 0.5rem 1rem;
+
+  font-size: 0.875rem;
+  color: var(--nova-color-text-muted);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-sidebar-link {
+  color: var(--nova-color-text-muted);
+}
+
+.nova-sidebar-link:hover,
+.nova-sidebar-link:focus-visible {
+  color: var(--nova-color-primary-600);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-sidebar-link:hover,
+[data-theme="dark"] .nova-sidebar-link:focus-visible {
+  color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+/* Active sidebar link - rounded violet left indicator. */
+.nova-sidebar-link[aria-current="page"] {
+  padding-left: calc(1rem - 3px);
+
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-left: 3px solid var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-sidebar-link[aria-current="page"] {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  border-left-color: var(--nova-color-primary-400);
+}

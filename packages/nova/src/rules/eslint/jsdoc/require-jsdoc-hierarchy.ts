@@ -677,7 +677,7 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
    * @since 0.15.0
    */
   private static deriveDescribeSuffix(describeString: RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixDescribeString, pathParts: RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixPathParts): RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixReturns {
-    // Plain string with spaces — title case each word with known name lookup.
+    // Plain string with spaces - title case each word with known name lookup.
     if (describeString.includes(' ') === true) {
       const words: RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixWords = describeString.split(' ');
       const prettyWords: RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixPrettyWords = [];
@@ -704,7 +704,7 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
       return prettyWords.join(' ');
     }
 
-    // Dot notation: 'ClassName.methodName' — take after last dot.
+    // Dot notation: 'ClassName.methodName' - take after last dot.
     if (describeString.includes('.') === true) {
       const dotIndex: RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixDotIndex = describeString.lastIndexOf('.');
       const methodPart: RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixMethodPart = describeString.slice(dotIndex + 1);
@@ -712,7 +712,7 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
       return RulesEslintJsdocRequireJsdocHierarchy.prettyMethodName(methodPart);
     }
 
-    // UPPER_SNAKE_CASE — split on '_', title case, dedup against path.
+    // UPPER_SNAKE_CASE - split on '_', title case, dedup against path.
     if (
       describeString === describeString.toUpperCase()
       && describeString.includes('_') === true
@@ -734,7 +734,7 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
       return RulesEslintJsdocRequireJsdocHierarchy.dedupAgainstPath(prettyWords, pathParts);
     }
 
-    // camelCase/PascalCase — prettify and dedup against path.
+    // camelCase/PascalCase - prettify and dedup against path.
     const prettyName: RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixPrettyName = RulesEslintJsdocRequireJsdocHierarchy.prettyMethodName(describeString);
     const words: RulesEslintJsdocRequireJsdocHierarchyDeriveDescribeSuffixWords = prettyName.split(' ');
 
@@ -842,7 +842,7 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
       return knownName;
     }
 
-    // PascalCase filenames (e.g., MDXComponents) — split via camelCase logic.
+    // PascalCase filenames (e.g., MDXComponents) - split via camelCase logic.
     if (segment.includes('-') === false && segment.charAt(0) === segment.charAt(0).toUpperCase()) {
       return RulesEslintJsdocRequireJsdocHierarchy.prettyMethodName(segment);
     }
@@ -876,8 +876,8 @@ export class RulesEslintJsdocRequireJsdocHierarchy {
     /**
      * Split camelCase into words, keeping consecutive uppercase together.
      *
-     * "checkJSXText" → ["check", "JSX", "Text"].
-     * "fetchData" → ["fetch", "Data"].
+     * "checkJSXText" -> ["check", "JSX", "Text"].
+     * "fetchData" -> ["fetch", "Data"].
      */
     const words: RulesEslintJsdocRequireJsdocHierarchyPrettyMethodNameWords = name.match(new RegExp(LIB_REGEX_PATTERN_CAMEL_CASE_WORDS.source, 'g'));
 

@@ -1,9 +1,5 @@
 import type {
-  Children,
-  Dispatch,
-  ReactElement,
-  ReactNode,
-  SetStateAction,
+  Children, CSSProperties, Dispatch, ReactElement, ReactNode, SetStateAction,
 } from 'react';
 
 /**
@@ -17,10 +13,19 @@ export type ThemeDetailsPropsChildren = ReactNode;
 
 export type ThemeDetailsPropsOpen = boolean | undefined;
 
+export type ThemeDetailsPropsOnToggle = ((isOpen: boolean) => void) | undefined;
+
+export type ThemeDetailsPropsClassName = string | undefined;
+
+export type ThemeDetailsPropsStyle = CSSProperties | undefined;
+
 export type ThemeDetailsProps = {
   summary?: ThemeDetailsPropsSummary;
   children: ThemeDetailsPropsChildren;
   open?: ThemeDetailsPropsOpen;
+  onToggle?: ThemeDetailsPropsOnToggle;
+  className?: ThemeDetailsPropsClassName;
+  style?: ThemeDetailsPropsStyle;
   [key: string]: unknown;
 };
 
@@ -31,6 +36,8 @@ export type ThemeDetailsSummary = ReactNode | undefined;
 export type ThemeDetailsChildren = ReactNode;
 
 export type ThemeDetailsOpen = boolean | undefined;
+
+export type ThemeDetailsOnToggle = ((isOpen: boolean) => void) | undefined;
 
 export type ThemeDetailsState = [ThemeDetailsIsOpen, ThemeDetailsSetIsOpen];
 

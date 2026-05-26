@@ -1,0 +1,128 @@
+/**
+ * Marshal - `BlogPostPaginator` theme overlay.
+ *
+ * Prev/next navigation styled as a register entry - hairline rule above,
+ * mono uppercase eyebrow labels, bold Plex Serif post titles, oldstyle
+ * excerpt body copy. Hover deepens the primary-700 link tint only.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - hairline rule above
+ * ============================
+ */
+
+.nova-blog-post-paginator {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator {
+  border-top-color: var(--nova-marshal-border);
+}
+
+@media (min-width: 768px) {
+  .nova-blog-post-paginator {
+    margin-top: 2rem;
+    padding-top: 2rem;
+  }
+}
+
+/**
+ * ============================
+ * 2. Heading - Plex Serif ledger header
+ * ============================
+ */
+
+.nova-blog-post-paginator-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+}
+
+/**
+ * ============================
+ * 3. Link tile - paper sheet
+ * ============================
+ */
+
+.nova-blog-post-paginator-link {
+  padding: 1rem 1.25rem;
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: background-color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-paginator-link:hover,
+.nova-blog-post-paginator-link:focus-visible {
+  background-color: var(--nova-color-surface-raised);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-link {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-link:hover,
+[data-theme="dark"] .nova-blog-post-paginator-link:focus-visible {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Direction label - seal-red eyebrow
+ * ============================
+ */
+
+.nova-blog-post-paginator-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-label {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 5. Post title - Plex Serif heading
+ * ============================
+ */
+
+.nova-blog-post-paginator-title {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-color-primary-800);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-title {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 6. Excerpt - body copy
+ * ============================
+ */
+
+.nova-blog-post-paginator-excerpt {
+  font-family: var(--nova-font-body);
+  line-height: 1.65;
+  color: var(--nova-marshal-ink-muted);
+}

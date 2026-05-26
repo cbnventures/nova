@@ -1,0 +1,10 @@
+{
+  "layout.heading": {
+    "message": "博客",
+    "description": "The blog list page heading"
+  },
+  "layout.description": {
+    "message": "版本说明与集成深度解析",
+    "description": "The blog list page description below the heading"
+  }
+}

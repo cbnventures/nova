@@ -3,10 +3,14 @@ import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 
 import FooterCredit from '../credit.js';
+import FooterCta from '../cta.js';
 
 import type {
   ThemeFooterEmbassyIndexEmbassyCopyright,
   ThemeFooterEmbassyIndexEmbassyCredit,
+  ThemeFooterEmbassyIndexEmbassyCta,
+  ThemeFooterEmbassyIndexEmbassyCtaContained,
+  ThemeFooterEmbassyIndexEmbassyExternalLinkAriaLabel,
   ThemeFooterEmbassyIndexEmbassyFooterClassName,
   ThemeFooterEmbassyIndexEmbassyLayout,
   ThemeFooterEmbassyIndexEmbassyLayoutEntries,
@@ -15,6 +19,7 @@ import type {
   ThemeFooterEmbassyIndexEmbassyReturns,
   ThemeFooterEmbassyIndexEmbassySectionLinks,
   ThemeFooterEmbassyIndexEmbassySections,
+  ThemeFooterEmbassyIndexEmbassySocialLinkLabel,
   ThemeFooterEmbassyIndexEmbassySocialLinks,
   ThemeFooterEmbassyIndexEmbassySocialLinksAriaLabel,
   ThemeFooterEmbassyIndexSectionLink,
@@ -40,6 +45,8 @@ function Embassy(props: ThemeFooterEmbassyIndexEmbassyProps): ThemeFooterEmbassy
   const socialLinks: ThemeFooterEmbassyIndexEmbassySocialLinks = props['socialLinks'];
   const copyright: ThemeFooterEmbassyIndexEmbassyCopyright = props['copyright'];
   const credit: ThemeFooterEmbassyIndexEmbassyCredit = props['credit'];
+  const cta: ThemeFooterEmbassyIndexEmbassyCta = props['cta'];
+  const ctaContained: ThemeFooterEmbassyIndexEmbassyCtaContained = props['ctaContained'];
   const footerClassName: ThemeFooterEmbassyIndexEmbassyFooterClassName = 'nova-footer-embassy';
   const layoutEntries: ThemeFooterEmbassyIndexEmbassyLayoutEntries = Object.entries(layout) as ThemeFooterEmbassyIndexEmbassyLayoutEntries;
   const socialLinksAriaLabel: ThemeFooterEmbassyIndexEmbassySocialLinksAriaLabel = translate({
@@ -47,61 +54,79 @@ function Embassy(props: ThemeFooterEmbassyIndexEmbassyProps): ThemeFooterEmbassy
     message: 'Social media links',
     description: 'The ARIA label for the footer social media links section',
   });
+  const externalLinkAriaLabel: ThemeFooterEmbassyIndexEmbassyExternalLinkAriaLabel = translate({
+    id: 'theme.IconExternalLink.ariaLabel',
+    message: '(opens in new tab)',
+    description: 'The screen-reader label appended to external links that open in a new tab',
+  });
 
   return (
-    <footer className={footerClassName}>
-      <div className="nova-footer-embassy-header nova-container">
-        <div className="nova-footer-embassy-social" aria-label={socialLinksAriaLabel}>
+    <>
+      <FooterCta variant="embassy" cta={cta} contained={ctaContained} />
+      <footer className={footerClassName}>
+        <div
+          className={(props['className'] !== undefined) ? `nova-footer-embassy-header nova-container ${props['className']}` : 'nova-footer-embassy-header nova-container'}
+          style={props['style']}
+        >
+          <div className="nova-footer-embassy-social" aria-label={socialLinksAriaLabel}>
+            {
+              socialLinks.map((socialLink: ThemeFooterEmbassyIndexSocialLink) => {
+                const socialLinkLabel: ThemeFooterEmbassyIndexEmbassySocialLinkLabel = `${socialLink['label']} ${externalLinkAriaLabel}`;
+
+                return (
+                  <a
+                    key={socialLink['label']}
+                    href={socialLink['href']}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={socialLinkLabel}
+                  >
+                    <Icon icon={socialLink['icon']} width="20" height="20" aria-hidden="true" />
+                  </a>
+                );
+              })
+            }
+          </div>
+        </div>
+        <div className="nova-footer-embassy-directory nova-container">
           {
-            socialLinks.map((socialLink: ThemeFooterEmbassyIndexSocialLink) => (
-              <a
-                key={socialLink['label']}
-                href={socialLink['href']}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={socialLink['label']}
-              >
-                <Icon icon={socialLink['icon']} width="20" height="20" aria-hidden="true" />
-              </a>
-            ))
+            layoutEntries.map((layoutEntry: ThemeFooterEmbassyIndexEmbassyLayoutEntry) => {
+              const sectionLinks: ThemeFooterEmbassyIndexEmbassySectionLinks = (sections[layoutEntry[1]['section']] ?? []) as ThemeFooterEmbassyIndexEmbassySectionLinks;
+
+              return (
+                <nav key={layoutEntry[0]} aria-label={layoutEntry[1]['title'] ?? layoutEntry[0]}>
+                  {(layoutEntry[1]['title'] !== undefined) && (
+                    <h3>
+                      {layoutEntry[1]['title']}
+                    </h3>
+                  )}
+                  <ul>
+                    {
+                      sectionLinks.map((sectionLink: ThemeFooterEmbassyIndexSectionLink) => (
+                        <li key={sectionLink['label']}>
+                          <Link to={sectionLink['href']}>
+                            {sectionLink['label']}
+                          </Link>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </nav>
+              );
+            })
           }
         </div>
-      </div>
-      <div className="nova-footer-embassy-directory nova-container">
-        {
-          layoutEntries.map((layoutEntry: ThemeFooterEmbassyIndexEmbassyLayoutEntry) => {
-            const sectionLinks: ThemeFooterEmbassyIndexEmbassySectionLinks = (sections[layoutEntry[1]['section']] ?? []) as ThemeFooterEmbassyIndexEmbassySectionLinks;
-
-            return (
-              <nav key={layoutEntry[0]} aria-label={layoutEntry[1]['title'] ?? layoutEntry[0]}>
-                {(layoutEntry[1]['title'] !== undefined) && (
-                  <h3>
-                    {layoutEntry[1]['title']}
-                  </h3>
-                )}
-                <ul>
-                  {
-                    sectionLinks.map((sectionLink: ThemeFooterEmbassyIndexSectionLink) => (
-                      <li key={sectionLink['label']}>
-                        <Link to={sectionLink['href']}>
-                          {sectionLink['label']}
-                        </Link>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </nav>
-            );
-          })
-        }
-      </div>
-      <div className="nova-footer-embassy-legal nova-container">
-        <p>
-          {copyright}
-        </p>
-        {(credit === true) && <FooterCredit />}
-      </div>
-    </footer>
+        <div
+          className={(props['className'] !== undefined) ? `nova-footer-embassy-legal nova-container ${props['className']}` : 'nova-footer-embassy-legal nova-container'}
+          style={props['style']}
+        >
+          <p dir="auto">
+            {copyright}
+          </p>
+          {(credit === true) && <FooterCredit />}
+        </div>
+      </footer>
+    </>
   );
 }
 

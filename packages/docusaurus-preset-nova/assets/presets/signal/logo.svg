@@ -3,7 +3,7 @@
     <title>signal-logo</title>
     <g id="signal-logo" stroke="none" fill="none" fill-rule="evenodd" stroke-width="1">
         <g id="Group">
-            <rect id="Rectangle" fill="#E11D48" x="0" y="0" width="512" height="512"></rect>
+            <rect id="Rectangle" fill="#DC2626" x="0" y="0" width="512" height="512"></rect>
             <polyline id="Path" stroke="#FFFFFF" stroke-width="53.3333333" points="149.333333 341.333333 256 170.666667 362.666667 341.333333"></polyline>
             <line x1="149.333333" y1="341.333333" x2="362.666667" y2="341.333333" id="Path" stroke="#FFFFFF" stroke-width="53.3333333"></line>
         </g>

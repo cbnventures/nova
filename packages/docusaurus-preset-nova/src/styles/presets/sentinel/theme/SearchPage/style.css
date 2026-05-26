@@ -1,0 +1,104 @@
+/**
+ * Sentinel - `SearchPage` theme overlay.
+ *
+ * Console / observability search page. Structured chrome surface for the
+ * input and result list, fine teal-tinted hover wash, mono uppercase eyebrow
+ * on state messages. Mirrors the SearchBar input chrome - same primary focus
+ * ring at the same width.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container & Header
+ * ============================ */
+
+.nova-search-page-header h1 {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-sentinel-text);
+}
+
+/* ============================
+ * 2. Search Input
+ * ============================ */
+
+.nova-search-page-input {
+  font-family: var(--nova-font-body);
+  color: var(--nova-color-text);
+  background-color: var(--nova-sentinel-chrome-bg);
+  border-color: var(--nova-sentinel-chrome-border);
+  border-radius: var(--nova-shape-radius);
+  transition: border-color var(--nova-motion-duration) ease,
+              box-shadow var(--nova-motion-duration) ease;
+}
+
+.nova-search-page-input:focus {
+  border-color: var(--nova-color-primary-500);
+  box-shadow: 0 0 0 var(--nova-sentinel-focus-ring-width) color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+}
+
+[data-theme="dark"] .nova-search-page-input:focus {
+  border-color: var(--nova-color-primary-500);
+  box-shadow: 0 0 0 var(--nova-sentinel-focus-ring-width) color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+}
+
+/* ============================
+ * 3. Result Cards
+ * ============================ */
+
+.nova-search-page-item a {
+  background-color: var(--nova-sentinel-chrome-bg);
+  border-color: var(--nova-sentinel-chrome-border);
+  border-radius: var(--nova-shape-radius);
+  transition: background-color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease;
+}
+
+.nova-search-page-item a:hover,
+.nova-search-page-item a:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-sentinel-chrome-bg) 95%);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-search-page-item a:hover,
+[data-theme="dark"] .nova-search-page-item a:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-sentinel-chrome-bg) 92%);
+  border-color: var(--nova-color-primary-500);
+}
+
+.nova-search-page-item-title {
+  font-family: var(--nova-font-display);
+  color: var(--nova-color-text);
+}
+
+.nova-search-page-item-snippet {
+  font-family: var(--nova-font-body);
+  color: var(--nova-sentinel-text-muted);
+}
+
+/* ============================
+ * 4. State Messages
+ * ============================ */
+
+.nova-search-page-loading,
+.nova-search-page-searching,
+.nova-search-page-empty {
+  font-family: var(--nova-font-code);
+  letter-spacing: 0.06em;
+  color: var(--nova-sentinel-text-soft);
+}
+
+/* Empty is a sticky state (no results) - one tier brighter + full opacity
+   to override shared `opacity: 0.75`. Loading stays soft (transient). */
+.nova-search-page-empty {
+  color: var(--nova-sentinel-text-muted);
+  opacity: 1;
+}
+
+.nova-search-page-error {
+  font-family: var(--nova-font-code);
+  color: var(--nova-color-danger-500);
+}
+

@@ -1,0 +1,279 @@
+---
+title: "مرجع الواجهة البرمجية"
+sidebar_position: 1
+description: "مرجع Spoke API الكامل لـ Envoy — إدارة المُرحِّلات، وفحوصات الصحّة، وعمليات CRUD على المواضيع، وحالة التسليم."
+tags:
+  - "reference"
+  - "api"
+---
+
+import Details from '@theme/Details';
+
+# مرجع الواجهة البرمجية
+
+يكشف Envoy عن Spoke API لإدارة المُرحِّلات، ورصد الصحّة، وفحص التسليم، وإدارة المواضيع. كلّ النقاط تُعيد JSON. وتستخدم المصادقة آليات Cipher نفسها المُعدّة لنقاط المُرحِّلات.
+
+## عنوان الأساس
+
+```
+http://localhost:8090/api
+```
+
+كلّ النقاط أدناه نسبية إلى هذا العنوان.
+
+## نقاط المُرحِّل
+
+### إرسال رسالة
+
+```bash title="POST /api/relay/:topic"
+curl -X POST http://localhost:8090/api/relay/infra-alerts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${RELAY_TOKEN}" \
+  -d '{
+    "title": "Manual alert",
+    "body": "Triggered via API.",
+    "priority": 3
+  }'
+```
+
+```json title="Response — 200 OK"
+{
+  "id": "msg_a1b2c3d4",
+  "status": "delivered",
+  "relay": "manual",
+  "latency_ms": 2.8
+}
+```
+
+### الحصول على حالة المُرحِّل
+
+```bash title="GET /api/relay/:name/status"
+curl http://localhost:8090/api/relay/threadbare-pushes/status
+```
+
+```json title="Response — 200 OK"
+{
+  "relay": "threadbare-pushes",
+  "active": true,
+  "messages_today": 47,
+  "delivery_rate": 1.0,
+  "last_delivery": "2025-08-22T14:30:07Z",
+  "dead_lettered": 0
+}
+```
+
+## نقاط الصحّة
+
+### فحص الصحّة
+
+```bash title="GET /api/health"
+curl http://localhost:8090/api/health
+```
+
+```json title="Response — 200 OK"
+{
+  "status": "healthy",
+  "version": "2.1.0",
+  "uptime_seconds": 86412,
+  "components": {
+    "cipher": "ready",
+    "parcel": "ready",
+    "dispatch": "ready",
+    "courier": "ready",
+    "ledger": "ready",
+    "embassy": "ready"
+  }
+}
+```
+
+### المقاييس
+
+```bash title="GET /api/health/metrics"
+curl http://localhost:8090/api/health/metrics
+```
+
+<Details>
+<summary>المخطّط الكامل لاستجابة المقاييس</summary>
+
+```json title="Response — 200 OK"
+{
+  "relay_count": 4,
+  "messages": {
+    "total": 12847,
+    "delivered": 12842,
+    "dead_lettered": 5,
+    "in_retry": 0
+  },
+  "latency": {
+    "p50_ms": 2.1,
+    "p95_ms": 4.3,
+    "p99_ms": 7.8
+  },
+  "uptime_seconds": 86412,
+  "memory_bytes": 8388608,
+  "goroutines": 24
+}
+```
+
+</Details>
+
+## نقاط المواضيع
+
+### سرد المواضيع
+
+```bash title="GET /api/topics"
+curl http://localhost:8090/api/topics
+```
+
+```json title="Response — 200 OK"
+{
+  "topics": [
+    { "name": "ci-builds", "relays": 2, "messages_today": 31 },
+    { "name": "infra-alerts", "relays": 3, "messages_today": 12 },
+    { "name": "oncall-urgent", "relays": 1, "messages_today": 4 },
+    { "name": "monitoring", "relays": 2, "messages_today": 0 }
+  ]
+}
+```
+
+### إنشاء موضوع
+
+```bash title="POST /api/topics"
+curl -X POST http://localhost:8090/api/topics \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+  -d '{ "name": "deploy-alerts", "retention": "30d" }'
+```
+
+```json title="Response — 201 Created"
+{
+  "topic": "deploy-alerts",
+  "created": true,
+  "retention": "30d"
+}
+```
+
+### تحديث موضوع
+
+```bash title="PATCH /api/topics/:name"
+curl -X PATCH http://localhost:8090/api/topics/deploy-alerts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+  -d '{ "retention": "90d" }'
+```
+
+### حذف موضوع
+
+```bash title="DELETE /api/topics/:name"
+curl -X DELETE http://localhost:8090/api/topics/deploy-alerts \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}"
+```
+
+```json title="Response — 200 OK"
+{
+  "topic": "deploy-alerts",
+  "deleted": true
+}
+```
+
+## نقاط التسليم
+
+### سرد عمليات التسليم
+
+```bash title="GET /api/deliveries"
+curl "http://localhost:8090/api/deliveries?relay=threadbare-pushes&limit=5"
+```
+
+<Details>
+<summary>المخطّط الكامل لاستجابة قائمة التسليمات</summary>
+
+```json title="Response — 200 OK"
+{
+  "deliveries": [
+    {
+      "id": "msg_f7a2b8c4",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 1,
+      "latency_ms": 3.1,
+      "timestamp": "2025-08-22T14:30:07Z"
+    },
+    {
+      "id": "msg_e6d5c4b3",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 2,
+      "latency_ms": 5.2,
+      "timestamp": "2025-08-22T14:28:41Z"
+    }
+  ],
+  "total": 47,
+  "limit": 5,
+  "offset": 0
+}
+```
+
+</Details>
+
+### إعادة محاولة رسالة ميّتة
+
+```bash title="POST /api/deliveries/:id/retry"
+curl -X POST http://localhost:8090/api/deliveries/msg_a9b8c7d6/retry \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}"
+```
+
+```json title="Response — 202 Accepted"
+{
+  "id": "msg_a9b8c7d6",
+  "status": "pending",
+  "message": "Message re-queued for delivery."
+}
+```
+
+### فحص تسليم
+
+```bash title="GET /api/deliveries/:id"
+curl http://localhost:8090/api/deliveries/msg_f7a2b8c4
+```
+
+```json title="Response — 200 OK"
+{
+  "id": "msg_f7a2b8c4",
+  "relay": "threadbare-pushes",
+  "status": "delivered",
+  "source_ip": "203.0.113.42",
+  "cipher_mode": "hmac-sha256",
+  "attempts": [
+    {
+      "number": 1,
+      "timestamp": "2025-08-22T14:30:07Z",
+      "status_code": 200,
+      "latency_ms": 3.1,
+      "receipt": "confirmed"
+    }
+  ],
+  "payload_hash": "sha256:e3b0c44298fc1c14",
+  "destination": "canary://ci-builds"
+}
+```
+
+## ملخّص النقاط
+
+| الطريقة  | المسار                      | الوصف                               |
+|----------|-----------------------------|-------------------------------------|
+| `POST`   | `/api/relay/:topic`         | إرسال رسالة إلى موضوع.              |
+| `GET`    | `/api/relay/:name/status`   | الحصول على حالة المُرحِّل ومقاييسه. |
+| `GET`    | `/api/health`               | فحص الصحّة.                         |
+| `GET`    | `/api/health/metrics`       | مقاييس تفصيلية للمنصّة.             |
+| `GET`    | `/api/topics`               | سرد جميع المواضيع.                  |
+| `POST`   | `/api/topics`               | إنشاء موضوع جديد.                   |
+| `PATCH`  | `/api/topics/:name`         | تحديث إعداد الموضوع.                |
+| `DELETE` | `/api/topics/:name`         | حذف موضوع.                          |
+| `GET`    | `/api/deliveries`           | سرد التسليمات مع التصفية.           |
+| `POST`   | `/api/deliveries/:id/retry` | إعادة محاولة رسالة ميّتة.           |
+| `GET`    | `/api/deliveries/:id`       | فحص تسليم واحد.                     |
+
+## الخطوات التالية
+
+- [الإعداد](/docs/setup/configuration/) — مرجع بيان الترحيل الكامل.
+- [البنية المعمارية](/docs/advanced/architecture/) — كيف تُربط كلّ نقطة API بالمكوّنات الداخلية.

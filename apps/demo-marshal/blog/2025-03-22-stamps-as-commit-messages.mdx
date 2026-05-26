@@ -1,0 +1,39 @@
+---
+title: "Stamps as commit messages"
+authors:
+  - "yuki"
+tags:
+  - "dockets"
+  - "audit"
+  - "philosophy"
+---
+
+A commit message is a stamp. A pull request title is a stamp. A docket entry is a stamp. They all do the same job — pin a moment to the record so the next reader can find their place.
+
+{/* truncate */}
+
+Marshal treats every action as a stamp by extension. Every closure, every label, every scheduled rollover writes a single line in the docket with the same shape: *what happened, when, by whose authority.* The line is short. The line is permanent.
+
+A stamp is what survives when the action is forgotten. The action is the cron job at 06:00 UTC; the stamp is the line that says *the cron job ran, sealed and on the record.* The first will be replaced. The second will be there in 2031, when somebody pulls the audit log to ask why a thread was archived.
+
+The clerk is patient. The seal is permanent. The line is short. That is the whole filing system.
+
+The shape of the line is fixed. We do not embellish. A docket entry contains the timestamp, the docket name, the action verb in the past tense, the subject, the policy that authorised it, and the seal. That is the whole vocabulary. There is no field for context, because context belongs in the policy, which is itself a sealed document, which the entry refers to by version. A reader who wants to know *why* the action was taken reads the policy. A reader who wants to know *whether* the action was taken reads the docket. The two are kept apart deliberately.
+
+A typical entry, written today, will read the same in 2031:
+
+```yaml title="dockets/stewardship/2025-03-22.yml"
+- id: STW-2025-03-22-0042
+  timestamp: 2025-03-22T06:00:14Z
+  policy: stale-thread-archival@v3
+  subject: org/relay#1284
+  action: ARCHIVED
+  reason-ref: policy:stale-thread-archival@v3#rule-1
+  seal: sha256:e8d2b5c0a3f9b4e1c5d26f8e9c3b7a1f
+```
+
+The `reason-ref` field is the only field that points outward. It points to the rule inside the policy that produced the entry. A reader following the reference reads, in the policy: *when issue.last_activity_age > 365d, action: archive.* The reference is enough. The entry does not repeat the rule, because the rule is a sealed document and may be cited by reference. If the policy is later replaced, the old version remains in the policy log under its sealed version number, and the entry continues to point to it. The reader in 2031 reads the policy as it was in 2025, not as it is in 2031.
+
+A commit message that says `fix bug` is a stamp that has lost its referent. The bug is fixed; the message says nothing about which bug. A docket entry that said `archived an old issue` would be the same kind of failure. We do not write entries that way. Every entry has a subject, a policy, and a seal. The reader is never asked to remember what the action was about; the entry tells them. The cost of writing the entry properly is fifty bytes more than writing it sloppily. The cost of reading it properly, six years later, is the difference between an answer and a guess.
+
+The stamp does not need to be admired. The stamp needs to be findable. The stamp needs to mean what it says. Everything else is courtesy.

@@ -1,5 +1,10 @@
 /**
- * Not Found Content — Shared structural styles.
+ * Not Found Content - Shared structural styles.
+ *
+ * Per-surface deltas only - cross-cutting baseline lives on the umbrella
+ * `.nova-error-surface` scope at theme/error-surface/style.css. NotFoundContent
+ * has no surface-specific structural needs beyond the umbrella; this file
+ * exists for parity with the directory layout and as a hook for future deltas.
  *
  * @since 0.15.0
  */

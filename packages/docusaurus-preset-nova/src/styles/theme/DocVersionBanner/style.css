@@ -1,11 +1,21 @@
 /**
  * ============================
- * Version — Banner
+ * Version - Banner
  * ============================
+ *
+ * Mobile keeps a 1rem gap from the sticky `DocSidebarMobile` trigger;
+ * desktop bumps to 1.5rem so the banner doesn't kiss the breadcrumbs row.
  */
 
 .nova-version-banner {
   padding: 8px 16px;
+  margin-bottom: 1rem;
 
   text-align: center;
+}
+
+@media (min-width: 1024px) {
+  .nova-version-banner {
+    margin-bottom: 1.5rem;
+  }
 }

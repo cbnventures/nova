@@ -1,19 +1,6 @@
 /**
  * ============================
- * Embassy — Social Header
- * ============================
- */
-
-.nova-footer-embassy-social-header {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-/**
- * ============================
- * Embassy — Directory
+ * Embassy - Directory
  * ============================
  */
 
@@ -27,4 +14,36 @@
   .nova-footer-embassy-directory {
     gap: 32px;
   }
+}
+
+/**
+ * ============================
+ * CTA + Footer Adjacency
+ *
+ * When CTA precedes footer, the CTA owns the visual spacing.
+ * Nullify footer's top margin so they sit adjacent.
+ * ============================
+ */
+
+.nova-footer-embassy-cta-wrap + .nova-footer-embassy {
+  margin-top: 0;
+}
+
+/**
+ * ============================
+ * CTA Block
+ *
+ * Applies whether <aside> (text-only CTA) or <a> (linked CTA).
+ * ============================
+ */
+
+.nova-footer-embassy-cta {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nova-footer-embassy-cta:hover,
+.nova-footer-embassy-cta:focus-visible {
+  text-decoration: none;
 }

@@ -1,0 +1,92 @@
+/**
+ * Blog Components - Author - Shared structural styles.
+ *
+ * Layout-only rules: avatar + details flex row, name baseline, image circle.
+ * Color, font, and identity belong in preset overlays.
+ *
+ * @since 0.18.0
+ */
+
+/* Author - flex row with avatar + details. */
+.nova-blog-author {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+/* Author image - circular avatar. */
+.nova-blog-author-image {
+  width: 48px;
+  height: 48px;
+
+  border-radius: 50%;
+
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.nova-blog-author-image-link {
+  display: block;
+  flex-shrink: 0;
+}
+
+/* Details - vertical stack. */
+.nova-blog-author-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+
+  min-width: 0;
+}
+
+/* Name + count row. */
+.nova-blog-author-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.nova-blog-author-name {
+  margin: 0;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+/* Name link - preserve color, no underline (Infima's `a:hover` underline is
+   suppressed; hover color shifts via the inner `.nova-blog-author-name`).
+   Presets override the hover color when identity demands a different shade. */
+.nova-blog-author-name-link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nova-blog-author-name-link:hover,
+.nova-blog-author-name-link:focus-visible {
+  color: inherit;
+  text-decoration: none;
+}
+
+.nova-blog-author-name-link:hover .nova-blog-author-name,
+.nova-blog-author-name-link:focus-visible .nova-blog-author-name {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-author-name-link:hover .nova-blog-author-name,
+[data-theme="dark"] .nova-blog-author-name-link:focus-visible .nova-blog-author-name {
+  color: var(--nova-color-primary-300);
+}
+
+/* Count - muted, subordinate to name. */
+.nova-blog-author-count {
+  font-size: 0.75rem;
+  color: var(--nova-color-text-muted);
+}
+
+/* Title - muted, subtitle treatment. */
+.nova-blog-author-title {
+  margin: 0;
+
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--nova-color-text-muted);
+}

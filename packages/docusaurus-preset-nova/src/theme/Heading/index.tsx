@@ -55,6 +55,7 @@ function Heading(props: ThemeHeadingProps) {
     {
       id,
       className: (props['className'] !== undefined) ? `nova-heading ${props['className']}` : 'nova-heading',
+      style: props['style'],
     },
     props['children'],
     hashLink,

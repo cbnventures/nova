@@ -1,0 +1,52 @@
+/**
+ * Marshal - `DocVersionBanner` theme overlay.
+ *
+ * Filed-record stamp - paper-tone marshal-bg flanked by double seal-red
+ * hairline rails (top + bottom) for that "official record" sandwich. Mono
+ * uppercase tracked text with `section-sign FILED:` prefix and `section-sign` suffix reads as a
+ * rubber-stamped registry note rather than a UI alert.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Version banner - double seal-red rails over paper
+ * ============================
+ */
+
+.nova-version-banner {
+  padding: 0.6rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+  font-variant-numeric: oldstyle-nums tabular-nums;
+  text-align: center;
+
+  background-color: var(--nova-marshal-bg);
+  border-top: 1px solid var(--nova-color-accent-700);
+  border-bottom: 1px solid var(--nova-color-accent-700);
+}
+
+.nova-version-banner p {
+  margin: 0;
+}
+
+.nova-version-banner p::before {
+  content: "§ FILED: ";
+}
+
+.nova-version-banner p::after {
+  content: " §";
+}
+
+[data-theme="dark"] .nova-version-banner {
+  color: var(--nova-color-accent-500);
+
+  border-top-color: var(--nova-color-accent-500);
+  border-bottom-color: var(--nova-color-accent-500);
+}

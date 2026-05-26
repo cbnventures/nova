@@ -1,5 +1,5 @@
 /**
- * Blog Post Item — Shared structural styles.
+ * Blog Post Item - Shared structural styles.
  *
  * @since 0.15.0
  */
@@ -36,7 +36,7 @@
 }
 
 /* ============================
- * 2. Post Page — Open Flow
+ * 2. Post Page - Open Flow
  * ============================ */
 
 /* Full blog post pages flow without card treatment. */
@@ -52,9 +52,9 @@
 
 .nova-blog-post-item.nova-blog-post-item-page:hover {
   transform: none;
-  box-shadow: none;
-  border: none;
   background: none;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 [data-theme="dark"] .nova-blog-post-item.nova-blog-post-item-page {
@@ -69,13 +69,13 @@
 
 [data-theme="dark"] .nova-blog-post-item.nova-blog-post-item-page:hover {
   transform: none;
-  box-shadow: none;
-  border: none;
   background: none;
+  border-color: transparent;
+  box-shadow: none;
 }
 
 /* ============================
- * 3. Post Page — Header
+ * 3. Post Page - Header
  * ============================ */
 
 /* Post page header gets more spacing and a bottom border
@@ -85,22 +85,21 @@
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
 
-  border-bottom: 1px solid var(--nova-color-neutral-200);
+  border-bottom: 1px solid var(--nova-color-border);
 }
 
-[data-theme="dark"] .nova-blog-post-item-page .nova-blog-post-item-header {
-  border-bottom-color: var(--nova-color-neutral-800);
-}
-
-/* Post page title — larger than card title for editorial weight. */
+/* Post page title - larger than card title for editorial weight. Size flows
+   from per-preset BlogPostItem overlay tokens (--nova-blog-post-title-size +
+   -size-md); fallback values match the system default when no preset is
+   loaded. */
 .nova-blog-post-item-page .nova-blog-post-item-header h1 {
-  font-size: 1.75rem;
+  font-size: var(--nova-blog-post-title-size, 1.75rem);
   line-height: 1.25;
 }
 
 @media (min-width: 768px) {
   .nova-blog-post-item-page .nova-blog-post-item-header h1 {
-    font-size: 2.125rem;
+    font-size: var(--nova-blog-post-title-size-md, 2.125rem);
   }
 }
 
@@ -108,12 +107,12 @@
  * 4. Card Content Hierarchy
  * ============================ */
 
-/* Header spacing — breathing room between metadata and content. */
+/* Header spacing - breathing room between metadata and content. */
 .nova-blog-post-item-header {
   margin-bottom: 0.75rem;
 }
 
-/* Content section — clear separation from header. */
+/* Content section - clear separation from header. */
 .nova-blog-post-item-content > *:first-child {
   margin-top: 0;
 }
@@ -122,7 +121,7 @@
   margin-bottom: 0;
 }
 
-/* Footer — tags and read-more row. */
+/* Footer - tags and read-more row. */
 .nova-blog-post-item-footer {
   display: flex;
   flex-wrap: wrap;
@@ -131,12 +130,12 @@
   margin-top: 1rem;
 }
 
-/* Read more — push to end of footer row. */
+/* Read more - push to end of footer row. */
 .nova-blog-post-item-read-more {
   margin-left: auto;
 }
 
-/* Tags row — flex wrap with gap. */
+/* Tags row - flex wrap with gap. */
 .nova-blog-post-item-tags {
   display: flex;
   flex-wrap: wrap;
@@ -144,17 +143,37 @@
 }
 
 /* ============================
- * 5. Reading Time
+ * 5. Author Link Hover
  * ============================ */
 
-/* Reading time — muted secondary label next to date. */
+/* Author name link - kill Infima underline-on-hover; shift to primary on
+   hover so the linked author has a clear interactive affordance. Resting
+   typography (font-size/weight/color) lives in per-preset overlays. */
+.nova-blog-post-item-author-link {
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-item-author-link:hover,
+.nova-blog-post-item-author-link:focus-visible {
+  color: var(--nova-color-primary-600);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-post-item-author-link:hover,
+[data-theme="dark"] .nova-blog-post-item-author-link:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 6. Reading Time
+ * ============================ */
+
+/* Reading time - muted secondary label next to date. */
 .nova-blog-post-item-reading-time {
   margin-left: 0.5rem;
   padding-left: 0.5rem;
 
-  border-left: 1px solid var(--nova-color-neutral-300);
-}
-
-[data-theme="dark"] .nova-blog-post-item-reading-time {
-  border-left-color: var(--nova-color-neutral-700);
+  border-left: 1px solid var(--nova-color-border);
 }

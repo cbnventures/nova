@@ -192,7 +192,7 @@ export class CliRecipePackageJsonNormalizeBundler {
     const packageSideEffects: CliRecipePackageJsonNormalizeBundlerHandlePackageSideEffects = fileContents['sideEffects'];
     const packageEsnext: CliRecipePackageJsonNormalizeBundlerHandlePackageEsnext = fileContents['esnext'];
 
-    // Merge "typings" → "types" (same pattern as bundledDependencies → bundleDependencies).
+    // Merge "typings" -> "types" (same pattern as bundledDependencies -> bundleDependencies).
     if (packageTypings !== undefined) {
       if (packageTypes !== undefined) {
         Logger.customize({

@@ -1,0 +1,26 @@
+{
+  "item.0.label": {
+    "message": "Docs",
+    "description": "Label of navbar item 1"
+  },
+  "item.1.label": {
+    "message": "Showcase",
+    "description": "Label of navbar item 2"
+  },
+  "item.2.label": {
+    "message": "Dockets",
+    "description": "Label of navbar item 3"
+  },
+  "item.3.label": {
+    "message": "Blog",
+    "description": "Label of navbar item 4"
+  },
+  "item.4.label": {
+    "message": "Manifesto",
+    "description": "Label of navbar item 5"
+  },
+  "item.6.label": {
+    "message": "GitHub",
+    "description": "Label of navbar item 7"
+  }
+}

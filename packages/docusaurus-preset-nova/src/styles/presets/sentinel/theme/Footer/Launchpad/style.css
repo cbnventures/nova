@@ -1,5 +1,9 @@
 /**
- * Sentinel — Footer (Launchpad) variant visual styling.
+ * Sentinel - `Footer/Launchpad` theme overlay.
+ *
+ * Action-oriented footer with a primary -> accent gradient CTA leading
+ * into compact link columns and a centered social strip on a neutral
+ * light or watchtower-deep dark ground.
  *
  * @since 0.15.0
  */
@@ -18,13 +22,13 @@
 
 .nova-footer-launchpad {
   font-size: 0.875rem;
-  background-color: var(--nova-color-neutral-100);
-  border-top: 1px solid var(--nova-color-neutral-200);
+  background-color: var(--nova-color-surface-raised);
+  border-top: 1px solid var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-footer-launchpad {
   background-color: var(--nova-sentinel-footer-bg, #030710);
-  border-top-color: var(--nova-color-neutral-800);
+  border-top-color: var(--nova-color-border);
 }
 
 /* ============================
@@ -60,7 +64,7 @@
   font-family: var(--nova-font-display);
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
   line-height: 1.4;
   letter-spacing: -0.01em;
 }
@@ -113,18 +117,18 @@
   font-family: var(--nova-font-display);
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--nova-color-neutral-700);
+  color: var(--nova-color-text);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
 
 [data-theme="dark"] .nova-footer-launchpad-columns nav h3 {
-  color: var(--nova-color-neutral-300);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-footer-launchpad-columns nav a {
   font-size: 0.875rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   text-decoration: none;
   transition: color var(--nova-motion-duration) ease;
 }
@@ -136,7 +140,7 @@
 }
 
 [data-theme="dark"] .nova-footer-launchpad-columns nav a {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 [data-theme="dark"] .nova-footer-launchpad-columns nav a:hover,
@@ -156,12 +160,12 @@
 }
 
 .nova-footer-launchpad-social a {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   transition: color var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-footer-launchpad-social a {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-footer-launchpad-social a:hover,
@@ -185,15 +189,24 @@
   justify-content: center;
   gap: 0.5rem;
   padding-block: 1rem;
-  border-top: 1px solid var(--nova-color-neutral-200);
+  border-top: 1px solid var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-footer-launchpad-legal {
-  border-top-color: var(--nova-color-neutral-800);
+  border-top-color: var(--nova-color-border);
 }
 
 .nova-footer-launchpad-legal p {
   margin: 0;
   font-size: 0.75rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
+}
+
+.nova-footer-launchpad-cta {
+  transition: filter var(--nova-footer-filter-duration) var(--nova-motion-easing);
+}
+
+.nova-footer-launchpad-cta:hover,
+.nova-footer-launchpad-cta:focus-visible {
+  filter: brightness(1.12);
 }

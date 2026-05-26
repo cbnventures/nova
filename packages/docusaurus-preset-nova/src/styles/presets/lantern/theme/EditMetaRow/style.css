@@ -1,0 +1,91 @@
+/**
+ * Lantern - `EditMetaRow` theme overlay.
+ *
+ * The bottom-of-page edit + last-updated row on standalone MDX pages
+ * (e.g., `/manifesto`). A warm amber gradient rule echoes the article
+ * hr - the row sits beneath it like a printed colophon. Quiet warm ink
+ * (lantern-ink-muted) brightens to amber on hover. Mirrors the
+ * typography tokens used by `ContentFooter/Edit`.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - warm amber gradient rule above
+ *
+ * Same triple-stop gradient as `.nova-mdx-content hr`: fades in from
+ * the page edge, peaks amber in the center, fades out. Reads as a
+ * porch lantern's beam catching the page midway.
+ * ============================
+ */
+
+.nova-edit-meta-row {
+  position: relative;
+
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+}
+
+.nova-edit-meta-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 1px;
+
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--nova-color-primary-500), transparent 60%),
+    transparent
+  );
+}
+
+[data-theme="dark"] .nova-edit-meta-row::before {
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--nova-color-primary-400), transparent 50%),
+    transparent
+  );
+}
+
+/**
+ * ============================
+ * 2. Edit this page link - warm muted, brightens to amber
+ * ============================
+ */
+
+.nova-edit-meta-row .nova-edit-this-page {
+  font-size: 0.875rem;
+  color: var(--nova-lantern-ink-muted);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-edit-meta-row .nova-edit-this-page:hover,
+.nova-edit-meta-row .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-edit-meta-row .nova-edit-this-page:hover,
+[data-theme="dark"] .nova-edit-meta-row .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 3. Last updated stamp
+ * ============================
+ */
+
+.nova-edit-meta-row .nova-last-updated {
+  font-size: 0.875rem;
+  color: var(--nova-lantern-ink-muted);
+}

@@ -1,0 +1,58 @@
+---
+title: "Handing off arm/disarm to someone you trust"
+authors:
+  - "marisol"
+tags:
+  - "arm-disarm"
+  - "hand-off"
+date: "2026-04-21"
+---
+
+A trusted user can disarm any zone Lantern watches without your phone in their hand. The handoff is by name, by passphrase, or by HomeKit Home Hub presence — whichever your household prefers.
+
+{/* truncate */}
+
+Travel mode tightens the rules; bedtime mode loosens them. Lantern listens but does not assume.
+
+The handoff has a use case that has come up in our households more than once. The neighbor who waters the plants while you are away. The parent who comes by to walk the dog. The teenager whose friend is dropping off a forgotten textbook. None of them have your phone. All of them, on the right day, need the hallway to dim and the porch to soften and the front door to know it is being opened by someone who belongs there. Not as a signed-in user. Not with an account. Just as a name on a list, with a passphrase or a hub presence to back it up.
+
+We wrote three handoff styles. The first is by name and passphrase — the trusted user says their name and the passphrase to the kitchen hub, and Lantern relaxes the porch for the next ten minutes. The second is by hub presence alone — the trusted user's phone has been added to the household hub group, and walking past the speaker is enough. The third is the manual passphrase, typed at the door panel, for the day the hub is unplugged or the phone is dead. Three paths into the same room. The household picks the one that fits.
+
+```yaml title="lantern.handoffs.yml"
+trusted:
+  - name:        plant-neighbor
+    expires:     2026-05-15
+    methods:
+      - voice-passphrase: kitchen-hub
+      - door-passphrase:  front-panel
+    relax:
+      zones:     [porch, hallway]
+      mode:      gentle
+      duration:  10min
+      audit:     log-and-notify-household-after
+  - name:        dog-walker
+    expires:     standing
+    methods:
+      - hub-presence:     known-phone-uuid
+      - door-passphrase:  back-panel
+    relax:
+      zones:     [back-door, side-path, kitchen]
+      mode:      welcoming
+      duration:  30min
+      audit:     log-only
+  - name:        teenager-friend
+    expires:     2026-04-30
+    methods:
+      - voice-passphrase: any-hub
+    relax:
+      zones:     [porch]
+      mode:      gentle
+      duration:  5min
+      audit:     log-and-notify-household-immediately
+```
+
+The audit column is the part we worried about most when we wrote this. A trusted handoff is still a handoff — the household should be able to read what happened later, and in some cases at the time. The plant-neighbor's audit is *log-and-notify-household-after* — the porch logs the visit and pings the household after it ends, so the household member reading on the couch upstairs is not interrupted. The dog-walker's audit is *log-only* because the dog-walker comes every day at the same hour and the notification stopped being interesting after the first week. The teenager-friend's audit is the strict one — *notify immediately* — because the teenager-friend is new on the list and the household wants to know the moment the porch relaxes.
+
+What travel mode does to the trusted list is small but careful. During travel, all *log-only* audits are upgraded to *notify-after*, and all expires-standing entries are checked once a day against the household calendar. During bedtime, the trusted list still works, but the audit is queued for morning instead of pinging the bedroom. Lantern listens to the mode the way the household does. It does not assume the rules from one weather apply to another.
+
+The handoff is the part of Lantern most people meet first. The neighbor at the door, the dog-walker at the gate, the friend at the porch with a textbook. The household has decided who belongs there. Lantern is just the one holding the door open.

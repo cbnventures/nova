@@ -1,11 +1,46 @@
 /**
- * Foundry — Typography: headings and responsive heading scales.
+ * Foundry - Typography: headings and responsive heading scales.
+ *
+ * Mobile-base vertical-rhythm margins flow from shared theme/Heading via
+ * canonical `--nova-h{N}-margin-block-start/end` tokens. Foundry's
+ * industrial-classic identity wants slightly deeper rhythm than the
+ * baseline - h1 mb 1.25, h2 mb 0.875, h3 mt 1.75 mb 0.625 - applied
+ * via the rename+alias chain below. h4/h5/h6 base margins match the
+ * baseline and need no preset+component overrides. Responsive `@media`
+ * margin overrides stay as bare-tag rules with literal values because
+ * they're foundry-identity and not shared across presets.
  *
  * @since 0.15.0
  */
 
 /* ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================ */
+
+:root {
+  --nova-foundry-h1-margin-block-end: 1.25rem;
+  --nova-foundry-h2-margin-block-end: 0.875rem;
+  --nova-foundry-h3-margin-block-start: 1.75rem;
+  --nova-foundry-h3-margin-block-end: 0.625rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Heading
+ * ============================ */
+
+:root {
+  --nova-h1-margin-block-end: var(--nova-foundry-h1-margin-block-end);
+  --nova-h2-margin-block-end: var(--nova-foundry-h2-margin-block-end);
+  --nova-h3-margin-block-start: var(--nova-foundry-h3-margin-block-start);
+  --nova-h3-margin-block-end: var(--nova-foundry-h3-margin-block-end);
+}
+
+/* ============================
  * 1. Headings (mobile-first)
+ *
+ * Base margins flow from shared theme/Heading via canonical tokens. This
+ * block sets only typography (font/weight/letter-spacing/color/font-size/
+ * line-height). Responsive `@media` margin overrides live below.
  * ============================ */
 
 h1,
@@ -14,56 +49,55 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--nova-font-display);
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
 }
 
 [data-theme="dark"] h1,
 [data-theme="dark"] h2,
 [data-theme="dark"] h3,
-[data-theme="dark"] h4 {
-  color: var(--nova-color-neutral-50);
-}
-
+[data-theme="dark"] h4,
 [data-theme="dark"] h5,
 [data-theme="dark"] h6 {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text);
 }
 
 h1 {
   font-size: 1.75rem;
   line-height: 1.2;
-  margin-bottom: 1.25rem;
 }
 
 h2 {
   font-size: 1.375rem;
   line-height: 1.3;
-  margin-top: 2rem;
-  margin-bottom: 0.875rem;
 }
 
 h3 {
   font-size: 1.125rem;
   line-height: 1.4;
-  margin-top: 1.75rem;
-  margin-bottom: 0.625rem;
 }
 
 h4 {
   font-size: 1rem;
   line-height: 1.5;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
+}
+
+h5 {
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+h6 {
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 /* ============================
  * 2. Responsive Typography
  * ============================ */
 
-/* --- md (768px) — headings scale up from mobile base. --- */
+/* --- md (768px) - headings scale up from mobile base. --- */
 @media (min-width: 768px) {
   h1 {
     font-size: 2rem;
@@ -88,7 +122,7 @@ h4 {
   }
 }
 
-/* --- lg (1024px) — desktop headings. --- */
+/* --- lg (1024px) - desktop headings. --- */
 @media (min-width: 1024px) {
   h1 {
     font-size: 2.25rem;
@@ -106,7 +140,7 @@ h4 {
   }
 }
 
-/* --- xl (1280px) — large headings for wide screens. --- */
+/* --- xl (1280px) - large headings for wide screens. --- */
 @media (min-width: 1280px) {
   h1 {
     font-size: 2.5rem;

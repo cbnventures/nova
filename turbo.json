@@ -15,10 +15,7 @@
     },
     "prod": {
       "cache": false,
-      "dependsOn": [
-        "check",
-        "build"
-      ],
+      "dependsOn": [],
       "inputs": [],
       "outputs": [],
       "persistent": true

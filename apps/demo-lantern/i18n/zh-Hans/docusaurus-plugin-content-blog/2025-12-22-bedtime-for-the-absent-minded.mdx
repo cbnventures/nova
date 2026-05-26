@@ -1,0 +1,60 @@
+---
+title: "为健忘者准备的睡前模式"
+authors:
+  - "theo"
+tags:
+  - "睡前"
+  - "模式"
+date: "2025-12-22"
+---
+
+你本打算在睡前为 watch 分区布防。你没做。你在沙发上读书，厨房还亮着。Lantern 已经替你经历过这一切。
+
+{/* truncate */}
+
+睡前模式会留意到家里人已经不再走动——不是听你说，而是听这栋房子说。厨房自己调暗，watch 分区自己布防，门廊查一次门后归于安静。你没必要再记得。
+
+睡前模式的第一个版本需要一个按钮。我们在仪表盘上摆了一块叫 *bedtime* 的瓦片，家里人原本应在上楼前按一下。我们有时按了，有时忘了。大多数夜里我们之中至少一个忘了，有时两个都忘了。厨房会在凌晨一点继续亮着，门廊会一直保持*正在迎接*直到天亮。这一切并不算不安全——watch 分区的大部分工作是被动完成的——但房子感觉醒着，家里人却已不在。所以我们把那个按钮取消了。按钮本身才是问题。
+
+如今睡前模式开始的方式，是先读这间房。楼上的过道已安静九十分钟。卧室门已关上半小时。厨房自上一次洗碗机循环以来没有动作。门廊自前门 21:14 关上以来没看到家庭成员到来。任何一项单独存在都不意味着睡前。它们合在一起，就是。Lantern 会等这套组合出现，然后开始一段缓慢的过渡——厨房灯先减三分之一，再减一半，最后到夜灯档位。Watch 分区从 *passive* 移到 *alert*。门廊把当下的一次观察做完，归于安静。
+
+```yaml title="lantern.modes.yml"
+modes:
+  bedtime:
+    triggers:
+      all-of:
+        - upstairs-quiet:    90min
+        - bedroom-door:      closed-for: 30min
+        - kitchen-quiet:     since-last: dishwasher-cycle
+        - front-door-quiet:  since-last: arrival
+    transitions:
+      kitchen:    [bright, dim, night-light]   # 12 分钟内完成
+      hallway:    passive
+      watch:      alert
+      porch:      gentle
+    cancel-on:
+      - upstairs-motion: > 60s
+      - bedroom-door:    opened
+      - front-door:      opened
+```
+
+取消条件与触发条件同样重要。如果家里人起身去喝水，楼上有动作就会取消这次过渡，睡前模式会安静地退回 *home*。如果半夜卧室门为猫打开，也是同理。这栋房子被允许改变主意，家里人也是。模式是一种姿态，不是一份判决。
+
+我们最喜欢它的，是那种沉默。大多数夜晚，家里人根本没看见这次过渡发生。我们在沙发上读完书，上楼刷牙，钻进被窝，厨房早已在我们身后自己调暗。门廊已经安静地道了晚安，watch 分区也已无声地布防。家里人睡了，lantern 在听。那个我们曾经忘记去按的按钮，如今成了一件房子替自己按下的事。
+
+账册会安静地记下每一次过渡，以备家里人第二天早上端着咖啡时想读它。多数早晨没人会读。有些早晨，那一行读起来就像一只在房子入睡时安静走着的过道钟：
+
+```bash
+$ lantern history --mode-transitions --since "last night"
+22:41   home → bedtime    transition started
+22:43   kitchen           bright → dim
+22:48   kitchen           dim → night-light
+22:51   watch-zones       passive → alert
+22:52   porch             welcoming → gentle
+03:14   bedroom-door      opened (cat)        transition held
+03:15   bedroom-door      closed              no change
+06:42   upstairs          motion              cancel-on triggered
+06:42   bedtime → home    transition started
+```
+
+一栋懂得何时入睡的房子，也是同一栋懂得何时醒来的房子。从睡前模式离开是更柔和的那种过渡。当楼上开始走动时，厨房先亮起三分之一，等到楼下出现第一声脚步时再亮到一半。当水壶被打开时，门廊已经重新回到*正在迎接*，watch 分区已经退回到 *passive*。也没有人在那一刻按过按钮。

@@ -1,4 +1,4 @@
-import { strictEqual } from 'node:assert/strict';
+import { deepStrictEqual, strictEqual } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
@@ -19,9 +19,18 @@ describe('presetsSignalPresetSignal', async () => {
   it('has correct color values', () => {
     const signal: TestsPresetsSignalPresetSignal = presetsSignalPresetSignal;
 
-    strictEqual(signal['colors']['primary'], '#e11d48');
-    strictEqual(signal['colors']['accent'], '#f59e0b');
-    strictEqual(signal['colors']['neutral'], '#525252');
+    deepStrictEqual(signal['colors']['primary'], {
+      light: '#dc2626', dark: '#dc2626',
+    });
+    deepStrictEqual(signal['colors']['accent'], {
+      light: '#f59e0b', dark: '#f59e0b',
+    });
+    deepStrictEqual(signal['colors']['text'], {
+      light: '#262626', dark: '#e5e5e5',
+    });
+    deepStrictEqual(signal['colors']['border'], {
+      light: '#d4d4d4', dark: '#404040',
+    });
 
     return;
   });

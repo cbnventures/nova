@@ -1,0 +1,96 @@
+---
+title: "为什么我们把载荷上限定在 256KB，以及触顶后会发生什么"
+authors:
+  - "nneka"
+tags:
+  - "payload"
+  - "protocol"
+  - "courier"
+date: "2025-07-14"
+---
+
+上周二，一位客户尝试通过 Courier 中继一份 47MB 的 webhook 载荷。那是一套 CI/CD 系统，把整份构建日志作为 JSON 块塞进了 webhook 主体。中继失败了，客户开了工单请求我们提高上限。
+
+我们没有提高上限。下面解释为什么。
+
+{/* truncate */}
+
+## 256KB 的限制
+
+Courier 为所有入站 webhook 强制执行 256KB 的最大载荷限制。任何超出 256KB 的载荷都会在接收阶段被以 `413 Payload Too Large` 回绝——消息从未进入流水线，没有认证、没有转换、没有路由、没有投递尝试。
+
+这不是技术限制，Courier 完全能处理更大的载荷。这是一个带有三条理由的设计决策。
+
+### 1. 内存可预测性
+
+Courier 在内存中处理中继。从接收到投递，每一份载荷都常驻一个缓冲区。在 30000 RPS 下，256KB 的限制意味着 Courier 在峰值最多需要 7.3GB 的缓冲内存（假设每条中继都达到最大值——实际从未发生，实际平均载荷只有 4.2KB）。
+
+```text title="不同载荷上限下的峰值内存（30k RPS）"
+Limit       Peak Memory (30k RPS)    Avg Memory (4.2KB actual)
+──────────────────────────────────────────────────────────────
+256KB              7.3GB                     126MB
+1MB               28.6GB                     126MB
+10MB             286.0GB                     126MB
+Unlimited             ?                      126MB (until it isn't)
+```
+
+"无上限"这一行就是问题所在。平均载荷大小保护不了你——一位以 100 RPS 持续发送 47MB 载荷的客户，单凭一己之力就能消耗 4.7GB 内存，足以让流水线里其他所有中继饥饿。
+
+### 2. 重试成本
+
+每一次重试都会重新发送完整载荷。一份 4KB 的载荷重试五次只花 20KB 带宽；一份 47MB 的载荷重试五次要花 235MB。再乘上跨目的地的并发重试，带宽成本就会变成中继性能里的主导因素。
+
+### 3. 目的地兼容性
+
+绝大多数 webhook 目的地有自己的载荷上限。Slack 限 40KB，Discord 限 8MB，Canary 限 1MB，PagerDuty 限 512KB。如果 Courier 接受了 47MB 的载荷，完成转换，再投递给一个会以"太大"拒绝它的目的地，重试循环就永远不会成功——消息会耗尽重试、落入死信队列，浪费算力、带宽与客户时间。
+
+## 触顶后会发生什么
+
+拒绝是即时且信息完整的：
+
+```text title="413 响应 — 载荷过大"
+HTTP/1.1 413 Payload Too Large
+Content-Type: application/json
+X-Courier-Request-Id: req_b8c4a2f1
+
+{
+  "error": "payload_too_large",
+  "message": "Payload size 49283072 bytes exceeds maximum 262144 bytes",
+  "received_bytes": 49283072,
+  "max_bytes": 262144,
+  "suggestion": "Use Parcel's extract block to send only the fields you need, or host the full payload externally and send a reference URL"
+}
+```
+
+响应里包含实际收到的字节数、允许的最大值，以及两条处理大载荷的建议路径。
+
+## 引用 URL 模式
+
+对那些确实需要很大的载荷——构建日志、审计轨迹、文件附件——推荐的做法是把载荷托管在外部，仅中继一个引用 URL。
+
+```text title="relay.grain — 引用 URL 模式"
+transform {
+  format = "json"
+  body   = {
+    "event":       "{{ event }}",
+    "summary":     truncate(body, 1024),
+    "payload_url": "{{ source_url }}/payloads/{{ id }}",
+    "payload_size": "{{ content_length }}",
+    "sha256":       "{{ body_hash }}"
+  }
+}
+```
+
+目的地收到一份足够小、足以判断是否需要完整载荷的中继。它如果需要，就直接从源端拉取。中继保持轻量，重试保持廉价，目的地自己决定何时——以及是否——下载完整内容。
+
+## 那位客户的最终选择
+
+那位 CI/CD 客户改用了引用 URL 模式。他们的 webhook 现在只发送 2.8KB 载荷，里面带着指向构建日志的链接，目的地异步去取。中继延迟从超时（47MB 载荷正在击穿 Courier 30 秒的接收超时）骤降到 3ms。
+
+他们感谢我们没有提高上限。
+
+## 教训
+
+约束就是特性。载荷上限不是限制，而是保证：保证没有任何一条中继能让整条流水线饥饿，保证重试始终负担得起，保证目的地永远不会收到它无法处理的载荷。
+
+诱惑总是想着抬高上限，正确的应对几乎总是重新设计载荷。

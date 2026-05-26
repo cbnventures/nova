@@ -1,0 +1,112 @@
+/**
+ * Lantern - `BlogPostPaginator` theme overlay.
+ *
+ * Warm hairline separator at top. Eyebrow label in small caps mono; italic
+ * Fraunces titles for prev/next; warm wash on hover with a soft pad.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - warm hairline divider
+ * ============================
+ */
+
+.nova-blog-post-paginator {
+  margin-top: 2rem;
+  padding-top: 2rem;
+
+  border-top: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator {
+  border-top-color: var(--nova-lantern-border);
+}
+
+/**
+ * ============================
+ * 2. Heading - italic Fraunces
+ * ============================
+ */
+
+.nova-blog-post-paginator-heading {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+  color: var(--nova-lantern-ink);
+}
+
+/**
+ * ============================
+ * 3. Link cells - warm wash on hover
+ * ============================
+ */
+
+.nova-blog-post-paginator-link {
+  padding: 0.75rem 1rem;
+
+  border: 1px solid transparent;
+  border-radius: 10px;
+
+  transition: background-color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-paginator-link:hover,
+.nova-blog-post-paginator-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 70%);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-link:hover,
+[data-theme="dark"] .nova-blog-post-paginator-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 82%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+}
+
+/**
+ * ============================
+ * 4. Eyebrow label - small caps mono
+ * ============================
+ */
+
+.nova-blog-post-paginator-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-post-paginator-label {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 5. Title - italic Fraunces caption
+ * ============================
+ */
+
+.nova-blog-post-paginator-title {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  color: var(--nova-lantern-ink);
+}
+
+/**
+ * ============================
+ * 6. Excerpt - muted ink body
+ * ============================
+ */
+
+.nova-blog-post-paginator-excerpt {
+  line-height: 1.65;
+  color: var(--nova-lantern-ink-muted);
+}

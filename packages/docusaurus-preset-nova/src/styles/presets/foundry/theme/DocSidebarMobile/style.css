@@ -1,7 +1,13 @@
 /**
- * Foundry — Doc Sidebar Mobile visual styling.
+ * Foundry - `DocSidebarMobile` theme overlay.
  *
- * @since 0.15.0
+ * Mobile slide-out doc sidebar - saturated frosted panel with hairline
+ * foundry borders. Mobile-only chrome (trigger, overlay, panel,
+ * header, close) follows foundry's industrial-neutral identity. Drawer
+ * items inherit their styling from the desktop sidebar overlays via the
+ * standard `.nova-sidebar-link` / `.nova-sidebar-category-summary` cascade.
+ *
+ * @since 0.18.0
  */
 
 /* ============================
@@ -9,7 +15,7 @@
  * ============================ */
 
 .nova-sidebar-mobile-trigger {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
 
   background: var(--nova-foundry-surface);
   border: 1px solid var(--nova-foundry-border);
@@ -24,10 +30,7 @@
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-trigger {
-  color: var(--nova-color-neutral-400);
-
   background: var(--nova-foundry-surface-raised);
-  border-color: rgba(255, 255, 255, 0.08);
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-trigger:hover,
@@ -63,7 +66,6 @@
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-panel {
-  border-color: rgba(255, 255, 255, 0.08);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
 }
 
@@ -75,12 +77,8 @@
   font-family: var(--nova-font-display);
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
   letter-spacing: -0.02em;
-}
-
-[data-theme="dark"] .nova-sidebar-mobile-header-title {
-  color: var(--nova-color-neutral-50);
 }
 
 /* ============================
@@ -88,7 +86,7 @@
  * ============================ */
 
 .nova-sidebar-mobile-close {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   border-radius: var(--nova-shape-radius);
 
   transition: color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
@@ -96,16 +94,12 @@
 
 .nova-sidebar-mobile-close:hover,
 .nova-sidebar-mobile-close:focus-visible {
-  color: var(--nova-color-neutral-900);
-  background-color: var(--nova-color-neutral-50);
-}
-
-[data-theme="dark"] .nova-sidebar-mobile-close {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text);
+  background-color: var(--nova-color-surface-raised);
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-close:hover,
 [data-theme="dark"] .nova-sidebar-mobile-close:focus-visible {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
   background-color: rgba(255, 255, 255, 0.06);
 }

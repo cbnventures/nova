@@ -1,24 +1,56 @@
 /**
- * Sentinel — TOC visual styling.
+ * Sentinel - `TOC` theme overlay.
  *
- * @since 0.15.0
+ * Right-rail table of contents - a monitor-console index in sentinel's
+ * chrome-and-teal palette. Container takes a 1rem right gutter (the docs
+ * are full-bleed at desktop). Hover and focus warm to teal primary.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - full-bleed right gutter
+ * ============================
+ */
+
+/**
+ * Sentinel's docs are full-bleed (`.nova-container { padding-inline: 0 }` at
+ * desktop), so the TOC column would otherwise sit flush against the viewport
+ * edge. Add a 1rem right gutter to mirror the shared rule's left gutter.
+ */
+@media (min-width: 1024px) {
+  .nova-toc {
+    padding-right: 1rem;
+
+    border-left-color: var(--nova-sentinel-chrome-border);
+  }
+}
+
+/**
+ * ============================
+ * 2. Link - soft text, teal on hover
+ * ============================
  */
 
 .nova-toc-link {
   padding: 0.125rem 0;
+
   font-size: 0.8125rem;
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
+
   transition: color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-toc-link {
+  color: var(--nova-color-text-muted);
 }
 
 .nova-toc-link:hover,
 .nova-toc-link:focus-visible {
   color: var(--nova-color-primary-500);
-  text-decoration: none;
-}
 
-[data-theme="dark"] .nova-toc-link {
-  color: var(--nova-color-neutral-500);
+  text-decoration: none;
 }
 
 [data-theme="dark"] .nova-toc-link:hover,

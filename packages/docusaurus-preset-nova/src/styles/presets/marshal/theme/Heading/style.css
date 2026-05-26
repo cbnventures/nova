@@ -1,0 +1,80 @@
+/**
+ * Marshal - `Heading` theme overlay.
+ *
+ * Plex Serif display typography (weighty, neutral letter-spacing) plus
+ * the seal-red mono `#` hash-link anchor revealed on hover or focus.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Heading typography - Plex Serif, weighty
+ * ============================
+ */
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--nova-marshal-ink);
+}
+
+h1 {
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: -0.015em;
+}
+
+h3 {
+  font-weight: 600;
+  font-size: 1.25rem;
+}
+
+h4 {
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+
+h5 {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+h6 {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+/**
+ * ============================
+ * 2. Hash link - seal-red mono `#` anchor mark
+ * ============================
+ */
+
+.nova-heading-hash-link {
+  margin-left: 0.25rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.85em;
+  font-weight: 600;
+  color: var(--nova-color-accent-700);
+}
+
+.nova-heading-hash-link:hover,
+.nova-heading-hash-link:focus-visible {
+  color: var(--nova-color-accent-800);
+}
+
+[data-theme="dark"] .nova-heading-hash-link {
+  color: var(--nova-color-accent-500);
+}
+
+[data-theme="dark"] .nova-heading-hash-link:hover,
+[data-theme="dark"] .nova-heading-hash-link:focus-visible {
+  color: var(--nova-color-accent-400);
+}

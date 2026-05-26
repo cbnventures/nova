@@ -11,6 +11,24 @@ export type ThemeMdxComponentsMdxCodeChildren = ReactNode;
 
 export type ThemeMdxComponentsMdxCodeIsInline = boolean;
 
+export type ThemeMdxComponentsMdxCodeLanguage = string | undefined;
+
+export type ThemeMdxComponentsMdxCodeTitle = string | undefined;
+
+export type ThemeMdxComponentsMdxCodeMetastring = string | undefined;
+
+export type ThemeMdxComponentsMdxCodeShowLineNumbers = boolean;
+
+export type ThemeMdxComponentsMdxCodeLive = boolean;
+
+export type ThemeMdxComponentsMdxCodeBlockSpread = {
+  showLineNumbers: boolean;
+  live: boolean;
+  language?: string;
+  title?: string;
+  metastring?: string;
+};
+
 /**
  * Theme - MDX Components - MDX Components.
  *

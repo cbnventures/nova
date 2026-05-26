@@ -1,0 +1,138 @@
+/**
+ * Marshal - `TOCCollapsible` theme overlay.
+ *
+ * Mobile sticky table-of-contents drawer. The trigger reads as a flat
+ * ledger plate; the panel slides in as paper with hairline borders.
+ * Header title is Plex Serif; the close button is a muted ink glyph.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Trigger - flat ledger plate
+ * ============================
+ */
+
+.nova-toc-collapsible-trigger {
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-collapsible-trigger:hover,
+.nova-toc-collapsible-trigger:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger:hover,
+[data-theme="dark"] .nova-toc-collapsible-trigger:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 2. Overlay
+ * ============================
+ */
+
+.nova-toc-collapsible-overlay {
+  background-color: color-mix(in srgb, var(--nova-marshal-bg), transparent 30%);
+}
+
+/**
+ * ============================
+ * 3. Panel - paper drawer
+ * ============================
+ */
+
+.nova-toc-collapsible-panel {
+  background-color: var(--nova-marshal-bg);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+}
+
+[data-theme="dark"] .nova-toc-collapsible-panel {
+  border-color: var(--nova-marshal-border);
+}
+
+@media (min-width: 576px) {
+  .nova-toc-collapsible-panel {
+    border-radius: 2px;
+  }
+}
+
+/**
+ * ============================
+ * 4. Header title - Plex Serif
+ * ============================
+ */
+
+.nova-toc-collapsible-header-title {
+  font-family: var(--nova-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+}
+
+/**
+ * ============================
+ * 5. Close button
+ * ============================
+ */
+
+.nova-toc-collapsible-close {
+  color: var(--nova-marshal-ink-muted);
+
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+
+  transition: color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-collapsible-close:hover,
+.nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-accent-700);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-close:hover,
+[data-theme="dark"] .nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 6. Drawer TOC links
+ * ============================
+ */
+
+.nova-toc-collapsible-content .nova-toc-link {
+  font-family: var(--nova-font-body);
+  font-size: 0.875rem;
+  color: var(--nova-marshal-ink-muted);
+}
+
+.nova-toc-collapsible-content .nova-toc-link:hover,
+.nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-marshal-ink);
+}
+

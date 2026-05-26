@@ -1,0 +1,72 @@
+---
+title: "第一枚钤章，是打印出来的 PR 上的一抹毡尖墨"
+authors:
+  - "cordelia"
+tags:
+  - "origin"
+  - "dockets"
+date: "2024-01-18"
+---
+
+第一枚钤章，是一份打印出来的 pull request 上的一抹毡尖墨水。签上首字母、写下日期，再从桌面那头推回来。仓库唯一的归档系统，是一个标着 `pending` 的牛皮纸文件夹。Marshal 之所以存在，是因为那个文件夹越来越沉。
+
+{/* truncate */}
+
+我们从一条规则起步，写在便利贴上：*超过三十天的，归档*。这条规则两年来没有变过。如今，那个文件夹大多数早晨都是空的。
+
+## 办公桌后的档案柜
+
+办公桌后那只档案柜，自从那条 policy 立卷以来就没再打开过。柜内有 312 页纸，先按年份、再按仓库、最后按日期分类。最后一页落款是 2022 年 4 月 14 日。复核者的首字母是 CV。钤章已经褪色，但仍可辨认。保洁人员学会了不去碰那只柜子，并且这一习惯持续了两年。
+
+## 当打印停了下来
+
+停止打印的决定并不戏剧化。它是当年三月立卷的一条 policy 自然带来的结果，那条 policy 部分内容如下：
+
+```yaml title="policies/approval-stamps.yml"
+policy: approval-stamps
+version: 1
+applies-to:
+  repositories: ["org/*"]
+  events: ["pull_request.review_submitted"]
+
+rules:
+  - when: review.state == "approved"
+    action: stamp
+    record:
+      docket: approvals
+      seal: required
+      retention: 7-years
+
+  - when: review.state == "changes_requested"
+    action: file
+    record:
+      docket: revisions
+      retention: 90-days
+```
+
+那条 policy 一经立卷，每一次通过的评审都会向 approvals docket 写下一行。每一次要求修改也会向 revisions docket 写下一行。钤章会自动施加——复核者的身份、时间戳、被批准提交的 SHA。没有什么需要打印。没有什么需要墨水签字。
+
+policy 立卷后的头一个月，docket 在 14 个仓库内记录下了 1,847 枚钤章。办公桌后的那个文件夹增长了零页。到那个季度末，审计员在他们的总结里指出：七年的历史留存要求第一次在本所历史上被自动达到。他们说这话时并不是赞许，他们只是说了——这事做到了。
+
+## 替代毡尖笔的是什么
+
+替代那支毡尖笔的不是一个按钮或一个对勾。替代它的是一条规则。这条规则在 2022 年 3 月被立卷一次，自那以后再没有改过。施加钤章的动作，则由事务员执行——他每分钟通读 docket，并对已封印的内容钤章。事务员不会累。事务员不会忘记今天是几号。事务员不会把文件夹放错地方。
+
+第一个月的审计轨迹至今仍在 docket 中。任何有读取权限的人都可以调出：
+
+```bash
+$ marshal docket query --policy approval-stamps --since 2022-03-01 --until 2022-03-31
+DATE        REPO              EVENT       SEAL              CLERK
+2022-03-01  org/relay         STAMPED     a3f9...:cv         clerk
+2022-03-01  org/relay         STAMPED     b4e1...:jw         clerk
+2022-03-02  org/courier       FILED       c5d2...:revisions  clerk
+2022-03-02  org/relay         STAMPED     d6c3...:nw         clerk
+...
+1,847 entries
+```
+
+## 留下来的文件夹
+
+办公桌后的文件夹没有被丢掉。它也属于记录的一部分，方式与 docket 同样属于记录的一部分相似。归档系统不同，意图一致。两者都保留。两者都不常被翻阅。两者都可在被问起时拿出来。
+
+某个尾数为零的年份里，柜子会被打开。312 张纸将被拍照，照片归入它们自己的 docket，归在 records-historical 之下。原件则进入长期保存。届时文件夹将第一次空着。docket 则不会。

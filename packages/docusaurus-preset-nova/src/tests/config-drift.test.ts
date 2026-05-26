@@ -1,4 +1,4 @@
-import { strictEqual } from 'node:assert/strict';
+import { deepStrictEqual, strictEqual } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
@@ -10,21 +10,13 @@ import type {
   TestsConfigDriftJoiSchema,
   TestsConfigDriftJoiSchemaValidateResult,
   TestsConfigDriftOverrides,
-  TestsConfigDriftOverridesColorsAccent,
-  TestsConfigDriftOverridesColorsNeutral,
   TestsConfigDriftOverridesColorsPrimary,
-  TestsConfigDriftOverridesDepthCards,
-  TestsConfigDriftOverridesDepthCodeBlocks,
+  TestsConfigDriftOverridesColorsSecondary,
   TestsConfigDriftOverridesFontsBody,
   TestsConfigDriftOverridesFontsCode,
   TestsConfigDriftOverridesFontsDisplay,
   TestsConfigDriftOverridesFooter,
-  TestsConfigDriftOverridesMotionHoverEffects,
-  TestsConfigDriftOverridesMotionSpeed,
-  TestsConfigDriftOverridesMotionStaggeredReveals,
   TestsConfigDriftOverridesNavbar,
-  TestsConfigDriftOverridesShapeDensity,
-  TestsConfigDriftOverridesShapeRadius,
   TestsConfigDriftPlugins,
   TestsConfigDriftPluginsBlog,
   TestsConfigDriftPluginsDocs,
@@ -66,8 +58,22 @@ import type {
   TestsConfigDriftThemeConfigDocsSidebarAutoCollapseCategories,
   TestsConfigDriftThemeConfigDocsSidebarHideable,
   TestsConfigDriftThemeConfigDocsVersionPersistence,
+  TestsConfigDriftThemeConfigErrorPages,
+  TestsConfigDriftThemeConfigErrorPagesError,
+  TestsConfigDriftThemeConfigErrorPagesErrorPageContent,
+  TestsConfigDriftThemeConfigErrorPagesErrorPageContentRetryLabel,
+  TestsConfigDriftThemeConfigErrorPagesErrorPageContentTitle,
+  TestsConfigDriftThemeConfigErrorPagesErrorRetryLabel,
+  TestsConfigDriftThemeConfigErrorPagesNotFound,
+  TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeHref,
+  TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeLabel,
+  TestsConfigDriftThemeConfigErrorPagesNotFoundDescription,
+  TestsConfigDriftThemeConfigErrorPagesNotFoundTitle,
   TestsConfigDriftThemeConfigFooter,
   TestsConfigDriftThemeConfigFooterCta,
+  TestsConfigDriftThemeConfigFooterCtaObject,
+  TestsConfigDriftThemeConfigFooterCtaObjectHref,
+  TestsConfigDriftThemeConfigFooterCtaObjectLabel,
   TestsConfigDriftThemeConfigJoiSchema,
   TestsConfigDriftThemeConfigJoiSchemaValidateResult,
   TestsConfigDriftThemeConfigNavbar,
@@ -80,9 +86,11 @@ import type {
   TestsConfigDriftThemeConfigSiteLogoHref,
   TestsConfigDriftThemeConfigSiteLogoSrc,
   TestsConfigDriftThemeConfigSiteLogoSrcDark,
+  TestsConfigDriftThemeConfigSiteLogoSrcLight,
   TestsConfigDriftThemeConfigSiteLogoTitle,
   TestsConfigDriftThemeConfigSiteLogoWordmark,
   TestsConfigDriftThemeConfigSiteLogoWordmarkDark,
+  TestsConfigDriftThemeConfigSiteLogoWordmarkLight,
   TestsConfigDriftThemeConfigSiteMetadata,
   TestsConfigDriftThemeConfigSiteTitle,
   TestsConfigDriftThemeConfigTableOfContents,
@@ -118,27 +126,29 @@ describe('configDrift validateOptions', async () => {
         preset: 'sentinel',
         overrides: {
           colors: {
-            primary: '#DC2626',
-            accent: '#FBBF24',
-            neutral: '#78716C',
+            primary: {
+              light: '#DC2626', dark: '#DC2626',
+            },
+            secondary: {
+              light: '#FBBF24', dark: '#FBBF24',
+            },
+            text: {
+              light: '#1c1917', dark: '#e7e5e4',
+            },
+            border: {
+              light: '#d6d3d1', dark: '#44403c',
+            },
+            warning: {
+              light: '#f59e0b', dark: '#fbbf24',
+            },
+            danger: {
+              light: '#ef4444', dark: '#f87171',
+            },
           },
           fonts: {
             display: 'Plus Jakarta Sans',
             body: 'Inter',
             code: 'JetBrains Mono',
-          },
-          shape: {
-            radius: 'pill',
-            density: 'spacious',
-          },
-          depth: {
-            cards: 'glass',
-            codeBlocks: 'elevated',
-          },
-          motion: {
-            speed: 'expressive',
-            staggeredReveals: true,
-            hoverEffects: true,
           },
           navbar: 'canopy',
           footer: 'embassy',
@@ -182,12 +192,14 @@ describe('configDrift validateOptions', async () => {
 
     const overrides: TestsConfigDriftOverrides = result['overrides'];
     const overridesColorsPrimary: TestsConfigDriftOverridesColorsPrimary = overrides['colors']['primary'];
-    const overridesColorsAccent: TestsConfigDriftOverridesColorsAccent = overrides['colors']['accent'];
-    const overridesColorsNeutral: TestsConfigDriftOverridesColorsNeutral = overrides['colors']['neutral'];
+    const overridesColorsSecondary: TestsConfigDriftOverridesColorsSecondary = overrides['colors']['secondary'];
 
-    strictEqual(overridesColorsPrimary, '#DC2626');
-    strictEqual(overridesColorsAccent, '#FBBF24');
-    strictEqual(overridesColorsNeutral, '#78716C');
+    deepStrictEqual(overridesColorsPrimary, {
+      light: '#DC2626', dark: '#DC2626',
+    });
+    deepStrictEqual(overridesColorsSecondary, {
+      light: '#FBBF24', dark: '#FBBF24',
+    });
 
     const overridesFontsDisplay: TestsConfigDriftOverridesFontsDisplay = overrides['fonts']['display'];
     const overridesFontsBody: TestsConfigDriftOverridesFontsBody = overrides['fonts']['body'];
@@ -196,26 +208,6 @@ describe('configDrift validateOptions', async () => {
     strictEqual(overridesFontsDisplay, 'Plus Jakarta Sans');
     strictEqual(overridesFontsBody, 'Inter');
     strictEqual(overridesFontsCode, 'JetBrains Mono');
-
-    const overridesShapeRadius: TestsConfigDriftOverridesShapeRadius = overrides['shape']['radius'];
-    const overridesShapeDensity: TestsConfigDriftOverridesShapeDensity = overrides['shape']['density'];
-
-    strictEqual(overridesShapeRadius, 'pill');
-    strictEqual(overridesShapeDensity, 'spacious');
-
-    const overridesDepthCards: TestsConfigDriftOverridesDepthCards = overrides['depth']['cards'];
-    const overridesDepthCodeBlocks: TestsConfigDriftOverridesDepthCodeBlocks = overrides['depth']['codeBlocks'];
-
-    strictEqual(overridesDepthCards, 'glass');
-    strictEqual(overridesDepthCodeBlocks, 'elevated');
-
-    const overridesMotionSpeed: TestsConfigDriftOverridesMotionSpeed = overrides['motion']['speed'];
-    const overridesMotionStaggeredReveals: TestsConfigDriftOverridesMotionStaggeredReveals = overrides['motion']['staggeredReveals'];
-    const overridesMotionHoverEffects: TestsConfigDriftOverridesMotionHoverEffects = overrides['motion']['hoverEffects'];
-
-    strictEqual(overridesMotionSpeed, 'expressive');
-    strictEqual(overridesMotionStaggeredReveals, true);
-    strictEqual(overridesMotionHoverEffects, true);
 
     const overridesNavbar: TestsConfigDriftOverridesNavbar = overrides['navbar'];
     const overridesFooter: TestsConfigDriftOverridesFooter = overrides['footer'];
@@ -306,11 +298,15 @@ describe('configDrift validateThemeConfig', async () => {
           title: 'Nova Docs',
           logo: {
             alt: 'Nova Logo',
-            src: '/img/logo.svg',
-            srcDark: '/img/logo-dark.svg',
+            src: {
+              light: '/img/logo.svg',
+              dark: '/img/logo-dark.svg',
+            },
             href: '/',
-            wordmark: '/img/wordmark.svg',
-            wordmarkDark: '/img/wordmark-dark.svg',
+            wordmark: {
+              light: '/img/wordmark.svg',
+              dark: '/img/wordmark-dark.svg',
+            },
             title: 'Nova',
           },
           image: '/img/social-card.png',
@@ -364,8 +360,25 @@ describe('configDrift validateThemeConfig', async () => {
           textColor: '#f8fafc',
           isCloseable: true,
         },
+        errorPages: {
+          notFound: {
+            title: 'Lost in deployment.',
+            description: 'This route did not roll out.',
+            backHomeLabel: 'Back to projects',
+            backHomeHref: '/',
+          },
+          errorPageContent: {
+            title: 'Pipeline interrupted.',
+            retryLabel: 'Re-run',
+          },
+          error: {
+            retryLabel: 'Restart',
+          },
+        },
         footer: {
-          cta: 'Get Started',
+          cta: {
+            label: 'Get Started', href: '/docs/intro',
+          },
         },
       },
     });
@@ -375,20 +388,22 @@ describe('configDrift validateThemeConfig', async () => {
     const siteLogo: TestsConfigDriftThemeConfigSiteLogo = site['logo'] as TestsConfigDriftThemeConfigSiteLogo;
     const siteLogoAlt: TestsConfigDriftThemeConfigSiteLogoAlt = siteLogo['alt'] as TestsConfigDriftThemeConfigSiteLogoAlt;
     const siteLogoSrc: TestsConfigDriftThemeConfigSiteLogoSrc = siteLogo['src'] as TestsConfigDriftThemeConfigSiteLogoSrc;
-    const siteLogoSrcDark: TestsConfigDriftThemeConfigSiteLogoSrcDark = siteLogo['srcDark'] as TestsConfigDriftThemeConfigSiteLogoSrcDark;
+    const siteLogoSrcLight: TestsConfigDriftThemeConfigSiteLogoSrcLight = siteLogoSrc['light'] as TestsConfigDriftThemeConfigSiteLogoSrcLight;
+    const siteLogoSrcDark: TestsConfigDriftThemeConfigSiteLogoSrcDark = siteLogoSrc['dark'] as TestsConfigDriftThemeConfigSiteLogoSrcDark;
     const siteLogoHref: TestsConfigDriftThemeConfigSiteLogoHref = siteLogo['href'] as TestsConfigDriftThemeConfigSiteLogoHref;
     const siteLogoWordmark: TestsConfigDriftThemeConfigSiteLogoWordmark = siteLogo['wordmark'] as TestsConfigDriftThemeConfigSiteLogoWordmark;
-    const siteLogoWordmarkDark: TestsConfigDriftThemeConfigSiteLogoWordmarkDark = siteLogo['wordmarkDark'] as TestsConfigDriftThemeConfigSiteLogoWordmarkDark;
+    const siteLogoWordmarkLight: TestsConfigDriftThemeConfigSiteLogoWordmarkLight = siteLogoWordmark['light'] as TestsConfigDriftThemeConfigSiteLogoWordmarkLight;
+    const siteLogoWordmarkDark: TestsConfigDriftThemeConfigSiteLogoWordmarkDark = siteLogoWordmark['dark'] as TestsConfigDriftThemeConfigSiteLogoWordmarkDark;
     const siteLogoTitle: TestsConfigDriftThemeConfigSiteLogoTitle = siteLogo['title'] as TestsConfigDriftThemeConfigSiteLogoTitle;
     const siteImage: TestsConfigDriftThemeConfigSiteImage = site['image'] as TestsConfigDriftThemeConfigSiteImage;
     const siteMetadata: TestsConfigDriftThemeConfigSiteMetadata = site['metadata'] as TestsConfigDriftThemeConfigSiteMetadata;
 
     strictEqual(siteTitle, 'Nova Docs');
     strictEqual(siteLogoAlt, 'Nova Logo');
-    strictEqual(siteLogoSrc, '/img/logo.svg');
+    strictEqual(siteLogoSrcLight, '/img/logo.svg');
     strictEqual(siteLogoSrcDark, '/img/logo-dark.svg');
     strictEqual(siteLogoHref, '/');
-    strictEqual(siteLogoWordmark, '/img/wordmark.svg');
+    strictEqual(siteLogoWordmarkLight, '/img/wordmark.svg');
     strictEqual(siteLogoWordmarkDark, '/img/wordmark-dark.svg');
     strictEqual(siteLogoTitle, 'Nova');
     strictEqual(siteImage, '/img/social-card.png');
@@ -457,10 +472,34 @@ describe('configDrift validateThemeConfig', async () => {
     strictEqual(announcementBarTextColor, '#f8fafc');
     strictEqual(announcementBarIsCloseable, true);
 
+    const errorPages: TestsConfigDriftThemeConfigErrorPages = result['errorPages'] as TestsConfigDriftThemeConfigErrorPages;
+    const errorPagesNotFound: TestsConfigDriftThemeConfigErrorPagesNotFound = errorPages['notFound'] as TestsConfigDriftThemeConfigErrorPagesNotFound;
+    const errorPagesNotFoundTitle: TestsConfigDriftThemeConfigErrorPagesNotFoundTitle = errorPagesNotFound['title'] as TestsConfigDriftThemeConfigErrorPagesNotFoundTitle;
+    const errorPagesNotFoundDescription: TestsConfigDriftThemeConfigErrorPagesNotFoundDescription = errorPagesNotFound['description'] as TestsConfigDriftThemeConfigErrorPagesNotFoundDescription;
+    const errorPagesNotFoundBackHomeLabel: TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeLabel = errorPagesNotFound['backHomeLabel'] as TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeLabel;
+    const errorPagesNotFoundBackHomeHref: TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeHref = errorPagesNotFound['backHomeHref'] as TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeHref;
+    const errorPagesErrorPageContent: TestsConfigDriftThemeConfigErrorPagesErrorPageContent = errorPages['errorPageContent'] as TestsConfigDriftThemeConfigErrorPagesErrorPageContent;
+    const errorPagesErrorPageContentTitle: TestsConfigDriftThemeConfigErrorPagesErrorPageContentTitle = errorPagesErrorPageContent['title'] as TestsConfigDriftThemeConfigErrorPagesErrorPageContentTitle;
+    const errorPagesErrorPageContentRetryLabel: TestsConfigDriftThemeConfigErrorPagesErrorPageContentRetryLabel = errorPagesErrorPageContent['retryLabel'] as TestsConfigDriftThemeConfigErrorPagesErrorPageContentRetryLabel;
+    const errorPagesError: TestsConfigDriftThemeConfigErrorPagesError = errorPages['error'] as TestsConfigDriftThemeConfigErrorPagesError;
+    const errorPagesErrorRetryLabel: TestsConfigDriftThemeConfigErrorPagesErrorRetryLabel = errorPagesError['retryLabel'] as TestsConfigDriftThemeConfigErrorPagesErrorRetryLabel;
+
+    strictEqual(errorPagesNotFoundTitle, 'Lost in deployment.');
+    strictEqual(errorPagesNotFoundDescription, 'This route did not roll out.');
+    strictEqual(errorPagesNotFoundBackHomeLabel, 'Back to projects');
+    strictEqual(errorPagesNotFoundBackHomeHref, '/');
+    strictEqual(errorPagesErrorPageContentTitle, 'Pipeline interrupted.');
+    strictEqual(errorPagesErrorPageContentRetryLabel, 'Re-run');
+    strictEqual(errorPagesErrorRetryLabel, 'Restart');
+
     const footer: TestsConfigDriftThemeConfigFooter = result['footer'] as TestsConfigDriftThemeConfigFooter;
     const footerCta: TestsConfigDriftThemeConfigFooterCta = footer['cta'] as TestsConfigDriftThemeConfigFooterCta;
+    const footerCtaObject: TestsConfigDriftThemeConfigFooterCtaObject = footerCta as TestsConfigDriftThemeConfigFooterCtaObject;
+    const footerCtaLabel: TestsConfigDriftThemeConfigFooterCtaObjectLabel = footerCtaObject['label'];
+    const footerCtaHref: TestsConfigDriftThemeConfigFooterCtaObjectHref = footerCtaObject['href'];
 
-    strictEqual(footerCta, 'Get Started');
+    strictEqual(footerCtaLabel, 'Get Started');
+    strictEqual(footerCtaHref, '/docs/intro');
 
     return;
   });

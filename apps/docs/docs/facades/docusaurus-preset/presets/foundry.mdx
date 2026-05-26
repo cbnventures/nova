@@ -2,7 +2,7 @@
 id: "foundry"
 title: "Foundry"
 description: "Warm orange and amber preset with Plus Jakarta Sans, Inter, and Fira Code fonts, rounded shapes, and elevated card depth."
-sidebar_position: 1
+sidebar_position: 2
 keywords:
   - "nova"
   - "docusaurus facades"
@@ -26,6 +26,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 import foundryLight from './_assets_/foundry-light.png';
 import foundryDark from './_assets_/foundry-dark.png';
@@ -42,7 +43,9 @@ Warm orange and amber tones paired with Plus Jakarta Sans headings, Inter body t
 
 ## Preview
 
-<ThemedImage sources={{ light: foundryLight, dark: foundryDark }} alt="Foundry preset preview" width={1280} height={900} style={{ maxWidth: '100%', height: 'auto' }} />
+<Frame caption="Foundry preset — light and dark mode preview">
+  <ThemedImage sources={{ light: foundryLight, dark: foundryDark }} alt="Foundry preset preview" width={1280} height={900} />
+</Frame>
 
 ## Summary
 
@@ -86,9 +89,9 @@ Override any category to customize the Foundry identity. Unspecified values keep
   preset: 'foundry',
   overrides: {
     colors: {
-      primary: '#dc2626',
-      accent: '#f59e0b',
-      neutral: '#6b7280',
+      primary: '#ea580c',
+      accent: '#fbbf24',
+      neutral: '#78716c',
     },
   },
 }
@@ -104,9 +107,9 @@ Each color generates an 11-level shade scale (50–950) as CSS custom properties
   preset: 'foundry',
   overrides: {
     fonts: {
-      display: 'Sora',
-      body: 'Nunito Sans',
-      code: 'JetBrains Mono',
+      display: 'Plus Jakarta Sans',
+      body: 'Inter',
+      code: 'Fira Code',
     },
   },
 }
@@ -122,12 +125,12 @@ Font families are set as CSS custom properties. Google Fonts are loaded automati
   preset: 'foundry',
   overrides: {
     shape: {
-      radius: 'pill',
-      density: 'spacious',
+      radius: 'rounded',
+      density: 'comfortable',
     },
     depth: {
-      cards: 'glass',
-      codeBlocks: 'elevated',
+      cards: 'elevated',
+      codeBlocks: 'bordered',
     },
   },
 }
@@ -161,12 +164,12 @@ Available navbar variants:
 
 - `bridge`
 - `canopy`
-- `monolith`
 - `compass`
+- `monolith`
 
 Available footer variants:
 
 - `commons`
 - `embassy`
-- `ledger`
 - `launchpad`
+- `ledger`

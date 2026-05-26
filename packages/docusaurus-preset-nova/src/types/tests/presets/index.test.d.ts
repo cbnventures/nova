@@ -5,13 +5,17 @@ import type { SharedPreset } from '../../shared.d.ts';
  *
  * @since 0.15.0
  */
+export type TestsPresetsIndexNamesIncludesEnvoy = boolean;
+
 export type TestsPresetsIndexNamesIncludesFoundry = boolean;
+
+export type TestsPresetsIndexNamesIncludesLantern = boolean;
+
+export type TestsPresetsIndexNamesIncludesMarshal = boolean;
 
 export type TestsPresetsIndexNamesIncludesSentinel = boolean;
 
 export type TestsPresetsIndexNamesIncludesSignal = boolean;
-
-export type TestsPresetsIndexNamesIncludesEnvoy = boolean;
 
 export type TestsPresetsIndexNamesLength = number;
 
@@ -20,10 +24,14 @@ export type TestsPresetsIndexNamesLength = number;
  *
  * @since 0.15.0
  */
+export type TestsPresetsIndexPresetsEnvoy = SharedPreset;
+
 export type TestsPresetsIndexPresetsFoundry = SharedPreset;
+
+export type TestsPresetsIndexPresetsLantern = SharedPreset;
+
+export type TestsPresetsIndexPresetsMarshal = SharedPreset;
 
 export type TestsPresetsIndexPresetsSentinel = SharedPreset;
 
 export type TestsPresetsIndexPresetsSignal = SharedPreset;
-
-export type TestsPresetsIndexPresetsEnvoy = SharedPreset;

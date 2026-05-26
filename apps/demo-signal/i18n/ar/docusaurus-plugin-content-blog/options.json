@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "المدونة",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "رؤى الإسناد، التحليل الجنائي للحملات، والأنماط الكامنة في تدفقات النقرات لديك.",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "المقالات الحديثة",
+    "description": "The label for the left sidebar"
+  }
+}

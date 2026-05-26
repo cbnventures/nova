@@ -25,6 +25,20 @@ export type ThemeSearchBarSearchInputHandleQueryChange = import('./search-contex
 
 export type ThemeSearchBarSearchInputInputRef = import('./search-context.d.ts').ThemeSearchBarSearchContextValueInputRef;
 
+export type ThemeSearchBarSearchInputIsActive = boolean;
+
+export type ThemeSearchBarSearchInputPreviousIsActiveRef = React.RefObject<boolean>;
+
+export type ThemeSearchBarSearchInputDirection = 'in' | 'out';
+
+export type ThemeSearchBarSearchInputBody = HTMLDivElement | null;
+
+export type ThemeSearchBarSearchInputClassName = string;
+
+export type ThemeSearchBarSearchInputAnimationEvent = AnimationEvent;
+
+export type ThemeSearchBarSearchInputOnSwapEndFunction = (event: ThemeSearchBarSearchInputAnimationEvent) => void;
+
 export type ThemeSearchBarSearchInputHandleKeyDownFunction = (event: ThemeSearchBarSearchInputKeyboardEvent) => void;
 
 export type ThemeSearchBarSearchInputKeyboardEvent = KeyboardEvent;
@@ -58,3 +72,5 @@ export type ThemeSearchBarSearchInputPlaceholder = string;
 export type ThemeSearchBarSearchInputAriaLabel = string;
 
 export type ThemeSearchBarSearchInputClearSearchAriaLabel = string;
+
+export type ThemeSearchBarSearchInputSearchedQuery = string;

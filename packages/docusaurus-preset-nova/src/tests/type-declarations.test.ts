@@ -450,7 +450,7 @@ describe('type declaration first-come-first-serve order', async () => {
         const typePositions: TestsTypeDeclarationsTypeDeclarationFirstComeFirstServeOrderTypePositions = [];
 
         for (const typeName of typeNames) {
-          // Skip object property types — validated by object property test.
+          // Skip object property types - validated by object property test.
           if (objectPropertyTypeNames.has(typeName) === true) {
             continue;
           }
@@ -958,6 +958,7 @@ function extractObjectTypes(lines: TestsTypeDeclarationsExtractObjectTypesLines,
         trimmedProperty === '}>'
         || trimmedProperty === '};'
         || trimmedProperty === '}>;'
+        || trimmedProperty.startsWith('} |') === true
       ) {
         break;
       }

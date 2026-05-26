@@ -1,0 +1,20 @@
+---
+title: "Unlisted Sample"
+sidebar_position: 998
+unlisted: true
+description: "Quick reference for on-call triage when a relay starts rejecting messages."
+tags:
+  - "unlisted"
+  - "internal"
+  - "on-call"
+---
+
+# Unlisted Sample
+
+Quick reference for on-call triage when a relay starts rejecting messages.
+
+First check the cipher health endpoint at `/internal/cipher/healthz` — if the upstream key has rotated, the answer is "fail closed" and you will see HTTP 503 responses with retry-after headers.
+
+Second check the parcel queue depth: if it is climbing past 4k items in a thirty-second window, the issue is downstream not upstream, and the dashboard at `routes/queues` will show which target lane is the offender.
+
+Third — and this is the one we keep forgetting — check whether the source's idempotency key is rotating fast enough; we have had two incidents this quarter caused by a source's key cache TTL drifting.

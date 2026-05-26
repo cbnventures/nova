@@ -1,40 +1,38 @@
 /**
- * Envoy — Content Footer visual styling.
+ * Envoy - `ContentFooter` theme overlay.
+ *
+ * The closing meta row beneath an article - share buttons (rounded violet
+ * pills), edit-this-page link, last-updated stamp. Quiet neutral ink that
+ * warms to primary violet on hover.
  *
  * @since 0.15.0
  */
 
-/* ============================
- * Section Label
- * ============================ */
+/**
+ * ============================
+ * 1. Section label
+ * ============================
+ */
 
 .nova-content-footer-section-label {
-  color: var(--nova-envoy-text-muted-light);
+  color: var(--nova-envoy-text-muted);
 }
 
-[data-theme="dark"] .nova-content-footer-section-label {
-  color: var(--nova-envoy-text-muted-dark);
-}
-
-/* ============================
- * Share Button
- * ============================ */
+/**
+ * ============================
+ * 2. Share button - rounded violet pill
+ * ============================
+ */
 
 .nova-content-footer-share-button {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
-  border-color: var(--nova-color-neutral-200);
+  border-color: var(--nova-color-border);
   border-radius: var(--nova-envoy-radius-pill);
 
-  transition: color 200ms ease,
-              border-color 200ms ease,
-              background-color 200ms ease;
-}
-
-[data-theme="dark"] .nova-content-footer-share-button {
-  color: var(--nova-color-neutral-300);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
-  border-color: var(--nova-envoy-border-dark);
+  transition: color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
 }
 
 .nova-content-footer-share-button:hover,
@@ -44,6 +42,11 @@
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
 }
 
+[data-theme="dark"] .nova-content-footer-share-button {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-envoy-border);
+}
+
 [data-theme="dark"] .nova-content-footer-share-button:hover,
 [data-theme="dark"] .nova-content-footer-share-button:focus-visible {
   color: var(--nova-color-primary-400);
@@ -51,9 +54,11 @@
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
 }
 
-/* ============================
- * Share Copied
- * ============================ */
+/**
+ * ============================
+ * 3. Share copied state
+ * ============================
+ */
 
 .nova-content-footer-share-copied {
   color: var(--nova-color-primary-600);
@@ -67,13 +72,15 @@
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
 }
 
-/* ============================
- * Edit This Page
- * ============================ */
+/**
+ * ============================
+ * 4. Edit this page link
+ * ============================
+ */
 
 .nova-content-footer-edit .nova-edit-this-page {
   font-size: 0.875rem;
-  color: var(--nova-envoy-text-muted-light);
+  color: var(--nova-envoy-text-muted);
   text-decoration: none;
   transition: color var(--nova-motion-duration) ease;
 }
@@ -84,7 +91,7 @@
 }
 
 [data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page {
-  color: var(--nova-envoy-text-muted-dark);
+  color: var(--nova-envoy-text-muted);
 }
 
 [data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:hover,
@@ -92,15 +99,17 @@
   color: var(--nova-color-primary-400);
 }
 
-/* ============================
- * Last Updated
- * ============================ */
+/**
+ * ============================
+ * 5. Last updated stamp
+ * ============================
+ */
 
 .nova-content-footer-edit .nova-last-updated {
-  font-size: 0.8125rem;
-  color: var(--nova-envoy-text-muted-light);
+  font-size: 0.875rem;
+  color: var(--nova-envoy-text-muted);
 }
 
 [data-theme="dark"] .nova-content-footer-edit .nova-last-updated {
-  color: var(--nova-envoy-text-muted-dark);
+  color: var(--nova-envoy-text-muted);
 }

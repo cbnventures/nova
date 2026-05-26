@@ -1,0 +1,53 @@
+/**
+ * Signal - `DocSidebarItem/Link` theme overlay.
+ *
+ * Top-level sidebar link styling - mono compact, neutral ink with rose
+ * hover and a rose left-rail indicator on the active page. Inner-summary
+ * links inherit from the canonical category-summary rules in shared
+ * `theme/DocSidebar/style.css`, which override these bare-class rules
+ * via higher specificity.
+ *
+ * @since 0.18.0
+ */
+
+.nova-sidebar-link {
+  display: block;
+  padding: 0.1875rem 0.75rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.8125rem;
+  color: var(--nova-color-text-muted);
+  text-decoration: none;
+
+  border-left: 2px solid transparent;
+}
+
+[data-theme="dark"] .nova-sidebar-link {
+  color: var(--nova-color-text-muted);
+}
+
+.nova-sidebar-link:hover,
+.nova-sidebar-link:focus-visible {
+  color: var(--nova-color-primary-600);
+  background-color: var(--nova-color-primary-50);
+}
+
+[data-theme="dark"] .nova-sidebar-link:hover,
+[data-theme="dark"] .nova-sidebar-link:focus-visible {
+  color: var(--nova-color-primary-400);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+/* Active sidebar link - rose accent on the left edge. */
+.nova-sidebar-link[aria-current="page"] {
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+  border-left-color: var(--nova-color-primary-600);
+  background-color: var(--nova-color-primary-50);
+}
+
+[data-theme="dark"] .nova-sidebar-link[aria-current="page"] {
+  color: var(--nova-color-primary-400);
+  border-left-color: var(--nova-color-primary-400);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}

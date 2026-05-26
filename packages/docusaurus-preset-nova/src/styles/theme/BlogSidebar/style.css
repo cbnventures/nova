@@ -1,5 +1,5 @@
 /**
- * Blog Sidebar — Shared structural styles.
+ * Blog Sidebar - Shared structural styles.
  *
  * @since 0.15.0
  */
@@ -8,9 +8,11 @@
  * 1. Sidebar Container
  * ============================ */
 
-/* Padding matching doc sidebar spacing. */
+/* Padding matching doc sidebar spacing - left side flush to column edge so
+   per-preset border-left rails / hover backgrounds reach the column boundary. */
 .nova-blog-sidebar {
   padding: calc(var(--nova-section-gap) / 4);
+  padding-left: 0;
 }
 
 /* Stick sidebar to top on desktop with scroll for long content. */
@@ -23,7 +25,7 @@
   }
 }
 
-/* Sidebar title — section label above post links. */
+/* Sidebar title - section label above post links. */
 .nova-blog-sidebar strong {
   display: block;
   margin-bottom: 0.75rem;
@@ -38,7 +40,7 @@
  * 2. Year Groups
  * ============================ */
 
-/* Year heading — compact label for grouped sidebar entries. */
+/* Year heading - compact label for grouped sidebar entries. */
 .nova-blog-sidebar h4 {
   margin-top: 0.75rem;
   margin-bottom: 0.1875rem;
@@ -68,7 +70,7 @@
   margin-bottom: 0.0625rem;
 }
 
-/* Sidebar links — block-level with compact click target. */
+/* Sidebar links - block-level with compact click target. */
 .nova-blog-sidebar a {
   display: block;
   padding: 0.25rem 0.5rem;
@@ -79,25 +81,28 @@
   text-decoration: none;
 }
 
+/* No underline on hover - Infima's `a:hover { text-decoration: underline }`
+   bleeds into sidebar links otherwise. */
+.nova-blog-sidebar a:hover,
+.nova-blog-sidebar a:focus-visible {
+  text-decoration: none;
+}
+
 /* ============================
  * 4. Authors Widget
  * ============================ */
 
-/* Authors section — separated from post list. */
+/* Authors section - separated from post list. */
 .nova-blog-sidebar-authors {
   margin-top: 1.25rem;
   padding-top: 1rem;
 
-  border-top: 1px solid var(--nova-color-neutral-200);
+  border-top: 1px solid var(--nova-color-border);
 }
 
-[data-theme="dark"] .nova-blog-sidebar-authors {
-  border-top-color: var(--nova-color-neutral-800);
-}
+/* Authors section label - inherits from .nova-blog-sidebar strong. */
 
-/* Authors section label — inherits from .nova-blog-sidebar strong. */
-
-/* Author link — inline avatar and name. */
+/* Author link - inline avatar and name. */
 .nova-blog-sidebar .nova-blog-sidebar-author {
   display: flex;
   align-items: center;
@@ -113,21 +118,17 @@
  * 5. Subscribe Widget
  * ============================ */
 
-/* Subscribe section — separated from authors. */
+/* Subscribe section - separated from authors. */
 .nova-blog-sidebar-subscribe {
   margin-top: 1.25rem;
   padding-top: 1rem;
 
-  border-top: 1px solid var(--nova-color-neutral-200);
+  border-top: 1px solid var(--nova-color-border);
 }
 
-[data-theme="dark"] .nova-blog-sidebar-subscribe {
-  border-top-color: var(--nova-color-neutral-800);
-}
+/* Subscribe section label - inherits from .nova-blog-sidebar strong. */
 
-/* Subscribe section label — inherits from .nova-blog-sidebar strong. */
-
-/* Feed link — icon and label inline. */
+/* Feed link - icon and label inline. */
 .nova-blog-sidebar .nova-blog-sidebar-feed-link {
   display: flex;
   align-items: center;

@@ -1,0 +1,178 @@
+/**
+ * Marshal - `CodeBlock` theme overlay.
+ *
+ * Flat paper sheet with hairline border and 2px corners. The title bar is
+ * mono uppercase with a seal-red section-sign prefix - a document caption. No shadows,
+ * no rounded code area; archival ledger feel throughout.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Code block - paper sheet
+ * ============================
+ */
+
+.nova-code-block {
+  margin: 1.5rem 0;
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 50%);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+}
+
+[data-theme="dark"] .nova-code-block {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 2. Title bar - mono uppercase + section-sign prefix
+ * ============================
+ */
+
+.nova-code-block-title {
+  padding: 0.5rem 1.25rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink);
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+.nova-code-block-title::before {
+  color: var(--nova-color-accent-700);
+
+  content: "§ ";
+}
+
+[data-theme="dark"] .nova-code-block-title {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+  border-bottom-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-code-block-title::before {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 3. Pre / shiki - typewriter density
+ * ============================
+ */
+
+.shiki {
+  padding: 1.25rem 1.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.85rem;
+  line-height: 1.65;
+
+  border-radius: 0;
+  overflow-x: auto;
+}
+
+/**
+ * ============================
+ * 4. Toolbar
+ * ============================
+ */
+
+.nova-code-block-toolbar {
+  padding: 0.5rem 0.5rem 0.5rem 1.25rem;
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-code-block-toolbar {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+  border-bottom-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 5. Copy / Wrap buttons - green on hover, mono uppercase
+ * ============================
+ */
+
+.nova-code-block-copy,
+.nova-code-block-wrap {
+  padding: 0.25rem 0.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+
+  background-color: transparent;
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: color var(--nova-marshal-transition), border-color var(--nova-marshal-transition);
+}
+
+.nova-code-block-copy:hover,
+.nova-code-block-copy:focus-visible,
+.nova-code-block-wrap:hover,
+.nova-code-block-wrap:focus-visible,
+[data-word-wrap="true"] .nova-code-block-wrap {
+  color: var(--nova-color-primary-700);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-code-block-copy,
+[data-theme="dark"] .nova-code-block-wrap {
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-code-block-copy:hover,
+[data-theme="dark"] .nova-code-block-copy:focus-visible,
+[data-theme="dark"] .nova-code-block-wrap:hover,
+[data-theme="dark"] .nova-code-block-wrap:focus-visible,
+[data-theme="dark"] [data-word-wrap="true"] .nova-code-block-wrap {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 6. Expand button - mono uppercase paper tail
+ * ============================
+ */
+
+.nova-code-block-expand {
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+  border-top: 1px solid var(--nova-marshal-border);
+
+  transition: color var(--nova-marshal-transition);
+}
+
+.nova-code-block-expand:hover,
+.nova-code-block-expand:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-code-block-expand {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+  border-top-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-code-block-expand:hover,
+[data-theme="dark"] .nova-code-block-expand:focus-visible {
+  color: var(--nova-color-primary-400);
+}

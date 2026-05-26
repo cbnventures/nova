@@ -3,11 +3,14 @@ import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 
 import FooterCredit from '../credit.js';
+import FooterCta from '../cta.js';
 
 import type {
   ThemeFooterLaunchpadIndexLaunchpadCopyright,
   ThemeFooterLaunchpadIndexLaunchpadCredit,
   ThemeFooterLaunchpadIndexLaunchpadCta,
+  ThemeFooterLaunchpadIndexLaunchpadCtaContained,
+  ThemeFooterLaunchpadIndexLaunchpadExternalLinkAriaLabel,
   ThemeFooterLaunchpadIndexLaunchpadFooterClassName,
   ThemeFooterLaunchpadIndexLaunchpadLayout,
   ThemeFooterLaunchpadIndexLaunchpadLayoutEntries,
@@ -16,6 +19,7 @@ import type {
   ThemeFooterLaunchpadIndexLaunchpadReturns,
   ThemeFooterLaunchpadIndexLaunchpadSectionLinks,
   ThemeFooterLaunchpadIndexLaunchpadSections,
+  ThemeFooterLaunchpadIndexLaunchpadSocialLinkLabel,
   ThemeFooterLaunchpadIndexLaunchpadSocialLinks,
   ThemeFooterLaunchpadIndexLaunchpadSocialLinksAriaLabel,
   ThemeFooterLaunchpadIndexSectionLink,
@@ -42,6 +46,7 @@ function Launchpad(props: ThemeFooterLaunchpadIndexLaunchpadProps): ThemeFooterL
   const copyright: ThemeFooterLaunchpadIndexLaunchpadCopyright = props['copyright'];
   const credit: ThemeFooterLaunchpadIndexLaunchpadCredit = props['credit'];
   const cta: ThemeFooterLaunchpadIndexLaunchpadCta = props['cta'];
+  const ctaContained: ThemeFooterLaunchpadIndexLaunchpadCtaContained = props['ctaContained'];
   const footerClassName: ThemeFooterLaunchpadIndexLaunchpadFooterClassName = 'nova-footer-launchpad';
   const layoutEntries: ThemeFooterLaunchpadIndexLaunchpadLayoutEntries = Object.entries(layout) as ThemeFooterLaunchpadIndexLaunchpadLayoutEntries;
   const socialLinksAriaLabel: ThemeFooterLaunchpadIndexLaunchpadSocialLinksAriaLabel = translate({
@@ -49,66 +54,78 @@ function Launchpad(props: ThemeFooterLaunchpadIndexLaunchpadProps): ThemeFooterL
     message: 'Social media links',
     description: 'The ARIA label for the footer social media links section',
   });
+  const externalLinkAriaLabel: ThemeFooterLaunchpadIndexLaunchpadExternalLinkAriaLabel = translate({
+    id: 'theme.IconExternalLink.ariaLabel',
+    message: '(opens in new tab)',
+    description: 'The screen-reader label appended to external links that open in a new tab',
+  });
 
   return (
-    <footer className={footerClassName}>
-      {(cta !== undefined) && (
-        <div className="nova-footer-launchpad-cta">
-          <p>
-            {cta}
-          </p>
-        </div>
-      )}
-      <div className="nova-footer-launchpad-columns nova-container">
-        {
-          layoutEntries.map((layoutEntry: ThemeFooterLaunchpadIndexLaunchpadLayoutEntry) => {
-            const sectionLinks: ThemeFooterLaunchpadIndexLaunchpadSectionLinks = (sections[layoutEntry[1]['section']] ?? []) as ThemeFooterLaunchpadIndexLaunchpadSectionLinks;
+    <>
+      <FooterCta variant="launchpad" cta={cta} contained={ctaContained} />
+      <footer className={footerClassName}>
+        <div
+          className={(props['className'] !== undefined) ? `nova-footer-launchpad-columns nova-container ${props['className']}` : 'nova-footer-launchpad-columns nova-container'}
+          style={props['style']}
+        >
+          {
+            layoutEntries.map((layoutEntry: ThemeFooterLaunchpadIndexLaunchpadLayoutEntry) => {
+              const sectionLinks: ThemeFooterLaunchpadIndexLaunchpadSectionLinks = (sections[layoutEntry[1]['section']] ?? []) as ThemeFooterLaunchpadIndexLaunchpadSectionLinks;
 
-            return (
-              <nav key={layoutEntry[0]} aria-label={layoutEntry[1]['title'] ?? layoutEntry[0]}>
-                {(layoutEntry[1]['title'] !== undefined) && (
-                  <h3>
-                    {layoutEntry[1]['title']}
-                  </h3>
-                )}
-                <ul>
-                  {
-                    sectionLinks.map((sectionLink: ThemeFooterLaunchpadIndexSectionLink) => (
-                      <li key={sectionLink['label']}>
-                        <Link to={sectionLink['href']}>
-                          {sectionLink['label']}
-                        </Link>
-                      </li>
-                    ))
-                  }
-                </ul>
-              </nav>
-            );
-          })
-        }
-      </div>
-      <div className="nova-footer-launchpad-social nova-container" aria-label={socialLinksAriaLabel}>
-        {
-          socialLinks.map((socialLink: ThemeFooterLaunchpadIndexSocialLink) => (
-            <a
-              key={socialLink['label']}
-              href={socialLink['href']}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={socialLink['label']}
-            >
-              <Icon icon={socialLink['icon']} width="20" height="20" aria-hidden="true" />
-            </a>
-          ))
-        }
-      </div>
-      <div className="nova-footer-launchpad-legal nova-container">
-        <p>
-          {copyright}
-        </p>
-        {(credit === true) && <FooterCredit />}
-      </div>
-    </footer>
+              return (
+                <nav key={layoutEntry[0]} aria-label={layoutEntry[1]['title'] ?? layoutEntry[0]}>
+                  {(layoutEntry[1]['title'] !== undefined) && (
+                    <h3>
+                      {layoutEntry[1]['title']}
+                    </h3>
+                  )}
+                  <ul>
+                    {
+                      sectionLinks.map((sectionLink: ThemeFooterLaunchpadIndexSectionLink) => (
+                        <li key={sectionLink['label']}>
+                          <Link to={sectionLink['href']}>
+                            {sectionLink['label']}
+                          </Link>
+                        </li>
+                      ))
+                    }
+                  </ul>
+                </nav>
+              );
+            })
+          }
+        </div>
+        <div
+          className={(props['className'] !== undefined) ? `nova-footer-launchpad-social nova-container ${props['className']}` : 'nova-footer-launchpad-social nova-container'}
+          style={props['style']}
+          aria-label={socialLinksAriaLabel}
+        >
+          {
+            socialLinks.map((socialLink: ThemeFooterLaunchpadIndexSocialLink) => {
+              const socialLinkLabel: ThemeFooterLaunchpadIndexLaunchpadSocialLinkLabel = `${socialLink['label']} ${externalLinkAriaLabel}`;
+
+              return (
+                <a
+                  key={socialLink['label']}
+                  href={socialLink['href']}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={socialLinkLabel}
+                >
+                  <Icon icon={socialLink['icon']} width="20" height="20" aria-hidden="true" />
+                </a>
+              );
+            })
+          }
+        </div>
+        <div className="nova-footer-launchpad-legal nova-container">
+          <p dir="auto">
+            {copyright}
+          </p>
+          {(credit === true) && <FooterCredit />}
+        </div>
+      </footer>
+    </>
   );
 }
 

@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "Current",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Setup": {
+    "message": "Setup",
+    "description": "The label for category 'Setup' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Core": {
+    "message": "Core",
+    "description": "The label for category 'Core' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Advanced": {
+    "message": "Advanced",
+    "description": "The label for category 'Advanced' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Operations": {
+    "message": "Operations",
+    "description": "The label for category 'Operations' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Operations.link.generated-index.description": {
+    "message": "Running Envoy in production — observability through the Ledger, dashboards, alerting on retry exhaustion, and horizontal scaling across regions.",
+    "description": "The generated-index page description for category 'Operations' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "Reference",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  }
+}

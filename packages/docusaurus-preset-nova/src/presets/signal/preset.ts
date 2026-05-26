@@ -16,9 +16,30 @@ export const presetsSignalPresetSignal: PresetsSignalPresetSignal = {
     src: '@nova-assets/presets/signal/logo.svg',
   },
   colors: {
-    primary: '#e11d48',
-    accent: '#f59e0b',
-    neutral: '#525252',
+    primary: {
+      light: '#dc2626',
+      dark: '#dc2626',
+    },
+    accent: {
+      light: '#f59e0b',
+      dark: '#f59e0b',
+    },
+    text: {
+      light: '#262626',
+      dark: '#e5e5e5',
+    },
+    border: {
+      light: '#d4d4d4',
+      dark: '#404040',
+    },
+    warning: {
+      light: '#f59e0b',
+      dark: '#f59e0b',
+    },
+    danger: {
+      light: '#ef4444',
+      dark: '#ef4444',
+    },
   },
   fonts: {
     display: 'Space Grotesk',
@@ -40,4 +61,7 @@ export const presetsSignalPresetSignal: PresetsSignalPresetSignal = {
   },
   navbar: 'monolith',
   footer: 'ledger',
+  cta: {
+    contained: false,
+  },
 };

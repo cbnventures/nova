@@ -91,7 +91,10 @@ function LastUpdated(props: ThemeLastUpdatedLastUpdatedProps) {
   });
 
   return (
-    <span className="nova-last-updated">
+    <span
+      className={(props['className'] !== undefined) ? `nova-last-updated ${props['className']}` : 'nova-last-updated'}
+      style={props['style']}
+    >
       {lastUpdatedLabel}
       {(props['lastUpdatedAt'] !== undefined) && LastUpdatedDate(props['lastUpdatedAt'], currentLocale)}
       {(props['lastUpdatedBy'] !== undefined) && (

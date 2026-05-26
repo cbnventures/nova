@@ -1,0 +1,10 @@
+{
+  "label": "Stewardship",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "How Marshal runs over time — scheduled cron work (cleanups, audits, rollovers, label sweeps) filed at the top of the hour, plus multi-repository supervision with one docket per repo."
+  }
+}

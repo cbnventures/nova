@@ -1,0 +1,66 @@
+{
+  "layout.sentinel.title": {
+    "message": "Sentinel",
+    "description": "Title of footer column \"sentinel\""
+  },
+  "layout.security.title": {
+    "message": "安全",
+    "description": "Title of footer column \"security\""
+  },
+  "layout.company.title": {
+    "message": "公司",
+    "description": "Title of footer column \"company\""
+  },
+  "layout.legal.title": {
+    "message": "法律",
+    "description": "Title of footer column \"legal\""
+  },
+  "sections.sentinel.0.label": {
+    "message": "快速入门",
+    "description": "Label of link 1 in footer section \"sentinel\""
+  },
+  "sections.sentinel.1.label": {
+    "message": "安装",
+    "description": "Label of link 2 in footer section \"sentinel\""
+  },
+  "sections.sentinel.2.label": {
+    "message": "API 参考",
+    "description": "Label of link 3 in footer section \"sentinel\""
+  },
+  "sections.security.0.label": {
+    "message": "博客",
+    "description": "Label of link 1 in footer section \"security\""
+  },
+  "sections.security.1.label": {
+    "message": "安全通告",
+    "description": "Label of link 2 in footer section \"security\""
+  },
+  "sections.company.0.label": {
+    "message": "关于我们",
+    "description": "Label of link 1 in footer section \"company\""
+  },
+  "sections.company.1.label": {
+    "message": "招贤纳士",
+    "description": "Label of link 2 in footer section \"company\""
+  },
+  "sections.legal.0.label": {
+    "message": "使用条款",
+    "description": "Label of link 1 in footer section \"legal\""
+  },
+  "sections.legal.1.label": {
+    "message": "隐私政策",
+    "description": "Label of link 2 in footer section \"legal\""
+  },
+  "sections.legal.2.label": {
+    "message": "联系我们",
+    "description": "Label of link 3 in footer section \"legal\""
+  },
+  "cta.label": {
+    "message": "准备好加固防线了吗？",
+    "description": "The footer call-to-action link label"
+  },
+  "copyright": {
+    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
+    "description": "The footer copyright text"
+  }
+}

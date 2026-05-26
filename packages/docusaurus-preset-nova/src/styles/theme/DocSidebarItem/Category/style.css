@@ -1,5 +1,64 @@
 /**
- * DocSidebarItem Category — Shared structural styles.
+ * DocSidebarItem Category - Shared structural styles.
+ *
+ * Owns per-row category concerns - collapsible summary base structure,
+ * default-marker hide, chevron mask + open-state rotation, and the
+ * "active peek hides when category is open" sibling rule. Per-preset
+ * overlays add color / hover / active / chevron icon on top.
  *
  * @since 0.15.0
  */
+
+/**
+ * ============================
+ * Category - Summary
+ * ============================
+ */
+
+.nova-sidebar-category-summary {
+  display: flex;
+  align-items: center;
+
+  cursor: pointer;
+
+  list-style: none;
+}
+
+.nova-sidebar-category-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-sidebar-category-summary::after {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-left: auto;
+
+  content: "";
+
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+
+  transition: transform var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-category-details[open] > .nova-sidebar-category-summary::after {
+  transform: rotate(90deg);
+}
+
+/**
+ * ============================
+ * Category - Active Peek
+ * ============================
+ *
+ * When a category is collapsed but contains the active page, an active
+ * peek `<a>` renders directly below the summary in the same `<li>`.
+ * When the category is open, hide the peek (the active link inside the
+ * expanded list takes its place).
+ */
+
+.nova-sidebar-category-details[open] ~ .nova-sidebar-active-peek {
+  display: none;
+}

@@ -1,147 +1,47 @@
 /**
- * Sentinel — Sidebar visual styling.
+ * Sentinel - `DocSidebar` theme overlay.
  *
- * @since 0.15.0
+ * Sidebar reads as a docked chrome panel - the aside column is painted
+ * to the viewport edge, with sharp teal arrows marking collapsible
+ * sections and a 2px teal left rail keying hover and active states.
+ *
+ * @since 0.18.0
  */
 
 /* ============================
  * 1. Sidebar Container
  * ============================ */
 
+/* Chrome-surface sidebar - bg paints the full aside column (paired with the
+   `.nova-container { padding-inline: 0 }` override in preset.css), giving
+   the sidebar a docked-panel look flush against the viewport. Scoped to
+   `.nova-doc-root` / `.nova-blog-root` so the rule does not leak into the
+   Footer cta `<aside>` or any other non-sidebar aside elsewhere. */
 @media (min-width: 1024px) {
-  aside {
-    padding-inline: 1rem;
-
-    background-color: var(--nova-color-neutral-50);
-    border-right: 1px solid var(--nova-color-neutral-200);
-  }
-
-  [data-theme="dark"] aside {
-    background-color: var(--nova-color-neutral-950);
-    border-right-color: var(--nova-color-neutral-800);
+  .nova-doc-root aside,
+  .nova-blog-root aside {
+    padding-inline-start: 1rem;
+    background-color: var(--nova-color-surface-raised);
+    border-right: 1px solid var(--nova-color-border);
   }
 }
 
 /* ============================
- * 2. Sidebar Links
+ * 2. Sidebar Item
  * ============================ */
 
 .nova-sidebar-item {
   margin-bottom: 0.125rem;
 }
 
-.nova-sidebar-item > .nova-sidebar-link {
-  display: block;
-  padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
-  color: var(--nova-color-neutral-600);
-  border-left: 2px solid transparent;
-  border-radius: 0 var(--nova-shape-radius) var(--nova-shape-radius) 0;
-}
-
-.nova-sidebar-item > .nova-sidebar-link:hover,
-.nova-sidebar-item > .nova-sidebar-link:focus-visible {
-  color: var(--nova-color-primary-700);
-  border-left-color: var(--nova-color-primary-500);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
-  text-decoration: none;
-}
-
-.nova-sidebar-item > .nova-sidebar-link[aria-current="page"],
-.nova-sidebar-item > .nova-sidebar-link.active {
-  color: var(--nova-color-primary-700);
-  border-left-color: var(--nova-color-primary-600);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
-  font-weight: 600;
-}
-
-[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link {
-  color: var(--nova-color-neutral-400);
-}
-
-[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link:hover,
-[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link:focus-visible {
-  color: var(--nova-color-primary-300);
-  border-left-color: var(--nova-color-primary-700);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 95%);
-}
-
-[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link[aria-current="page"],
-[data-theme="dark"] .nova-sidebar-item > .nova-sidebar-link.active {
-  color: var(--nova-color-primary-400);
-  border-left-color: var(--nova-color-primary-500);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
-}
-
 /* ============================
- * 3. Sidebar Category Summary
- * ============================ */
-
-.nova-sidebar-category-summary {
-  gap: 0.375rem;
-  padding: 0.375rem 0.75rem;
-  font-size: 0.875rem;
-  color: var(--nova-color-neutral-600);
-  border-left: 2px solid transparent;
-  border-radius: 0 var(--nova-shape-radius) var(--nova-shape-radius) 0;
-}
-
-.nova-sidebar-category-summary:not(:has([aria-current="page"])):hover,
-.nova-sidebar-category-summary:not(:has([aria-current="page"])):focus-visible {
-  color: var(--nova-color-primary-700);
-  border-left-color: var(--nova-color-primary-500);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
-}
-
-/* Active category summary — matches active link styling. */
-.nova-sidebar-category-summary:has([aria-current="page"]) {
-  color: var(--nova-color-primary-700);
-  border-left-color: var(--nova-color-primary-600);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
-}
-
-[data-theme="dark"] .nova-sidebar-category-summary {
-  color: var(--nova-color-neutral-400);
-}
-
-[data-theme="dark"] .nova-sidebar-category-summary:not(:has([aria-current="page"])):hover,
-[data-theme="dark"] .nova-sidebar-category-summary:not(:has([aria-current="page"])):focus-visible {
-  color: var(--nova-color-primary-300);
-  border-left-color: var(--nova-color-primary-700);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 95%);
-}
-
-[data-theme="dark"] .nova-sidebar-category-summary:has([aria-current="page"]) {
-  color: var(--nova-color-primary-400);
-  border-left-color: var(--nova-color-primary-500);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
-}
-
-/* Arrow icon — sharp arrow-right (no rounded joins). */
-.nova-sidebar-category-summary::after {
-  background-color: var(--nova-color-primary-500);
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
-}
-
-[data-theme="dark"] .nova-sidebar-category-summary::after {
-  background-color: var(--nova-color-primary-400);
-}
-
-
-/* ============================
- * 4. Sidebar Toggle Button
+ * 3. Sidebar Toggle Button
  * ============================ */
 
 .nova-sidebar-toggle {
-  background: var(--nova-color-neutral-50);
-  border-color: var(--nova-color-neutral-300);
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-sidebar-toggle {
-  background: var(--nova-color-neutral-900);
-  border-color: var(--nova-color-neutral-700);
-  color: var(--nova-color-neutral-400);
+  background: var(--nova-color-surface-raised);
+  border-color: var(--nova-color-border);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-sidebar-toggle:hover,
@@ -149,3 +49,66 @@
   color: var(--nova-color-primary-400);
   border-color: var(--nova-color-primary-600);
 }
+
+/* ============================
+ * 4. Version Switcher
+ * ============================ */
+
+/* Sidebar version-switcher trigger - mirrors color-mode-toggle in the navbar
+   actions cluster, adapted to fill the sidebar column width. */
+.nova-sidebar-version-switcher .nova-version-dropdown-summary {
+  padding: 0.5rem 0.75rem;
+
+  font-family: var(--nova-font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--nova-sentinel-text-muted);
+  background: none;
+  border: 1px solid var(--nova-color-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary,
+.nova-sidebar-version-switcher .nova-version-dropdown-summary:hover,
+.nova-sidebar-version-switcher .nova-version-dropdown-summary:focus-visible {
+  color: var(--nova-color-primary-700);
+  border-color: var(--nova-color-primary-500);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+}
+
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary,
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown-summary:hover,
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown-summary:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+}
+
+/* Disclosure caret - sharp chevron-down (no rounded joins). */
+.nova-sidebar-version-switcher .nova-version-dropdown-summary::after {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+
+  content: "";
+  background-color: currentColor;
+
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2.5' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+
+  transition: transform var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary::after {
+  transform: rotate(180deg);
+}
+

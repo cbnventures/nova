@@ -130,29 +130,29 @@ ruleTester.run('requirePaddingLines', RequirePaddingLines['rule'], {
       filename: '/path/to/ignored-file.ts',
     },
 
-    // Line comment with blank line before — allowed.
+    // Line comment with blank line before - allowed.
     {
       code: 'const x = 1;\n\n// comment\nconst y = 2;',
     },
 
-    // Line comment after opening brace — allowed.
+    // Line comment after opening brace - allowed.
     {
       code: '{\n// comment\nconst x = 1;\n}',
     },
 
-    // Consecutive line comments — allowed.
+    // Consecutive line comments - allowed.
     {
       code: '// first\n// second\nconst x = 1;',
     },
 
-    // Trailing comment on code line — allowed.
+    // Trailing comment on code line - allowed.
     {
       code: 'const x = 1; // inline comment\nconst y = 2;',
     },
   ],
   invalid: [
 
-    // Line comment without blank line before — should add one.
+    // Line comment without blank line before - should add one.
     {
       code: 'const x = 1;\n// comment\nconst y = 2;',
       output: 'const x = 1;\n\n// comment\nconst y = 2;',

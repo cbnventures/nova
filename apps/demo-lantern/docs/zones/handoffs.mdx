@@ -1,0 +1,33 @@
+---
+title: "Handoffs"
+sidebar_position: 2
+description: "A handoff lets a trusted person disarm a zone without your phone in their hand. By name, passphrase, or hub presence."
+tags:
+  - "zones"
+  - "arm-disarm"
+---
+
+# Handoffs
+
+A handoff lets a trusted person disarm a zone without your phone in their hand. Lantern accepts the pass, records who held it, and lets the lights stay on.
+
+## Handoff types
+
+- **By name** — the household roster recognizes the voice
+- **By passphrase** — a soft phrase, set in advance
+- **By Home Hub presence** — the hub already trusts this person
+- **By schedule** — a window of trust that opens and closes itself
+
+## When the handoff arrives
+
+```bash
+lantern handoff list
+```
+
+Every disarm becomes a line in the event stream. The lantern remembers who came home.
+
+## Next Steps
+
+- [Zones](/docs/zones/overview/) — Which zones each handoff can disarm.
+- [Travel Mode](/docs/modes/travel-mode/) — Tighter handoff rules while away.
+- [Events](/docs/events/overview/) — Every handoff is a line in the stream.

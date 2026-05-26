@@ -1,4 +1,4 @@
-import type { MouseEvent, RefObject } from 'react';
+import type { CSSProperties, MouseEvent, RefObject } from 'react';
 
 /**
  * Theme - Toc Collapsible - Toc Collapsible.
@@ -9,6 +9,8 @@ export type ThemeTocCollapsibleTocCollapsiblePropsToc = ThemeTocCollapsibleTocLi
 
 export type ThemeTocCollapsibleTocCollapsiblePropsClassName = string | undefined;
 
+export type ThemeTocCollapsibleTocCollapsiblePropsStyle = CSSProperties | undefined;
+
 export type ThemeTocCollapsibleTocCollapsiblePropsMinHeadingLevel = number | undefined;
 
 export type ThemeTocCollapsibleTocCollapsiblePropsMaxHeadingLevel = number | undefined;
@@ -16,6 +18,7 @@ export type ThemeTocCollapsibleTocCollapsiblePropsMaxHeadingLevel = number | und
 export type ThemeTocCollapsibleTocCollapsibleProps = {
   toc: ThemeTocCollapsibleTocCollapsiblePropsToc;
   className?: ThemeTocCollapsibleTocCollapsiblePropsClassName;
+  style?: ThemeTocCollapsibleTocCollapsiblePropsStyle;
   minHeadingLevel?: ThemeTocCollapsibleTocCollapsiblePropsMinHeadingLevel;
   maxHeadingLevel?: ThemeTocCollapsibleTocCollapsiblePropsMaxHeadingLevel;
   [key: string]: unknown;

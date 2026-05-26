@@ -1,0 +1,23 @@
+/**
+ * Marshal - `CodeInline` theme overlay.
+ *
+ * Inline `code` snippets. Paper-slip background, no border, square corners
+ * - a clipped slip of typed paper inside the prose.
+ *
+ * @since 0.18.0
+ */
+
+.nova-code-inline {
+  padding: 0.08em 0.35em;
+  font-family: var(--nova-font-code);
+  font-size: 0.85em;
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 50%);
+  border: none;
+  border-radius: 0;
+}
+
+[data-theme="dark"] .nova-code-inline {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 88%);
+}

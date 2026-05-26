@@ -1,0 +1,36 @@
+/**
+ * Envoy - `BlogLayout` theme overlay.
+ *
+ * Defines per-preset blog typography tokens consumed by the shared
+ * theme/BlogLayout/style.css. Color tokens for blog typography live in
+ * preset.css.
+ *
+ * Premium SaaS voice - generous heading sizes, comfortable description
+ * line-height, breathing room between heading and description.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned blog typography tokens
+ * ============================ */
+
+:root {
+  --nova-envoy-blog-header-heading-size: 1.625rem;
+  --nova-envoy-blog-header-heading-size-md: 2rem;
+  --nova-envoy-blog-header-heading-spacing: 0.5rem;
+  --nova-envoy-blog-description-size: 0.9375rem;
+  --nova-envoy-blog-description-line-height: 1.65;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogLayout
+ * ============================ */
+
+:root {
+  --nova-blog-header-heading-size: var(--nova-envoy-blog-header-heading-size);
+  --nova-blog-header-heading-size-md: var(--nova-envoy-blog-header-heading-size-md);
+  --nova-blog-header-heading-spacing: var(--nova-envoy-blog-header-heading-spacing);
+  --nova-blog-description-size: var(--nova-envoy-blog-description-size);
+  --nova-blog-description-line-height: var(--nova-envoy-blog-description-line-height);
+}

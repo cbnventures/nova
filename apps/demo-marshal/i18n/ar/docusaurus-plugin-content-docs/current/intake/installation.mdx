@@ -1,0 +1,43 @@
+---
+title: "التثبيت"
+sidebar_position: 1
+description: "ثبّت Marshal عبر Spark أو Vial. تُشحَن الحاوية والخاتم مضغوط عليها مُسبقًا."
+tags:
+  - "setup"
+  - "installation"
+---
+
+# التثبيت
+
+يُثبَّت Marshal من Spark أو كحاوية Vial. في كلتا الحالتين، يصل بترويسته الخاصّة.
+
+## المتطلّبات
+
+- Spark 3.0 أو أحدث
+- مستودع (أو عدّة مستودعات) يحتاج إلى إشراف
+- بعد ظهر. أوّل تثبيت يستغرق دائمًا أطول ممّا يُتوقَّع — هناك إجراءات ورقيّة.
+
+## التثبيت عبر Spark
+
+```bash title="Install Marshal"
+spark install marshal
+```
+
+تحقّق من التثبيت:
+
+```bash
+marshal --version
+```
+
+## التثبيت عبر Vial
+
+```bash title="Pull the Marshal image"
+vial pull marshal/cli:latest
+```
+
+تُشحَن الحاوية والخاتم مضغوط عليها مُسبقًا. Marshal جاهز للإيداع لحظة وصوله.
+
+## ما يأتي تاليًا
+
+- [سياستك الأولى](/docs/intake/first-policy/) — أودِع القاعدة الأولى وراقب اللائحة وهي تُفتَح.
+- [السياسات](/docs/filings/policies/) — قواعد مكتوبة للمسائل الخاملة وفئات الوصول والأعمال المجدولة.

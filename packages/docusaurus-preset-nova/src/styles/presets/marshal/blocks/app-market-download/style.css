@@ -1,0 +1,145 @@
+/**
+ * Marshal - `app-market-download` component overlay.
+ *
+ * App store badges rendered as flat ledger plates - ink-dark surface,
+ * 2px corners, hairline outline. Subtitle sits above title in mono
+ * uppercase, mirroring the official seal lettering. Hover swaps the
+ * outline to seal-red without lifting (Marshal is flat, never glowing).
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section rhythm
+ * ============================
+ */
+
+/* Stack the section's content above adjacent surface chrome. Marshal's
+   neighboring sections lay paper/ledger backgrounds with `position:
+   absolute` pseudo-elements; pinning a `z-index` on the inner wrapper
+   ensures the buttons stay above those decorative layers. */
+.nova-app-market-download-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/**
+ * ============================
+ * 2. Label - mono uppercase seal-red
+ * ============================
+ */
+
+.nova-app-market-download-label {
+  margin: 0 0 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-app-market-download-label {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 3. Buttons row
+ * ============================
+ */
+
+/* Override the shared base's `inline-flex` + `justify-content: center`.
+   Marshal lays the buttons as a left-aligned flex row that fills the
+   section width - mirrors the docket's flush-left columnar layout - and
+   uses a tighter gap that opens up at desktop widths. */
+.nova-app-market-download-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .nova-app-market-download-buttons {
+    gap: 0.75rem;
+  }
+}
+
+/**
+ * ============================
+ * 4. Button - flat ledger plate
+ * ============================
+ */
+
+/* Selector matches the shared base's `.nova-app-market-download
+   .nova-app-market-download-button` specificity (0,2,0) so Marshal's
+   tighter `gap: 0.5rem` (vs the base's 0.625rem) actually applies
+   instead of being silently overridden. */
+.nova-app-market-download .nova-app-market-download-button {
+  gap: 0.5rem;
+
+  padding: 0.5rem 1rem;
+
+  color: var(--nova-marshal-ink);
+
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: color var(--nova-marshal-transition), border-color var(--nova-marshal-transition), background-color var(--nova-marshal-transition);
+}
+
+.nova-app-market-download-button:hover,
+.nova-app-market-download-button:focus-visible {
+  color: var(--nova-marshal-ink);
+
+  border-color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-app-market-download-button {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-app-market-download-button:hover,
+[data-theme="dark"] .nova-app-market-download-button:focus-visible {
+  color: var(--nova-marshal-ink);
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+  border-color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 5. Button text stack
+ * ============================
+ */
+
+/* `inline-flex` (vs shared base's `flex`) keeps the text stack from
+   eating the full button width when the row wraps to mobile, and the
+   tight `line-height: 1.1` packs subtitle + title flush like a ledger
+   signature block. */
+.nova-app-market-download-button-text {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.nova-app-market-download-button-subtitle {
+  font-family: var(--nova-font-code);
+  font-size: 0.55rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+}
+
+.nova-app-market-download-button-title {
+  font-family: var(--nova-font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+}

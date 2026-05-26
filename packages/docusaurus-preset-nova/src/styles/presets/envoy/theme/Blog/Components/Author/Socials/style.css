@@ -1,0 +1,34 @@
+/**
+ * Envoy - `Blog/Components/Author/Socials` theme overlay.
+ *
+ * Pill: white surface, primary-violet edge on hover.
+ *
+ * @since 0.18.0
+ */
+
+.nova-blog-author-social-link {
+  background-color: var(--nova-envoy-surface);
+  border: 1px solid var(--nova-envoy-border);
+  border-radius: var(--nova-envoy-radius-pill);
+  color: var(--nova-color-text);
+}
+
+.nova-blog-author-social-link:hover,
+.nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-envoy-surface) 92%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link {
+  background-color: var(--nova-envoy-surface);
+  border-color: var(--nova-envoy-border);
+  color: var(--nova-color-text-muted);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link:hover,
+[data-theme="dark"] .nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-envoy-surface) 85%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-400), transparent 50%);
+  color: var(--nova-color-primary-300);
+}

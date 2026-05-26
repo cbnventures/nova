@@ -1,6 +1,17 @@
 /**
+ * Error - Shared structural styles.
+ *
+ * Per-surface deltas only - cross-cutting baseline lives on the umbrella
+ * `.nova-error-surface` scope at theme/error-surface/style.css. Error mounts
+ * as the top-level boundary fallback WITHOUT a Layout wrapper, so unlike
+ * NotFound/ErrorPageContent it provides its own centering for the bare case.
+ *
+ * @since 0.15.0
+ */
+
+/**
  * ============================
- * Error — Container
+ * Error - Container (bare-mount centering)
  * ============================
  */
 
@@ -14,4 +25,16 @@
   min-height: 200px;
 
   text-align: center;
+}
+
+/**
+ * ============================
+ * Error - Message
+ * ============================
+ */
+
+.nova-error-message {
+  margin: 0;
+
+  color: var(--nova-color-text-muted);
 }

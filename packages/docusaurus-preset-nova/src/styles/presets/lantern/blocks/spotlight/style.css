@@ -1,0 +1,67 @@
+/**
+ * Lantern - `spotlight` component overlay.
+ *
+ * A constrained single-column block - narrow reading width, italic
+ * Fraunces heading centered with breathing room, and a soft warm rule
+ * under the heading echoing the doc-content `<hr>` lantern beam.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section heading - italic Fraunces, centered, soft warm rule under
+ * ============================
+ */
+
+.nova-spotlight-heading {
+  position: relative;
+
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .nova-spotlight-heading {
+    margin-bottom: 2rem;
+  }
+}
+
+.nova-spotlight-heading::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+
+  width: 3rem;
+  height: 1px;
+
+  transform: translateX(-50%);
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--nova-color-primary-500), transparent 40%),
+    transparent
+  );
+}
+
+[data-theme="dark"] .nova-spotlight-heading::after {
+  background: linear-gradient(
+    to right,
+    transparent,
+    color-mix(in srgb, var(--nova-color-primary-400), transparent 30%),
+    transparent
+  );
+}
+
+/**
+ * ============================
+ * 2. Inner container - narrower reading width
+ * ============================
+ */
+
+.nova-spotlight-inner {
+  max-width: 56rem;
+}

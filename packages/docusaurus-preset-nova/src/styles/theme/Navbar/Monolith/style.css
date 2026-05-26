@@ -1,30 +1,53 @@
 /**
  * ============================
- * Navbar — Monolith — Bar Layout
+ * Navbar - Monolith - Bar Layout
+ *
+ * Below 640px, the brand and actions stack vertically so a longer wordmark
+ * never collides with the absolute-positioned action buttons. From 640px up,
+ * the brand centers in a single row with actions pinned to the right edge.
+ *
+ * Bar height contract: content-driven. Preset overlays do NOT set
+ * `.nova-container { height }` - the bar grows to fit brand + actions.
+ * Bridge is the only variant that pins a fixed container height.
  * ============================
  */
 
-.nova-navbar-monolith {
+.nova-navbar-monolith > .nova-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0.25rem;
 }
 
 .nova-navbar-monolith-actions {
-  position: absolute;
-  right: var(--nova-grid-padding);
-  top: 50%;
+  position: static;
 
   display: flex;
   align-items: center;
   gap: 8px;
+}
 
-  transform: translateY(-50%);
+@media (min-width: 640px) {
+  .nova-navbar-monolith > .nova-container {
+    position: relative;
+
+    flex-direction: row;
+    gap: 0;
+  }
+
+  .nova-navbar-monolith-actions {
+    position: absolute;
+    right: var(--nova-grid-padding);
+    top: 50%;
+
+    transform: translateY(-50%);
+  }
 }
 
 /**
  * ============================
- * Navbar — Monolith — Mobile Menu Overlay
+ * Navbar - Monolith - Mobile Menu Overlay
  * ============================
  */
 
@@ -43,7 +66,7 @@
 
 /**
  * ============================
- * Navbar — Monolith — Mobile Menu Open/Close State
+ * Navbar - Monolith - Mobile Menu Open/Close State
  * ============================
  */
 
@@ -77,11 +100,11 @@
 
 /**
  * ============================
- * Navbar — Monolith — Mobile Menu Panel
+ * Navbar - Monolith - Mobile Menu Panel
  * ============================
  */
 
-/* Always-float panel — never goes full-screen. */
+/* Always-float panel - never goes full-screen. */
 .nova-navbar-monolith-menu-panel {
   display: flex;
   flex-direction: column;
@@ -98,7 +121,7 @@
 
 /**
  * ============================
- * Navbar — Monolith — Mobile Menu Header
+ * Navbar - Monolith - Mobile Menu Header
  * ============================
  */
 
@@ -110,7 +133,7 @@
 
 /**
  * ============================
- * Navbar — Monolith — Mobile Menu Close
+ * Navbar - Monolith - Mobile Menu Close
  * ============================
  */
 
@@ -126,19 +149,15 @@
   padding: 0;
 
   background: none;
-  border: 1px solid var(--nova-color-neutral-300);
+  border: 1px solid var(--nova-color-border);
   border-radius: 0.375rem;
 
   cursor: pointer;
 }
 
-[data-theme="dark"] .nova-navbar-monolith-menu-close {
-  border-color: var(--nova-color-neutral-700);
-}
-
 /**
  * ============================
- * Navbar — Monolith — Mobile Menu Search
+ * Navbar - Monolith - Mobile Menu Search
  * ============================
  */
 
@@ -154,19 +173,7 @@
 
 /**
  * ============================
- * Navbar — Monolith — Mobile Menu Results
- * ============================
- */
-
-.nova-navbar-monolith-menu-results {}
-
-.nova-navbar-monolith-menu-results:empty {
-  display: none;
-}
-
-/**
- * ============================
- * Navbar — Monolith — Mobile Menu Items
+ * Navbar - Monolith - Mobile Menu Items
  * ============================
  */
 

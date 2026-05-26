@@ -1,0 +1,54 @@
+/**
+ * Lantern - `TOC` theme overlay.
+ *
+ * Right-rail table of contents - a quiet column of warm muted ink.
+ * Hover and focus warm to amber. The rail border that separates the TOC
+ * from the article is given a warm cream hairline to match the body.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Rail - warm cream hairline overrides the neutral default
+ * ============================
+ */
+
+@media (min-width: 1024px) {
+  .nova-toc {
+    border-left-color: var(--nova-lantern-border);
+  }
+}
+
+/**
+ * ============================
+ * 2. Link - muted ink, amber on hover
+ * ============================
+ */
+
+.nova-toc-link {
+  padding: 0.25rem 0;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--nova-lantern-ink-muted);
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-toc-link {
+  color: var(--nova-lantern-ink-muted);
+}
+
+.nova-toc-link:hover,
+.nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-toc-link:hover,
+[data-theme="dark"] .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-300);
+}

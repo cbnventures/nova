@@ -1,0 +1,142 @@
+/**
+ * Marshal - `SearchBar` theme overlay.
+ *
+ * Paper-tone input with hairline border and 2px corners. Focus brings green
+ * border; results dropdown is a flat ledger sheet with primary tint on hover.
+ * Mono uppercase placeholder restraint, no shadows.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Search input - paper field
+ * ============================
+ */
+
+.nova-search-bar-input {
+  width: 100%;
+  max-width: 220px;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.85rem;
+  color: var(--nova-marshal-ink);
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: var(--nova-marshal-radius-sharp);
+
+  transition: border-color var(--nova-marshal-transition), background-color var(--nova-marshal-transition);
+}
+
+.nova-search-bar-input::placeholder {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+}
+
+.nova-search-bar-input:focus {
+  background-color: var(--nova-color-surface-raised);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-search-bar-input {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 88%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-search-bar-input:focus {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 2. Dropdown - paper sheet
+ * ============================
+ */
+
+.nova-search-dropdown {
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: var(--nova-marshal-radius-sharp);
+}
+
+[data-theme="dark"] .nova-search-dropdown {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 88%);
+  border-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 3. Result rows - hairline ledger
+ * ============================
+ */
+
+.nova-search-result {
+  border-bottom: 1px solid var(--nova-marshal-border);
+
+  transition: background-color var(--nova-marshal-transition);
+}
+
+.nova-search-result:hover,
+.nova-search-result:focus-visible,
+.nova-search-result--active {
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 94%);
+}
+
+[data-theme="dark"] .nova-search-result {
+  border-bottom-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-search-result:hover,
+[data-theme="dark"] .nova-search-result:focus-visible,
+[data-theme="dark"] .nova-search-result--active {
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 86%);
+}
+
+.nova-search-result-title {
+  font-family: var(--nova-font-display);
+  color: var(--nova-marshal-ink);
+}
+
+.nova-search-count {
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-search-count {
+  border-bottom-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 4. Mobile menu search
+ * ============================
+ */
+
+.nova-mobile-menu-search .nova-search-bar-input {
+  width: 100%;
+  max-width: none;
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+  border-radius: var(--nova-marshal-radius-sharp);
+}
+
+[data-theme="dark"] .nova-mobile-menu-search .nova-search-bar-input {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 88%);
+}
+
+.nova-mobile-menu-search .nova-search-dropdown {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+}

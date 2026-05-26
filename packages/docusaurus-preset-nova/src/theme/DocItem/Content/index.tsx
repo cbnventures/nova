@@ -49,7 +49,10 @@ function DocItemContent(props: ThemeDocItemContentDocItemContentProps) {
   const syntheticTitle: ThemeDocItemContentUseSyntheticTitleSyntheticTitle = useSyntheticTitle();
 
   return (
-    <div className="nova-doc-content">
+    <div
+      className={(props['className'] !== undefined) ? `nova-doc-content ${props['className']}` : 'nova-doc-content'}
+      style={props['style']}
+    >
       {(syntheticTitle !== null) && (
         <header className="nova-doc-content-header">
           <Heading as="h1">{syntheticTitle}</Heading>

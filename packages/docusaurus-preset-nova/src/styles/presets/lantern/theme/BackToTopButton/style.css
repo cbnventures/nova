@@ -1,0 +1,82 @@
+/**
+ * Lantern - `BackToTopButton` theme overlay.
+ *
+ * A small amber paper pill anchored bottom-right. At rest it sits on warm
+ * cream with a hairline border; on hover it warms to filled amber with the
+ * signature soft warm glow.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Floating button - amber paper pill
+ * ============================
+ */
+
+.nova-back-to-top {
+  bottom: 1rem;
+  right: 1rem;
+
+  width: 38px;
+  height: 38px;
+
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 999px;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--nova-color-primary-700), transparent 90%);
+
+  transition:
+    opacity var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease,
+    box-shadow var(--nova-motion-duration) ease,
+    transform var(--nova-motion-duration) ease;
+}
+
+.nova-back-to-top:hover,
+.nova-back-to-top:focus-visible {
+  color: var(--nova-color-text);
+
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-600);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 86%);
+
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .nova-back-to-top {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .nova-back-to-top:hover,
+[data-theme="dark"] .nova-back-to-top:focus-visible {
+  color: var(--nova-color-text);
+
+  background-color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-300);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 75%);
+}
+
+/**
+ * ============================
+ * 2. Larger surface on tablet+
+ * ============================
+ */
+
+@media (min-width: 768px) {
+  .nova-back-to-top {
+    bottom: 2rem;
+    right: 2rem;
+
+    width: 42px;
+    height: 42px;
+  }
+}

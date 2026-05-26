@@ -33,6 +33,7 @@ import type {
   ThemeDocSidebarMobileDocSidebarMobilePanelAriaLabel,
   ThemeDocSidebarMobileDocSidebarMobilePanelRef,
   ThemeDocSidebarMobileDocSidebarMobilePathname,
+  ThemeDocSidebarMobileDocSidebarMobileProps,
   ThemeDocSidebarMobileDocSidebarMobileSeparator,
   ThemeDocSidebarMobileDocSidebarMobileSetIsClosing,
   ThemeDocSidebarMobileDocSidebarMobileSetIsOpen,
@@ -47,11 +48,13 @@ import type {
  * hierarchy path, and a floating overlay panel containing the full
  * doc sidebar when tapped.
  *
+ * @param {ThemeDocSidebarMobileDocSidebarMobileProps} props - Props.
+ *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocSidebarMobile() {
+function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
   const breadcrumbs: ThemeDocSidebarMobileDocSidebarMobileBreadcrumbs = useSidebarBreadcrumbs();
   const sidebar: ThemeDocSidebarMobileDocSidebarMobileSidebar = useDocsSidebar() as ThemeDocSidebarMobileDocSidebarMobileSidebar;
   const pathname: ThemeDocSidebarMobileDocSidebarMobilePathname = useLocation()['pathname'];
@@ -172,7 +175,8 @@ function DocSidebarMobile() {
   return (
     <>
       <button
-        className="nova-sidebar-mobile-trigger"
+        className={(props['className'] !== undefined) ? `nova-sidebar-mobile-trigger ${props['className']}` : 'nova-sidebar-mobile-trigger'}
+        style={props['style']}
         type="button"
         onClick={() => {
           setIsOpen(true);

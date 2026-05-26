@@ -1,0 +1,10 @@
+{
+  "label": "发布",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "将构建推广至生产环境——alpha/beta/stable 通道、Quench 锁定的版本、Warden 闸门强制、由 Bellows 协调的滚动部署，以及通过 Forge 历史回滚。"
+  }
+}

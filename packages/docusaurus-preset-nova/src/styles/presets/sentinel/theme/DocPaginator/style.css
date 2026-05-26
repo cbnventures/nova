@@ -1,5 +1,9 @@
 /**
- * Sentinel — Doc Paginator visual styling.
+ * Sentinel - `DocPaginator` theme overlay.
+ *
+ * Previous/next-page navigation - display-font heading with tight
+ * tracking, hover lifts the link with a 2px primary-slate left rail and
+ * a faint primary tint. Title color shifts to primary on hover.
  *
  * @since 0.15.0
  */
@@ -7,14 +11,10 @@
 .nova-doc-paginator {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--nova-color-neutral-200);
+  border-top: 1px solid var(--nova-color-border);
 }
 
-[data-theme="dark"] .nova-doc-paginator {
-  border-top-color: var(--nova-color-neutral-800);
-}
-
-@media (min-width: 480px) {
+@media (min-width: 640px) {
   .nova-doc-paginator {
     margin-top: 2rem;
     padding-top: 2rem;
@@ -30,11 +30,7 @@
   font-size: 1.125rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-doc-paginator-heading {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 }
 
 /* ============================
@@ -50,6 +46,10 @@
   transition:
     border-color var(--nova-motion-duration) ease,
     background-color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-doc-paginator-link {
+  color: var(--nova-color-text);
 }
 
 .nova-doc-paginator-link:hover,
@@ -73,11 +73,7 @@
   font-size: 0.8125rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-doc-paginator-label {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 /* ============================
@@ -86,11 +82,7 @@
 
 .nova-doc-paginator-title {
   font-weight: 700;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-doc-paginator-title {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 }
 
 .nova-doc-paginator-link:hover .nova-doc-paginator-title,
@@ -108,10 +100,6 @@
  * ============================ */
 
 .nova-doc-paginator-excerpt {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   line-height: 1.7;
-}
-
-[data-theme="dark"] .nova-doc-paginator-excerpt {
-  color: var(--nova-color-neutral-400);
 }

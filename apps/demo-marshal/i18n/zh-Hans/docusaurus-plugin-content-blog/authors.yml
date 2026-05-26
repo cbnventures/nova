@@ -1,0 +1,41 @@
+cordelia:
+  name: Cordelia Vance
+  title: 仓储事务部主任，Marshal
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
+
+dimitri:
+  name: Dimitri Markov
+  title: Docket 事务员，Marshal
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
+
+yuki:
+  name: Yuki Hayashi
+  title: 立卷与 Stewardship，Marshal
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures

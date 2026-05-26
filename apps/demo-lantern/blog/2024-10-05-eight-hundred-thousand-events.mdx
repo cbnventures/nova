@@ -1,0 +1,43 @@
+---
+title: "What eight hundred thousand motion events look like"
+authors:
+  - "noor"
+tags:
+  - "sensor-history"
+  - "motion"
+date: "2024-10-05"
+---
+
+In a year, a single house produced eight hundred thousand motion events. The cat accounts for nearly two hundred thousand of them. The dishwasher cycle accounts for forty thousand. The rest is the household, going about its business.
+
+{/* truncate */}
+
+Lantern stores all of it. Replays it on demand. Most of it is never read. That is the point — the page is open if you ever need it.
+
+We did the count on a Sunday afternoon, mostly out of curiosity. Eight hundred and twelve thousand events, give or take. We expected a flood. What we found was a tide. The cat at 4:17, the cat at 6:30, the dishwasher at 9:14, the porch at 11:11 every weekday morning when the mail arrives. The events are not noise. They are a transcript of a year of an ordinary house being itself.
+
+Some of the numbers were surprising. The hallway sensor fired more times than the porch — which made no sense, until we remembered the cat sleeps on the runner. The bedroom sensor fired the least, by a wide margin; about eleven hundred events all year, almost all of them between 6:30 and 7am or 10:30 and 11pm. The bedroom is a quiet room with a quiet schedule. The garage was the loudest unexpected zone, mostly because the garage door has a faulty contact that fires twice every time it closes.
+
+We pulled the breakdown by zone in one command. The full table fits on a postcard.
+
+```bash
+$ lantern history --summary --since "1 year ago"
+zone        events     dominant         peak-hour
+porch       182,441    mail-carrier     11:00–12:00
+hallway     264,003    cat              16:00–17:00
+kitchen      94,210    dishwasher       21:00–22:00
+sunroom      78,114    cat              12:00–13:00
+bedroom       1,127    household        06:00–07:00
+garage      131,440    door-contact     varies
+deck         60,899    wind             18:00–19:00
+
+total       812,234    cat              16:00–17:00
+```
+
+What we want to say about that table is small. None of the eight hundred thousand events were alarms. None of them woke anyone. None of them shipped a notification. They are sitting in a column on disk, indexed by zone and by hour, waiting in case a question ever comes up that needs them.
+
+A question came up in November. A neighbor knocked on a Tuesday afternoon and asked if we had seen anyone walking down the side path the night before, around midnight. We pulled `lantern history --zone side-path --on 2024-10-29` and read out the column to her. There had been one event at 11:47pm — too brief to flag, too low to be a person. Probably a fox. The neighbor went home reassured. The history did its one job that month, and then went quiet again.
+
+Eight hundred thousand events is a lot. It is also nothing. The point is the ledger is open. You do not have to read it. You have to be able to.
+
+We did the count again on the anniversary. The total had grown to eight hundred and ninety-three thousand. The cat had picked up a few thousand events because the cat had grown bolder about the kitchen counter. The mail carrier had switched routes in the spring and the porch's 11am column had thinned. The garage's faulty contact had been replaced and the garage was finally honest. None of these were alerts. They were just the ledger doing what ledgers do, which is sit on the shelf and remember things the household no longer needs to.

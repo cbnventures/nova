@@ -1,5 +1,5 @@
 /**
- * Doc Paginator — Shared structural styles.
+ * Doc Paginator - Shared structural styles.
  *
  * @since 0.15.0
  */
@@ -20,7 +20,7 @@
 
 /**
  * ============================
- * Doc Paginator — Heading
+ * Doc Paginator - Heading
  * ============================
  */
 
@@ -32,13 +32,12 @@
 
 /**
  * ============================
- * Doc Paginator — Link
+ * Doc Paginator - Link
  * ============================
  */
 
 .nova-doc-paginator-link {
   display: flex;
-  flex: 1;
   flex-direction: column;
   gap: 0.25rem;
 
@@ -52,15 +51,35 @@
 }
 
 @media (min-width: 640px) {
-  .nova-doc-paginator-link[data-next] {
+  .nova-doc-paginator-link {
+    flex: 1 1 0%;
+    max-width: 50%;
+  }
+
+  /* Two-link case only: Next sits at the END of the inline axis with
+     content end-aligned. When Next is the only link (first doc page),
+     it inherits the default `start`-aligned layout so it sits under
+     the heading on the same side, matching the single-Previous case
+     on the last doc page. */
+  .nova-doc-paginator-link[data-next]:not(:first-child) {
+    margin-inline-start: auto;
+
     text-align: right;
     align-items: flex-end;
   }
 }
 
+/* Chevron icons in the title row are physical assets (arrow-left for
+   previous, arrow-right for next). In RTL the "forward" direction is
+   leftward, so flip horizontally to keep the visual cue aligned with
+   the reading flow. */
+[dir="rtl"] .nova-doc-paginator-title svg {
+  transform: scaleX(-1);
+}
+
 /**
  * ============================
- * Doc Paginator — Title
+ * Doc Paginator - Title
  * ============================
  */
 
@@ -76,7 +95,7 @@
 
 /**
  * ============================
- * Doc Paginator — Label
+ * Doc Paginator - Label
  * ============================
  */
 
@@ -88,7 +107,7 @@
 
 /**
  * ============================
- * Doc Paginator — Excerpt
+ * Doc Paginator - Excerpt
  * ============================
  */
 

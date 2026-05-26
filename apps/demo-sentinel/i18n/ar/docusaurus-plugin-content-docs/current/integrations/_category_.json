@@ -1,0 +1,10 @@
+{
+  "label": "التكاملات",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "ربط Sentinel ببقيّة منظومة العمل — تكامل Cipher مع موفّري الهوية (Okta وAzure AD وGoogle Workspace ومعايير OIDC/SAML العامة)، وإدخال بيانات EDR (CrowdStrike وDefender وJAMF) إلى Watchtower مع تطبيق Drawbridge."
+  }
+}

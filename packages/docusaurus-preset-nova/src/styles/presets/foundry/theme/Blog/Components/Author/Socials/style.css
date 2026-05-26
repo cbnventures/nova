@@ -1,0 +1,32 @@
+/**
+ * Foundry - `Blog/Components/Author/Socials` theme overlay.
+ *
+ * Industrial square: 2px corners, hairline border, primary-orange edge on hover.
+ *
+ * @since 0.18.0
+ */
+
+.nova-blog-author-social-link {
+  background-color: var(--nova-foundry-surface);
+  border: 1px solid var(--nova-foundry-border);
+  border-radius: var(--nova-foundry-radius-square);
+  color: var(--nova-color-text);
+}
+
+.nova-blog-author-social-link:hover,
+.nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-foundry-surface) 94%);
+  border-color: var(--nova-color-primary-500);
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link {
+  color: var(--nova-color-text);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link:hover,
+[data-theme="dark"] .nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-foundry-surface) 85%);
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-300);
+}

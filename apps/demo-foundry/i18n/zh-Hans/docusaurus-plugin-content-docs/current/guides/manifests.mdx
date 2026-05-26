@@ -1,0 +1,197 @@
+---
+title: "清单"
+sidebar_position: 3
+description: ".grain 清单是 Foundry 工作空间的唯一事实来源——包、依赖、预设与部署目标都在其中声明。"
+tags:
+  - "指南"
+  - "清单"
+---
+
+import Details from '@theme/Details';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 清单
+
+`.grain` 清单是 Foundry 工作空间的唯一事实来源。它描述了你的项目是什么——语言、包、依赖、规则与部署目标——其余一切都由 Foundry 据此生成。
+
+## 工作空间声明
+
+每份清单都以 `workspace` 块开头。这是文件的根。
+
+```text title="project.grain"
+workspace "my-app" {
+  lang   = "alloy"
+  target = "arcline"
+}
+```
+
+工作空间名必须唯一。它会成为所有生成的包标识符的前缀，也是 Tongs 依赖解析的命名空间。
+
+## 包块
+
+包在工作空间内部声明。每个包拥有一个名称、一种类型以及若干可选指令。
+
+```text title="project.grain — 包"
+workspace "my-app" {
+  lang = "alloy"
+
+  packages {
+    core     { type = "library" }
+    api      { type = "service", depends = ["core"] }
+    web      { type = "app", depends = ["core"] }
+    cli      { type = "binary", depends = ["core"] }
+  }
+}
+```
+
+支持的包类型：
+
+| 类型        | 用途           | 生成内容                          |
+|-----------|--------------|-------------------------------|
+| `library` | 被其他包共用的代码。   | Blueprint、Warden 配置、Alloy 设置。 |
+| `service` | 拥有对外端点的长驻进程。 | library 的全部产物外加 Spoke 配置。     |
+| `app`     | 面向用户的应用程序。   | library 的全部产物外加 Smelter 配置。   |
+| `binary`  | 独立的 CLI 工具。  | library 的全部产物外加入口点。           |
+
+## 依赖表达式
+
+`depends` 指令接受一个由包名组成的数组。Foundry 会据此校验工作空间，并构建 Tongs 依赖图。
+
+```text title="依赖链"
+packages {
+  core     { type = "library" }
+  auth     { type = "library", depends = ["core"] }
+  api      { type = "service", depends = ["core", "auth"] }
+}
+```
+
+:::info
+循环依赖在解析阶段就会被拒绝。如果 `api` 依赖 `auth`，而 `auth` 又依赖 `api`，Foundry 会拒绝锻造，并打印出环的路径。
+:::
+
+## Warden 预设
+
+`warden` 指令控制启用哪些检查规则的预设。你可以以数组形式指定一个或多个预设。
+
+```text title="Warden 预设配置"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+}
+```
+
+预设按顺序堆叠。当规则冲突时，靠后的预设覆盖靠前的。可用的预设：
+
+| 预设            | 规则数量 | 关注点                   |
+|---------------|------|-----------------------|
+| `strict`      | 220  | 类型安全、显式返回类型、禁止隐式 any。 |
+| `conventions` | 95   | 命名、导出、文件结构。           |
+| `formatting`  | 65   | 空白、注释、视觉一致性。          |
+
+## Crucible 配置
+
+`crucible` 指令控制测试脚手架的自动生成。
+
+<Tabs>
+<TabItem value="auto" label="自动" default>
+
+```text title="project.grain — 自动模式"
+workspace "my-app" {
+  crucible = auto
+}
+```
+
+Crucible 会扫描每一个导出的类型签名，并生成带断言模板的测试文件。每次锻造，测试文件都会更新。
+
+</TabItem>
+<TabItem value="manual" label="手动">
+
+```text title="project.grain — 手动模式"
+workspace "my-app" {
+  crucible = manual
+}
+```
+
+Crucible 仅在首次锻造时生成一次测试存根。之后的锻造不会改动现有的测试文件。
+
+</TabItem>
+<TabItem value="off" label="关闭">
+
+```text title="project.grain — 已禁用"
+workspace "my-app" {
+  crucible = off
+}
+```
+
+不生成任何测试脚手架。测试文件完全由你自己管理。
+
+</TabItem>
+</Tabs>
+
+## 部署目标
+
+`target` 指令指定工作空间的部署位置。它决定了 Foundry 生成哪些部署产物。
+
+```text title="project.grain — 部署目标"
+workspace "my-app" {
+  target = "arcline"
+
+  deploy {
+    region   = "us-east-1"
+    replicas = 3
+    scaling  = "auto"
+  }
+}
+```
+
+完整的目标选项与 deploy 块指令，请参见[部署](/docs/reference/deployment/)。
+
+## 清单继承
+
+使用 `extend` 关键字可在多个工作空间之间共享设置。子清单继承父清单的一切，并可以覆盖特定指令。
+
+```text title="base.grain — 共享设置"
+workspace "base" {
+  lang    = "alloy"
+  warden  = ["strict", "conventions"]
+  crucible = auto
+}
+```
+
+```text title="project.grain — 扩展 base"
+extend "base.grain"
+
+workspace "my-app" {
+  target = "arcline"
+
+  packages {
+    core { type = "library" }
+    api  { type = "service", depends = ["core"] }
+  }
+}
+```
+
+子工作空间继承 `lang`、`warden` 与 `crucible`。只有 `target` 和 `packages` 在本地定义。
+
+<Details>
+<summary>完整指令参考</summary>
+
+| 指令         | 类型       | 默认值          | 说明              |
+|------------|----------|--------------|-----------------|
+| `lang`     | `Text`   | `"alloy"`    | 工作空间的主要语言。      |
+| `target`   | `Text`   | `"local"`    | 部署目标平台。         |
+| `warden`   | `[Text]` | `["strict"]` | 要应用的检查规则预设。     |
+| `crucible` | `Enum`   | `auto`       | 测试脚手架的生成模式。     |
+| `smelter`  | `Text`   | `"standard"` | 打包器的配置档。        |
+| `packages` | `Block`  | 必填           | 包声明。            |
+| `deploy`   | `Block`  | 可选           | 部署配置。           |
+| `rules`    | `Block`  | 可选           | Warden 的单条规则覆盖。 |
+| `extend`   | `Text`   | 可选           | 父清单的路径。         |
+
+</Details>
+
+## 下一步
+
+- [工作空间管理](/docs/guides/workspace-management/) — 用 Tongs 管理跨包依赖。
+- [构建流水线](/docs/pipeline/build-pipeline/) — Quench 与 Bellows 如何把清单变成构建产物。
+- [Warden 规则](/docs/pipeline/warden-rules/) — 深入了解检查规则系统。

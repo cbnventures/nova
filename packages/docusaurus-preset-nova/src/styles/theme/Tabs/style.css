@@ -8,6 +8,14 @@
  * Tabs — Tab List
  * ============================ */
 
+/* Per-preset tabs paint the list hairline via `box-shadow: inset 0 -2px 0`
+ * (inside the content box) and the active marker via the tab's
+ * `border-bottom` at the same y. Both paint in the last 2px of the
+ * content box, so the marker overlays the hairline cleanly. Using
+ * `border-bottom` on the list with `margin-bottom: -Npx` on the tab
+ * would push the overlap into the border zone, which gets clipped:
+ * `overflow-x: auto` (needed for horizontal scroll on wide strips)
+ * auto-promotes `overflow-y` to `auto` per the CSS overflow spec. */
 .nova-tabs-list {
   display: flex;
   padding: 0;
@@ -16,7 +24,6 @@
   list-style: none;
 
   overflow-x: auto;
-  overflow-y: hidden;
   scrollbar-width: none;
 }
 
@@ -34,6 +41,13 @@
 
   cursor: pointer;
   user-select: none;
+
+  /* Override the MDXContent rhythm rule's `margin-block: 0.25rem` on the
+   * bottom edge. The tab's `border-bottom` (active marker) must land at
+   * the same y as the list's `box-shadow` hairline (last 2px inside the
+   * list content box). A 4px bottom margin would leave the tab 4px above
+   * the shadow, producing two stacked lines. */
+  margin-block-end: 0;
 }
 
 .nova-tabs-tab:active {

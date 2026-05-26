@@ -1,0 +1,70 @@
+---
+title: "三类新到来的工作，一个队列"
+authors:
+  - "dimitri"
+tags:
+  - "access-tiers"
+  - "support"
+  - "dockets"
+date: "2024-10-08"
+---
+
+新到来的工作不会自我说明。Marshal 在受理时就把它归类——sponsor、contributor、public。这枚标签是钤上去的，不是商量出来的。队列是单一的，标签来做路由。
+
+{/* truncate */}
+
+Sponsor 优先被看到。Contributor 紧随其后。Public 请求会在队列轻闲时被回复。每一次归类决策都立卷到 docket。任何人都可以审计自己的请求是如何分层的。
+
+归类在受理阶段完成，先于任何人类读到该请求。受理事务员从入站元数据中读取请求人身份，在封印过的注册表里查询其访问层级，并把一枚标签写到请求上。标签只写一次。此后，标签会随着请求穿过每一个队列、每一枚钤章、每一次合上。一个在 14:02 被打上 `sponsor` 标签的请求，到它在下一个星期二被封印合上的那一刻，仍然是 `sponsor`。
+
+不存在可以绕过标签的升级路径。一份抱怨紧急性的 public 请求，仍归入 public。一份以致歉开头的 sponsor 请求，仍归入 sponsor。层级就是层级。礼貌不改变它；急躁也不改变它。
+
+层级注册表是封印过、有版本的。要把一个请求人从某一层挪到另一层，必须由具备封印权限的维护者编辑注册表，而这一变更本身也是一条 docket 条目：
+
+```yaml title="policies/access-tiers.yml"
+policy: access-tiers
+version: 4
+sealed: true
+
+tiers:
+  sponsor:
+    sla: 1-business-day
+    queue-priority: 1
+    members-source: sponsors-registry@v12
+
+  contributor:
+    sla: 5-business-days
+    queue-priority: 2
+    members-source: contributors-registry@v8
+
+  public:
+    sla: best-effort
+    queue-priority: 3
+    members-source: "*"
+
+intake:
+  on-receipt:
+    - lookup: tier
+    - stamp: tier-label
+    - record:
+        docket: access
+        seal: required
+        retention: 3-years
+```
+
+`members-source` 字段本身也是一份封印过的注册表，会在赞助开始或结束时更新。一位赞助合同在月初到期的 sponsor，会在次日被重新归类为 contributor。这次重新归类会被立卷。该账户在二号 09:14 之后的下一次请求，会被钤为 `contributor`，无论上一个月内该账户的请求被钤过什么。这枚标签是当下的，不是历史的。
+
+实际运行中，这一切产生的是一个不需要分诊会议的队列。队列的顺序，就是标签所规定的顺序。事务员读取标签并照着做。一个典型上午的受理大致是这样：
+
+```bash
+$ marshal docket query --docket access --since 09:00 --until 12:00
+TIME      REQUESTER       TIER         REPO              STAMP
+09:01:14  acme-co         sponsor      org/relay         RECEIVED
+09:14:22  jdoe            contributor  org/courier       RECEIVED
+09:22:01  mfoo            public       org/relay         RECEIVED
+09:38:47  acme-co         sponsor      org/courier       RECEIVED
+10:11:30  beta-labs       sponsor      org/relay         RECEIVED
+11:02:05  cbar            public       org/relay         RECEIVED
+```
+
+队列是单一的，但并不是平的。标签做的是电话语音树假装在做的工作，而且无需让请求人按按键。请求人的层级就是他们付费、贡献或没有得到的层级。队列也据此排序。审计轨迹是开放的。任何人都可以核实自己的位置。

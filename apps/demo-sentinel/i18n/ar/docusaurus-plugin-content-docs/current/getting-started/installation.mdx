@@ -1,0 +1,120 @@
+---
+title: "التثبيت"
+sidebar_position: 1
+description: "نشر وكيل Sentinel عبر Spark أو حاوية Vial أو سوق Arcline Cloud."
+tags:
+  - "getting started"
+  - "installation"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# التثبيت
+
+يتطلّب Sentinel وكيلاً على كلّ نقطة نهاية تشارك في حلقة تقييم الثقة. يتواصل الوكيل مع مستوى التحكّم في Sentinel عبر أنفاق Filament، ويُبلّغ Watchtower بالوضع الأمني للجهاز.
+
+## المتطلّبات
+
+- **Spark CLI** 2.0 أو أحدث (لطريقة تثبيت Spark)
+- دعم بروتوكول **Filament** على شبكة المضيف (UDP 51820)
+- نسخة من مستوى التحكّم في Sentinel (مُستضافة سحابياً أو مُدارة ذاتياً)
+
+:::warning إصدار بروتوكول Filament
+يتطلّب Sentinel 3.x إصدار بروتوكول Filament 2.0 أو أحدث. لا تدعم تطبيقات Filament الأقدم قناة قياسات الوضع الأمني المُشفّرة التي يستخدمها Garrison للإبلاغ عن صحّة الجهاز. تحقّق من إصدار Filament لديك عبر `filament --version` قبل المتابعة.
+:::
+
+## تثبيت الوكيل
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+```bash title="التثبيت عبر Spark"
+spark install sentinel-agent
+```
+
+يحلّ Spark الملف الثنائي المناسب لنظام تشغيلك وبنيتك. يُثبَّت الوكيل في `~/.spark/bin/sentinel-agent` ويُضاف إلى متغيّر PATH تلقائياً.
+
+```bash title="التحقّق من التثبيت"
+sentinel-agent --version
+```
+
+</TabItem>
+<TabItem value="vial" label="Vial Container">
+
+```bash title="سحب صورة وكيل Sentinel"
+vial pull sentinel/agent:latest
+```
+
+شغّل الوكيل بوصفه حاوية طويلة الأمد:
+
+```bash title="تشغيل حاوية الوكيل"
+vial run -d \
+  --name sentinel-agent \
+  --restart always \
+  --cap-add NET_ADMIN \
+  -v /var/lib/sentinel:/data \
+  sentinel/agent:latest
+```
+
+قدرة `NET_ADMIN` مطلوبة لإدارة أنفاق Filament.
+
+</TabItem>
+<TabItem value="arcline" label="Arcline Marketplace">
+
+```bash title="النشر من سوق Arcline"
+arcline deploy sentinel-agent \
+  --region us-east-1 \
+  --tier standard \
+  --auto-enroll
+```
+
+يتضمّن النشر من سوق Arcline تسجيل Garrison التلقائي وتزويد أنفاق Filament. لا حاجة إلى أي تهيئة إضافية.
+
+</TabItem>
+</Tabs>
+
+## التسجيل في مستوى التحكّم
+
+بعد التثبيت، سجّل الوكيل في مستوى التحكّم في Sentinel:
+
+```bash title="تسجيل الوكيل"
+sentinel-agent register \
+  --control-plane sentinel.yourcompany.internal \
+  --enrollment-token $SENTINEL_ENROLLMENT_TOKEN
+```
+
+يُجري الوكيل فحص وضع أمني أوّلياً أثناء التسجيل. يُسجّل Garrison حالة الجهاز الأساسية، إصدار نظام التشغيل، وحالة تشفير القرص، وتهيئة جدار الحماية، ومستوى الترقيعات المثبّتة.
+
+```text title="مخرجات التسجيل"
+Registering with control plane: sentinel.yourcompany.internal
+  Device ID:       dev_a3b7c9d1e5f2
+  Filament tunnel: established (UDP 51820)
+  Posture baseline: captured
+    OS:             macOS 15.2
+    Encryption:     FileVault enabled (AES-256)
+    Firewall:       active
+    Patch level:    current
+
+Registration complete. Watchtower evaluation begins in 90s.
+```
+
+:::note رموز التسجيل
+رموز التسجيل صالحة لاستخدام واحد فقط، وتنتهي صلاحيّتها بعد 24 ساعة. ولّد رموزاً جديدة من لوحة تحكّم Sentinel أو عبر Spoke API، `sentinel api tokens create --type enrollment --ttl 24h`.
+:::
+
+## ما بعد التثبيت
+
+بعد التسجيل، يعمل الوكيل ذاتياً:
+
+- يفحص **Garrison** الوضع الأمني للجهاز في حلقة مستمرّة، ويُبلّغ مستوى التحكّم.
+- يُقيّم **Watchtower** بيانات الوضع الأمني للوكيل مقابل سياسات الثقة النشطة كلّ 90 ثانية.
+- يمنح **Drawbridge** نفق Filament أو يُلغيه بناءً على نتيجة التقييم.
+
+لا حاجة إلى تدخّل يدوي بعد التسجيل. تنتشر تغييرات السياسة إلى الوكلاء المسجّلين تلقائياً.
+
+## الخطوات التالية
+
+- [سياستك الأولى](/docs/getting-started/your-first-policy/)، اكتب سياسة ثقة واربطها بمورد.
+- [تسجيل الجهاز](/docs/trust/device-enrollment/)، الوضع الأمني الأساسي ومُلفّات الامتثال بالتفصيل.
+- [نظرة عامة](/docs/overview/)، البنية المعمارية ومرجع المكوّنات.

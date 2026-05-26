@@ -1,0 +1,61 @@
+---
+title: "把 cron 任务视为 ledger 条目"
+authors:
+  - "yuki"
+tags:
+  - "scheduled-stewardship"
+  - "dockets"
+date: "2025-07-04"
+---
+
+不写入 ledger 的 cron 任务，等同于没发生过的 cron 任务。Marshal 把每一项计划行为都当作一次立卷——计划本身被封印，运行被钤章，结果被归档。
+
+{/* truncate */}
+
+教训会复利。从不运行的 cron 任务会在下一次季度审计中被注意到。悄无声息地运行又失败的 cron 任务会在下一次季度审计中被注意到。审计会注意到一切。
+
+计划以 policy 的形态被立卷，形态与所有其他 policy 相同。节奏是封印参数；时间窗是封印参数；行为是对另一份封印过的 policy 的引用。因此，cron 任务并不是某台服务器上某处存在的脚本——它是 policy 日志里的一条记录，事务员在每一次通读时读取它，并在节奏到来时执行它。不存在脱离 policy 日志而存在的计划行为。如果维护者需要某件事每周运行一次，维护者就立卷一条 policy。policy 被封印。事务员就会读取它。
+
+一条计划条目大约是这样的：
+
+```yaml title="policies/quarterly-stewardship-rollover.yml"
+policy: quarterly-stewardship-rollover
+version: 1
+sealed: true
+sealed-by: cordelia
+sealed-at: 2025-04-01T09:00:00Z
+
+schedule:
+  cadence: quarterly
+  window: first-day-of-quarter 04:00 UTC
+  next-run-after: 2025-07-01T04:00:00Z
+
+action:
+  invoke: stewardship-rollover@v2
+  with:
+    quarter: previous
+
+record:
+  docket: stewardship
+  on-start: stamp RECEIVED
+  on-success: stamp ARCHIVED
+  on-failure: stamp REJECTED
+  retention: 7-years
+```
+
+`on-start`、`on-success` 与 `on-failure` 字段就是 ledger 契约。每一次运行至少产生两条条目——开始时一条、结束时一条。只产生第一条的运行，是一次没返回的运行，登记员会在次晨汇总中报告它。产生 `REJECTED` 条目的运行是一次失败，而这次失败在记录中无需任何人手动写下。事务员不必记得去记账；policy 替事务员记账。
+
+实际运行中，stewardship docket 每个季度都以小而可预期的速度增长。大多数日子里，条目是例行公事——每日归档遍历、每周留存检查、每月审计核验。每个季度一次，会出现一条较大的条目，标记接续。一位读者在 docket 中滚动时，能看到这个节律：许多小行，然后一行较大的，再然后许多小行。这个图样每个季度都相同。当那条较大的行被封印时，这个季度就过去了。
+
+```bash
+$ marshal stewardship schedule status --policy quarterly-stewardship-rollover
+LAST RUN              STATUS      DURATION   ENTRIES
+2025-04-01 04:00 UTC  ARCHIVED    00:14:22   8,402
+2025-07-01 04:00 UTC  ARCHIVED    00:13:48   8,917
+NEXT RUN              SCHEDULED
+2025-10-01 04:00 UTC  PENDING
+```
+
+`PENDING` 那一行也是一种记录。它不在 docket 中——docket 只包含已经发生过的事——但它在计划中，事务员每一次通读都会读它。一位想知道接下来会发生什么的读者去读计划。一位想知道发生过什么的读者去读 docket。两者从不相互矛盾，因为计划写入 docket，而 docket 不能被其他任何东西写入。
+
+不写入 ledger 的 cron 任务，等同于没发生过的 cron 任务。同理，一条曾写入 ledger、后又从计划中删除的 cron 任务，仍然是一条发生过的 cron 任务——docket 条目仍在，封印核验仍然通过，2031 年的审计员读到它们时，会知道 2025 年 7 月 1 日的接续运行过。计划是面向未来的记录。docket 是面向过去的记录。两者都被保留。两者都被封印。两者都不会被遗忘。

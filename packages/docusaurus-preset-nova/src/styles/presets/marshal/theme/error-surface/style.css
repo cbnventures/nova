@@ -1,0 +1,82 @@
+/**
+ * Marshal - `error-surface` umbrella overlay.
+ *
+ * Ledger-style error surface (404 / per-page crash / top-level boundary).
+ * Display Crimson Text heading, body Inter, sharp-cornered hairline-bordered
+ * retry button with accent hover wash. No shadows - printed-page voice.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Heading
+ * ============================ */
+
+.nova-error-surface h1 {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--nova-marshal-ink);
+}
+
+[data-theme="dark"] .nova-error-surface h1 {
+  color: var(--nova-marshal-ink);
+}
+
+/* ============================
+ * 2. Body Copy
+ * ============================ */
+
+.nova-error-surface p {
+  font-family: var(--nova-font-body);
+  color: var(--nova-marshal-ink-muted);
+}
+
+[data-theme="dark"] .nova-error-surface p {
+  color: var(--nova-marshal-ink-muted);
+}
+
+/* ============================
+ * 3. Retry Button - Sharp Hairline
+ * ============================ */
+
+.nova-error-surface button {
+  font-family: var(--nova-font-body);
+
+  color: var(--nova-marshal-ink);
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+  border-color: var(--nova-marshal-border);
+  border-radius: var(--nova-marshal-radius-sharp);
+
+  transition: background-color var(--nova-marshal-transition),
+              border-color var(--nova-marshal-transition);
+}
+
+[data-theme="dark"] .nova-error-surface button {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 88%);
+  border-color: var(--nova-marshal-border);
+}
+
+.nova-error-surface button:hover,
+.nova-error-surface button:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 90%);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-error-surface button:hover,
+[data-theme="dark"] .nova-error-surface button:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Horizontal Rule
+ * ============================ */
+
+.nova-error-surface hr {
+  border-top-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-error-surface hr {
+  border-top-color: var(--nova-marshal-border);
+}

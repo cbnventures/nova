@@ -1,0 +1,94 @@
+---
+title: "把 3MB 的容器镜像加固为生产可用"
+authors:
+  - "tomas"
+tags:
+  - "vial"
+  - "deployment"
+  - "minimal"
+date: "2025-12-01"
+---
+
+3MB 的容器镜像是个好开端，而一份经过生产加固的 3MB 镜像，又完全是另一回事。小不等于安全；小只是意味着需要审计的内容更少——但审计仍要做。
+
+我们用了两周时间为 Envoy 的 Vial 镜像加固。起因是一次安全审计发现了三处问题——在传统容器里它们都会很显眼，却被"才 3MB 能出什么事"的心态掩盖了。
+
+{/* truncate */}
+
+## 安全审计发现了什么
+
+### 问题 1：可写的根文件系统
+
+Vial 镜像运行在可写的根文件系统上。在带包管理器与 shell 的传统容器里，可写根意味着拿到代码执行的攻击者可以装工具、改二进制、持久化恶意软件。我们的镜像既无包管理器也无 shell——但可写的根，仍允许攻击者覆盖 Envoy 自身的二进制。
+
+### 问题 2：以 root 运行
+
+Envoy 进程以 UID 0 运行。不是因为它需要 root 权限——它并不需要——而是我们从未设置过非 root 用户，理由是"镜像里只有一个二进制"。但在很多运行时配置下，容器内的 UID 0 仍会映射到宿主机的 UID 0。从 root 进程发起的容器逃逸，比非 root 进程的逃逸危险得多。
+
+### 问题 3：没有资源限制
+
+Vial 镜像没有默认的内存或 CPU 限制。3MB 的镜像让人以为运行时资源占用必然很小，但镜像大小与运行时资源占用毫无关系。一个 3MB 的二进制照样可以在处理大载荷或慢慢泄漏内存时分配数 GB。
+
+## 加固清单
+
+我们对 Vial 镜像应用了 12 项改动。值得记录的有这些：
+
+```text title="Vial 镜像加固 — 已应用改动"
+ 1. Read-only root filesystem (--read-only)
+ 2. Non-root user (UID 10001, GID 10001)
+ 3. No new privileges (--security-opt=no-new-privileges)
+ 4. Drop all capabilities (--cap-drop=ALL)
+ 5. Memory limit: 512MB (--memory=512m)
+ 6. CPU limit: 1.0 core (--cpus=1.0)
+ 7. Temp directory: tmpfs mount at /tmp (64MB max)
+ 8. Health check: built-in HTTP endpoint, 10s interval
+ 9. Signal handling: SIGTERM triggers graceful drain
+10. No SUID/SGID binaries (verified at build time)
+11. Minimal /etc: only resolv.conf and nsswitch.conf
+12. Reproducible build: identical binary from identical source
+```
+
+只读的根文件系统只要求我们改了一处代码：Courier 原本把 Ledger 的写入放在容器的工作目录中，现在改为写入 `/tmp` 上挂载的 tmpfs；tmpfs 上限 64MB，足以承载两次刷盘之间的预写日志。
+
+## 加固前后对比
+
+| 安全属性               | 加固前         | 加固后              |
+|--------------------|-------------|------------------|
+| 根文件系统              | 可写          | 只读               |
+| 进程用户               | root（UID 0） | envoy（UID 10001） |
+| Linux capabilities | 全部          | 无                |
+| SUID/SGID 二进制      | 0（碰巧没有）     | 0（按策略保证）         |
+| 内存限制               | 无           | 512MB            |
+| CPU 限制             | 无           | 1.0 核            |
+| 临时存储               | 容器层         | tmpfs（64MB）      |
+| 新增特权               | 允许          | 阻止               |
+
+## 可复现构建
+
+第 12 项值得单开一节。可复现构建意味着同一份源码在任何机器上编译都会产出字节相同的二进制。这一点很重要——它让任何人都能验证 Vial 镜像里的二进制确实对应已发布的源码。
+
+实现方式：固定 Alloy 编译器版本，剥离全部调试符号与构建路径，并把构建时间戳设为该次 git 提交的时间戳而非当前时间。二进制的 SHA-256 会随每个发布一同公布。
+
+```text title="可复现构建验证"
+$ sha256sum envoy
+a3f1c9d8e7b2... envoy
+
+$ curl -s https://releases.envoy.dev/v0.48.0/sha256
+a3f1c9d8e7b2... envoy
+
+# 一致。这个二进制就是我们发布的那个。
+```
+
+哈希若不一致，就说明二进制被篡改过。无需信任，自己就能验证。
+
+## 代价
+
+加固后镜像总大小：3.1MB。多出的 100KB 来自 `/etc/passwd` 里非 root 用户的条目，以及 `/etc/nsswitch.conf` 增加的内容。冷启动时间保持不变，仍在 200 毫秒以内。
+
+100KB 与零延迟换来更高的安全水位。任何容器镜像，不论大小，都没理由不做这件事。
+
+## 教训
+
+小容器不是安全容器，小容器是可审计的容器——这更好，但前提是你真的去审计。"它太小了，不会有风险"的每一个假设，都是攻击者会去检验的假设。
+
+把它加固，把它锁死，把它的构建可验证。3MB 的镜像是一个特性，加固过的 3MB 镜像才是产品。

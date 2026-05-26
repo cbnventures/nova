@@ -15,6 +15,7 @@ import type {
   ThemeCodeBlockCodeBlockCopiedState,
   ThemeCodeBlockCodeBlockCopyAriaLabel,
   ThemeCodeBlockCodeBlockCopyLabel,
+  ThemeCodeBlockCodeBlockHandleCopyTextarea,
   ThemeCodeBlockCodeBlockIsPreHighlighted,
   ThemeCodeBlockCodeBlockLineCount,
   ThemeCodeBlockCodeBlockPlainText,
@@ -166,7 +167,30 @@ function CodeBlock(props: ThemeCodeBlockCodeBlockProps) {
    * @since 0.15.0
    */
   function handleCopy() {
-    void navigator.clipboard.writeText(plainText);
+    /*
+     * navigator.clipboard is a secure-context-only API. Browsers expose it
+     * only on HTTPS or on localhost/127.0.0.1, so it is undefined on plain
+     * HTTP over a LAN IP (common during cross-device dev testing). When
+     * missing, fall back to a hidden-textarea + execCommand('copy') path
+     * that works in any context. The fallback is deprecated but universally
+     * supported, and we only reach it when the modern API is unavailable.
+     */
+    if (navigator.clipboard !== undefined && navigator.clipboard.writeText !== undefined) {
+      void navigator.clipboard.writeText(plainText);
+    } else {
+      const textarea: ThemeCodeBlockCodeBlockHandleCopyTextarea = document.createElement('textarea');
+
+      textarea.value = plainText;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.appendChild(textarea);
+
+      textarea.select();
+
+      document.execCommand('copy');
+
+      document.body.removeChild(textarea);
+    }
 
     setCopied(true);
 
@@ -207,7 +231,7 @@ function CodeBlock(props: ThemeCodeBlockCodeBlockProps) {
     return undefined;
   }
 
-  // Path A — Live editor.
+  // Path A - Live editor.
   if (props['live'] === true && props['language'] !== undefined) {
     return (
       <Suspense
@@ -225,11 +249,12 @@ function CodeBlock(props: ThemeCodeBlockCodeBlockProps) {
     );
   }
 
-  // Path B — Pre-highlighted (from rehype plugin).
+  // Path B - Pre-highlighted (from rehype plugin).
   if (isPreHighlighted === true) {
     return (
       <div
-        className="nova-code-block"
+        className={(props['className'] !== undefined) ? `nova-code-block ${props['className']}` : 'nova-code-block'}
+        style={props['style']}
         data-word-wrap={wordWrap}
         data-collapsed={collapsed}
         data-line-numbers={(props['showLineNumbers'] === true) ? 'true' : undefined}
@@ -278,10 +303,11 @@ function CodeBlock(props: ThemeCodeBlockCodeBlockProps) {
     );
   }
 
-  // Path C — Raw text (dynamic code).
+  // Path C - Raw text (dynamic code).
   return (
     <div
-      className="nova-code-block"
+      className={(props['className'] !== undefined) ? `nova-code-block ${props['className']}` : 'nova-code-block'}
+      style={props['style']}
       data-word-wrap={wordWrap}
       data-collapsed={collapsed}
       data-line-numbers={(props['showLineNumbers'] === true) ? 'true' : undefined}

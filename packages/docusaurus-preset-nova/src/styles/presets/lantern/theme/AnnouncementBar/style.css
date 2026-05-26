@@ -1,0 +1,96 @@
+/**
+ * Lantern - `AnnouncementBar` theme overlay.
+ *
+ * Warm cream strip with a slim amber bottom hairline and a small caps mono
+ * label, kept low-contrast so it whispers above the navbar instead of
+ * dominating it.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - warm cream wash
+ * ============================
+ */
+
+.nova-announcement-bar {
+  padding: 0.5rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--nova-color-primary-800);
+  text-align: center;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-bottom: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+}
+
+[data-theme="dark"] .nova-announcement-bar {
+  color: var(--nova-color-primary-200);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 84%);
+  border-bottom-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
+}
+
+/**
+ * ============================
+ * 2. Inline links - amber underline
+ * ============================
+ */
+
+.nova-announcement-bar a {
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.nova-announcement-bar a:hover,
+.nova-announcement-bar a:focus-visible {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-announcement-bar a {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-announcement-bar a:hover,
+[data-theme="dark"] .nova-announcement-bar a:focus-visible {
+  color: var(--nova-color-primary-200);
+}
+
+/**
+ * ============================
+ * 3. Close button - quiet warm icon
+ * ============================
+ */
+
+.nova-announcement-bar-close {
+  padding: 0.25rem;
+
+  color: var(--nova-color-primary-800);
+
+  opacity: 0.65;
+
+  transition: color var(--nova-motion-duration) ease, opacity var(--nova-motion-duration) ease;
+}
+
+.nova-announcement-bar-close:hover,
+.nova-announcement-bar-close:focus-visible {
+  color: var(--nova-color-primary-600);
+
+  opacity: 1;
+}
+
+[data-theme="dark"] .nova-announcement-bar-close {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-announcement-bar-close:hover,
+[data-theme="dark"] .nova-announcement-bar-close:focus-visible {
+  color: var(--nova-color-primary-200);
+}

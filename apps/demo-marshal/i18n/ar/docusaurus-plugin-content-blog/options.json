@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "المدونة",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "نشرات الإدارة — سياسات مُودَعة، لوائح مختومة، ورعاية مُدوَّنة في السجل.",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "المقالات الأخيرة",
+    "description": "The label for the left sidebar"
+  }
+}

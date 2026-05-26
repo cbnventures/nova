@@ -1,0 +1,132 @@
+---
+title: "النطاقات المُوسَمة"
+sidebar_position: 1
+description: "شغّل كل رابط Beacon على نطاقك الخاص. نطاقات مخصصة، وتزويد شهادات Ironclad، وتوجيه متعدد النطاقات، تُدار عبر واجهة الأوامر."
+tags:
+  - "beacons"
+  - "domains"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# النطاقات المُوسَمة
+
+شغّل كل رابط Beacon على نطاقك الخاص. نطاقات مخصصة، وتزويد شهادات Ironclad، وتوجيه متعدد النطاقات، تُدار جميعها عبر واجهة الأوامر أو Spoke API.
+
+## لماذا النطاقات المُوسَمة
+
+تُخفي خدمات الروابط القصيرة العامة علامتك خلف نطاق طرف آخر. أما روابط Beacon على نطاق موسوم فهي مألوفة وموثوقة وتحقق معدلات نقر أعلى:
+
+```
+https://go.yourcompany.com/launch     (موسوم، نطاقك، ثقتك)
+https://sho.rt/x9k2mP7                (عام، لمن هذا الرابط؟)
+```
+
+كل رابط Beacon على نطاق موسوم لا يزال يحمل بيانات إسناد كاملة. النطاق نطاقك، والذكاء ذكاء Signal.
+
+## إعداد DNS
+
+<Tabs>
+<TabItem value="single" label="نطاق واحد" default>
+
+وجِّه نطاقك الفرعي الموسوم إلى حافة Signal بسجل CNAME:
+
+| النوع | الاسم                | الهدف                     | الوكيل |
+|-------|----------------------|---------------------------|--------|
+| CNAME | `go.yourcompany.com` | `edge.signal.example.dev` | نعم    |
+
+ثم سجّل النطاق لدى Signal:
+
+```bash title="تسجيل نطاق موسوم"
+signal beacon domain add --domain "go.yourcompany.com"
+```
+
+يتحقق Signal من تحليل DNS ويزود شهادة Ironclad تلقائياً.
+
+</TabItem>
+<TabItem value="multi" label="نطاقات متعددة">
+
+قدّم نطاقات موسومة متعددة من حساب Signal واحد. سجّل كلاً منها:
+
+```bash title="تسجيل نطاقات متعددة"
+signal beacon domain add --domain "go.yourcompany.com"
+signal beacon domain add --domain "links.brand.io"
+signal beacon domain add --domain "l.campaign.dev"
+```
+
+يعمل كل نطاق كمساحة أسماء معزولة. رابط Beacon أُنشئ على `go.yourcompany.com` لا يمكن الوصول إليه إلا عبر `go.yourcompany.com`.
+
+| النطاق               | حالة الاستخدام         | الحالة       |
+|----------------------|------------------------|--------------|
+| `go.yourcompany.com` | روابط العلامة الأساسية | نشط          |
+| `links.brand.io`     | حملات الشركاء          | نشط          |
+| `l.campaign.dev`     | اختبار داخلي           | قيد الانتظار |
+
+</TabItem>
+<TabItem value="wildcard" label="رمز شامل">
+
+للمؤسسات ذات الفرق الكثيرة، استخدم نطاقاً فرعياً شاملاً:
+
+| النوع | الاسم                  | الهدف                     |
+|-------|------------------------|---------------------------|
+| CNAME | `*.go.yourcompany.com` | `edge.signal.example.dev` |
+
+ثم اقصر روابط Beacon على نطاقات فرق فرعية:
+
+```bash
+signal beacon create --domain "marketing.go.yourcompany.com" --url "https://example.com"
+signal beacon create --domain "eng.go.yourcompany.com" --url "https://example.com"
+```
+
+</TabItem>
+</Tabs>
+
+## تزويد شهادات Ironclad
+
+يزود Signal شهادات Ironclad TLS تلقائياً لكل نطاق مسجّل. لا إدارة يدوية للشهادات. وتُجدَّد الشهادات تلقائياً قبل 30 يوماً من انتهائها.
+
+```bash title="التحقق من حالة الشهادة"
+signal beacon domain status --domain "go.yourcompany.com"
+```
+
+```json title="حالة النطاق"
+{
+  "domain": "go.yourcompany.com",
+  "status": "active",
+  "certificate": {
+    "issuer": "Ironclad",
+    "validFrom": "2025-01-15T00:00:00Z",
+    "validUntil": "2025-04-15T23:59:59Z",
+    "autoRenew": true
+  },
+  "redirectLatency": "2ms"
+}
+```
+
+:::warning
+قد تستغرق تغييرات DNS حتى 48 ساعة لتنتشر عالمياً. خلال الانتشار، قد ترى بعض المناطق أخطاء شهادات. يُعيد Signal محاولة تزويد Ironclad كل 15 دقيقة حتى يُحلَّ DNS بشكل نظيف عبر جميع المناطق الأكثر من 180.
+:::
+
+## إعدادات افتراضية لكل نطاق
+
+اضبط إعدادات افتراضية لكل نطاق لسلوك إعادة التوجيه وعناوين URL الاحتياطية:
+
+```bash title="ضبط إعدادات النطاق"
+signal beacon domain config \
+  --domain "go.yourcompany.com" \
+  --redirect-code 301 \
+  --fallback-url "https://yourcompany.com" \
+  --slug-prefix "q1-"
+```
+
+| الإعداد         | النوع | الوصف                                         |
+|-----------------|-------|-----------------------------------------------|
+| `redirect-code` | رقم   | كود حالة HTTP لإعادة التوجيه (301 أو 302).    |
+| `fallback-url`  | نص    | وجهة للمعرّفات غير المُحلَّلة على هذا النطاق. |
+| `slug-prefix`   | نص    | إضافة بادئة تلقائية لجميع المعرّفات الجديدة.  |
+
+## الخطوات التالية
+
+- [إسناد النقرات](/docs/attribution/click-attribution/) — تتبع كيف تسهم الروابط الموسومة في التحويلات.
+- [إدارة الحملات](/docs/campaigns/campaign-management/) — نظّم روابط Beacon في حملات.

@@ -1,0 +1,10 @@
+{
+  "label": "Integrations",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Wiring Sentinel into the rest of the stack — Cipher IdP integration (Okta, Azure AD, Google Workspace, generic OIDC/SAML) and EDR ingestion (CrowdStrike, Defender, JAMF) into Watchtower with Drawbridge enforcement."
+  }
+}

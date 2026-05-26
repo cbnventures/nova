@@ -77,6 +77,42 @@ export type TestsLibRehypeShikiDiffIncludesAdd = boolean;
 
 export type TestsLibRehypeShikiDiffIncludesRemove = boolean;
 
+export type TestsLibRehypeShikiMetadataTree = SharedHastNode;
+
+export type TestsLibRehypeShikiMetadataTransformer = (tree: SharedHastNode) => Promise<void>;
+
+export type TestsLibRehypeShikiMetadataOutputNode = SharedHastNode | undefined;
+
+export type TestsLibRehypeShikiMetadataOutputJson = string;
+
+export type TestsLibRehypeShikiMetadataIncludesTitle = boolean;
+
+export type TestsLibRehypeShikiMetadataIncludesLanguage = boolean;
+
+export type TestsLibRehypeShikiMetadataIncludesShowLineNumbers = boolean;
+
+export type TestsLibRehypeShikiMetadataIncludesLive = boolean;
+
+export type TestsLibRehypeShikiMetadataIncludesMetastring = boolean;
+
+export type TestsLibRehypeShikiAddRemoveCode = string;
+
+export type TestsLibRehypeShikiAddRemoveTree = SharedHastNode;
+
+export type TestsLibRehypeShikiAddRemoveTransformer = (tree: SharedHastNode) => Promise<void>;
+
+export type TestsLibRehypeShikiAddRemoveOutputNode = SharedHastNode | undefined;
+
+export type TestsLibRehypeShikiAddRemoveOutputJson = string;
+
+export type TestsLibRehypeShikiAddRemoveIncludesAdd = boolean;
+
+export type TestsLibRehypeShikiAddRemoveIncludesRemove = boolean;
+
+export type TestsLibRehypeShikiAddRemoveExcludesAddMarker = boolean;
+
+export type TestsLibRehypeShikiAddRemoveExcludesRemoveMarker = boolean;
+
 export type TestsLibRehypeShikiMarkerTree = SharedHastNode;
 
 export type TestsLibRehypeShikiMarkerTransformer = (tree: SharedHastNode) => Promise<void>;

@@ -1,0 +1,216 @@
+---
+title: "CLI 参考"
+sidebar_position: 2
+description: "六条核心命令——每个子工具一条——再加上锻造与部署工作空间的顶层命令。"
+tags:
+  - "参考"
+  - "CLI"
+---
+
+import Details from '@theme/Details';
+
+# CLI 参考
+
+Foundry CLI 提供六条核心命令——每个子工具对应一条——以及若干用于锻造和部署工作空间的顶层命令。
+
+## 用法
+
+```bash
+foundry <command> [options]
+```
+
+## 顶层命令
+
+| 命令                 | 说明                    |
+|--------------------|-----------------------|
+| `foundry ignite`   | 根据 `.grain` 清单锻造工作空间。 |
+| `foundry deploy`   | 把包交付到部署目标。            |
+| `foundry tongs`    | 解析并可视化依赖图。            |
+| `foundry quench`   | 管理增量构建缓存。             |
+| `foundry bellows`  | 跨工作空间包并行运行任务。         |
+| `foundry crucible` | 生成并运行测试脚手架。           |
+| `foundry slag`     | 检测死代码与未使用的依赖。         |
+| `foundry warden`   | 运行检查引擎。               |
+
+## foundry ignite
+
+读取 `.grain` 清单，并生成所有工作空间产物——目录结构、配置文件、Warden 规则与 Crucible 测试脚手架。
+
+```bash title="锻造工作空间"
+foundry ignite
+```
+
+| 参数              | 说明                  |
+|-----------------|---------------------|
+| `--dry-run`     | 不写入文件，仅预览输出。        |
+| `--incremental` | 仅重新生成输入变更过的包。       |
+| `--ci`          | 输出适合流水线集成的结构化 JSON。 |
+| `--verbose`     | 为每一项操作打印详细日志。       |
+
+```text title="示例输出"
+$ foundry ignite --verbose
+[00:00.000] 正在加载清单：project.grain
+[00:00.012] 已解析工作空间 "my-app"（3 个包，2 条边）
+[00:00.018] 正在锻造 core (library)
+[00:00.052] 正在锻造 api (service)
+[00:00.091] 正在锻造 web (app)
+[00:03.800] 用时 3.8 秒
+```
+
+## foundry tongs
+
+从清单解析依赖图，并提供查询和可视化工具。
+
+```bash
+foundry tongs <subcommand>
+```
+
+| 子命令                               | 说明                 |
+|-----------------------------------|--------------------|
+| `tongs graph`                     | 打印依赖图。             |
+| `tongs graph --format mermaid`    | 将依赖图输出为 Mermaid 图。 |
+| `tongs verify`                    | 检查环与缺失的引用。         |
+| `tongs query --depends-on <pkg>`  | 列出依赖某个包的所有包。       |
+| `tongs query --build-order <pkg>` | 打印某个包的构建顺序。        |
+
+## foundry quench
+
+管理内容寻址的构建缓存。
+
+```bash
+foundry quench <subcommand>
+```
+
+| 子命令                            | 说明                |
+|--------------------------------|-------------------|
+| `quench status`                | 显示所有包的缓存命中/未命中状态。 |
+| `quench prune --older-than 7d` | 删除早于给定时长的缓存条目。    |
+| `quench clear`                 | 清空整个缓存。           |
+| `quench stats`                 | 打印缓存大小、条目数与命中率。   |
+
+## foundry bellows
+
+跨工作空间包并行运行任务，并遵循 Tongs 依赖图。
+
+```bash
+foundry bellows <task> [options]
+```
+
+| 参数                  | 说明               |
+|---------------------|------------------|
+| `--only <pkg>`      | 仅为单个包及其依赖运行任务。   |
+| `--concurrency <n>` | 覆盖并行 worker 的数量。 |
+| `--verbose`         | 按包打印用时与状态。       |
+
+```text title="示例：并行构建"
+$ foundry bellows build --verbose
+  第 1 波：core (1.2 秒)
+  第 2 波：auth、cli、docs (并行，2.1 秒)
+  第 3 波：api、web (并行，1.8 秒)
+  合计：5.1 秒
+```
+
+## foundry crucible
+
+从类型签名生成测试脚手架，并运行测试。
+
+```bash
+foundry crucible <subcommand>
+```
+
+| 子命令                               | 说明               |
+|-----------------------------------|------------------|
+| `crucible run`                    | 运行所有生成与手写的测试。    |
+| `crucible watch`                  | 监视变更并重新运行受影响的测试。 |
+| `crucible run --update-snapshots` | 更新所有快照文件。        |
+| `crucible run --only <pkg>`       | 仅运行某个包的测试。       |
+
+## foundry slag
+
+扫描工作空间，查找死代码、未使用的导出与孤立依赖。
+
+```bash
+foundry slag <subcommand>
+```
+
+| 子命令           | 说明                          |
+|---------------|-----------------------------|
+| `slag scan`   | 扫描工作空间并报告未被使用的代码。           |
+| `slag clean`  | 移除已检测到的死代码（需要 `--confirm`）。 |
+| `slag report` | 生成关于未使用导出与依赖的 JSON 报告。      |
+
+## foundry warden
+
+在工作空间上运行检查引擎。
+
+```bash
+foundry warden <subcommand>
+```
+
+| 子命令                         | 说明              |
+|-----------------------------|-----------------|
+| `warden check`              | 运行所有规则并报告违规。    |
+| `warden fix`                | 自动修复所有可修复的违规。   |
+| `warden check --only <pkg>` | 只检查单个包。         |
+| `warden list`               | 列出已启用的规则及其严重级别。 |
+
+## foundry deploy
+
+把工作空间内的包交付到部署目标。
+
+```bash
+foundry deploy --target <target> [options]
+```
+
+| 参数                 | 说明                                 |
+|--------------------|------------------------------------|
+| `--target`         | 部署目标：`arcline`、`vial` 或 `trellis`。 |
+| `--confirm`        | 生产环境部署必填。                          |
+| `--rollback <ver>` | 回滚到指定版本。                           |
+| `--verbose`        | 打印详细的部署日志。                         |
+
+## 交互模式
+
+Foundry 内置一个用于探索与发现的交互式 CLI 模式。启动方式：
+
+```bash
+foundry interactive
+```
+
+交互模式下的快捷键：
+
+- <kbd>Ctrl</kbd> + <kbd>F</kbd> — 搜索命令。
+- <kbd>Ctrl</kbd> + <kbd>G</kbd> — 查看依赖图。
+- <kbd>Ctrl</kbd> + <kbd>R</kbd> — 重新运行上一条命令。
+- <kbd>Tab</kbd> — 自动补全命令名与参数。
+- <kbd>Ctrl</kbd> + <kbd>C</kbd> — 退出交互模式。
+
+<Details>
+<summary>所有命令的完整参数参考</summary>
+
+| 命令         | 参数                   | 类型        | 默认值     | 说明            |
+|------------|----------------------|-----------|---------|---------------|
+| `ignite`   | `--dry-run`          | `Boolean` | `false` | 不写入即预览。       |
+| `ignite`   | `--incremental`      | `Boolean` | `false` | 仅重建变更过的包。     |
+| `ignite`   | `--ci`               | `Boolean` | `false` | 输出结构化 JSON。   |
+| `ignite`   | `--verbose`          | `Boolean` | `false` | 详细日志。         |
+| `deploy`   | `--target`           | `Text`    | 必填      | 部署目标。         |
+| `deploy`   | `--confirm`          | `Boolean` | `false` | 确认生产部署。       |
+| `deploy`   | `--rollback`         | `Text`    | 可选      | 要回滚到的版本。      |
+| `bellows`  | `--only`             | `Text`    | 可选      | 单包作用域。        |
+| `bellows`  | `--concurrency`      | `Numeric` | 自动      | 并行 worker 数量。 |
+| `crucible` | `--update-snapshots` | `Boolean` | `false` | 覆盖快照文件。       |
+| `crucible` | `--only`             | `Text`    | 可选      | 单包作用域。        |
+| `slag`     | `--confirm`          | `Boolean` | `false` | 允许破坏性清理。      |
+| `warden`   | `--only`             | `Text`    | 可选      | 单包作用域。        |
+
+</Details>
+
+## 全局选项
+
+所有命令都支持下列参数：
+
+| 参数          | 说明                  |
+|-------------|---------------------|
+| `--help`    | 显示任一命令的帮助文本。        |
+| `--version` | 打印 Foundry CLI 版本号。 |

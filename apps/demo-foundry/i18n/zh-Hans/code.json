@@ -1,0 +1,638 @@
+{
+  "home.appMarket.label": {
+    "message": "随时随地管理你的锻炉",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.description": {
+    "message": "理念、基准测试，以及我们交付过的观点。",
+    "description": "Front page BlogPreview section description"
+  },
+  "home.blogPreview.heading": {
+    "message": "来自锻炉的快讯",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.features.anvil.description": {
+    "message": "核心 CLI。读取单一 Blueprint 清单，锻造你的整个工作区——目录结构、依赖图、构建配置以及 lint 规则。一份文件输入，一整套环境输出。",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.anvil.title": {
+    "message": "Anvil",
+    "description": "Front page Features card title for Anvil"
+  },
+  "home.features.bellows.description": {
+    "message": "并行任务运行器，将工作同时扇出到每个工作区包。遵循来自 Tongs 的依赖图，确保任何任务都不会在其前置依赖完成前启动。",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.bellows.title": {
+    "message": "Bellows",
+    "description": "Front page Features card title for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "测试脚手架生成器，读取你的类型签名并为你写好测试骨架。快照测试、断言模板与 fixture 文件——全部由你已经写好的类型派生而来。",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.crucible.title": {
+    "message": "Crucible",
+    "description": "Front page Features card title for Crucible"
+  },
+  "home.features.quench.description": {
+    "message": "增量构建缓存，追踪文件哈希，只重建真正发生变化的部分。冷锻造耗时 14 秒，热锻造不到两秒。",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.quench.title": {
+    "message": "Quench",
+    "description": "Front page Features card title for Quench"
+  },
+  "home.features.slag.description": {
+    "message": "无用代码与未使用依赖探测器。扫描每一个 import、每一个 export，以及 Blueprint 中的每一条目，找出不再被引用的部分。除去渣滓，留下精钢。",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.features.slag.title": {
+    "message": "Slag",
+    "description": "Front page Features card title for Slag"
+  },
+  "home.features.tongs.description": {
+    "message": "依赖图解析器与可视化工具。映射工作区每个包之间的关系，并渲染完整的依赖树，让你在改动之前清楚谁依赖谁。",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.tongs.title": {
+    "message": "Tongs",
+    "description": "Front page Features card title for Tongs"
+  },
+  "home.head.title": {
+    "message": "Foundry - 每件工具都始于原始金属",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.ctaLabel": {
+    "message": "开始使用",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.eyebrow": {
+    "message": "开发者工具链",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "每件工具都始于原始金属。",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "在 Threadbare 查看",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.hero.tagline": {
+    "message": "Foundry 读取你的意图，并从单一清单中锻造出整个开发环境。停止配置，开始描述。",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.layout.description": {
+    "message": "Foundry 读取你的意图，并从单一清单中锻造出整个开发环境。",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.spotlight.description": {
+    "message": "描述你的意图，Foundry 会把剩下的事情搞定。",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.spotlight.heading": {
+    "message": "一份清单，万物互联",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.stats.coldForge.label": {
+    "message": "冷锻造耗时",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.configFiles.label": {
+    "message": "配置文件",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.heading": {
+    "message": "数字一览",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manifest.label": {
+    "message": "清单文件",
+    "description": "Front page Stats label for manifest count"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "Warden 规则",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "在 iOS 上可用",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "下载配套应用",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "在 Android 上可用",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "近期更新",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Crucible 现在会在每次锻造时自动重新生成测试脚手架，Slag 则可以跨整个工作区图探测未使用的依赖。",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4：Crucible 自动模式与 Slag 探测",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "理念、基准测试，以及我们交付过的观点。",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "来自锻炉的快讯",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "配置漂移是工作区的隐形杀手。我们打造 Foundry，是因为相信意图应当以声明式表达。",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "我们为何不再写配置文件",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "Quench 缓存与 Bellows 并行如何把一次十二分钟的构建变成十四秒的锻造。",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "在 14 秒内锻造一个包含 200 个包的 Monorepo",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "我们写了 380 条 lint 规则，又丢掉了 60 条。这是最终留下来的部分，以及那些差点让团队分裂的争论。",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "我们差点没能上线的 Warden 规则",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.description": {
+    "message": "Foundry 预设的每一个组件，使用示例数据渲染。",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "核心 CLI。读取 Blueprint 清单，锻造你的工作区——目录结构、依赖图、构建配置以及 lint 规则。",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.anvil.title": {
+    "message": "Anvil",
+    "description": "Showcase Features (with icons) card title for Anvil"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "团队为何选择 Foundry",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "增量构建缓存，追踪文件哈希，只重建发生变化的部分。冷锻造耗时 14 秒，热锻造不到两秒。",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.featuresIcons.quench.title": {
+    "message": "Quench",
+    "description": "Showcase Features (with icons) card title for Quench"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "依赖图解析器与可视化工具。映射包之间的每一种关系，并渲染完整的依赖树。",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.tongs.title": {
+    "message": "Tongs",
+    "description": "Showcase Features (with icons) card title for Tongs"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "并行任务运行器，将工作同时扇出到每个工作区包。遵循 Tongs 的依赖图。",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.bellows.title": {
+    "message": "Bellows",
+    "description": "Showcase Features (no icons) card title for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "测试脚手架生成器，读取你的类型签名并写出测试骨架。包含快照测试与断言模板。",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.crucible.title": {
+    "message": "Crucible",
+    "description": "Showcase Features (no icons) card title for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "无用代码与未使用依赖探测器。扫描每一个 import 与 export，找出不再被引用的部分。",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.featuresNoIcons.slag.title": {
+    "message": "Slag",
+    "description": "Showcase Features (no icons) card title for Slag"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "读取你的清单并生成工作区所需的每一份配置产物。一份文件输入，所有产物输出。",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.anvil.title": {
+    "message": "Anvil",
+    "description": "Showcase Features (six items) card title for Anvil"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "根据依赖图分批调度构建任务。彼此独立的包并行构建。",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.bellows.title": {
+    "message": "Bellows",
+    "description": "Showcase Features (six items) card title for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "从类型签名生成测试脚手架。快照测试、断言模板与 fixture 文件。",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.crucible.title": {
+    "message": "Crucible",
+    "description": "Showcase Features (six items) card title for Crucible"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "一座锻炉，囊括一切",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "基于内容寻址的构建缓存。如果输入没有变化，构建会被完全跳过。",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.quench.title": {
+    "message": "Quench",
+    "description": "Showcase Features (six items) card title for Quench"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "找出无用代码与孤立依赖。除去渣滓，留下精钢。",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.featuresSix.slag.title": {
+    "message": "Slag",
+    "description": "Showcase Features (six items) card title for Slag"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "解析依赖图，检测循环依赖，并为脚本与流水线集成提供查询工具。",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.tongs.title": {
+    "message": "Tongs",
+    "description": "Showcase Features (six items) card title for Tongs"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "阅读文档",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "组件展示",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Foundry 的每个组件，集中在一处演示。",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "在 Threadbare 查看",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "本页使用 Foundry 世界中的示例数据，渲染 @cbnventures/docusaurus-preset-nova/blocks 中的每个组件，便于你观察它们的外观与行为。",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "开始使用",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "塑造可交付的成果。",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Foundry 读取你的意图，并从单一清单中锻造出整个开发环境。停止配置，开始描述。",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "或者使用 Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "使用 Spark 安装",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripText.label": {
+    "message": "快速安装",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload（仅 App Store）",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload（两家商店）",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload（仅 Google Play）",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload（无标签）",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview（无描述）",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview（带描述）",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features（带图标）",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features（无图标、无标题）",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features（六项，图标混合）",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero（完整版）",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero（最简版）",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip（copyTarget: block）",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip（copyTarget: icon）",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip（无标签）",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip（copyTarget: text）",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight（带代码）",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight（带文字）",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats（带标题与描述）",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats（无标题）",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology（行内用法）",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter（默认）",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter（不循环）",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter（无前缀）",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter（慢速）",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.layout.description": {
+    "message": "Foundry 组件展示，演示来自 docusaurus-preset-nova 的每一个组件。",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "三条命令，从零到一个完整锻造好的工作区。",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "快速开始",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Foundry 读取你的清单，借助 Tongs 解析依赖图，并以确定性方式生成每一份配置产物。相同的输入始终产生相同的输出——没有副作用，没有隐藏状态。",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "工作原理",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "缓存命中率",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "冷锻造耗时",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.description": {
+    "message": "在一个包含 200 个包的工作区中的关键性能指标。",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.heading": {
+    "message": "锻造指标",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "Warden 规则",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "热锻造耗时",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "配置文件",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "清单文件",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "已测最大包数",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "子工具",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "Alloy 设置",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "编译器配置",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.forge.label": {
+    "message": "锻造",
+    "description": "Showcase Terminology displayed text for forge"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "配置生成过程",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "lint 规则",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "静态分析规则",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.manifest.label": {
+    "message": "清单",
+    "description": "Showcase Terminology displayed text for manifest"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "工作区配置文件",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": "过程进行管理，使每一份产物都保持同步。当你需要验证代码质量时，",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": "来驱动所有代码生成与配置工作。每个工作区包都由",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": " 引擎无需额外配置即可运行每一条规则。",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Foundry 使用一份",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": "，无需重复维护配置文件。",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": "与",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": "，各团队便能共享一份单一可信源来管理",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "有了",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "预设系统",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "规则集合预设",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "静态分析引擎",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "我喜欢 ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "欢迎来到 ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "快速",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "灵活",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "免费",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "设计师",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "开发者",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "为 ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "该作者尚未撰写任何文章。",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "查看所有作者",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.post.plurals": {
+    "message": "{count} 篇博文",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} 含有标签「{tagName}」",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "跳到主要内容",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.footer.copyright": {
+    "message": "版权所有 © 2025-2026 CBN Ventures LLC。保留所有权利。",
+    "description": "Footer copyright text, localized per-locale via i18n code.json"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "标签",
+    "description": "The title of the tag list page"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Foundry 品牌缩略图。",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "品牌标识印于 Frame 内 — 锐利边框,等宽字体标题。",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame(无标题)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame(带标题)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  }
+}

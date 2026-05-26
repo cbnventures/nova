@@ -1,6 +1,6 @@
 import type { BlogMetadata, BlogSidebar, PropBlogPostContent } from '@docusaurus/plugin-content-blog';
 import type { BlogPostContextValue } from '@docusaurus/plugin-content-blog/client';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Blog Post Page - Blog Post Page.
@@ -13,10 +13,16 @@ export type ThemeBlogPostPageBlogPostPagePropsContent = PropBlogPostContent;
 
 export type ThemeBlogPostPageBlogPostPagePropsBlogMetadata = BlogMetadata;
 
+export type ThemeBlogPostPageBlogPostPagePropsClassName = string | undefined;
+
+export type ThemeBlogPostPageBlogPostPagePropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogPostPageBlogPostPageProps = {
   sidebar: ThemeBlogPostPageBlogPostPagePropsSidebar;
   content: ThemeBlogPostPageBlogPostPagePropsContent;
   blogMetadata: ThemeBlogPostPageBlogPostPagePropsBlogMetadata;
+  className?: ThemeBlogPostPageBlogPostPagePropsClassName;
+  style?: ThemeBlogPostPageBlogPostPagePropsStyle;
   [key: string]: unknown;
 };
 
@@ -31,9 +37,15 @@ export type ThemeBlogPostPageBlogPostPageContentPropsChildren = ReactNode;
 
 export type ThemeBlogPostPageBlogPostPageContentPropsSidebar = BlogSidebar;
 
+export type ThemeBlogPostPageBlogPostPageContentPropsClassName = string | undefined;
+
+export type ThemeBlogPostPageBlogPostPageContentPropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogPostPageBlogPostPageContentProps = {
   sidebar: ThemeBlogPostPageBlogPostPageContentPropsSidebar;
   children: ThemeBlogPostPageBlogPostPageContentPropsChildren;
+  className?: ThemeBlogPostPageBlogPostPageContentPropsClassName;
+  style?: ThemeBlogPostPageBlogPostPageContentPropsStyle;
   [key: string]: unknown;
 };
 
@@ -70,10 +82,6 @@ export type ThemeBlogPostPageBlogPostPageContentTocMinHeadingLevel = number | un
 export type ThemeBlogPostPageBlogPostPageContentTocMaxHeadingLevel = number | undefined;
 
 export type ThemeBlogPostPageBlogPostPageContentTocSpread = Record<string, unknown>;
-
-export type ThemeBlogPostPageBlogPostPageContentMetadataSpread = Record<string, unknown>;
-
-export type ThemeBlogPostPageBlogPostPageContentMetadataImage = string | undefined;
 
 export type ThemeBlogPostPageBlogPostPageContentCanRenderToc = boolean;
 

@@ -1,0 +1,138 @@
+---
+title: "身份认证"
+sidebar_position: 3
+description: "Cipher 的校验模式，包括 HMAC-SHA256 签名、Bearer 令牌、IP 白名单与令牌轮换。"
+tags:
+  - "core"
+  - "authentication"
+---
+
+# 身份认证
+
+Cipher 是 Envoy 的身份认证网关。每一条进入的请求都要先经过 Cipher，才能抵达 Parcel 或 Dispatch。如果 Cipher 拒绝请求，流水线随之停止——什么都不转换、什么都不路由、什么都不投递。
+
+## 校验模式
+
+Cipher 支持三种校验模式。它们可以单独使用，也可以组合使用。
+
+### HMAC-SHA256 签名
+
+webhook 来源最常用的模式。发送方计算 `HMAC-SHA256(shared_secret, request_body)`，将结果置入请求头；Cipher 在收到请求后重新计算并比对。
+
+```text title="relay.grain — HMAC 校验"
+relay "threadbare-pushes" {
+  source = "threadbare"
+  // highlight-next-line
+  cipher = "hmac-sha256"
+
+  cipher_config {
+    header = "X-Threadbare-Signature-256"
+    secret = "${THREADBARE_WEBHOOK_SECRET}"
+  }
+
+  destination = "canary://ci-builds"
+}
+```
+
+Cipher 读取 `X-Threadbare-Signature-256` 头，用共享密钥计算期望的哈希值，若不匹配则拒绝请求。比较是常量时间的，以防止时序攻击。
+
+### Bearer 令牌
+
+适用于在 `Authorization` 头中发送静态令牌的自定义集成。
+
+```text title="relay.grain — Bearer 令牌"
+relay "custom-integration" {
+  source = "generic"
+  // highlight-next-line
+  cipher = "bearer"
+
+  cipher_config {
+    token = "${CUSTOM_RELAY_TOKEN}"
+  }
+
+  destination = "canary://custom-events"
+}
+```
+
+### IP 白名单
+
+将中继访问限制在特定 IP 地址或 CIDR 段。可作为 HMAC 或 Bearer 之外的第二层保护。
+
+```text title="relay.grain — IP 白名单"
+relay "internal-only" {
+  source = "spoke"
+  // highlight-next-line
+  cipher = "ip-allowlist"
+
+  cipher_config {
+    addresses = [
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16"
+    ]
+  }
+
+  destination = "canary://internal-events"
+}
+```
+
+:::warning
+在源端 IP 频繁变化的动态环境中（如 Serverless 平台、自动伸缩组、Trellis Pod 重排），IP 白名单是脆弱的。请以 HMAC 或 Bearer 令牌作为主要校验，IP 白名单仅作辅助检查。
+:::
+
+## 组合模式
+
+当同一条中继配置了多种 Cipher 模式时，**任一模式**通过即视为请求通过。这样不同类型的来源可以共存于同一端点。
+
+```text title="relay.grain — 组合模式"
+relay "multi-source" {
+  source = "generic"
+
+  cipher_config {
+    modes = [
+      { type = "hmac-sha256", header = "X-Signature", secret = "${HMAC_SECRET}" },
+      { type = "bearer", token = "${BEARER_TOKEN}" },
+      { type = "ip-allowlist", addresses = ["10.0.0.0/8"] }
+    ]
+  }
+
+  destination = "canary://all-events"
+}
+```
+
+## 令牌轮换
+
+Cipher 支持零停机令牌轮换。声明一个主密钥与一个备用密钥，Envoy 会在轮换窗口期内同时校验两者。
+
+```text title="relay.grain — 令牌轮换"
+cipher_config {
+  secret          = "${NEW_WEBHOOK_SECRET}"
+  // highlight-next-line
+  previous_secret = "${OLD_WEBHOOK_SECRET}"
+  rotation_window = "24h"
+}
+```
+
+在轮换窗口内，Cipher 接受用任一密钥签名的请求；窗口过期后，只有主密钥继续有效。Ledger 会记录每条请求使用的是哪一个密钥，便于在移除旧密钥前确认所有来源都已迁移完毕。
+
+:::danger 关闭认证运行
+为方便开发与测试，Envoy 允许 `cipher = "none"`。绝不要在生产环境部署没有认证的中继。未认证的中继端点等同于敞开的大门——网络上任何系统都能向你的目的地注入任意消息。
+:::
+
+## Cipher 日志
+
+每一次认证决策都会被记录到 Ledger：
+
+```text title="Cipher 日志条目"
+[cipher] threadbare-pushes  HMAC-SHA256 valid   (source: 203.0.113.42)
+[cipher] custom-integration  Bearer valid        (source: 10.0.1.15)
+[cipher] unknown-source      REJECTED — no matching mode (source: 198.51.100.7)
+```
+
+失败的认证尝试会附上来源 IP、尝试的模式与拒绝原因。这些数据可通过 Spoke API 查询，用于安全审计。
+
+## 下一步
+
+- [集成](/docs/advanced/integrations/) — 各内置集成的 Cipher 配置方式。
+- [架构](/docs/advanced/architecture/) — Cipher 在完整请求生命周期中的位置。
+- [API 参考](/docs/reference/api-reference/) — Cipher 状态与审计端点。

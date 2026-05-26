@@ -1,0 +1,20 @@
+---
+title: "Unlisted Sample"
+sidebar_position: 998
+unlisted: true
+description: "Cheat sheet for slow analytics-dashboard queries."
+tags:
+  - "unlisted"
+  - "internal"
+  - "analytics"
+---
+
+# Unlisted Sample
+
+Cheat sheet for when the analytics dashboard starts taking more than four seconds to load. The top three offenders, in order of frequency:
+
+- A join against the events table without a date partition predicate (always specify `dt_event` — the partitioning is by day).
+- A `SELECT *` against the user-attribute table when only two columns are needed (the table has eighty-seven columns, most of them sparse).
+- An unnecessary `DISTINCT` in the funnel query (the events table has natural deduplication via the `dedupe_key` column).
+
+Fixing any one of these usually takes the dashboard from four seconds to under one. The other ten percent of slow queries are something else.

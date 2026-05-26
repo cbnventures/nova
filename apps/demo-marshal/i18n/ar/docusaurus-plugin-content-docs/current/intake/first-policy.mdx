@@ -1,0 +1,49 @@
+---
+title: "سياستك الأولى"
+sidebar_position: 2
+description: "اكتب سياسة مختومة، أودِعها، وراقب اللائحة وهي تمتلئ. أوّل إيداع في ثلاث خطوات."
+tags:
+  - "setup"
+  - "tutorial"
+---
+
+# سياستك الأولى
+
+السياسة الأولى هي وثيقة مختومة وحيدة عن فئة وحيدة من الأحداث. ابدأ صغيرًا، أودِع مرّة واحدة، وراقب اللائحة وهي تمتلئ.
+
+## الخطوة 1: اكتب السياسة
+
+```yaml title="policies/stale-threads.yml"
+policy: thread-archival
+applies_to: ["issues", "pull-requests"]
+condition:
+  inactive_days: 365
+action: seal
+notice: "Archived after a year of silence. Reopen by request."
+```
+
+## الخطوة 2: أودِعها
+
+```bash
+marshal file policies/stale-threads.yml
+```
+
+يَختم Marshal السياسة برقم إيداع ويُضيفها إلى اللائحة.
+
+## الخطوة 3: راقب الختم
+
+```bash
+marshal docket tail
+```
+
+في المرّة التالية التي يتجاوز فيها مسار خامل العتبة، يَختمه Marshal. كلّ إجراء سطر في دفتر القيد العام.
+
+## ماذا حدث للتوّ
+
+أودَعت سياسة، وراقبت الختم، وقرأت اللائحة. كلّ ما يلي إجراءات ورقيّة — لكنّ Marshal يتولّى الإجراءات الورقيّة.
+
+## الخطوات التالية
+
+- [السياسات](/docs/filings/policies/) — أنواع السياسات المُدمَجة وأنماط الإيداع.
+- [اللوائح](/docs/dockets/overview/) — كيف تقرأ السجل العام.
+- [الرعاية المجدولة](/docs/stewardship/scheduled-stewardship/) — تشغيل التنظيف على cron.

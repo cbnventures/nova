@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "الإصدار الحالي",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "دليل البدء",
+    "description": "The label for category 'Getting Started' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Beacons": {
+    "message": "Beacon",
+    "description": "The label for category 'Beacons' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Attribution": {
+    "message": "الإسناد",
+    "description": "The label for category 'Attribution' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Campaigns": {
+    "message": "الحملات",
+    "description": "The label for category 'Campaigns' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "المرجع",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  }
+}

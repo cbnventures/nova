@@ -25,7 +25,10 @@ function DocRootLayout(props: ThemeDocRootLayoutDocRootLayoutProps) {
 
   if (sidebar !== null && sidebar !== undefined) {
     return (
-      <div className="nova-doc-root">
+      <div
+        className={(props['className'] !== undefined) ? `nova-doc-root ${props['className']}` : 'nova-doc-root'}
+        style={props['style']}
+      >
         <div className="nova-container nova-grid">
           <DocRootLayoutSidebar
             sidebar={sidebar['items']}
@@ -41,7 +44,10 @@ function DocRootLayout(props: ThemeDocRootLayoutDocRootLayoutProps) {
   }
 
   return (
-    <div className="nova-doc-root">
+    <div
+      className={(props['className'] !== undefined) ? `nova-doc-root ${props['className']}` : 'nova-doc-root'}
+      style={props['style']}
+    >
       <div className="nova-container">
         <DocRootLayoutMain hiddenSidebarContainer={false}>
           {props['children']}

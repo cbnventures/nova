@@ -1,5 +1,6 @@
 import { PageMetadata } from '@docusaurus/theme-common';
 import BlogLayout from '@theme/BlogLayout';
+import BlogListPageStructuredData from '@theme/BlogListPage/StructuredData';
 import BlogListPaginator from '@theme/BlogListPaginator';
 import BlogPostItems from '@theme/BlogPostItems';
 
@@ -25,8 +26,14 @@ function BlogListPage(props: ThemeBlogListPageBlogListPageProps) {
   const title: ThemeBlogListPageBlogListPageTitle = props['metadata']['blogTitle'];
 
   return (
-    <BlogLayout sidebar={props['sidebar']}>
+    <BlogLayout
+      sidebar={props['sidebar']}
+      showHeader
+      className={(props['className'] !== undefined) ? `nova-blog-list-page ${props['className']}` : 'nova-blog-list-page'}
+      style={props['style']}
+    >
       <PageMetadata title={title} />
+      <BlogListPageStructuredData sidebar={props['sidebar']} metadata={props['metadata']} items={props['items']} />
       <BlogPostItems items={props['items']} />
       <BlogListPaginator metadata={props['metadata']} />
     </BlogLayout>

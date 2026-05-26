@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Content Visibility - Content Visibility.
  *
@@ -19,8 +21,14 @@ export type ThemeContentVisibilityContentVisibilityPropsMetadata = {
   frontMatter: ThemeContentVisibilityContentVisibilityPropsMetadataFrontMatter;
 };
 
+export type ThemeContentVisibilityContentVisibilityPropsClassName = string | undefined;
+
+export type ThemeContentVisibilityContentVisibilityPropsStyle = CSSProperties | undefined;
+
 export type ThemeContentVisibilityContentVisibilityProps = {
   metadata: ThemeContentVisibilityContentVisibilityPropsMetadata;
+  className?: ThemeContentVisibilityContentVisibilityPropsClassName;
+  style?: ThemeContentVisibilityContentVisibilityPropsStyle;
 };
 
 export type ThemeContentVisibilityContentVisibilityUnlisted = boolean;

@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "الإصدار الحالي",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "البدء السريع",
+    "description": "The label for category 'Getting Started' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Zones": {
+    "message": "المناطق",
+    "description": "The label for category 'Zones' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Events": {
+    "message": "الأحداث",
+    "description": "The label for category 'Events' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Modes": {
+    "message": "الأوضاع",
+    "description": "The label for category 'Modes' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "المرجع",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  }
+}

@@ -1,89 +1,94 @@
 /**
- * Signal — Blog List Paginator visual styling.
+ * Signal - Blog List Paginator visual styling.
  *
- * Solid inverted style — dark fill in light mode, primary swap on hover.
+ * Terminal-style uppercase mono links - flat surface with a primary tint
+ * on hover. Strip left-aligned to read as a terminal command row. Active
+ * page is the filled primary slab (signal's loud "current" signal).
  *
  * @since 0.15.0
  */
 
-/* Nav links — solid inverted slab. */
+/* Container - left-aligned terminal-style row. */
+.nova-blog-list-paginator {
+  justify-content: flex-start;
+}
+
+/* Nav links - flat with primary tint on hover. */
 .nova-blog-list-paginator-nav {
   font-family: var(--nova-font-code);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-primary-600);
 
-  background: var(--nova-color-neutral-900);
   border-radius: var(--nova-shape-radius);
 
-  transition: color 100ms ease,
-    background 100ms ease;
+  transition: color var(--nova-motion-duration) ease,
+    background var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-blog-list-paginator-nav {
-  color: var(--nova-color-neutral-900);
-
-  background: var(--nova-color-neutral-50);
+  color: var(--nova-color-primary-100);
 }
 
 .nova-blog-list-paginator-nav:hover,
 .nova-blog-list-paginator-nav:focus-visible {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-primary-700);
 
-  background: var(--nova-color-primary-600);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
 }
 
 [data-theme="dark"] .nova-blog-list-paginator-nav:hover,
 [data-theme="dark"] .nova-blog-list-paginator-nav:focus-visible {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-primary-100);
 
-  background: var(--nova-color-primary-500);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
 }
 
-/* Page links — solid inverted slab. */
+/* Page links - flat with primary tint on hover. */
 .nova-blog-list-paginator-page {
   font-family: var(--nova-font-code);
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-primary-600);
 
-  background: var(--nova-color-neutral-900);
   border-radius: var(--nova-shape-radius);
 
-  transition: color 100ms ease,
-    background 100ms ease;
+  transition: color var(--nova-motion-duration) ease,
+    background var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-blog-list-paginator-page {
-  color: var(--nova-color-neutral-900);
-
-  background: var(--nova-color-neutral-50);
+  color: var(--nova-color-primary-100);
 }
 
-.nova-blog-list-paginator-page:hover,
-.nova-blog-list-paginator-page:focus-visible {
-  color: var(--nova-color-neutral-50);
+.nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):hover,
+.nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):focus-visible {
+  color: var(--nova-color-primary-700);
 
-  background: var(--nova-color-primary-600);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
 }
 
-[data-theme="dark"] .nova-blog-list-paginator-page:hover,
-[data-theme="dark"] .nova-blog-list-paginator-page:focus-visible {
-  color: var(--nova-color-neutral-50);
+[data-theme="dark"] .nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):hover,
+[data-theme="dark"] .nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):focus-visible {
+  color: var(--nova-color-primary-100);
 
-  background: var(--nova-color-primary-500);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
 }
 
-/* Active page — primary filled slab. */
+/* Active page - primary filled slab. */
 .nova-blog-list-paginator-page-active {
   font-family: var(--nova-font-code);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
 
   background: var(--nova-color-primary-600);
   border-radius: var(--nova-shape-radius);
@@ -92,18 +97,12 @@
 }
 
 [data-theme="dark"] .nova-blog-list-paginator-page-active {
-  color: var(--nova-color-neutral-50);
-
-  background: var(--nova-color-primary-500);
+  background: var(--nova-color-primary-700);
 }
 
-/* Ellipsis — muted, code font. */
+/* Ellipsis - muted, code font. */
 .nova-blog-list-paginator-ellipsis {
   font-family: var(--nova-font-code);
   font-size: 0.75rem;
-  color: var(--nova-color-neutral-400);
-}
-
-[data-theme="dark"] .nova-blog-list-paginator-ellipsis {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
 }

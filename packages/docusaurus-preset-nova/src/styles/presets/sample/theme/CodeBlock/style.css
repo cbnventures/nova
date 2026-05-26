@@ -1,0 +1,57 @@
+/**
+ * Sample - `CodeBlock` theme component overlay scaffold.
+ *
+ * @internal Reference template only. The shared structural CSS for this
+ *           Docusaurus theme component lives at:
+ *           theme/CodeBlock/style.css
+ *
+ * Section headers below establish the canonical layout each preset adopts.
+ * Fill bodies with identity-specific rules - see preset.css for tokens and
+ * conventions.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================ */
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/CodeBlock
+ * ============================ */
+
+/* ============================
+ * 1. Container
+ * ============================ */
+
+/* ============================
+ * 2. Title bar
+ * ============================ */
+
+/* ============================
+ * 3. Language label
+ * ============================ */
+
+/* ============================
+ * 4. Pre / shiki
+ * ============================ */
+
+/* ============================
+ * 5. Toolbar
+ * ============================ */
+
+/* ============================
+ * 6. Copy button
+ * ============================ */
+
+/* ============================
+ * 7. Wrap button
+ * ============================ */
+
+/* ============================
+ * 8. Expand button
+ * ============================ */
+
+/* ============================
+ * 9. Animations
+ * ============================ */

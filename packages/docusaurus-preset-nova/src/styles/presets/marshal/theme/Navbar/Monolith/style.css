@@ -1,0 +1,237 @@
+/**
+ * Marshal - `Navbar/Monolith` theme overlay.
+ *
+ * Sticky aged-paper bar with the Plex Serif brand wordmark centered and
+ * only the hamburger + color-mode toggle floated right. No inline navigation;
+ * all menu items live in the mobile overlay.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container - sticky aged paper
+ * ============================ */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+
+  padding-block: 0.5rem;
+
+  background-color: var(--nova-marshal-bg);
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+.nova-navbar-monolith {
+  position: relative;
+}
+
+/* ============================
+ * 2. Brand wordmark - Plex Serif weighty
+ * ============================ */
+
+.nova-navbar-monolith-brand {
+  display: flex;
+  align-items: center;
+}
+
+.nova-navbar-monolith-brand a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+
+  transition: color var(--nova-marshal-transition);
+}
+
+.nova-navbar-monolith-brand a:hover,
+.nova-navbar-monolith-brand a:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-monolith-brand a:hover,
+[data-theme="dark"] .nova-navbar-monolith-brand a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+.nova-navbar-monolith-brand img {
+  height: 1.5rem;
+  width: auto;
+}
+
+/* ============================
+ * 3. Hamburger toggle
+ * ============================ */
+
+.nova-navbar-monolith .nova-hamburger-toggle {
+  color: var(--nova-marshal-ink);
+  background-color: var(--nova-marshal-bg);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-navbar-monolith .nova-hamburger-toggle:hover,
+.nova-navbar-monolith .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-monolith .nova-hamburger-toggle:hover,
+[data-theme="dark"] .nova-navbar-monolith .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Color mode toggle
+ * ============================ */
+
+.nova-navbar-monolith .nova-color-mode-toggle {
+  color: var(--nova-marshal-ink);
+  background-color: var(--nova-marshal-bg);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-navbar-monolith .nova-color-mode-toggle:hover,
+.nova-navbar-monolith .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-monolith .nova-color-mode-toggle:hover,
+[data-theme="dark"] .nova-navbar-monolith .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 5. Mobile menu overlay
+ * ============================ */
+
+.nova-navbar-monolith-menu-overlay {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  background-color: color-mix(in srgb, #000000, transparent 40%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-overlay {
+  background-color: color-mix(in srgb, #000000, transparent 30%);
+}
+
+/* ============================
+ * 6. Mobile menu panel
+ * ============================ */
+
+.nova-navbar-monolith-menu-panel {
+  background-color: var(--nova-marshal-bg);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+}
+
+/* ============================
+ * 7. Mobile menu close
+ * ============================ */
+
+.nova-navbar-monolith-menu-close {
+  color: var(--nova-marshal-ink);
+  background-color: var(--nova-marshal-bg);
+  border-color: var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-navbar-monolith-menu-close:hover,
+.nova-navbar-monolith-menu-close:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-close:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-close:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 8. Mobile menu items - mono uppercase carved labels
+ * ============================ */
+
+.nova-navbar-monolith-menu-item {
+  gap: 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink);
+  border-radius: 2px;
+
+  transition: color var(--nova-marshal-transition);
+}
+
+.nova-navbar-monolith-menu-item:hover,
+.nova-navbar-monolith-menu-item:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-item:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+.nova-navbar-monolith-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  box-shadow: inset 2px 0 0 0 var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+  box-shadow: inset 2px 0 0 0 var(--nova-color-primary-400);
+}
+
+.nova-navbar-monolith-menu-panel .nova-navbar-monolith-menu-items a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-panel .nova-navbar-monolith-menu-items a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Mobile Menu - Unison Reveal
+ *
+ * Reuses preset-level `marshal-fade-in`. Marshal declares
+ * `motion.staggeredReveals: false` so items reveal together.
+ * ============================ */
+
+.nova-navbar-monolith-menu-item {
+  opacity: 0;
+
+  animation: marshal-fade-in var(--nova-marshal-transition) forwards;
+}

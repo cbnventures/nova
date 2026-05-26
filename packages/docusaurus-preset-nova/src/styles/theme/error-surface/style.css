@@ -1,0 +1,141 @@
+/**
+ * Error Surface - Shared structural styles.
+ *
+ * Layout-only baseline for the umbrella scope shared by 404 / per-page-crash
+ * / top-level-error surfaces. Each surface composes this scope with its own
+ * per-surface scope (see theme/NotFound/Content/index.tsx, theme/Error/index.tsx,
+ * theme/ErrorPageContent/index.tsx). Presets paint identity in their per-preset
+ * overlay at presets/<preset>/theme/error-surface/style.css.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * Error Surface - Container
+ * ============================
+ */
+
+.nova-error-surface {
+  padding-block: 4rem 5rem;
+}
+
+/**
+ * ============================
+ * Error Surface - Heading
+ * ============================
+ */
+
+.nova-error-surface h1 {
+  margin: 0 0 1rem;
+}
+
+/**
+ * ============================
+ * Error Surface - Paragraphs
+ * ============================
+ */
+
+.nova-error-surface p {
+  margin-block: 0 1rem;
+
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.nova-error-surface p:last-child {
+  margin-bottom: 0;
+}
+
+/**
+ * ============================
+ * Error Surface - Retry Button
+ * ============================
+ */
+
+.nova-error-surface button {
+  padding: 0.5rem 1rem;
+
+  /* 16px prevents iOS Safari auto-zoom on focus. */
+  font-size: 1rem;
+
+  cursor: pointer;
+  border: 1px solid var(--nova-color-border);
+  border-radius: var(--nova-shape-radius);
+  background: transparent;
+  color: inherit;
+
+  transition: border-color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+.nova-error-surface button:hover {
+  border-color: var(--nova-color-primary-400);
+  background-color: var(--nova-color-surface-raised);
+}
+
+.nova-error-surface button:focus-visible {
+  outline: 2px solid var(--nova-color-primary-500);
+  outline-offset: 2px;
+}
+
+/**
+ * ============================
+ * Error Surface - Horizontal Rule
+ * ============================
+ */
+
+.nova-error-surface hr {
+  margin-block: 2rem;
+
+  border: 0;
+  border-top: 1px solid var(--nova-color-border);
+}
+
+/**
+ * ============================
+ * Not Found - Actions row + Primary CTA
+ * ============================
+ */
+
+.nova-not-found-actions {
+  margin-top: 1.5rem;
+}
+
+.nova-not-found-back-home {
+  display: inline-flex;
+  align-items: center;
+
+  padding: 0.625rem 1.25rem;
+
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+
+  color: var(--nova-color-background);
+  background-color: var(--nova-color-primary-500);
+  border-radius: var(--nova-shape-radius);
+
+  transition: background-color var(--nova-motion-duration) ease,
+              transform var(--nova-motion-duration) ease;
+}
+
+.nova-not-found-back-home:hover,
+.nova-not-found-back-home:focus-visible {
+  background-color: var(--nova-color-primary-600);
+  text-decoration: none;
+  color: var(--nova-color-background);
+}
+
+/**
+ * Dark-mode color override - required because each preset.css declares a
+ * `[data-theme="dark"] a` rule (specificity 0,1,1) that would otherwise
+ * clobber the bare class rule (specificity 0,1,0) and turn the CTA text
+ * into a primary-300 tint that blends into the primary-500 button fill.
+ * Specificity 0,2,0 wins.
+ */
+[data-theme="dark"] .nova-not-found-back-home,
+[data-theme="dark"] .nova-not-found-back-home:hover,
+[data-theme="dark"] .nova-not-found-back-home:focus-visible {
+  color: var(--nova-color-background);
+}

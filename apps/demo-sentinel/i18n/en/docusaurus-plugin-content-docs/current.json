@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "Current",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "Getting Started",
+    "description": "The label for category 'Getting Started' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Trust": {
+    "message": "Trust",
+    "description": "The label for category 'Trust' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Operations": {
+    "message": "Operations",
+    "description": "The label for category 'Operations' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Integrations": {
+    "message": "Integrations",
+    "description": "The label for category 'Integrations' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "Reference",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  }
+}

@@ -1,6 +1,6 @@
 /**
  * ============================
- * Launchpad — CTA Block
+ * Launchpad - CTA Block
  * ============================
  */
 
@@ -12,7 +12,7 @@
 
 /**
  * ============================
- * Launchpad — Link Columns
+ * Launchpad - Link Columns
  * ============================
  */
 
@@ -30,7 +30,7 @@
 
 /**
  * ============================
- * Launchpad — Social Links
+ * Launchpad - Social Links
  * ============================
  */
 
@@ -39,4 +39,36 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
+}
+
+/**
+ * ============================
+ * CTA + Footer Adjacency
+ *
+ * When CTA precedes footer, the CTA owns the visual spacing.
+ * Nullify footer's top margin so they sit adjacent.
+ * ============================
+ */
+
+.nova-footer-launchpad-cta-wrap + .nova-footer-launchpad {
+  margin-top: 0;
+}
+
+/**
+ * ============================
+ * CTA Block
+ *
+ * Applies whether <aside> (text-only CTA) or <a> (linked CTA).
+ * ============================
+ */
+
+.nova-footer-launchpad-cta {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nova-footer-launchpad-cta:hover,
+.nova-footer-launchpad-cta:focus-visible {
+  text-decoration: none;
 }

@@ -1,0 +1,20 @@
+---
+title: "未列出样例"
+sidebar_position: 998
+unlisted: true
+description: "当中继开始拒绝消息时，供值班排查使用的快速参考。"
+tags:
+  - "unlisted"
+  - "internal"
+  - "on-call"
+---
+
+# 未列出样例
+
+当中继开始拒绝消息时，供值班排查使用的快速参考。
+
+第一步检查 cipher 健康端点 `/internal/cipher/healthz`——如果上游密钥已轮换，答案就是"失败即拒绝"，你会看到带有 retry-after 头的 HTTP 503 响应。
+
+第二步检查 parcel 队列深度：如果在三十秒窗口内攀升超过 4k 条，问题在下游而非上游，仪表盘 `routes/queues` 会显示是哪一条目标通道在拖累。
+
+第三步——这一步我们总是忘——检查来源方的幂等键是否轮换得足够快；本季度我们已经因为某来源的密钥缓存 TTL 漂移而出过两次事故。

@@ -1,0 +1,53 @@
+/**
+ * Sentinel - `DocVersionBanner` theme overlay.
+ *
+ * Console advisory panel - gradient teal background with a 4px accent top
+ * rail (status-indicator line). Plex Display label with a glowing LED dot
+ * prefix that reads as a calm system notice - not an alarm.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Version banner - console advisory panel
+ * ============================
+ */
+
+.nova-version-banner {
+  padding: 0.625rem 1rem;
+
+  font-family: var(--nova-font-display);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  color: var(--nova-color-accent-800);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+
+  background-image: linear-gradient(180deg, var(--nova-color-accent-100), var(--nova-color-accent-50));
+  border-top: 4px solid var(--nova-color-accent-500);
+}
+
+.nova-version-banner p {
+  margin: 0;
+}
+
+.nova-version-banner p::before {
+  content: "● ";
+
+  color: var(--nova-color-accent-500);
+  text-shadow: 0 0 6px color-mix(in srgb, var(--nova-color-accent-500), transparent 50%);
+}
+
+[data-theme="dark"] .nova-version-banner {
+  color: var(--nova-color-accent-200);
+
+  background-image: linear-gradient(180deg, var(--nova-color-accent-800), var(--nova-color-accent-900));
+  border-top-color: var(--nova-color-accent-400);
+}
+
+[data-theme="dark"] .nova-version-banner p::before {
+  color: var(--nova-color-accent-400);
+  text-shadow: 0 0 8px color-mix(in srgb, var(--nova-color-accent-400), transparent 40%);
+}

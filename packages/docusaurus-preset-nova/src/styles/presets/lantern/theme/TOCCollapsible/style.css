@@ -1,0 +1,147 @@
+/**
+ * Lantern - `TOCCollapsible` theme overlay.
+ *
+ * The mobile-top sticky TOC drawer. Trigger is a warm cream pill that
+ * warms to amber on hover; the drawer panel is a hand-thrown paper card
+ * with italic Fraunces title.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Trigger - warm cream pill
+ * ============================
+ */
+
+.nova-toc-collapsible-trigger {
+  color: var(--nova-lantern-ink);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 8px;
+
+  transition: color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-collapsible-trigger:hover,
+.nova-toc-collapsible-trigger:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-trigger:hover,
+[data-theme="dark"] .nova-toc-collapsible-trigger:focus-visible {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 84%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/**
+ * ============================
+ * 2. Overlay - backdrop blur
+ * ============================
+ */
+
+.nova-toc-collapsible-overlay {
+  align-items: center;
+
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/**
+ * ============================
+ * 3. Panel - warm paper card with hand-thrown corners
+ * ============================
+ */
+
+.nova-toc-collapsible-panel {
+  width: calc(100% - 2rem);
+  max-width: 360px;
+  height: auto;
+  max-height: calc(100dvh - 2rem);
+
+  background-color: var(--nova-lantern-bg);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 14px 4px 14px 4px;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--nova-color-primary-700), transparent 80%);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-panel {
+  border-color: var(--nova-lantern-border);
+  box-shadow: 0 12px 32px color-mix(in srgb, color-mix(in srgb, var(--nova-color-background), #000000 8%), transparent 50%);
+}
+
+/**
+ * ============================
+ * 4. Header title - italic Fraunces
+ * ============================
+ */
+
+.nova-toc-collapsible-header-title {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--nova-lantern-ink);
+}
+
+/**
+ * ============================
+ * 5. Close button - muted, amber on hover
+ * ============================
+ */
+
+.nova-toc-collapsible-close {
+  color: var(--nova-lantern-ink-muted);
+
+  border-radius: 6px;
+
+  transition: color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-toc-collapsible-close:hover,
+.nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-close:hover,
+[data-theme="dark"] .nova-toc-collapsible-close:focus-visible {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+/**
+ * ============================
+ * 6. Drawer TOC links - slight padding bump
+ * ============================
+ */
+
+.nova-toc-collapsible-content .nova-toc-link {
+  padding: 0.25rem 0.5rem;
+
+  border-radius: 6px;
+}
+
+.nova-toc-collapsible-content .nova-toc-link:hover,
+.nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link:hover,
+[data-theme="dark"] .nova-toc-collapsible-content .nova-toc-link:focus-visible {
+  color: var(--nova-color-primary-300);
+}

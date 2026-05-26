@@ -1,0 +1,10 @@
+{
+  "label": "Filings",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Marshal 如何处理请求——为陈旧议题、逾期 PR、按等级的支持配置封存策略，并在收到时将每个传入请求分类为赞助者、贡献者或公众。"
+  }
+}

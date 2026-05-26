@@ -8,6 +8,7 @@ import {
 } from '../../lib/mermaid.js';
 
 import type {
+  ThemeMermaidContentClassName,
   ThemeMermaidContentContainerRef,
   ThemeMermaidContentProps,
   ThemeMermaidContentRenderResult,
@@ -54,10 +55,13 @@ function MermaidContent(props: ThemeMermaidContentProps): ThemeMermaidContentRet
     return null;
   }
 
+  const className: ThemeMermaidContentClassName = (props['className'] !== undefined) ? `${MERMAID_CONTAINER_CLASS_NAME} ${props['className']}` : MERMAID_CONTAINER_CLASS_NAME;
+
   return (
     <div
       ref={containerRef}
-      className={MERMAID_CONTAINER_CLASS_NAME}
+      className={className}
+      style={props['style']}
       dangerouslySetInnerHTML={{ __html: renderResult['svg'] }}
     />
   );
@@ -118,7 +122,12 @@ function Mermaid(props: ThemeMermaidMermaidProps): ThemeMermaidMermaidReturns {
         />
       )}
     >
-      <MermaidContent key={colorMode} value={props['value']} />
+      <MermaidContent
+        key={colorMode}
+        value={props['value']}
+        className={props['className']}
+        style={props['style']}
+      />
     </ErrorBoundary>
   );
 }

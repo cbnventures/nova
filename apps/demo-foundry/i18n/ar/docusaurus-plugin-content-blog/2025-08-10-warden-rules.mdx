@@ -1,0 +1,174 @@
+---
+title: "قواعد Warden التي كدنا لا نشحنها"
+authors:
+  - "priya"
+tags:
+  - "warden"
+  - "linting"
+  - "opinions"
+date: "2025-08-10"
+---
+
+كتبنا 440 قاعدة Warden. شحنّا 380. الـ 60 التي رميناها علّمتنا عن أدوات المطوّرين أكثر مما علّمتنا الـ 380 التي أبقيناها.
+
+{/* truncate */}
+
+## الهدف
+
+حين بدأنا Foundry، أردنا طبقة تدقيق لا تتطلب إعدادًا. تُعلِن `warden = ["strict"]` في بيانك، فتحصل على مجموعة قواعد كاملة — الاتفاقيات، والتنسيق، والأنماط، والأمان، والصياغة، وقواعد الأنواع — بلا قرارات أخرى.
+
+عنى ذلك أنه كان علينا اتخاذ كل قرار عنك. وعنى ذلك جدالات.
+
+## ثلاث قواعد كادت تشقّ الفريق
+
+من بين 440 قاعدة مرشّحة، كان معظمها واضحًا. لا يجادل أحد في حظر `eval` أو اشتراط أنواع عودة صريحة. لكن ثلاث قواعد ولّدت أسابيع من النقاش. إليك ما تفعله، ولماذا كدنا نحذفها، ولماذا نجت.
+
+### القاعدة 1: `warden/no-default-export`
+
+تحظر هذه القاعدة التصديرات الافتراضية في حزم المكتبات. التصديرات المُسمّاة فقط.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="on" label="القاعدة مُفعَّلة" default>
+
+```alloy title="src/utils/format.al"
+// Passes — named export
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+// Passes — named re-export
+export { formatDate } from "./format.al"
+```
+
+</TabItem>
+<TabItem value="off" label="القاعدة مُعطَّلة">
+
+```alloy title="src/utils/format.al"
+// Allowed — default export (refactoring hazard)
+export default function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+// Allowed — anonymous default
+export default (timestamp: Numeric): Text => {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+```
+
+</TabItem>
+</Tabs>
+
+**لماذا كانت مثيرة للجدل:** التصديرات الافتراضية اصطلاحية في كثير من الأُطُر. حاجج نصف الفريق بأن حظرها سيُحبط المستخدمين الذين ينقلون قواعد شيفرة قائمة. حاجج النصف الآخر بأن التصديرات الافتراضية مخاطرة إعادة هيكلة — تسمح للمستهلكين بإعادة تسمية الاستيراد بصمت، مما يكسر قابلية البحث عبر مساحة العمل.
+
+**لماذا شُحنت:** قصرناها على حزم المكتبات فقط. نقاط دخول التطبيقات ومعالجات الخدمات مُستثناة. تتضمّن القاعدة إصلاحًا تلقائيًا يُحوِّل `export default` إلى تصدير مُسمّى باستخدام اسم الملف كمعرّف.
+
+### القاعدة 2: `warden/require-exhaustive-deps`
+
+تتطلب هذه القاعدة أن تكون كل تبعية مُستخدَمة داخل جسم الدالة مُعلَنة في توقيع الدالة أو في نطاق الوحدة.
+
+<Tabs>
+<TabItem value="on" label="القاعدة مُفعَّلة" default>
+
+```alloy title="src/services/notify.al"
+// Passes — all dependencies are explicit
+function sendNotification(
+  client: NotifyClient,
+  message: Text,
+  channel: Text,
+): Outcome {
+  return client.send(channel, message)
+}
+```
+
+</TabItem>
+<TabItem value="off" label="القاعدة مُعطَّلة">
+
+```alloy title="src/services/notify.al"
+// Allowed — imports a global client implicitly
+import { globalClient } from "@app/globals"
+
+function sendNotification(message: Text, channel: Text): Outcome {
+  return globalClient.send(channel, message)
+}
+```
+
+</TabItem>
+</Tabs>
+
+**لماذا كانت مثيرة للجدل:** تجعل هذه القاعدة حقن التبعيات إلزاميًا. يجب أن تقبل كل دالة متعاونيها كمعاملات. وصفها بعض أعضاء الفريق بـ «دماغ Java» وحاججوا بأنها تُضيف ضوضاء بلا فائدة في المشاريع الصغيرة.
+
+**لماذا شُحنت:** التبعيات الصريحة تجعل الدوال قابلة للاختبار دون محاكاة الكائنات العالمية. في مساحة عمل بـ 200 حزمة، تخلق التبعيات الضمنية اقترانًا غير مرئي لا تستطيع Tongs تتبّعه. تفرض القاعدة ما تطلبه المعمارية أصلًا.
+
+### القاعدة 3: `warden/no-barrel-files`
+
+تحظر هذه القاعدة ملفات `index.al` التي تُعيد التصدير من وحدات أخرى — تُعرف عمومًا بملفات البرميل.
+
+<Tabs>
+<TabItem value="on" label="القاعدة مُفعَّلة" default>
+
+```alloy title="Importing directly from the source"
+// Passes — direct import
+import { formatDate } from "@core/utils/format.al"
+import { sendNotification } from "@core/services/notify.al"
+```
+
+</TabItem>
+<TabItem value="off" label="القاعدة مُعطَّلة">
+
+```alloy title="Importing through a barrel file"
+// Allowed — barrel re-export
+// src/index.al
+export { formatDate } from "./utils/format.al"
+export { sendNotification } from "./services/notify.al"
+
+// Consumer uses the barrel
+import { formatDate, sendNotification } from "@core"
+```
+
+</TabItem>
+</Tabs>
+
+**لماذا كانت مثيرة للجدل:** ملفات البرميل في كل مكان. تُبسِّط مسارات الاستيراد وتمنح الحزم واجهة عامة نظيفة. بدا حظرها متطرّفًا.
+
+**لماذا شُحنت:** ملفات البرميل هي السبب الأوحد الأكبر للتبعيات الدورية في مساحات العمل الكبيرة. تهزم أيضًا هز الشجرة — لا يستطيع Smelter إزالة التصديرات غير المستخدمة من برميل لأن البرميل نفسه يُستورَد دائمًا. قِسنا انخفاضًا بنسبة 23% في حجم الحزمة بعد إزالة البراميل من مساحة عملنا الداخلية. تتضمّن القاعدة إصلاح Warden تلقائيًا يُعيد كتابة استيرادات البرميل إلى استيرادات مباشرة.
+
+## الـ 60 التي رميناها
+
+ليس كل رأي نجا. إليك ثلاث قواعد كتبناها واختبرناها وحذفناها في النهاية:
+
+- **`warden/max-function-length`** — وضعنا الحدّ عند 50 سطرًا. ثم وجدنا أن دوال إعداد الاختبار، وخطوط أنابيب تحويل البيانات، ومعالجات أوامر CLI كانت تحتاج عادةً 80 إلى 120 سطرًا. ولّدت القاعدة تعليقات قمع أكثر من الإصلاحات. قتلناها.
+
+- **`warden/require-jsdoc-on-exports`** — كان على كل دالة مُصدَّرة أن تحوي تعليق توثيق. عمليًا، أنتج هذا آلاف التعليقات من سطر واحد قالت «يُنسِّق تاريخًا» فوق دالة اسمها `formatDate`. لم يُضِف التوثيق أي معلومة. قتلناها.
+
+- **`warden/no-nested-ternary`** — التعابير الثلاثية المتداخلة صعبة القراءة. لكن حظرها بالكامل أجبر المطوّرين على سلاسل if-else مطوّلة لتبديلات بسيطة ثلاثية. جرّبنا متغيّر `maxDepth: 2`، لكن القاعدة أصبحت دقيقة جدًا لتفسيرها في رسالة خطأ. قتلناها.
+
+## الفلسفة
+
+اشحن آراء، لا خيارات.
+
+أداة تدقيق بـ 380 قاعدة وصفر مفاتيح إعداد أكثر فائدة من أداة بـ 10 قواعد وملف إعدادات. كلّما أضفت خيار إعداد، نقلت قرارًا من مؤلف الأداة إلى مستخدم الأداة. ولدى مستخدم الأداة أصلًا قرارات كافية ليتخذها.
+
+اتخذنا 380 قرارًا حتى لا تضطر أنت. إن لم توافق على واحد، تجاوزه في بيانك. لكن لا ينبغي أن تفكّر فيه حتى تفعل.
+
+```text title="project.grain — overriding a single rule"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+
+  rules {
+    "warden/no-default-export" = "off"
+  }
+}
+```
+
+سطر واحد. التجاوز صريح ومرئي ومُحفَّظ بالإصدار. لا ملف إعداد مخفي في دليل متداخل.
+
+## ما تعلّمناه
+
+أصعب جزء في بناء أداة تدقيق ليس كتابة زائر AST. هو كتابة رسالة الخطأ التي تجعل المطوّر يفكّر «هذا منطقي» بدلًا من «دعني أضيف تعليق قمع».
+
+كل قاعدة شحنّاها لها مبرّر واضح من جملة واحدة في توثيق Warden. إن لم نستطع تفسير وجود قاعدة في جملة واحدة، لم نشحنها.
+
+اقرأ مرجع القواعد الكامل في توثيق [قواعد Warden](/docs/pipeline/warden-rules/).

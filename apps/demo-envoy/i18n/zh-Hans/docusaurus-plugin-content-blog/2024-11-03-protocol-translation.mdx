@@ -1,0 +1,117 @@
+---
+title: "在 Webhook 协议之间翻译而不被绕晕"
+authors:
+  - "tomas"
+tags:
+  - "protocol"
+  - "payload"
+  - "architecture"
+date: "2024-11-03"
+---
+
+每家 webhook 提供方都发明了自己的格式。GitHub 发送 JSON 主体并附带 `X-Hub-Signature-256` 头；Stripe 也发送 JSON 主体，但用的是 `Stripe-Signature` 头，签名方案完全不同；Twilio 发送的是表单编码数据，`X-Twilio-Signature` 还会把包含查询参数的完整 URL 一并签入。
+
+那只是三家提供方，我们支持四十七家。每一家都是一片独有的雪花。
+
+{/* truncate */}
+
+## 问题所在
+
+中继平台必须在入站侧懂得每一种协议，并在出站侧把它们翻译为统一格式。最朴素的做法是一个巨大的 switch 语句：如果来源是 GitHub，就这样解析；如果是 Stripe，就那样解析。
+
+我们写过那个 switch 语句。等接入二十家时，它已经有 2400 行；每接入一家新提供方，就要再加 80-120 行；每一次提供方 API 变更，都会变成某位客户的中继开始失败时我们才发现的缺陷。
+
+```text title="switch 语句时代 — 提供方数量 vs 代码体量"
+Providers    Lines of Code    Bugs per Month
+─────────────────────────────────────────────
+     5            400              0.2
+    10            920              0.8
+    20          2,400              2.1
+    30          4,100              4.7
+    47          never got here
+```
+
+曲线是超线性的：每多一家提供方意味着更多代码，也意味着与已有提供方之间产生更多交互——共享解析逻辑里的任何一处变动，都可能破坏其中任意一家。
+
+## Parcel：一种协议语法
+
+我们用一种声明式的协议语法 Parcel 替换了那个 switch 语句。不再为每家提供方写代码，而是写一个 `.parcel` 文件来描述其 webhook 格式——签名放在哪里、如何校验、载荷在何处、采用什么编码，以及需要提取哪些字段。
+
+```text title="parcel/github.parcel"
+provider "github" {
+  auth {
+    method  = "hmac-sha256"
+    header  = "X-Hub-Signature-256"
+    prefix  = "sha256="
+    payload = body
+  }
+
+  envelope {
+    format  = "json"
+    event   = header("X-GitHub-Event")
+    id      = header("X-GitHub-Delivery")
+  }
+
+  extract {
+    repository = "$.repository.full_name"
+    action     = "$.action"
+    sender     = "$.sender.login"
+  }
+}
+```
+
+```text title="parcel/stripe.parcel"
+provider "stripe" {
+  auth {
+    method  = "hmac-sha256"
+    header  = "Stripe-Signature"
+    prefix  = "v1="
+    payload = timestamp_body("t=")
+  }
+
+  envelope {
+    format  = "json"
+    event   = "$.type"
+    id      = "$.id"
+  }
+
+  extract {
+    object_type = "$.data.object.object"
+    amount      = "$.data.object.amount"
+    currency    = "$.data.object.currency"
+  }
+}
+```
+
+Parcel 引擎读取这些语法，在启动时为每一家提供方构造专属解析器，并对每一条进入的 webhook 进行校验。新增提供方就是新增一个 `.parcel` 文件——不改代码、不重编译，也不会波及已接入的提供方。
+
+## 翻译层
+
+解析入站 webhook 只是问题的一半，另一半是把提取出的字段翻译成目的地所期望的格式。Canary 通知、Spoke API 调用、原生 HTTP POST，所需字段各不相同。
+
+Envoy 的 transform 块用一种引用提取字段的模板语法来处理这件事：
+
+```text title="relay.grain — transform 块"
+transform {
+  format = "json"
+  body   = {
+    "title":    "[{{ provider }}] {{ event }}",
+    "message":  "{{ repository }} — {{ action }} by {{ sender }}",
+    "priority": event_priority(event),
+    "metadata": {
+      "source":   "{{ provider }}",
+      "event_id": "{{ id }}"
+    }
+  }
+}
+```
+
+模板在中继加载时被一次性编译。运行时的字段替换只是查表——没有字符串解析、没有正则、没有分配。一次转换的 p50 是 0.3ms。
+
+## 我们学到的
+
+协议翻译不是编码问题，是语法问题。一旦把协议表达为数据而非代码，解析器就可以是通用的、校验可以自动化，而测试面也从"每一家提供方的代码路径"收敛到"语法引擎本身"。
+
+我们从 2400 行的提供方专属代码，过渡到 47 份平均 25 行的 `.parcel` 文件——总计 1175 行，并且彼此之间没有任何共享可变状态。缺陷率从每月 4.7 降到 0.3。
+
+每一次，语法都胜于代码。

@@ -1,0 +1,113 @@
+---
+title: "用 Rampart 区域图做威胁建模"
+authors:
+  - "ingrid"
+tags:
+  - "rampart"
+  - "threat-research"
+  - "micro-segmentation"
+date: "2026-03-05"
+---
+
+传统的威胁模型描述的是针对某套系统架构的攻击。它把资产、威胁与缓解措施列在一份文档里——这份文档在它写下的那一天是准确的，从那以后逐渐过时。我们想要一个能与现状保持同步的威胁模型——一个由实时网络拓扑计算出来、而不是在幻灯片里被作者出来的威胁模型。
+
+Rampart 区域图给了我们这一切。每一道区域边界都是一次显式的信任决策，每一条区域跨越规则都是一份有文档记录的数据流。区域图就是威胁模型，并且会在每次策略变更时更新。
+
+{/* truncate */}
+
+## 我们现在如何威胁建模
+
+在 Rampart 之前，我们的威胁建模会是这样的：
+
+1. 把架构师、安全工程师、产品负责人聚到一间会议室。
+2. 在白板上画系统架构。
+3. 标出信任边界。
+4. 列出每条边界上的威胁。
+5. 写下缓解措施。
+6. 归档这份文档，然后再也不去更新它。
+
+产物是一份 PDF，描述着某个特定周四的网络。到第二个周一，新服务上线了，又加了一条区域跨越规则，威胁模型已经过时了。
+
+如今我们从实时 Rampart 拓扑生成威胁模型：
+
+```bash title="从实时拓扑生成威胁模型"
+sentinel rampart threat-model \
+  --output markdown \
+  --include-policies \
+  --include-traffic-stats
+```
+
+```text title="威胁模型输出（节选）"
+Rampart 区域威胁模型 —— 生成时间 2026-03-05T14:00:00Z
+
+区域：payments（PCI 范围）
+  入向连接来自：
+    - api（策略：api-to-payments，单向）
+    - auth（策略：auth-token-validation，单向）
+  出向连接到：
+    - data-layer（策略：payments-to-db，单向）
+    - external（策略：payment-processor-egress，单向）
+  没有连接的区域（入向或出向）：
+    - edge、web、analytics、admin-tools、ci-cd、monitoring、
+      control-plane、staging、sandbox
+
+  威胁面：
+    - 入向：来自 2 个区域的 2 条跨越规则
+    - 出向：去往 2 个区域的 2 条跨越规则
+    - 横向移动：被限制——无路径可达 control-plane
+    - 数据外泄：仅限 payment-processor-egress
+      （目的允许列表：2 个 IP）
+
+  流量统计（最近 30 天）：
+    - 入向：4.2M 次连接，其中 99.7% 来自 api 区域
+    - 出向：1.1M 次连接，其中 89% 流向 data-layer
+    - 拒绝：847 次连接（全部来自 staging——测试配置错误）
+```
+
+每个区域都得到这样的分析。威胁面是被计算出来的，不是被估计出来的；流量统计验证了实际数据流是否与意图数据流一致；被拒绝的连接揭露了原本会被忽视的配置错误。
+
+## 区域图揭示了什么
+
+最有价值的输出不是每个区域的单独分析，而是连通性矩阵。矩阵展示每一对区域之间是否存在路径、需要几跳：
+
+```text title="区域连通性矩阵"
+              edge  web  api  data  pay  auth  admin  ci   mon  ctrl
+    edge        -    1    -    -     -    -     -      -    -    -
+    web         -    -    1    -     -    1     -      -    -    -
+    api         -    -    -    1     1    1     -      -    -    -
+    data        -    -    -    -     -    -     -      -    -    -
+    payments    -    -    -    1     -    -     -      -    -    -
+    auth        -    -    -    -     -    -     -      -    -    -
+    admin       -    -    -    1     -    1     -      -    1    1
+    ci-cd       -    -    -    -     -    -     -      -    -    -
+    monitoring  -    -    -    -     -    -     -      -    -    1
+    control     -    -    -    -     -    -     -      -    -    -
+```
+
+这张矩阵让两件事一目了然：
+
+- **可达性。** 从 `edge` 出发，可达 `web`（1 跳）、再到 `api`（2 跳）、再到 `data-layer`（3 跳）。这是从互联网到持久数据的最长路径，它穿越了三道信任边界，每道边界各做一次策略评估。
+- **隔离性。** `ci-cd` 没有任何出向连接——被攻陷的构建流水线触不到任何其他区域；`data-layer` 也没有任何出向连接——被攻陷的数据库无法主动连接任何地方。
+
+## 模型如何更新
+
+威胁模型会自动更新，因为它是从策略集生成出来的。安全工程师每加一条新的区域跨越规则，下一次生成时威胁模型就会反映出来。Parapet 仿真一项策略变更时，会针对当前威胁模型生成一份 diff，团队就能看到这次变更对威胁面究竟意味着什么。
+
+```bash title="对一项拟议变更生成威胁模型 diff"
+sentinel rampart threat-model \
+  --diff draft:new-analytics-egress \
+  --output markdown
+```
+
+```text title="diff 输出"
+区域：analytics
+  + 新增出向连接到：external
+    策略：analytics-export-egress（草案）
+    目的允许列表：1 个 IP（data-warehouse.vendor.example）
+
+  威胁面变更：
+    - 数据外泄：新增从 analytics 到 external 的路径
+    - 建议：核实目的允许列表是否最小化
+```
+
+威胁模型不是一份文档，而是一次针对实时拓扑的查询。它不会过时——因为它根本不以静态产物形式存在。你每问一次，就得到当下的答案。

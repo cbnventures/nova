@@ -1,0 +1,15 @@
+/**
+ * Sentinel - `DocsRoot` theme overlay.
+ *
+ * Cancels the default `.nova-container` outer gutter at desktop because
+ * Sentinel docs content is intentionally full-width - the sidebar reads
+ * as a docked panel flush against the viewport.
+ *
+ * @since 0.18.0
+ */
+
+@media (min-width: 1024px) {
+  .nova-doc-root .nova-container {
+    padding-inline: 0;
+  }
+}

@@ -1,5 +1,8 @@
 /**
- * Envoy — Doc footer visual styling.
+ * Envoy - `DocItem/Footer` theme overlay.
+ *
+ * Article-end seal - a violet hairline rule above and a measured top margin
+ * separate the article body from the meta colophon (tags, share, edit).
  *
  * @since 0.15.0
  */
@@ -7,9 +10,9 @@
 .nova-doc-footer {
   margin-top: 2.5rem;
   padding-top: 2rem;
-  border-top: 1px solid var(--nova-envoy-border-light);
+  border-top: 1px solid var(--nova-envoy-border);
 }
 
 [data-theme="dark"] .nova-doc-footer {
-  border-top-color: var(--nova-envoy-border-dark);
+  border-top-color: var(--nova-envoy-border);
 }

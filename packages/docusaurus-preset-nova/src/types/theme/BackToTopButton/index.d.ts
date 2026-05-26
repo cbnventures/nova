@@ -1,10 +1,19 @@
-import type { Dispatch, SetStateAction } from 'react';
+import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 
 /**
  * Theme - Back To Top Button - Back To Top Button.
  *
  * @since 0.15.0
  */
+export type ThemeBackToTopButtonPropsClassName = string | undefined;
+
+export type ThemeBackToTopButtonPropsStyle = CSSProperties | undefined;
+
+export type ThemeBackToTopButtonProps = {
+  className?: ThemeBackToTopButtonPropsClassName;
+  style?: ThemeBackToTopButtonPropsStyle;
+};
+
 export type ThemeBackToTopButtonReturns = React.JSX.Element | null;
 
 export type ThemeBackToTopButtonThemeConfig = {

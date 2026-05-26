@@ -1,0 +1,10 @@
+{
+  "layout.heading": {
+    "message": "المدوّنة",
+    "description": "The blog list page heading"
+  },
+  "layout.description": {
+    "message": "ملاحظات الإصدارات وتحليلات معمّقة للتكاملات",
+    "description": "The blog list page description below the heading"
+  }
+}

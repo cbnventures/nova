@@ -1,0 +1,112 @@
+/**
+ * Sentinel - `Admonition` theme overlay.
+ *
+ * Inline notice blocks. Observability console feel: flat tinted bg, sharp
+ * 2px left rail, color-coded by type. Display-font heading in uppercase
+ * tracked label voice.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned rhythm tokens
+ *
+ * 1.5rem block margin (matches the previous `margin-bottom: 1.5rem`
+ * value but is now symmetric - fixes the asymmetric-drift bug where
+ * first-child admonitions had no top spacing).
+ * ============================ */
+
+:root {
+  --nova-sentinel-admonition-margin-block: 1.5rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Admonition
+ * ============================ */
+
+:root {
+  --nova-admonition-margin-block: var(--nova-sentinel-admonition-margin-block);
+}
+
+/* ============================
+ * 1. Container
+ *
+ * Block-margin flows from shared theme/Admonition via the canonical
+ * `--nova-admonition-margin-block` token.
+ * ============================ */
+
+.nova-admonition {
+  padding: var(--nova-shape-padding);
+  border-left: 2px solid var(--nova-color-text-soft);
+  border-radius: 0;
+  background-color: var(--nova-color-surface-raised);
+}
+
+[data-theme="dark"] .nova-admonition {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+@media (min-width: 768px) {
+  .nova-admonition {
+    padding: 1rem 1.25rem;
+  }
+}
+
+/* ============================
+ * 2. Heading
+ * ============================ */
+
+.nova-admonition-heading {
+  margin-bottom: 0.5rem;
+}
+
+.nova-admonition-heading strong {
+  font-family: var(--nova-font-display);
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ============================
+ * 3. Type variants
+ *
+ * Per-type rail + fill consume component-tier --nova-admonition-{type}-{facet}
+ * tokens; per-preset values + light/dark swaps live in sentinel/preset.css.
+ * Note only overrides the rail; tip/info/warning/danger override both facets.
+ * ============================ */
+
+.nova-admonition[data-admonition-type="note"] {
+  border-left-color: var(--nova-admonition-note-rail);
+}
+
+.nova-admonition[data-admonition-type="tip"] {
+  border-left-color: var(--nova-admonition-tip-rail);
+  background-color: var(--nova-admonition-tip-fill);
+}
+
+.nova-admonition[data-admonition-type="info"] {
+  border-left-color: var(--nova-admonition-info-rail);
+  background-color: var(--nova-admonition-info-fill);
+}
+
+.nova-admonition[data-admonition-type="warning"],
+.nova-admonition[data-admonition-type="caution"] {
+  border-left-color: var(--nova-admonition-warning-rail);
+  background-color: var(--nova-admonition-warning-fill);
+}
+
+.nova-admonition[data-admonition-type="danger"] {
+  border-left-color: var(--nova-admonition-danger-rail);
+  background-color: var(--nova-admonition-danger-fill);
+}
+
+/* ============================
+ * 4. Type transition
+ * ============================ */
+
+[data-admonition-type] {
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    border-left-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}

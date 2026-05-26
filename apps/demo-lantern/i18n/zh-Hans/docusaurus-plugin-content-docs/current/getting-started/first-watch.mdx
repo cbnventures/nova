@@ -1,0 +1,46 @@
+---
+title: "你的第一次看守"
+sidebar_position: 2
+description: "发现集线器、命名一个分区、为单台设备布防。一切围栏中最小的那一圈，只需三步。"
+tags:
+  - "安装配置"
+  - "教程"
+---
+
+# 你的第一次看守
+
+第一次看守，是围栏中最小的那一圈：一个分区，一台设备，一个安静的夜晚。
+
+## 第一步：发现集线器
+
+```bash
+lantern hub discover
+```
+
+Lantern 会找到网络上的 HomeKit Home Hub，并不动声色地完成配对。
+
+## 第二步：命名一个分区
+
+```bash
+lantern zone create perimeter --device front-door
+```
+
+只有一台设备的分区，依然是一个分区。Lantern 待它的方式，和待整间屋子一模一样。
+
+## 第三步：为它布防
+
+```bash
+lantern arm perimeter
+```
+
+前门已经被看守。Lantern 不会出声，直到有事情发生——即便发生了，也只是轻声相告。
+
+## 刚才发生了什么
+
+你发现了集线器，命名了一个分区，并为它布防。门廊现在已属于这场看守。
+
+## 下一步
+
+- [分区](/docs/zones/overview/) — 在门廊之外，加入更多分区。
+- [事件](/docs/events/overview/) — 跟着事件流，看屋子里的家人如何走动。
+- [接力](/docs/zones/handoffs/) — 把布防 / 撤防的权力，交给你信任的人。

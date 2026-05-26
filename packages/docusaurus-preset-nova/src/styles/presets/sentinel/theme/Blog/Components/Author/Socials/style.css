@@ -1,0 +1,28 @@
+/**
+ * Sentinel - `Blog/Components/Author/Socials` theme overlay.
+ *
+ * Steel rounded-square: 6px radius, teal-tinted chrome surface, brighten
+ * toward primary on hover. Tokens auto-switch for dark mode via
+ * `[data-theme="dark"]` overrides on `:root`.
+ *
+ * @since 0.18.0
+ */
+
+.nova-blog-author-social-link {
+  background-color: var(--nova-sentinel-chrome-bg);
+  border: 1px solid var(--nova-sentinel-chrome-border);
+  border-radius: 6px;
+  color: var(--nova-sentinel-text-muted);
+}
+
+.nova-blog-author-social-link:hover,
+.nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-sentinel-chrome-bg) 88%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link:hover,
+[data-theme="dark"] .nova-blog-author-social-link:focus-visible {
+  color: var(--nova-color-primary-300);
+}

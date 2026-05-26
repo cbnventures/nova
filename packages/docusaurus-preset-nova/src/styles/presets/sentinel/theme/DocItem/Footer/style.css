@@ -1,5 +1,9 @@
 /**
- * Sentinel — Doc footer visual styling.
+ * Sentinel - `DocItem/Footer` theme overlay.
+ *
+ * Article-end seal - a console-grey hairline rule above and breathing
+ * room between the article body and the meta colophon. Margin grows at
+ * the md breakpoint.
  *
  * @since 0.15.0
  */
@@ -7,11 +11,7 @@
 .nova-doc-footer {
   margin-top: 2.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--nova-color-neutral-200);
-}
-
-[data-theme="dark"] .nova-doc-footer {
-  border-top-color: var(--nova-color-neutral-800);
+  border-top: 1px solid var(--nova-color-border);
 }
 
 @media (min-width: 768px) {

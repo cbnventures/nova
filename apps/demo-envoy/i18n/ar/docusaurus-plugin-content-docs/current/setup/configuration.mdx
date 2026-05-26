@@ -1,0 +1,188 @@
+---
+title: "الإعداد"
+sidebar_position: 3
+description: "بيان الترحيل بصيغة .grain يُعرّف المصادر، والتحويلات، والوجهات، وسياسات إعادة المحاولة. مرجع التوجيهات الكامل مُضمَّن."
+tags:
+  - "setup"
+  - "configuration"
+---
+
+import Details from '@theme/Details';
+
+# الإعداد
+
+يُعدّ Envoy عبر بيان ترحيل بصيغة `.grain`. يُعلن البيان كلّ مُرحِّل — ما الذي يستمع إليه، وكيف يحوّل الحمولة، وأين يُسلّم، وماذا يحدث حين يفشل التسليم.
+
+## بنية بيان الترحيل
+
+يحتوي بيان الترحيل على كتلة `relay` أو أكثر. كلّ كتلة تُعرّف خطّ معالجة كاملًا من المصدر إلى الوجهة.
+
+```text title="relay.grain"
+relay "glassboard-to-canary" {
+  source      = "glassboard"
+  cipher      = "hmac-sha256"
+  destination = "canary://infra-alerts"
+
+  transform {
+    title    = "[{{ severity }}] {{ alertname }}"
+    body     = "{{ instance }} — {{ message }}"
+    priority = severity_to_priority(severity)
+    tags     = ["{{ severity_emoji }}"]
+  }
+
+  retry {
+    strategy = "exponential"
+    max      = 5
+    backoff  = "1s, 5s, 30s, 2m, 10m"
+  }
+}
+
+relay "threadbare-to-canary" {
+  source      = "threadbare"
+  cipher      = "hmac-sha256"
+  destination = "canary://ci-builds"
+
+  transform {
+    title = "[{{ repo }}] {{ count }} commit(s) to {{ branch }}"
+    body  = "{{ author }}: {{ commit_summary }}"
+  }
+}
+```
+
+## توجيهات الإعداد
+
+| التوجيه       | النوع | مطلوب | الوصف                                                                  |
+|---------------|-------|-------|------------------------------------------------------------------------|
+| `source`      | نصّ   | نعم   | مُعرِّف مصدر التكامل (مثل `threadbare` أو `glassboard`).               |
+| `cipher`      | نصّ   | لا    | وضع المصادقة: `hmac-sha256` أو `bearer` أو `ip-allowlist` أو `none`.   |
+| `destination` | نصّ   | نعم   | هدف التسليم بصيغة `protocol://topic`.                                  |
+| `transform`   | كتلة  | لا    | قواعد تحويل Parcel للحمولة.                                            |
+| `retry`       | كتلة  | لا    | سياسة إعادة المحاولات في Courier. الافتراضي تراجع أُسّي بثلاث محاولات. |
+| `filter`      | كتلة  | لا    | مُرحِّل شرطي — يعالج فقط الرسائل المطابِقة لتعبير الفلتر.              |
+| `fanout`      | قائمة | لا    | التسليم إلى وجهات متعدّدة من مصدر واحد.                                |
+
+## كتلة التحويل
+
+كتلة `transform` تُعرّف كيف يُعيد Parcel كتابة الحمولة. تستخدم الحقول صياغة قوالب على نمط Mustache مع وصول إلى حمولة المصدر.
+
+```text title="Transform directives"
+transform {
+  title    = "[{{ severity }}] {{ alertname }}"
+  body     = "{{ instance }} — {{ message }}"
+  priority = severity_to_priority(severity)
+  tags     = ["{{ severity_emoji }}"]
+  actions  = [
+    { label = "View Dashboard", url = "{{ dashboard_url }}" }
+  ]
+}
+```
+
+| الحقل      | النوع          | الوصف                                           |
+|------------|----------------|-------------------------------------------------|
+| `title`    | قالب           | عنوان الإشعار. يدعم متغيّرات القوالب.           |
+| `body`     | قالب           | متن الإشعار. يدعم متغيّرات القوالب وأسطر جديدة. |
+| `priority` | رقم/دالّة      | مستوى الأولوية (1-5) أو دالّة تعيين.            |
+| `tags`     | قائمة          | مُعرِّفات الوسوم المرتبطة بالإشعار.             |
+| `actions`  | قائمة من خرائط | إجراءات تفاعلية (روابط عرض، أزرار رفض).         |
+
+## كتلة إعادة المحاولة
+
+تُعدّ كتلة `retry` سلوك ضمان التسليم في Courier.
+
+```text title="Retry directives"
+retry {
+  strategy   = "exponential"
+  max        = 5
+  backoff    = "1s, 5s, 30s, 2m, 10m"
+  jitter     = 0.25
+  dead_letter {
+    enabled    = true
+    retention  = "30d"
+    escalation = "dispatch://fallback-channel"
+  }
+}
+```
+
+| الحقل         | النوع | الافتراضي     | الوصف                                                               |
+|---------------|-------|---------------|---------------------------------------------------------------------|
+| `strategy`    | نصّ   | `exponential` | استراتيجية إعادة المحاولة: `exponential` أو `fixed` أو `immediate`. |
+| `max`         | رقم   | `3`           | الحدّ الأقصى للمحاولات قبل الرسائل الميّتة.                         |
+| `backoff`     | نصّ   | `1s, 4s, 16s` | جدول تأخير مفصول بفواصل لكلّ محاولة.                                |
+| `jitter`      | عشري  | `0.25`        | نطاق العشوائية كنسبة من التأخير الحالي.                             |
+| `dead_letter` | كتلة  | مُفعَّل       | إعداد طابور الرسائل الميّتة للرسائل غير القابلة للتسليم.            |
+
+## كتلة الفلتر
+
+تُضيف كتلة `filter` منطق ترحيل شرطي. تُعالَج فقط الرسائل المطابِقة لتعبير الفلتر. وتُسقَط البقيّة بصمت.
+
+```text title="Filter example"
+relay "critical-alerts-only" {
+  source = "glassboard"
+  // highlight-start
+  filter {
+    severity = "critical"
+  }
+  // highlight-end
+  destination = "canary://oncall-urgent"
+}
+```
+
+## مُرحِّلات متعدّدة
+
+يستطيع بيان واحد إعلان أيّ عدد من المُرحِّلات. يُحمِّلها Envoy جميعها عند البدء ويوجّه الرسائل الواردة إلى أوّل مُرحِّل مطابِق.
+
+```text title="Multi-relay manifest"
+relay "critical-glassboard"  { source = "glassboard", filter { severity = "critical" }, destination = "canary://oncall-urgent" }
+relay "standard-glassboard"  { source = "glassboard", destination = "canary://infra-alerts" }
+relay "threadbare-pushes"    { source = "threadbare", destination = "canary://ci-builds" }
+relay "canary-heartbeats"    { source = "canary", destination = "canary://monitoring" }
+```
+
+:::warning ترتيب المُرحِّلات
+تُقيَّم المُرحِّلات بترتيب الإعلان. إن طابق مُرحِّلان المصدر نفسه، يفوز الأوّل. ضع المُرحِّلات الأكثر تخصيصًا (التي تحوي فلاتر) قبل المُرحِّلات العامّة الجامعة.
+:::
+
+<Details>
+<summary>مرجع التوجيهات الكامل</summary>
+
+| التوجيه                             | النوع  | الافتراضي     | الوصف                                     |
+|-------------------------------------|--------|---------------|-------------------------------------------|
+| `relay.source`                      | نصّ    | —             | مُعرِّف مصدر التكامل.                     |
+| `relay.cipher`                      | نصّ    | `none`        | وضع المصادقة.                             |
+| `relay.destination`                 | نصّ    | —             | هدف التسليم (protocol://topic).           |
+| `relay.transform.title`             | نصّ    | —             | قالب عنوان الإشعار.                       |
+| `relay.transform.body`              | نصّ    | —             | قالب متن الإشعار.                         |
+| `relay.transform.priority`          | رقم    | `3`           | أولوية الإشعار (1-5).                     |
+| `relay.transform.tags`              | قائمة  | `[]`          | وسوم الإشعار.                             |
+| `relay.retry.strategy`              | نصّ    | `exponential` | استراتيجية إعادة المحاولة.                |
+| `relay.retry.max`                   | رقم    | `3`           | الحدّ الأقصى للمحاولات.                   |
+| `relay.retry.backoff`               | نصّ    | `1s, 4s, 16s` | جدول التأخير.                             |
+| `relay.retry.jitter`                | عشري   | `0.25`        | نسبة الرجفة.                              |
+| `relay.retry.dead_letter.enabled`   | منطقي  | `true`        | تمكين طابور الرسائل الميّتة.              |
+| `relay.retry.dead_letter.retention` | نصّ    | `7d`          | مدّة الاحتفاظ بالرسائل الميّتة.           |
+| `relay.filter.*`                    | متفاوت | —             | حقول الفلتر الشرطية (تُطابَق مع الحمولة). |
+| `relay.fanout`                      | قائمة  | —             | أهداف وجهات متعدّدة.                      |
+
+</Details>
+
+## التحقّق
+
+تحقّق من البيان قبل بدء المُرحِّل:
+
+```bash title="Validate configuration"
+envoy validate --config relay.grain
+```
+
+```text title="Validation output"
+[validate] Loading relay.grain
+[validate] Relay "glassboard-to-canary" ... OK
+[validate] Relay "threadbare-to-canary" ... OK
+[validate] 2 relays configured, 0 errors
+[validate] Configuration is valid.
+```
+
+## الخطوات التالية
+
+- [ترجمة البروتوكولات](/docs/core/protocol-translation/) — كيف يحوّل Parcel الحمولات بين الصيغ.
+- [التوجيه والإرسال](/docs/core/routing-dispatch/) — التوجيه القائم على المحتوى وتصعيد الخطورة.
+- [المصادقة](/docs/core/authentication/) — أوضاع تحقّق Cipher بشيء من العمق.

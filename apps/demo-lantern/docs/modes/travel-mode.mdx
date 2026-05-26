@@ -1,0 +1,36 @@
+---
+title: "Travel Mode"
+sidebar_position: 1
+description: "Travel mode tightens the rules. Quiet zones become Watch zones. Bedtime windows close. The porch learns to be more suspicious."
+tags:
+  - "modes"
+---
+
+# Travel Mode
+
+Travel mode tightens the rules. Quiet zones become Watch zones. Bedtime windows close. The porch light learns to be a little more suspicious for a few days.
+
+## Entering travel mode
+
+```bash
+lantern mode travel --until 2026-05-01
+```
+
+The end date is mandatory. Lantern will not stay watchful longer than you ask.
+
+## What changes
+
+- **Quiet zones** are armed continuously
+- **Confidence bands** narrow — small movements count
+- **Handoffs** require an explicit passphrase
+- **Notifications** route to a single trusted hub
+
+## Returning home
+
+Travel mode ends on the date you set, or sooner if you arm `home` on a recognized device. Lantern softens automatically.
+
+## Next Steps
+
+- [Zones](/docs/zones/overview/) — How Quiet zones become Watch zones during travel.
+- [Handoffs](/docs/zones/handoffs/) — Handoff rules tighten on travel.
+- [Integrations](/docs/zones/integrations/) — Routing trusted alerts while away.

@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Doc Sidebar Item - Link - Doc Sidebar Item Link.
  *
@@ -17,10 +19,16 @@ export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsActivePath = string;
 
 export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsLevel = number;
 
+export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsClassName = string | undefined;
+
+export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocSidebarItemLinkDocSidebarItemLinkProps = {
   item: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsItem;
   activePath: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsActivePath;
   level: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsLevel;
+  className?: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsClassName;
+  style?: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsStyle;
   [key: string]: unknown;
 };
 

@@ -1,5 +1,5 @@
 /**
- * Foundry — Preset identity, design tokens, keyframes, and global visual styles.
+ * Foundry - Preset identity, design tokens, keyframes, and global visual styles.
  *
  * @since 0.15.0
  */
@@ -9,54 +9,210 @@
  * ============================ */
 
 :root {
-  --nova-foundry-bg: #ffffff;
-  --nova-foundry-surface: #ffffff;
-  --nova-foundry-surface-raised: #ffffff;
-  --nova-foundry-surface-overlay: rgba(255, 255, 255, 0.88);
-  --nova-foundry-border: var(--nova-color-neutral-200);
-  --nova-foundry-border-subtle: var(--nova-color-neutral-100);
+  --nova-color-background: color-mix(in oklab, var(--nova-color-primary-500), #ffffff 99%);
+  --nova-foundry-bg: var(--nova-color-background);
+  --nova-foundry-surface: var(--nova-color-background);
+  --nova-foundry-surface-raised: var(--nova-color-surface-raised);
+  --nova-foundry-surface-overlay: color-mix(in srgb, var(--nova-color-background), transparent 12%);
+  --nova-foundry-border: var(--nova-color-border);
+  --nova-foundry-border-subtle: var(--nova-color-surface-raised);
+  --nova-foundry-border-overlay: var(--nova-color-border);
+
+  /* Industrial square radius - 2px hairline corners on author social buttons.
+     Distinct from --nova-shape-radius (0.5rem rounded) which governs general
+     foundry surfaces. Defined as a preset-tier identity token because the
+     2px crispness reads as foundry's industrial voice, not a generic radius. */
+  --nova-foundry-radius-square: 2px;
+
+  /* App-market button - canonical Apple/Google badge convention: pure black
+     with light text in both modes. Not mode-flipped. */
+  --nova-foundry-app-market-bg: #000000;
+  --nova-foundry-disclosure-bg: var(--nova-color-background);
+  --nova-foundry-disclosure-bg-strong: var(--nova-color-background);
+  --nova-foundry-disclosure-bg-hover: var(--nova-color-surface-raised);
+  --nova-disclosure-bg: var(--nova-foundry-disclosure-bg);
+  --nova-disclosure-bg-strong: var(--nova-foundry-disclosure-bg-strong);
+  --nova-disclosure-bg-hover: var(--nova-foundry-disclosure-bg-hover);
+  --nova-foundry-chrome-overlay: var(--nova-foundry-surface);
   --nova-foundry-glow-primary: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
   --nova-foundry-glow-accent: color-mix(in srgb, var(--nova-color-accent-500), transparent 90%);
-  --nova-color-warning-500: #f59e0b;
-  --nova-color-warning-400: #fbbf24;
-  --nova-color-warning-bg: rgba(245, 158, 11, 0.06);
-  --nova-color-warning-bg-dark: rgba(245, 158, 11, 0.1);
-  --nova-color-danger-500: #ef4444;
-  --nova-color-danger-400: #f87171;
-  --nova-color-danger-bg: rgba(239, 68, 68, 0.06);
-  --nova-color-danger-bg-dark: rgba(239, 68, 68, 0.1);
-  --nova-grid-padding: 16px;
-  --nova-grid-gutter: 16px;
-  --nova-section-gap: 3rem;
+  --nova-foundry-color-warning-500: #f59e0b;
+  --nova-foundry-color-warning-400: #fbbf24;
+  --nova-foundry-color-warning-bg: rgba(245, 158, 11, 0.06);
+  --nova-foundry-color-danger-500: #ef4444;
+  --nova-foundry-color-danger-400: #f87171;
+  --nova-foundry-color-danger-bg: rgba(239, 68, 68, 0.06);
+  --nova-color-warning-500: var(--nova-foundry-color-warning-500);
+  --nova-color-warning-400: var(--nova-foundry-color-warning-400);
+  --nova-color-warning-bg: var(--nova-foundry-color-warning-bg);
+  --nova-color-danger-500: var(--nova-foundry-color-danger-500);
+  --nova-color-danger-400: var(--nova-foundry-color-danger-400);
+  --nova-color-danger-bg: var(--nova-foundry-color-danger-bg);
+  --nova-foundry-grid-padding: 16px;
+  --nova-foundry-grid-gutter: 16px;
+  --nova-foundry-section-gap: 3rem;
+  --nova-grid-padding: var(--nova-foundry-grid-padding);
+  --nova-grid-gutter: var(--nova-foundry-grid-gutter);
+  --nova-section-gap: var(--nova-foundry-section-gap);
+
+  /* Sticky chrome offset - single-row sticky navbar at ~85px (taller because
+     of generous nav padding). Consumed by hash-anchor scroll, sticky sidebars,
+     and TOC. sticky-layout.ts dynamically updates --nova-layout-sticky-top at
+     runtime; this static value provides the initial-paint baseline. */
+  --nova-foundry-layout-sticky-top: 85px;
+  --nova-layout-sticky-top: var(--nova-foundry-layout-sticky-top);
+
+  /* Ambient backdrop - warm light streaming in from the upper-right, like an
+     open forge door. Layered orange + amber radial glows anchored at the
+     top-right corner. Bigger and warmer than Envoy's centered halo because
+     Foundry is hands-on industrial, not polished SaaS. */
+  --nova-foundry-ambient:
+    radial-gradient(ellipse 80% 65% at 100% -5%, color-mix(in srgb, var(--nova-color-primary-500), transparent 78%), transparent 65%),
+    radial-gradient(ellipse 40% 30% at 95% 5%, color-mix(in srgb, var(--nova-color-accent-500), transparent 72%), transparent 60%);
+
+  /* SkipToContent - color tokens (shape lives in the SkipToContent overlay). */
+  --nova-foundry-skip-bg: var(--nova-color-primary-600);
+  --nova-foundry-skip-color: var(--nova-color-text-inverse);
+  --nova-foundry-skip-border: 1px solid var(--nova-color-primary-700);
+  --nova-foundry-skip-shadow: 0 4px 14px color-mix(in srgb, var(--nova-color-primary-500), transparent 65%);
+  --nova-skip-bg: var(--nova-foundry-skip-bg);
+  --nova-skip-color: var(--nova-foundry-skip-color);
+  --nova-skip-border: var(--nova-foundry-skip-border);
+  --nova-skip-shadow: var(--nova-foundry-skip-shadow);
+
+  /* Blog Layout - color tokens (typography lives in the BlogLayout overlay). */
+  --nova-foundry-blog-description-color: var(--nova-color-text-muted);
+  --nova-blog-description-color: var(--nova-foundry-blog-description-color);
+
+  /* Mermaid identity - drives themeCSS color overrides in docusaurus.config.ts pre-render config.
+     Each token swaps in the dark block below so toggling [data-theme="dark"] recolors the SVG
+     without re-rendering. */
+  --nova-foundry-mermaid-node-radius: 0.5rem;
+  --nova-foundry-mermaid-edge-stroke: var(--nova-color-primary-400);
+  --nova-foundry-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 96%);
+  --nova-foundry-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 50%);
+  --nova-foundry-mermaid-cluster-radius: 0.5rem;
+  --nova-mermaid-node-radius: var(--nova-foundry-mermaid-node-radius);
+  --nova-mermaid-edge-stroke: var(--nova-foundry-mermaid-edge-stroke);
+  --nova-mermaid-cluster-fill: var(--nova-foundry-mermaid-cluster-fill);
+  --nova-mermaid-cluster-stroke: var(--nova-foundry-mermaid-cluster-stroke);
+  --nova-mermaid-cluster-radius: var(--nova-foundry-mermaid-cluster-radius);
+
+  /* Search - dropdown shadow stack and faint surface used by the SearchBar
+     and SearchPage overlays. Light mode is a soft drop with a tighter inner
+     ring. */
+  --nova-foundry-shadow-dropdown:
+    0 12px 40px color-mix(in srgb, #000000, transparent 88%),
+    0 4px 12px color-mix(in srgb, #000000, transparent 94%);
+  --nova-foundry-surface-faint: var(--nova-color-background);
+  --nova-foundry-border-faint: var(--nova-color-border);
+
+  /* Footer credit-row filter slow-fade - intentionally longer than the system
+     motion-duration to give the credit-row hover its own slower visual rhythm.
+     Component-scoped (Footer only). */
+  --nova-foundry-footer-filter-duration: 250ms;
+  --nova-footer-filter-duration: var(--nova-foundry-footer-filter-duration);
+
+  /* Admonition - per-type rail + fill (consumed by the Admonition overlay).
+     All 5 types (note/tip/info/warning/danger) get explicit overrides. */
+  --nova-foundry-admonition-note-rail: var(--nova-color-text-muted);
+  --nova-foundry-admonition-note-fill: var(--nova-color-background);
+  --nova-foundry-admonition-tip-rail: var(--nova-color-primary-500);
+  --nova-foundry-admonition-tip-fill: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  --nova-foundry-admonition-info-rail: var(--nova-color-accent-500);
+  --nova-foundry-admonition-info-fill: color-mix(in srgb, var(--nova-color-accent-500), transparent 94%);
+  --nova-foundry-admonition-warning-rail: var(--nova-color-warning-500);
+  --nova-foundry-admonition-warning-fill: var(--nova-color-warning-bg);
+  --nova-foundry-admonition-danger-rail: var(--nova-color-danger-500);
+  --nova-foundry-admonition-danger-fill: var(--nova-color-danger-bg);
+  --nova-admonition-note-rail: var(--nova-foundry-admonition-note-rail);
+  --nova-admonition-note-fill: var(--nova-foundry-admonition-note-fill);
+  --nova-admonition-tip-rail: var(--nova-foundry-admonition-tip-rail);
+  --nova-admonition-tip-fill: var(--nova-foundry-admonition-tip-fill);
+  --nova-admonition-info-rail: var(--nova-foundry-admonition-info-rail);
+  --nova-admonition-info-fill: var(--nova-foundry-admonition-info-fill);
+  --nova-admonition-warning-rail: var(--nova-foundry-admonition-warning-rail);
+  --nova-admonition-warning-fill: var(--nova-foundry-admonition-warning-fill);
+  --nova-admonition-danger-rail: var(--nova-foundry-admonition-danger-rail);
+  --nova-admonition-danger-fill: var(--nova-foundry-admonition-danger-fill);
 }
 
 @media (min-width: 768px) {
   :root {
-    --nova-grid-padding: 20px;
-    --nova-grid-gutter: 20px;
-    --nova-section-gap: 4rem;
+    --nova-foundry-grid-padding: 20px;
+    --nova-foundry-grid-gutter: 20px;
+    --nova-foundry-section-gap: 4rem;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --nova-grid-padding: 24px;
-    --nova-grid-gutter: 24px;
-    --nova-section-gap: 5rem;
+    --nova-foundry-grid-padding: 24px;
+    --nova-foundry-grid-gutter: 24px;
+    --nova-foundry-section-gap: 5rem;
   }
 }
 
-[data-theme="dark"] {
-  --nova-foundry-bg: #0b0f1a;
-  --nova-foundry-surface: #0b0f1a;
-  --nova-foundry-surface-raised: #111827;
-  --nova-foundry-surface-overlay: rgba(11, 15, 26, 0.88);
-  --nova-foundry-border: var(--nova-color-neutral-800);
-  --nova-foundry-border-subtle: var(--nova-color-neutral-900);
+/* :root prefix prevents cssnano partial-merge from hoisting this dark block ahead of :root. */
+:root[data-theme="dark"] {
+  --nova-color-background: color-mix(in oklab, var(--nova-color-primary-500), #000000 96%);
+
+  /* Blog Layout - dark-mode swap of color token. */
+  --nova-foundry-blog-description-color: var(--nova-color-text-muted);
+
+  /* Semantic palette - dark-mode swap of admonition fills. */
+  --nova-foundry-color-warning-bg: rgba(245, 158, 11, 0.1);
+  --nova-foundry-color-danger-bg: rgba(239, 68, 68, 0.1);
+
+  /* SkipToContent - dark-mode swap of color tokens. */
+  --nova-foundry-skip-bg: var(--nova-color-primary-500);
+  --nova-foundry-skip-border: 1px solid var(--nova-color-primary-400);
+  --nova-foundry-skip-shadow: 0 4px 20px color-mix(in srgb, var(--nova-color-primary-500), transparent 55%);
+
+  --nova-foundry-surface: var(--nova-color-background);
+  --nova-foundry-surface-raised: color-mix(in srgb, var(--nova-color-background), #ffffff 5%);
+  --nova-foundry-surface-overlay: color-mix(in srgb, var(--nova-color-background), transparent 12%);
+  --nova-foundry-border: var(--nova-color-border);
+  --nova-foundry-border-subtle: var(--nova-color-border);
+  --nova-foundry-border-overlay: rgba(255, 255, 255, 0.08);
+  --nova-foundry-disclosure-bg: rgba(255, 255, 255, 0.03);
+  --nova-foundry-disclosure-bg-strong: rgba(255, 255, 255, 0.04);
+  --nova-foundry-disclosure-bg-hover: rgba(255, 255, 255, 0.06);
+  --nova-foundry-chrome-overlay: rgba(255, 255, 255, 0.04);
   --nova-foundry-glow-primary: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
   --nova-foundry-glow-accent: rgba(124, 58, 237, 0.10);
-  --nova-depth-card-border: 1px solid var(--nova-color-neutral-800);
-  --nova-depth-code-border: 1px solid var(--nova-color-neutral-800);
+  --nova-foundry-depth-card-border: 1px solid var(--nova-color-border);
+  --nova-foundry-depth-code-border: 1px solid var(--nova-color-border);
+  --nova-depth-card-border: var(--nova-foundry-depth-card-border);
+  --nova-depth-code-border: var(--nova-foundry-depth-code-border);
+
+  /* Dark ambient - denser embers so they read against the navy backdrop. */
+  --nova-foundry-ambient:
+    radial-gradient(ellipse 80% 65% at 100% -5%, color-mix(in srgb, var(--nova-color-primary-500), transparent 65%), transparent 65%),
+    radial-gradient(ellipse 40% 30% at 95% 5%, color-mix(in srgb, var(--nova-color-accent-500), transparent 60%), transparent 60%);
+
+  /* Mermaid identity - dark-mode overrides. */
+  --nova-foundry-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 90%);
+  --nova-foundry-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 40%);
+
+  /* Search - dark-mode swap: heavier ambient shadow, hairline inner ring. */
+  --nova-foundry-shadow-dropdown:
+    0 12px 40px color-mix(in srgb, #000000, transparent 50%),
+    0 0 1px color-mix(in srgb, #ffffff, transparent 90%);
+  --nova-foundry-surface-faint: color-mix(in srgb, var(--nova-color-background), transparent 96%);
+  --nova-foundry-border-faint: color-mix(in srgb, #ffffff, transparent 92%);
+
+  /* Admonition - dark-mode swap of rail + fill. warning-fill and danger-fill
+     re-resolve to dark via the existing --nova-foundry-color-warning-bg /
+     -danger-bg overrides earlier in this block. */
+  --nova-foundry-admonition-note-rail: var(--nova-color-text-muted);
+  --nova-foundry-admonition-note-fill: var(--nova-foundry-disclosure-bg-strong);
+  --nova-foundry-admonition-tip-rail: var(--nova-color-primary-400);
+  --nova-foundry-admonition-tip-fill: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  --nova-foundry-admonition-info-rail: var(--nova-color-accent-400);
+  --nova-foundry-admonition-info-fill: color-mix(in srgb, var(--nova-color-accent-500), transparent 90%);
+  --nova-foundry-admonition-warning-rail: var(--nova-color-warning-400);
+  --nova-foundry-admonition-danger-rail: var(--nova-color-danger-400);
 }
 
 /* ============================
@@ -64,18 +220,41 @@
  * ============================ */
 
 body {
+  position: relative;
+  z-index: 0;
   font-family: var(--nova-font-body);
   font-size: 0.9375rem;
   line-height: 1.6;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
   background-color: var(--nova-foundry-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 [data-theme="dark"] body {
-  color: var(--nova-color-neutral-200);
+  color: var(--nova-color-text-inverse);
   background-color: var(--nova-foundry-bg);
+}
+
+/* Ambient backdrop layer - fixed pseudo painted behind all content. The
+   token shadow on [data-theme="dark"] swaps the gradient palette automatically. */
+body::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background: var(--nova-foundry-ambient);
+
+  pointer-events: none;
+}
+
+/* Stack page content above the ambient layer. */
+main,
+.main-wrapper {
+  position: relative;
+  z-index: 1;
 }
 
 /* ============================
@@ -109,7 +288,7 @@ body {
  * 5. Responsive Body Typography
  * ============================ */
 
-/* --- sm (640px) — body text scales up. --- */
+/* --- sm (640px) - body text scales up. --- */
 @media (min-width: 640px) {
   body {
     font-size: 1rem;
@@ -190,7 +369,7 @@ body {
   *,
   *::before,
   *::after {
-    /* !important is intentional — accessibility override must win regardless of specificity. */
+    /* !important is intentional - accessibility override must win regardless of specificity. */
     animation-duration: 0.01ms !important;
     animation-delay: 0ms !important;
     transition-duration: 0.01ms !important;
@@ -238,7 +417,7 @@ a:focus-visible {
   font-family: var(--nova-font-body);
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
   background-color: var(--nova-color-primary-600);
   border-radius: var(--nova-shape-radius);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -257,7 +436,7 @@ a:focus-visible {
 .nova-cta-primary:focus-visible {
   background-color: var(--nova-color-primary-700);
   box-shadow: 0 4px 14px color-mix(in srgb, var(--nova-color-primary-500), transparent 65%), 0 1px 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
 }
 
 .nova-cta-primary:active {
@@ -268,14 +447,14 @@ a:focus-visible {
 [data-theme="dark"] .nova-cta-primary {
   background-color: var(--nova-color-primary-500);
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
 }
 
 [data-theme="dark"] .nova-cta-primary:hover,
 [data-theme="dark"] .nova-cta-primary:focus-visible {
   background-color: var(--nova-color-primary-400);
   box-shadow: 0 4px 20px color-mix(in srgb, var(--nova-color-primary-500), transparent 60%), 0 0 40px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
 }
 
 /* --- Secondary CTA --- */
@@ -335,7 +514,7 @@ a:focus-visible {
 .nova-cta-primary {
   transition: background-color var(--nova-motion-duration) ease,
               box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
-              transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+              transform var(--nova-motion-duration) var(--nova-motion-easing);
 }
 
 .nova-cta-primary:hover,
@@ -353,7 +532,7 @@ a:focus-visible {
               border-color var(--nova-motion-duration) ease,
               color var(--nova-motion-duration) ease,
               box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
-              transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+              transform var(--nova-motion-duration) var(--nova-motion-easing);
 }
 
 .nova-cta-secondary:hover,
@@ -367,7 +546,7 @@ a:focus-visible {
 }
 
 /* ============================
- * 10. Scrollbar
+ * 11. Scrollbar
  * ============================ */
 
 html {
@@ -379,7 +558,7 @@ html {
 }
 
 /* ============================
- * 11. Stats & Spotlight
+ * 12. Stats & Spotlight
  * ============================ */
 
 .nova-stats-heading {
@@ -387,11 +566,11 @@ html {
   font-size: 1.375rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
 }
 
 [data-theme="dark"] .nova-stats-heading {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text-inverse);
 }
 
 @media (min-width: 640px) {
@@ -409,11 +588,7 @@ html {
 .nova-stats-description {
   font-size: 0.9375rem;
   line-height: 1.7;
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-stats-description {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-stat {
@@ -464,11 +639,11 @@ html {
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 1;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
 }
 
 [data-theme="dark"] .nova-stat-value {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text-inverse);
 }
 
 @media (min-width: 640px) {
@@ -504,11 +679,7 @@ html {
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-stat-label {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-spotlight-heading {
@@ -516,41 +687,36 @@ html {
   font-size: 1.375rem;
   font-weight: 700;
   letter-spacing: -0.01em;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
 }
 
 [data-theme="dark"] .nova-spotlight-heading {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text-inverse);
 }
 
 .nova-section-description {
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-section-description {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-code-snippet {
-  background-color: #fff;
+  background-color: var(--nova-foundry-surface);
   border: 1px solid var(--nova-foundry-border);
   border-radius: var(--nova-shape-radius);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
 }
 
 [data-theme="dark"] .nova-code-snippet {
-  background-color: var(--nova-color-neutral-950);
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* ============================
- * 12. Surface Alt
+ * 13. Surface Alt
  * ============================ */
 
 .nova-surface-alt {
   padding-block: 2.5rem;
-  background-color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-surface-raised);
   border-top: 1px solid var(--nova-foundry-border);
   border-bottom: 1px solid var(--nova-foundry-border);
 }
@@ -574,105 +740,12 @@ html {
 }
 
 /* ============================
- * 13. Typography
+ * 14. Typography
+ *
+ * Article-body paragraph color + line-height live in the MDXContent
+ * overlay (scoped to `.nova-mdx-content`) so they only apply to MDX
+ * surfaces - chrome surfaces keep their own class-based styling
+ * untouched. Block-margin flows from shared theme/MDXContent via the
+ * canonical `--nova-mdx-paragraph-margin-block-end` token (foundry
+ * diverges to 1.25rem via the preset+component rename+alias chain).
  * ============================ */
-
-p {
-  line-height: 1.75;
-  color: var(--nova-color-neutral-900);
-  margin-bottom: 1.25rem;
-}
-
-[data-theme="dark"] p {
-  color: var(--nova-color-neutral-300);
-}
-
-/* ============================
- * 14. Tables
- * ============================ */
-
-table {
-  width: 100%;
-  min-width: 480px;
-  border-collapse: collapse;
-  font-size: 0.9375rem;
-  margin-bottom: 0;
-  border: 1px solid var(--nova-foundry-border);
-  border-radius: var(--nova-shape-radius);
-  overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  table {
-    min-width: 0;
-  }
-}
-
-table thead {
-  background-color: var(--nova-color-neutral-50);
-}
-
-[data-theme="dark"] table thead {
-  background-color: rgba(255, 255, 255, 0.03);
-}
-
-table th {
-  font-family: var(--nova-font-display);
-  font-weight: 600;
-  font-size: 0.8125rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--nova-color-neutral-500);
-  padding: 0.625rem 0.75rem;
-  text-align: left;
-  white-space: nowrap;
-  border-bottom: 2px solid var(--nova-foundry-border);
-}
-
-table td {
-  padding: 0.625rem 0.75rem;
-  border-bottom: 1px solid var(--nova-foundry-border-subtle);
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] table th {
-  color: var(--nova-color-neutral-400);
-}
-
-[data-theme="dark"] table td {
-  color: var(--nova-color-neutral-300);
-}
-
-@media (min-width: 768px) {
-  table th {
-    padding: 0.75rem 1rem;
-  }
-
-  table td {
-    padding: 0.75rem 1rem;
-  }
-}
-
-table tbody tr:last-child td {
-  border-bottom: none;
-}
-
-table tbody tr:nth-child(even) {
-  background-color: var(--nova-color-neutral-50);
-}
-
-[data-theme="dark"] table tbody tr:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-table tbody tr {
-  transition: background-color var(--nova-motion-duration) ease;
-}
-
-table tbody tr:hover {
-  background-color: var(--nova-color-neutral-50);
-}
-
-[data-theme="dark"] table tbody tr:hover {
-  background-color: rgba(255, 255, 255, 0.03);
-}

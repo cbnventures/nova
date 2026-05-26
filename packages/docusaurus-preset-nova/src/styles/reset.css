@@ -1,5 +1,5 @@
 /**
- * Reset — Universal box model, margin, and typography normalization.
+ * Reset - Universal box model, margin, and typography normalization.
  *
  * @since 0.15.0
  */
@@ -10,6 +10,28 @@
   box-sizing: border-box;
 }
 
+/*
+ * Contract for --nova-layout-sticky-top (consumed below as scroll-padding-top):
+ *
+ *   1. Each preset MUST declare --nova-{preset}-layout-sticky-top in its
+ *      preset.css :root and alias it to --nova-layout-sticky-top. The value
+ *      should equal the rendered sticky-navbar height (or 0 if non-sticky).
+ *   2. The system default in grid.css :root is 0px (no sticky chrome). The
+ *      inline 5rem fallback below is a defense-in-depth safety net that only
+ *      fires if grid.css fails to load.
+ *   3. sticky-layout.ts (loaded as a client module) dynamically overrides
+ *      --nova-layout-sticky-top at runtime via inline style on documentElement
+ *      to track navbar-height changes (announcement-bar dismissal, resize).
+ *      The CSS value is the initial-paint baseline before hydration.
+ *   4. scroll-padding-top is the single source of truth for hash-anchor scroll
+ *      offset - it applies to every scrollable target inside the html scroll
+ *      container, including bare <h2 id> (custom JSX pages) and <Heading>
+ *      (Nova swizzle). Do NOT also set scroll-margin-top on the heading, or
+ *      the two will compound and the heading will land at 2x the navbar
+ *      height below the viewport top.
+ *   5. Same token is also consumed by the sticky-positioning top offset of
+ *      DocSidebar, BlogSidebar, and TOC overlays.
+ */
 html {
   -webkit-text-size-adjust: 100%;
   -moz-tab-size: 4;
@@ -49,4 +71,11 @@ h4,
 h5,
 h6 {
   overflow-wrap: break-word;
+}
+
+code,
+pre,
+kbd,
+samp {
+  font-family: var(--nova-font-code);
 }

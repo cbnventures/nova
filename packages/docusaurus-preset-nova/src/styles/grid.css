@@ -1,5 +1,5 @@
 /**
- * Grid — Responsive container, column system, and breakpoint variables.
+ * Grid - Responsive container, column system, and breakpoint variables.
  *
  * @since 0.15.0
  */
@@ -23,6 +23,47 @@
   --nova-layout-docs-max: var(--nova-grid-container-max);
   --nova-layout-blog-max: var(--nova-grid-container-max);
   --nova-layout-footer-max: var(--nova-grid-container-max);
+
+  /* Sticky chrome offset for hash-anchor scroll, sticky sidebars, and TOC.
+     System default is 0px (no sticky chrome). Each preset MUST override this
+     to match the rendered sticky-navbar height (or 0 if non-sticky) via
+     rename+alias from --nova-{preset}-layout-sticky-top in preset.css.
+     sticky-layout.ts also overrides this at runtime to track dynamic
+     navbar-height changes (e.g. announcement-bar dismissal). */
+  --nova-layout-sticky-top: 0px;
+
+  /* Navbar items cluster max-width budgets - one value per variant,
+     shared across all 6 presets. Inline items beyond this budget get
+     pushed into a trailing "More" dropdown by `useNavbarOverflow`.
+     Monolith excluded (no desktop items row). Budgets grow at xl
+     (1280px) + xxl (1536px) so wider viewports surface more inline
+     items before falling back to the dropdown. `useNavbarOverflow`
+     re-reads these on every ResizeObserver fire, so the visible slice
+     updates automatically when the viewport crosses a breakpoint. */
+  --nova-navbar-bridge-items-max-width: 25rem;
+  --nova-navbar-compass-items-max-width: 28.125rem;
+  --nova-navbar-canopy-items-max-width: 18.75rem;
+
+  /* Navbar More dropdown trigger reserved width. `useNavbarOverflow`
+     subtracts this (plus one gap) from the budget when deciding the
+     overflow cutoff, so the trigger fits next to the visible items. */
+  --nova-navbar-more-width: 2.5rem;
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --nova-navbar-bridge-items-max-width: 32rem;
+    --nova-navbar-compass-items-max-width: 36rem;
+    --nova-navbar-canopy-items-max-width: 24rem;
+  }
+}
+
+@media (min-width: 1536px) {
+  :root {
+    --nova-navbar-bridge-items-max-width: 40rem;
+    --nova-navbar-compass-items-max-width: 45rem;
+    --nova-navbar-canopy-items-max-width: 30rem;
+  }
 }
 
 .nova-container {
@@ -39,7 +80,7 @@
 }
 
 /**
- * Grid — Section container scoping.
+ * Grid - Section container scoping.
  *
  * Each section wrapper re-scopes --nova-grid-container-max for its
  * .nova-container children. Override --nova-layout-*-max in :root
@@ -51,14 +92,7 @@
 .nova-doc-root  { --nova-grid-container-max: var(--nova-layout-docs-max); }
 .nova-blog-root { --nova-grid-container-max: var(--nova-layout-blog-max); }
 
-@media (min-width: 1024px) {
-  .nova-doc-root > .nova-container,
-  .nova-blog-root > .nova-container {
-    padding-inline: 0;
-  }
-}
-
-/* Grid — Base column spans */
+/* Grid - Base column spans */
 .nova-col-1 { grid-column: span 1; }
 .nova-col-2 { grid-column: span 2; }
 .nova-col-3 { grid-column: span 3; }
@@ -72,7 +106,7 @@
 .nova-col-11 { grid-column: span 11; }
 .nova-col-12 { grid-column: span 12; }
 
-/* Grid — xxs (360px) */
+/* Grid - xxs (360px) */
 @media (min-width: 360px) {
   .nova-col-xxs-1 { grid-column: span 1; }
   .nova-col-xxs-2 { grid-column: span 2; }
@@ -88,7 +122,7 @@
   .nova-col-xxs-12 { grid-column: span 12; }
 }
 
-/* Grid — xs (480px) */
+/* Grid - xs (480px) */
 @media (min-width: 480px) {
   .nova-col-xs-1 { grid-column: span 1; }
   .nova-col-xs-2 { grid-column: span 2; }
@@ -104,7 +138,7 @@
   .nova-col-xs-12 { grid-column: span 12; }
 }
 
-/* Grid — sm (640px) */
+/* Grid - sm (640px) */
 @media (min-width: 640px) {
   .nova-col-sm-1 { grid-column: span 1; }
   .nova-col-sm-2 { grid-column: span 2; }
@@ -120,7 +154,7 @@
   .nova-col-sm-12 { grid-column: span 12; }
 }
 
-/* Grid — md (768px) */
+/* Grid - md (768px) */
 @media (min-width: 768px) {
   .nova-col-md-1 { grid-column: span 1; }
   .nova-col-md-2 { grid-column: span 2; }
@@ -136,7 +170,7 @@
   .nova-col-md-12 { grid-column: span 12; }
 }
 
-/* Grid — lg (1024px) */
+/* Grid - lg (1024px) */
 @media (min-width: 1024px) {
   .nova-col-lg-1 { grid-column: span 1; }
   .nova-col-lg-2 { grid-column: span 2; }
@@ -152,7 +186,7 @@
   .nova-col-lg-12 { grid-column: span 12; }
 }
 
-/* Grid — xl (1280px) */
+/* Grid - xl (1280px) */
 @media (min-width: 1280px) {
   .nova-col-xl-1 { grid-column: span 1; }
   .nova-col-xl-2 { grid-column: span 2; }
@@ -168,7 +202,7 @@
   .nova-col-xl-12 { grid-column: span 12; }
 }
 
-/* Grid — xxl (1536px) */
+/* Grid - xxl (1536px) */
 @media (min-width: 1536px) {
   .nova-col-xxl-1 { grid-column: span 1; }
   .nova-col-xxl-2 { grid-column: span 2; }
@@ -184,7 +218,7 @@
   .nova-col-xxl-12 { grid-column: span 12; }
 }
 
-/* Grid — 3xl (1920px) */
+/* Grid - 3xl (1920px) */
 @media (min-width: 1920px) {
   .nova-col-3xl-1 { grid-column: span 1; }
   .nova-col-3xl-2 { grid-column: span 2; }
@@ -200,7 +234,7 @@
   .nova-col-3xl-12 { grid-column: span 12; }
 }
 
-/* Grid — 4xl (2560px) */
+/* Grid - 4xl (2560px) */
 @media (min-width: 2560px) {
   .nova-col-4xl-1 { grid-column: span 1; }
   .nova-col-4xl-2 { grid-column: span 2; }

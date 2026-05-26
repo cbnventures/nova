@@ -1,0 +1,10 @@
+{
+  "label": "الاستلام",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "إدخال Marshal — التثبيت عبر Spark أو حاوية Vial (يصل الختم وقد طُبع مسبقًا)، ثم قدّم أوّل سياسة مختومة وراقب السجلّ يمتلئ."
+  }
+}

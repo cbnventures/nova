@@ -1,0 +1,110 @@
+---
+title: "重试逻辑比你想的难"
+authors:
+  - "nneka"
+tags:
+  - "courier"
+  - "retry"
+  - "infrastructure"
+date: "2025-06-05"
+---
+
+人人都以为自己懂重试逻辑。发请求，失败了就再发一次，可能等一秒，可能等两秒——能有多难？
+
+{/* truncate */}
+
+比你想的难，远不止难一点。
+
+## 朴素的做法
+
+最朴素的重试是立即重试：请求失败，那就立刻再发一次。这种做法只在一种场景下奏效——失败恰好是一次瞬时网络抖动。其他场景里，它只会把事情变得更糟。
+
+```text title="负载下的立即重试"
+03:47:00  POST /relay — 503 Service Unavailable
+03:47:00  POST /relay — 503 Service Unavailable (retry 1)
+03:47:00  POST /relay — 503 Service Unavailable (retry 2)
+03:47:00  POST /relay — 503 Service Unavailable (retry 3)
+# 目的地已经过载，你正在让它更糟。
+```
+
+进一步是固定间隔重试：每次重试之间等待一秒。虽然稍好，但仍有问题。一旦上百条中继都按同一秒节拍重试，就会形成一次同步的"惊群"，把目的地按死。
+
+## Courier 实际的做法
+
+Courier 使用带抖动的指数退避。指数退避拉长重试之间的间隔，抖动则把准确时机随机化，避免并发重试同步。
+
+| 策略      | 延迟模式                   | 惊群风险 | 投递保证 |
+|---------|------------------------|------|------|
+| 立即      | 0s, 0s, 0s             | 极高   | 无    |
+| 固定间隔    | 1s, 1s, 1s             | 高    | 弱    |
+| 指数退避    | 1s, 2s, 4s, 8s         | 中    | 中    |
+| 退避 + 抖动 | 0.8s, 2.3s, 3.7s, 9.1s | 低    | 强    |
+| Courier | 退避 + 抖动 + 死信           | 极低   | 保证   |
+
+最后一行就是 Courier 所处的位置。退避与抖动负责时机，而真正"有保证的投递"还需要两件事：死信队列与投递回执。
+
+## 死信队列
+
+耗尽所有重试的消息不会被丢弃，它会被移入死信队列——专门存放"未能在重试窗口内完成投递"的消息。
+
+```text title="Courier 死信流"
+Attempt 1  →  503  →  wait 1.2s
+Attempt 2  →  503  →  wait 4.7s
+Attempt 3  →  503  →  wait 28.3s
+Attempt 4  →  503  →  wait 2m 10s
+Attempt 5  →  503  →  DEAD LETTER
+
+Message moved to: /ledger/dead-letter/msg_a7f3c9
+Escalation: Dispatch routes to fallback destination
+```
+
+死信消息可通过 Spoke API 查询。运维人员可以查看、手动重试或清除；Ledger 会记录每一次状态转移。
+
+## 投递回执
+
+Courier 不会因为目的地返回 200 就认为消息已投递。它要的是目的地返回 200，*并且*响应正文符合期望的回执 schema。
+
+这一区分很重要：反向代理返回的空体 200，与真正业务服务确认接收的 200，是两回事。Courier 校验回执，写入 Ledger，只有此时才会把投递标记为完成。
+
+### Courier 重试完整配置 schema
+
+```text title="relay.grain — retry 块"
+retry {
+  # Strategy: "exponential" | "fixed" | "immediate"
+  strategy = "exponential"
+
+  # Maximum retry attempts before dead-letter
+  max = 5
+
+  # Base delay for exponential backoff
+  base_delay = "1s"
+
+  # Maximum delay cap
+  max_delay = "10m"
+
+  # Jitter range (percentage of current delay)
+  jitter = 0.25
+
+  # Dead-letter queue configuration
+  dead_letter {
+    enabled = true
+    retention = "30d"
+    escalation = "dispatch://fallback-channel"
+  }
+
+  # Delivery receipt validation
+  receipt {
+    required = true
+    schema   = "standard"
+    timeout  = "5s"
+  }
+}
+```
+
+## 教训
+
+重试逻辑不是带 sleep 的循环，而是至少包含五个状态的状态机：pending、attempting、backing off、dead-lettered、delivered。每一次转换都有规则，每一种状态都有副作用，每一种失败模式都对应不同的正确响应。
+
+Courier 把这件事处理好，是为了让中继清单不必处理。你在 `.grain` 文件里声明重试策略，剩下的交给 Courier。
+
+这正是要点：可靠性不应该要求每一个集成点都具备专家级知识，它应该是默认值。

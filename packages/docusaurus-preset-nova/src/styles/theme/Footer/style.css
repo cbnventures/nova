@@ -1,6 +1,23 @@
 /**
  * ============================
- * Footer — Container Scoping
+ * Footer - Tokens
+ *
+ * Component-tier default for the credit-row hover filter
+ * sweep duration. Preset overlays override the canonical
+ * via a rename+alias chain in their preset.css. The
+ * footer surface itself uses preset-level identity tokens
+ * (no shared canonical) since per-variant footer chrome
+ * varies enough that a single token doesn't fit.
+ * ============================
+ */
+
+:root {
+  --nova-footer-filter-duration: 250ms;
+}
+
+/**
+ * ============================
+ * Footer - Container Scoping
  * ============================
  */
 
@@ -10,7 +27,7 @@
 
 /**
  * ============================
- * Footer — Navigation Lists
+ * Footer - Navigation Lists
  * ============================
  */
 

@@ -1,5 +1,9 @@
 /**
- * Foundry — Doc Paginator visual styling.
+ * Foundry - `DocPaginator` theme overlay.
+ *
+ * Previous/next-page navigation - display-font heading, shape-radius
+ * card with neutral-50 hover fill. Direction labels in uppercase tracking
+ * (industrial signage); page titles take primary.
  *
  * @since 0.15.0
  */
@@ -24,11 +28,7 @@
 .nova-doc-paginator-heading {
   font-family: var(--nova-font-display);
   font-size: 1.125rem;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-doc-paginator-heading {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
 }
 
 /* ============================
@@ -45,12 +45,12 @@
 
 .nova-doc-paginator-link:hover,
 .nova-doc-paginator-link:focus-visible {
-  background-color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-surface-raised);
 }
 
 [data-theme="dark"] .nova-doc-paginator-link:hover,
 [data-theme="dark"] .nova-doc-paginator-link:focus-visible {
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--nova-foundry-glow-primary);
 }
 
 /* ============================
@@ -62,11 +62,7 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-doc-paginator-label {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 /* ============================
@@ -88,10 +84,6 @@
  * ============================ */
 
 .nova-doc-paginator-excerpt {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   line-height: 1.6;
-}
-
-[data-theme="dark"] .nova-doc-paginator-excerpt {
-  color: var(--nova-color-neutral-400);
 }

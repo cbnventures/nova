@@ -1,0 +1,194 @@
+/**
+ * Lantern - `install-strip` component overlay.
+ *
+ * Block variant rendered as a warm cream paper card with amber hairline,
+ * gentle glow on hover. Italic Fraunces small label, warm monospace
+ * command with a unix-shell `$` prompt prefix, muted copy icon that warms on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Block variant - warm paper card
+ * ============================
+ */
+
+.nova-install-strip-command-block {
+  gap: 0;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 88%);
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--nova-color-primary-700), transparent 88%);
+
+  transition:
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-install-strip-command-block:hover,
+.nova-install-strip-command-block:focus-visible {
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow-strong);
+
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .nova-install-strip-command-block:hover,
+[data-theme="dark"] .nova-install-strip-command-block:focus-visible {
+  border-color: var(--nova-color-primary-400);
+
+  transform: var(--nova-lantern-hover-lift);
+}
+
+/**
+ * ============================
+ * 2. Code element - amber pointer prefix
+ * ============================
+ */
+
+.nova-install-strip .nova-install-strip-code {
+  padding: 0.75rem 0 0.75rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.85rem;
+  color: var(--nova-lantern-ink);
+}
+
+.nova-install-strip .nova-install-strip-code::before {
+  margin-right: 0.5rem;
+
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+
+  content: "$";
+}
+
+[data-theme="dark"] .nova-install-strip .nova-install-strip-code::before {
+  color: var(--nova-color-primary-400);
+}
+
+@media (min-width: 640px) {
+  .nova-install-strip .nova-install-strip-code {
+    padding: 1rem 0 1rem 1.5rem;
+    font-size: 0.95rem;
+  }
+}
+
+/**
+ * ============================
+ * 3. Icon variant - warm cream paper code + interactive copy with glow on hover
+ *
+ * Matches the block variant's cream paper card + amber hairline + soft
+ * warm shadow so all variants share the same lantern voice. Code is static;
+ * copy button gains the warm glow + gentle lift on hover.
+ * ============================
+ */
+
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+  padding-right: 1.125rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 88%);
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--nova-color-primary-700), transparent 88%);
+}
+
+@media (min-width: 640px) {
+  .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+    padding-right: 1.5rem;
+  }
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
+  box-shadow: none;
+}
+
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy {
+  color: var(--nova-lantern-ink);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 88%);
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+  border-radius: 10px;
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--nova-color-primary-700), transparent 88%);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:hover,
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:focus-visible {
+  color: var(--nova-color-primary-700);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow-strong);
+
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
+  box-shadow: none;
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:hover,
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:focus-visible {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-400);
+
+  transform: var(--nova-lantern-hover-lift);
+}
+
+/**
+ * ============================
+ * 4. Block copy icon
+ * ============================
+ */
+
+.nova-install-strip-command-block .nova-install-strip-copy {
+  padding: 0.5rem 0.75rem;
+  margin: 0.25rem;
+
+  color: var(--nova-lantern-ink);
+}
+
+.nova-install-strip-command-block:hover .nova-install-strip-copy,
+.nova-install-strip-command-block:focus-visible .nova-install-strip-copy {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block:hover .nova-install-strip-copy,
+[data-theme="dark"] .nova-install-strip-command-block:focus-visible .nova-install-strip-copy {
+  color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Label - italic Fraunces, warm muted
+ * ============================
+ */
+
+.nova-install-strip-label {
+  margin-bottom: 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--nova-lantern-ink-muted);
+}

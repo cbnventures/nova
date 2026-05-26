@@ -5,7 +5,7 @@ import {
   InstallStrip,
   Stats,
   Typewriter,
-} from '@cbnventures/docusaurus-preset-nova/components';
+} from '@cbnventures/docusaurus-preset-nova/blocks';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -38,7 +38,7 @@ function Home() {
   /**
    * Pages - Home - Feature Items.
    *
-   * Hero-adjacent cards that highlight why Nova exists — config
+   * Hero-adjacent cards that highlight why Nova exists - config
    * fatigue, strict defaults, and shipping faster.
    *
    * @since 0.15.0
@@ -65,7 +65,7 @@ function Home() {
    * Pages - Home - Included Items.
    *
    * Secondary feature cards that detail the concrete capabilities
-   * bundled with Nova — presets, generators, toolkit, and more.
+   * bundled with Nova - presets, generators, toolkit, and more.
    *
    * @since 0.15.0
    */

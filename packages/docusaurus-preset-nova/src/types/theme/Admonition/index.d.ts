@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Admonition.
@@ -11,10 +11,16 @@ export type ThemeAdmonitionPropsTitle = ReactNode;
 
 export type ThemeAdmonitionPropsChildren = ReactNode;
 
+export type ThemeAdmonitionPropsClassName = string | undefined;
+
+export type ThemeAdmonitionPropsStyle = CSSProperties | undefined;
+
 export type ThemeAdmonitionProps = {
   type: ThemeAdmonitionPropsType;
   title?: ThemeAdmonitionPropsTitle;
   children?: ThemeAdmonitionPropsChildren;
+  className?: ThemeAdmonitionPropsClassName;
+  style?: ThemeAdmonitionPropsStyle;
   [key: string]: unknown;
 };
 
@@ -28,3 +34,10 @@ export type ThemeAdmonitionIconName = string;
  * @since 0.15.0
  */
 export type ThemeAdmonitionIcons = Record<string, string>;
+
+/**
+ * Theme - Admonition - Type Labels.
+ *
+ * @since 0.18.0
+ */
+export type ThemeAdmonitionTypeLabels = Record<string, string>;

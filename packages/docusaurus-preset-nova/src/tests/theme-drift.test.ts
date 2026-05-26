@@ -63,6 +63,7 @@ const variantDirectories: TestsThemeDriftVariantDirectories = [
   'Navbar/Canopy',
   'Navbar/Compass',
   'Navbar/Monolith',
+  'Navbar/More',
 ];
 
 /**

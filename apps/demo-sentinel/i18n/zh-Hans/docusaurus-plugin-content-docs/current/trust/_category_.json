@@ -1,0 +1,10 @@
+{
+  "label": "Trust",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Sentinel 的信任引擎——策略语法与评估顺序、Garrison 设备纳入与基线姿态，以及 Drawbridge 访问控制（含上下文感知授权、时间限制与紧急覆盖）。"
+  }
+}

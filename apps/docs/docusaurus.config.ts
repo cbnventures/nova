@@ -131,27 +131,23 @@ const config: DocusaurusNovaConfig = {
       // Preset Overrides (undefined = use preset default).
       overrides: {
         colors: {
-          primary: '#DC2626',
-          accent: '#FFBA33',
-          neutral: '#78716C',
+          primary: {
+            light: '#DC2626',
+            dark: '#DC2626',
+          },
+          secondary: {
+            light: '#FFBA33',
+            dark: '#FFBA33',
+          },
+          text: undefined,
+          border: undefined,
+          warning: undefined,
+          danger: undefined,
         },
         fonts: {
           display: 'Sora',
           body: 'DM Sans',
           code: 'JetBrains Mono',
-        },
-        shape: {
-          radius: undefined,
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: undefined,
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
         },
         navbar: undefined,
         footer: undefined,
@@ -231,11 +227,15 @@ const config: DocusaurusNovaConfig = {
       title: 'Nova',
       logo: {
         alt: 'Nova',
-        src: '/images/logo.svg',
-        srcDark: undefined,
+        src: {
+          light: '/images/logo.svg',
+          dark: undefined,
+        },
         href: '/',
-        wordmark: undefined,
-        wordmarkDark: undefined,
+        wordmark: {
+          light: undefined,
+          dark: undefined,
+        },
         title: 'Nova',
       },
       image: '/thumbnails/brand.png',
@@ -351,8 +351,8 @@ const config: DocusaurusNovaConfig = {
 
     // Announcement Bar.
     announcementBar: {
-      id: 'nova-preset-theme',
-      content: 'The Docusaurus preset is now available — four theme presets, one package.',
+      id: 'nova-preset-theme-2',
+      content: 'The Docusaurus preset is now available — six theme presets, one package.',
       backgroundColor: undefined,
       textColor: undefined,
       isCloseable: true,
@@ -445,7 +445,7 @@ const config: DocusaurusNovaConfig = {
       },
       socialLinks: [
         {
-          icon: 'mdi:facebook',
+          icon: 'ri:facebook-fill',
           href: 'https://www.facebook.com/cbnventures',
           label: 'Facebook',
         },
@@ -455,27 +455,27 @@ const config: DocusaurusNovaConfig = {
           label: 'X',
         },
         {
-          icon: 'mdi:youtube',
+          icon: 'ri:youtube-fill',
           href: 'https://www.youtube.com/@cbnventures',
           label: 'YouTube',
         },
         {
-          icon: 'mdi:instagram',
+          icon: 'ri:instagram-fill',
           href: 'https://www.instagram.com/cbnventures/',
           label: 'Instagram',
         },
         {
-          icon: 'mdi:github',
+          icon: 'ri:github-fill',
           href: 'https://github.com/cbnventures',
           label: 'GitHub',
         },
         {
-          icon: 'mdi:google-play',
+          icon: 'ri:google-play-fill',
           href: 'https://play.google.com/store/apps/dev?id=6419450160526226105',
           label: 'Google Play',
         },
         {
-          icon: 'mdi:linkedin',
+          icon: 'ri:linkedin-fill',
           href: 'https://www.linkedin.com/company/cbnventures/',
           label: 'LinkedIn',
         },

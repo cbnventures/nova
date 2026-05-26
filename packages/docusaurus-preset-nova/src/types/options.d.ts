@@ -1,34 +1,78 @@
 import type {
   SharedHexColor,
   SharedPreset,
-  SharedPresetDepthCards,
-  SharedPresetDepthCodeBlocks,
   SharedPresetFontsBody,
   SharedPresetFontsCode,
   SharedPresetFontsDisplay,
   SharedPresetFooter,
   SharedPresetLogo,
-  SharedPresetMotionHoverEffects,
-  SharedPresetMotionSpeed,
-  SharedPresetMotionStaggeredReveals,
   SharedPresetName,
   SharedPresetNavbar,
-  SharedPresetShapeDensity,
-  SharedPresetShapeRadius,
 } from './shared.d.ts';
 
 export type OptionsPluginOptionsPreset = SharedPresetName;
 
-export type OptionsPluginOptionsOverridesColorsPrimary = SharedHexColor | undefined;
+export type OptionsPluginOptionsOverridesColorsPrimaryLight = SharedHexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsAccent = SharedHexColor | undefined;
+export type OptionsPluginOptionsOverridesColorsPrimaryDark = SharedHexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsNeutral = SharedHexColor | undefined;
+export type OptionsPluginOptionsOverridesColorsPrimary = {
+  light: OptionsPluginOptionsOverridesColorsPrimaryLight;
+  dark: OptionsPluginOptionsOverridesColorsPrimaryDark;
+} | undefined;
+
+export type OptionsPluginOptionsOverridesColorsSecondaryLight = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsSecondaryDark = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsSecondary = {
+  light: OptionsPluginOptionsOverridesColorsSecondaryLight;
+  dark: OptionsPluginOptionsOverridesColorsSecondaryDark;
+} | undefined;
+
+export type OptionsPluginOptionsOverridesColorsTextLight = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsTextDark = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsText = {
+  light: OptionsPluginOptionsOverridesColorsTextLight;
+  dark: OptionsPluginOptionsOverridesColorsTextDark;
+} | undefined;
+
+export type OptionsPluginOptionsOverridesColorsBorderLight = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsBorderDark = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsBorder = {
+  light: OptionsPluginOptionsOverridesColorsBorderLight;
+  dark: OptionsPluginOptionsOverridesColorsBorderDark;
+} | undefined;
+
+export type OptionsPluginOptionsOverridesColorsWarningLight = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsWarningDark = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsWarning = {
+  light: OptionsPluginOptionsOverridesColorsWarningLight;
+  dark: OptionsPluginOptionsOverridesColorsWarningDark;
+} | undefined;
+
+export type OptionsPluginOptionsOverridesColorsDangerLight = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsDangerDark = SharedHexColor | undefined;
+
+export type OptionsPluginOptionsOverridesColorsDanger = {
+  light: OptionsPluginOptionsOverridesColorsDangerLight;
+  dark: OptionsPluginOptionsOverridesColorsDangerDark;
+} | undefined;
 
 export type OptionsPluginOptionsOverridesColors = {
   primary: OptionsPluginOptionsOverridesColorsPrimary;
-  accent: OptionsPluginOptionsOverridesColorsAccent;
-  neutral: OptionsPluginOptionsOverridesColorsNeutral;
+  secondary: OptionsPluginOptionsOverridesColorsSecondary;
+  text: OptionsPluginOptionsOverridesColorsText;
+  border: OptionsPluginOptionsOverridesColorsBorder;
+  warning: OptionsPluginOptionsOverridesColorsWarning;
+  danger: OptionsPluginOptionsOverridesColorsDanger;
 };
 
 export type OptionsPluginOptionsOverridesFontsDisplay = SharedPresetFontsDisplay | undefined;
@@ -43,36 +87,6 @@ export type OptionsPluginOptionsOverridesFonts = {
   code: OptionsPluginOptionsOverridesFontsCode;
 };
 
-export type OptionsPluginOptionsOverridesShapeRadius = SharedPresetShapeRadius | undefined;
-
-export type OptionsPluginOptionsOverridesShapeDensity = SharedPresetShapeDensity | undefined;
-
-export type OptionsPluginOptionsOverridesShape = {
-  radius: OptionsPluginOptionsOverridesShapeRadius;
-  density: OptionsPluginOptionsOverridesShapeDensity;
-};
-
-export type OptionsPluginOptionsOverridesDepthCards = SharedPresetDepthCards | undefined;
-
-export type OptionsPluginOptionsOverridesDepthCodeBlocks = SharedPresetDepthCodeBlocks | undefined;
-
-export type OptionsPluginOptionsOverridesDepth = {
-  cards: OptionsPluginOptionsOverridesDepthCards;
-  codeBlocks: OptionsPluginOptionsOverridesDepthCodeBlocks;
-};
-
-export type OptionsPluginOptionsOverridesMotionSpeed = SharedPresetMotionSpeed | undefined;
-
-export type OptionsPluginOptionsOverridesMotionStaggeredReveals = SharedPresetMotionStaggeredReveals | undefined;
-
-export type OptionsPluginOptionsOverridesMotionHoverEffects = SharedPresetMotionHoverEffects | undefined;
-
-export type OptionsPluginOptionsOverridesMotion = {
-  speed: OptionsPluginOptionsOverridesMotionSpeed;
-  staggeredReveals: OptionsPluginOptionsOverridesMotionStaggeredReveals;
-  hoverEffects: OptionsPluginOptionsOverridesMotionHoverEffects;
-};
-
 export type OptionsPluginOptionsOverridesNavbar = SharedPresetNavbar | undefined;
 
 export type OptionsPluginOptionsOverridesFooter = SharedPresetFooter | undefined;
@@ -80,9 +94,6 @@ export type OptionsPluginOptionsOverridesFooter = SharedPresetFooter | undefined
 export type OptionsPluginOptionsOverrides = {
   colors: OptionsPluginOptionsOverridesColors;
   fonts: OptionsPluginOptionsOverridesFonts;
-  shape: OptionsPluginOptionsOverridesShape;
-  depth: OptionsPluginOptionsOverridesDepth;
-  motion: OptionsPluginOptionsOverridesMotion;
   navbar: OptionsPluginOptionsOverridesNavbar;
   footer: OptionsPluginOptionsOverridesFooter;
 };
@@ -191,31 +202,65 @@ export type OptionsResolvePresetBasePreset = SharedPreset;
 
 export type OptionsResolvePresetResolvedLogo = SharedPresetLogo;
 
-export type OptionsResolvePresetResolvedColorsPrimary = SharedHexColor;
+export type OptionsResolvePresetResolvedColorsPrimaryLight = SharedHexColor;
 
-export type OptionsResolvePresetResolvedColorsAccent = SharedHexColor;
+export type OptionsResolvePresetResolvedColorsPrimaryDark = SharedHexColor;
 
-export type OptionsResolvePresetResolvedColorsNeutral = SharedHexColor;
+export type OptionsResolvePresetResolvedColorsPrimary = {
+  light: OptionsResolvePresetResolvedColorsPrimaryLight;
+  dark: OptionsResolvePresetResolvedColorsPrimaryDark;
+};
+
+export type OptionsResolvePresetResolvedColorsAccentLight = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsAccentDark = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsAccent = {
+  light: OptionsResolvePresetResolvedColorsAccentLight;
+  dark: OptionsResolvePresetResolvedColorsAccentDark;
+};
+
+export type OptionsResolvePresetResolvedColorsTextLight = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsTextDark = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsText = {
+  light: OptionsResolvePresetResolvedColorsTextLight;
+  dark: OptionsResolvePresetResolvedColorsTextDark;
+};
+
+export type OptionsResolvePresetResolvedColorsBorderLight = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsBorderDark = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsBorder = {
+  light: OptionsResolvePresetResolvedColorsBorderLight;
+  dark: OptionsResolvePresetResolvedColorsBorderDark;
+};
+
+export type OptionsResolvePresetResolvedColorsWarningLight = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsWarningDark = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsWarning = {
+  light: OptionsResolvePresetResolvedColorsWarningLight;
+  dark: OptionsResolvePresetResolvedColorsWarningDark;
+};
+
+export type OptionsResolvePresetResolvedColorsDangerLight = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsDangerDark = SharedHexColor;
+
+export type OptionsResolvePresetResolvedColorsDanger = {
+  light: OptionsResolvePresetResolvedColorsDangerLight;
+  dark: OptionsResolvePresetResolvedColorsDangerDark;
+};
 
 export type OptionsResolvePresetResolvedFontsDisplay = SharedPresetFontsDisplay;
 
 export type OptionsResolvePresetResolvedFontsBody = SharedPresetFontsBody;
 
 export type OptionsResolvePresetResolvedFontsCode = SharedPresetFontsCode;
-
-export type OptionsResolvePresetResolvedShapeRadius = SharedPresetShapeRadius;
-
-export type OptionsResolvePresetResolvedShapeDensity = SharedPresetShapeDensity;
-
-export type OptionsResolvePresetResolvedDepthCards = SharedPresetDepthCards;
-
-export type OptionsResolvePresetResolvedDepthCodeBlocks = SharedPresetDepthCodeBlocks;
-
-export type OptionsResolvePresetResolvedMotionSpeed = SharedPresetMotionSpeed;
-
-export type OptionsResolvePresetResolvedMotionStaggeredReveals = SharedPresetMotionStaggeredReveals;
-
-export type OptionsResolvePresetResolvedMotionHoverEffects = SharedPresetMotionHoverEffects;
 
 export type OptionsResolvePresetResolvedNavbar = SharedPresetNavbar;
 

@@ -1,0 +1,11 @@
+/**
+ * Lantern - `DocItem/Content` theme overlay.
+ *
+ * Article-rhythm rules (paragraph, lists, hr, blockquote, tables, strong,
+ * em, selection) live in the `MDXContent` overlay scoped to
+ * `.nova-mdx-content` so they apply uniformly across docs, blog posts, and
+ * standalone MDX pages. This file is reserved for rules that are truly
+ * specific to the doc article shell - none currently exist for lantern.
+ *
+ * @since 0.18.0
+ */

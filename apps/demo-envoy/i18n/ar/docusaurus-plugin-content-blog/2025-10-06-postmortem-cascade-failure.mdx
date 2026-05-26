@@ -1,0 +1,103 @@
+---
+title: "تشريح: العطل المتسلسل الذي أسقط أربعة عملاء"
+authors:
+  - "anders"
+tags:
+  - "incident-response"
+  - "observability"
+  - "monitoring"
+date: "2025-10-06"
+---
+
+في 29 سبتمبر عند 16:42 UTC، تسبّب ملفّ Parcel واحد مُعدّ بشكل خاطئ في عطل متسلسل أثّر على أربعة عملاء، وأسقط 12,000 رسالة على مدى 23 دقيقة، وأطلق أطول حادثة في تاريخ Envoy.
+
+هذا هو التشريح الكامل. لا تفاصيل محذوفة.
+
+{/* truncate */}
+
+## الجدول الزمني
+
+```text title="Incident #112 — 2025-09-29"
+16:42:00  Customer D deploys new relay config with malformed .parcel file
+16:42:00  Parcel parser enters infinite loop on recursive field reference
+16:42:01  CPU on envoy-prod-03 hits 100%
+16:42:03  Courier stops processing relays on envoy-prod-03
+16:42:03  Trellis health check fails → marks envoy-prod-03 as unhealthy
+16:42:04  Trellis redistributes traffic to envoy-prod-01 and envoy-prod-02
+16:42:04  Traffic spike on envoy-prod-01 (from 15k to 25k RPS)
+16:42:08  envoy-prod-01 latency p99 spikes to 940ms
+16:42:15  Glassboard fires P2 alert (latency breach)
+16:42:30  envoy-prod-03 restarts, loads same bad config, enters infinite loop again
+16:42:31  Trellis marks envoy-prod-03 as unhealthy (again)
+16:42:45  Glassboard escalates to P1 (repeated failure + sustained latency)
+16:43:02  On-call engineer acknowledges
+16:44:30  Engineer identifies envoy-prod-03 restart loop in Trellis logs
+16:46:00  Engineer cordons envoy-prod-03 (removed from pool)
+16:46:15  Traffic stabilizes on envoy-prod-01 and envoy-prod-02
+16:47:00  Latency returns to normal
+16:52:00  Root cause identified: recursive $ref in customer D's .parcel file
+16:55:00  Customer D's config rolled back
+17:05:00  envoy-prod-03 restarted with clean config
+17:05:30  All clear
+```
+
+المدّة الإجمالية: 23 دقيقة و30 ثانية. الرسائل المُسقَطة: 12,147. العملاء المتأثّرون: 4 (كلّهم يتشاركون envoy-prod-01 وenvoy-prod-02 أثناء إعادة توزيع الحركة).
+
+## السبب الجذري
+
+احتوى ملفّ `.parcel` للعميل D على مرجع حقل دائري:
+
+```text title="The bad .parcel file (simplified)"
+provider "internal-webhook" {
+  extract {
+    user_id   = "$.data.user.id"
+    user_data = "$.data.user"
+    nested    = "$ref:user_data.nested"   # ← references itself via user_data
+  }
+}
+```
+
+استخراج `$ref:user_data.nested` أشار إلى `user_data`، الذي احتوى على كائن `$.data.user` الكامل، الذي احتوى على حقل `nested` يُشير عودًا إلى المسار نفسه. تتبّع محلّل Parcel سلسلة المرجع دون حدّ عمق ودخل حلقة لا نهائية.
+
+## ما الذي فشل
+
+فشلت ثلاثة أشياء:
+
+1. **لا تحقّق من المراجع الدائرية.** صادق محلّل Parcel على الصياغة، لكن ليس على طوبولوجيا المرجع. كان المرجع الدائري صحيحًا صياغيًّا.
+2. **لا عزل CPU بين العملاء.** عملت كلّ إعدادات العملاء على مثيلات Courier مشتركة. استهلك إعداد عميل واحد سيّئ 100% من CPU على المثيل المشترك.
+3. **حلقة إعادة التشغيل.** أعاد Trellis تشغيل المثيل الفاشل، الذي حمّل الإعداد السيّئ ذاته، الذي أطلق الحلقة اللانهائية ذاتها. لم تكن إعادة التشغيل استعادة — بل تكرارًا.
+
+## ما الذي أصلحناه
+
+### الإصلاح 1: حدّ عمق المرجع
+
+يفرض Parcel الآن حدّ عمق مرجع أقصاه 8. أيّ سلسلة `$ref` أعمق من 8 مستويات تُرفَض عند تحميل الإعداد برسالة خطأ واضحة.
+
+### الإصلاح 2: بوّابة التحقّق من الإعداد
+
+تُصادَق إعدادات الترحيل الجديدة الآن في مثيل Vial مُعزَّل قبل تطبيقها على الإنتاج. يُعالج الصندوق المعزول خطّاف ويب اصطناعيًّا عبر خطّ المعالجة الكامل. وإن انهار، أو دخل حلقة، أو تجاوز مهلة 5 ثوانٍ، يُرفَض الإعداد.
+
+### الإصلاح 3: ميزانيات CPU لكلّ عميل
+
+يتتبّع Courier الآن وقت CPU لكلّ إعداد عميل. إذا استهلكت ترحيلات عميل واحد أكثر من 40% من CPU المتاح لأكثر من 10 ثوانٍ، يُعلّق Courier تلقائيًّا إعداد ذلك العميل ويُطلق تنبيه P1 بمعرّف العميل وتجزئة الإعداد.
+
+### الإصلاح 4: إعادات التشغيل الواعية بالإعداد
+
+يفحص Trellis الآن ما إذا كان المثيل الفاشل يُعالج الإعداد ذاته الذي تسبّب في الفشل السابق. إذا لم يتغيّر الإعداد، لا يُعيد Trellis التشغيل — بل يحجز المثيل ويُنبّه المُشغّل.
+
+## تقييم الأثر
+
+| العميل | الرسائل المُسقَطة | زمن التعافي      | تعرّض السبب الجذري |
+|--------|-------------------|------------------|--------------------|
+| A      | 3,412             | 4 دقائق 15 ثانية | إعادة توزيع الحركة |
+| B      | 5,891             | 4 دقائق 15 ثانية | إعادة توزيع الحركة |
+| C      | 2,203             | 4 دقائق 15 ثانية | إعادة توزيع الحركة |
+| D      | 641               | 13 دقيقة         | مباشر (إعداد سيّئ) |
+
+استُعيدت كلّ الرسائل المُسقَطة من سجلّ الكتابة الأمامي في Ledger وأُعيد تشغيلها خلال ساعتين من الحادثة.
+
+## الدرس
+
+البنية التحتية متعدّدة المستأجرين تفشل بطرق متعدّدة المستأجرين. عَطَل في إعداد عميل واحد ينبغي ألّا يكون قادرًا على التأثير على حركة عميل آخر. العزل ليس اختياريًّا — بل هو الحدّ بين «عميل واحد لديه يوم سيّئ» و«أربعة عملاء لديهم يوم سيّئ».
+
+انتهكنا ذلك الحدّ. لن ننتهكه مجدّدًا.

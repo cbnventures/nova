@@ -1,0 +1,25 @@
+/**
+ * Sentinel - `Loading` theme overlay.
+ *
+ * Teal primary ring with a subtle teal halo, matching sentinel's chrome
+ * console aesthetic and mirroring the drop-shadow pattern used elsewhere
+ * (mermaid nodes, code chrome).
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * Sentinel - Loading Spinner
+ * ============================
+ */
+
+.nova-loading-spinner {
+  box-shadow: 0 0 6px color-mix(in srgb, var(--nova-color-primary-500), transparent 70%);
+
+  animation: nova-loading-spinner-rotate 0.8s linear infinite;
+}
+
+[data-theme="dark"] .nova-loading-spinner {
+  box-shadow: 0 0 8px color-mix(in srgb, var(--nova-color-primary-400), transparent 65%);
+}

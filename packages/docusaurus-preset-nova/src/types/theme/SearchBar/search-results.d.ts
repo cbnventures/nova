@@ -1,3 +1,5 @@
+import type { Dispatch, SetStateAction } from 'react';
+
 import type { SharedSearchWorkerSearchHit } from '../../shared.d.ts';
 
 /**
@@ -19,6 +21,8 @@ export type ThemeSearchBarSearchResultsIsReady = boolean;
 
 export type ThemeSearchBarSearchResultsQuery = string;
 
+export type ThemeSearchBarSearchResultsSearchedQuery = string;
+
 export type ThemeSearchBarSearchResultsActiveIndex = number;
 
 export type ThemeSearchBarSearchResultsSetIsOpen = import('./search-context.d.ts').ThemeSearchBarSearchContextValueSetIsOpen;
@@ -26,6 +30,22 @@ export type ThemeSearchBarSearchResultsSetIsOpen = import('./search-context.d.ts
 export type ThemeSearchBarSearchResultsInputRef = import('./search-context.d.ts').ThemeSearchBarSearchContextValueInputRef;
 
 export type ThemeSearchBarSearchResultsDropdownRef = React.RefObject<HTMLDivElement | null>;
+
+export type ThemeSearchBarSearchResultsWasOpenRef = React.RefObject<boolean>;
+
+export type ThemeSearchBarSearchResultsIsClosingState = [ThemeSearchBarSearchResultsIsClosing, ThemeSearchBarSearchResultsSetIsClosing];
+
+export type ThemeSearchBarSearchResultsIsClosing = boolean;
+
+export type ThemeSearchBarSearchResultsSetIsClosing = Dispatch<SetStateAction<ThemeSearchBarSearchResultsIsClosing>>;
+
+export type ThemeSearchBarSearchResultsIsMountedState = [ThemeSearchBarSearchResultsIsMounted, ThemeSearchBarSearchResultsSetIsMounted];
+
+export type ThemeSearchBarSearchResultsIsMounted = boolean;
+
+export type ThemeSearchBarSearchResultsSetIsMounted = Dispatch<SetStateAction<ThemeSearchBarSearchResultsIsMounted>>;
+
+export type ThemeSearchBarSearchResultsIsTransitionToClose = boolean;
 
 export type ThemeSearchBarSearchResultsHandleClickOutsideFunction = (event: ThemeSearchBarSearchResultsMouseEvent) => void;
 
@@ -39,17 +59,29 @@ export type ThemeSearchBarSearchResultsIsOutsideInput = boolean;
 
 export type ThemeSearchBarSearchResultsIsInsideMobileMenu = boolean;
 
+export type ThemeSearchBarSearchResultsAnimationFrameId = number;
+
+export type ThemeSearchBarSearchResultsIsInMobileMenu = boolean;
+
+export type ThemeSearchBarSearchResultsTimer = ReturnType<typeof setTimeout>;
+
 export type ThemeSearchBarSearchResultsLoading = string;
 
 export type ThemeSearchBarSearchResultsNoResults = string;
+
+export type ThemeSearchBarSearchResultsSearching = string;
 
 export type ThemeSearchBarSearchResultsResultCount = number;
 
 export type ThemeSearchBarSearchResultsResultsFound = string;
 
-export type ThemeSearchBarSearchResultsNoResultsFound = string;
+export type ThemeSearchBarSearchResultsDropdownClassName = string;
 
-export type ThemeSearchBarSearchResultsStatusAnnouncement = string;
+export type ThemeSearchBarSearchResultsAnimationEvent = React.AnimationEvent<HTMLDivElement>;
+
+export type ThemeSearchBarSearchResultsDropdownElement = HTMLElement;
+
+export type ThemeSearchBarSearchResultsTransitionEvent = React.TransitionEvent<HTMLDivElement>;
 
 export type ThemeSearchBarSearchResultsResultItem = SharedSearchWorkerSearchHit;
 
@@ -62,3 +94,7 @@ export type ThemeSearchBarSearchResultsActiveClassName = string;
 export type ThemeSearchBarSearchResultsSnippetSegment = SharedSearchWorkerSearchHit['snippetSegments'][number];
 
 export type ThemeSearchBarSearchResultsSnippetSegmentIndex = number;
+
+export type ThemeSearchBarSearchResultsNoResultsFound = string;
+
+export type ThemeSearchBarSearchResultsStatusAnnouncement = string;

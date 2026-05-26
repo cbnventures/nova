@@ -39,8 +39,8 @@ describe('preset', async () => {
     const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
     const themeCount: TestsPresetPresetThemeCount = result['themes'].length;
 
-    // Docs, blog, pages, sitemap, svgr.
-    strictEqual(pluginCount, 5);
+    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip.
+    strictEqual(pluginCount, 6);
 
     // Nova theme (Mermaid is now integrated natively).
     strictEqual(themeCount, 1);
@@ -70,8 +70,8 @@ describe('preset', async () => {
 
     const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
 
-    // Docs, pages, sitemap, svgr (no blog).
-    strictEqual(pluginCount, 4);
+    // Docs, pages, sitemap, svgr, mermaid-tooltip (no blog).
+    strictEqual(pluginCount, 5);
 
     return;
   });
@@ -98,8 +98,8 @@ describe('preset', async () => {
 
     const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
 
-    // Docs, blog, sitemap, svgr (no pages).
-    strictEqual(pluginCount, 4);
+    // Docs, blog, sitemap, svgr, mermaid-tooltip (no pages).
+    strictEqual(pluginCount, 5);
 
     return;
   });
@@ -126,8 +126,8 @@ describe('preset', async () => {
 
     const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
 
-    // Docs, blog, pages, svgr (no sitemap).
-    strictEqual(pluginCount, 4);
+    // Docs, blog, pages, svgr, mermaid-tooltip (no sitemap).
+    strictEqual(pluginCount, 5);
 
     return;
   });
@@ -154,8 +154,8 @@ describe('preset', async () => {
 
     const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
 
-    // Docs, blog, pages, sitemap, svgr, gtm.
-    strictEqual(pluginCount, 6);
+    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip, gtm.
+    strictEqual(pluginCount, 7);
 
     return;
   });
@@ -182,8 +182,8 @@ describe('preset', async () => {
 
     const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
 
-    // Docs, blog, pages, sitemap, svgr (no gtm).
-    strictEqual(pluginCount, 5);
+    // Docs, blog, pages, sitemap, svgr, mermaid-tooltip (no gtm).
+    strictEqual(pluginCount, 6);
 
     return;
   });

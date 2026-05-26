@@ -1,0 +1,174 @@
+---
+title: "那些我们差点没发布的 Warden 规则"
+authors:
+  - "priya"
+tags:
+  - "warden"
+  - "检查"
+  - "观点"
+date: "2025-08-10"
+---
+
+我们一共写了 440 条 Warden 规则。我们发布了 380 条。被丢掉的那 60 条，比留下的 380 条教会了我们更多关于开发者工具的事情。
+
+{/* truncate */}
+
+## 我们的目标
+
+我们启动 Foundry 时希望打造一个不需要配置的检查层。你在清单里声明 `warden = ["strict"]`，就能得到一整套规则——约定、格式、模式、安全、语法、类型——之后无需再做任何选择。
+
+这意味着每一个决定都要由我们替你做。也就意味着争论。
+
+## 三条差点拆分团队的规则
+
+在 440 条候选规则里，大部分都没什么悬念。没人会争论是否禁用 `eval` 或是否要求显式返回类型。但有三条规则引发了数周的辩论。下面讲它们是什么、我们差点把它们砍掉的原因，以及它们最终为什么活了下来。
+
+### 规则 1：`warden/no-default-export`
+
+这条规则在 library 包中禁用默认导出。只允许命名导出。
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="on" label="规则开启" default>
+
+```alloy title="src/utils/format.al"
+// 通过——命名导出
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+// 通过——命名 re-export
+export { formatDate } from "./format.al"
+```
+
+</TabItem>
+<TabItem value="off" label="规则关闭">
+
+```alloy title="src/utils/format.al"
+// 允许——默认导出（重构隐患）
+export default function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+// 允许——匿名默认导出
+export default (timestamp: Numeric): Text => {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+```
+
+</TabItem>
+</Tabs>
+
+**为什么有争议：** 默认导出在很多框架里是惯用法。半个团队认为禁用会让正在迁移既有代码库的用户感到挫败；另一半则认为默认导出是重构隐患——它让消费者悄无声息地重命名导入，工作空间里的 grep 能力直接被破坏。
+
+**为什么保留：** 我们把作用域限制到 library 包。应用入口与服务处理器豁免。规则附带自动修复，会按文件名为标识符将 `export default` 转为命名导出。
+
+### 规则 2：`warden/require-exhaustive-deps`
+
+这条规则要求函数体内用到的每一个依赖，都必须在函数签名或模块作用域中声明。
+
+<Tabs>
+<TabItem value="on" label="规则开启" default>
+
+```alloy title="src/services/notify.al"
+// 通过——所有依赖都显式
+function sendNotification(
+  client: NotifyClient,
+  message: Text,
+  channel: Text,
+): Outcome {
+  return client.send(channel, message)
+}
+```
+
+</TabItem>
+<TabItem value="off" label="规则关闭">
+
+```alloy title="src/services/notify.al"
+// 允许——隐式导入一个全局 client
+import { globalClient } from "@app/globals"
+
+function sendNotification(message: Text, channel: Text): Outcome {
+  return globalClient.send(channel, message)
+}
+```
+
+</TabItem>
+</Tabs>
+
+**为什么有争议：** 这条规则把依赖注入变成强制。每个函数都必须把协作者作为参数接收。一些成员管它叫"Java 脑"，认为在小项目里只会增加样板而无收益。
+
+**为什么保留：** 显式依赖让函数能在不 mock 全局的情况下被测试。在一个 200 包的工作空间里，隐式依赖会制造 Tongs 追踪不到的隐形耦合。这条规则强制的是架构本就要求的东西。
+
+### 规则 3：`warden/no-barrel-files`
+
+这条规则禁用那种从其他模块 re-export 的 `index.al` 文件——也就是所谓的 barrel 文件。
+
+<Tabs>
+<TabItem value="on" label="规则开启" default>
+
+```alloy title="直接从源文件导入"
+// 通过——直接导入
+import { formatDate } from "@core/utils/format.al"
+import { sendNotification } from "@core/services/notify.al"
+```
+
+</TabItem>
+<TabItem value="off" label="规则关闭">
+
+```alloy title="通过 barrel 文件导入"
+// 允许——barrel re-export
+// src/index.al
+export { formatDate } from "./utils/format.al"
+export { sendNotification } from "./services/notify.al"
+
+// 消费者使用 barrel
+import { formatDate, sendNotification } from "@core"
+```
+
+</TabItem>
+</Tabs>
+
+**为什么有争议：** Barrel 文件无处不在。它们简化了导入路径，给包提供一个干净的公开 API。禁用它们感觉过于极端。
+
+**为什么保留：** Barrel 文件是大型工作空间中循环依赖的头号成因。它们也会击溃 tree-shaking——Smelter 没法从 barrel 中移除未使用的导出，因为 barrel 自身总是会被导入。我们在内部工作空间中移除 barrel 后测得 23% 的打包体积减少。这条规则附带 Warden 的自动修复，能把 barrel 导入重写为直接导入。
+
+## 被丢掉的 60 条
+
+并不是每一种意见都活了下来。下面是三条我们写过、测过、最终删掉的规则：
+
+- **`warden/max-function-length`** — 上限设为 50 行。结果我们发现，测试 setup、数据变换流水线、CLI 命令处理器经常需要 80 到 120 行。这条规则催生的"豁免注释"比真正修复还多。我们干掉了它。
+
+- **`warden/require-jsdoc-on-exports`** — 每一个导出函数都必须有文档注释。实践中，它催生了成千上万条"格式化日期"放在叫 `formatDate` 的函数上方的一行注释。文档没增加任何信息。我们干掉了它。
+
+- **`warden/no-nested-ternary`** — 嵌套三目确实难读。但完全禁用又把开发者推进了冗长的 if-else 链中，应付简单的三向分支。我们试了 `maxDepth: 2` 的变体，结果规则细节多到无法在错误信息里讲清。我们干掉了它。
+
+## 哲学
+
+发布观点，而不是发布选项。
+
+一个带 380 条规则、零配置项的检查工具，比一个带 10 条规则与配置文件的工具更有用。每多一个配置选项，你就把一个决定从工具作者转嫁给工具用户。而工具用户已经有太多决定要做了。
+
+我们替你做了 380 个决定，让你不必去想。如果你不同意其中某一个，在清单里覆盖它就行。但在你确实想覆盖之前，你不应该去操这份心。
+
+```text title="project.grain — 覆盖单条规则"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+
+  rules {
+    "warden/no-default-export" = "off"
+  }
+}
+```
+
+一行。覆盖显式、可见、纳入版本控制。没有藏在嵌套目录里的隐式配置文件。
+
+## 我们学到了什么
+
+做一款检查工具最难的部分，不是写 AST 访问器，而是写出能让开发者觉得"这有道理"而不是"那我加一行豁免注释吧"的错误信息。
+
+我们发布的每一条规则，在 Warden 文档里都有一句话的 rationale。如果一条规则的存在理由没法用一句话解释清楚，我们就不发布它。
+
+完整的规则参考请阅读 [Warden 规则](/docs/pipeline/warden-rules/) 文档。

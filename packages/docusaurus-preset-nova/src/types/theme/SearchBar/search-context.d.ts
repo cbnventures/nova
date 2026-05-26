@@ -9,6 +9,8 @@ import type { SharedSearchWorkerSearchHit } from '../../shared.d.ts';
  */
 export type ThemeSearchBarSearchContextValueQuery = string;
 
+export type ThemeSearchBarSearchContextValueSearchedQuery = string;
+
 export type ThemeSearchBarSearchContextValueResults = SharedSearchWorkerSearchHit[];
 
 export type ThemeSearchBarSearchContextValueError = string | undefined;
@@ -31,6 +33,7 @@ export type ThemeSearchBarSearchContextValueInputRef = React.RefObject<HTMLInput
 
 export type ThemeSearchBarSearchContextValue = {
   query: ThemeSearchBarSearchContextValueQuery;
+  searchedQuery: ThemeSearchBarSearchContextValueSearchedQuery;
   results: ThemeSearchBarSearchContextValueResults;
   error: ThemeSearchBarSearchContextValueError;
   isReady: ThemeSearchBarSearchContextValueIsReady;

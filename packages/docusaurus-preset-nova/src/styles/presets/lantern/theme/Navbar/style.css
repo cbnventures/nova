@@ -1,0 +1,167 @@
+/**
+ * Lantern - `Navbar` theme overlay (entry-level wrapper).
+ *
+ * The variant root (`.nova-navbar-bridge` / `-canopy` / `-compass` /
+ * `-monolith`) carries its own bg / border / chrome in its sibling
+ * overlay; this file only carries cross-variant preset rules (e.g. the
+ * shared hamburger button padding) so wrapper-level styles cannot win
+ * specificity collisions against variant rules.
+ *
+ * @since 0.18.0
+ */
+
+/* Hamburger button padding - applied at preset level so all 4 variants share it. */
+.nova-hamburger-toggle {
+  padding: 0.375rem;
+}
+
+/* ============================
+ * Locale Dropdown - cream-tinted button + paper-card popover
+ *
+ * Trigger button + popover surface live at preset level so the actions
+ * cluster reads consistently across all 4 navbar variants. Each variant's
+ * navbar overlay can override individual properties if it needs a
+ * variant-specific treatment (variant rules ship later in the cascade).
+ * ============================ */
+
+/* Trigger - mirrors color-mode-toggle. Height + padding flow from shared
+   theme/Navbar. */
+.nova-locale-dropdown-summary {
+  font-family: var(--nova-font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-locale-dropdown[open] > .nova-locale-dropdown-summary,
+.nova-locale-dropdown-summary:hover,
+.nova-locale-dropdown-summary:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow);
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-locale-dropdown-summary {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-locale-dropdown[open] > .nova-locale-dropdown-summary,
+[data-theme="dark"] .nova-locale-dropdown-summary:hover,
+[data-theme="dark"] .nova-locale-dropdown-summary:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* Popover menu - mirrors search-dropdown paper-card treatment. */
+.nova-locale-dropdown-menu,
+.nova-version-dropdown-menu,
+.nova-navbar-more-menu {
+  padding: 0.5rem 0;
+
+  background: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 94%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 10px;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+[data-theme="dark"] .nova-locale-dropdown-menu,
+[data-theme="dark"] .nova-version-dropdown-menu,
+[data-theme="dark"] .nova-navbar-more-menu {
+  background: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 88%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+  box-shadow: none;
+}
+
+/* Item link - italic Fraunces caption.
+   Explicit `display: block`, `border-radius: 0`, `text-transform: none`,
+   `letter-spacing: normal` defend the More popover items from the variant
+   nav-item cluster rule (`.nova-navbar-compass-items a`) which would
+   otherwise leak inline-flex, rounded corners, uppercase, and 0.12em
+   tracking onto items rendered inside the popover. No-op for
+   locale/version where no variant rule competes. */
+.nova-locale-dropdown-item-link,
+.nova-version-dropdown-item-link,
+.nova-navbar-more-menu .nova-navbar-more-item a {
+  display: block;
+  padding: 0.5rem 0.75rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--nova-lantern-ink);
+  text-decoration: none;
+
+  border-radius: 0;
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition);
+}
+
+.nova-locale-dropdown-item-link:hover,
+.nova-locale-dropdown-item-link:focus-visible,
+.nova-version-dropdown-item-link:hover,
+.nova-version-dropdown-item-link:focus-visible,
+.nova-navbar-more-menu .nova-navbar-more-item a:hover,
+.nova-navbar-more-menu .nova-navbar-more-item a:focus-visible {
+  text-decoration: none;
+}
+
+.nova-locale-dropdown-item:not(.nova-locale-dropdown-item--active) > .nova-locale-dropdown-item-link:hover,
+.nova-locale-dropdown-item:not(.nova-locale-dropdown-item--active) > .nova-locale-dropdown-item-link:focus-visible,
+.nova-version-dropdown-item:not(.nova-version-dropdown-item--active) > .nova-version-dropdown-item-link:hover,
+.nova-version-dropdown-item:not(.nova-version-dropdown-item--active) > .nova-version-dropdown-item-link:focus-visible,
+.nova-navbar-more-menu .nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):hover,
+.nova-navbar-more-menu .nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):focus-visible {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  transform: none;
+}
+
+[data-theme="dark"] .nova-locale-dropdown-item:not(.nova-locale-dropdown-item--active) > .nova-locale-dropdown-item-link:hover,
+[data-theme="dark"] .nova-locale-dropdown-item:not(.nova-locale-dropdown-item--active) > .nova-locale-dropdown-item-link:focus-visible,
+[data-theme="dark"] .nova-version-dropdown-item:not(.nova-version-dropdown-item--active) > .nova-version-dropdown-item-link:hover,
+[data-theme="dark"] .nova-version-dropdown-item:not(.nova-version-dropdown-item--active) > .nova-version-dropdown-item-link:focus-visible,
+[data-theme="dark"] .nova-navbar-more-menu .nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):hover,
+[data-theme="dark"] .nova-navbar-more-menu .nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+  transform: none;
+}
+
+/* Active item - amber pin (filled tint + ink color). */
+.nova-locale-dropdown-item--active > .nova-locale-dropdown-item-link,
+.nova-version-dropdown-item--active > .nova-version-dropdown-item-link,
+.nova-navbar-more-menu .nova-navbar-more-item a.navbar__link--active,
+.nova-navbar-more-menu .nova-navbar-more-item a[aria-current="page"] {
+  font-weight: 600;
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+[data-theme="dark"] .nova-locale-dropdown-item--active > .nova-locale-dropdown-item-link,
+[data-theme="dark"] .nova-version-dropdown-item--active > .nova-version-dropdown-item-link,
+[data-theme="dark"] .nova-navbar-more-menu .nova-navbar-more-item a.navbar__link--active,
+[data-theme="dark"] .nova-navbar-more-menu .nova-navbar-more-item a[aria-current="page"] {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 76%);
+}

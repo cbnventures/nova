@@ -1,0 +1,123 @@
+---
+title: "受众分析"
+sidebar_position: 2
+description: "Resonance 探测受众之间的彼此渗透。定义细分人群、度量营销活动之间的重叠，找出隐藏在点击流中的规律。"
+tags:
+  - "归因"
+  - "分析"
+---
+
+# 受众分析
+
+Resonance 探测受众之间的彼此渗透。定义细分人群、度量营销活动之间的重叠，找出隐藏在点击流中的规律。
+
+## 为什么重叠这么重要
+
+两个看起来"面向不同人群"的营销活动，往往共享着比你以为更多的访客。当 40% 的邮件列表订阅者同时也点击了你的社交广告时，你就在为同一拨人付两份钱。Resonance 让这件事变得可见。
+
+## 定义细分人群
+
+细分人群是一组按条件定义的具名受众。这些条件会在 Beacon 点击数据上实时求值。
+
+```bash title="创建细分人群"
+signal resonance segment create \
+  --name "engaged-email" \
+  --condition "channel == email" \
+  --condition "clicks >= 3" \
+  --condition "last_click within 14d"
+```
+
+```json title="细分人群响应"
+{
+  "id": "seg_01J9P4R6S8T2U0V3W1X5Y7Z9",
+  "name": "engaged-email",
+  "conditions": [
+    { "field": "channel", "operator": "==", "value": "email" },
+    { "field": "clicks", "operator": ">=", "value": 3 },
+    { "field": "last_click", "operator": "within", "value": "14d" }
+  ],
+  "size": 4280,
+  "updatedAt": "2025-02-20T12:00:00Z"
+}
+```
+
+## 细分操作符
+
+| 操作符        | 说明           | 示例                                |
+|------------|--------------|-----------------------------------|
+| `==`       | 等于           | `channel == email`                |
+| `!=`       | 不等于          | `channel != direct`               |
+| `>=`       | 大于等于         | `clicks >= 3`                     |
+| `<=`       | 小于等于         | `clicks <= 10`                    |
+| `in`       | 命中列表中的任意值    | `campaign in [launch, summer]`    |
+| `within`   | 在指定时间窗内      | `last_click within 7d`            |
+| `between`  | 介于两个值之间（含边界） | `conversion_value between 10,100` |
+| `contains` | 字符串包含        | `variant contains hero`           |
+
+## 度量重叠
+
+查询两个或更多细分人群之间的重叠：
+
+```bash title="度量受众重叠"
+signal resonance overlap \
+  --segments "engaged-email,social-clickers,search-converters"
+```
+
+```json title="重叠输出"
+{
+  "segments": ["engaged-email", "social-clickers", "search-converters"],
+  "sizes": {
+    "engaged-email": 4280,
+    "social-clickers": 6120,
+    "search-converters": 2840
+  },
+  "overlaps": {
+    "engaged-email + social-clickers": { "count": 1720, "percent": 40.2 },
+    "engaged-email + search-converters": { "count": 890, "percent": 20.8 },
+    "social-clickers + search-converters": { "count": 1340, "percent": 21.9 },
+    "all-three": { "count": 510, "percent": 11.9 }
+  }
+}
+```
+
+在这个例子里，活跃邮件受众中有 40.2% 同时出现在社交点击受众里。这就是 Resonance 所揭示的渗透。
+
+## 跨营销活动的渗透检测
+
+当两个营销活动在抢同一拨受众时，Resonance 能及时发现：
+
+```bash title="跨营销活动渗透"
+signal resonance bleed \
+  --campaigns "product-launch,summer-sale" \
+  --threshold 0.30
+```
+
+```json title="渗透检测输出"
+{
+  "campaigns": ["product-launch", "summer-sale"],
+  "sharedAudience": 2840,
+  "bleedRate": 0.42,
+  "exceededThreshold": true,
+  "recommendation": "考虑合并受众，或错开营销活动时间窗，以减少花费重叠。"
+}
+```
+
+0.42 的渗透率意味着合并受众中有 42% 同时看过两个营销活动。如果阈值是 0.30，Resonance 会将其标记为"重叠过高"。
+
+## 导出细分人群
+
+把一个细分人群导出为 CSV，以便在外部工具中使用：
+
+```bash title="导出细分人群"
+signal resonance segment export \
+  --name "engaged-email" \
+  --format csv \
+  --output ./engaged-email-segment.csv
+```
+
+导出内容包含匿名访客标识、点击数、渠道与最近一次出现的时间戳。不包含任何可识别个人身份的信息。
+
+## 下一步
+
+- [二维码与深度链接](/docs/beacons/qr-deep-links/) — 用 Flare 链接打通线下与线上的归因。
+- [API 参考](/docs/reference/api-reference/) — 通过程序化方式访问细分人群与重叠查询。

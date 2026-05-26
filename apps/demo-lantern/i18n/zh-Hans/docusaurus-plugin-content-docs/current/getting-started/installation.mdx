@@ -1,0 +1,43 @@
+---
+title: "安装"
+sidebar_position: 1
+description: "通过 Spark CLI 或 Vial 容器安装 Lantern。在网络上配对 HomeKit Home Hub 并验证安装。"
+tags:
+  - "安装配置"
+  - "安装"
+---
+
+# 安装
+
+Lantern 可以从 Loom Registry 安装，也可以作为 Vial 容器运行。选用集线器已经信任的那条路径即可。
+
+## 前置条件
+
+- 网络上已存在一台 HomeKit Home Hub
+- Spark 3.0 或更高版本（用于 CLI 安装）
+- 一段安静的十分钟——大多数安装在水壶烧开之前就已完成
+
+## 通过 Spark 安装
+
+```bash title="安装 Lantern"
+spark install lantern
+```
+
+验证安装：
+
+```bash
+lantern --version
+```
+
+## 通过 Vial 安装
+
+```bash title="拉取 Lantern 镜像"
+vial pull lantern/cli:latest
+```
+
+在家庭网络的容器层中运行。Lantern 始终守在它自己的房间里。
+
+## 接下来
+
+- [你的第一次看守](/docs/getting-started/first-watch/) — 在睡前为一个分区布防。
+- [分区](/docs/zones/overview/) — 按所在位置将传感器归类。

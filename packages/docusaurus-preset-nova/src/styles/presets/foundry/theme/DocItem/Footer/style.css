@@ -1,5 +1,9 @@
 /**
- * Foundry — Doc footer visual styling.
+ * Foundry - `DocItem/Footer` theme overlay.
+ *
+ * Article-end seal - a subtle hairline rule above and breathing room
+ * between the article body and the meta colophon. Margin grows at the
+ * md breakpoint to match the industrial mobile-to-desktop rhythm.
  *
  * @since 0.15.0
  */

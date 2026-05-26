@@ -1,0 +1,10 @@
+{
+  "label": "核心",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Foundry 如何为构建建模——`.grain` 工作区清单、Tongs 依赖图、Anvil 按内容寻址缓存，以及 Crucible 增量重跑。"
+  }
+}

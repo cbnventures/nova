@@ -72,28 +72,28 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
       code: 'function f() { const { a, b } = getValue(); }',
     },
 
-    // TSAsExpression: as const — allowed.
+    // TSAsExpression: as const - allowed.
     {
       code: 'function f() { const x: MyType = \'left\' as const; }',
     },
 
-    // TSAsExpression: as NamedType (no generic args) — allowed.
+    // TSAsExpression: as NamedType (no generic args) - allowed.
     {
       code: 'function f() { const x: MyType = getValue() as SomeType; }',
     },
 
-    // TSAsExpression: as NamedType<T> where T is enclosing type param — allowed (dependency).
+    // TSAsExpression: as NamedType<T> where T is enclosing type param - allowed (dependency).
     {
       code: 'function f<T>() { const x: MyType = getValue() as SomeType<T>; }',
     },
 
-    // TSAsExpression: as Record<string, unknown> in .d.ts file — skipped.
+    // TSAsExpression: as Record<string, unknown> in .d.ts file - skipped.
     {
       code: 'function f() { const x: MyType = getValue() as Record<string, unknown>; }',
       filename: 'src/types/shared.d.ts',
     },
 
-    // TSAsExpression: as Record<string, unknown> in ignored file — skipped.
+    // TSAsExpression: as Record<string, unknown> in ignored file - skipped.
     {
       code: 'function f() { const x: MyType = getValue() as Record<string, unknown>; }',
       options: [{ ignoreFiles: ['ignored.ts'] }],
@@ -143,19 +143,19 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
       errors: [{ messageId: 'requireTypeAnnotation' }],
     },
 
-    // TSAsExpression: as Record<string, unknown> — concrete generic args.
+    // TSAsExpression: as Record<string, unknown> - concrete generic args.
     {
       code: 'function f() { const x: MyType = getValue() as Record<string, unknown>; }',
       errors: [{ messageId: 'useNamedType' }],
     },
 
-    // TSAsExpression: as Map<string, number> — concrete generic args.
+    // TSAsExpression: as Map<string, number> - concrete generic args.
     {
       code: 'function f() { const x: MyType = getValue() as Map<string, number>; }',
       errors: [{ messageId: 'useNamedType' }],
     },
 
-    // TSAsExpression: as { name: string } — inline object type (2 errors: the object literal + the inner `: string`).
+    // TSAsExpression: as { name: string } - inline object type (2 errors: the object literal + the inner `: string`).
     {
       code: 'function f() { const x: MyType = getValue() as { name: string }; }',
       errors: [
@@ -164,13 +164,13 @@ ruleTester.run('noInlineTypeAnnotation', NoInlineTypeAnnotation['rule'], {
       ],
     },
 
-    // TSAsExpression: as string[] — inline array type.
+    // TSAsExpression: as string[] - inline array type.
     {
       code: 'function f() { const x: MyType = getValue() as string[]; }',
       errors: [{ messageId: 'useNamedType' }],
     },
 
-    // TSAsExpression: as (string | number) — inline union type.
+    // TSAsExpression: as (string | number) - inline union type.
     {
       code: 'function f() { const x: MyType = getValue() as (string | number); }',
       errors: [{ messageId: 'useNamedType' }],

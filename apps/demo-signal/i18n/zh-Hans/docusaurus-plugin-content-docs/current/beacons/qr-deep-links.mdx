@@ -1,0 +1,117 @@
+---
+title: "二维码与深度链接"
+sidebar_position: 2
+description: "Flare 生成二维码与深度链接，让物理世界与数字世界共用同一条归因链。每一次扫码都携带完整的归因信息。"
+tags:
+  - "beacons"
+  - "qr codes"
+---
+
+# 二维码与深度链接
+
+Flare 生成二维码与深度链接，让物理世界与数字世界共用同一条归因链。每一次扫码都携带完整的归因——营销活动、渠道、变体与 trace——从一张印刷海报一路通到转化事件。
+
+## 为什么选 Flare
+
+会议横幅上的二维码，其实是一次"从物理世界开始的点击"。没有 Flare，那次点击就是暗流量——没有 referrer、没有 UTM 参数、没有归因。有了 Flare，二维码就是 Beacon 链接的可视形态，它携带数字 Beacon 链接所拥有的全部元数据。
+
+## 生成一个 Flare 二维码
+
+一步完成 Flare 链接创建与二维码生成：
+
+```bash title="生成 Flare 二维码"
+signal flare create \
+  --url "https://threadbare.example/register" \
+  --campaign "conf-2025" \
+  --channel "event" \
+  --variant "main-stage-banner" \
+  --format svg \
+  --size 1024 \
+  --output ./main-stage-qr.svg
+```
+
+```json title="Flare 响应"
+{
+  "id": "flr_01J9Q5S7T9U1V3W2X4Y6Z8A0",
+  "shortUrl": "https://go.signal.example/c2025ms",
+  "qrFile": "./main-stage-qr.svg",
+  "attribution": {
+    "campaign": "conf-2025",
+    "channel": "event",
+    "variant": "main-stage-banner",
+    "trace": "trc_4a7b3c8d9e0f1234"
+  },
+  "format": "svg",
+  "size": 1024
+}
+```
+
+SVG 文件可以按任意分辨率送印。其内嵌的 Beacon 链接携带完整的归因元数据。
+
+:::info[印刷分辨率]
+用于印刷材料时，请按 1024px 或更高分辨率生成。Flare 的二维码使用 H 级（高）纠错，这意味着即使最多 30% 的码面被遮挡或损坏，依然可以被正确扫描。用于广告牌等大幅印刷品时，请使用 `--size 2048`。
+:::
+
+## 深度链接
+
+Flare 同时为移动应用生成深度链接。当用户扫描 Flare 二维码或点击深度链接时，应用会直接打开到目标界面，归因元数据则作为参数一并带入：
+
+```bash title="生成一个深度链接"
+signal flare create \
+  --url "https://threadbare.example/register" \
+  --deep-link "signal://register?ref=conf-2025" \
+  --campaign "conf-2025" \
+  --channel "event" \
+  --variant "badge-scan"
+```
+
+```json title="深度链接响应"
+{
+  "id": "flr_01J9R6T8U0V2W3X5Y7Z9A1B3",
+  "shortUrl": "https://go.signal.example/c2025bs",
+  "deepLink": "signal://register?ref=conf-2025",
+  "fallbackUrl": "https://threadbare.example/register",
+  "attribution": {
+    "campaign": "conf-2025",
+    "channel": "event",
+    "variant": "badge-scan",
+    "trace": "trc_5b8c4d9e0f1a2345"
+  }
+}
+```
+
+应用已安装时，深度链接会直接拉起它；未安装时，用户会被导向回退 URL。两条路径都能保留归因。
+
+## 扫码归因
+
+Flare 二维码被扫描时，归因链条的工作方式与点击数字 Beacon 链接完全一致：
+
+1. 用户扫描二维码。
+2. Beacon 重定向触发（延迟 2ms）。
+3. Pulse 捕获本次点击事件，附带地理、设备与 referrer 数据。
+4. trace ID 将这次扫码与未来任何触点和转化关联起来。
+
+查询扫码数据的方式，与查询任何 Beacon 点击完全相同：
+
+```bash title="查询 Flare 扫码事件"
+signal pulse events --campaign "conf-2025" --channel "event"
+```
+
+## 批量生成二维码
+
+一条命令为整个营销活动生成所有二维码：
+
+```bash title="批量生成二维码"
+signal flare batch \
+  --input ./conference-links.csv \
+  --format png \
+  --size 512 \
+  --output-dir ./qr-codes/
+```
+
+CSV 把目的地映射到营销活动元数据。Flare 会为每一行生成一张二维码，每张都对应独立的 Beacon 链接与 trace ID。
+
+## 下一步
+
+- [批量操作](/docs/beacons/batch-operations/) — 通过 CSV 或 Spoke API 批量导入链接。
+- [点击归因](/docs/attribution/click-attribution/) — 看 Flare 扫码事件如何接入 Prism 的归因路径。

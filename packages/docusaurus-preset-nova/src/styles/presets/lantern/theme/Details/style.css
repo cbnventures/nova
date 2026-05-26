@@ -1,0 +1,165 @@
+/**
+ * Lantern - `Details` theme overlay.
+ *
+ * A warm cream paper card with an italic Fraunces summary. The amber triangle
+ * pointer warms on hover and rotates when open.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================
+ */
+
+:root {
+  --nova-lantern-details-margin-block-end: 1.25rem;
+}
+
+/**
+ * ============================
+ * 0b. Canonical aliases - consumed by shared theme/Details
+ * ============================
+ */
+
+:root {
+  --nova-details-margin-block-end: var(--nova-lantern-details-margin-block-end);
+}
+
+/**
+ * ============================
+ * 1. Container - warm paper card
+ *
+ * Block-margin flows from shared theme/Details via the canonical
+ * `--nova-details-margin-block-end` token.
+ * ============================
+ */
+
+.nova-details {
+  padding: 0;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+[data-theme="dark"] .nova-details {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-color: var(--nova-lantern-border);
+}
+
+/**
+ * ============================
+ * 2. Summary - italic Fraunces with amber triangle pointer
+ *
+ * Browsers render TWO disclosure markers on `<details>` by default:
+ * the WebKit `::-webkit-details-marker` and the standard `::marker`.
+ * Both must be hidden along with `list-style: none` for our custom triangle
+ * pseudo to be the only visible glyph. Without all three, mobile Safari
+ * and Firefox show a second triangle next to ours.
+ * ============================
+ */
+
+.nova-details-summary {
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
+
+  position: relative;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--nova-lantern-ink);
+
+  transition: color var(--nova-lantern-transition);
+
+  list-style: none;
+}
+
+.nova-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-details-summary::marker {
+  content: "";
+  display: none;
+}
+
+/* The Details JSX renders <Icon className="nova-details-arrow" />, which
+   would stack with our custom triangle - hide the lucide chevron and keep the
+   triangle pseudo as the only marker. */
+.nova-details-arrow {
+  display: none;
+}
+
+.nova-details-summary::before {
+  position: absolute;
+  left: 1rem;
+  top: 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-style: normal;
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+
+  transition:
+    transform var(--nova-lantern-transition),
+    color var(--nova-lantern-transition);
+
+  content: "▸";
+}
+
+.nova-details-summary:hover,
+.nova-details-summary:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+.nova-details-summary:hover::before,
+.nova-details-summary:focus-visible::before {
+  color: var(--nova-color-primary-700);
+}
+
+[data-open="true"] > .nova-details-summary::before,
+.nova-details[open] > .nova-details-summary::before {
+  transform: rotate(90deg);
+}
+
+[data-open="true"] > .nova-details-summary {
+  border-bottom: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-details-summary:hover,
+[data-theme="dark"] .nova-details-summary:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-details-summary::before {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-details-summary:hover::before,
+[data-theme="dark"] .nova-details-summary:focus-visible::before {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] [data-open="true"] > .nova-details-summary {
+  border-bottom-color: var(--nova-lantern-border);
+}
+
+/**
+ * ============================
+ * 3. Content body
+ * ============================
+ */
+
+.nova-details-content-body {
+  padding: 1rem;
+
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-lantern-ink);
+}

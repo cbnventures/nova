@@ -1,0 +1,166 @@
+---
+title: "Warden 规则"
+sidebar_position: 2
+description: "Warden 是 Foundry 的检查引擎——380+ 条规则覆盖六大类别，零配置默认全部启用。"
+tags:
+  - "流水线"
+  - "检查"
+---
+
+# Warden 规则
+
+Warden 是 Foundry 的检查引擎。它内置 380+ 条规则，覆盖六大类别，当你在清单中声明 `warden = ["strict"]` 时全部默认启用。没有配置文件，没有决策疲劳。一个预设，所有规则。
+
+## 规则分类
+
+| 分类          | 规则数 | 可自动修复 | 关注点              |
+|-------------|-----|-------|------------------|
+| Conventions | 68  | 12    | 命名、导出、文件结构、可见性。  |
+| Formatting  | 55  | 55    | 空白、注释、视觉一致性。     |
+| Patterns    | 72  | 8     | 逻辑流、赋值、控制结构。     |
+| Safety      | 45  | 0     | 危险的运行时模式、隐式类型转换。 |
+| Syntax      | 60  | 15    | 语言特性限制与兼容性。      |
+| Types       | 80  | 24    | 类型注解、泛型与类型推断的边界。 |
+
+## 预设
+
+预设是命名规则集合。你可以在清单中将它们堆叠起来，当规则冲突时，靠后的预设覆盖靠前的。
+
+```text title="project.grain"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+}
+```
+
+| 预设            | 规则数 | 说明                 |
+|---------------|-----|--------------------|
+| `strict`      | 220 | 核心安全与类型规则。整套预设的基础。 |
+| `conventions` | 95  | 命名、导出与结构模式。        |
+| `formatting`  | 65  | 空白、行长与注释风格。        |
+
+:::warning
+`strict` 预设启用的规则会拒绝隐式 `any`，并要求所有导出函数都显式声明返回类型。如果你正在迁移已有代码库，建议先从 `conventions` 开始，等类型覆盖率超过 90% 后再叠加 `strict`。
+:::
+
+## 严重级别
+
+每条规则都有三种严重级别之一：
+
+| 级别      | 行为               |
+|---------|------------------|
+| `error` | 让锻造失败。必须先修复才能交付。 |
+| `warn`  | 打印警告，但不会让锻造失败。   |
+| `info`  | 信息性，仅在详细模式下显示。   |
+
+## 自定义规则
+
+你可以在清单的 `rules` 块中调整单条规则：
+
+```text title="project.grain — 覆盖一条规则"
+workspace "my-app" {
+  warden = ["strict"]
+
+  rules {
+    "warden/no-default-export" = "off"
+    "warden/max-params"        = ["error", { max = 5 }]
+  }
+}
+```
+
+覆盖是显式的、纳入版本控制的，并在清单中清晰可见。没有藏在某处的隐式配置文件。
+
+## 规则示例
+
+### 捕获违规
+
+Warden 会附带规则名、文件路径、行号以及一句话说明，报告每一处违规：
+
+```text title="Warden 输出"
+$ foundry warden check
+
+  src/utils/format.al
+    12:1  error  warden/no-default-export   library 包中禁止使用默认导出。
+    34:5  warn   warden/no-shadow           变量 "result" 遮蔽了外层作用域中的同名变量。
+
+  src/services/notify.al
+    8:1   error  warden/require-explicit-return  导出函数必须声明返回类型。
+
+  3 个问题 (2 个错误，1 个警告)
+```
+
+### 差异高亮
+
+下面是一条规则捕获并修复违规的示例：
+
+```alloy title="修复前——返回类型隐式推断"
+// remove-start
+export function formatDate(timestamp: Numeric) {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+// remove-end
+// add-start
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+// add-end
+```
+
+`warden/require-explicit-return` 规则带有自动修复——它会从函数体推断返回类型，并补到签名上。
+
+<details>
+<summary>按分类的完整规则清单</summary>
+
+**Conventions（68 条）**
+
+| 规则                        | 可自动修复 | 说明                              |
+|---------------------------|-------|---------------------------------|
+| `no-default-export`       | 是     | 在 library 包中禁用默认导出。             |
+| `no-barrel-files`         | 是     | 禁止 re-export 的索引文件。             |
+| `require-exhaustive-deps` | 否     | 函数的所有依赖必须是显式的。                  |
+| `consistent-naming`       | 否     | 变量使用 camelCase，类型使用 PascalCase。 |
+| `file-name-case`          | 否     | 文件名必须与主导出名一致。                   |
+| ...                       |       | *本分类还有 65 条规则。*                 |
+
+**Safety（45 条）**
+
+| 规则                      | 可自动修复 | 说明                          |
+|-------------------------|-------|-----------------------------|
+| `no-eval`               | 否     | 禁用 `eval` 与 `Function` 构造器。 |
+| `no-implicit-coercion`  | 是     | 要求显式的类型转换。                  |
+| `no-prototype-builtins` | 否     | 禁止直接调用 prototype 上的方法。      |
+| `no-unsafe-assignment`  | 否     | 禁止把 `any` 赋给有类型的变量。         |
+| ...                     |       | *本分类还有 41 条规则。*             |
+
+**Types（80 条）**
+
+| 规则                        | 可自动修复 | 说明                        |
+|---------------------------|-------|---------------------------|
+| `require-explicit-return` | 是     | 导出函数必须声明返回类型。             |
+| `no-implicit-any`         | 否     | 禁止任何位置出现隐式 `any`。         |
+| `consistent-type-imports` | 是     | 仅类型的导入强制使用 `import type`。 |
+| `no-unnecessary-generics` | 否     | 禁止可被推断出的泛型参数。             |
+| ...                       |       | *本分类还有 76 条规则。*           |
+
+</details>
+
+## 运行 Warden
+
+Warden 会在每次锻造的校验阶段自动运行。你也可以单独运行它：
+
+```bash title="检查整个工作空间"
+foundry warden check
+```
+
+```bash title="自动修复所有可修复的违规"
+foundry warden fix
+```
+
+```bash title="只检查单个包"
+foundry warden check --only api
+```
+
+## 下一步
+
+- [使用 Crucible 测试](/docs/pipeline/testing-with-crucible/) — 与 Warden 规则配套的测试脚手架。
+- [构建流水线](/docs/pipeline/build-pipeline/) — Warden 在锻造生命周期中的位置。
+- [CLI 参考](/docs/reference/cli-reference/) — `foundry warden` 的完整命令参考。

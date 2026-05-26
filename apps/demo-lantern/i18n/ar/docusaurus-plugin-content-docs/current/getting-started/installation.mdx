@@ -1,0 +1,43 @@
+---
+title: "التثبيت"
+sidebar_position: 1
+description: "ثبِّت Lantern عبر Spark CLI أو حاوية Vial. اقرن HomeKit Home Hub على الشبكة وتحقّق من التثبيت."
+tags:
+  - "setup"
+  - "installation"
+---
+
+# التثبيت
+
+يُثبَّت Lantern من Loom Registry أو كحاوية Vial. اختر المسار الذي يثق به موزّعك أصلاً.
+
+## المتطلّبات السابقة
+
+- HomeKit Home Hub على الشبكة
+- Spark 3.0 أو ما هو أحدث (لتثبيت سطر الأوامر)
+- عشر دقائق هادئة، فأغلب التثبيتات تنتهي قبل الإبريق.
+
+## التثبيت عبر Spark
+
+```bash title="Install Lantern"
+spark install lantern
+```
+
+تحقّق من التثبيت:
+
+```bash
+lantern --version
+```
+
+## التثبيت عبر Vial
+
+```bash title="Pull the Lantern image"
+vial pull lantern/cli:latest
+```
+
+شغِّله داخل طبقة الحاويات في شبكة المنزل. يبقى Lantern داخل غرفته الخاصة.
+
+## ما يلي ذلك
+
+- [مراقبتك الأولى](/docs/getting-started/first-watch/) ـ فعِّل المراقبة على منطقة واحدة قبل النوم.
+- [المناطق](/docs/zones/overview/) ـ جمّع المستشعرات بحسب مواقعها في البيت.

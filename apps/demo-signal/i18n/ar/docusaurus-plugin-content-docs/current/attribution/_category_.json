@@ -1,0 +1,10 @@
+{
+  "label": "الإسناد",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "تتبّع التحويلات عبر القنوات — يقيس Prism مساهمة كلّ نقطة تماس في تدفّق النقرات عبر إسناد متعدّد اللمسات، ويكتشف Resonance حيث تتداخل شرائح الجمهور بين الحملات."
+  }
+}

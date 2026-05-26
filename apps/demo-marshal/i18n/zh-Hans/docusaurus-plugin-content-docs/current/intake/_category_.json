@@ -1,0 +1,10 @@
+{
+  "label": "Intake",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "让 Marshal 入场——通过 Spark 或 Vial 容器安装（封印随包出厂已盖好），然后提交首个封存策略，看着案卷逐步填满。"
+  }
+}

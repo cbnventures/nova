@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 import type { SharedMermaidRenderOutput } from '../../shared.d.ts';
 
 /**
@@ -7,8 +9,14 @@ import type { SharedMermaidRenderOutput } from '../../shared.d.ts';
  */
 export type ThemeMermaidContentPropsValue = string;
 
+export type ThemeMermaidContentPropsClassName = string | undefined;
+
+export type ThemeMermaidContentPropsStyle = CSSProperties | undefined;
+
 export type ThemeMermaidContentProps = {
   value: ThemeMermaidContentPropsValue;
+  className?: ThemeMermaidContentPropsClassName;
+  style?: ThemeMermaidContentPropsStyle;
   [key: string]: unknown;
 };
 
@@ -18,6 +26,8 @@ export type ThemeMermaidContentRenderResult = SharedMermaidRenderOutput | null;
 
 export type ThemeMermaidContentContainerRef = React.RefObject<HTMLDivElement | null>;
 
+export type ThemeMermaidContentClassName = string;
+
 /**
  * Theme - Mermaid - Mermaid.
  *
@@ -25,8 +35,14 @@ export type ThemeMermaidContentContainerRef = React.RefObject<HTMLDivElement | n
  */
 export type ThemeMermaidMermaidPropsValue = string;
 
+export type ThemeMermaidMermaidPropsClassName = string | undefined;
+
+export type ThemeMermaidMermaidPropsStyle = CSSProperties | undefined;
+
 export type ThemeMermaidMermaidProps = {
   value: ThemeMermaidMermaidPropsValue;
+  className?: ThemeMermaidMermaidPropsClassName;
+  style?: ThemeMermaidMermaidPropsStyle;
   [key: string]: unknown;
 };
 

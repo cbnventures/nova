@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "المدونة",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "ملاحظات من المسبك — فلسفة، ومقاييس أداء، والآراء التي شحنّاها بالفعل.",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "أحدث المنشورات",
+    "description": "The label for the left sidebar"
+  }
+}

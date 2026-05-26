@@ -1,0 +1,79 @@
+/**
+ * Lantern - `Tabs` overlay.
+ *
+ * Tab strip rendered as warm cream paper marginalia. All tabs read in
+ * italic Fraunces - the same journal-margin voice used elsewhere for
+ * active anchors. Selection is indicated by ink color + amber underline,
+ * NOT by switching font-family (which would cause width shift between
+ * Manrope and Fraunces metrics on selection change).
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================ */
+
+:root {
+  --nova-lantern-tabs-margin-block-end: 1.25rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Tabs
+ * ============================ */
+
+:root {
+  --nova-tabs-margin-block-end: var(--nova-lantern-tabs-margin-block-end);
+}
+
+/* ============================
+ * 1. Tabs Container
+ * ============================ */
+
+.nova-tabs {
+  margin-bottom: var(--nova-lantern-tabs-margin-block-end);
+}
+
+/* ============================
+ * 2. Tab Button - italic Fraunces journal voice across all states
+ * ============================ */
+
+.nova-tabs-tab {
+  padding: 0.5rem 0.875rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-size: 0.875rem;
+  color: var(--nova-lantern-ink-muted);
+
+  border-bottom: 2px solid transparent;
+
+  transition:
+    color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition);
+}
+
+.nova-tabs-tab:hover,
+.nova-tabs-tab:focus-visible {
+  color: var(--nova-lantern-ink);
+
+  border-bottom: 2px solid var(--nova-color-primary-400);
+}
+
+.nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-color-primary-700);
+  border-bottom-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-tabs-tab:hover,
+[data-theme="dark"] .nova-tabs-tab:focus-visible {
+  color: var(--nova-lantern-ink);
+
+  border-bottom: 2px solid var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-color-primary-300);
+  border-bottom-color: var(--nova-color-primary-400);
+}

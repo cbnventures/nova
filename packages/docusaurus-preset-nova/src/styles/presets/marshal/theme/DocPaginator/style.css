@@ -1,0 +1,147 @@
+/**
+ * Marshal - `DocPaginator` theme overlay.
+ *
+ * Page-folio navigation - a hairline rule above, then a heading and
+ * a left/right pair of links. Direction labels are mono uppercase in
+ * seal-red, titles are Plex Serif, descriptions in muted ink.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Paginator - colophon rule
+ * ============================
+ */
+
+.nova-doc-paginator {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+@media (min-width: 768px) {
+  .nova-doc-paginator {
+    margin-top: 3rem;
+    padding-top: 2rem;
+  }
+}
+
+[data-theme="dark"] .nova-doc-paginator {
+  border-top-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 2. Heading
+ * ============================
+ */
+
+.nova-doc-paginator-heading {
+  margin-bottom: 0.75rem;
+  padding: 0 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+}
+
+/**
+ * ============================
+ * 3. Link - flat ledger plate
+ * ============================
+ */
+
+.nova-doc-paginator-link {
+  padding: 0.75rem 1rem;
+
+  text-decoration: none;
+
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: background-color var(--nova-marshal-transition), border-color var(--nova-marshal-transition);
+}
+
+.nova-doc-paginator-link:hover,
+.nova-doc-paginator-link:focus-visible {
+  text-decoration: none;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), #ffffff 96%);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-doc-paginator-link {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-doc-paginator-link:hover,
+[data-theme="dark"] .nova-doc-paginator-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 88%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Direction label - section-sign seal-red marker
+ * ============================
+ */
+
+.nova-doc-paginator-label {
+  display: block;
+  margin-bottom: 0.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+}
+
+.nova-doc-paginator-label::before {
+  margin-right: 0.25rem;
+  content: "§";
+}
+
+[data-theme="dark"] .nova-doc-paginator-label {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 5. Title - Plex Serif anchor
+ * ============================
+ */
+
+.nova-doc-paginator-title {
+  font-family: var(--nova-font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-color-primary-800);
+}
+
+[data-theme="dark"] .nova-doc-paginator-title {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 6. Excerpt
+ * ============================
+ */
+
+.nova-doc-paginator-excerpt {
+  display: block;
+  margin-top: 0.25rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--nova-marshal-ink-muted);
+}

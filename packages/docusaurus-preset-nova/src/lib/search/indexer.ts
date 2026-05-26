@@ -170,7 +170,7 @@ function extractDocument(htmlFilePath: LibSearchIndexerExtractDocumentHtmlFilePa
     return;
   });
 
-  // Extract clean content — prefer targeted content containers, fall back to article/main.
+  // Extract clean content - prefer targeted content containers, fall back to article/main.
   const contentSelectors: LibSearchIndexerExtractDocumentContentSelectors = '.nova-doc-content, .nova-blog-post-item-content';
   const contentText: LibSearchIndexerExtractDocumentContentText = String(cheerioApi(contentSelectors).text() ?? '');
   const articleText: LibSearchIndexerExtractDocumentArticleText = String(cheerioApi('article').text() ?? '');

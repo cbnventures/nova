@@ -1,0 +1,91 @@
+---
+title: "用一个周末把 200 个 webhook 集成迁出 Zapier"
+authors:
+  - "anders"
+tags:
+  - "migration"
+  - "payload"
+  - "scaling"
+  - "retry"
+date: "2026-03-08"
+---
+
+一位客户星期四下午找到我们。他们在 Zapier 上跑了 200 个 webhook 集成，月账单已经突破 4000 美元；webhook 流量超出了 Zapier 的速率上限；而他们三周内有一场合规审计，要求为每一条 webhook 提供完整的投递回执——这恰恰是 Zapier 不提供的。
+
+他们问能不能在下周一之前完成迁移。我们说可以。下面是过程。
+
+{/* truncate */}
+
+## 盘点
+
+第一步是搞清他们手里有什么。我们请他们导出 Zapier 上的 webhook 配置。Zapier 没有批量导出，他们只能把每个集成截图下来，我们再写了一段 Spark 脚本把截图解析为结构化清单。（我们并不为此感到自豪，但它能用。）
+
+```text title="集成清单 — 汇总"
+Total integrations:           200
+Unique source providers:       14
+Unique destinations:           23
+Integrations with transforms:  87
+Integrations with filters:     34
+Integrations with multi-step:  12
+```
+
+那 12 个多步集成是隐忧。Zapier 的多步 zap 把多个动作串起来——"接收 webhook、过滤、转换、发到 Slack、等 5 分钟、再发到 CRM"。Envoy 不会把带延迟的动作链起来，每条中继都是一条独立的"源到目的地"流水线。
+
+## 翻译
+
+我们写了一个转换器，把结构化清单转换为每个集成对应的 `.grain` 与 `.parcel` 文件。单步集成一对一映射，多步集成则被拆解为多条中继并由 Trellis 编排顺序。
+
+转换器处理了四类情形：
+
+| 类别        | 数量  | 转换方式                            |
+|-----------|-----|---------------------------------|
+| 简单中继（无转换） | 79  | 每条 1 个 `.grain` 文件              |
+| 带转换的中继    | 87  | 每条 1 个 `.grain` + 1 个 `.parcel` |
+| 带过滤的中继    | 34  | 1 个 `.grain` 文件加 filter 块       |
+| 多步链       | 12  | 2-4 个 `.grain` + Trellis 序列     |
+
+最终生成：312 个 `.grain` 文件与 87 个 `.parcel` 文件。
+
+## 切换
+
+我们分三个阶段执行迁移：
+
+**阶段 1（周五傍晚）：影子模式。** 200 个集成全部并行运行——Zapier 处理生产流量，Envoy 接收一份副本。我们对两个系统的投递结果进行对比。
+
+```text title="影子模式结果 — 周五 18:00 到周六 06:00"
+Webhooks received (Zapier):     12,847
+Webhooks received (Envoy):      12,847   ✓ (parity)
+Successful deliveries (Zapier): 12,512
+Successful deliveries (Envoy):  12,841   ✓ (Envoy retried 329 that Zapier dropped)
+Payload mismatches:                  6   ✗ (transform differences)
+```
+
+6 处载荷不一致全部来自日期格式差异——Zapier 用 `MM/DD/YYYY`，我们的 Parcel 模板用 `YYYY-MM-DD`。我们更新了模板。
+
+**阶段 2（周六上午）：双写，Envoy 为主。** 流量先走 Envoy，Zapier 作为备份在后端继续运行。任何在 Envoy 失败的中继都会与 Zapier 的结果做交叉核对。
+
+**阶段 3（周日傍晚）：关停 Zapier。** 所有集成只走 Envoy，Zapier 上的集成被暂停（而非删除），保留 7 天作为回滚兜底。
+
+## 数字
+
+生产里跑了一周之后：
+
+- **中继 webhook：** 89247 条
+- **投递成功率：** 100%（含重试）
+- **平均中继延迟：** 6.2ms（Zapier 平均 340ms）
+- **死信消息：** 3 条（均因目的地宕机，已成功重放）
+- **每月成本：** 0 美元（在客户已有基础设施上自托管 Envoy）
+
+延迟改进最为显著。Zapier 把 webhook 经过他们的基础设施、加上他们的处理开销，再从他们的 IP 段送出。Envoy 跑在客户自己的基础设施上，在内存中处理并直接投递。从 340ms 到 6.2ms 的差距，就是"中间代理路由"与"直接投递"的差距。
+
+## 我们会怎么改
+
+截图转清单这一步实在尴尬。从那以后，我们做了 `envoy migrate`：一个能接收 Zapier 导出 CSV（Zapier 在 2025 年末新增的功能）并自动生成 `.grain` 与 `.parcel` 文件的 CLI 工具。下一次迁移不需要 Spark 脚本与截图。
+
+多步拆解也还有改进空间。12 个多步 zap 变成了 38 条独立的中继加上 Trellis 编排——正确，但比原本的 Zapier 表达更难理解。我们正在探索在中继语法里引入 `chain` 块，让运维人员能在单个 `.grain` 文件中表达多步序列。
+
+## 教训
+
+迁移不是技术挑战，是盘点挑战。难的不是写新配置，而是把旧配置理解到能完整复刻。影子模式不可妥协——如果你没办法把新旧系统并行跑起来对结果，那就不是在迁移，而是在赌博。
+
+两百个集成、一个周末、零条丢失消息。这就是一个中继平台的意义。

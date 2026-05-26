@@ -8,23 +8,18 @@ import { dirname, resolve } from 'path';
 
 import { readDefaultCodeTranslationMessages } from '@docusaurus/theme-translations';
 
+import { comparePresetThemeFiles } from './lib/compare-preset-theme-files.js';
 import { CssGenerator } from './lib/css-generator.js';
-import { LIB_REGEX_CHARACTER_SPACE } from './lib/regex.js';
+import { filterPresetThemeFile } from './lib/filter-preset-theme-file.js';
+import { buildGoogleFontsUrl } from './lib/google-fonts-url.js';
 import { buildSearchIndex } from './lib/search/indexer.js';
+import { Translations } from './lib/translations.js';
 import { resolvePreset } from './options.js';
 import { announcementBarInit } from './scripts/announcement-bar-init.js';
 import { colorModeInit } from './scripts/color-mode-init.js';
 import { dataAttributeQuery } from './scripts/data-attribute-query.js';
 
 import type {
-  IndexDocusaurusThemeNovaBuildGoogleFontsUrlBodyFamily,
-  IndexDocusaurusThemeNovaBuildGoogleFontsUrlCodeFamily,
-  IndexDocusaurusThemeNovaBuildGoogleFontsUrlDisplayFamily,
-  IndexDocusaurusThemeNovaBuildGoogleFontsUrlFamilies,
-  IndexDocusaurusThemeNovaBuildGoogleFontsUrlPreset,
-  IndexDocusaurusThemeNovaBuildGoogleFontsUrlQuery,
-  IndexDocusaurusThemeNovaBuildGoogleFontsUrlReturns,
-  IndexDocusaurusThemeNovaBuildGoogleFontsUrlSpacePattern,
   IndexDocusaurusThemeNovaDefaultActiveFooterPrefix,
   IndexDocusaurusThemeNovaDefaultActiveNavbarPrefix,
   IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent,
@@ -60,23 +55,28 @@ import type {
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenAuthorKeys,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenPostPermalinks,
   IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue,
+  IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseCount,
+  IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseIndexValue,
   IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue,
   IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions,
+  IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleCount,
+  IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleIndexValue,
+  IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleCount,
+  IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleIndexValue,
   IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue,
   IndexDocusaurusThemeNovaDefaultContext,
   IndexDocusaurusThemeNovaDefaultCssAccessibilityPath,
-  IndexDocusaurusThemeNovaDefaultCssComponentFileName,
-  IndexDocusaurusThemeNovaDefaultCssComponentFiles,
-  IndexDocusaurusThemeNovaDefaultCssComponentsDirectory,
+  IndexDocusaurusThemeNovaDefaultCssBlockFileName,
+  IndexDocusaurusThemeNovaDefaultCssBlockFiles,
+  IndexDocusaurusThemeNovaDefaultCssBlocksDirectory,
   IndexDocusaurusThemeNovaDefaultCssGridPath,
-  IndexDocusaurusThemeNovaDefaultCssPresetComponentFileName,
-  IndexDocusaurusThemeNovaDefaultCssPresetComponentFiles,
-  IndexDocusaurusThemeNovaDefaultCssPresetComponentsDirectory,
+  IndexDocusaurusThemeNovaDefaultCssPresetBlockFileName,
+  IndexDocusaurusThemeNovaDefaultCssPresetBlockFiles,
+  IndexDocusaurusThemeNovaDefaultCssPresetBlocksDirectory,
   IndexDocusaurusThemeNovaDefaultCssPresetDirectory,
   IndexDocusaurusThemeNovaDefaultCssPresetPath,
   IndexDocusaurusThemeNovaDefaultCssPresetThemeDirectory,
   IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName,
-  IndexDocusaurusThemeNovaDefaultCssPresetThemeFileNameString,
   IndexDocusaurusThemeNovaDefaultCssPresetThemeFiles,
   IndexDocusaurusThemeNovaDefaultCssResetPath,
   IndexDocusaurusThemeNovaDefaultCssThemeDirectory,
@@ -90,6 +90,12 @@ import type {
   IndexDocusaurusThemeNovaDefaultGeneratedCssPath,
   IndexDocusaurusThemeNovaDefaultGetClientModulesClientModules,
   IndexDocusaurusThemeNovaDefaultGetClientModulesNprogressCssPath,
+  IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesNovaTranslationsDirPath,
+  IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeCommonMessages,
+  IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeNovaMessages,
+  IndexDocusaurusThemeNovaDefaultGetPathsToWatchBlocksPath,
+  IndexDocusaurusThemeNovaDefaultGetPathsToWatchLibPath,
+  IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths,
   IndexDocusaurusThemeNovaDefaultGoogleFontsUrl,
   IndexDocusaurusThemeNovaDefaultI18nConfig,
   IndexDocusaurusThemeNovaDefaultInjectHtmlTagsAnnouncementBarInit,
@@ -165,7 +171,23 @@ export class DocusaurusThemeNova {
 
     writeFileSync(generatedCssPath, generatedCss, 'utf-8');
 
-    const googleFontsUrl: IndexDocusaurusThemeNovaDefaultGoogleFontsUrl = DocusaurusThemeNova.buildGoogleFontsUrl(resolvedPreset);
+    const googleFontsUrl: IndexDocusaurusThemeNovaDefaultGoogleFontsUrl = buildGoogleFontsUrl(
+      [
+        {
+          name: resolvedPreset['fonts']['display'],
+          axis: 'wght@400;600;700',
+        },
+        {
+          name: resolvedPreset['fonts']['body'],
+          axis: 'wght@400;500;700',
+        },
+        {
+          name: resolvedPreset['fonts']['code'],
+          axis: 'wght@400;500',
+        },
+      ],
+      'block',
+    );
 
     const presetName: IndexDocusaurusThemeNovaDefaultPresetName = options['preset'];
     const currentDirectory: IndexDocusaurusThemeNovaDefaultCurrentDirectory = dirname(__filename);
@@ -179,6 +201,12 @@ export class DocusaurusThemeNova {
 
     const themePath: IndexDocusaurusThemeNovaDefaultThemePath = `${currentDirectory}/theme`;
     const typeScriptThemePath: IndexDocusaurusThemeNovaDefaultTypeScriptThemePath = resolve(currentDirectory, '../src/theme');
+    const blocksPath: IndexDocusaurusThemeNovaDefaultGetPathsToWatchBlocksPath = `${currentDirectory}/blocks`;
+    const libPath: IndexDocusaurusThemeNovaDefaultGetPathsToWatchLibPath = `${currentDirectory}/lib`;
+    const pathsToWatch: IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths = [
+      blocksPath,
+      libPath,
+    ];
 
     // Global CSS files.
     const cssResetPath: IndexDocusaurusThemeNovaDefaultCssResetPath = resolve(currentDirectory, 'styles/reset.css');
@@ -186,39 +214,25 @@ export class DocusaurusThemeNova {
     const cssAccessibilityPath: IndexDocusaurusThemeNovaDefaultCssAccessibilityPath = resolve(currentDirectory, 'styles/accessibility.css');
     const cssUtilitiesPath: IndexDocusaurusThemeNovaDefaultCssUtilitiesPath = resolve(currentDirectory, 'styles/utilities.css');
 
-    // Shared component and theme CSS files.
-    const cssComponentsDirectory: IndexDocusaurusThemeNovaDefaultCssComponentsDirectory = resolve(currentDirectory, 'styles/components');
-    const cssComponentFiles: IndexDocusaurusThemeNovaDefaultCssComponentFiles = readdirSync(cssComponentsDirectory, { recursive: true }).filter((fileName: IndexDocusaurusThemeNovaDefaultCssComponentFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssComponentFileName) => resolve(cssComponentsDirectory, String(fileName)));
+    // Shared block and theme CSS files.
+    const cssBlocksDirectory: IndexDocusaurusThemeNovaDefaultCssBlocksDirectory = resolve(currentDirectory, 'styles/blocks');
+    const cssBlockFiles: IndexDocusaurusThemeNovaDefaultCssBlockFiles = readdirSync(cssBlocksDirectory, { recursive: true }).filter((fileName: IndexDocusaurusThemeNovaDefaultCssBlockFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssBlockFileName) => resolve(cssBlocksDirectory, String(fileName)));
     const cssThemeDirectory: IndexDocusaurusThemeNovaDefaultCssThemeDirectory = resolve(currentDirectory, 'styles/theme');
     const cssThemeFiles: IndexDocusaurusThemeNovaDefaultCssThemeFiles = readdirSync(cssThemeDirectory, { recursive: true }).filter((fileName: IndexDocusaurusThemeNovaDefaultCssThemeFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssThemeFileName) => resolve(cssThemeDirectory, String(fileName)));
 
     // Preset CSS files.
     const cssPresetDirectory: IndexDocusaurusThemeNovaDefaultCssPresetDirectory = resolve(currentDirectory, `styles/presets/${presetName}`);
     const cssPresetPath: IndexDocusaurusThemeNovaDefaultCssPresetPath = resolve(cssPresetDirectory, 'preset.css');
-    const cssPresetComponentsDirectory: IndexDocusaurusThemeNovaDefaultCssPresetComponentsDirectory = resolve(cssPresetDirectory, 'components');
-    const cssPresetComponentFiles: IndexDocusaurusThemeNovaDefaultCssPresetComponentFiles = readdirSync(cssPresetComponentsDirectory, { recursive: true }).filter((fileName: IndexDocusaurusThemeNovaDefaultCssPresetComponentFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssPresetComponentFileName) => resolve(cssPresetComponentsDirectory, String(fileName)));
+    const cssPresetBlocksDirectory: IndexDocusaurusThemeNovaDefaultCssPresetBlocksDirectory = resolve(cssPresetDirectory, 'blocks');
+    const cssPresetBlockFiles: IndexDocusaurusThemeNovaDefaultCssPresetBlockFiles = readdirSync(cssPresetBlocksDirectory, { recursive: true }).filter((fileName: IndexDocusaurusThemeNovaDefaultCssPresetBlockFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssPresetBlockFileName) => resolve(cssPresetBlocksDirectory, String(fileName)));
     const cssPresetThemeDirectory: IndexDocusaurusThemeNovaDefaultCssPresetThemeDirectory = resolve(cssPresetDirectory, 'theme');
     const activeNavbarPrefix: IndexDocusaurusThemeNovaDefaultActiveNavbarPrefix = `Navbar/${resolvedPreset['navbar'].charAt(0).toUpperCase()}${resolvedPreset['navbar'].slice(1)}/`;
     const activeFooterPrefix: IndexDocusaurusThemeNovaDefaultActiveFooterPrefix = `Footer/${resolvedPreset['footer'].charAt(0).toUpperCase()}${resolvedPreset['footer'].slice(1)}/`;
     const cssPresetThemeFiles: IndexDocusaurusThemeNovaDefaultCssPresetThemeFiles = readdirSync(cssPresetThemeDirectory, { recursive: true }).filter(
-      (fileName: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName) => {
-        const name: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileNameString = String(fileName);
-
-        if (name.endsWith('style.css') === false) {
-          return false;
-        }
-
-        if (name.startsWith('Navbar/') === true) {
-          return name.startsWith(activeNavbarPrefix);
-        }
-
-        if (name.startsWith('Footer/') === true) {
-          return name.startsWith(activeFooterPrefix);
-        }
-
-        return true;
-      },
-    ).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName) => resolve(cssPresetThemeDirectory, String(fileName)));
+      (fileName: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName) => filterPresetThemeFile(String(fileName), activeNavbarPrefix, activeFooterPrefix),
+    ).sort(
+      (a: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName, b: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName) => comparePresetThemeFiles(String(a), String(b)),
+    ).map((fileName: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName) => resolve(cssPresetThemeDirectory, String(fileName)));
 
     const i18nConfig: IndexDocusaurusThemeNovaDefaultI18nConfig = context['i18n'] as IndexDocusaurusThemeNovaDefaultI18nConfig;
     const currentLocale: IndexDocusaurusThemeNovaDefaultCurrentLocale = i18nConfig['currentLocale'];
@@ -267,10 +281,25 @@ export class DocusaurusThemeNova {
       },
 
       /**
+       * Index - Docusaurus Theme Nova - Default - Get Paths To Watch.
+       *
+       * Returns preset source paths that Docusaurus walks during translation
+       * extraction in addition to `getThemePath()`, so `translate()` calls in
+       * `blocks/` and `lib/` get picked up by `docusaurus write-translations`.
+       *
+       * @returns {IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths}
+       *
+       * @since 0.18.0
+       */
+      getPathsToWatch() {
+        return pathsToWatch;
+      },
+
+      /**
        * Index - Docusaurus Theme Nova - Default - Get Client Modules.
        *
        * Returns the list of CSS asset paths that Docusaurus injects as client
-       * modules including global resets, shared component and theme styles, preset
+       * modules including global resets, shared block and theme styles, preset
        * identity and overrides, and optionally the NProgress progress bar stylesheet.
        *
        * @returns {string[]}
@@ -286,10 +315,10 @@ export class DocusaurusThemeNova {
           cssAccessibilityPath,
           cssUtilitiesPath,
           generatedCssPath,
-          ...cssComponentFiles,
+          ...cssBlockFiles,
           ...cssThemeFiles,
           cssPresetPath,
-          ...cssPresetComponentFiles,
+          ...cssPresetBlockFiles,
           ...cssPresetThemeFiles,
           stickyLayoutPath,
         ];
@@ -434,39 +463,55 @@ export class DocusaurusThemeNova {
       /**
        * Index - Docusaurus Theme Nova - Default - Get Translation Files.
        *
-       * Returns an empty array as a placeholder for future locale-specific
-       * translation file support.
+       * Extracts translatable strings from the resolved theme configuration
+       * into per-area `TranslationFile` bundles (navbar, announcementBar,
+       * footer, blog) for `docusaurus write-translations` to scaffold.
        *
-       * @returns {never[]}
+       * @returns {TranslationFile[]}
        *
        * @since 0.15.0
        */
       getTranslationFiles() {
-        return [];
+        return Translations.extract({ themeConfig });
       },
 
       /**
        * Index - Docusaurus Theme Nova - Default - Get Default Code Translation Messages.
        *
-       * Loads the default code translation messages for the current locale
-       * from the Docusaurus theme-common translation bundle.
+       * Loads the default code translation messages for the current locale by
+       * reading both the upstream Docusaurus theme-common bundle and Nova's own
+       * theme-nova bundle, then merging them with Nova taking precedence.
        *
        * @returns {Promise<Record<string, string>>}
        *
        * @since 0.15.0
        */
-      getDefaultCodeTranslationMessages() {
-        return readDefaultCodeTranslationMessages({
+      async getDefaultCodeTranslationMessages() {
+        const novaTranslationsDirPath: IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesNovaTranslationsDirPath = resolve(currentDirectory, '../../translations/locales');
+
+        const themeCommonMessages: IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeCommonMessages = await readDefaultCodeTranslationMessages({
           locale: currentLocale,
           name: 'theme-common',
         });
+
+        const themeNovaMessages: IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeNovaMessages = await readDefaultCodeTranslationMessages({
+          dirPath: novaTranslationsDirPath,
+          locale: currentLocale,
+          name: 'theme-nova',
+        });
+
+        return {
+          ...themeCommonMessages,
+          ...themeNovaMessages,
+        };
       },
 
       /**
        * Index - Docusaurus Theme Nova - Default - Translate Theme Config.
        *
-       * Returns the theme configuration unchanged as a placeholder for future
-       * locale-specific theme configuration translation support.
+       * Returns a deep-cloned theme configuration with translated strings
+       * spliced into the navbar, announcement bar, footer, and blog areas,
+       * falling back to source strings when a translation key is missing.
        *
        * @param {IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParams} params - Params.
        *
@@ -475,7 +520,10 @@ export class DocusaurusThemeNova {
        * @since 0.15.0
        */
       translateThemeConfig(params: IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParams) {
-        return params['themeConfig'];
+        return Translations.apply({
+          themeConfig: params['themeConfig'],
+          translationFiles: params['translationFiles'],
+        });
       },
 
       /**
@@ -637,55 +685,37 @@ export class DocusaurusThemeNova {
           }
         }
 
+        // Build-time random indices for surfaces that pick from a phrase pool.
+        // Computed once per build so SSR HTML matches client hydration - no
+        // visible flash from useEffect-time randomization.
+        const notFoundBundleCount: IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleCount = 5;
+        const errorPageContentTitleCount: IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleCount = 5;
+        const creditPhraseCount: IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseCount = 10;
+
+        const notFoundBundleIndex: IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleIndexValue = Math.floor(Math.random() * notFoundBundleCount);
+        const errorPageContentTitleIndex: IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleIndexValue = Math.floor(Math.random() * errorPageContentTitleCount);
+        const creditPhraseIndex: IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseIndexValue = Math.floor(Math.random() * creditPhraseCount);
+
         actions.setGlobalData({
           blogAuthors,
           blogPosts,
           docDescriptions,
           navbarVariant: resolvedPreset['navbar'],
           footerVariant: resolvedPreset['footer'],
+          presetCta: resolvedPreset['cta'],
           presetLogo: {
             title: resolvedPreset['logo']['title'],
             alt: resolvedPreset['logo']['alt'],
             src: presetLogoDataUri,
           },
+          notFoundBundleIndex,
+          errorPageContentTitleIndex,
+          creditPhraseIndex,
         });
 
         return;
       },
     };
-  }
-
-  /**
-   * Index - Docusaurus Theme Nova - Build Google Fonts URL.
-   *
-   * Constructs a Google Fonts CSS API URL from the resolved preset
-   * font families with appropriate weight ranges for display, body,
-   * and code typefaces.
-   *
-   * @param {IndexDocusaurusThemeNovaBuildGoogleFontsUrlPreset} preset - Preset.
-   *
-   * @private
-   *
-   * @returns {IndexDocusaurusThemeNovaBuildGoogleFontsUrlReturns}
-   *
-   * @since 0.15.0
-   */
-  private static buildGoogleFontsUrl(preset: IndexDocusaurusThemeNovaBuildGoogleFontsUrlPreset): IndexDocusaurusThemeNovaBuildGoogleFontsUrlReturns {
-    const spacePattern: IndexDocusaurusThemeNovaBuildGoogleFontsUrlSpacePattern = new RegExp(LIB_REGEX_CHARACTER_SPACE, 'g');
-
-    const displayFamily: IndexDocusaurusThemeNovaBuildGoogleFontsUrlDisplayFamily = `family=${preset['fonts']['display'].replace(spacePattern, '+')}:wght@400;600;700`;
-    const bodyFamily: IndexDocusaurusThemeNovaBuildGoogleFontsUrlBodyFamily = `family=${preset['fonts']['body'].replace(spacePattern, '+')}:wght@400;500;700`;
-    const codeFamily: IndexDocusaurusThemeNovaBuildGoogleFontsUrlCodeFamily = `family=${preset['fonts']['code'].replace(spacePattern, '+')}:wght@400;500`;
-
-    const families: IndexDocusaurusThemeNovaBuildGoogleFontsUrlFamilies = [
-      displayFamily,
-      bodyFamily,
-      codeFamily,
-    ];
-
-    const query: IndexDocusaurusThemeNovaBuildGoogleFontsUrlQuery = families.join('&');
-
-    return `https://fonts.googleapis.com/css2?${query}&display=block`;
   }
 }
 

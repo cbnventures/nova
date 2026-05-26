@@ -1,0 +1,299 @@
+---
+title: "API 参考"
+sidebar_position: 1
+description: "Signal 的完整 Spoke API 参考——Beacon 链接、Prism 归因、Pulse 实时流、Aperture 快照、Resonance 受众。"
+tags:
+  - "reference"
+  - "api"
+---
+
+import Details from '@theme/Details';
+
+# API 参考
+
+Signal 通过 Spoke 暴露一组 REST API。CLI 中可用的每一项能力都可以程序化调用。所有请求都需要在 `Authorization` 头中带上 Bearer 令牌。
+
+## Base URL
+
+```
+https://api.signal.example/v2
+```
+
+## 认证
+
+```bash title="带认证的请求"
+curl -H "Authorization: Bearer sk_live_your_api_key" \
+  https://api.signal.example/v2/beacons
+```
+
+生产环境的 API 密钥以 `sk_live_` 开头，沙箱环境则以 `sk_test_` 开头。请在 Signal 仪表盘或通过 `signal auth` CLI 命令生成密钥。
+
+---
+
+## 链接
+
+### 创建一条 Beacon 链接
+
+| 属性     | 取值            |
+|--------|---------------|
+| Method | `POST`        |
+| Path   | `/v2/beacons` |
+| Auth   | Bearer 令牌（必填） |
+
+```bash title="创建 Beacon 链接"
+curl -X POST https://api.signal.example/v2/beacons \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://threadbare.example/pricing",
+    "domain": "go.signal.example",
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta"
+  }'
+```
+
+<Details>
+<summary>响应结构</summary>
+
+```json title="201 Created"
+{
+  "id": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "shortUrl": "https://go.signal.example/a7x9m2",
+  "url": "https://threadbare.example/pricing",
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  },
+  "clicks": 0,
+  "createdAt": "2025-02-20T09:15:00.000Z"
+}
+```
+
+</Details>
+
+### 列出 Beacon 链接
+
+| 属性     | 取值            |
+|--------|---------------|
+| Method | `GET`         |
+| Path   | `/v2/beacons` |
+| Auth   | Bearer 令牌（必填） |
+
+| 参数         | 类型     | 默认值 | 说明             |
+|------------|--------|-----|----------------|
+| `campaign` | string | —   | 按营销活动名筛选。      |
+| `channel`  | string | —   | 按渠道筛选。         |
+| `domain`   | string | —   | 按品牌域名筛选。       |
+| `limit`    | number | 50  | 每页结果数（最多 200）。 |
+| `cursor`   | string | —   | 上一页返回的分页游标。    |
+
+```bash title="按营销活动列出链接"
+curl "https://api.signal.example/v2/beacons?campaign=product-launch&limit=10" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+### 更新一条 Beacon 链接
+
+| 属性     | 取值                |
+|--------|-------------------|
+| Method | `PATCH`           |
+| Path   | `/v2/beacons/:id` |
+| Auth   | Bearer 令牌（必填）     |
+
+```bash title="更新目的地 URL"
+curl -X PATCH https://api.signal.example/v2/beacons/bcn_01J9K4M7N2P8Q3R5S6T1U0V2 \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://threadbare.example/pricing-v2" }'
+```
+
+### 删除一条 Beacon 链接
+
+| 属性     | 取值                |
+|--------|-------------------|
+| Method | `DELETE`          |
+| Path   | `/v2/beacons/:id` |
+| Auth   | Bearer 令牌（必填）     |
+
+```bash title="删除链接"
+curl -X DELETE https://api.signal.example/v2/beacons/bcn_01J9K4M7N2P8Q3R5S6T1U0V2 \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## 分析
+
+### 查询点击数据
+
+| 属性     | 取值                     |
+|--------|------------------------|
+| Method | `GET`                  |
+| Path   | `/v2/analytics/clicks` |
+| Auth   | Bearer 令牌（必填）          |
+
+| 参数            | 类型     | 默认值   | 说明                        |
+|---------------|--------|-------|---------------------------|
+| `beacon`      | string | —     | 按 Beacon ID 筛选。           |
+| `campaign`    | string | —     | 按营销活动筛选。                  |
+| `from`        | string | 7 天前  | 起始日期（ISO 8601）。           |
+| `to`          | string | now   | 结束日期（ISO 8601）。           |
+| `granularity` | string | `day` | 聚合粒度：`hour`、`day`、`week`。 |
+
+```bash title="查询点击分析"
+curl "https://api.signal.example/v2/analytics/clicks?campaign=product-launch&granularity=day" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+<Details>
+<summary>响应结构</summary>
+
+```json title="200 OK"
+{
+  "campaign": "product-launch",
+  "granularity": "day",
+  "data": [
+    { "date": "2025-02-18", "clicks": 2150, "unique": 1540 },
+    { "date": "2025-02-19", "clicks": 1890, "unique": 1350 },
+    { "date": "2025-02-20", "clicks": 2480, "unique": 1780 }
+  ]
+}
+```
+
+</Details>
+
+### 查询归因路径
+
+| 属性     | 取值                    |
+|--------|-----------------------|
+| Method | `GET`                 |
+| Path   | `/v2/analytics/paths` |
+| Auth   | Bearer 令牌（必填）         |
+
+| 参数         | 类型     | 默认值      | 说明                                         |
+|------------|--------|----------|--------------------------------------------|
+| `trace`    | string | —        | 指定的 trace ID。                              |
+| `campaign` | string | —        | 营销活动下的全部路径。                                |
+| `model`    | string | `linear` | 归因模型：`linear`、`decay`、`position`、`custom`。 |
+
+```bash title="查询特定归因路径"
+curl "https://api.signal.example/v2/analytics/paths?trace=trc_8f3a1b2c4d5e6f70&model=decay" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## 受众
+
+### 列出细分人群
+
+| 属性     | 取值                       |
+|--------|--------------------------|
+| Method | `GET`                    |
+| Path   | `/v2/audiences/segments` |
+| Auth   | Bearer 令牌（必填）            |
+
+### 创建细分人群
+
+| 属性     | 取值                       |
+|--------|--------------------------|
+| Method | `POST`                   |
+| Path   | `/v2/audiences/segments` |
+| Auth   | Bearer 令牌（必填）            |
+
+```bash title="创建细分人群"
+curl -X POST https://api.signal.example/v2/audiences/segments \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "high-intent-email",
+    "conditions": [
+      { "field": "channel", "operator": "==", "value": "email" },
+      { "field": "clicks", "operator": ">=", "value": 5 }
+    ]
+  }'
+```
+
+### 查询重叠
+
+| 属性     | 取值                      |
+|--------|-------------------------|
+| Method | `POST`                  |
+| Path   | `/v2/audiences/overlap` |
+| Auth   | Bearer 令牌（必填）           |
+
+```bash title="查询受众重叠"
+curl -X POST https://api.signal.example/v2/audiences/overlap \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "segments": ["high-intent-email", "social-clickers"] }'
+```
+
+<Details>
+<summary>响应结构</summary>
+
+```json title="200 OK"
+{
+  "segments": ["high-intent-email", "social-clickers"],
+  "sizes": { "high-intent-email": 4280, "social-clickers": 6120 },
+  "overlap": { "count": 1720, "percent": 40.2 }
+}
+```
+
+</Details>
+
+---
+
+## 营销活动
+
+### 创建营销活动
+
+| 属性     | 取值              |
+|--------|-----------------|
+| Method | `POST`          |
+| Path   | `/v2/campaigns` |
+| Auth   | Bearer 令牌（必填）   |
+
+### 拍一张快照
+
+| 属性     | 取值                            |
+|--------|-------------------------------|
+| Method | `POST`                        |
+| Path   | `/v2/campaigns/:id/snapshots` |
+| Auth   | Bearer 令牌（必填）                 |
+
+### 对比快照
+
+| 属性     | 取值                                    |
+|--------|---------------------------------------|
+| Method | `GET`                                 |
+| Path   | `/v2/campaigns/:id/snapshots/compare` |
+| Auth   | Bearer 令牌（必填）                         |
+
+| 参数     | 类型     | 说明            |
+|--------|--------|---------------|
+| `from` | string | 第一张快照的标签或 ID。 |
+| `to`   | string | 第二张快照的标签或 ID。 |
+
+```bash title="对比两张快照"
+curl "https://api.signal.example/v2/campaigns/cmp_01J9L2M8N4P6Q7R3S5T0U1V9/snapshots/compare?from=week-1&to=week-2" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## 键盘快捷键（CLI）
+
+Signal CLI 在交互模式下支持下列键盘快捷键：
+
+| 快捷键                                               | 操作            |
+|---------------------------------------------------|---------------|
+| <kbd>Ctrl</kbd> + <kbd>C</kbd>                    | 取消当前操作。       |
+| <kbd>Ctrl</kbd> + <kbd>L</kbd>                    | 清空 Pulse 实时流。 |
+| <kbd>Ctrl</kbd> + <kbd>R</kbd>                    | 刷新营销活动指标。     |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | 将当前视图导出为 CSV。 |
+
+在 macOS 上，大多数快捷键中可将 <kbd>Ctrl</kbd> 替换为 <kbd>Cmd</kbd>。

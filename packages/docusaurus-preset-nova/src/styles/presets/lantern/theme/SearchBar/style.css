@@ -1,0 +1,163 @@
+/**
+ * Lantern - `SearchBar` theme overlay.
+ *
+ * Warm cream input with a soft amber focus ring. The dropdown reads as a
+ * paper card; result titles use italic Fraunces and amber wash on the active
+ * row. Search highlights warm to amber.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Input - warm cream paper field
+ * ============================
+ */
+
+.nova-search-bar-input {
+  width: 100%;
+  max-width: 220px;
+
+  font-family: var(--nova-font-body);
+  color: var(--nova-lantern-ink);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition: border-color var(--nova-lantern-transition), box-shadow var(--nova-lantern-transition);
+}
+
+.nova-search-bar-input::placeholder {
+  color: var(--nova-lantern-ink-muted);
+}
+
+.nova-search-bar-input:focus {
+  border-color: var(--nova-color-primary-500);
+  box-shadow: 0 0 0 var(--nova-lantern-focus-ring-width) color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+[data-theme="dark"] .nova-search-bar-input {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-search-bar-input:focus {
+  border-color: var(--nova-color-primary-400);
+  box-shadow: 0 0 0 var(--nova-lantern-focus-ring-width) color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
+}
+
+/**
+ * ============================
+ * 2. Dropdown - paper card
+ * ============================
+ */
+
+.nova-search-dropdown {
+  background: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 94%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-lantern-radius-card);
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+[data-theme="dark"] .nova-search-dropdown {
+  background: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 88%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+  box-shadow: none;
+}
+
+/**
+ * ============================
+ * 3. Result rows - amber wash on active
+ * ============================
+ */
+
+.nova-search-result {
+  border-bottom: 1px solid color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 70%);
+
+  transition: background-color var(--nova-lantern-transition-fast);
+}
+
+.nova-search-result:hover,
+.nova-search-result:focus-visible,
+.nova-search-result--active {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+[data-theme="dark"] .nova-search-result {
+  border-bottom-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 60%);
+}
+
+[data-theme="dark"] .nova-search-result:hover,
+[data-theme="dark"] .nova-search-result:focus-visible,
+[data-theme="dark"] .nova-search-result--active {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+}
+
+/**
+ * ============================
+ * 4. Result title - italic Fraunces caption
+ * ============================
+ */
+
+.nova-search-result-title {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-weight: 500;
+  color: var(--nova-lantern-ink);
+}
+
+.nova-search-count {
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/**
+ * ============================
+ * 5. Search highlight - warm amber tag
+ * ============================
+ */
+
+mark {
+  padding: 0.05em 0.2em;
+
+  color: var(--nova-color-primary-800);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 72%);
+  border-radius: calc(var(--nova-shape-radius) * 0.5);
+}
+
+[data-theme="dark"] mark {
+  color: var(--nova-color-primary-200);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+}
+
+/**
+ * ============================
+ * 6. Mobile menu search - fills the panel
+ * ============================
+ */
+
+.nova-mobile-menu-search .nova-search-bar-input {
+  width: 100%;
+  max-width: none;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 94%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-mobile-menu-search .nova-search-bar-input {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+}
+
+.nova-mobile-menu-search .nova-search-dropdown {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}

@@ -1,0 +1,38 @@
+---
+title: "Squirrel patrols and the porch that knew them"
+authors:
+  - "noor"
+tags:
+  - "perimeter"
+  - "motion"
+  - "sensor-history"
+date: "2025-07-01"
+---
+
+The porch sensor catalogued the squirrel patrols for two summers. There are three of them. They arrive by noon, leave by two, and come back at dusk. Lantern stopped flagging the patrols last spring — they are part of the household now, in their way.
+
+{/* truncate */}
+
+The list of regulars grew. The mail carrier. The neighbor's dog. The wind through the wisteria. Lantern keeps a quiet roster of who belongs on the porch, even if nobody made it official.
+
+We named the squirrels in the second summer. Not officially — we never wrote them into a configuration file. But the household started calling them by where they came from. The one from the maple. The one from the fence line. The one who only came when the others were elsewhere. The fence-line squirrel was the largest, and the slowest, and the most predictable. The maple squirrel was the loudest at the porch railing. The third one stayed mostly out of sight and only ever showed up on the railing camera as a tail.
+
+The porch learned all three before we did. The first summer Lantern logged every squirrel arrival as a low-confidence motion event with no companion signature — too low to be a person, too high to be the wind. By August we had three clusters in the sensor history that lined up with the railing-camera footage, all with their own arrival times and their own patrol routes. By the second summer the porch had moved them out of the alert pile and into the gentle pile. They got the same treatment as the cat. The history still wrote them down. The lamp said nothing.
+
+The roster grew sideways from there. Lantern added the wind through the wisteria after a windy April. It added the neighbor's dog in May, after the dog visited the porch every Sunday for six weeks. It added a chipmunk, briefly, in June, then quietly removed it in July when the chipmunk stopped coming. The roster is not a setting. It is the porch's running list of what counts as a regular, derived from the history.
+
+```bash
+$ lantern history --zone porch --regulars
+porch  regular   first-seen   last-seen    events   typical-window
+porch  cat       2022-04-11   2026-05-01   12,847   16:00–17:00
+porch  mail      2022-04-11   2026-05-01    2,193   11:00–12:00
+porch  squirrel-maple    2024-06-02  2026-04-30   1,402   12:00–14:00
+porch  squirrel-fence    2024-06-04  2026-04-30   1,108   12:00–14:00
+porch  squirrel-third    2024-07-19  2026-04-29      388   18:00–20:00
+porch  wisteria-wind     2025-04-08  2026-04-30      974   varies
+porch  neighbor-dog      2025-05-04  2026-04-26      189   sundays
+```
+
+The porch is the friendliest sensor in the house. It treats the regulars the way a gardener treats the weather — not as a problem, but as a context. A squirrel on the rail at 1pm is not an alarm. A squirrel on the rail at 3am would be. The porch can tell the difference because it has been keeping the roster honest since 2024.
+
+Some of the regulars have left. The chipmunk did not return after July. The original mail carrier retired and a new one shows up earlier. The roster updates itself, quietly, the way the household updates its own list of who walks past the kitchen window. The porch does not need a celebration. It just keeps the door open, and the list current.

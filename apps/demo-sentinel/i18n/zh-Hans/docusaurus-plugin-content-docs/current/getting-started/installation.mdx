@@ -1,0 +1,120 @@
+---
+title: "安装"
+sidebar_position: 1
+description: "通过 Spark、Vial 容器或 Arcline 云市场部署 Sentinel 代理。"
+tags:
+  - "快速入门"
+  - "安装"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 安装
+
+Sentinel 要求在每一个参与信任评估闭环的端点上都安装代理。代理通过 Filament 隧道与 Sentinel 控制面通信，并向 Watchtower 上报设备态势。
+
+## 前置条件
+
+- **Spark CLI** 2.0 或更高（采用 Spark 安装方式时）
+- 主机网络支持 **Filament** 协议（UDP 51820）
+- 一个 Sentinel 控制面实例（云托管或自托管）
+
+:::warning Filament 协议版本
+Sentinel 3.x 要求 Filament 协议版本 2.0 或更高。更早版本的 Filament 实现不支持 Garrison 上报设备健康所用的加密态势遥测通道。请在继续前用 `filament --version` 验证你的 Filament 版本。
+:::
+
+## 安装代理
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+```bash title="通过 Spark 安装"
+spark install sentinel-agent
+```
+
+Spark 会为你的操作系统与架构解析正确的二进制文件。代理会被安装到 `~/.spark/bin/sentinel-agent` 并自动加入到你的 PATH 中。
+
+```bash title="验证安装"
+sentinel-agent --version
+```
+
+</TabItem>
+<TabItem value="vial" label="Vial 容器">
+
+```bash title="拉取 Sentinel 代理镜像"
+vial pull sentinel/agent:latest
+```
+
+以长生命周期容器运行代理：
+
+```bash title="运行代理容器"
+vial run -d \
+  --name sentinel-agent \
+  --restart always \
+  --cap-add NET_ADMIN \
+  -v /var/lib/sentinel:/data \
+  sentinel/agent:latest
+```
+
+`NET_ADMIN` 能力是 Filament 隧道管理所必需的。
+
+</TabItem>
+<TabItem value="arcline" label="Arcline 市场">
+
+```bash title="从 Arcline 市场部署"
+arcline deploy sentinel-agent \
+  --region us-east-1 \
+  --tier standard \
+  --auto-enroll
+```
+
+Arcline 市场部署内置了 Garrison 自动注册与 Filament 隧道置备，无需额外配置。
+
+</TabItem>
+</Tabs>
+
+## 向控制面注册
+
+安装完成后，将代理向 Sentinel 控制面注册：
+
+```bash title="代理注册"
+sentinel-agent register \
+  --control-plane sentinel.yourcompany.internal \
+  --enrollment-token $SENTINEL_ENROLLMENT_TOKEN
+```
+
+注册过程中，代理会执行一次初始态势检查。Garrison 会记录设备的基线状态——操作系统版本、磁盘加密状态、防火墙配置与已安装的补丁等级。
+
+```text title="注册输出"
+正在向控制面注册：sentinel.yourcompany.internal
+  设备 ID:        dev_a3b7c9d1e5f2
+  Filament 隧道： 已建立 (UDP 51820)
+  态势基线：       已采集
+    操作系统：      macOS 15.2
+    加密：          FileVault 已启用 (AES-256)
+    防火墙：        已激活
+    补丁等级：      最新
+
+注册完成。Watchtower 将在 90 秒后开始评估。
+```
+
+:::note 注册令牌
+注册令牌为一次性使用，24 小时后失效。可在 Sentinel 控制台或通过 Spoke API 生成新令牌：`sentinel api tokens create --type enrollment --ttl 24h`。
+:::
+
+## 安装之后
+
+注册完成后，代理将自主运行：
+
+- **Garrison** 持续循环地检查设备态势，并上报至控制面。
+- **Watchtower** 每 90 秒针对活跃的信任策略评估一次代理上报的态势数据。
+- **Drawbridge** 根据评估结果，授予或撤销 Filament 隧道的访问权。
+
+注册之后无需任何人工干预。策略变更会自动传播到所有已注册的代理。
+
+## 下一步
+
+- [你的第一条策略](/docs/getting-started/your-first-policy/) — 编写一条信任策略并将其绑定到资源。
+- [设备注册](/docs/trust/device-enrollment/) — 深入了解态势基线与合规配置文件。
+- [概述](/docs/overview/) — 架构与组件参考。

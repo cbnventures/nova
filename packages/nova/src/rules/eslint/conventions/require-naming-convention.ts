@@ -451,7 +451,7 @@ export class RulesEslintConventionsRequireNamingConvention {
 
     const name: RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationName = node.id.name;
 
-    // React components use PascalCase — detect by uppercase first letter.
+    // React components use PascalCase - detect by uppercase first letter.
     const isUppercaseStart: RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationIsUppercaseStart = name.charAt(0) === name.charAt(0).toUpperCase() && name.charAt(0) !== name.charAt(0).toLowerCase();
     const expectedCasing: RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationExpectedCasing = (isUppercaseStart === true) ? reactComponentCasing : functionCasing;
     const expectedContext: RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationExpectedContext = (isUppercaseStart === true) ? 'a React component' : 'a function';
@@ -628,7 +628,7 @@ export class RulesEslintConventionsRequireNamingConvention {
       return;
     }
 
-    // Skip function/arrow assignments — handled by function checks.
+    // Skip function/arrow assignments - handled by function checks.
     const init: RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorInit = node.init;
 
     if (
@@ -642,7 +642,7 @@ export class RulesEslintConventionsRequireNamingConvention {
       return;
     }
 
-    // Const with immutable value → constant casing.
+    // Const with immutable value -> constant casing.
     if (parent.kind === 'const' && RulesEslintConventionsRequireNamingConvention.isImmutableValue(init) === true) {
       if (RulesEslintConventionsRequireNamingConvention.checkCasing(name, constant) === false) {
         // Also accept camelCase for const primitives (allow either).

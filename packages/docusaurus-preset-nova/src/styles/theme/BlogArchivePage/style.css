@@ -1,5 +1,5 @@
 /**
- * Blog Archive Page — Shared structural styles.
+ * Blog Archive Page - Shared structural styles.
  *
  * @since 0.15.0
  */
@@ -8,33 +8,29 @@
  * 1. Archive Container
  * ============================ */
 
-/* Archive page has section gap matching blog layout. */
+/* Archive page padding - section-gap divided down so the page doesn't
+   feel hollow when content is short. */
 .nova-blog-archive {
-  padding-block: var(--nova-section-gap);
-}
-
-/* Page heading — display heading for the archive title. */
-.nova-blog-archive > .nova-heading {
-  margin-bottom: 1.5rem;
-
-  font-size: 1.5rem;
+  padding-block: calc(var(--nova-section-gap) / 2);
 }
 
 /* ============================
  * 2. Year Sections
  * ============================ */
 
-/* Year heading — section divider between archive groups. */
+/* Year heading - flush with the page header above the first section. */
+.nova-blog-archive section h3 {
+  margin-top: 0;
+  margin-bottom: 0.75rem;
+}
+
+/* Spacing between year groups. */
 .nova-blog-archive section {
   margin-bottom: 2rem;
 }
 
 .nova-blog-archive section:last-child {
   margin-bottom: 0;
-}
-
-.nova-blog-archive section h3 {
-  margin-bottom: 0.75rem;
 }
 
 /* ============================
@@ -53,7 +49,7 @@
   margin-bottom: 0.25rem;
 }
 
-/* Archive links — block-level with padding for click target. */
+/* Archive links - block-level with padding for click target. */
 .nova-blog-archive a {
   display: inline-block;
   padding: 0.25rem 0;
@@ -62,4 +58,21 @@
   line-height: 1.5;
 
   text-decoration: none;
+}
+
+/* Standardized hover across all 6 presets - color shift to primary +
+   soft primary bg tint. Preset identity comes through via the primary
+   color value (envoy=violet, foundry=orange, marshal=green, lantern=amber,
+   sentinel=navy, signal=coral). No underline, no border-left. */
+.nova-blog-archive a:hover,
+.nova-blog-archive a:focus-visible {
+  color: var(--nova-color-primary-600);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-archive a:hover,
+[data-theme="dark"] .nova-blog-archive a:focus-visible {
+  color: var(--nova-color-primary-400);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
 }

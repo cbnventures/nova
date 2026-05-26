@@ -1,6 +1,6 @@
 /**
  * ============================
- * Loading — Container
+ * Loading - Container
  * ============================
  */
 
@@ -18,57 +18,77 @@
 
 /**
  * ============================
- * Loading — Retry Button
+ * Loading - Spinner
+ * ============================
+ *
+ * Pure-CSS rotating ring shown during the `loading` and `timeout` states (the
+ * `error` state has its own retry affordance and stays text-only). Each preset
+ * overrides the ring colors, optional glow, and animation speed in its own
+ * theme/Loading/style.css overlay.
+ */
+
+.nova-loading-spinner {
+  width: 2rem;
+  height: 2rem;
+
+  border: 2px solid var(--nova-color-border);
+  border-top-color: var(--nova-color-primary-500);
+  border-radius: 50%;
+
+  animation: nova-loading-spinner-rotate 0.8s linear infinite;
+}
+
+[data-theme="dark"] .nova-loading-spinner {
+  border-top-color: var(--nova-color-primary-400);
+}
+
+@keyframes nova-loading-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nova-loading-spinner {
+    animation: none;
+    border-style: dashed;
+  }
+}
+
+/**
+ * ============================
+ * Loading - Retry Button
  * ============================
  */
 
-.nova-loading-retry,
-.nova-error-retry {
+.nova-loading-retry {
   padding: 0.5rem 1rem;
 
   font-size: 0.875rem;
 
   cursor: pointer;
-  border: 1px solid var(--nova-color-neutral-300);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-shape-radius);
   background: transparent;
   color: inherit;
 
-  transition: border-color 0.2s ease,
-              background-color 0.2s ease;
+  transition: border-color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
 }
 
-.nova-loading-retry:hover,
-.nova-error-retry:hover {
+.nova-loading-retry:hover {
   border-color: var(--nova-color-primary-400);
-  background-color: var(--nova-color-neutral-50);
-}
-
-[data-theme="dark"] .nova-loading-retry,
-[data-theme="dark"] .nova-error-retry {
-  border-color: var(--nova-color-neutral-700);
-}
-
-[data-theme="dark"] .nova-loading-retry:hover,
-[data-theme="dark"] .nova-error-retry:hover {
-  border-color: var(--nova-color-primary-600);
-  background-color: rgba(255, 255, 255, 0.04);
+  background-color: var(--nova-color-surface-raised);
 }
 
 /**
  * ============================
- * Loading — Message
+ * Loading - Message
  * ============================
  */
 
-.nova-loading-message,
-.nova-error-message {
+.nova-loading-message {
   margin: 0;
 
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-loading-message,
-[data-theme="dark"] .nova-error-message {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }

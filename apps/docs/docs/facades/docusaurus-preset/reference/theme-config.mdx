@@ -36,9 +36,9 @@ themeConfig: {
   blog: { /* ... */ },
   tableOfContents: { /* ... */ },
   announcementBar: { /* ... */ },
-  footer: { /* ... */ },
   backToTopButton: true,
-  mermaid: { /* ... */ },
+  errorPages: { /* ... */ },
+  footer: { /* ... */ },
 },
 ```
 
@@ -52,6 +52,9 @@ themeConfig: {
 | `site.logo.src`          | `string`                                   | `''`        | Logo icon image source path.                      |
 | `site.logo.srcDark`      | `string \| undefined`                      | `undefined` | Logo icon source for dark mode.                   |
 | `site.logo.href`         | `string \| undefined`                      | `undefined` | Logo click URL.                                   |
+| `site.logo.target`       | `string \| undefined`                      | `undefined` | Logo link `target` attribute (e.g. `'_blank'`).   |
+| `site.logo.rel`          | `string \| undefined`                      | `undefined` | Logo link `rel` attribute (e.g. `'noopener'`).    |
+| `site.logo.ariaLabel`    | `string \| undefined`                      | `undefined` | Logo link accessible label.                       |
 | `site.logo.wordmark`     | `string \| undefined`                      | `undefined` | Wordmark image source path (full logo with text). |
 | `site.logo.wordmarkDark` | `string \| undefined`                      | `undefined` | Wordmark source for dark mode.                    |
 | `site.logo.title`        | `string \| undefined`                      | `undefined` | Brand title text shown in navbar.                 |
@@ -104,6 +107,10 @@ Each item in the `navbar.items` array follows this structure:
 | `blog.layout.description`  | `string`   | `''`     | Blog listing page description.                                                 |
 | `blog.share.platforms`     | `string[]` | `[]`     | Share button platforms. Accepts `x`, `facebook`, `linkedin`, `reddit`, `copy`. |
 
+:::info[Blog Header Rendering]
+`blog.layout.heading` and `blog.layout.description` populate the page-level header that `<BlogLayout>` renders above the blog content on the index, archive, and author pages. Swizzle consumers can pass `<BlogLayout showHeader>` to opt into the header on a custom page, or pass a `header` ReactNode prop to override the default heading + description entirely.
+:::
+
 ## Table of Contents
 
 | Option                            | Type     | Default | Description                              |
@@ -121,33 +128,47 @@ Each item in the `navbar.items` array follows this structure:
 | `announcementBar.textColor`       | `string \| undefined` | `undefined` | Text color override.               |
 | `announcementBar.isCloseable`     | `boolean`             | `true`      | Whether users can dismiss the bar. |
 
-## Footer
-
-Set to `false` to hide the footer entirely. Otherwise, provide an object:
-
-| Option               | Type                                                   | Default     | Description                        |
-|----------------------|--------------------------------------------------------|-------------|------------------------------------|
-| `footer.sections`    | `Record<string, FooterLink[]>`                         | `{}`        | Named groups of footer links.      |
-| `footer.layout`      | `Record<string, { title?, section }>`                  | `{}`        | Layout mapping for footer columns. |
-| `footer.socialLinks` | `Array<{ icon: string, href: string, label: string }>` | `[]`        | Social media icon links.           |
-| `footer.copyright`   | `string \| undefined`                                  | `undefined` | Copyright text.                    |
-| `footer.credit`      | `boolean`                                              | `true`      | Show "Built with Nova" credit.     |
-| `footer.cta`         | `string \| undefined`                                  | `undefined` | Call-to-action text or HTML.       |
-
 ## Back to Top Button
-
-:::info[Docusaurus Pass-Through]
-This option is passed directly to Docusaurus and is not validated by the Nova preset schema.
-:::
 
 | Option            | Type      | Default | Description                           |
 |-------------------|-----------|---------|---------------------------------------|
 | `backToTopButton` | `boolean` | `true`  | Show the back-to-top floating button. |
 
-## Mermaid
+## Error Pages
 
-| Option                | Type     | Default     | Description                                                         |
-|-----------------------|----------|-------------|---------------------------------------------------------------------|
-| `mermaid.theme.dark`  | `string` | `'dark'`    | Mermaid theme used in dark mode.                                    |
-| `mermaid.theme.light` | `string` | `'default'` | Mermaid theme used in light mode.                                   |
-| `mermaid.options`     | `object` | `{}`        | Additional Mermaid configuration passed through to the Mermaid API. |
+Customize copy on the 404, route-error, and React error-boundary surfaces. Each sub-key is optional; omit a key to use the preset's built-in defaults. Each leaf value is also optional, so you can override just the fields you care about.
+
+### Not Found (`/404`)
+
+| Option                              | Type     | Default | Description                                                         |
+|-------------------------------------|----------|---------|---------------------------------------------------------------------|
+| `errorPages.notFound.title`         | `string` | —       | Title shown above the 404 message.                                  |
+| `errorPages.notFound.description`   | `string` | —       | Body text below the title.                                          |
+| `errorPages.notFound.backHomeLabel` | `string` | —       | Label of the back-home link.                                        |
+| `errorPages.notFound.backHomeHref`  | `string` | —       | Href of the back-home link. Defaults to the site root when omitted. |
+
+### Error Page Content (route load errors)
+
+| Option                                   | Type     | Default | Description                                     |
+|------------------------------------------|----------|---------|-------------------------------------------------|
+| `errorPages.errorPageContent.title`      | `string` | —       | Title shown when a route-level error is caught. |
+| `errorPages.errorPageContent.retryLabel` | `string` | —       | Label of the retry button.                      |
+
+### Error (React error boundary)
+
+| Option                        | Type     | Default | Description                                                      |
+|-------------------------------|----------|---------|------------------------------------------------------------------|
+| `errorPages.error.retryLabel` | `string` | —       | Label of the retry button shown by the top-level error boundary. |
+
+## Footer
+
+Set to `false` to hide the footer entirely. Otherwise, provide an object:
+
+| Option               | Type                                                   | Default     | Description                                                                                                |
+|----------------------|--------------------------------------------------------|-------------|------------------------------------------------------------------------------------------------------------|
+| `footer.sections`    | `Record<string, FooterLink[]>`                         | `{}`        | Named groups of footer links.                                                                              |
+| `footer.layout`      | `Record<string, { title?, section }>`                  | `{}`        | Layout mapping for footer columns.                                                                         |
+| `footer.socialLinks` | `Array<{ icon: string, href: string, label: string }>` | `[]`        | Social media icon links.                                                                                   |
+| `footer.copyright`   | `string \| undefined`                                  | `undefined` | Copyright text.                                                                                            |
+| `footer.credit`      | `boolean`                                              | `true`      | Show "Built with Nova" credit.                                                                             |
+| `footer.cta`         | `string \| { label, href } \| undefined`               | `undefined` | Call-to-action. Pass a string for a static label, or `{ label, href }` to make the entire block clickable. |

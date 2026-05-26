@@ -1,0 +1,11 @@
+/**
+ * Signal - `Footer` theme overlay (placeholder).
+ *
+ * Each footer variant root (Commons / Embassy / Launchpad / Ledger) carries
+ * its own bg / border / color scheme in its sibling overlay; this file is
+ * intentionally empty so wrapper-level styles cannot win specificity
+ * collisions against variant rules. Consumers adding a custom variant
+ * should provide their own styling.
+ *
+ * @since 0.18.0
+ */

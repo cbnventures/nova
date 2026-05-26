@@ -1,0 +1,14 @@
+/**
+ * Sentinel - `DocItem` theme overlay.
+ *
+ * Doc page chrome baseline. The article body styling lives in
+ * `DocItem/Content/style.css`; this file sets the outer-page color/bg
+ * defaults that apply to doc page chrome.
+ *
+ * @since 0.18.0
+ */
+
+.nova-doc-root {
+  color: var(--nova-color-text);
+  background-color: var(--nova-sentinel-chrome-bg);
+}

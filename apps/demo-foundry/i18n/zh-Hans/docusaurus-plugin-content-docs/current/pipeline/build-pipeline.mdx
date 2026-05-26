@@ -1,0 +1,121 @@
+---
+title: "构建流水线"
+sidebar_position: 1
+description: "Foundry 通过五个阶段构建工作空间——解析、缓存检查、编译、链接与校验。Quench 负责缓存，Bellows 负责并行。"
+tags:
+  - "流水线"
+  - "构建"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 构建流水线
+
+Foundry 通过五个阶段构建工作空间：解析、缓存检查、编译、链接与校验。流水线由两个工具驱动——Quench 负责缓存，Bellows 负责并行。
+
+## 锻造生命周期
+
+每一次 `foundry ignite` 调用都遵循同样的序列：
+
+1. **解析。** Tongs 读取清单并构建依赖图。
+2. **缓存检查。** Quench 对每个源文件、每个依赖版本以及每条清单指令求哈希。如果哈希匹配先前的构建结果，则跳过该包。
+3. **编译。** Smelter 编译每个包的源文件。
+4. **链接。** 解析跨包引用，并接入导入别名。
+5. **校验。** Warden 对编译产物运行规则；若已配置，Crucible 运行已生成的测试。
+
+## Quench 缓存
+
+Quench 是一种内容寻址的构建缓存。它不使用文件时间戳——时间戳在跨机器以及版本控制操作之后都不可靠。Quench 对三类输入求哈希：
+
+| 输入    | 描述                                     |
+|-------|----------------------------------------|
+| 源文件内容 | 包 `src/` 目录中每个文件的 SHA-256。             |
+| 依赖版本  | Tongs 图中每条依赖解析后的版本字符串。                 |
+| 清单指令  | `.grain` 文件中的 Warden 规则、Smelter 配置与目标。 |
+
+如果这三个哈希都命中已缓存的构建，Quench 会恢复产物，并完全跳过编译。
+
+```text title="缓存状态输出"
+$ foundry quench status
+  core       [HIT]  abc12f → 2 分钟前缓存
+  auth       [HIT]  def34a → 2 分钟前缓存
+  api        [MISS] ghi56b → 源码已变 (src/routes/health.al)
+  web        [HIT]  jkl78c → 14 分钟前缓存
+  gateway    [WAIT] 依赖 api (MISS)，必须重建
+```
+
+### 冷锻造 vs. 热锻造
+
+冷锻造从空缓存开始，每个包都从头编译。热锻造发生在大多数哈希都命中时——只有变更过的包及其下游依赖会重建。
+
+| 工作空间规模 | 冷锻造    | 热锻造   |
+|--------|--------|-------|
+| 10 个包  | 8.1 秒  | 1.2 秒 |
+| 50 个包  | 14.7 秒 | 1.8 秒 |
+| 100 个包 | 28.3 秒 | 2.1 秒 |
+| 200 个包 | 52.6 秒 | 3.4 秒 |
+
+### 缓存维护
+
+清理过期条目以回收磁盘空间：
+
+```bash title="删除 7 天前的条目"
+foundry quench prune --older-than 7d
+```
+
+## Bellows 并行
+
+Bellows 读取 Tongs 依赖图，并把包按波次排程。彼此独立的包并行构建，存在依赖关系的包则等待前置完成。
+
+<Tabs>
+<TabItem value="local" label="本地开发" default>
+
+```bash title="本地运行并行锻造"
+foundry ignite
+```
+
+Bellows 会自动识别 CPU 核心数并据此分配工作。可通过 `FOUNDRY_PARALLELISM` 环境变量覆盖。
+
+</TabItem>
+<TabItem value="ci" label="Conduit (CI)">
+
+```bash title="在 Conduit 中运行锻造"
+foundry ignite --ci
+```
+
+在 CI 模式下，Foundry 输出适合流水线集成的结构化 JSON，禁用交互式提示，并尊重 `FOUNDRY_CACHE_DIR` 变量以使用共享缓存目录。
+
+</TabItem>
+</Tabs>
+
+### 执行顺序
+
+Bellows 依据依赖图把包分到不同的波次：
+
+```text title="Bellows 执行日志"
+$ foundry bellows build --verbose
+  第 1 波：core (无依赖)
+  第 2 波：auth、cli、docs (依赖 core)
+  第 3 波：api、web (依赖 core 与 auth)
+  第 4 波：gateway (依赖 api 与 auth)
+
+  合计：4 波，7 个包，3.4 秒 (热)
+```
+
+同一波内的包并行运行，波与波之间顺序执行。总构建时间等于每一波中最长那个包之和——而不是所有包之和。
+
+## 构建策略
+
+| 策略           | 命令                                 | 用例           |
+|--------------|------------------------------------|--------------|
+| 完整锻造         | `foundry ignite`                   | 从清单生成所有产物。   |
+| 增量构建         | `foundry ignite --incremental`     | 仅重建发生变更的包。   |
+| 单包构建         | `foundry bellows build --only api` | 构建某个包及其依赖。   |
+| 演练 (Dry run) | `foundry ignite --dry-run`         | 不写入文件，仅预览输出。 |
+
+## 下一步
+
+- [Warden 规则](/docs/pipeline/warden-rules/) — 在校验阶段运行的检查层。
+- [使用 Crucible 测试](/docs/pipeline/testing-with-crucible/) — 测试脚手架的生成与执行。
+- [部署](/docs/reference/deployment/) — 将构建产物交付到 Arcline、Vial 或 Trellis。

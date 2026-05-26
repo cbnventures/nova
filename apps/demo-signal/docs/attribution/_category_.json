@@ -1,0 +1,10 @@
+{
+  "label": "Attribution",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Tracing conversions across channels — Prism's multi-touch attribution weights every touchpoint in the click stream, and Resonance finds where audience segments bleed into each other between campaigns."
+  }
+}

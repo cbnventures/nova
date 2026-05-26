@@ -26,6 +26,8 @@ function DocSidebarItem(props: ThemeDocSidebarItemDocSidebarItemProps) {
           activePath={props['activePath']}
           level={props['level']}
           index={0}
+          className={(props['className'] !== undefined) ? `${props['className']}` : undefined}
+          style={props['style']}
         />
       );
     }
@@ -37,6 +39,8 @@ function DocSidebarItem(props: ThemeDocSidebarItemDocSidebarItemProps) {
           activePath={props['activePath']}
           level={props['level']}
           index={0}
+          className={(props['className'] !== undefined) ? `${props['className']}` : undefined}
+          style={props['style']}
         />
       );
     }
@@ -48,6 +52,8 @@ function DocSidebarItem(props: ThemeDocSidebarItemDocSidebarItemProps) {
           activePath={props['activePath']}
           level={props['level']}
           index={0}
+          className={(props['className'] !== undefined) ? `${props['className']}` : undefined}
+          style={props['style']}
         />
       );
     }

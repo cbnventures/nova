@@ -1,7 +1,14 @@
 /**
- * Signal — Doc Sidebar Mobile visual styling.
+ * Signal - `DocSidebarMobile` theme overlay.
  *
- * @since 0.15.0
+ * Mobile slide-out doc sidebar - hard square panel with a top rose
+ * accent rail and a pixelated overlay backdrop. Mobile-only chrome
+ * (trigger, overlay, panel, header, close) follows signal's terminal-
+ * mono identity. Drawer items inherit their styling from the desktop
+ * sidebar overlays via the standard
+ * `.nova-sidebar-link` / `.nova-sidebar-category-summary` cascade.
+ *
+ * @since 0.18.0
  */
 
 /* ============================
@@ -11,11 +18,11 @@
 .nova-sidebar-mobile-trigger {
   font-family: var(--nova-font-code);
   font-size: 0.75rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 
-  background-color: var(--nova-color-neutral-50);
-  border: 1px solid var(--nova-color-neutral-200);
-  border-radius: 0;
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-color-border);
+  border-radius: var(--nova-signal-radius-sharp);
 
   transition: border-color var(--nova-motion-duration) ease;
 }
@@ -26,10 +33,7 @@
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-trigger {
-  color: var(--nova-color-neutral-400);
-
-  background-color: var(--nova-color-neutral-950);
-  border-color: var(--nova-color-neutral-800);
+  border-color: var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-trigger:hover,
@@ -52,15 +56,14 @@
  * ============================ */
 
 .nova-sidebar-mobile-panel {
-  background-color: var(--nova-color-neutral-50);
-  border: 1px solid var(--nova-color-neutral-200);
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-color-border);
   border-top: 2px solid var(--nova-color-primary-600);
-  border-radius: 0;
+  border-radius: var(--nova-signal-radius-sharp);
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-panel {
-  background-color: var(--nova-color-neutral-950);
-  border-color: var(--nova-color-neutral-800);
+  border-color: var(--nova-color-border);
   border-top-color: var(--nova-color-primary-500);
 }
 
@@ -81,8 +84,8 @@
  * ============================ */
 
 .nova-sidebar-mobile-close {
-  color: var(--nova-color-neutral-500);
-  border-radius: 0;
+  color: var(--nova-color-text-muted);
+  border-radius: var(--nova-signal-radius-sharp);
 
   transition: color var(--nova-motion-duration) ease;
 }
@@ -93,8 +96,7 @@
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-close {
-  color: var(--nova-color-neutral-500);
-  border-color: var(--nova-color-neutral-800);
+  border-color: var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-sidebar-mobile-close:hover,

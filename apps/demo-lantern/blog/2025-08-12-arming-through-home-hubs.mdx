@@ -1,0 +1,53 @@
+---
+title: "Arming through HomeKit Home Hubs without a phone in the room"
+authors:
+  - "theo"
+tags:
+  - "arm-disarm"
+  - "integrations"
+date: "2025-08-12"
+---
+
+The phone is not always in the room. The hub usually is. Lantern can arm and disarm through HomeKit Home Hub presence — the household member walks past the speaker, and the porch knows.
+
+{/* truncate */}
+
+The handoff is invisible. No prompt, no chime, no lock screen tap. The hallway light dims; the porch reading shifts from *watching* to *welcoming*. The household notices nothing, which is the entire point.
+
+A phone is a frequent traveler. It rides in pockets, sits on counters, charges on the wrong floor at the wrong time. The household is not always carrying it. The hub, on the other hand, lives on a shelf. It does not move. It is always listening, in the patient way a shelf-bound speaker can listen, and it knows by voice and by proximity who has just walked into the room. Lantern reads the hub's sense of the household and uses it as a soft signal — not the only signal, but a useful one. When the kitchen hub registers a household voice and the front door has just closed, the porch shifts from *watching* to *welcoming* without anyone having to say so.
+
+The handoff is two seconds long. The porch dims its alert state by half. The hallway lamp comes up to its evening level. The dashboard tile changes color from a gentle blue to a warmer cream. None of it is loud. The household member has put down a bag of groceries and not noticed that the house has greeted them. That is the version of arrival we wanted.
+
+The integration is described in a single block. The hub is a peer, not an authority — Lantern listens, but Lantern still decides.
+
+```yaml title="lantern.handoffs.yml"
+handoffs:
+  homekit-hub:
+    enabled: true
+    hubs:
+      - id:       kitchen-hub
+        location: kitchen
+        listens-for: [household-voice, household-presence]
+      - id:       living-room-hub
+        location: living-room
+        listens-for: [household-presence]
+    rules:
+      arrival:
+        when:
+          - hub-presence:    household
+          - front-door:      recently-closed
+        then:
+          - porch:    welcoming
+          - hallway:  evening
+      departure:
+        when:
+          - hub-presence:    none-for: 15min
+          - front-door:      recently-closed
+        then:
+          - porch:    watching
+          - hallway:  passive
+```
+
+There are two rules and a list of hubs. The rest of the file is empty on purpose. We did not want the configuration to grow with the household — we wanted the household to grow into the configuration. A new resident does not need a new line. The hub already knows their voice, and the porch trusts the hub.
+
+What we like about this is the failure mode. If the hub is unplugged, the rules silently stop firing — the porch stays in *watching* and the hallway stays in *passive*, which is the safer default. The household has to use the phone or the door panel for that day. Then the hub comes back online, and the handoffs resume, and nobody has to think about what changed. The porch has been doing the same job all along, just with one less peer in the room.

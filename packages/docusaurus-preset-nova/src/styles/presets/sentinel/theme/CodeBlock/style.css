@@ -1,5 +1,10 @@
 /**
- * Sentinel — Code block visual styling.
+ * Sentinel - Code block visual styling.
+ *
+ * Driven by `--nova-sentinel-code-bg`, which mode-flips: light resolves to
+ * `--nova-color-surface-raised` (clean off-white card) and dark overrides to a
+ * near-black navy slab. Title bar, toolbar, code area, and expand tail share
+ * the same surface so the component reads as a single slab in either mode.
  *
  * @since 0.15.0
  */
@@ -8,38 +13,32 @@
  * 1. Code Block Container
  * ============================ */
 
+/* Block-margin flows from shared theme/CodeBlock via the canonical
+ * `--nova-code-block-margin-block` token (sentinel inherits the 1.5rem
+ * symmetric baseline - fixes the previous asymmetric `margin-bottom: 1.5rem`
+ * which had no top spacing for first-child blocks). */
 .nova-code-block {
   border-radius: var(--nova-shape-radius);
   border: var(--nova-depth-code-border);
-  border-color: var(--nova-color-neutral-300);
+  border-color: var(--nova-color-border);
   box-shadow: var(--nova-depth-code-shadow);
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-
-[data-theme="dark"] .nova-code-block {
-  border-color: var(--nova-color-neutral-800);
 }
 
 .nova-code-block pre.shiki {
   padding: 0.75rem 1rem;
 
-  background-color: var(--nova-color-neutral-900);
+  background-color: var(--nova-sentinel-code-bg);
   border-radius: 0;
 
   overflow-x: auto;
 }
 
-[data-theme="dark"] .nova-code-block pre.shiki {
-  background-color: var(--nova-sentinel-code-bg);
-}
-
-/* Sentinel uses a dark code background in light mode, so Shiki must
-   render with dark-theme token colors in both modes. Fallback to
-   neutral-300 for spans without Shiki dark tokens. */
-.nova-code-block .shiki,
-.nova-code-block .shiki span {
-  color: var(--shiki-dark, var(--nova-color-neutral-300));
+/* Sentinel keeps its dark slab in dark mode only; light mode reads as a
+   clean light card. Force Shiki dark tokens only when the dark slab is
+   actually on screen. Light mode inherits Docusaurus's default light tokens. */
+[data-theme="dark"] .nova-code-block .shiki,
+[data-theme="dark"] .nova-code-block .shiki span {
+  color: var(--shiki-dark, var(--nova-color-text-inverse));
   background-color: var(--shiki-dark-bg);
 }
 
@@ -48,19 +47,18 @@
  * ============================ */
 
 .nova-code-block-title {
-  background-color: var(--nova-color-neutral-800);
-  color: var(--nova-color-primary-300);
+  background-color: var(--nova-sentinel-code-bg);
+  color: var(--nova-color-text-muted);
   font-family: var(--nova-font-code);
   font-size: 0.8125rem;
   letter-spacing: 0.02em;
-  border-bottom: 1px solid var(--nova-color-neutral-700);
+  border-bottom: 1px solid var(--nova-color-border);
   padding: 0.5rem 0.75rem;
 }
 
 [data-theme="dark"] .nova-code-block-title {
-  background-color: var(--nova-sentinel-code-title-bg);
   color: var(--nova-color-primary-400);
-  border-bottom-color: var(--nova-color-neutral-800);
+  border-bottom-color: var(--nova-color-border);
 }
 
 /* ============================
@@ -69,7 +67,7 @@
 
 .nova-code-block-lang {
   font-family: var(--nova-font-code);
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
   font-size: 0.6875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -79,14 +77,17 @@
  * 4. Toolbar
  * ============================ */
 
-/* Sentinel uses dark code blocks in light mode so the
-   toolbar border must match the dark surface below. */
+/* Sentinel uses dark code blocks in both modes - the toolbar bg matches
+   the dark slab so title + toolbar + code area read as a single surface. */
 .nova-code-block-toolbar {
-  border-bottom: 1px solid var(--nova-color-neutral-700);
+  padding: 0.5rem 0.5rem 0.5rem 0.75rem;
+
+  background-color: var(--nova-sentinel-code-bg);
+  border-bottom: 1px solid var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-code-block-toolbar {
-  border-bottom-color: var(--nova-color-neutral-800);
+  border-bottom-color: var(--nova-color-border);
 }
 
 /* ============================
@@ -94,18 +95,16 @@
  * ============================ */
 
 .nova-code-block-copy {
-  color: var(--nova-color-neutral-600);
-  background-color: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
+  background-color: var(--nova-sentinel-chrome-overlay);
+  border: 1px solid var(--nova-color-text-muted);
   border-radius: calc(var(--nova-shape-radius) * 0.5);
-  font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
 }
 
 [data-theme="dark"] .nova-code-block-copy {
-  background-color: rgba(255, 255, 255, 0.04);
-  border-color: var(--nova-color-neutral-700);
-  color: var(--nova-color-neutral-400);
+  border-color: var(--nova-color-border);
+  color: var(--nova-color-text-soft);
 }
 
 .nova-code-block-copy:active {
@@ -153,10 +152,9 @@
  * ============================ */
 
 .nova-code-block-expand {
-  background-color: var(--nova-sentinel-code-title-bg);
-  color: var(--nova-color-neutral-500);
-  border: none;
-  border-top: 1px solid var(--nova-color-neutral-800);
+  background-color: var(--nova-sentinel-code-bg);
+  color: var(--nova-color-text-muted);
+  border-top: 1px solid var(--nova-color-border);
 }
 
 .nova-code-block-expand:hover,
@@ -176,18 +174,16 @@
 }
 
 .nova-code-block-wrap {
-  background-color: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--nova-color-neutral-600);
+  background-color: var(--nova-sentinel-chrome-overlay);
+  border: 1px solid var(--nova-color-text-muted);
   border-radius: calc(var(--nova-shape-radius) * 0.5);
-  color: var(--nova-color-neutral-600);
-  font-size: 0.75rem;
+  color: var(--nova-color-text-muted);
   padding: 0.25rem 0.5rem;
 }
 
 [data-theme="dark"] .nova-code-block-wrap {
-  background-color: rgba(255, 255, 255, 0.04);
-  border-color: var(--nova-color-neutral-700);
-  color: var(--nova-color-neutral-400);
+  border-color: var(--nova-color-border);
+  color: var(--nova-color-text-soft);
 }
 
 .nova-code-block-wrap:active,

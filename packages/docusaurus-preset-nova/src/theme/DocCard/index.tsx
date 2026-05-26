@@ -68,7 +68,11 @@ function useCategoryItemsPlural(): ThemeDocCardUseCategoryItemsPluralSelectMessa
  */
 function CardLayout(props: ThemeDocCardCardLayoutProps) {
   return (
-    <Link href={props['href']}>
+    <Link
+      className={(props['className'] !== undefined) ? `nova-doc-card ${props['className']}` : 'nova-doc-card'}
+      {...((props['style'] !== undefined) ? { style: props['style'] } : {})}
+      href={props['href']}
+    >
       <Heading
         as="h2"
         title={props['title']}

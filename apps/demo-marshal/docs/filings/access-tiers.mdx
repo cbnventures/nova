@@ -1,0 +1,40 @@
+---
+title: "Access Tiers"
+sidebar_position: 2
+description: "Marshal classifies every incoming request into a tier — sponsor, contributor, public — stamped on receipt and routed."
+tags:
+  - "filings"
+  - "access-tiers"
+---
+
+# Access Tiers
+
+Marshal classifies every incoming request into a tier. Tiers are not negotiable — they are stamped on receipt and routed accordingly.
+
+## The three tiers
+
+- **Sponsor** — the queue is short, the clerk responds first
+- **Contributor** — the queue is the working order, by file date
+- **Public** — the queue is patient, but never silent
+
+## How the stamp is applied
+
+```bash
+marshal classify --by github-sponsor,github-org-member
+```
+
+Marshal reads the requester's status, applies the tier stamp, and routes to the appropriate folder. The stamp itself is filed in the docket.
+
+## Tier overrides
+
+```bash
+marshal override request-id 4821 --tier contributor --reason "former maintainer"
+```
+
+Every override is a line in the ledger. Marshal does not forget who asked for the exception, or why.
+
+## Next Steps
+
+- [Policies](/docs/filings/policies/) — How tiers compose with other policies.
+- [Dockets](/docs/dockets/overview/) — Where tier classifications are stamped.
+- [Audit Trail](/docs/dockets/audit-trail/) — Reviewing tier overrides.

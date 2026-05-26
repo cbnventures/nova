@@ -1,5 +1,5 @@
 import type { DocusaurusContext } from '@docusaurus/types';
-import type { Dispatch, ReactNode, SetStateAction } from 'react';
+import type { ReactNode } from 'react';
 
 /**
  * Theme - Footer - Credit.
@@ -18,11 +18,12 @@ export type ThemeFooterCreditCreditDocusaurusUrl = string;
 
 export type ThemeFooterCreditCreditPhrases = string[];
 
-export type ThemeFooterCreditCreditPhraseIndexState = [ThemeFooterCreditCreditPhraseIndex, ThemeFooterCreditSetCreditPhraseIndex];
+export type ThemeFooterCreditGlobalData = {
+  creditPhraseIndex?: number;
+  [key: string]: unknown;
+};
 
 export type ThemeFooterCreditCreditPhraseIndex = number;
-
-export type ThemeFooterCreditSetCreditPhraseIndex = Dispatch<SetStateAction<ThemeFooterCreditCreditPhraseIndex>>;
 
 export type ThemeFooterCreditCreditSuffix = string;
 

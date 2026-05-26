@@ -1,0 +1,87 @@
+/**
+ * Marshal - `BlogSidebar` theme overlay.
+ *
+ * Recent posts as a register stack: mono uppercase seal-red title strong,
+ * Plex Serif year headings, body links with seal-red active rail mirroring
+ * the doc sidebar.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Sidebar title - seal-red eyebrow
+ * ============================
+ */
+
+.nova-blog-sidebar strong {
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-blog-sidebar strong {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 2. Year headings - Plex Serif folio
+ * ============================
+ */
+
+.nova-blog-sidebar h4 {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+}
+
+/**
+ * ============================
+ * 3. Sidebar links - hairline ledger rows
+ * ============================
+ */
+
+.nova-blog-sidebar a {
+  font-family: var(--nova-font-body);
+  font-size: 0.9rem;
+  color: var(--nova-marshal-ink-muted);
+
+  border-left: 2px solid var(--nova-marshal-border);
+  border-radius: 0 2px 2px 0;
+
+  transition: color var(--nova-motion-duration) ease, border-left-color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-sidebar a:hover,
+.nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-accent-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 94%);
+  border-left-color: var(--nova-color-accent-600);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-sidebar a:hover,
+[data-theme="dark"] .nova-blog-sidebar a:focus-visible {
+  color: var(--nova-color-accent-500);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 86%);
+  border-left-color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 4. Aside padding - edge-to-edge nav
+ * ============================
+ */
+
+@media (min-width: 1024px) {
+  .nova-blog-root aside {
+    padding-inline: 0;
+  }
+}

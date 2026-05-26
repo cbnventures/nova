@@ -1,5 +1,5 @@
 /**
- * Sentinel — Blog Post Paginator visual styling.
+ * Sentinel - Blog Post Paginator visual styling.
  *
  * @since 0.15.0
  */
@@ -7,11 +7,7 @@
 .nova-blog-post-paginator {
   margin-top: 1.5rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--nova-color-neutral-200);
-}
-
-[data-theme="dark"] .nova-blog-post-paginator {
-  border-top-color: var(--nova-color-neutral-800);
+  border-top: 1px solid var(--nova-color-border);
 }
 
 @media (min-width: 480px) {
@@ -30,11 +26,7 @@
   font-size: 1.125rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-blog-post-paginator-heading {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 }
 
 /* ============================
@@ -73,11 +65,7 @@
   font-size: 0.8125rem;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-blog-post-paginator-label {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 /* ============================
@@ -86,11 +74,7 @@
 
 .nova-blog-post-paginator-title {
   font-weight: 700;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-blog-post-paginator-title {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 }
 
 .nova-blog-post-paginator-link:hover .nova-blog-post-paginator-title,
@@ -108,10 +92,6 @@
  * ============================ */
 
 .nova-blog-post-paginator-excerpt {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   line-height: 1.7;
-}
-
-[data-theme="dark"] .nova-blog-post-paginator-excerpt {
-  color: var(--nova-color-neutral-400);
 }

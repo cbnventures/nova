@@ -1,0 +1,60 @@
+---
+title: "Bedtime mode for the absent-minded"
+authors:
+  - "theo"
+tags:
+  - "bedtime"
+  - "modes"
+date: "2025-12-22"
+---
+
+You meant to arm the watch zones before bed. You did not. You are reading on the couch and the kitchen is still on. Lantern has been here before.
+
+{/* truncate */}
+
+Bedtime mode notices when the household has stopped moving. Not when you say so — when the house says so. The kitchen dims itself. The watch zones arm themselves. The porch checks the door once and goes quiet. You did not have to remember.
+
+The first version of bedtime mode required a button. We had a tile on the dashboard called *bedtime* and the household was supposed to tap it before going upstairs. We did, sometimes. Most nights one of us forgot. Some nights we both forgot. The kitchen would stay lit at 1am with no one in it; the porch would stay in *welcoming* until the dawn. None of it was unsafe, exactly — the watch zones do most of their work passively — but the house felt awake when the household was not. So we removed the button. The button was the problem.
+
+Bedtime mode now begins by reading the house. The hallway upstairs has been quiet for ninety minutes. The bedroom door has been closed for half an hour. The kitchen has not had motion since the last time the dishwasher ran. The porch has not seen a household arrival since the front door closed at 9:14. None of these on their own mean bedtime. Together, they do. Lantern waits for the combination, then begins the slow shift — the kitchen lights step down by a third, then by a half, then to the night-light setting. The watch zones move from *passive* to *alert*. The porch finishes its current observation and goes quiet.
+
+```yaml title="lantern.modes.yml"
+modes:
+  bedtime:
+    triggers:
+      all-of:
+        - upstairs-quiet:    90min
+        - bedroom-door:      closed-for: 30min
+        - kitchen-quiet:     since-last: dishwasher-cycle
+        - front-door-quiet:  since-last: arrival
+    transitions:
+      kitchen:    [bright, dim, night-light]   # over 12min
+      hallway:    passive
+      watch:      alert
+      porch:      gentle
+    cancel-on:
+      - upstairs-motion: > 60s
+      - bedroom-door:    opened
+      - front-door:      opened
+```
+
+The cancel rules are as important as the triggers. If the household gets up for water, the upstairs motion cancels the transition and bedtime mode quietly steps back to *home*. If the bedroom door opens for the cat at midnight, the same thing. The house is allowed to change its mind. So is the household. The mode is a posture, not a verdict.
+
+What we like about it is the silence of it. Most nights the household never sees the transition happen. We finish the book on the couch, walk upstairs, brush teeth, climb into bed, and the kitchen has already dimmed itself behind us. The porch said good night without a chime. The watch zones armed without a confirmation tone. The household sleeps. The lantern listens. The button we used to forget to press is now a thing the house presses for itself.
+
+The ledger keeps a quiet record of every transition, in case the household wants to read it the next morning over coffee. Most mornings nobody does. Some mornings the row reads back like a hallway clock that quietly kept time while the house was asleep:
+
+```bash
+$ lantern history --mode-transitions --since "last night"
+22:41   home → bedtime    transition started
+22:43   kitchen           bright → dim
+22:48   kitchen           dim → night-light
+22:51   watch-zones       passive → alert
+22:52   porch             welcoming → gentle
+03:14   bedroom-door      opened (cat)        transition held
+03:15   bedroom-door      closed              no change
+06:42   upstairs          motion              cancel-on triggered
+06:42   bedtime → home    transition started
+```
+
+A house that knows when to sleep is the same house that knows when to wake. The transition out of bedtime is the gentler one. The kitchen brightens by a third when the upstairs starts moving, then by a half when the first downstairs footstep lands. By the time the kettle is on, the porch has reopened to *welcoming* and the watch zones have stepped back to *passive*. Nobody pressed a button there, either.

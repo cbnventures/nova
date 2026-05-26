@@ -1,0 +1,50 @@
+---
+title: "Confidence bands, gently calibrated to your house"
+authors:
+  - "theo"
+tags:
+  - "motion"
+  - "sensor-history"
+date: "2026-01-17"
+---
+
+The confidence band is the difference between *something happened* and *something happened that you should know about*. We tune it per zone, per device, per household.
+
+{/* truncate */}
+
+The porch tolerates more. Wind, weather, the patrolling cat — none of those need the household's attention. The hallway tolerates less. A figure at 3am is a figure at 3am. The bands narrow themselves over months, learning your house the way the house learns you.
+
+Calibration is slow on purpose. The first week a new zone is online, every event lands in the *uncertain* column. The lamp says nothing; the history writes the row; the band is wide. The second week the band is a touch narrower, because the lamp has seen the cat pass twice and the mail carrier four times and the wind through the screen door more times than that. By the second month the band has settled into a shape, and the shape is unique to that zone in that house. We do not ship a default band that works for everyone, because no two houses have the same wind.
+
+The shape changes with the season. The porch's confidence band in February is narrower than the porch's confidence band in October — fewer leaves on the deck, fewer squirrels in the wisteria, less ambient motion to filter. Lantern adjusts the bands quietly. The household never sees the recalibration. The dashboard does not announce *band updated*. The lamp just gets slightly better at telling the cat from a leaf, and the household notices, six weeks later, that the porch tile has been very calm for a while.
+
+The settled bands look like this — one zone, one row.
+
+```yaml title="lantern.events.yml"
+calibration:
+  porch:
+    last-updated: 2026-01-12
+    season:       winter
+    bands:
+      person:    { window: 0.55–0.95, fired-30d: 41 }
+      cat:       { window: 0.20–0.45, fired-30d: 217 }
+      wind:      { window: 0.05–0.20, fired-30d: 1,902 }
+      squirrel:  { window: 0.30–0.55, fired-30d: 89 }
+  hallway:
+    last-updated: 2026-01-09
+    season:       winter
+    bands:
+      person:    { window: 0.65–0.95, fired-30d: 318 }
+      cat:       { window: 0.25–0.50, fired-30d: 482 }
+      dryer:     { window: 0.10–0.30, fired-30d: 41 }
+  bedroom:
+    last-updated: 2026-01-15
+    season:       winter
+    bands:
+      person:    { window: 0.70–0.95, fired-30d: 87 }
+      window-tap:{ window: 0.10–0.30, fired-30d: 14 }
+```
+
+What we hear from households after the first calibration cycle is a small, quiet observation: the lamp speaks less. Not because Lantern has been dialed down, but because the bands are tighter against the actual rhythm of the house. The wind no longer lands in the *person* band. The cat no longer lands in the *uncertain* band. The dryer no longer lands anywhere at all, because the dryer's signature has been moved into its own quiet category and the lamp has agreed not to take it personally.
+
+A confidence band is humility on a slider. It is the lamp saying *I think this is the cat, but I am only seventy percent sure, and the rule says seventy percent is enough.* The slider can be pushed left or right by the household, but mostly the household leaves it alone. The lamp moves it for them, slowly, over months, in the direction of the household's actual life. Calibration is just the lamp taking the long way to know your house.

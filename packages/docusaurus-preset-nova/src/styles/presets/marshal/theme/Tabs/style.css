@@ -1,0 +1,92 @@
+/**
+ * Marshal - `Tabs` theme overlay.
+ *
+ * Tab strip rendered as ledger tabs along a hairline rule. Inactive
+ * tabs read in mono uppercase ink-muted; the selected tab is anchored
+ * by a 2px seal-red baseline. No glow, no shadows - flat paper.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================
+ */
+
+:root {
+  --nova-marshal-tabs-margin-block-end: 1.5rem;
+}
+
+/**
+ * ============================
+ * 0b. Canonical aliases - consumed by shared theme/Tabs
+ * ============================
+ */
+
+:root {
+  --nova-tabs-margin-block-end: var(--nova-marshal-tabs-margin-block-end);
+}
+
+/**
+ * ============================
+ * 1. Tabs Container
+ * ============================
+ */
+
+.nova-tabs {
+  margin-bottom: var(--nova-marshal-tabs-margin-block-end);
+}
+
+/**
+ * ============================
+ * 2. Tab Button - mono uppercase ledger marker
+ * ============================
+ */
+
+.nova-tabs-tab {
+  padding: 0.5rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--nova-marshal-ink-muted);
+
+  background-color: transparent;
+  border-bottom: 2px solid transparent;
+
+  transition: color var(--nova-marshal-transition), border-color var(--nova-marshal-transition), background-color var(--nova-marshal-transition);
+
+  cursor: pointer;
+}
+
+.nova-tabs-tab:hover,
+.nova-tabs-tab:focus-visible {
+  color: var(--nova-color-accent-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-marshal-bg) 96%);
+  border-bottom: 2px dashed var(--nova-color-accent-600);
+}
+
+.nova-tabs-tab[data-selected="true"] {
+  color: var(--nova-marshal-ink);
+  background-color: transparent;
+  border-bottom: 2px solid var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-tabs-tab:hover,
+[data-theme="dark"] .nova-tabs-tab:focus-visible {
+  color: var(--nova-color-accent-500);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-marshal-bg) 92%);
+  border-bottom: 2px dashed var(--nova-color-accent-500);
+}
+
+[data-theme="dark"] .nova-tabs-tab[data-selected="true"] {
+  background-color: transparent;
+  border-bottom: 2px solid var(--nova-color-accent-500);
+}
+

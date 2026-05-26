@@ -1,0 +1,31 @@
+/**
+ * Marshal - `DocItem/Footer` theme overlay.
+ *
+ * Closing colophon - a hairline rule above and a measured top margin
+ * mark where the article body ends and the page-meta colophon begins.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Doc footer - colophon rule
+ * ============================
+ */
+
+.nova-doc-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+@media (min-width: 768px) {
+  .nova-doc-footer {
+    margin-top: 3rem;
+    padding-top: 2rem;
+  }
+}
+
+[data-theme="dark"] .nova-doc-footer {
+  border-top-color: var(--nova-marshal-border);
+}

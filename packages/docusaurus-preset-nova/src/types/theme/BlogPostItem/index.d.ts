@@ -2,7 +2,7 @@ import type { Author } from '@docusaurus/plugin-content-blog';
 import type { BlogPostContextValue } from '@docusaurus/plugin-content-blog/client';
 import type { DocusaurusContext } from '@docusaurus/types';
 import type { TagMetadata } from '@docusaurus/utils';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Blog Post Item - Blog Post Item.
@@ -13,9 +13,12 @@ export type ThemeBlogPostItemBlogPostItemPropsChildren = ReactNode;
 
 export type ThemeBlogPostItemBlogPostItemPropsClassName = string | undefined;
 
+export type ThemeBlogPostItemBlogPostItemPropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogPostItemBlogPostItemProps = {
   children: ThemeBlogPostItemBlogPostItemPropsChildren;
   className?: ThemeBlogPostItemBlogPostItemPropsClassName;
+  style?: ThemeBlogPostItemBlogPostItemPropsStyle;
   [key: string]: unknown;
 };
 
@@ -77,6 +80,8 @@ export type ThemeBlogPostItemBlogPostItemHasShareButtons = boolean;
 export type ThemeBlogPostItemBlogPostItemShareUrl = string;
 
 export type ThemeBlogPostItemBlogPostItemReadMore = string;
+
+export type ThemeBlogPostItemBlogPostItemReadMoreAriaLabel = string;
 
 export type ThemeBlogPostItemBlogPostItemAuthor = Author;
 

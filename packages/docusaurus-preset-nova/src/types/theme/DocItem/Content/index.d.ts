@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Doc Item - Content - Doc Item Content.
@@ -7,8 +7,14 @@ import type { ReactNode } from 'react';
  */
 export type ThemeDocItemContentDocItemContentPropsChildren = ReactNode;
 
+export type ThemeDocItemContentDocItemContentPropsClassName = string | undefined;
+
+export type ThemeDocItemContentDocItemContentPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocItemContentDocItemContentProps = {
   children: ThemeDocItemContentDocItemContentPropsChildren;
+  className?: ThemeDocItemContentDocItemContentPropsClassName;
+  style?: ThemeDocItemContentDocItemContentPropsStyle;
   [key: string]: unknown;
 };
 

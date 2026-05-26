@@ -1,5 +1,5 @@
 import type { PropBlogPostContent } from '@docusaurus/plugin-content-blog';
-import type { ComponentType, ReactNode } from 'react';
+import type { ComponentType, CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Blog Post Items - Blog Post Items.
@@ -17,9 +17,15 @@ export type ThemeBlogPostItemsBlogPostItemsPropsComponent = ComponentType<ThemeB
 
 export type ThemeBlogPostItemsBlogPostItemsPropsItems = readonly ThemeBlogPostItemsBlogPostItemsPropsItem[];
 
+export type ThemeBlogPostItemsBlogPostItemsPropsClassName = string | undefined;
+
+export type ThemeBlogPostItemsBlogPostItemsPropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogPostItemsBlogPostItemsProps = {
   items: ThemeBlogPostItemsBlogPostItemsPropsItems;
   component?: ThemeBlogPostItemsBlogPostItemsPropsComponent;
+  className?: ThemeBlogPostItemsBlogPostItemsPropsClassName;
+  style?: ThemeBlogPostItemsBlogPostItemsPropsStyle;
   [key: string]: unknown;
 };
 

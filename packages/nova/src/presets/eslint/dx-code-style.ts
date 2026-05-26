@@ -136,7 +136,7 @@ const config: PresetsEslintDxCodeStyleConfigConfig = [
       // Disallow computed keys when the expression is a static string so object keys stay simple and don't look dynamic when they are not.
       'no-useless-computed-key': ['error'],
 
-      // Disallow concatenating two string literals because "foo" + "bar" should just be "foobar" — separate pieces suggest dynamic values that don't exist.
+      // Disallow concatenating two string literals because "foo" + "bar" should just be "foobar" - separate pieces suggest dynamic values that don't exist.
       'no-useless-concat': ['error'],
 
       // Disallow renaming imports, exports, or destructured values to the same name so renames only appear when they are meaningful.

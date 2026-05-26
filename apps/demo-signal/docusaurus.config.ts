@@ -85,15 +85,33 @@ const config: DocusaurusNovaConfig = {
   // Internationalization.
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: [
+      'en',
+      'zh-Hans',
+      'ar',
+    ],
     path: 'i18n',
     localeConfigs: {
-      en: {
+      'en': {
         label: 'English',
         direction: 'ltr',
         htmlLang: 'en-US',
         calendar: 'gregory',
         path: 'en',
+      },
+      'zh-Hans': {
+        label: '简体中文',
+        direction: 'ltr',
+        htmlLang: 'zh-CN',
+        calendar: 'gregory',
+        path: 'zh-Hans',
+      },
+      'ar': {
+        label: 'العربية',
+        direction: 'rtl',
+        htmlLang: 'ar',
+        calendar: 'gregory',
+        path: 'ar',
       },
     },
   },
@@ -128,26 +146,16 @@ const config: DocusaurusNovaConfig = {
       overrides: {
         colors: {
           primary: undefined,
-          accent: undefined,
-          neutral: undefined,
+          secondary: undefined,
+          text: undefined,
+          border: undefined,
+          warning: undefined,
+          danger: undefined,
         },
         fonts: {
           display: undefined,
           body: undefined,
           code: undefined,
-        },
-        shape: {
-          radius: undefined,
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: undefined,
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
         },
         navbar: undefined,
         footer: undefined,
@@ -161,6 +169,19 @@ const config: DocusaurusNovaConfig = {
           editUrl: 'https://github.com/cbnventures/nova/tree/main/apps/demo-signal/',
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
+          lastVersion: 'current',
+          versions: {
+            'current': {
+              label: 'Current',
+              badge: false,
+              banner: 'none',
+            },
+            '1.0.0': {
+              label: '1.0.0',
+              badge: true,
+              banner: 'unmaintained',
+            },
+          },
         },
         blog: {
           showReadingTime: true,
@@ -180,7 +201,11 @@ const config: DocusaurusNovaConfig = {
             description: 'Attribution insights, campaign forensics, and the patterns hiding in your click streams.',
           },
         },
-        pages: undefined,
+        pages: {
+          editUrl: 'https://github.com/cbnventures/nova/tree/main/apps/demo-signal/',
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: true,
+        },
         sitemap: {
           lastmod: 'date',
           changefreq: 'weekly',
@@ -225,11 +250,18 @@ const config: DocusaurusNovaConfig = {
       title: 'Signal',
       logo: {
         alt: undefined,
-        src: undefined,
-        srcDark: undefined,
+        src: {
+          light: '/images/logo.svg',
+          dark: undefined,
+        },
         href: undefined,
-        wordmark: undefined,
-        wordmarkDark: undefined,
+        target: undefined,
+        rel: undefined,
+        ariaLabel: undefined,
+        wordmark: {
+          light: undefined,
+          dark: undefined,
+        },
         title: undefined,
       },
       image: '/thumbnails/brand.png',
@@ -253,7 +285,6 @@ const config: DocusaurusNovaConfig = {
 
     // Navbar.
     navbar: {
-      title: 'Signal',
       hideOnScroll: false,
       items: [
         {
@@ -274,7 +305,8 @@ const config: DocusaurusNovaConfig = {
           label: 'Features',
           position: 'left',
           type: undefined,
-          to: '/docs/category/features/',
+          to: '/docs/category/beacons/',
+          activeBaseRegex: '^/docs/(category/)?beacons(/|$)',
           icon: 'lucide:sparkles',
         },
         {
@@ -283,6 +315,17 @@ const config: DocusaurusNovaConfig = {
           type: undefined,
           to: '/blog/',
           icon: 'lucide:pen-line',
+        },
+        {
+          label: 'Manifesto',
+          position: 'left',
+          type: undefined,
+          to: '/manifesto',
+          icon: 'lucide:scroll-text',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
         },
         {
           label: 'GitHub',
@@ -331,8 +374,8 @@ const config: DocusaurusNovaConfig = {
 
     // Announcement Bar.
     announcementBar: {
-      id: 'signal-qr',
-      content: 'QR deep links are now available — connect print to digital instantly.',
+      id: 'signal-attribution-2',
+      content: 'Print scans → digital clicks → attribution paths.',
       backgroundColor: undefined,
       textColor: undefined,
       isCloseable: true,
@@ -341,10 +384,28 @@ const config: DocusaurusNovaConfig = {
     // Back to Top Button.
     backToTopButton: true,
 
+    // Error Pages - overrides Nova's randomized defaults with consumer copy.
+    // Any unset field falls through to the Nova-flavored randomized pool.
+    errorPages: {
+      notFound: {
+        title: 'Signal lost.',
+        description: 'No path matched this URL. Trace back to a known route.',
+        backHomeLabel: 'Back to root',
+        backHomeHref: undefined,
+      },
+      errorPageContent: {
+        title: 'We lost the signal here.',
+        retryLabel: 'Reacquire signal',
+      },
+      error: {
+        retryLabel: 'Retry the trace',
+      },
+    },
+
     // Footer.
     footer: {
       sections: {
-        product: [
+        signal: [
           {
             label: 'Getting Started',
             href: '/docs/overview/',
@@ -394,9 +455,9 @@ const config: DocusaurusNovaConfig = {
         ],
       },
       layout: {
-        product: {
-          title: 'Product',
-          section: 'product',
+        signal: {
+          title: 'Signal',
+          section: 'signal',
         },
         insights: {
           title: 'Insights',
@@ -413,7 +474,7 @@ const config: DocusaurusNovaConfig = {
       },
       socialLinks: [
         {
-          icon: 'mdi:facebook',
+          icon: 'ri:facebook-fill',
           href: 'https://www.facebook.com/cbnventures',
           label: 'Facebook',
         },
@@ -423,34 +484,37 @@ const config: DocusaurusNovaConfig = {
           label: 'X',
         },
         {
-          icon: 'mdi:youtube',
+          icon: 'ri:youtube-fill',
           href: 'https://www.youtube.com/@cbnventures',
           label: 'YouTube',
         },
         {
-          icon: 'mdi:instagram',
+          icon: 'ri:instagram-fill',
           href: 'https://www.instagram.com/cbnventures/',
           label: 'Instagram',
         },
         {
-          icon: 'mdi:github',
+          icon: 'ri:github-fill',
           href: 'https://github.com/cbnventures',
           label: 'GitHub',
         },
         {
-          icon: 'mdi:google-play',
+          icon: 'ri:google-play-fill',
           href: 'https://play.google.com/store/apps/dev?id=6419450160526226105',
           label: 'Google Play',
         },
         {
-          icon: 'mdi:linkedin',
+          icon: 'ri:linkedin-fill',
           href: 'https://www.linkedin.com/company/cbnventures/',
           label: 'LinkedIn',
         },
       ],
       copyright: `Copyright \u00A9 2025-${String(new Date().getFullYear())} CBN Ventures LLC. All Rights Reserved.`,
       credit: true,
-      cta: undefined,
+      cta: {
+        label: 'Ready to find yours?',
+        href: 'https://nova.cbnventures.io',
+      },
     },
   },
 };

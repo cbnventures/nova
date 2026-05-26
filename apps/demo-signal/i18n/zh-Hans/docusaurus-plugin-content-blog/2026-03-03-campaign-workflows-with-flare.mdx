@@ -1,0 +1,96 @@
+---
+title: "Flare 如何替换掉我们 14 步的营销活动上线流程"
+authors:
+  - "suki"
+tags:
+  - "flare"
+  - "campaign"
+  - "batch"
+  - "utm"
+date: "2026-03-03"
+---
+
+上线一次多渠道营销活动，过去要在五种工具之间走完十四步人工流程。在一个工具里建跟踪链接。在另一个里搭 UTM 表格。再去配邮件变体，配社交贴文，把分析仪表盘接起来，在系统之间复制粘贴链接 ID。然后祈祷没有任何东西被拼错。
+
+我们把整个流程从头到尾画了一遍，发现中位的营销活动上线要花掉 4.5 小时的协调工作——不是创意、不是策略，纯粹是水管活。Flare 把这部分压到了 22 分钟。
+
+{/* truncate */}
+
+## 旧流程
+
+下面是 Flare 出现之前，一次五渠道营销活动上线的样子：
+
+1. 在文档里起草营销活动简报。
+2. 在表格里建 UTM 参数。
+3. 为每个渠道-变体组合生成 Beacon 链接。
+4. 把 Beacon 链接 ID 复制粘贴回 UTM 表格。
+5. 创建嵌入 Beacon 链接的邮件模板。
+6. 创建嵌入 Beacon 链接的社交贴文草稿。
+7. 用正确的 Beacon 链接配置付费广告 URL。
+8. 为印刷投放配置二维码。
+9. 为这次营销活动搭一个 Pulse 仪表盘。
+10. 配置 Pulse 告警。
+11. 为目标受众创建一个 Lens 细分。
+12. 把链接提交合规审核。
+13. 在各渠道排期上线。
+14. 验证所有链接都能正常解析。
+
+第 2 到 11 步是纯粹的协调开销。每一步都要切换工具、复制粘贴标识符，并人工保证各系统之间的一致。第 4 步里一个拼写错误，就能把整条渠道的点击送进错误的归因桶里。
+
+## Flare 做了什么
+
+Flare 是一层架在 Beacon、Prism、Pulse、Lens 与 Relay 之上的营销活动编排层。你只把营销活动定义一次，Flare 负责处理链接生成、UTM 标记、仪表盘搭建、告警配置与受众定向：
+
+```json title="Flare 营销活动定义"
+{
+  "campaign": "core-activation-trial-004",
+  "channels": ["email", "social", "paid", "qr-print"],
+  "variants": {
+    "email": ["hero-cta", "sidebar-link", "footer-banner"],
+    "social": ["og-card", "thread-link"],
+    "paid": ["search-brand", "display-retarget"],
+    "qr-print": ["conference-badge", "booth-banner"]
+  },
+  "audience": {
+    "segment": "high-intent-evaluators",
+    "source": "lens"
+  },
+  "monitoring": {
+    "dashboard": true,
+    "alerts": [
+      { "metric": "ctr", "below": 0.015, "window": "1h" },
+      { "metric": "conversionRate", "below": 0.01, "window": "4h" }
+    ]
+  }
+}
+```
+
+基于这份定义，Flare 会生成：
+
+- **9 条 Beacon 链接**（每个渠道-变体组合一条），使用一致的 UTM 参数。
+- **1 个 Pulse 仪表盘**，预先配置好这九条链接并按渠道分组。
+- **2 条 Pulse 告警**，使用营销活动规约中定义的阈值。
+- **1 个 Lens 细分查询**，与本次营销活动绑定以供受众分析。
+- **1 个 Relay 作业**，在营销活动期间如需批量修改链接时即刻可用。
+
+## 时间对比
+
+| 步骤     | 人工           | Flare      |
+|--------|--------------|------------|
+| 链接生成   | 35 min       | 0 min      |
+| UTM 配置 | 20 min       | 0 min      |
+| 仪表盘搭建  | 25 min       | 0 min      |
+| 告警配置   | 15 min       | 0 min      |
+| 受众定向   | 20 min       | 0 min      |
+| 营销活动定义 | 0 min        | 12 min     |
+| 复核与上线  | 45 min       | 10 min     |
+| 链接验证   | 30 min       | 0 min      |
+| **总计** | **4h 30min** | **22 min** |
+
+Flare 不会消灭创意工作。它消灭的是接线工作。剩下的 22 分钟用在营销活动定义上（这是策略），以及最后的复核上（这是质量把关）。
+
+## 营销活动进行中的修改
+
+旧流程在"营销活动半路要改"时更糟糕。把九条链接的落地页 URL 都更新一遍，意味着逐条编辑、逐条验证重定向、再回去更新跟踪表格。Flare 把营销活动当作一个对象——一次目的地变更，会通过 Relay 传播到这个营销活动的每一条链接上。
+
+营销活动不是一堆链接的集合。它是一个被协调的系统。Flare 就按这种方式对待它。

@@ -10,7 +10,7 @@
  * @since 0.15.0
  */
 function ColorModeToggle() {
-  return undefined;
+  return null;
 }
 
 export default ColorModeToggle;

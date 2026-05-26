@@ -1,0 +1,228 @@
+---
+title: "滚动升级"
+sidebar_position: 2
+description: "Bellows 协调滚动部署——金丝雀阶段、流量切换、机群波次，以及通过 Forge 历史回滚的方式。"
+tags:
+  - "部署"
+  - "推进"
+  - "金丝雀"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Details from '@theme/Details';
+
+# 滚动升级
+
+当一个 Quench 版本戳进入 stable 通道后，把它推送到每一个正在运行的实例的工作才刚开始。Foundry 称之为**滚动升级**，由 Bellows 负责编排。
+
+Bellows 处理滚动升级的方式与处理并行构建相同：一个由若干波次组成的有向序列，每一波都带有自己的门槛条件，并且整个过程的顺序是确定的、可从任一检查点重跑的。Forge 历史日志保留每一个先前的 stable 版本戳，随时可用于回滚。
+
+## 推进阶段
+
+每一次滚动升级都会经历四个阶段。每个阶段是机群实例的一波，加上必须通过 Bellows 才会推进的一组遥测检查。
+
+```mermaid
+flowchart LR
+  start(["stable 版本戳"]) --> canary["canary<br/>机群 1%"]
+  canary --> shadow["shadow<br/>机群 10%，双写"]
+  shadow --> ramp["ramp<br/>机群 50%"]
+  ramp --> full["full<br/>机群 100%"]
+  full --> done(["推进完成"])
+```
+
+| 阶段     | 机群占比 | 流量            | 默认保持  |
+|--------|------|---------------|-------|
+| canary | 1%   | 真实流量，隔离的路由键   | 15 分钟 |
+| shadow | 10%  | 真实流量 + 向旧版本双写 | 30 分钟 |
+| ramp   | 50%  | 真实流量，按请求加权    | 60 分钟 |
+| full   | 100% | 真实流量          | 不适用   |
+
+保持时间让 Bellows 在推进到下一阶段前能够收集遥测。默认值可在清单中按工作空间覆盖：
+
+```text title="project.grain — 推进配置"
+workspace "platform" {
+  target = "arcline"
+
+  deploy {
+    rollout {
+      strategy = "rolling"
+
+      stages {
+        canary { share = "1%",  hold = "15m" }
+        shadow { share = "10%", hold = "30m", dual_write = true }
+        ramp   { share = "50%", hold = "1h"  }
+        full   { share = "100%" }
+      }
+
+      abort_on {
+        error_rate    = "> 1%"
+        p95_latency   = "> 250ms"
+        warden_runtime = "any"
+      }
+    }
+  }
+}
+```
+
+## 启动一次推进
+
+```bash title="启动滚动升级"
+foundry bellows rollout --stamp q-2.4.7-9f2c4e3a
+```
+
+```text title="输出"
+→ 从 Quench 加载版本戳 q-2.4.7-9f2c4e3a
+→ 校验通道：stable [OK]
+→ 从 project.grain 读取推进配置
+→ 阶段：canary (1%)
+   - Bellows：把 1400 个实例中的 14 个切到新版本
+   - Warden 运行时：0 条发现
+   - 遥测：错误率 0.04%，p95 132ms
+   - 保持：15m (开始于 14:22:08 UTC)
+```
+
+Bellows 会阻塞在每个阶段，直到配置的保持时间结束，并且中止条件全程清白。当前进行中的推进可在任意终端观察：
+
+```bash title="观察进行中的推进"
+foundry bellows rollout status
+```
+
+```text title="输出"
+推进：r-2026-05-14-001
+  版本戳：    q-2.4.7-9f2c4e3a
+  策略：     rolling
+  开始时间：  14:22:08 UTC
+
+  canary    [DONE]    1400 个实例中的 14 个        14:37 通过
+  shadow    [ACTIVE]  1400 个实例中的 140 个       保持期至 15:07 结束
+  ramp      [QUEUED]
+  full      [QUEUED]
+```
+
+## 金丝雀遥测
+
+canary 阶段的存在意义在于以真实流量的一小片捕捉回归。Bellows 在保持期内采样三个信号，与 `abort_on` 阈值进行比较。
+
+| 信号         | 来源            | 默认阈值      |
+|------------|---------------|-----------|
+| 错误率        | Spoke 请求处理器。  | `> 1%`    |
+| 延迟 (p95)   | Spoke 请求处理器。  | `> 250ms` |
+| Warden 运行时 | Warden 运行时钩子。 | `任一条发现`   |
+
+如果保持期内任一信号越过阈值，Bellows 会暂停推进。是等待恢复、放弃，还是回滚，由操作员决定。
+
+```text title="金丝雀阶段回归"
+→ 阶段：canary (1%)
+   - 遥测：错误率 2.4% (阈值 > 1%)
+   - Bellows：暂停推进，等待操作员决定
+   - 命令：'foundry bellows rollout pause-resolve --rollout r-2026-05-14-001'
+```
+
+## 流量切换的协调
+
+Foundry 从不擅自移动流量。Bellows 请求部署目标——Arcline、Vial 或 Trellis——调整路由权重，并等待目标确认后才宣告本阶段完成。
+
+<Tabs>
+<TabItem value="arcline" label="Arcline" default>
+
+Arcline 接受加权路由表。Bellows 在每个阶段开始时提交新权重，并读回已应用的实际状态。
+
+```text title="Arcline 流量切换"
+→ 阶段：ramp (50%)
+   - Bellows：向 Arcline 请求权重
+       q-2.4.6-71b0fd2c：50% (当前 stable)
+       q-2.4.7-9f2c4e3a：50% (目标戳)
+   - Arcline：边缘节点 8 秒内应用完成
+```
+
+</TabItem>
+<TabItem value="vial" label="Vial">
+
+Vial 使用镜像标签作为路由标签。Bellows 更新服务描述符，Vial 控制平面在新容器就绪时排空旧容器。
+
+```text title="Vial 容器推进"
+→ 阶段：ramp (50%)
+   - Bellows：更新 Vial 描述符
+       期望副本数：70 (原先在 q-2.4.6 上 140 个)
+       新版本副本数：70 个在 q-2.4.7
+   - Vial：每个旧副本 30 秒排空超时
+```
+
+</TabItem>
+<TabItem value="trellis" label="Trellis">
+
+Trellis 暴露一份机群清单。Bellows 重写每个可用区的占比，Trellis 调度切换。
+
+```text title="Trellis 可用区切换"
+→ 阶段：ramp (50%)
+   - Bellows：应用 Trellis 机群规划
+       可用区 us-east-1a：50% q-2.4.7，50% q-2.4.6
+       可用区 us-east-1b：50% q-2.4.7，50% q-2.4.6
+       可用区 us-east-1c：50% q-2.4.7，50% q-2.4.6
+   - Trellis：22 秒内切换完成
+```
+
+</TabItem>
+</Tabs>
+
+:::info
+每个目标都会回报实际应用的权重，而不是被请求的权重。Bellows 把回报的状态视作事实，并在目标未在配置超时内应用时暂停推进。
+:::
+
+## 通过 Forge 历史回滚
+
+Forge 保留一份只追加的历史，记录每一次晋升与每一次推进。每条记录包含版本戳、推进策略、各阶段结果，以及发起人。
+
+```bash title="查看 Forge 历史"
+foundry forge history --limit 5
+```
+
+```text title="输出"
+2026-05-14 14:22  推进 r-2026-05-14-001  q-2.4.7-9f2c4e3a  ACTIVE  ramp
+2026-05-13 09:11  推进 r-2026-05-13-002  q-2.4.6-71b0fd2c  DONE    full
+2026-05-12 17:48  推进 r-2026-05-12-003  q-2.4.5-c83e1f55  DONE    full
+2026-05-11 12:04  晋升 q-2.4.5-c83e1f55  beta → stable
+2026-05-10 10:22  晋升 q-2.4.4-32b1e905  beta → stable
+```
+
+要回滚，从历史中挑出一个已知良好的版本戳，并让 Bellows 向前推进到它。
+
+```bash title="回滚到上一个 stable"
+foundry bellows rollout --stamp q-2.4.6-71b0fd2c --reason "INC-2026-05-14"
+```
+
+Bellows 把回滚当作一次普通的滚动升级处理，只是方向反过来。同样的阶段、同样的门槛、同样的遥测。Slag 审计日志会把回滚与其事故原因一并记录。
+
+:::warning
+回滚是向前推进，不是状态恢复。如果 `q-2.4.7` 执行了破坏性的 schema 迁移，那么推进 `q-2.4.6` 并不会撤销该迁移——这需要一次独立的 Conduit 迁移步骤。请始终在依赖迁移的变更上线前预留一段前向兼容窗口。
+:::
+
+## 中止一次推进
+
+```bash title="中止当前推进"
+foundry bellows rollout abort --rollout r-2026-05-14-001 --reason "INC-2026-05-14：用户可见的 5xx 突增"
+```
+
+中止会把推进定格在当前阶段。流量保持在最近一次应用的权重，推进在 Forge 历史中被标记为终止。先解决根因，再选择从同一版本戳恢复，或者向前推进到修复版。
+
+<Details>
+<summary>推进指令参考</summary>
+
+| 指令                        | 类型         | 默认值         | 描述                                  |
+|---------------------------|------------|-------------|-------------------------------------|
+| `strategy`                | `Enum`     | `"rolling"` | `rolling`、`bluegreen` 或 `recreate`。 |
+| `stages.X.share`          | `Percent`  | 必填          | 该阶段的机群占比。                           |
+| `stages.X.hold`           | `Duration` | `0`         | 推进到下一阶段前的最短保持时间。                    |
+| `stages.X.dual_write`     | `Bool`     | `false`     | 将写入镜像到上一个版本戳。                       |
+| `abort_on.error_rate`     | `Text`     | `"> 1%"`    | 错误率比较表达式。                           |
+| `abort_on.p95_latency`    | `Text`     | `"> 250ms"` | p95 延迟比较表达式。                        |
+| `abort_on.warden_runtime` | `Enum`     | `"any"`     | 运行时 Warden 发现的处理策略。                 |
+
+</Details>
+
+## 下一步
+
+- [发布通道](/docs/releases/release-channels/) — 一个版本戳是如何取得被推进资格的。
+- [部署目标](/docs/reference/deployment/) — 推进背后的运行平台 Arcline、Vial 与 Trellis。
+- [构建流水线](/docs/pipeline/build-pipeline/) — 版本戳所封装的产物是如何被生产出来的。

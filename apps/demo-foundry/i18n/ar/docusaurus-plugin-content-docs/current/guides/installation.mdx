@@ -1,0 +1,109 @@
+---
+title: "التثبيت"
+sidebar_position: 1
+description: "ثبِّت Foundry CLI عبر Spark أو Loom Registry أو حاوية Vial الرسمية. التحقق يستغرق أقل من دقيقتين."
+tags:
+  - "guides"
+  - "installation"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# التثبيت
+
+يأخذك هذا الدليل عبر تثبيت Foundry والتحقق من بيئتك. تستغرق العملية برمّتها أقل من دقيقتين.
+
+## المتطلبات المسبقة
+
+قبل تثبيت Foundry، تأكّد من أن بيئتك تستوفي هذه المتطلبات:
+
+| المتطلب    | الإصدار | ملاحظات                                           |
+|------------|---------|---------------------------------------------------|
+| **Spark**  | `>=3.0` | يُوزَّع Foundry CLI عبر Spark.                    |
+| **Alloy**  | `>=5.0` | مطلوب لقواعد Warden المدركة للأنواع ولـ Crucible. |
+| **Ferric** | `>=1.8` | اختياري. مطلوب فقط لمساحات عمل تستهدف Ferric.     |
+
+:::warning
+يتطلب Foundry 2.x الإصدار 5.0 من Alloy أو أحدث. الإصدارات الأقدم من Alloy لا تدعم واجهة استبطان الأنواع التي يستخدمها Crucible لتوليد هياكل الاختبار. إن كنت تشغّل Alloy 4.x، فرقّيه قبل تثبيت Foundry.
+:::
+
+## تثبيت Foundry
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+الطريقة المُوصى بها لتثبيت Foundry عبر Spark:
+
+```bash title="Global install via Spark"
+spark install foundry
+```
+
+يُثبِّت هذا ملف `foundry` التنفيذي وكل الأدوات الفرعية (Anvil وTongs وQuench وBellows وCrucible وSlag) كحزمة واحدة.
+
+</TabItem>
+<TabItem value="loom" label="Loom Registry">
+
+يمكنك أيضًا تثبيت Foundry من Loom Registry كتبعية لمساحة العمل:
+
+```bash title="Workspace dependency via Loom"
+loom add --dev foundry
+```
+
+هذا مفيد حين تريد تثبيت إصدار محدّد من Foundry لكل مساحة عمل بدلًا من استخدام تثبيت عالمي.
+
+</TabItem>
+<TabItem value="vial" label="Vial Container">
+
+لخطوط أنابيب Conduit والبيئات القابلة للتكرار، استخدم صورة Vial الرسمية:
+
+```bash title="Pull the official Vial image"
+vial pull foundry/cli:latest
+vial run foundry/cli:latest foundry --version
+```
+
+تتضمّن صورة Vial كلًا من Spark وAlloy وFoundry مثبَّتًا مسبقًا. هذا هو النهج المُوصى به لمراحل Conduit التي تُشغِّل `foundry ignite` كجزء من خط نشر.
+
+</TabItem>
+</Tabs>
+
+## التحقق من التثبيت
+
+تأكّد أن كل شيء يعمل:
+
+```bash title="Check the installed version"
+foundry --version
+```
+
+الخرج المتوقّع:
+
+```text
+Foundry CLI v2.4.1
+  Anvil    2.4.1
+  Tongs    2.4.1
+  Quench   2.4.1
+  Bellows  2.4.1
+  Crucible 2.4.1
+  Slag     2.4.1
+```
+
+:::info
+كل الأدوات الفرعية تُشحَن بالإصدار نفسه لـ CLI الرئيسي. لا توجد مصفوفة إصدارات لإدارتها — تثبيت واحد، رقم إصدار واحد، كل الأدوات متوافقة.
+:::
+
+## الإعداد بعد التثبيت
+
+لا يتطلب Foundry ملف إعداد عام. كل الإعدادات تعيش في بيان `.grain` لمساحة عملك. ومع ذلك، يمكنك ضبط متغيّرَي بيئة اختياريَّين:
+
+| المتغيّر              | الغرض                             | الافتراضي        |
+|-----------------------|-----------------------------------|------------------|
+| `FOUNDRY_CACHE_DIR`   | موقع ذاكرة بناء Quench.           | `.foundry/cache` |
+| `FOUNDRY_PARALLELISM` | أقصى عدد مهام متزامنة لـ Bellows. | تلقائي (نوى CPU) |
+
+## ما يأتي بعد ذلك
+
+مع Foundry مثبَّتًا، أنت جاهز لـ:
+
+1. [إنشاء أول طَرق لك](/docs/guides/your-first-forge/) — جولة خطوة بخطوة.
+2. [تعلُّم صيغة البيان](/docs/guides/manifests/) — شرح كل توجيه.
+3. [استكشاف CLI](/docs/reference/cli-reference/) — مرجع كامل للأوامر.

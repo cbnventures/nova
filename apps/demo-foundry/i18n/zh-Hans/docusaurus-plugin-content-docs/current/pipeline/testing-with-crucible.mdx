@@ -1,0 +1,157 @@
+---
+title: "使用 Crucible 测试"
+sidebar_position: 3
+description: "Crucible 从类型签名生成测试脚手架。只要你写出了类型，你也就描述了测试契约。"
+tags:
+  - "流水线"
+  - "测试"
+---
+
+# 使用 Crucible 测试
+
+Crucible 从你的类型签名生成测试脚手架。只要你写出了类型，你也就描述了测试契约。Crucible 读取契约，并写出样板代码。
+
+## 工作原理
+
+Crucible 扫描工作空间内每一处导出的类型签名。对每一个导出函数，它都会生成一份测试文件，包含：
+
+- 与函数签名匹配的断言模板。
+- 由参数类型派生出来的夹具数据。
+- 一份用于固化输出形状的快照测试。
+
+```alloy title="src/utils/format.al — 源码"
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+export function formatCurrency(amount: Numeric, locale: Text): Text {
+  return Intl.currency(amount, locale)
+}
+```
+
+从这两个导出，Crucible 生成：
+
+```alloy title="tests/format.assay.al — 生成的脚手架"
+import { formatDate, formatCurrency } from "@my-app/core/utils/format"
+
+// highlight-start
+describe("formatDate", () => {
+  it("returns Text for a valid Numeric input", () => {
+    const result: Text = formatDate(1714780800)
+    expect(result).toMatchSnapshot()
+  })
+})
+// highlight-end
+
+describe("formatCurrency", () => {
+  it("returns Text for valid Numeric and Text inputs", () => {
+    const result: Text = formatCurrency(49.99, "en-US")
+    expect(result).toMatchSnapshot()
+  })
+})
+```
+
+断言模板默认采用快照测试。第一次运行会记录输出，后续运行则校验输出未变。
+
+:::tip
+直接编辑文件，便可覆盖任何生成的测试。Crucible 尊重手工修改——它只会为尚无测试文件的函数重新生成测试。把清单中的 `crucible` 设为 `manual` 可在首次搭建脚手架之后阻止任何再生。
+:::
+
+## 运行测试
+
+```bash title="运行所有测试"
+foundry crucible run
+```
+
+```text title="输出"
+  core
+    ✓ format.assay.al (2 个测试，0.8 毫秒)
+    ✓ validate.assay.al (3 个测试，1.2 毫秒)
+    ✓ parse.assay.al (4 个测试，0.9 毫秒)
+  api
+    ✓ routes.assay.al (5 个测试，2.1 毫秒)
+    ✓ handlers.assay.al (4 个测试，1.8 毫秒)
+
+  18 个测试通过，用时 1.4 秒
+```
+
+## 监视模式
+
+Crucible 能够监视文件变更并重新运行受影响的测试：
+
+```bash title="监视变更"
+foundry crucible watch
+```
+
+在监视模式下，Crucible 跟踪 Tongs 依赖图。当某个源文件发生变更时，它会重新运行该文件以及全部下游依赖的测试。`core` 中的一处变更，会触发 `core`、`api` 与 `web` 中的测试。
+
+## 快照测试
+
+Crucible 的快照测试会固化函数的输出形状。当输出变化时，测试会失败并附上展示差异的 diff。
+
+```text title="快照失败输出"
+  ✗ formatDate — 快照不匹配
+
+  预期：
+    "2025-05-04"
+
+  实际：
+    "2025/05/04"
+
+  更新快照？请运行：foundry crucible run --update-snapshots
+```
+
+:::info
+快照文件保存在每个测试文件同级的 `__snapshots__` 目录下。它们是纯文本，应纳入版本控制。代码评审时审查快照差异，能够帮助及时发现非预期的输出变更。
+:::
+
+## 夹具生成
+
+对于输入类型复杂的函数，Crucible 会自动生成夹具数据：
+
+```alloy title="src/services/order.al — 源码"
+export interface OrderRequest {
+  customerId: Text
+  items: List<OrderItem>
+  shipping: ShippingMethod
+}
+
+export function processOrder(request: OrderRequest): OrderResult {
+  // ...
+}
+```
+
+```alloy title="tests/order.assay.al — 自动生成的夹具"
+import { processOrder } from "@my-app/api/services/order"
+
+const fixture: OrderRequest = {
+  customerId: "cust_001",
+  items: [{ sku: "item_001", quantity: 1, price: 29.99 }],
+  shipping: ShippingMethod.Standard,
+}
+
+describe("processOrder", () => {
+  it("returns OrderResult for a valid OrderRequest", () => {
+    const result: OrderResult = processOrder(fixture)
+    expect(result).toMatchSnapshot()
+  })
+})
+```
+
+Crucible 会为每个字段类型推断合理的默认值——字符串得到标识符，数字得到真实可用的数值，枚举得到第一个变体。
+
+## 配置
+
+Crucible 尊重清单中的 `crucible` 指令：
+
+| 值        | 行为                     |
+|----------|------------------------|
+| `auto`   | 每次锻造，对新增或变更的导出重新生成脚手架。 |
+| `manual` | 仅在首次锻造时生成一次，之后不再覆盖。    |
+| `off`    | 不生成任何脚手架，测试完全由你管理。     |
+
+## 下一步
+
+- [Warden 规则](/docs/pipeline/warden-rules/) — 与 Crucible 配套、提供完整代码质量覆盖的检查规则。
+- [构建流水线](/docs/pipeline/build-pipeline/) — Crucible 在锻造生命周期中的位置。
+- [你的第一次锻造](/docs/guides/your-first-forge/) — 在工作空间初始化时看到 Crucible 的运作。

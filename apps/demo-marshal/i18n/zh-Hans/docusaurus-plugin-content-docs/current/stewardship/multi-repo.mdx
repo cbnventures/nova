@@ -1,0 +1,50 @@
+---
+title: "多仓库"
+sidebar_position: 2
+description: "一个 Marshal 实例可以督管数十个仓库。每个仓库保留各自的 docket。policy 立一次卷，凡适用之处皆生效。"
+tags:
+  - "stewardship"
+  - "multi-repo"
+---
+
+# 多仓库
+
+一个 Marshal 实例可以督管数十个仓库。每个仓库保留各自的 docket。policy 立一次卷，在所有适用之处皆生效。
+
+## 跨仓库立卷
+
+```yaml title="policies/org-wide-archival.yml"
+policy: thread-archival
+applies_to: ["issues", "pull-requests"]
+repositories: ["org/*"]
+condition:
+  inactive_days: 365
+action: seal
+```
+
+`repositories` 字段接受通配符。Marshal 在立卷时展开列表，并将 policy 分别钤入各个 docket。
+
+## 单仓库覆盖
+
+某个仓库可以提交一项覆盖，使其优先于全组织的 policy：
+
+```yaml title="repos/org/critical-service/policies/no-archival.yml"
+override: thread-archival
+reason: "Long-running design discussions are normal here."
+```
+
+Marshal 读取这条覆盖，将其立卷于该仓库的 docket 之下，并对该仓停止应用父规则。
+
+## 通读全组织 ledger
+
+```bash
+marshal docket list --org acme --since 30d
+```
+
+Marshal 把每个仓库的 docket 合并成一份有序 ledger。哪怕涉及四十个仓库，仍然是一式三份。
+
+## 下一步
+
+- [Policies](/docs/filings/policies/) — 跨仓库提交一条 policy。
+- [审计轨迹](/docs/dockets/audit-trail/) — 跨仓库联合审计。
+- [API 参考](/docs/reference/api-reference/) — 多仓库查询。

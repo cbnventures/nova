@@ -1,11 +1,11 @@
 /**
- * Announcement Bar — Component structural styles.
+ * Announcement Bar - Component structural styles.
  *
  * @since 0.15.0
  */
 
 /* ============================
- * Announcement Bar — Container
+ * Announcement Bar - Container
  * ============================ */
 
 .nova-announcement-bar {
@@ -15,7 +15,7 @@
 }
 
 /* ============================
- * Announcement Bar — Content
+ * Announcement Bar - Content
  * ============================ */
 
 .nova-announcement-bar-content {
@@ -24,7 +24,7 @@
 }
 
 /* ============================
- * Announcement Bar — Close Button
+ * Announcement Bar - Close Button
  * ============================ */
 
 .nova-announcement-bar-close {

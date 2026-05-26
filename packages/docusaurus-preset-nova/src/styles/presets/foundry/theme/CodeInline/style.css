@@ -1,0 +1,21 @@
+/**
+ * Foundry - `CodeInline` theme overlay.
+ *
+ * Inline `code` snippets. Hairline border, subtle bg - workshop tool feel.
+ *
+ * @since 0.18.0
+ */
+
+.nova-code-inline {
+  padding: 0.125em 0.375em;
+  font-family: var(--nova-font-code);
+  font-size: 0.875em;
+  color: var(--nova-color-primary-700);
+  background-color: var(--nova-foundry-surface-raised);
+  border: 1px solid var(--nova-foundry-border);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-code-inline {
+  color: var(--nova-color-primary-400);
+}

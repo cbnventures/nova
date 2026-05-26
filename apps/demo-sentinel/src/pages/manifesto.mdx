@@ -1,0 +1,29 @@
+---
+title: "Manifesto"
+description: "How Sentinel thinks about monitoring — observation over interpretation."
+keywords:
+  - "sentinel"
+  - "manifesto"
+  - "monitoring"
+  - "alerting"
+---
+
+# Manifesto
+
+Sentinel exists because the gap between a system being broken and a human knowing it is broken is where real damage compounds. We believe in monitoring as observation, not interpretation. The probe's job is to report what it sees; the alert's job is to wake the right person. Both should be boring.
+
+## Observation, Not Interpretation
+
+The probe sees something. The alert reports something. Neither one decides what it means. Interpretation is a person's job, and a person needs unambiguous input — not pre-chewed conclusions that hide the underlying signal.
+
+## The Calibration Discipline
+
+Most bad alerts trace to one of two failure modes: too loud or too quiet. The first gets muted, the second gets missed. Both cost the same outage. Calibration is the ongoing work of moving every alert toward the narrow middle where it actually wakes the right person at the right time.
+
+## Earning the Page
+
+A page is a debt to the on-call engineer. We optimize for usefulness per page, not pages per hour. The goal is fewer pages, each one earning its disturbance.
+
+### Why fewer pages is the goal
+
+The system that pages constantly trains its operators to ignore pages. That training is permanent. We would rather miss a soft anomaly than burn the threshold of the next real one.

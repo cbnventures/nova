@@ -1,5 +1,7 @@
 import type { PropSidebarItemCategory, PropSidebarItemLink } from '@docusaurus/plugin-content-docs';
 
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Doc Card - Card Category.
  *
@@ -30,8 +32,11 @@ export type ThemeDocCardCardLayoutPropsTitle = string;
 
 export type ThemeDocCardCardLayoutPropsDescription = string | undefined;
 
+export type ThemeDocCardCardLayoutPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocCardCardLayoutProps = {
-  className: ThemeDocCardCardLayoutPropsClassName;
+  className?: ThemeDocCardCardLayoutPropsClassName;
+  style?: ThemeDocCardCardLayoutPropsStyle;
   href: ThemeDocCardCardLayoutPropsHref;
   icon: ThemeDocCardCardLayoutPropsIcon;
   title: ThemeDocCardCardLayoutPropsTitle;
@@ -74,8 +79,14 @@ export type ThemeDocCardItem = ThemeDocCardCategoryItem | ThemeDocCardLinkItem;
 
 export type ThemeDocCardDocCardPropsItem = ThemeDocCardCategoryItem | ThemeDocCardLinkItem;
 
+export type ThemeDocCardDocCardPropsClassName = string | undefined;
+
+export type ThemeDocCardDocCardPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocCardDocCardProps = {
   item: ThemeDocCardDocCardPropsItem;
+  className?: ThemeDocCardDocCardPropsClassName;
+  style?: ThemeDocCardDocCardPropsStyle;
 };
 
 /**

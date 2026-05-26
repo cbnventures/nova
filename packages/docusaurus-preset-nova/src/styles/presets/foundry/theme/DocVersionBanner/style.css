@@ -1,0 +1,64 @@
+/**
+ * Foundry - `DocVersionBanner` theme overlay.
+ *
+ * Industrial signal stripe - diagonal hatched neutral background (think
+ * blueprint paper / safety-tape) with a 4px primary-orange top rail (hot-rolled
+ * marker). Mono-code label with `[ENG]` bracket prefix in primary, reading as
+ * an engineering shop notice rather than a generic alert.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Version banner - industrial hatched stripe
+ * ============================
+ */
+
+.nova-version-banner {
+  padding: 0.625rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--nova-color-text);
+  text-align: center;
+
+  background-color: var(--nova-color-surface-raised);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 12px,
+    color-mix(in srgb, var(--nova-color-primary-500), transparent 95%) 12px,
+    color-mix(in srgb, var(--nova-color-primary-500), transparent 95%) 13px
+  );
+  border-top: 4px solid var(--nova-color-primary-500);
+}
+
+.nova-version-banner p {
+  margin: 0;
+}
+
+.nova-version-banner p::before {
+  content: "[ENG] ";
+
+  color: var(--nova-color-primary-600);
+  font-weight: 600;
+}
+
+[data-theme="dark"] .nova-version-banner {
+  background-color: var(--nova-color-text);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 12px,
+    color-mix(in srgb, var(--nova-color-primary-400), transparent 92%) 12px,
+    color-mix(in srgb, var(--nova-color-primary-400), transparent 92%) 13px
+  );
+  border-top-color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-version-banner p::before {
+  color: var(--nova-color-primary-400);
+}

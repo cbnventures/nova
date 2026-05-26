@@ -1,0 +1,13 @@
+/**
+ * Foundry - `DocTagDocListPage` theme overlay.
+ *
+ * Heavier bottom breath to match Foundry's hands-on industrial feel -
+ * the warm forge-door radial ambient and chunky CTA strip want a clear
+ * page-end pause, not a tight symmetric tail.
+ *
+ * @since 0.18.0
+ */
+
+.nova-doc-tag-doc-list-page {
+  padding-bottom: calc(var(--nova-section-gap) * 1.25);
+}

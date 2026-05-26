@@ -1,0 +1,211 @@
+/**
+ * Marshal - `Footer/Commons` theme overlay.
+ *
+ * Community-focused footer on aged paper with Plex Serif section
+ * headings (section-sign leader), mono uppercase carved labels, hairline-bordered
+ * social tiles, and a paper-toned CTA that blushes on hover.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container - aged paper with top hairline
+ * ============================ */
+
+.nova-footer-commons {
+  padding-top: 2.5rem;
+  padding-bottom: 1.5rem;
+
+  background-color: var(--nova-marshal-bg);
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+/* ============================
+ * 2. Section grid - auto-fit columns, wrap to viewport
+ * ============================ */
+
+.nova-footer-commons-sections {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+/* ============================
+ * 3. Section heading - Plex Serif weighty with `\00A7` leader
+ * ============================ */
+
+.nova-footer-commons-sections h3 {
+  position: relative;
+  margin: 0 0 0.75rem;
+  padding-left: 1.25em;
+
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+}
+
+.nova-footer-commons-sections h3::before {
+  content: "\00A7";
+  position: absolute;
+  left: 0;
+
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-footer-commons-sections h3::before {
+  color: var(--nova-color-accent-500);
+}
+
+/* ============================
+ * 4. Section link list - mono uppercase carved labels
+ * ============================ */
+
+.nova-footer-commons-sections nav ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-left: 1.25em;
+}
+
+.nova-footer-commons-sections nav a {
+  font-family: var(--nova-font-code);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+  text-decoration: none;
+
+  transition: color var(--nova-marshal-transition);
+}
+
+.nova-footer-commons-sections nav a:hover,
+.nova-footer-commons-sections nav a:focus-visible {
+  color: var(--nova-color-primary-800);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-footer-commons-sections nav a:hover,
+[data-theme="dark"] .nova-footer-commons-sections nav a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 5. External-link arrow - green
+ * ============================ */
+
+.nova-footer-commons-sections nav a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-footer-commons-sections nav a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 6. Social icons - square hairline-bordered tiles
+ * ============================ */
+
+.nova-footer-commons-social {
+  justify-content: center;
+  padding-block: 1.5rem;
+  border-top: 1px solid var(--nova-marshal-border);
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+.nova-footer-commons-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+
+  color: var(--nova-marshal-ink);
+  border: 1px solid var(--nova-marshal-border);
+
+  transition:
+    color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-footer-commons-social a:hover,
+.nova-footer-commons-social a:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-footer-commons-social a:hover,
+[data-theme="dark"] .nova-footer-commons-social a:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 7. Legal - copyright + credit, muted
+ * ============================ */
+
+.nova-footer-commons-legal {
+  padding-top: 1.5rem;
+  text-align: center;
+}
+
+.nova-footer-commons-legal p {
+  margin: 0;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.78rem;
+  color: var(--nova-marshal-ink-muted);
+}
+
+/* ============================
+ * CTA - preset signature.
+ * ============================ */
+
+.nova-footer-commons-cta {
+  padding: 3rem 2rem;
+
+  background-color: var(--nova-marshal-bg);
+  border-top: 1px solid var(--nova-marshal-border);
+  border-radius: 0;
+  text-align: center;
+}
+
+.nova-footer-commons-cta p {
+  margin: 0;
+
+  font-family: var(--nova-font-display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  letter-spacing: -0.02em;
+  color: var(--nova-marshal-ink);
+}
+
+[data-theme="dark"] .nova-footer-commons-cta {
+  border-top-color: var(--nova-color-primary-500);
+}
+
+.nova-footer-commons-cta {
+  transition:
+    background-color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-footer-commons-cta:hover,
+.nova-footer-commons-cta:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 92%);
+}
+
+.nova-footer-commons-cta:hover p,
+.nova-footer-commons-cta:focus-visible p {
+  color: var(--nova-color-primary-800);
+}
+
+[data-theme="dark"] .nova-footer-commons-cta:hover p,
+[data-theme="dark"] .nova-footer-commons-cta:focus-visible p {
+  color: var(--nova-color-primary-300);
+}

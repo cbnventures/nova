@@ -76,6 +76,8 @@ export type PresetPresetTheme = [string, Record<string, unknown>] | string;
 
 export type PresetPresetThemes = PresetPresetTheme[];
 
+export type PresetPresetThemePath = string;
+
 export type PresetPresetShikiThemes = LibShikiThemesGetShikiThemesReturns;
 
 export type PresetPresetRehypePluginFunction = (options: LibRehypeShikiRehypeShikiOptions) => LibRehypeShikiRehypeShikiReturns;
@@ -110,6 +112,8 @@ export type PresetPresetSitemapPlugin = PresetPresetPlugin;
 
 export type PresetPresetSvgrPlugin = PresetPresetPlugin;
 
+export type PresetPresetMermaidTooltipPlugin = string;
+
 export type PresetPresetGtmPlugin = PresetPresetPlugin;
 
 export type PresetPresetThemeOptionsPreset = OptionsPluginOptionsPreset;
@@ -126,7 +130,5 @@ export type PresetPresetThemeOptions = {
   progressBar: PresetPresetThemeOptionsProgressBar;
   search: PresetPresetThemeOptionsSearch;
 };
-
-export type PresetPresetThemePath = string;
 
 export type PresetPresetNovaTheme = PresetPresetTheme;

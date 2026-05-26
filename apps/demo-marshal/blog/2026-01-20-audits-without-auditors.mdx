@@ -1,0 +1,67 @@
+---
+title: "Audits without auditors, in the time before the audit"
+authors:
+  - "yuki"
+tags:
+  - "audit"
+  - "scheduled-stewardship"
+date: "2026-01-20"
+---
+
+The auditor will arrive in March. The audit, by then, will be a courtesy. Marshal has been auditing the repository every night for two years. The trail is already complete.
+
+{/* truncate */}
+
+The auditor will read three lines from the docket and ask one question. The question will be answered by line four. Marshal will then offer to print a copy of the seal for the auditor's records.
+
+The pre-audit is filed as a policy, on a nightly cadence, and produces a single docket entry per run. The entry contains the count of records inspected, the count of seals verified, the count of policies cross-referenced, and the seal of the audit itself. A reader scrolling the audit docket sees a column of identically-shaped lines, one per night, going back to the day the policy was first sealed. The column is unbroken. The auditor will read the most recent entry, then the entry from one year prior, then the entry from two years prior, and the three entries will agree on the procedure that produced them. That is the audit, in summary.
+
+The procedure has been sealed for two years and looks like this:
+
+```yaml title="policies/pre-audit-nightly.yml"
+policy: pre-audit-nightly
+version: 2
+sealed: true
+sealed-by: cordelia
+sealed-at: 2024-01-15T09:00:00Z
+
+schedule:
+  cadence: nightly
+  window: 04:00-04:30 UTC
+
+procedure:
+  - inspect: docket/*
+    verify:
+      - seal-chain-intact
+      - policy-refs-resolve
+      - retention-deadlines-honoured
+  - inspect: policies/*
+    verify:
+      - sealed-by-authorised-maintainer
+      - version-monotonic
+      - no-silent-amendments
+  - report:
+      docket: audit
+      stamp: VERIFIED
+      seal: required
+      retention: permanent
+  - on-discrepancy:
+      stamp: DISCREPANCY
+      escalate: registrar
+      seal: required
+      retention: permanent
+```
+
+In 752 nightly runs since the procedure was sealed, the audit docket contains 752 `VERIFIED` entries and zero `DISCREPANCY` entries. This is not because the procedure has been lenient. It is because the rest of the system was designed not to produce discrepancies in the first place. A policy that cannot be amended silently does not produce a silent-amendment flag. A docket that is append-only cannot have its retention deadlines violated by edit. The verification, in practice, is the recording of an absence — *no discrepancy was found, again, for the seven hundred and fifty-second night in a row.*
+
+The auditor's visit in March will follow the same procedure, in essence. The auditor reads three sample entries from the audit docket, asks for the policy that produced them, reads the policy, and verifies one entry's seal by hand. The auditor's verification will agree with the docket's verification. The auditor will then file a summary of the visit, in the auditor's own archive, which will say in formal language *the procedure was followed and the records cooperate.* The summary will be a single page.
+
+```bash
+$ marshal audit run --report-only --since 2024-01-15
+RUNS-INSPECTED  VERIFIED  DISCREPANCIES  OLDEST-ENTRY  NEWEST-ENTRY
+752             752       0              2024-01-16    2026-01-20
+```
+
+The line above is the audit, in summary. The auditor will print it, sign it, and file it. The clerk does not require the auditor's signature, but accepts it as a courtesy. The signature is itself a docket entry, in the audit docket, stamped `COUNTERSIGNED` and sealed alongside the entry it countersigns.
+
+The auditor's visit is a Tuesday in March. The work that the visit confirms was done, in small nightly increments, for the two years preceding it. The visit does not produce the trail; the visit merely reads it. The trail produces itself.

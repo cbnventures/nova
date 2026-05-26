@@ -1,0 +1,51 @@
+/**
+ * Envoy - `DocVersionBanner` theme overlay.
+ *
+ * Floating gradient pill - the banner sits inset from the page edge with
+ * envoy's signature pill-radius and a soft violet glow underneath. Reads as
+ * an elevated tile rather than a flat strip; matches envoy's CTA pattern.
+ * Slides down on mount via the shared envoy fade-in-up keyframe.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Version banner - floating gradient pill
+ * ============================
+ */
+
+.nova-version-banner {
+  margin: 0.75rem 1rem 1.5rem;
+  padding: 0.625rem 1.5rem;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  color: var(--nova-color-text-inverse);
+
+  background-image: linear-gradient(135deg, var(--nova-color-primary-600), var(--nova-color-accent-500));
+  border-radius: var(--nova-envoy-radius-pill);
+
+  box-shadow: 0 8px 24px -10px color-mix(in srgb, var(--nova-color-primary-500), transparent 50%),
+    inset 0 1px 0 rgb(255 255 255 / 0.2);
+}
+
+.nova-version-banner p {
+  margin: 0;
+}
+
+[data-theme="dark"] .nova-version-banner {
+  box-shadow: 0 10px 28px -10px color-mix(in srgb, var(--nova-color-primary-400), transparent 50%),
+    inset 0 1px 0 rgb(255 255 255 / 0.15);
+}
+
+/**
+ * ============================
+ * 2. Animation - slide down on mount
+ * ============================
+ */
+
+.nova-version-banner {
+  animation: envoy-fade-in-up 400ms var(--nova-motion-easing) both;
+}

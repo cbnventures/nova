@@ -2,17 +2,20 @@ import { useEffect, useState } from 'react';
 
 import type {
   LibMermaidContainerClassName,
-  LibMermaidGetCssVariableComputedStyle,
+  LibMermaidGetCssVariableAlpha,
+  LibMermaidGetCssVariableBlue,
+  LibMermaidGetCssVariableCanvas,
+  LibMermaidGetCssVariableContext,
+  LibMermaidGetCssVariableData,
+  LibMermaidGetCssVariableGreen,
   LibMermaidGetCssVariableName,
+  LibMermaidGetCssVariableProbe,
+  LibMermaidGetCssVariableRed,
+  LibMermaidGetCssVariableResolved,
   LibMermaidGetCssVariableReturns,
-  LibMermaidGetDensityMultiplierPadding,
-  LibMermaidGetDensityMultiplierReturns,
   LibMermaidLoadMermaidReturns,
   LibMermaidPromise,
-  LibMermaidUseMermaidConfigCodeFontFamily,
   LibMermaidUseMermaidConfigColorMode,
-  LibMermaidUseMermaidConfigDensityMultiplier,
-  LibMermaidUseMermaidConfigDisplayFontFamily,
   LibMermaidUseMermaidConfigFontFamily,
   LibMermaidUseMermaidConfigIsDark,
   LibMermaidUseMermaidConfigReturns,
@@ -37,53 +40,69 @@ import type {
  *
  * @since 0.15.0
  */
-export const MERMAID_CONTAINER_CLASS_NAME: LibMermaidContainerClassName = 'docusaurus-mermaid-container';
+export const MERMAID_CONTAINER_CLASS_NAME: LibMermaidContainerClassName = 'nova-mermaid-container';
 
 /**
- * Lib - Mermaid - Get CSS Variable.
+ * Lib - Mermaid - Get Resolved Color.
  *
- * Reads a CSS custom property value from the document root
- * element and returns the trimmed string.
+ * Returns the CSS custom property value flattened to `#rrggbb` (or
+ * `rgba(...)` if non-opaque) so Mermaid's color parser can consume
+ * color-mix expressions the generator emits for token-bearing colors.
  *
  * @param {LibMermaidGetCssVariableName} name - Name.
  *
  * @returns {LibMermaidGetCssVariableReturns}
  *
- * @since 0.15.0
+ * @since 0.18.0
  */
-function getCssVariable(name: LibMermaidGetCssVariableName): LibMermaidGetCssVariableReturns {
+function getResolvedColor(name: LibMermaidGetCssVariableName): LibMermaidGetCssVariableReturns {
   if (typeof document === 'undefined') {
     return '';
   }
 
-  const computedStyle: LibMermaidGetCssVariableComputedStyle = getComputedStyle(document.documentElement);
+  const probe: LibMermaidGetCssVariableProbe = document.createElement('span');
 
-  return computedStyle.getPropertyValue(name).trim();
-}
+  probe.style.color = `var(${name})`;
+  probe.style.display = 'none';
+  document.body.appendChild(probe);
 
-/**
- * Lib - Mermaid - Get Density Multiplier.
- *
- * Reads the shape density CSS variable and returns a scalar
- * that scales mermaid spacing values — 0.5 for compact, 1.5
- * for spacious, 1 for the comfortable default.
- *
- * @returns {LibMermaidGetDensityMultiplierReturns}
- *
- * @since 0.16.2
- */
-function getDensityMultiplier(): LibMermaidGetDensityMultiplierReturns {
-  const padding: LibMermaidGetDensityMultiplierPadding = getCssVariable('--nova-shape-padding');
+  const resolved: LibMermaidGetCssVariableResolved = getComputedStyle(probe).color;
 
-  if (padding === '0.5rem') {
-    return 0.5;
+  document.body.removeChild(probe);
+
+  if (resolved === '') {
+    return '';
   }
 
-  if (padding === '1.5rem') {
-    return 1.5;
+  const canvas: LibMermaidGetCssVariableCanvas = document.createElement('canvas');
+
+  canvas.width = 1;
+  canvas.height = 1;
+
+  const ctx: LibMermaidGetCssVariableContext = canvas.getContext('2d');
+
+  if (ctx === null) {
+    return resolved;
   }
 
-  return 1;
+  ctx.fillStyle = resolved;
+  ctx.fillRect(0, 0, 1, 1);
+
+  const data: LibMermaidGetCssVariableData = ctx.getImageData(0, 0, 1, 1).data;
+  const r: LibMermaidGetCssVariableRed = data[0];
+  const g: LibMermaidGetCssVariableGreen = data[1];
+  const b: LibMermaidGetCssVariableBlue = data[2];
+  const a: LibMermaidGetCssVariableAlpha = data[3];
+
+  if (a === 255) {
+    return `#${[
+      r,
+      g,
+      b,
+    ].map((n) => (n ?? 0).toString(16).padStart(2, '0')).join('')}`;
+  }
+
+  return `rgba(${r ?? 0}, ${g ?? 0}, ${b ?? 0}, ${((a ?? 0) / 255).toFixed(3)})`;
 }
 
 /**
@@ -128,10 +147,15 @@ export function loadMermaid(): LibMermaidLoadMermaidReturns {
 export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
   const colorMode: LibMermaidUseMermaidConfigColorMode = (typeof document !== 'undefined') ? (document.documentElement.getAttribute('data-theme') ?? 'light') : 'light';
   const isDark: LibMermaidUseMermaidConfigIsDark = colorMode === 'dark';
-  const fontFamily: LibMermaidUseMermaidConfigFontFamily = getCssVariable('--nova-font-body');
-  const displayFontFamily: LibMermaidUseMermaidConfigDisplayFontFamily = getCssVariable('--nova-font-display');
-  const codeFontFamily: LibMermaidUseMermaidConfigCodeFontFamily = getCssVariable('--nova-font-code');
-  const densityMultiplier: LibMermaidUseMermaidConfigDensityMultiplier = getDensityMultiplier();
+  /*
+   * Mermaid's font is hard-coded - decoupled from `--nova-font-body` - so
+   * measurement (themeVariables.fontFamily) and render (themeCSS rule below)
+   * always come from the same source. Binding to a preset or consumer-level
+   * body font lets site-wide typography swaps push diagram rect widths into
+   * unpredictable layouts with no way to recover, because mermaid sizes
+   * rects from measurement at config time and has no post-render reflow.
+   */
+  const fontFamily: LibMermaidUseMermaidConfigFontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
   /*
    * securityLevel: 'loose' matches @docusaurus/theme-mermaid's default.
@@ -146,50 +170,53 @@ export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
     colorMode,
     htmlLabels: true,
     themeVariables: {
-      primaryColor: getCssVariable(isDark === true ? '--nova-color-primary-800' : '--nova-color-primary-100'),
-      primaryTextColor: getCssVariable(isDark === true ? '--nova-color-primary-100' : '--nova-color-primary-900'),
-      primaryBorderColor: getCssVariable(isDark === true ? '--nova-color-primary-600' : '--nova-color-primary-300'),
-      secondaryColor: getCssVariable(isDark === true ? '--nova-color-accent-800' : '--nova-color-accent-100'),
-      secondaryTextColor: getCssVariable(isDark === true ? '--nova-color-accent-100' : '--nova-color-accent-900'),
-      secondaryBorderColor: getCssVariable(isDark === true ? '--nova-color-accent-600' : '--nova-color-accent-300'),
-      tertiaryColor: getCssVariable(isDark === true ? '--nova-color-neutral-800' : '--nova-color-neutral-100'),
-      tertiaryTextColor: getCssVariable(isDark === true ? '--nova-color-neutral-100' : '--nova-color-neutral-800'),
-      tertiaryBorderColor: getCssVariable(isDark === true ? '--nova-color-neutral-600' : '--nova-color-neutral-300'),
-      lineColor: getCssVariable(isDark === true ? '--nova-color-neutral-500' : '--nova-color-neutral-400'),
-      textColor: getCssVariable(isDark === true ? '--nova-color-neutral-200' : '--nova-color-neutral-800'),
-      mainBkg: getCssVariable(isDark === true ? '--nova-color-primary-900' : '--nova-color-primary-50'),
-      nodeBorder: getCssVariable(isDark === true ? '--nova-color-primary-600' : '--nova-color-primary-300'),
-      clusterBkg: getCssVariable(isDark === true ? '--nova-color-neutral-900' : '--nova-color-neutral-50'),
-      clusterBorder: getCssVariable(isDark === true ? '--nova-color-neutral-700' : '--nova-color-neutral-200'),
-      edgeLabelBackground: getCssVariable(isDark === true ? '--nova-color-neutral-900' : '--nova-color-neutral-50'),
+      primaryColor: getResolvedColor(isDark === true ? '--nova-color-primary-800' : '--nova-color-primary-100'),
+      primaryTextColor: getResolvedColor(isDark === true ? '--nova-color-primary-100' : '--nova-color-primary-900'),
+      primaryBorderColor: getResolvedColor(isDark === true ? '--nova-color-primary-600' : '--nova-color-primary-300'),
+      secondaryColor: getResolvedColor(isDark === true ? '--nova-color-accent-800' : '--nova-color-accent-100'),
+      secondaryTextColor: getResolvedColor(isDark === true ? '--nova-color-accent-100' : '--nova-color-accent-900'),
+      secondaryBorderColor: getResolvedColor(isDark === true ? '--nova-color-accent-600' : '--nova-color-accent-300'),
+      tertiaryColor: getResolvedColor('--nova-color-surface-raised'),
+      tertiaryTextColor: getResolvedColor('--nova-color-text'),
+      tertiaryBorderColor: getResolvedColor('--nova-color-border'),
+      lineColor: getResolvedColor('--nova-color-text-muted'),
+      textColor: getResolvedColor('--nova-color-text'),
+      mainBkg: getResolvedColor(isDark === true ? '--nova-color-primary-900' : '--nova-color-primary-50'),
+      nodeBorder: getResolvedColor(isDark === true ? '--nova-color-primary-600' : '--nova-color-primary-300'),
+      clusterBkg: getResolvedColor('--nova-mermaid-cluster-fill'),
+      clusterBorder: getResolvedColor('--nova-mermaid-cluster-stroke'),
+      edgeLabelBackground: getResolvedColor('--nova-color-background'),
       fontFamily,
       fontSize: '14px',
     },
+    /*
+     * themeCSS gets injected into a `<style>` block inside the rendered SVG
+     * with every selector auto-prefixed by `#mermaid-svg-<id>` (specificity
+     * 1,0,N). CSS variables here resolve at render time from the document
+     * context, so per-preset `--nova-*` tokens flow through.
+     *
+     * `.nodeLabel p` / `.cluster-label foreignObject p` — forces font-family +
+     * font-size + margin on the `<p>` mermaid emits for htmlLabels so
+     * rendered text matches what mermaid measured with themeVariables.
+     * Without these, page CSS `p { font-size: 1rem; margin-block: 1em;
+     * font-family: var(--nova-font-body) }` cascades in and overruns the
+     * rect mermaid sized at config time.
+     *
+     * `.node rect` / `.cluster rect` — corner radius. Each preset declares
+     * its own `--nova-mermaid-node-radius` / `--nova-mermaid-cluster-radius`
+     * explicitly (no fallback) so the per-preset value is the single source
+     * of truth for diagram block geometry.
+     */
     themeCSS: [
-      '.node rect, .node circle, .node polygon, .node ellipse, .node .basic { rx: var(--nova-shape-radius); ry: var(--nova-shape-radius); stroke-width: 1.5px; }',
-      '.node .label { font-weight: 500; letter-spacing: -0.01em; }',
-      '.edgePath path.path { stroke-width: 1.5px; }',
-      '.edgeLabel { font-size: 12px; }',
-      '.cluster rect { rx: calc(var(--nova-shape-radius) * 1.5); ry: calc(var(--nova-shape-radius) * 1.5); stroke-width: 1.5px; }',
-      `.cluster text { font-weight: 600; font-size: 13px; letter-spacing: -0.01em; font-family: ${displayFontFamily}; }`,
-      `.label { font-family: ${fontFamily}; }`,
-      `.nodeLabel { font-family: ${fontFamily}; }`,
-      `.edgeLabel { font-family: ${fontFamily}; }`,
-      `code { font-family: ${codeFontFamily}; }`,
-      '.label foreignObject { overflow: visible; }',
-      `.node.muted rect, .node.muted path, .node.muted .basic { fill: ${getCssVariable(isDark === true ? '--nova-color-neutral-800' : '--nova-color-neutral-100')} !important; stroke: ${getCssVariable(isDark === true ? '--nova-color-neutral-600' : '--nova-color-neutral-300')} !important; }`,
-      `.node.muted .label, .node.muted .nodeLabel { color: ${getCssVariable(isDark === true ? '--nova-color-neutral-400' : '--nova-color-neutral-500')} !important; }`,
+      `.nodeLabel p, .cluster-label foreignObject p { margin: 0; color: inherit; font-family: ${fontFamily}; font-size: 14px; line-height: 1.5; }`,
+      '.node rect { rx: var(--nova-mermaid-node-radius); ry: var(--nova-mermaid-node-radius); }',
+      '.cluster rect { rx: var(--nova-mermaid-cluster-radius); ry: var(--nova-mermaid-cluster-radius); }',
     ].join('\n'),
     flowchart: {
-      curve: 'basis',
-      padding: Math.round(16 * densityMultiplier),
-      nodeSpacing: Math.round(50 * densityMultiplier),
-      rankSpacing: Math.round(60 * densityMultiplier),
       subGraphTitleMargin: {
-        top: Math.round(16 * densityMultiplier),
-        bottom: Math.round(8 * densityMultiplier),
+        top: 16,
+        bottom: 16,
       },
-      useMaxWidth: false,
     },
   };
 }
@@ -220,6 +247,19 @@ export function useMermaidRenderResult(options: LibMermaidUseMermaidRenderResult
       try {
         const mermaidModule: LibMermaidUseMermaidRenderResultMermaidModule = await loadMermaid();
         const mermaidDefault: LibMermaidUseMermaidRenderResultMermaidDefault = mermaidModule['default'];
+
+        /*
+         * Wait for web fonts to load before measuring label widths. Mermaid
+         * measures node and cluster label widths via a temporary DOM element
+         * whose bbox depends on the live font metrics. Preset body fonts use
+         * `font-display: block`, so during the load blocking period the temp
+         * element measures with the fallback font - typically narrower than
+         * the eventual web font. Awaiting `document.fonts.ready` pins
+         * measurement to the same font that will render.
+         */
+        if (typeof document !== 'undefined') {
+          await document.fonts.ready;
+        }
 
         mermaidDefault.initialize(config as LibMermaidUseMermaidRenderResultInitializeConfig);
 

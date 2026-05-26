@@ -1,6 +1,6 @@
 /**
  * ============================
- * Code Inline — Base
+ * Code Inline - Base
  * ============================
  */
 
@@ -14,6 +14,17 @@
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
   border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
   border-radius: 0.25rem;
+
+  /* In an RTL paragraph the consolidated `direction: ltr; unicode-bidi: isolate;`
+     rule from `CodeBlock/style.css` makes the code's content render LTR, but
+     with the default `display: inline` Chrome paints the element background
+     and the glyph runs at different x-positions when an LTR isolate sits
+     inside an RTL parent, so the pill ends up empty and pure-neutral content
+     like `---` leaks outside it. Forcing `inline-block` gives the element a
+     single contiguous painted box; `vertical-align: baseline` keeps it
+     aligned with the surrounding text the same way the default inline does. */
+  display: inline-block;
+  vertical-align: baseline;
 }
 
 [data-theme="dark"] .nova-code-inline {

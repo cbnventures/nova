@@ -1,0 +1,152 @@
+/**
+ * Signal - `SearchPage` theme overlay.
+ *
+ * Sharp terminal search page. No corner radius, mono code typography,
+ * compact line spacing. Result rows render as connected slabs with rose
+ * primary accent on the active row. Mirrors the SearchBar input chrome -
+ * same flat surface, same square corners.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container & Header
+ * ============================ */
+
+.nova-search-page-header h1 {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--nova-signal-text);
+}
+
+[data-theme="dark"] .nova-search-page-header h1 {
+  color: var(--nova-signal-text);
+}
+
+/* ============================
+ * 2. Search Input
+ * ============================ */
+
+.nova-search-page-input {
+  font-family: var(--nova-font-code);
+  color: var(--nova-color-text);
+  background-color: var(--nova-signal-bg);
+  border-radius: var(--nova-signal-radius-sharp);
+}
+
+[data-theme="dark"] .nova-search-page-input {
+  border-color: var(--nova-color-border);
+}
+
+.nova-search-page-input:focus {
+  border-color: var(--nova-color-primary-600);
+  outline: 2px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  outline-offset: 0;
+}
+
+[data-theme="dark"] .nova-search-page-input:focus {
+  border-color: var(--nova-color-primary-400);
+  outline-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+/* ============================
+ * 3. Result Slabs
+ * ============================ */
+
+.nova-search-page-list {
+  border: 1px solid var(--nova-color-border);
+  background-color: var(--nova-signal-bg);
+  box-shadow: var(--nova-signal-shadow-dropdown);
+  gap: 0;
+}
+
+[data-theme="dark"] .nova-search-page-list {
+  border-color: var(--nova-color-text);
+}
+
+.nova-search-page-item {
+  border-bottom: 1px solid var(--nova-color-border);
+}
+
+.nova-search-page-item:last-child {
+  border-bottom: none;
+}
+
+[data-theme="dark"] .nova-search-page-item {
+  border-bottom-color: var(--nova-color-text);
+}
+
+.nova-search-page-item a {
+  border: none;
+  border-radius: var(--nova-signal-radius-sharp);
+  background-color: transparent;
+  transition: background-color var(--nova-motion-duration) ease;
+}
+
+/* Hover bg in light mode: subtle surface-raised step. In dark mode: signal's
+   terminal flair flips to a near-white bg for the active row, so title +
+   snippet swap to dark text for contrast (otherwise the white-on-white
+   title becomes invisible). */
+.nova-search-page-item a:hover,
+.nova-search-page-item a:focus-visible {
+  background-color: var(--nova-color-surface-raised);
+}
+
+[data-theme="dark"] .nova-search-page-item a:hover,
+[data-theme="dark"] .nova-search-page-item a:focus-visible {
+  background-color: var(--nova-color-text);
+}
+
+[data-theme="dark"] .nova-search-page-item a:hover .nova-search-page-item-title,
+[data-theme="dark"] .nova-search-page-item a:focus-visible .nova-search-page-item-title {
+  color: var(--nova-color-background);
+}
+
+[data-theme="dark"] .nova-search-page-item a:hover .nova-search-page-item-snippet,
+[data-theme="dark"] .nova-search-page-item a:focus-visible .nova-search-page-item-snippet {
+  color: color-mix(in srgb, var(--nova-color-background), var(--nova-color-text) 50%);
+}
+
+.nova-search-page-item-title {
+  font-family: var(--nova-font-display);
+  color: var(--nova-color-text);
+}
+
+.nova-search-page-item-snippet {
+  font-family: var(--nova-font-code);
+  color: var(--nova-signal-text-muted);
+}
+
+/* ============================
+ * 4. State Messages
+ * ============================ */
+
+.nova-search-page-loading,
+.nova-search-page-searching,
+.nova-search-page-empty {
+  font-family: var(--nova-font-code);
+  color: var(--nova-signal-text-soft);
+}
+
+[data-theme="dark"] .nova-search-page-loading,
+[data-theme="dark"] .nova-search-page-searching,
+[data-theme="dark"] .nova-search-page-empty {
+  color: var(--nova-signal-text-soft);
+}
+
+/* Empty is a sticky state (no results) - one tier brighter + full opacity
+   to override shared `opacity: 0.75`. Loading stays soft (transient). */
+.nova-search-page-empty {
+  color: var(--nova-signal-text-muted);
+  opacity: 1;
+}
+
+.nova-search-page-error {
+  font-family: var(--nova-font-code);
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-search-page-error {
+  color: var(--nova-color-primary-300);
+}

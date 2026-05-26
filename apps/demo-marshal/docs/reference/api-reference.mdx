@@ -1,0 +1,45 @@
+---
+title: "API Reference"
+sidebar_position: 1
+description: "The Marshal Spoke API — file policies, read the docket, export audit trails. Bearer-token authentication, JSON responses, no surprises."
+tags:
+  - "reference"
+  - "api"
+---
+
+# API Reference
+
+Marshal exposes a Spoke API for filing policies, reading the docket, and exporting the audit trail. Bearer-token authentication, JSON responses, no surprises.
+
+## Base URL
+
+```
+https://marshal.your-org.example/api
+```
+
+## Endpoints
+
+| Method   | Path                 | Description                            |
+|----------|----------------------|----------------------------------------|
+| `GET`    | `/api/policies`      | List every filed policy.               |
+| `POST`   | `/api/policies`      | File a new policy.                     |
+| `DELETE` | `/api/policies/:id`  | Withdraw a policy (filed as override). |
+| `GET`    | `/api/dockets`       | List dockets across repositories.      |
+| `GET`    | `/api/dockets/:repo` | Read one repository's docket.          |
+| `POST`   | `/api/audit/export`  | Generate an audit trail export.        |
+| `GET`    | `/api/cron`          | List scheduled stewardship jobs.       |
+
+## Example
+
+```bash
+curl https://marshal.your-org.example/api/dockets/org/api \
+  -H "Authorization: Bearer $MARSHAL_TOKEN"
+```
+
+The response is a chronological list of every action filed against the repository. The seal of office appears in every record.
+
+## Next Steps
+
+- [Policies](/docs/filings/policies/) — Filing policies via the API.
+- [Dockets](/docs/dockets/overview/) — Reading dockets via the API.
+- [Audit Trail](/docs/dockets/audit-trail/) — Exporting the full trail.

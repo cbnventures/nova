@@ -1,0 +1,42 @@
+---
+title: "Scheduled Stewardship"
+sidebar_position: 1
+description: "Marshal runs scheduled work on a cron — cleanups, audits, rollovers, label sweeps. Filed at the top of the hour."
+tags:
+  - "stewardship"
+  - "scheduled-stewardship"
+---
+
+# Scheduled Stewardship
+
+Marshal runs scheduled work on a cron. Cleanups, audits, rollovers, label sweeps — anything that should happen at the top of the hour without anyone being woken up.
+
+## What can be scheduled
+
+- **Cleanups** — close and seal threads that meet a policy condition
+- **Audits** — verify that every open ticket has been classified
+- **Rollovers** — roll the docket forward into the next quarter
+- **Label sweeps** — apply or remove labels in bulk
+
+## Filing a scheduled job
+
+```yaml title="schedules/quarterly-rollover.yml"
+schedule: "0 0 1 1,4,7,10 *"
+action: rollover
+docket: "FY-{quarter}"
+notice: "Rolled forward at the top of the quarter."
+```
+
+## Watching the cron
+
+```bash
+marshal cron list
+```
+
+Marshal lists every scheduled job, its next run, and the policy that filed it. Nothing runs unsealed.
+
+## Next Steps
+
+- [Policies](/docs/filings/policies/) — Schedule a policy for automatic filing.
+- [Dockets](/docs/dockets/overview/) — Where each scheduled run leaves its line.
+- [Audit Trail](/docs/dockets/audit-trail/) — Quarterly audits of scheduled work.

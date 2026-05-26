@@ -1,0 +1,179 @@
+---
+title: "محاكاة السياسة"
+sidebar_position: 3
+description: "بيئة محاكاة Parapet، ووضع التشغيل التجريبي، وإعادة تشغيل حركة البيانات، وتحليل الفروقات بين السياسات."
+tags:
+  - "operations"
+  - "simulation"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# محاكاة السياسة
+
+Parapet هو بيئة محاكاة السياسات المعزولة في Sentinel. يختبر سياسات الوصول مقابل حركة بيانات تاريخية حقيقية دون تعديل أيّ حالة سياسة فعلية. وقبل أن تصل سياسة جديدة إلى الإنتاج، يُجيب Parapet عن السؤال، ما الذي سيتغيّر؟
+
+## لماذا المحاكاة
+
+تغييرات السياسة محفوفة بالمخاطر بطبيعتها. قاعدة تبدو صحيحة بمعزل عن غيرها قد تتفاعل مع السياسات القائمة بطرق غير متوقّعة، فتمنح وصولاً لم يكن موجوداً، أو تُلغي وصولاً عن حساب خدمة حرج. يُلغي Parapet هذه المخاطرة بإعادة تشغيل حركة بيانات أنفاق Filament المُسجَّلة عبر مجموعة السياسات المُقترحة، وإنتاج تقرير أثر دقيق.
+
+:::warning المحاكاة ليست ضماناً
+يُعيد Parapet تشغيل حركة بيانات تاريخية. يكشف كيف كانت السياسات المُقترحة ستُقيَّم مقابل أنماط الاتصال السابقة. ولا يستطيع التنبّؤ بأنماط حركة بيانات لم تحدث من قبل. اجمع دائماً بين محاكاة Parapet والنمذجة اليدويّة للتهديدات في بنى المناطق الجديدة أو أنماط الوصول المُستحدثة.
+:::
+
+## أوضاع المحاكاة
+
+<Tabs>
+<TabItem value="dryrun" label="التشغيل التجريبي" default>
+
+يُقيّم وضع التشغيل التجريبي سياسة مسودّة مقابل الأسطول الحالي دون إعادة تشغيل حركة البيانات. يُظهر أيّ الجلسات النشطة حالياً ستنجح أو تُخفق تحت القواعد المُقترحة:
+
+```bash title="محاكاة تشغيل تجريبي"
+sentinel parapet dry-run \
+  --policy draft:tightened-posture \
+  --scope all-devices
+```
+
+```text title="مخرجات التشغيل التجريبي"
+Parapet Dry Run: tightened-posture
+  Policy change: device.posture >= 80 → device.posture >= 90
+  Scope: all enrolled devices (1,247)
+
+  Current sessions that would be affected:
+    Would still pass:     1,089 (87.3%)
+    Would now fail:       158 (12.7%)
+
+  Failure breakdown by platform:
+    macOS:    42 devices (avg posture 84)
+    Windows:  67 devices (avg posture 82)
+    Linux:    31 devices (avg posture 86)
+    Android:  18 devices (avg posture 79)
+
+  Failure breakdown by cause:
+    OS patch level stale:      89
+    Antivirus definitions:     34
+    Screen lock timeout:       22
+    Firewall disabled:         13
+```
+
+التشغيل التجريبي سريع، يكتمل في ثوانٍ لأنّه يُقيّم اللقطة الحالية، لا حركة البيانات التاريخية.
+
+</TabItem>
+<TabItem value="replay" label="إعادة تشغيل حركة البيانات">
+
+تُعالج إعادة تشغيل حركة البيانات سجلّات أنفاق Filament التاريخية عبر مجموعة السياسات المُقترحة. تُظهر كيف كان سيُقيَّم كلّ اتصال خلال فترة زمنية:
+
+```bash title="محاكاة إعادة تشغيل حركة البيانات"
+sentinel parapet simulate \
+  --policy-set production \
+  --include draft:tightened-posture \
+  --traffic-source production-replay \
+  --duration 7d
+```
+
+```text title="مخرجات إعادة التشغيل"
+Parapet Simulation Report
+  Policy set:      production + draft:tightened-posture
+  Traffic source:  production-replay (5,847,291 connections)
+  Duration:        7d replay in 43m 12s
+
+  Results:
+    Connections evaluated:   5,847,291
+    Access granted:          5,412,447 (92.6%)
+    Access denied:           434,844 (7.4%)
+
+  Delta from current production:
+    New grants:     0
+    New denials:    434,844
+    Unchanged:      5,412,447
+
+  Anomalies detected: 0
+  Lateral movement paths found: 0
+```
+
+تستغرق إعادة تشغيل حركة البيانات وقتاً أطول، لكنّها تُقدّم الصورة الكاملة. يُظهر تقرير الفرق ما الذي سيتغيّر بالضبط مقارنة بمجموعة سياسات الإنتاج الحالية.
+
+</TabItem>
+</Tabs>
+
+## فرق السياسات
+
+يستطيع Parapet مقارنة مجموعتَي سياسات جنباً إلى جنب، وإظهار فرق الوصول لكلّ مورد:
+
+```bash title="فرق السياسات"
+sentinel parapet diff \
+  --baseline production \
+  --proposed production+draft:tightened-posture
+```
+
+```text title="مخرجات الفرق"
+Parapet Policy Diff
+  Baseline: production (current)
+  Proposed: production + draft:tightened-posture
+
+  Resource: api-cluster-east
+    Baseline:  1,089 sessions granted
+    Proposed:  931 sessions granted
+    Delta:     -158 sessions (posture threshold increase)
+
+  Resource: data-layer
+    Baseline:  247 sessions granted
+    Proposed:  247 sessions granted
+    Delta:     no change
+
+  Resource: admin-tools
+    Baseline:  12 sessions granted
+    Proposed:  12 sessions granted
+    Delta:     no change
+
+  Summary:
+    Resources affected: 1 of 3
+    Total session impact: -158 (13.6% of api-cluster-east)
+```
+
+## ترقية محاكاة
+
+بعد مراجعة نتائج المحاكاة، رقِّ سياسة المسودّة إلى الإنتاج:
+
+```bash title="ترقية بعد المحاكاة"
+sentinel parapet promote \
+  --draft tightened-posture \
+  --simulation-id sim_7f3a2b9c
+```
+
+تربط الترقية السياسة الجديدة بنتائج محاكاتها في Spyglass. يستطيع المدقّقون تتبّع كلّ سياسة إنتاج إلى المحاكاة التي صحّحتها.
+
+:::note متطلّبات المحاكاة
+يجب أن يمرّ كلّ تغيير سياسة يُعدّل شروط الوصول بمحاكاة Parapet قبل الترقية. يفرض ذلك مستوى التحكّم في Sentinel، تطبيق السياسة مباشرة دون محاكاة معطّل افتراضياً لموارد الإنتاج.
+:::
+
+## المحاكاة المؤتمتة في Conduit
+
+ادمج Parapet في خطّ Conduit للتكامل المستمرّ لمحاكاة تغييرات السياسة في كلّ commit:
+
+```text title="conduit.grain — policy simulation step"
+pipeline "policy-deploy" {
+  stage "simulate" {
+    run = "sentinel parapet simulate --policy-set production --include $DRAFT_POLICY --duration 24h"
+    fail_on = "anomalies > 0 || new_denials > 500"
+  }
+
+  stage "review" {
+    type    = "manual"
+    approvers = ["security-ops"]
+  }
+
+  stage "promote" {
+    run = "sentinel parapet promote --draft $DRAFT_POLICY --simulation-id $SIM_ID"
+  }
+}
+```
+
+يُشغّل الخطّ إعادة تشغيل حركة بيانات لمدّة 24 ساعة، ويحجب الترقية إن اكتُشف شذوذ أو تجاوز عدد الرفوضات العتبة، ويتطلّب موافقة يدويّة من فريق العمليّات الأمنية، ثمّ يُرقّي السياسة تلقائياً.
+
+## الخطوات التالية
+
+- [سياسات الثقة](/docs/trust/trust-policies/)، قواعد السياسة التي يُحاكي Parapet مقابلها.
+- [التدقيق والتحقيق الجنائي](/docs/operations/audit-forensics/)، كيف تُسجَّل نتائج المحاكاة في Spyglass.
+- [مرجع API](/docs/reference/api-reference/)، الوصول البرمجي إلى نقاط نهاية محاكاة Parapet وترقيتها.

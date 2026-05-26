@@ -1,0 +1,10 @@
+{
+  "label": "运维",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "在生产环境中运行 Envoy——通过 Ledger 实现可观测性、构建仪表盘、对重试耗尽告警，并在多区域之间横向扩展。"
+  }
+}

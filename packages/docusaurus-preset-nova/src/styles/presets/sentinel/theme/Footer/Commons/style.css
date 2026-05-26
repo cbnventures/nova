@@ -1,5 +1,9 @@
 /**
- * Sentinel — Footer (Commons) variant visual styling.
+ * Sentinel - `Footer/Commons` theme overlay.
+ *
+ * Community-focused footer on a near-black watchtower ground with section
+ * grids, a centered social row bordered by neutral hairlines, and a
+ * primary -> accent gradient CTA signature that brightens on hover.
  *
  * @since 0.15.0
  */
@@ -18,11 +22,11 @@
 
 .nova-footer-commons {
   background-color: var(--nova-sentinel-footer-bg, #030710);
-  color: var(--nova-color-neutral-300);
+  color: var(--nova-color-text-muted);
   padding-top: 2.5rem;
   padding-bottom: 1.5rem;
   margin-top: 2.5rem;
-  border-top: 1px solid var(--nova-color-neutral-800);
+  border-top: 1px solid color-mix(in srgb, var(--nova-color-text-inverse), transparent 70%);
 }
 
 @media (min-width: 768px) {
@@ -64,14 +68,14 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text-inverse);
   margin-bottom: 1rem;
 }
 
 .nova-footer-commons-sections nav a {
   padding: 0.3125rem 0;
   font-size: 0.875rem;
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
   text-decoration: none;
   transition: color var(--nova-motion-duration) ease;
 }
@@ -89,8 +93,8 @@
 .nova-footer-commons-social {
   justify-content: center;
   padding: 1.5rem 0;
-  border-top: 1px solid var(--nova-color-neutral-800);
-  border-bottom: 1px solid var(--nova-color-neutral-800);
+  border-top: 1px solid color-mix(in srgb, var(--nova-color-text-inverse), transparent 70%);
+  border-bottom: 1px solid color-mix(in srgb, var(--nova-color-text-inverse), transparent 70%);
 }
 
 .nova-footer-commons-social a {
@@ -99,7 +103,7 @@
   justify-content: center;
   width: 2.25rem;
   height: 2.25rem;
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
   border-radius: var(--nova-shape-radius);
   transition: color var(--nova-motion-duration) ease,
               background-color var(--nova-motion-duration) ease;
@@ -107,8 +111,8 @@
 
 .nova-footer-commons-social a:hover,
 .nova-footer-commons-social a:focus-visible {
-  color: var(--nova-color-neutral-50);
-  background-color: var(--nova-color-neutral-800);
+  color: var(--nova-color-text);
+  background-color: var(--nova-color-border);
 }
 
 /* ============================
@@ -122,6 +126,53 @@
 
 .nova-footer-commons-legal p {
   font-size: 0.8125rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   margin: 0;
+}
+
+/* ============================
+ * CTA - preset signature.
+ * ============================ */
+
+.nova-footer-commons-cta {
+  position: relative;
+  padding-block: 3.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--nova-color-primary-600) 0%, var(--nova-color-primary-700) 60%, var(--nova-color-accent-600) 100%);
+  overflow: hidden;
+}
+
+.nova-footer-commons-cta::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .nova-footer-commons-cta {
+  background: linear-gradient(135deg, var(--nova-color-primary-800) 0%, var(--nova-color-primary-900) 60%, color-mix(in srgb, var(--nova-color-accent-500), transparent 85%) 100%);
+}
+
+.nova-footer-commons-cta p {
+  position: relative;
+  margin: 0;
+  font-family: var(--nova-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--nova-color-text-inverse);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.nova-footer-commons-cta {
+  transition: filter var(--nova-footer-filter-duration) var(--nova-motion-easing);
+}
+
+.nova-footer-commons-cta:hover,
+.nova-footer-commons-cta:focus-visible {
+  filter: brightness(1.12);
 }

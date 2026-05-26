@@ -1,0 +1,292 @@
+---
+title: "Identity Providers"
+sidebar_position: 1
+description: "Cipher integration with external IdPs — Okta, Azure AD, Google Workspace, and generic OIDC/SAML — covering group mapping, JIT provisioning, and conditional access gates."
+tags:
+  - "integrations"
+  - "identity"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Identity Providers
+
+Cipher is Sentinel's authentication layer. It does not store passwords or issue primary credentials. Instead, Cipher federates with an external identity provider — Okta, Azure AD, Google Workspace, or any conformant OIDC or SAML endpoint — and translates the IdP's assertions into the user-identity signals that Watchtower consumes.
+
+The integration is intentionally narrow. The IdP authoritatively answers who the user is. Cipher authoritatively answers whether that user, on this device, at this moment, should pass through Drawbridge.
+
+## Federation Model
+
+Every IdP integration follows the same four-stage handshake. The user authenticates against the IdP, the IdP returns a signed assertion, Cipher validates the assertion and extracts identity claims, and Watchtower consumes the claims as the user-identity signal in the trust score.
+
+```mermaid
+graph LR
+    U[User] --> A(["primary auth"]):::muted --> I[IdP]
+    I --> AS(["signed assertion"]):::muted --> C[Cipher]
+    C --> CL(["identity claims"]):::muted --> W[Watchtower]
+    W --> TS(["trust score"]):::muted --> D[Drawbridge]
+```
+
+Cipher never extends the IdP session. When the IdP-issued token expires, the user must re-authenticate against the IdP — not against Cipher. This keeps the source of truth for identity in one place.
+
+## Supported Providers
+
+| Provider         | Protocol    | Group Source       | JIT Provisioning | Step-Up MFA |
+|------------------|-------------|--------------------|------------------|-------------|
+| Okta             | OIDC + SAML | Okta groups        | Yes              | Yes         |
+| Azure AD         | OIDC + SAML | AAD security group | Yes              | Yes         |
+| Google Workspace | OIDC        | Workspace OU       | Yes              | Yes         |
+| Generic OIDC     | OIDC        | `groups` claim     | Yes              | Optional    |
+| Generic SAML 2.0 | SAML        | `memberOf` attr    | Yes              | Optional    |
+| SCIM 2.0 source  | SCIM (push) | SCIM group         | Push-based       | N/A         |
+
+The generic OIDC and SAML connectors handle any conformant provider. Use them when the dedicated connector for your IdP is unavailable or when you need to point at a self-hosted endpoint.
+
+## Configuring an IdP
+
+<Tabs>
+<TabItem value="okta" label="Okta" default>
+
+```text title="cipher/okta.grain"
+identity_provider "okta-primary" {
+  protocol      = "oidc"
+  issuer        = "https://yourcompany.okta.com"
+  client_id     = ref("secrets/okta_client_id")
+  client_secret = ref("secrets/okta_client_secret")
+
+  claims {
+    user_id     = "sub"
+    email       = "email"
+    groups      = "groups"
+    mfa_method  = "amr"
+  }
+
+  jit_provisioning = true
+  step_up_mfa      = true
+}
+```
+
+The `claims` block maps OIDC claim names to Cipher's internal identity fields. Okta emits the `amr` (Authentication Methods References) claim, which Watchtower uses to verify MFA strength.
+
+</TabItem>
+<TabItem value="azure" label="Azure AD">
+
+```text title="cipher/azure-ad.grain"
+identity_provider "azure-ad" {
+  protocol      = "oidc"
+  issuer        = "https://login.microsoftonline.com/{tenant-id}/v2.0"
+  client_id     = ref("secrets/aad_client_id")
+  client_secret = ref("secrets/aad_client_secret")
+
+  claims {
+    user_id     = "oid"
+    email       = "preferred_username"
+    groups      = "groups"
+    mfa_method  = "amr"
+  }
+
+  group_resolution {
+    // highlight-start
+    expand_transitive = true
+    overage_strategy  = "graph_api"
+    // highlight-end
+  }
+
+  jit_provisioning = true
+}
+```
+
+Azure AD truncates the `groups` claim when a user is a member of more than 200 groups. The `overage_strategy = "graph_api"` block instructs Cipher to fall back to the Microsoft Graph API to resolve the full group membership.
+
+</TabItem>
+<TabItem value="google" label="Google Workspace">
+
+```text title="cipher/google-workspace.grain"
+identity_provider "google-workspace" {
+  protocol      = "oidc"
+  issuer        = "https://accounts.google.com"
+  client_id     = ref("secrets/google_client_id")
+  client_secret = ref("secrets/google_client_secret")
+
+  claims {
+    user_id     = "sub"
+    email       = "email"
+    hd          = "hd"          # hosted domain
+  }
+
+  group_resolution {
+    source         = "admin_sdk"
+    delegated_user = "sentinel-sync@yourcompany.com"
+  }
+
+  jit_provisioning = true
+}
+```
+
+Google Workspace does not emit groups in the OIDC token. Cipher resolves group membership through the Admin SDK with a delegated service account. The `hd` claim is enforced to reject sign-ins from external Google accounts.
+
+</TabItem>
+<TabItem value="generic" label="Generic OIDC">
+
+```text title="cipher/generic-oidc.grain"
+identity_provider "internal-keycloak" {
+  protocol      = "oidc"
+  issuer        = "https://auth.yourcompany.internal"
+  client_id     = ref("secrets/keycloak_client_id")
+  client_secret = ref("secrets/keycloak_client_secret")
+
+  discovery_url = "https://auth.yourcompany.internal/.well-known/openid-configuration"
+
+  claims {
+    user_id     = "sub"
+    email       = "email"
+    groups      = "realm_access.roles"
+    mfa_method  = "amr"
+  }
+
+  trust_root = "/etc/sentinel/certs/keycloak-ca.pem"
+}
+```
+
+The generic OIDC connector follows the discovery document at the well-known endpoint. The `trust_root` field accepts a custom CA bundle for self-signed certificates on internal IdPs.
+
+</TabItem>
+</Tabs>
+
+:::info One Primary, Many Secondary
+Sentinel supports exactly one primary IdP per tenant. Secondary IdPs may be configured for specific user populations — contractors, partners, or break-glass administrators — but the primary IdP is the authoritative source for the employee identity graph.
+:::
+
+## Mapping Policies to IdP Groups
+
+Trust policies reference IdP groups directly through the `user.groups` condition. The group name is the value as emitted by the IdP after Cipher's claim mapping:
+
+```text title="policies/group-scoped-access.grain"
+policy "platform-team-access" {
+  resource = "platform-services"
+  effect   = "allow"
+
+  conditions {
+    user.groups      = ["platform-engineering", "sre"]
+    device.posture   >= 85
+    user.mfa         = true
+  }
+
+  on_failure {
+    action = "revoke"
+    log    = "spyglass"
+  }
+}
+```
+
+The condition matches any user whose IdP group claim includes either `platform-engineering` or `sre`. Group membership is re-evaluated at every Watchtower cycle — a user removed from the group in the IdP loses access within 90 seconds without any Sentinel-side action.
+
+:::warning Group Resolution Lag
+The 90-second cycle measures Watchtower's evaluation cadence, not the IdP propagation delay. If the IdP itself takes minutes to propagate group changes, that lag adds on top. For high-risk groups, configure the IdP for immediate group propagation or use the SCIM connector for push-based updates.
+:::
+
+## JIT User Provisioning
+
+When a user authenticates for the first time through a federated IdP, Cipher creates a Sentinel-side identity record automatically. No prior account creation is required.
+
+```text title="JIT provisioning event"
+[14:22:03] CIPHER user authentication
+  IdP:           okta-primary
+  Subject:       00uX2Y4Z1A3B
+  Email:         m.torres@yourcompany.com
+  Groups:        [engineering, oncall-secondary]
+  MFA method:    [pwd, otp]
+
+[14:22:03] CIPHER JIT provisioning
+  Created Sentinel identity: usr_8a3f7c2b
+  Mapped groups: engineering → policy.engineering-access
+                 oncall-secondary → policy.oncall-tier-2
+
+[14:22:04] WATCHTOWER initial evaluation
+  Trust score: 88
+  Result:      GRANT api-cluster-east (tunnel tun_9f4a)
+```
+
+JIT provisioning never grants access on its own. The new identity is still subject to every applicable trust policy — device posture, MFA strength, group membership, and any other condition. JIT only removes the operational friction of pre-creating accounts.
+
+## Conditional Access Gates
+
+Cipher evaluates IdP-emitted signals as conditional access gates before the user reaches Drawbridge. A failing gate produces an authentication failure, not a revoked tunnel:
+
+| Gate               | Source claim           | Failure mode             |
+|--------------------|------------------------|--------------------------|
+| MFA strength       | `amr` / `acr`          | Step-up MFA prompt       |
+| Account risk score | IdP risk signal        | Authentication rejected  |
+| Geo restriction    | IdP geolocation claim  | Authentication rejected  |
+| Device binding     | IdP device certificate | Step-up to bound device  |
+| Session age        | IdP `auth_time`        | Forced re-authentication |
+
+Conditional gates are configured per IdP and apply uniformly to all policies that reference that IdP's groups. Resource-specific conditions remain the responsibility of trust policies.
+
+```text title="cipher/conditional-gates.grain"
+gates "okta-primary" {
+  mfa_strength {
+    require = ["hwk", "fido"]
+    fallback {
+      action  = "step_up"
+      methods = ["push", "otp"]
+    }
+  }
+
+  risk_threshold {
+    max_score = 70
+    on_exceed = "reject"
+  }
+
+  geo_restriction {
+    allow = ["US", "CA", "GB", "DE"]
+    on_deny = "reject"
+  }
+}
+```
+
+## SCIM Provisioning
+
+For high-churn environments, SCIM 2.0 push provisioning eliminates the propagation lag inherent in pull-based group resolution. The IdP pushes user and group changes to Cipher's SCIM endpoint as they happen:
+
+```bash title="Register the SCIM endpoint"
+sentinel cipher scim register \
+  --provider okta-primary \
+  --token-ttl 365d
+```
+
+```text title="SCIM endpoint output"
+SCIM 2.0 endpoint registered
+
+  URL:           https://sentinel.yourcompany.internal/scim/v2
+  Token:         scim_8f3a2b9c4e1d... (single display, store securely)
+  Token TTL:     365d
+
+  Supported operations:
+    Users:   CREATE, READ, UPDATE, DELETE
+    Groups:  CREATE, READ, UPDATE, DELETE
+    Schema:  urn:ietf:params:scim:schemas:core:2.0:User
+             urn:ietf:params:scim:schemas:core:2.0:Group
+```
+
+SCIM events are applied to the Sentinel identity graph within seconds of the IdP push. A user removed from a group through SCIM loses access at the next Watchtower cycle — typically faster than the 90-second pull cadence.
+
+## Auditing IdP Events
+
+Every authentication event flows through Spyglass with the originating IdP, the subject identifier, and the resolved group set:
+
+```bash title="Audit IdP authentication events"
+sentinel spyglass query \
+  --event-type cipher-auth \
+  --idp okta-primary \
+  --period "2025-06-01..2025-06-30"
+```
+
+The query returns the full chain — IdP assertion received, claims extracted, JIT provisioning (if applicable), conditional gate evaluation, and the resulting Watchtower trust score. Identity provider integration is not a black box; every assertion is auditable.
+
+## Next Steps
+
+- [EDR Connectors](/docs/integrations/edr-connectors/) — How Watchtower correlates device posture signals from EDR platforms with the identity signals described here.
+- [Access Control](/docs/trust/access-control/) — How Drawbridge translates IdP group membership into concrete access decisions.
+- [API Reference](/docs/reference/api-reference/) — Programmatic management of Cipher IdP configuration and SCIM endpoints.

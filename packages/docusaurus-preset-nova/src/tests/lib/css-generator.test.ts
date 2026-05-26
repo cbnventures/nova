@@ -49,13 +49,18 @@ import type {
   TestsLibCssGeneratorGridMediaIncludesSevenSixtyEight,
   TestsLibCssGeneratorGridMediaResult,
   TestsLibCssGeneratorIncludesAccent,
+  TestsLibCssGeneratorIncludesBorder,
   TestsLibCssGeneratorIncludesDepth,
   TestsLibCssGeneratorIncludesFont,
   TestsLibCssGeneratorIncludesMotion,
-  TestsLibCssGeneratorIncludesNeutral,
+  TestsLibCssGeneratorIncludesMotionEasing,
   TestsLibCssGeneratorIncludesPrimary,
   TestsLibCssGeneratorIncludesRoot,
   TestsLibCssGeneratorIncludesShape,
+  TestsLibCssGeneratorIncludesSurface,
+  TestsLibCssGeneratorIncludesText,
+  TestsLibCssGeneratorMotionEasingIncludesCurve,
+  TestsLibCssGeneratorMotionEasingResult,
   TestsLibCssGeneratorNoneMotionIncludesZero,
   TestsLibCssGeneratorNoneMotionResult,
   TestsLibCssGeneratorPillIncludesLargeRadius,
@@ -92,9 +97,24 @@ describe('CssGenerator generate', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -116,26 +136,35 @@ describe('CssGenerator generate', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
     const includesRoot: TestsLibCssGeneratorIncludesRoot = result.includes(':root {');
     const includesPrimary: TestsLibCssGeneratorIncludesPrimary = result.includes('--nova-color-primary-');
     const includesAccent: TestsLibCssGeneratorIncludesAccent = result.includes('--nova-color-accent-');
-    const includesNeutral: TestsLibCssGeneratorIncludesNeutral = result.includes('--nova-color-neutral-');
+    const includesText: TestsLibCssGeneratorIncludesText = result.includes('--nova-color-text:');
+    const includesBorder: TestsLibCssGeneratorIncludesBorder = result.includes('--nova-color-border:');
+    const includesSurface: TestsLibCssGeneratorIncludesSurface = result.includes('--nova-color-surface-raised:');
     const includesFont: TestsLibCssGeneratorIncludesFont = result.includes('--nova-font-display:');
     const includesShape: TestsLibCssGeneratorIncludesShape = result.includes('--nova-shape-radius:');
     const includesDepth: TestsLibCssGeneratorIncludesDepth = result.includes('--nova-depth-card-');
     const includesMotion: TestsLibCssGeneratorIncludesMotion = result.includes('--nova-motion-duration:');
+    const includesMotionEasing: TestsLibCssGeneratorIncludesMotionEasing = result.includes('--nova-motion-easing:');
 
     ok(includesRoot);
     ok(includesPrimary);
     ok(includesAccent);
-    ok(includesNeutral);
+    ok(includesText);
+    ok(includesBorder);
+    ok(includesSurface);
     ok(includesFont);
     ok(includesShape);
     ok(includesDepth);
     ok(includesMotion);
+    ok(includesMotionEasing);
 
     return;
   });
@@ -149,9 +178,24 @@ describe('CssGenerator generate', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -173,6 +217,9 @@ describe('CssGenerator generate', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -205,9 +252,24 @@ describe('CssGenerator generate depth variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -229,6 +291,9 @@ describe('CssGenerator generate depth variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -248,9 +313,24 @@ describe('CssGenerator generate depth variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -272,6 +352,9 @@ describe('CssGenerator generate depth variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -291,9 +374,24 @@ describe('CssGenerator generate depth variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -315,6 +413,9 @@ describe('CssGenerator generate depth variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -343,9 +444,24 @@ describe('CssGenerator generate grid variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -367,6 +483,9 @@ describe('CssGenerator generate grid variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -391,9 +510,24 @@ describe('CssGenerator generate grid variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -415,6 +549,9 @@ describe('CssGenerator generate grid variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -439,9 +576,24 @@ describe('CssGenerator generate grid variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -463,6 +615,9 @@ describe('CssGenerator generate grid variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -487,9 +642,24 @@ describe('CssGenerator generate grid variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -511,6 +681,9 @@ describe('CssGenerator generate grid variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -540,9 +713,24 @@ describe('CssGenerator generate grid variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -564,6 +752,9 @@ describe('CssGenerator generate grid variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -593,9 +784,24 @@ describe('CssGenerator generate grid variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -617,6 +823,9 @@ describe('CssGenerator generate grid variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -646,9 +855,24 @@ describe('CssGenerator generate grid variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -670,6 +894,9 @@ describe('CssGenerator generate grid variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -691,9 +918,24 @@ describe('CssGenerator generate grid variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -715,6 +957,9 @@ describe('CssGenerator generate grid variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -747,9 +992,24 @@ describe('CssGenerator generate motion variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -771,6 +1031,9 @@ describe('CssGenerator generate motion variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -790,9 +1053,24 @@ describe('CssGenerator generate motion variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -814,12 +1092,76 @@ describe('CssGenerator generate motion variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
     const includesThreeHundred: TestsLibCssGeneratorExpressiveMotionIncludesThreeHundred = result.includes('--nova-motion-duration: 300ms;');
 
     ok(includesThreeHundred);
+
+    return;
+  });
+
+  it('produces canonical Nova ease curve for motion easing', () => {
+    const result: TestsLibCssGeneratorMotionEasingResult = CssGenerator.generate({
+      preset: {
+        logo: {
+          title: 'Test',
+          alt: 'Test',
+          src: '/test/logo.svg',
+        },
+        colors: {
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
+        },
+        fonts: {
+          display: 'Sora',
+          body: 'DM Sans',
+          code: 'JetBrains Mono',
+        },
+        shape: {
+          radius: 'rounded',
+          density: 'comfortable',
+        },
+        depth: {
+          cards: 'flat',
+          codeBlocks: 'flat',
+        },
+        motion: {
+          speed: 'normal',
+          staggeredReveals: false,
+          hoverEffects: false,
+        },
+        navbar: 'bridge',
+        footer: 'commons',
+        cta: {
+          contained: false,
+        },
+      },
+    });
+
+    const includesCurve: TestsLibCssGeneratorMotionEasingIncludesCurve = result.includes('--nova-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);');
+
+    ok(includesCurve);
 
     return;
   });
@@ -842,9 +1184,24 @@ describe('CssGenerator generate shape variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -866,6 +1223,9 @@ describe('CssGenerator generate shape variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 
@@ -885,9 +1245,24 @@ describe('CssGenerator generate shape variables', async () => {
           src: '/test/logo.svg',
         },
         colors: {
-          primary: '#ea580c',
-          accent: '#fbbf24',
-          neutral: '#78716c',
+          primary: {
+            light: '#ea580c', dark: '#ea580c',
+          },
+          accent: {
+            light: '#fbbf24', dark: '#fbbf24',
+          },
+          text: {
+            light: '#1c1917', dark: '#e7e5e4',
+          },
+          border: {
+            light: '#d6d3d1', dark: '#44403c',
+          },
+          warning: {
+            light: '#f59e0b', dark: '#fbbf24',
+          },
+          danger: {
+            light: '#ef4444', dark: '#f87171',
+          },
         },
         fonts: {
           display: 'Sora',
@@ -909,6 +1284,9 @@ describe('CssGenerator generate shape variables', async () => {
         },
         navbar: 'bridge',
         footer: 'commons',
+        cta: {
+          contained: false,
+        },
       },
     });
 

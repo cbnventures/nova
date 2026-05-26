@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 import type {
   SharedTocHeading,
   SharedTocHeadingChildren,
@@ -15,6 +17,8 @@ export type ThemeTocPropsToc = SharedTocHeading[];
 
 export type ThemeTocPropsClassName = string | undefined;
 
+export type ThemeTocPropsStyle = CSSProperties | undefined;
+
 export type ThemeTocPropsMinHeadingLevel = number;
 
 export type ThemeTocPropsMaxHeadingLevel = number;
@@ -22,6 +26,7 @@ export type ThemeTocPropsMaxHeadingLevel = number;
 export type ThemeTocProps = {
   toc: ThemeTocPropsToc;
   className?: ThemeTocPropsClassName;
+  style?: ThemeTocPropsStyle;
   minHeadingLevel?: ThemeTocPropsMinHeadingLevel;
   maxHeadingLevel?: ThemeTocPropsMaxHeadingLevel;
   [key: string]: unknown;

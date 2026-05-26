@@ -14,6 +14,7 @@ import type {
   ThemeAnnouncementBarIsCloseable,
   ThemeAnnouncementBarIsDismissed,
   ThemeAnnouncementBarIsDismissedState,
+  ThemeAnnouncementBarProps,
   ThemeAnnouncementBarReturns,
   ThemeAnnouncementBarSetIsDismissed,
   ThemeAnnouncementBarTextColor,
@@ -31,7 +32,7 @@ import type {
  *
  * @since 0.15.0
  */
-function AnnouncementBar(): ThemeAnnouncementBarReturns {
+function AnnouncementBar(props: ThemeAnnouncementBarProps): ThemeAnnouncementBarReturns {
   const themeConfig: ThemeAnnouncementBarThemeConfig = useThemeConfig() as ThemeAnnouncementBarThemeConfig;
   const config: ThemeAnnouncementBarConfig = themeConfig['announcementBar'];
 
@@ -82,9 +83,11 @@ function AnnouncementBar(): ThemeAnnouncementBarReturns {
 
   return (
     <div
-      className="nova-announcement-bar"
+      className={(props['className'] !== undefined) ? `nova-announcement-bar ${props['className']}` : 'nova-announcement-bar'}
+      style={{
+        ...inlineStyle, ...props['style'],
+      }}
       role="banner"
-      style={inlineStyle}
     >
       <div
         className="nova-announcement-bar-content"

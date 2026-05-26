@@ -1,5 +1,5 @@
 import type { PropBlogPostContent } from '@docusaurus/plugin-content-blog';
-import type { ReactNode } from 'react';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Blog Archive Page - Blog Archive Page.
@@ -17,8 +17,14 @@ export type ThemeBlogArchivePageBlogArchivePagePropsArchive = {
   [key: string]: unknown;
 };
 
+export type ThemeBlogArchivePageBlogArchivePagePropsClassName = string | undefined;
+
+export type ThemeBlogArchivePageBlogArchivePagePropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogArchivePageBlogArchivePageProps = {
   archive: ThemeBlogArchivePageBlogArchivePagePropsArchive;
+  className?: ThemeBlogArchivePageBlogArchivePagePropsClassName;
+  style?: ThemeBlogArchivePageBlogArchivePagePropsStyle;
   [key: string]: unknown;
 };
 
@@ -48,8 +54,6 @@ export type ThemeBlogArchivePageYearPostMetadata = {
 
 export type ThemeBlogArchivePageBlogArchivePageFormattedDate = string;
 
-export type ThemeBlogArchivePageBlogArchivePageTitle = ReactNode;
-
 export type ThemeBlogArchivePageYearPosts = ThemeBlogArchivePageYearPost[];
 
 export type ThemeBlogArchivePageYear = string;
@@ -60,6 +64,8 @@ export type ThemeBlogArchivePageYear = string;
  * @since 0.15.0
  */
 export type ThemeBlogArchivePageBlogArchivePageHeading = string;
+
+export type ThemeBlogArchivePageBlogArchivePageDescription = string;
 
 export type ThemeBlogArchivePageListPostsByYearsBlogPosts = readonly ThemeBlogArchivePageYearPost[];
 

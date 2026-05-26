@@ -1,22 +1,44 @@
 /**
- * Foundry — Details/collapsible visual styling.
+ * Foundry - Details/collapsible visual styling.
  *
  * @since 0.15.0
  */
 
 /* ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================ */
+
+:root {
+  --nova-foundry-details-margin-block-end: 1.5rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Details
+ * ============================ */
+
+:root {
+  --nova-details-margin-block-end: var(--nova-foundry-details-margin-block-end);
+}
+
+/* ============================
  * 1. Details Container
+ *
+ * Block-margin flows from shared theme/Details via the canonical
+ * `--nova-details-margin-block-end` token.
  * ============================ */
 
 .nova-details {
-  margin-bottom: 1.5rem;
-  border: 1px solid var(--nova-foundry-border);
+  border: 1px solid var(--nova-foundry-border-overlay);
   border-radius: var(--nova-shape-radius);
   overflow: hidden;
 }
 
+/* Dark mode: foundry's `border-overlay` resolves to rgba(255,255,255,0.08)
+ * which is too subtle for the details container to read against the body.
+ * Promote to the canonical `--nova-color-border` so the widget stays
+ * visible in dark mode. */
 [data-theme="dark"] .nova-details {
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--nova-color-border);
 }
 
 /* ============================
@@ -26,26 +48,44 @@
 .nova-details-summary {
   padding: 0.75rem 1rem;
   font-weight: 600;
-  background-color: var(--nova-color-neutral-50);
+  background-color: var(--nova-disclosure-bg);
   transition: background-color var(--nova-motion-duration) ease;
+}
+
+/* Dark mode: foundry's `disclosure-bg` resolves to rgba(255,255,255,0.03)
+ * which makes the summary header indistinguishable from the body. Promote
+ * to the canonical raised surface so the disclosure reads as a distinct
+ * affordance. Hover uses a primary-tinted wash for the interaction signal. */
+[data-theme="dark"] .nova-details-summary {
+  background-color: var(--nova-color-surface-raised);
 }
 
 .nova-details-summary:hover,
 .nova-details-summary:focus-visible {
-  background-color: var(--nova-color-neutral-100);
-}
-
-[data-theme="dark"] .nova-details-summary {
-  background-color: rgba(255, 255, 255, 0.03);
+  background-color: var(--nova-disclosure-bg-hover);
 }
 
 [data-theme="dark"] .nova-details-summary:hover,
 [data-theme="dark"] .nova-details-summary:focus-visible {
-  background-color: rgba(255, 255, 255, 0.06);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
 }
 
 [data-open="true"] > .nova-details-summary {
-  border-bottom: 1px solid var(--nova-foundry-border);
+  /*
+   * Use the same overlay token as the container border (line 31) so the
+   * open-state separator reads as part of the same hairline system. The
+   * two tokens resolve to identical warm-gray in light mode, but in dark
+   * mode `--nova-foundry-border` is a solid warm-gray while
+   * `--nova-foundry-border-overlay` is translucent white at 8% - keeping
+   * them in sync was off by a tier and broke the flush container reading.
+   */
+  border-bottom: 1px solid var(--nova-foundry-border-overlay);
+}
+
+/* Dark mode: matches the container border promotion above so the
+ * open-state separator stays in sync with the container hairline. */
+[data-theme="dark"] [data-open="true"] > .nova-details-summary {
+  border-bottom-color: var(--nova-color-border);
 }
 
 /* ============================

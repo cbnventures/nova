@@ -100,7 +100,7 @@ export class RulesEslintConventionsNoDefaultExportDeclaration {
 
     const name: RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationName = ('id' in node['declaration'] && node['declaration']['id'] !== null) ? node['declaration']['id']['name'] : 'anonymous';
 
-    // Skip anonymous declarations — cannot be separated.
+    // Skip anonymous declarations - cannot be separated.
     if (name === 'anonymous') {
       return;
     }

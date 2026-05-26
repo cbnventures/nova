@@ -1,0 +1,136 @@
+/**
+ * Lantern - `DocPaginator` theme overlay.
+ *
+ * Previous/next-page navigation at the bottom of a doc. Each link is a
+ * warm-paper card with a small-caps mono direction label and italic
+ * Fraunces page title. Soft amber halo on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container
+ * ============================
+ */
+
+.nova-doc-paginator {
+  margin-top: 2rem;
+  padding-top: 2rem;
+
+  border-top: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-doc-paginator {
+  border-top-color: var(--nova-lantern-border);
+}
+
+/**
+ * ============================
+ * 2. Optional heading - italic Fraunces
+ * ============================
+ */
+
+.nova-doc-paginator-heading {
+  padding: 0 1rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  font-size: 1.15rem;
+  color: var(--nova-lantern-ink);
+}
+
+/**
+ * ============================
+ * 3. Link card - warm paper with asymmetric corners
+ * ============================
+ */
+
+.nova-doc-paginator-link {
+  padding: 1rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 12px 4px 12px 4px;
+
+  transition:
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-doc-paginator-link:nth-child(2n) {
+  border-radius: 4px 12px 4px 12px;
+}
+
+.nova-doc-paginator-link:hover,
+.nova-doc-paginator-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-color-primary-400);
+  box-shadow: var(--nova-lantern-hover-glow);
+
+  transform: var(--nova-lantern-hover-lift);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-doc-paginator-link {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-doc-paginator-link:hover,
+[data-theme="dark"] .nova-doc-paginator-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 84%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/**
+ * ============================
+ * 4. Direction label - small-caps mono
+ * ============================
+ */
+
+.nova-doc-paginator-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-doc-paginator-label {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 5. Page title - italic Fraunces
+ * ============================
+ */
+
+.nova-doc-paginator-title {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 1.3;
+  color: var(--nova-lantern-ink);
+}
+
+/**
+ * ============================
+ * 6. Excerpt - muted ink
+ * ============================
+ */
+
+.nova-doc-paginator-excerpt {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--nova-lantern-ink-muted);
+}

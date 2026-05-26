@@ -1,5 +1,5 @@
 /**
- * Doc Card — Shared structural styles.
+ * Doc Card - Shared structural styles.
  *
  * @since 0.15.0
  */
@@ -12,7 +12,12 @@ article[class*="nova-col"] > a {
   color: inherit;
 }
 
-article[class*="nova-col"] > a:hover {
+/* Override the preset-level `[data-theme="dark"] a:hover` color flip
+ * (specificity 0,2,1) so DocCard inner h2/p stay inherited on hover.
+ * Light mode is already safe; this fixes the asymmetry in dark mode. */
+article[class*="nova-col"] > a:hover,
+article[class*="nova-col"] > a:focus-visible {
+  color: inherit;
   text-decoration: none;
 }
 
@@ -29,7 +34,7 @@ article[class*="nova-col"] > a h2 img {
   flex-shrink: 0;
 }
 
-article[class*="nova-col"] > a p {
+article[class*="nova-col"] > a > h2 + p {
   margin-top: 0.5rem;
   font-size: 0.875rem;
 }

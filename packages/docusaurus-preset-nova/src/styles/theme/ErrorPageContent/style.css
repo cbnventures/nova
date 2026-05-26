@@ -1,5 +1,32 @@
 /**
- * Error Page Content — Shared structural styles.
+ * Error Page Content - Shared structural styles.
+ *
+ * Per-surface deltas only - cross-cutting baseline lives on the umbrella
+ * `.nova-error-surface` scope at theme/error-surface/style.css.
  *
  * @since 0.15.0
  */
+
+/**
+ * ============================
+ * Error Page Content - Actions
+ * ============================
+ */
+
+.nova-error-page-content-actions {
+  margin-bottom: 1.5rem;
+}
+
+/**
+ * ============================
+ * Error Page Content - Message
+ * ============================
+ */
+
+.nova-error-page-content-message {
+  font-family: var(--nova-font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+
+  opacity: 0.85;
+}

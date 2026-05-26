@@ -62,17 +62,17 @@ Nova gives you strict presets and guided tooling so you skip the busywork of wir
 
 ### Nova concepts
 
-| Term            | Definition                                                                                                                                         |
-|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Battery**     | A modular, importable toolkit utility (e.g., Logger, CLIHeader, MarkdownTable). Import only what you need.                                         |
-| **Preset**      | A composable ESLint or TSConfig configuration layer. Presets are spread (ESLint) or chained (TSConfig) into a single export.                       |
-| **Layer**       | A single preset within a composition. Layers are stacked in a defined order: ignores, code style, language, runtime, framework, tool.                |
-| **Generator**   | A CLI command (`nova generate`) that creates semi-tailored files populated with values from `nova.config.json`.                                    |
-| **Recipe**      | A CLI command (`nova recipe`) that applies scripted edits to automate routine maintenance across workspaces.                                       |
-| **Scaffold**    | A CLI command (`nova scaffold`) that bootstraps a full project starter as a monorepo with Docusaurus built in.                                     |
-| **Utility**     | A CLI command (`nova utility`) for diagnostics, quick checks, and development helpers.                                                             |
-| **Rule**        | A custom ESLint rule shipped with Nova (e.g., `no-logger-dev`, `switch-case-blocks`).                                                              |
-| **Nova Config** | The `nova.config.json` file at the monorepo root. Source of truth for project metadata, entities, emails, URLs, and workspace definitions.         |
+| Term            | Definition                                                                                                                                 |
+|-----------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| **Battery**     | A modular, importable toolkit utility (e.g., Logger, CLIHeader, MarkdownTable). Import only what you need.                                 |
+| **Preset**      | A composable ESLint or TSConfig configuration layer. Presets are spread (ESLint) or chained (TSConfig) into a single export.               |
+| **Layer**       | A single preset within a composition. Layers are stacked in a defined order: ignores, code style, language, runtime, framework, tool.      |
+| **Generator**   | A CLI command (`nova generate`) that creates semi-tailored files populated with values from `nova.config.json`.                            |
+| **Recipe**      | A CLI command (`nova recipe`) that applies scripted edits to automate routine maintenance across workspaces.                               |
+| **Scaffold**    | A CLI command (`nova scaffold`) that bootstraps a full project starter as a monorepo with Docusaurus built in.                             |
+| **Utility**     | A CLI command (`nova utility`) for diagnostics, quick checks, and development helpers.                                                     |
+| **Rule**        | A custom ESLint rule shipped with Nova (e.g., `no-logger-dev`, `switch-case-blocks`).                                                      |
+| **Nova Config** | The `nova.config.json` file at the monorepo root. Source of truth for project metadata, entities, emails, URLs, and workspace definitions. |
 
 ### Workspace model
 

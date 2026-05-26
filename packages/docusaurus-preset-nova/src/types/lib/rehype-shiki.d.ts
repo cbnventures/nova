@@ -113,9 +113,15 @@ export type LibRehypeShikiProcessMagicCommentsResultCode = string;
 
 export type LibRehypeShikiProcessMagicCommentsResultHighlightedLines = number[];
 
+export type LibRehypeShikiProcessMagicCommentsResultAddedLines = number[];
+
+export type LibRehypeShikiProcessMagicCommentsResultRemovedLines = number[];
+
 export type LibRehypeShikiProcessMagicCommentsResult = {
   code: LibRehypeShikiProcessMagicCommentsResultCode;
   highlightedLines: LibRehypeShikiProcessMagicCommentsResultHighlightedLines;
+  addedLines: LibRehypeShikiProcessMagicCommentsResultAddedLines;
+  removedLines: LibRehypeShikiProcessMagicCommentsResultRemovedLines;
 };
 
 export type LibRehypeShikiProcessMagicCommentsLines = string[];
@@ -124,11 +130,19 @@ export type LibRehypeShikiProcessMagicCommentsOutputLines = string[];
 
 export type LibRehypeShikiProcessMagicCommentsHighlightedLines = number[];
 
+export type LibRehypeShikiProcessMagicCommentsAddedLines = number[];
+
+export type LibRehypeShikiProcessMagicCommentsRemovedLines = number[];
+
 export type LibRehypeShikiProcessMagicCommentsOutputLineNumber = number;
 
 export type LibRehypeShikiProcessMagicCommentsIsHighlightNext = boolean;
 
 export type LibRehypeShikiProcessMagicCommentsInsideHighlightBlock = boolean;
+
+export type LibRehypeShikiProcessMagicCommentsInsideAddBlock = boolean;
+
+export type LibRehypeShikiProcessMagicCommentsInsideRemoveBlock = boolean;
 
 export type LibRehypeShikiProcessMagicCommentsTrimmedLine = string;
 
@@ -203,6 +217,18 @@ export type LibRehypeShikiProcessNodeHastRootRecord = Record<string, unknown>;
 export type LibRehypeShikiProcessNodeHastChildren = unknown[];
 
 export type LibRehypeShikiProcessNodeHastPreElement = Record<string, unknown>;
+
+export type LibRehypeShikiProcessNodeHastPreChildren = unknown[];
+
+export type LibRehypeShikiProcessNodeHastCodeElement = Record<string, unknown>;
+
+export type LibRehypeShikiProcessNodeTitleMatch = RegExpMatchArray | null;
+
+export type LibRehypeShikiProcessNodeTitle = string | undefined;
+
+export type LibRehypeShikiProcessNodeShowLineNumbers = boolean;
+
+export type LibRehypeShikiProcessNodeLive = boolean;
 
 export type LibRehypeShikiProcessNodeParentChildren = SharedHastNode[];
 

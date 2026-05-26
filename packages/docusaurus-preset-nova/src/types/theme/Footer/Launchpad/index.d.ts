@@ -1,4 +1,5 @@
 import type { IconifyIcon } from '@iconify/react/offline';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Footer - Launchpad.
@@ -26,7 +27,16 @@ export type ThemeFooterLaunchpadIndexCopyright = string;
 
 export type ThemeFooterLaunchpadIndexCredit = boolean;
 
-export type ThemeFooterLaunchpadIndexCta = string | undefined;
+export type ThemeFooterLaunchpadIndexCtaObjectLabel = string;
+
+export type ThemeFooterLaunchpadIndexCtaObjectHref = string;
+
+export type ThemeFooterLaunchpadIndexCtaObject = {
+  label: ThemeFooterLaunchpadIndexCtaObjectLabel;
+  href: ThemeFooterLaunchpadIndexCtaObjectHref;
+};
+
+export type ThemeFooterLaunchpadIndexCta = string | ThemeFooterLaunchpadIndexCtaObject | undefined;
 
 export type ThemeFooterLaunchpadIndexLaunchpadPropsSections = ThemeFooterLaunchpadIndexSections;
 
@@ -40,6 +50,12 @@ export type ThemeFooterLaunchpadIndexLaunchpadPropsCredit = ThemeFooterLaunchpad
 
 export type ThemeFooterLaunchpadIndexLaunchpadPropsCta = ThemeFooterLaunchpadIndexCta;
 
+export type ThemeFooterLaunchpadIndexLaunchpadPropsCtaContained = boolean;
+
+export type ThemeFooterLaunchpadIndexLaunchpadPropsClassName = string | undefined;
+
+export type ThemeFooterLaunchpadIndexLaunchpadPropsStyle = CSSProperties | undefined;
+
 export type ThemeFooterLaunchpadIndexLaunchpadProps = {
   sections: ThemeFooterLaunchpadIndexLaunchpadPropsSections;
   layout: ThemeFooterLaunchpadIndexLaunchpadPropsLayout;
@@ -47,6 +63,9 @@ export type ThemeFooterLaunchpadIndexLaunchpadProps = {
   copyright: ThemeFooterLaunchpadIndexLaunchpadPropsCopyright;
   credit: ThemeFooterLaunchpadIndexLaunchpadPropsCredit;
   cta?: ThemeFooterLaunchpadIndexLaunchpadPropsCta;
+  ctaContained: ThemeFooterLaunchpadIndexLaunchpadPropsCtaContained;
+  className?: ThemeFooterLaunchpadIndexLaunchpadPropsClassName;
+  style?: ThemeFooterLaunchpadIndexLaunchpadPropsStyle;
 };
 
 export type ThemeFooterLaunchpadIndexLaunchpadReturns = React.JSX.Element;
@@ -63,11 +82,15 @@ export type ThemeFooterLaunchpadIndexLaunchpadCredit = ThemeFooterLaunchpadIndex
 
 export type ThemeFooterLaunchpadIndexLaunchpadCta = ThemeFooterLaunchpadIndexCta;
 
+export type ThemeFooterLaunchpadIndexLaunchpadCtaContained = boolean;
+
 export type ThemeFooterLaunchpadIndexLaunchpadFooterClassName = string;
 
 export type ThemeFooterLaunchpadIndexLaunchpadLayoutEntries = [string, ThemeFooterLaunchpadIndexLayoutSlot][];
 
 export type ThemeFooterLaunchpadIndexLaunchpadSocialLinksAriaLabel = string;
+
+export type ThemeFooterLaunchpadIndexLaunchpadExternalLinkAriaLabel = string;
 
 export type ThemeFooterLaunchpadIndexLaunchpadLayoutEntry = [string, ThemeFooterLaunchpadIndexLayoutSlot];
 
@@ -93,3 +116,5 @@ export type ThemeFooterLaunchpadIndexSocialLink = {
   href: ThemeFooterLaunchpadIndexSocialLinkHref;
   label: ThemeFooterLaunchpadIndexSocialLinkLabel;
 };
+
+export type ThemeFooterLaunchpadIndexLaunchpadSocialLinkLabel = string;

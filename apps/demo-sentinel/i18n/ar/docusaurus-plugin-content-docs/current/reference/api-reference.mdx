@@ -1,0 +1,275 @@
+---
+title: "مرجع API"
+sidebar_position: 1
+description: "مرجع Spoke API الكامل لـ Sentinel، إدارة السياسات، واستعلامات الأجهزة، وعمليّات المناطق، ونقاط نهاية تصدير التدقيق."
+tags:
+  - "reference"
+  - "api"
+---
+
+import Details from '@theme/Details';
+
+# مرجع API
+
+يُقدّم Sentinel Spoke API وصولاً برمجياً إلى جميع عمليّات المنصّة، إدارة السياسات، واستعلامات الأجهزة، وعمليّات المناطق، وتصدير التدقيق. تتطلّب جميع نقاط النهاية رمز bearer من Cipher للمصادقة.
+
+## المصادقة
+
+يجب أن يتضمّن كلّ طلب رمز bearer من Cipher في رأس `Authorization`:
+
+```bash title="طلب مُصادَق"
+curl -X GET https://sentinel.yourcompany.internal/spoke/v1/policies \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json"
+```
+
+ولّد الرموز عبر لوحة تحكّم Sentinel أو واجهة سطر الأوامر:
+
+```bash title="توليد رمز API"
+sentinel api tokens create \
+  --name "ci-pipeline" \
+  --scope "policies:read,policies:simulate,devices:read" \
+  --ttl 90d
+```
+
+:::note نطاقات الرموز
+تخضع الرموز لنطاقات محدّدة من العمليّات. الرمز ذو `policies:read` لا يستطيع تعديل السياسات. والرمز ذو `devices:read` لا يستطيع تسجيل أجهزة جديدة. استخدم دائماً الحدّ الأدنى من النطاقات المطلوب لتكاملك.
+:::
+
+## السياسات
+
+| الطريقة  | المسار                            | الوصف                        |
+|----------|-----------------------------------|------------------------------|
+| `GET`    | `/spoke/v1/policies`              | عرض جميع السياسات            |
+| `GET`    | `/spoke/v1/policies/:id`          | الحصول على سياسة محدّدة      |
+| `POST`   | `/spoke/v1/policies`              | إنشاء سياسة جديدة            |
+| `PUT`    | `/spoke/v1/policies/:id`          | تحديث سياسة موجودة           |
+| `DELETE` | `/spoke/v1/policies/:id`          | حذف سياسة                    |
+| `POST`   | `/spoke/v1/policies/:id/evaluate` | تقييم سياسة مقابل جهاز       |
+| `POST`   | `/spoke/v1/policies/simulate`     | محاكاة تغيير سياسة (Parapet) |
+
+### إنشاء سياسة
+
+```bash title="POST /spoke/v1/policies"
+curl -X POST https://sentinel.yourcompany.internal/spoke/v1/policies \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "staging-access",
+    "resource": "staging-services",
+    "effect": "allow",
+    "priority": 100,
+    "conditions": {
+      "device.posture": { "gte": 70 },
+      "user.mfa": true,
+      "user.role": ["engineer", "qa"]
+    },
+    "on_failure": {
+      "action": "revoke",
+      "notify": "security-ops"
+    }
+  }'
+```
+
+<Details>
+<summary>مخطّط الاستجابة</summary>
+
+```json title="201 Created"
+{
+  "id": "pol_8a3f7b2c9d1e",
+  "name": "staging-access",
+  "resource": "staging-services",
+  "effect": "allow",
+  "priority": 100,
+  "conditions": {
+    "device.posture": { "gte": 70 },
+    "user.mfa": true,
+    "user.role": ["engineer", "qa"]
+  },
+  "on_failure": {
+    "action": "revoke",
+    "notify": "security-ops"
+  },
+  "created_at": "2025-06-15T09:00:00Z",
+  "updated_at": "2025-06-15T09:00:00Z",
+  "status": "active"
+}
+```
+
+</Details>
+
+### محاكاة تغيير سياسة
+
+```bash title="POST /spoke/v1/policies/simulate"
+curl -X POST https://sentinel.yourcompany.internal/spoke/v1/policies/simulate \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "proposed_changes": [{
+      "policy_id": "pol_8a3f7b2c9d1e",
+      "change": "update",
+      "fields": {
+        "conditions.device.posture.gte": 85
+      }
+    }],
+    "scope": "all_devices",
+    "mode": "dry-run"
+  }'
+```
+
+<Details>
+<summary>مخطّط الاستجابة</summary>
+
+```json title="200 OK"
+{
+  "simulation_id": "sim_7f3a2b9c4e1d",
+  "mode": "dry-run",
+  "scope": "all_devices",
+  "results": {
+    "total_sessions": 1247,
+    "would_pass": 1089,
+    "would_fail": 158,
+    "failure_breakdown": {
+      "by_platform": {
+        "macos": 42,
+        "windows": 67,
+        "linux": 31,
+        "android": 18
+      },
+      "by_cause": {
+        "posture_below_threshold": 158
+      }
+    }
+  },
+  "created_at": "2025-06-15T09:05:00Z"
+}
+```
+
+</Details>
+
+## الأجهزة
+
+| الطريقة | المسار                           | الوصف                                   |
+|---------|----------------------------------|-----------------------------------------|
+| `GET`   | `/spoke/v1/devices`              | عرض جميع الأجهزة المسجّلة               |
+| `GET`   | `/spoke/v1/devices/:id`          | الحصول على تفاصيل الجهاز ووضعه الأمني   |
+| `POST`  | `/spoke/v1/devices/:id/enroll`   | تسجيل جهاز                              |
+| `POST`  | `/spoke/v1/devices/:id/unenroll` | إزالة جهاز من الأسطول                   |
+| `GET`   | `/spoke/v1/devices/:id/posture`  | الحصول على تفصيل الوضع الأمني الحالي    |
+| `GET`   | `/spoke/v1/devices/:id/history`  | الحصول على تاريخ الوضع الأمني عبر الزمن |
+
+### الحصول على الوضع الأمني للجهاز
+
+```bash title="GET /spoke/v1/devices/:id/posture"
+curl -X GET https://sentinel.yourcompany.internal/spoke/v1/devices/dev_a3b7c9d1/posture \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN"
+```
+
+<Details>
+<summary>مخطّط الاستجابة</summary>
+
+```json title="200 OK"
+{
+  "device_id": "dev_a3b7c9d1",
+  "composite_score": 94,
+  "profile": "standard",
+  "last_check": "2025-06-15T14:30:00Z",
+  "categories": {
+    "os_integrity": { "score": 100, "weight": 25, "checks": { "version": "current", "patches": "current", "jailbreak": false } },
+    "encryption": { "score": 100, "weight": 20, "checks": { "enabled": true, "algorithm": "AES-256", "key_age_days": 12 } },
+    "network": { "score": 85, "weight": 15, "checks": { "firewall": true, "stealth_mode": false, "open_ports": 3 } },
+    "authentication": { "score": 90, "weight": 15, "checks": { "screen_lock": true, "timeout_seconds": 300, "biometric": true } },
+    "software": { "score": 95, "weight": 15, "checks": { "antivirus": true, "definitions_age_days": 1, "unauthorized": [] } },
+    "configuration": { "score": 90, "weight": 10, "checks": { "mdm_compliant": true, "cert_valid": true, "agent_version": "3.4.1" } }
+  }
+}
+```
+
+</Details>
+
+## المناطق
+
+| الطريقة | المسار                          | الوصف                                  |
+|---------|---------------------------------|----------------------------------------|
+| `GET`   | `/spoke/v1/zones`               | عرض جميع مناطق Rampart                 |
+| `GET`   | `/spoke/v1/zones/:id`           | الحصول على تفاصيل المنطقة وأعباء العمل |
+| `POST`  | `/spoke/v1/zones`               | إنشاء منطقة جديدة                      |
+| `PUT`   | `/spoke/v1/zones/:id`           | تحديث تهيئة المنطقة                    |
+| `GET`   | `/spoke/v1/zones/:id/crossings` | عرض قواعد العبور للمنطقة               |
+| `POST`  | `/spoke/v1/zones/crossings`     | إنشاء قاعدة عبور منطقة                 |
+
+## التدقيق
+
+| الطريقة | المسار                         | الوصف                       |
+|---------|--------------------------------|-----------------------------|
+| `GET`   | `/spoke/v1/audit/query`        | الاستعلام عن أحداث Spyglass |
+| `GET`   | `/spoke/v1/audit/sessions/:id` | إعادة بناء جلسة محدّدة      |
+| `POST`  | `/spoke/v1/audit/export`       | تصدير حزمة أدلّة الامتثال   |
+| `GET`   | `/spoke/v1/audit/export/:id`   | تنزيل تصدير مكتمل           |
+
+### الاستعلام عن أحداث التدقيق
+
+```bash title="GET /spoke/v1/audit/query"
+curl -X GET "https://sentinel.yourcompany.internal/spoke/v1/audit/query?\
+event_type=access-decision&\
+result=revoke&\
+period=2025-06-01..2025-06-30&\
+resource=api-cluster-east" \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN"
+```
+
+<Details>
+<summary>مخطّط الاستجابة</summary>
+
+```json title="200 OK"
+{
+  "query": {
+    "event_type": "access-decision",
+    "result": "revoke",
+    "period": "2025-06-01..2025-06-30",
+    "resource": "api-cluster-east"
+  },
+  "total": 4,
+  "events": [
+    {
+      "timestamp": "2025-06-04T10:22:00Z",
+      "user": "k.patel",
+      "device": "dev_b1a9c3e7",
+      "resource": "api-cluster-east",
+      "result": "revoke",
+      "reason": "device.posture < 80",
+      "remediation_time": "47m"
+    },
+    {
+      "timestamp": "2025-06-09T14:22:00Z",
+      "user": "m.torres",
+      "device": "dev_f8e2d4c6",
+      "resource": "api-cluster-east",
+      "result": "revoke",
+      "reason": "network.location anomaly",
+      "remediation_time": "12m"
+    }
+  ]
+}
+```
+
+</Details>
+
+## حدود المعدّل
+
+جميع نقاط نهاية Spoke API محدودة المعدّل لكلّ رمز:
+
+| النطاق             | الحدّ           |
+|--------------------|-----------------|
+| نقاط نهاية القراءة | 1,000 طلب/دقيقة |
+| نقاط نهاية الكتابة | 100 طلب/دقيقة   |
+| المحاكاة           | 10 طلبات/ساعة   |
+| تصدير التدقيق      | 5 طلبات/ساعة    |
+
+تُضمَّن رؤوس حدود المعدّل في كلّ استجابة، `X-RateLimit-Limit`, `X-RateLimit-Remaining`, `X-RateLimit-Reset`.
+
+## الخطوات التالية
+
+- [سياسات الثقة](/docs/trust/trust-policies/)، قواعد السياسة ومرجع الشروط.
+- [التدقيق والتحقيق الجنائي](/docs/operations/audit-forensics/)، صيغة استعلام واجهة سطر الأوامر لـ Spyglass.
+- [نظرة عامة](/docs/overview/)، السياق المعماري للـ API.

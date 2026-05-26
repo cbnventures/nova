@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Loading.
  *
@@ -13,12 +15,18 @@ export type ThemeLoadingPropsError = Error | null | undefined;
 
 export type ThemeLoadingPropsRetry = (() => void) | undefined;
 
+export type ThemeLoadingPropsClassName = string | undefined;
+
+export type ThemeLoadingPropsStyle = CSSProperties | undefined;
+
 export type ThemeLoadingProps = {
   isLoading: ThemeLoadingPropsIsLoading;
   pastDelay: ThemeLoadingPropsPastDelay;
   timedOut: ThemeLoadingPropsTimedOut;
   error: ThemeLoadingPropsError;
   retry: ThemeLoadingPropsRetry;
+  className?: ThemeLoadingPropsClassName;
+  style?: ThemeLoadingPropsStyle;
   [key: string]: unknown;
 };
 

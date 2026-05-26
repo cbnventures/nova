@@ -1,0 +1,222 @@
+/**
+ * Lantern - `blog-preview` component overlay.
+ *
+ * A small grid of warm paper journal entries. Each card alternates the
+ * hand-thrown asymmetric corners. The date wears the small-caps mono
+ * eyebrow voice; the title is italic Fraunces; the read-more link sports
+ * an amber arrow that nudges right on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section heading rhythm
+ * ============================
+ */
+
+.nova-blog-preview-no-description .nova-blog-preview-heading {
+  margin-bottom: 2rem;
+
+  text-align: center;
+}
+
+.nova-blog-preview-has-description .nova-blog-preview-heading {
+  margin-bottom: 0.75rem;
+
+  text-align: center;
+}
+
+.nova-blog-preview-description {
+  max-width: 50ch;
+  margin: 0 auto 2rem;
+
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--nova-lantern-ink-muted);
+  text-align: center;
+}
+
+/**
+ * ============================
+ * 2. Grid spacing
+ * ============================
+ */
+
+.nova-blog-preview-grid {
+  row-gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .nova-blog-preview-grid {
+    row-gap: 2rem;
+  }
+}
+
+/**
+ * ============================
+ * 3. Card - warm paper with asymmetric corners (hand-thrown)
+ * ============================
+ */
+
+.nova-blog-preview-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 95%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 14px 4px 14px 4px;
+
+  transition:
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-blog-preview-card:nth-child(3n+2) {
+  border-radius: 4px 14px 4px 14px;
+}
+
+.nova-blog-preview-card:nth-child(3n+3) {
+  border-radius: 14px 14px 4px 14px;
+}
+
+.nova-blog-preview-card:hover,
+.nova-blog-preview-card:focus-within {
+  border-color: var(--nova-color-primary-400);
+  box-shadow: var(--nova-lantern-hover-glow-strong);
+
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-blog-preview-card {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover,
+[data-theme="dark"] .nova-blog-preview-card:focus-within {
+  border-color: var(--nova-color-primary-500);
+}
+
+/**
+ * ============================
+ * 4. Date - small-caps mono eyebrow
+ * ============================
+ */
+
+.nova-blog-preview-card time {
+  display: block;
+  margin-bottom: 0.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-preview-card time {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 5. Title - italic Fraunces (the signature)
+ * ============================
+ */
+
+.nova-blog-preview-card h3 {
+  margin: 0 0 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  font-size: 1.2rem;
+  line-height: 1.2;
+  color: var(--nova-lantern-ink);
+}
+
+/**
+ * ============================
+ * 6. Excerpt
+ * ============================
+ */
+
+.nova-blog-preview-card p {
+  margin: 0 0 1rem;
+
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/**
+ * ============================
+ * 7. Read-more - amber affordance with arrow that nudges right on card hover
+ * ============================
+ */
+
+.nova-blog-preview-card .nova-blog-preview-read-more {
+  margin-top: auto;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+
+  transition: color var(--nova-lantern-transition);
+}
+
+.nova-blog-preview-card .nova-blog-preview-read-more::after {
+  display: inline-block;
+  margin-left: 0.25rem;
+
+  color: var(--nova-color-primary-600);
+
+  transition: transform var(--nova-lantern-transition);
+
+  content: "→";
+}
+
+.nova-blog-preview-card:hover .nova-blog-preview-read-more,
+.nova-blog-preview-card:focus-within .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-600);
+}
+
+.nova-blog-preview-card:hover .nova-blog-preview-read-more::after,
+.nova-blog-preview-card:focus-within .nova-blog-preview-read-more::after {
+  transform: translateX(3px);
+}
+
+[data-theme="dark"] .nova-blog-preview-card .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-blog-preview-card .nova-blog-preview-read-more::after {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover .nova-blog-preview-read-more,
+[data-theme="dark"] .nova-blog-preview-card:focus-within .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 8. Empty state - italic Fraunces, muted
+ * ============================
+ */
+
+.nova-blog-preview-no-posts {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-size: 1rem;
+  color: var(--nova-lantern-ink-muted);
+  text-align: center;
+}

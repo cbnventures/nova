@@ -1,0 +1,42 @@
+---
+title: "计划 Stewardship"
+sidebar_position: 1
+description: "Marshal 按 cron 执行计划工作——清理、审计、接续、标签清扫。每一项都在整点立卷。"
+tags:
+  - "stewardship"
+  - "scheduled-stewardship"
+---
+
+# 计划 Stewardship
+
+Marshal 按 cron 执行计划工作。清理、审计、接续、标签清扫——任何应当在整点发生而又不必把谁从被窝里叫起来的事。
+
+## 哪些工作可以计划
+
+- **清理** — 关闭并封存符合 policy 条件的线程
+- **审计** — 核验每一张未结工单是否都已分类
+- **接续** — 将 docket 滚入下一个季度
+- **标签清扫** — 批量施加或移除标签
+
+## 提交一项计划任务
+
+```yaml title="schedules/quarterly-rollover.yml"
+schedule: "0 0 1 1,4,7,10 *"
+action: rollover
+docket: "FY-{quarter}"
+notice: "Rolled forward at the top of the quarter."
+```
+
+## 观察 cron
+
+```bash
+marshal cron list
+```
+
+Marshal 列出每一项计划任务、它的下一次运行时间，以及提交它的 policy。没有未封印的内容会被运行。
+
+## 下一步
+
+- [Policies](/docs/filings/policies/) — 计划一项 policy，让它自动立卷。
+- [Dockets](/docs/dockets/overview/) — 每一次计划运行在哪里留下印迹。
+- [审计轨迹](/docs/dockets/audit-trail/) — 对计划工作的季度审计。

@@ -1,0 +1,18 @@
+/**
+ * Lantern - `SkipToContent` theme overlay.
+ *
+ * Defines per-preset shape, spacing, and timing tokens consumed by the shared
+ * theme/SkipToContent/style.css. Color tokens for the focus state live in
+ * preset.css.
+ *
+ * @since 0.18.0
+ */
+
+:root {
+  --nova-skip-radius: 999px;
+  --nova-skip-padding-y: 0.625rem;
+  --nova-skip-padding-x: 1.5rem;
+  --nova-skip-offset: 1rem;
+  --nova-skip-font-weight: 500;
+  --nova-skip-transition: transform var(--nova-lantern-transition), opacity var(--nova-lantern-transition);
+}

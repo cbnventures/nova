@@ -1,0 +1,66 @@
+{
+  "layout.marshal.title": {
+    "message": "Marshal",
+    "description": "Title of footer column \"marshal\""
+  },
+  "layout.community.title": {
+    "message": "المجتمع",
+    "description": "Title of footer column \"community\""
+  },
+  "layout.company.title": {
+    "message": "الشركة",
+    "description": "Title of footer column \"company\""
+  },
+  "layout.legal.title": {
+    "message": "قانوني",
+    "description": "Title of footer column \"legal\""
+  },
+  "sections.marshal.0.label": {
+    "message": "أهلًا بك",
+    "description": "Label of link 1 in footer section \"marshal\""
+  },
+  "sections.marshal.1.label": {
+    "message": "التثبيت",
+    "description": "Label of link 2 in footer section \"marshal\""
+  },
+  "sections.marshal.2.label": {
+    "message": "مرجع API",
+    "description": "Label of link 3 in footer section \"marshal\""
+  },
+  "sections.community.0.label": {
+    "message": "Threadbare",
+    "description": "Label of link 1 in footer section \"community\""
+  },
+  "sections.community.1.label": {
+    "message": "المدونة",
+    "description": "Label of link 2 in footer section \"community\""
+  },
+  "sections.company.0.label": {
+    "message": "حول",
+    "description": "Label of link 1 in footer section \"company\""
+  },
+  "sections.company.1.label": {
+    "message": "الوظائف",
+    "description": "Label of link 2 in footer section \"company\""
+  },
+  "sections.legal.0.label": {
+    "message": "شروط الاستخدام",
+    "description": "Label of link 1 in footer section \"legal\""
+  },
+  "sections.legal.1.label": {
+    "message": "سياسة الخصوصية",
+    "description": "Label of link 2 in footer section \"legal\""
+  },
+  "sections.legal.2.label": {
+    "message": "اتصل بنا",
+    "description": "Label of link 3 in footer section \"legal\""
+  },
+  "cta.label": {
+    "message": "هل أنت مستعدّ لبدء الإيداع؟",
+    "description": "The footer call-to-action link label"
+  },
+  "copyright": {
+    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
+    "description": "The footer copyright text"
+  }
+}

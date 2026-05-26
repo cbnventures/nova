@@ -26,8 +26,11 @@ function DocTagsListPage(props: ThemeDocTagsListPageDocTagsListPageProps) {
   return (
     <>
       <PageMetadata title={title} />
-      <div className="nova-container">
-        <main>
+      <div
+        className={(props['className'] !== undefined) ? `nova-container ${props['className']}` : 'nova-container'}
+        style={props['style']}
+      >
+        <main className="nova-doc-tags-list-page">
           <Heading as="h1">{title}</Heading>
           <TagsListByLetter tags={props['tags']} />
         </main>

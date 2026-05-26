@@ -28,7 +28,15 @@ function TabItem(props: ThemeTabItemTabItemProps) {
   const hidden: ThemeTabItemTabItemHidden = props['value'] !== tabs['selectedValue'];
 
   return (
-    <div className="nova-tabs-panel" id={panelId} role="tabpanel" aria-labelledby={ariaLabelledBy} hidden={hidden} data-value={props['value']}>
+    <div
+      className={(props['className'] !== undefined) ? `nova-tabs-panel ${props['className']}` : 'nova-tabs-panel'}
+      style={props['style']}
+      id={panelId}
+      role="tabpanel"
+      aria-labelledby={ariaLabelledBy}
+      hidden={hidden}
+      data-value={props['value']}
+    >
       {props['children']}
     </div>
   );

@@ -4,6 +4,13 @@ elena:
   url: https://nova.cbnventures.io
   image_url: https://github.com/cbnventures.png
   page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
 
 kofi:
   name: Kofi Mensah
@@ -11,6 +18,13 @@ kofi:
   url: https://nova.cbnventures.io
   image_url: https://github.com/cbnventures.png
   page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
 
 priya:
   name: Priya Nair
@@ -18,3 +32,10 @@ priya:
   url: https://nova.cbnventures.io
   image_url: https://github.com/cbnventures.png
   page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures

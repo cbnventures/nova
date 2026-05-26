@@ -1,8 +1,8 @@
-import Link from '@docusaurus/Link';
 import { PageMetadata } from '@docusaurus/theme-common';
 import { translate } from '@docusaurus/Translate';
 import BlogLayout from '@theme/BlogLayout';
 import Heading from '@theme/Heading';
+import Tag from '@theme/Tag';
 
 import type {
   ThemeBlogTagsListPageBlogTagsListPageHeading,
@@ -31,24 +31,24 @@ function BlogTagsListPage(props: ThemeBlogTagsListPageBlogTagsListPageProps) {
   });
 
   return (
-    <BlogLayout sidebar={props['sidebar']}>
+    <BlogLayout
+      sidebar={props['sidebar']}
+      showHeader
+      header={<Heading as="h1">{heading}</Heading>}
+    >
       <PageMetadata title={heading} />
-      <header className="nova-blog-tags-posts-header">
-        <Heading as="h2">
-          {heading}
-        </Heading>
-      </header>
-      <ul className="nova-blog-tags-list">
+      <ul
+        className={(props['className'] !== undefined) ? `nova-blog-tags-list ${props['className']}` : 'nova-blog-tags-list'}
+        style={props['style']}
+      >
         {
           props['tags'].map((tag: ThemeBlogTagsListPageBlogTagsListPagePropsTag) => (
             <li className="nova-blog-tags-list-item" key={tag['permalink']}>
-              <Link className="nova-blog-tags-list-link" to={tag['permalink']}>
-                {tag['label']}
-                {' '}
-                (
-                {tag['count']}
-                )
-              </Link>
+              <Tag
+                permalink={tag['permalink']}
+                label={tag['label']}
+                count={tag['count']}
+              />
             </li>
           ))
         }

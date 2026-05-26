@@ -1,0 +1,45 @@
+---
+title: "API 参考"
+sidebar_position: 1
+description: "Marshal Spoke API——提交 policy、通读 docket、导出审计轨迹。Bearer 令牌认证、JSON 响应，没有意外。"
+tags:
+  - "reference"
+  - "api"
+---
+
+# API 参考
+
+Marshal 提供一个 Spoke API，用于提交 policy、通读 docket 和导出审计轨迹。Bearer 令牌认证、JSON 响应，没有意外。
+
+## Base URL
+
+```
+https://marshal.your-org.example/api
+```
+
+## 端点
+
+| Method   | Path                 | 说明                     |
+|----------|----------------------|------------------------|
+| `GET`    | `/api/policies`      | 列出所有已提交的 policy。       |
+| `POST`   | `/api/policies`      | 提交一条新 policy。          |
+| `DELETE` | `/api/policies/:id`  | 撤回一条 policy（以覆盖立卷）。    |
+| `GET`    | `/api/dockets`       | 列出跨仓库的 docket。         |
+| `GET`    | `/api/dockets/:repo` | 通读某一个仓库的 docket。       |
+| `POST`   | `/api/audit/export`  | 生成一次审计轨迹导出。            |
+| `GET`    | `/api/cron`          | 列出计划中的 stewardship 任务。 |
+
+## 示例
+
+```bash
+curl https://marshal.your-org.example/api/dockets/org/api \
+  -H "Authorization: Bearer $MARSHAL_TOKEN"
+```
+
+响应是该仓库上每一次立卷操作的时间顺序列表。官署封印出现在每一条记录里。
+
+## 下一步
+
+- [Policies](/docs/filings/policies/) — 通过 API 提交 policy。
+- [Dockets](/docs/dockets/overview/) — 通过 API 通读 docket。
+- [审计轨迹](/docs/dockets/audit-trail/) — 导出完整轨迹。

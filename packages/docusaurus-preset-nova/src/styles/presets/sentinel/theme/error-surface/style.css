@@ -1,0 +1,63 @@
+/**
+ * Sentinel - `error-surface` umbrella overlay.
+ *
+ * Console / observability error surface (404 / per-page crash / top-level
+ * boundary). Display Inter heading, body Inter, chrome-tinted retry button
+ * with primary teal hover wash. Mirrors the SearchPage input + result card
+ * chrome.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Heading
+ * ============================ */
+
+.nova-error-surface h1 {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-sentinel-text);
+}
+
+/* ============================
+ * 2. Body Copy
+ * ============================ */
+
+.nova-error-surface p {
+  font-family: var(--nova-font-body);
+  color: var(--nova-sentinel-text-muted);
+}
+
+/* ============================
+ * 3. Retry Button - Chrome
+ * ============================ */
+
+.nova-error-surface button {
+  font-family: var(--nova-font-body);
+
+  color: var(--nova-color-text);
+  background-color: var(--nova-sentinel-chrome-bg);
+  border-color: var(--nova-sentinel-chrome-border);
+  border-radius: var(--nova-shape-radius);
+}
+
+.nova-error-surface button:hover,
+.nova-error-surface button:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-sentinel-chrome-bg) 95%);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-error-surface button:hover,
+[data-theme="dark"] .nova-error-surface button:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-sentinel-chrome-bg) 92%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 4. Horizontal Rule
+ * ============================ */
+
+.nova-error-surface hr {
+  border-top-color: var(--nova-sentinel-chrome-border);
+}

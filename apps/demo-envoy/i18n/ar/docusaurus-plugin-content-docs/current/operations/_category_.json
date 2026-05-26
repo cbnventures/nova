@@ -1,0 +1,10 @@
+{
+  "label": "العمليات التشغيلية",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "تشغيل Envoy في بيئة الإنتاج — قابلية الرصد عبر Ledger، ولوحات المراقبة، والتنبيه عند استنفاد المحاولات، والتوسّع الأفقي عبر المناطق."
+  }
+}

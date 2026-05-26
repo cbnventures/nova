@@ -1,0 +1,6 @@
+{
+  "content": {
+    "message": "Cut your build times with dependency-aware incremental caching.",
+    "description": "The announcement bar content (may contain HTML)"
+  }
+}

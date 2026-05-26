@@ -1,0 +1,348 @@
+/**
+ * Marshal - `Navbar/Compass` theme overlay.
+ *
+ * Sticky aged-paper bar with the Plex Serif brand wordmark left, mono
+ * uppercase navigation labels flowing beside it, and hairline-bordered
+ * utility actions at the far right.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Bar layout - items left-grouped beside brand, actions floated right
+ * ============================ */
+
+.nova-navbar-compass > .nova-container {
+  gap: var(--nova-shape-gap);
+}
+
+.nova-navbar-compass-items {
+  display: none;
+  flex: 1 0 auto;
+  margin-left: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .nova-navbar-compass-items {
+    display: flex;
+  }
+}
+
+/* ============================
+ * 2. Container - sticky aged paper
+ * ============================ */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+
+  padding-block: 0.5rem;
+
+  background-color: var(--nova-marshal-bg);
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+/* ============================
+ * 3. Brand wordmark - Plex Serif weighty
+ * ============================ */
+
+.nova-navbar-compass-brand {
+  display: flex;
+  align-items: center;
+}
+
+.nova-navbar-compass-brand a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  font-size: 1.125rem;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+
+  transition: color var(--nova-marshal-transition);
+}
+
+.nova-navbar-compass-brand a:hover,
+.nova-navbar-compass-brand a:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-compass-brand a:hover,
+[data-theme="dark"] .nova-navbar-compass-brand a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+.nova-navbar-compass-brand img {
+  height: 1.75rem;
+  width: auto;
+}
+
+/* ============================
+ * 4. Nav items - mono uppercase carved labels
+ * ============================ */
+
+.nova-navbar-compass-items a,
+.nova-navbar-compass-items .nova-navbar-more-summary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.375rem 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+  text-decoration: none;
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    background-color var(--nova-marshal-transition);
+}
+
+.nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):hover,
+.nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
+.nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
+.nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
+.nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+  color: var(--nova-color-accent-800);
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 94%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):hover,
+[data-theme="dark"] .nova-navbar-compass-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+  color: var(--nova-color-accent-300);
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 86%);
+}
+
+/* ============================
+ * 5. Active link - seal-red filled tint
+ *
+ * Matches `.nova-locale-dropdown-item--active` chrome so the navbar items,
+ * More popover, and locale popover all read the same on hover/active.
+ * `:has()` promotes the More trigger when an item inside is the current
+ * page.
+ * ============================ */
+
+.nova-navbar-compass-items a[aria-current="page"],
+.nova-navbar-compass-items a.navbar__link--active,
+.nova-navbar-compass-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
+.nova-navbar-compass-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+  color: var(--nova-color-accent-800);
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 88%);
+}
+
+[data-theme="dark"] .nova-navbar-compass-items a[aria-current="page"],
+[data-theme="dark"] .nova-navbar-compass-items a.navbar__link--active,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-compass-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+  color: var(--nova-color-accent-300);
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 80%);
+}
+
+/* ============================
+ * 6. Hamburger toggle
+ * ============================ */
+
+.nova-navbar-compass .nova-hamburger-toggle {
+  color: var(--nova-marshal-ink);
+  background-color: var(--nova-marshal-bg);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-navbar-compass .nova-hamburger-toggle:hover,
+.nova-navbar-compass .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-compass .nova-hamburger-toggle:hover,
+[data-theme="dark"] .nova-navbar-compass .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+@media (min-width: 1024px) {
+  .nova-navbar-compass .nova-hamburger-toggle {
+    display: none;
+  }
+}
+
+/* ============================
+ * 7. Color mode toggle
+ * ============================ */
+
+.nova-navbar-compass .nova-color-mode-toggle {
+  color: var(--nova-marshal-ink);
+  background-color: var(--nova-marshal-bg);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-navbar-compass .nova-color-mode-toggle:hover,
+.nova-navbar-compass .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-compass .nova-color-mode-toggle:hover,
+[data-theme="dark"] .nova-navbar-compass .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 8. Mobile menu overlay
+ * ============================ */
+
+.nova-navbar-compass-menu-overlay {
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+
+  background-color: color-mix(in srgb, #000000, transparent 40%);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-overlay {
+  background-color: color-mix(in srgb, #000000, transparent 30%);
+}
+
+/* ============================
+ * 9. Mobile menu panel - aged paper card with hairline border
+ * ============================ */
+
+.nova-navbar-compass-menu-panel {
+  background-color: var(--nova-marshal-bg);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+}
+
+/* ============================
+ * 10. Mobile menu brand wordmark
+ * ============================ */
+
+.nova-navbar-compass-menu-brand a {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+}
+
+/* ============================
+ * 11. Mobile menu close
+ * ============================ */
+
+.nova-navbar-compass-menu-close {
+  color: var(--nova-marshal-ink);
+  background-color: var(--nova-marshal-bg);
+  border-color: var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-navbar-compass-menu-close:hover,
+.nova-navbar-compass-menu-close:focus-visible {
+  color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-close:hover,
+[data-theme="dark"] .nova-navbar-compass-menu-close:focus-visible {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 12. Mobile menu items - mono uppercase carved labels
+ * ============================ */
+
+.nova-navbar-compass-menu-item {
+  gap: 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink);
+  border-radius: 2px;
+
+  transition: color var(--nova-marshal-transition);
+}
+
+.nova-navbar-compass-menu-item:hover,
+.nova-navbar-compass-menu-item:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-item:hover,
+[data-theme="dark"] .nova-navbar-compass-menu-item:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+}
+
+.nova-navbar-compass-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  box-shadow: inset 2px 0 0 0 var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+  box-shadow: inset 2px 0 0 0 var(--nova-color-primary-400);
+}
+
+.nova-navbar-compass-menu-item svg {
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-item svg {
+  color: var(--nova-color-accent-500);
+}
+
+.nova-navbar-compass-menu-panel .nova-navbar-compass-menu-items a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-navbar-compass-menu-panel .nova-navbar-compass-menu-items a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Mobile Menu - Unison Reveal
+ *
+ * Reuses preset-level `marshal-fade-in`. Marshal declares
+ * `motion.staggeredReveals: false` so items reveal together.
+ * ============================ */
+
+.nova-navbar-compass-menu-item {
+  opacity: 0;
+
+  animation: marshal-fade-in var(--nova-marshal-transition) forwards;
+}

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Tab Item - Tab Item.
@@ -9,9 +9,15 @@ export type ThemeTabItemTabItemPropsChildren = ReactNode;
 
 export type ThemeTabItemTabItemPropsValue = string;
 
+export type ThemeTabItemTabItemPropsClassName = string | undefined;
+
+export type ThemeTabItemTabItemPropsStyle = CSSProperties | undefined;
+
 export type ThemeTabItemTabItemProps = {
   children: ThemeTabItemTabItemPropsChildren;
   value: ThemeTabItemTabItemPropsValue;
+  className?: ThemeTabItemTabItemPropsClassName;
+  style?: ThemeTabItemTabItemPropsStyle;
   [key: string]: unknown;
 };
 

@@ -1,0 +1,129 @@
+---
+title: "信任策略"
+sidebar_position: 1
+description: "Sentinel 信任引擎中的策略语法、条件、可组合性、继承链与评估顺序。"
+tags:
+  - "trust"
+  - "策略"
+---
+
+import Details from '@theme/Details';
+
+# 信任策略
+
+信任策略是 Sentinel 中访问控制的基本单元。一条策略定义了访问获得授权所必须满足的条件，以及当这些条件不再满足时会发生什么。策略以 `.grain` 格式编写，纳入版本控制，并由 Watchtower 每 90 秒评估一次。
+
+## 策略语法
+
+每条策略都由一个声明、一个条件块与一个失败处理块组成：
+
+```text title="policies/api-access.grain"
+policy "api-cluster-access" {
+  resource = "api-cluster-east"
+  effect   = "allow"
+  priority = 100
+
+  conditions {
+    device.posture   >= 85
+    user.mfa         = true
+    user.role        = ["engineer", "sre"]
+    network.location = ["office", "vpn"]
+    session.age      <= 7200
+  }
+
+  on_failure {
+    action  = "revoke"
+    notify  = "security-ops"
+    log     = "spyglass"
+    step_up = "mfa"
+  }
+}
+```
+
+`effect` 字段的取值为 `allow` 或 `deny`。在相同优先级下，拒绝策略始终优先于允许策略。
+
+## 条件类型
+
+| 条件                  | 操作符           | 取值             | 说明                     |
+|---------------------|---------------|----------------|------------------------|
+| `device.posture`    | `>=`、`<=`、`=` | 0-100          | 来自 Garrison 的综合态势评分。   |
+| `device.encryption` | `=`           | `true`、`false` | 磁盘加密状态。                |
+| `device.os`         | `=`           | 操作系统名称数组       | 允许的操作系统。               |
+| `user.mfa`          | `=`           | `true`、`false` | 是否已注册多因素认证。            |
+| `user.role`         | `=`           | 角色名数组          | 所需的用户角色（任一匹配即可）。       |
+| `user.department`   | `=`           | 部门名数组          | 所需的部门（任一匹配即可）。         |
+| `network.location`  | `=`           | 位置标签数组         | 允许的网络位置。               |
+| `network.ip_range`  | `=`           | CIDR 段数组       | 允许的源 IP 段。             |
+| `behavior.score`    | `>=`、`<=`、`=` | 0-100          | 来自 Watchtower 的行为异常评分。 |
+| `session.age`       | `<=`          | 秒              | 强制重新认证前的最大会话时长。        |
+| `time.window`       | `=`           | Cron 表达式       | 策略生效的时间窗口。             |
+
+策略中的所有条件必须同时满足。单条策略内部没有 OR 逻辑——如需 OR 语义，请通过策略组合实现。
+
+:::info 评估顺序
+当多条策略适用于同一资源时，Sentinel 会按优先级顺序（数字越小越优先）评估。第一条匹配的策略决定访问结果。在相同优先级下，拒绝策略始终胜过允许策略。
+:::
+
+## 策略组合
+
+策略可以通过继承与链式组合。子策略继承父策略的所有条件，并可新增或覆盖特定条件：
+
+```text title="policies/base-access.grain"
+policy "base-access" {
+  resource = "*"
+  effect   = "allow"
+
+  conditions {
+    device.posture >= 70
+    user.mfa       = true
+  }
+}
+```
+
+```text title="policies/production-access.grain"
+policy "production-access" {
+  // highlight-next-line
+  extends  = "base-access"
+  resource = "production-*"
+  priority = 50
+
+  conditions {
+    // highlight-start
+    device.posture   >= 90
+    network.location = ["office"]
+    session.age      <= 3600
+    // highlight-end
+  }
+}
+```
+
+`production-access` 策略从 `base-access` 继承了 `user.mfa = true`，并将态势阈值从 70 覆盖为 90。它还新增了父策略所没有的网络位置与会话时长约束。
+
+## 评估周期
+
+Watchtower 每 90 秒对所有活跃会话按其适用策略评估一次：
+
+1. Garrison 上报每一台已注册设备的当前态势。
+2. Watchtower 收集态势数据、用户身份、网络上下文与行为信号。
+3. 对每一个活跃会话，Watchtower 解析适用的策略链（继承 + 优先级）。
+4. 评估所有条件。任一条件失败时，`on_failure` 处理器会被执行。
+5. Spyglass 完整记录评估过程——无论通过或失败——附带时间戳与信号数值。
+
+<Details>
+<summary>完整条件操作符参考</summary>
+
+**数值操作符**（`>=`、`<=`、`=`）：用于态势评分、行为评分与会话时长，按整数比较。
+
+**等值操作符**（`=`）：用于布尔值（MFA、加密）、数组（角色、位置、操作系统名称）与 CIDR 段。数组条件采用"任一匹配"语义——只要实际值匹配数组中任一元素，条件即通过。
+
+**Cron 操作符**（与 cron 表达式配合的 `=`）：用于 `time.window`。只有在 cron 表达式定义的时间窗口内，条件才通过；窗口之外条件失败，`on_failure` 处理器会被触发。
+
+**否定**：在任何条件前加 `!` 可对其取反：`!network.location = ["public-wifi"]` 表示拒绝来自公共 WiFi 的访问。
+
+</Details>
+
+## 下一步
+
+- [设备注册](/docs/trust/device-enrollment/) — Garrison 如何接入设备并建立态势基线。
+- [访问控制](/docs/trust/access-control/) — Drawbridge 规则、时段限定访问与紧急覆盖。
+- [策略仿真](/docs/operations/policy-simulation/) — 在执行前用真实流量测试策略。

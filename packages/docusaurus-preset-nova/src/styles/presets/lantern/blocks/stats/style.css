@@ -1,0 +1,63 @@
+/**
+ * Lantern - `stats` component overlay.
+ *
+ * A row of italic Fraunces numerals (the signature) under small-caps
+ * mono labels. The numerals already carry their italic Fraunces voice
+ * from preset.css; this file owns section-level rhythm and the centered
+ * description rhythm.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section heading - italic Fraunces centered
+ * ============================
+ */
+
+.nova-stats-heading {
+  margin-bottom: 0.75rem;
+
+  text-align: center;
+}
+
+/**
+ * ============================
+ * 2. Description - muted ink centered
+ * ============================
+ */
+
+.nova-stats-description {
+  max-width: 50ch;
+  margin: 0 auto 2.5rem;
+
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--nova-lantern-ink-muted);
+  text-align: center;
+}
+
+/**
+ * ============================
+ * 3. Grid spacing - generous gutters between stats
+ * ============================
+ */
+
+.nova-stats-grid {
+  row-gap: 2rem;
+}
+
+/**
+ * ============================
+ * 4. Stat item - center each numeral over its label
+ * ============================
+ */
+
+.nova-stat {
+  text-align: center;
+}
+
+.nova-stat-value {
+  display: block;
+  margin-bottom: 0.25rem;
+}

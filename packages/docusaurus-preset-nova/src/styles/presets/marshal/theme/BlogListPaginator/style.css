@@ -1,0 +1,160 @@
+/**
+ * Marshal - `BlogListPaginator` theme overlay.
+ *
+ * Page navigation rendered as flat ledger tiles: hairline border, 2px
+ * corners, mono uppercase labels. Active page filled green; ellipsis muted.
+ * Strip left-aligned so it reads as a flat ledger row.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - left-aligned ledger row with hairline rule above
+ * ============================
+ */
+
+.nova-blog-list-paginator {
+  justify-content: flex-start;
+
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator {
+  border-top-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 2. Nav links - paper tile
+ * ============================
+ */
+
+.nova-blog-list-paginator-nav {
+  padding: 0.5rem 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-600);
+
+  background-color: transparent;
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-list-paginator-nav:hover,
+.nova-blog-list-paginator-nav:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  text-decoration: none;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-nav {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-nav:hover,
+[data-theme="dark"] .nova-blog-list-paginator-nav:focus-visible {
+  color: var(--nova-color-primary-300);
+
+  text-decoration: none;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 86%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 3. Page links - same paper tile
+ * ============================
+ */
+
+.nova-blog-list-paginator-page {
+  padding: 0.5rem 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: oldstyle-nums tabular-nums;
+  color: var(--nova-color-primary-600);
+
+  background-color: transparent;
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):hover,
+.nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):focus-visible {
+  color: var(--nova-color-primary-700);
+
+  text-decoration: none;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):hover,
+[data-theme="dark"] .nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):focus-visible {
+  color: var(--nova-color-primary-300);
+
+  text-decoration: none;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 86%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Active page - filed green
+ * ============================
+ */
+
+.nova-blog-list-paginator-page-active {
+  padding: 0.5rem 0.75rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  font-variant-numeric: oldstyle-nums tabular-nums;
+  color: var(--nova-color-text-inverse);
+
+  background-color: var(--nova-color-primary-700);
+  border: 1px solid var(--nova-color-primary-800);
+  border-radius: 2px;
+
+  cursor: default;
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page.nova-blog-list-paginator-page-active {
+  color: var(--nova-color-text-inverse);
+
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 5. Ellipsis - muted page-folio
+ * ============================
+ */
+
+.nova-blog-list-paginator-ellipsis {
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--nova-marshal-ink-muted);
+}

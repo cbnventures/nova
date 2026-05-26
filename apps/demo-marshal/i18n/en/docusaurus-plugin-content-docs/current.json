@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "Current",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Intake": {
+    "message": "Intake",
+    "description": "The label for category 'Intake' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Filings": {
+    "message": "Filings",
+    "description": "The label for category 'Filings' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Dockets": {
+    "message": "Dockets",
+    "description": "The label for category 'Dockets' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Stewardship": {
+    "message": "Stewardship",
+    "description": "The label for category 'Stewardship' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "Reference",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  }
+}

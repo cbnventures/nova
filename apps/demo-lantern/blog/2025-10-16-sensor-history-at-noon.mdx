@@ -1,0 +1,44 @@
+---
+title: "Sensor history is a quiet ledger you read at noon"
+authors:
+  - "marisol"
+tags:
+  - "sensor-history"
+date: "2025-10-16"
+---
+
+Sensor history is not a feed. It is a ledger. You do not read a ledger at 3am with a notification badge. You read it at noon, on a quiet weekend, with a cup of coffee.
+
+{/* truncate */}
+
+We built history that way on purpose. No counts, no alerts, no daily summary. Just a column of times and gentle verbs. *Front door, opened. Front door, closed. Hallway, motion. Hallway, dimmed.* The page is open if you ever want to read it.
+
+The shape of the ledger came out of an argument we had on a Saturday morning. One of us wanted a daily summary email — the way a heart-rate app sends a daily summary, with green check marks and a friendly tone. The other one of us said no. A house is not a wristband. A house does not owe the household a report. The ledger should sit on the shelf and be read when the household chooses to read it, not when the dashboard decides it is time. We went with no summary. The dashboard tile for history just says *open the ledger* and a date range.
+
+When you open it, the page is plain. There is a column of times, a column of zones, a column of verbs, and a column for whatever the verb was about. There is no count. There is no graph. There is no rolling average. The household reads it the way you would read a hallway clock — looking at it for the one thing you wanted to know, and then looking away.
+
+A typical Sunday afternoon glance looks like this:
+
+```bash
+$ lantern history --since "this morning"
+07:14   bedroom    motion    household
+07:18   hallway    motion    household
+07:21   kitchen    motion    household
+07:21   kitchen    light     on
+08:42   front-door opened    household
+08:42   porch      motion    household
+08:43   front-door closed    -
+08:44   porch      motion    cat
+09:11   hallway    motion    cat
+11:02   front-door opened    mail
+11:02   porch      motion    mail
+11:03   front-door closed    -
+12:14   kitchen    motion    household
+12:14   kitchen    light     on
+```
+
+That is the whole interface. Verbs are gentle on purpose — *opened* and *closed* and *dimmed* and *quieted*, not *triggered* or *fired* or *armed*. The cat shows up by name because Lantern has learned the cat. The mail shows up by name because the mail comes at the same time most days. The wind does not show up at all in this view; the wind lives in a separate band of low-confidence events that you can read if you want to, but mostly do not.
+
+We have heard from a few households that wanted a summary anyway. We pointed them at `lantern history --summary`, which prints a single block of zone counts and dominant categories, no charts. They use it on Sunday afternoons. They do not get an email about it. The summary, like the ledger, is a page that opens when the household opens it.
+
+A ledger is a small idea. The household does not need to be told that the kitchen made coffee at 7:21. The household made the coffee. What the household needs is a place to look when the question comes up — *was the back door open last Tuesday at four?* — and an answer that does not require a phone, a notification, or a graph. Just a row, a time, and a quiet verb.

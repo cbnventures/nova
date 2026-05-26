@@ -1,0 +1,116 @@
+/**
+ * Lantern - `ContentFooter` theme overlay.
+ *
+ * The closing meta row beneath an article - share buttons, edit-this-page
+ * link, last-updated stamp. Quiet warm typography; share button is a
+ * ghost amber pill that warms on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section label - italic Fraunces, muted
+ * ============================
+ */
+
+.nova-content-footer-section-label {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24;
+  font-weight: 500;
+  font-size: 0.875rem;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/**
+ * ============================
+ * 2. Share button - ghost amber pill
+ * ============================
+ */
+
+.nova-content-footer-share-button {
+  color: var(--nova-lantern-ink-muted);
+
+  background-color: transparent;
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 999px;
+
+  transition: color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-content-footer-share-button:hover,
+.nova-content-footer-share-button:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  border-color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-content-footer-share-button {
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-content-footer-share-button:hover,
+[data-theme="dark"] .nova-content-footer-share-button:focus-visible {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/**
+ * ============================
+ * 3. Share copied state - flush amber
+ * ============================
+ */
+
+.nova-content-footer-share-copied {
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-content-footer-share-copied {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Edit this page link - amber on hover
+ * ============================
+ */
+
+.nova-content-footer-edit .nova-edit-this-page {
+  font-size: 0.875rem;
+  color: var(--nova-lantern-ink-muted);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-content-footer-edit .nova-edit-this-page:hover,
+.nova-content-footer-edit .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:hover,
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 5. Last updated stamp
+ * ============================
+ */
+
+.nova-content-footer-edit .nova-last-updated {
+  font-size: 0.875rem;
+  color: var(--nova-lantern-ink-muted);
+}

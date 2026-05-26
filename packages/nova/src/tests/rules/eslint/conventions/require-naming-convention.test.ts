@@ -45,12 +45,12 @@ ruleTester.run('requireNamingConvention', RequireNamingConvention['rule'], {
       code: 'function processItems(inputData) {}',
     },
 
-    // React component — PascalCase function allowed.
+    // React component - PascalCase function allowed.
     {
       code: 'function MyComponent() { return null; }',
     },
 
-    // Constructor variable — PascalCase allowed when used with new.
+    // Constructor variable - PascalCase allowed when used with new.
     {
       code: 'const MyClass = getConstructor(); const instance = new MyClass();',
     },

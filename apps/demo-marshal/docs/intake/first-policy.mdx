@@ -1,0 +1,49 @@
+---
+title: "Your First Policy"
+sidebar_position: 2
+description: "Write a sealed policy, file it, watch the docket fill in. A first filing in three steps."
+tags:
+  - "setup"
+  - "tutorial"
+---
+
+# Your First Policy
+
+A first policy is a single sealed document about a single class of events. Start small, file once, watch the docket fill in.
+
+## Step 1: Write the Policy
+
+```yaml title="policies/stale-threads.yml"
+policy: thread-archival
+applies_to: ["issues", "pull-requests"]
+condition:
+  inactive_days: 365
+action: seal
+notice: "Archived after a year of silence. Reopen by request."
+```
+
+## Step 2: File It
+
+```bash
+marshal file policies/stale-threads.yml
+```
+
+Marshal stamps the policy with a filing number and adds it to the docket.
+
+## Step 3: Watch the Stamp
+
+```bash
+marshal docket tail
+```
+
+The next time a stale thread crosses the threshold, Marshal seals it. Every action is a line in the public ledger.
+
+## What Just Happened
+
+You filed a policy, watched the stamp, and read the docket. Everything that follows is paperwork — but Marshal does the paperwork.
+
+## Next Steps
+
+- [Policies](/docs/filings/policies/) — Built-in policy types and filing patterns.
+- [Dockets](/docs/dockets/overview/) — How to read the public record.
+- [Scheduled Stewardship](/docs/stewardship/scheduled-stewardship/) — Run cleanups on a cron.

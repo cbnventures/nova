@@ -1,0 +1,10 @@
+{
+  "layout.heading": {
+    "message": "博客",
+    "description": "The blog list page heading"
+  },
+  "layout.description": {
+    "message": "来自门廊灯下",
+    "description": "The blog list page description below the heading"
+  }
+}

@@ -1,0 +1,71 @@
+---
+title: "三层支持，一个队列，一位事务员"
+authors:
+  - "dimitri"
+tags:
+  - "access-tiers"
+  - "support"
+  - "ledger"
+date: "2026-04-22"
+---
+
+Marshal 现在按访问层级——sponsor、contributor、public——把新到来的支持工单路由到一个带三种标签的单一队列里。标签是钤上去的，不是商量出来的。
+
+{/* truncate */}
+
+Sponsor 优先被看到；contributor 紧随其后；public 请求在队列轻闲时被回复。每一次路由决策都立卷到 docket。
+
+之所以选择单一队列而不是三个分队列（每层一个），是因为标签已经携带了路由信息，一个单一队列让审计轨迹更简单。一位事务员从顶部到底部读队列时按优先级顺序处理标签。一位在 docket 中滚动的读者，看到的是标签被钤上的顺序，也就是它们被受理的顺序，也就是它们将被处理的顺序。要查阅的只有一个数字，而不是三个。
+
+路由 policy 自层级系统立卷以来就被封印过。它在此后的几个月里并不需要修订：
+
+```yaml title="policies/support-routing.yml"
+policy: support-routing
+version: 3
+sealed: true
+sealed-by: dimitri
+sealed-at: 2025-09-08T10:00:00Z
+
+intake:
+  on-receipt:
+    - lookup: tier
+      from: access-tiers@v5
+    - stamp: tier-label
+    - record:
+        docket: access
+        seal: required
+        retention: 3-years
+    - enqueue:
+        queue: support
+        priority-from: tier
+        order-within-priority: receipt-time
+
+clerk:
+  reads: queue
+  acts-in-order: priority, then receipt-time
+  records-each-action:
+    docket: support
+    stamp: HANDLED
+    seal: required
+```
+
+`priority-from: tier` 这条指令就是路由规则，由队列本身强制执行。一个在 14:02 入队的 `sponsor` 标签项，会在一个 09:15 入队的 `contributor` 标签项之前被处理，因为优先级取自标签，而不是受理时间。在同一优先级内，按受理时间顺序处理。事务员不能在同一优先级内重排。事务员不能把 sponsor 降为 contributor。事务员读标签并照做。
+
+docket 条目反映这一点。一位想确认路由是否公正的读者会同时查阅 access docket 与 support docket，并核验项目被处理的顺序与标签所规定的顺序一致。任何不一致都会被夜间审计揭示。自该 policy 被封印以来，路由零次不一致。
+
+```bash
+$ marshal docket query --docket support --stamp HANDLED --since 2026-04-21 --limit 8
+TIME      REQUESTER       TIER         DURATION    HANDLER
+09:14:02  acme-co         sponsor      0d:02h      yuki
+10:38:17  beta-labs       sponsor      0d:03h      yuki
+11:02:04  gamma-corp      sponsor      0d:01h      dimitri
+13:22:55  jdoe            contributor  1d:14h      yuki
+14:01:11  mfoo            contributor  2d:08h      yuki
+14:38:42  acme-co         sponsor      0d:01h      cordelia
+15:14:00  cbar            public       4d:22h      dimitri
+15:48:33  pquux           public       5d:11h      yuki
+```
+
+`DURATION` 一栏是从受理到 `HANDLED` 的时间。这正是 policy 所承诺的图样：sponsor 的时长以小时计，contributor 以日计，public 以"几日"计。这些数字不是抱负——是从 docket 算出来的实际时长。policy 与实际情形一致。
+
+在这个意义上，单一队列就是同一个标题下的三个队列。标签来组织，事务员来读，docket 来记。当审计员到来时，他会通读 docket，并确认标签被尊重了。标签是钤上去的，不是商量出来的。这就是全部安排。

@@ -1,0 +1,10 @@
+{
+  "label": "الإصدارات",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "ترقية البناءات إلى الإنتاج — قنوات alpha/beta/stable، وإصدارات مثبّتة بـ Quench، وتطبيق بوّابات Warden، وعمليات نشر متدرّجة منسّقة عبر Bellows مع التراجع باستخدام تاريخ Forge."
+  }
+}

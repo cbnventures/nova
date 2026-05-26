@@ -1,0 +1,51 @@
+/**
+ * Marshal - `BlogArchivePage` theme overlay.
+ *
+ * Year/month archive rendered as a register: bold Plex Serif year heading
+ * with hairline rule below, mono uppercase entries, seal-red tint on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Year heading - Plex Serif ledger header
+ * ============================
+ */
+
+.nova-blog-archive section h3 {
+  padding-bottom: 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-archive section h3 {
+  border-bottom-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 2. Archive entries - mono uppercase rows
+ * ============================
+ */
+
+.nova-blog-archive a {
+  padding: 0.25rem 0.5rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.92rem;
+  color: var(--nova-marshal-ink-muted);
+
+  border-radius: 2px;
+
+  transition: color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+/* Hover handled by shared CSS (color + bg tint + no underline; standardized
+   to primary across all 6 presets — marshal's prior seal-red accent hover
+   gave way to primary green for cross-preset consistency). */

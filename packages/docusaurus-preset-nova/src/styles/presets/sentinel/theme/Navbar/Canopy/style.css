@@ -1,5 +1,9 @@
 /**
- * Sentinel — Navbar (Canopy) variant visual styling.
+ * Sentinel - `Navbar/Canopy` theme overlay.
+ *
+ * Sticky two-row bar on a near-white surface with the brand wordmark centered
+ * above and navigation items flowing below. Action buttons float right at
+ * desktop; watchtower-deep dark inverts the surface.
  *
  * @since 0.15.0
  */
@@ -9,21 +13,17 @@
  * ============================ */
 
 .navbar {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: var(--nova-sentinel-chrome-bg-translucent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--nova-color-neutral-200);
-  padding: 0;
+  border-bottom: 1px solid var(--nova-color-border);
   position: sticky;
   top: 0;
   z-index: 200;
 }
 
 [data-theme="dark"] .navbar {
-  background-color: rgba(3, 7, 10, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom-color: var(--nova-color-neutral-800);
+  border-bottom-color: var(--nova-color-border);
 }
 
 /* ============================
@@ -31,7 +31,6 @@
  * ============================ */
 
 .nova-navbar-canopy {
-  padding-block: 0.625rem;
   position: relative;
 }
 
@@ -44,15 +43,15 @@
   font-family: var(--nova-font-display);
   font-weight: 700;
   font-size: 1.125rem;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-sentinel-text);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-brand a {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 }
 
 .nova-navbar-canopy-brand img {
-  height: 24px;
+  height: 1.5rem;
   width: auto;
 }
 
@@ -64,10 +63,12 @@
   display: none;
 }
 
-.nova-navbar-canopy-items a {
+.nova-navbar-canopy-items a,
+.nova-navbar-canopy-items .nova-navbar-more-summary {
+  min-height: 2.25rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-sentinel-text-muted);
   text-decoration: none;
   padding: 0.375rem 0.75rem;
   border-radius: var(--nova-shape-radius);
@@ -76,33 +77,49 @@
     background-color var(--nova-motion-duration) ease;
 }
 
-.nova-navbar-canopy-items a:hover,
-.nova-navbar-canopy-items a:focus-visible {
+.nova-navbar-canopy-items a:not(.navbar__link--active):not([aria-current="page"]):hover,
+.nova-navbar-canopy-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
+.nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
+.nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
+.nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
   color: var(--nova-color-primary-700);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 95%);
   text-decoration: none;
 }
 
+/* Active navbar link - matches `.nova-locale-dropdown-item--active` chrome
+   so the navbar items, More popover, and locale popover all read the same
+   on hover/active. `:has()` promotes the More trigger when an item inside
+   is the current page. */
 .nova-navbar-canopy-items a[aria-current="page"],
-.nova-navbar-canopy-items a.active {
+.nova-navbar-canopy-items a.navbar__link--active,
+.nova-navbar-canopy-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
+.nova-navbar-canopy-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
+  font-weight: 600;
   color: var(--nova-color-primary-700);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
 }
 
-[data-theme="dark"] .nova-navbar-canopy-items a {
-  color: var(--nova-color-neutral-400);
+[data-theme="dark"] .nova-navbar-canopy-items a,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more-summary {
+  color: var(--nova-color-text-muted);
 }
 
-[data-theme="dark"] .nova-navbar-canopy-items a:hover,
-[data-theme="dark"] .nova-navbar-canopy-items a:focus-visible {
-  color: var(--nova-color-primary-300);
+[data-theme="dark"] .nova-navbar-canopy-items a:not(.navbar__link--active):not([aria-current="page"]):hover,
+[data-theme="dark"] .nova-navbar-canopy-items a:not(.navbar__link--active):not([aria-current="page"]):focus-visible,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:hover,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"])) > .nova-navbar-more-summary:focus-visible,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:not(:has(a.navbar__link--active)):not(:has(a[aria-current="page"]))[open] > .nova-navbar-more-summary {
+  color: var(--nova-color-primary-400);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-items a[aria-current="page"],
-[data-theme="dark"] .nova-navbar-canopy-items a.active {
+[data-theme="dark"] .nova-navbar-canopy-items a.navbar__link--active,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:has(a[aria-current="page"]) > .nova-navbar-more-summary,
+[data-theme="dark"] .nova-navbar-canopy-items .nova-navbar-more:has(a.navbar__link--active) > .nova-navbar-more-summary {
   color: var(--nova-color-primary-400);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
 }
 
 /* ============================
@@ -118,16 +135,12 @@
  * ============================ */
 
 @media (min-width: 768px) {
-  .nova-navbar-canopy {
-    padding-block: 0.75rem;
-  }
-
   .nova-navbar-canopy-brand a {
     font-size: 1.25rem;
   }
 
   .nova-navbar-canopy-brand img {
-    height: 28px;
+    height: 1.75rem;
   }
 }
 
@@ -151,9 +164,9 @@
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-sentinel-text-muted);
   background: none;
-  border: 1px solid var(--nova-color-neutral-300);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-shape-radius);
 }
 
@@ -165,8 +178,8 @@
 }
 
 [data-theme="dark"] .nova-color-mode-toggle {
-  color: var(--nova-color-neutral-400);
-  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-text-muted);
+  border-color: var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-color-mode-toggle:hover,
@@ -195,9 +208,9 @@
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-sentinel-text-muted);
   background: none;
-  border: 1px solid var(--nova-color-neutral-300);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-shape-radius);
 }
 
@@ -209,8 +222,8 @@
 }
 
 [data-theme="dark"] .nova-navbar-canopy .nova-hamburger-toggle {
-  color: var(--nova-color-neutral-400);
-  border-color: var(--nova-color-neutral-700);
+  color: var(--nova-color-text-muted);
+  border-color: var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-navbar-canopy .nova-hamburger-toggle:hover,
@@ -228,7 +241,7 @@
 }
 
 /* ============================
- * 9. Mobile Menu — Overlay
+ * 9. Mobile Menu - Overlay
  * ============================ */
 
 .nova-navbar-canopy-menu-overlay {
@@ -237,51 +250,47 @@
 }
 
 /* ============================
- * 10. Mobile Menu — Panel
+ * 10. Mobile Menu - Panel
  * ============================ */
 
 .nova-navbar-canopy-menu-panel {
-  background-color: rgba(255, 255, 255, 0.97);
+  background-color: var(--nova-sentinel-chrome-bg-translucent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 @media (min-width: 576px) {
   .nova-navbar-canopy-menu-panel {
-    border: 1px solid var(--nova-color-neutral-200);
+    border: 1px solid var(--nova-color-border);
     border-radius: var(--nova-shape-radius);
   }
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-panel {
-  background-color: rgba(3, 7, 10, 0.97);
-}
-
-[data-theme="dark"] .nova-navbar-canopy-menu-panel {
-  border-color: var(--nova-color-neutral-800);
+  border-color: var(--nova-color-border);
 }
 
 /* ============================
- * 11. Mobile Menu — Brand
+ * 11. Mobile Menu - Brand
  * ============================ */
 
 .nova-navbar-canopy-menu-brand a {
   font-family: var(--nova-font-display);
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-sentinel-text);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-brand a {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 }
 
 /* ============================
- * 12. Mobile Menu — Close
+ * 12. Mobile Menu - Close
  * ============================ */
 
 .nova-navbar-canopy-menu-close {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-sentinel-text-muted);
 
   border-radius: var(--nova-shape-radius);
 
@@ -297,7 +306,7 @@
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-close {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-close:hover,
@@ -308,7 +317,7 @@
 }
 
 /* ============================
- * 12. Mobile Menu — Items (2-Column Grid)
+ * 12. Mobile Menu - Items (2-Column Grid)
  * ============================ */
 
 .nova-navbar-canopy-menu-items {
@@ -323,19 +332,21 @@
 
   padding: 1.25rem 1rem;
 
-  font-family: var(--nova-font-body);
-  font-size: 0.9375rem;
+  font-family: var(--nova-font-display);
+  font-size: 0.875rem;
   font-weight: 500;
-  color: var(--nova-color-neutral-700);
+  letter-spacing: -0.005em;
+  color: var(--nova-color-text);
   text-align: center;
 
-  background-color: color-mix(in srgb, var(--nova-color-neutral-500), transparent 96%);
-  border: 1px solid var(--nova-color-neutral-200);
+  background-color: color-mix(in srgb, var(--nova-color-text-muted), transparent 96%);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-shape-radius);
 
   transition: color var(--nova-motion-duration) ease,
               background-color var(--nova-motion-duration) ease,
-              border-color var(--nova-motion-duration) ease;
+              border-color var(--nova-motion-duration) ease,
+              box-shadow var(--nova-motion-duration) ease;
 }
 
 .nova-navbar-canopy-menu-item:hover,
@@ -344,13 +355,14 @@
 
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
   border-color: var(--nova-color-primary-500);
+  box-shadow: inset 0 0 0 1px var(--nova-color-primary-500);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-item {
-  color: var(--nova-color-neutral-300);
+  color: var(--nova-color-text-muted);
 
-  background-color: color-mix(in srgb, var(--nova-color-neutral-500), transparent 94%);
-  border-color: var(--nova-color-neutral-800);
+  background-color: color-mix(in srgb, var(--nova-color-text-muted), transparent 94%);
+  border-color: var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-navbar-canopy-menu-item:hover,
@@ -361,7 +373,7 @@
   border-color: var(--nova-color-primary-600);
 }
 
-/* Active mobile menu item — current page indicator. */
+/* Active mobile menu item - current page indicator. */
 .nova-navbar-canopy-menu-item[aria-current="page"] {
   color: var(--nova-color-primary-700);
   font-weight: 600;
@@ -372,19 +384,22 @@
 }
 
 /* ============================
- * 13. Mobile Menu — Subtle Fade
+ * 13. Mobile Menu - Subtle Fade
  * ============================ */
 
-@keyframes nova-navbar-canopy-menu-fade {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
+/* ============================
+ * Mobile Menu - Panel Fade + Item Slide-up (Unison)
+ *
+ * Panel reuses preset-level `sentinel-fade-in`; items reuse `sentinel-slide-up`.
+ * Sentinel declares `motion.staggeredReveals: false` so items rise together.
+ * ============================ */
 
 .nova-navbar-canopy-menu-panel {
-  animation: nova-navbar-canopy-menu-fade 200ms ease;
+  animation: sentinel-fade-in var(--nova-motion-duration) ease;
+}
+
+.nova-navbar-canopy-menu-item {
+  opacity: 0;
+
+  animation: sentinel-slide-up 350ms ease forwards;
 }

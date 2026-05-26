@@ -1,4 +1,5 @@
 import Head from '@docusaurus/Head';
+import Link from '@docusaurus/Link';
 import Admonition from '@theme/Admonition';
 import CodeBlock from '@theme/CodeBlock';
 import CodeInline from '@theme/CodeInline';
@@ -10,9 +11,15 @@ import { Children, isValidElement } from 'react';
 import type { ReactElement, ReactNode } from 'react';
 
 import type {
+  ThemeMdxComponentsMdxCodeBlockSpread,
   ThemeMdxComponentsMdxCodeChildren,
   ThemeMdxComponentsMdxCodeIsInline,
+  ThemeMdxComponentsMdxCodeLanguage,
+  ThemeMdxComponentsMdxCodeLive,
+  ThemeMdxComponentsMdxCodeMetastring,
   ThemeMdxComponentsMdxCodeProps,
+  ThemeMdxComponentsMdxCodeShowLineNumbers,
+  ThemeMdxComponentsMdxCodeTitle,
   ThemeMdxComponentsMdxComponentsProps,
   ThemeMdxComponentsMdxDetailsChildren,
   ThemeMdxComponentsMdxDetailsItems,
@@ -51,7 +58,34 @@ function MdxCode(props: ThemeMdxComponentsMdxCodeProps) {
     return <CodeInline>{children}</CodeInline>;
   }
 
-  return <CodeBlock>{children}</CodeBlock>;
+  const language: ThemeMdxComponentsMdxCodeLanguage = (typeof props['data-language'] === 'string') ? props['data-language'] : undefined;
+  const title: ThemeMdxComponentsMdxCodeTitle = (typeof props['data-title'] === 'string') ? props['data-title'] : undefined;
+  const metastring: ThemeMdxComponentsMdxCodeMetastring = (typeof props['metastring'] === 'string') ? props['metastring'] : undefined;
+  const showLineNumbers: ThemeMdxComponentsMdxCodeShowLineNumbers = props['data-show-line-numbers'] === 'true';
+  const live: ThemeMdxComponentsMdxCodeLive = props['data-live'] === 'true';
+
+  const codeBlockSpread: ThemeMdxComponentsMdxCodeBlockSpread = {
+    showLineNumbers,
+    live,
+  };
+
+  if (language !== undefined) {
+    Reflect.set(codeBlockSpread, 'language', language);
+  }
+
+  if (title !== undefined) {
+    Reflect.set(codeBlockSpread, 'title', title);
+  }
+
+  if (metastring !== undefined) {
+    Reflect.set(codeBlockSpread, 'metastring', metastring);
+  }
+
+  return (
+    <CodeBlock {...codeBlockSpread}>
+      {children}
+    </CodeBlock>
+  );
 }
 
 /**
@@ -160,11 +194,10 @@ const mdxComponents = {
   details: MdxDetails,
   Details: MdxDetails,
   code: MdxCode,
-  a: 'a',
+  a: Link,
   pre: MdxPre,
   ul: 'ul',
   li: 'li',
-  mermaid: Mermaid,
   table: MdxTable,
   img: 'img',
   h1: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h1" {...props} />,
@@ -174,6 +207,8 @@ const mdxComponents = {
   h5: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h5" {...props} />,
   h6: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h6" {...props} />,
   admonition: Admonition,
+  mermaid: Mermaid,
+  Mermaid,
 };
 
 export default mdxComponents;

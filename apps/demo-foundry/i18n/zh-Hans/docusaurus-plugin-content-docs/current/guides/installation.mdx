@@ -1,0 +1,109 @@
+---
+title: "安装"
+sidebar_position: 1
+description: "通过 Spark、Loom 注册中心或官方 Vial 容器安装 Foundry CLI。验证流程不到两分钟。"
+tags:
+  - "指南"
+  - "安装"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 安装
+
+本指南带你安装 Foundry，并验证你的环境。整个过程不到两分钟。
+
+## 前置条件
+
+在安装 Foundry 之前，请确认你的环境满足以下要求：
+
+| 要求         | 版本      | 备注                              |
+|------------|---------|---------------------------------|
+| **Spark**  | `>=3.0` | Foundry CLI 通过 Spark 分发。        |
+| **Alloy**  | `>=5.0` | 类型感知的 Warden 规则与 Crucible 都需要它。 |
+| **Ferric** | `>=1.8` | 可选，仅在使用 Ferric 工作空间目标时需要。       |
+
+:::warning
+Foundry 2.x 需要 Alloy 5.0 或更高版本。更早的 Alloy 版本不支持 Crucible 用于生成测试脚手架的类型自省 API。若仍在使用 Alloy 4.x，请先升级，再安装 Foundry。
+:::
+
+## 安装 Foundry
+
+<Tabs>
+<TabItem value="spark" label="Spark" default>
+
+我们推荐通过 Spark 安装 Foundry：
+
+```bash title="通过 Spark 全局安装"
+spark install foundry
+```
+
+这一步会以单一包的形式安装 `foundry` CLI 二进制文件，以及全部子工具（Anvil、Tongs、Quench、Bellows、Crucible 与 Slag）。
+
+</TabItem>
+<TabItem value="loom" label="Loom 注册中心">
+
+你也可以从 Loom 注册中心将 Foundry 作为工作空间依赖安装：
+
+```bash title="通过 Loom 添加为工作空间依赖"
+loom add --dev foundry
+```
+
+当你希望按工作空间锁定特定 Foundry 版本，而不是使用全局安装时，这种方式很合适。
+
+</TabItem>
+<TabItem value="vial" label="Vial 容器">
+
+对于 Conduit 流水线与可复现环境，请使用官方 Vial 镜像：
+
+```bash title="拉取官方 Vial 镜像"
+vial pull foundry/cli:latest
+vial run foundry/cli:latest foundry --version
+```
+
+Vial 镜像预装了 Spark、Alloy 与 Foundry。当 Conduit 阶段需要执行 `foundry ignite` 作为部署流水线的一部分时，推荐采用这种方式。
+
+</TabItem>
+</Tabs>
+
+## 验证安装
+
+确认一切正常：
+
+```bash title="查看已安装版本"
+foundry --version
+```
+
+预期输出：
+
+```text
+Foundry CLI v2.4.1
+  Anvil    2.4.1
+  Tongs    2.4.1
+  Quench   2.4.1
+  Bellows  2.4.1
+  Crucible 2.4.1
+  Slag     2.4.1
+```
+
+:::info
+所有子工具的版本号与主 CLI 完全一致。不存在需要管理的版本矩阵——一次安装、一个版本号，所有工具对齐。
+:::
+
+## 安装后的配置
+
+Foundry 不需要全局配置文件。所有设置都写在工作空间的 `.grain` 清单中。不过，你可以设置两个可选的环境变量：
+
+| 变量                    | 用途                | 默认值              |
+|-----------------------|-------------------|------------------|
+| `FOUNDRY_CACHE_DIR`   | Quench 构建缓存的位置。   | `.foundry/cache` |
+| `FOUNDRY_PARALLELISM` | Bellows 的最大并发任务数。 | 自动（按 CPU 核心数）    |
+
+## 接下来
+
+装好 Foundry 之后，你可以：
+
+1. [创建你的第一次锻造](/docs/guides/your-first-forge/) — 逐步演练。
+2. [学习清单格式](/docs/guides/manifests/) — 每一条指令逐一讲解。
+3. [浏览 CLI](/docs/reference/cli-reference/) — 完整命令参考。

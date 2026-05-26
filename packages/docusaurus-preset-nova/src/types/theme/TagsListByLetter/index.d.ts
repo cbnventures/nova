@@ -1,5 +1,6 @@
 import type { TagLetterEntry } from '@docusaurus/theme-common';
 import type { TagsListItem } from '@docusaurus/utils';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Tags List By Letter - Tags List By Letter.
@@ -8,8 +9,14 @@ import type { TagsListItem } from '@docusaurus/utils';
  */
 export type ThemeTagsListByLetterTagsListByLetterPropsTags = readonly TagsListItem[];
 
+export type ThemeTagsListByLetterTagsListByLetterPropsClassName = string | undefined;
+
+export type ThemeTagsListByLetterTagsListByLetterPropsStyle = CSSProperties | undefined;
+
 export type ThemeTagsListByLetterTagsListByLetterProps = {
   tags: ThemeTagsListByLetterTagsListByLetterPropsTags;
+  className?: ThemeTagsListByLetterTagsListByLetterPropsClassName;
+  style?: ThemeTagsListByLetterTagsListByLetterPropsStyle;
   [key: string]: unknown;
 };
 

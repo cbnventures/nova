@@ -1,0 +1,77 @@
+---
+title: "用 Crucible 在 60 个包之间做契约测试"
+authors:
+  - "priya"
+tags:
+  - "测试"
+  - "crucible"
+  - "typescript"
+  - "monorepo"
+date: "2026-01-15"
+---
+
+去年，我们因为一个 library 包改了某个返回类型的形状而把生产搞坏了。从 TypeScript 编译器的角度看，这次改动是向后兼容的——旧字段都还在，新字段是可选的。但下游有三个包依赖"那个字段不存在"来触发降级路径。当这个字段突然存在（值为 `undefined`）时，降级停止触发，用户在四十分钟里看到空白屏幕。
+
+编译器说这次改动是安全的，运行时不同意。那次事故，正是我们把契约测试做进 Crucible 的原因。
+
+{/* truncate */}
+
+## 契约测试是什么
+
+契约测试验证的是包边界——其他包消费的那个公开 API——的行为。它既不是单元测试（测内部逻辑），也不是集成测试（测整套系统）。它处在中间：用真实代码（不是 mock）测试两个包之间的接口。
+
+在 Crucible 中，契约测试写在消费者侧，而不是提供者侧。`web` 包为它期望从 `core` 拿到的 API 写契约测试。如果 `core` 以违反契约的方式变化，测试会在 `web` 中失败——也就是那个实际上会被搞坏的包。
+
+```alloy title="packages/web/contracts/core.contract.al"
+crucible.contract("core/formatCurrency") {
+  // 契约：返回一个以货币符号开头的字符串
+  const result = formatCurrency(42.5, "USD")
+  assert typeof result == "Text", "必须返回 Text"
+  assert result.startsWith("$"), "必须以货币符号开头"
+  assert result.contains("."), "必须包含小数分隔符"
+}
+
+crucible.contract("core/resolveUser") {
+  // 契约：未知用户返回 undefined（不是 null，不抛异常）
+  const result = resolveUser("nonexistent-id")
+  assert result === undefined, "未知用户必须返回 undefined"
+}
+```
+
+第二个契约正是当初本可以拦下生产事故的那种测试。它显式断言："缺失的用户必须返回 `undefined`，而不是一个字段全为 `undefined` 的对象。"
+
+## Crucible 如何发现契约
+
+Crucible 不需要手动注册。它会扫描每个包中匹配 `contracts/*.contract.al` 模式的文件，并通过解读 import 语句自动判定契约所针对的提供者包。
+
+在 `foundry ignite` 过程中，Crucible 会在提供者包构建之后、消费者包构建之前运行契约。这样，`core` 中的破坏性变更会在 `web` 还来不及编译之前就被拦住。
+
+```text title="Bellows 任务排序与契约"
+[bellows] core (build)           → 2.1 秒
+[bellows] core (contracts: web)  → 0.4 秒 ← web 的契约对 core 运行
+[bellows] core (contracts: api)  → 0.3 秒 ← api 的契约对 core 运行
+[bellows] web (build)            → 3.2 秒 ← 只在契约通过后启动
+[bellows] api (build)            → 2.8 秒
+```
+
+如果契约失败，Bellows 会立刻中止下游构建。你不必等 3 分钟让 `web` 抛一个令人困惑的编译错误。在破坏性变更发生后的几秒内，你就能拿到清晰的契约违规信息。
+
+## 如何写好契约
+
+我们在内部工作空间累计写了 400 多个契约测试。三种模式让有用的契约和噪声泾渭分明：
+
+- **测行为，不测形状。** 断言 `typeof result.name == "Text"` 的契约很脆弱——字段改名就失败。断言 `result.displayLabel().length > 0` 的契约，测的是消费者真正依赖的行为。
+- **显式测"缺失"。** 如果你的代码依赖某个字段不存在，就写契约断言它就是 `undefined`。隐式假设最终会变成隐形 bug。
+- **测错误路径。** 契约应该覆盖提供者拒绝输入、返回空结果或超时的情况。跨包 bug 的多数都藏在这些路径上。
+
+## 规模问题
+
+每次构建都跑 400 个契约听起来很贵。事实上，Quench 像缓存构建产物一样缓存契约结果。如果提供者与消费者都没变，契约结果就从缓存中恢复。一次典型 pull request 里实际执行的契约不到 20 个，其余都是缓存命中。
+
+平均每次构建多花约 2 到 4 秒。不跑它们的代价——正如我们在生产事故里学到的——是用用户信任和工程师工时来计量的。
+
+## 试一下
+
+向任意包里加一个 `contracts/` 目录，写一个从依赖中 import 的 `.contract.al` 文件，再跑 `foundry ignite`。Crucible 会自动捡起它。无需任何配置。
+
+从下游消费者最多的那个包开始——契约在那里产生的价值最大，而破坏性变更在那里造成的伤害也最大。

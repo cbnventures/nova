@@ -35,19 +35,29 @@ function BlogTagsPostsPage(props: ThemeBlogTagsPostsPageBlogTagsPostsPageProps) 
   });
 
   return (
-    <BlogLayout sidebar={props['sidebar']}>
+    <BlogLayout
+      sidebar={props['sidebar']}
+      showHeader
+      header={(
+        <>
+          <Heading as="h1">
+            {title}
+          </Heading>
+          {(props['tag']['description'] !== undefined) && (
+            <p
+              className={(props['className'] !== undefined) ? `nova-blog-description ${props['className']}` : 'nova-blog-description'}
+              style={props['style']}
+            >
+              {props['tag']['description']}
+            </p>
+          )}
+          <Link className="nova-blog-tags-posts-all-link" href={props['tag']['allTagsPath']}>
+            {viewAllTags}
+          </Link>
+        </>
+      )}
+    >
       <PageMetadata title={title} />
-      <header className="nova-blog-tags-posts-header">
-        <Heading as="h2">
-          {title}
-        </Heading>
-        {(props['tag']['description'] !== undefined) && (
-          <p className="nova-blog-tags-posts-description">{props['tag']['description']}</p>
-        )}
-        <Link className="nova-blog-tags-posts-all-link" href={props['tag']['allTagsPath']}>
-          {viewAllTags}
-        </Link>
-      </header>
       <BlogPostItems items={props['items']} />
       <BlogListPaginator metadata={props['listMetadata']} />
     </BlogLayout>

@@ -1,5 +1,8 @@
 import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
-import type { ReactNode } from 'react';
+import type {
+  CSSProperties,
+  ReactNode,
+} from 'react';
 
 /**
  * Theme - Doc Root - Layout - Doc Root Layout.
@@ -8,8 +11,14 @@ import type { ReactNode } from 'react';
  */
 export type ThemeDocRootLayoutDocRootLayoutPropsChildren = ReactNode;
 
+export type ThemeDocRootLayoutDocRootLayoutPropsClassName = string | undefined;
+
+export type ThemeDocRootLayoutDocRootLayoutPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocRootLayoutDocRootLayoutProps = {
   children: ThemeDocRootLayoutDocRootLayoutPropsChildren;
+  className?: ThemeDocRootLayoutDocRootLayoutPropsClassName;
+  style?: ThemeDocRootLayoutDocRootLayoutPropsStyle;
   [key: string]: unknown;
 };
 

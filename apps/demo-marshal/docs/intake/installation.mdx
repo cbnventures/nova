@@ -1,0 +1,43 @@
+---
+title: "Installation"
+sidebar_position: 1
+description: "Install Marshal via Spark or Vial. The container ships with the seal already pressed."
+tags:
+  - "setup"
+  - "installation"
+---
+
+# Installation
+
+Marshal installs from Spark or as a Vial container. Either way, it arrives with its own letterhead.
+
+## Prerequisites
+
+- Spark 3.0 or later
+- A repository (or several) that wants supervision
+- An afternoon. The first install always runs longer than expected — there is paperwork.
+
+## Install via Spark
+
+```bash title="Install Marshal"
+spark install marshal
+```
+
+Verify the install:
+
+```bash
+marshal --version
+```
+
+## Install via Vial
+
+```bash title="Pull the Marshal image"
+vial pull marshal/cli:latest
+```
+
+The container ships with the seal already pressed. Marshal is ready to file the moment it lands.
+
+## What Comes Next
+
+- [Your First Policy](/docs/intake/first-policy/) — File the first rule and watch the docket open.
+- [Policies](/docs/filings/policies/) — Written rules for stale issues, access tiers, scheduled work.

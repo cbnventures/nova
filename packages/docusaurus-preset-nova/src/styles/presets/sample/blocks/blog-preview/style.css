@@ -1,0 +1,41 @@
+/**
+ * Sample - `blog-preview` component overlay scaffold.
+ *
+ * @internal Reference template only. The shared structural CSS for this
+ *           surface lives at:
+ *           components/blog-preview/style.css
+ *
+ * Section headers below establish the canonical layout each preset adopts.
+ * Fill bodies with identity-specific rules - see preset.css for tokens and
+ * conventions.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container
+ * ============================ */
+
+/* ============================
+ * 2. Card
+ * ============================ */
+
+/* ============================
+ * 3. Date
+ * ============================ */
+
+/* ============================
+ * 4. Title
+ * ============================ */
+
+/* ============================
+ * 5. Excerpt
+ * ============================ */
+
+/* ============================
+ * 6. Read-more
+ * ============================ */
+
+/* ============================
+ * 7. Empty state
+ * ============================ */

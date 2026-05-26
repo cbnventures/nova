@@ -1,0 +1,104 @@
+/**
+ * Lantern - `DocSidebar` theme overlay.
+ *
+ * Sidebar reads as a margin gloss in a journal - gentle warm tones with
+ * generous breathing room. A soft-rounded amber chevron marks
+ * collapsible categories; hover and active state both lift to the same
+ * amber primary so the sidebar feels like a single ranged accent.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Sidebar Container
+ * ============================ */
+
+.nova-sidebar,
+.nova-sidebar-mobile-content {
+  font-size: 0.9rem;
+}
+
+/* ============================
+ * 2. Responsive Layout
+ * ============================ */
+
+/* Divider line scoped to the doc / blog aside column so the rule does not
+   leak into Footer cta `<aside>` (when `cta.contained: true`) or any other
+   unrelated `<aside>` markup an author might add (e.g. inside MDX). The
+   `--nova-lantern-border` token auto-switches in dark mode. */
+@media (min-width: 1024px) {
+  .nova-doc-root aside,
+  .nova-blog-root aside {
+    border-right: 1px solid var(--nova-lantern-border);
+  }
+}
+
+/* ============================
+ * 3. Version Switcher
+ * ============================ */
+
+/* Sidebar version-switcher trigger - mirrors color-mode-toggle in the navbar
+   actions cluster, adapted to fill the sidebar column width. */
+.nova-sidebar-version-switcher .nova-version-dropdown-summary {
+  padding: 0.5rem 0.75rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition);
+}
+
+.nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary,
+.nova-sidebar-version-switcher .nova-version-dropdown-summary:hover,
+.nova-sidebar-version-switcher .nova-version-dropdown-summary:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow);
+}
+
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown-summary {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
+}
+
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary,
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown-summary:hover,
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown-summary:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* Disclosure caret - rotates when open. */
+.nova-sidebar-version-switcher .nova-version-dropdown-summary::after {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+
+  content: "";
+  background-color: currentColor;
+
+  mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6' stroke='currentColor' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+
+  transition: transform var(--nova-lantern-sidebar-caret-duration) var(--nova-motion-easing);
+}
+
+.nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary::after {
+  transform: rotate(180deg);
+}
+

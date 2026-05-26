@@ -1,5 +1,5 @@
 /**
- * Sentinel — Blog Sidebar visual styling.
+ * Sentinel - Blog Sidebar visual styling.
  *
  * @since 0.15.0
  */
@@ -24,11 +24,7 @@
  * ============================ */
 
 .nova-blog-sidebar h4 {
-  color: var(--nova-color-neutral-800);
-}
-
-[data-theme="dark"] .nova-blog-sidebar h4 {
-  color: var(--nova-color-neutral-200);
+  color: var(--nova-color-text);
 }
 
 /* ============================
@@ -37,17 +33,13 @@
 
 /* Links with left border indicator matching doc sidebar. */
 .nova-blog-sidebar a {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
   border-left: 2px solid transparent;
   border-radius: 0 var(--nova-shape-radius) var(--nova-shape-radius) 0;
 
   transition: color var(--nova-motion-duration) ease,
               border-left-color var(--nova-motion-duration) ease,
               background-color var(--nova-motion-duration) ease;
-}
-
-[data-theme="dark"] .nova-blog-sidebar a {
-  color: var(--nova-color-neutral-400);
 }
 
 .nova-blog-sidebar a:hover,
@@ -65,6 +57,10 @@
 
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 95%);
 }
+
+/* ============================
+ * 4. Aside Padding
+ * ============================ */
 
 /* Override aside padding so the sidebar nav fills edge-to-edge
    and the scrollbar sits against the border. The sidebar's own

@@ -1,5 +1,9 @@
 /**
- * Sentinel — Footer (Embassy) visual styling.
+ * Sentinel - `Footer/Embassy` theme overlay.
+ *
+ * Directory-style footer with a quiet social header above multi-column
+ * link sections and a legal bar, on neutral light or watchtower-deep
+ * dark. CTA signature uses the primary -> accent gradient.
  *
  * @since 0.15.0
  */
@@ -17,18 +21,18 @@
  * ============================ */
 
 .nova-footer-embassy {
-  background-color: var(--nova-color-neutral-100);
-  border-top: 1px solid var(--nova-color-neutral-200);
+  background-color: var(--nova-color-surface-raised);
+  border-top: 1px solid var(--nova-color-border);
   padding: 0;
 }
 
 [data-theme="dark"] .nova-footer-embassy {
   background-color: var(--nova-sentinel-footer-bg);
-  border-top-color: var(--nova-color-neutral-800);
+  border-top-color: var(--nova-color-border);
 }
 
 /* ============================
- * 2. Footer Header
+ * 3. Footer Header
  * ============================ */
 
 .nova-footer-embassy-header {
@@ -42,12 +46,12 @@
 }
 
 .nova-footer-embassy-social a {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   transition: color var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-footer-embassy-social a {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-footer-embassy-social a:hover,
@@ -68,7 +72,7 @@
 }
 
 /* ============================
- * 3. Footer Directory
+ * 4. Footer Directory
  * ============================ */
 
 .nova-footer-embassy-directory {
@@ -89,23 +93,23 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--nova-color-neutral-700);
+  color: var(--nova-color-text);
   margin-bottom: 0.75rem;
 }
 
 [data-theme="dark"] .nova-footer-embassy-directory nav h3 {
-  color: var(--nova-color-neutral-300);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-footer-embassy-directory nav a {
   font-size: 0.875rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   padding: 0.25rem 0;
   transition: color var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-footer-embassy-directory nav a {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-footer-embassy-directory nav a:hover,
@@ -149,12 +153,12 @@
 }
 
 /* ============================
- * 4. Footer Legal Bar
+ * 5. Footer Legal Bar
  * ============================ */
 
 .nova-footer-embassy-legal {
   padding-block: 0.75rem;
-  border-top: 1px solid var(--nova-color-neutral-200);
+  border-top: 1px solid var(--nova-color-border);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -163,12 +167,12 @@
 }
 
 [data-theme="dark"] .nova-footer-embassy-legal {
-  border-top-color: var(--nova-color-neutral-800);
+  border-top-color: var(--nova-color-border);
 }
 
 .nova-footer-embassy-legal p {
   font-size: 0.75rem;
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
   margin: 0;
 }
 
@@ -182,7 +186,7 @@
 }
 
 /* ============================
- * 5. Directory Link Transitions
+ * 6. Directory Link Transitions
  * ============================ */
 
 .nova-footer-embassy-directory nav a {
@@ -190,9 +194,57 @@
 }
 
 /* ============================
- * 6. Social Icon Transitions
+ * 7. Social Icon Transitions
  * ============================ */
 
 .nova-footer-embassy-social a {
   transition: color var(--nova-motion-duration) ease;
+}
+
+/* ============================
+ * CTA - preset signature.
+ * ============================ */
+
+.nova-footer-embassy-cta {
+  position: relative;
+  padding-block: 3.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--nova-color-primary-600) 0%, var(--nova-color-primary-700) 60%, var(--nova-color-accent-600) 100%);
+  overflow: hidden;
+}
+
+.nova-footer-embassy-cta::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .nova-footer-embassy-cta {
+  color: var(--nova-color-text-inverse);
+  background: linear-gradient(135deg, var(--nova-color-primary-800) 0%, var(--nova-color-primary-900) 60%, color-mix(in srgb, var(--nova-color-accent-500), transparent 85%) 100%);
+}
+
+.nova-footer-embassy-cta p {
+  position: relative;
+  margin: 0;
+  font-family: var(--nova-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--nova-color-text-inverse);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.nova-footer-embassy-cta {
+  transition: filter var(--nova-footer-filter-duration) var(--nova-motion-easing);
+}
+
+.nova-footer-embassy-cta:hover,
+.nova-footer-embassy-cta:focus-visible {
+  filter: brightness(1.12);
 }

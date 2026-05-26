@@ -1,0 +1,123 @@
+---
+title: "تحليل الجمهور"
+sidebar_position: 2
+description: "يكتشف Resonance أين تتسرّب الجماهير بين بعضها. عرّف الشرائح، قِس التداخل بين الحملات، واعثر على الأنماط الكامنة في تدفقات النقرات."
+tags:
+  - "attribution"
+  - "analytics"
+---
+
+# تحليل الجمهور
+
+يكتشف Resonance أين تتسرّب الجماهير بين بعضها. عرّف الشرائح، قِس التداخل بين الحملات، واعثر على الأنماط الكامنة في تدفقات النقرات.
+
+## لماذا يهم التداخل
+
+غالباً ما تتشارك حملتان تستهدفان جمهورين «مختلفين» زواراً أكثر مما تتوقع. حين ينقر 40% من قائمة بريدك الإلكتروني أيضاً على إعلاناتك الاجتماعية، فأنت تدفع مرتين للوصول إلى الأشخاص أنفسهم. يجعل Resonance ذلك مرئياً.
+
+## تعريف الشرائح
+
+الشريحة جمهور مُسمّى يُعرَّف بمجموعة من الشروط. تُقيَّم الشرائح بمواجهة بيانات نقرات Beacon لحظياً.
+
+```bash title="إنشاء شريحة"
+signal resonance segment create \
+  --name "engaged-email" \
+  --condition "channel == email" \
+  --condition "clicks >= 3" \
+  --condition "last_click within 14d"
+```
+
+```json title="استجابة الشريحة"
+{
+  "id": "seg_01J9P4R6S8T2U0V3W1X5Y7Z9",
+  "name": "engaged-email",
+  "conditions": [
+    { "field": "channel", "operator": "==", "value": "email" },
+    { "field": "clicks", "operator": ">=", "value": 3 },
+    { "field": "last_click", "operator": "within", "value": "14d" }
+  ],
+  "size": 4280,
+  "updatedAt": "2025-02-20T12:00:00Z"
+}
+```
+
+## معاملات الشرائح
+
+| المعامل    | الوصف                  | مثال                              |
+|------------|------------------------|-----------------------------------|
+| `==`       | يساوي                  | `channel == email`                |
+| `!=`       | لا يساوي               | `channel != direct`               |
+| `>=`       | أكبر من أو يساوي       | `clicks >= 3`                     |
+| `<=`       | أصغر من أو يساوي       | `clicks <= 10`                    |
+| `in`       | يطابق أي قيمة في قائمة | `campaign in [launch, summer]`    |
+| `within`   | ضمن فترة زمنية         | `last_click within 7d`            |
+| `between`  | بين قيمتين (شاملة)     | `conversion_value between 10,100` |
+| `contains` | السلسلة تحتوي          | `variant contains hero`           |
+
+## قياس التداخل
+
+استعلم عن التداخل بين شريحتين أو أكثر:
+
+```bash title="قياس تداخل الجمهور"
+signal resonance overlap \
+  --segments "engaged-email,social-clickers,search-converters"
+```
+
+```json title="مخرَج التداخل"
+{
+  "segments": ["engaged-email", "social-clickers", "search-converters"],
+  "sizes": {
+    "engaged-email": 4280,
+    "social-clickers": 6120,
+    "search-converters": 2840
+  },
+  "overlaps": {
+    "engaged-email + social-clickers": { "count": 1720, "percent": 40.2 },
+    "engaged-email + search-converters": { "count": 890, "percent": 20.8 },
+    "social-clickers + search-converters": { "count": 1340, "percent": 21.9 },
+    "all-three": { "count": 510, "percent": 11.9 }
+  }
+}
+```
+
+في هذا المثال، يظهر 40.2% من جمهور البريد المتفاعل أيضاً ضمن شريحة المنقرين على وسائل التواصل. هذا هو التسرّب الذي يكتشفه Resonance.
+
+## اكتشاف التسرّب بين الحملات
+
+اكتشف متى تتنافس حملتان على الجمهور نفسه:
+
+```bash title="التسرّب بين الحملات"
+signal resonance bleed \
+  --campaigns "product-launch,summer-sale" \
+  --threshold 0.30
+```
+
+```json title="مخرَج اكتشاف التسرّب"
+{
+  "campaigns": ["product-launch", "summer-sale"],
+  "sharedAudience": 2840,
+  "bleedRate": 0.42,
+  "exceededThreshold": true,
+  "recommendation": "Consider merging audiences or staggering campaign windows to reduce spend overlap."
+}
+```
+
+معدّل تسرّب بنسبة 0.42 يعني أن 42% من الجمهور المشترك قد رأى كلتا الحملتين. وإن كانت العتبة 0.30، فإن Resonance يُعلِّم ذلك تداخلاً مفرطاً.
+
+## تصدير الشرائح
+
+صدِّر شريحة كملف CSV للاستخدام في أدوات خارجية:
+
+```bash title="تصدير شريحة"
+signal resonance segment export \
+  --name "engaged-email" \
+  --format csv \
+  --output ./engaged-email-segment.csv
+```
+
+يتضمن التصدير معرّفات زوار مجهولة الهوية وعدد النقرات والقنوات والطوابع الزمنية لآخر ظهور. لا تُدرَج أي معلومات تعريف شخصية.
+
+## الخطوات التالية
+
+- [QR والروابط العميقة](/docs/beacons/qr-deep-links/) — أنشئ روابط Flare للإسناد من العالم المادي إلى الرقمي.
+- [مرجع API](/docs/reference/api-reference/) — وصول برمجي إلى استعلامات الشرائح والتداخل.

@@ -1,0 +1,642 @@
+{
+  "home.appMarket.label": {
+    "message": "随时随地管理你的分区",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.description": {
+    "message": "来自这座房子的更新、模式与一些安静的随笔。",
+    "description": "Front page BlogPreview section description"
+  },
+  "home.blogPreview.heading": {
+    "message": "来自门廊灯的随笔",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.features.armDisarm.description": {
+    "message": "按分区、按用户或按时段布防或撤防。把控制权交给你信任的人——通过姓名、口令，或 HomeKit Home Hub 的在场状态。",
+    "description": "Front page Features card description for Arm / Disarm"
+  },
+  "home.features.armDisarm.title": {
+    "message": "布防 / 撤防",
+    "description": "Front page Features card title for Arm / Disarm"
+  },
+  "home.features.contactSensors.description": {
+    "message": "门被打开、窗被推起、栅栏闭合——每个接触事件都带时间戳，存入一份安静的日志。无需离开房间即可浏览传感器历史。",
+    "description": "Front page Features card description for Contact Sensors"
+  },
+  "home.features.contactSensors.title": {
+    "message": "接触式传感器",
+    "description": "Front page Features card title for Contact Sensors"
+  },
+  "home.features.deviceDiscovery.description": {
+    "message": "Lantern 会自动找到中枢上的每一个传感器和接触设备。无需手动配对，也无需配置文件。它只发现已经在那里的东西。",
+    "description": "Front page Features card description for Device Discovery"
+  },
+  "home.features.deviceDiscovery.title": {
+    "message": "设备发现",
+    "description": "Front page Features card title for Device Discovery"
+  },
+  "home.features.motionEvents.description": {
+    "message": "每一次动作都会带着方向和可选的置信度通过事件流。可回放、过滤、转交给中枢。不会有任何遗漏。",
+    "description": "Front page Features card description for Motion Events"
+  },
+  "home.features.motionEvents.title": {
+    "message": "动作事件",
+    "description": "Front page Features card title for Motion Events"
+  },
+  "home.features.sensorHistory.description": {
+    "message": "一份安静的日志，记录所发生的一切——动作、接触、布防状态——按分区与时间排序。无需离开仪表盘，便可回溯一周。",
+    "description": "Front page Features card description for Sensor History"
+  },
+  "home.features.sensorHistory.title": {
+    "message": "传感器历史",
+    "description": "Front page Features card title for Sensor History"
+  },
+  "home.features.zones.description": {
+    "message": "按位置分组设备——外围、室内、休息区。每个分区可独立布防，按名字温柔撤防。Lantern 从不大声张扬。",
+    "description": "Front page Features card description for Zones"
+  },
+  "home.features.zones.title": {
+    "message": "分区",
+    "description": "Front page Features card title for Zones"
+  },
+  "home.head.title": {
+    "message": "Lantern - 温柔守望，常在家中",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.ctaLabel": {
+    "message": "开始使用",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.eyebrow": {
+    "message": "全屋监护",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "温柔守望，常在家中。",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "在 Threadbare 查看",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.hero.tagline": {
+    "message": "Lantern 静静守护你的整个家——分区、动作、布防与撤防——从不大声张扬。每一间房、每一扇门、每一个安静的瞬间，都被温柔托起。",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.layout.description": {
+    "message": "Lantern 静静守护你的整个家——分区、动作、布防与撤防——从不大声张扬。",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.spotlight.description": {
+    "message": "描述谁住在哪里。其余的就交给 Lantern。",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.spotlight.heading": {
+    "message": "每个分区，被静静守护",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.stats.configFiles.label": {
+    "message": "配置文件",
+    "description": "Front page Stats label for config files count"
+  },
+  "home.stats.handoff.label": {
+    "message": "可移交时间",
+    "description": "Front page Stats label for handoff readiness"
+  },
+  "home.stats.heading": {
+    "message": "数字一览",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.sensorHistory.label": {
+    "message": "传感器历史",
+    "description": "Front page Stats label for sensor history"
+  },
+  "home.stats.zones.label": {
+    "message": "默认分区数",
+    "description": "Front page Stats label for default zones count"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "在 iOS 上可用",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "下载配套应用",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "在 Android 上可用",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "近期更新",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Lens 现在可以把家庭分区图渲染到平面图上，Beacon 也支持增量运行，仅重新评估发生变化的传感器。",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Lantern 2.4：Lens 平面图叠加层与 Beacon 增量运行",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "来自这座房子的更新、模式与一些安静的随笔。",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "来自门廊灯的随笔",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "楼上的家人应该知道前门已经关好，而不必给小狗发一条通知。Lantern 按受众路由事件，而非按事件类型。",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "在另一个房间静静守望，不惊动屋子",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "前门廊的动作传感器一天会被触发四十次，其中大多数是松鼠。在 Lantern 的历史视图里，松鼠便成了一种模式。",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "六个月的外围动作，浓缩成一张图",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "你信任的人无需拿着你的手机，就能撤防 Lantern 守护的任何分区——通过姓名、口令或 HomeKit 在场。",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "把布防与撤防交给你信任的人",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.description": {
+    "message": "Lantern 预设的每一个组件，使用示例数据渲染。",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.featuresIcons.armDisarm.description": {
+    "message": "按分区、用户或时段布防或撤防。通过姓名、口令或 HomeKit 在场，把控制权交给你信任的人。",
+    "description": "Showcase Features (with icons) card description for Arm / Disarm"
+  },
+  "showcase.featuresIcons.armDisarm.title": {
+    "message": "布防 / 撤防",
+    "description": "Showcase Features (with icons) card title for Arm / Disarm"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "家庭为何选择 Lantern",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.motionEvents.description": {
+    "message": "每一次动作都会带着方向和可选的置信度通过事件流。可回放、过滤、转交给中枢。",
+    "description": "Showcase Features (with icons) card description for Motion Events"
+  },
+  "showcase.featuresIcons.motionEvents.title": {
+    "message": "动作事件",
+    "description": "Showcase Features (with icons) card title for Motion Events"
+  },
+  "showcase.featuresIcons.zones.description": {
+    "message": "按位置分组设备——外围、室内、休息区。每个分区可独立布防，按名字温柔撤防。",
+    "description": "Showcase Features (with icons) card description for Zones"
+  },
+  "showcase.featuresIcons.zones.title": {
+    "message": "分区",
+    "description": "Showcase Features (with icons) card title for Zones"
+  },
+  "showcase.featuresNoIcons.contactSensors.description": {
+    "message": "门被打开、窗被推起、栅栏闭合——每个接触事件都带时间戳，存入一份安静的日志。",
+    "description": "Showcase Features (no icons) card description for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.contactSensors.title": {
+    "message": "接触式传感器",
+    "description": "Showcase Features (no icons) card title for Contact Sensors"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.description": {
+    "message": "Lantern 会自动找到中枢上的每一个传感器和接触设备。无需手动配对，也无需配置文件。",
+    "description": "Showcase Features (no icons) card description for Device Discovery"
+  },
+  "showcase.featuresNoIcons.deviceDiscovery.title": {
+    "message": "设备发现",
+    "description": "Showcase Features (no icons) card title for Device Discovery"
+  },
+  "showcase.featuresNoIcons.sensorHistory.description": {
+    "message": "一份安静的日志，记录所发生的一切——动作、接触、布防状态——按分区与时间排序。",
+    "description": "Showcase Features (no icons) card description for Sensor History"
+  },
+  "showcase.featuresNoIcons.sensorHistory.title": {
+    "message": "传感器历史",
+    "description": "Showcase Features (no icons) card title for Sensor History"
+  },
+  "showcase.featuresSix.armDisarm.description": {
+    "message": "按分区、用户或时段。通过姓名、口令或 HomeKit Home Hub 在场进行移交。",
+    "description": "Showcase Features (six items) card description for Arm / Disarm"
+  },
+  "showcase.featuresSix.armDisarm.title": {
+    "message": "布防 / 撤防",
+    "description": "Showcase Features (six items) card title for Arm / Disarm"
+  },
+  "showcase.featuresSix.contactSensors.description": {
+    "message": "门、窗、栅栏——每个接触事件都带时间戳，并写入传感器历史日志。",
+    "description": "Showcase Features (six items) card description for Contact Sensors"
+  },
+  "showcase.featuresSix.contactSensors.title": {
+    "message": "接触式传感器",
+    "description": "Showcase Features (six items) card title for Contact Sensors"
+  },
+  "showcase.featuresSix.deviceDiscovery.description": {
+    "message": "自动发现中枢上的每一个传感器和接触设备。无需手动配对。",
+    "description": "Showcase Features (six items) card description for Device Discovery"
+  },
+  "showcase.featuresSix.deviceDiscovery.title": {
+    "message": "设备发现",
+    "description": "Showcase Features (six items) card title for Device Discovery"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "一座家，囊括一切",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.motionEvents.description": {
+    "message": "带方向的动作信息与可选的置信度。可回放、过滤、转交给中枢，不会遗漏任何事件。",
+    "description": "Showcase Features (six items) card description for Motion Events"
+  },
+  "showcase.featuresSix.motionEvents.title": {
+    "message": "动作事件",
+    "description": "Showcase Features (six items) card title for Motion Events"
+  },
+  "showcase.featuresSix.sensorHistory.description": {
+    "message": "动作、接触与布防状态汇入一份安静的日志。无需离开仪表盘，便可回溯一周。",
+    "description": "Showcase Features (six items) card description for Sensor History"
+  },
+  "showcase.featuresSix.sensorHistory.title": {
+    "message": "传感器历史",
+    "description": "Showcase Features (six items) card title for Sensor History"
+  },
+  "showcase.featuresSix.zones.description": {
+    "message": "按房间、走廊、外部或电器组分组。独立布防。按名字温柔撤防。",
+    "description": "Showcase Features (six items) card description for Zones"
+  },
+  "showcase.featuresSix.zones.title": {
+    "message": "分区",
+    "description": "Showcase Features (six items) card title for Zones"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "阅读文档",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "组件展示",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Lantern 的每个组件，集中在一处演示。",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "在 Threadbare 查看",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "本页使用 Lantern 世界中的示例数据，渲染 @cbnventures/docusaurus-preset-nova/blocks 中的每个组件，便于你观察它们的外观与行为。",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "开始使用",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "温柔守望，常在家中。",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Lantern 静静守护你的整个家——分区、动作、布防与撤防——从不大声张扬。",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "或者使用 Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "使用 Spark 安装",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripText.label": {
+    "message": "快速安装",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload（仅 App Store）",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload（两家商店）",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload（仅 Google Play）",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload（无标签）",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview（无描述）",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview（带描述）",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features（带图标）",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features（无图标、无标题）",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features（六项，图标混合）",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero（完整版）",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero（最简版）",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip（copyTarget: block）",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip（copyTarget: icon）",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip（无标签）",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip（copyTarget: text）",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight（带代码）",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight（带文字）",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats（带标题与描述）",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats（无标题）",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology（行内用法）",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter（默认）",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter（不循环）",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter（无前缀）",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter（慢速）",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.layout.description": {
+    "message": "Lantern 组件展示，演示来自 docusaurus-preset-nova 的每一个组件。",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "三条命令，从零到一座被守护的家。",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "快速开始",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Lantern 发现你中枢上的每一个设备，按分区分组，并把每一次动作和接触事件流入事件日志。布防状态会被持久化——断电再上电，分区依旧记得。",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "工作原理",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.statsFull.configFiles.label": {
+    "message": "配置文件",
+    "description": "Showcase Stats (full) label for config files"
+  },
+  "showcase.statsFull.description": {
+    "message": "典型四分区家庭设置中的关键数字。",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.devices.label": {
+    "message": "已发现的设备",
+    "description": "Showcase Stats (full) label for devices discovered"
+  },
+  "showcase.statsFull.handoff.label": {
+    "message": "可移交时间",
+    "description": "Showcase Stats (full) label for handoff readiness"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Lantern 指标",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.zones.label": {
+    "message": "默认分区数",
+    "description": "Showcase Stats (full) label for default zones"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "配置文件",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "清单",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.statsNoHeading.sensorHistory.label": {
+    "message": "传感器历史",
+    "description": "Showcase Stats (no heading) label for sensor history"
+  },
+  "showcase.statsNoHeading.zones.label": {
+    "message": "分区",
+    "description": "Showcase Stats (no heading) label for zones"
+  },
+  "showcase.terminology.armState.label": {
+    "message": "布防状态",
+    "description": "Showcase Terminology displayed text for arm state"
+  },
+  "showcase.terminology.armState.title": {
+    "message": "布防/撤防控制",
+    "description": "Showcase Terminology hover title for arm state"
+  },
+  "showcase.terminology.eventStream.label": {
+    "message": "事件流",
+    "description": "Showcase Terminology displayed text for event stream"
+  },
+  "showcase.terminology.eventStream.title": {
+    "message": "实时通知流",
+    "description": "Showcase Terminology hover title for event stream"
+  },
+  "showcase.terminology.handoffSystem.label": {
+    "message": "移交系统",
+    "description": "Showcase Terminology displayed text for handoff system"
+  },
+  "showcase.terminology.handoffSystem.title": {
+    "message": "信任之人移交",
+    "description": "Showcase Terminology hover title for handoff system"
+  },
+  "showcase.terminology.paragraph1.afterArmState": {
+    "message": "管理，且能在断电重启后保持。当传感器被触发时，事件会通过",
+    "description": "Showcase Terminology paragraph 1 fragment after arm state"
+  },
+  "showcase.terminology.paragraph1.afterEventStream": {
+    "message": "传递，绝不被遗漏。",
+    "description": "Showcase Terminology paragraph 1 fragment after event stream"
+  },
+  "showcase.terminology.paragraph1.afterZone": {
+    "message": "按位置对设备进行分组。每个分区都由一个",
+    "description": "Showcase Terminology paragraph 1 fragment after zone"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Lantern 使用",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.paragraph2.afterHandoff": {
+    "message": "，家庭成员可以共享对",
+    "description": "Showcase Terminology paragraph 2 fragment after handoff system"
+  },
+  "showcase.terminology.paragraph2.afterSensorHistory": {
+    "message": "的控制权，而无需交换凭据。",
+    "description": "Showcase Terminology paragraph 2 fragment after sensor history"
+  },
+  "showcase.terminology.paragraph2.afterZoneAccess": {
+    "message": "与",
+    "description": "Showcase Terminology paragraph 2 fragment after zone access"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "借助",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.sensorHistory.label": {
+    "message": "传感器历史",
+    "description": "Showcase Terminology displayed text for sensor history"
+  },
+  "showcase.terminology.sensorHistory.title": {
+    "message": "历史传感器数据",
+    "description": "Showcase Terminology hover title for sensor history"
+  },
+  "showcase.terminology.zone.label": {
+    "message": "分区",
+    "description": "Showcase Terminology displayed text for zone"
+  },
+  "showcase.terminology.zone.title": {
+    "message": "命名的房间、走廊或外部组",
+    "description": "Showcase Terminology hover title for zone"
+  },
+  "showcase.terminology.zoneAccess.label": {
+    "message": "分区访问",
+    "description": "Showcase Terminology displayed text for zone access"
+  },
+  "showcase.terminology.zoneAccess.title": {
+    "message": "分区布防/撤防访问",
+    "description": "Showcase Terminology hover title for zone access"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "我喜欢 ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "欢迎来到 ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "快速",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "灵活",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "免费",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "设计师",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "开发者",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "为 ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "该作者尚未撰写任何文章。",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "查看所有作者",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.post.plurals": {
+    "message": "{count} 篇博文",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} 含有标签「{tagName}」",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "跳到主要内容",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.footer.copyright": {
+    "message": "版权所有 © 2025-2026 CBN Ventures LLC。保留所有权利。",
+    "description": "Footer copyright text, localized per-locale via i18n code.json"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "标签",
+    "description": "The title of the tag list page"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Lantern 品牌缩略图。",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "品牌标识在 Frame 中闪耀 — 温暖纸质卡片,含图像与标题。",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame(无标题)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame(带标题)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  }
+}

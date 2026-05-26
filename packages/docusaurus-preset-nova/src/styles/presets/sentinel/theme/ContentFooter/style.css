@@ -1,42 +1,41 @@
 /**
- * Sentinel — Content Footer visual styling.
+ * Sentinel - `ContentFooter` theme overlay.
+ *
+ * The closing meta row beneath an article - display-font uppercase share
+ * buttons (no radius, monitor-console flavor), edit-this-page link in
+ * muted neutral, last-updated stamp quieter still.
  *
  * @since 0.15.0
  */
 
-/* ============================
- * Section Label
- * ============================ */
+/**
+ * ============================
+ * 1. Section label - display, lightly tracked
+ * ============================
+ */
 
 .nova-content-footer-section-label {
   font-family: var(--nova-font-display);
   letter-spacing: 0.04em;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 }
 
-[data-theme="dark"] .nova-content-footer-section-label {
-  color: var(--nova-color-neutral-400);
-}
-
-/* ============================
- * Share Button
- * ============================ */
+/**
+ * ============================
+ * 2. Share button - display uppercase, no radius
+ * ============================
+ */
 
 .nova-content-footer-share-button {
   font-family: var(--nova-font-display);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--nova-color-neutral-500);
-  border-color: var(--nova-color-neutral-200);
+  color: var(--nova-color-text-muted);
+  border-color: var(--nova-color-border);
   border-radius: 0;
 
   transition: color var(--nova-motion-duration) ease,
               border-color var(--nova-motion-duration) ease;
-}
-
-[data-theme="dark"] .nova-content-footer-share-button {
-  color: var(--nova-color-neutral-400);
-  border-color: var(--nova-color-neutral-800);
 }
 
 .nova-content-footer-share-button:hover,
@@ -51,9 +50,11 @@
   border-color: var(--nova-color-primary-600);
 }
 
-/* ============================
- * Share Copied
- * ============================ */
+/**
+ * ============================
+ * 3. Share copied state
+ * ============================
+ */
 
 .nova-content-footer-share-copied {
   color: var(--nova-color-primary-500);
@@ -65,15 +66,15 @@
   border-color: var(--nova-color-primary-600);
 }
 
-/* ============================
- * Edit This Page
- * ============================ */
+/**
+ * ============================
+ * 4. Edit this page link
+ * ============================
+ */
 
 .nova-content-footer-edit .nova-edit-this-page {
-  font-size: 0.8125rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--nova-color-neutral-500);
+  font-size: 0.875rem;
+  color: var(--nova-color-text-muted);
   text-decoration: none;
   transition: color var(--nova-motion-duration) ease;
 }
@@ -88,11 +89,13 @@
   color: var(--nova-color-primary-400);
 }
 
-/* ============================
- * Last Updated
- * ============================ */
+/**
+ * ============================
+ * 5. Last updated stamp
+ * ============================
+ */
 
 .nova-content-footer-edit .nova-last-updated {
-  font-size: 0.75rem;
-  color: var(--nova-color-neutral-400);
+  font-size: 0.875rem;
+  color: var(--nova-color-text-soft);
 }

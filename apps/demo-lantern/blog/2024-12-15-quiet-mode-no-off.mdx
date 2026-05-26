@@ -1,0 +1,52 @@
+---
+title: "Quiet mode does not have an off switch"
+authors:
+  - "theo"
+tags:
+  - "quiet-mode"
+  - "modes"
+date: "2024-12-15"
+---
+
+A bedroom that knows it is a bedroom should not be loud about being one. Lantern's quiet mode never has an off switch — because the bedroom never stops being the bedroom.
+
+{/* truncate */}
+
+The mode loosens during travel. Tightens during a long weekend home alone. But the rule is steady: the bedroom asks no questions, sends no alerts, holds no opinions. The lamp just waits.
+
+The first version of Lantern had an off switch on every zone. The bedroom switch was the one we used most often. We disarmed the bedroom on a Friday evening to read in bed without the lamp pulsing every time we turned a page. Then we forgot it was off. The cat walked across the bed at 2am, the contact on the window opened during a thunderstorm, the upstairs went quiet for three hours and nothing in the house knew. We did not know either. The bedroom had no opinion because we had told it not to.
+
+That weekend we removed the off switch. The bedroom got a quiet mode instead — a mode where the lamp is dim, the alerts are silent, the dashboard does not refresh. But the sensors keep listening. The history keeps writing. The watch logic keeps running, just without an audience.
+
+The configuration looks small because the philosophy is small.
+
+```yaml title="lantern.modes.yml"
+zones:
+  bedroom:
+    sensors: [motion-bedroom, contact-window]
+    schedule:
+      always: quiet         # never off, never alert
+    quiet-mode:
+      alerts:    none       # the lamp says nothing
+      history:   write      # the ledger keeps writing
+      handoffs:  pass       # other zones can still ask
+      surface:   dim        # the dashboard tile fades
+```
+
+There are four lines of behavior in quiet mode. None of them are an off switch. The lamp is dim. The history keeps writing. Other zones can still ask the bedroom what it has seen. The bedroom answers truthfully, just very softly.
+
+We learned the rule from the second weekend. The cat walked across the bed again at 1:47am. The window contact reported a brief open at 3:09 — not from a thunderstorm, this time, just the cat finding a draft. The lamp said nothing. The household slept through both. Sunday afternoon we read the ledger over coffee, saw the line about the window, walked upstairs to look at the latch. The latch needed a half-turn. We turned it. The lantern went back to being quiet.
+
+A bedroom is a room with a single rule: it is for sleep. Quiet mode is the same rule, written for a lamp. Off would have been simpler. Quiet is what the room actually needed.
+
+The same rule has spread to other rooms by now. The nursery in one of our households was the second to get it. The home office of a household member who works the early shift was the third. The list of zones that wear the *quiet* label is short on purpose — it is the list of rooms where the lamp is allowed to be present without being audible.
+
+```bash
+$ lantern zones list --mode quiet
+zone           since         alerts   history   handoffs   surface
+bedroom        2024-12-15    none     write     pass       dim
+nursery        2025-02-08    none     write     pass       off
+home-office    2025-09-21    none     write     pass       dim
+```
+
+The list grows slowly. We have not added a quiet zone in seven months. The household decides which rooms wear quiet, and most rooms do not need it. The kitchen needs to be heard. The hallway needs to be present. The bedroom asks for nothing, and the lamp obliges. That is the whole agreement.

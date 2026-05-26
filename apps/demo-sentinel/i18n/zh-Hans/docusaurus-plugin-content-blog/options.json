@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "博客",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "威胁研究、态势通告，以及关于持续信任的思考。",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "近期文章",
+    "description": "The label for the left sidebar"
+  }
+}

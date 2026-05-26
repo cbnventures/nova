@@ -1,0 +1,156 @@
+---
+title: "سياستك الأولى"
+sidebar_position: 2
+description: "اكتب سياسة ثقة بصيغة .grain، واربطها بمورد، وراقب Watchtower يُقيّمها آنياً."
+tags:
+  - "getting started"
+  - "tutorial"
+---
+
+import Details from '@theme/Details';
+
+# سياستك الأولى
+
+تُحدّد سياسة الثقة الشروط التي يُمنح بموجبها الوصول، والمورد الذي تحميه، وما يحدث حين لا تعود الشروط مستوفاة. يستعرض هذا الدليل كتابة سياسة من الصفر، والتحقّق من صحّتها، ومراقبة Watchtower وهو يُقيّمها.
+
+## كتابة السياسة
+
+أنشئ ملفّاً باسم `web-access.grain` في مجلّد السياسات لديك:
+
+```text title="policies/web-access.grain"
+policy "web-application-access" {
+  // highlight-next-line
+  resource = "web-app-production"
+  effect   = "allow"
+
+  conditions {
+    // highlight-start
+    device.posture   >= 80
+    user.mfa         = true
+    network.location = ["office", "vpn"]
+    // highlight-end
+  }
+
+  on_failure {
+    action = "revoke"
+    notify = "security-ops"
+    log    = "spyglass"
+  }
+}
+```
+
+تتألّف كلّ سياسة من ثلاثة أقسام:
+
+- **المورد والأثر**، ما تحميه السياسة وما إذا كانت تسمح بالوصول أم تمنعه.
+- **الشروط**، متطلّبات الثقة التي يجب أن تتحقّق جميعها في الوقت ذاته.
+- **عند الإخفاق**، ما يحدث حين لا تعود الشروط مستوفاة أثناء الجلسة.
+
+## التحقّق قبل التطبيق
+
+تحقّق دائماً من السياسة قبل تطبيقها على مورد فعلي:
+
+```bash title="التحقّق من السياسة"
+sentinel policy validate policies/web-access.grain
+```
+
+```text title="مخرجات التحقّق"
+Validating: policies/web-access.grain
+  Syntax:     valid
+  Resource:   web-app-production (found, 3 active sessions)
+  Conditions: 3 rules, all supported
+  On failure: revoke + notify (security-ops channel configured)
+
+  Dry-run impact:
+    Current sessions:  3
+    Would pass:        2
+    Would fail:        1 (device posture score 74, threshold 80)
+
+Validation complete. No errors.
+```
+
+:::tip
+شغّل `sentinel policy validate --verbose` لمشاهدة التفصيل الكامل لتقييم كلّ جلسة نشطة. هذه أسرع طريقة لفهم كيف ستؤثّر سياسة جديدة على المستخدمين المتّصلين حالياً.
+:::
+
+## تطبيق السياسة
+
+طبّق السياسة بعد التحقّق منها لبدء فرضها:
+
+```bash title="تطبيق السياسة"
+sentinel policy apply policies/web-access.grain
+```
+
+```text title="مخرجات التطبيق"
+Applying policy: web-application-access
+  Resource:        web-app-production
+  Effect:          allow
+  Conditions:      3 rules
+  Enforcement:     active
+
+  Watchtower: first evaluation in 90s
+  Spyglass:   logging enabled for this policy
+```
+
+يبدأ Watchtower تقييم كلّ الجلسات النشطة مقابل السياسة الجديدة خلال 90 ثانية. تُلغى تلقائياً الجلسات التي لا تستوفي الشروط.
+
+## مراقبة التقييم
+
+راقب تقييمات Watchtower آنياً:
+
+```bash title="مراقبة التقييمات المباشرة"
+sentinel watchtower watch --policy web-application-access
+```
+
+```text title="مخرجات التقييم المباشر"
+Watchtower — web-application-access (every 90s)
+  [14:30:00] dev_a3b7c9d1 user=j.chen    posture=92 mfa=true  net=office  → PASS
+  [14:30:00] dev_f8e2d4c6 user=m.torres  posture=88 mfa=true  net=vpn     → PASS
+  [14:30:00] dev_b1a9c3e7 user=k.patel   posture=74 mfa=true  net=office  → FAIL (posture < 80)
+    → Access revoked. Notification sent to security-ops.
+  [14:31:30] dev_a3b7c9d1 user=j.chen    posture=92 mfa=true  net=office  → PASS
+  [14:31:30] dev_f8e2d4c6 user=m.torres  posture=87 mfa=true  net=vpn     → PASS
+```
+
+أدّى التقييم المُخفق للمستخدم `k.patel` إلى إلغاء فوري للوصول. أغلق Drawbridge نفق Filament. وعلى المستخدم أن يُعالج مشكلة الوضع الأمني للجهاز ويُعيد المصادقة لاستعادة الوصول.
+
+## مرجع بنية السياسة
+
+<Details>
+<summary>المخطّط الكامل للسياسة</summary>
+
+```text title="Policy schema reference"
+policy "<name>" {
+  resource = "<resource-id>"
+  effect   = "allow" | "deny"
+  priority = <number>              # optional, default 100
+
+  conditions {
+    device.posture    >= | <= | = <number>
+    device.encryption = true | false
+    device.os         = ["<os-name>", ...]
+    user.mfa          = true | false
+    user.role         = ["<role>", ...]
+    user.department   = ["<dept>", ...]
+    network.location  = ["<location>", ...]
+    network.ip_range  = ["<cidr>", ...]
+    behavior.score    >= | <= | = <number>
+    session.age       <= <seconds>
+    time.window       = "<cron-expression>"
+  }
+
+  on_failure {
+    action  = "revoke" | "notify" | "log"
+    notify  = "<channel>"
+    log     = "spyglass"
+    step_up = "mfa"               # optional, request re-authentication
+  }
+}
+```
+
+</Details>
+
+## الخطوات التالية
+
+- [سياسات الثقة](/docs/trust/trust-policies/)، قواعد السياسة وشروطها وقابليّة التركيب وسلاسل الوراثة.
+- [التحكّم في الوصول](/docs/trust/access-control/)، قواعد Drawbridge، والوصول المحدود زمنياً، ومحفّزات الإلغاء.
+- [محاكاة السياسة](/docs/operations/policy-simulation/)، اختبر السياسات مقابل حركة بيانات حقيقية قبل فرضها.

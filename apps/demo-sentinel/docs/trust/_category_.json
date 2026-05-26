@@ -4,6 +4,7 @@
   "collapsible": true,
   "collapsed": true,
   "link": {
-    "type": "generated-index"
+    "type": "generated-index",
+    "description": "The Sentinel trust engine — policy grammar and evaluation order, Garrison device enrollment with posture baselines, and Drawbridge access control with context-aware grants, time bounds, and emergency overrides."
   }
 }

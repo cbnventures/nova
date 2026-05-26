@@ -4,24 +4,26 @@ import { LIB_REGEX_HEX_COLOR } from './lib/regex.js';
 import { presetsIndexNames, presetsIndexPresets } from './presets/index.js';
 
 import type {
+  OptionsPluginOptionsOverridesColorsBorder,
+  OptionsPluginOptionsOverridesColorsDanger,
+  OptionsPluginOptionsOverridesColorsPrimary,
+  OptionsPluginOptionsOverridesColorsSecondary,
+  OptionsPluginOptionsOverridesColorsText,
+  OptionsPluginOptionsOverridesColorsWarning,
   OptionsResolvePresetBasePreset,
   OptionsResolvePresetOptions,
   OptionsResolvePresetResolvedColorsAccent,
-  OptionsResolvePresetResolvedColorsNeutral,
+  OptionsResolvePresetResolvedColorsBorder,
+  OptionsResolvePresetResolvedColorsDanger,
   OptionsResolvePresetResolvedColorsPrimary,
-  OptionsResolvePresetResolvedDepthCards,
-  OptionsResolvePresetResolvedDepthCodeBlocks,
+  OptionsResolvePresetResolvedColorsText,
+  OptionsResolvePresetResolvedColorsWarning,
   OptionsResolvePresetResolvedFontsBody,
   OptionsResolvePresetResolvedFontsCode,
   OptionsResolvePresetResolvedFontsDisplay,
   OptionsResolvePresetResolvedFooter,
   OptionsResolvePresetResolvedLogo,
-  OptionsResolvePresetResolvedMotionHoverEffects,
-  OptionsResolvePresetResolvedMotionSpeed,
-  OptionsResolvePresetResolvedMotionStaggeredReveals,
   OptionsResolvePresetResolvedNavbar,
-  OptionsResolvePresetResolvedShapeDensity,
-  OptionsResolvePresetResolvedShapeRadius,
   OptionsResolvePresetReturns,
   OptionsValidateOptionsData,
   OptionsValidateOptionsReturns,
@@ -44,33 +46,35 @@ const pluginOptionsSchema = Joi.object({
     .required(),
   overrides: Joi.object({
     colors: Joi.object({
-      primary: Joi.string()
-        .pattern(LIB_REGEX_HEX_COLOR)
-        .optional(),
-      accent: Joi.string()
-        .pattern(LIB_REGEX_HEX_COLOR)
-        .optional(),
-      neutral: Joi.string()
-        .pattern(LIB_REGEX_HEX_COLOR)
-        .optional(),
+      primary: Joi.object({
+        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      }).optional(),
+      secondary: Joi.object({
+        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      }).optional(),
+      text: Joi.object({
+        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      }).optional(),
+      border: Joi.object({
+        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      }).optional(),
+      warning: Joi.object({
+        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      }).optional(),
+      danger: Joi.object({
+        light: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+        dark: Joi.string().pattern(LIB_REGEX_HEX_COLOR).optional(),
+      }).optional(),
     }).default(),
     fonts: Joi.object({
       display: Joi.string().optional(),
       body: Joi.string().optional(),
       code: Joi.string().optional(),
-    }).default(),
-    shape: Joi.object({
-      radius: Joi.string().valid('sharp', 'rounded', 'pill').optional(),
-      density: Joi.string().valid('compact', 'comfortable', 'spacious').optional(),
-    }).default(),
-    depth: Joi.object({
-      cards: Joi.string().valid('flat', 'elevated', 'glass').optional(),
-      codeBlocks: Joi.string().valid('flat', 'bordered', 'elevated').optional(),
-    }).default(),
-    motion: Joi.object({
-      speed: Joi.string().valid('none', 'subtle', 'normal', 'expressive').optional(),
-      staggeredReveals: Joi.boolean().optional(),
-      hoverEffects: Joi.boolean().optional(),
     }).default(),
     navbar: Joi.string().valid('bridge', 'canopy', 'monolith', 'compass').optional(),
     footer: Joi.string().valid('commons', 'embassy', 'ledger', 'launchpad').optional(),
@@ -132,11 +136,18 @@ const themeConfigSchema = Joi.object({
     title: Joi.string().allow('').default(''),
     logo: Joi.object({
       alt: Joi.string().optional(),
-      src: Joi.string().optional(),
-      srcDark: Joi.string().optional(),
+      src: Joi.object({
+        light: Joi.string().optional(),
+        dark: Joi.string().optional(),
+      }).default(),
       href: Joi.string().optional(),
-      wordmark: Joi.string().optional(),
-      wordmarkDark: Joi.string().optional(),
+      target: Joi.string().optional(),
+      rel: Joi.string().optional(),
+      ariaLabel: Joi.string().optional(),
+      wordmark: Joi.object({
+        light: Joi.string().optional(),
+        dark: Joi.string().optional(),
+      }).default(),
       title: Joi.string().optional(),
     }).default(),
     image: Joi.string().allow('').default(''),
@@ -181,21 +192,38 @@ const themeConfigSchema = Joi.object({
     textColor: Joi.string().optional(),
     isCloseable: Joi.boolean().default(true),
   }).optional(),
+  backToTopButton: Joi.boolean().default(true),
+  errorPages: Joi.object({
+    notFound: Joi.object({
+      title: Joi.string().optional(),
+      description: Joi.string().optional(),
+      backHomeLabel: Joi.string().optional(),
+      backHomeHref: Joi.string().optional(),
+    }).optional(),
+    errorPageContent: Joi.object({
+      title: Joi.string().optional(),
+      retryLabel: Joi.string().optional(),
+    }).optional(),
+    error: Joi.object({
+      retryLabel: Joi.string().optional(),
+    }).optional(),
+  }).optional(),
   footer: Joi.alternatives()
     .try(
       Joi.boolean().valid(false),
       Joi.object({
-        cta: Joi.string().optional(),
+        cta: Joi.alternatives()
+          .try(
+            Joi.string(),
+            Joi.object({
+              label: Joi.string().required(),
+              href: Joi.string().required(),
+            }),
+          )
+          .optional(),
       }).unknown(true),
     )
     .default(false),
-  mermaid: Joi.object({
-    theme: Joi.object({
-      dark: Joi.string().default('dark'),
-      light: Joi.string().default('default'),
-    }).default(),
-    options: Joi.object().unknown(true).default({}),
-  }).default(),
 }).unknown(true);
 
 /**
@@ -248,23 +276,41 @@ export function resolvePreset(options: OptionsResolvePresetOptions): OptionsReso
 
   const resolvedLogo: OptionsResolvePresetResolvedLogo = basePreset['logo'];
 
-  let resolvedColorsPrimary: OptionsResolvePresetResolvedColorsPrimary = basePreset['colors']['primary'];
+  const overridePrimary: OptionsPluginOptionsOverridesColorsPrimary = options['overrides']['colors']['primary'];
+  const resolvedColorsPrimary: OptionsResolvePresetResolvedColorsPrimary = {
+    light: (overridePrimary !== undefined && overridePrimary['light'] !== undefined) ? overridePrimary['light'] : basePreset['colors']['primary']['light'],
+    dark: (overridePrimary !== undefined && overridePrimary['dark'] !== undefined) ? overridePrimary['dark'] : basePreset['colors']['primary']['dark'],
+  };
 
-  if (options['overrides']['colors']['primary'] !== undefined) {
-    resolvedColorsPrimary = options['overrides']['colors']['primary'];
-  }
+  const overrideSecondary: OptionsPluginOptionsOverridesColorsSecondary = options['overrides']['colors']['secondary'];
+  const resolvedColorsAccent: OptionsResolvePresetResolvedColorsAccent = {
+    light: (overrideSecondary !== undefined && overrideSecondary['light'] !== undefined) ? overrideSecondary['light'] : basePreset['colors']['accent']['light'],
+    dark: (overrideSecondary !== undefined && overrideSecondary['dark'] !== undefined) ? overrideSecondary['dark'] : basePreset['colors']['accent']['dark'],
+  };
 
-  let resolvedColorsAccent: OptionsResolvePresetResolvedColorsAccent = basePreset['colors']['accent'];
+  const overrideText: OptionsPluginOptionsOverridesColorsText = options['overrides']['colors']['text'];
+  const resolvedColorsText: OptionsResolvePresetResolvedColorsText = {
+    light: (overrideText !== undefined && overrideText['light'] !== undefined) ? overrideText['light'] : basePreset['colors']['text']['light'],
+    dark: (overrideText !== undefined && overrideText['dark'] !== undefined) ? overrideText['dark'] : basePreset['colors']['text']['dark'],
+  };
 
-  if (options['overrides']['colors']['accent'] !== undefined) {
-    resolvedColorsAccent = options['overrides']['colors']['accent'];
-  }
+  const overrideBorder: OptionsPluginOptionsOverridesColorsBorder = options['overrides']['colors']['border'];
+  const resolvedColorsBorder: OptionsResolvePresetResolvedColorsBorder = {
+    light: (overrideBorder !== undefined && overrideBorder['light'] !== undefined) ? overrideBorder['light'] : basePreset['colors']['border']['light'],
+    dark: (overrideBorder !== undefined && overrideBorder['dark'] !== undefined) ? overrideBorder['dark'] : basePreset['colors']['border']['dark'],
+  };
 
-  let resolvedColorsNeutral: OptionsResolvePresetResolvedColorsNeutral = basePreset['colors']['neutral'];
+  const overrideWarning: OptionsPluginOptionsOverridesColorsWarning = options['overrides']['colors']['warning'];
+  const resolvedColorsWarning: OptionsResolvePresetResolvedColorsWarning = {
+    light: (overrideWarning !== undefined && overrideWarning['light'] !== undefined) ? overrideWarning['light'] : basePreset['colors']['warning']['light'],
+    dark: (overrideWarning !== undefined && overrideWarning['dark'] !== undefined) ? overrideWarning['dark'] : basePreset['colors']['warning']['dark'],
+  };
 
-  if (options['overrides']['colors']['neutral'] !== undefined) {
-    resolvedColorsNeutral = options['overrides']['colors']['neutral'];
-  }
+  const overrideDanger: OptionsPluginOptionsOverridesColorsDanger = options['overrides']['colors']['danger'];
+  const resolvedColorsDanger: OptionsResolvePresetResolvedColorsDanger = {
+    light: (overrideDanger !== undefined && overrideDanger['light'] !== undefined) ? overrideDanger['light'] : basePreset['colors']['danger']['light'],
+    dark: (overrideDanger !== undefined && overrideDanger['dark'] !== undefined) ? overrideDanger['dark'] : basePreset['colors']['danger']['dark'],
+  };
 
   let resolvedFontsDisplay: OptionsResolvePresetResolvedFontsDisplay = basePreset['fonts']['display'];
 
@@ -284,48 +330,6 @@ export function resolvePreset(options: OptionsResolvePresetOptions): OptionsReso
     resolvedFontsCode = options['overrides']['fonts']['code'];
   }
 
-  let resolvedShapeRadius: OptionsResolvePresetResolvedShapeRadius = basePreset['shape']['radius'];
-
-  if (options['overrides']['shape']['radius'] !== undefined) {
-    resolvedShapeRadius = options['overrides']['shape']['radius'];
-  }
-
-  let resolvedShapeDensity: OptionsResolvePresetResolvedShapeDensity = basePreset['shape']['density'];
-
-  if (options['overrides']['shape']['density'] !== undefined) {
-    resolvedShapeDensity = options['overrides']['shape']['density'];
-  }
-
-  let resolvedDepthCards: OptionsResolvePresetResolvedDepthCards = basePreset['depth']['cards'];
-
-  if (options['overrides']['depth']['cards'] !== undefined) {
-    resolvedDepthCards = options['overrides']['depth']['cards'];
-  }
-
-  let resolvedDepthCodeBlocks: OptionsResolvePresetResolvedDepthCodeBlocks = basePreset['depth']['codeBlocks'];
-
-  if (options['overrides']['depth']['codeBlocks'] !== undefined) {
-    resolvedDepthCodeBlocks = options['overrides']['depth']['codeBlocks'];
-  }
-
-  let resolvedMotionSpeed: OptionsResolvePresetResolvedMotionSpeed = basePreset['motion']['speed'];
-
-  if (options['overrides']['motion']['speed'] !== undefined) {
-    resolvedMotionSpeed = options['overrides']['motion']['speed'];
-  }
-
-  let resolvedMotionStaggeredReveals: OptionsResolvePresetResolvedMotionStaggeredReveals = basePreset['motion']['staggeredReveals'];
-
-  if (options['overrides']['motion']['staggeredReveals'] !== undefined) {
-    resolvedMotionStaggeredReveals = options['overrides']['motion']['staggeredReveals'];
-  }
-
-  let resolvedMotionHoverEffects: OptionsResolvePresetResolvedMotionHoverEffects = basePreset['motion']['hoverEffects'];
-
-  if (options['overrides']['motion']['hoverEffects'] !== undefined) {
-    resolvedMotionHoverEffects = options['overrides']['motion']['hoverEffects'];
-  }
-
   let resolvedNavbar: OptionsResolvePresetResolvedNavbar = basePreset['navbar'];
 
   if (options['overrides']['navbar'] !== undefined) {
@@ -343,27 +347,23 @@ export function resolvePreset(options: OptionsResolvePresetOptions): OptionsReso
     colors: {
       primary: resolvedColorsPrimary,
       accent: resolvedColorsAccent,
-      neutral: resolvedColorsNeutral,
+      text: resolvedColorsText,
+      border: resolvedColorsBorder,
+      warning: resolvedColorsWarning,
+      danger: resolvedColorsDanger,
     },
     fonts: {
       display: resolvedFontsDisplay,
       body: resolvedFontsBody,
       code: resolvedFontsCode,
     },
-    shape: {
-      radius: resolvedShapeRadius,
-      density: resolvedShapeDensity,
-    },
-    depth: {
-      cards: resolvedDepthCards,
-      codeBlocks: resolvedDepthCodeBlocks,
-    },
-    motion: {
-      speed: resolvedMotionSpeed,
-      staggeredReveals: resolvedMotionStaggeredReveals,
-      hoverEffects: resolvedMotionHoverEffects,
-    },
+    shape: basePreset['shape'],
+    depth: basePreset['depth'],
+    motion: basePreset['motion'],
     navbar: resolvedNavbar,
     footer: resolvedFooter,
+    cta: {
+      contained: basePreset['cta']['contained'],
+    },
   };
 }

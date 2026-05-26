@@ -1,6 +1,7 @@
 import Link from '@docusaurus/Link';
 import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
+import Logo from '@theme/Logo';
 import { SearchInput, SearchProvider, SearchResults } from '@theme/SearchBar';
 import {
   useCallback,
@@ -12,6 +13,7 @@ import { createPortal } from 'react-dom';
 
 import type {
   ThemeNavbarCanopyMobileMenuCloseMenuAriaLabel,
+  ThemeNavbarCanopyMobileMenuMobileMenuActiveItemLabel,
   ThemeNavbarCanopyMobileMenuMobileMenuAnimationEvent,
   ThemeNavbarCanopyMobileMenuMobileMenuAriaLabel,
   ThemeNavbarCanopyMobileMenuMobileMenuDefaultIcon,
@@ -26,6 +28,7 @@ import type {
   ThemeNavbarCanopyMobileMenuMobileMenuIsOpen,
   ThemeNavbarCanopyMobileMenuMobileMenuItemIcon,
   ThemeNavbarCanopyMobileMenuMobileMenuItemIndex,
+  ThemeNavbarCanopyMobileMenuMobileMenuItemIsActive,
   ThemeNavbarCanopyMobileMenuMobileMenuItems,
   ThemeNavbarCanopyMobileMenuMobileMenuItemStyle,
   ThemeNavbarCanopyMobileMenuMobileMenuLinkProps,
@@ -59,6 +62,7 @@ function MobileMenu(props: ThemeNavbarCanopyMobileMenuMobileMenuProps): ThemeNav
   const onClose: ThemeNavbarCanopyMobileMenuMobileMenuOnClose = props['onClose'];
   const items: ThemeNavbarCanopyMobileMenuMobileMenuItems = props['items'];
   const siteLogo: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogo = props['siteLogo'];
+  const activeItemLabel: ThemeNavbarCanopyMobileMenuMobileMenuActiveItemLabel = props['activeItemLabel'];
   const panelRef: ThemeNavbarCanopyMobileMenuMobileMenuPanelRef = useRef<HTMLDivElement>(null);
   const isClosingState: ThemeNavbarCanopyMobileMenuMobileMenuIsClosingState = useState<ThemeNavbarCanopyMobileMenuMobileMenuIsClosing>(false);
   const isClosing: ThemeNavbarCanopyMobileMenuMobileMenuIsClosing = isClosingState[0];
@@ -173,50 +177,16 @@ function MobileMenu(props: ThemeNavbarCanopyMobileMenuMobileMenuProps): ThemeNav
             <div className="nova-navbar-canopy-menu-brand">
               <Link
                 to={siteLogo['href'] ?? '/'}
+                target={siteLogo['target']}
+                rel={siteLogo['rel']}
+                aria-label={siteLogo['ariaLabel']}
                 onClick={() => {
                   setIsClosing(true);
 
                   return undefined;
                 }}
               >
-                {(siteLogo['src'] !== undefined) && (
-                  <img
-                    className={(siteLogo['srcDark'] !== undefined) ? 'nova-brand-light' : undefined}
-                    src={siteLogo['src']}
-                    alt={siteLogo['alt']}
-                  />
-                )}
-                {(
-                  siteLogo['src'] !== undefined
-                  && siteLogo['srcDark'] !== undefined
-                ) && (
-                  <img
-                    className="nova-brand-dark"
-                    src={siteLogo['srcDark']}
-                    alt={siteLogo['alt']}
-                  />
-                )}
-                {(
-                  siteLogo['src'] === undefined
-                  && siteLogo['wordmark'] !== undefined
-                ) && (
-                  <img
-                    className={(siteLogo['wordmarkDark'] !== undefined) ? 'nova-brand-light' : undefined}
-                    src={siteLogo['wordmark']}
-                    alt={siteLogo['alt']}
-                  />
-                )}
-                {(
-                  siteLogo['src'] === undefined
-                  && siteLogo['wordmark'] !== undefined
-                  && siteLogo['wordmarkDark'] !== undefined
-                ) && (
-                  <img
-                    className="nova-brand-dark"
-                    src={siteLogo['wordmarkDark']}
-                    alt={siteLogo['alt']}
-                  />
-                )}
+                <Logo siteLogo={siteLogo} iconFirst />
               </Link>
             </div>
             <div className="nova-navbar-canopy-menu-search nova-mobile-menu-search">
@@ -235,44 +205,48 @@ function MobileMenu(props: ThemeNavbarCanopyMobileMenuMobileMenuProps): ThemeNav
               <Icon icon="lucide:x" width="20" height="20" aria-hidden="true" />
             </button>
           </div>
-          <div className="nova-navbar-canopy-menu-results nova-mobile-menu-results">
+          <div className="nova-navbar-canopy-menu-body nova-mobile-menu-body">
             <SearchResults />
-          </div>
-          <div className="nova-navbar-canopy-menu-items nova-mobile-menu-items">
-            {
-              items.map((navItem: ThemeNavbarItem, itemIndex: ThemeNavbarCanopyMobileMenuMobileMenuItemIndex) => {
-                const itemIcon: ThemeNavbarCanopyMobileMenuMobileMenuItemIcon = navItem['icon'] as ThemeNavbarCanopyMobileMenuMobileMenuItemIcon;
-                const defaultIcon: ThemeNavbarCanopyMobileMenuMobileMenuDefaultIcon = 'lucide:link';
-                const itemStyle: ThemeNavbarCanopyMobileMenuMobileMenuItemStyle = { '--nova-item-index': itemIndex } as ThemeNavbarCanopyMobileMenuMobileMenuItemStyle;
-                const linkProps: ThemeNavbarCanopyMobileMenuMobileMenuLinkProps = {};
+            <div className="nova-navbar-canopy-menu-items nova-mobile-menu-items">
+              {
+                items.map((navItem: ThemeNavbarItem, itemIndex: ThemeNavbarCanopyMobileMenuMobileMenuItemIndex) => {
+                  const itemIcon: ThemeNavbarCanopyMobileMenuMobileMenuItemIcon = navItem['icon'] as ThemeNavbarCanopyMobileMenuMobileMenuItemIcon;
+                  const defaultIcon: ThemeNavbarCanopyMobileMenuMobileMenuDefaultIcon = 'lucide:link';
+                  const itemStyle: ThemeNavbarCanopyMobileMenuMobileMenuItemStyle = { '--nova-item-index': itemIndex } as ThemeNavbarCanopyMobileMenuMobileMenuItemStyle;
+                  const linkProps: ThemeNavbarCanopyMobileMenuMobileMenuLinkProps = {};
+                  const isActive: ThemeNavbarCanopyMobileMenuMobileMenuItemIsActive = navItem['label'] === activeItemLabel;
 
-                if (navItem['to'] !== undefined) {
-                  Reflect.set(linkProps, 'to', navItem['to']);
-                  Reflect.set(linkProps, 'isNavLink', true);
-                }
+                  if (navItem['to'] !== undefined) {
+                    Reflect.set(linkProps, 'to', navItem['to']);
+                  }
 
-                if (navItem['href'] !== undefined) {
-                  Reflect.set(linkProps, 'href', navItem['href']);
-                }
+                  if (navItem['href'] !== undefined) {
+                    Reflect.set(linkProps, 'href', navItem['href']);
+                  }
 
-                return (
-                  <Link
-                    className="nova-navbar-canopy-menu-item"
-                    key={navItem['label']}
-                    style={itemStyle}
-                    {...(linkProps as ThemeNavbarCanopyMobileMenuMobileMenuLinkSpread)}
-                    onClick={() => {
-                      setIsClosing(true);
+                  if (isActive === true) {
+                    Reflect.set(linkProps, 'aria-current', 'page');
+                  }
 
-                      return undefined;
-                    }}
-                  >
-                    <Icon icon={itemIcon ?? defaultIcon} width="18" height="18" aria-hidden="true" />
-                    <span>{navItem['label']}</span>
-                  </Link>
-                );
-              })
-            }
+                  return (
+                    <Link
+                      className="nova-navbar-canopy-menu-item"
+                      key={navItem['label']}
+                      style={itemStyle}
+                      {...(linkProps as ThemeNavbarCanopyMobileMenuMobileMenuLinkSpread)}
+                      onClick={() => {
+                        setIsClosing(true);
+
+                        return undefined;
+                      }}
+                    >
+                      <Icon icon={itemIcon ?? defaultIcon} width="18" height="18" aria-hidden="true" />
+                      <span>{navItem['label']}</span>
+                    </Link>
+                  );
+                })
+              }
+            </div>
           </div>
         </SearchProvider>
       </div>

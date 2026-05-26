@@ -1,5 +1,5 @@
 import type { BlogSidebar } from '@docusaurus/plugin-content-blog';
-import type { MouseEvent, RefObject } from 'react';
+import type { CSSProperties, MouseEvent, RefObject } from 'react';
 
 /**
  * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile.
@@ -8,8 +8,14 @@ import type { MouseEvent, RefObject } from 'react';
  */
 export type ThemeBlogSidebarMobileBlogSidebarMobilePropsSidebar = BlogSidebar | undefined;
 
+export type ThemeBlogSidebarMobileBlogSidebarMobilePropsClassName = string | undefined;
+
+export type ThemeBlogSidebarMobileBlogSidebarMobilePropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogSidebarMobileBlogSidebarMobileProps = {
   sidebar?: ThemeBlogSidebarMobileBlogSidebarMobilePropsSidebar;
+  className?: ThemeBlogSidebarMobileBlogSidebarMobilePropsClassName;
+  style?: ThemeBlogSidebarMobileBlogSidebarMobilePropsStyle;
   [key: string]: unknown;
 };
 

@@ -1,0 +1,137 @@
+---
+title: "التثبيت"
+sidebar_position: 1
+description: "ثبّت Envoy عبر حاوية Vial، أو واجهة Spark، أو نشر Trellis. يشمل التحقّق من فحص الصحّة وملاحظات البصمة الدنيا."
+tags:
+  - "setup"
+  - "installation"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# التثبيت
+
+يُشحَن Envoy بوصفه وحدة Vial بحجم 3MB دون أيّ تبعيات خارجية. اختر طريقة النشر المناسبة لبنيتك التحتية.
+
+## المتطلّبات المسبقة
+
+| المتطلَّب   | الحدّ الأدنى للإصدار | ملاحظات                                  |
+|-------------|----------------------|------------------------------------------|
+| **Vial**    | 4.0                  | مُوصى به للإنتاج. Compose v2 لنشر الحزم. |
+| **Spark**   | 2.1                  | نشر بديل قائم على واجهة الأوامر.         |
+| **Trellis** | 1.8                  | نشر منسّق عبر العناقيد.                  |
+
+## التثبيت
+
+<Tabs>
+<TabItem value="vial" label="Vial" default>
+
+اسحب الوحدة من المستودع:
+
+```bash title="Pull and run with Vial"
+vial pull envoy:latest
+vial run -d \
+  --name envoy \
+  --restart unless-stopped \
+  -p 8090:8090 \
+  envoy:latest
+```
+
+تحقّق من أن الحاوية تعمل:
+
+```bash
+vial logs envoy
+# [envoy] Starting on port 8090
+# [envoy] Cipher: ready
+# [envoy] Courier: ready
+# [envoy] Health check: OK
+```
+
+</TabItem>
+<TabItem value="spark" label="Spark CLI">
+
+ثبّت Envoy CLI عالميًّا:
+
+```bash title="Install with Spark"
+spark install envoy
+```
+
+ابدأ خادم المُرحِّل:
+
+```bash
+envoy start --port 8090
+```
+
+أو مع إعداد صريح:
+
+```bash
+envoy start --config relay.grain --port 8090
+```
+
+</TabItem>
+<TabItem value="trellis" label="Trellis">
+
+انشر إلى عنقود Trellis باستخدام البيان:
+
+```text title="envoy.trellis.grain"
+deployment "envoy" {
+  image    = "envoy:latest"
+  replicas = 2
+  port     = 8090
+
+  resources {
+    memory = "32Mi"
+    cpu    = "50m"
+  }
+
+  health {
+    path     = "/health"
+    interval = "10s"
+  }
+}
+```
+
+طبّق النشر:
+
+```bash title="Deploy to Trellis"
+trellis apply envoy.trellis.grain
+```
+
+</TabItem>
+</Tabs>
+
+:::tip بصمة دنيا
+وحدة Envoy Vial بحجم 3MB. هذا ليس خطأ مطبعيًّا. صفر تبعيات خارجية يعني صفر تورّم. يكتمل البدء البارد دون 200ms، ومساحة الهجوم محصورة في شيفرة كتبناها ويمكنك تدقيقها.
+:::
+
+## التحقّق بعد التثبيت
+
+بصرف النظر عن طريقة النشر، تحقّق من أن المُرحِّل يعمل:
+
+```bash title="Health check"
+curl http://localhost:8090/health
+```
+
+الاستجابة المتوقّعة:
+
+```json title="Health check response"
+{
+  "status": "healthy",
+  "version": "2.1.0",
+  "uptime_seconds": 12,
+  "components": {
+    "cipher": "ready",
+    "parcel": "ready",
+    "dispatch": "ready",
+    "courier": "ready",
+    "ledger": "ready"
+  }
+}
+```
+
+## ما يأتي بعد ذلك
+
+- [أوّل مُرحِّل لك](/docs/setup/your-first-relay/) — استقبل خطّاف ويب من Threadbare، وحوِّله، وسلّمه إلى Canary.
+- [الإعداد](/docs/setup/configuration/) — بيان الترحيل بصيغة `.grain` بشيء من التعمّق.
+- [التكاملات](/docs/advanced/integrations/) — مترجمات مُدمَجة لـ Threadbare وGlassboard وCanary.

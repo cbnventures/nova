@@ -1,23 +1,24 @@
 /**
  * ============================
- * Search — Mark Highlighting
+ * Search - Mark Highlighting
  * ============================
+ *
+ * mark.js wraps matched query terms in <mark> elements during result-page
+ * highlight (see lib/search/use-search-highlight.ts). The default tint comes
+ * from --nova-search-mark-bg defined in each preset.css; presets override
+ * to match their identity (warning amber, primary tint, etc.).
  */
 
 mark {
   padding: 0.1em 0.2em;
 
-  background-color: rgba(250, 204, 21, 0.4);
+  background-color: var(--nova-search-mark-bg);
   border-radius: 0.125rem;
-}
-
-[data-theme="dark"] mark {
-  background-color: rgba(250, 204, 21, 0.3);
 }
 
 /**
  * ============================
- * Search — Desktop Visibility
+ * Search - Desktop Visibility
  * ============================
  */
 
@@ -27,15 +28,22 @@ mark {
 }
 
 .nova-search-anchor .nova-search-dropdown {
-  margin-top: 0.25rem;
+  margin-top: 0.5rem;
 }
 
-/* Hide desktop search bar on mobile — mobile menu has its own. */
+/* Hide desktop search bar (and its anchor wrapper) on mobile - mobile menu
+   has its own. The wrapper must be hidden too, otherwise it remains a flex
+   child of the actions cluster and inflates the gap on either side of it. */
+[class*="-actions"] .nova-search-anchor,
 [class*="-actions"] .nova-search-bar {
   display: none;
 }
 
 @media (min-width: 1024px) {
+  [class*="-actions"] .nova-search-anchor {
+    display: block;
+  }
+
   [class*="-actions"] .nova-search-bar {
     display: block;
   }
@@ -43,7 +51,7 @@ mark {
 
 /**
  * ============================
- * Search — Search Bar (shared)
+ * Search - Search Bar (shared)
  * ============================
  */
 
@@ -60,7 +68,7 @@ mark {
   /* 16px prevents iOS Safari auto-zoom on focus. */
   font-size: 1rem;
 
-  border: 1px solid var(--nova-color-neutral-300);
+  border: 1px solid var(--nova-color-border);
   border-radius: 0.375rem;
 }
 
@@ -82,7 +90,7 @@ mark {
 
 /**
  * ============================
- * Search — Clear Button
+ * Search - Clear Button
  * ============================
  */
 
@@ -96,7 +104,7 @@ mark {
   justify-content: center;
   padding: 0.125rem;
 
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-soft);
 
   background: none;
   border: none;
@@ -116,12 +124,7 @@ mark {
 
 .nova-search-bar-clear:hover,
 .nova-search-bar-clear:focus-visible {
-  color: var(--nova-color-neutral-600);
-}
-
-[data-theme="dark"] .nova-search-bar-clear:hover,
-[data-theme="dark"] .nova-search-bar-clear:focus-visible {
-  color: var(--nova-color-neutral-300);
+  color: var(--nova-color-text);
 }
 
 /* Make room for the clear button inside the input. */
@@ -130,15 +133,15 @@ mark {
 }
 
 [data-theme="dark"] .nova-search-bar-input {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 
-  background-color: var(--nova-color-neutral-800);
-  border-color: var(--nova-color-neutral-600);
+  background-color: var(--nova-color-surface-raised);
+  border-color: var(--nova-color-border);
 }
 
 /**
  * ============================
- * Search — Desktop Dropdown
+ * Search - Desktop Dropdown
  * ============================
  */
 
@@ -151,22 +154,37 @@ mark {
   min-width: 300px;
   max-height: 400px;
 
-  background: var(--nova-color-neutral-50);
-  border: 1px solid var(--nova-color-neutral-300);
+  background: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-color-border);
   border-radius: 0.375rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--nova-search-dropdown-shadow);
 
   overflow: hidden auto;
 }
 
-[data-theme="dark"] .nova-search-dropdown {
-  background: var(--nova-color-neutral-800);
-  border-color: var(--nova-color-neutral-600);
+/**
+ * Closing dropdown - block pointer events and run a 1ms no-op animation so
+ * SearchResults TSX's onAnimationEnd handler fires, flipping isClosing to
+ * false and unmounting the element. This is a clean baseline with no visible
+ * motion; future animation work can replace the keyframe.
+ */
+
+.nova-search-dropdown-closing {
+  visibility: hidden;
+
+  pointer-events: none;
+  animation: nova-search-dropdown-unmount 1ms;
+}
+
+@keyframes nova-search-dropdown-unmount {
+  to {
+    opacity: 1;
+  }
 }
 
 /**
  * ============================
- * Search — Mobile Menu Overrides
+ * Search - Mobile Menu Overrides
  * ============================
  */
 
@@ -181,20 +199,32 @@ mark {
   padding: 0 2rem 0 0.75rem;
 }
 
-/* Dropdown flows inline within the menu panel. */
+/* Mobile dropdown: default state is hidden. The transition + @starting-style
+   pair (plus the `.nova-search-dropdown-mounting` JS-managed class for prod
+   where cssnano strips @starting-style) fires the show transition the moment
+   the body's swap-in class adds the visible target. steps(2, jump-none)
+   gives an exact 50% midpoint flip for max-height, matching the previous
+   keyframe choreography. visibility flips at the same midpoint via
+   transition-delay 500ms (duration 0 = the value swaps discretely).
+   overflow: auto so results can scroll when content exceeds 100dvh. */
 .nova-mobile-menu-panel .nova-search-dropdown {
   position: static;
   z-index: auto;
 
   min-width: 0;
-  max-height: none;
+  max-height: 0;
+  visibility: hidden;
 
   background: transparent;
   border: none;
   border-radius: 0;
   box-shadow: none;
 
-  overflow: visible;
+  overflow: auto;
+
+  transition:
+    max-height 1000ms steps(2, jump-none),
+    visibility 0s 500ms;
 }
 
 [data-theme="dark"] .nova-mobile-menu-panel .nova-search-dropdown {
@@ -203,28 +233,155 @@ mark {
 }
 
 /**
- * ============================
- * Search — Mobile Active Search
- * ============================
+ * Mobile-menu body slide-swap animation.
+ *
+ * search-input.tsx watches isActive (query !== '') and adds
+ * `.nova-mobile-menu-body-swapping-in` or `-swapping-out` to the body
+ * wrapper whenever the state flips. The class drives the body's collapse
+ * keyframe and triggers the items + dropdown transitions below. The body
+ * uses a single animation-name across both directions so it continues
+ * smoothly when the user reverses direction mid-flight.
+ *
+ * Items + dropdown use CSS transitions (not keyframe animations) with
+ * steps(2, jump-none) so the midpoint flip looks the same as the old
+ * keyframes, but direction changes mid-flight resolve from the current
+ * value to the new target instead of snapping to the new keyframe's 0%
+ * value (the snap that made the items disappear when the user typed and
+ * backspaced fast).
  */
 
-/* Hide menu navigation items when search input has text. */
-.nova-mobile-menu-panel:has(.nova-search-bar-input:not(:placeholder-shown)) .nova-mobile-menu-items {
-  display: none;
+.nova-mobile-menu-body {
+  overflow: hidden;
+
+  max-height: 100dvh;
 }
 
-/* Let search and results sections fill panel when items are hidden. */
-.nova-mobile-menu-panel:has(.nova-search-bar-input:not(:placeholder-shown)) [class*="-menu-search"],
-.nova-mobile-menu-panel:has(.nova-search-bar-input:not(:placeholder-shown)) .nova-mobile-menu-results {
-  flex: 1;
-  min-height: 0;
+/* Steady-state scrolling. The panel uses flex column layout which caps the
+   body to the available vertical space (~620px on a 854px viewport, less
+   header + search bar). If the dropdown's content exceeds that, the body
+   needs `overflow: auto` to scroll. We keep `overflow: hidden` during the
+   slide-swap animation (for the max-height collapse to clip cleanly) and
+   only flip to auto in steady state (no swap class on body). The :not()
+   chain matches when neither swap class is present - search-input.tsx's
+   onSwapEnd strips the swap class on animationend, so steady state is when
+   the animation has fully completed. */
+.nova-mobile-menu-body:not(.nova-mobile-menu-body-swapping-in):not(.nova-mobile-menu-body-swapping-out) {
+  overflow: hidden auto;
+}
+
+/* Direction-specific animation names so the body keyframe RESTARTS fresh on
+   every swap class change. With a single shared name, Chrome treats the same
+   animation as continuing across class swaps - which truncates the second
+   cycle if you back out before the first animation technically completed
+   (e.g. backing out at t=800ms during the body's expand phase). The body
+   would finish its lingering 200ms and return to base max-height before the
+   items transition's midpoint flip at t=500ms-of-second-swap, leaving the
+   body uncollapsed when the items snap - so the items pop into view in a
+   single frame.
+
+   The keyframes are intentionally NOT byte-identical (40-60% vs 41-59%
+   collapse window) because cssnano in the prod build dedupes identical
+   @keyframes rules into a single rule, which would re-merge the two
+   animation-names back into one and re-introduce the bug. The 1% timing
+   shift is visually imperceptible (~10ms total skew) and defeats the dedup. */
+.nova-mobile-menu-body-swapping-in {
+  animation: nova-mobile-menu-body-slide-swap-in 1000ms ease-in-out;
+}
+
+.nova-mobile-menu-body-swapping-out {
+  animation: nova-mobile-menu-body-slide-swap-out 1000ms ease-in-out;
+}
+
+@keyframes nova-mobile-menu-body-slide-swap-in {
+  0%, 100% {
+    max-height: 100dvh;
+  }
+
+  40%, 60% {
+    max-height: 0;
+  }
+}
+
+@keyframes nova-mobile-menu-body-slide-swap-out {
+  0%, 100% {
+    max-height: 100dvh;
+  }
+
+  41%, 59% {
+    max-height: 0;
+  }
+}
+
+/* Items default: visible. Target hidden when swap-in is active or when
+   the dropdown is in DOM and not closing (steady-state search active). */
+.nova-mobile-menu-items {
+  visibility: visible;
+
+  max-height: 100dvh;
+
+  overflow: hidden;
+
+  transition:
+    max-height 1000ms steps(2, jump-none),
+    visibility 0s 500ms;
+}
+
+.nova-mobile-menu-body-swapping-in .nova-mobile-menu-items,
+.nova-mobile-menu-body:has(.nova-search-dropdown:not(.nova-search-dropdown-closing)) .nova-mobile-menu-items {
+  visibility: hidden;
+  max-height: 0;
+}
+
+/* Dropdown visible target: when swap-in is active or when the dropdown is
+   in DOM and not closing. The closing class isn't matched, so the cascade
+   falls back to the default hidden target and the swap-out transition
+   runs collapsing the dropdown to 0. */
+.nova-mobile-menu-body-swapping-in .nova-search-dropdown,
+.nova-mobile-menu-body:has(.nova-search-dropdown:not(.nova-search-dropdown-closing)) .nova-search-dropdown {
+  visibility: visible;
+  max-height: 100dvh;
 }
 
 
+/* Starting style applied at element insertion - must come AFTER the
+   visible-target rule above so it wins on source order (same selector
+   specificity of 2 classes). Without it the dropdown mounts directly
+   into the visible target with no previous computed value and no
+   transition fires - the dropdown just pops in. With it, the dropdown's
+   starting style is hidden, the cascade immediately switches to the
+   visible target on the next frame, and the transition runs the show.
+
+   cssnano in the prod build strips @starting-style entirely. The
+   `.nova-search-dropdown-mounting` rule below is the JS-managed fallback
+   that SearchResults applies for one frame after insertion - same effect
+   but works through minification. */
+@starting-style {
+  .nova-mobile-menu-body-swapping-in .nova-search-dropdown,
+  .nova-mobile-menu-body:has(.nova-search-dropdown:not(.nova-search-dropdown-closing)) .nova-search-dropdown {
+    visibility: hidden;
+    max-height: 0;
+  }
+}
+
+/* Prod-safe mount transition trigger. SearchResults attaches this class
+   for one frame on initial render so the dropdown's first paint shows the
+   hidden state; the class is removed on the next requestAnimationFrame,
+   the cascade switches to the visible-target rule above, and the
+   max-height + visibility transition fires from hidden to visible.
+
+   `!important` is needed because the visible-target rule's `:has()`
+   selector accumulates the inner `.nova-search-dropdown:not(.nova-search-
+   dropdown-closing)` specificity, putting it at 4 classes - higher than
+   any reasonable selector chain that doesn't also include `:has()`. The
+   class only lives for one frame so the !important impact is contained. */
+.nova-search-dropdown-mounting {
+  visibility: hidden !important;
+  max-height: 0 !important;
+}
 
 /**
  * ============================
- * Search — Results
+ * Search - Results
  * ============================
  */
 
@@ -232,15 +389,9 @@ mark {
   padding: 0.5rem 1rem;
 
   font-size: 0.75rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 
-  border-bottom: 1px solid var(--nova-color-neutral-100);
-}
-
-[data-theme="dark"] .nova-search-count {
-  color: var(--nova-color-neutral-400);
-
-  border-bottom-color: var(--nova-color-neutral-700);
+  border-bottom: 1px solid var(--nova-color-border-subtle);
 }
 
 .nova-search-result {
@@ -251,31 +402,21 @@ mark {
   color: inherit;
   text-decoration: none;
 
-  border-bottom: 1px solid var(--nova-color-neutral-100);
+  border-bottom: 1px solid var(--nova-color-border-subtle);
 }
 
 .nova-search-result:last-child {
   border-bottom: none;
 }
 
-[data-theme="dark"] .nova-search-result {
-  border-bottom-color: var(--nova-color-neutral-700);
-}
-
 .nova-search-result:hover,
 .nova-search-result:focus-visible,
 .nova-search-result--active {
-  background-color: var(--nova-color-neutral-100);
+  background-color: var(--nova-color-surface-raised);
   text-decoration: none;
 }
 
-[data-theme="dark"] .nova-search-result:hover,
-[data-theme="dark"] .nova-search-result:focus-visible,
-[data-theme="dark"] .nova-search-result--active {
-  background-color: var(--nova-color-neutral-700);
-}
-
-/* Mobile menu results — keep last item borderless. */
+/* Mobile menu results - keep last item borderless. */
 .nova-mobile-menu-panel .nova-search-result:last-child {
   border-bottom: none;
 }
@@ -309,7 +450,7 @@ mark {
 
 /**
  * ============================
- * Search — Empty / Error State
+ * Search - Empty / Error State
  * ============================
  */
 

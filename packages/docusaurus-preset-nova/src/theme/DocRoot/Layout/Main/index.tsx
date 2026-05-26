@@ -15,7 +15,10 @@ import type { ThemeDocRootLayoutMainDocRootLayoutMainProps } from '../../../../t
  */
 function DocRootLayoutMain(props: ThemeDocRootLayoutMainDocRootLayoutMainProps) {
   return (
-    <main className="nova-col-12 nova-col-lg-9">
+    <main
+      className={(props['className'] !== undefined) ? `nova-col-12 nova-col-lg-9 ${props['className']}` : 'nova-col-12 nova-col-lg-9'}
+      style={props['style']}
+    >
       {props['children']}
     </main>
   );

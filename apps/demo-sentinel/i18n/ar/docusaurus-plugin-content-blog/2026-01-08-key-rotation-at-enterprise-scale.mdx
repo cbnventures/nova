@@ -1,0 +1,102 @@
+---
+title: "تدوير مفاتيح التشفير عبر 14 منطقة Rampart"
+authors:
+  - "rafael"
+tags:
+  - "encryption"
+  - "compliance"
+  - "policy"
+date: "2026-01-08"
+---
+
+يتطلّب إطار الامتثال لدينا تدوير مفاتيح التشفير كلّ 90 يوماً. يبدو هذا بسيطاً حتى تُدرك أنّ "مفاتيح التشفير" في نشر Sentinel تعني مفاتيح أنفاق WireGuard لكلّ حدّ منطقة Rampart، وشهادات TLS لكلّ بوّابة Bastion، ومفاتيح تسجيل الأجهزة لكلّ وكيل نقطة نهاية. تدوير جميعها دون تعطيل حركة بيانات الإنتاج هو مشكلة تنسيق استغرقتنا ثلاثة أرباع لإتقانها.
+
+{/* truncate */}
+
+## الجرد
+
+قبل أن نستطيع تدوير أيّ شيء، احتجنا إلى معرفة ما لدينا:
+
+```bash title="Key inventory"
+sentinel keys inventory --format table
+```
+
+```text title="Key inventory output"
+Key Type                Count   Oldest           Rotation Period
+──────────────────────  ──────  ───────────────  ───────────────
+WireGuard tunnel keys      48  2025-07-14       90 days
+Bastion TLS certs           6  2025-09-01       365 days
+Device enrollment keys  9,814  2024-01-18       180 days
+Zone CA certificates       14  2024-06-01       730 days
+Spyglass signing keys       2  2024-03-01       365 days
+```
+
+خمسة أنواع مفاتيح. ما يقارب 10,000 مفتاح فردي. جداول تدوير مختلفة. أنصاف أقطار انفجار مختلفة إن أخفق التدوير.
+
+## مشكلة التدوير الساذج
+
+في المرّة الأولى التي دوّرنا فيها مفاتيح أنفاق WireGuard، فعلنا ذلك بالطريقة البديهيّة، توليد مفاتيح جديدة، وتوزيعها، وتبديلها في وقت منسّق. نجح. وتسبّب أيضاً في انقطاع حركة بيانات 400 ميلي ثانية على كلّ حدّ منطقة بينما أعادت الأنفاق التفاوض.
+
+لا يبدو 400 ميلي ثانية كثيراً. مضروبة عبر 48 زوج أنفاق، مع خدمات تُعيد محاولة الطلبات المُخفقة، كان الأثر المتدفّق قفزة زمن انتقال 12 ثانية عبر المنصّة. أُطلقت التنبيهات. استيقظ مهندسو المناوبة. كان التدوير ناجحاً، لكنّ نصف قطر الانفجار كان غير مقبول.
+
+## نافذة المفتاح المزدوج
+
+حللنا هذا بنافذة مفتاح مزدوج. بدل تبديل المفاتيح ذرّياً، نُشغّل فترة انتقاليّة يصلح فيها كلّ من المفتاحَين القديم والجديد في وقت واحد:
+
+```text title="Dual-key rotation timeline"
+Day 0:  Generate new key pair for zone boundary
+Day 0:  Distribute new key to both sides of the tunnel
+Day 0:  Both sides accept old AND new keys (dual-key window opens)
+Day 1:  New connections use new key; existing connections drain on old key
+Day 3:  Old key marked for deletion (dual-key window closes)
+Day 7:  Old key purged from all nodes
+```
+
+خلال نافذة المفتاح المزدوج، كلا المفتاحَين صالح. الاتصالات الجديدة تتفاوض باستخدام المفتاح الجديد. الاتصالات القائمة تستمرّ على المفتاح القديم حتى تُغلق طبيعياً أو يُعاد تدويرها. لا توجد مبادلة منسّقة، ولا انقطاع حركة بيانات، ولا تنبيهات.
+
+## أتمتة الجدول
+
+مع خمسة أنواع مفاتيح على جداول تدوير مختلفة، التنسيق اليدوي مستحيل. بنينا تقويم تدوير في Citadel يُدير الجدول:
+
+```text title="trust-policy.grain — rotation schedule"
+rotation "quarterly-tunnel-keys" {
+  key_type  = "wireguard-tunnel"
+  interval  = 90d
+  window    = 72h
+  strategy  = "dual-key"
+
+  on_failure {
+    action = "hold"
+    notify = ["security-ops"]
+    log    = "spyglass"
+  }
+}
+
+rotation "annual-bastion-certs" {
+  key_type  = "bastion-tls"
+  interval  = 365d
+  window    = 168h
+  strategy  = "dual-cert"
+
+  on_failure {
+    action = "hold"
+    notify = ["security-ops", "infrastructure"]
+    log    = "spyglass"
+  }
+}
+```
+
+كلّ تدوير يعمل باستقلال. إن أخفق تدوير، عقدة غير قابلة للوصول، أو انتهت مهلة توزيع مفتاح، فالاستراتيجيّة الانتظار، لا إعادة المحاولة. التدوير المُحتجَز يُنبّه الفريق وينتظر تدخّلاً يدوياً. لا نفرض أبداً مبادلة مفتاح على نظام لم يُؤكّد الاستلام.
+
+## مخرجات الامتثال
+
+كلّ حدث تدوير يُسجَّل في Spyglass بإثبات منشأ كامل، أيّ مفتاح دُوِّر، وأيّ عقد كانت متورّطة، ومتى افتُتحت نافذة المفتاح المزدوج وأُغلقت، وما إذا قُطعت أيّ اتصالات. يُولَّد تقرير الامتثال من ذلك السجلّ:
+
+```bash title="Compliance rotation report"
+sentinel spyglass export \
+  --type key-rotation \
+  --period 2025-Q4 \
+  --framework soc2
+```
+
+يحصل المدقّق على تقرير يُظهر أنّ كلّ مفتاح دُوِّر خلال فاصله المطلوب، وأنّ كلّ تدوير استخدم استراتيجيّة المفتاح المزدوج، وأنّه لم تحدث أيّ انقطاعات في الإنتاج. الدليل تلقائي. التدوير تلقائي. الخطوة اليدويّة الوحيدة هي مراجعة التدويرات المُحتجَزة، وفي الأرباع الأربعة الماضية، كانت اثنتَين.

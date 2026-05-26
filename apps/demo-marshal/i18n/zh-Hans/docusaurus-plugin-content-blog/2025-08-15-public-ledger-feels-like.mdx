@@ -1,0 +1,57 @@
+---
+title: "一份公开 ledger 用了一年，是什么感觉"
+authors:
+  - "cordelia"
+tags:
+  - "dockets"
+  - "philosophy"
+date: "2025-08-15"
+---
+
+一份公开 ledger 与一张私人电子表格的感觉不一样。不是因为规则变了——规则没变——而是因为读规则的每个人都知道你知道的那些事。
+
+{/* truncate */}
+
+贡献者不再追问*这是被有意归档的吗？* docket 已经写明了。维护者不再在 PR 评论里写*是机器人做的*。机器人有名字。它在条目上署了名。
+
+公开 docket 一年下来，提问方式发生了细微但可测量的变化。问题没有消失；它们提前了。一位曾经会开 issue 来问*为什么我的 PR 被合上了？*的贡献者，现在会开一个 issue 来问*我读了 docket 条目和它引用的规则——能否修订这条规则，使这种情形不再被合上？*第一种问题是抱怨，针对某个人。第二种是提议，针对一条 policy。两者都合法。只有第二种是可执行的——因为 policy 可以被修订、封印、重新立卷，下一次同类案例就会被不同地处理。
+
+而维护者，也已不再在评论中解释机器人的行为。没什么可解释的。docket 条目包含 policy 引用；policy 引用解析到一份封印过的文件；封印文件包含产生这次合上的规则。一位被问到*为什么会这样*的维护者用一个链接回答，而不是一段话。
+
+policy 日志本身也是一份公开文件，其概览大致如下：
+
+```yaml title="docs/dockets/policy-log.yml"
+- name: approval-stamps
+  versions: [v1]
+  sealed-by: dimitri
+  first-sealed: 2022-03-14
+  invocations-q3-2025: 5,402
+
+- name: stale-thread-archival
+  versions: [v1, v2, v3]
+  sealed-by: cordelia
+  first-sealed: 2022-09-01
+  current-since: 2024-06-12
+  invocations-q3-2025: 12,884
+
+- name: access-tiers
+  versions: [v1, v2, v3, v4]
+  sealed-by: dimitri
+  first-sealed: 2023-01-08
+  current-since: 2024-08-01
+  invocations-q3-2025: 5,318
+
+- name: duplicate-incident-suppression
+  versions: [v1]
+  sealed-by: yuki
+  first-sealed: 2024-12-21
+  invocations-q3-2025: 1,402
+```
+
+日志中的每一条 policy 都由具名的维护者在具名的日期上以版本号封印。一位想知道某起案例如何被处理的读者读取条目，沿着 policy 引用走到版本，再读那条规则。读者无须询问任何人。读者无须取得许可。在这一点上，读者与审计员无异。
+
+我们在 docket 公开之前没预料到的是：我们自己作为维护者的行为也会发生变化。我们不再写自己不愿在书面上为之辩护的规则。我们不再封印自己说不清前置条件的 policy。我们不再用手工去调用 policy，因为每一次调用都可见，而手工调用的 policy 与事务员调用的带着不同的钤章——`STAMPED-MANUAL` 对比 `STAMPED`。两者立卷形式不同。两者都可见。这种差异本就该被看见。
+
+一年下来，手工钤章比从前更稀有。我们只在事务员的前置条件未匹配某个我们仍认为应当被处理的案例时手工调用。每一次手工调用都是一次小小的承认：policy 是不完整的。我们尽力通过修订 policy 来降低这一计数；不能修订时，就接受手工钤章。
+
+ledger 是公开的。封印是永久的。问题来得更早。工作还是那个工作。

@@ -2,7 +2,7 @@
 id: "signal"
 title: "Signal"
 description: "Rose and amber preset with Space Grotesk, Inter, and JetBrains Mono fonts, sharp shapes, and compact density."
-sidebar_position: 3
+sidebar_position: 6
 keywords:
   - "nova"
   - "docusaurus facades"
@@ -26,6 +26,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
 
 import signalLight from './_assets_/signal-light.png';
 import signalDark from './_assets_/signal-dark.png';
@@ -42,7 +43,9 @@ Rose and amber tones paired with Space Grotesk headings, Inter body text, and Je
 
 ## Preview
 
-<ThemedImage sources={{ light: signalLight, dark: signalDark }} alt="Signal preset preview" width={1280} height={900} style={{ maxWidth: '100%', height: 'auto' }} />
+<Frame caption="Signal preset — light and dark mode preview">
+  <ThemedImage sources={{ light: signalLight, dark: signalDark }} alt="Signal preset preview" width={1280} height={900} />
+</Frame>
 
 ## Summary
 
@@ -86,9 +89,9 @@ Override any category to customize the Signal identity. Unspecified values keep 
   preset: 'signal',
   overrides: {
     colors: {
-      primary: '#be123c',
-      accent: '#d97706',
-      neutral: '#737373',
+      primary: '#e11d48',
+      accent: '#f59e0b',
+      neutral: '#525252',
     },
   },
 }
@@ -104,9 +107,9 @@ Each color generates an 11-level shade scale (50–950) as CSS custom properties
   preset: 'signal',
   overrides: {
     fonts: {
-      display: 'Archivo',
-      body: 'IBM Plex Sans',
-      code: 'Fira Code',
+      display: 'Space Grotesk',
+      body: 'Inter',
+      code: 'JetBrains Mono',
     },
   },
 }
@@ -122,12 +125,12 @@ Font families are set as CSS custom properties. Google Fonts are loaded automati
   preset: 'signal',
   overrides: {
     shape: {
-      radius: 'rounded',
-      density: 'comfortable',
+      radius: 'sharp',
+      density: 'compact',
     },
     depth: {
-      cards: 'elevated',
-      codeBlocks: 'elevated',
+      cards: 'flat',
+      codeBlocks: 'bordered',
     },
   },
 }
@@ -161,12 +164,12 @@ Available navbar variants:
 
 - `bridge`
 - `canopy`
-- `monolith`
 - `compass`
+- `monolith`
 
 Available footer variants:
 
 - `commons`
 - `embassy`
-- `ledger`
 - `launchpad`
+- `ledger`

@@ -11,10 +11,13 @@ export type ThemeNavbarMonolithMobileMenuMobileMenuPropsOnClose = () => void;
 
 export type ThemeNavbarMonolithMobileMenuMobileMenuPropsItems = ThemeNavbarItem[];
 
+export type ThemeNavbarMonolithMobileMenuMobileMenuPropsActiveItemLabel = string | null;
+
 export type ThemeNavbarMonolithMobileMenuMobileMenuProps = {
   isOpen: ThemeNavbarMonolithMobileMenuMobileMenuPropsIsOpen;
   onClose: ThemeNavbarMonolithMobileMenuMobileMenuPropsOnClose;
   items: ThemeNavbarMonolithMobileMenuMobileMenuPropsItems;
+  activeItemLabel: ThemeNavbarMonolithMobileMenuMobileMenuPropsActiveItemLabel;
 };
 
 export type ThemeNavbarMonolithMobileMenuMobileMenuReturns = React.JSX.Element | null;
@@ -24,6 +27,8 @@ export type ThemeNavbarMonolithMobileMenuMobileMenuIsOpen = boolean;
 export type ThemeNavbarMonolithMobileMenuMobileMenuOnClose = () => void;
 
 export type ThemeNavbarMonolithMobileMenuMobileMenuItems = ThemeNavbarItem[];
+
+export type ThemeNavbarMonolithMobileMenuMobileMenuActiveItemLabel = string | null;
 
 export type ThemeNavbarMonolithMobileMenuMobileMenuPanelRef = React.RefObject<HTMLDivElement | null>;
 
@@ -54,6 +59,8 @@ export type ThemeNavbarMonolithMobileMenuMobileMenuItemTo = string;
 export type ThemeNavbarMonolithMobileMenuMobileMenuItemHref = string;
 
 export type ThemeNavbarMonolithMobileMenuMobileMenuLinkProps = Record<string, string>;
+
+export type ThemeNavbarMonolithMobileMenuMobileMenuItemIsActive = boolean;
 
 export type ThemeNavbarMonolithMobileMenuMobileMenuLinkSpread = Record<string, string>;
 

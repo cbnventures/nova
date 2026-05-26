@@ -1,0 +1,10 @@
+{
+  "label": "الأدلة",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "أدلة عملية — التثبيت عبر Spark أو حاوية Vial، وكتابة أول بيان، وتشغيل `foundry ignite`، وإدارة التبعيات بين الحزم باستخدام Tongs."
+  }
+}

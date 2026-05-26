@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Code Inline - Code Inline.
@@ -7,7 +7,13 @@ import type { ReactNode } from 'react';
  */
 export type ThemeCodeInlineCodeInlinePropsChildren = ReactNode;
 
+export type ThemeCodeInlineCodeInlinePropsClassName = string | undefined;
+
+export type ThemeCodeInlineCodeInlinePropsStyle = CSSProperties | undefined;
+
 export type ThemeCodeInlineCodeInlineProps = {
   children: ThemeCodeInlineCodeInlinePropsChildren;
+  className?: ThemeCodeInlineCodeInlinePropsClassName;
+  style?: ThemeCodeInlineCodeInlinePropsStyle;
   [key: string]: unknown;
 };

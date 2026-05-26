@@ -1,4 +1,5 @@
 import type { DocusaurusContext } from '@docusaurus/types';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Last Updated - Last Updated.
@@ -9,9 +10,15 @@ export type ThemeLastUpdatedLastUpdatedPropsLastUpdatedAt = number | undefined;
 
 export type ThemeLastUpdatedLastUpdatedPropsLastUpdatedBy = string | undefined;
 
+export type ThemeLastUpdatedLastUpdatedPropsClassName = string | undefined;
+
+export type ThemeLastUpdatedLastUpdatedPropsStyle = CSSProperties | undefined;
+
 export type ThemeLastUpdatedLastUpdatedProps = {
   lastUpdatedAt?: ThemeLastUpdatedLastUpdatedPropsLastUpdatedAt;
   lastUpdatedBy?: ThemeLastUpdatedLastUpdatedPropsLastUpdatedBy;
+  className?: ThemeLastUpdatedLastUpdatedPropsClassName;
+  style?: ThemeLastUpdatedLastUpdatedPropsStyle;
   [key: string]: unknown;
 };
 

@@ -1,5 +1,6 @@
 import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
 import type {
+  CSSProperties,
   Dispatch,
   SetStateAction,
 } from 'react';
@@ -11,8 +12,14 @@ import type {
  */
 export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsSidebar = PropSidebarItem[];
 
+export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsClassName = string | undefined;
+
+export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarProps = {
   sidebar: ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsSidebar;
+  className?: ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsClassName;
+  style?: ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsStyle;
   [key: string]: unknown;
 };
 

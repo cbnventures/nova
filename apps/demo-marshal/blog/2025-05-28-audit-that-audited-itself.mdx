@@ -1,0 +1,55 @@
+---
+title: "The audit that audited itself"
+authors:
+  - "yuki"
+tags:
+  - "audit"
+  - "dockets"
+date: "2025-05-28"
+---
+
+We ran an audit on the audit trail. The trail audited cleanly. Every entry traced back to a policy. Every policy traced back to a sealed filing. Every seal verified.
+
+{/* truncate */}
+
+The exercise was a formality. The auditor said so. Nothing was unsealed; nothing was retracted. We ran it anyway. The Department of Repository Affairs files itself first.
+
+The audit took fourteen minutes to run, and produced a single docket entry of its own. The entry was sealed in the same shape as every other entry — a timestamp, a policy reference, a subject (in this case, the audit trail itself), an action verb, a seal. The recursion is intentional. An audit trail that cannot itself be audited is not an audit trail; it is an assertion. We do not maintain assertions. We maintain records.
+
+The procedure is simple, and was filed in 2024. The audit reads the entire docket, in order, and for each entry, performs three checks: that the entry's policy reference resolves to a sealed policy in the policy log; that the policy referenced existed at the time the entry was written; and that the entry's seal verifies against the entry's contents. An entry that fails any of the three checks is flagged. A flagged entry produces a discrepancy notice, which is itself a docket entry, in the audit docket.
+
+```yaml title="policies/audit-trail-verification.yml"
+policy: audit-trail-verification
+version: 2
+sealed: true
+
+schedule:
+  cadence: monthly
+  window: last-day-of-month 23:00 UTC
+
+procedure:
+  - read: docket/*
+  - for-each: entry
+    verify:
+      - policy-ref-resolves
+      - policy-ref-existed-at-entry-time
+      - seal-verifies
+  - on-failure:
+      record:
+        docket: audit
+        action: DISCREPANCY
+        seal: required
+        retention: permanent
+  - on-success:
+      record:
+        docket: audit
+        action: VERIFIED
+        seal: required
+        retention: permanent
+```
+
+In 27 monthly runs since the procedure was filed, there have been zero discrepancy notices. There have been 27 verification entries. The audit docket contains 27 lines, each a single seal, each pointing to the docket-month it verified. A reader who wants to confirm that the docket is intact reads the audit docket and finds 27 verifications in succession. The reader does not need to read the docket itself, unless the reader doubts the verification, in which case the reader runs the verification again. The procedure is deterministic. The same docket, audited twice, will produce the same seal both times.
+
+The verification log itself has been verified, on the same monthly cadence, by a separate procedure that reads only the audit docket. That log is two lines long, and is sealed by the registrar each quarter. It exists so that there is no point in the chain at which the docket is asked to vouch for itself without an outside verifier. The outside verifier is also a docket. The outside verifier of that docket is also a docket. At some point in the chain, the chain meets its tail. We accept this. The seals are not infinite. The seals are a chain that ends, in practice, where the auditor agreed to stop.
+
+The Department's clerk does not get sentimental about the recursion. The clerk reads the procedure, runs the procedure, files the entry. The audit is a Tuesday. The seal is permanent.

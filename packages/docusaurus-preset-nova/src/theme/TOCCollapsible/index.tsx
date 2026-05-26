@@ -210,7 +210,8 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
   return (
     <>
       <button
-        className="nova-toc-collapsible-trigger"
+        className={(props['className'] !== undefined) ? `nova-toc-collapsible-trigger ${props['className']}` : 'nova-toc-collapsible-trigger'}
+        style={props['style']}
         type="button"
         onClick={() => {
           setIsOpen(true);

@@ -1,0 +1,196 @@
+---
+title: "集成"
+sidebar_position: 1
+description: "为 Threadbare、Glassboard、Canary 与自定义来源提供的内置翻译器。载荷格式、配置与示例。"
+tags:
+  - "advanced"
+  - "integrations"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 集成
+
+Envoy 为常见基础设施来源内置了翻译器。每个翻译器都掌握所属来源的载荷格式、事件类型与认证方式。自定义来源则通过通用翻译器支持。
+
+<Tabs>
+<TabItem value="threadbare" label="Threadbare" default>
+
+## Threadbare
+
+Threadbare 是一个源码托管平台，会在仓库事件发生时触发 webhook。Envoy 的 Threadbare 翻译器可处理推送、合并请求、发布与议题更新等事件。
+
+### 支持的事件
+
+| 事件             | 载荷字段                                        | 默认主题              |
+|----------------|---------------------------------------------|-------------------|
+| `push`         | `repo`、`branch`、`author`、`commits`、`count`  | `ci-builds`       |
+| `pull_request` | `repo`、`action`、`title`、`author`、`number`   | `ci-builds`       |
+| `release`      | `repo`、`tag`、`name`、`author`、`html_url`     | `deploy-alerts`   |
+| `issues`       | `repo`、`action`、`title`、`number`、`assignee` | `project-updates` |
+
+### 示例
+
+```text title="relay.grain — Threadbare 集成"
+relay "threadbare-pushes" {
+  source = "threadbare"
+  cipher = "hmac-sha256"
+
+  cipher_config {
+    header = "X-Threadbare-Signature-256"
+    secret = "${THREADBARE_SECRET}"
+  }
+
+  transform {
+    title = "[{{ repo }}] {{ count }} commit(s) to {{ branch }}"
+    body  = "{{ author }}: {{ commit_summary }}"
+  }
+
+  destination = "canary://ci-builds"
+}
+```
+
+**进入的载荷：**
+
+```json title="Threadbare 推送事件"
+{
+  "ref": "refs/heads/main",
+  "repository": { "full_name": "acme/api" },
+  "pusher": { "name": "anders" },
+  "commits": [
+    { "id": "c3d2a1f", "message": "Add Courier health endpoint" }
+  ]
+}
+```
+
+**转换后的输出：**
+
+```json title="Canary 通知"
+{
+  "title": "[acme/api] 1 commit(s) to main",
+  "body": "anders: c3d2a1f — Add Courier health endpoint",
+  "priority": 3,
+  "tags": ["package"]
+}
+```
+
+</TabItem>
+<TabItem value="glassboard" label="Glassboard">
+
+## Glassboard
+
+Glassboard 是一个监控与仪表盘平台，会在告警状态变更时触发 webhook。Envoy 的 Glassboard 翻译器可处理告警与解除事件。
+
+### 支持的事件
+
+| 事件         | 载荷字段                                                | 默认主题           |
+|------------|-----------------------------------------------------|----------------|
+| `alerting` | `alertname`、`severity`、`instance`、`message`、`value` | `infra-alerts` |
+| `resolved` | `alertname`、`severity`、`instance`、`resolved_at`     | `infra-alerts` |
+
+### 严重程度映射
+
+| Glassboard 严重程度 | Canary 优先级 | 路由建议            |
+|-----------------|------------|-----------------|
+| `critical`      | 5          | `oncall-urgent` |
+| `high`          | 4          | `infra-alerts`  |
+| `warning`       | 3          | `infra-alerts`  |
+| `info`          | 2          | `infra-log`     |
+
+### 示例
+
+```text title="relay.grain — Glassboard 集成"
+relay "glassboard-critical" {
+  source = "glassboard"
+  cipher = "hmac-sha256"
+
+  filter { severity = "critical" }
+
+  transform {
+    title    = "[critical] {{ alertname }}"
+    body     = "{{ instance }} — {{ message }}"
+    priority = 5
+    tags     = ["rotating_light"]
+  }
+
+  destination = "canary://oncall-urgent"
+}
+```
+
+</TabItem>
+<TabItem value="canary" label="Canary">
+
+## Canary
+
+Canary 是一个可用性监测服务，当被监控的端点状态变化时触发 webhook。Envoy 的 Canary 翻译器可处理下线与恢复事件。
+
+### 支持的事件
+
+| 事件               | 载荷字段                                           | 默认主题         |
+|------------------|------------------------------------------------|--------------|
+| `down`           | `monitor_name`、`url`、`status_code`、`timestamp` | `monitoring` |
+| `up`             | `monitor_name`、`url`、`downtime_seconds`        | `monitoring` |
+| `heartbeat_fail` | `monitor_name`、`expected_interval`、`last_seen` | `monitoring` |
+
+### 示例
+
+```text title="relay.grain — Canary 集成"
+relay "canary-down" {
+  source = "canary"
+  cipher = "bearer"
+
+  filter { event = "down" }
+
+  transform {
+    title    = "[DOWN] {{ monitor_name }}"
+    body     = "{{ url }} returned {{ status_code }} at {{ timestamp }}"
+    priority = 5
+    tags     = ["red_circle"]
+  }
+
+  destination = "canary://oncall-urgent"
+}
+```
+
+</TabItem>
+<TabItem value="custom" label="自定义来源">
+
+## 自定义来源
+
+任何能以 JSON、XML 或 form-data 形式发送 HTTP POST 的系统，都可以通过通用翻译器与 Envoy 集成。
+
+### 示例
+
+```text title="relay.grain — 自定义来源"
+relay "custom-deploy-hook" {
+  source = "generic"
+  cipher = "bearer"
+
+  cipher_config {
+    token = "${DEPLOY_WEBHOOK_TOKEN}"
+  }
+
+  transform {
+    title = "Deploy: {{ app }} → {{ environment }}"
+    body  = "Version {{ version }} deployed by {{ user }}"
+    priority = 3
+  }
+
+  destination = "canary://deploy-alerts"
+}
+```
+
+通用翻译器会从顶层 JSON 对象中提取字段；嵌套字段使用点号表示，例如 `{{ server.hostname }}`。
+
+:::note
+自定义来源需要在 transform 块中显式映射字段。与内置集成不同，自动归一并不存在——你只能映射自己需要的那些字段。
+:::
+
+</TabItem>
+</Tabs>
+
+## 下一步
+
+- [协议翻译](/docs/core/protocol-translation/) — Parcel 如何在来源与目的地之间完成格式转换。
+- [身份认证](/docs/core/authentication/) — 各集成类型对应的 Cipher 配置。

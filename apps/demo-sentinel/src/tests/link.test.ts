@@ -97,7 +97,7 @@ describe('Link validation', async () => {
     // Build a set of valid blog slugs for /blog/... link validation.
     const blogPaths: TestsLinkLinkValidationBlogPaths = new Set();
 
-    // Build an id-based lookup: dir + frontmatter id → valid path.
+    // Build an id-based lookup: dir + frontmatter id -> valid path.
     const idPaths: TestsLinkLinkValidationIdPaths = new Set();
 
     for (const mdFile of mdFiles) {

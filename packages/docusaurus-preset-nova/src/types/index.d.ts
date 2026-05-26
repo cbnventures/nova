@@ -1,3 +1,5 @@
+import type { TranslationFile } from '@docusaurus/types';
+
 import type {
   OptionsPluginOptions,
   OptionsPluginOptionsProgressBar,
@@ -5,32 +7,12 @@ import type {
 } from './options.d.ts';
 import type {
   SharedPreset,
+  SharedPresetCta,
   SharedPresetFooter,
   SharedPresetLogo,
   SharedPresetName,
   SharedPresetNavbar,
 } from './shared.d.ts';
-
-/**
- * Index - Docusaurus Theme Nova - Build Google Fonts URL.
- *
- * @since 0.15.0
- */
-export type IndexDocusaurusThemeNovaBuildGoogleFontsUrlPreset = SharedPreset;
-
-export type IndexDocusaurusThemeNovaBuildGoogleFontsUrlReturns = string;
-
-export type IndexDocusaurusThemeNovaBuildGoogleFontsUrlSpacePattern = RegExp;
-
-export type IndexDocusaurusThemeNovaBuildGoogleFontsUrlDisplayFamily = string;
-
-export type IndexDocusaurusThemeNovaBuildGoogleFontsUrlBodyFamily = string;
-
-export type IndexDocusaurusThemeNovaBuildGoogleFontsUrlCodeFamily = string;
-
-export type IndexDocusaurusThemeNovaBuildGoogleFontsUrlFamilies = string[];
-
-export type IndexDocusaurusThemeNovaBuildGoogleFontsUrlQuery = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default.
@@ -53,6 +35,8 @@ export type IndexDocusaurusThemeNovaDefaultReturnsGetThemePath = () => string;
 export type IndexDocusaurusThemeNovaDefaultReturnsGetTypeScriptThemePath = () => string;
 
 export type IndexDocusaurusThemeNovaDefaultReturnsGetClientModules = () => string[];
+
+export type IndexDocusaurusThemeNovaDefaultReturnsGetPathsToWatch = () => string[];
 
 export type IndexDocusaurusThemeNovaDefaultReturnsInjectHtmlTagsHeadTags = IndexDocusaurusThemeNovaDefaultInjectHtmlTagsHeadTags;
 
@@ -91,13 +75,13 @@ export type IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpackReturns = {
 
 export type IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpack = () => IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpackReturns;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsGetTranslationFiles = () => never[];
+export type IndexDocusaurusThemeNovaDefaultReturnsGetTranslationFiles = () => TranslationFile[];
 
 export type IndexDocusaurusThemeNovaDefaultReturnsGetDefaultCodeTranslationMessages = () => Promise<Record<string, string>>;
 
 export type IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParamsThemeConfig = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParamsTranslationFiles = unknown[];
+export type IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParamsTranslationFiles = TranslationFile[];
 
 export type IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParams = {
   themeConfig: IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParamsThemeConfig;
@@ -117,6 +101,7 @@ export type IndexDocusaurusThemeNovaDefaultReturns = {
   getThemePath: IndexDocusaurusThemeNovaDefaultReturnsGetThemePath;
   getTypeScriptThemePath: IndexDocusaurusThemeNovaDefaultReturnsGetTypeScriptThemePath;
   getClientModules: IndexDocusaurusThemeNovaDefaultReturnsGetClientModules;
+  getPathsToWatch: IndexDocusaurusThemeNovaDefaultReturnsGetPathsToWatch;
   injectHtmlTags: IndexDocusaurusThemeNovaDefaultReturnsInjectHtmlTags;
   configurePostCss: IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCss;
   configureWebpack: IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpack;
@@ -156,11 +141,11 @@ export type IndexDocusaurusThemeNovaDefaultCssAccessibilityPath = string;
 
 export type IndexDocusaurusThemeNovaDefaultCssUtilitiesPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssComponentsDirectory = string;
+export type IndexDocusaurusThemeNovaDefaultCssBlocksDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssComponentFiles = string[];
+export type IndexDocusaurusThemeNovaDefaultCssBlockFiles = string[];
 
-export type IndexDocusaurusThemeNovaDefaultCssComponentFileName = string | Buffer;
+export type IndexDocusaurusThemeNovaDefaultCssBlockFileName = string | Buffer;
 
 export type IndexDocusaurusThemeNovaDefaultCssThemeDirectory = string;
 
@@ -172,11 +157,11 @@ export type IndexDocusaurusThemeNovaDefaultCssPresetDirectory = string;
 
 export type IndexDocusaurusThemeNovaDefaultCssPresetPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetComponentsDirectory = string;
+export type IndexDocusaurusThemeNovaDefaultCssPresetBlocksDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetComponentFiles = string[];
+export type IndexDocusaurusThemeNovaDefaultCssPresetBlockFiles = string[];
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetComponentFileName = string | Buffer;
+export type IndexDocusaurusThemeNovaDefaultCssPresetBlockFileName = string | Buffer;
 
 export type IndexDocusaurusThemeNovaDefaultCssPresetThemeDirectory = string;
 
@@ -187,8 +172,6 @@ export type IndexDocusaurusThemeNovaDefaultActiveFooterPrefix = string;
 export type IndexDocusaurusThemeNovaDefaultCssPresetThemeFiles = string[];
 
 export type IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName = string | Buffer;
-
-export type IndexDocusaurusThemeNovaDefaultCssPresetThemeFileNameString = string;
 
 export type IndexDocusaurusThemeNovaDefaultI18nConfigCurrentLocale = string;
 
@@ -362,13 +345,25 @@ export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataFooterVariant 
 
 export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataPresetLogo = SharedPresetLogo;
 
+export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataPresetCta = SharedPresetCta;
+
+export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataNotFoundBundleIndex = number;
+
+export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataErrorPageContentTitleIndex = number;
+
+export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataCreditPhraseIndex = number;
+
 export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalData = {
   blogAuthors: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataBlogAuthors;
   blogPosts: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataBlogPosts;
   docDescriptions: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataDocDescriptions;
   navbarVariant: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataNavbarVariant;
   footerVariant: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataFooterVariant;
+  presetCta: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataPresetCta;
   presetLogo: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataPresetLogo;
+  notFoundBundleIndex: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataNotFoundBundleIndex;
+  errorPageContentTitleIndex: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataErrorPageContentTitleIndex;
+  creditPhraseIndex: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataCreditPhraseIndex;
 };
 
 export type IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions = Record<string, string>;
@@ -440,6 +435,18 @@ export type IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRouteConfig = 
   [key: string]: unknown;
 };
 
+export type IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleCount = number;
+
+export type IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleCount = number;
+
+export type IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseCount = number;
+
+export type IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleIndexValue = number;
+
+export type IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleIndexValue = number;
+
+export type IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseIndexValue = number;
+
 /**
  * Index - Docusaurus Theme Nova - Default - Get Client Modules.
  *
@@ -456,6 +463,22 @@ export type IndexDocusaurusThemeNovaDefaultGetClientModulesNprogressCssPath = st
  *
  * @since 0.15.0
  */
+export type IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesNovaTranslationsDirPath = string;
+
+export type IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeCommonMessages = Record<string, string>;
+
+export type IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeNovaMessages = Record<string, string>;
+
+/**
+ * Index - Docusaurus Theme Nova - Default - Get Paths To Watch.
+ *
+ * @since 0.18.0
+ */
+export type IndexDocusaurusThemeNovaDefaultGetPathsToWatchBlocksPath = string;
+
+export type IndexDocusaurusThemeNovaDefaultGetPathsToWatchLibPath = string;
+
+export type IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths = string[];
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Theme Path.
@@ -563,7 +586,7 @@ export type IndexDocusaurusThemeNovaDefaultPresetLogoSrc = string;
  */
 export type IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParamsThemeConfig = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParamsTranslationFiles = unknown[];
+export type IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParamsTranslationFiles = TranslationFile[];
 
 export type IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParams = {
   themeConfig: IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParamsThemeConfig;
