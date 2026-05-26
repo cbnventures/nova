@@ -44,11 +44,15 @@ import type {
   LibSearchIndexerBuildSearchIndexLunrDestinationPath,
   LibSearchIndexerBuildSearchIndexLunrFunction,
   LibSearchIndexerBuildSearchIndexLunrIndex,
+  LibSearchIndexerBuildSearchIndexLocaleRelativeRoutePath,
+  LibSearchIndexerBuildSearchIndexIsBaseUrlPrefixedRoute,
+  LibSearchIndexerBuildSearchIndexBaseUrl,
   LibSearchIndexerBuildSearchIndexLunrLanguageLoader,
   LibSearchIndexerBuildSearchIndexLunrModule,
   LibSearchIndexerBuildSearchIndexLunrMultiLoader,
   LibSearchIndexerBuildSearchIndexLunrSourcePath,
   LibSearchIndexerBuildSearchIndexLunrStemmerSupportLoader,
+  LibSearchIndexerBuildSearchIndexLunrTinySegLoader,
   LibSearchIndexerBuildSearchIndexManifest,
   LibSearchIndexerBuildSearchIndexManifestFilePath,
   LibSearchIndexerBuildSearchIndexManifestJson,
@@ -170,7 +174,7 @@ function extractDocument(htmlFilePath: LibSearchIndexerExtractDocumentHtmlFilePa
     return;
   });
 
-  // Extract clean content - prefer targeted content containers, fall back to article/main.
+  // Extract clean content — prefer targeted content containers, fall back to article/main.
   const contentSelectors: LibSearchIndexerExtractDocumentContentSelectors = '.nova-doc-content, .nova-blog-post-item-content';
   const contentText: LibSearchIndexerExtractDocumentContentText = String(cheerioApi(contentSelectors).text() ?? '');
   const articleText: LibSearchIndexerExtractDocumentArticleText = String(cheerioApi('article').text() ?? '');
@@ -255,7 +259,20 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
       continue;
     }
 
-    const htmlFilePath: LibSearchIndexerExtractDocumentHtmlFilePath = join(options['outDir'], typedRoutePath, 'index.html');
+    // For non-default locales Docusaurus passes the locale-aware
+    // `baseUrl` (e.g. `/ja/`) AND already locale-prefixed routes (e.g.
+    // `/ja/docs/overview/`), while `outDir` is the locale's build
+    // directory (e.g. `build/ja`). Joining outDir + the full route
+    // would double-prefix the locale and miss every HTML file. Strip
+    // baseUrl from the route to recover the locale-relative path that
+    // outDir expects. For the default locale `baseUrl` is `/` so the
+    // slice is a no-op.
+    const baseUrlString: LibSearchIndexerBuildSearchIndexBaseUrl = options['baseUrl'];
+    const baseUrlPrefixedRoute: LibSearchIndexerBuildSearchIndexIsBaseUrlPrefixedRoute = typedRoutePath.startsWith(baseUrlString) && baseUrlString.length > 1;
+    const localeRelativeRoutePath: LibSearchIndexerBuildSearchIndexLocaleRelativeRoutePath = baseUrlPrefixedRoute === true
+      ? `/${typedRoutePath.slice(baseUrlString.length)}`
+      : typedRoutePath;
+    const htmlFilePath: LibSearchIndexerExtractDocumentHtmlFilePath = join(options['outDir'], localeRelativeRoutePath, 'index.html');
     const document: LibSearchIndexerBuildSearchIndexDocument = extractDocument(htmlFilePath, typedRoutePath);
 
     if (document === undefined) {
@@ -294,6 +311,18 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
         }
       }
 
+      // Japanese (`lunr.ja.js`) and the older `lunr.jp.js` both call
+      // `new lunr.TinySegmenter()` at load time. TinySegmenter ships
+      // with lunr-languages as a separate `tinyseg.js` module that
+      // attaches the constructor to `lunr`; without pre-loading it
+      // the Japanese language loader crashes with
+      // "TypeError: lunr.TinySegmenter is not a constructor".
+      if (typedLanguageCode === 'ja' || typedLanguageCode === 'jp') {
+        const lunrTinySegLoader: LibSearchIndexerBuildSearchIndexLunrTinySegLoader = require('lunr-languages/tinyseg');
+
+        lunrTinySegLoader(lunrFunction);
+      }
+
       const lunrLanguageLoader: LibSearchIndexerBuildSearchIndexLunrLanguageLoader = require(`lunr-languages/lunr.${typedLanguageCode}`);
 
       lunrLanguageLoader(lunrFunction);
@@ -314,14 +343,30 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
       nonEnglishLanguages.length > 0
       && language.length >= 2
     ) {
-      typedBuilder.use(typedBuilder['multiLanguage'], ...language);
+      // `lunr-languages/lunr.multi` exposes the multi-language factory
+      // as `lunr.multiLanguage(...codes)` -- it returns a configured
+      // plugin function that `Builder.use` then runs. The previous
+      // implementation read `typedBuilder['multiLanguage']` which is
+      // undefined (multiLanguage lives on `lunr`, not the builder),
+      // so the call crashed with "Cannot read properties of undefined
+      // (reading 'apply')". Call the factory on `lunrFunction` and
+      // pass the returned plugin to `use`. The `!` is safe because
+      // `lunrMultiLoader(lunrFunction)` ran above when
+      // `nonEnglishLanguages.length >= 2`, which is exactly the
+      // condition that gates this branch.
+      const lunrMultiLanguageFactory = (lunrFunction as unknown as Record<string, (...codes: LibSearchIndexerBuildSearchIndexLanguageCode[]) => unknown>)['multiLanguage']!;
+      typedBuilder.use(lunrMultiLanguageFactory(...language));
     } else if (
       nonEnglishLanguages.length === 1
       && language.length === 1
     ) {
       const nonEnglishLanguageKey: LibSearchIndexerBuildSearchIndexNonEnglishLanguageKey = nonEnglishLanguages[0] as LibSearchIndexerBuildSearchIndexNonEnglishLanguageKey;
 
-      typedBuilder.use(typedBuilder[nonEnglishLanguageKey]);
+      // Same fix as the multi-language branch above: per-language
+      // plugins live on `lunr` (`lunr.de`, `lunr.fr`, ...) after the
+      // language loader runs -- not on the Builder instance.
+      const lunrLanguagePlugin = (lunrFunction as unknown as Record<string, unknown>)[nonEnglishLanguageKey];
+      typedBuilder.use(lunrLanguagePlugin);
     }
 
     typedBuilder.ref('path');

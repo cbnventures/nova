@@ -100,6 +100,12 @@ export type LibSearchIndexerBuildSearchIndexIsPageRoute = boolean;
 
 export type LibSearchIndexerBuildSearchIndexIsNonContentRoute = boolean;
 
+export type LibSearchIndexerBuildSearchIndexBaseUrl = string;
+
+export type LibSearchIndexerBuildSearchIndexIsBaseUrlPrefixedRoute = boolean;
+
+export type LibSearchIndexerBuildSearchIndexLocaleRelativeRoutePath = string;
+
 export type LibSearchIndexerBuildSearchIndexDocument = LibSearchIndexerDocument | undefined;
 
 export type LibSearchIndexerBuildSearchIndexLunrModule = unknown;
@@ -113,6 +119,8 @@ export type LibSearchIndexerBuildSearchIndexLanguageCode = string;
 export type LibSearchIndexerBuildSearchIndexLunrStemmerSupportLoader = Function;
 
 export type LibSearchIndexerBuildSearchIndexLunrLanguageLoader = Function;
+
+export type LibSearchIndexerBuildSearchIndexLunrTinySegLoader = Function;
 
 export type LibSearchIndexerBuildSearchIndexLunrMultiLoader = Function;
 
