@@ -1,0 +1,10 @@
+{
+  "label": "Beacon",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "روابط قصيرة تحمل سلسلة الإسناد كاملة — نطاقات مخصّصة بشهادات Ironclad، ورموز Flare QR وروابط عميقة تربط بين العالمين المادّي والرقمي، إضافة إلى إصدار جماعي لروابط Beacon عبر واجهة Spoke API أو استيراد CSV."
+  }
+}

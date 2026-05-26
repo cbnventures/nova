@@ -9,9 +9,9 @@ import type {
 /**
  * Theme - MDX Content - MDX Content.
  *
- * Wraps page children in the MDX provider so that
- * custom component mappings defined in MDXComponents apply
- * to all MDX content rendered on the page.
+ * Wraps page children in the MDX provider so custom component mappings
+ * apply to all MDX content, plus a `.nova-mdx-content` div so page-wide
+ * MDX styling has a single scope hook.
  *
  * @param {ThemeMdxContentMdxContentProps} props - Props.
  *
@@ -22,7 +22,12 @@ import type {
 function MdxContent(props: ThemeMdxContentMdxContentProps) {
   return (
     <MDXProvider components={MDXComponents as ThemeMdxContentMdxContentComponents}>
-      {props['children']}
+      <div
+        className={(props['className'] !== undefined) ? `nova-mdx-content ${props['className']}` : 'nova-mdx-content'}
+        style={props['style']}
+      >
+        {props['children']}
+      </div>
     </MDXProvider>
   );
 }

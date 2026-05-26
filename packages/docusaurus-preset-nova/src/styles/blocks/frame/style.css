@@ -1,0 +1,47 @@
+/**
+ * ============================
+ * Frame - Figure Container
+ * ============================
+ */
+
+.nova-frame {
+  display: block;
+  margin-block: 1.5rem;
+  margin-inline: 0;
+}
+
+/**
+ * ============================
+ * Frame - Media
+ * ============================
+ */
+
+.nova-frame-media {
+  display: block;
+  overflow: hidden;
+}
+
+.nova-frame-media > img,
+.nova-frame-media > picture > img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+/**
+ * ============================
+ * Frame - Caption
+ * ============================
+ */
+
+.nova-frame-caption {
+  display: block;
+
+  margin-top: 0.625rem;
+
+  font-size: 0.875rem;
+  line-height: 1.5;
+
+  text-align: center;
+}

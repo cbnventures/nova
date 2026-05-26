@@ -1,0 +1,142 @@
+---
+title: "设备注册"
+sidebar_position: 2
+description: "Garrison 代理接入、态势基线、合规配置文件，以及持续的设备健康监控。"
+tags:
+  - "trust"
+  - "设备"
+---
+
+# 设备注册
+
+每一台参与 Sentinel 信任评估闭环的设备都必须通过 Garrison 完成注册。注册会建立一个态势基线——设备健康的初始快照，作为日后所有评估的参照。
+
+## 注册流程
+
+注册分三步：安装代理、向控制面认证、采集态势基线。
+
+```bash title="注册一台设备"
+sentinel-agent enroll \
+  --control-plane sentinel.yourcompany.internal \
+  --token $ENROLLMENT_TOKEN \
+  --profile standard
+```
+
+```text title="注册输出"
+正在向 Sentinel 控制面注册设备……
+  设备 ID:           dev_7f3a2b9c4e1d
+  平台:              macOS 15.2 (arm64)
+  代理版本:           3.4.1
+
+  已采集态势基线：
+    操作系统版本:    15.2（最新）
+    磁盘加密:        FileVault 已启用 (AES-256)
+    防火墙:          已激活（隐身模式）
+    补丁等级:        最新（0 个待安装）
+    屏幕锁定:        已启用（5 分钟超时）
+    防病毒:          已激活（病毒库为最新）
+
+  合规配置文件: standard（已应用）
+  Filament 隧道:    已建立 (UDP 51820)
+  首次 Watchtower 评估：90 秒后
+
+注册完成。
+```
+
+态势基线是不可变的。它作为 Garrison 持续合规检查的参照点。如果某设备的态势下降到其合规配置文件所定义的阈值以下，Watchtower 会收到通知，Drawbridge 也会相应调整访问。
+
+## 态势检查类别
+
+注册时与之后的每一次检查中，Garrison 都会评估以下类别：
+
+| 类别          | 检查项                       | 权重  |
+|-------------|---------------------------|-----|
+| **操作系统完整性** | 版本是否最新、安全补丁等级、越狱/Root 检测  | 25% |
+| **加密**      | 全盘加密是否启用、算法强度、密钥使用年限      | 20% |
+| **网络**      | 防火墙是否激活、隐身模式、开放端口数量       | 15% |
+| **认证**      | 屏幕锁定是否启用、超时时长、生物识别注册情况    | 15% |
+| **软件**      | 防病毒是否激活、病毒库是否最新、是否存在未授权软件 | 15% |
+| **配置**      | MDM 配置合规性、证书有效性、代理版本      | 10% |
+
+综合态势评分是所有类别评分的加权和。评分为 100 意味着每个类别中的每项检查都通过；低于策略阈值时会触发 `on_failure` 处理器。
+
+:::tip 基线漂移
+注册之后，Garrison 会追踪每一项检查相对基线的漂移情况。注册时态势评分为 95、之后降至 82 的设备，会与注册时就是 82 的设备区别对待。在很多环境中，基线漂移比绝对评分更具信号价值。
+:::
+
+## 合规配置文件
+
+合规配置文件定义了一组设备所必须满足的最低态势要求。每台注册设备会被分配到一个配置文件：
+
+```text title="profiles/standard.grain"
+profile "standard" {
+  posture_minimum = 80
+
+  requirements {
+    os.patch_age     <= 30       # 距上次补丁的天数
+    encryption       = true
+    firewall         = true
+    screen_lock      = true
+    screen_timeout   <= 300      # 秒
+    antivirus        = true
+  }
+}
+```
+
+```text title="profiles/high-security.grain"
+profile "high-security" {
+  posture_minimum = 95
+
+  requirements {
+    os.patch_age     <= 7
+    encryption       = true
+    encryption.algo  = "AES-256"
+    firewall         = true
+    firewall.stealth = true
+    screen_lock      = true
+    screen_timeout   <= 60
+    antivirus        = true
+    antivirus.defs   <= 1        # 距上次病毒库更新的天数
+    biometric        = true
+  }
+}
+```
+
+:::warning 配置文件变更
+追溯性地变更一份合规配置文件，会对所有归属该配置的设备进行重新评估。新要求下不再合规的设备将在下一次 Watchtower 评估中失败并失去访问权。在收紧配置文件要求前，请务必先运行一次 Parapet 仿真。
+:::
+
+## 重新注册
+
+设备在以下情况下必须重新注册：
+
+- 操作系统被重新安装或主版本升级。
+- Sentinel 代理被重新安装。
+- 注册令牌已被管理员吊销。
+- 设备离线时长超过配置文件 `max_offline`（默认：30 天）。
+
+重新注册会采集一份新的态势基线，并重置基线漂移追踪。
+
+## 监控已注册设备
+
+查询已注册设备及其当前态势：
+
+```bash title="列出已注册设备"
+sentinel garrison list --profile standard --sort posture
+```
+
+```text title="设备列表输出"
+DEVICE ID         PLATFORM        POSTURE  PROFILE        LAST CHECK
+dev_7f3a2b9c4e1d  macOS 15.2      94       standard       2m ago
+dev_b2c8d4e6f1a3  Windows 11      91       standard       1m ago
+dev_e5f7a1b3c9d2  Ubuntu 24.04    87       standard       45s ago
+dev_a9c1e3f5b7d4  macOS 15.1      76       standard       30s ago  (!)
+
+(!) 低于配置文件下限 (80)。访问已受限。
+```
+
+## 下一步
+
+- [信任策略](/docs/trust/trust-policies/) — 态势评分如何进入策略评估流程。
+- [访问控制](/docs/trust/access-control/) — Drawbridge 如何利用态势数据授予或撤销访问。
+- [微隔离](/docs/operations/micro-segmentation/) — 基于设备与工作负载态势的区域级隔离。

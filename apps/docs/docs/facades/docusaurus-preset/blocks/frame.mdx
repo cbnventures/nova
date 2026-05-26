@@ -1,0 +1,71 @@
+---
+id: "frame"
+title: "Frame"
+description: "Figure wrapper with optional caption for images, themed images, and other media with per-preset framing identity."
+sidebar_position: 10
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "frame block"
+  - "figure caption"
+  - "themed image"
+  - "media wrapper"
+  - "figcaption"
+tags:
+  - "facades"
+  - "block"
+  - "component"
+  - "frame"
+  - "figure"
+---
+
+# Frame
+
+Figure wrapper with an optional caption. Wraps any media child (themed image, image, video, embed) with preset-specific framing identity — radius, border, shadow, and caption typography.
+
+## Summary
+
+The Frame block renders a `<figure>` element with two parts: a `<div class="nova-frame-media">` that holds your media child, and an optional `<figcaption class="nova-frame-caption">` below it. The framing identity (radius, border treatment, shadow, caption font) adapts to the active preset.
+
+## Why Use This Block?
+
+- **Per-preset framing** — each preset declares its own figure styling (rounded card shadow, industrial border, paper hairline, etc.).
+- **Caption support** — pass a `caption` prop to render a styled `<figcaption>` below the media.
+- **Pass-through styling** — `className` and `style` props merge with the base `nova-frame` class for one-off overrides.
+- **Semantic HTML** — uses `<figure>` + `<figcaption>` so screen readers announce the caption as related to the media.
+
+## Usage
+
+```tsx title="src/pages/index.tsx"
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+import ThemedImage from '@theme/ThemedImage';
+
+import diagramLight from './_assets_/diagram-light.png';
+import diagramDark from './_assets_/diagram-dark.png';
+
+<Frame caption="System overview — request flow from client to worker.">
+  <ThemedImage
+    sources={{ light: diagramLight, dark: diagramDark }}
+    alt="System overview diagram"
+    width={1280}
+    height={720}
+  />
+</Frame>
+```
+
+A Frame without a caption omits the `<figcaption>` entirely:
+
+```tsx title="src/pages/index.tsx"
+<Frame>
+  <img src="/img/screenshot.png" alt="App screenshot" />
+</Frame>
+```
+
+## Options
+
+| Prop        | Type                         | Default     | Description                                                          |
+|-------------|------------------------------|-------------|----------------------------------------------------------------------|
+| `children`  | `ReactNode`                  | —           | Media element to wrap (image, themed image, video, embed). Required. |
+| `caption`   | `ReactNode \| undefined`     | `undefined` | Caption rendered below the media in a `<figcaption>`. Omit to hide.  |
+| `className` | `string \| undefined`        | `undefined` | Additional class names merged with the base `nova-frame` class.      |
+| `style`     | `CSSProperties \| undefined` | `undefined` | Inline style overrides applied to the outer `<figure>` element.      |

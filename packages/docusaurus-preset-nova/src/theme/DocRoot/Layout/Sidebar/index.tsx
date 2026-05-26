@@ -70,12 +70,16 @@ function DocRootLayoutSidebar(props: ThemeDocRootLayoutSidebarDocRootLayoutSideb
     description: 'The ARIA label for the button that collapses the doc sidebar',
   });
 
-  const asideClassName: ThemeDocRootLayoutSidebarDocRootLayoutSidebarAsideClassName = (collapsed === true) ? 'nova-col-12 nova-col-lg-3 nova-sidebar-collapsed' : 'nova-col-12 nova-col-lg-3';
+  const baseAsideClassName: ThemeDocRootLayoutSidebarDocRootLayoutSidebarAsideClassName = (collapsed === true) ? 'nova-col-12 nova-col-lg-3 nova-sidebar-collapsed' : 'nova-col-12 nova-col-lg-3';
+  const asideClassName: ThemeDocRootLayoutSidebarDocRootLayoutSidebarAsideClassName = (props['className'] !== undefined) ? `${baseAsideClassName} ${props['className']}` : baseAsideClassName;
   const toggleLabel: ThemeDocRootLayoutSidebarDocRootLayoutSidebarToggleLabel = (collapsed === true) ? expandAriaLabel : collapseAriaLabel;
   const toggleIndicator: ThemeDocRootLayoutSidebarDocRootLayoutSidebarToggleIndicator = (collapsed === true) ? '\u00BB' : '\u00AB';
 
   return (
-    <aside className={asideClassName}>
+    <aside
+      className={asideClassName}
+      style={props['style']}
+    >
       <DocSidebar
         sidebar={props['sidebar']}
         path={pathname}

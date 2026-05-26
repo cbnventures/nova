@@ -21,7 +21,8 @@ function DocSidebarItemHtml(props: ThemeDocSidebarItemHtmlDocSidebarItemHtmlProp
 
   return (
     <li
-      className="nova-sidebar-item nova-sidebar-item-html"
+      className={(props['className'] !== undefined) ? `nova-sidebar-item nova-sidebar-item-html ${props['className']}` : 'nova-sidebar-item nova-sidebar-item-html'}
+      style={props['style']}
       dangerouslySetInnerHTML={{ __html: value }}
     />
   );

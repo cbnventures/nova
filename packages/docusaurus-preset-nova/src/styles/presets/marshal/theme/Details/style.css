@@ -1,0 +1,167 @@
+/**
+ * Marshal - `Details` theme overlay.
+ *
+ * Collapsible disclosure block rendered as a hairline ledger paper.
+ * Summary row carries a section-sign seal-red prefix and mono uppercase label
+ * voice. Open state separates summary from body via a hairline rule.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================
+ */
+
+:root {
+  --nova-marshal-details-margin-block-end: 1.5rem;
+}
+
+/**
+ * ============================
+ * 0b. Canonical aliases - consumed by shared theme/Details
+ * ============================
+ */
+
+:root {
+  --nova-details-margin-block-end: var(--nova-marshal-details-margin-block-end);
+}
+
+/**
+ * ============================
+ * 1. Container - flat ledger paper
+ *
+ * Block-margin flows from shared theme/Details via the canonical
+ * `--nova-details-margin-block-end` token.
+ * ============================
+ */
+
+.nova-details {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 50%);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+[data-theme="dark"] .nova-details {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 2. Summary - section-sign seal-red prefix, mono uppercase
+ * ============================
+ */
+
+/* Hide the native disclosure marker (browser-default arrow) so only
+   the custom section-sign prefix renders - prevents the double-arrow defect. */
+
+.nova-details-summary,
+.nova-details summary,
+details > summary {
+  list-style: none;
+}
+
+.nova-details-summary::-webkit-details-marker,
+.nova-details summary::-webkit-details-marker,
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-details-summary::marker,
+.nova-details summary::marker,
+details > summary::marker {
+  content: "";
+  display: none;
+}
+
+/* Details JSX renders <Icon className="nova-details-arrow" /> - hide the
+   lucide chevron so our section-sign marker is the only visible glyph. */
+.nova-details-arrow {
+  display: none;
+}
+
+.nova-details-summary {
+  padding: 0.75rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink);
+
+  background-color: transparent;
+  border: none;
+
+  transition: background-color var(--nova-marshal-transition), color var(--nova-marshal-transition);
+
+  cursor: pointer;
+}
+
+.nova-details-summary::before {
+  display: inline-block;
+
+  margin-right: 0.5rem;
+
+  color: var(--nova-color-accent-700);
+
+  transition: transform var(--nova-marshal-transition);
+
+  content: "§";
+}
+
+[data-open="true"] > .nova-details-summary::before {
+  transform: rotate(90deg);
+}
+
+.nova-details-summary:hover,
+.nova-details-summary:focus-visible {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+}
+
+[data-theme="dark"] .nova-details-summary::before {
+  color: var(--nova-color-accent-500);
+}
+
+[data-theme="dark"] .nova-details-summary:hover,
+[data-theme="dark"] .nova-details-summary:focus-visible {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+}
+
+/**
+ * ============================
+ * 3. Open state - hairline divider
+ * ============================
+ */
+
+[data-open="true"] > .nova-details-summary {
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] [data-open="true"] > .nova-details-summary {
+  border-bottom-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 4. Body - paper interior
+ * ============================
+ */
+
+.nova-details-content-body {
+  padding: 0.75rem 1rem;
+  background-color: var(--nova-color-surface-raised);
+}
+
+@media (min-width: 768px) {
+  .nova-details-content-body {
+    padding: 1rem 1.25rem;
+  }
+}
+
+[data-theme="dark"] .nova-details-content-body {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 95%);
+}

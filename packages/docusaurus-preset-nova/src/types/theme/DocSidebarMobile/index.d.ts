@@ -1,11 +1,23 @@
 import type { PropSidebarBreadcrumbsItem } from '@docusaurus/plugin-content-docs';
-import type { MouseEvent, ReactNode, RefObject } from 'react';
+import type {
+  CSSProperties, MouseEvent, ReactNode, RefObject,
+} from 'react';
 
 /**
  * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile.
  *
  * @since 0.15.0
  */
+export type ThemeDocSidebarMobileDocSidebarMobilePropsClassName = string | undefined;
+
+export type ThemeDocSidebarMobileDocSidebarMobilePropsStyle = CSSProperties | undefined;
+
+export type ThemeDocSidebarMobileDocSidebarMobileProps = {
+  className?: ThemeDocSidebarMobileDocSidebarMobilePropsClassName;
+  style?: ThemeDocSidebarMobileDocSidebarMobilePropsStyle;
+  [key: string]: unknown;
+};
+
 export type ThemeDocSidebarMobileDocSidebarMobileBreadcrumbs = PropSidebarBreadcrumbsItem[] | null;
 
 export type ThemeDocSidebarMobileDocSidebarMobileSidebar = Record<string, unknown> | null;

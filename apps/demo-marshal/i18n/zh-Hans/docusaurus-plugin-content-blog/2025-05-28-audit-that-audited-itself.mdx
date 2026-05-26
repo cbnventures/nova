@@ -1,0 +1,55 @@
+---
+title: "那次审计审计了它自己"
+authors:
+  - "yuki"
+tags:
+  - "audit"
+  - "dockets"
+date: "2025-05-28"
+---
+
+我们对审计轨迹做了一次审计。轨迹通过了审计。每一条条目都能追溯到一份 policy。每一份 policy 都能追溯到一次封印过的立卷。每一枚封印都核验通过。
+
+{/* truncate */}
+
+这次演练是走个形式。审计员也这么说。没有任何条目失封；没有任何条目被撤回。我们仍然做了。仓储事务部从对自己立卷开始。
+
+这次审计运行了十四分钟，并产生了它自己的一条 docket 条目。这条条目按与其他每一条同样的形态封印——时间戳、policy 引用、主体（这次是审计轨迹本身）、行为动词、封印。这种递归是刻意的。一个无法被自己审计的审计轨迹，不是审计轨迹；那是一句断言。我们不维护断言。我们维护记录。
+
+这一流程很简单，于 2024 年立卷。审计按顺序读取整个 docket，对每一条条目执行三项检查：该条目的 policy 引用解析到 policy 日志中一份封印过的 policy；所引用的 policy 在条目写入时已存在；该条目的封印与其内容核验吻合。任何一项不通过的条目都会被标记。标记会产生一份不符通告，而该通告本身就是审计 docket 中的一条 docket 条目。
+
+```yaml title="policies/audit-trail-verification.yml"
+policy: audit-trail-verification
+version: 2
+sealed: true
+
+schedule:
+  cadence: monthly
+  window: last-day-of-month 23:00 UTC
+
+procedure:
+  - read: docket/*
+  - for-each: entry
+    verify:
+      - policy-ref-resolves
+      - policy-ref-existed-at-entry-time
+      - seal-verifies
+  - on-failure:
+      record:
+        docket: audit
+        action: DISCREPANCY
+        seal: required
+        retention: permanent
+  - on-success:
+      record:
+        docket: audit
+        action: VERIFIED
+        seal: required
+        retention: permanent
+```
+
+自该流程立卷以来，27 次月度运行里出现了零次不符通告。共有 27 条核验条目。审计 docket 包含 27 行，每一行是一枚封印，每一枚指向它所核验的那个 docket 月份。一位想确认 docket 完好无损的读者去读审计 docket，看到接连 27 次核验。读者无须再读 docket 本身，除非读者怀疑这些核验——那种情况下读者可以再跑一次核验。流程是确定性的。同一份 docket 被审计两次会产生相同的封印。
+
+核验日志本身也按同一月度节奏被核验，由另一项只读审计 docket 的独立流程完成。那份日志有两行长，每个季度由登记员封印一次。它的存在，是为了让链上不存在一处让 docket 自己替自己作保、却没有外部核验者的环节。外部核验者也是一份 docket。那份 docket 的外部核验者还是一份 docket。链条在某处会遇到它的尾。我们接受这一点。封印不是无限的。封印是一条链，实际终止于审计员同意停下来的地方。
+
+本部的事务员对这种递归并不感伤。事务员读流程、跑流程、立卷条目。审计是一个星期二。封印是永久的。

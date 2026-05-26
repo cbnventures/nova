@@ -31,7 +31,10 @@ function EditMetaRow(props: ThemeEditMetaRowEditMetaRowProps) {
   }
 
   return (
-    <div className="nova-edit-meta-row">
+    <div
+      className={(props['className'] !== undefined) ? `nova-edit-meta-row ${props['className']}` : 'nova-edit-meta-row'}
+      style={props['style']}
+    >
       {(props['editUrl'] !== undefined) && (
         <EditThisPage editUrl={props['editUrl']} />
       )}

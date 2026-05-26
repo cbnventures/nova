@@ -1,0 +1,10 @@
+{
+  "label": "分区",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "区域是 Lantern 一起监视的命名房间、走廊或外部群组。可通过姓名或暗号进行可信移交，并与 HomeKit、Threadbare、Spoke、Canary 实现安静集成。"
+  }
+}

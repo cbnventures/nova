@@ -1,11 +1,11 @@
 /**
- * Doc Sidebar Mobile — Trigger button, overlay, and panel structural styles.
+ * Doc Sidebar Mobile - Trigger button, overlay, and panel structural styles.
  *
  * @since 0.15.0
  */
 
 /* ============================
- * Trigger — Mobile Only
+ * Trigger - Mobile Only
  * ============================ */
 
 .nova-sidebar-mobile-trigger {
@@ -19,20 +19,13 @@
   font: inherit;
   font-size: 0.8125rem;
   text-align: left;
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
 
-  background: var(--nova-color-neutral-50);
-  border: 1px solid var(--nova-color-neutral-200);
+  background: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-color-border);
   border-radius: 0.375rem;
 
   cursor: pointer;
-}
-
-[data-theme="dark"] .nova-sidebar-mobile-trigger {
-  color: var(--nova-color-neutral-400);
-
-  background: var(--nova-color-neutral-900);
-  border-color: var(--nova-color-neutral-700);
 }
 
 @media (min-width: 1024px) {
@@ -42,7 +35,7 @@
 }
 
 /* ============================
- * Trigger — Path
+ * Trigger - Path
  * ============================ */
 
 .nova-sidebar-mobile-trigger-path {
@@ -85,7 +78,7 @@
 }
 
 /* ============================
- * Overlay — Open / Close Animation
+ * Overlay - Open / Close Animation
  * ============================ */
 
 @keyframes nova-sidebar-mobile-open {
@@ -131,7 +124,7 @@
   overflow-y: auto;
 }
 
-/* Bridge / Canopy — full-screen, then floating card at 576px+. */
+/* Bridge / Canopy - full-screen, then floating card at 576px+. */
 @media (min-width: 576px) {
   [data-navbar-variant="bridge"] .nova-sidebar-mobile-panel,
   [data-navbar-variant="canopy"] .nova-sidebar-mobile-panel {
@@ -143,7 +136,7 @@
   }
 }
 
-/* Compass — always-float panel. */
+/* Compass - always-float panel. */
 [data-navbar-variant="compass"] .nova-sidebar-mobile-panel {
   width: calc(100% - 2rem);
   max-width: 480px;
@@ -157,7 +150,7 @@
   }
 }
 
-/* Monolith — always-float panel, compact. */
+/* Monolith - always-float panel, compact. */
 [data-navbar-variant="monolith"] .nova-sidebar-mobile-panel {
   width: calc(100% - 2rem);
   max-width: 320px;
@@ -167,7 +160,7 @@
 }
 
 /* ============================
- * Panel — Header
+ * Panel - Header
  * ============================ */
 
 .nova-sidebar-mobile-header {
@@ -177,25 +170,17 @@
 
   padding: 1rem;
 
-  border-bottom: 1px solid var(--nova-color-neutral-300);
-}
-
-[data-theme="dark"] .nova-sidebar-mobile-header {
-  border-bottom-color: var(--nova-color-neutral-800);
+  border-bottom: 1px solid var(--nova-color-border);
 }
 
 .nova-sidebar-mobile-header-title {
   font-weight: 600;
   font-size: 0.875rem;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] .nova-sidebar-mobile-header-title {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
 }
 
 /* ============================
- * Panel — Close Button
+ * Panel - Close Button
  * ============================ */
 
 .nova-sidebar-mobile-close {
@@ -209,21 +194,17 @@
   height: 2.25rem;
   padding: 0;
 
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 
   background: none;
-  border: 1px solid var(--nova-color-neutral-300);
+  border: 1px solid var(--nova-color-border);
   border-radius: 0.375rem;
 
   cursor: pointer;
 }
 
-[data-theme="dark"] .nova-sidebar-mobile-close {
-  border-color: var(--nova-color-neutral-700);
-}
-
 /* ============================
- * Panel — Content
+ * Panel - Content
  * ============================ */
 
 .nova-sidebar-mobile-content {
@@ -233,4 +214,16 @@
   padding: 0.5rem 1rem 1rem;
 
   overflow-y: auto;
+}
+
+/* ============================
+ * Panel - Version Switcher
+ * ============================ */
+
+/* The desktop version-switcher in `theme/DocSidebar/style.css` adds
+   `padding-right: 1rem` to leave space alongside the desktop collapse-toggle
+   button. The mobile panel has no toggle, and its own `nova-sidebar-mobile-content`
+   already provides the inset - so reset the wrapper padding here. */
+.nova-sidebar-mobile-panel .nova-sidebar-version-switcher {
+  padding: 0;
 }

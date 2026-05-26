@@ -1,12 +1,18 @@
 /**
- * Sentinel — Blog List Paginator visual styling.
+ * Sentinel - Blog List Paginator visual styling.
  *
- * Flat style — no border, background tint on hover, left accent on active.
+ * Flat style - no border, background tint on hover, left accent on active.
+ * Strip left-aligned to anchor with the active item's left-rail motif.
  *
  * @since 0.15.0
  */
 
-/* Nav links — flat with tint on hover. */
+/* Container - left-aligned strip anchoring the active left-rail motif. */
+.nova-blog-list-paginator {
+  justify-content: flex-start;
+}
+
+/* Nav links - flat with tint on hover. */
 .nova-blog-list-paginator-nav {
   font-family: var(--nova-font-display);
   font-weight: 600;
@@ -26,6 +32,7 @@
 .nova-blog-list-paginator-nav:focus-visible {
   color: var(--nova-color-primary-700);
 
+  text-decoration: none;
   background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
 }
 
@@ -33,10 +40,11 @@
 [data-theme="dark"] .nova-blog-list-paginator-nav:focus-visible {
   color: var(--nova-color-primary-300);
 
-  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
 }
 
-/* Page links — flat with tint on hover. */
+/* Page links - flat with tint on hover. */
 .nova-blog-list-paginator-page {
   font-family: var(--nova-font-display);
   font-weight: 600;
@@ -56,6 +64,7 @@
 .nova-blog-list-paginator-page:focus-visible {
   color: var(--nova-color-primary-700);
 
+  text-decoration: none;
   background: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
 }
 
@@ -63,10 +72,11 @@
 [data-theme="dark"] .nova-blog-list-paginator-page:focus-visible {
   color: var(--nova-color-primary-300);
 
-  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  text-decoration: none;
+  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
 }
 
-/* Active page — left accent bar, tinted background. */
+/* Active page - left accent bar, tinted background. */
 .nova-blog-list-paginator-page-active {
   color: var(--nova-color-primary-700);
   font-weight: 700;
@@ -85,12 +95,8 @@
   border-left-color: var(--nova-color-primary-400);
 }
 
-/* Ellipsis — muted. */
+/* Ellipsis - muted. */
 .nova-blog-list-paginator-ellipsis {
   font-family: var(--nova-font-display);
-  color: var(--nova-color-neutral-400);
-}
-
-[data-theme="dark"] .nova-blog-list-paginator-ellipsis {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-soft);
 }

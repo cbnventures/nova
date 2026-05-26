@@ -11,7 +11,7 @@ import type {
 export type LibMermaidContainerClassName = string;
 
 /**
- * Lib - Mermaid - Get CSS Variable.
+ * Lib - Mermaid - Get Resolved Color.
  *
  * @since 0.15.0
  */
@@ -21,14 +21,23 @@ export type LibMermaidGetCssVariableReturns = string;
 
 export type LibMermaidGetCssVariableComputedStyle = CSSStyleDeclaration;
 
-/**
- * Lib - Mermaid - Get Density Multiplier.
- *
- * @since 0.16.2
- */
-export type LibMermaidGetDensityMultiplierReturns = number;
+export type LibMermaidGetCssVariableProbe = HTMLSpanElement;
 
-export type LibMermaidGetDensityMultiplierPadding = string;
+export type LibMermaidGetCssVariableResolved = string;
+
+export type LibMermaidGetCssVariableCanvas = HTMLCanvasElement;
+
+export type LibMermaidGetCssVariableContext = CanvasRenderingContext2D | null;
+
+export type LibMermaidGetCssVariableData = Uint8ClampedArray;
+
+export type LibMermaidGetCssVariableRed = number | undefined;
+
+export type LibMermaidGetCssVariableGreen = number | undefined;
+
+export type LibMermaidGetCssVariableBlue = number | undefined;
+
+export type LibMermaidGetCssVariableAlpha = number | undefined;
 
 /**
  * Lib - Mermaid - Load Mermaid.
@@ -60,12 +69,6 @@ export type LibMermaidUseMermaidConfigColorMode = string;
 export type LibMermaidUseMermaidConfigIsDark = boolean;
 
 export type LibMermaidUseMermaidConfigFontFamily = string;
-
-export type LibMermaidUseMermaidConfigDisplayFontFamily = string;
-
-export type LibMermaidUseMermaidConfigCodeFontFamily = string;
-
-export type LibMermaidUseMermaidConfigDensityMultiplier = number;
 
 export type LibMermaidUseMermaidConfigConfigStartOnLoad = boolean;
 

@@ -1,5 +1,5 @@
 /**
- * Foundry — Doc Card visual styling.
+ * Foundry - Doc Card visual styling.
  *
  * @since 0.15.0
  */
@@ -33,21 +33,21 @@ article[class*="nova-col"] > a:focus-visible {
 }
 
 article[class*="nova-col"] > a h2 {
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
 }
 
 [data-theme="dark"] article[class*="nova-col"] > a h2 {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
 }
 
 article[class*="nova-col"] > a h2 svg {
   color: var(--nova-color-primary-500);
 }
 
-article[class*="nova-col"] > a p {
-  color: var(--nova-color-neutral-600);
+article[class*="nova-col"] > a > h2 + p {
+  color: var(--nova-color-text-muted);
 }
 
-[data-theme="dark"] article[class*="nova-col"] > a p {
-  color: var(--nova-color-neutral-400);
+[data-theme="dark"] article[class*="nova-col"] > a > h2 + p {
+  color: var(--nova-color-text-muted);
 }

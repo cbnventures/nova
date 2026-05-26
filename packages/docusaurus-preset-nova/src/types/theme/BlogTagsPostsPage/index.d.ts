@@ -1,5 +1,6 @@
 import type { BlogPaginatedMetadata, BlogSidebar, PropBlogPostContent } from '@docusaurus/plugin-content-blog';
 import type { TagModule } from '@docusaurus/utils';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Blog Tags Posts Page - Blog Tags Posts Page.
@@ -21,11 +22,17 @@ export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItem = {
 
 export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItems = readonly ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItem[];
 
+export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsClassName = string | undefined;
+
+export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogTagsPostsPageBlogTagsPostsPageProps = {
   sidebar: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsSidebar;
   tag: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsTag;
   listMetadata: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsListMetadata;
   items: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItems;
+  className?: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsClassName;
+  style?: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsStyle;
   [key: string]: unknown;
 };
 

@@ -26,32 +26,32 @@ const ruleTester: TestsRulesEslintConventionsNoDefaultExportDeclarationRuleTeste
 ruleTester.run('noDefaultExportDeclaration', NoDefaultExportDeclaration['rule'], {
   valid: [
 
-    // Separate default export — allowed.
+    // Separate default export - allowed.
     {
       code: 'function Foo() {}\nexport default Foo;',
     },
 
-    // Named export — allowed.
+    // Named export - allowed.
     {
       code: 'export function foo() {}',
     },
 
-    // Named class export — allowed.
+    // Named class export - allowed.
     {
       code: 'export class Bar {}',
     },
 
-    // Default export of identifier — allowed.
+    // Default export of identifier - allowed.
     {
       code: 'const config = {};\nexport default config;',
     },
 
-    // Default export of anonymous arrow — allowed.
+    // Default export of anonymous arrow - allowed.
     {
       code: 'export default () => {};',
     },
 
-    // Ignored file — allowed.
+    // Ignored file - allowed.
     {
       code: 'export default function Foo() {}',
       options: [{ ignoreFiles: ['ignored.ts'] }],
@@ -60,14 +60,14 @@ ruleTester.run('noDefaultExportDeclaration', NoDefaultExportDeclaration['rule'],
   ],
   invalid: [
 
-    // Default export function declaration — should separate.
+    // Default export function declaration - should separate.
     {
       code: 'export default function Foo() {}',
       errors: [{ messageId: 'noDefaultExportDeclaration' }],
       output: 'function Foo() {}\nexport default Foo;\n',
     },
 
-    // Default export class declaration — should separate.
+    // Default export class declaration - should separate.
     {
       code: 'export default class Bar {}',
       errors: [{ messageId: 'noDefaultExportDeclaration' }],

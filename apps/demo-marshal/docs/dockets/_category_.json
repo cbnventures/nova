@@ -1,0 +1,10 @@
+{
+  "label": "Dockets",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "The docket is Marshal's public record — append-only, never retracted. Read every stamp, every filing, every override end to end, with the clerk's signature on each line."
+  }
+}

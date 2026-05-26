@@ -1,0 +1,275 @@
+---
+title: "API 参考"
+sidebar_position: 1
+description: "Sentinel 的完整 Spoke API 参考——策略管理、设备查询、区域操作与审计导出端点。"
+tags:
+  - "参考"
+  - "api"
+---
+
+import Details from '@theme/Details';
+
+# API 参考
+
+Sentinel 的 Spoke API 为平台的所有操作提供了程序化访问——策略管理、设备查询、区域操作与审计导出。所有端点均需 Cipher Bearer 令牌进行身份认证。
+
+## 身份认证
+
+每一个请求都必须在 `Authorization` 头中包含一个 Cipher Bearer 令牌：
+
+```bash title="经过身份认证的请求"
+curl -X GET https://sentinel.yourcompany.internal/spoke/v1/policies \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json"
+```
+
+可在 Sentinel 控制台或通过 CLI 生成令牌：
+
+```bash title="生成 API 令牌"
+sentinel api tokens create \
+  --name "ci-pipeline" \
+  --scope "policies:read,policies:simulate,devices:read" \
+  --ttl 90d
+```
+
+:::note 令牌范围
+令牌按具体操作授权。拥有 `policies:read` 的令牌无法修改策略；拥有 `devices:read` 的令牌无法注册新设备。请始终为集成使用所需的最小范围。
+:::
+
+## 策略
+
+| 方法       | 路径                                | 说明              |
+|----------|-----------------------------------|-----------------|
+| `GET`    | `/spoke/v1/policies`              | 列出所有策略          |
+| `GET`    | `/spoke/v1/policies/:id`          | 获取指定策略          |
+| `POST`   | `/spoke/v1/policies`              | 创建新策略           |
+| `PUT`    | `/spoke/v1/policies/:id`          | 更新已有策略          |
+| `DELETE` | `/spoke/v1/policies/:id`          | 删除策略            |
+| `POST`   | `/spoke/v1/policies/:id/evaluate` | 针对设备评估策略        |
+| `POST`   | `/spoke/v1/policies/simulate`     | 仿真策略变更（Parapet） |
+
+### 创建策略
+
+```bash title="POST /spoke/v1/policies"
+curl -X POST https://sentinel.yourcompany.internal/spoke/v1/policies \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "staging-access",
+    "resource": "staging-services",
+    "effect": "allow",
+    "priority": 100,
+    "conditions": {
+      "device.posture": { "gte": 70 },
+      "user.mfa": true,
+      "user.role": ["engineer", "qa"]
+    },
+    "on_failure": {
+      "action": "revoke",
+      "notify": "security-ops"
+    }
+  }'
+```
+
+<Details>
+<summary>响应 schema</summary>
+
+```json title="201 Created"
+{
+  "id": "pol_8a3f7b2c9d1e",
+  "name": "staging-access",
+  "resource": "staging-services",
+  "effect": "allow",
+  "priority": 100,
+  "conditions": {
+    "device.posture": { "gte": 70 },
+    "user.mfa": true,
+    "user.role": ["engineer", "qa"]
+  },
+  "on_failure": {
+    "action": "revoke",
+    "notify": "security-ops"
+  },
+  "created_at": "2025-06-15T09:00:00Z",
+  "updated_at": "2025-06-15T09:00:00Z",
+  "status": "active"
+}
+```
+
+</Details>
+
+### 仿真策略变更
+
+```bash title="POST /spoke/v1/policies/simulate"
+curl -X POST https://sentinel.yourcompany.internal/spoke/v1/policies/simulate \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "proposed_changes": [{
+      "policy_id": "pol_8a3f7b2c9d1e",
+      "change": "update",
+      "fields": {
+        "conditions.device.posture.gte": 85
+      }
+    }],
+    "scope": "all_devices",
+    "mode": "dry-run"
+  }'
+```
+
+<Details>
+<summary>响应 schema</summary>
+
+```json title="200 OK"
+{
+  "simulation_id": "sim_7f3a2b9c4e1d",
+  "mode": "dry-run",
+  "scope": "all_devices",
+  "results": {
+    "total_sessions": 1247,
+    "would_pass": 1089,
+    "would_fail": 158,
+    "failure_breakdown": {
+      "by_platform": {
+        "macos": 42,
+        "windows": 67,
+        "linux": 31,
+        "android": 18
+      },
+      "by_cause": {
+        "posture_below_threshold": 158
+      }
+    }
+  },
+  "created_at": "2025-06-15T09:05:00Z"
+}
+```
+
+</Details>
+
+## 设备
+
+| 方法     | 路径                               | 说明        |
+|--------|----------------------------------|-----------|
+| `GET`  | `/spoke/v1/devices`              | 列出所有已注册设备 |
+| `GET`  | `/spoke/v1/devices/:id`          | 获取设备详情与态势 |
+| `POST` | `/spoke/v1/devices/:id/enroll`   | 注册一台设备    |
+| `POST` | `/spoke/v1/devices/:id/unenroll` | 将设备从车队中移除 |
+| `GET`  | `/spoke/v1/devices/:id/posture`  | 获取当前态势的明细 |
+| `GET`  | `/spoke/v1/devices/:id/history`  | 获取态势的历史变化 |
+
+### 获取设备态势
+
+```bash title="GET /spoke/v1/devices/:id/posture"
+curl -X GET https://sentinel.yourcompany.internal/spoke/v1/devices/dev_a3b7c9d1/posture \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN"
+```
+
+<Details>
+<summary>响应 schema</summary>
+
+```json title="200 OK"
+{
+  "device_id": "dev_a3b7c9d1",
+  "composite_score": 94,
+  "profile": "standard",
+  "last_check": "2025-06-15T14:30:00Z",
+  "categories": {
+    "os_integrity": { "score": 100, "weight": 25, "checks": { "version": "current", "patches": "current", "jailbreak": false } },
+    "encryption": { "score": 100, "weight": 20, "checks": { "enabled": true, "algorithm": "AES-256", "key_age_days": 12 } },
+    "network": { "score": 85, "weight": 15, "checks": { "firewall": true, "stealth_mode": false, "open_ports": 3 } },
+    "authentication": { "score": 90, "weight": 15, "checks": { "screen_lock": true, "timeout_seconds": 300, "biometric": true } },
+    "software": { "score": 95, "weight": 15, "checks": { "antivirus": true, "definitions_age_days": 1, "unauthorized": [] } },
+    "configuration": { "score": 90, "weight": 10, "checks": { "mdm_compliant": true, "cert_valid": true, "agent_version": "3.4.1" } }
+  }
+}
+```
+
+</Details>
+
+## 区域
+
+| 方法     | 路径                              | 说明              |
+|--------|---------------------------------|-----------------|
+| `GET`  | `/spoke/v1/zones`               | 列出所有 Rampart 区域 |
+| `GET`  | `/spoke/v1/zones/:id`           | 获取区域详情与工作负载     |
+| `POST` | `/spoke/v1/zones`               | 创建新区域           |
+| `PUT`  | `/spoke/v1/zones/:id`           | 更新区域配置          |
+| `GET`  | `/spoke/v1/zones/:id/crossings` | 列出某区域的跨越规则      |
+| `POST` | `/spoke/v1/zones/crossings`     | 创建区域跨越规则        |
+
+## 审计
+
+| 方法     | 路径                             | 说明             |
+|--------|--------------------------------|----------------|
+| `GET`  | `/spoke/v1/audit/query`        | 查询 Spyglass 事件 |
+| `GET`  | `/spoke/v1/audit/sessions/:id` | 还原指定会话         |
+| `POST` | `/spoke/v1/audit/export`       | 导出合规证据包        |
+| `GET`  | `/spoke/v1/audit/export/:id`   | 下载已完成的导出       |
+
+### 查询审计事件
+
+```bash title="GET /spoke/v1/audit/query"
+curl -X GET "https://sentinel.yourcompany.internal/spoke/v1/audit/query?\
+event_type=access-decision&\
+result=revoke&\
+period=2025-06-01..2025-06-30&\
+resource=api-cluster-east" \
+  -H "Authorization: Bearer $SENTINEL_API_TOKEN"
+```
+
+<Details>
+<summary>响应 schema</summary>
+
+```json title="200 OK"
+{
+  "query": {
+    "event_type": "access-decision",
+    "result": "revoke",
+    "period": "2025-06-01..2025-06-30",
+    "resource": "api-cluster-east"
+  },
+  "total": 4,
+  "events": [
+    {
+      "timestamp": "2025-06-04T10:22:00Z",
+      "user": "k.patel",
+      "device": "dev_b1a9c3e7",
+      "resource": "api-cluster-east",
+      "result": "revoke",
+      "reason": "device.posture < 80",
+      "remediation_time": "47m"
+    },
+    {
+      "timestamp": "2025-06-09T14:22:00Z",
+      "user": "m.torres",
+      "device": "dev_f8e2d4c6",
+      "resource": "api-cluster-east",
+      "result": "revoke",
+      "reason": "network.location anomaly",
+      "remediation_time": "12m"
+    }
+  ]
+}
+```
+
+</Details>
+
+## 速率限制
+
+所有 Spoke API 端点都按令牌进行速率限制：
+
+| 范围   | 限制           |
+|------|--------------|
+| 读取端点 | 1,000 次请求/分钟 |
+| 写入端点 | 100 次请求/分钟   |
+| 仿真   | 10 次请求/小时    |
+| 审计导出 | 5 次请求/小时     |
+
+每个响应都会包含速率限制头：`X-RateLimit-Limit`、`X-RateLimit-Remaining`、`X-RateLimit-Reset`。
+
+## 下一步
+
+- [信任策略](/docs/trust/trust-policies/) — 策略语法与条件参考。
+- [审计与取证](/docs/operations/audit-forensics/) — Spyglass 的 CLI 查询语法。
+- [概述](/docs/overview/) — 围绕 API 的架构上下文。

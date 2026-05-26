@@ -3,6 +3,8 @@ import TOCCollapsible from '@theme/TOCCollapsible';
 
 import type {
   ThemeDocItemTocMobileDocItemTocMobileDoc,
+  ThemeDocItemTocMobileDocItemTocMobileMergedClassName,
+  ThemeDocItemTocMobileDocItemTocMobileProps,
   ThemeDocItemTocMobileDocItemTocMobileTocSpread,
 } from '../../../../types/theme/DocItem/TOC/Mobile/index.d.ts';
 
@@ -13,11 +15,13 @@ import type {
  * using heading data and level constraints from the current
  * doc front matter.
  *
+ * @param {ThemeDocItemTocMobileDocItemTocMobileProps} props - Props.
+ *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocItemTOCMobile() {
+function DocItemTOCMobile(props: ThemeDocItemTocMobileDocItemTocMobileProps) {
   const doc: ThemeDocItemTocMobileDocItemTocMobileDoc = useDoc();
   const tocSpread: ThemeDocItemTocMobileDocItemTocMobileTocSpread = {};
 
@@ -29,9 +33,13 @@ function DocItemTOCMobile() {
     Reflect.set(tocSpread, 'maxHeadingLevel', doc['frontMatter']['toc_max_heading_level']);
   }
 
+  const mergedClassName: ThemeDocItemTocMobileDocItemTocMobileMergedClassName = (props['className'] !== undefined) ? `nova-doc-item-toc-mobile ${props['className']}` : 'nova-doc-item-toc-mobile';
+
   return (
     <TOCCollapsible
       toc={doc['toc']}
+      className={mergedClassName}
+      style={props['style']}
       {...tocSpread}
     />
   );

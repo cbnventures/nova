@@ -41,37 +41,37 @@ const ruleTester: TestsRulesEslintTypescriptRequireBracketPropertyAccessRuleTest
 ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rule'], {
   valid: [
 
-    // Bracket notation on plain object — allowed.
+    // Bracket notation on plain object - allowed.
     {
       code: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config[\'name\'];',
     },
 
-    // Method call — dot notation allowed.
+    // Method call - dot notation allowed.
     {
       code: 'const arr = [1, 2]; arr.push(3);',
     },
 
-    // Built-in property — dot notation allowed.
+    // Built-in property - dot notation allowed.
     {
       code: 'const arr = [1, 2]; const x = arr.length;',
     },
 
-    // String built-in — dot notation allowed.
+    // String built-in - dot notation allowed.
     {
       code: 'const s = "hello"; const x = s.length;',
     },
 
-    // Class member — dot notation allowed.
+    // Class member - dot notation allowed.
     {
       code: 'class Foo { name = "test"; } const f = new Foo(); const x = f.name;',
     },
 
-    // Private field — dot notation allowed.
+    // Private field - dot notation allowed.
     {
       code: 'class Bar { #secret = 1; get value() { return this.#secret; } }',
     },
 
-    // Ignored file — dot notation allowed.
+    // Ignored file - dot notation allowed.
     {
       code: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config.name;',
       options: [{
@@ -80,7 +80,7 @@ ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rul
       filename: 'ignored.ts',
     },
 
-    // Allowed property — dot notation allowed.
+    // Allowed property - dot notation allowed.
     {
       code: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config.name;',
       options: [{
@@ -88,21 +88,21 @@ ruleTester.run('requireBracketPropertyAccess', RequireBracketPropertyAccess['rul
       }],
     },
 
-    // Computed access — already bracket.
+    // Computed access - already bracket.
     {
       code: 'type Config = { name: string }; const config: Config = { name: "test" }; const key = "name"; const x = config[key];',
     },
   ],
   invalid: [
 
-    // Plain object dot access — should use bracket.
+    // Plain object dot access - should use bracket.
     {
       code: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config.name;',
       errors: [{ messageId: 'requireBracketAccess' }],
       output: 'type Config = { name: string }; const config: Config = { name: "test" }; const x = config[\'name\'];',
     },
 
-    // Interface dot access — should use bracket.
+    // Interface dot access - should use bracket.
     {
       code: 'interface Settings { timeout: number; } const s: Settings = { timeout: 100 }; const x = s.timeout;',
       errors: [{ messageId: 'requireBracketAccess' }],

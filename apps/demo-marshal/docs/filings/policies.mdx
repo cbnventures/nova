@@ -1,0 +1,29 @@
+---
+title: "Policies"
+sidebar_position: 1
+description: "A policy is a written rule about how Marshal handles a class of events — stale issues, overdue PRs, support by tier."
+tags:
+  - "filings"
+  - "policies"
+---
+
+# Policies
+
+A policy is a written rule about how Marshal handles a class of events on a repository — stale issues, overdue PRs, support requests by tier, scheduled handovers.
+
+## Default policies
+
+- **Thread archival** — close and seal threads inactive for N days
+- **Access tiers** — route incoming work by sponsor / contributor / public
+- **Scheduled stewardship** — run cleanups, audits, and rollovers on a cron
+- **Stamp ledger** — every Marshal action records its own line in the public record
+
+## Filing a policy
+
+Each policy is a YAML block, signed at the bottom, filed by Marshal at the top of the next hour. Marshal reads only what is filed and stamps only what is sealed.
+
+## Next Steps
+
+- [Dockets](/docs/dockets/overview/) — Where filed policies leave their stamps.
+- [Access Tiers](/docs/filings/access-tiers/) — Tier-based routing as a policy.
+- [Multi-Repository](/docs/stewardship/multi-repo/) — Filing policies across many repositories.

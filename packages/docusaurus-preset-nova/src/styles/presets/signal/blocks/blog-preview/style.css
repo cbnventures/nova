@@ -1,0 +1,132 @@
+/**
+ * Signal - Blog preview visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/* ============================
+ * 1. Blog Preview Container
+ * ============================ */
+
+/* ============================
+ * 2. Blog Preview Heading
+ * ============================ */
+
+.nova-blog-preview-heading {
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nova-color-text);
+}
+
+.nova-blog-preview-no-description .nova-blog-preview-heading {
+  margin-bottom: calc(var(--nova-shape-gap) * 2);
+}
+
+.nova-blog-preview-has-description .nova-blog-preview-heading {
+  margin-bottom: var(--nova-shape-gap);
+}
+
+.nova-blog-preview-description {
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--nova-color-text-muted);
+  margin-bottom: calc(var(--nova-shape-gap) * 1.25);
+}
+
+/* ============================
+ * 3. Blog Preview Card
+ * ============================ */
+
+.nova-blog-preview-card {
+  padding: calc(var(--nova-shape-padding) * 2);
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-color-border);
+  border-left: 3px solid var(--nova-color-primary-500);
+  transition:
+    border-color var(--nova-motion-duration) ease,
+    background-color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-blog-preview-card {
+  border-color: var(--nova-color-border);
+  border-left-color: var(--nova-color-primary-400);
+}
+
+.nova-blog-preview-card:hover {
+  border-color: var(--nova-color-primary-500);
+  border-left-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover {
+  border-color: var(--nova-color-primary-400);
+  border-left-color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 4. Blog Preview Card Content
+ * ============================ */
+
+.nova-blog-preview-card time {
+  display: block;
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--nova-color-primary-500);
+  margin-bottom: calc(var(--nova-shape-gap) * 0.5);
+}
+
+[data-theme="dark"] .nova-blog-preview-card time {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-blog-preview-card h3 {
+  font-family: var(--nova-font-display);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  margin-bottom: calc(var(--nova-shape-gap) * 0.5);
+  color: var(--nova-color-text);
+}
+
+[data-theme="dark"] .nova-blog-preview-card h3 {
+  color: var(--nova-color-text);
+}
+
+.nova-blog-preview-card p {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--nova-color-text-muted);
+  margin-bottom: calc(var(--nova-shape-gap) * 0.75);
+}
+
+[data-theme="dark"] .nova-blog-preview-card p {
+  color: var(--nova-color-text-muted);
+}
+
+.nova-blog-preview-card .nova-blog-preview-read-more {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-preview-card .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-blog-preview-card:hover .nova-blog-preview-read-more,
+.nova-blog-preview-card:focus-within .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover .nova-blog-preview-read-more,
+[data-theme="dark"] .nova-blog-preview-card:focus-within .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-300);
+}

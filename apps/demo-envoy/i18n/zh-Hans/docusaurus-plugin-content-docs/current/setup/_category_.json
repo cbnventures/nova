@@ -1,0 +1,10 @@
+{
+  "label": "安装配置",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "安装 Envoy 并启动首个 relay——通过 Vial 或 Spark CLI 安装、`.grain` relay 清单参考，以及从 Threadbare 到 Canary 的端到端教程，从零到首次投递。"
+  }
+}

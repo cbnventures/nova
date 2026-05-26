@@ -27,6 +27,12 @@ export type ThemeSearchBarSearchProviderQuery = string;
 
 export type ThemeSearchBarSearchProviderSetQuery = Dispatch<SetStateAction<ThemeSearchBarSearchProviderQuery>>;
 
+export type ThemeSearchBarSearchProviderSearchedQueryState = [ThemeSearchBarSearchProviderSearchedQuery, ThemeSearchBarSearchProviderSetSearchedQuery];
+
+export type ThemeSearchBarSearchProviderSearchedQuery = string;
+
+export type ThemeSearchBarSearchProviderSetSearchedQuery = Dispatch<SetStateAction<ThemeSearchBarSearchProviderSearchedQuery>>;
+
 export type ThemeSearchBarSearchProviderIsOpenState = [ThemeSearchBarSearchProviderIsOpen, ThemeSearchBarSearchProviderSetIsOpen];
 
 export type ThemeSearchBarSearchProviderIsOpen = boolean;
@@ -42,6 +48,8 @@ export type ThemeSearchBarSearchProviderSetActiveIndex = Dispatch<SetStateAction
 export type ThemeSearchBarSearchProviderInputRef = React.RefObject<HTMLInputElement | null>;
 
 export type ThemeSearchBarSearchProviderDebounceTimerRef = React.RefObject<ReturnType<typeof setTimeout> | undefined>;
+
+export type ThemeSearchBarSearchProviderDispatchedQueryRef = React.RefObject<string>;
 
 export type ThemeSearchBarSearchProviderHandleQueryChangeFunction = (value: ThemeSearchBarSearchProviderHandleQueryChangeValue) => void;
 

@@ -1,5 +1,5 @@
 /**
- * Foundry — Blog Archive Page visual styling.
+ * Foundry - Blog Archive Page visual styling.
  *
  * @since 0.15.0
  */
@@ -8,20 +8,20 @@
 .nova-blog-archive section h3 {
   padding-bottom: 0.5rem;
 
-  color: var(--nova-color-neutral-800);
+  color: var(--nova-color-text);
 
   border-bottom: 1px solid var(--nova-foundry-border-subtle);
 }
 
 [data-theme="dark"] .nova-blog-archive section h3 {
-  color: var(--nova-color-neutral-200);
+  color: var(--nova-color-text);
 
   border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Archive links — neutral hover with tight radius. */
+/* Archive links - neutral hover with tight radius. */
 .nova-blog-archive a {
-  color: var(--nova-color-neutral-700);
+  color: var(--nova-color-text);
   border-radius: var(--nova-shape-radius);
   padding: 0.25rem 0.5rem;
 
@@ -30,19 +30,7 @@
 }
 
 [data-theme="dark"] .nova-blog-archive a {
-  color: var(--nova-color-neutral-300);
+  color: var(--nova-color-text);
 }
 
-.nova-blog-archive a:hover,
-.nova-blog-archive a:focus-visible {
-  color: var(--nova-color-neutral-900);
-
-  background-color: var(--nova-color-neutral-50);
-}
-
-[data-theme="dark"] .nova-blog-archive a:hover,
-[data-theme="dark"] .nova-blog-archive a:focus-visible {
-  color: var(--nova-color-neutral-200);
-
-  background-color: rgba(255, 255, 255, 0.04);
-}
+/* Hover handled by shared CSS (color + bg tint + no underline). */

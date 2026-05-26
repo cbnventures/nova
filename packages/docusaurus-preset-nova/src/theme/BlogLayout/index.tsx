@@ -11,6 +11,7 @@ import type {
   ThemeBlogLayoutHasToc,
   ThemeBlogLayoutMainClassName,
   ThemeBlogLayoutProps,
+  ThemeBlogLayoutShowHeader,
   ThemeBlogLayoutThemeConfig,
   ThemeBlogLayoutThemeConfigCast,
 } from '../../types/theme/BlogLayout/index.d.ts';
@@ -19,8 +20,8 @@ import type {
  * Theme - Blog Layout - Blog Layout.
  *
  * Replaces the default Docusaurus BlogLayout with a version that
- * adds a prominent display heading and description above the blog
- * post list with responsive container spacing.
+ * renders a page-level header (opt-in via `showHeader`, content
+ * overridable via `header`) above the main column.
  *
  * @param {ThemeBlogLayoutProps} props - Props.
  *
@@ -38,6 +39,7 @@ function BlogLayout(props: ThemeBlogLayoutProps) {
     && props['sidebar']['items']['length'] > 0
   );
   const hasToc: ThemeBlogLayoutHasToc = props['toc'] !== undefined;
+  const showHeader: ThemeBlogLayoutShowHeader = props['showHeader'] === true;
 
   let mainClassName: ThemeBlogLayoutMainClassName = 'nova-col-12';
 
@@ -47,7 +49,10 @@ function BlogLayout(props: ThemeBlogLayoutProps) {
 
   return (
     <Layout>
-      <div className="nova-blog-root">
+      <div
+        className={(props['className'] !== undefined) ? `nova-blog-root ${props['className']}` : 'nova-blog-root'}
+        style={props['style']}
+      >
         <div className="nova-container nova-grid">
           {(hasSidebar === true) && (
             <aside className="nova-col-12 nova-col-lg-3">
@@ -55,14 +60,20 @@ function BlogLayout(props: ThemeBlogLayoutProps) {
             </aside>
           )}
           <main className={mainClassName}>
-            {(hasToc === false) && (
+            {(showHeader === true) && (
               <header className="nova-blog-header">
-                <Heading as="h1">
-                  {blogLayoutConfig['heading']}
-                </Heading>
-                <p className="nova-blog-description">
-                  {blogLayoutConfig['description']}
-                </p>
+                {(props['header'] !== undefined) ? (
+                  props['header']
+                ) : (
+                  <>
+                    <Heading as="h1">
+                      {blogLayoutConfig['heading']}
+                    </Heading>
+                    <p className="nova-blog-description">
+                      {blogLayoutConfig['description']}
+                    </p>
+                  </>
+                )}
               </header>
             )}
             <BlogSidebarMobile sidebar={props['sidebar']} />

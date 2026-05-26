@@ -4,6 +4,7 @@ import { translate } from '@docusaurus/Translate';
 import type {
   ThemeDocVersionBannerDocVersionBannerBannerMessage,
   ThemeDocVersionBannerDocVersionBannerMessage,
+  ThemeDocVersionBannerDocVersionBannerProps,
   ThemeDocVersionBannerDocVersionBannerVersion,
   ThemeDocVersionBannerDocVersionBannerVersionIsLast,
   ThemeDocVersionBannerDocVersionBannerVersionLabel,
@@ -20,7 +21,7 @@ import type {
  *
  * @since 0.15.0
  */
-function DocVersionBanner() {
+function DocVersionBanner(props: ThemeDocVersionBannerDocVersionBannerProps) {
   const version: ThemeDocVersionBannerDocVersionBannerVersion = useDocsVersion() as ThemeDocVersionBannerDocVersionBannerVersion;
   const isLastVersion: ThemeDocVersionBannerDocVersionBannerVersionIsLast = version['isLast'];
 
@@ -40,7 +41,11 @@ function DocVersionBanner() {
   const bannerMessage: ThemeDocVersionBannerDocVersionBannerBannerMessage = translatedMessage;
 
   return (
-    <div className="nova-version-banner" role="alert">
+    <div
+      className={(props['className'] !== undefined) ? `nova-version-banner ${props['className']}` : 'nova-version-banner'}
+      style={props['style']}
+      role="alert"
+    >
       <p>{bannerMessage}</p>
     </div>
   );

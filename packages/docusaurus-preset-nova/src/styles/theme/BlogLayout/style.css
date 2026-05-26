@@ -1,5 +1,5 @@
 /**
- * Blog Layout — Shared structural styles.
+ * Blog Layout - Shared structural styles.
  *
  * @since 0.15.0
  */
@@ -21,7 +21,7 @@
   padding-bottom: calc(var(--nova-section-gap) / 4);
 }
 
-/* Hidden on mobile — mobile trigger provides navigation. */
+/* Hidden on mobile - mobile trigger provides navigation. */
 .nova-blog-root aside {
   display: none;
   min-width: 0;
@@ -37,39 +37,43 @@
  * 2. Blog Header
  * ============================ */
 
-/* Blog heading — editorial scale, not hero scale. */
+/* Blog header - breathing room before the content below.
+   Collapses with the description's `margin-bottom` on pages that have one
+   (BlogListPage), and provides the gap by itself on pages that don't
+   (BlogTagsListPage, BlogAuthorsListPage). */
+.nova-blog-header {
+  margin-bottom: 1.25rem;
+}
+
+/* Blog heading - editorial scale, not hero scale. */
 .nova-blog-header .nova-heading {
   margin-top: 0;
-  margin-bottom: 0.25rem;
+  margin-bottom: var(--nova-blog-header-heading-spacing, 0.25rem);
 
-  font-size: 1.5rem;
+  font-size: var(--nova-blog-header-heading-size, 1.5rem);
 }
 
 @media (min-width: 768px) {
   .nova-blog-header .nova-heading {
-    font-size: 1.75rem;
+    font-size: var(--nova-blog-header-heading-size-md, 1.75rem);
   }
 }
 
-/* Blog description — muted subtitle below the heading. */
+/* Blog description - muted subtitle below the heading. */
 .nova-blog-description {
   margin-top: 0;
   margin-bottom: 1.25rem;
 
-  font-size: 0.875rem;
-  line-height: 1.6;
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-blog-description {
-  color: var(--nova-color-neutral-400);
+  font-size: var(--nova-blog-description-size, 0.875rem);
+  line-height: var(--nova-blog-description-line-height, 1.6);
+  color: var(--nova-blog-description-color, var(--nova-color-text-muted));
 }
 
 /* ============================
  * 3. TOC Column
  * ============================ */
 
-/* Hide TOC column on mobile — TOCCollapsible trigger handles mobile.
+/* Hide TOC column on mobile - TOCCollapsible trigger handles mobile.
    On desktop, the inner .nova-toc handles its own sticky, border,
    padding, max-height, and scroll. The column is just a grid cell. */
 .nova-blog-toc-column {
@@ -81,7 +85,3 @@
     display: block;
   }
 }
-
-/* ============================
- * 4. Post Page — Compact Header
- * ============================ */

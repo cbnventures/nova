@@ -134,7 +134,7 @@ import type {
 export async function detectMonorepoContext(currentWorkingDirectory: LibScaffoldDetectMonorepoContextCurrentWorkingDirectory): LibScaffoldDetectMonorepoContextReturns {
   const locations: LibScaffoldDetectMonorepoContextLocations = await discoverPathsWithFile('package.json', 'backward');
 
-  // No package.json found anywhere — safe to create a new monorepo.
+  // No package.json found anywhere - safe to create a new monorepo.
   if (locations.length === 0) {
     return { context: 'monorepo' };
   }
@@ -150,7 +150,7 @@ export async function detectMonorepoContext(currentWorkingDirectory: LibScaffold
     return { context: 'nested' };
   }
 
-  // Package.json is in currentWorkingDirectory — check for workspaces field.
+  // Package.json is in currentWorkingDirectory - check for workspaces field.
   const parsedPackageJson: LibScaffoldDetectMonorepoContextParsedPackageJson = JSON.parse(await fs.readFile(join(currentWorkingDirectory, 'package.json'), 'utf-8'));
 
   if (parsedPackageJson['workspaces'] !== undefined) {
@@ -181,7 +181,7 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
   let cancelled: LibScaffoldPromptScaffoldOptionsCancelled = false;
 
   if (context['context'] === 'monorepo') {
-    // Monorepo mode — prompt for project name, workspace name, and output directory.
+    // Monorepo mode - prompt for project name, workspace name, and output directory.
     const nameValue: LibScaffoldPromptScaffoldOptionsNameValue = defaults['name'] ?? undefined;
     const outputValue: LibScaffoldPromptScaffoldOptionsOutputValue = defaults['output'] ?? undefined;
     const workspaceNameValue: LibScaffoldPromptScaffoldOptionsWorkspaceNameValue = defaults['workspaceName'] ?? undefined;
@@ -306,7 +306,7 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
     };
   }
 
-  // Workspace mode — prompt for package name, workspace name, and output directory.
+  // Workspace mode - prompt for package name, workspace name, and output directory.
   const nameValue: LibScaffoldPromptScaffoldOptionsNameValue = defaults['name'] ?? undefined;
   const outputValue: LibScaffoldPromptScaffoldOptionsOutputValue = defaults['output'] ?? undefined;
   const workspaceNameValue: LibScaffoldPromptScaffoldOptionsWorkspaceNameValue = defaults['workspaceName'] ?? undefined;

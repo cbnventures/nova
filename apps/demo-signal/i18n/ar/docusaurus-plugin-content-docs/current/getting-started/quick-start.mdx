@@ -1,0 +1,124 @@
+---
+title: "البداية السريعة"
+sidebar_position: 2
+description: "أنشئ أول رابط Beacon، افتح بث Pulse المباشر، وراقب نقرة تصل لحظياً. ستون ثانية من البداية إلى النهاية."
+tags:
+  - "getting started"
+  - "tutorial"
+---
+
+import Details from '@theme/Details';
+
+# البداية السريعة
+
+أنشئ أول رابط Beacon، افتح بث Pulse المباشر، وراقب نقرة تصل لحظياً. تستغرق الجولة كاملةً ستين ثانية.
+
+## الخطوة 1: إنشاء رابط Beacon
+
+أنشئ رابط Beacon ببيانات وصفية للحملة مضمنة:
+
+```bash title="إنشاء رابط Beacon"
+signal beacon create \
+  --url "https://threadbare.example/blog/launch-post" \
+  --domain "go.signal.example" \
+  --campaign "product-launch" \
+  --channel "email" \
+  --variant "hero-cta"
+```
+
+الاستجابة:
+
+```json title="استجابة رابط Beacon"
+{
+  "id": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "shortUrl": "https://go.signal.example/a7x9m2",
+  // highlight-start
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  },
+  // highlight-end
+  "destination": "https://threadbare.example/blog/launch-post",
+  "createdAt": "2025-02-20T09:15:00.000Z"
+}
+```
+
+كائن `attribution` مضمن داخل الرابط نفسه. لا يعتمد على معاملات UTM ولا على ترويسات المُحيل.
+
+## الخطوة 2: افتح Pulse
+
+في طرفية منفصلة، افتح بث Pulse المباشر لمشاهدة وصول النقرات:
+
+```bash title="بدء بث Pulse المباشر"
+signal pulse watch --campaign "product-launch"
+```
+
+يفتح Pulse تدفقاً مباشراً مُصفّى وفق حملتك. اتركه يعمل.
+
+## الخطوة 3: انقر الرابط
+
+افتح `https://go.signal.example/a7x9m2` في المتصفح. خلال ميلي ثانيتين، تكتمل إعادة التوجيه. وخلال ثانية واحدة، يعرض تدفق Pulse:
+
+```json title="حدث Pulse"
+{
+  "event": "click",
+  "beacon": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "timestamp": "2025-02-20T09:16:42.318Z",
+  "geo": { "country": "US", "region": "CA", "city": "San Francisco" },
+  "device": { "type": "desktop", "os": "macOS", "browser": "Alloy Browser" },
+  "referrer": "direct",
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  }
+}
+```
+
+هذه نقرة مُسنَدة بالكامل، الحملة والقناة والصيغة والجهاز والموقع الجغرافي، ملتقطة لحظياً دون أي بكسل تتبع ولا أي سكربت من جانب الصفحة.
+
+## الخطوة 4: التحقق من الإسناد
+
+بعد النقرة، استعلم Prism عن مسار الإسناد:
+
+```bash title="استعلام Prism"
+signal prism path --trace "trc_8f3a1b2c4d5e6f70"
+```
+
+<Details>
+<summary>المخرَج الكامل لإسناد Prism</summary>
+
+```json title="مسار إسناد Prism"
+{
+  "trace": "trc_8f3a1b2c4d5e6f70",
+  "touchpoints": [
+    {
+      "order": 1,
+      "channel": "email",
+      "campaign": "product-launch",
+      "variant": "hero-cta",
+      "timestamp": "2025-02-20T09:16:42.318Z",
+      "weight": 1.0
+    }
+  ],
+  "model": "linear",
+  "status": "open"
+}
+```
+
+مع وجود نقطة تماس واحدة فقط، يُمنح الوزن الكامل لنقرة البريد الإلكتروني. ومع تفاعل المستخدم مع المزيد من روابط Beacon عبر القنوات، يبني Prism مسار إسناد أكثر ثراءً.
+
+</Details>
+
+## ماذا حدث للتو
+
+أنشأت رابط Beacon ببيانات وصفية مضمنة للإسناد، وراقبت نقرة تصل في بث Pulse المباشر، واستعلمت عن مسار الإسناد عبر Prism. لا بكسلات تتبع. لا سكربتات من جانب الصفحة. لا معاملات UTM يمكن تجريدها. الإسناد يقطن داخل الرابط.
+
+## الخطوات التالية
+
+- [النطاقات المُوسَمة](/docs/beacons/branded-domains/) — شغّل روابط Beacon على نطاقك الخاص.
+- [إسناد النقرات](/docs/attribution/click-attribution/) — استكشف نموذج الإسناد متعدد اللمس لدى Prism.
+- [إدارة الحملات](/docs/campaigns/campaign-management/) — نظّم الروابط في حملات مع لقطات Aperture.

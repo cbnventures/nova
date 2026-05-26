@@ -8,7 +8,7 @@ import type {
   DocusaurusContext,
   I18nLocaleConfig,
 } from '@docusaurus/types';
-import type { ComponentType, ReactNode } from 'react';
+import type { ComponentType, CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Navbar Item - Component Types.
@@ -28,10 +28,16 @@ export type ThemeNavbarItemDefaultNavbarItemPropsTo = string | undefined;
 
 export type ThemeNavbarItemDefaultNavbarItemPropsHref = string | undefined;
 
+export type ThemeNavbarItemDefaultNavbarItemPropsActiveBaseRegex = string | undefined;
+
+export type ThemeNavbarItemDefaultNavbarItemPropsIsActiveItem = boolean | undefined;
+
 export type ThemeNavbarItemDefaultNavbarItemProps = {
   label?: ThemeNavbarItemDefaultNavbarItemPropsLabel;
   to?: ThemeNavbarItemDefaultNavbarItemPropsTo;
   href?: ThemeNavbarItemDefaultNavbarItemPropsHref;
+  activeBaseRegex?: ThemeNavbarItemDefaultNavbarItemPropsActiveBaseRegex;
+  isActiveItem?: ThemeNavbarItemDefaultNavbarItemPropsIsActiveItem;
   [key: string]: unknown;
 };
 
@@ -40,6 +46,14 @@ export type ThemeNavbarItemDefaultNavbarItemLabel = string | undefined;
 export type ThemeNavbarItemDefaultNavbarItemTo = string | undefined;
 
 export type ThemeNavbarItemDefaultNavbarItemHref = string | undefined;
+
+export type ThemeNavbarItemDefaultNavbarItemActiveBaseRegex = string | undefined;
+
+export type ThemeNavbarItemDefaultNavbarItemPathname = string;
+
+export type ThemeNavbarItemDefaultNavbarItemIsActive = boolean;
+
+export type ThemeNavbarItemDefaultNavbarItemAriaCurrent = 'page' | undefined;
 
 export type ThemeNavbarItemDefaultNavbarItemLinkSpread = Record<string, unknown>;
 
@@ -54,16 +68,21 @@ export type ThemeNavbarItemDocNavbarItemPropsLabel = string | undefined;
 
 export type ThemeNavbarItemDocNavbarItemPropsDocsPluginId = string | undefined;
 
+export type ThemeNavbarItemDocNavbarItemPropsIsActiveItem = boolean | undefined;
+
 export type ThemeNavbarItemDocNavbarItemProps = {
   docId: ThemeNavbarItemDocNavbarItemPropsDocId;
   label?: ThemeNavbarItemDocNavbarItemPropsLabel;
   docsPluginId?: ThemeNavbarItemDocNavbarItemPropsDocsPluginId;
+  isActiveItem?: ThemeNavbarItemDocNavbarItemPropsIsActiveItem;
   [key: string]: unknown;
 };
 
 export type ThemeNavbarItemDocNavbarItemActiveDocContext = ActiveDocContext;
 
 export type ThemeNavbarItemDocNavbarItemLayoutDoc = GlobalDoc | null;
+
+export type ThemeNavbarItemDocNavbarItemPathname = string;
 
 export type ThemeNavbarItemDocNavbarItemPageActive = boolean;
 
@@ -84,10 +103,13 @@ export type ThemeNavbarItemDocSidebarNavbarItemPropsLabel = string | undefined;
 
 export type ThemeNavbarItemDocSidebarNavbarItemPropsDocsPluginId = string | undefined;
 
+export type ThemeNavbarItemDocSidebarNavbarItemPropsIsActiveItem = boolean | undefined;
+
 export type ThemeNavbarItemDocSidebarNavbarItemProps = {
   sidebarId: ThemeNavbarItemDocSidebarNavbarItemPropsSidebarId;
   label?: ThemeNavbarItemDocSidebarNavbarItemPropsLabel;
   docsPluginId?: ThemeNavbarItemDocSidebarNavbarItemPropsDocsPluginId;
+  isActiveItem?: ThemeNavbarItemDocSidebarNavbarItemPropsIsActiveItem;
   [key: string]: unknown;
 };
 
@@ -123,9 +145,11 @@ export type ThemeNavbarItemDocsVersionDropdownNavbarItemProps = {
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemCandidates = [GlobalVersion, ...GlobalVersion[]];
+export type ThemeNavbarItemDocsVersionDropdownNavbarItemVersions = GlobalVersion[];
 
 export type ThemeNavbarItemDocsVersionDropdownNavbarItemActiveDocContext = ActiveDocContext;
+
+export type ThemeNavbarItemDocsVersionDropdownNavbarItemActiveVersion = GlobalVersion | undefined;
 
 export type ThemeNavbarItemDocsVersionDropdownNavbarItemVersion = GlobalVersion;
 
@@ -139,14 +163,21 @@ export type ThemeNavbarItemDocsVersionDropdownNavbarItemItemLabel = string;
 
 export type ThemeNavbarItemDocsVersionDropdownNavbarItemItemTo = string;
 
+export type ThemeNavbarItemDocsVersionDropdownNavbarItemItemVersionName = string;
+
 export type ThemeNavbarItemDocsVersionDropdownNavbarItemItem = {
   label: ThemeNavbarItemDocsVersionDropdownNavbarItemItemLabel;
   to: ThemeNavbarItemDocsVersionDropdownNavbarItemItemTo;
+  versionName: ThemeNavbarItemDocsVersionDropdownNavbarItemItemVersionName;
 };
 
 export type ThemeNavbarItemDocsVersionDropdownNavbarItemItems = ThemeNavbarItemDocsVersionDropdownNavbarItemItem[];
 
 export type ThemeNavbarItemDocsVersionDropdownNavbarItemFirstItem = ThemeNavbarItemDocsVersionDropdownNavbarItemItem | undefined;
+
+export type ThemeNavbarItemDocsVersionDropdownNavbarItemItemClassName = string;
+
+export type ThemeNavbarItemDocsVersionDropdownNavbarItemDetailsRef = React.RefObject<HTMLDetailsElement | null>;
 
 /**
  * Theme - Navbar Item - Docs Version Navbar Item.
@@ -240,21 +271,21 @@ export type ThemeNavbarItemLocaleDropdownNavbarItemProps = {
 
 export type ThemeNavbarItemLocaleDropdownNavbarItemContext = DocusaurusContext;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemCurrentLocale = string;
-
 export type ThemeNavbarItemLocaleDropdownNavbarItemLocales = string[];
 
 export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleConfigs = {
   [locale: string]: I18nLocaleConfig;
 };
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemCurrentLocaleConfig = I18nLocaleConfig | undefined;
+export type ThemeNavbarItemLocaleDropdownNavbarItemActiveLocale = string;
+
+export type ThemeNavbarItemLocaleDropdownNavbarItemAlternatePageUtilsCreateUrlParams = {
+  locale: string;
+  fullyQualified: boolean;
+};
 
 export type ThemeNavbarItemLocaleDropdownNavbarItemAlternatePageUtils = {
-  createUrl: (options: {
-    locale: string;
-    fullyQualified: boolean;
-  }) => string;
+  createUrl: (params: ThemeNavbarItemLocaleDropdownNavbarItemAlternatePageUtilsCreateUrlParams) => string;
 };
 
 export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleConfig = I18nLocaleConfig | undefined;
@@ -272,11 +303,19 @@ export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleItem = {
 
 export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleItems = ThemeNavbarItemLocaleDropdownNavbarItemLocaleItem[];
 
+export type ThemeNavbarItemLocaleDropdownNavbarItemShortLabelMap = Record<string, string>;
+
 export type ThemeNavbarItemLocaleDropdownNavbarItemItems = ThemeNavbarItemDropdownNavbarItemChildItem[];
 
 export type ThemeNavbarItemLocaleDropdownNavbarItemLabel = string;
 
+export type ThemeNavbarItemLocaleDropdownNavbarItemShortLabel = string;
+
 export type ThemeNavbarItemLocaleDropdownNavbarItemHref = string;
+
+export type ThemeNavbarItemLocaleDropdownNavbarItemItemClassName = string;
+
+export type ThemeNavbarItemLocaleDropdownNavbarItemDetailsRef = React.RefObject<HTMLDetailsElement | null>;
 
 /**
  * Theme - Navbar Item - Navbar Item.
@@ -285,8 +324,17 @@ export type ThemeNavbarItemLocaleDropdownNavbarItemHref = string;
  */
 export type ThemeNavbarItemNavbarItemPropsType = string | undefined;
 
+export type ThemeNavbarItemNavbarItemPropsClassName = string | undefined;
+
+export type ThemeNavbarItemNavbarItemPropsStyle = CSSProperties | undefined;
+
+export type ThemeNavbarItemNavbarItemPropsIsActiveItem = boolean | undefined;
+
 export type ThemeNavbarItemNavbarItemProps = {
   type?: ThemeNavbarItemNavbarItemPropsType;
+  className?: ThemeNavbarItemNavbarItemPropsClassName;
+  style?: ThemeNavbarItemNavbarItemPropsStyle;
+  isActiveItem?: ThemeNavbarItemNavbarItemPropsIsActiveItem;
   [key: string]: unknown;
 };
 

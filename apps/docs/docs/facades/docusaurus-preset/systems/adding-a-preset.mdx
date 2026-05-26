@@ -1,0 +1,261 @@
+---
+id: "adding-a-preset"
+title: "Adding a Preset"
+description: "Cookbook for contributing a new preset using the sample scaffold — copy the template, fill in the eight schema slots, register, document, and verify."
+sidebar_position: 4
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "adding a preset"
+  - "sample preset"
+  - "preset scaffold"
+  - "contributing"
+  - "shared preset schema"
+  - "preset registry"
+  - "preset template"
+  - "css overlay"
+tags:
+  - "facades"
+  - "systems"
+  - "preset"
+  - "scaffold"
+  - "contributing"
+---
+
+# Adding a Preset
+
+This page is for contributors extending the codebase with a new preset. End users selecting from the existing presets do not need this page — see [the Presets section](/docs/category/presets/) instead.
+
+## Why a `sample` preset exists
+
+The codebase ships a deliberately-empty preset called **`sample`** that lives at:
+
+- `src/presets/sample/preset.ts`
+- `src/types/presets/sample/preset.d.ts`
+- `src/styles/presets/sample/preset.css`
+- `src/styles/presets/sample/blocks/**`
+- `src/styles/presets/sample/theme/**`
+- `assets/presets/sample/logo.svg`
+
+It is **not** a user-selectable preset. It is intentionally excluded from `SharedPresetName` (the type union that gates which preset names can be passed to `preset:` in `docusaurus.config.ts`), from the registry exports in `src/presets/index.ts`, and from `src/lib/shiki-themes.ts`. A consumer who tries to write `preset: 'sample'` gets a TypeScript error and a runtime validation error.
+
+The reason it exists in the source tree at all is to serve as a **copy-pastable scaffold**. Without it, anyone adding a new preset has to pattern-match against whichever existing preset happens to be most fleshed-out, which causes new presets to inherit unintended visual characteristics from their reference. Copying from `sample/` instead gives you the full surface area to fill in (every Nova block, every Docusaurus theme component) without inheriting any visual identity.
+
+The scaffold mirrors the full surface of the shared structural CSS — **all 10 Nova block directories** and **all 96 Docusaurus theme component directories** that have a `style.css` of their own. Each stub is empty by design; you decide whether to leave it empty (the surface inherits only the shared structural base) or fill it with preset-specific identity.
+
+## The eight schema slots
+
+A preset is configured through one object that matches the `SharedPreset` type. Every preset declares values for these eight slots:
+
+| Slot     | Type                                                | Purpose                                                                                  |
+|----------|-----------------------------------------------------|------------------------------------------------------------------------------------------|
+| `logo`   | `{ title, alt, src }`                               | Brand mark shown in the navbar.                                                          |
+| `colors` | `{ primary, accent, neutral }` (each a hex string)  | Three brand colors that the runtime expands to 11-stop scales (`50` through `950`).      |
+| `fonts`  | `{ display, body, code }`                           | Three Google Font families that the runtime auto-injects via `<link>` tag at build time. |
+| `shape`  | `{ radius, density }`                               | Toggles which shared shape variants apply (rounded vs sharp, comfortable vs compact).    |
+| `depth`  | `{ cards, codeBlocks }`                             | Toggles which shared depth variants apply (flat vs elevated cards, etc.).                |
+| `motion` | `{ speed, staggeredReveals, hoverEffects }`         | Controls animation cadence and whether decorative motion is enabled.                     |
+| `navbar` | `'bridge' \| 'canopy' \| 'compass' \| 'monolith'`   | Which navbar layout variant to activate.                                                 |
+| `footer` | `'commons' \| 'embassy' \| 'ledger' \| 'launchpad'` | Which footer layout variant to activate.                                                 |
+
+Consumers can override any of these slots from their `docusaurus.config.ts` via `overrides:`. Your preset's values are the **defaults** that win when the consumer does not override.
+
+## Cookbook
+
+### 1. Copy the scaffold
+
+Replace `<name>` with your preset's chosen name throughout. The name must be lowercase and must not collide with the existing preset names.
+
+```bash
+PKG=packages/docusaurus-preset-nova
+
+cp -R $PKG/src/presets/sample                 $PKG/src/presets/<name>
+cp -R $PKG/src/types/presets/sample           $PKG/src/types/presets/<name>
+cp -R $PKG/src/styles/presets/sample          $PKG/src/styles/presets/<name>
+cp -R $PKG/assets/presets/sample              $PKG/assets/presets/<name>
+```
+
+### 2. Rename the constant and type
+
+In `src/presets/<name>/preset.ts`:
+
+```ts title="src/presets/<name>/preset.ts"
+import type { PresetsXxxPresetXxx } from '../../types/presets/<name>/preset.d.ts';
+
+export const presetsXxxPresetXxx: PresetsXxxPresetXxx = {
+  // ...
+};
+```
+
+Replace `Xxx` with the preset name in PascalCase (e.g., `Lantern` → `PresetsLanternPresetLantern`).
+
+In `src/types/presets/<name>/preset.d.ts`:
+
+```ts title="src/types/presets/<name>/preset.d.ts"
+import type { SharedPreset } from '../../shared.d.ts';
+
+export type PresetsXxxPresetXxx = SharedPreset;
+```
+
+### 3. Fill in the eight slots
+
+Edit `src/presets/<name>/preset.ts` and replace every value with your preset's identity:
+
+```ts title="src/presets/<name>/preset.ts"
+export const presetsXxxPresetXxx: PresetsXxxPresetXxx = {
+  logo: {
+    title: 'Xxx',
+    alt: 'Xxx',
+    src: '@nova-assets/presets/<name>/logo.svg',
+  },
+  colors: {
+    primary: '#000000',  // brand color
+    accent:  '#000000',  // secondary accent
+    neutral: '#000000',  // tone for surface tints
+  },
+  fonts: {
+    display: 'Font Name',  // headings (Google Fonts only)
+    body:    'Font Name',  // body text
+    code:    'Font Name',  // monospaced code
+  },
+  shape: {
+    radius:  'sharp' | 'rounded' | 'pill',
+    density: 'compact' | 'comfortable' | 'spacious',
+  },
+  depth: {
+    cards:      'flat' | 'elevated' | 'glass',
+    codeBlocks: 'flat' | 'bordered' | 'elevated',
+  },
+  motion: {
+    speed:            'none' | 'subtle' | 'normal' | 'expressive',
+    staggeredReveals: true | false,
+    hoverEffects:     true | false,
+  },
+  navbar: 'bridge' | 'canopy' | 'compass' | 'monolith',
+  footer: 'commons' | 'embassy' | 'ledger' | 'launchpad',
+};
+```
+
+Replace the placeholder logo SVG at `assets/presets/<name>/logo.svg` with a real mark.
+
+### 4. Register the preset
+
+#### Add to `SharedPresetName`
+
+In `src/types/shared.d.ts`, add `<name>` to the `SharedPresetName` union, **alphabetically**:
+
+```ts title="src/types/shared.d.ts"
+export type SharedPresetName = 'envoy' | 'foundry' | '<name>' | /* ... */;
+```
+
+#### Register in the index
+
+In `src/presets/index.ts`, import the preset and add it to both `presetsIndexNames` (alphabetical) and `presetsIndexPresets`:
+
+```ts title="src/presets/index.ts"
+import { presetsXxxPresetXxx } from './<name>/preset.js';
+
+export const presetsIndexNames: PresetsIndexNames = [
+  // ...alphabetical
+  '<name>',
+  // ...
+];
+
+export const presetsIndexPresets: PresetsIndexPresets = {
+  // ...alphabetical
+  <name>: presetsXxxPresetXxx,
+  // ...
+};
+```
+
+#### Add a Shiki theme pair
+
+In `src/lib/shiki-themes.ts`, map your preset name to a Shiki theme pair (light + dark) for code-block syntax highlighting. Use any pair from the [Shiki theme list](https://shiki.style/themes).
+
+### 5. Layer your identity
+
+This is the bulk of the work. The scaffold has a `style.css` stub for every Nova block and every Docusaurus theme component that has shared structural styling. You can:
+
+- **Leave a stub empty** — the surface inherits only the shared structural base.
+- **Fill the stub** — your CSS layers on top of the shared base, scoped by preset selection at runtime.
+
+For an identity to feel cohesive, fill as many surfaces as the design demands. Conservative presets reach maybe a third of the surface. Committed presets reach most of it.
+
+The CSS load order at runtime:
+
+```text
+shared global vars
+  → generated --nova-color-{primary,accent,neutral}-{50..950} scales
+  → shared block CSS      (src/styles/blocks/**)
+  → shared theme CSS      (src/styles/theme/**)
+  → preset's preset.css         (your tokens, accessibility floor, scrollbar, etc.)
+  → preset's blocks/**          (your Nova block overlays)
+  → preset's theme/**           (your Docusaurus theme component overlays)
+```
+
+Conventions:
+
+- **No `@import` statements** in `preset.css`. The runtime auto-loads your three Google Fonts via `<link>` tag injection. Adding `@import` bypasses the consumer's `overrides.fonts.*` mechanics.
+- Reference colors via `var(--nova-color-{primary,accent,neutral}-{50..950})`, or via `color-mix(in srgb, ...)`. Avoid raw hex inside `theme/` overlays; declare hex only in `preset.css` for surface tokens.
+- Reference fonts via `var(--nova-font-{display,body,code})`. Never hardcode font names in selectors.
+- Provide light + dark mode parity for every visible color (`:root` defaults, `[data-theme="dark"]` overrides).
+- Keep `:focus-visible` outlines and the `prefers-reduced-motion` block from `sample/preset.css`. They are the accessibility floor.
+
+### 6. Add tests
+
+Add expectations for your preset to:
+
+- `src/tests/presets/index.test.ts` (registry membership and schema)
+- `src/tests/lib/shiki-themes.test.ts` (Shiki theme pair lookup)
+- `src/types/tests/presets/index.test.d.ts` (type aliases for the test assertions)
+
+Run `npm run test` to confirm.
+
+### 7. Document the preset
+
+Create a user-facing docs page at:
+
+```
+apps/docs/docs/facades/docusaurus-preset/presets/<name>.mdx
+```
+
+Mirror the structure of the existing preset pages (Why Use → Preview → Summary → Configuration → Overrides → Navbar and Footer). Set `sidebar_position` so presets stay alphabetical.
+
+Add light/dark preview screenshots at:
+
+```
+apps/docs/docs/facades/docusaurus-preset/presets/_assets_/<name>-light.png
+apps/docs/docs/facades/docusaurus-preset/presets/_assets_/<name>-dark.png
+```
+
+### 8. Add a demo app (optional but recommended)
+
+Clone an existing demo app and adapt it:
+
+```bash
+cp -R apps/demo-foundry apps/demo-<name>
+```
+
+Update `package.json`, `docusaurus.config.ts`, content directories, and static assets to match the new preset's identity. The demo app is what gets captured for the preview screenshots in the docs page.
+
+### 9. Verify
+
+```bash
+cd packages/docusaurus-preset-nova && npm run check
+cd apps/demo-<name> && npm run dev
+```
+
+`npm run check` runs lint, typecheck, and the test suite. `npm run dev` boots the demo so you can verify the preset visually.
+
+## What `sample` does NOT contain
+
+For the avoidance of doubt, the sample scaffold is intentionally absent from:
+
+- `SharedPresetName` (type union in `src/types/shared.d.ts`) — so consumers cannot type `preset: 'sample'`.
+- `presetsIndexNames` and `presetsIndexPresets` (in `src/presets/index.ts`) — so the runtime registry never sees it.
+- `src/lib/shiki-themes.ts` — so no Shiki theme is mapped.
+- `apps/docs/docs/facades/docusaurus-preset/presets/` — there is no consumer-facing preset doc page.
+- `apps/` — there is no `demo-sample` app.
+- The Joi schema allow-list — runtime validation rejects the name.
+
+These exclusions are the mechanism that makes `sample` invisible to consumers while keeping it visible to contributors as a copy-pastable template.

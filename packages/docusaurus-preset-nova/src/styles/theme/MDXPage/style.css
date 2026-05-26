@@ -1,5 +1,24 @@
 /**
- * MDX Page — Shared structural styles.
+ * MDX Page - Shared structural styles.
+ *
+ * Parallel to `theme/DocRoot/Layout/(Main/)style.css` and
+ * `theme/BlogLayout/style.css`: provides the same vertical breathing room
+ * around `<main>` (top + bottom = section-gap / 4) and the same
+ * `min-width: 0` guards that prevent CSS Grid children from overflowing on
+ * narrow viewports. MDXPage has no left sidebar, so the inner two-column
+ * grid (article + right-rail TOC) sits directly inside `<main>`.
  *
  * @since 0.15.0
  */
+
+.nova-mdx-page-root .nova-container,
+.nova-mdx-page-root .nova-grid {
+  min-width: 0;
+}
+
+.nova-mdx-page-root main {
+  min-width: 0;
+
+  padding-top: calc(var(--nova-section-gap) / 4);
+  padding-bottom: calc(var(--nova-section-gap) / 4);
+}

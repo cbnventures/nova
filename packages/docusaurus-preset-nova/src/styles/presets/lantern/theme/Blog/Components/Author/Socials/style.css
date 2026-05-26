@@ -1,0 +1,26 @@
+/**
+ * Lantern - `Blog/Components/Author/Socials` theme overlay.
+ *
+ * Warm paper circle: full radius, hand-laid feel, warmer fill on hover.
+ *
+ * @since 0.18.0
+ */
+
+.nova-blog-author-social-link {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 50%;
+  color: var(--nova-lantern-ink-muted);
+}
+
+.nova-blog-author-social-link:hover,
+.nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 60%);
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link:hover,
+[data-theme="dark"] .nova-blog-author-social-link:focus-visible {
+  color: var(--nova-color-primary-300);
+}

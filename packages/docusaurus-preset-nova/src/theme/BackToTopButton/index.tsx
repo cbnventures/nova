@@ -12,6 +12,7 @@ import type {
   ThemeBackToTopButtonEnabled,
   ThemeBackToTopButtonIsVisible,
   ThemeBackToTopButtonIsVisibleState,
+  ThemeBackToTopButtonProps,
   ThemeBackToTopButtonReturns,
   ThemeBackToTopButtonScrollThreshold,
   ThemeBackToTopButtonSetIsVisible,
@@ -29,7 +30,7 @@ import type {
  *
  * @since 0.15.0
  */
-function BackToTopButton(): ThemeBackToTopButtonReturns {
+function BackToTopButton(props: ThemeBackToTopButtonProps): ThemeBackToTopButtonReturns {
   const themeConfig: ThemeBackToTopButtonThemeConfig = useThemeConfig() as ThemeBackToTopButtonThemeConfig;
   const enabled: ThemeBackToTopButtonEnabled = themeConfig['backToTopButton'] ?? true;
   const scrollThreshold: ThemeBackToTopButtonScrollThreshold = 300;
@@ -63,7 +64,7 @@ function BackToTopButton(): ThemeBackToTopButtonReturns {
     };
   }, [scrollThreshold]);
 
-  if (enabled === false || isVisible === false) {
+  if (enabled === false) {
     return null;
   }
 
@@ -75,8 +76,12 @@ function BackToTopButton(): ThemeBackToTopButtonReturns {
 
   return (
     <button
-      className="nova-back-to-top"
+      className={(props['className'] !== undefined) ? `nova-back-to-top ${props['className']}` : 'nova-back-to-top'}
+      style={props['style']}
       type="button"
+      data-visible={(isVisible === true) ? 'true' : 'false'}
+      aria-hidden={(isVisible === true) ? undefined : true}
+      tabIndex={(isVisible === true) ? 0 : -1}
       onClick={() => {
         window.scrollTo({
           top: 0,

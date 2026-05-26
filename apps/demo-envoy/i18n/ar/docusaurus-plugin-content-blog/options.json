@@ -1,0 +1,14 @@
+{
+  "title": {
+    "message": "المدوّنة",
+    "description": "The title for the blog used in SEO"
+  },
+  "description": {
+    "message": "ملاحظات الإصدارات، وتحليلات معمّقة للتكاملات، ورسائل عابرة من غرفة المُرحِّلات.",
+    "description": "The description for the blog used in SEO"
+  },
+  "sidebar.title": {
+    "message": "أحدث المقالات",
+    "description": "The label for the left sidebar"
+  }
+}

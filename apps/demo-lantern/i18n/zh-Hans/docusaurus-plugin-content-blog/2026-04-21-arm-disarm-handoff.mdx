@@ -1,0 +1,58 @@
+---
+title: "把布防 / 撤防的权力交给你信任的人"
+authors:
+  - "marisol"
+tags:
+  - "布防与撤防"
+  - "接力"
+date: "2026-04-21"
+---
+
+一位可信赖的用户，无需你的手机在手，就能为 Lantern 看守的任意分区撤防。接力方式可以是按名、按暗语，或按 HomeKit Home Hub 在场——由你的家庭来选。
+
+{/* truncate */}
+
+旅行模式会收紧规则；睡前模式会放松规则。Lantern 倾听，但不预设。
+
+接力的用例，在我们的家庭里反复出现过。出门时来浇花的邻居。上门遛狗的父母。把忘带的教科书送回来的孩子的同学。他们都没有你的手机。但在合适的那一天，他们都需要过道变暗、门廊变柔、前门知道开门的这个人属于这里——不是作为登录用户，没有账号。只是清单上的一个名字，加上一句暗语或一次集线器在场作为佐证。
+
+我们写了三种接力方式。第一种是按名加暗语——可信任用户对厨房集线器说出自己的名字与暗语，Lantern 把门廊放松十分钟。第二种只是集线器在场——可信任用户的手机已被加入家庭集线器组，从音箱旁走过就够了。第三种是手动暗语，输入在门口面板上，留给集线器拔掉或手机没电的日子用。三条路通向同一间房。家里人选一条合适的。
+
+```yaml title="lantern.handoffs.yml"
+trusted:
+  - name:        plant-neighbor
+    expires:     2026-05-15
+    methods:
+      - voice-passphrase: kitchen-hub
+      - door-passphrase:  front-panel
+    relax:
+      zones:     [porch, hallway]
+      mode:      gentle
+      duration:  10min
+      audit:     log-and-notify-household-after
+  - name:        dog-walker
+    expires:     standing
+    methods:
+      - hub-presence:     known-phone-uuid
+      - door-passphrase:  back-panel
+    relax:
+      zones:     [back-door, side-path, kitchen]
+      mode:      welcoming
+      duration:  30min
+      audit:     log-only
+  - name:        teenager-friend
+    expires:     2026-04-30
+    methods:
+      - voice-passphrase: any-hub
+    relax:
+      zones:     [porch]
+      mode:      gentle
+      duration:  5min
+      audit:     log-and-notify-household-immediately
+```
+
+写这一段时让我们最纠结的是审计那一列。一次可信任接力依然是一次接力——家里人之后应当可以读到发生了什么，某些情况下当时就要知道。浇花邻居的审计是*log-and-notify-household-after*——门廊记下这次到访，并在结束之后再通知家里人，这样楼上沙发上正在读书的家庭成员不会被打断。遛狗者的审计是*log-only*，因为他每天同一时刻出现，通知在第一周之后就不再有趣。孩子同学的审计是最严的那一种——*notify immediately*——因为这位同学刚加入清单不久，家里人想在门廊放松的那一刻就知道。
+
+旅行模式对可信清单的影响很小，但很谨慎。旅行期间，所有 *log-only* 的审计都会升级为 *notify-after*，所有 *expires-standing* 的条目每天都会与家庭日历比对一次。睡前期间，可信清单仍然有效，但审计会排队到次日上午，而不是 ping 卧室。Lantern 听天气听得像家里人那样——它不假设一种天气下的规则也适用于另一种。
+
+接力是 Lantern 中大多数人最先遇到的那一部分。门口的邻居、门外的遛狗者、捧着教科书站在门廊上的同学。家里人已经决定了谁属于这里。Lantern 只是替他们把门留开的那一位。

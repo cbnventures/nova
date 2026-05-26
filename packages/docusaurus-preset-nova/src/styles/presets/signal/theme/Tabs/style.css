@@ -13,19 +13,7 @@
 }
 
 /* ============================
- * 2. Tab List
- * ============================ */
-
-.nova-tabs-list {
-  border-bottom: 1px solid var(--nova-color-neutral-200);
-}
-
-[data-theme="dark"] .nova-tabs-list {
-  border-bottom-color: var(--nova-color-neutral-800);
-}
-
-/* ============================
- * 3. Tab Button
+ * 2. Tab Button
  * ============================ */
 
 .nova-tabs-tab {
@@ -33,24 +21,19 @@
 
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
 
   border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
 }
 
 .nova-tabs-tab:hover,
 .nova-tabs-tab:focus-visible {
-  color: var(--nova-color-neutral-900);
+  border-bottom: 2px solid var(--nova-color-primary-400);
 }
 
 .nova-tabs-tab[data-selected="true"] {
   color: var(--nova-color-primary-600);
   border-bottom-color: var(--nova-color-primary-600);
-}
-
-[data-theme="dark"] .nova-tabs-tab {
-  color: var(--nova-color-neutral-400);
 }
 
 [data-theme="dark"] .nova-tabs-tab[data-selected="true"] {

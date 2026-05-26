@@ -19,7 +19,7 @@
   },
   "include": [
     "./nova-theme.d.ts",
-    "./src/components/**/*",
+    "./src/blocks/**/*",
     "./src/lib/mermaid.ts",
     "./src/lib/rehype-shiki.ts",
     "./src/lib/search/perform-search.ts",

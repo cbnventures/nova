@@ -1,0 +1,114 @@
+/**
+ * Lantern - `features` component overlay.
+ *
+ * The card surface itself (`.nova-feature-card`) already carries the
+ * asymmetric hand-thrown corners and warm wash from preset.css - DO NOT
+ * redeclare. This file only adds the section heading rhythm, the icon
+ * tone, the title/description typography, and a soft amber halo on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section heading - italic Fraunces, centered with breathing room
+ * ============================
+ */
+
+.nova-features-heading {
+  margin-bottom: 2rem;
+
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .nova-features-heading {
+    margin-bottom: 3rem;
+  }
+}
+
+/**
+ * ============================
+ * 2. Grid spacing
+ * ============================
+ */
+
+.nova-features-grid {
+  row-gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .nova-features-grid {
+    row-gap: 2rem;
+  }
+}
+
+/**
+ * ============================
+ * 3. Card hover halo - soft warm glow + 1px lift
+ * ============================
+ */
+
+.nova-feature-card {
+  transition:
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-feature-card:hover {
+  box-shadow: var(--nova-lantern-hover-glow-strong);
+
+  transform: var(--nova-lantern-hover-lift);
+}
+
+/**
+ * ============================
+ * 4. Icon - amber lantern-flame
+ * ============================
+ */
+
+.nova-feature-card-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  margin-bottom: 0.75rem;
+
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-feature-card-icon {
+  color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 5. Card title - italic Fraunces (the signature)
+ * ============================
+ */
+
+.nova-feature-card-title {
+  margin-bottom: 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--nova-lantern-ink);
+}
+
+/**
+ * ============================
+ * 6. Card description - warm muted ink
+ * ============================
+ */
+
+.nova-feature-card-description {
+  margin: 0;
+
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-lantern-ink-muted);
+}

@@ -1,0 +1,22 @@
+/**
+ * Signal - `CodeInline` theme overlay.
+ *
+ * Inline `code` snippets. Sharp terminal block - flat rose-tinted bg, no
+ * radius, mono.
+ *
+ * @since 0.18.0
+ */
+
+.nova-code-inline {
+  padding: 0.0625em 0.25em;
+  font-family: var(--nova-font-code);
+  font-size: 0.8125em;
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-signal-bg) 94%);
+  border-radius: var(--nova-signal-radius-sharp);
+}
+
+[data-theme="dark"] .nova-code-inline {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-signal-bg) 84%);
+}

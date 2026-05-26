@@ -1,0 +1,42 @@
+---
+title: "The hallway light that nobody trusted"
+authors:
+  - "theo"
+tags:
+  - "zones"
+  - "sensor-history"
+date: "2025-05-25"
+---
+
+There is a hallway light in every house that nobody trusts. It comes on too late. It flickers when the dryer runs. It refuses to dim when the rest of the house dims. Lantern is mostly a love letter to that hallway light.
+
+{/* truncate */}
+
+We took the suspect lamp seriously. Logged its hesitations, its small lies. The lamp has been on the watch list for six months. It is on probation. The hallway is brighter for it.
+
+The lamp was a hand-me-down. It came with the house, hardwired into a junction box that had been re-wired twice by previous owners. The first month we lived there we noticed it was a beat slow — the kitchen would brighten when someone walked in, and the hallway would catch up half a second later. After a year we noticed it would dim during the dryer cycle, like the dryer was pulling the hallway down with it. After two years we just stopped trusting the lamp's word on anything. If the hallway said *motion*, the kitchen looked over. If the hallway said *nothing*, the kitchen still looked over.
+
+When we wired the lamp into Lantern we did not replace it. We watched it. We marked it as suspect, kept its sensor in the zone, and started writing every report it filed against every report from the kitchen and the bedroom on either side. After two weeks the pattern was obvious. The hallway was honest about motion at the runner. It lied about motion near the laundry room. It told the truth at noon and slept through the 6pm rush. The lamp had a personality, and the personality was uneven.
+
+So we did not throw the lamp out. We told Lantern to weight its reports.
+
+```yaml title="lantern.zones.yml"
+zones:
+  hallway:
+    sensors:
+      - id:     motion-hallway
+        weight: 1.0
+        notes:  primary, runner-side
+      - id:     motion-hallway-laundry
+        weight: 0.4
+        notes:  suspect since 2024-11; dryer interference
+        watch:
+          - condition: dryer-running
+            weight:    0.0   # ignore entirely while dryer cycles
+          - condition: 18:00-19:00
+            weight:    0.7   # underreports during 6pm rush
+```
+
+The suspect sensor still gets to vote. It just does not get to vote alone. When the dryer is on, the lamp's reports are dropped to zero — the rest of the hallway votes without it. Between 6 and 7 in the evening, when the lamp tends to underreport, its weight comes down to seven-tenths and the kitchen's weight comes up. The lamp is still in the zone. The zone is just no longer at the lamp's mercy.
+
+A suspect sensor is more useful than a missing one, if you know its lies. The hallway is brighter than it was. The lamp is the same lamp. We just stopped pretending it was telling us the whole truth, and started reading what it said the way we would read a relative who exaggerates — affectionately, and with the rest of the family in the room.

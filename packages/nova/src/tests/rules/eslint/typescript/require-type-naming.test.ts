@@ -41,13 +41,13 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
       options: [{ ignoreFiles: ['changelog.d.ts'] }],
     },
 
-    // PascalCase filename — MDXComponents normalized to ThemeMdxComponents.
+    // PascalCase filename - MDXComponents normalized to ThemeMdxComponents.
     {
       code: 'export type ThemeMdxComponentsOverrides = string;',
       filename: '/project/src/types/theme/MDXComponents.d.ts',
     },
 
-    // PascalCase filename — single word stays PascalCase.
+    // PascalCase filename - single word stays PascalCase.
     {
       code: 'export type ThemeLayoutConfig = string;',
       filename: '/project/src/types/theme/Layout.d.ts',
@@ -95,7 +95,7 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
       errors: [{ messageId: 'typeNamingPrefix' }],
     },
 
-    // PascalCase filename — raw MDX uppercase should be rejected.
+    // PascalCase filename - raw MDX uppercase should be rejected.
     {
       code: 'export type ThemeMDXComponentsOverrides = string;',
       filename: '/project/src/types/theme/MDXComponents.d.ts',

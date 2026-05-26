@@ -1000,7 +1000,7 @@ export class CliGenerateGithubWorkflows {
 
             // Build the needs list. Always starts with "build"; same-type target
             // workingDirs declared in `needs` are appended as job ids so the generated
-            // workflow serializes nova → preset, etc.
+            // workflow serializes nova -> preset, etc.
             const targetNeeds: CliGenerateGithubWorkflowsRunTargetNeeds = currentEntryTarget['needs'] ?? [];
             const targetNeedsJobIds: CliGenerateGithubWorkflowsRunTargetNeedsJobIds = targetNeeds.map(
               (targetNeedWorkingDir: CliGenerateGithubWorkflowsRunTargetNeedWorkingDir) => `publish-${targetType}-${CliGenerateGithubWorkflows.slugifyWorkingDir(targetNeedWorkingDir)}`,

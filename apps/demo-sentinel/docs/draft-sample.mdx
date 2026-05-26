@@ -1,0 +1,17 @@
+---
+title: "Draft Sample"
+sidebar_position: 999
+draft: true
+description: "Working notes on the probe interval rework. Not finalized."
+tags:
+  - "draft"
+  - "monitoring"
+---
+
+# Draft Sample
+
+Working notes for the probe interval rework. The current default is sixty seconds for HTTP probes and thirty for TCP.
+
+Last month we hit a noisy-neighbor incident where two services on the same node both ran their checks simultaneously and the host paged on synthetic load that came entirely from us.
+
+The plan is to add a per-node jitter window of plus-or-minus eight seconds so the probes naturally drift apart, with the jitter seed derived from node hostname so it stays stable across restarts. We do not want to ship this until it has been simulated against the alert evaluation windows — false negatives would be much worse than what we have now.

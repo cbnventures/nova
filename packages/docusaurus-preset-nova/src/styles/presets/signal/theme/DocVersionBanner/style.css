@@ -1,0 +1,83 @@
+/**
+ * Signal - `DocVersionBanner` theme overlay.
+ *
+ * Terminal log line - sharp 4px primary-rose left rail (signal's signature
+ * stripe), neutral chrome, mono uppercase tracked text with a `[INFO]`
+ * bracket prefix and a blinking `block-cursor` cursor sigil at the tail. Reads as a
+ * console emit rather than a UI alert.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Version banner - terminal stripe with bracket prefix + cursor sigil
+ * ============================
+ */
+
+.nova-version-banner {
+  padding: 0.5rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nova-color-text);
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+
+  background-color: var(--nova-color-surface-raised);
+  border-left: 4px solid var(--nova-color-primary-500);
+}
+
+.nova-version-banner p {
+  margin: 0;
+}
+
+.nova-version-banner p::before {
+  content: "[INFO] ";
+
+  color: var(--nova-color-primary-600);
+}
+
+.nova-version-banner p::after {
+  content: " ▌";
+
+  color: var(--nova-color-primary-500);
+
+  animation: signal-banner-cursor-blink 1.2s steps(2, jump-none) infinite;
+}
+
+[data-theme="dark"] .nova-version-banner {
+  color: var(--nova-color-border);
+
+  background-color: var(--nova-color-text);
+  border-left-color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-version-banner p::before {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-version-banner p::after {
+  color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 2. Cursor sigil - terminal blink
+ * ============================
+ */
+
+@keyframes signal-banner-cursor-blink {
+  0%,
+  50% {
+    opacity: 1;
+  }
+
+  50.01%,
+  100% {
+    opacity: 0;
+  }
+}

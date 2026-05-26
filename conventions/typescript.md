@@ -20,23 +20,23 @@ Quotes: Single. Indentation: 2-space. File naming: kebab-case (e.g., `markdown-t
 ```ts
 // GOOD — param names aligned, dashes aligned
 /**
- * @param {CliChangelogWritePackageDir}  packageDir  - Package dir.
- * @param {CliChangelogWritePackageName} packageName - Package name.
- * @param {CliChangelogWriteVersion}     version     - Version.
- * @param {CliChangelogWriteEntries}     entries     - Entries.
+ * @param {Cli_Changelog_Write_PackageDir}  packageDir  - Package dir.
+ * @param {Cli_Changelog_Write_PackageName} packageName - Package name.
+ * @param {Cli_Changelog_Write_Version}     version     - Version.
+ * @param {Cli_Changelog_Write_Entries}     entries     - Entries.
  */
 
 // GOOD — same-length types, 1 space after } suffices
 /**
- * @param {TaskRunnerConstructorHeaders} headers   - Headers.
- * @param {TaskRunnerConstructorOptions} [options] - Options.
+ * @param {Task_Runner_Constructor_Headers} headers   - Headers.
+ * @param {Task_Runner_Constructor_Options} [options] - Options.
  */
 
 // BAD — no alignment
 /**
- * @param {CliChangelogWritePackageDir} packageDir - Package dir.
- * @param {CliChangelogWritePackageName} packageName - Package name.
- * @param {CliChangelogWriteVersion} version - Version.
+ * @param {Cli_Changelog_Write_PackageDir} packageDir - Package dir.
+ * @param {Cli_Changelog_Write_PackageName} packageName - Package name.
+ * @param {Cli_Changelog_Write_Version} version - Version.
  */
 ```
 
@@ -56,13 +56,13 @@ export class CliUtilityRunner {
   /**
    * CLI - Utility - Runner - Run.
    *
-   * @param {CliUtilityRunnerRunOptions} options - Options.
+   * @param {Cli_Utility_Runner_Run_Options} options - Options.
    *
-   * @returns {CliUtilityRunnerRunReturns}
+   * @returns {Cli_Utility_Runner_Run_Returns}
    *
    * @since 1.0.0
    */
-  public static async run(options: CliUtilityRunnerRunOptions): CliUtilityRunnerRunReturns {
+  public static async run(options: Cli_Utility_Runner_Run_Options): Cli_Utility_Runner_Run_Returns {
   }
 
   /**
@@ -70,26 +70,26 @@ export class CliUtilityRunner {
    *
    * @private
    *
-   * @returns {CliUtilityRunnerFetchDataReturns}
+   * @returns {Cli_Utility_Runner_FetchData_Returns}
    *
    * @since 1.0.0
    */
-  private static async fetchData(): CliUtilityRunnerFetchDataReturns {
+  private static async fetchData(): Cli_Utility_Runner_FetchData_Returns {
   }
 
   /**
    * CLI - Utility - Runner - Format Line.
    *
-   * @param {CliUtilityRunnerFormatLinePrefix}  prefix  - Prefix.
-   * @param {CliUtilityRunnerFormatLineMessage} message - Message.
+   * @param {Cli_Utility_Runner_FormatLine_Prefix}  prefix  - Prefix.
+   * @param {Cli_Utility_Runner_FormatLine_Message} message - Message.
    *
    * @private
    *
-   * @returns {CliUtilityRunnerFormatLineReturns}
+   * @returns {Cli_Utility_Runner_FormatLine_Returns}
    *
    * @since 1.0.0
    */
-  private static formatLine(prefix: CliUtilityRunnerFormatLinePrefix, message: CliUtilityRunnerFormatLineMessage): CliUtilityRunnerFormatLineReturns {
+  private static formatLine(prefix: Cli_Utility_Runner_FormatLine_Prefix, message: Cli_Utility_Runner_FormatLine_Message): Cli_Utility_Runner_FormatLine_Returns {
   }
 }
 ```
@@ -119,15 +119,15 @@ const header = this.formatRow(this.#headers, columnWidths);
 const directory = path.dirname(filePath);
 
 // GOOD — named types from .d.ts
-const entries: RunnerParseEntries = [];
-const files: RunnerParseFiles = [];
-let selectedPackage: RunnerRunSelectedPackage;
-const allowedKeys: ValidatorCheckAllowedKeys = new Set([...]);
-const reordered: SyncerHandleReorderReordered = {};
+const entries: Runner_Parse_Entries = [];
+const files: Runner_Parse_Files = [];
+let selectedPackage: Runner_Run_SelectedPackage;
+const allowedKeys: Validator_Check_AllowedKeys = new Set([...]);
+const reordered: Syncer_HandleReorder_Reordered = {};
 
 // GOOD — named types even for inferred primitives
-const header: MarkdownTableRenderHeader = this.formatRow(this.#headers, columnWidths);
-const directory: RunnerSaveFileDirectory = path.dirname(filePath);
+const header: MarkdownTable_Render_Header = this.formatRow(this.#headers, columnWidths);
+const directory: Runner_SaveFile_Directory = path.dirname(filePath);
 
 // GOOD — inference OK for these (excluded from rule)
 items.filter((item) => item.length > 0);
@@ -165,78 +165,147 @@ export type EntryCategory = 'added' | 'updated' | 'fixed' | 'removed';
 
 // types/cli/runner.d.ts — imports from shared.d.ts
 import type { EntryCategory } from '@/types/shared.d.ts';
-export type RunnerRecordSelectedCategory = EntryCategory;
+export type Cli_Runner_Record_SelectedCategory = EntryCategory;
 
 // cli/runner.ts — imports from runner.d.ts, NEVER from shared.d.ts
-import type { RunnerRecordSelectedCategory } from '@/types/cli/runner.d.ts';
+import type { Cli_Runner_Record_SelectedCategory } from '@/types/cli/runner.d.ts';
 ```
 
 ### Type Ordering in `.d.ts` Files
 
-**Sections** are in alphabetical order by method name. **Within each section**, types are ordered by first-use, first-listed (first come, first serve): parameters first (used first in the signature), then return/typeguard (used next in the signature), then body variable types in the sequential order they appear in the method body. This is strictly code-order, NOT alphabetical.
+**Sections** are in alphabetical order by their full section prefix (path + class + method/function/(string, fn) chunks). **Within each section**, types are ordered by first-use, first-listed (first come, first serve): parameters first (used first in the signature), then return/typeguard (used next in the signature), then body variable types in the sequential order they appear in the method body. This is strictly code-order, NOT alphabetical.
 
 The reason for first-come-first-serve ordering: the `.d.ts` file reads as a parallel of the `.ts` file. When reading the implementation top to bottom and encountering a type, it appears at the same relative position in the `.d.ts`. The `.d.ts` is a table of contents for the implementation — same order, same flow, no hunting.
 
-The **only** valid forward reference: `Returns` referencing a type defined later in the same section — `Returns` still comes first because it's used first (in the signature). This covers two patterns: `Returns` referencing a body variable the method returns, and `Returns` referencing a return object type whose properties are defined after `Returns`. All other types must be defined before use.
+The **only** valid forward references: return-position type aliases — `Returns`, `TypeGuard`, and the singular `Return` — referencing a type defined later in the same section. The return-position alias still comes first because it's used first (in the signature). This covers two patterns: the alias referencing a body variable the method returns, and the alias referencing a return object type whose properties are defined after it. All other types must be defined before use.
+
+> Inline examples below use a `Runner_*` shorthand for brevity — read it as the full Mode 2 form `{PathPrefix}_Runner_*` (e.g., `Cli_Utility_Foo_Runner_*` for `cli/utility/foo.ts`). Real `.d.ts` files always include the full path prefix.
 
 ```ts
 /** Runner - Execute. */
-export type RunnerExecuteOptions = { ... };                             // param (used first)
-export type RunnerExecuteReturns = Promise<void>;                       // return (used next)
-export type RunnerExecuteConfig = Record<...>;                          // body variable (used later, sequential order)
+export type Runner_Execute_Options = { ... };                                // param (used first)
+export type Runner_Execute_Returns = Promise<void>;                          // return (used next)
+export type Runner_Execute_Config = Record<...>;                             // body variable (used later, sequential order)
 
 /** Runner - Group items. */
-export type RunnerGroupItemsItems = ...;                                // param (used first)
-export type RunnerGroupItemsReturns = RunnerGroupItemsGrouped;          // return (used next, forward ref OK)
-export type RunnerGroupItemsGrouped = Map<...>;                         // body variable (used later, owns the definition)
-export type RunnerGroupItemsProcessed = Set<...>;                       // body variable (used later, sequential order)
+export type Runner_GroupItems_Items = ...;                                   // param (used first)
+export type Runner_GroupItems_Returns = Runner_GroupItems_Grouped;           // return (used next, forward ref OK)
+export type Runner_GroupItems_Grouped = Map<...>;                            // body variable (used later, owns the definition)
+export type Runner_GroupItems_Processed = Set<...>;                          // body variable (used later, sequential order)
 
 /** Runner - Detect platform. */
-export type RunnerDetectPlatformUrl = string;                           // param (used first)
-export type RunnerDetectPlatformReturns = RunnerDetectPlatformPlatform; // return (forward ref OK)
-export type RunnerDetectPlatformPlatformId = 'a' | 'b';                 // return object property
-export type RunnerDetectPlatformPlatformUrl = string;                   // return object property
-export type RunnerDetectPlatformPlatform = {                            // return object (owns the definition)
-  id: RunnerDetectPlatformPlatformId;
-  url: RunnerDetectPlatformPlatformUrl;
+export type Runner_DetectPlatform_Url = string;                              // param (used first)
+export type Runner_DetectPlatform_Returns = Runner_DetectPlatform_Platform;  // return (forward ref OK)
+export type Runner_DetectPlatform_Platform_Id = 'a' | 'b';                   // return object property
+export type Runner_DetectPlatform_Platform_Url = string;                     // return object property
+export type Runner_DetectPlatform_Platform = {                               // return object (owns the definition)
+  id: Runner_DetectPlatform_Platform_Id;
+  url: Runner_DetectPlatform_Platform_Url;
 };
 ```
 
 ### Named Type Naming
 
-Pattern: `{PathPrefix}{MethodName}{VariableName}`. The path prefix is derived from the file path using simple PascalCase — each path segment and hyphenated word gets its first letter capitalized, no abbreviation expansion. The type naming system does NOT use brand casing (e.g., `Cli` not `CLI`, `Api` not `API`, `Eslint` not `ESLint`). Brand casing is reserved for JSDoc hierarchy display only.
-
-Files named `index` skip the filename — the directory path is the identity.
+Pattern: `{PathPrefix}_{ClassName}_{MethodName}_{VariableName}` — chunks joined by underscores, each chunk PascalCase. The path prefix is derived from the file path: every path segment becomes one chunk (PascalCase, with hyphenated names like `package-json` flattened to `PackageJson` within the chunk). No segments are stripped — the path is the identity verbatim. The type naming system does NOT use brand casing (e.g., `Cli` not `CLI`, `Api` not `API`, `Eslint` not `ESLint`). Brand casing is reserved for JSDoc hierarchy display only.
 
 ```
-src/cli/                               → Cli (namespace)
-src/cli/utility/                       → CliUtility (sub-namespace)
-src/cli/utility/changelog.ts           → CliUtilityChangelog (class)
-src/cli/generate/must-haves/dotenv.ts  → CliGenerateMustHavesDotenv (class)
-src/cli/recipe/package-json/cleanup.ts → CliRecipePackageJsonCleanup (class)
-src/cli/index.ts                       → Cli (index skipped)
+src/cli/utility/changelog.ts           → Cli_Utility_Changelog
+src/cli/generate/must-haves/dotenv.ts  → Cli_Generate_MustHaves_Dotenv
+src/cli/recipe/package-json/cleanup.ts → Cli_Recipe_PackageJson_Cleanup
+src/cli/index.ts                       → Cli_Index
+src/toolkit/index.ts                   → Toolkit_Index
 ```
 
-Inside a class, the namespace keeps extending — method adds a level, variable adds a level, object property adds a level:
+Type prefixes are built from the source mechanically. Each level adds a chunk:
+
+| Source | Adds a chunk | Chunk content |
+|---|---|---|
+| File path segment | yes | segment PascalCased (verbatim, no segments stripped) |
+| Class declaration | yes | class name PascalCased |
+| Constructor | yes | literal `Constructor` |
+| Method declaration | yes | method name PascalCased (incl. private `#name`) |
+| Top-level function declaration | yes | function name PascalCased |
+| Top-level function-typed `const` | yes | const name PascalCased |
+| Nested function declaration / function-typed `const` | yes | name PascalCased |
+| `(string, fn)` call expression | yes | string parsed (split on non-word, PascalCase each part, concatenate) |
+| Body variable / parameter | yes | title-cased var/param name (the leaf) |
+| Object property | yes | property key PascalCased (chained on the parent object's type name) |
 
 ```
-CliUtilityChangelog                    → directory path (class)
-  Release                              → method
-    Release                            → object variable
-      PackageName                      → property
-= CliUtilityChangelogReleaseReleasePackageName
+Cli_Utility_Changelog                  → file path
+  Runner                               → class chunk
+    Release                            → method
+      Release                          → object variable
+        PackageName                    → property
+= Cli_Utility_Changelog_Runner_Release_Release_PackageName
 ```
 
-Repetition in names (e.g., `ReleaseRelease`) is expected when the method name matches the variable name — the `release()` method produces `release` objects. The convention does not deduplicate — each segment maps to one level, keeping the namespace unambiguous.
+Repetition (e.g., `Release_Release`) is expected when a method name matches the variable name — the `release()` method produces `release` objects. The convention does not deduplicate — each chunk maps to one level, keeping the namespace unambiguous, and the underscore makes the boundary visible.
 
 The variable name must match the actual parameter/variable name in the code. The method name must match the method where the type is used — don't reuse a type from another method even if the underlying type is the same.
 
 ```ts
 // BAD — type name references filter, but used in categorize
-private static categorize(items: RunnerFilterItems): ...
+private static categorize(items: Cli_Foo_Runner_Filter_Items): ...
 
 // GOOD — type name matches the method it's used in
-private static categorize(items: RunnerCategorizeItems): ...
+private static categorize(items: Cli_Foo_Runner_Categorize_Items): ...
+```
+
+**Generic `(string, fn)` call expressions.** Any call where the first argument is a string literal AND a later argument is a function expression adds a chunk dynamically — the string parsed via `parseDescribeString` (split on non-alphanumeric, PascalCase each piece, concatenate). This applies recursively at any depth and is not limited to test framework calls. Examples that match: `describe('Db', ...)`, `it('does X', ...)`, `app.get('/users', handler)`, `db.transaction('init', tx => ...)`, `button.addEventListener('click', () => ...)`. Template strings with interpolation (`` `test ${i}` ``) and variable arguments do NOT match — only string literals.
+
+**Source-identifier-based section detection.** The section a type belongs to is derived from source-code identifiers (class/method/function names, `(string, fn)` call arguments), NOT from JSDoc summary comments. JSDoc remains as documentation but plays no role in section computation — comments drift, identifiers can't. The meta-test parses the source file's AST to determine which section each line belongs to; types in `.d.ts` must use the corresponding section prefix.
+
+### Identifier Names Cannot Equal File Name (C1, C2, C3)
+
+Top-level class, function, and function-typed `const` names must NOT equal the file name (PascalCased, with hyphens flattened). Forces meaningful identifiers and prevents type-name doubling like `Cli_Utility_Changelog_Changelog_*`.
+
+```ts
+// cli/utility/changelog.ts — file name "changelog" → "Changelog"
+export class Changelog {}                          // BAD — class name == file name
+export class Runner {}                             // GOOD
+
+// lib/utility.ts — file name "utility" → "Utility"
+export function utility(): ... {}                  // BAD — function name == file name
+export function getCurrentTimestamp(): ... {}      // GOOD
+
+const utility: ... = () => {};                     // BAD — const name == file name
+const formatRow: ... = () => {};                   // GOOD
+
+// toolkit/markdown-table.ts — flattened file name "MarkdownTable"
+export class MarkdownTable {}                      // BAD — class name == flattened file name
+export class Runner {}                             // GOOD
+```
+
+If consumers want to import a class as `MarkdownTable`, use a barrel re-export:
+
+```ts
+// toolkit/markdown-table.ts — internal class is `Runner`
+export class Runner { public addRow(...) {} }
+
+// toolkit/index.ts — barrel
+export { Runner as MarkdownTable } from './markdown-table.js';
+
+// some-consumer.ts
+import { MarkdownTable } from '@/toolkit/index.js';
+const table = new MarkdownTable(...);
+```
+
+### Filename and Path Segment Rules (EC19, EC20, EC21)
+
+Path segments (each directory and the file basename) must match `/^[a-z][a-z0-9-]*$/` after stripping the recognized suffixes (`.d.ts`, `.tsx`, `.ts`, `.test`). The strip-list is fixed and minimal — no other dotted suffixes are recognized.
+
+```
+foo.ts          → GOOD
+foo-bar.ts      → GOOD (hyphens flatten in PascalCasing)
+foo123.ts       → GOOD (digits OK, just not as the first character)
+foo.test.ts     → GOOD (`.test` recognized and stripped)
+foo.bar.ts      → BAD (`.bar` not recognized; rename to foo-bar.ts)
+foo.spec.ts     → BAD (`.spec` not recognized; use `.test` or `-spec`)
+123foo.ts       → BAD (starts with a digit)
+foo_bar.ts      → BAD (underscore)
+foo$bar.ts      → BAD (special char)
+foo bar.ts      → BAD (space)
 ```
 
 ### Named Type Alias per Param and Return
@@ -245,21 +314,21 @@ Each function parameter and return value gets its own named type alias.
 
 ```ts
 // types/toolkit/markdown-table.d.ts
-export type MarkdownTableConstructorHeaders = string[];
-export type MarkdownTableAddRowRow = string[];
-export type MarkdownTableAddRowReturns = void;
+export type Toolkit_MarkdownTable_Constructor_Headers = string[];
+export type Toolkit_MarkdownTable_AddRow_Row = string[];
+export type Toolkit_MarkdownTable_AddRow_Returns = void;
 
 // toolkit/markdown-table.ts
 /**
- * Markdown Table - Add row.
+ * Toolkit - Markdown Table - Add row.
  *
- * @param {MarkdownTableAddRowRow} row - Row.
+ * @param {Toolkit_MarkdownTable_AddRow_Row} row - Row.
  *
- * @returns {MarkdownTableAddRowReturns}
+ * @returns {Toolkit_MarkdownTable_AddRow_Returns}
  *
  * @since 1.0.0
  */
-public addRow(row: MarkdownTableAddRowRow): MarkdownTableAddRowReturns { ... }
+public addRow(row: Toolkit_MarkdownTable_AddRow_Row): Toolkit_MarkdownTable_AddRow_Returns { ... }
 ```
 
 ### `satisfies` vs `:` Type Annotation
@@ -291,11 +360,11 @@ Type guard methods/functions use `TypeGuard` instead of `Returns` for the narrow
 
 ```ts
 // .d.ts
-export type RunnerIsErrorResponseValue = unknown;
-export type RunnerIsErrorResponseTypeGuard = ErrorResponse;
+export type Runner_IsErrorResponse_Value = unknown;
+export type Runner_IsErrorResponse_TypeGuard = ErrorResponse;
 
 // .ts
-private static isErrorResponse(value: RunnerIsErrorResponseValue): value is RunnerIsErrorResponseTypeGuard {
+private static isErrorResponse(value: Runner_IsErrorResponse_Value): value is Runner_IsErrorResponse_TypeGuard {
   return (
     typeof value === 'object'
     && value !== null
@@ -303,9 +372,100 @@ private static isErrorResponse(value: RunnerIsErrorResponseValue): value is Runn
     && 'message' in value
   );
 }
+```
 
-// Also works inline in .filter()
-.filter((value): value is SyncPropertiesTypeGuard => allowedProperties.has(value))
+`TypeGuard` (and `Returns` and the singular `Return`) are reserved for return positions only — they MUST NOT appear at body-variable or parameter positions. The meta-test enforces this.
+
+### Variable Type Symmetry
+
+Every typed declaration in source code must follow rules 7.1–7.8. The meta-test (`packages/nova/src/tests/type-declarations.test.ts`) walks every `.ts` source file and enforces these mechanically — there is no "common sense" exception.
+
+**7.1 Leaf must equal title-cased var name.** A typed body variable / parameter named `xxx` must use a type whose leaf chunk is `Xxx` (title-cased), and whose preceding chunks match the surrounding source section (class + method / function / `describe` string).
+
+```ts
+// GOOD — leaf 'Items' matches var name 'items'
+const items: Cli_Utility_DoThing_Items = ...;
+
+// GOOD — class-prefix passthrough (skips the method chunk) is also valid
+const items: Cli_Utility_Items = ...;
+
+// BAD — leaf 'Things' does not match var name 'items'
+const items: Cli_Utility_DoThing_Things = ...;
+```
+
+**7.2 Cross-module body-variable types are forbidden — no alias loophole.** A `.ts` body variable's type must be defined in the corresponding `.d.ts` (the same module) AND must NOT be a direct alias to a foreign type. Three escape hatches:
+
+```ts
+// BAD — local definition but only an alias to a foreign type
+import type { Lib_Utility_FetchData_Returns } from '@/types/lib/utility.d.ts';
+export type Cli_Foo_Run_Data = Lib_Utility_FetchData_Returns;
+
+// (a) Promote the shape to shared.d.ts
+// types/shared.d.ts
+export type FetchedConfigData = { name: string; version: string };
+// types/cli/foo.d.ts
+import type { FetchedConfigData } from '@/types/shared.d.ts';
+export type Cli_Foo_Run_Data = FetchedConfigData;
+
+// (b) Redefine the concrete shape locally
+export type Cli_Foo_Run_Data = { name: string; version: string };
+
+// (c) Don't store in a typed body var — let inference work
+const result = await fetchData();
+```
+
+**7.3 Return-position-only suffixes (`Returns`, `TypeGuard`, `Return`) are banned at body/param positions.** These suffixes are reserved for function return type aliases.
+
+**7.4 Inline typed callbacks are forbidden.** Anonymous arrow callbacks with typed parameters must be extracted to a named `const` so they follow rule 7.1 like any other function-typed `const`. Untyped inline callbacks (relying on TypeScript inference) remain allowed.
+
+```ts
+// BAD — inline anonymous typed callback
+items.filter((value: Runner_Foo_Item): boolean => value.active);
+
+// GOOD — extracted to named const, which then follows rule 7.1
+const isActive: Runner_Foo_IsActive = (value: Runner_Foo_IsActive_Value): boolean => value.active;
+items.filter(isActive);
+
+// GOOD — untyped inline callback is fine (inference)
+items.filter((value) => value.active);
+```
+
+**7.5 Function returns must end in `Returns` (plural).** Regular (non-type-guard) function return type aliases use the plural form.
+
+**7.6 Singular `Return` is banned at return positions.** Use `Returns` instead.
+
+**7.7 `TypeGuard` only at type-guard return positions.** A return type ending in `TypeGuard` must be on a function written as `value is T`. Conversely, `value is T` return positions must use a `TypeGuard`-suffixed type.
+
+**7.8 Two declarations in the same `.ts` file may not produce the same expected type name.** The most common trigger is two `describe(string, ...)` blocks with identical strings, or two extracted typed callbacks with the same chosen const name in the same enclosing method. The meta-test catches this before the duplicate `export type` lands in the `.d.ts`, with a clearer error than TypeScript's "duplicate identifier" message.
+
+### Standalone Type Files (S1, S2, S3, S4)
+
+Files listed in the meta-test's `testConfig.standaloneTypeFiles` (typically `shared.d.ts`, `fetch-response.d.ts`) follow a separate rule set. They contain domain concepts that are imported by multiple modules; they are NOT mirrors of source files.
+
+**S1. PascalCase identifiers, no brand casing.** Top-level type names are PascalCase glued; nested property types use `Parent_Property` form. Brand casing (3+ consecutive uppercase letters) is forbidden — `Url` not `URL`, `Api` not `API`.
+
+**S2. No path-prefix-style names.** Type names must not start with a known source-file top-level segment (e.g., `Cli_`, `Lib_`, `Tests_`). Standalone types are domain concepts, not path-derived.
+
+**S3. Object property types follow `Parent_Property` form.** When a property uses a local type, the property type name must start with the parent object's name plus an underscore. Add an intermediate alias if needed.
+
+```ts
+// shared.d.ts
+export type EntryCategory = 'added' | 'updated' | 'fixed' | 'removed';
+export type EntryBump = 'major' | 'minor' | 'patch';
+
+export type EntryItem_Category = EntryCategory;
+export type EntryItem_PackageName = string;
+export type EntryItem = {
+  category: EntryItem_Category;
+  packageName: EntryItem_PackageName;
+};
+```
+
+**S4. Array element types defined before the array.** Same as E3 in domain `.d.ts` files.
+
+```ts
+export type EntryItem_Tag = string;
+export type EntryItem_Tags = EntryItem_Tag[];
 ```
 
 ### No Redundant Intermediate Type Aliases
@@ -314,24 +474,24 @@ Don't create a type alias that only exists to be referenced by one other type. B
 
 ```ts
 // BAD — Filtered only exists to be referenced by Returns
-export type RunnerFilterItems = Item[];
-export type RunnerFilterFiltered = Item[];
-export type RunnerFilterReturns = RunnerFilterFiltered;
+export type Runner_Filter_Items = Item[];
+export type Runner_Filter_Filtered = Item[];
+export type Runner_Filter_Returns = Runner_Filter_Filtered;
 
 // BAD — Returns references Items (input ≠ output semantically)
-export type RunnerFilterItems = Item[];
-export type RunnerFilterReturns = RunnerFilterItems;
+export type Runner_Filter_Items = Item[];
+export type Runner_Filter_Returns = Runner_Filter_Items;
 
 // GOOD — same underlying type, but defined independently
-export type RunnerFilterItems = Item[];
-export type RunnerFilterReturns = Item[];
+export type Runner_Filter_Items = Item[];
+export type Runner_Filter_Returns = Item[];
 
 // BAD — Response only exists to be referenced by Returns
-export type FetcherGetDataResponse = z.infer<typeof FetcherResponseSchema>;
-export type FetcherGetDataReturns = Promise<FetcherGetDataResponse | undefined>;
+export type Fetcher_GetData_Response = z.infer<typeof FetcherResponseSchema>;
+export type Fetcher_GetData_Returns = Promise<Fetcher_GetData_Response | undefined>;
 
 // GOOD — z.infer inlined directly into Returns
-export type FetcherGetDataReturns = Promise<z.infer<typeof FetcherResponseSchema> | undefined>;
+export type Fetcher_GetData_Returns = Promise<z.infer<typeof FetcherResponseSchema> | undefined>;
 ```
 
 ### Never Flatten Types in `.d.ts` Files
@@ -344,19 +504,19 @@ export type EntryPackage = string;
 export type EntryMessage = string;
 
 // BAD — flattened to primitive, loses the type path
-export type RunnerParseEntryPackage = string | undefined;
-export type RunnerWriteByCategory = Map<EntryCategory, string[]>;
+export type Runner_Parse_EntryPackage = string | undefined;
+export type Runner_Write_ByCategory = Map<EntryCategory, string[]>;
 
 // GOOD — references the shared type
-export type RunnerParseEntryPackage = EntryPackage | undefined;
-export type RunnerWriteByCategory = Map<EntryCategory, EntryMessage[]>;
+export type Runner_Parse_EntryPackage = EntryPackage | undefined;
+export type Runner_Write_ByCategory = Map<EntryCategory, EntryMessage[]>;
 
 // BAD — nested array, loses the type path
-export type RunnerGroupRows = string[][];
+export type Runner_Group_Rows = string[][];
 
 // GOOD — singular references primitive, plural references singular
-export type RunnerGroupRow = string[];
-export type RunnerGroupRows = RunnerGroupRow[];
+export type Runner_Group_Row = string[];
+export type Runner_Group_Rows = Runner_Group_Row[];
 ```
 
 When creating a `= string` type, check if it represents a domain concept that has a shared type. If so, reference it. Genuinely `string` types include: generated file names, directory paths, version strings, CLI formatting strings, generic utility returns, external API data, prompt output keys, test setup paths.
@@ -373,14 +533,16 @@ Both prevent fragile cross-references where removing one type silently breaks ot
 ```ts
 // GOOD — shared type in shared.d.ts, imported once by domain .d.ts
 import type { EntryBump } from '@/types/shared.d.ts';
-export type RunnerRecordSelectedBump = EntryBump;
-export type RunnerReleaseHighestBump = EntryBump;
-export type RunnerParseEntryBump = EntryBump | undefined;
+export type Runner_Record_SelectedBump = EntryBump;
+export type Runner_Release_HighestBump = EntryBump;
+export type Runner_Parse_EntryBump = EntryBump | undefined;
 ```
 
 ### Object Property Types Form a Hierarchy
 
-Object property types belong to their parent object — they are scoped to that specific context. Each property gets its own named type, defined before the object type that references them. The property types are part of the object's namespace hierarchy.
+Object property types belong to their parent object — they are scoped to that specific context. Each property gets its own named type whose name literally starts with the parent object's name (e.g., property `packageName` of `Runner_Release_Release` uses type `Runner_Release_Release_PackageName`). The property type must be defined on a line *before* the object type that references it.
+
+**Array element types follow the same rule.** When `Items = Item[]`, the element type `Item` must be defined in the same file (or imported) and on a line *before* `Items`. The exception: when the array type's name ends in `Returns`, `TypeGuard`, or the singular `Return` (return positions are exempt). The meta-test enforces both rules.
 
 If a variable in a different method needs the same underlying type, it must NOT import from another method's object hierarchy. That creates cross-dependencies between unrelated methods. Instead, the common base type goes into `shared.d.ts`. Both the object property type and the unrelated variable type reference `shared.d.ts` independently — no lateral dependencies.
 
@@ -389,27 +551,27 @@ If a variable in a different method needs the same underlying type, it must NOT 
 export type ChangelogEntryPackage = string;
 
 // GOOD — release method's object hierarchy references shared.d.ts
-export type RunnerReleaseReleasePackageName = ChangelogEntryPackage;
-export type RunnerReleaseRelease = {
-  packageName: RunnerReleaseReleasePackageName;
+export type Runner_Release_Release_PackageName = ChangelogEntryPackage;
+export type Runner_Release_Release = {
+  packageName: Runner_Release_Release_PackageName;
 };
 
 // GOOD — record method also references shared.d.ts independently
-export type RunnerRecordSelectedPackage = ChangelogEntryPackage | undefined;
+export type Runner_Record_SelectedPackage = ChangelogEntryPackage | undefined;
 
 // BAD — record method reaching into release method's object hierarchy
-export type RunnerRecordSelectedPackage = RunnerReleaseReleasePackageName | undefined;
+export type Runner_Record_SelectedPackage = Runner_Release_Release_PackageName | undefined;
 ```
 
 Within the same method, a standalone variable and an object property that share the same domain concept also define their types independently — both reference the base type, neither references the other.
 
 ```ts
 // GOOD — both reference shared.d.ts, neither references the other
-export type RunnerReleaseReleaseHighestBump = ChangelogEntryBump;
-export type RunnerReleaseRelease = {
-  highestBump: RunnerReleaseReleaseHighestBump;
+export type Runner_Release_Release_HighestBump = ChangelogEntryBump;
+export type Runner_Release_Release = {
+  highestBump: Runner_Release_Release_HighestBump;
 };
-export type RunnerReleaseHighestBump = ChangelogEntryBump;
+export type Runner_Release_HighestBump = ChangelogEntryBump;
 ```
 
 ### Tight Types over Loose Types
@@ -418,16 +580,16 @@ Define the exact shape. No `Record<string, string>` when fields are known.
 
 ```ts
 // BAD — frontmatter has known fields
-export type RunnerParseFrontMatter = Record<string, string>;
+export type Runner_Parse_FrontMatter = Record<string, string>;
 
 // GOOD — define exact shape with named field types
-export type RunnerParseFrontMatterPackage = string;
-export type RunnerParseFrontMatterCategory = EntryCategory;
-export type RunnerParseFrontMatterBump = EntryBump;
-export type RunnerParseFrontMatter = {
-  package: RunnerParseFrontMatterPackage;
-  category: RunnerParseFrontMatterCategory;
-  bump: RunnerParseFrontMatterBump;
+export type Runner_Parse_FrontMatter_Package = string;
+export type Runner_Parse_FrontMatter_Category = EntryCategory;
+export type Runner_Parse_FrontMatter_Bump = EntryBump;
+export type Runner_Parse_FrontMatter = {
+  package: Runner_Parse_FrontMatter_Package;
+  category: Runner_Parse_FrontMatter_Category;
+  bump: Runner_Parse_FrontMatter_Bump;
 };
 ```
 
@@ -451,7 +613,7 @@ Type guard internals do NOT need `as` — use `in` narrowing instead after `null
 
 ```ts
 // BAD — as cast when .find() can replace it
-selectedCategory = options.category as RunnerRecordSelectedCategory;
+selectedCategory = options.category as Runner_Record_SelectedCategory;
 
 // GOOD — .find() validates AND narrows
 const validCategory = validCategories.find(
@@ -467,10 +629,10 @@ selectedCategory = validCategory;
 ```ts
 // GOOD — Zod runtime validation
 const responseData = await response.json();
-const data: FetcherGetDataResponse = FetcherResponseSchema.parse(responseData);
+const data: Fetcher_GetData_Response = FetcherResponseSchema.parse(responseData);
 
 // BAD — blind cast, no runtime validation
-const data: FetcherGetDataResponse = await response.json() as FetcherGetDataResponse;
+const data: Fetcher_GetData_Response = await response.json() as Fetcher_GetData_Response;
 ```
 
 This applies to all external API boundaries (`fetch`, webhook payloads, etc.). Internal typed data (e.g., `Object.fromEntries`, `Object.keys`) still uses `as` casts where compiler-forced.
@@ -480,8 +642,8 @@ This applies to all external API boundaries (`fetch`, webhook payloads, etc.). I
 Files like `package.json` have too many optional/third-party fields to define a Zod schema. Use the absorb-into-typed-container pattern with `Record<string, unknown>` and `as` casts for bracket access.
 
 ```ts
-const config: RunnerRunConfig = JSON.parse(configRaw);
-const configItems = config['items'] as RunnerFilterItems;
+const config: Runner_Run_Config = JSON.parse(configRaw);
+const configItems = config['items'] as Runner_Filter_Items;
 ```
 
 ### `JSON.parse` — Type the Result Immediately
@@ -490,8 +652,8 @@ const configItems = config['items'] as RunnerFilterItems;
 
 ```ts
 // GOOD — typed directly
-const config: RunnerRunConfig = JSON.parse(configRaw);
-const configItems = config['items'] as RunnerFilterItems;
+const config: Runner_Run_Config = JSON.parse(configRaw);
+const configItems = config['items'] as Runner_Filter_Items;
 
 // GOOD — absorbed into existing structure
 const parsedFile = JSON.parse(rawFile);
@@ -507,7 +669,7 @@ const config = JSON.parse(configRaw);
 const items = config.items ?? []; // any propagates
 
 // BAD — unnecessary wrapping object
-const config: RunnerRunConfig = {
+const config: Runner_Run_Config = {
   fileContents: JSON.parse(configRaw),
 };
 ```
@@ -521,7 +683,7 @@ When accessing a field from a `Record<string, unknown>` container (e.g., from `J
 const configItems = config.fileContents['items'];
 
 // GOOD — explicit type annotation
-const configItems: RunnerFilterItems = config.fileContents['items'];
+const configItems: Runner_Filter_Items = config.fileContents['items'];
 ```
 
 ### `as const` Is Acceptable
@@ -574,8 +736,8 @@ import { validCategories } from '@/lib/item.js';
 import { Logger } from '@/toolkit/index.js';
 
 import type {
-  RunnerRecordOptions,
-  RunnerRecordReturns,
+  Runner_Record_Options,
+  Runner_Record_Returns,
 } from '@/types/cli/runner.d.ts';
 ```
 
@@ -685,7 +847,7 @@ export class CliUtilityChangelog {
 Instance (per-caller state):
 ```ts
 export default class MarkdownTable {
-  readonly #headers: MarkdownTableHeaders;
+  readonly #headers: MarkdownTable_Constructor_Headers;
 
   public constructor(headers: ..., options?: ...) {
     this.#headers = headers;
@@ -703,7 +865,7 @@ Use `#` (runtime-enforced) for private class **fields only**. Methods stay as `p
 ```ts
 // GOOD — field uses #hash
 static #cache: SomeType;
-readonly #headers: MarkdownTableHeaders;
+readonly #headers: MarkdownTable_Constructor_Headers;
 
 // GOOD — method uses private keyword
 private static async fetchData(): FetcherFetchDataReturns { }
@@ -722,7 +884,7 @@ static #fetchData(): FetcherFetchDataReturns { }
 
 ```ts
 // Private fields use #hash notation
-readonly #headers: MarkdownTableHeaders;
+readonly #headers: MarkdownTable_Constructor_Headers;
 
 // Static caching pattern
 static #cache: SomeType;
@@ -769,8 +931,8 @@ const configPath = resolve(process.cwd(), 'config.json');
 const configRaw = await fs.readFile(configPath, 'utf-8');
 
 // Parse the configuration file.
-const config: RunnerRunConfig = JSON.parse(configRaw);
-const configItems = config['items'] as RunnerRunConfigItems;
+const config: Runner_Run_Config = JSON.parse(configRaw);
+const configItems = config['items'] as Runner_Run_ConfigItems;
 
 // Filter and group items by category.
 const filtered = Runner.filterItems(configItems);
@@ -865,7 +1027,7 @@ arr.push(item);
 obj[methodName]();
 
 // OK — bracket notation for property reads on Record/plain objects
-const configItems = config['items'] as RunnerFilterItems;
+const configItems = config['items'] as Runner_Filter_Items;
 ```
 
 ### No Exponentiation Operator
@@ -1030,7 +1192,7 @@ if (
 
 ```ts
 // Both .d.ts tuple types and .ts constant arrays
-const categoryOrder: RunnerReleaseCategoryOrder = [
+const categoryOrder: Runner_Release_CategoryOrder = [
   'updated',
   'fixed',
   'added',
@@ -1166,13 +1328,13 @@ await Runner.writeOutput({
 await Runner.runParallel();
 
 // BAD — declarations and loop stuck together
-const grouped: RunnerGroupItemsGrouped = new Map();
-const processed: RunnerGroupItemsProcessed = new Set();
+const grouped: Runner_GroupItems_Grouped = new Map();
+const processed: Runner_GroupItems_Processed = new Set();
 for (const category of validPolicies) {
 
 // GOOD — blank line before loop
-const grouped: RunnerGroupItemsGrouped = new Map();
-const processed: RunnerGroupItemsProcessed = new Set();
+const grouped: Runner_GroupItems_Grouped = new Map();
+const processed: Runner_GroupItems_Processed = new Set();
 
 for (const category of validPolicies) {
 
@@ -1303,7 +1465,7 @@ Use `undefined` for optional/missing values (params not passed, uninitialized). 
 let selectedPackage;
 
 // GOOD — explicit undefined
-let selectedPackage: RunnerSelectedPackage = undefined;
+let selectedPackage: Runner_Run_SelectedPackage = undefined;
 ```
 
 ### Error Handling
@@ -1479,8 +1641,8 @@ function parse(input: any): any { ... }
 const data = response.json() as any;
 
 // GOOD — named type aliases (defined as unknown in .d.ts)
-function parse(input: RunnerParseInput): RunnerParseReturns { ... }
-const data: FetcherGetDataResponse = FetcherResponseSchema.parse(response.json());
+function parse(input: Runner_Parse_Input): Runner_Parse_Returns { ... }
+const data: Fetcher_GetData_Response = FetcherResponseSchema.parse(response.json());
 ```
 
 ## Regex Patterns

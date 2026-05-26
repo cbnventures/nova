@@ -1,0 +1,10 @@
+{
+  "label": "اللوائح",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "السجلّ هو محضر Marshal العلني — يُضاف إليه فقط، ولا يُسحب أبدًا. اقرأ كلّ ختم، وكلّ ملف، وكلّ تجاوز من بدايته إلى نهايته، مع توقيع الكاتب على كلّ سطر."
+  }
+}

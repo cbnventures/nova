@@ -1,0 +1,67 @@
+---
+title: "The first lantern was a porch light on a long extension cord"
+authors:
+  - "noor"
+tags:
+  - "origin"
+  - "perimeter"
+date: "2024-01-15"
+---
+
+The first lantern was an actual lantern. Wired to a motion sensor with twenty feet of orange extension cord. It clicked on whenever the front porch had a visitor — the cat, the mail carrier, occasionally the wind.
+
+{/* truncate */}
+
+## The Notebook on the Counter
+
+We learned more from that one lamp than from a year of dashboards. The hallway should know who is home. The porch should know who is leaving. The kitchen should not.
+
+The cat came at 4:17 most afternoons, after the school bus passed. The mail carrier between 11 and 11:30, except Tuesdays — Tuesdays were closer to 2. Leaves came whenever the wind did. Some evenings the porch lit up four times in twenty minutes; some it stayed dark from sundown to sunrise. We started keeping a notebook on the kitchen counter. After two weeks the notebook had a rhythm in it.
+
+That rhythm became the first zone. Not a configuration we wrote, but one we noticed. The porch was a place where things arrived. The hallway behind it was a place where things passed through. The bedroom upstairs was a place where things ended for the day. Different times, different rules, different lights.
+
+## From Notebook to Configuration
+
+When we sat down to describe what we wanted, the configuration almost wrote itself:
+
+```yaml title="lantern.zones.yml"
+zones:
+  porch:
+    sensors: [motion-front-door, contact-front-door]
+    schedule:
+      always: gentle  # the porch is always watching
+  hallway:
+    sensors: [motion-hallway]
+    schedule:
+      day: passive
+      night: alert
+  bedroom:
+    sensors: [motion-bedroom, contact-window]
+    schedule:
+      day: off
+      night: quiet  # only what matters at 2am
+```
+
+Three zones. Three rhythms. The porch never sleeps. The bedroom rarely wakes. The hallway sits between, attentive when the house is.
+
+## What Surprised Us
+
+What surprised us was how much of the configuration we could derive from the notebook. The cat did not need its own rule — it just needed the porch to be in `gentle` mode. The mail carrier was the same. The wind was the same. A burglar would also be the same, in the sense that the porch would notice. The difference would be in what the rest of the house did next. That was the second zone's job, and the third's.
+
+We have added many more zones since then. The garage, the deck, the side path, the basement workshop. The first one is still the porch. It still uses the same `gentle` mode the original lantern did, even though the original lantern is gone — replaced by something that does not need an extension cord. The information is the same. The light bulb was just the first place we knew where to look.
+
+## What Persists
+
+The notebook on the kitchen counter is gone too. The patterns it held now live in `lantern history`, which prints them back any time we want a reminder of what the house has been doing while we were not watching:
+
+```bash
+$ lantern history --zone porch --since "2 weeks ago"
+porch  2024-01-01  motion  cat        16:42
+porch  2024-01-01  motion  cat        16:51
+porch  2024-01-01  motion  mail       11:14
+porch  2024-01-02  motion  leaves     19:33
+porch  2024-01-02  motion  cat        16:38
+...
+```
+
+Some patterns hold across years. The cat is still here. The school bus still passes. Some patterns shift — the mail carrier retired in 2024 and the new one comes earlier. The porch noticed before we did. That is what the first lantern was for.

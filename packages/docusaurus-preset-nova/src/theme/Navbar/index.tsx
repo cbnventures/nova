@@ -9,6 +9,7 @@ import {
   useState,
 } from 'react';
 
+import { useNavbarActiveItem } from '../../lib/use-navbar-active-item.js';
 import Bridge from './Bridge/index.js';
 import BridgeMobileMenu from './Bridge/mobile-menu.js';
 import Canopy from './Canopy/index.js';
@@ -22,6 +23,8 @@ import type {
   ThemeNavbarColorModeChoice,
   ThemeNavbarColorModeLabel,
   ThemeNavbarColorModeState,
+  ThemeNavbarIndexActionItemType,
+  ThemeNavbarIndexActionItemTypes,
   ThemeNavbarIndexAllDocsData,
   ThemeNavbarIndexCurrentScrollPosition,
   ThemeNavbarIndexGlobalData,
@@ -60,18 +63,21 @@ import type {
   ThemeNavbarIndexSetIsMenuOpen,
   ThemeNavbarIndexSetNavbarHidden,
   ThemeNavbarIndexSiteLogo,
+  ThemeNavbarIndexSiteLogoSrc,
   ThemeNavbarIndexSvgFilterDefinition,
   ThemeNavbarIndexSystemColorMode,
   ThemeNavbarIndexThemeChoice,
   ThemeNavbarIndexUserLogo,
   ThemeNavbarIndexUserLogoAlt,
+  ThemeNavbarIndexUserLogoAriaLabel,
   ThemeNavbarIndexUserLogoHref,
+  ThemeNavbarIndexUserLogoRel,
   ThemeNavbarIndexUserLogoSrc,
-  ThemeNavbarIndexUserLogoSrcDark,
+  ThemeNavbarIndexUserLogoTarget,
   ThemeNavbarIndexUserLogoTitle,
   ThemeNavbarIndexUserLogoWordmark,
-  ThemeNavbarIndexUserLogoWordmarkDark,
   ThemeNavbarIndexVariantProps,
+  ThemeNavbarIndexVariantPropsActiveItemLabel,
   ThemeNavbarItem,
   ThemeNavbarItems,
   ThemeNavbarNavbarColorModeDarkLabel,
@@ -79,6 +85,7 @@ import type {
   ThemeNavbarNavbarColorModeSystemLabel,
   ThemeNavbarNavbarConfig,
   ThemeNavbarNavbarMenuButtonLabel,
+  ThemeNavbarProps,
   ThemeNavbarSetColorMode,
   ThemeNavbarSiteConfig,
   ThemeNavbarThemeConfig,
@@ -96,7 +103,7 @@ import type {
  *
  * @since 0.15.0
  */
-function Navbar() {
+function Navbar(props: ThemeNavbarProps) {
   const themeConfig: ThemeNavbarThemeConfig = useThemeConfig() as ThemeNavbarThemeConfigCast as ThemeNavbarThemeConfig;
   const siteConfig: ThemeNavbarSiteConfig = themeConfig['site'] as ThemeNavbarSiteConfig;
   const navbarConfig: ThemeNavbarNavbarConfig = themeConfig['navbar'] as ThemeNavbarNavbarConfig;
@@ -108,29 +115,52 @@ function Navbar() {
   const userLogo: ThemeNavbarIndexUserLogo = siteConfig['logo'] as ThemeNavbarIndexUserLogo;
 
   const userLogoSrc: ThemeNavbarIndexUserLogoSrc = (userLogo !== undefined) ? userLogo['src'] as ThemeNavbarIndexUserLogoSrc : undefined;
-  const userLogoSrcDark: ThemeNavbarIndexUserLogoSrcDark = (userLogo !== undefined) ? userLogo['srcDark'] as ThemeNavbarIndexUserLogoSrcDark : undefined;
   const userLogoWordmark: ThemeNavbarIndexUserLogoWordmark = (userLogo !== undefined) ? userLogo['wordmark'] as ThemeNavbarIndexUserLogoWordmark : undefined;
-  const userLogoWordmarkDark: ThemeNavbarIndexUserLogoWordmarkDark = (userLogo !== undefined) ? userLogo['wordmarkDark'] as ThemeNavbarIndexUserLogoWordmarkDark : undefined;
   const userLogoTitle: ThemeNavbarIndexUserLogoTitle = (userLogo !== undefined) ? userLogo['title'] as ThemeNavbarIndexUserLogoTitle : undefined;
   const userLogoAlt: ThemeNavbarIndexUserLogoAlt = (userLogo !== undefined) ? userLogo['alt'] as ThemeNavbarIndexUserLogoAlt : undefined;
   const userLogoHref: ThemeNavbarIndexUserLogoHref = (userLogo !== undefined) ? userLogo['href'] as ThemeNavbarIndexUserLogoHref : undefined;
+  const userLogoTarget: ThemeNavbarIndexUserLogoTarget = (userLogo !== undefined) ? userLogo['target'] as ThemeNavbarIndexUserLogoTarget : undefined;
+  const userLogoRel: ThemeNavbarIndexUserLogoRel = (userLogo !== undefined) ? userLogo['rel'] as ThemeNavbarIndexUserLogoRel : undefined;
+  const userLogoAriaLabel: ThemeNavbarIndexUserLogoAriaLabel = (userLogo !== undefined) ? userLogo['ariaLabel'] as ThemeNavbarIndexUserLogoAriaLabel : undefined;
   const presetLogoSrc: ThemeNavbarIndexPresetLogoSrc = (presetLogo !== undefined) ? presetLogo['src'] : undefined;
   const presetLogoTitle: ThemeNavbarIndexPresetLogoTitle = (presetLogo !== undefined) ? presetLogo['title'] : undefined;
   const presetLogoAlt: ThemeNavbarIndexPresetLogoAlt = (presetLogo !== undefined) ? presetLogo['alt'] : undefined;
 
+  let resolvedSiteLogoSrc: ThemeNavbarIndexSiteLogoSrc = undefined;
+
+  if (userLogoSrc !== undefined) {
+    resolvedSiteLogoSrc = userLogoSrc;
+  } else if (presetLogoSrc !== undefined) {
+    resolvedSiteLogoSrc = {
+      light: presetLogoSrc,
+      dark: undefined,
+    };
+  }
+
   const siteLogo: ThemeNavbarIndexSiteLogo = {
-    src: userLogoSrc ?? presetLogoSrc,
-    srcDark: userLogoSrcDark,
+    src: resolvedSiteLogoSrc,
     wordmark: userLogoWordmark,
-    wordmarkDark: userLogoWordmarkDark,
     title: userLogoTitle ?? presetLogoTitle,
     alt: userLogoAlt
       ?? presetLogoAlt
       ?? '',
     href: userLogoHref,
+    target: userLogoTarget,
+    rel: userLogoRel,
+    ariaLabel: userLogoAriaLabel,
   };
   const hideOnScrollValue: ThemeNavbarIndexHideOnScroll = (navbarConfig['hideOnScroll'] ?? false) as ThemeNavbarIndexHideOnScroll;
-  const items: ThemeNavbarItems = (navbarConfig['items'] ?? []) as ThemeNavbarItems;
+  const allItems: ThemeNavbarItems = (navbarConfig['items'] ?? []) as ThemeNavbarItems;
+
+  // Split items by type - utility dropdowns (locale, etc.) route to the
+  // navbar `actions` slot rather than the menu-link slot.
+  const actionItemTypes: ThemeNavbarIndexActionItemTypes = new Set(['localeDropdown']);
+  const items: ThemeNavbarItems = allItems.filter(
+    (item: ThemeNavbarItem) => actionItemTypes.has(item['type'] as ThemeNavbarIndexActionItemType) === false,
+  );
+  const actionItems: ThemeNavbarItems = allItems.filter(
+    (item: ThemeNavbarItem) => actionItemTypes.has(item['type'] as ThemeNavbarIndexActionItemType),
+  );
 
   // Resolve doc-type navbar items for mobile menus (desktop NavbarItem resolves its own).
   const allDocsData: ThemeNavbarIndexAllDocsData = useAllDocsData();
@@ -161,6 +191,7 @@ function Navbar() {
         return {
           ...item,
           to: matchedDoc['path'],
+          claimBase: pluginData['path'],
         } as ThemeNavbarIndexResolvedItem;
       }
     }
@@ -200,6 +231,12 @@ function Navbar() {
 
     return item;
   });
+
+  // Coordinator: pick the most-specific item that claims the current URL.
+  // Most-specific is decided by claim length (regex match or prefix). Doc
+  // items broaden their claim to the docs plugin base via `claimBase`, so
+  // a per-section sibling with a deeper prefix always wins specificity.
+  const activeItemLabel: ThemeNavbarIndexVariantPropsActiveItemLabel = useNavbarActiveItem(resolvedItems);
 
   // Read navbar variant from build-time global data (no hydration mismatch).
   const globalData: ThemeNavbarIndexGlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as ThemeNavbarIndexGlobalData;
@@ -302,7 +339,7 @@ function Navbar() {
     };
   }, [colorModeChoice]);
 
-  // Cycle: light → dark → system (null) → light.
+  // Cycle: light -> dark -> system (null) -> light.
   let nextColorMode: ThemeNavbarColorModeChoice = 'light';
 
   if (colorModeChoice === 'light') {
@@ -362,11 +399,13 @@ function Navbar() {
     </>
   );
 
-  const navbarClassName: ThemeNavbarIndexNavbarClassName = (navbarHidden === true) ? 'navbar nova-navbar-hidden' : 'navbar';
+  const navbarBaseClassName: ThemeNavbarIndexNavbarClassName = (navbarHidden === true) ? 'navbar nova-navbar-hidden' : 'navbar';
+  const navbarClassName: ThemeNavbarIndexNavbarClassName = (props['className'] !== undefined) ? `${navbarBaseClassName} ${props['className']}` : navbarBaseClassName;
 
   const variantProps: ThemeNavbarIndexVariantProps = {
     siteLogo,
     items,
+    actionItems,
     colorModeLabel,
     onColorModeToggle: () => {
       setColorMode(nextColorMode);
@@ -379,6 +418,7 @@ function Navbar() {
 
       return undefined;
     },
+    activeItemLabel,
   };
 
   const svgFilterDefinition: ThemeNavbarIndexSvgFilterDefinition = (
@@ -398,7 +438,10 @@ function Navbar() {
       return (
         <>
           {svgFilterDefinition}
-          <div className={navbarClassName}>
+          <div
+            className={navbarClassName}
+            style={props['style']}
+          >
             <Bridge {...variantProps} />
           </div>
           <BridgeMobileMenu
@@ -410,6 +453,7 @@ function Navbar() {
             }}
             items={resolvedItems}
             siteLogo={siteLogo}
+            activeItemLabel={activeItemLabel}
           />
         </>
       );
@@ -419,7 +463,10 @@ function Navbar() {
       return (
         <>
           {svgFilterDefinition}
-          <div className={navbarClassName}>
+          <div
+            className={navbarClassName}
+            style={props['style']}
+          >
             <Canopy {...variantProps} />
           </div>
           <CanopyMobileMenu
@@ -431,6 +478,7 @@ function Navbar() {
             }}
             items={resolvedItems}
             siteLogo={siteLogo}
+            activeItemLabel={activeItemLabel}
           />
         </>
       );
@@ -440,7 +488,10 @@ function Navbar() {
       return (
         <>
           {svgFilterDefinition}
-          <div className={navbarClassName}>
+          <div
+            className={navbarClassName}
+            style={props['style']}
+          >
             <Monolith {...variantProps} />
           </div>
           <MonolithMobileMenu
@@ -451,6 +502,7 @@ function Navbar() {
               return undefined;
             }}
             items={resolvedItems}
+            activeItemLabel={activeItemLabel}
           />
         </>
       );
@@ -460,7 +512,10 @@ function Navbar() {
       return (
         <>
           {svgFilterDefinition}
-          <div className={navbarClassName}>
+          <div
+            className={navbarClassName}
+            style={props['style']}
+          >
             <Compass {...variantProps} />
           </div>
           <CompassMobileMenu
@@ -472,6 +527,7 @@ function Navbar() {
             }}
             items={resolvedItems}
             siteLogo={siteLogo}
+            activeItemLabel={activeItemLabel}
           />
         </>
       );
@@ -481,7 +537,10 @@ function Navbar() {
       return (
         <>
           {svgFilterDefinition}
-          <div className={navbarClassName}>
+          <div
+            className={navbarClassName}
+            style={props['style']}
+          >
             <Bridge {...variantProps} />
           </div>
           <BridgeMobileMenu
@@ -493,6 +552,7 @@ function Navbar() {
             }}
             items={resolvedItems}
             siteLogo={siteLogo}
+            activeItemLabel={activeItemLabel}
           />
         </>
       );

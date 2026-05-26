@@ -33,7 +33,14 @@ function NavbarItem(props: ThemeNavbarItemNavbarItemProps) {
     throw new Error(`No NavbarItem component found for type "${props['type']}".`);
   }
 
-  return createElement(componentToRender, props);
+  return (
+    <span
+      className={(props['className'] !== undefined) ? `nova-navbar-item ${props['className']}` : 'nova-navbar-item'}
+      style={props['style']}
+    >
+      {createElement(componentToRender, props)}
+    </span>
+  );
 }
 
 export default NavbarItem;

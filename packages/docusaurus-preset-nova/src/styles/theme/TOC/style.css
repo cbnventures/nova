@@ -1,10 +1,10 @@
 /**
  * ============================
- * TOC — Container
+ * TOC - Container
  * ============================
  */
 
-/* Hidden on mobile — TOCCollapsible is shown instead. */
+/* Hidden on mobile - TOCCollapsible is shown instead. */
 .nova-toc {
   display: none;
 }
@@ -19,7 +19,7 @@
     max-height: calc(100vh - var(--nova-layout-sticky-top, 5rem) - calc(var(--nova-section-gap) / 4) - 1rem);
     padding-left: 1rem;
 
-    border-left: 1px solid var(--nova-color-neutral-200);
+    border-left: 1px solid var(--nova-color-border);
 
     overflow-y: auto;
     scrollbar-width: none;
@@ -29,15 +29,11 @@
     width: 0;
     height: 0;
   }
-
-  [data-theme="dark"] .nova-toc {
-    border-left-color: var(--nova-color-neutral-800);
-  }
 }
 
 /**
  * ============================
- * TOC — List
+ * TOC - List
  * ============================
  */
 
@@ -54,7 +50,7 @@
 
 /**
  * ============================
- * TOC — Link
+ * TOC - Link
  * ============================
  */
 

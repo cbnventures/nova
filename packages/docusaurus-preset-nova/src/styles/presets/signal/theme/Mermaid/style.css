@@ -1,0 +1,17 @@
+/**
+ * Signal - `Mermaid` theme overlay.
+ *
+ * Identity flows through tokens defined in signal/preset.css (light + dark)
+ * which lib/mermaid.ts reads at render time for Layer 1 themeVariables +
+ * Layer 2 themeCSS. This file holds residual decorations only - currently
+ * empty.
+ *
+ * Cluster titles previously used `var(--nova-font-code)` uppercase at 0.7rem
+ * for a terminal section-header voice, but mono fonts and uppercase render
+ * wider than the proportional display font mermaid measured the
+ * `<foreignObject>` width against at 13px - the title text overflowed the
+ * cluster border. The cluster title now inherits the themeCSS default
+ * (display font, 13px, weight 600) so the rendered text fits.
+ *
+ * @since 0.18.0
+ */

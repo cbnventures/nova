@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "الإصدار الحالي",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Intake": {
+    "message": "الاستلام",
+    "description": "The label for category 'Intake' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Filings": {
+    "message": "الإيداعات",
+    "description": "The label for category 'Filings' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Dockets": {
+    "message": "اللوائح",
+    "description": "The label for category 'Dockets' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Stewardship": {
+    "message": "الرعاية",
+    "description": "The label for category 'Stewardship' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "المرجع",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  }
+}

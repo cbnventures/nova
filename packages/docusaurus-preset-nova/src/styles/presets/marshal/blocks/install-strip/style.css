@@ -1,0 +1,187 @@
+/**
+ * Marshal - `install-strip` component overlay.
+ *
+ * Block variant rendered as a flat paper card with hairline border and 2px
+ * corners. Mono uppercase seal-red label sits above the command. Inside,
+ * an ink-dark monospace command line led by a unix-shell `$` prompt prefix.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 0. Section rhythm - micro-section padding
+ * ============================
+ */
+
+/**
+ * ============================
+ * 1. Block variant - flat ledger card
+ * ============================
+ */
+
+.nova-install-strip-command-block {
+  gap: 0;
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 50%);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: border-color var(--nova-marshal-transition), background-color var(--nova-marshal-transition);
+}
+
+.nova-install-strip-command-block:hover,
+.nova-install-strip-command-block:focus-visible {
+  background-color: var(--nova-color-surface-raised);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block:hover,
+[data-theme="dark"] .nova-install-strip-command-block:focus-visible {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 2. Code element - section-symbol prefix
+ * ============================
+ */
+
+.nova-install-strip .nova-install-strip-code {
+  padding: 0.75rem 0 0.75rem 1rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.85rem;
+  color: var(--nova-marshal-ink);
+}
+
+.nova-install-strip .nova-install-strip-code::before {
+  margin-right: 0.5rem;
+
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+
+  content: "$";
+}
+
+[data-theme="dark"] .nova-install-strip .nova-install-strip-code::before {
+  color: var(--nova-color-primary-400);
+}
+
+@media (min-width: 640px) {
+  .nova-install-strip .nova-install-strip-code {
+    padding: 0.75rem 0 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}
+
+/**
+ * ============================
+ * 3. Icon variant - two floating cards (code + copy)
+ * ============================
+ */
+
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+  padding-right: 1.125rem;
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 50%);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+}
+
+@media (min-width: 640px) {
+  .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+    padding-right: 1.5rem;
+  }
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-code {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy {
+  color: var(--nova-marshal-ink);
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 50%);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    background-color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:hover,
+.nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background-color: var(--nova-color-surface-raised);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:hover,
+[data-theme="dark"] .nova-install-strip-command:not(.nova-install-strip-command-block) .nova-install-strip-copy:focus-visible {
+  color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Block copy icon
+ * ============================
+ */
+
+.nova-install-strip-command-block .nova-install-strip-copy {
+  padding: 0.5rem 0.75rem;
+  margin: 0.25rem;
+
+  color: var(--nova-marshal-ink);
+
+  transition: color var(--nova-marshal-transition);
+}
+
+.nova-install-strip-command-block:hover .nova-install-strip-copy,
+.nova-install-strip-command-block:focus-visible .nova-install-strip-copy {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-install-strip-command-block:hover .nova-install-strip-copy,
+[data-theme="dark"] .nova-install-strip-command-block:focus-visible .nova-install-strip-copy {
+  color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Label - mono uppercase seal red
+ * ============================
+ */
+
+.nova-install-strip-label {
+  margin-bottom: 0.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-install-strip-label {
+  color: var(--nova-color-accent-500);
+}

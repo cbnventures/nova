@@ -1,0 +1,22 @@
+/**
+ * Envoy - `frame` component overlay.
+ *
+ * Rounded corners with a soft card shadow - a floating tile aesthetic
+ * that mirrors envoy's elevated CTA / card pattern. Caption sits below
+ * in muted neutral.
+ *
+ * @since 0.18.0
+ */
+
+.nova-frame-media {
+  border-radius: var(--nova-envoy-radius-generous);
+
+  box-shadow: var(--nova-envoy-shadow-card);
+}
+
+.nova-frame-caption {
+  margin-top: 0.875rem;
+
+  font-size: 0.875rem;
+  color: var(--nova-envoy-text-muted);
+}

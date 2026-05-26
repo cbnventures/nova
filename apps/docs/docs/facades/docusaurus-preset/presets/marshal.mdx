@@ -1,0 +1,176 @@
+---
+id: "marshal"
+title: "Marshal"
+description: "Documentary green and seal-red preset with IBM Plex Serif, Sans, and Mono fonts, rounded shapes, and flat card depth — for repository-stewardship docs."
+sidebar_position: 4
+keywords:
+  - "nova"
+  - "docusaurus facades"
+  - "marshal preset"
+  - "documentary theme"
+  - "ibm plex serif"
+  - "ibm plex sans"
+  - "ibm plex mono"
+  - "rounded shapes"
+  - "flat cards"
+  - "canopy navbar"
+  - "ledger footer"
+tags:
+  - "facades"
+  - "preset"
+  - "marshal"
+  - "docusaurus"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+import ThemedImage from '@theme/ThemedImage';
+import { Frame } from '@cbnventures/docusaurus-preset-nova/blocks';
+
+import marshalLight from './_assets_/marshal-light.png';
+import marshalDark from './_assets_/marshal-dark.png';
+
+# Marshal
+
+Documentary green and seal-red tones paired with IBM Plex Serif display headings, IBM Plex Sans body text, and IBM Plex Mono for code blocks. Rounded shapes with compact spacing and flat cards with bordered code blocks.
+
+## Why Use This Preset?
+
+- Documentary green palette with seal-red accents so repository-automation and stewardship-toolkit documentation projects an official, record-keeping authority.
+- IBM Plex Serif headings paired with IBM Plex Sans body text so the typography reads like a well-maintained ledger — structured, legible, and consistent.
+- Canopy navbar carries Marshal's letterhead-styled identity — a centered serif wordmark with a "RECEIVED" stamp treatment that frames every page as an official record.
+- Ledger footer carries a colophon-styled centered rule so the document close feels deliberate and complete.
+
+## Preview
+
+<Frame caption="Marshal preset — light and dark mode preview">
+  <ThemedImage sources={{ light: marshalLight, dark: marshalDark }} alt="Marshal preset preview" width={1280} height={900} />
+</Frame>
+
+## Summary
+
+Marshal is designed for repository-stewardship and automation-toolkit documentation. The documentary palette communicates authority while the flat card depth keeps the layout clean and scannable. Motion is set to subtle speed with staggered reveals disabled and hover effects enabled.
+
+## Configuration
+
+The full default configuration for the Marshal preset:
+
+```ts
+{
+  preset: 'marshal',
+  // Default values (no overrides needed):
+  // colors.primary:          '#2f5a3d'
+  // colors.accent:           '#a33939'
+  // colors.neutral:          '#3f3a33'
+  // fonts.display:           'IBM Plex Serif'
+  // fonts.body:              'IBM Plex Sans'
+  // fonts.code:              'IBM Plex Mono'
+  // shape.radius:            'rounded'
+  // shape.density:           'compact'
+  // depth.cards:             'flat'
+  // depth.codeBlocks:        'bordered'
+  // motion.speed:            'subtle'
+  // motion.staggeredReveals: false
+  // motion.hoverEffects:     true
+  // navbar:                  'canopy'
+  // footer:                  'ledger'
+}
+```
+
+## Overrides
+
+Override any category to customize the Marshal identity. Unspecified values keep their defaults.
+
+<Tabs groupId="marshal-overrides">
+  <TabItem value="colors" label="Colors" default>
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'marshal',
+  overrides: {
+    colors: {
+      primary: '#2f5a3d',
+      accent: '#a33939',
+      neutral: '#3f3a33',
+    },
+  },
+}
+```
+
+Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+
+  </TabItem>
+  <TabItem value="fonts" label="Fonts">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'marshal',
+  overrides: {
+    fonts: {
+      display: 'IBM Plex Serif',
+      body: 'IBM Plex Sans',
+      code: 'IBM Plex Mono',
+    },
+  },
+}
+```
+
+Font families are set as CSS custom properties. Google Fonts are loaded automatically.
+
+  </TabItem>
+  <TabItem value="shape" label="Shape & Depth">
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'marshal',
+  overrides: {
+    shape: {
+      radius: 'rounded',
+      density: 'compact',
+    },
+    depth: {
+      cards: 'flat',
+      codeBlocks: 'bordered',
+    },
+  },
+}
+```
+
+  </TabItem>
+</Tabs>
+
+## Navbar and Footer
+
+Marshal uses the **Canopy** navbar and **Ledger** footer.
+
+| Slot   | Variant  | Description                                                                                   |
+|--------|----------|-----------------------------------------------------------------------------------------------|
+| Navbar | `canopy` | Letterhead-styled navigation with a centered serif wordmark and a "RECEIVED" stamp treatment. |
+| Footer | `ledger` | Colophon-styled footer with a centered rule closing each page like an official document.      |
+
+Override the variant in the preset options:
+
+```ts title="docusaurus.config.ts"
+{
+  preset: 'marshal',
+  overrides: {
+    navbar: 'bridge',
+    footer: 'commons',
+  },
+}
+```
+
+Available navbar variants:
+
+- `bridge`
+- `canopy`
+- `compass`
+- `monolith`
+
+Available footer variants:
+
+- `commons`
+- `embassy`
+- `launchpad`
+- `ledger`

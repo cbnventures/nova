@@ -1,10 +1,17 @@
 import Link from '@docusaurus/Link';
 import { translate } from '@docusaurus/Translate';
+import Logo from '@theme/Logo';
+import NavbarItem from '@theme/NavbarItem';
 
+import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
 import type {
+  ThemeNavbarMonolithIndexMonolithActionItems,
   ThemeNavbarMonolithIndexMonolithColorModeLabel,
   ThemeNavbarMonolithIndexMonolithHamburgerLabel,
+  ThemeNavbarMonolithIndexMonolithNavAriaLabel,
   ThemeNavbarMonolithIndexMonolithNavbarClassName,
+  ThemeNavbarMonolithIndexMonolithNavbarItemKey,
+  ThemeNavbarMonolithIndexMonolithNavbarItemSpread,
   ThemeNavbarMonolithIndexMonolithOnColorModeToggle,
   ThemeNavbarMonolithIndexMonolithOnMenuToggle,
   ThemeNavbarMonolithIndexMonolithOpenMenuAriaLabel,
@@ -29,12 +36,18 @@ import type {
  */
 function Monolith(props: ThemeNavbarMonolithIndexMonolithProps): ThemeNavbarMonolithIndexMonolithReturns {
   const siteLogo: ThemeNavbarMonolithIndexMonolithSiteLogo = props['siteLogo'];
+  const actionItems: ThemeNavbarMonolithIndexMonolithActionItems = props['actionItems'];
   const colorModeLabel: ThemeNavbarMonolithIndexMonolithColorModeLabel = props['colorModeLabel'];
   const onColorModeToggle: ThemeNavbarMonolithIndexMonolithOnColorModeToggle = props['onColorModeToggle'];
   const hamburgerLabel: ThemeNavbarMonolithIndexMonolithHamburgerLabel = props['hamburgerLabel'];
   const onMenuToggle: ThemeNavbarMonolithIndexMonolithOnMenuToggle = props['onMenuToggle'];
   const navbarClassName: ThemeNavbarMonolithIndexMonolithNavbarClassName = 'nova-navbar-monolith';
 
+  const navAriaLabel: ThemeNavbarMonolithIndexMonolithNavAriaLabel = translate({
+    id: 'theme.navbar.navAriaLabel',
+    message: 'Main',
+    description: 'The ARIA label for the main site navigation landmark',
+  });
   const openMenuAriaLabel: ThemeNavbarMonolithIndexMonolithOpenMenuAriaLabel = translate({
     id: 'theme.navbar.openMenuAriaLabel',
     message: 'Open menu',
@@ -47,54 +60,20 @@ function Monolith(props: ThemeNavbarMonolithIndexMonolithProps): ThemeNavbarMono
   });
 
   return (
-    <nav className={navbarClassName}>
-      <div className="nova-navbar-monolith nova-container">
+    <nav
+      className={(props['className'] !== undefined) ? `${navbarClassName} ${props['className']}` : navbarClassName}
+      style={props['style']}
+      aria-label={navAriaLabel}
+    >
+      <div className="nova-container">
         <div className="nova-navbar-monolith-brand">
-          <Link to={siteLogo['href'] ?? '/'}>
-            {(siteLogo['wordmark'] !== undefined) && (
-              <img
-                className={(siteLogo['wordmarkDark'] !== undefined) ? 'nova-brand-light' : undefined}
-                src={siteLogo['wordmark']}
-                alt={siteLogo['alt']}
-              />
-            )}
-            {(
-              siteLogo['wordmark'] !== undefined
-              && siteLogo['wordmarkDark'] !== undefined
-            ) && (
-              <img
-                className="nova-brand-dark"
-                src={siteLogo['wordmarkDark']}
-                alt={siteLogo['alt']}
-              />
-            )}
-            {(
-              siteLogo['wordmark'] === undefined
-              && siteLogo['src'] !== undefined
-            ) && (
-              <img
-                className={(siteLogo['srcDark'] !== undefined) ? 'nova-brand-light' : undefined}
-                src={siteLogo['src']}
-                alt={siteLogo['alt']}
-              />
-            )}
-            {(
-              siteLogo['wordmark'] === undefined
-              && siteLogo['src'] !== undefined
-              && siteLogo['srcDark'] !== undefined
-            ) && (
-              <img
-                className="nova-brand-dark"
-                src={siteLogo['srcDark']}
-                alt={siteLogo['alt']}
-              />
-            )}
-            {(
-              siteLogo['wordmark'] === undefined
-              && siteLogo['title'] !== undefined
-            ) && (
-              <span>{siteLogo['title']}</span>
-            )}
+          <Link
+            to={siteLogo['href'] ?? '/'}
+            target={siteLogo['target']}
+            rel={siteLogo['rel']}
+            aria-label={siteLogo['ariaLabel']}
+          >
+            <Logo siteLogo={siteLogo} />
           </Link>
         </div>
         <div className="nova-navbar-monolith-actions">
@@ -106,6 +85,14 @@ function Monolith(props: ThemeNavbarMonolithIndexMonolithProps): ThemeNavbarMono
           >
             {hamburgerLabel}
           </button>
+          {
+            actionItems.map((navItem: ThemeNavbarItem) => (
+              <NavbarItem
+                key={(navItem['type'] as ThemeNavbarMonolithIndexMonolithNavbarItemKey) ?? (navItem['label'])}
+                {...navItem as ThemeNavbarMonolithIndexMonolithNavbarItemSpread}
+              />
+            ))
+          }
           <button
             className="nova-color-mode-toggle"
             type="button"

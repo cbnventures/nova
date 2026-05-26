@@ -1,0 +1,66 @@
+{
+  "layout.signal.title": {
+    "message": "Signal",
+    "description": "Title of footer column \"signal\""
+  },
+  "layout.insights.title": {
+    "message": "洞察",
+    "description": "Title of footer column \"insights\""
+  },
+  "layout.company.title": {
+    "message": "公司",
+    "description": "Title of footer column \"company\""
+  },
+  "layout.legal.title": {
+    "message": "法律",
+    "description": "Title of footer column \"legal\""
+  },
+  "sections.signal.0.label": {
+    "message": "入门指南",
+    "description": "Label of link 1 in footer section \"signal\""
+  },
+  "sections.signal.1.label": {
+    "message": "快速开始",
+    "description": "Label of link 2 in footer section \"signal\""
+  },
+  "sections.signal.2.label": {
+    "message": "API 参考",
+    "description": "Label of link 3 in footer section \"signal\""
+  },
+  "sections.insights.0.label": {
+    "message": "博客",
+    "description": "Label of link 1 in footer section \"insights\""
+  },
+  "sections.insights.1.label": {
+    "message": "客户案例",
+    "description": "Label of link 2 in footer section \"insights\""
+  },
+  "sections.company.0.label": {
+    "message": "关于我们",
+    "description": "Label of link 1 in footer section \"company\""
+  },
+  "sections.company.1.label": {
+    "message": "招贤纳士",
+    "description": "Label of link 2 in footer section \"company\""
+  },
+  "sections.legal.0.label": {
+    "message": "使用条款",
+    "description": "Label of link 1 in footer section \"legal\""
+  },
+  "sections.legal.1.label": {
+    "message": "隐私政策",
+    "description": "Label of link 2 in footer section \"legal\""
+  },
+  "sections.legal.2.label": {
+    "message": "联系我们",
+    "description": "Label of link 3 in footer section \"legal\""
+  },
+  "cta.label": {
+    "message": "准备好找到属于你的信号了吗？",
+    "description": "The footer call-to-action link label"
+  },
+  "copyright": {
+    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
+    "description": "The footer copyright text"
+  }
+}

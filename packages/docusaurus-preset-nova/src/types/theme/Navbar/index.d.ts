@@ -5,6 +5,7 @@ import type {
   GlobalVersion,
 } from '@docusaurus/plugin-content-docs/client';
 import type {
+  CSSProperties,
   Dispatch,
   ReactNode,
   RefObject,
@@ -21,6 +22,15 @@ import type {
  *
  * @since 0.15.0
  */
+export type ThemeNavbarPropsClassName = string | undefined;
+
+export type ThemeNavbarPropsStyle = CSSProperties | undefined;
+
+export type ThemeNavbarProps = {
+  className?: ThemeNavbarPropsClassName;
+  style?: ThemeNavbarPropsStyle;
+};
+
 export type ThemeNavbarThemeConfigCast = unknown;
 
 export type ThemeNavbarThemeConfig = Record<string, unknown>;
@@ -69,13 +79,23 @@ export type ThemeNavbarIndexPresetLogo = SharedPresetLogo | undefined;
 
 export type ThemeNavbarIndexUserLogo = Record<string, unknown> | undefined;
 
-export type ThemeNavbarIndexUserLogoSrc = string | undefined;
+export type ThemeNavbarIndexUserLogoSrcLight = string | undefined;
 
 export type ThemeNavbarIndexUserLogoSrcDark = string | undefined;
 
-export type ThemeNavbarIndexUserLogoWordmark = string | undefined;
+export type ThemeNavbarIndexUserLogoSrc = {
+  light: ThemeNavbarIndexUserLogoSrcLight;
+  dark: ThemeNavbarIndexUserLogoSrcDark;
+} | undefined;
+
+export type ThemeNavbarIndexUserLogoWordmarkLight = string | undefined;
 
 export type ThemeNavbarIndexUserLogoWordmarkDark = string | undefined;
+
+export type ThemeNavbarIndexUserLogoWordmark = {
+  light: ThemeNavbarIndexUserLogoWordmarkLight;
+  dark: ThemeNavbarIndexUserLogoWordmarkDark;
+} | undefined;
 
 export type ThemeNavbarIndexUserLogoTitle = string | undefined;
 
@@ -83,19 +103,35 @@ export type ThemeNavbarIndexUserLogoAlt = string | undefined;
 
 export type ThemeNavbarIndexUserLogoHref = string | undefined;
 
+export type ThemeNavbarIndexUserLogoTarget = string | undefined;
+
+export type ThemeNavbarIndexUserLogoRel = string | undefined;
+
+export type ThemeNavbarIndexUserLogoAriaLabel = string | undefined;
+
 export type ThemeNavbarIndexPresetLogoSrc = string | undefined;
 
 export type ThemeNavbarIndexPresetLogoTitle = string | undefined;
 
 export type ThemeNavbarIndexPresetLogoAlt = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoSrc = string | undefined;
+export type ThemeNavbarIndexSiteLogoSrcLight = string | undefined;
 
 export type ThemeNavbarIndexSiteLogoSrcDark = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoWordmark = string | undefined;
+export type ThemeNavbarIndexSiteLogoSrc = {
+  light: ThemeNavbarIndexSiteLogoSrcLight;
+  dark: ThemeNavbarIndexSiteLogoSrcDark;
+} | undefined;
+
+export type ThemeNavbarIndexSiteLogoWordmarkLight = string | undefined;
 
 export type ThemeNavbarIndexSiteLogoWordmarkDark = string | undefined;
+
+export type ThemeNavbarIndexSiteLogoWordmark = {
+  light: ThemeNavbarIndexSiteLogoWordmarkLight;
+  dark: ThemeNavbarIndexSiteLogoWordmarkDark;
+} | undefined;
 
 export type ThemeNavbarIndexSiteLogoTitle = string | undefined;
 
@@ -103,14 +139,21 @@ export type ThemeNavbarIndexSiteLogoAlt = string;
 
 export type ThemeNavbarIndexSiteLogoHref = string | undefined;
 
+export type ThemeNavbarIndexSiteLogoTarget = string | undefined;
+
+export type ThemeNavbarIndexSiteLogoRel = string | undefined;
+
+export type ThemeNavbarIndexSiteLogoAriaLabel = string | undefined;
+
 export type ThemeNavbarIndexSiteLogo = {
   src: ThemeNavbarIndexSiteLogoSrc;
-  srcDark: ThemeNavbarIndexSiteLogoSrcDark;
   wordmark: ThemeNavbarIndexSiteLogoWordmark;
-  wordmarkDark: ThemeNavbarIndexSiteLogoWordmarkDark;
   title: ThemeNavbarIndexSiteLogoTitle;
   alt: ThemeNavbarIndexSiteLogoAlt;
   href: ThemeNavbarIndexSiteLogoHref;
+  target: ThemeNavbarIndexSiteLogoTarget;
+  rel: ThemeNavbarIndexSiteLogoRel;
+  ariaLabel: ThemeNavbarIndexSiteLogoAriaLabel;
 };
 
 export type ThemeNavbarIndexHideOnScroll = boolean;
@@ -166,6 +209,8 @@ export type ThemeNavbarIndexVariantPropsSiteLogo = ThemeNavbarIndexSiteLogo;
 
 export type ThemeNavbarIndexVariantPropsItems = ThemeNavbarItems;
 
+export type ThemeNavbarIndexVariantPropsActionItems = ThemeNavbarItems;
+
 export type ThemeNavbarIndexVariantPropsColorModeLabel = ThemeNavbarColorModeLabel;
 
 export type ThemeNavbarIndexVariantPropsOnColorModeToggle = () => void;
@@ -174,13 +219,17 @@ export type ThemeNavbarIndexVariantPropsHamburgerLabel = ReactNode;
 
 export type ThemeNavbarIndexVariantPropsOnMenuToggle = () => void;
 
+export type ThemeNavbarIndexVariantPropsActiveItemLabel = string | null;
+
 export type ThemeNavbarIndexVariantProps = {
   siteLogo: ThemeNavbarIndexVariantPropsSiteLogo;
   items: ThemeNavbarIndexVariantPropsItems;
+  actionItems: ThemeNavbarIndexVariantPropsActionItems;
   colorModeLabel: ThemeNavbarIndexVariantPropsColorModeLabel;
   onColorModeToggle: ThemeNavbarIndexVariantPropsOnColorModeToggle;
   hamburgerLabel: ThemeNavbarIndexVariantPropsHamburgerLabel;
   onMenuToggle: ThemeNavbarIndexVariantPropsOnMenuToggle;
+  activeItemLabel: ThemeNavbarIndexVariantPropsActiveItemLabel;
 };
 
 export type ThemeNavbarIndexSvgFilterDefinition = ReactNode;
@@ -194,6 +243,9 @@ export type ThemeNavbarItemSpread = Record<string, unknown>;
  *
  * @since 0.15.0
  */
+export type ThemeNavbarIndexActionItemTypes = Set<string>;
+
+export type ThemeNavbarIndexActionItemType = string;
 
 export type ThemeNavbarIndexThemeChoice = string | null;
 

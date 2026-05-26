@@ -1,20 +1,49 @@
 /**
- * Signal — TOC visual styling.
+ * Signal - `TOC` theme overlay.
  *
- * @since 0.15.0
+ * Right-rail table of contents - a compact terminal index. Mono code font
+ * with tight rows; hover and focus warm to rose primary so the rail reads
+ * machine-precise rather than decorative.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Rail - neutral hairline
+ * ============================
+ */
+
+@media (min-width: 1024px) {
+  .nova-toc {
+    border-left-color: var(--nova-color-border);
+  }
+}
+
+/**
+ * ============================
+ * 2. Link - mono code, rose on hover
+ * ============================
  */
 
 .nova-toc-link {
   padding: 0.125rem 0;
+
   font-family: var(--nova-font-code);
   font-size: 0.6875rem;
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-signal-text-soft);
+
   transition: color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-toc-link {
+  color: var(--nova-signal-text-soft);
 }
 
 .nova-toc-link:hover,
 .nova-toc-link:focus-visible {
   color: var(--nova-color-primary-500);
+
   text-decoration: none;
 }
 

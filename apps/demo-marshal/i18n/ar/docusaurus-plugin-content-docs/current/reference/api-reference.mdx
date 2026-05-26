@@ -1,0 +1,45 @@
+---
+title: "مرجع API"
+sidebar_position: 1
+description: "Marshal Spoke API — أودِع السياسات، اقرأ اللائحة، صدِّر مسارات التدقيق. مصادقة برمز Bearer، استجابات JSON، بلا مفاجآت."
+tags:
+  - "reference"
+  - "api"
+---
+
+# مرجع API
+
+يكشف Marshal واجهة Spoke API لإيداع السياسات، وقراءة اللائحة، وتصدير مسار التدقيق. مصادقة برمز Bearer، استجابات JSON، بلا مفاجآت.
+
+## العنوان الأساسي
+
+```
+https://marshal.your-org.example/api
+```
+
+## نقاط النهاية
+
+| الأسلوب  | المسار               | الوصف                       |
+|----------|----------------------|-----------------------------|
+| `GET`    | `/api/policies`      | سرد كلّ سياسة مُودَعة.      |
+| `POST`   | `/api/policies`      | إيداع سياسة جديدة.          |
+| `DELETE` | `/api/policies/:id`  | سحب سياسة (تُودَع كنسخ).    |
+| `GET`    | `/api/dockets`       | سرد اللوائح عبر المستودعات. |
+| `GET`    | `/api/dockets/:repo` | قراءة لائحة مستودعٍ واحد.   |
+| `POST`   | `/api/audit/export`  | توليد تصدير لمسار التدقيق.  |
+| `GET`    | `/api/cron`          | سرد أعمال الرعاية المجدولة. |
+
+## مثال
+
+```bash
+curl https://marshal.your-org.example/api/dockets/org/api \
+  -H "Authorization: Bearer $MARSHAL_TOKEN"
+```
+
+الاستجابة قائمة زمنيّة بكلّ إجراء أُودِع على المستودع. يظهر ختم الإدارة في كلّ سجل.
+
+## الخطوات التالية
+
+- [السياسات](/docs/filings/policies/) — إيداع السياسات عبر API.
+- [اللوائح](/docs/dockets/overview/) — قراءة اللوائح عبر API.
+- [مسار التدقيق](/docs/dockets/audit-trail/) — تصدير المسار الكامل.

@@ -1,0 +1,9 @@
+/**
+ * Marshal - `TabItem` theme overlay.
+ *
+ * Empty by default. Marshal owns its panel rhythm at the parent
+ * `.nova-tabs-panels` wrapper level (see Tabs overlay) rather than per
+ * panel - keeps the ledger gutter consistent.
+ *
+ * @since 0.18.0
+ */

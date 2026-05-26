@@ -1,0 +1,257 @@
+/**
+ * Lantern - `BlogPostItem` theme overlay.
+ *
+ * A warm cream paper card with hand-thrown asymmetric corners. Eyebrow date
+ * is small caps mono in primary-700. Italic Fraunces title; muted ink body
+ * copy. Read-more reads as an italic Fraunces caption with an amber arrow.
+ *
+ * Editorial paper voice - clamp-based post title (1.75->2.5rem) for smooth
+ * Fraunces scaling, larger 1.4rem card title, 0.95 / 1.75 content rhythm
+ * for paper reading.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 0. Preset-owned blog-post typography tokens
+ * ============================
+ */
+
+:root {
+  --nova-lantern-blog-post-title-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  --nova-lantern-blog-post-title-size-md: clamp(1.75rem, 3.5vw, 2.5rem);
+  --nova-lantern-blog-card-title-size: 1.4rem;
+  --nova-lantern-blog-card-title-size-md: 1.5rem;
+  --nova-lantern-blog-date-size: 0.7rem;
+  --nova-lantern-blog-content-size: 0.95rem;
+  --nova-lantern-blog-content-line-height: 1.75;
+  --nova-lantern-blog-author-size: 0.85rem;
+  --nova-lantern-blog-read-more-size: 0.9rem;
+  --nova-lantern-blog-footer-spacing-top: 2rem;
+}
+
+/**
+ * ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogPostItem + below
+ * ============================
+ */
+
+:root {
+  --nova-blog-post-title-size: var(--nova-lantern-blog-post-title-size);
+  --nova-blog-post-title-size-md: var(--nova-lantern-blog-post-title-size-md);
+  --nova-blog-card-title-size: var(--nova-lantern-blog-card-title-size);
+  --nova-blog-card-title-size-md: var(--nova-lantern-blog-card-title-size-md);
+  --nova-blog-date-size: var(--nova-lantern-blog-date-size);
+  --nova-blog-content-size: var(--nova-lantern-blog-content-size);
+  --nova-blog-content-line-height: var(--nova-lantern-blog-content-line-height);
+  --nova-blog-author-size: var(--nova-lantern-blog-author-size);
+  --nova-blog-read-more-size: var(--nova-lantern-blog-read-more-size);
+  --nova-blog-footer-spacing-top: var(--nova-lantern-blog-footer-spacing-top);
+}
+
+/**
+ * ============================
+ * 1. Card - warm paper with asymmetric corners
+ * ============================
+ */
+
+.nova-blog-post-item {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 95%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 14px 4px 14px 4px;
+
+  transition: background-color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease, box-shadow var(--nova-motion-duration) ease, transform var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-item:nth-of-type(2n) {
+  border-radius: 4px 14px 4px 14px;
+}
+
+.nova-blog-post-item:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-color-primary-400);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .nova-blog-post-item {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-blog-post-item:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 82%);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+}
+
+@media (min-width: 768px) {
+  .nova-blog-post-item {
+    padding: calc(var(--nova-shape-padding) * 1.5);
+  }
+}
+
+/**
+ * ============================
+ * 2. Header - eyebrow date and italic Fraunces title
+ * ============================
+ */
+
+.nova-blog-post-item-header time {
+  display: block;
+  margin-bottom: 0.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: var(--nova-blog-date-size, 0.7rem);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-post-item-header time {
+  color: var(--nova-color-primary-300);
+}
+
+/* h1 size flows from shared CSS via canonical token
+   (--nova-blog-post-title-size); h2 size is consumed below in this
+   overlay. */
+.nova-blog-post-item-header h1,
+.nova-blog-post-item-header h2 {
+  margin: 0 0 0.75rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--nova-lantern-ink);
+}
+
+.nova-blog-post-item-header h1 {
+  font-variation-settings: "opsz" 96;
+}
+
+.nova-blog-post-item-header h2 {
+  font-variation-settings: "opsz" 60;
+  font-size: var(--nova-blog-card-title-size, 1.4rem);
+}
+
+@media (min-width: 768px) {
+  .nova-blog-post-item-header h2 {
+    font-size: var(--nova-blog-card-title-size-md, 1.5rem);
+  }
+}
+
+.nova-blog-post-item-header h2 a {
+  color: inherit;
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-item-header h2 a:hover,
+.nova-blog-post-item-header h2 a:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-post-item-header h2 a:hover,
+[data-theme="dark"] .nova-blog-post-item-header h2 a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 3. Authors - quiet warm row
+ * ============================
+ */
+
+.nova-blog-post-item-authors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.nova-blog-post-item-author {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nova-blog-post-item-author img {
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 50%;
+}
+
+.nova-blog-post-item-author span,
+.nova-blog-post-item-author-link {
+  font-size: var(--nova-blog-author-size, 0.85rem);
+  font-weight: 500;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/**
+ * ============================
+ * 4. Content - muted ink body
+ * ============================
+ */
+
+.nova-blog-post-item-content {
+  font-size: var(--nova-blog-content-size, 0.95rem);
+  line-height: var(--nova-blog-content-line-height, 1.75);
+  color: var(--nova-lantern-ink-muted);
+}
+
+/**
+ * ============================
+ * 5. Footer - warm hairline divider
+ * ============================
+ */
+
+.nova-blog-post-item-footer {
+  margin-top: var(--nova-blog-footer-spacing-top, 2rem);
+  padding-top: 1.5rem;
+
+  border-top: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-blog-post-item-footer {
+  border-top-color: var(--nova-lantern-border);
+}
+
+/**
+ * ============================
+ * 6. Read-more - italic Fraunces caption
+ * ============================
+ */
+
+.nova-blog-post-item-read-more {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24;
+  font-size: var(--nova-blog-read-more-size, 0.9rem);
+  font-weight: 500;
+  color: var(--nova-color-primary-700);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-item-read-more:hover,
+.nova-blog-post-item-read-more:focus-visible {
+  color: var(--nova-color-primary-600);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-post-item-read-more {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-blog-post-item-read-more:hover,
+[data-theme="dark"] .nova-blog-post-item-read-more:focus-visible {
+  color: var(--nova-color-primary-200);
+}

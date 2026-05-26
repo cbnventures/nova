@@ -675,6 +675,7 @@ export const libItemPrettyNamesAbbreviation: LibItemPrettyNamesAbbreviation = {
   'ip': 'IP',
   'json': 'JSON',
   'jsx': 'JSX',
+  'ld': 'LD',
   'lf': 'LF',
   'lts': 'LTS',
   'mdx': 'MDX',

@@ -1,0 +1,10 @@
+/**
+ * Envoy - `Mermaid` theme overlay.
+ *
+ * Identity flows through tokens defined in envoy/preset.css (light + dark)
+ * which lib/mermaid.ts reads at render time for Layer 1 themeVariables +
+ * Layer 2 themeCSS. This file holds residual decorations only - currently
+ * empty.
+ *
+ * @since 0.18.0
+ */

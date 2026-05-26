@@ -1,0 +1,26 @@
+{
+  "notFound.title": {
+    "message": "تهت في منتصف الطريق إلى الإطلاق.",
+    "description": "The 404 page heading set by the consumer in themeConfig.errorPages.notFound.title"
+  },
+  "notFound.description": {
+    "message": "هذا المسار لم يُنشر بعد — عُد إلى المشروع لمتابعة التصفّح.",
+    "description": "The 404 page description set by the consumer in themeConfig.errorPages.notFound.description"
+  },
+  "notFound.backHomeLabel": {
+    "message": "العودة إلى المشروع",
+    "description": "The 404 page \"Back to home\" CTA label set by the consumer in themeConfig.errorPages.notFound.backHomeLabel"
+  },
+  "errorPageContent.title": {
+    "message": "فشل تسليم هذه الصفحة.",
+    "description": "The per-page crash heading set by the consumer in themeConfig.errorPages.errorPageContent.title"
+  },
+  "errorPageContent.retryLabel": {
+    "message": "إعادة التسليم",
+    "description": "The per-page crash retry button label set by the consumer in themeConfig.errorPages.errorPageContent.retryLabel"
+  },
+  "error.retryLabel": {
+    "message": "إعادة الإرسال",
+    "description": "The top-level error boundary retry button label set by the consumer in themeConfig.errorPages.error.retryLabel"
+  }
+}

@@ -1,0 +1,85 @@
+/**
+ * Marshal - `EditMetaRow` theme overlay.
+ *
+ * The bottom-of-page edit + last-updated row on standalone MDX pages
+ * (e.g., `/manifesto`). Reads as a clerk's stamp at the foot of an
+ * archival document - double-hairline ledger crease above (echoes the
+ * article hr), muted ink stamp typography, edit link deepens to
+ * primary green on hover. Mirrors the typography tokens used by
+ * `ContentFooter/Edit`.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - double-hairline ledger crease above
+ *
+ * Two 1px rules stacked 2px apart, same idiom as `.nova-mdx-content hr`.
+ * The double-rule is a documentary-printing convention for marking
+ * significant entries.
+ * ============================
+ */
+
+.nova-edit-meta-row {
+  position: relative;
+
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+.nova-edit-meta-row::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  right: 0;
+
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 2. Edit this page link - muted ink, lifts to primary green on hover
+ *
+ * Idle uses `--nova-marshal-ink-muted` (resolves to `--nova-color-text-muted`,
+ * auto-flips with mode) so the link reads as quiet ledger ink in both modes.
+ * No dark idle override is needed - the muted token cascade handles it.
+ * Hover uses `primary-500` (light) / `primary-400` (dark) to match the
+ * 4-preset majority cluster (envoy / foundry / sentinel / signal); marshal
+ * stays distinctive through the green palette, not through hover-tier depth.
+ * ============================
+ */
+
+.nova-edit-meta-row .nova-edit-this-page {
+  font-size: 0.875rem;
+  color: var(--nova-marshal-ink-muted);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-edit-meta-row .nova-edit-this-page:hover,
+.nova-edit-meta-row .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-edit-meta-row .nova-edit-this-page:hover,
+[data-theme="dark"] .nova-edit-meta-row .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 3. Last updated stamp
+ * ============================
+ */
+
+.nova-edit-meta-row .nova-last-updated {
+  font-size: 0.875rem;
+  color: var(--nova-marshal-ink-muted);
+}

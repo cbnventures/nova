@@ -165,7 +165,7 @@ export class RulesEslintConventionsRequireExplicitReturn {
       return;
     }
 
-    // If the function has any return with a value, it is not void — skip.
+    // If the function has any return with a value, it is not void - skip.
     if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(body) === true) {
       return;
     }

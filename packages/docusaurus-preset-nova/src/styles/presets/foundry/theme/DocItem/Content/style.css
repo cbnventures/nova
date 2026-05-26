@@ -1,18 +1,11 @@
 /**
- * Foundry — Table visual styling.
+ * Foundry - `DocItem/Content` theme overlay.
+ *
+ * Article-rhythm rules (hr, blockquote, lists, tables) live in the
+ * `MDXContent` overlay scoped to `.nova-mdx-content` so they apply
+ * uniformly across docs, blog posts, and standalone MDX pages. This file
+ * is reserved for rules that are truly specific to the doc article shell -
+ * none currently exist for foundry.
  *
  * @since 0.15.0
  */
-
-/* ============================
- * 1. Table Container
- * ============================ */
-
-/* Wrap tables in a scrollable container for narrow viewports. */
-.table-wrapper,
-article .markdown > table {
-  display: block;
-  width: 100%;
-  overflow-x: auto;
-  margin-bottom: 1.5rem;
-}

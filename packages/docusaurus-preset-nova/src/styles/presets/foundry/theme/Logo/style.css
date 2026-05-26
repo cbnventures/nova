@@ -1,0 +1,9 @@
+/**
+ * Foundry - `Logo` theme overlay.
+ *
+ * Brand identity inherits foundry's industrial-orange palette via the navbar
+ * variant overlays (`.nova-brand-light` / `.nova-brand-dark` rules). This
+ * file is a scaffold for any future Logo-specific identity rules.
+ *
+ * @since 0.18.0
+ */

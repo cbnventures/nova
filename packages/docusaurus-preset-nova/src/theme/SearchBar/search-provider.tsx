@@ -13,6 +13,7 @@ import type {
   ThemeSearchBarSearchProviderBaseUrl,
   ThemeSearchBarSearchProviderContextValue,
   ThemeSearchBarSearchProviderDebounceTimerRef,
+  ThemeSearchBarSearchProviderDispatchedQueryRef,
   ThemeSearchBarSearchProviderDocusaurusContext,
   ThemeSearchBarSearchProviderHandleQueryChangeFunction,
   ThemeSearchBarSearchProviderHandleQueryChangeValue,
@@ -24,10 +25,13 @@ import type {
   ThemeSearchBarSearchProviderPropsChildren,
   ThemeSearchBarSearchProviderQuery,
   ThemeSearchBarSearchProviderQueryState,
+  ThemeSearchBarSearchProviderSearchedQuery,
+  ThemeSearchBarSearchProviderSearchedQueryState,
   ThemeSearchBarSearchProviderSearchWorker,
   ThemeSearchBarSearchProviderSetActiveIndex,
   ThemeSearchBarSearchProviderSetIsOpen,
   ThemeSearchBarSearchProviderSetQuery,
+  ThemeSearchBarSearchProviderSetSearchedQuery,
   ThemeSearchBarSearchProviderWorkerUrl,
 } from '../../types/theme/SearchBar/search-provider.d.ts';
 
@@ -61,6 +65,10 @@ function SearchProvider(props: ThemeSearchBarSearchProviderProps) {
   const query: ThemeSearchBarSearchProviderQuery = queryState[0];
   const setQuery: ThemeSearchBarSearchProviderSetQuery = queryState[1];
 
+  const searchedQueryState: ThemeSearchBarSearchProviderSearchedQueryState = useState<ThemeSearchBarSearchProviderSearchedQuery>('');
+  const searchedQuery: ThemeSearchBarSearchProviderSearchedQuery = searchedQueryState[0];
+  const setSearchedQuery: ThemeSearchBarSearchProviderSetSearchedQuery = searchedQueryState[1];
+
   const isOpenState: ThemeSearchBarSearchProviderIsOpenState = useState<ThemeSearchBarSearchProviderIsOpen>(false);
   const isOpen: ThemeSearchBarSearchProviderIsOpen = isOpenState[0];
   const setIsOpen: ThemeSearchBarSearchProviderSetIsOpen = isOpenState[1];
@@ -71,6 +79,7 @@ function SearchProvider(props: ThemeSearchBarSearchProviderProps) {
 
   const inputRef: ThemeSearchBarSearchProviderInputRef = useRef<HTMLInputElement | null>(null);
   const debounceTimerRef: ThemeSearchBarSearchProviderDebounceTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const dispatchedQueryRef: ThemeSearchBarSearchProviderDispatchedQueryRef = useRef<string>('');
 
   const handleQueryChange: ThemeSearchBarSearchProviderHandleQueryChangeFunction = useCallback((value: ThemeSearchBarSearchProviderHandleQueryChangeValue) => {
     setQuery(value);
@@ -83,10 +92,16 @@ function SearchProvider(props: ThemeSearchBarSearchProviderProps) {
 
     debounceTimerRef.current = setTimeout(() => {
       if (value !== '') {
+        dispatchedQueryRef.current = value;
+
         searchWorker.search(value);
 
         setIsOpen(true);
       } else {
+        dispatchedQueryRef.current = '';
+
+        setSearchedQuery('');
+
         setIsOpen(false);
       }
 
@@ -99,6 +114,8 @@ function SearchProvider(props: ThemeSearchBarSearchProviderProps) {
   // Dispatch pending query when the worker becomes ready.
   useEffect(() => {
     if (searchWorker['isReady'] === true && query !== '') {
+      dispatchedQueryRef.current = query;
+
       searchWorker.search(query);
 
       setIsOpen(true);
@@ -107,8 +124,25 @@ function SearchProvider(props: ThemeSearchBarSearchProviderProps) {
     return;
   }, [searchWorker['isReady']]);
 
+  // Mark the dispatched query as searched only when the worker has actually
+  // responded (results or error change). This is what hides the mobile menu
+  // items + the "no results" message: both wait for a real worker response,
+  // not just a debounce-fired dispatch. Skip the initial mount where results
+  // is the empty-array default and no query has been dispatched yet.
+  useEffect(() => {
+    if (dispatchedQueryRef.current !== '') {
+      setSearchedQuery(dispatchedQueryRef.current);
+    }
+
+    return;
+  }, [
+    searchWorker['results'],
+    searchWorker['error'],
+  ]);
+
   const contextValue: ThemeSearchBarSearchProviderContextValue = {
     query,
+    searchedQuery,
     results: searchWorker['results'],
     error: searchWorker['error'],
     isReady: searchWorker['isReady'],

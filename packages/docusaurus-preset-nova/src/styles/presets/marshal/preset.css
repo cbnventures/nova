@@ -1,0 +1,689 @@
+/**
+ * Marshal - preset identity.
+ *
+ * Aged paper body, weighty Plex Serif headings, documentary green CTAs.
+ * Restrained - no watermarks, no stamps, no decorative chrome.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Surface tokens
+ * ============================ */
+
+:root {
+  --nova-color-background: color-mix(in oklab, var(--nova-color-text), #ffffff 95%);
+
+  --nova-marshal-bg: var(--nova-color-background);
+  --nova-marshal-ink: var(--nova-color-text);
+  --nova-marshal-ink-muted: var(--nova-color-text-muted);
+  --nova-marshal-border: var(--nova-color-border);
+  --nova-marshal-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.16 0 0 0 0 0.16 0 0 0 0 0.16 0 0 0 0.18 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  --nova-marshal-transition-fast: 150ms ease;
+  --nova-marshal-transition: 200ms ease;
+  --nova-marshal-transition-slow: 280ms ease;
+  --nova-marshal-active-rail-color: var(--nova-color-accent-600);
+
+  /* Marshal identity - sharp 2px corners on inputs, dropdowns, and ledger
+     surfaces. Pair with hairline borders so the geometry reads as cut,
+     not rounded. */
+  --nova-marshal-radius-sharp: 2px;
+
+  /* Ledger square - 4px corners on author social buttons. Slightly softer
+     than radius-sharp (2px) to read as ledger stationery vs cut chrome.
+     Defined as a preset-tier identity token because the 4px expresses
+     marshal's "ledger square" voice on per-author affordances. */
+  --nova-marshal-radius-ledger: 4px;
+
+  /* Semantic palette - amber warning + red danger for admonitions. */
+  --nova-marshal-color-warning-500: #f59e0b;
+  --nova-marshal-color-warning-400: #fbbf24;
+  --nova-marshal-color-warning-bg: rgba(245, 158, 11, 0.06);
+  --nova-marshal-color-danger-500: #ef4444;
+  --nova-marshal-color-danger-400: #f87171;
+  --nova-marshal-color-danger-bg: rgba(239, 68, 68, 0.06);
+  --nova-color-warning-500: var(--nova-marshal-color-warning-500);
+  --nova-color-warning-400: var(--nova-marshal-color-warning-400);
+  --nova-color-warning-bg: var(--nova-marshal-color-warning-bg);
+  --nova-color-danger-500: var(--nova-marshal-color-danger-500);
+  --nova-color-danger-400: var(--nova-marshal-color-danger-400);
+  --nova-color-danger-bg: var(--nova-marshal-color-danger-bg);
+
+  --nova-marshal-section-gap: 1.5rem;
+  --nova-section-gap: var(--nova-marshal-section-gap);
+
+  /* Sticky chrome offset - 129px canopy navbar alone (announcement-bar is a
+     sibling of .navbar and is non-sticky, so it scrolls out after any scroll
+     and doesn't contribute to the post-scroll sticky chrome that matters for
+     hash-anchor offsetting). The 129px is 1px navbar bottom-border + 128px
+     canopy nav-row (inner container with explicit gap:12px stacking brand
+     row + items row + padding). 2px taller than sentinel's canopy (which
+     uses gap:normal). Consumed by hash-anchor scroll, sticky sidebars, and
+     TOC. sticky-layout.ts measures .navbar.getBoundingClientRect().height
+     directly at runtime, matching this static value. */
+  --nova-marshal-layout-sticky-top: 129px;
+  --nova-layout-sticky-top: var(--nova-marshal-layout-sticky-top);
+
+  /* SkipToContent - color tokens (shape lives in the SkipToContent overlay).
+     All four auto-switch via the referenced --nova-marshal-* identity tokens. */
+  --nova-marshal-skip-bg: var(--nova-marshal-ink);
+  --nova-marshal-skip-color: var(--nova-marshal-bg);
+  --nova-marshal-skip-border: 1px solid var(--nova-marshal-border);
+  --nova-marshal-skip-shadow: none;
+  --nova-skip-bg: var(--nova-marshal-skip-bg);
+  --nova-skip-color: var(--nova-marshal-skip-color);
+  --nova-skip-border: var(--nova-marshal-skip-border);
+  --nova-skip-shadow: var(--nova-marshal-skip-shadow);
+
+  /* Blog Layout - color tokens (typography lives in the BlogLayout overlay). */
+  --nova-marshal-blog-description-color: var(--nova-color-text-muted);
+  --nova-blog-description-color: var(--nova-marshal-blog-description-color);
+
+  /* Mermaid identity - drives themeCSS color overrides in docusaurus.config.ts pre-render config.
+     Each token swaps in the dark block below so toggling [data-theme="dark"] recolors the SVG
+     without re-rendering. */
+  --nova-marshal-mermaid-node-radius: 2px;
+  --nova-marshal-mermaid-edge-stroke: var(--nova-marshal-ink);
+  --nova-marshal-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 96%);
+  --nova-marshal-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 50%);
+  --nova-marshal-mermaid-cluster-radius: 2px;
+  --nova-mermaid-node-radius: var(--nova-marshal-mermaid-node-radius);
+  --nova-mermaid-edge-stroke: var(--nova-marshal-mermaid-edge-stroke);
+  --nova-mermaid-cluster-fill: var(--nova-marshal-mermaid-cluster-fill);
+  --nova-mermaid-cluster-stroke: var(--nova-marshal-mermaid-cluster-stroke);
+  --nova-mermaid-cluster-radius: var(--nova-marshal-mermaid-cluster-radius);
+
+  /* Admonition - per-type rail + fill + ink (consumed by the Admonition
+     overlay). Marshal renders admonitions as ledger notices with a mono
+     uppercase heading; per-type colors swap the rail + heading ink and
+     blend a tinted fill into the marshal paper bg. Note inherits the
+     container default fill (no fill override needed). */
+  --nova-marshal-admonition-note-rail: var(--nova-marshal-ink-muted);
+  --nova-marshal-admonition-note-ink: var(--nova-marshal-ink-muted);
+  --nova-marshal-admonition-tip-rail: var(--nova-color-primary-700);
+  --nova-marshal-admonition-tip-fill: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 92%);
+  --nova-marshal-admonition-tip-ink: var(--nova-color-primary-800);
+  --nova-marshal-admonition-info-rail: var(--nova-color-accent-600);
+  --nova-marshal-admonition-info-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-marshal-bg) 92%);
+  --nova-marshal-admonition-info-ink: var(--nova-color-accent-700);
+  --nova-marshal-admonition-warning-rail: var(--nova-color-warning-500);
+  --nova-marshal-admonition-warning-fill: color-mix(in srgb, var(--nova-color-warning-500), var(--nova-marshal-bg) 92%);
+  --nova-marshal-admonition-warning-ink: var(--nova-color-warning-500);
+  --nova-marshal-admonition-danger-rail: var(--nova-color-danger-500);
+  --nova-marshal-admonition-danger-fill: color-mix(in srgb, var(--nova-color-danger-500), var(--nova-marshal-bg) 92%);
+  --nova-marshal-admonition-danger-ink: var(--nova-color-danger-500);
+  --nova-admonition-note-rail: var(--nova-marshal-admonition-note-rail);
+  --nova-admonition-note-ink: var(--nova-marshal-admonition-note-ink);
+  --nova-admonition-tip-rail: var(--nova-marshal-admonition-tip-rail);
+  --nova-admonition-tip-fill: var(--nova-marshal-admonition-tip-fill);
+  --nova-admonition-tip-ink: var(--nova-marshal-admonition-tip-ink);
+  --nova-admonition-info-rail: var(--nova-marshal-admonition-info-rail);
+  --nova-admonition-info-fill: var(--nova-marshal-admonition-info-fill);
+  --nova-admonition-info-ink: var(--nova-marshal-admonition-info-ink);
+  --nova-admonition-warning-rail: var(--nova-marshal-admonition-warning-rail);
+  --nova-admonition-warning-fill: var(--nova-marshal-admonition-warning-fill);
+  --nova-admonition-warning-ink: var(--nova-marshal-admonition-warning-ink);
+  --nova-admonition-danger-rail: var(--nova-marshal-admonition-danger-rail);
+  --nova-admonition-danger-fill: var(--nova-marshal-admonition-danger-fill);
+  --nova-admonition-danger-ink: var(--nova-marshal-admonition-danger-ink);
+}
+
+/* :root prefix prevents cssnano partial-merge from hoisting this dark block ahead of :root. */
+:root[data-theme="dark"] {
+  --nova-color-background: color-mix(in oklab, var(--nova-color-text), #000000 95%);
+
+  --nova-marshal-active-rail-color: var(--nova-color-accent-500);
+
+  /* Semantic palette - dark-mode swap of admonition fills. */
+  --nova-marshal-color-warning-bg: rgba(245, 158, 11, 0.1);
+  --nova-marshal-color-danger-bg: rgba(239, 68, 68, 0.1);
+
+  --nova-marshal-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0 0.9 0 0 0 0.12 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+
+  /* Mermaid identity - dark-mode overrides. */
+  --nova-marshal-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 90%);
+  --nova-marshal-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 40%);
+
+  /* Admonition - dark-mode swap of rail + fill + ink. Note inherits the
+     container default - no dark override needed (--nova-marshal-ink-muted
+     swaps via the identity tokens above). */
+  --nova-marshal-admonition-tip-rail: var(--nova-color-primary-400);
+  --nova-marshal-admonition-tip-fill: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 88%);
+  --nova-marshal-admonition-tip-ink: var(--nova-color-primary-300);
+  --nova-marshal-admonition-info-rail: var(--nova-color-accent-500);
+  --nova-marshal-admonition-info-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-marshal-bg) 88%);
+  --nova-marshal-admonition-info-ink: var(--nova-color-accent-500);
+  --nova-marshal-admonition-warning-rail: var(--nova-color-warning-400);
+  --nova-marshal-admonition-warning-fill: color-mix(in srgb, var(--nova-color-warning-500), var(--nova-marshal-bg) 88%);
+  --nova-marshal-admonition-warning-ink: var(--nova-color-warning-400);
+  --nova-marshal-admonition-danger-rail: var(--nova-color-danger-400);
+  --nova-marshal-admonition-danger-fill: color-mix(in srgb, var(--nova-color-danger-500), var(--nova-marshal-bg) 88%);
+  --nova-marshal-admonition-danger-ink: var(--nova-color-danger-400);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nova-marshal-section-gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nova-marshal-section-gap: 3rem;
+  }
+}
+
+/* ============================
+ * 1.5. Keyframes - fade-in entrance
+ *
+ * Marshal's motion identity is no transform - only color + opacity.
+ * Pair with `var(--nova-marshal-transition)` (200ms ease) at use sites.
+ * ============================ */
+
+@keyframes marshal-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================
+ * 2. Body
+ * ============================ */
+
+body {
+  position: relative;
+  z-index: 0;
+  font-family: var(--nova-font-body);
+  color: var(--nova-marshal-ink);
+  background-color: var(--nova-marshal-bg);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: var(--nova-marshal-grain);
+  pointer-events: none;
+  z-index: -1;
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+main,
+.main-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+[data-theme="dark"] body::before {
+  mix-blend-mode: overlay;
+  opacity: 0.55;
+}
+
+/* Hero eyebrow - bracketed stamp. The brackets read as a stamp impression
+   wrapping the typed label. Mono uppercase sealed in seal-red brackets
+   makes this feel like a marshal's docket entry rather than a SaaS
+   capsule. */
+.nova-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+}
+
+.nova-hero-eyebrow::before {
+  content: "[";
+
+  font-family: var(--nova-font-code);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--nova-color-accent-700);
+}
+
+.nova-hero-eyebrow::after {
+  content: "]";
+
+  font-family: var(--nova-font-code);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-hero-eyebrow,
+[data-theme="dark"] .nova-hero-eyebrow::before,
+[data-theme="dark"] .nova-hero-eyebrow::after {
+  color: var(--nova-color-accent-500);
+}
+
+/* ============================
+ * 3. Features grid - hairline-bordered ledger cards
+ * ============================ */
+
+.nova-feature-card {
+  padding: 1.5rem;
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: var(--nova-marshal-radius-sharp);
+  transition: background-color var(--nova-marshal-transition), border-color var(--nova-marshal-transition);
+}
+
+.nova-feature-card:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-color-surface-raised) 96%);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-feature-card {
+  background-color: color-mix(in srgb, var(--nova-marshal-bg), #ffffff 5%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-feature-card:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 90%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 4. Stats - bold Plex Serif oldstyle tabular nums
+ * ============================ */
+
+.nova-stat-value {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  letter-spacing: -0.015em;
+  color: var(--nova-color-primary-800);
+  font-variant-numeric: oldstyle-nums tabular-nums;
+}
+
+[data-theme="dark"] .nova-stat-value {
+  color: var(--nova-color-primary-300);
+}
+
+.nova-stat-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+}
+
+/* ============================
+ * 4.5. Code snippet - stamped form-field card
+ * ============================ */
+
+.nova-code-snippet {
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: var(--nova-marshal-radius-sharp);
+}
+
+[data-theme="dark"] .nova-code-snippet {
+  background-color: color-mix(in srgb, var(--nova-marshal-bg), #ffffff 5%);
+}
+
+/* ============================
+ * 5. Surface alt - paper stripe with double hairline
+ * ============================ */
+
+.nova-surface-alt {
+  position: relative;
+  padding-block: 3rem;
+  background-color: color-mix(in srgb, var(--nova-marshal-bg), #ffffff 50%);
+  border-top: 1px solid var(--nova-marshal-border);
+  border-bottom: 1px solid var(--nova-marshal-border);
+  box-shadow:
+    inset 0 3px 0 -1px var(--nova-marshal-bg),
+    inset 0 4px 0 -1px var(--nova-marshal-border),
+    inset 0 -3px 0 -1px var(--nova-marshal-bg),
+    inset 0 -4px 0 -1px var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-surface-alt {
+  background-color: color-mix(in srgb, var(--nova-marshal-bg), #ffffff 12%);
+}
+
+/* ============================
+ * 6. Tags - square mono uppercase pill
+ * ============================ */
+
+.nova-tag {
+  padding: 0.18rem 0.5rem;
+  background-color: transparent;
+  color: var(--nova-color-primary-800);
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: var(--nova-marshal-radius-sharp);
+}
+
+[data-theme="dark"] .nova-tag {
+  color: var(--nova-color-primary-300);
+  border-color: var(--nova-marshal-border);
+}
+
+/* ============================
+ * 7. Reduced motion (REQUIRED)
+ * ============================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================
+ * 8. Focus outline (REQUIRED)
+ * ============================ */
+
+:focus-visible {
+  outline: 2px solid var(--nova-color-accent-600);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--nova-color-accent-500);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================
+ * 9. Links - green, no underline default, underline on hover
+ * ============================ */
+
+a {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--nova-color-primary-800);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+[data-theme="dark"] a {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] a:hover,
+[data-theme="dark"] a:focus-visible {
+  color: var(--nova-color-primary-200);
+}
+
+/* ============================
+ * 10. CTAs - green filled primary, ghost secondary, mono uppercase
+ * ============================ */
+
+.nova-cta-primary {
+  padding: 0.5rem 1.5rem;
+  background-color: var(--nova-color-primary-700);
+  color: var(--nova-color-text-inverse);
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--nova-color-primary-800);
+  border-radius: var(--nova-marshal-radius-sharp);
+  transition: background-color var(--nova-marshal-transition), border-color var(--nova-marshal-transition), color var(--nova-marshal-transition);
+}
+
+.nova-cta-primary:hover,
+.nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-800);
+  border-color: var(--nova-color-primary-900);
+  color: var(--nova-color-text-inverse);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-cta-primary {
+  background-color: var(--nova-color-primary-500);
+  color: var(--nova-color-text-inverse);
+  border-color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-cta-primary:hover,
+[data-theme="dark"] .nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-400);
+  /*
+   * On hover the bg lifts to primary-400 (light mint), so the cream
+   * text-inverse falls below 3:1 contrast and `[data-theme="dark"] a:hover`
+   * additionally tints the text primary-200 (very light mint). Drop to the
+   * darkest primary tier so hover keeps a readable dark-on-light reading
+   * against the brighter button surface.
+   */
+  color: var(--nova-color-primary-900);
+  border-color: var(--nova-color-primary-400);
+}
+
+.nova-cta-secondary {
+  padding: 0.5rem 1.5rem;
+  background-color: transparent;
+  color: var(--nova-color-primary-700);
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: var(--nova-marshal-radius-sharp);
+  transition: border-color var(--nova-marshal-transition), color var(--nova-marshal-transition);
+}
+
+.nova-cta-secondary:hover,
+.nova-cta-secondary:focus-visible {
+  border-color: var(--nova-color-primary-700);
+  color: var(--nova-color-primary-800);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-cta-secondary {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-cta-secondary:hover,
+[data-theme="dark"] .nova-cta-secondary:focus-visible {
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-200);
+}
+
+/* ============================
+ * 11. Scrollbar - thin green thumb on transparent track
+ *
+ * `scrollbar-width: thin` matches Marshal's compact density. Auto-adapts
+ * via the global primary scale: forest green in light mode, deeper green
+ * in dark.
+ * ============================ */
+
+html {
+  scrollbar-color: var(--nova-color-primary-300) transparent;
+  scrollbar-width: thin;
+}
+
+[data-theme="dark"] {
+  scrollbar-color: var(--nova-color-primary-700) transparent;
+}
+
+/* ============================
+ * Stats - typography (heading, value, label) and grid dividers
+ *
+ * Mirrored from sentinel and retinted with marshal's ledger ink tokens.
+ * Component overlay handles section rhythm; this block covers the
+ * voice and the divider lines.
+ * ============================ */
+
+.nova-stats-inner {
+  text-align: center;
+}
+
+.nova-stats-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--nova-marshal-ink);
+  border: none;
+  padding: 0;
+}
+
+.nova-stats-description {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-marshal-ink-muted);
+}
+
+.nova-stats-grid {
+  text-align: center;
+}
+
+.nova-stat {
+  padding: 1rem 0.75rem;
+  position: relative;
+}
+
+.nova-stat + .nova-stat {
+  border-left: 1px solid var(--nova-marshal-border);
+}
+
+.nova-stat:nth-child(odd) {
+  border-left: none;
+}
+
+.nova-stat:nth-child(n+3) {
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+.nova-stat-value {
+  font-family: var(--nova-font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.nova-stat-primary {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-stat-primary {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-stat-accent {
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-stat-accent {
+  color: var(--nova-color-accent-500);
+}
+
+.nova-stat-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .nova-stats-heading {
+    font-size: 1.5rem;
+  }
+
+  .nova-stats-description {
+    font-size: 1rem;
+  }
+
+  .nova-stat {
+    padding: 1.25rem 1rem;
+  }
+
+  .nova-stat:nth-child(odd) {
+    border-left: none;
+  }
+
+  .nova-stat:nth-child(n+3) {
+    border-top: none;
+  }
+
+  .nova-stat:nth-child(n+2) {
+    border-left: 1px solid var(--nova-marshal-border);
+  }
+
+  .nova-stat-value {
+    font-size: 2rem;
+  }
+
+  .nova-stat-label {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-stats-heading {
+    font-size: 1.75rem;
+  }
+
+  .nova-stat {
+    padding: 1.5rem 1rem;
+  }
+
+  .nova-stat-value {
+    font-size: 2.5rem;
+  }
+}
+
+/* ============================
+ * Spotlight - heading typography
+ *
+ * Mirrored from sentinel and retinted with marshal's ledger ink.
+ * ============================ */
+
+.nova-spotlight-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--nova-marshal-ink);
+  border: none;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .nova-spotlight-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-spotlight-heading {
+    font-size: 1.75rem;
+  }
+}

@@ -1,0 +1,43 @@
+---
+title: "Installation"
+sidebar_position: 1
+description: "Install Lantern via Spark CLI or Vial container. Pair the HomeKit Home Hub on the network and verify the install."
+tags:
+  - "setup"
+  - "installation"
+---
+
+# Installation
+
+Lantern installs from the Loom Registry or as a Vial container. Pick the path your hub already trusts.
+
+## Prerequisites
+
+- A HomeKit Home Hub on the network
+- Spark 3.0 or later (for CLI installation)
+- A quiet ten minutes — most installs finish before the kettle does
+
+## Install via Spark
+
+```bash title="Install Lantern"
+spark install lantern
+```
+
+Verify the install:
+
+```bash
+lantern --version
+```
+
+## Install via Vial
+
+```bash title="Pull the Lantern image"
+vial pull lantern/cli:latest
+```
+
+Run inside the home network's container plane. Lantern keeps to its own room.
+
+## What Comes Next
+
+- [Your First Watch](/docs/getting-started/first-watch/) — Arm a single zone before bedtime.
+- [Zones](/docs/zones/overview/) — Group sensors by where they live.

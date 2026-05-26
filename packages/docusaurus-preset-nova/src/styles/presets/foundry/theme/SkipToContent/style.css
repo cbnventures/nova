@@ -1,0 +1,18 @@
+/**
+ * Foundry - `SkipToContent` theme overlay.
+ *
+ * Defines per-preset shape, spacing, and timing tokens consumed by the shared
+ * theme/SkipToContent/style.css. Color tokens for the focus state live in
+ * preset.css.
+ *
+ * @since 0.18.0
+ */
+
+:root {
+  --nova-skip-radius: var(--nova-shape-radius);
+  --nova-skip-padding-y: 0.625rem;
+  --nova-skip-padding-x: 1.25rem;
+  --nova-skip-offset: 0.75rem;
+  --nova-skip-font-weight: 600;
+  --nova-skip-transition: transform 180ms ease, opacity 180ms ease;
+}

@@ -1,0 +1,102 @@
+---
+title: "在 14 个 Rampart 区域里轮换加密密钥"
+authors:
+  - "rafael"
+tags:
+  - "encryption"
+  - "compliance"
+  - "policy"
+date: "2026-01-08"
+---
+
+我们的合规框架要求每 90 天轮换一次加密密钥。听起来简单，直到你意识到 Sentinel 部署里的"加密密钥"意味着：每一个 Rampart 区域边界的 WireGuard 隧道密钥、每一个 Bastion 网关的 TLS 证书、每一台端点代理的设备注册密钥。在不打扰生产流量的情况下把它们全部轮换一遍，是一道用了我们三个季度才搞对的协调题。
+
+{/* truncate */}
+
+## 清点
+
+在轮换任何东西之前，我们得先知道我们有什么：
+
+```bash title="密钥清单"
+sentinel keys inventory --format table
+```
+
+```text title="密钥清单输出"
+Key Type                Count   Oldest           Rotation Period
+──────────────────────  ──────  ───────────────  ───────────────
+WireGuard 隧道密钥           48  2025-07-14       90 天
+Bastion TLS 证书              6  2025-09-01       365 天
+设备注册密钥              9,814  2024-01-18       180 天
+区域 CA 证书                14  2024-06-01       730 天
+Spyglass 签名密钥            2  2024-03-01       365 天
+```
+
+五种密钥，将近一万把单独的密钥。各自不同的轮换周期，各自不同的失败波及范围。
+
+## 朴素轮换的问题
+
+第一次轮换 WireGuard 隧道密钥时，我们走了显而易见的路：生成新密钥、下发、在一个协调好的时刻切换。它跑通了，但也带来了每个区域边界上 400 毫秒的流量中断——隧道在重新协商。
+
+400 毫秒听起来不算多。乘上 48 对隧道，再加上服务对失败请求的重试，下游观察到的是整个平台 12 秒的延迟尖峰。告警响起，值班工程师被叫醒。轮换是成功的，但波及范围不可接受。
+
+## 双密钥窗口
+
+我们用双密钥窗口解决了这个问题。我们不再原子地切换密钥，而是在过渡期内让旧密钥与新密钥同时有效：
+
+```text title="双密钥轮换时间线"
+Day 0：为区域边界生成新密钥对
+Day 0：将新密钥下发到隧道两端
+Day 0：两端同时接受旧密钥和新密钥（双密钥窗口打开）
+Day 1：新连接使用新密钥；旧连接在旧密钥上自然消耗
+Day 3：旧密钥标记为待删除（双密钥窗口关闭）
+Day 7：旧密钥从所有节点清理
+```
+
+在双密钥窗口内，两把密钥都有效。新连接用新密钥协商，旧连接继续走旧密钥直到自然关闭或被回收。没有协调切换、没有流量中断、没有告警。
+
+## 把节奏自动化
+
+五种密钥各有不同节奏，人工协调是不可能的。我们把轮换日历做进了 Citadel：
+
+```text title="trust-policy.grain — 轮换节奏"
+rotation "quarterly-tunnel-keys" {
+  key_type  = "wireguard-tunnel"
+  interval  = 90d
+  window    = 72h
+  strategy  = "dual-key"
+
+  on_failure {
+    action = "hold"
+    notify = ["security-ops"]
+    log    = "spyglass"
+  }
+}
+
+rotation "annual-bastion-certs" {
+  key_type  = "bastion-tls"
+  interval  = 365d
+  window    = 168h
+  strategy  = "dual-cert"
+
+  on_failure {
+    action = "hold"
+    notify = ["security-ops", "infrastructure"]
+    log    = "spyglass"
+  }
+}
+```
+
+每个轮换独立运行。如果一次轮换失败——节点不可达、密钥下发超时——策略是 hold，而不是重试。被 hold 的轮换会通知团队并等待人工介入。我们绝不会对一个没有确认收到密钥的系统强行切换。
+
+## 合规产物
+
+每一次轮换事件都会以完整谱系记录到 Spyglass：哪把密钥被轮换、涉及哪些节点、双密钥窗口何时打开、何时关闭、是否有任何连接被打断。合规报告就由这份日志生成：
+
+```bash title="合规轮换报告"
+sentinel spyglass export \
+  --type key-rotation \
+  --period 2025-Q4 \
+  --framework soc2
+```
+
+审计员拿到的报告显示：每一把密钥都在要求的间隔内完成了轮换、每一次轮换都使用了双密钥策略、零生产中断。证据是自动的，轮换是自动的，唯一的人工步骤是复核被 hold 的轮换——过去四个季度里，被 hold 的总共两次。

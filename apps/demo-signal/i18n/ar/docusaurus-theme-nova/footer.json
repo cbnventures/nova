@@ -1,0 +1,66 @@
+{
+  "layout.signal.title": {
+    "message": "Signal",
+    "description": "Title of footer column \"signal\""
+  },
+  "layout.insights.title": {
+    "message": "الرؤى",
+    "description": "Title of footer column \"insights\""
+  },
+  "layout.company.title": {
+    "message": "الشركة",
+    "description": "Title of footer column \"company\""
+  },
+  "layout.legal.title": {
+    "message": "القانوني",
+    "description": "Title of footer column \"legal\""
+  },
+  "sections.signal.0.label": {
+    "message": "دليل البدء",
+    "description": "Label of link 1 in footer section \"signal\""
+  },
+  "sections.signal.1.label": {
+    "message": "البداية السريعة",
+    "description": "Label of link 2 in footer section \"signal\""
+  },
+  "sections.signal.2.label": {
+    "message": "مرجع API",
+    "description": "Label of link 3 in footer section \"signal\""
+  },
+  "sections.insights.0.label": {
+    "message": "المدونة",
+    "description": "Label of link 1 in footer section \"insights\""
+  },
+  "sections.insights.1.label": {
+    "message": "دراسات حالة العملاء",
+    "description": "Label of link 2 in footer section \"insights\""
+  },
+  "sections.company.0.label": {
+    "message": "من نحن",
+    "description": "Label of link 1 in footer section \"company\""
+  },
+  "sections.company.1.label": {
+    "message": "الوظائف",
+    "description": "Label of link 2 in footer section \"company\""
+  },
+  "sections.legal.0.label": {
+    "message": "شروط الاستخدام",
+    "description": "Label of link 1 in footer section \"legal\""
+  },
+  "sections.legal.1.label": {
+    "message": "سياسة الخصوصية",
+    "description": "Label of link 2 in footer section \"legal\""
+  },
+  "sections.legal.2.label": {
+    "message": "تواصل معنا",
+    "description": "Label of link 3 in footer section \"legal\""
+  },
+  "cta.label": {
+    "message": "جاهز للعثور على إشارتك؟",
+    "description": "The footer call-to-action link label"
+  },
+  "copyright": {
+    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
+    "description": "The footer copyright text"
+  }
+}

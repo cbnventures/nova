@@ -5,7 +5,6 @@ import DocBreadcrumbs from '@theme/DocBreadcrumbs';
 import DocCardList from '@theme/DocCardList';
 import DocPaginator from '@theme/DocPaginator';
 import DocSidebarMobile from '@theme/DocSidebarMobile';
-import DocVersionBadge from '@theme/DocVersionBadge';
 import DocVersionBanner from '@theme/DocVersionBanner';
 import Heading from '@theme/Heading';
 
@@ -63,12 +62,14 @@ function DocCategoryGeneratedIndexPage(props: ThemeDocCategoryGeneratedIndexPage
         title={props['categoryGeneratedIndex']['title']}
         {...metadataSpread}
       />
-      <div className="nova-category-index">
+      <div
+        className={(props['className'] !== undefined) ? `nova-category-index ${props['className']}` : 'nova-category-index'}
+        style={props['style']}
+      >
         <article>
           <DocSidebarMobile />
           <DocBreadcrumbs />
           <DocVersionBanner />
-          <DocVersionBadge />
           <header>
             <Heading as="h1">
               {props['categoryGeneratedIndex']['title']}

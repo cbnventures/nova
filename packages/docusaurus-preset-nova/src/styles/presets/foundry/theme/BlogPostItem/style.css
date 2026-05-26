@@ -1,8 +1,51 @@
 /**
- * Foundry — Blog Post Item visual styling.
+ * Foundry - Blog Post Item visual styling.
+ *
+ * Industrial restraint voice - smaller post title (1.625 / 1.875rem),
+ * tighter card title (1.0625), industrial 1.6 content line-height,
+ * 2rem footer spacing. Smaller date/author/read-more (0.6875 / 0.8125)
+ * to distinguish from envoy.
  *
  * @since 0.15.0
  */
+
+/* ============================
+ * 0. Preset-owned blog-post typography tokens
+ * ============================ */
+
+:root {
+  --nova-foundry-blog-post-title-size: 1.625rem;
+  --nova-foundry-blog-post-title-size-md: 1.875rem;
+  --nova-foundry-blog-card-title-size: 1.0625rem;
+  --nova-foundry-blog-card-title-size-md: 1.1875rem;
+  --nova-foundry-blog-date-size: 0.6875rem;
+  --nova-foundry-blog-content-size: 0.875rem;
+  --nova-foundry-blog-content-line-height: 1.6;
+  --nova-foundry-blog-author-size: 0.8125rem;
+  --nova-foundry-blog-read-more-size: 0.8125rem;
+  --nova-foundry-blog-footer-spacing-top: 2rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogPostItem + below
+ * ============================ */
+
+:root {
+  --nova-blog-post-title-size: var(--nova-foundry-blog-post-title-size);
+  --nova-blog-post-title-size-md: var(--nova-foundry-blog-post-title-size-md);
+  --nova-blog-card-title-size: var(--nova-foundry-blog-card-title-size);
+  --nova-blog-card-title-size-md: var(--nova-foundry-blog-card-title-size-md);
+  --nova-blog-date-size: var(--nova-foundry-blog-date-size);
+  --nova-blog-content-size: var(--nova-foundry-blog-content-size);
+  --nova-blog-content-line-height: var(--nova-foundry-blog-content-line-height);
+  --nova-blog-author-size: var(--nova-foundry-blog-author-size);
+  --nova-blog-read-more-size: var(--nova-foundry-blog-read-more-size);
+  --nova-blog-footer-spacing-top: var(--nova-foundry-blog-footer-spacing-top);
+}
+
+/* ============================
+ * 1. Card - clean with subtle shadow
+ * ============================ */
 
 /* Clean card with subtle shadow and tight radius. */
 .nova-blog-post-item {
@@ -13,7 +56,7 @@
 
   transition: border-color var(--nova-motion-duration) ease,
               box-shadow calc(var(--nova-motion-duration) * 1.5) ease,
-              transform var(--nova-motion-duration) cubic-bezier(0.22, 1, 0.36, 1);
+              transform var(--nova-motion-duration) var(--nova-motion-easing);
 }
 
 @media (min-width: 768px) {
@@ -47,19 +90,21 @@
  * 2. Header
  * ============================ */
 
-/* Date label — neutral, understated. */
+/* Date label - neutral, understated. */
 .nova-blog-post-item-header time {
   display: block;
   margin-bottom: 0.5rem;
 
-  font-size: 0.75rem;
+  font-size: var(--nova-blog-date-size, 0.6875rem);
   font-weight: 500;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-/* Post title — clean, body font. */
+/* Post title - clean, body font. h1 size flows from shared CSS via
+   canonical token (--nova-blog-post-title-size); h2 size is consumed
+   below in this overlay. */
 .nova-blog-post-item-header h1,
 .nova-blog-post-item-header h2 {
   margin: 0 0 0.75rem;
@@ -69,18 +114,23 @@
 }
 
 .nova-blog-post-item-header h1 {
-  font-size: 1.75rem;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
 }
 
 .nova-blog-post-item-header h2 {
-  font-size: 1.125rem;
-  color: var(--nova-color-neutral-900);
+  font-size: var(--nova-blog-card-title-size, 1.0625rem);
+  color: var(--nova-color-text);
+}
+
+@media (min-width: 768px) {
+  .nova-blog-post-item-header h2 {
+    font-size: var(--nova-blog-card-title-size-md, 1.1875rem);
+  }
 }
 
 [data-theme="dark"] .nova-blog-post-item-header h1,
 [data-theme="dark"] .nova-blog-post-item-header h2 {
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
 }
 
 /* Title link inherits color. */
@@ -121,13 +171,15 @@
   border-radius: 50%;
 }
 
-.nova-blog-post-item-author span {
-  font-size: 0.875rem;
-  color: var(--nova-color-neutral-500);
+.nova-blog-post-item-author span,
+.nova-blog-post-item-author-link {
+  font-size: var(--nova-blog-author-size, 0.8125rem);
+  color: var(--nova-color-text-muted);
 }
 
-[data-theme="dark"] .nova-blog-post-item-author span {
-  color: var(--nova-color-neutral-400);
+[data-theme="dark"] .nova-blog-post-item-author span,
+.nova-blog-post-item-author-link {
+  color: var(--nova-color-text-muted);
 }
 
 /* ============================
@@ -135,22 +187,18 @@
  * ============================ */
 
 .nova-blog-post-item-content {
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  color: var(--nova-color-neutral-600);
-}
-
-[data-theme="dark"] .nova-blog-post-item-content {
-  color: var(--nova-color-neutral-400);
+  font-size: var(--nova-blog-content-size, 0.875rem);
+  line-height: var(--nova-blog-content-line-height, 1.6);
+  color: var(--nova-color-text-muted);
 }
 
 /* ============================
  * 5. Footer
  * ============================ */
 
-/* Footer — top border separator. */
+/* Footer - top border separator. */
 .nova-blog-post-item-footer {
-  margin-top: 2.5rem;
+  margin-top: var(--nova-blog-footer-spacing-top, 2rem);
   padding-top: 1.5rem;
   border-top: 1px solid var(--nova-foundry-border-subtle);
 }
@@ -161,14 +209,13 @@
 
 @media (min-width: 768px) {
   .nova-blog-post-item-footer {
-    margin-top: 2rem;
     padding-top: 2rem;
   }
 }
 
-/* Read-more link — primary, clean. */
+/* Read-more link - primary, clean. */
 .nova-blog-post-item-read-more {
-  font-size: 0.875rem;
+  font-size: var(--nova-blog-read-more-size, 0.8125rem);
   font-weight: 600;
   color: var(--nova-color-primary-600);
 
@@ -180,6 +227,7 @@
 .nova-blog-post-item-read-more:hover,
 .nova-blog-post-item-read-more:focus-visible {
   color: var(--nova-color-primary-700);
+  text-decoration: none;
 }
 
 [data-theme="dark"] .nova-blog-post-item-read-more {
@@ -190,4 +238,3 @@
 [data-theme="dark"] .nova-blog-post-item-read-more:focus-visible {
   color: var(--nova-color-primary-300);
 }
-

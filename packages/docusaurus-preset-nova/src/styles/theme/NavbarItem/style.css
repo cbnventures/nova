@@ -1,5 +1,129 @@
 /**
- * Navbar Item — Shared structural styles.
+ * Navbar Item - Shared structural styles.
  *
  * @since 0.15.0
  */
+
+/**
+ * ============================
+ * 0. Item wrapper - shared chrome height
+ * ============================
+ *
+ * Every <NavbarItem> renders inside a <span class="nova-navbar-item">.
+ * The wrapper enforces the standard navbar chrome height (2.25rem) so
+ * inline links and dropdowns align vertically with the search bar,
+ * hamburger, locale dropdown, and other 36px chrome.
+ */
+
+.nova-navbar-item {
+  display: block;
+  min-height: 2.25rem;
+}
+
+/**
+ * ============================
+ * 1. Locale dropdown - disclosure with absolute popover
+ * ============================
+ */
+
+.nova-locale-dropdown {
+  position: relative;
+}
+
+.nova-locale-dropdown-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.nova-locale-dropdown-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-locale-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  z-index: 100;
+
+  margin: 0;
+  padding: 0.25rem 0;
+  min-width: 9rem;
+
+  list-style: none;
+}
+
+.nova-locale-dropdown-item {
+  display: block;
+}
+
+.nova-locale-dropdown-item-link {
+  display: block;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* Override the global `a:hover` underline rule defined in each preset's
+   `preset.css` - utility-component links never get underlined. */
+.nova-locale-dropdown-item-link:hover,
+.nova-locale-dropdown-item-link:focus-visible {
+  text-decoration: none;
+}
+
+/**
+ * ============================
+ * 2. Version dropdown - disclosure with absolute popover
+ * ============================
+ */
+
+.nova-version-dropdown {
+  position: relative;
+}
+
+.nova-version-dropdown-summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+}
+
+.nova-version-dropdown-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-version-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  z-index: 100;
+
+  margin: 0;
+  padding: 0.25rem 0;
+  min-width: 8rem;
+
+  list-style: none;
+}
+
+.nova-version-dropdown-item {
+  display: block;
+}
+
+.nova-version-dropdown-item-link {
+  display: block;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+/* Override the global `a:hover` underline rule defined in each preset's
+   `preset.css` - utility-component links never get underlined. */
+.nova-version-dropdown-item-link:hover,
+.nova-version-dropdown-item-link:focus-visible {
+  text-decoration: none;
+}

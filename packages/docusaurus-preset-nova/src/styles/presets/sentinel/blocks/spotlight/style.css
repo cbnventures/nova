@@ -1,0 +1,13 @@
+/**
+ * Sentinel - `spotlight` component overlay.
+ *
+ * Single-column constrained block. Heading + description styling already
+ * lives in preset.css; this file adds section-level layout / rhythm.
+ *
+ * @since 0.18.0
+ */
+
+.nova-spotlight-heading {
+  margin-bottom: 0.75rem;
+  text-align: center;
+}

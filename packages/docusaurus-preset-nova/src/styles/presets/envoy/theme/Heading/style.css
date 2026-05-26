@@ -1,5 +1,5 @@
 /**
- * Envoy — Typography: headings.
+ * Envoy - Typography: headings.
  *
  * @since 0.15.0
  */
@@ -15,11 +15,10 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--nova-font-display);
   font-weight: 700;
   line-height: 1.3;
 
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
 }
 
 [data-theme="dark"] h1,
@@ -28,7 +27,7 @@ h6 {
 [data-theme="dark"] h4,
 [data-theme="dark"] h5,
 [data-theme="dark"] h6 {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 }
 
 h1 {
@@ -41,6 +40,18 @@ h2 {
 
 h3 {
   font-size: 1.25rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: 0.9375rem;
 }
 
 /* Responsive typography scaling at sm, md, and lg breakpoints. */

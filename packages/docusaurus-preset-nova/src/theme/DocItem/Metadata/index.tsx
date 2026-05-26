@@ -4,6 +4,8 @@ import { PageMetadata } from '@docusaurus/theme-common';
 import type {
   ThemeDocItemMetadataDocItemMetadataDoc,
   ThemeDocItemMetadataDocItemMetadataImage,
+  ThemeDocItemMetadataDocItemMetadataMergedClassName,
+  ThemeDocItemMetadataDocItemMetadataProps,
   ThemeDocItemMetadataDocItemMetadataSpread,
 } from '../../../types/theme/DocItem/Metadata/index.d.ts';
 
@@ -14,11 +16,13 @@ import type {
  * description, keywords, and image from front matter
  * and asset metadata.
  *
+ * @param {ThemeDocItemMetadataDocItemMetadataProps} props - Props.
+ *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocItemMetadata() {
+function DocItemMetadata(props: ThemeDocItemMetadataDocItemMetadataProps) {
   const doc: ThemeDocItemMetadataDocItemMetadataDoc = useDoc();
   const metadataSpread: ThemeDocItemMetadataDocItemMetadataSpread = {};
 
@@ -35,6 +39,11 @@ function DocItemMetadata() {
   if (metadataImage !== undefined) {
     Reflect.set(metadataSpread, 'image', metadataImage);
   }
+
+  const mergedClassName: ThemeDocItemMetadataDocItemMetadataMergedClassName = (props['className'] !== undefined) ? `nova-doc-item-metadata ${props['className']}` : 'nova-doc-item-metadata';
+
+  Reflect.set(metadataSpread, 'className', mergedClassName);
+  Reflect.set(metadataSpread, 'style', props['style']);
 
   return (
     <PageMetadata

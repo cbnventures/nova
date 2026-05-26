@@ -1,0 +1,38 @@
+/**
+ * Blog Components - Author - Socials - Shared structural styles.
+ *
+ * Layout-only rules: row of icon links. Color and hover treatment belong in
+ * preset overlays.
+ *
+ * @since 0.18.0
+ */
+
+/* Socials row - horizontal flex of icon links. */
+.nova-blog-author-socials {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin-top: 0.25rem;
+}
+
+/* Social link - icon-button container. Background, border, and corner shape
+   come from per-preset overlays so each preset matches its identity. */
+.nova-blog-author-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 2rem;
+  height: 2rem;
+
+  transition:
+    background-color var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-author-social-icon {
+  width: 1rem;
+  height: 1rem;
+}

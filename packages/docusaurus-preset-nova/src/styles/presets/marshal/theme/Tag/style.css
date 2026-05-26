@@ -1,0 +1,54 @@
+/**
+ * Marshal - `Tag` theme overlay.
+ *
+ * Base `.nova-tag` rule lives in preset.css. Here: hover/focus + adjacent
+ * affordance (count). Mono uppercase 2px square pills with hairline border,
+ * accent-tinted on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Tag - hover / focus
+ * ============================
+ */
+
+.nova-tag {
+  transition: color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
+}
+
+.nova-tag:hover,
+.nova-tag:focus-visible {
+  color: var(--nova-color-accent-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 94%);
+  border-color: var(--nova-color-accent-600);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-tag:hover,
+[data-theme="dark"] .nova-tag:focus-visible {
+  color: var(--nova-color-accent-500);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 86%);
+  border-color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 2. Tag count - muted page-folio
+ * ============================
+ */
+
+.nova-tag-count {
+  font-family: var(--nova-font-code);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+}

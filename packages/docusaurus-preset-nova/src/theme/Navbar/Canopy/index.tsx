@@ -1,13 +1,29 @@
 import Link from '@docusaurus/Link';
 import { translate } from '@docusaurus/Translate';
+import Logo from '@theme/Logo';
 import NavbarItem from '@theme/NavbarItem';
 import { SearchInput, SearchProvider, SearchResults } from '@theme/SearchBar';
 
+import { useNavbarOverflow } from '../../../lib/use-navbar-overflow.js';
+import More from '../More/index.js';
+
 import type {
+  LibUseNavbarOverflowHasOverflow,
+  LibUseNavbarOverflowMeasureRef,
+  LibUseNavbarOverflowMeasuring,
+  LibUseNavbarOverflowReturns,
+  LibUseNavbarOverflowVisibleCount,
+} from '../../../types/lib/use-navbar-overflow.d.ts';
+
+import type {
+  ThemeNavbarCanopyIndexCanopyActionItems,
+  ThemeNavbarCanopyIndexCanopyActiveItemLabel,
   ThemeNavbarCanopyIndexCanopyColorModeLabel,
   ThemeNavbarCanopyIndexCanopyHamburgerLabel,
   ThemeNavbarCanopyIndexCanopyItems,
+  ThemeNavbarCanopyIndexCanopyNavAriaLabel,
   ThemeNavbarCanopyIndexCanopyNavbarClassName,
+  ThemeNavbarCanopyIndexCanopyNavbarItemKey,
   ThemeNavbarCanopyIndexCanopyNavbarItemSpread,
   ThemeNavbarCanopyIndexCanopyOnColorModeToggle,
   ThemeNavbarCanopyIndexCanopyOnMenuToggle,
@@ -36,12 +52,19 @@ import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
 function Canopy(props: ThemeNavbarCanopyIndexCanopyProps): ThemeNavbarCanopyIndexCanopyReturns {
   const siteLogo: ThemeNavbarCanopyIndexCanopySiteLogo = props['siteLogo'];
   const items: ThemeNavbarCanopyIndexCanopyItems = props['items'];
+  const actionItems: ThemeNavbarCanopyIndexCanopyActionItems = props['actionItems'];
   const colorModeLabel: ThemeNavbarCanopyIndexCanopyColorModeLabel = props['colorModeLabel'];
   const onColorModeToggle: ThemeNavbarCanopyIndexCanopyOnColorModeToggle = props['onColorModeToggle'];
   const hamburgerLabel: ThemeNavbarCanopyIndexCanopyHamburgerLabel = props['hamburgerLabel'];
   const onMenuToggle: ThemeNavbarCanopyIndexCanopyOnMenuToggle = props['onMenuToggle'];
+  const activeItemLabel: ThemeNavbarCanopyIndexCanopyActiveItemLabel = props['activeItemLabel'];
   const navbarClassName: ThemeNavbarCanopyIndexCanopyNavbarClassName = 'nova-navbar-canopy';
 
+  const navAriaLabel: ThemeNavbarCanopyIndexCanopyNavAriaLabel = translate({
+    id: 'theme.navbar.navAriaLabel',
+    message: 'Main',
+    description: 'The ARIA label for the main site navigation landmark',
+  });
   const openMenuAriaLabel: ThemeNavbarCanopyIndexCanopyOpenMenuAriaLabel = translate({
     id: 'theme.navbar.openMenuAriaLabel',
     message: 'Open menu',
@@ -53,74 +76,61 @@ function Canopy(props: ThemeNavbarCanopyIndexCanopyProps): ThemeNavbarCanopyInde
     description: 'The ARIA label for the button that cycles through color modes',
   });
 
+  const overflow: LibUseNavbarOverflowReturns = useNavbarOverflow({
+    items,
+    budgetVariable: '--nova-navbar-canopy-items-max-width',
+    triggerVariable: '--nova-navbar-more-width',
+  });
+  const measureRef: LibUseNavbarOverflowMeasureRef = overflow['measureRef'];
+  const visibleCount: LibUseNavbarOverflowVisibleCount = overflow['visibleCount'];
+  const hasOverflow: LibUseNavbarOverflowHasOverflow = overflow['hasOverflow'];
+  const measuring: LibUseNavbarOverflowMeasuring = overflow['measuring'];
+  const visibleItems: ThemeNavbarCanopyIndexCanopyItems = items.slice(0, visibleCount);
+  const overflowItems: ThemeNavbarCanopyIndexCanopyItems = items.slice(visibleCount);
+
   return (
-    <nav className={navbarClassName}>
-      <div className="nova-navbar-canopy nova-container">
+    <nav
+      className={(props['className'] !== undefined) ? `${navbarClassName} ${props['className']}` : navbarClassName}
+      style={props['style']}
+      aria-label={navAriaLabel}
+    >
+      <div className="nova-container">
         <div className="nova-navbar-canopy-brand">
-          <Link to={siteLogo['href'] ?? '/'}>
-            {(siteLogo['wordmark'] !== undefined) && (
-              <img
-                className={(siteLogo['wordmarkDark'] !== undefined) ? 'nova-brand-light' : undefined}
-                src={siteLogo['wordmark']}
-                alt={siteLogo['alt']}
-              />
-            )}
-            {(
-              siteLogo['wordmark'] !== undefined
-              && siteLogo['wordmarkDark'] !== undefined
-            ) && (
-              <img
-                className="nova-brand-dark"
-                src={siteLogo['wordmarkDark']}
-                alt={siteLogo['alt']}
-              />
-            )}
-            {(
-              siteLogo['wordmark'] === undefined
-              && siteLogo['src'] !== undefined
-            ) && (
-              <img
-                className={(siteLogo['srcDark'] !== undefined) ? 'nova-brand-light' : undefined}
-                src={siteLogo['src']}
-                alt={siteLogo['alt']}
-              />
-            )}
-            {(
-              siteLogo['wordmark'] === undefined
-              && siteLogo['src'] !== undefined
-              && siteLogo['srcDark'] !== undefined
-            ) && (
-              <img
-                className="nova-brand-dark"
-                src={siteLogo['srcDark']}
-                alt={siteLogo['alt']}
-              />
-            )}
-            {(
-              siteLogo['wordmark'] === undefined
-              && siteLogo['title'] !== undefined
-            ) && (
-              <span>{siteLogo['title']}</span>
-            )}
+          <Link
+            to={siteLogo['href'] ?? '/'}
+            target={siteLogo['target']}
+            rel={siteLogo['rel']}
+            aria-label={siteLogo['ariaLabel']}
+          >
+            <Logo siteLogo={siteLogo} />
           </Link>
         </div>
-        <div className="nova-navbar-canopy-items">
+        <div ref={measureRef} className="nova-navbar-canopy-items nova-navbar-items-measure" aria-hidden="true">
           {
             items.map((navItem: ThemeNavbarItem) => (
               <NavbarItem
                 key={navItem['label']}
                 {...navItem as ThemeNavbarCanopyIndexCanopyNavbarItemSpread}
+                isActiveItem={navItem['label'] === activeItemLabel}
               />
             ))
           }
         </div>
+        <div className={(measuring === true) ? 'nova-navbar-canopy-items nova-navbar-items-measuring' : 'nova-navbar-canopy-items'}>
+          {
+            visibleItems.map((navItem: ThemeNavbarItem) => (
+              <NavbarItem
+                key={navItem['label']}
+                {...navItem as ThemeNavbarCanopyIndexCanopyNavbarItemSpread}
+                isActiveItem={navItem['label'] === activeItemLabel}
+              />
+            ))
+          }
+          {(hasOverflow === true) && (
+            <More items={overflowItems} activeItemLabel={activeItemLabel} />
+          )}
+        </div>
         <div className="nova-navbar-canopy-actions">
-          <SearchProvider>
-            <div className="nova-search-anchor">
-              <SearchInput />
-              <SearchResults />
-            </div>
-          </SearchProvider>
           <button
             className="nova-hamburger-toggle"
             type="button"
@@ -129,6 +139,20 @@ function Canopy(props: ThemeNavbarCanopyIndexCanopyProps): ThemeNavbarCanopyInde
           >
             {hamburgerLabel}
           </button>
+          <SearchProvider>
+            <div className="nova-search-anchor">
+              <SearchInput />
+              <SearchResults />
+            </div>
+          </SearchProvider>
+          {
+            actionItems.map((navItem: ThemeNavbarItem) => (
+              <NavbarItem
+                key={(navItem['type'] as ThemeNavbarCanopyIndexCanopyNavbarItemKey) ?? (navItem['label'])}
+                {...navItem as ThemeNavbarCanopyIndexCanopyNavbarItemSpread}
+              />
+            ))
+          }
           <button
             className="nova-color-mode-toggle"
             type="button"

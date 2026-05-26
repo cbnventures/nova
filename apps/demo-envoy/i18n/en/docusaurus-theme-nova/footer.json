@@ -1,0 +1,70 @@
+{
+  "layout.envoy.title": {
+    "message": "Envoy",
+    "description": "Title of footer column \"envoy\""
+  },
+  "layout.integrations.title": {
+    "message": "Integrations",
+    "description": "Title of footer column \"integrations\""
+  },
+  "layout.company.title": {
+    "message": "Company",
+    "description": "Title of footer column \"company\""
+  },
+  "layout.legal.title": {
+    "message": "Legal",
+    "description": "Title of footer column \"legal\""
+  },
+  "sections.envoy.0.label": {
+    "message": "Getting Started",
+    "description": "Label of link 1 in footer section \"envoy\""
+  },
+  "sections.envoy.1.label": {
+    "message": "Installation",
+    "description": "Label of link 2 in footer section \"envoy\""
+  },
+  "sections.envoy.2.label": {
+    "message": "API Reference",
+    "description": "Label of link 3 in footer section \"envoy\""
+  },
+  "sections.integrations.0.label": {
+    "message": "Threadbare",
+    "description": "Label of link 1 in footer section \"integrations\""
+  },
+  "sections.integrations.1.label": {
+    "message": "Glassboard",
+    "description": "Label of link 2 in footer section \"integrations\""
+  },
+  "sections.integrations.2.label": {
+    "message": "Canary",
+    "description": "Label of link 3 in footer section \"integrations\""
+  },
+  "sections.company.0.label": {
+    "message": "About",
+    "description": "Label of link 1 in footer section \"company\""
+  },
+  "sections.company.1.label": {
+    "message": "Careers",
+    "description": "Label of link 2 in footer section \"company\""
+  },
+  "sections.legal.0.label": {
+    "message": "Terms of Use",
+    "description": "Label of link 1 in footer section \"legal\""
+  },
+  "sections.legal.1.label": {
+    "message": "Privacy Policy",
+    "description": "Label of link 2 in footer section \"legal\""
+  },
+  "sections.legal.2.label": {
+    "message": "Get In Touch",
+    "description": "Label of link 3 in footer section \"legal\""
+  },
+  "cta.label": {
+    "message": "Ready to deploy?",
+    "description": "The footer call-to-action link label"
+  },
+  "copyright": {
+    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
+    "description": "The footer copyright text"
+  }
+}

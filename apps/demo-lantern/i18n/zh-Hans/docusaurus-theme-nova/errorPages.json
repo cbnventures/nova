@@ -1,0 +1,26 @@
+{
+  "notFound.title": {
+    "message": "这一条没有记进日志。",
+    "description": "The 404 page heading set by the consumer in themeConfig.errorPages.notFound.title"
+  },
+  "notFound.description": {
+    "message": "它可能遗失在某两页之间，又或从未被写下来过。",
+    "description": "The 404 page description set by the consumer in themeConfig.errorPages.notFound.description"
+  },
+  "notFound.backHomeLabel": {
+    "message": "回到目录",
+    "description": "The 404 page \"Back to home\" CTA label set by the consumer in themeConfig.errorPages.notFound.backHomeLabel"
+  },
+  "errorPageContent.title": {
+    "message": "这一条目无法打开。",
+    "description": "The per-page crash heading set by the consumer in themeConfig.errorPages.errorPageContent.title"
+  },
+  "errorPageContent.retryLabel": {
+    "message": "重新打开",
+    "description": "The per-page crash retry button label set by the consumer in themeConfig.errorPages.errorPageContent.retryLabel"
+  },
+  "error.retryLabel": {
+    "message": "重试记录",
+    "description": "The top-level error boundary retry button label set by the consumer in themeConfig.errorPages.error.retryLabel"
+  }
+}

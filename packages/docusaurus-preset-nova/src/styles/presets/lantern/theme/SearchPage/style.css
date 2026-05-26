@@ -1,0 +1,127 @@
+/**
+ * Lantern - `SearchPage` theme overlay.
+ *
+ * Warm cream paper with amber dust. Page heading uses display Fraunces
+ * italic, results render as paper cards with a soft amber wash on hover, and
+ * snippets read as muted ink. Mirrors the SearchBar input chrome - same
+ * cream tint, same amber focus ring.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container & Header
+ * ============================ */
+
+.nova-search-page-header h1 {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  color: var(--nova-lantern-ink);
+}
+
+[data-theme="dark"] .nova-search-page-header h1 {
+  color: var(--nova-lantern-ink);
+}
+
+/* ============================
+ * 2. Search Input
+ * ============================ */
+
+.nova-search-page-input {
+  font-family: var(--nova-font-body);
+  color: var(--nova-lantern-ink);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border-color: var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+  transition: border-color var(--nova-lantern-transition),
+              box-shadow var(--nova-lantern-transition);
+}
+
+.nova-search-page-input::placeholder {
+  color: var(--nova-lantern-ink-muted);
+}
+
+[data-theme="dark"] .nova-search-page-input {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+}
+
+.nova-search-page-input:focus {
+  border-color: var(--nova-color-primary-500);
+  box-shadow: 0 0 0 var(--nova-lantern-focus-ring-width) color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+[data-theme="dark"] .nova-search-page-input:focus {
+  border-color: var(--nova-color-primary-400);
+  box-shadow: 0 0 0 var(--nova-lantern-focus-ring-width) color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
+}
+
+/* ============================
+ * 3. Result Cards
+ * ============================ */
+
+.nova-search-page-item a {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border-color: var(--nova-lantern-border);
+  border-radius: var(--nova-lantern-radius-card);
+  transition: background-color var(--nova-lantern-transition-fast),
+              border-color var(--nova-lantern-transition-fast);
+}
+
+[data-theme="dark"] .nova-search-page-item a {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+}
+
+.nova-search-page-item a:hover,
+.nova-search-page-item a:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-search-page-item a:hover,
+[data-theme="dark"] .nova-search-page-item a:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+.nova-search-page-item-title {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-weight: 500;
+  color: var(--nova-lantern-ink);
+}
+
+.nova-search-page-item-snippet {
+  font-family: var(--nova-font-body);
+  color: var(--nova-lantern-ink-muted);
+}
+
+/* ============================
+ * 4. State Messages
+ * ============================ */
+
+.nova-search-page-loading,
+.nova-search-page-searching,
+.nova-search-page-empty {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  color: var(--nova-lantern-ink-muted);
+}
+
+[data-theme="dark"] .nova-search-page-loading,
+[data-theme="dark"] .nova-search-page-searching,
+[data-theme="dark"] .nova-search-page-empty {
+  color: var(--nova-lantern-ink-muted);
+}
+
+.nova-search-page-error {
+  font-family: var(--nova-font-body);
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-search-page-error {
+  color: var(--nova-color-primary-300);
+}

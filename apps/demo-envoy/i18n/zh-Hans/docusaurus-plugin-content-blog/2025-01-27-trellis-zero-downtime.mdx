@@ -1,0 +1,92 @@
+---
+title: "用 Trellis 与 Vial 做到零停机部署"
+authors:
+  - "anders"
+tags:
+  - "deployment"
+  - "scaling"
+  - "vial"
+date: "2025-01-27"
+---
+
+我们在一月里部署了 47 次 Envoy：零停机、零丢失消息、客户无感。但情况并非一向如此。
+
+去年九月，一次部署在 12 秒的窗口里丢了 340 条消息。这是我们如何修复它的故事，也是真正的零停机部署对一个中继平台到底意味着什么。
+
+{/* truncate */}
+
+## 九月的事故
+
+Trellis 管理 Envoy 的容器生命周期。新版本部署时，Trellis 启动一个新 Vial 实例，等其健康检查通过、把流量切过去，再停掉旧实例——一次简单的滚动发布。
+
+问题出在"切换流量"与"旧实例处理完在途中继"之间的缝隙。Trellis 在切流量后立刻向旧实例发出 SIGTERM；任何处于投递中途的中继——TCP 连接已开、载荷还在传、等着响应——都被直接杀掉了。
+
+```text title="部署过程中的消息丢失 — 2024-09-17"
+14:22:00  Deploy triggered for envoy v0.41.3
+14:22:03  New instance health check passes
+14:22:03  Traffic shifts to new instance
+14:22:03  SIGTERM sent to old instance
+14:22:03  Old instance begins shutdown
+14:22:04  127 in-flight relays terminated (TCP RST)
+14:22:04  213 queued relays lost (not yet persisted to Ledger)
+14:22:15  Old instance exits
+──────────────────────────────────────────────────
+Total messages lost: 340
+```
+
+340 条消息。其中一部分是支付确认，客户比我们先发现。
+
+## 优雅排空
+
+修复方案分三步：
+
+1. **停止接收。** Trellis 发出关停信号后，Courier 立刻停止接收新中继。健康检查端点开始返回 503，告诉 Trellis 把新流量发往别处。
+2. **排空在途。** Courier 继续处理所有已经在流水线里的中继。每一条最多有 30 秒时间完成投递并把结果写入 Ledger。
+3. **持久化队列。** 任何在关停信号之后、流量完全切走之前到达的中继都会被写入交接文件。新实例在启动时读取该文件并优先处理。
+
+```text title="优雅排空时间线"
+T+0.0s   SIGTERM received
+T+0.0s   Health check → 503 (stop new traffic)
+T+0.0s   Courier stops accepting new relays
+T+0.1s   In-flight relays continue processing
+T+0.1s   Late-arriving relays written to handoff file
+...
+T+8.4s   Last in-flight relay completes
+T+8.4s   Handoff file closed (12 relays persisted)
+T+8.5s   Old instance exits cleanly
+T+8.5s   New instance reads handoff file
+T+8.6s   12 handoff relays processed
+```
+
+实践中，整个排空通常在 8 到 10 秒内完成；上限是 30 秒。若仍有中继未能完成，会被强制写入交接文件，交由新实例继续重试。
+
+## 健康检查作为约定
+
+健康检查不只是"进程是否还活着"。它是 Envoy 与 Trellis 之间的契约，用来传达三种状态：
+
+| 健康检查响应                   | 含义       | Trellis 动作 |
+|--------------------------|----------|------------|
+| 200 OK                   | 准备好接受流量  | 把流量路由到这里   |
+| 200 OK + `X-Drain: true` | 正在排空，仍存活 | 停止路由、继续等待  |
+| 503 Service Unavailable  | 正在关停     | 停止路由、启动替换  |
+| 无响应                      | 已死       | 立即杀掉并替换    |
+
+`X-Drain: true` 头至关重要：它告诉 Trellis 实例仍活着，但正在收尾。Trellis 既不会再向它路由新流量，也不会杀掉它，给它时间把活干完。
+
+## 结果
+
+自 10 月引入优雅排空之后：
+
+- **一月内 47 次部署**
+- 期间**零条消息丢失**
+- **平均排空时间：** 8.4 秒
+- **最长排空时间：** 22.1 秒（在一次流量尖峰中）
+- **每次部署的交接中继数：** 3-15（视流量而定）
+
+3MB 的 Vial 镜像在这里也帮上了忙。冷启动在 200ms 内完成，因此新实例往往在旧实例还没排空完之前就准备好了，几乎不存在没有实例接收流量的空档。
+
+## 教训
+
+零停机部署不是关于部署得更快，而是关于关停得更慢。新实例是简单的——它启动、接客、工作；真正难的是旧实例：它有状态、有在途任务，需要时间把事情做完。
+
+给它那段时间。排空连接、持久化队列，让进程有尊严地退场。消息会感谢你的。

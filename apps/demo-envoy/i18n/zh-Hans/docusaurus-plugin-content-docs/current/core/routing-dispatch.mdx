@@ -1,0 +1,134 @@
+---
+title: "路由与分发"
+sidebar_position: 2
+description: "基于内容的路由、严重程度升级、主题分发，以及条件性投递规则。"
+tags:
+  - "core"
+  - "routing"
+---
+
+# 路由与分发
+
+Dispatch 是 Envoy 的路由引擎。Parcel 完成载荷转换后，Dispatch 决定它去向何处。路由决策可基于内容、来源身份、严重程度，或中继清单中声明的自定义规则。
+
+## 基于内容的路由
+
+最简单的路由策略：检视载荷，按其内容路由。Dispatch 按声明顺序依次求值各中继的 `filter` 块，首个匹配胜出。
+
+```text title="relay.grain — 基于内容的路由"
+relay "critical-alerts" {
+  source = "glassboard"
+  filter { severity = "critical" }
+  destination = "canary://oncall-urgent"
+  transform { priority = 5 }
+}
+
+relay "warning-alerts" {
+  source = "glassboard"
+  filter { severity = "warning" }
+  destination = "canary://infra-alerts"
+  transform { priority = 3 }
+}
+
+relay "info-alerts" {
+  source = "glassboard"
+  destination = "canary://infra-log"
+  transform { priority = 1 }
+}
+```
+
+critical 级的 Glassboard 告警路由到 `oncall-urgent`，warning 级路由到 `infra-alerts`，其余则落到 `infra-log`。
+
+## 严重程度升级
+
+Dispatch 可根据严重程度阈值升级消息。当某来源在时间窗口内反复触发告警时，有效严重程度会上升，路由也随之改变。
+
+```text title="升级规则"
+escalation {
+  source   = "glassboard"
+  window   = "5m"
+  thresholds {
+    3  = "warning"     # 5 分钟内 3 条告警 → 升级为 warning
+    10 = "critical"    # 5 分钟内 10 条告警 → 升级为 critical
+  }
+}
+```
+
+| 5 分钟窗口内告警数 | 原始严重程度 | 有效严重程度   | 路由至                    |
+|------------|--------|----------|------------------------|
+| 1          | info   | info     | canary://infra-log     |
+| 3          | info   | warning  | canary://infra-alerts  |
+| 10         | info   | critical | canary://oncall-urgent |
+
+:::warning
+升级只改变用于路由的有效严重程度。载荷中的原始严重程度会原样保留到 Ledger，从而在保留路由灵活性的同时保证审计准确。
+:::
+
+## 主题分发
+
+一条进入的消息可以投递到多个目的地。用 `fanout` 列表替换单一的 `destination` 即可。
+
+```text title="relay.grain — fanout"
+relay "deploy-notifications" {
+  source = "threadbare"
+  filter { event = "release" }
+
+  // highlight-start
+  fanout = [
+    "canary://deploy-alerts",
+    "canary://team-general",
+    "spoke://dashboard.internal/webhook"
+  ]
+  // highlight-end
+
+  transform {
+    title = "[{{ repo }}] Release {{ tag }}"
+    body  = "{{ author }} published {{ tag }}"
+  }
+}
+```
+
+Courier 对每一个目的地独立投递。任何一处失败都不会阻塞其他目的地。每条投递都拥有自己的重试计划与 Ledger 条目。
+
+## 条件投递
+
+按时段或星期改变路由，常用于非工作时段的升级。
+
+```text title="基于时间的路由"
+relay "after-hours-critical" {
+  source = "glassboard"
+  filter {
+    severity = "critical"
+    // highlight-next-line
+    schedule = "weekdays 18:00-08:00, weekends *"
+  }
+  destination = "canary://oncall-emergency"
+  transform { priority = 5 }
+}
+
+relay "business-hours-critical" {
+  source = "glassboard"
+  filter {
+    severity = "critical"
+    schedule = "weekdays 08:00-18:00"
+  }
+  destination = "canary://oncall-urgent"
+  transform { priority = 5 }
+}
+```
+
+## 路由策略
+
+| 策略     | 用途         | 配置方式                                |
+|--------|------------|-------------------------------------|
+| 基于内容   | 按载荷字段路由    | `filter { field = "value" }`        |
+| 基于来源   | 按来源身份路由    | `source = "glassboard"`             |
+| 严重程度升级 | 在高频时提升紧急度  | `escalation { thresholds { ... } }` |
+| 主题分发   | 投递到多个目的地   | `fanout = ["a", "b", "c"]`          |
+| 基于时间   | 不同时段使用不同路由 | `filter { schedule = "..." }`       |
+| 兜底     | 接住所有未匹配的消息 | 不带过滤器的末条中继                          |
+
+## 下一步
+
+- [身份认证](/docs/core/authentication/) — Dispatch 处理消息之前，Cipher 如何校验来源身份。
+- [架构](/docs/advanced/architecture/) — 从系统层观察 Dispatch、Courier 与 Embassy 的协作方式。

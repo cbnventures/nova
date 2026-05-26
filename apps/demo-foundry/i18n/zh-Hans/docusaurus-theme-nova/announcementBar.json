@@ -1,0 +1,6 @@
+{
+  "content": {
+    "message": "用依赖感知的增量缓存大幅缩短构建时间。",
+    "description": "The announcement bar content (may contain HTML)"
+  }
+}

@@ -1,17 +1,29 @@
 /**
  * ============================
- * Navbar — Canopy — Bar Layout
+ * Navbar - Canopy - Bar Layout
+ *
+ * Bar height contract: content-driven. The two-row stacked layout (brand
+ * above, items below at desktop) makes a fixed height impractical - height
+ * derives from row stack + gap + padding. Preset overlays do NOT set
+ * `.nova-container { height }`. Bridge is the only variant that pins a
+ * fixed container height.
  * ============================
  */
 
-.nova-navbar-canopy {
+.navbar {
+  padding: 1.5rem 0;
+}
+
+.nova-navbar-canopy > .nova-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 @media (min-width: 1024px) {
-  .nova-navbar-canopy {
+  .nova-navbar-canopy > .nova-container {
+    position: relative;
+
     flex-direction: column;
     justify-content: center;
   }
@@ -20,7 +32,15 @@
 .nova-navbar-canopy-items {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: var(--nova-shape-gap);
+
+  max-width: var(--nova-navbar-canopy-items-max-width);
+}
+
+.nova-navbar-canopy-items a {
+  display: inline-flex;
+  align-items: center;
 }
 
 .nova-navbar-canopy-actions {
@@ -41,7 +61,7 @@
 
 /**
  * ============================
- * Navbar — Canopy — Mobile Menu Overlay
+ * Navbar - Canopy - Mobile Menu Overlay
  * ============================
  */
 
@@ -60,7 +80,7 @@
 
 /**
  * ============================
- * Navbar — Canopy — Mobile Menu Open/Close State
+ * Navbar - Canopy - Mobile Menu Open/Close State
  * ============================
  */
 
@@ -94,7 +114,7 @@
 
 /**
  * ============================
- * Navbar — Canopy — Mobile Menu Panel
+ * Navbar - Canopy - Mobile Menu Panel
  * ============================
  */
 
@@ -124,7 +144,7 @@
 
 /**
  * ============================
- * Navbar — Canopy — Mobile Menu Header
+ * Navbar - Canopy - Mobile Menu Header
  * ============================
  */
 
@@ -136,7 +156,7 @@
 
 /**
  * ============================
- * Navbar — Canopy — Mobile Menu Brand
+ * Navbar - Canopy - Mobile Menu Brand
  * ============================
  */
 
@@ -155,7 +175,7 @@
 
 /**
  * ============================
- * Navbar — Canopy — Mobile Menu Close
+ * Navbar - Canopy - Mobile Menu Close
  * ============================
  */
 
@@ -171,19 +191,15 @@
   padding: 0;
 
   background: none;
-  border: 1px solid var(--nova-color-neutral-300);
+  border: 1px solid var(--nova-color-border);
   border-radius: 0.375rem;
 
   cursor: pointer;
 }
 
-[data-theme="dark"] .nova-navbar-canopy-menu-close {
-  border-color: var(--nova-color-neutral-700);
-}
-
 /**
  * ============================
- * Navbar — Canopy — Mobile Menu Search
+ * Navbar - Canopy - Mobile Menu Search
  * ============================
  */
 
@@ -199,19 +215,7 @@
 
 /**
  * ============================
- * Navbar — Canopy — Mobile Menu Results
- * ============================
- */
-
-.nova-navbar-canopy-menu-results {}
-
-.nova-navbar-canopy-menu-results:empty {
-  display: none;
-}
-
-/**
- * ============================
- * Navbar — Canopy — Mobile Menu Items
+ * Navbar - Canopy - Mobile Menu Items
  * ============================
  */
 

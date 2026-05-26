@@ -1,0 +1,68 @@
+---
+title: "为不可立卷之物立卷"
+authors:
+  - "dimitri"
+tags:
+  - "policies"
+  - "dockets"
+date: "2026-02-26"
+---
+
+有些新到来的工作不符合任何 policy。一份误归类的缺陷。一份来自层级系统之外的请求。一份重复之上的重复。Marshal 仍会为它们立卷——归在 `unclassified` policy 之下，附上交由高级复核的备注。
+
+{/* truncate */}
+
+高级复核曾经是积压。如今每个季度十二条。policy 追上了。"不可立卷"逐渐成为可立卷，靠的是被立卷本身。
+
+`unclassified` policy 是 policy 日志的地板。其他每一条 policy 都有前置条件；这一条没有。一份请求经受理读取、与每一条活跃 policy 比对而未找到匹配，按定义即是"未归类"，会以 `RECEIVED-UNCLASSIFIED` 钤章立卷到这条 policy 之下。事务员除立卷之外不再处理这份请求。某位高级维护者通读未归类 docket，决定这份请求是否揭示了 policy 中的缺口，要么修订一条 policy 来处理这种情况，要么写下一次性的处置。
+
+policy 本身简短，自 2022 年以来未曾修订：
+
+```yaml title="policies/unclassified.yml"
+policy: unclassified
+version: 2
+sealed: true
+sealed-by: dimitri
+sealed-at: 2022-04-02T11:00:00Z
+
+trigger:
+  - on: intake.no-match
+    after: all-other-policies-evaluated
+
+action:
+  stamp: RECEIVED-UNCLASSIFIED
+  record:
+    docket: incidents
+    seal: required
+    retention: 7-years
+  notify:
+    queue: senior-review
+    cadence: weekly-summary
+
+resolution:
+  - by: senior-maintainer
+  - within: 14-days
+  - record:
+      docket: incidents
+      stamp: RESOLVED-WITH-DISPOSITION
+      seal: required
+      reason-required: true
+```
+
+有意思的字段是 `reason-required: true`。处置一条未归类条目的高级维护者，必须把原因记录到 docket 里。原因会与处置一同被封印。久而久之，原因构成的语料库本身成为一份文件——一份关于"哪类请求未匹配任何 policy，以及对其做了什么"的记录。语料库每个季度作为 policy 复核的一部分被通读，原因中显现的规律成为新 policy 的依据。
+
+`duplicate-incident-suppression@v1` 就是这样在 2024 年末被立卷的。一个季度的未归类条目里，1,402 条带着同一个原因：*某次重复的重复，集成把同一起事件多次转发过来。* 规律被命名，policy 被立卷，未归类队列相应下降。自那以后，同样的事情以更小的规模在另几个规律上发生过。
+
+```bash
+$ marshal docket query --docket incidents --stamp RECEIVED-UNCLASSIFIED --group-by reason --since 2026-Q1
+REASON                                            COUNT
+external-vendor-request                           4
+malformed-issue-template                          3
+spam-flagged-but-meaningful                       2
+new-platform-not-yet-tiered                       2
+ambiguous-tier-membership                         1
+```
+
+总数是十二，与过去四个季度的数字相同。"不可立卷"不会归零，因为总会有新规律、新平台、新边界。policy 并不奢望覆盖每一种情形。它们志在覆盖每一种*反复出现*的情形，并以一种让高级维护者能在十五分钟内通读其余部分的方式，把其余部分立卷起来。十二条在十五分钟内可以读完。一千二百条不行。
+
+"不可立卷"本身也是一份记录。这份记录被封印。这份记录被通读。通读以缓慢节奏催生下一条 policy。这条 policy 加入 policy 日志。不可立卷因此短暂缩小，直至下一个规律到来。

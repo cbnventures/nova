@@ -1,0 +1,127 @@
+/**
+ * ============================
+ * Blog Preview - Section
+ * ============================
+ */
+
+.nova-blog-preview {
+  margin-block: var(--nova-section-gap);
+}
+
+/**
+ * ============================
+ * Blog Preview - Heading
+ * ============================
+ */
+
+.nova-blog-preview-heading {
+  margin-bottom: 1.5rem;
+}
+
+/**
+ * ============================
+ * Blog Preview - Description
+ * ============================
+ */
+
+.nova-blog-preview-description {
+  margin-top: 0;
+}
+
+/**
+ * ============================
+ * Blog Preview - Card (full-card hit target)
+ *
+ * The whole card is clickable via a pseudo-element on the heading link.
+ * Card is a positioning context; the heading link's `::after` stretches
+ * to fill the card. Per-preset overlays own the visual hover state via
+ * `.nova-blog-preview-card:hover` / `:focus-within`.
+ * ============================
+ */
+
+.nova-blog-preview-card {
+  position: relative;
+}
+
+/**
+ * ============================
+ * Blog Preview - Card Heading
+ * ============================
+ */
+
+.nova-blog-preview-card h3 {
+  margin-top: 0;
+  padding: 0;
+
+  border: none;
+}
+
+.nova-blog-preview-card h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Override the preset-level `[data-theme="dark"] a:hover` color flip
+ * (specificity 0,2,1) so the heading link stays inherited on hover —
+ * only `.nova-blog-preview-read-more` should react to card hover. */
+.nova-blog-preview-card h3 a:hover,
+.nova-blog-preview-card h3 a:focus-visible {
+  color: inherit;
+}
+
+.nova-blog-preview-card h3 a::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Hide the link's own focus ring; the card surfaces focus via :focus-within. */
+.nova-blog-preview-card h3 a:focus-visible {
+  outline: none;
+}
+
+/**
+ * ============================
+ * Blog Preview - Read-More (decorative, never underlined)
+ *
+ * Read-more is a non-interactive `<span aria-hidden>` - the whole card is
+ * the link. Pin `text-decoration: none` here so preset overlays don't have
+ * to repeat it, and so card hover/focus-within can never reintroduce an
+ * underline.
+ * ============================
+ */
+
+.nova-blog-preview-read-more,
+.nova-blog-preview-card:hover .nova-blog-preview-read-more,
+.nova-blog-preview-card:focus-within .nova-blog-preview-read-more {
+  text-decoration: none;
+}
+
+/**
+ * ============================
+ * Blog Preview - Card Time
+ * ============================
+ */
+
+/**
+ * ============================
+ * Blog Preview - No Posts
+ * ============================
+ */
+
+.nova-blog-preview-no-posts {
+  margin: 0;
+  color: var(--nova-color-text-muted);
+}
+
+/**
+ * ============================
+ * Blog Preview - Card Time
+ * ============================
+ */
+
+.nova-blog-preview-card time {
+  display: block;
+}

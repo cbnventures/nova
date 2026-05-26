@@ -1,0 +1,66 @@
+{
+  "layout.marshal.title": {
+    "message": "Marshal",
+    "description": "Title of footer column \"marshal\""
+  },
+  "layout.community.title": {
+    "message": "Community",
+    "description": "Title of footer column \"community\""
+  },
+  "layout.company.title": {
+    "message": "Company",
+    "description": "Title of footer column \"company\""
+  },
+  "layout.legal.title": {
+    "message": "Legal",
+    "description": "Title of footer column \"legal\""
+  },
+  "sections.marshal.0.label": {
+    "message": "Welcome",
+    "description": "Label of link 1 in footer section \"marshal\""
+  },
+  "sections.marshal.1.label": {
+    "message": "Installation",
+    "description": "Label of link 2 in footer section \"marshal\""
+  },
+  "sections.marshal.2.label": {
+    "message": "API Reference",
+    "description": "Label of link 3 in footer section \"marshal\""
+  },
+  "sections.community.0.label": {
+    "message": "Threadbare",
+    "description": "Label of link 1 in footer section \"community\""
+  },
+  "sections.community.1.label": {
+    "message": "Blog",
+    "description": "Label of link 2 in footer section \"community\""
+  },
+  "sections.company.0.label": {
+    "message": "About",
+    "description": "Label of link 1 in footer section \"company\""
+  },
+  "sections.company.1.label": {
+    "message": "Careers",
+    "description": "Label of link 2 in footer section \"company\""
+  },
+  "sections.legal.0.label": {
+    "message": "Terms of Use",
+    "description": "Label of link 1 in footer section \"legal\""
+  },
+  "sections.legal.1.label": {
+    "message": "Privacy Policy",
+    "description": "Label of link 2 in footer section \"legal\""
+  },
+  "sections.legal.2.label": {
+    "message": "Get In Touch",
+    "description": "Label of link 3 in footer section \"legal\""
+  },
+  "cta.label": {
+    "message": "Ready to file?",
+    "description": "The footer call-to-action link label"
+  },
+  "copyright": {
+    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
+    "description": "The footer copyright text"
+  }
+}

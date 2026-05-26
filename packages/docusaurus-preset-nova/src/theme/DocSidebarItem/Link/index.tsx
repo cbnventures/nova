@@ -26,7 +26,10 @@ function DocSidebarItemLink(props: ThemeDocSidebarItemLinkDocSidebarItemLinkProp
   const ariaCurrent: ThemeDocSidebarItemLinkDocSidebarItemLinkAriaCurrent = (isActive === true) ? 'page' : undefined;
 
   return (
-    <li className="nova-sidebar-item">
+    <li
+      className={(props['className'] !== undefined) ? `nova-sidebar-item ${props['className']}` : 'nova-sidebar-item'}
+      style={props['style']}
+    >
       <Link
         className="nova-sidebar-link"
         to={props['item']['href']}

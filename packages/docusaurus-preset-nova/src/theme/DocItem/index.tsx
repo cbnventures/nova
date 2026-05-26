@@ -24,14 +24,14 @@ import type {
  * @since 0.15.0
  */
 function DocItem(props: ThemeDocItemDocItemProps) {
-  const htmlClassName: ThemeDocItemDocItemHtmlClassName = `docs-doc-id-${props['content']['metadata']['id']}`;
+  const htmlClassName: ThemeDocItemDocItemHtmlClassName = (props['className'] !== undefined) ? `docs-doc-id-${props['content']['metadata']['id']} ${props['className']}` : `docs-doc-id-${props['content']['metadata']['id']}`;
   const mdxComponent: ThemeDocItemDocItemMdxComponent = props['content'];
 
   return (
     <DocProvider content={props['content']}>
       <HtmlClassNameProvider className={htmlClassName}>
         <DocItemMetadata />
-        <DocItemLayout>
+        <DocItemLayout style={props['style']}>
           {createElement(mdxComponent)}
         </DocItemLayout>
       </HtmlClassNameProvider>

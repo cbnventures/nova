@@ -1,5 +1,9 @@
 /**
- * Envoy — Back to top button visual styling.
+ * Envoy - `BackToTopButton` theme overlay.
+ *
+ * A soft violet rounded square anchored bottom-right. At rest it sits on
+ * raised surface with a neutral hairline; on hover it tints violet with
+ * the signature soft primary halo glow.
  *
  * @since 0.15.0
  */
@@ -13,11 +17,13 @@
   right: 1rem;
   width: 36px;
   height: 36px;
-  color: var(--nova-color-neutral-600);
-  background-color: var(--nova-envoy-surface-raised-light);
-  border: 1px solid var(--nova-color-neutral-200);
+  color: var(--nova-color-text-muted);
+  background-color: var(--nova-envoy-surface-raised);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-envoy-radius-generous);
   transition:
+    opacity var(--nova-motion-duration) ease,
+    transform var(--nova-motion-duration) ease,
     background-color var(--nova-motion-duration) ease,
     color var(--nova-motion-duration) ease,
     border-color var(--nova-motion-duration) ease,
@@ -27,15 +33,14 @@
 .nova-back-to-top:hover,
 .nova-back-to-top:focus-visible {
   color: var(--nova-color-primary-600);
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-envoy-surface-raised) 92%);
   border-color: var(--nova-color-primary-300);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
 }
 
 [data-theme="dark"] .nova-back-to-top {
-  color: var(--nova-color-neutral-300);
-  background: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
-  border-color: var(--nova-envoy-border-dark);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-envoy-surface-raised) 94%);
+  border-color: var(--nova-envoy-border);
 }
 
 [data-theme="dark"] .nova-back-to-top:hover,

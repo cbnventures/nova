@@ -1,0 +1,26 @@
+/**
+ * Foundry - `NavbarItem` theme overlay (entry-level wrapper).
+ *
+ * Fallback link colors for the default `.navbar__link` class. Each variant
+ * overrides this with its own scoped Nova-prefixed selectors; this wrapper
+ * only matters if a downstream consumer mounts a Docusaurus default
+ * navbar item that bypasses the variant DOM. Industrial neutral ink with
+ * primary on hover.
+ *
+ * @since 0.18.0
+ */
+
+.navbar__link {
+  color: var(--nova-color-text);
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .navbar__link:hover,
+[data-theme="dark"] .navbar__link--active {
+  color: var(--nova-color-primary-400);
+}

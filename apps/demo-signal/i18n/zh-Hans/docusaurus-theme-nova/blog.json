@@ -1,0 +1,10 @@
+{
+  "layout.heading": {
+    "message": "博客",
+    "description": "The blog list page heading"
+  },
+  "layout.description": {
+    "message": "归因洞察与营销活动的取证记录",
+    "description": "The blog list page description below the heading"
+  }
+}

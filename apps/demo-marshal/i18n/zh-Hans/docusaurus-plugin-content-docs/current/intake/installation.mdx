@@ -1,0 +1,43 @@
+---
+title: "安装"
+sidebar_position: 1
+description: "通过 Spark 或 Vial 安装 Marshal。容器到货时，印章已经盖好。"
+tags:
+  - "setup"
+  - "installation"
+---
+
+# 安装
+
+Marshal 可从 Spark 安装，或作为 Vial 容器使用。无论哪种方式，它都自带抬头信笺。
+
+## 前置条件
+
+- Spark 3.0 或更新版本
+- 一个（或多个）愿意接受督管的仓库
+- 一个下午。首次安装总会比预期长一些——文书工作免不了。
+
+## 通过 Spark 安装
+
+```bash title="安装 Marshal"
+spark install marshal
+```
+
+验证安装：
+
+```bash
+marshal --version
+```
+
+## 通过 Vial 安装
+
+```bash title="拉取 Marshal 镜像"
+vial pull marshal/cli:latest
+```
+
+容器到货时，印章已经盖好。Marshal 一落地就能开始立卷。
+
+## 接下来呢
+
+- [你的第一条 policy](/docs/intake/first-policy/) — 提交第一条规则，看 docket 打开。
+- [Policies](/docs/filings/policies/) — 关于陈旧 issue、访问层级与计划工作的成文规则。

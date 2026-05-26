@@ -1,0 +1,18 @@
+/**
+ * Lantern - `Mermaid` theme overlay.
+ *
+ * Identity flows through tokens defined in lantern/preset.css (light + dark)
+ * which lib/mermaid.ts reads at render time as themeVariables. This file
+ * holds residual decorations only - currently empty.
+ *
+ * Note: a "leaf" border-radius pattern (top-left and bottom-right corners
+ * rounded, top-right and bottom-left corners sharp) was attempted here via
+ * `rx: 0; ry: 0;` on `.node rect` / `.cluster rect` plus the four-value
+ * CSS `border-radius` shorthand. The CSS values computed correctly under
+ * getComputedStyle, but Chrome does not visually paint per-corner
+ * `border-radius` on SVG `<rect>` elements - the rect rendered as a sharp
+ * rectangle with no rounded corners at all, not the intended leaf shape.
+ * Reverted to the standard uniform `rx`/`ry` inherited from lib/mermaid.ts.
+ *
+ * @since 0.18.0
+ */

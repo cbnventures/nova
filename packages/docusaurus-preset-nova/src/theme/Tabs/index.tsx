@@ -13,6 +13,7 @@ import type {
   ThemeTabsContainerRef,
   ThemeTabsEffectCleanupReturns,
   ThemeTabsHandleHashChangeReturns,
+  ThemeTabsHashDecodedId,
   ThemeTabsHashPanel,
   ThemeTabsHashTabValue,
   ThemeTabsHashTarget,
@@ -174,7 +175,19 @@ function Tabs(props: ThemeTabsProps) {
         return undefined;
       }
 
-      const hashTarget: ThemeTabsHashTarget = containerRef['current'].querySelector(window.location.hash);
+      // Browser percent-encodes non-ASCII characters in `location.hash`
+      // (e.g. Arabic-slug anchors become `#%D9%85...mermaid`). The encoded
+      // form is not a valid CSS selector, so decode and re-escape before
+      // querying. `decodeURIComponent` can throw on malformed input — wrap
+      // defensively so a bad hash doesn't crash the page.
+      let hashTarget: ThemeTabsHashTarget = null;
+
+      try {
+        const decodedId: ThemeTabsHashDecodedId = decodeURIComponent(window.location.hash.slice(1));
+        hashTarget = containerRef['current'].querySelector(`#${CSS.escape(decodedId)}`);
+      } catch {
+        return undefined;
+      }
 
       if (hashTarget === null) {
         return undefined;
@@ -212,7 +225,11 @@ function Tabs(props: ThemeTabsProps) {
 
   return (
     <TabsProvider value={tabs}>
-      <div className="nova-tabs" ref={containerRef}>
+      <div
+        className={(props['className'] !== undefined) ? `nova-tabs ${props['className']}` : 'nova-tabs'}
+        style={props['style']}
+        ref={containerRef}
+      >
         <TabList
           selectedValue={tabs['selectedValue']}
           selectValue={tabs['selectValue']}

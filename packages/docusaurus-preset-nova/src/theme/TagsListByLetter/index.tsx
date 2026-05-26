@@ -26,7 +26,10 @@ function TagsListByLetter(props: ThemeTagsListByLetterTagsListByLetterProps) {
   const letterList: ThemeTagsListByLetterTagsListByLetterLetterList = listTagsByLetters(props['tags']);
 
   return (
-    <section className="nova-tags-list-by-letter">
+    <section
+      className={(props['className'] !== undefined) ? `nova-tags-list-by-letter ${props['className']}` : 'nova-tags-list-by-letter'}
+      style={props['style']}
+    >
       {
         letterList.map((letterEntry: ThemeTagsListByLetterTagsListByLetterLetterEntry) => (
           <article className="nova-tags-list-by-letter-group" key={letterEntry['letter']}>
@@ -47,7 +50,6 @@ function TagsListByLetter(props: ThemeTagsListByLetterTagsListByLetterProps) {
                 ))
               }
             </ul>
-            <hr />
           </article>
         ))
       }

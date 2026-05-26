@@ -13,33 +13,53 @@ export type ThemeNavbarCanopyMobileMenuMobileMenuPropsItems = ThemeNavbarItem[];
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoAlt = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrc = string | undefined;
+export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcLight = string | undefined;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcDark = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmark = string | undefined;
+export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrc = {
+  light: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcLight;
+  dark: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcDark;
+} | undefined;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkLight = string | undefined;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkDark = string | undefined;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmark = {
+  light: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkLight;
+  dark: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkDark;
+} | undefined;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoTitle = string | undefined;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoHref = string | undefined;
 
+export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoTarget = string | undefined;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoRel = string | undefined;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoAriaLabel = string | undefined;
+
 export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogo = {
   alt: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoAlt;
   src: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrc;
-  srcDark: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcDark;
   wordmark: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmark;
-  wordmarkDark: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkDark;
   title: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoTitle;
   href: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoHref;
+  target: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoTarget;
+  rel: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoRel;
+  ariaLabel: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoAriaLabel;
 };
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuPropsActiveItemLabel = string | null;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuProps = {
   isOpen: ThemeNavbarCanopyMobileMenuMobileMenuPropsIsOpen;
   onClose: ThemeNavbarCanopyMobileMenuMobileMenuPropsOnClose;
   items: ThemeNavbarCanopyMobileMenuMobileMenuPropsItems;
   siteLogo: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogo;
+  activeItemLabel: ThemeNavbarCanopyMobileMenuMobileMenuPropsActiveItemLabel;
 };
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuReturns = React.JSX.Element | null;
@@ -52,27 +72,46 @@ export type ThemeNavbarCanopyMobileMenuMobileMenuItems = ThemeNavbarItem[];
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoAlt = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrc = string | undefined;
+export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcLight = string | undefined;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcDark = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmark = string | undefined;
+export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrc = {
+  light: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcLight;
+  dark: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcDark;
+} | undefined;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkLight = string | undefined;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkDark = string | undefined;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmark = {
+  light: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkLight;
+  dark: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkDark;
+} | undefined;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoTitle = string | undefined;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoHref = string | undefined;
 
+export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoTarget = string | undefined;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoRel = string | undefined;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoAriaLabel = string | undefined;
+
 export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogo = {
   alt: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoAlt;
   src: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrc;
-  srcDark: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcDark;
   wordmark: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmark;
-  wordmarkDark: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkDark;
   title: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoTitle;
   href: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoHref;
+  target: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoTarget;
+  rel: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoRel;
+  ariaLabel: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoAriaLabel;
 };
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuActiveItemLabel = string | null;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuPanelRef = React.RefObject<HTMLDivElement | null>;
 
@@ -103,6 +142,8 @@ export type ThemeNavbarCanopyMobileMenuMobileMenuItemTo = string;
 export type ThemeNavbarCanopyMobileMenuMobileMenuItemHref = string;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuLinkProps = Record<string, string>;
+
+export type ThemeNavbarCanopyMobileMenuMobileMenuItemIsActive = boolean;
 
 export type ThemeNavbarCanopyMobileMenuMobileMenuLinkSpread = Record<string, string>;
 

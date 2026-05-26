@@ -1,0 +1,10 @@
+{
+  "label": "المناطق",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "المنطقة هي غرفة أو ممرّ أو مجموعة خارجية مُسمّاة يراقبها Lantern معًا. تسليم موثوق بالاسم أو بعبارة المرور، وتكاملات هادئة مع HomeKit وThreadbare وSpoke وCanary."
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "الإصدار الحالي",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Setup": {
+    "message": "التثبيت والإعداد",
+    "description": "The label for category 'Setup' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Core": {
+    "message": "المفاهيم الأساسية",
+    "description": "The label for category 'Core' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Advanced": {
+    "message": "مواضيع متقدّمة",
+    "description": "The label for category 'Advanced' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "مراجع توثيقية",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Operations": {
+    "message": "العمليات التشغيلية",
+    "description": "The label for category 'Operations' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Operations.link.generated-index.description": {
+    "message": "تشغيل Envoy في بيئة الإنتاج — قابلية الرصد عبر Ledger، ولوحات المراقبة، والتنبيه عند استنفاد المحاولات، والتوسّع الأفقي عبر المناطق.",
+    "description": "The generated-index page description for category 'Operations' in sidebar 'docs'"
+  }
+}

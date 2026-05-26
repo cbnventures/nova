@@ -1,0 +1,11 @@
+/**
+ * Marshal - `DocSidebarItem` theme overlay.
+ *
+ * Sidebar item wrapper baseline - compact ledger spacing.
+ *
+ * @since 0.18.0
+ */
+
+.nova-sidebar-item {
+  margin-block: 0;
+}

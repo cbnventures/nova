@@ -1,0 +1,98 @@
+/**
+ * Lantern - `DocCard` theme overlay.
+ *
+ * The doc landing-page card grid (DocCardList). Each card is a warm cream
+ * paper square with hand-thrown asymmetric corners, italic Fraunces title,
+ * and a soft amber halo on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Card surface - warm paper, asymmetric corners
+ * ============================
+ */
+
+article[class*="nova-col"] > a {
+  display: block;
+  padding: 1.25rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 12px 4px 12px 4px;
+
+  transition:
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+
+  text-decoration: none;
+}
+
+article[class*="nova-col"]:nth-child(2n) > a {
+  border-radius: 4px 12px 4px 12px;
+}
+
+article[class*="nova-col"] > a:hover,
+article[class*="nova-col"] > a:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-color-primary-400);
+  box-shadow: var(--nova-lantern-hover-glow-strong);
+
+  transform: var(--nova-lantern-hover-lift);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a:hover,
+[data-theme="dark"] article[class*="nova-col"] > a:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 84%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/**
+ * ============================
+ * 2. Card title - italic Fraunces with amber icon
+ * ============================
+ */
+
+article[class*="nova-col"] > a h2 {
+  margin: 0 0 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--nova-lantern-ink);
+}
+
+article[class*="nova-col"] > a h2 svg {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a h2 svg {
+  color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 3. Card description - muted ink
+ * ============================
+ */
+
+article[class*="nova-col"] > a > h2 + p {
+  margin: 0;
+
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--nova-lantern-ink-muted);
+}

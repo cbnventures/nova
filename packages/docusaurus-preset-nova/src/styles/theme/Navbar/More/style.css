@@ -1,0 +1,101 @@
+/**
+ * ============================
+ * Navbar - More - Trigger + Popover
+ *
+ * Shared chrome for the navbar-overflow "More" dropdown. Mirrors the
+ * locale-dropdown disclosure pattern (`<details>` + `<summary>`) so
+ * outside-click + open-state conventions apply uniformly.
+ *
+ * Rendered by `<More>` whenever `useNavbarOverflow` reports that
+ * inline items would exceed the variant's max-width budget. Trigger
+ * width is reserved by `--nova-navbar-more-width` so the hook can
+ * subtract it when computing the budget. Each preset MAY add an
+ * overlay at `presets/{preset}/theme/Navbar/More/style.css` if the
+ * default chrome reads incorrectly against the preset's identity.
+ * ============================
+ */
+
+.nova-navbar-more {
+  position: relative;
+
+  flex-shrink: 0;
+}
+
+/* Layout-only base. Per-preset variant CSS adds the trigger to its
+   own navbar-items grouping so font / color / hover all match the
+   sibling inline items. `min-height` matches `.nova-navbar-item`
+   (the inline-item wrapper) so the trigger is the same height as its
+   siblings - the chevron is short on its own so without this floor
+   the trigger reads as a half-height button next to full-height
+   inline items. */
+.nova-navbar-more-summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: var(--nova-navbar-more-width);
+  min-height: 2.25rem;
+
+  list-style: none;
+  cursor: pointer;
+}
+
+.nova-navbar-more-summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-navbar-more-summary svg {
+  transition: transform var(--nova-motion-duration) var(--nova-motion-easing);
+}
+
+.nova-navbar-more[open] > .nova-navbar-more-summary svg {
+  transform: rotate(180deg);
+}
+
+.nova-navbar-more-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  min-width: 8rem;
+  max-height: 70vh;
+  padding: 0.25rem 0;
+  margin: 0.5rem 0 0 0;
+
+  list-style: none;
+
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-color-border);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  overflow-y: auto;
+  z-index: 100;
+}
+
+[data-theme="dark"] .nova-navbar-more-menu {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.nova-navbar-more-item {
+  padding: 0;
+  margin: 0;
+}
+
+.nova-navbar-more-item a,
+.nova-navbar-more-item a:hover,
+.nova-navbar-more-item a:focus-visible {
+  display: block;
+
+  padding: 0.375rem 0.75rem;
+
+  color: var(--nova-color-text);
+  text-decoration: none;
+}
+
+.nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):hover,
+.nova-navbar-more-item a:not(.navbar__link--active):not([aria-current="page"]):focus-visible {
+  color: var(--nova-color-text);
+  background-color: var(--nova-color-surface-raised);
+  text-decoration: none;
+}

@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Layout.
@@ -15,12 +15,18 @@ export type ThemeLayoutPropsDescription = string | undefined;
 
 export type ThemeLayoutPropsWrapperClassName = string | undefined;
 
+export type ThemeLayoutPropsClassName = string | undefined;
+
+export type ThemeLayoutPropsStyle = CSSProperties | undefined;
+
 export type ThemeLayoutProps = {
   children: ThemeLayoutPropsChildren;
   noFooter?: ThemeLayoutPropsNoFooter;
   title?: ThemeLayoutPropsTitle;
   description?: ThemeLayoutPropsDescription;
   wrapperClassName?: ThemeLayoutPropsWrapperClassName;
+  className?: ThemeLayoutPropsClassName;
+  style?: ThemeLayoutPropsStyle;
   [key: string]: unknown;
 };
 

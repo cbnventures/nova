@@ -1,0 +1,26 @@
+{
+  "notFound.title": {
+    "message": "本区域未匹配到该路由。",
+    "description": "The 404 page heading set by the consumer in themeConfig.errorPages.notFound.title"
+  },
+  "notFound.description": {
+    "message": "我们无法将此 URL 关联到任何受监控的端点。",
+    "description": "The 404 page description set by the consumer in themeConfig.errorPages.notFound.description"
+  },
+  "notFound.backHomeLabel": {
+    "message": "返回控制台",
+    "description": "The 404 page \"Back to home\" CTA label set by the consumer in themeConfig.errorPages.notFound.backHomeLabel"
+  },
+  "errorPageContent.title": {
+    "message": "这一页的信任核查失败了。",
+    "description": "The per-page crash heading set by the consumer in themeConfig.errorPages.errorPageContent.title"
+  },
+  "errorPageContent.retryLabel": {
+    "message": "重新核查",
+    "description": "The per-page crash retry button label set by the consumer in themeConfig.errorPages.errorPageContent.retryLabel"
+  },
+  "error.retryLabel": {
+    "message": "重试核查",
+    "description": "The top-level error boundary retry button label set by the consumer in themeConfig.errorPages.error.retryLabel"
+  }
+}

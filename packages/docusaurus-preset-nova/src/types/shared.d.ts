@@ -108,18 +108,69 @@ export type SharedMermaidConfig = {
  *
  * @since 0.15.0
  */
-export type SharedPresetName = 'foundry' | 'sentinel' | 'signal' | 'envoy';
+export type SharedPresetName = 'envoy' | 'foundry' | 'lantern' | 'marshal' | 'sentinel' | 'signal';
 
-export type SharedPresetColorsPrimary = SharedHexColor;
+export type SharedPresetColorsPrimaryLight = SharedHexColor;
 
-export type SharedPresetColorsAccent = SharedHexColor;
+export type SharedPresetColorsPrimaryDark = SharedHexColor;
 
-export type SharedPresetColorsNeutral = SharedHexColor;
+export type SharedPresetColorsPrimary = {
+  light: SharedPresetColorsPrimaryLight;
+  dark: SharedPresetColorsPrimaryDark;
+};
+
+export type SharedPresetColorsAccentLight = SharedHexColor;
+
+export type SharedPresetColorsAccentDark = SharedHexColor;
+
+export type SharedPresetColorsAccent = {
+  light: SharedPresetColorsAccentLight;
+  dark: SharedPresetColorsAccentDark;
+};
+
+export type SharedPresetColorsTextLight = SharedHexColor;
+
+export type SharedPresetColorsTextDark = SharedHexColor;
+
+export type SharedPresetColorsText = {
+  light: SharedPresetColorsTextLight;
+  dark: SharedPresetColorsTextDark;
+};
+
+export type SharedPresetColorsBorderLight = SharedHexColor;
+
+export type SharedPresetColorsBorderDark = SharedHexColor;
+
+export type SharedPresetColorsBorder = {
+  light: SharedPresetColorsBorderLight;
+  dark: SharedPresetColorsBorderDark;
+};
+
+export type SharedPresetColorsWarningLight = SharedHexColor;
+
+export type SharedPresetColorsWarningDark = SharedHexColor;
+
+export type SharedPresetColorsWarning = {
+  light: SharedPresetColorsWarningLight;
+  dark: SharedPresetColorsWarningDark;
+};
+
+export type SharedPresetColorsDangerLight = SharedHexColor;
+
+export type SharedPresetColorsDangerDark = SharedHexColor;
+
+export type SharedPresetColorsDanger = {
+  light: SharedPresetColorsDangerLight;
+  dark: SharedPresetColorsDangerDark;
+};
 
 export type SharedPresetColors = {
   primary: SharedPresetColorsPrimary;
   accent: SharedPresetColorsAccent;
-  neutral: SharedPresetColorsNeutral;
+  text: SharedPresetColorsText;
+  border: SharedPresetColorsBorder;
+  warning: SharedPresetColorsWarning;
+  danger: SharedPresetColorsDanger;
 };
 
 export type SharedPresetFontsDisplay = string;
@@ -168,6 +219,12 @@ export type SharedPresetNavbar = 'bridge' | 'canopy' | 'monolith' | 'compass';
 
 export type SharedPresetFooter = 'commons' | 'embassy' | 'ledger' | 'launchpad';
 
+export type SharedPresetCtaContained = boolean;
+
+export type SharedPresetCta = {
+  contained: SharedPresetCtaContained;
+};
+
 export type SharedPresetLogoTitle = string;
 
 export type SharedPresetLogoAlt = string;
@@ -189,6 +246,7 @@ export type SharedPreset = {
   motion: SharedPresetMotion;
   navbar: SharedPresetNavbar;
   footer: SharedPresetFooter;
+  cta: SharedPresetCta;
 };
 
 /**

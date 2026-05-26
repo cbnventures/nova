@@ -15,9 +15,30 @@ export const presetsSentinelPresetSentinel: PresetsSentinelPresetSentinel = {
     src: '@nova-assets/presets/sentinel/logo.svg',
   },
   colors: {
-    primary: '#0d9488',
-    accent: '#6366f1',
-    neutral: '#64748b',
+    primary: {
+      light: '#0d9488',
+      dark: '#0d9488',
+    },
+    accent: {
+      light: '#6366f1',
+      dark: '#6366f1',
+    },
+    text: {
+      light: '#1e293b',
+      dark: '#e2e8f0',
+    },
+    border: {
+      light: '#cbd5e1',
+      dark: '#334155',
+    },
+    warning: {
+      light: '#f59e0b',
+      dark: '#f59e0b',
+    },
+    danger: {
+      light: '#ef4444',
+      dark: '#ef4444',
+    },
   },
   fonts: {
     display: 'Unbounded',
@@ -39,4 +60,7 @@ export const presetsSentinelPresetSentinel: PresetsSentinelPresetSentinel = {
   },
   navbar: 'canopy',
   footer: 'embassy',
+  cta: {
+    contained: false,
+  },
 };

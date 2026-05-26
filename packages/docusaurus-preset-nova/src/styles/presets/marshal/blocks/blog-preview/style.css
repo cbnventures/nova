@@ -1,0 +1,189 @@
+/**
+ * Marshal - `blog-preview` component overlay.
+ *
+ * Bulletin board of recent dispatches. Each card is a hairline ledger
+ * paper with the date stamp set in mono uppercase, a Plex Serif title,
+ * and a mono uppercase read-more link aligned at the foot.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section rhythm
+ * ============================
+ */
+
+.nova-blog-preview-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/**
+ * ============================
+ * 2. Heading and description
+ * ============================
+ */
+
+.nova-blog-preview-heading {
+  margin: 0 0 0.75rem;
+  text-align: left;
+}
+
+.nova-blog-preview-no-description .nova-blog-preview-heading {
+  margin-bottom: 2rem;
+}
+
+.nova-blog-preview-description {
+  max-width: 60ch;
+  margin: 0 0 2rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--nova-marshal-ink-muted);
+}
+
+/**
+ * ============================
+ * 3. Card - hairline ledger sheet
+ * ============================
+ */
+
+.nova-blog-preview-card {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: background-color var(--nova-marshal-transition), border-color var(--nova-marshal-transition);
+}
+
+.nova-blog-preview-card:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), #ffffff 96%);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-preview-card {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 95%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 90%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/**
+ * ============================
+ * 4. Date stamp - mono uppercase
+ * ============================
+ */
+
+.nova-blog-preview-card time {
+  display: block;
+  margin-bottom: 0.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink-muted);
+}
+
+/**
+ * ============================
+ * 5. Card title - Plex Serif
+ * ============================
+ */
+
+.nova-blog-preview-card h3 {
+  margin: 0 0 0.5rem;
+  padding: 0;
+
+  font-family: var(--nova-font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+
+  border: none;
+}
+
+/**
+ * ============================
+ * 6. Card body
+ * ============================
+ */
+
+.nova-blog-preview-card p {
+  margin: 0 0 1rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--nova-marshal-ink-muted);
+}
+
+/**
+ * ============================
+ * 7. Read-more - mono uppercase marker
+ * ============================
+ */
+
+.nova-blog-preview-card .nova-blog-preview-read-more {
+  margin-top: auto;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-800);
+
+  transition: color var(--nova-marshal-transition);
+}
+
+.nova-blog-preview-card:hover .nova-blog-preview-read-more,
+.nova-blog-preview-card:focus-within .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-900);
+}
+
+[data-theme="dark"] .nova-blog-preview-card .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-blog-preview-card:hover .nova-blog-preview-read-more,
+[data-theme="dark"] .nova-blog-preview-card:focus-within .nova-blog-preview-read-more {
+  color: var(--nova-color-primary-200);
+}
+
+/**
+ * ============================
+ * 8. Empty state - paper aside
+ * ============================
+ */
+
+.nova-blog-preview-no-posts {
+  padding: 1rem 1.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--nova-marshal-ink-muted);
+
+  border: 1px dashed var(--nova-marshal-border);
+  border-radius: 2px;
+}
+
+[data-theme="dark"] .nova-blog-preview-no-posts {
+  border-color: var(--nova-marshal-border);
+}

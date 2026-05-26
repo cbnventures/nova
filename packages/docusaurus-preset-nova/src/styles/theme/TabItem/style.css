@@ -1,5 +1,13 @@
 /**
- * Tab Item — Shared structural styles.
+ * Tab Item - Shared structural styles.
  *
  * @since 0.15.0
  */
+
+/* ============================
+ * Tab Item - Panel padding
+ * ============================ */
+
+.nova-tabs-panel {
+  padding: 0.75rem 0;
+}

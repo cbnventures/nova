@@ -1,0 +1,10 @@
+{
+  "label": "Beacon",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "携带完整归因链路的短链——使用 Ironclad 证书的品牌域名、连接物理与数字世界的 Flare 二维码与深度链接，以及通过 Spoke API 或 CSV 导入的批量 Beacon 链接生成。"
+  }
+}

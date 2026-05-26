@@ -4,6 +4,13 @@ james:
   url: https://nova.cbnventures.io
   image_url: https://github.com/cbnventures.png
   page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
 
 ingrid:
   name: Ingrid Holm
@@ -11,6 +18,13 @@ ingrid:
   url: https://nova.cbnventures.io
   image_url: https://github.com/cbnventures.png
   page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
 
 rafael:
   name: Rafael Dominguez
@@ -18,3 +32,10 @@ rafael:
   url: https://nova.cbnventures.io
   image_url: https://github.com/cbnventures.png
   page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures

@@ -1,0 +1,142 @@
+/**
+ * Lantern - `Footer/Ledger` theme overlay.
+ *
+ * Minimal single-bar footer on warm cream paper with copyright, a small
+ * link cluster, and amber-tinted inline social tokens. CTA signature
+ * reuses the grain-blended primary tile with hover lift.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container - cream paper with hairline top border
+ * ============================ */
+
+.nova-footer-ledger {
+  padding: 0.5rem 0;
+  font-size: 0.75rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border-top: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-footer-ledger {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+}
+
+.nova-footer-ledger p {
+  margin: 0;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.75rem;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/* ============================
+ * 2. Links - mono uppercase carved labels
+ * ============================ */
+
+.nova-footer-ledger-links a {
+  font-family: var(--nova-font-body);
+  font-size: 0.78rem;
+  color: var(--nova-lantern-ink-muted);
+  text-decoration: none;
+
+  transition: color var(--nova-lantern-transition);
+}
+
+.nova-footer-ledger-links a:hover,
+.nova-footer-ledger-links a:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-footer-ledger-links a:hover,
+[data-theme="dark"] .nova-footer-ledger-links a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+.nova-footer-ledger-links a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-footer-ledger-links a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 3. Social icons - small inline tokens
+ * ============================ */
+
+.nova-footer-ledger-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+
+  color: var(--nova-color-primary-700);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-footer-ledger-social a:hover,
+.nova-footer-ledger-social a:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-footer-ledger-social a {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-footer-ledger-social a:hover,
+[data-theme="dark"] .nova-footer-ledger-social a:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+}
+
+/* ============================
+ * CTA - preset signature.
+ * ============================ */
+
+.nova-footer-ledger-cta {
+  padding: 3rem 2rem;
+
+  background-color: var(--nova-color-primary-800);
+  background-image: linear-gradient(135deg, var(--nova-color-primary-800) 0%, color-mix(in srgb, var(--nova-color-primary-700), var(--nova-color-accent-700) 30%) 100%);
+  border: none;
+  text-align: center;
+}
+
+.nova-footer-ledger-cta p {
+  margin: 0;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: "opsz" 60;
+  font-size: 2rem;
+  color: var(--nova-lantern-bg);
+}
+
+[data-theme="dark"] .nova-footer-ledger-cta {
+  background: linear-gradient(135deg, var(--nova-color-primary-700) 0%, color-mix(in srgb, var(--nova-color-primary-600), var(--nova-color-accent-700) 40%) 100%);
+}
+
+.nova-footer-ledger-cta {
+  transition:
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition);
+}
+
+.nova-footer-ledger-cta:hover p,
+.nova-footer-ledger-cta:focus-visible p {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}

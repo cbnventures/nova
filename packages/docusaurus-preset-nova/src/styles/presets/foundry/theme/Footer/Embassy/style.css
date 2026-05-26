@@ -1,5 +1,9 @@
 /**
- * Foundry — Footer (Embassy) variant visual styling.
+ * Foundry - `Footer/Embassy` theme overlay.
+ *
+ * Directory-style footer with a social-icon header above multi-column
+ * link sections and a legal bar, all on the foundry surface. CTA signature
+ * uses the primary -> accent gradient with brighten-on-hover.
  *
  * @since 0.15.0
  */
@@ -17,14 +21,14 @@
  * ============================ */
 
 .nova-footer-embassy {
-  background-color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-surface-raised);
   border-top: 1px solid var(--nova-foundry-border);
   padding: 0;
 }
 
 [data-theme="dark"] .nova-footer-embassy {
   background-color: var(--nova-foundry-surface-raised);
-  border-top-color: rgba(255, 255, 255, 0.08);
+  border-top-color: var(--nova-color-border);
 }
 
 /* ============================
@@ -42,12 +46,12 @@
 }
 
 .nova-footer-embassy-social a {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   transition: color var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-footer-embassy-social a {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-footer-embassy-social a:hover,
@@ -89,24 +93,24 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--nova-color-neutral-700);
+  color: var(--nova-color-text);
   margin-bottom: 0.75rem;
 }
 
 [data-theme="dark"] .nova-footer-embassy-directory nav h3 {
-  color: var(--nova-color-neutral-300);
+  color: var(--nova-color-text);
 }
 
 .nova-footer-embassy-directory nav a {
   font-size: 0.875rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   padding: 0.25rem 0;
   text-decoration: none;
   transition: color var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-footer-embassy-directory nav a {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-footer-embassy-directory nav a:hover,
@@ -164,12 +168,12 @@
 }
 
 [data-theme="dark"] .nova-footer-embassy-legal {
-  border-top-color: rgba(255, 255, 255, 0.08);
+  border-top-color: var(--nova-color-border);
 }
 
 .nova-footer-embassy-legal p {
   font-size: 0.75rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   margin: 0;
 }
 
@@ -180,4 +184,51 @@
     text-align: left;
     padding-block: 1rem;
   }
+}
+
+/* ============================
+ * CTA - preset signature.
+ * ============================ */
+
+.nova-footer-embassy-cta {
+  position: relative;
+  padding-block: 3.5rem;
+  text-align: center;
+  background: linear-gradient(135deg, var(--nova-color-primary-600) 0%, var(--nova-color-primary-700) 60%, var(--nova-color-accent-600) 100%);
+  overflow: hidden;
+}
+
+.nova-footer-embassy-cta::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  content: "";
+  background: radial-gradient(ellipse at 30% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+[data-theme="dark"] .nova-footer-embassy-cta {
+  background: linear-gradient(135deg, var(--nova-color-primary-800) 0%, var(--nova-color-primary-900) 60%, color-mix(in srgb, var(--nova-color-accent-500), transparent 85%) 100%);
+}
+
+.nova-footer-embassy-cta p {
+  position: relative;
+  margin: 0;
+  font-family: var(--nova-font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--nova-color-text-inverse);
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.nova-footer-embassy-cta {
+  transition: filter var(--nova-footer-filter-duration) var(--nova-motion-easing);
+}
+
+.nova-footer-embassy-cta:hover,
+.nova-footer-embassy-cta:focus-visible {
+  filter: brightness(1.12);
 }

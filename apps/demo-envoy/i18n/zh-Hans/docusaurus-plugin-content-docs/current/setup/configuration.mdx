@@ -1,0 +1,188 @@
+---
+title: "配置"
+sidebar_position: 3
+description: ".grain 中继清单定义来源、转换、目的地与重试策略。本页包含完整指令参考。"
+tags:
+  - "setup"
+  - "configuration"
+---
+
+import Details from '@theme/Details';
+
+# 配置
+
+Envoy 通过 `.grain` 中继清单进行配置。清单声明每一条中继——监听什么、如何转换载荷、投递到哪里，以及投递失败后会发生什么。
+
+## 中继清单结构
+
+一份中继清单包含一个或多个 `relay` 块。每个块定义一条从来源到目的地的完整流水线。
+
+```text title="relay.grain"
+relay "glassboard-to-canary" {
+  source      = "glassboard"
+  cipher      = "hmac-sha256"
+  destination = "canary://infra-alerts"
+
+  transform {
+    title    = "[{{ severity }}] {{ alertname }}"
+    body     = "{{ instance }} — {{ message }}"
+    priority = severity_to_priority(severity)
+    tags     = ["{{ severity_emoji }}"]
+  }
+
+  retry {
+    strategy = "exponential"
+    max      = 5
+    backoff  = "1s, 5s, 30s, 2m, 10m"
+  }
+}
+
+relay "threadbare-to-canary" {
+  source      = "threadbare"
+  cipher      = "hmac-sha256"
+  destination = "canary://ci-builds"
+
+  transform {
+    title = "[{{ repo }}] {{ count }} commit(s) to {{ branch }}"
+    body  = "{{ author }}: {{ commit_summary }}"
+  }
+}
+```
+
+## 配置指令
+
+| 指令            | 类型     | 必填  | 描述                                                   |
+|---------------|--------|-----|------------------------------------------------------|
+| `source`      | string | 是   | 集成来源标识符（如 `threadbare`、`glassboard`）。                |
+| `cipher`      | string | 否   | 认证模式：`hmac-sha256`、`bearer`、`ip-allowlist` 或 `none`。 |
+| `destination` | string | 是   | 投递目标，格式为 `protocol://topic`。                         |
+| `transform`   | block  | 否   | Parcel 对载荷的转换规则。                                     |
+| `retry`       | block  | 否   | Courier 重试策略；默认为指数退避，重试 3 次。                         |
+| `filter`      | block  | 否   | 条件中继——只处理与过滤表达式匹配的消息。                                |
+| `fanout`      | list   | 否   | 从单一来源投递到多个目的地。                                       |
+
+## Transform 块
+
+`transform` 块定义 Parcel 如何重写载荷。字段使用 Mustache 风格的模板语法，可访问来源载荷。
+
+```text title="Transform 指令"
+transform {
+  title    = "[{{ severity }}] {{ alertname }}"
+  body     = "{{ instance }} — {{ message }}"
+  priority = severity_to_priority(severity)
+  tags     = ["{{ severity_emoji }}"]
+  actions  = [
+    { label = "View Dashboard", url = "{{ dashboard_url }}" }
+  ]
+}
+```
+
+| 字段         | 类型      | 描述               |
+|------------|---------|------------------|
+| `title`    | 模板      | 通知标题。支持模板变量。     |
+| `body`     | 模板      | 通知正文。支持模板变量与换行。  |
+| `priority` | 数字 / 函数 | 优先级（1-5）或映射函数。   |
+| `tags`     | 列表      | 附加在通知上的标签标识。     |
+| `actions`  | 映射列表    | 交互操作（查看链接、关闭按钮）。 |
+
+## Retry 块
+
+`retry` 块配置 Courier 的投递保障行为。
+
+```text title="Retry 指令"
+retry {
+  strategy   = "exponential"
+  max        = 5
+  backoff    = "1s, 5s, 30s, 2m, 10m"
+  jitter     = 0.25
+  dead_letter {
+    enabled    = true
+    retention  = "30d"
+    escalation = "dispatch://fallback-channel"
+  }
+}
+```
+
+| 字段            | 类型     | 默认值           | 描述                                        |
+|---------------|--------|---------------|-------------------------------------------|
+| `strategy`    | string | `exponential` | 重试策略：`exponential`、`fixed` 或 `immediate`。 |
+| `max`         | number | `3`           | 进入死信队列前的最大重试次数。                           |
+| `backoff`     | string | `1s, 4s, 16s` | 每次重试的延迟序列，逗号分隔。                           |
+| `jitter`      | float  | `0.25`        | 抖动幅度，按当前延迟的比例计算。                          |
+| `dead_letter` | block  | 启用            | 不可投递消息的死信队列配置。                            |
+
+## Filter 块
+
+`filter` 块增加条件中继逻辑。只有与过滤表达式匹配的消息才会被处理，其余将被静默丢弃。
+
+```text title="Filter 示例"
+relay "critical-alerts-only" {
+  source = "glassboard"
+  // highlight-start
+  filter {
+    severity = "critical"
+  }
+  // highlight-end
+  destination = "canary://oncall-urgent"
+}
+```
+
+## 多条中继
+
+一份清单可以声明任意数量的中继。Envoy 在启动时加载它们，并把进入的消息路由到第一个匹配的中继。
+
+```text title="多中继清单"
+relay "critical-glassboard"  { source = "glassboard", filter { severity = "critical" }, destination = "canary://oncall-urgent" }
+relay "standard-glassboard"  { source = "glassboard", destination = "canary://infra-alerts" }
+relay "threadbare-pushes"    { source = "threadbare", destination = "canary://ci-builds" }
+relay "canary-heartbeats"    { source = "canary", destination = "canary://monitoring" }
+```
+
+:::warning 中继顺序
+中继按声明顺序求值。当两条中继匹配同一来源时，先声明的胜出。请把更具体的中继（带过滤器）放在通用兜底中继之前。
+:::
+
+<Details>
+<summary>完整指令参考</summary>
+
+| 指令                                  | 类型      | 默认值           | 描述                      |
+|-------------------------------------|---------|---------------|-------------------------|
+| `relay.source`                      | string  | —             | 集成来源标识符。                |
+| `relay.cipher`                      | string  | `none`        | 认证模式。                   |
+| `relay.destination`                 | string  | —             | 投递目标（protocol://topic）。 |
+| `relay.transform.title`             | string  | —             | 通知标题模板。                 |
+| `relay.transform.body`              | string  | —             | 通知正文模板。                 |
+| `relay.transform.priority`          | number  | `3`           | 通知优先级（1-5）。             |
+| `relay.transform.tags`              | list    | `[]`          | 通知标签。                   |
+| `relay.retry.strategy`              | string  | `exponential` | 重试策略。                   |
+| `relay.retry.max`                   | number  | `3`           | 最大重试次数。                 |
+| `relay.retry.backoff`               | string  | `1s, 4s, 16s` | 延迟序列。                   |
+| `relay.retry.jitter`                | float   | `0.25`        | 抖动比例。                   |
+| `relay.retry.dead_letter.enabled`   | boolean | `true`        | 是否启用死信队列。               |
+| `relay.retry.dead_letter.retention` | string  | `7d`          | 死信消息保留期。                |
+| `relay.filter.*`                    | varies  | —             | 条件过滤字段（用于匹配载荷）。         |
+| `relay.fanout`                      | list    | —             | 多目的地投递列表。               |
+
+</Details>
+
+## 校验
+
+启动中继前先校验清单：
+
+```bash title="校验配置"
+envoy validate --config relay.grain
+```
+
+```text title="校验输出"
+[validate] Loading relay.grain
+[validate] Relay "glassboard-to-canary" ... OK
+[validate] Relay "threadbare-to-canary" ... OK
+[validate] 2 relays configured, 0 errors
+[validate] Configuration is valid.
+```
+
+## 下一步
+
+- [协议翻译](/docs/core/protocol-translation/) — Parcel 如何在不同格式之间转换载荷。
+- [路由与分发](/docs/core/routing-dispatch/) — 基于内容的路由与严重程度升级。
+- [身份认证](/docs/core/authentication/) — 深入解读 Cipher 的校验模式。

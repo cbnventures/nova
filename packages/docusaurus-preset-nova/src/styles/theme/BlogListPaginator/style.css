@@ -1,6 +1,6 @@
 /**
  * ============================
- * Blog List Paginator — Layout
+ * Blog List Paginator - Layout
  * ============================
  */
 
@@ -14,16 +14,12 @@
   margin-top: 2rem;
   padding-top: 1rem;
 
-  border-top: 1px solid var(--nova-color-neutral-200);
-}
-
-[data-theme="dark"] .nova-blog-list-paginator {
-  border-top-color: var(--nova-color-neutral-800);
+  border-top: 1px solid var(--nova-color-border);
 }
 
 /**
  * ============================
- * Blog List Paginator — Nav
+ * Blog List Paginator - Nav
  * ============================
  */
 
@@ -37,7 +33,7 @@
 
 /**
  * ============================
- * Blog List Paginator — Pages
+ * Blog List Paginator - Pages
  * ============================
  */
 
@@ -49,9 +45,14 @@
   text-decoration: none;
 }
 
+.nova-blog-list-paginator-page:hover,
+.nova-blog-list-paginator-page:focus-visible {
+  text-decoration: none;
+}
+
 /**
  * ============================
- * Blog List Paginator — Ellipsis
+ * Blog List Paginator - Ellipsis
  * ============================
  */
 

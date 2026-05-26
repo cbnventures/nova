@@ -3,6 +3,8 @@ import TOC from '@theme/TOC';
 
 import type {
   ThemeDocItemTocDesktopDocItemTocDesktopDoc,
+  ThemeDocItemTocDesktopDocItemTocDesktopMergedClassName,
+  ThemeDocItemTocDesktopDocItemTocDesktopProps,
   ThemeDocItemTocDesktopDocItemTocDesktopTocSpread,
 } from '../../../../types/theme/DocItem/TOC/Desktop/index.d.ts';
 
@@ -13,11 +15,13 @@ import type {
  * using heading data and level constraints from the current
  * doc front matter.
  *
+ * @param {ThemeDocItemTocDesktopDocItemTocDesktopProps} props - Props.
+ *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocItemTOCDesktop() {
+function DocItemTOCDesktop(props: ThemeDocItemTocDesktopDocItemTocDesktopProps) {
   const doc: ThemeDocItemTocDesktopDocItemTocDesktopDoc = useDoc();
   const tocSpread: ThemeDocItemTocDesktopDocItemTocDesktopTocSpread = {};
 
@@ -29,9 +33,13 @@ function DocItemTOCDesktop() {
     Reflect.set(tocSpread, 'maxHeadingLevel', doc['frontMatter']['toc_max_heading_level']);
   }
 
+  const mergedClassName: ThemeDocItemTocDesktopDocItemTocDesktopMergedClassName = (props['className'] !== undefined) ? `nova-doc-item-toc-desktop ${props['className']}` : 'nova-doc-item-toc-desktop';
+
   return (
     <TOC
       toc={doc['toc']}
+      className={mergedClassName}
+      style={props['style']}
       {...tocSpread}
     />
   );

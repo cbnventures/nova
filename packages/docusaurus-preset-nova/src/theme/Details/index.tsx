@@ -12,6 +12,7 @@ import type {
   ThemeDetailsExtractedSummary,
   ThemeDetailsFilteredChildren,
   ThemeDetailsIsOpen,
+  ThemeDetailsOnToggle,
   ThemeDetailsOpen,
   ThemeDetailsProps,
   ThemeDetailsReturns,
@@ -37,7 +38,8 @@ function Details(props: ThemeDetailsProps): ThemeDetailsReturns {
   const summary: ThemeDetailsSummary = props['summary'];
   const children: ThemeDetailsChildren = props['children'];
   const open: ThemeDetailsOpen = props['open'];
-  const state: ThemeDetailsState = useState<ThemeDetailsIsOpen>((open !== undefined) ? (open === false) : false);
+  const onToggle: ThemeDetailsOnToggle = props['onToggle'] as ThemeDetailsOnToggle;
+  const state: ThemeDetailsState = useState<ThemeDetailsIsOpen>((open !== undefined) ? (open === true) : false);
   const isOpen: ThemeDetailsIsOpen = state[0];
   const setIsOpen: ThemeDetailsSetIsOpen = state[1];
 
@@ -66,12 +68,24 @@ function Details(props: ThemeDetailsProps): ThemeDetailsReturns {
   }
 
   return (
-    <div className="nova-details" data-open={isOpen}>
+    <div
+      className={(props['className'] !== undefined) ? `nova-details ${props['className']}` : 'nova-details'}
+      style={props['style']}
+      data-open={isOpen}
+    >
       <button
         className="nova-details-summary"
         type="button"
         onClick={() => {
-          setIsOpen((previous: ThemeDetailsIsOpen) => (previous === false));
+          setIsOpen((previous: ThemeDetailsIsOpen) => {
+            const next: ThemeDetailsIsOpen = (previous === false);
+
+            if (onToggle !== undefined) {
+              onToggle(next);
+            }
+
+            return next;
+          });
 
           return undefined;
         }}

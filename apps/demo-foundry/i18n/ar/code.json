@@ -1,0 +1,638 @@
+{
+  "home.appMarket.label": {
+    "message": "أدِر مصهرك في أي وقت ومن أي مكان",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.description": {
+    "message": "أفكار، وقياسات أداء، ووجهات نظر سلّمناها فعلًا.",
+    "description": "Front page BlogPreview section description"
+  },
+  "home.blogPreview.heading": {
+    "message": "أخبار من المصهر",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.features.anvil.description": {
+    "message": "واجهة سطر الأوامر الأساسية. تقرأ ملف Blueprint واحدًا، وتصوغ مساحة عملك بأكملها: بنية الدلائل، ورسم التبعيات، وتكوين البناء، وقواعد التدقيق. ملف واحد كمدخل، بيئة متكاملة كمخرج.",
+    "description": "Front page Features card description for Anvil"
+  },
+  "home.features.anvil.title": {
+    "message": "Anvil",
+    "description": "Front page Features card title for Anvil"
+  },
+  "home.features.bellows.description": {
+    "message": "مشغّل مهام متوازٍ يوزّع العمل في آن واحد على كل حزمة في مساحة العمل. يلتزم برسم التبعيات الذي يوفّره Tongs، فيضمن ألّا تبدأ أي مهمة قبل اكتمال متطلباتها.",
+    "description": "Front page Features card description for Bellows"
+  },
+  "home.features.bellows.title": {
+    "message": "Bellows",
+    "description": "Front page Features card title for Bellows"
+  },
+  "home.features.crucible.description": {
+    "message": "مولّد سقالات اختبار يقرأ توقيعات الأنواع لديك، ويكتب لك هياكل الاختبارات. اختبارات اللقطات، وقوالب التأكيد، وملفات التركيبات؛ كلها مشتقّة من الأنواع التي كتبتها أصلًا.",
+    "description": "Front page Features card description for Crucible"
+  },
+  "home.features.crucible.title": {
+    "message": "Crucible",
+    "description": "Front page Features card title for Crucible"
+  },
+  "home.features.quench.description": {
+    "message": "ذاكرة بناء تزايدية تتعقّب بصمات الملفات، فلا تعيد بناء سوى ما تغيّر فعلًا. الصياغة الباردة تستغرق ١٤ ثانية، والصياغة الدافئة أقل من ثانيتين.",
+    "description": "Front page Features card description for Quench"
+  },
+  "home.features.quench.title": {
+    "message": "Quench",
+    "description": "Front page Features card title for Quench"
+  },
+  "home.features.slag.description": {
+    "message": "كاشف الشيفرة الميتة والتبعيات غير المستخدمة. يفحص كل import وكل export وكل مدخل في Blueprint، ليرصد ما لم يعد له مرجع. أزِل الخبث، وأبقِ على المعدن الصافي.",
+    "description": "Front page Features card description for Slag"
+  },
+  "home.features.slag.title": {
+    "message": "Slag",
+    "description": "Front page Features card title for Slag"
+  },
+  "home.features.tongs.description": {
+    "message": "محلّل رسم التبعيات وأداة تصويرها. يرسم العلاقات بين كل حزمة في مساحة العمل، ويعرض شجرة التبعيات الكاملة، لتعرف من يعتمد على من قبل إجراء أي تغيير.",
+    "description": "Front page Features card description for Tongs"
+  },
+  "home.features.tongs.title": {
+    "message": "Tongs",
+    "description": "Front page Features card title for Tongs"
+  },
+  "home.head.title": {
+    "message": "Foundry - كل أداة تبدأ من المعدن الخام",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.ctaLabel": {
+    "message": "ابدأ الآن",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.eyebrow": {
+    "message": "سلسلة أدوات المطورين",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "كل أداة تبدأ من المعدن الخام.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "اعرضه على Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.hero.tagline": {
+    "message": "يقرأ Foundry نيّتك، ويصوغ من ملف بيان واحد بيئة تطوير كاملة. توقّف عن الإعداد، وابدأ بالوصف.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.layout.description": {
+    "message": "يقرأ Foundry نيّتك، ويصوغ من ملف بيان واحد بيئة تطوير كاملة.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.spotlight.description": {
+    "message": "صِف نيّتك، ويتكفّل Foundry بالبقية.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.spotlight.heading": {
+    "message": "بيان واحد، وكل شيء متصل",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.stats.coldForge.label": {
+    "message": "زمن الصياغة الباردة",
+    "description": "Front page Stats label for cold forge time"
+  },
+  "home.stats.configFiles.label": {
+    "message": "ملفات الإعداد",
+    "description": "Front page Stats label for config file count"
+  },
+  "home.stats.heading": {
+    "message": "الأرقام في لمحة",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manifest.label": {
+    "message": "ملفات البيان",
+    "description": "Front page Stats label for manifest count"
+  },
+  "home.stats.wardenRules.label": {
+    "message": "قواعد Warden",
+    "description": "Front page Stats label for Warden rule count"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "متاح على iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "نزّل التطبيق المرافق",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "متاح على Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "آخر التحديثات",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "يعيد Crucible الآن توليد سقالات الاختبارات تلقائيًا عند كل صياغة، ويستطيع Slag كشف التبعيات غير المستخدمة عبر رسم مساحة العمل كاملًا.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Foundry 2.4: وضع Crucible التلقائي وكاشف Slag",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "أفكار، وقياسات أداء، ووجهات نظر سلّمناها فعلًا.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "أخبار من المصهر",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "انحراف الإعداد هو القاتل الخفي لمساحات العمل. بنينا Foundry لأننا نؤمن بأن النيّة يجب أن يُعبَّر عنها تصريحيًا.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "لماذا توقّفنا عن كتابة ملفات الإعداد",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "كيف حوّلت ذاكرة Quench المؤقتة وتوازي Bellows بناءً مدّته اثنتا عشرة دقيقة إلى صياغة في أربع عشرة ثانية.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "صياغة Monorepo بـ ٢٠٠ حزمة في ١٤ ثانية",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "كتبنا ٣٨٠ قاعدة تدقيق، ثم استبعدنا ٦٠ منها. هذا ما بقي في النهاية، والنقاشات التي كادت أن تُفرّق الفريق.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "قواعد Warden التي كادت ألّا ترى النور",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.description": {
+    "message": "كل مكوّن من إعدادات Foundry المسبقة، معروضًا ببيانات نموذجية.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.featuresIcons.anvil.description": {
+    "message": "واجهة سطر الأوامر الأساسية. تقرأ ملف Blueprint، وتصوغ مساحة عملك: بنية الدلائل، ورسم التبعيات، وتكوين البناء، وقواعد التدقيق.",
+    "description": "Showcase Features (with icons) card description for Anvil"
+  },
+  "showcase.featuresIcons.anvil.title": {
+    "message": "Anvil",
+    "description": "Showcase Features (with icons) card title for Anvil"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "لماذا تختار الفرق Foundry",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.quench.description": {
+    "message": "ذاكرة بناء تزايدية تتعقّب بصمات الملفات، فلا تعيد بناء سوى ما تغيّر. الصياغة الباردة تستغرق ١٤ ثانية، والصياغة الدافئة أقل من ثانيتين.",
+    "description": "Showcase Features (with icons) card description for Quench"
+  },
+  "showcase.featuresIcons.quench.title": {
+    "message": "Quench",
+    "description": "Showcase Features (with icons) card title for Quench"
+  },
+  "showcase.featuresIcons.tongs.description": {
+    "message": "محلّل رسم التبعيات وأداة تصويرها. يرسم كل علاقة بين الحزم، ويعرض شجرة التبعيات الكاملة.",
+    "description": "Showcase Features (with icons) card description for Tongs"
+  },
+  "showcase.featuresIcons.tongs.title": {
+    "message": "Tongs",
+    "description": "Showcase Features (with icons) card title for Tongs"
+  },
+  "showcase.featuresNoIcons.bellows.description": {
+    "message": "مشغّل مهام متوازٍ يوزّع العمل في آن واحد على كل حزمة في مساحة العمل. يلتزم برسم التبعيات الذي يوفّره Tongs.",
+    "description": "Showcase Features (no icons) card description for Bellows"
+  },
+  "showcase.featuresNoIcons.bellows.title": {
+    "message": "Bellows",
+    "description": "Showcase Features (no icons) card title for Bellows"
+  },
+  "showcase.featuresNoIcons.crucible.description": {
+    "message": "مولّد سقالات اختبار يقرأ توقيعات الأنواع لديك، ويكتب هياكل الاختبارات. يشمل اختبارات اللقطات وقوالب التأكيد.",
+    "description": "Showcase Features (no icons) card description for Crucible"
+  },
+  "showcase.featuresNoIcons.crucible.title": {
+    "message": "Crucible",
+    "description": "Showcase Features (no icons) card title for Crucible"
+  },
+  "showcase.featuresNoIcons.slag.description": {
+    "message": "كاشف الشيفرة الميتة والتبعيات غير المستخدمة. يفحص كل import وكل export، ليرصد ما لم يعد له مرجع.",
+    "description": "Showcase Features (no icons) card description for Slag"
+  },
+  "showcase.featuresNoIcons.slag.title": {
+    "message": "Slag",
+    "description": "Showcase Features (no icons) card title for Slag"
+  },
+  "showcase.featuresSix.anvil.description": {
+    "message": "يقرأ بيانك ويولّد كل ملف إعداد تحتاجه مساحة العمل. ملف واحد كمدخل، وكل المخرجات جاهزة.",
+    "description": "Showcase Features (six items) card description for Anvil"
+  },
+  "showcase.featuresSix.anvil.title": {
+    "message": "Anvil",
+    "description": "Showcase Features (six items) card title for Anvil"
+  },
+  "showcase.featuresSix.bellows.description": {
+    "message": "يجدول مهام البناء على دفعات وفق رسم التبعيات. الحزم المستقلّة عن بعضها تُبنى بالتوازي.",
+    "description": "Showcase Features (six items) card description for Bellows"
+  },
+  "showcase.featuresSix.bellows.title": {
+    "message": "Bellows",
+    "description": "Showcase Features (six items) card title for Bellows"
+  },
+  "showcase.featuresSix.crucible.description": {
+    "message": "يولّد سقالات اختبار من توقيعات الأنواع. اختبارات لقطات، وقوالب تأكيد، وملفات تركيبات.",
+    "description": "Showcase Features (six items) card description for Crucible"
+  },
+  "showcase.featuresSix.crucible.title": {
+    "message": "Crucible",
+    "description": "Showcase Features (six items) card title for Crucible"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "مصهر واحد يحتوي كل شيء",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.quench.description": {
+    "message": "ذاكرة بناء معنوَنة بمحتواها. إذا لم تتغيّر المدخلات، يُتجاوز البناء كليًا.",
+    "description": "Showcase Features (six items) card description for Quench"
+  },
+  "showcase.featuresSix.quench.title": {
+    "message": "Quench",
+    "description": "Showcase Features (six items) card title for Quench"
+  },
+  "showcase.featuresSix.slag.description": {
+    "message": "يرصد الشيفرة الميتة والتبعيات المعزولة. أزِل الخبث، وأبقِ على المعدن الصافي.",
+    "description": "Showcase Features (six items) card description for Slag"
+  },
+  "showcase.featuresSix.slag.title": {
+    "message": "Slag",
+    "description": "Showcase Features (six items) card title for Slag"
+  },
+  "showcase.featuresSix.tongs.description": {
+    "message": "يحلّل رسم التبعيات، ويرصد التبعيات الدائرية، ويوفّر أدوات استعلام للنصوص البرمجية وتكامل خطوط الأنابيب.",
+    "description": "Showcase Features (six items) card description for Tongs"
+  },
+  "showcase.featuresSix.tongs.title": {
+    "message": "Tongs",
+    "description": "Showcase Features (six items) card title for Tongs"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "اقرأ الوثائق",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "عرض المكوّنات",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "كل مكوّن من مكوّنات Foundry، مجمّعًا في مكان واحد.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "اعرضه على Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "تعرض هذه الصفحة كل مكوّن من @cbnventures/docusaurus-preset-nova/blocks ببيانات نموذجية من عالم Foundry، لتلاحظ شكلها وسلوكها.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "ابدأ الآن",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "اصنع ما يمكن تسليمه.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "يقرأ Foundry نيّتك، ويصوغ من ملف بيان واحد بيئة تطوير كاملة. توقّف عن الإعداد، وابدأ بالوصف.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "أو استخدم Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "ثبّت باستخدام Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripText.label": {
+    "message": "تثبيت سريع",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store فقط)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (كلا المتجرين)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play فقط)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (بدون تسمية)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (بدون وصف)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (مع الوصف)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (مع الأيقونات)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (بدون أيقونات أو عنوان)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (ستة عناصر، أيقونات مختلطة)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (كامل)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (مبسط)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip (copyTarget: block)",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip (copyTarget: icon)",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (بدون تسمية)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip (copyTarget: text)",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (مع الكود)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (مع نص)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (مع العنوان والوصف)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (بدون عنوان)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (استخدام داخل النص)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (افتراضي)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (بدون تكرار)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (بدون بادئة)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (توقيت بطيء)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.layout.description": {
+    "message": "عرض مكوّنات Foundry، يستعرض كل مكوّن من docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "ثلاثة أوامر، من الصفر إلى مساحة عمل مصاغة بالكامل.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "بداية سريعة",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "يقرأ Foundry بيانك، ويحلّل رسم التبعيات بمساعدة Tongs، ويولّد كل ملف إعداد بطريقة حتمية. المدخلات نفسها تنتج المخرجات نفسها دائمًا؛ لا آثار جانبية، ولا حالة مخفية.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "كيف يعمل",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.statsFull.cacheHit.label": {
+    "message": "معدّل إصابة الذاكرة المؤقتة",
+    "description": "Showcase Stats (full) label for cache hit rate"
+  },
+  "showcase.statsFull.coldForge.label": {
+    "message": "زمن الصياغة الباردة",
+    "description": "Showcase Stats (full) label for cold forge time"
+  },
+  "showcase.statsFull.description": {
+    "message": "مؤشرات الأداء الرئيسية في مساحة عمل تضم ٢٠٠ حزمة.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.heading": {
+    "message": "مقاييس الصياغة",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.wardenRules.label": {
+    "message": "قواعد Warden",
+    "description": "Showcase Stats (full) label for Warden rule count"
+  },
+  "showcase.statsFull.warmForge.label": {
+    "message": "زمن الصياغة الدافئة",
+    "description": "Showcase Stats (full) label for warm forge time"
+  },
+  "showcase.statsNoHeading.configFiles.label": {
+    "message": "ملفات الإعداد",
+    "description": "Showcase Stats (no heading) label for config files"
+  },
+  "showcase.statsNoHeading.manifest.label": {
+    "message": "ملفات البيان",
+    "description": "Showcase Stats (no heading) label for manifest"
+  },
+  "showcase.statsNoHeading.maxPackages.label": {
+    "message": "أكبر عدد حزم مختبَر",
+    "description": "Showcase Stats (no heading) label for max packages tested"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "الأدوات الفرعية",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.terminology.alloySettings.label": {
+    "message": "إعدادات Alloy",
+    "description": "Showcase Terminology displayed text for Alloy settings"
+  },
+  "showcase.terminology.alloySettings.title": {
+    "message": "إعدادات المترجم",
+    "description": "Showcase Terminology hover title for Alloy settings"
+  },
+  "showcase.terminology.forge.label": {
+    "message": "صياغة",
+    "description": "Showcase Terminology displayed text for forge"
+  },
+  "showcase.terminology.forge.title": {
+    "message": "عملية توليد الإعداد",
+    "description": "Showcase Terminology hover title for forge"
+  },
+  "showcase.terminology.lintingRules.label": {
+    "message": "قواعد التدقيق",
+    "description": "Showcase Terminology displayed text for linting rules"
+  },
+  "showcase.terminology.lintingRules.title": {
+    "message": "قواعد التحليل الساكن",
+    "description": "Showcase Terminology hover title for linting rules"
+  },
+  "showcase.terminology.manifest.label": {
+    "message": "بيانًا",
+    "description": "Showcase Terminology displayed text for manifest"
+  },
+  "showcase.terminology.manifest.title": {
+    "message": "ملف إعداد مساحة العمل",
+    "description": "Showcase Terminology hover title for manifest"
+  },
+  "showcase.terminology.paragraph1.afterForge": {
+    "message": "، فيبقى كل ملف ناتج متزامنًا. وحين تحتاج إلى التحقق من جودة الشيفرة، يشغّل محرّك ",
+    "description": "Showcase Terminology paragraph 1 fragment after forge"
+  },
+  "showcase.terminology.paragraph1.afterManifest": {
+    "message": " لتشغيل كل عمليات توليد الشيفرة والإعداد. كل حزمة في مساحة العمل تُدار عبر عملية ",
+    "description": "Showcase Terminology paragraph 1 fragment after manifest"
+  },
+  "showcase.terminology.paragraph1.afterWarden": {
+    "message": " كل قاعدة دون إعداد إضافي.",
+    "description": "Showcase Terminology paragraph 1 fragment after Warden"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "يستخدم Foundry ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.paragraph2.afterAlloy": {
+    "message": "، دون تكرار صيانة ملفات الإعداد.",
+    "description": "Showcase Terminology paragraph 2 fragment after Alloy settings"
+  },
+  "showcase.terminology.paragraph2.afterLinting": {
+    "message": " و",
+    "description": "Showcase Terminology paragraph 2 fragment after linting rules"
+  },
+  "showcase.terminology.paragraph2.afterPreset": {
+    "message": "، تستطيع الفرق مشاركة مصدر موثوق واحد لإدارة ",
+    "description": "Showcase Terminology paragraph 2 fragment after preset system"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "وبفضل ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.presetSystem.label": {
+    "message": "نظام الإعدادات المسبقة",
+    "description": "Showcase Terminology displayed text for preset system"
+  },
+  "showcase.terminology.presetSystem.title": {
+    "message": "إعدادات مسبقة لمجموعات القواعد",
+    "description": "Showcase Terminology hover title for preset system"
+  },
+  "showcase.terminology.warden.title": {
+    "message": "محرّك التحليل الساكن",
+    "description": "Showcase Terminology hover title for Warden"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "أحب ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "مرحبًا بك في ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "سريع",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "مرن",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "مجاني",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "للمصممين",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "للمطورين",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "صُمّم ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "لم يكتب هذا المؤلّف أيّ منشورات بعد.",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "عرض جميع المؤلّفين",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.post.plurals": {
+    "message": "منشور واحد|{count} منشورات",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} موسومة بـ \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "تخطّى إلى المحتوى الرئيسي",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.footer.copyright": {
+    "message": "حقوق النشر © 2025-2026 CBN Ventures LLC. جميع الحقوق محفوظة.",
+    "description": "Footer copyright text. The {copyright} placeholder receives the consumer's themeConfig.footer.copyright value as the source-locale fallback; per-locale overrides in i18n code.json usually inline their own text."
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "الوسوم",
+    "description": "The title of the tag list page"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "صورة مصغرة لعلامة Foundry التجارية.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "علامة تجارية مطبوعة داخل كتلة Frame — حدود حادة، تعليق بخط ثابت.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "إطار (بدون تعليق)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "إطار (مع تعليق)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  }
+}

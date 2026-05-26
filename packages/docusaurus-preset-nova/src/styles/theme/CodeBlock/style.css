@@ -1,6 +1,6 @@
 /**
  * ============================
- * Code Block — Shiki Theme
+ * Code Block - Shiki Theme
  * ============================
  */
 
@@ -20,9 +20,23 @@
 
 /**
  * ============================
- * Code Block — Container
+ * Code Block - Container rhythm
+ *
+ * Symmetric block margin pairs with adjacent paragraphs/lists/admonitions
+ * via margin-collapse. Per-preset CodeBlock overlays override
+ * `--nova-code-block-margin-block` via the rename+alias chain (signal
+ * tightens to match its terminal density).
  * ============================
  */
+
+/* Cross-preset uniform: every preset clips overflow on the code-block
+   wrapper so the rounded/squared border isn't broken by long horizontal
+   scrollers inside `pre.shiki`. Promoted to shared baseline. */
+.nova-code-block {
+  margin: var(--nova-code-block-margin-block, 1.5rem) 0;
+
+  overflow: hidden;
+}
 
 .nova-code-block pre {
   margin: 0;
@@ -30,7 +44,7 @@
 
 /**
  * ============================
- * Code Block — Title Bar
+ * Code Block - Title Bar
  * ============================
  */
 
@@ -40,16 +54,12 @@
   font-size: 0.875rem;
   font-weight: 600;
 
-  border-bottom: 1px solid var(--nova-color-neutral-200);
-}
-
-[data-theme="dark"] .nova-code-block-title {
-  border-bottom-color: var(--nova-color-neutral-700);
+  border-bottom: 1px solid var(--nova-color-border);
 }
 
 /**
  * ============================
- * Code Block — Toolbar
+ * Code Block - Toolbar
  * ============================
  */
 
@@ -59,12 +69,12 @@
   justify-content: flex-end;
   gap: 0.25rem;
 
-  padding: 0.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 1rem;
 }
 
 /**
  * ============================
- * Code Block — Toolbar Actions
+ * Code Block - Toolbar Actions
  * ============================
  */
 
@@ -76,7 +86,7 @@
 
 /**
  * ============================
- * Code Block — Language Badge
+ * Code Block - Language Badge
  * ============================
  */
 
@@ -93,7 +103,7 @@
 
 /**
  * ============================
- * Code Block — Copy Button
+ * Code Block - Copy Button
  * ============================
  */
 
@@ -120,7 +130,7 @@
 
 /**
  * ============================
- * Code Block — Line Numbers
+ * Code Block - Line Numbers
  * ============================
  */
 
@@ -141,7 +151,7 @@
 
 /**
  * ============================
- * Code Block — Line Highlighting
+ * Code Block - Line Highlighting
  * ============================
  */
 
@@ -163,7 +173,7 @@
 
 /**
  * ============================
- * Code Block — Diff Highlighting
+ * Code Block - Diff Highlighting
  * ============================
  */
 
@@ -193,7 +203,7 @@
 
 /**
  * ============================
- * Code Block — Word Wrap
+ * Code Block - Word Wrap
  * ============================
  */
 
@@ -204,7 +214,7 @@
 
 /**
  * ============================
- * Code Block — Collapsible
+ * Code Block - Collapsible
  * ============================
  */
 
@@ -214,6 +224,9 @@
   overflow: hidden;
 }
 
+/* Cross-preset uniform: every preset clears the default <button> border
+   so the only divider drawn is each preset's `border-top` rule. Promoted
+   to shared baseline. */
 .nova-code-block-expand {
   display: block;
   width: 100%;
@@ -222,12 +235,14 @@
   font-size: 0.875rem;
   text-align: center;
 
+  border: none;
+
   cursor: pointer;
 }
 
 /**
  * ============================
- * Code Block — Pre Base
+ * Code Block - Pre Base
  * ============================
  */
 
@@ -242,3 +257,33 @@
 .shiki code {
   counter-reset: line;
 }
+
+/**
+ * ============================
+ * Code Display - LTR Enforcement
+ *
+ * Code is inherently left-to-right: programming syntax, identifiers,
+ * operators, file paths, CLI flags. When a consumer enables an RTL
+ * locale, the auto-pushed `rtlcss` plugin flips the document — but
+ * the code text itself must stay LTR or it becomes unreadable.
+ *
+ * Scope: only the code CONTENT (`.shiki`, `.nova-code-inline`,
+ * `.nova-code-snippet`). The block wrapper (`.nova-code-block`) and
+ * its chrome (title bar, toolbar, copy/wrap buttons) intentionally
+ * inherit page direction so they sit on the RTL-correct edge.
+ *
+ * The `rtl:begin/end:ignore` directives keep rtlcss from re-flipping
+ * the LTR enforcement itself; the leading `!` marks the comments as
+ * important so cssnano preserves them through minify.
+ * ============================
+ */
+
+/*! rtl:begin:ignore */
+.nova-code-inline,
+.nova-code-snippet,
+.shiki {
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+}
+/*! rtl:end:ignore */

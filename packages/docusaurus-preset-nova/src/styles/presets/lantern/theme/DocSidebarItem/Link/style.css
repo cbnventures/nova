@@ -1,0 +1,45 @@
+/**
+ * Lantern - `DocSidebarItem/Link` theme overlay.
+ *
+ * Sidebar link styling - warm ink default, amber on hover and active.
+ * Body voice throughout (Manrope) so the sidebar reads as a quiet
+ * margin column rather than a typographic flourish.
+ *
+ * @since 0.18.0
+ */
+
+.nova-sidebar-link {
+  padding: 0.375rem 0.75rem;
+  font-family: var(--nova-font-body);
+  font-size: 0.9rem;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/* Same auto-switching token as the bare rule; lifts specificity to (0,1,1)
+   so it beats preset.css `[data-theme="dark"] a` on source order. */
+[data-theme="dark"] .nova-sidebar-link {
+  color: var(--nova-lantern-ink-muted);
+}
+
+.nova-sidebar-link:hover,
+.nova-sidebar-link:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+.nova-sidebar-link.active,
+.nova-sidebar-link[aria-current="page"] {
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-sidebar-link:hover,
+[data-theme="dark"] .nova-sidebar-link:focus-visible {
+  color: var(--nova-color-primary-300);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-sidebar-link.active,
+[data-theme="dark"] .nova-sidebar-link[aria-current="page"] {
+  color: var(--nova-color-primary-300);
+}

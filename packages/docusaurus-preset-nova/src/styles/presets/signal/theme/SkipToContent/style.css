@@ -1,0 +1,17 @@
+/**
+ * Signal - `SkipToContent` theme overlay.
+ *
+ * Defines per-preset shape, spacing, and timing tokens consumed by the shared
+ * theme/SkipToContent/style.css. Color tokens for the focus state live in
+ * preset.css.
+ *
+ * @since 0.18.0
+ */
+
+:root {
+  --nova-skip-radius: 4px;
+  --nova-skip-padding-y: 0.5rem;
+  --nova-skip-padding-x: 1rem;
+  --nova-skip-offset: 0.75rem;
+  --nova-skip-font-weight: 500;
+}

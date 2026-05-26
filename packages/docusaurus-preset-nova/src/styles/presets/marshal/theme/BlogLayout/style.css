@@ -1,0 +1,38 @@
+/**
+ * Marshal - `BlogLayout` theme overlay.
+ *
+ * Defines per-preset blog typography tokens consumed by the shared
+ * theme/BlogLayout/style.css. Color tokens for blog typography live in
+ * preset.css.
+ *
+ * Documentary aged-paper voice - restrained mobile heading at 1.5rem,
+ * bumps to 1.875rem at md (Plex Serif rewards display sizing), 0.5rem
+ * spacing, baseline description (Plex Serif comfortable at 0.875rem /
+ * 1.6).
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned blog typography tokens
+ * ============================ */
+
+:root {
+  --nova-marshal-blog-header-heading-size: 1.5rem;
+  --nova-marshal-blog-header-heading-size-md: 1.875rem;
+  --nova-marshal-blog-header-heading-spacing: 0.5rem;
+  --nova-marshal-blog-description-size: 0.875rem;
+  --nova-marshal-blog-description-line-height: 1.6;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogLayout
+ * ============================ */
+
+:root {
+  --nova-blog-header-heading-size: var(--nova-marshal-blog-header-heading-size);
+  --nova-blog-header-heading-size-md: var(--nova-marshal-blog-header-heading-size-md);
+  --nova-blog-header-heading-spacing: var(--nova-marshal-blog-header-heading-spacing);
+  --nova-blog-description-size: var(--nova-marshal-blog-description-size);
+  --nova-blog-description-line-height: var(--nova-marshal-blog-description-line-height);
+}

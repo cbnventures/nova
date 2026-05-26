@@ -1,0 +1,630 @@
+{
+  "home.appMarket.label": {
+    "message": "راقب حملاتك في أي وقت ومن أي مكان",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.description": {
+    "message": "دراسات حالة، وتحليلات تقنية معمّقة، والأنماط الخفية داخل تدفقات النقرات.",
+    "description": "Front page BlogPreview section description"
+  },
+  "home.blogPreview.heading": {
+    "message": "رؤى الإسناد",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.features.aperture.description": {
+    "message": "لقطات للحملات. يلتقط بيانات الأداء عند نقاط زمنية محددة، ويوفر طبقات مقارنة بصرية. شاهد بوضوح كيف تغيّرت حملة ما بين أي لحظتين.",
+    "description": "Front page Features card description for Aperture"
+  },
+  "home.features.aperture.title": {
+    "message": "Aperture",
+    "description": "Front page Features card title for Aperture"
+  },
+  "home.features.beacon.description": {
+    "message": "محرك إنشاء روابط قصيرة. يضمّن البيانات الوصفية للإسناد داخل روابط قصيرة موسومة بالعلامة التجارية، ويحافظ على المسار الكامل عبر اختصار عناوين URL وتطبيقات المراسلة والتنقل بين الأجهزة. كل رابط هو مستشعر.",
+    "description": "Front page Features card description for Beacon"
+  },
+  "home.features.beacon.title": {
+    "message": "Beacon",
+    "description": "Front page Features card title for Beacon"
+  },
+  "home.features.flare.description": {
+    "message": "مولّد رموز QR والروابط العميقة. يربط العالم المادي بالإسناد الرقمي عبر بيانات تتبع وصفية كاملة. كل مسح ضوئي يحمل القدر نفسه من البصيرة كأي نقرة رقمية.",
+    "description": "Front page Features card description for Flare"
+  },
+  "home.features.flare.title": {
+    "message": "Flare",
+    "description": "Front page Features card title for Flare"
+  },
+  "home.features.prism.description": {
+    "message": "نموذج إسناد متعدد نقاط التماس. يتتبع مسارات التحويل عبر القنوات، ويوزّع وزنًا مرجّحًا على كل نقطة تماس، ويعيد بناء الرحلة الكاملة من اللمسة الأولى إلى الإجراء النهائي.",
+    "description": "Front page Features card description for Prism"
+  },
+  "home.features.prism.title": {
+    "message": "Prism",
+    "description": "Front page Features card title for Prism"
+  },
+  "home.features.pulse.description": {
+    "message": "تدفق نقرات في الزمن الفعلي. تيار حي لكل تفاعل، يشمل الموقع الجغرافي والجهاز وصفحة الإحالة وبيانات الإسناد، يصل خلال ثانية واحدة من حدوث النقرة.",
+    "description": "Front page Features card description for Pulse"
+  },
+  "home.features.pulse.title": {
+    "message": "Pulse",
+    "description": "Front page Features card title for Pulse"
+  },
+  "home.features.resonance.description": {
+    "message": "كاشف تداخل الجمهور. يحدد الجماهير التي تتسرب بين الحملات والشرائح المختلفة. توقّف عن الدفع المزدوج للوصول إلى الأشخاص أنفسهم.",
+    "description": "Front page Features card description for Resonance"
+  },
+  "home.features.resonance.title": {
+    "message": "Resonance",
+    "description": "Front page Features card title for Resonance"
+  },
+  "home.head.title": {
+    "message": "Signal - كل نقرة تروي قصة",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.ctaLabel": {
+    "message": "ابدأ الآن",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.eyebrow": {
+    "message": "محرك الإسناد",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "كل نقرة تروي قصة، لكن معظم الأدوات تفوّت الحبكة.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "اعرضه على Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.hero.tagline": {
+    "message": "يتتبع Signal تدفق النية، من الظهور الأول إلى الإجراء النهائي. لا يسجل فقط أي نقرة وقعت، بل يفسر سبب وقوعها، وأي النقرات كادت أن تقع.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.layout.description": {
+    "message": "يتتبع Signal تدفق النية، من الظهور الأول إلى الإجراء النهائي. لا يسجل فقط أي نقرة وقعت، بل يفسر سبب وقوعها.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.spotlight.description": {
+    "message": "كل رابط مستشعر، وكل إعادة توجيه نقطة بيانات. يربطها Prism جميعًا في مسار إسناد متكامل.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.spotlight.heading": {
+    "message": "من Beacon إلى الإسناد",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.stats.heading": {
+    "message": "الأرقام في لمحة",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.latency.label": {
+    "message": "زمن استجابة إعادة التوجيه",
+    "description": "Front page Stats label for redirect latency"
+  },
+  "home.stats.links.label": {
+    "message": "الروابط المتتبَّعة",
+    "description": "Front page Stats label for links traced"
+  },
+  "home.stats.regions.label": {
+    "message": "المناطق المغطاة",
+    "description": "Front page Stats label for regions"
+  },
+  "home.stats.uptime.label": {
+    "message": "نسبة التشغيل",
+    "description": "Front page Stats label for uptime"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "متاح على iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "نزّل التطبيق المرافق",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "متاح على Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "آخر التحديثات",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "صار بإمكان Resonance تصوير تداخل الجمهور بين أي عدد من الشرائح، وبدأ Flare يدعم الإنشاء المجمَّع لرموز QR استنادًا إلى ملفات CSV.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Signal 2.1: خرائط التداخل في Resonance والإنشاء المجمَّع في Flare",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "دراسات حالة، ومراجعات للحملات، والأنماط الخفية داخل تدفقات النقرات.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "رؤى الإسناد",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "ارتفاع بنسبة 40% في التحويلات، تبيّن أن مصدره رابط جانبي لم يلتفت إليه أحد.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "تتبّعنا انتشارًا فيروسيًا حتى رابط في رسالة يوم الثلاثاء",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "حين ينسخ شخص ما عنوان URL إلى تطبيق مراسلة، تختفي ترويسة Referer. لكن البيانات الوصفية لـ Beacon تبقى حيّة.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "حركة المرور المظلمة: النقرات التي لا تراها",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "منح الفضل كاملًا لآخر نقطة تماس هو في جوهره خداع. يوزّع Prism الفضل على المسار بأكمله.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "نهاية إسناد النقرة الأخيرة",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.description": {
+    "message": "كل مكوّن في إعداد Signal، معروضًا ببيانات نموذجية.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.featuresIcons.beacon.description": {
+    "message": "محرك إنشاء روابط قصيرة. يضمّن البيانات الوصفية للإسناد داخل روابط قصيرة موسومة بالعلامة التجارية، فيحافظ على قدرة التتبع حتى في السيناريوهات التي تُجرَّد فيها معاملات UTM.",
+    "description": "Showcase Features (with icons) card description for Beacon"
+  },
+  "showcase.featuresIcons.beacon.title": {
+    "message": "Beacon",
+    "description": "Showcase Features (with icons) card title for Beacon"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "لماذا تختار الفِرق Signal",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.prism.description": {
+    "message": "نموذج إسناد متعدد نقاط التماس. يتتبع مسارات التحويل عبر القنوات، ويوزّع وزنًا مرجّحًا على كل نقطة تماس.",
+    "description": "Showcase Features (with icons) card description for Prism"
+  },
+  "showcase.featuresIcons.prism.title": {
+    "message": "Prism",
+    "description": "Showcase Features (with icons) card title for Prism"
+  },
+  "showcase.featuresIcons.pulse.description": {
+    "message": "تدفق نقرات في الزمن الفعلي. تيار حي لأحداث التفاعل، يتضمن الموقع الجغرافي والجهاز وصفحة الإحالة وبيانات الإسناد.",
+    "description": "Showcase Features (with icons) card description for Pulse"
+  },
+  "showcase.featuresIcons.pulse.title": {
+    "message": "Pulse",
+    "description": "Showcase Features (with icons) card title for Pulse"
+  },
+  "showcase.featuresNoIcons.aperture.description": {
+    "message": "لقطات للحملات. يلتقط بيانات الأداء عند نقاط زمنية محددة، ويوفر طبقات مقارنة بصرية بين نوافذ زمنية مختلفة.",
+    "description": "Showcase Features (no icons) card description for Aperture"
+  },
+  "showcase.featuresNoIcons.aperture.title": {
+    "message": "Aperture",
+    "description": "Showcase Features (no icons) card title for Aperture"
+  },
+  "showcase.featuresNoIcons.flare.description": {
+    "message": "مولّد رموز QR والروابط العميقة. يصل العالم المادي بالعالم الرقمي، فيحمل كل مسح ضوئي سلسلة إسناد كاملة.",
+    "description": "Showcase Features (no icons) card description for Flare"
+  },
+  "showcase.featuresNoIcons.flare.title": {
+    "message": "Flare",
+    "description": "Showcase Features (no icons) card title for Flare"
+  },
+  "showcase.featuresNoIcons.resonance.description": {
+    "message": "كاشف تداخل الجمهور. يحدد الجماهير التي تتسرب بين الحملات والشرائح المختلفة.",
+    "description": "Showcase Features (no icons) card description for Resonance"
+  },
+  "showcase.featuresNoIcons.resonance.title": {
+    "message": "Resonance",
+    "description": "Showcase Features (no icons) card title for Resonance"
+  },
+  "showcase.featuresSix.aperture.description": {
+    "message": "يلتقط لقطات للحملات غير قابلة للتعديل. قارن بين أي نقطتين زمنيتين لاستيعاب ما تغيّر بينهما.",
+    "description": "Showcase Features (six items) card description for Aperture"
+  },
+  "showcase.featuresSix.aperture.title": {
+    "message": "Aperture",
+    "description": "Showcase Features (six items) card title for Aperture"
+  },
+  "showcase.featuresSix.beacon.description": {
+    "message": "يُنشئ روابط موسومة بالعلامة التجارية مع بيانات تتبع وصفية مضمَّنة. كل رابط مستشعر داخل شبكة الإسناد.",
+    "description": "Showcase Features (six items) card description for Beacon"
+  },
+  "showcase.featuresSix.beacon.title": {
+    "message": "Beacon",
+    "description": "Showcase Features (six items) card title for Beacon"
+  },
+  "showcase.featuresSix.flare.description": {
+    "message": "يُنشئ رموز QR وروابط عميقة مع إسناد كامل. يربط المواد المطبوعة والفعاليات الميدانية بالعالم الرقمي.",
+    "description": "Showcase Features (six items) card description for Flare"
+  },
+  "showcase.featuresSix.flare.title": {
+    "message": "Flare",
+    "description": "Showcase Features (six items) card title for Flare"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "حزمة الإسناد الكاملة",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.prism.description": {
+    "message": "يعيد بناء مسارات التحويل الكاملة. يدعم النماذج الخطية والمتلاشية زمنيًا والمستندة إلى الموقع، إضافة إلى نماذج الإسناد المخصصة.",
+    "description": "Showcase Features (six items) card description for Prism"
+  },
+  "showcase.featuresSix.prism.title": {
+    "message": "Prism",
+    "description": "Showcase Features (six items) card title for Prism"
+  },
+  "showcase.featuresSix.pulse.description": {
+    "message": "يدفع أحداث النقر في الزمن الفعلي. يمكن تصفيتها حسب الحملة أو القناة أو الموقع الجغرافي أو الجهاز.",
+    "description": "Showcase Features (six items) card description for Pulse"
+  },
+  "showcase.featuresSix.pulse.title": {
+    "message": "Pulse",
+    "description": "Showcase Features (six items) card title for Pulse"
+  },
+  "showcase.featuresSix.resonance.description": {
+    "message": "يقيس تداخل الجمهور بين الشرائح. يحدد الحملات التي تتنافس على الزوّار أنفسهم.",
+    "description": "Showcase Features (six items) card description for Resonance"
+  },
+  "showcase.featuresSix.resonance.title": {
+    "message": "Resonance",
+    "description": "Showcase Features (six items) card title for Resonance"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "اقرأ التوثيق",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "عرض المكونات",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "كل مكوّن من Signal، معروضًا في مكان واحد.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "اعرضه على Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "تعرض هذه الصفحة كل مكوّن من @cbnventures/docusaurus-preset-nova/blocks باستخدام بيانات نموذجية من عالم Signal، حتى تتمكن من مراقبة شكلها وسلوكها.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "ابدأ الآن",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "اعثر على الإشارة.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "يتتبع Signal تدفق النية، من الظهور الأول إلى الإجراء النهائي. لا يسجل فقط أي نقرة وقعت، بل يفسر سبب وقوعها، وأي النقرات كادت أن تقع.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "أو استخدم Loom Registry",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "ثبّت عبر Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripText.label": {
+    "message": "تثبيت سريع",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store فقط)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (كلا المتجرين)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play فقط)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (بدون تسمية)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (بدون وصف)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (مع وصف)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (مع الأيقونات)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (بدون أيقونات، بدون عنوان)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (ستة عناصر، أيقونات مختلطة)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (كامل)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (مبسط)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip (copyTarget: block)",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip (copyTarget: icon)",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (بدون تسمية)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip (copyTarget: text)",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (مع الكود)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (مع نص)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (مع العنوان والوصف)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (بدون عنوان)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (استخدام داخل السطر)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (افتراضي)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (بدون تكرار)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (بدون بادئة)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (توقيت بطيء)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.layout.description": {
+    "message": "عرض مكونات Signal، يقدّم كل مكوّن من docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "ثلاثة أوامر تنقلك من الصفر إلى رابط إسناد مكتمل.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "البدء السريع",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "يضمّن Signal بيانات الإسناد الوصفية داخل الرابط نفسه، دون الاعتماد على معاملات الاستعلام التي تُجرَّد، ولا على ترويسة Referer التي قد تختفي. حين تقع النقرة، يلتقطها Pulse؛ وحين يحدث التحويل، يعيد Prism بناء المسار الكامل. لا حاجة لبكسلات تتبع ولا لنصوص برمجية على صفحات الموقع.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "كيف يعمل",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "لمحة عن مؤشرات الأداء الأساسية لمنصة Signal.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.heading": {
+    "message": "مؤشرات الإسناد",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "زمن استجابة إعادة التوجيه",
+    "description": "Showcase Stats (full) label for redirect latency"
+  },
+  "showcase.statsFull.links.label": {
+    "message": "الروابط المتتبَّعة",
+    "description": "Showcase Stats (full) label for links traced"
+  },
+  "showcase.statsFull.regions.label": {
+    "message": "المناطق المغطاة",
+    "description": "Showcase Stats (full) label for regions served"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "اتفاقية مستوى خدمة التشغيل",
+    "description": "Showcase Stats (full) label for uptime SLA"
+  },
+  "showcase.statsNoHeading.models.label": {
+    "message": "نماذج الإسناد",
+    "description": "Showcase Stats (no heading) label for attribution models"
+  },
+  "showcase.statsNoHeading.operators.label": {
+    "message": "معاملات الشرائح",
+    "description": "Showcase Stats (no heading) label for segment operators"
+  },
+  "showcase.statsNoHeading.pixels.label": {
+    "message": "لا حاجة لبكسلات تتبع",
+    "description": "Showcase Stats (no heading) label for tracking pixels required"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "الأدوات الفرعية",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.terminology.aperture.label": {
+    "message": "لقطات Aperture",
+    "description": "Showcase Terminology displayed text for Aperture snapshots"
+  },
+  "showcase.terminology.aperture.title": {
+    "message": "لقطات للحملات عند نقاط زمنية محددة",
+    "description": "Showcase Terminology hover title for Aperture snapshots"
+  },
+  "showcase.terminology.beaconLinks.label": {
+    "message": "روابط Beacon",
+    "description": "Showcase Terminology displayed text for Beacon links"
+  },
+  "showcase.terminology.beaconLinks.title": {
+    "message": "روابط إسناد موسومة بالعلامة التجارية",
+    "description": "Showcase Terminology hover title for Beacon links"
+  },
+  "showcase.terminology.flare.title": {
+    "message": "مولّد رموز QR والروابط العميقة",
+    "description": "Showcase Terminology hover title for Flare"
+  },
+  "showcase.terminology.paragraph1.afterBeacon": {
+    "message": " لتسجيل المسار الكامل من الظهور إلى التحويل. كل نقرة يلتقطها ",
+    "description": "Showcase Terminology paragraph 1 fragment after Beacon links"
+  },
+  "showcase.terminology.paragraph1.afterPrism": {
+    "message": " لإتمام الإسناد على المسار الكامل.",
+    "description": "Showcase Terminology paragraph 1 fragment after Prism"
+  },
+  "showcase.terminology.paragraph1.afterPulse": {
+    "message": "، ثم تُسلَّم إلى ",
+    "description": "Showcase Terminology paragraph 1 fragment after Pulse"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "يستخدم Signal ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.paragraph2.afterAperture": {
+    "message": "، تستطيع الفِرق تتبّع تطوّر أداء الحملات عبر الزمن.",
+    "description": "Showcase Terminology paragraph 2 fragment after Aperture"
+  },
+  "showcase.terminology.paragraph2.afterFlare": {
+    "message": " يمدّ الإسناد إلى العالم المادي.",
+    "description": "Showcase Terminology paragraph 2 fragment after Flare"
+  },
+  "showcase.terminology.paragraph2.afterResonance": {
+    "message": " يكشف مواضع تداخل الجمهور، بينما ",
+    "description": "Showcase Terminology paragraph 2 fragment after Resonance"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "بفضل ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.prism.title": {
+    "message": "محرك إسناد متعدد نقاط التماس",
+    "description": "Showcase Terminology hover title for Prism"
+  },
+  "showcase.terminology.pulse.title": {
+    "message": "تدفق نقرات في الزمن الفعلي",
+    "description": "Showcase Terminology hover title for Pulse"
+  },
+  "showcase.terminology.resonance.label": {
+    "message": "محرك Resonance",
+    "description": "Showcase Terminology displayed text for Resonance engine"
+  },
+  "showcase.terminology.resonance.title": {
+    "message": "كاشف تداخل الجمهور",
+    "description": "Showcase Terminology hover title for Resonance engine"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "أحب ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "أهلًا بك في ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "سريع",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "مرن",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "مجاني",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "للمصممين",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "للمطورين",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "من أجل ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "لم يكتب هذا المؤلّف أيّ منشورات بعد.",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "عرض جميع المؤلّفين",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.post.plurals": {
+    "message": "منشور واحد|{count} منشورات",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} موسومة بـ \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "تخطّى إلى المحتوى الرئيسي",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.footer.copyright": {
+    "message": "حقوق النشر © 2025-2026 CBN Ventures LLC. جميع الحقوق محفوظة.",
+    "description": "Footer copyright text. The {copyright} placeholder receives the consumer's themeConfig.footer.copyright value as the source-locale fallback; per-locale overrides in i18n code.json usually inline their own text."
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "الوسوم",
+    "description": "The title of the tag list page"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "صورة مصغرة لعلامة Signal التجارية.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "علامة تجارية مُضخَّمة عبر كتلة Frame، مُعنونة للإسناد.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "إطار (بدون تعليق)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "إطار (مع تعليق)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  }
+}

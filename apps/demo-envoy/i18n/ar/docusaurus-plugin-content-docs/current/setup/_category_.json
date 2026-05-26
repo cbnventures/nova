@@ -1,0 +1,10 @@
+{
+  "label": "التثبيت والإعداد",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "تثبيت Envoy وتشغيل أول مرحّل — التثبيت عبر Vial أو واجهة Spark CLI، ومرجع بيان مرحّل `.grain`، ودرس تطبيقي من Threadbare إلى Canary من الصفر حتى أول تسليم."
+  }
+}

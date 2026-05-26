@@ -1,0 +1,77 @@
+/**
+ * Signal - `Admonition` theme overlay.
+ *
+ * Inline notice blocks. Sharp, bordered, compact. Left border only,
+ * type-keyed (tip=primary, warning/caution=accent, danger=primary-deep,
+ * info=neutral). Mono uppercase heading label.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================ */
+
+:root {
+  --nova-signal-admonition-margin-block: 0.75rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Admonition
+ * ============================ */
+
+:root {
+  --nova-admonition-margin-block: var(--nova-signal-admonition-margin-block);
+}
+
+/* ============================
+ * 1. Container
+ *
+ * Block-margin flows from shared theme/Admonition via the canonical
+ * `--nova-admonition-margin-block` token.
+ * ============================ */
+
+.nova-admonition {
+  border: none;
+  border-left: 2px solid var(--nova-color-text-soft);
+  border-radius: var(--nova-shape-radius);
+  padding: var(--nova-shape-padding);
+  font-size: 0.8125rem;
+  background-color: var(--nova-color-surface-raised);
+}
+
+/* ============================
+ * 2. Heading - uppercase mono label
+ * ============================ */
+
+.nova-admonition-heading strong {
+  font-family: var(--nova-font-code);
+  font-size: 0.6875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ============================
+ * 3. Type variants
+ *
+ * Per-type rail consumes component-tier --nova-admonition-{type}-rail tokens;
+ * per-preset values live in signal/preset.css. Signal keeps admonitions
+ * minimal - just a left rail, no fill / ink overrides.
+ * ============================ */
+
+.nova-admonition[data-admonition-type="tip"] {
+  border-left-color: var(--nova-admonition-tip-rail);
+}
+
+.nova-admonition[data-admonition-type="warning"],
+.nova-admonition[data-admonition-type="caution"] {
+  border-left-color: var(--nova-admonition-warning-rail);
+}
+
+.nova-admonition[data-admonition-type="danger"] {
+  border-left-color: var(--nova-admonition-danger-rail);
+}
+
+.nova-admonition[data-admonition-type="info"] {
+  border-left-color: var(--nova-admonition-info-rail);
+}

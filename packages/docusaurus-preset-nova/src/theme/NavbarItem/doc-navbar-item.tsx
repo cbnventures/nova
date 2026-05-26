@@ -17,9 +17,9 @@ import type {
 /**
  * Theme - Navbar Item - Doc Navbar Item - Doc Navbar Item.
  *
- * Renders a navigation link to a specific document resolved by ID
- * through the Docusaurus docs plugin, hiding the item when the target
- * document is null or unlisted.
+ * Renders a navigation link to a specific document resolved by ID through
+ * the docs plugin, hiding the item when the target is null or unlisted.
+ * Active state is supplied by the coordinator via `isActiveItem`.
  *
  * @param {ThemeNavbarItemDocNavbarItemProps} props - Props.
  *
@@ -30,16 +30,19 @@ import type {
 function DocNavbarItem(props: ThemeNavbarItemDocNavbarItemProps) {
   const activeDocContext: ThemeNavbarItemDocNavbarItemActiveDocContext = useActiveDocContext(props['docsPluginId']);
   const layoutDoc: ThemeNavbarItemDocNavbarItemLayoutDoc = useLayoutDoc(props['docId'], props['docsPluginId']);
-  const pageActive: ThemeNavbarItemDocNavbarItemPageActive = activeDocContext['activeDoc'] !== undefined
-    && layoutDoc !== null
-    && activeDocContext['activeDoc']['sidebar'] === layoutDoc['sidebar'];
+  const pageActive: ThemeNavbarItemDocNavbarItemPageActive = props['isActiveItem'] === true;
 
-  // Draft and unlisted items are not displayed in the navbar.
+  // Draft and unlisted items are not displayed in the navbar. Unlisted items
+  // are still shown when the user is reading them, so the sidebar check
+  // mirrors the docs plugin's own "active doc lives in this sidebar" rule.
   if (
     layoutDoc === null
     || (
       layoutDoc['unlisted'] === true
-      && pageActive !== true
+      && (
+        activeDocContext['activeDoc'] === undefined
+        || activeDocContext['activeDoc']['sidebar'] !== layoutDoc['sidebar']
+      )
     )
   ) {
     return undefined;

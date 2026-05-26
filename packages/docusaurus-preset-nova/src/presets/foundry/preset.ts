@@ -16,9 +16,30 @@ export const presetsFoundryPresetFoundry: PresetsFoundryPresetFoundry = {
     src: '@nova-assets/presets/foundry/logo.svg',
   },
   colors: {
-    primary: '#ea580c',
-    accent: '#fbbf24',
-    neutral: '#78716c',
+    primary: {
+      light: '#ea580c',
+      dark: '#ea580c',
+    },
+    accent: {
+      light: '#fbbf24',
+      dark: '#fbbf24',
+    },
+    text: {
+      light: '#1c1917',
+      dark: '#e7e5e4',
+    },
+    border: {
+      light: '#d6d3d1',
+      dark: '#57534e',
+    },
+    warning: {
+      light: '#f59e0b',
+      dark: '#f59e0b',
+    },
+    danger: {
+      light: '#ef4444',
+      dark: '#ef4444',
+    },
   },
   fonts: {
     display: 'Plus Jakarta Sans',
@@ -40,4 +61,7 @@ export const presetsFoundryPresetFoundry: PresetsFoundryPresetFoundry = {
   },
   navbar: 'bridge',
   footer: 'commons',
+  cta: {
+    contained: false,
+  },
 };

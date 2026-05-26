@@ -1,0 +1,74 @@
+---
+title: "那位永不入眠的事务员，只对封印过的内容钤章"
+authors:
+  - "yuki"
+tags:
+  - "scheduled-stewardship"
+  - "automation"
+date: "2024-07-28"
+---
+
+本部的事务员不睡觉。事务员不会对陈旧 issue 失去耐心。事务员没有周末。但事务员只对已封印的 policy 行事。
+
+{/* truncate */}
+
+Marshal 就是那位事务员。每一条 policy 都是一份成文指令。每一枚钤章都是一次行为。未经授权的，事务员不会动手。事务员有耐心，却从不迟到。
+
+## 事务员的节奏
+
+事务员每分钟运行一次，其节拍自第一条 policy 立卷以来再未改动过。每一次运行，事务员都会通读 policy 日志，查看是否有新封印的 policy；再通读 docket，查看是否有匹配某条 policy 前置条件的工作。若工作匹配，事务员动手。若不匹配，事务员什么都不做，也什么都不写。docket 只有在事务员动手时才会增长。安静的分钟按设计不留痕迹。事务员不为自己的心跳记账。
+
+## 以封印为授权
+
+未封印的 policy，对事务员而言是不可见的。被封印后又被撤回的 policy，同样不可见。事务员在每一次运行时都会读取封印状态。授权不缓存。
+
+```yaml title="policies/stale-thread-archival.yml"
+policy: stale-thread-archival
+version: 3
+sealed: true
+sealed-by: dimitri
+sealed-at: 2024-06-12T09:14:00Z
+
+schedule:
+  cadence: hourly
+  window: 02:00..04:00 UTC
+
+applies-to:
+  repositories: ["org/*"]
+  resource: issues
+
+rules:
+  - when: issue.state == "open" AND issue.last_activity_age > 365d
+    action: archive
+    record:
+      docket: stewardship
+      seal: required
+      retention: 7-years
+      stamp: ARCHIVED
+```
+
+事务员不作解读。上面的规则要么匹配，要么不匹配。不存在某个十月的星期二，事务员判断阈值*差不多*够近的情形。阈值就是 365 天。一个 364 天的线程会被读到然后跳过。一个 365 天的线程会被处理。事务员的可靠性，源自这一点——没有什么可被误读，因为根本没有什么需要事务员凭判断去读。
+
+## 为什么有时间窗
+
+上面的计划只在 UTC 02:00 至 04:00 之间运行。窗外时间，事务员读到 policy 即跳过。这个时间窗的存在，是为了让贡献者不会在他们工作日的中段，看到上百条归档通知接连出现。时间窗本身也是一项封印过的参数。要移动这个时间窗，policy 必须被有授权的维护者重新封印。
+
+实际上，大多数夜晚，事务员的运行会在 stewardship docket 里写下一行：
+
+```bash
+$ marshal stewardship schedule status --policy stale-thread-archival --last 7d
+DATE        WINDOW          MATCHES   ACTIONS   FAILED
+2024-07-21  02:00-04:00     312       312       0
+2024-07-22  02:00-04:00     287       287       0
+2024-07-23  02:00-04:00     341       341       0
+2024-07-24  02:00-04:00     298       298       0
+2024-07-25  02:00-04:00     303       303       0
+2024-07-26  02:00-04:00     0         0         0
+2024-07-27  02:00-04:00     0         0         0
+```
+
+## 那些空行
+
+底部那两个零并非失败。那是周末夜——贡献者开 issue 的速度还不够快，让任何 issue 老到跨过阈值。事务员在同一时间窗里工作。工作内容是空的。那一行依然被写下，因为工作的"不存在"本身也是记录——安静的运行，是 docket 在确认这次调度没有被跳过。
+
+事务员对空白的夜晚没有意见。事务员醒来，读 policy，找不到匹配，写下空行，等待下一分钟。

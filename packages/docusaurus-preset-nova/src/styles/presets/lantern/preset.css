@@ -1,0 +1,699 @@
+/**
+ * Lantern - preset identity.
+ *
+ * Iteration 1: warm cream paper, amber link/accent color, restrained.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Surface tokens
+ * ============================ */
+
+:root {
+  --nova-color-background: color-mix(in oklab, var(--nova-color-primary-500), #ffffff 95%);
+  --nova-lantern-bg: var(--nova-color-background);
+  --nova-lantern-ink: var(--nova-color-text);
+  --nova-lantern-ink-muted: var(--nova-color-text-muted);
+  --nova-lantern-border: var(--nova-color-border);
+
+  /* App-market button - canonical Apple/Google badge convention: always
+     pure black with pure white text in both modes. Not mode-flipped.
+     Distinct from `--nova-color-text-inverse` which carries lantern's cream
+     identity (#f0e2c0) and would tint the badge text. */
+  --nova-lantern-app-market-bg: #000000;
+  --nova-lantern-app-market-text: #ffffff;
+
+  /* Admonition palette - type-keyed accents outside lantern's amber/indigo identity. */
+  --nova-lantern-info-rail: #3b82f6;
+  --nova-lantern-info-ink: #2563eb;
+  --nova-lantern-tip-rail: #10b981;
+  --nova-lantern-tip-ink: #059669;
+  --nova-lantern-danger-rail: #b91c1c;
+  --nova-lantern-danger-fill: #dc2626;
+  --nova-lantern-danger-ink: #b91c1c;
+
+  /* SkipToContent - color tokens (shape lives in the SkipToContent overlay). */
+  --nova-lantern-skip-bg: var(--nova-lantern-bg);
+  --nova-lantern-skip-color: var(--nova-lantern-ink);
+  --nova-lantern-skip-border: 1px solid var(--nova-lantern-border);
+  --nova-lantern-skip-shadow: 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 86%);
+  --nova-skip-bg: var(--nova-lantern-skip-bg);
+  --nova-skip-color: var(--nova-lantern-skip-color);
+  --nova-skip-border: var(--nova-lantern-skip-border);
+  --nova-skip-shadow: var(--nova-lantern-skip-shadow);
+
+  /* Blog Layout - color tokens (typography lives in the BlogLayout overlay). */
+  --nova-lantern-blog-description-color: var(--nova-color-text-muted);
+  --nova-blog-description-color: var(--nova-lantern-blog-description-color);
+
+  /* Mermaid identity - drives Layer 1 themeVariables + Layer 2 themeCSS in lib/mermaid.ts. */
+  --nova-lantern-mermaid-node-radius: 0.5rem;
+  --nova-lantern-mermaid-edge-stroke: var(--nova-color-primary-700);
+  --nova-lantern-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 96%);
+  --nova-lantern-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 50%);
+  --nova-lantern-mermaid-cluster-radius: 0.5rem;
+  --nova-mermaid-node-radius: var(--nova-lantern-mermaid-node-radius);
+  --nova-mermaid-edge-stroke: var(--nova-lantern-mermaid-edge-stroke);
+  --nova-mermaid-cluster-fill: var(--nova-lantern-mermaid-cluster-fill);
+  --nova-mermaid-cluster-stroke: var(--nova-lantern-mermaid-cluster-stroke);
+  --nova-mermaid-cluster-radius: var(--nova-lantern-mermaid-cluster-radius);
+
+  /* Sidebar caret rotation - slower than system motion-duration to give
+     category-toggle its own slightly languid rhythm.
+     Component-scoped (DocSidebar only). */
+  --nova-lantern-sidebar-caret-duration: 250ms;
+
+  /* Admonition - per-type rail + fill + ink (consumed by the Admonition
+     overlay). Note + warning/caution inherit the container's amber default;
+     only info/tip/danger override (lantern's signature is the type-keyed
+     palette outside the amber/indigo identity). */
+  --nova-lantern-admonition-info-rail: var(--nova-lantern-info-rail);
+  --nova-lantern-admonition-info-fill: color-mix(in srgb, var(--nova-lantern-info-rail), var(--nova-lantern-bg) 95%);
+  --nova-lantern-admonition-info-ink: var(--nova-lantern-info-ink);
+  --nova-lantern-admonition-tip-rail: var(--nova-lantern-tip-rail);
+  --nova-lantern-admonition-tip-fill: color-mix(in srgb, var(--nova-lantern-tip-rail), var(--nova-lantern-bg) 95%);
+  --nova-lantern-admonition-tip-ink: var(--nova-lantern-tip-ink);
+  --nova-lantern-admonition-danger-rail: var(--nova-lantern-danger-rail);
+  --nova-lantern-admonition-danger-fill: color-mix(in srgb, var(--nova-lantern-danger-fill), var(--nova-lantern-bg) 94%);
+  --nova-lantern-admonition-danger-ink: var(--nova-lantern-danger-ink);
+  --nova-admonition-info-rail: var(--nova-lantern-admonition-info-rail);
+  --nova-admonition-info-fill: var(--nova-lantern-admonition-info-fill);
+  --nova-admonition-info-ink: var(--nova-lantern-admonition-info-ink);
+  --nova-admonition-tip-rail: var(--nova-lantern-admonition-tip-rail);
+  --nova-admonition-tip-fill: var(--nova-lantern-admonition-tip-fill);
+  --nova-admonition-tip-ink: var(--nova-lantern-admonition-tip-ink);
+  --nova-admonition-danger-rail: var(--nova-lantern-admonition-danger-rail);
+  --nova-admonition-danger-fill: var(--nova-lantern-admonition-danger-fill);
+  --nova-admonition-danger-ink: var(--nova-lantern-admonition-danger-ink);
+}
+
+/* :root prefix prevents cssnano partial-merge from hoisting this dark block ahead of :root. */
+:root[data-theme="dark"] {
+  /* Blog Layout - dark-mode swap of color token. */
+  --nova-lantern-blog-description-color: var(--nova-color-text-muted);
+
+  /* SkipToContent - dark-mode swap of shadow token (other 3 auto-switch via lantern surface tokens). */
+  --nova-lantern-skip-shadow: 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
+
+  --nova-color-background: color-mix(in oklab, var(--nova-color-primary-500), #000000 94%);
+
+  /* Admonition palette - dark-mode ink overrides for type-keyed accents. */
+  --nova-lantern-info-ink: #93c5fd;
+  --nova-lantern-tip-ink: #6ee7b7;
+  --nova-lantern-danger-ink: #fca5a5;
+
+  /* Mermaid identity - dark-mode overrides. */
+  --nova-lantern-mermaid-edge-stroke: var(--nova-color-primary-300);
+  --nova-lantern-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 90%);
+  --nova-lantern-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 40%);
+
+  /* Admonition - dark-mode swap of fill mix ratios (denser tint against the
+     deep cream backdrop). Rails + inks auto-switch via --nova-lantern-info-ink
+     etc. dark overrides above. */
+  --nova-lantern-admonition-info-fill: color-mix(in srgb, var(--nova-lantern-info-rail), var(--nova-lantern-bg) 90%);
+  --nova-lantern-admonition-tip-fill: color-mix(in srgb, var(--nova-lantern-tip-rail), var(--nova-lantern-bg) 90%);
+  --nova-lantern-admonition-danger-fill: color-mix(in srgb, var(--nova-lantern-danger-fill), var(--nova-lantern-bg) 88%);
+}
+
+/* ============================
+ * 1.25. Animation tokens - centralized motion vocabulary
+ *
+ * Use these instead of inline `200ms ease` / `0 0 0 3px ...` so a future
+ * rebalance (slower hovers, deeper glow) only edits this block. Light/dark
+ * glow values diverge because dark mode needs a denser haze to read
+ * against the deep cream backdrop.
+ * ============================ */
+
+:root {
+  --nova-lantern-transition-fast: 180ms ease;
+  --nova-lantern-transition: 220ms ease;
+  --nova-lantern-transition-slow: 320ms ease;
+  --nova-lantern-hover-lift: translateY(-1px);
+  --nova-lantern-hover-glow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  --nova-lantern-hover-glow-strong: 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 86%);
+
+  /* Search - paper-card dropdown radius and focus-ring width. */
+  --nova-lantern-radius-card: 0.625rem;
+  --nova-lantern-focus-ring-width: 3px;
+}
+
+/* :root prefix prevents cssnano partial-merge from hoisting this dark block ahead of :root. */
+:root[data-theme="dark"] {
+  --nova-lantern-hover-glow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+  --nova-lantern-hover-glow-strong: 0 0 0 4px color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
+}
+
+/* ============================
+ * 1.5. Keyframes - pulsing dot, gentle fade-in-up
+ *
+ * `lantern-fade-in-up` matches the preset's micro-lift vocabulary
+ * (translateY(-1px) hover lifts) - a small 2px settle paired with opacity.
+ * Pair with `var(--nova-lantern-transition)` (220ms ease) at use sites.
+ * ============================ */
+
+@keyframes lantern-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+  }
+
+  60% {
+    box-shadow: 0 0 0 6px color-mix(in srgb, var(--nova-color-primary-500), transparent 100%);
+  }
+}
+
+@keyframes lantern-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(2px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================
+ * 2. Body
+ * ============================ */
+
+body {
+  position: relative;
+  z-index: 0;
+  font-family: var(--nova-font-body);
+  color: var(--nova-lantern-ink);
+  background-color: var(--nova-lantern-bg);
+  background-image:
+    radial-gradient(ellipse 90% 45% at 50% 100%, color-mix(in srgb, var(--nova-color-primary-500), transparent 82%), transparent 65%),
+    radial-gradient(ellipse 100% 25% at 50% 0%, color-mix(in srgb, var(--nova-color-accent-500), transparent 94%), transparent 60%);
+  background-attachment: fixed;
+}
+
+main,
+.main-wrapper {
+  position: relative;
+  z-index: 1;
+}
+
+[data-theme="dark"] body {
+  background-image:
+    radial-gradient(ellipse 90% 45% at 50% 100%, color-mix(in srgb, var(--nova-color-primary-500), transparent 75%), transparent 60%),
+    radial-gradient(ellipse 100% 25% at 50% 0%, color-mix(in srgb, var(--nova-color-accent-500), transparent 90%), transparent 55%);
+}
+
+/* Hero eyebrow - italic Fraunces journal-margin label. Breaks the mono
+   uppercase template; reads like a handwritten note in the page margin.
+   The leading "~" replaces the bullet/dot motif used elsewhere. The
+   pulsing amber dot lives further left, linking the label to the rest of
+   the page. */
+.nova-hero-eyebrow {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 18;
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--nova-color-primary-700);
+}
+
+.nova-hero-eyebrow::before {
+  content: "~";
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-hero-eyebrow {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-hero-eyebrow::before {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 3. Reduced motion (REQUIRED - accessibility floor)
+ * ============================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0ms !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================
+ * 4. Focus outline (REQUIRED - accessibility floor)
+ * ============================ */
+
+:focus-visible {
+  outline: 2px solid var(--nova-color-primary-600);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--nova-color-primary-400);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================
+ * 5. Links - amber, no underline default, underline on hover
+ * ============================ */
+
+a {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--nova-color-primary-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+[data-theme="dark"] a {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] a:hover,
+[data-theme="dark"] a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 6. CTAs - amber filled primary, ghost secondary
+ * ============================ */
+
+.nova-cta-primary {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--nova-color-primary-500);
+  color: var(--nova-color-text);
+  font-family: var(--nova-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border: 1px solid var(--nova-color-primary-600);
+  border-radius: var(--nova-shape-radius);
+  transition:
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-cta-primary:hover,
+.nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-700);
+  color: var(--nova-color-text);
+  box-shadow: var(--nova-lantern-hover-glow-strong);
+  transform: var(--nova-lantern-hover-lift);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-cta-primary {
+  background-color: var(--nova-color-primary-500);
+  color: color-mix(in srgb, var(--nova-color-background), #000000 8%);
+  border-color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-cta-primary:hover,
+[data-theme="dark"] .nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-300);
+  color: color-mix(in srgb, var(--nova-color-background), #000000 8%);
+}
+
+.nova-cta-secondary {
+  padding: 0.75rem 1.5rem;
+  background-color: transparent;
+  color: var(--nova-color-primary-700);
+  font-family: var(--nova-font-body);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+  transition:
+    border-color var(--nova-lantern-transition),
+    color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-cta-secondary:hover,
+.nova-cta-secondary:focus-visible {
+  border-color: var(--nova-color-primary-500);
+  color: var(--nova-color-primary-600);
+  box-shadow: var(--nova-lantern-hover-glow);
+  transform: var(--nova-lantern-hover-lift);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-cta-secondary {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-cta-secondary:hover,
+[data-theme="dark"] .nova-cta-secondary:focus-visible {
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 7. Features grid - hand-thrown asymmetric cards
+ * ============================ */
+
+.nova-feature-card {
+  padding: 1.5rem;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 95%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 14px 4px 14px 4px;
+  transition:
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition);
+}
+
+.nova-feature-card:nth-child(3n+2) {
+  border-radius: 4px 14px 4px 14px;
+}
+
+.nova-feature-card:nth-child(3n+3) {
+  border-radius: 14px 14px 4px 14px;
+}
+
+.nova-feature-card:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 88%);
+  border-color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-feature-card {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-feature-card:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 8. Stats - italic Fraunces numerals
+ * ============================ */
+
+.nova-stat-value {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 96;
+  font-weight: 500;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  letter-spacing: -0.01em;
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-stat-value {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-stat-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/* ============================
+ * 8.5. Code snippet - warm amber-tinted card
+ * ============================ */
+
+.nova-code-snippet {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 95%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+}
+
+[data-theme="dark"] .nova-code-snippet {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+}
+
+/* ============================
+ * 9. Surface alt - warmer cream stripe
+ * ============================ */
+
+.nova-surface-alt {
+  padding-block: 3rem;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 94%);
+  border-top: 1px solid var(--nova-lantern-border);
+  border-bottom: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-surface-alt {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+}
+
+/* ============================
+ * 10. Tags - amber glow pill
+ * ============================ */
+
+.nova-tag {
+  padding: 0.18rem 0.65rem;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  color: var(--nova-color-primary-800);
+  font-family: var(--nova-font-body);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), transparent 70%);
+  border-radius: 999px;
+}
+
+[data-theme="dark"] .nova-tag {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 82%);
+  color: var(--nova-color-primary-300);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 60%);
+}
+
+/* ============================
+ * 11. Section rhythm - define the contract variable
+ *
+ * Base components carry `margin-block: var(--nova-section-gap)` on every
+ * section root. Each preset paces the page by setting the variable. Lantern
+ * is generous and warm - give sections room to breathe.
+ * ============================ */
+
+:root {
+  --nova-lantern-section-gap: 2rem;
+  --nova-section-gap: var(--nova-lantern-section-gap);
+
+  /* Sticky chrome offset - single-row sticky navbar at ~61px. Consumed by
+     hash-anchor scroll, sticky sidebars, and TOC. sticky-layout.ts dynamically
+     updates --nova-layout-sticky-top at runtime; this static value provides
+     the initial-paint baseline before hydration. */
+  --nova-lantern-layout-sticky-top: 61px;
+  --nova-layout-sticky-top: var(--nova-lantern-layout-sticky-top);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --nova-lantern-section-gap: 3rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nova-lantern-section-gap: 4rem;
+  }
+}
+
+/* ============================
+ * 12. Scrollbar - amber thumb on transparent track
+ *
+ * Auto-adapts via the global primary scale: amber in light mode, deeper
+ * amber in dark. Matches the family-wide convention.
+ * ============================ */
+
+html {
+  scrollbar-color: var(--nova-color-primary-300) transparent;
+}
+
+[data-theme="dark"] {
+  scrollbar-color: var(--nova-color-primary-700) transparent;
+}
+
+/* ============================
+ * 13. Stats - typography (heading, value, label) and grid dividers
+ *
+ * Mirrored from sentinel and retinted with lantern's warm ink tokens.
+ * Component overlay handles section rhythm; this block covers the
+ * voice and the divider lines.
+ * ============================ */
+
+.nova-stats-inner {
+  text-align: center;
+}
+
+.nova-stats-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--nova-lantern-ink);
+  border: none;
+  padding: 0;
+}
+
+.nova-stats-description {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-lantern-ink-muted);
+}
+
+.nova-stats-grid {
+  text-align: center;
+}
+
+.nova-stat {
+  padding: 1rem 0.75rem;
+  position: relative;
+}
+
+.nova-stat + .nova-stat {
+  border-left: 1px solid var(--nova-lantern-border);
+}
+
+.nova-stat:nth-child(odd) {
+  border-left: none;
+}
+
+.nova-stat:nth-child(n+3) {
+  border-top: 1px solid var(--nova-lantern-border);
+}
+
+.nova-stat-value {
+  font-family: var(--nova-font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.nova-stat-primary {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-stat-primary {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-stat-accent {
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-stat-accent {
+  color: var(--nova-color-accent-500);
+}
+
+.nova-stat-label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--nova-lantern-ink-muted);
+  margin: 0;
+}
+
+@media (min-width: 640px) {
+  .nova-stats-heading {
+    font-size: 1.5rem;
+  }
+
+  .nova-stats-description {
+    font-size: 1rem;
+  }
+
+  .nova-stat {
+    padding: 1.25rem 1rem;
+  }
+
+  .nova-stat:nth-child(odd) {
+    border-left: none;
+  }
+
+  .nova-stat:nth-child(n+3) {
+    border-top: none;
+  }
+
+  .nova-stat:nth-child(n+2) {
+    border-left: 1px solid var(--nova-lantern-border);
+  }
+
+  .nova-stat-value {
+    font-size: 2rem;
+  }
+
+  .nova-stat-label {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-stats-heading {
+    font-size: 1.75rem;
+  }
+
+  .nova-stat {
+    padding: 1.5rem 1rem;
+  }
+
+  .nova-stat-value {
+    font-size: 2.5rem;
+  }
+}
+
+/* ============================
+ * 14. Spotlight - heading typography
+ *
+ * Mirrored from sentinel and retinted with lantern's warm ink. Layout
+ * (centered, soft warm rule below) is owned by the component overlay.
+ * ============================ */
+
+.nova-spotlight-heading {
+  font-family: var(--nova-font-display);
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--nova-lantern-ink);
+  border: none;
+  padding: 0;
+}
+
+@media (min-width: 640px) {
+  .nova-spotlight-heading {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-spotlight-heading {
+    font-size: 1.75rem;
+  }
+}

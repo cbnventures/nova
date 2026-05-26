@@ -1,0 +1,84 @@
+/**
+ * Lantern - `DocBreadcrumbs` theme overlay.
+ *
+ * Quiet trail of muted ink. Links warm to amber; the current crumb takes
+ * the full ink color. The separator between crumbs is a soft amber dot.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Trail
+ * ============================
+ */
+
+.nova-breadcrumbs {
+  margin-bottom: 1.5rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.85rem;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/**
+ * ============================
+ * 2. Crumb link - muted, warms to amber
+ * ============================
+ */
+
+.nova-breadcrumbs-link {
+  color: var(--nova-lantern-ink-muted);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-breadcrumbs-link:hover,
+.nova-breadcrumbs-link:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-breadcrumbs-link:hover,
+[data-theme="dark"] .nova-breadcrumbs-link:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 3. Current crumb - full ink, italic Fraunces voice
+ * ============================
+ */
+
+.nova-breadcrumbs-current {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24;
+  font-weight: 500;
+  color: var(--nova-lantern-ink);
+}
+
+/**
+ * ============================
+ * 4. Static text crumb - muted, no hover
+ * ============================
+ */
+
+.nova-breadcrumbs-text {
+  color: var(--nova-lantern-ink-muted);
+}
+
+/**
+ * ============================
+ * 5. Separator - soft amber dot
+ * ============================
+ */
+
+.nova-breadcrumbs-item:not(:last-child)::after {
+  color: color-mix(in srgb, var(--nova-color-primary-500), transparent 50%);
+}
+
+[data-theme="dark"] .nova-breadcrumbs-item:not(:last-child)::after {
+  color: color-mix(in srgb, var(--nova-color-primary-400), transparent 50%);
+}

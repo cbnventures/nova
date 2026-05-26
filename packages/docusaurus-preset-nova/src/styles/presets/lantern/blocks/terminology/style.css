@@ -1,0 +1,51 @@
+/**
+ * Lantern - `terminology` component overlay.
+ *
+ * Inline term marked with a warm amber dotted underline reminiscent of
+ * fountain-pen footnote shorthand. On hover the dots warm to lit primary
+ * amber and the ink flushes to the same hue.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Underline - amber dotted hairline
+ * ============================
+ */
+
+.nova-terminology {
+  text-decoration: underline dotted color-mix(in srgb, var(--nova-color-primary-500), transparent 55%);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+
+  transition:
+    color var(--nova-lantern-transition),
+    text-decoration-color var(--nova-lantern-transition);
+
+  cursor: help;
+}
+
+[data-theme="dark"] .nova-terminology {
+  text-decoration-color: color-mix(in srgb, var(--nova-color-primary-400), transparent 50%);
+}
+
+/**
+ * ============================
+ * 2. Hover / colored variant - flush amber
+ * ============================
+ */
+
+.nova-terminology:hover,
+.nova-terminology:focus-visible,
+.nova-terminology-colored {
+  color: var(--nova-color-primary-700);
+  text-decoration-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-terminology:hover,
+[data-theme="dark"] .nova-terminology:focus-visible,
+[data-theme="dark"] .nova-terminology-colored {
+  color: var(--nova-color-primary-300);
+  text-decoration-color: var(--nova-color-primary-400);
+}

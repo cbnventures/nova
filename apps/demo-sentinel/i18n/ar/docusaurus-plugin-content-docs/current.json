@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "النسخة الحالية",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "البدء السريع",
+    "description": "The label for category 'Getting Started' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Trust": {
+    "message": "Trust",
+    "description": "The label for category 'Trust' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Operations": {
+    "message": "العمليات",
+    "description": "The label for category 'Operations' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "المرجع",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Integrations": {
+    "message": "Integrations",
+    "description": "The label for category 'Integrations' in sidebar 'docs'"
+  }
+}

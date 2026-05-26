@@ -1,4 +1,5 @@
 import type { BlogSidebar } from '@docusaurus/plugin-content-blog';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Blog - Pages - Blog Authors List Page.
@@ -35,11 +36,19 @@ export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthor = {
 
 export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthors = ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthor[];
 
+export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsClassName = string | undefined;
+
+export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageProps = {
   sidebar: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsSidebar;
   authors: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthors;
+  className?: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsClassName;
+  style?: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsStyle;
 };
 
 export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageHeading = string;
 
 export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthor = ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthor;
+
+export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthorCount = number | undefined;

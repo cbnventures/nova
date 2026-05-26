@@ -1,0 +1,54 @@
+---
+title: "节前夜里两点的 Marshal"
+authors:
+  - "cordelia"
+tags:
+  - "scheduled-stewardship"
+  - "automation"
+date: "2025-12-25"
+---
+
+cron 任务在节前夜里 UTC 02:00 运行。一万两千条陈旧线程被封存。47 条被标记交由高级复核并暂搁。维护者一觉睡到天亮。
+
+{/* truncate */}
+
+没有事故报告。没有嘉奖。只有一条 docket 条目，写着*STAMPED 02:00:00 UTC: thread-archival policy invoked, 12,047 sealed, 47 deferred*。事务员不需要被致谢。
+
+这项计划于 2024 年立卷，此后未曾改动。节奏是每夜；时间窗是 UTC 02:00–04:00；行为是标准的归档遍历。节假日并不是这份计划所认识的参数。这份计划不知道今天是一年中的哪一天——除了日历意义上的。事务员在 02:00 读取 policy，找出符合规则的 12,094 条线程，并开始处理。事务员没有为节假日停下。事务员也没有为正落在维护者所睡的三个时区里的雪停下。
+
+归档 policy 不是新东西。它已两年来每夜按同一钟点运行。多数夜晚它处理两三百条线程。节前那一夜它处理了一万两千条——因为前一周贡献者开 issue 比平日少，已经存在的积压老化跨过了阈值。事务员对成交量的差异并无任何感知，除了它写进 docket 的那个计数。一万两千是一个比前一夜三百更大的数字。事务员把两个数字写成同一形态：
+
+```yaml title="dockets/stewardship/2025-12-25.yml"
+- id: STW-2025-12-25-0001
+  timestamp: 2025-12-25T02:00:00Z
+  policy: stale-thread-archival@v3
+  action: RECEIVED
+  scope: org/*
+  matched: 12094
+
+- id: STW-2025-12-25-0002
+  timestamp: 2025-12-25T02:14:22Z
+  policy: stale-thread-archival@v3
+  action: ARCHIVED
+  scope: org/*
+  sealed: 12047
+  deferred: 47
+  reason-deferred: senior-review-required
+  duration: 14m22s
+  seal: sha256:c5d26f8e9c3b7a1f4e8d2b5c0a3f9b4e
+```
+
+47 条暂搁项分别立卷。每一条都是一个匹配了归档规则、但同时还命中了 `requires-senior-review` 标记的线程——通常因为它在其生命周期内被高级维护者触碰过，或它引用了一个未结的安全公告，或它从外部事件报告里被链接过。事务员不会处理这些。事务员会把它们停在一个叫 `stewardship-deferred` 的队列里，等高级维护者来读。
+
+```bash
+$ marshal docket query --docket stewardship-deferred --since 2025-12-25 --until 2025-12-26
+COUNT  REASON                              OLDEST                  NEWEST
+12     senior-author                       2024-08-14              2024-12-22
+8      security-advisory-linked            2024-11-01              2024-12-19
+14     external-incident-linked            2024-09-30              2024-12-21
+13     repeated-deferral                   2024-07-22              2024-12-23
+```
+
+表中第一条暂搁来自 2024 年 8 月，被暂搁过十六次。高级维护者在节后第二个工作日的早晨通读 docket，看到 13 条 `repeated-deferral`，逐条决定是清除暂搁还是修订 policy 以自动处理这种情况。这个决定本身也是一条 docket 条目。循环继续。
+
+维护者睡过了整次运行，因为运行并不需要他们。运行只需要 policy、事务员与 docket。三者在 UTC 02:00 都到场。封印是永久的。节假日没变。

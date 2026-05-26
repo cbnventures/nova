@@ -1,0 +1,45 @@
+---
+title: "Audit Trail"
+sidebar_position: 2
+description: "The audit trail is the docket read end to end. Every stamp, every filing, every override — chronologically, with the clerk's signature."
+tags:
+  - "dockets"
+  - "audit"
+---
+
+# Audit Trail
+
+The audit trail is the docket, read end to end. Every stamp, every filing, every override — in the order they happened, with the clerk's signature attached.
+
+## Reading the trail
+
+```bash
+marshal audit --since 90d --format ledger
+```
+
+Output is a single chronological column. No summaries, no rollups. The trail is meant to be read, not skimmed.
+
+## What the trail captures
+
+| Field       | Description                                           |
+|-------------|-------------------------------------------------------|
+| `timestamp` | When Marshal acted, to the second.                    |
+| `clerk`     | Which Marshal instance handled the entry.             |
+| `action`    | FILED, STAMPED, RECEIVED, ARCHIVED, OVERRIDDEN.       |
+| `policy`    | The policy that authorized the action.                |
+| `subject`   | The repository and thread the action applied to.      |
+| `seal`      | A signed hash linking this entry to the previous one. |
+
+## Exporting for review
+
+```bash
+marshal audit --export quarterly-2026-q1.pdf
+```
+
+Marshal generates a printable PDF with the seal of office at the top of every page. Suitable for filing.
+
+## Next Steps
+
+- [Dockets](/docs/dockets/overview/) — The append-only record the trail reads from.
+- [Multi-Repository](/docs/stewardship/multi-repo/) — Joined trails across repositories.
+- [API Reference](/docs/reference/api-reference/) — Export the trail via Spoke.

@@ -1,0 +1,10 @@
+{
+  "label": "事件",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "每一次移动、接触、布防/撤防都流经 Lantern 的事件流。回放一整天、按区域筛选、移交给中枢，或在正午读取传感器历史。"
+  }
+}

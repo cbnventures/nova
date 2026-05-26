@@ -9,6 +9,7 @@ import type {
   ThemeDocItemFooterDocItemFooterCanDisplayTagsRow,
   ThemeDocItemFooterDocItemFooterContentFooterSpread,
   ThemeDocItemFooterDocItemFooterDoc,
+  ThemeDocItemFooterDocItemFooterProps,
   ThemeDocItemFooterDocItemFooterSharePlatforms,
   ThemeDocItemFooterDocItemFooterShareUrl,
   ThemeDocItemFooterDocItemFooterThemeConfig,
@@ -26,7 +27,7 @@ import type {
  *
  * @since 0.15.0
  */
-function DocItemFooter() {
+function DocItemFooter(props: ThemeDocItemFooterDocItemFooterProps) {
   const doc: ThemeDocItemFooterDocItemFooterDoc = useDoc();
   const canDisplayTagsRow: ThemeDocItemFooterDocItemFooterCanDisplayTagsRow = doc['metadata']['tags']['length'] > 0;
   const canDisplayEditMetaRow: ThemeDocItemFooterDocItemFooterCanDisplayEditMetaRow = (
@@ -71,7 +72,10 @@ function DocItemFooter() {
   }
 
   return (
-    <footer className="nova-doc-footer">
+    <footer
+      className={(props['className'] !== undefined) ? `nova-doc-footer ${props['className']}` : 'nova-doc-footer'}
+      style={props['style']}
+    >
       <ContentFooter
         tags={doc['metadata']['tags']}
         sharePlatforms={sharePlatforms}

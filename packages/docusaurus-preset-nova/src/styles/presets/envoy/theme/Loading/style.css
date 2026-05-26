@@ -1,0 +1,24 @@
+/**
+ * Envoy - `Loading` theme overlay.
+ *
+ * Soft violet ring with a graceful ease-in-out rotation and a low-opacity
+ * primary glow underneath, matching envoy's elevated-tile identity.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * Envoy - Loading Spinner
+ * ============================
+ */
+
+.nova-loading-spinner {
+  box-shadow: 0 0 12px color-mix(in srgb, var(--nova-color-primary-500), transparent 75%);
+
+  animation: nova-loading-spinner-rotate 0.9s ease-in-out infinite;
+}
+
+[data-theme="dark"] .nova-loading-spinner {
+  box-shadow: 0 0 16px color-mix(in srgb, var(--nova-color-primary-400), transparent 70%);
+}

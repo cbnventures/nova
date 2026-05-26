@@ -21,23 +21,45 @@ export type LibCssGeneratorGenerateOptions = {
 
 export type LibCssGeneratorGenerateReturns = string;
 
-export type LibCssGeneratorGeneratePrimaryColor = InstanceType<typeof import('../../lib/color.js').Color>;
+export type LibCssGeneratorGeneratePrimaryLightColor = InstanceType<typeof import('../../lib/color.js').Color>;
 
-export type LibCssGeneratorGenerateAccentColor = InstanceType<typeof import('../../lib/color.js').Color>;
+export type LibCssGeneratorGeneratePrimaryDarkColor = InstanceType<typeof import('../../lib/color.js').Color>;
 
-export type LibCssGeneratorGenerateNeutralColor = InstanceType<typeof import('../../lib/color.js').Color>;
+export type LibCssGeneratorGenerateAccentLightColor = InstanceType<typeof import('../../lib/color.js').Color>;
 
-export type LibCssGeneratorGeneratePrimaryScale = SharedColorScale;
+export type LibCssGeneratorGenerateAccentDarkColor = InstanceType<typeof import('../../lib/color.js').Color>;
 
-export type LibCssGeneratorGenerateAccentScale = SharedColorScale;
+export type LibCssGeneratorGeneratePrimaryLightScale = SharedColorScale;
 
-export type LibCssGeneratorGenerateNeutralScale = SharedColorScale;
+export type LibCssGeneratorGeneratePrimaryDarkScale = SharedColorScale;
 
-export type LibCssGeneratorGeneratePrimaryLines = string[];
+export type LibCssGeneratorGenerateAccentLightScale = SharedColorScale;
 
-export type LibCssGeneratorGenerateAccentLines = string[];
+export type LibCssGeneratorGenerateAccentDarkScale = SharedColorScale;
 
-export type LibCssGeneratorGenerateNeutralLines = string[];
+export type LibCssGeneratorGeneratePrimaryLightLines = string[];
+
+export type LibCssGeneratorGeneratePrimaryDarkLines = string[];
+
+export type LibCssGeneratorGenerateAccentLightLines = string[];
+
+export type LibCssGeneratorGenerateAccentDarkLines = string[];
+
+export type LibCssGeneratorGenerateTextLight = string;
+
+export type LibCssGeneratorGenerateTextDark = string;
+
+export type LibCssGeneratorGenerateBorderLight = string;
+
+export type LibCssGeneratorGenerateBorderDark = string;
+
+export type LibCssGeneratorGenerateWarningLight = string;
+
+export type LibCssGeneratorGenerateWarningDark = string;
+
+export type LibCssGeneratorGenerateDangerLight = string;
+
+export type LibCssGeneratorGenerateDangerDark = string;
 
 export type LibCssGeneratorGenerateFontLines = string[];
 

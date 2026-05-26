@@ -1,0 +1,26 @@
+{
+  "version.label": {
+    "message": "当前版本",
+    "description": "The label for version current"
+  },
+  "sidebar.docs.category.Getting Started": {
+    "message": "快速上手",
+    "description": "The label for category 'Getting Started' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Zones": {
+    "message": "分区",
+    "description": "The label for category 'Zones' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Events": {
+    "message": "事件",
+    "description": "The label for category 'Events' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Modes": {
+    "message": "模式",
+    "description": "The label for category 'Modes' in sidebar 'docs'"
+  },
+  "sidebar.docs.category.Reference": {
+    "message": "参考文档",
+    "description": "The label for category 'Reference' in sidebar 'docs'"
+  }
+}

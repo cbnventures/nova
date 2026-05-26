@@ -1,4 +1,4 @@
-import { strictEqual } from 'node:assert/strict';
+import { deepStrictEqual, strictEqual } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
@@ -19,9 +19,18 @@ describe('presetsEnvoyPresetEnvoy', async () => {
   it('has correct color values', () => {
     const envoy: TestsPresetsEnvoyPresetEnvoy = presetsEnvoyPresetEnvoy;
 
-    strictEqual(envoy['colors']['primary'], '#7c3aed');
-    strictEqual(envoy['colors']['accent'], '#06b6d4');
-    strictEqual(envoy['colors']['neutral'], '#71717a');
+    deepStrictEqual(envoy['colors']['primary'], {
+      light: '#7c3aed', dark: '#7c3aed',
+    });
+    deepStrictEqual(envoy['colors']['accent'], {
+      light: '#06b6d4', dark: '#06b6d4',
+    });
+    deepStrictEqual(envoy['colors']['text'], {
+      light: '#18181b', dark: '#e4e4e7',
+    });
+    deepStrictEqual(envoy['colors']['border'], {
+      light: '#d4d4d8', dark: '#52525b',
+    });
 
     return;
   });

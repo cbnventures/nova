@@ -1,5 +1,9 @@
 /**
- * Signal — Back to top button visual styling.
+ * Signal - `BackToTopButton` theme overlay.
+ *
+ * A minimal sharp tile anchored bottom-right - the smallest of the six at
+ * 32px. Hairline neutral at rest; on hover the border and glyph shift to
+ * primary - color-only, no fill, no shadow.
  *
  * @since 0.15.0
  */
@@ -13,10 +17,15 @@
   right: 1rem;
   width: 32px;
   height: 32px;
-  background-color: var(--nova-color-neutral-50);
-  color: var(--nova-color-neutral-500);
-  border: 1px solid var(--nova-color-neutral-300);
   font-size: 0.75rem;
+  color: var(--nova-color-text-muted);
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-color-border);
+  transition:
+    opacity var(--nova-motion-duration) ease,
+    transform var(--nova-motion-duration) ease,
+    border-color var(--nova-motion-duration) ease,
+    color var(--nova-motion-duration) ease;
 }
 
 .nova-back-to-top:hover,
@@ -26,9 +35,7 @@
 }
 
 [data-theme="dark"] .nova-back-to-top {
-  background-color: var(--nova-color-neutral-950);
-  border-color: var(--nova-color-neutral-700);
-  color: var(--nova-color-neutral-500);
+  border-color: var(--nova-color-border);
 }
 
 [data-theme="dark"] .nova-back-to-top:hover,
@@ -41,7 +48,7 @@
  * 2. Responsive
  * ============================ */
 
-/* xs — 480px and above */
+/* xs - 480px and above */
 @media (min-width: 480px) {
   .nova-back-to-top {
     bottom: 1.5rem;

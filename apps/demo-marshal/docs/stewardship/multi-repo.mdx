@@ -1,0 +1,50 @@
+---
+title: "Multi-Repository"
+sidebar_position: 2
+description: "A single Marshal instance can supervise dozens of repositories. Each keeps its own docket. Policies file once, apply everywhere valid."
+tags:
+  - "stewardship"
+  - "multi-repo"
+---
+
+# Multi-Repository
+
+A single Marshal instance can supervise dozens of repositories. Each repository keeps its own docket. Policies file once and apply everywhere they are valid.
+
+## Filing across repositories
+
+```yaml title="policies/org-wide-archival.yml"
+policy: thread-archival
+applies_to: ["issues", "pull-requests"]
+repositories: ["org/*"]
+condition:
+  inactive_days: 365
+action: seal
+```
+
+The `repositories` field accepts wildcards. Marshal expands the list at filing time and stamps the policy into each docket separately.
+
+## Per-repository overrides
+
+A repository can file an override that supersedes the org-wide policy:
+
+```yaml title="repos/org/critical-service/policies/no-archival.yml"
+override: thread-archival
+reason: "Long-running design discussions are normal here."
+```
+
+Marshal reads the override, files it under the repository's docket, and stops applying the parent rule for that repo.
+
+## Reading the org-wide ledger
+
+```bash
+marshal docket list --org acme --since 30d
+```
+
+Marshal joins every repository docket into a single ordered ledger. Filed in triplicate, even when there are forty repositories.
+
+## Next Steps
+
+- [Policies](/docs/filings/policies/) — Filing a policy across repositories.
+- [Audit Trail](/docs/dockets/audit-trail/) — Joined audit across repos.
+- [API Reference](/docs/reference/api-reference/) — Multi-repo queries.

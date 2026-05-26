@@ -1,0 +1,53 @@
+/**
+ * Sample - `Navbar/Bridge` theme component overlay scaffold.
+ *
+ * @internal Reference template only. The shared structural CSS for this
+ *           Docusaurus theme component lives at:
+ *           theme/Navbar/Bridge/style.css
+ *
+ * Section headers below establish the canonical layout each preset adopts.
+ * Fill bodies with identity-specific rules - see preset.css for tokens and
+ * conventions.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container
+ * ============================ */
+
+/* ============================
+ * 2. Brand
+ * ============================ */
+
+/* ============================
+ * 3. Nav items
+ * ============================ */
+
+/* ============================
+ * 4. Active link
+ * ============================ */
+
+/* ============================
+ * 5. Actions
+ * ============================ */
+
+/* ============================
+ * 6. Hamburger toggle
+ * ============================ */
+
+/* ============================
+ * 7. Mobile menu overlay
+ * ============================ */
+
+/* ============================
+ * 8. Mobile menu panel
+ * ============================ */
+
+/* ============================
+ * 9. Mobile menu brand
+ * ============================ */
+
+/* ============================
+ * 10. Mobile menu close
+ * ============================ */

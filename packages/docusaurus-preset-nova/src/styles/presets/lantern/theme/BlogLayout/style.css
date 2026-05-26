@@ -1,0 +1,37 @@
+/**
+ * Lantern - `BlogLayout` theme overlay.
+ *
+ * Defines per-preset blog typography tokens consumed by the shared
+ * theme/BlogLayout/style.css. Color tokens for blog typography live in
+ * preset.css.
+ *
+ * Editorial Fraunces cream-paper voice - biggest heading (Fraunces opsz
+ * rewards size), loosest description line-height for paper-reading
+ * rhythm, editorial pause via 0.625rem spacing.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned blog typography tokens
+ * ============================ */
+
+:root {
+  --nova-lantern-blog-header-heading-size: 1.75rem;
+  --nova-lantern-blog-header-heading-size-md: 2.125rem;
+  --nova-lantern-blog-header-heading-spacing: 0.625rem;
+  --nova-lantern-blog-description-size: 0.9375rem;
+  --nova-lantern-blog-description-line-height: 1.7;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogLayout
+ * ============================ */
+
+:root {
+  --nova-blog-header-heading-size: var(--nova-lantern-blog-header-heading-size);
+  --nova-blog-header-heading-size-md: var(--nova-lantern-blog-header-heading-size-md);
+  --nova-blog-header-heading-spacing: var(--nova-lantern-blog-header-heading-spacing);
+  --nova-blog-description-size: var(--nova-lantern-blog-description-size);
+  --nova-blog-description-line-height: var(--nova-lantern-blog-description-line-height);
+}

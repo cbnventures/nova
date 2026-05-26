@@ -1,0 +1,110 @@
+---
+title: "لماذا الامتثال ليس أمناً (لكنّك لا تزال بحاجة إلى كليهما)"
+authors:
+  - "rafael"
+tags:
+  - "compliance"
+  - "spyglass"
+  - "audit"
+---
+
+عملنا مع مؤسّسات اجتازت كلّ تدقيق على الجدول واخترقت رغم ذلك. وعملنا أيضاً مع مؤسّسات لا تستطيع اجتياز تدقيق واحد لكنّها تمتلك أوضاعاً أمنيّة تجعل الدول القوميّة تتمهّل. الأمران ليسا متشابهَين.
+
+{/* truncate */}
+
+## الفجوة
+
+الامتثال قائمة تحقّق. الأمن وضع. تُخبرك قائمة التحقّق ما إذا كان ضابط ما موجوداً. ويُخبرك الوضع ما إذا كان يعمل.
+
+تأمّل تشفير القرص. يسأل إطار امتثال، "هل أجهزة نقاط النهاية مُشفّرة؟" الإجابة نعم أو لا. يسأل الوضع الأمني، "هل أجهزة نقاط النهاية مُشفّرة، وهل خوارزميّة التشفير حديثة، وهل دُوِّر المفتاح خلال آخر 90 يوماً، وهل أبلغ أيّ جهاز عن فشل فكّ تشفير؟" الإجابة طيف.
+
+| سؤال الامتثال                 | السؤال الأمني                                                          |
+|-------------------------------|------------------------------------------------------------------------|
+| هل الأجهزة مُشفّرة؟           | ما النسبة المئوية للأجهزة التي تستخدم AES-256 مقابل خوارزميّات مُهملة؟ |
+| هل MFA مُفعَّلة؟              | ما متوسّط الوقت بين طلب MFA والموافقة؟ هل هناك من يُصادق بشكل آلي؟     |
+| هل تُحفظ سجلّات الوصول؟       | هل تستطيع إعادة بناء جلسة كاملة من بيانات السجلّ وحدها؟                |
+| هل توجد خطّة استجابة للحوادث؟ | متى كانت آخر مرّة اختبرتها بمحاكاة اختراق؟                             |
+| هل تُطبَّق الترقيعات؟         | ما متوسّط الوقت من إفصاح CVE إلى المعالجة على مستوى الأسطول؟           |
+
+كلّ صفّ في ذلك الجدول هو الفرق بين اجتياز تدقيق وكونك آمناً.
+
+## كيف يجسر Spyglass الفجوة
+
+Spyglass هو محرّك التدقيق والتحقيق الجنائي في Sentinel. يُحافظ على سجلّ غير قابل للتعديل لكلّ قرار وصول، وكلّ تقييم سياسة، وكلّ حدث اتصال لمدّة سبع سنوات. لكنّ الاحتفاظ ليس الهدف. إعادة البناء هي الهدف.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="compliance" label="عرض الامتثال" default>
+
+```text title="Compliance audit export"
+$ sentinel spyglass export \
+    --framework soc2 \
+    --period 2025-Q2
+
+SOC 2 Type II — Q2 2025
+  CC6.1 Logical Access Controls:     PASS (continuous enforcement via Drawbridge)
+  CC6.3 Role-Based Access:           PASS (policy-based, evaluated every 90s)
+  CC7.2 System Monitoring:           PASS (Watchtower posture checks, 90s interval)
+  CC8.1 Change Management:           PASS (Parapet simulation required for policy changes)
+
+  Evidence artifacts: 4,291 policy evaluations, 847 device posture checks
+  Export format: PDF + structured JSON
+```
+
+</TabItem>
+<TabItem value="security" label="عرض الأمن">
+
+```text title="Security posture query"
+$ sentinel spyglass query \
+    --type session-reconstruction \
+    --user svc-deploy-east \
+    --period "2025-06-01..2025-06-15"
+
+Session Reconstruction: svc-deploy-east
+  Total sessions: 1,247
+  Unique resources accessed: 34
+  Zone crossings: 12
+  Failed policy evaluations: 3
+    - 2025-06-04T03:41:00Z: posture score 71 (threshold 80) → access revoked
+    - 2025-06-09T14:22:00Z: location anomaly (new IP range) → step-up MFA required
+    - 2025-06-12T09:15:00Z: session age exceeded 3600s → forced re-authentication
+
+  Anomalies detected: 1
+    - 2025-06-09T14:22:00Z: first-ever connection from IP range 203.0.113.0/24
+      Resolution: legitimate — engineer traveling, confirmed via out-of-band channel
+```
+
+</TabItem>
+</Tabs>
+
+يُخبر عرض الامتثال المدقّق أنّ الضوابط موجودة. ويُخبر عرض الأمن فريق الأمن بما حدث فعلاً. كلاهما يُولَّد من البيانات ذاتها. الفرق هو السؤال الذي تطرحه.
+
+## الأشياء الثلاثة التي لا يستطيع الامتثال قياسها
+
+**1. زمن التفاعل.** لا يقيس إطار الامتثال سرعة كشفك تهديداً واحتوائه. يُسجّل Spyglass الطابع الزمني لكلّ تقييم سياسة. نستطيع قياس متوسّط الوقت إلى الإلغاء حتى الميلي ثانية.
+
+**2. تعرّض التنقّل الجانبي.** لا تسأل قائمة تحقّق تدقيق "كم قفزة يستطيع حساب خدمة مُخترَق اجتيازها قبل الاصطدام بحدّ تجزئة؟" تُجيب طوبولوجيا مناطق Rampart ومحاكاة Parapet عن ذلك السؤال باستمرار.
+
+**3. اضمحلال الثقة.** المستخدم الذي صادق قبل ثماني ساعات ليس بنفس المخاطرة كالذي صادق قبل 30 ثانية. تتعامل أُطر الامتثال مع المصادقة بوصفها ثنائيّة. يتعامل معها Sentinel بوصفها أصلاً متناقصاً، تضمحلّ درجات الوضع الأمني، ويتراكم عمر الجلسة، ويُعيد Watchtower تقييم الصورة بأكملها كلّ 90 ثانية.
+
+## ما الذي نوصي به
+
+لا تختر بين الامتثال والأمن. ابنِ الوضع الأمني أوّلاً، ثمّ استخرج أدلّة الامتثال منه.
+
+صُمّم Sentinel لهذا النمط. يُولّد Spyglass تقارير الامتثال من تدفّق البيانات ذاته الذي يُشغّل العمليّات الأمنيّة. أدلّة التدقيق هي ناتج جانبي للقيام بالأمن بشكل صحيح، لا مسار عمل منفصل يُنافس على وقت الهندسة.
+
+```bash title="Generate compliance evidence from live data"
+sentinel spyglass export --framework hipaa --period 2025-Q3
+sentinel spyglass export --framework pci-dss --period 2025-Q3
+sentinel spyglass export --framework iso27001 --period 2025-Q3
+```
+
+ثلاثة أوامر. ثلاثة أُطر. البيانات الأساسيّة ذاتها. التدقيق مُنجَز بالفعل، تحتاج فقط إلى تنسيقه.
+
+## قراءة إضافيّة
+
+- [التدقيق والتحقيق الجنائي](/docs/operations/audit-forensics/)، قدرات Spyglass الكاملة وصياغة الاستعلام.
+- [محاكاة السياسة](/docs/operations/policy-simulation/)، كيف يُصحّح Parapet السياسات قبل أن تصل إلى الإنتاج.
+- [نظرة عامة](/docs/overview/)، البنية التي تجعل الامتثال المستمرّ ممكناً.

@@ -1,4 +1,5 @@
 import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Doc Sidebar Items - Doc Sidebar Items.
@@ -11,10 +12,16 @@ export type ThemeDocSidebarItemsDocSidebarItemsPropsActivePath = string;
 
 export type ThemeDocSidebarItemsDocSidebarItemsPropsLevel = number;
 
+export type ThemeDocSidebarItemsDocSidebarItemsPropsClassName = string | undefined;
+
+export type ThemeDocSidebarItemsDocSidebarItemsPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocSidebarItemsDocSidebarItemsProps = {
   items: ThemeDocSidebarItemsDocSidebarItemsPropsItems;
   activePath: ThemeDocSidebarItemsDocSidebarItemsPropsActivePath;
   level: ThemeDocSidebarItemsDocSidebarItemsPropsLevel;
+  className?: ThemeDocSidebarItemsDocSidebarItemsPropsClassName;
+  style?: ThemeDocSidebarItemsDocSidebarItemsPropsStyle;
   [key: string]: unknown;
 };
 

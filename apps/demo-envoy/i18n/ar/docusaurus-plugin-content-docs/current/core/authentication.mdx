@@ -1,0 +1,138 @@
+---
+title: "المصادقة"
+sidebar_position: 3
+description: "أوضاع تحقّق Cipher بما في ذلك توقيعات HMAC-SHA256، والرموز الحاملة، وقوائم IP المسموح بها، وتدوير الرموز."
+tags:
+  - "core"
+  - "authentication"
+---
+
+# المصادقة
+
+Cipher هو بوّابة المصادقة في Envoy. يمرّ كلّ طلب وارد عبر Cipher قبل أن يصل إلى Parcel أو Dispatch. إذا رفض Cipher الطلب، يتوقّف خطّ المعالجة. لا يُحوَّل شيء. لا يُوجَّه شيء. لا يُسلَّم شيء.
+
+## أوضاع التحقّق
+
+يدعم Cipher ثلاثة أوضاع للتحقّق. يمكن استخدامها بشكل مستقلّ أو مجتمعة.
+
+### توقيعات HMAC-SHA256
+
+الوضع الأكثر شيوعًا لمصادر خطّافات الويب. يحسب المُرسِل `HMAC-SHA256(shared_secret, request_body)` ويُضمّن النتيجة في رأس. ثمّ يُعيد Cipher حساب القيمة ويُقارنها.
+
+```text title="relay.grain — HMAC verification"
+relay "threadbare-pushes" {
+  source = "threadbare"
+  // highlight-next-line
+  cipher = "hmac-sha256"
+
+  cipher_config {
+    header = "X-Threadbare-Signature-256"
+    secret = "${THREADBARE_WEBHOOK_SECRET}"
+  }
+
+  destination = "canary://ci-builds"
+}
+```
+
+يقرأ Cipher رأس `X-Threadbare-Signature-256`، ويحسب القيمة المتوقّعة باستخدام السرّ المشترك، ويرفض الطلب إن لم يتطابقا. تكون المقارنة بزمن ثابت لمنع هجمات التوقيت.
+
+### الرموز الحاملة
+
+للتكاملات المخصّصة التي ترسل رمزًا ثابتًا في رأس `Authorization`.
+
+```text title="relay.grain — Bearer token"
+relay "custom-integration" {
+  source = "generic"
+  // highlight-next-line
+  cipher = "bearer"
+
+  cipher_config {
+    token = "${CUSTOM_RELAY_TOKEN}"
+  }
+
+  destination = "canary://custom-events"
+}
+```
+
+### قوائم IP المسموح بها
+
+تُقيّد وصول المُرحِّل إلى عناوين IP أو نطاقات CIDR محدّدة. مفيدة بوصفها طبقة ثانوية إلى جانب التحقّق عبر HMAC أو رمز حامل.
+
+```text title="relay.grain — IP allowlist"
+relay "internal-only" {
+  source = "spoke"
+  // highlight-next-line
+  cipher = "ip-allowlist"
+
+  cipher_config {
+    addresses = [
+      "10.0.0.0/8",
+      "172.16.0.0/12",
+      "192.168.0.0/16"
+    ]
+  }
+
+  destination = "canary://internal-events"
+}
+```
+
+:::warning
+قوائم IP المسموح بها هشّة في البيئات الديناميكية التي تتغيّر فيها عناوين المصادر بكثرة (مثل المنصّات بدون خوادم، ومجموعات التوسّع التلقائي، وإعادة جدولة Trellis للقرنات). استخدم HMAC أو الرموز الحاملة بوصفها وضع التحقّق الأساسي وقوائم IP بوصفها فحصًا تكميليًّا.
+:::
+
+## دمج الأوضاع
+
+عند إعداد أوضاع متعدّدة من Cipher على المُرحِّل نفسه، يقبل Envoy الطلب إذا نجح **أيّ** وضع. وهذا يتيح لأنواع المصادر المختلفة التعايش على النقطة نفسها.
+
+```text title="relay.grain — combined modes"
+relay "multi-source" {
+  source = "generic"
+
+  cipher_config {
+    modes = [
+      { type = "hmac-sha256", header = "X-Signature", secret = "${HMAC_SECRET}" },
+      { type = "bearer", token = "${BEARER_TOKEN}" },
+      { type = "ip-allowlist", addresses = ["10.0.0.0/8"] }
+    ]
+  }
+
+  destination = "canary://all-events"
+}
+```
+
+## تدوير الرموز
+
+يدعم Cipher تدوير الرموز دون انقطاع. أعلن سرًّا أساسيًّا وآخر احتياطيًّا. يتحقّق Envoy من كليهما خلال نافذة التدوير.
+
+```text title="relay.grain — token rotation"
+cipher_config {
+  secret          = "${NEW_WEBHOOK_SECRET}"
+  // highlight-next-line
+  previous_secret = "${OLD_WEBHOOK_SECRET}"
+  rotation_window = "24h"
+}
+```
+
+خلال نافذة التدوير، يقبل Cipher الطلبات الموقّعة بأيٍّ من السرّين. وبعد انتهاء النافذة، لا يكون سوى السرّ الأساسي صالحًا. ويسجّل Ledger أيّ سرّ استُخدم لكلّ طلب، فتستطيع التحقّق من أن كلّ المصادر قد انتقلت قبل إزالة السرّ القديم.
+
+:::danger التشغيل بدون مصادقة
+يسمح Envoy بقيمة `cipher = "none"` للتطوير والاختبار. لا تنشر مُرحِّلًا إلى الإنتاج أبدًا دون مصادقة. نقطة مُرحِّل غير مُصادَق عليها هي باب مفتوح لحقن الحمولات — أيّ نظام على الشبكة يستطيع إرسال رسائل عشوائية إلى وجهاتك.
+:::
+
+## تسجيل Cipher
+
+تُدوَّن كلّ قرارات المصادقة في Ledger:
+
+```text title="Cipher log entries"
+[cipher] threadbare-pushes  HMAC-SHA256 valid   (source: 203.0.113.42)
+[cipher] custom-integration  Bearer valid        (source: 10.0.1.15)
+[cipher] unknown-source      REJECTED — no matching mode (source: 198.51.100.7)
+```
+
+تتضمّن محاولات المصادقة الفاشلة عنوان IP للمصدر، والوضع المُجرَّب، وسبب الرفض. هذه البيانات قابلة للاستعلام عبر Spoke API لأغراض التدقيق الأمني.
+
+## الخطوات التالية
+
+- [التكاملات](/docs/advanced/integrations/) — كيف يُعدّ Cipher لكلّ تكامل مُدمَج.
+- [البنية المعمارية](/docs/advanced/architecture/) — موضع Cipher في دورة حياة الطلب الكاملة.
+- [مرجع الواجهة البرمجية](/docs/reference/api-reference/) — نقاط حالة Cipher والتدقيق.

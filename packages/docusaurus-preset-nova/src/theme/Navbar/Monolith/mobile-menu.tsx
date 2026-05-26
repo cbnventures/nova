@@ -14,6 +14,7 @@ import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
 
 import type {
   ThemeNavbarMonolithMobileMenuCloseMenuAriaLabel,
+  ThemeNavbarMonolithMobileMenuMobileMenuActiveItemLabel,
   ThemeNavbarMonolithMobileMenuMobileMenuAnimationEvent,
   ThemeNavbarMonolithMobileMenuMobileMenuAriaLabel,
   ThemeNavbarMonolithMobileMenuMobileMenuDefaultIcon,
@@ -28,6 +29,7 @@ import type {
   ThemeNavbarMonolithMobileMenuMobileMenuIsOpen,
   ThemeNavbarMonolithMobileMenuMobileMenuItemIcon,
   ThemeNavbarMonolithMobileMenuMobileMenuItemIndex,
+  ThemeNavbarMonolithMobileMenuMobileMenuItemIsActive,
   ThemeNavbarMonolithMobileMenuMobileMenuItems,
   ThemeNavbarMonolithMobileMenuMobileMenuItemStyle,
   ThemeNavbarMonolithMobileMenuMobileMenuLinkProps,
@@ -57,6 +59,7 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
   const isOpen: ThemeNavbarMonolithMobileMenuMobileMenuIsOpen = props['isOpen'];
   const onClose: ThemeNavbarMonolithMobileMenuMobileMenuOnClose = props['onClose'];
   const items: ThemeNavbarMonolithMobileMenuMobileMenuItems = props['items'];
+  const activeItemLabel: ThemeNavbarMonolithMobileMenuMobileMenuActiveItemLabel = props['activeItemLabel'];
   const panelRef: ThemeNavbarMonolithMobileMenuMobileMenuPanelRef = useRef<HTMLDivElement>(null);
   const isClosingState: ThemeNavbarMonolithMobileMenuMobileMenuIsClosingState = useState<ThemeNavbarMonolithMobileMenuMobileMenuIsClosing>(false);
   const isClosing: ThemeNavbarMonolithMobileMenuMobileMenuIsClosing = isClosingState[0];
@@ -184,44 +187,48 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
               <Icon icon="lucide:x" width="20" height="20" aria-hidden="true" />
             </button>
           </div>
-          <div className="nova-navbar-monolith-menu-results nova-mobile-menu-results">
+          <div className="nova-navbar-monolith-menu-body nova-mobile-menu-body">
             <SearchResults />
-          </div>
-          <div className="nova-navbar-monolith-menu-items nova-mobile-menu-items">
-            {
-              items.map((navItem: ThemeNavbarItem, itemIndex: ThemeNavbarMonolithMobileMenuMobileMenuItemIndex) => {
-                const itemIcon: ThemeNavbarMonolithMobileMenuMobileMenuItemIcon = navItem['icon'] as ThemeNavbarMonolithMobileMenuMobileMenuItemIcon;
-                const defaultIcon: ThemeNavbarMonolithMobileMenuMobileMenuDefaultIcon = 'lucide:link';
-                const itemStyle: ThemeNavbarMonolithMobileMenuMobileMenuItemStyle = { '--nova-item-index': itemIndex } as ThemeNavbarMonolithMobileMenuMobileMenuItemStyle;
-                const linkProps: ThemeNavbarMonolithMobileMenuMobileMenuLinkProps = {};
+            <div className="nova-navbar-monolith-menu-items nova-mobile-menu-items">
+              {
+                items.map((navItem: ThemeNavbarItem, itemIndex: ThemeNavbarMonolithMobileMenuMobileMenuItemIndex) => {
+                  const itemIcon: ThemeNavbarMonolithMobileMenuMobileMenuItemIcon = navItem['icon'] as ThemeNavbarMonolithMobileMenuMobileMenuItemIcon;
+                  const defaultIcon: ThemeNavbarMonolithMobileMenuMobileMenuDefaultIcon = 'lucide:link';
+                  const itemStyle: ThemeNavbarMonolithMobileMenuMobileMenuItemStyle = { '--nova-item-index': itemIndex } as ThemeNavbarMonolithMobileMenuMobileMenuItemStyle;
+                  const linkProps: ThemeNavbarMonolithMobileMenuMobileMenuLinkProps = {};
+                  const isActive: ThemeNavbarMonolithMobileMenuMobileMenuItemIsActive = navItem['label'] === activeItemLabel;
 
-                if (navItem['to'] !== undefined) {
-                  Reflect.set(linkProps, 'to', navItem['to']);
-                  Reflect.set(linkProps, 'isNavLink', true);
-                }
+                  if (navItem['to'] !== undefined) {
+                    Reflect.set(linkProps, 'to', navItem['to']);
+                  }
 
-                if (navItem['href'] !== undefined) {
-                  Reflect.set(linkProps, 'href', navItem['href']);
-                }
+                  if (navItem['href'] !== undefined) {
+                    Reflect.set(linkProps, 'href', navItem['href']);
+                  }
 
-                return (
-                  <Link
-                    className="nova-navbar-monolith-menu-item"
-                    key={navItem['label']}
-                    style={itemStyle}
-                    {...(linkProps as ThemeNavbarMonolithMobileMenuMobileMenuLinkSpread)}
-                    onClick={() => {
-                      setIsClosing(true);
+                  if (isActive === true) {
+                    Reflect.set(linkProps, 'aria-current', 'page');
+                  }
 
-                      return undefined;
-                    }}
-                  >
-                    <Icon icon={itemIcon ?? defaultIcon} width="18" height="18" aria-hidden="true" />
-                    <span>{navItem['label']}</span>
-                  </Link>
-                );
-              })
-            }
+                  return (
+                    <Link
+                      className="nova-navbar-monolith-menu-item"
+                      key={navItem['label']}
+                      style={itemStyle}
+                      {...(linkProps as ThemeNavbarMonolithMobileMenuMobileMenuLinkSpread)}
+                      onClick={() => {
+                        setIsClosing(true);
+
+                        return undefined;
+                      }}
+                    >
+                      <Icon icon={itemIcon ?? defaultIcon} width="18" height="18" aria-hidden="true" />
+                      <span>{navItem['label']}</span>
+                    </Link>
+                  );
+                })
+              }
+            </div>
           </div>
         </SearchProvider>
       </div>

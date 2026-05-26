@@ -1,0 +1,84 @@
+/**
+ * Lantern - `error-surface` umbrella overlay.
+ *
+ * Warm cream paper error surface (404 / per-page crash / top-level boundary).
+ * Italic Fraunces display heading, body Manrope, paper card retry button with
+ * amber primary hover wash. Mirrors the SearchPage heading + result card
+ * chrome.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Heading
+ * ============================ */
+
+.nova-error-surface h1 {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  color: var(--nova-lantern-ink);
+}
+
+[data-theme="dark"] .nova-error-surface h1 {
+  color: var(--nova-lantern-ink);
+}
+
+/* ============================
+ * 2. Body Copy
+ * ============================ */
+
+.nova-error-surface p {
+  font-family: var(--nova-font-body);
+  color: var(--nova-lantern-ink-muted);
+}
+
+[data-theme="dark"] .nova-error-surface p {
+  color: var(--nova-lantern-ink-muted);
+}
+
+/* ============================
+ * 3. Retry Button - Paper Card
+ * ============================ */
+
+.nova-error-surface button {
+  font-family: var(--nova-font-body);
+
+  color: var(--nova-lantern-ink);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border-color: var(--nova-lantern-border);
+  border-radius: var(--nova-lantern-radius-card);
+
+  transition: background-color var(--nova-lantern-transition-fast),
+              border-color var(--nova-lantern-transition-fast);
+}
+
+[data-theme="dark"] .nova-error-surface button {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+}
+
+.nova-error-surface button:hover,
+.nova-error-surface button:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-error-surface button:hover,
+[data-theme="dark"] .nova-error-surface button:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Horizontal Rule
+ * ============================ */
+
+.nova-error-surface hr {
+  border-top-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-error-surface hr {
+  border-top-color: var(--nova-lantern-border);
+}

@@ -1,0 +1,622 @@
+{
+  "home.appMarket.label": {
+    "message": "接收投递通知",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.description": {
+    "message": "版本说明、集成深度解析，以及偶尔从中继室发出的快讯。",
+    "description": "Front page BlogPreview section description"
+  },
+  "home.blogPreview.heading": {
+    "message": "来自中继室的快讯",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.features.cipher.description": {
+    "message": "身份验证网关。HMAC-SHA256 签名、Bearer 令牌以及 IP 白名单。在任何字节抵达转换流水线之前，先核验来源身份。",
+    "description": "Front page Features card description for Cipher"
+  },
+  "home.features.cipher.title": {
+    "message": "Cipher",
+    "description": "Front page Features card title for Cipher"
+  },
+  "home.features.courier.description": {
+    "message": "保证送达的重试引擎。带抖动的指数退避、用于永远到不了的消息的死信队列，以及每次投递的回执。",
+    "description": "Front page Features card description for Courier"
+  },
+  "home.features.courier.title": {
+    "message": "Courier",
+    "description": "Front page Features card title for Courier"
+  },
+  "home.features.dispatch.description": {
+    "message": "智能路由引擎。检查每个入站载荷，根据内容、来源、严重程度或自定义规则进行路由。首个匹配胜出，绝无歧义。",
+    "description": "Front page Features card description for Dispatch"
+  },
+  "home.features.dispatch.title": {
+    "message": "Dispatch",
+    "description": "Front page Features card title for Dispatch"
+  },
+  "home.features.embassy.description": {
+    "message": "屏蔽源站的反向代理。让内部服务远离公网。外部请求只触及 Embassy，内部服务永远不会察觉外面世界的存在。",
+    "description": "Front page Features card description for Embassy"
+  },
+  "home.features.embassy.title": {
+    "message": "Embassy",
+    "description": "Front page Features card title for Embassy"
+  },
+  "home.features.ledger.description": {
+    "message": "完整的投递审计轨迹。每一条消息的接收、转换、路由与送达都被写入仅追加日志，并可配置保留策略。",
+    "description": "Front page Features card description for Ledger"
+  },
+  "home.features.ledger.title": {
+    "message": "Ledger",
+    "description": "Front page Features card title for Ledger"
+  },
+  "home.features.parcel.description": {
+    "message": "载荷转换流水线。在不同格式之间重写消息——JSON 到 JSON、JSON 到纯文本、XML 到 JSON。支持字段映射、有损与无损模式。",
+    "description": "Front page Features card description for Parcel"
+  },
+  "home.features.parcel.title": {
+    "message": "Parcel",
+    "description": "Front page Features card title for Parcel"
+  },
+  "home.head.title": {
+    "message": "Envoy - 消息总会送达",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.ctaLabel": {
+    "message": "阅读文档",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.eyebrow": {
+    "message": "集成基础设施",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "消息总会送达。这就是产品的全部。",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "在 Threadbare 查看",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.hero.tagline": {
+    "message": "Envoy 在那些从未被设计为彼此理解的系统之间充当翻译者。无需共享格式，无需共享协议，只要送达。",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.layout.description": {
+    "message": "Envoy 在那些从未被设计为彼此理解的系统之间充当翻译者。无需共享格式，无需共享协议，只要送达。",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.spotlight.description": {
+    "message": "Glassboard 触发告警。Envoy 转换载荷，路由到正确的 Canary 主题，并确认送达。两端都不知道对方的存在。",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.spotlight.heading": {
+    "message": "翻译、路由、送达",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.stats.dependencies.label": {
+    "message": "外部依赖",
+    "description": "Front page Stats label for external dependency count"
+  },
+  "home.stats.heading": {
+    "message": "数字一览",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.image.label": {
+    "message": "Vial 镜像大小",
+    "description": "Front page Stats label for Vial image size"
+  },
+  "home.stats.latency.label": {
+    "message": "中继延迟",
+    "description": "Front page Stats label for relay latency"
+  },
+  "home.stats.translators.label": {
+    "message": "协议翻译器",
+    "description": "Front page Stats label for protocol translator count"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "在 iOS 上可用",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "下载配套应用",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "在 Android 上可用",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "近期快讯",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Dispatch 现在支持从单个中继扇出到多个目的地。Ledger 条目可按可配置的计划导出到任意 Spoke 端点。",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Envoy 2.2：扇出路由与 Ledger 导出",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "版本说明、集成深度解析，以及偶尔从中继室发出的快讯。",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "来自中继室的快讯",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "凌晨 3:47 分，Glassboard 触发了一次告警。发往 Canary 的 webhook 静默失败，没人被叫醒。这就是 Envoy 诞生的起因。",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "凌晨三点 Webhook 失败后会怎样",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "朴素的重试很容易，但在负载下做可靠的重试——退避、抖动、死信队列——是另一种功夫。",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "重试逻辑比你想的更难",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "十二个服务、九个定时任务，加上一个共享数据库——全部被一个 3MB 的 Vial 镜像取代。",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "替换我们整个集成层的 3MB 容器",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.description": {
+    "message": "Envoy 预设的每一个组件，使用示例数据渲染。",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.featuresIcons.courier.description": {
+    "message": "保证送达的重试引擎。指数退避、死信队列以及投递回执。",
+    "description": "Showcase Features (with icons) card description for Courier"
+  },
+  "showcase.featuresIcons.courier.title": {
+    "message": "Courier",
+    "description": "Showcase Features (with icons) card title for Courier"
+  },
+  "showcase.featuresIcons.dispatch.description": {
+    "message": "智能路由引擎。检查载荷并根据内容、来源、严重程度或自定义规则进行路由。",
+    "description": "Showcase Features (with icons) card description for Dispatch"
+  },
+  "showcase.featuresIcons.dispatch.title": {
+    "message": "Dispatch",
+    "description": "Showcase Features (with icons) card title for Dispatch"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "团队为何选择 Envoy",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.parcel.description": {
+    "message": "载荷转换流水线。在不同格式之间重写消息——JSON、XML、纯文本、表单数据。",
+    "description": "Showcase Features (with icons) card description for Parcel"
+  },
+  "showcase.featuresIcons.parcel.title": {
+    "message": "Parcel",
+    "description": "Showcase Features (with icons) card title for Parcel"
+  },
+  "showcase.featuresNoIcons.cipher.description": {
+    "message": "身份验证网关。HMAC 签名、Bearer 令牌以及 IP 白名单。在处理之前先核验来源身份。",
+    "description": "Showcase Features (no icons) card description for Cipher"
+  },
+  "showcase.featuresNoIcons.cipher.title": {
+    "message": "Cipher",
+    "description": "Showcase Features (no icons) card title for Cipher"
+  },
+  "showcase.featuresNoIcons.embassy.description": {
+    "message": "屏蔽源站的反向代理。让内部服务完全远离公网。",
+    "description": "Showcase Features (no icons) card description for Embassy"
+  },
+  "showcase.featuresNoIcons.embassy.title": {
+    "message": "Embassy",
+    "description": "Showcase Features (no icons) card title for Embassy"
+  },
+  "showcase.featuresNoIcons.ledger.description": {
+    "message": "仅追加的投递审计轨迹。每条消息的接收、转换、路由与送达都被记录。",
+    "description": "Showcase Features (no icons) card description for Ledger"
+  },
+  "showcase.featuresNoIcons.ledger.title": {
+    "message": "Ledger",
+    "description": "Showcase Features (no icons) card title for Ledger"
+  },
+  "showcase.featuresSix.cipher.description": {
+    "message": "对每个入站请求进行身份验证。支持 HMAC、Bearer 和 IP 白名单模式。零停机令牌轮换。",
+    "description": "Showcase Features (six items) card description for Cipher"
+  },
+  "showcase.featuresSix.cipher.title": {
+    "message": "Cipher",
+    "description": "Showcase Features (six items) card title for Cipher"
+  },
+  "showcase.featuresSix.courier.description": {
+    "message": "带抖动的指数退避。死信队列。投递回执。保证送达。",
+    "description": "Showcase Features (six items) card description for Courier"
+  },
+  "showcase.featuresSix.courier.title": {
+    "message": "Courier",
+    "description": "Showcase Features (six items) card title for Courier"
+  },
+  "showcase.featuresSix.dispatch.description": {
+    "message": "按内容、来源、严重程度或排程路由消息。首个匹配的中继胜出。",
+    "description": "Showcase Features (six items) card description for Dispatch"
+  },
+  "showcase.featuresSix.dispatch.title": {
+    "message": "Dispatch",
+    "description": "Showcase Features (six items) card title for Dispatch"
+  },
+  "showcase.featuresSix.embassy.description": {
+    "message": "隐藏内部拓扑的反向代理。TLS 终结。响应头剥离。源站屏蔽。",
+    "description": "Showcase Features (six items) card description for Embassy"
+  },
+  "showcase.featuresSix.embassy.title": {
+    "message": "Embassy",
+    "description": "Showcase Features (six items) card title for Embassy"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "一个中继，囊括一切",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.ledger.description": {
+    "message": "记录每一次状态转换。仅追加。可配置保留策略。可通过 Spoke API 导出。",
+    "description": "Showcase Features (six items) card description for Ledger"
+  },
+  "showcase.featuresSix.ledger.title": {
+    "message": "Ledger",
+    "description": "Showcase Features (six items) card title for Ledger"
+  },
+  "showcase.featuresSix.parcel.description": {
+    "message": "在任意两种格式之间转换载荷。有损与无损模式。字段映射与模板渲染。",
+    "description": "Showcase Features (six items) card description for Parcel"
+  },
+  "showcase.featuresSix.parcel.title": {
+    "message": "Parcel",
+    "description": "Showcase Features (six items) card title for Parcel"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "阅读文档",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "组件展示",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Envoy 的每个组件，集中在一处演示。",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "在 Threadbare 查看",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "本页使用 Envoy 世界中的示例数据，渲染 @cbnventures/docusaurus-preset-nova/blocks 中的每个组件，便于你观察它们的外观与行为。",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "开始使用",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "投递从不繁文缛节。",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Envoy 在那些从未被设计为彼此理解的系统之间充当翻译者。无需共享格式，无需共享协议，只要送达。",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "或者使用 Spark CLI",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "使用 Vial 安装",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripText.label": {
+    "message": "快速安装",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload（仅 App Store）",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload（两家商店）",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload（仅 Google Play）",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload（无标签）",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview（无描述）",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview（带描述）",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features（带图标）",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features（无图标、无标题）",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features（六项，图标混合）",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero（完整版）",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero（最简版）",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip（copyTarget: block）",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip（copyTarget: icon）",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip（无标签）",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip（copyTarget: text）",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight（带代码）",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight（带文字）",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats（带标题与描述）",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats（无标题）",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology（行内用法）",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter（默认）",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter（不循环）",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter（无前缀）",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter（慢速）",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.layout.description": {
+    "message": "Envoy 组件展示，演示来自 docusaurus-preset-nova 的每一个组件。",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "三条命令，从零到一个可运行的中继。",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "快速开始",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Envoy 读取中继清单，初始化 Cipher 进行身份验证，编译 Parcel 转换规则，并注册 Dispatch 路由。消息在不到五毫秒内穿过整条流水线。",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "工作原理",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.statsFull.delivery.label": {
+    "message": "投递率",
+    "description": "Showcase Stats (full) label for delivery rate"
+  },
+  "showcase.statsFull.description": {
+    "message": "所有活跃中继流水线的关键性能指标。",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.heading": {
+    "message": "中继指标",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.image.label": {
+    "message": "Vial 镜像大小",
+    "description": "Showcase Stats (full) label for Vial image size"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "中继延迟（p99）",
+    "description": "Showcase Stats (full) label for relay latency"
+  },
+  "showcase.statsFull.translators.label": {
+    "message": "协议翻译器",
+    "description": "Showcase Stats (full) label for protocol translator count"
+  },
+  "showcase.statsNoHeading.coldStart.label": {
+    "message": "冷启动",
+    "description": "Showcase Stats (no heading) label for cold start"
+  },
+  "showcase.statsNoHeading.dependencies.label": {
+    "message": "依赖",
+    "description": "Showcase Stats (no heading) label for dependencies"
+  },
+  "showcase.statsNoHeading.subtools.label": {
+    "message": "子工具",
+    "description": "Showcase Stats (no heading) label for sub-tools"
+  },
+  "showcase.statsNoHeading.translators.label": {
+    "message": "翻译器",
+    "description": "Showcase Stats (no heading) label for translators"
+  },
+  "showcase.terminology.cipher.title": {
+    "message": "身份验证网关",
+    "description": "Showcase Terminology hover title for Cipher"
+  },
+  "showcase.terminology.courier.title": {
+    "message": "保证送达的重试引擎",
+    "description": "Showcase Terminology hover title for Courier"
+  },
+  "showcase.terminology.dispatch.title": {
+    "message": "智能路由引擎",
+    "description": "Showcase Terminology hover title for Dispatch"
+  },
+  "showcase.terminology.ledger.title": {
+    "message": "仅追加的审计轨迹",
+    "description": "Showcase Terminology hover title for Ledger"
+  },
+  "showcase.terminology.paragraph1.afterCipher": {
+    "message": " 网关的身份验证，才会抵达转换阶段。当投递失败时，",
+    "description": "Showcase Terminology paragraph 1 fragment after Cipher"
+  },
+  "showcase.terminology.paragraph1.afterCourier": {
+    "message": " 引擎会自动处理重试。",
+    "description": "Showcase Terminology paragraph 1 fragment after Courier"
+  },
+  "showcase.terminology.paragraph1.afterRelay": {
+    "message": "来定义每一条集成流水线。每条入站消息都会先经过 ",
+    "description": "Showcase Terminology paragraph 1 fragment after relay manifest"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Envoy 使用一份",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.paragraph2.afterDispatch": {
+    "message": " 负责路由，",
+    "description": "Showcase Terminology paragraph 2 fragment after Dispatch"
+  },
+  "showcase.terminology.paragraph2.afterLedger": {
+    "message": " 记录完整的事务历史。",
+    "description": "Showcase Terminology paragraph 2 fragment after Ledger"
+  },
+  "showcase.terminology.paragraph2.afterParcel": {
+    "message": " 流水线，源端和目的端无需就格式达成一致。",
+    "description": "Showcase Terminology paragraph 2 fragment after Parcel"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "有了",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.parcel.title": {
+    "message": "载荷转换流水线",
+    "description": "Showcase Terminology hover title for Parcel"
+  },
+  "showcase.terminology.relayManifest.label": {
+    "message": "中继清单",
+    "description": "Showcase Terminology displayed text for relay manifest"
+  },
+  "showcase.terminology.relayManifest.title": {
+    "message": "中继流水线声明文件",
+    "description": "Showcase Terminology hover title for relay manifest"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "我喜欢 ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "欢迎来到 ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "快速",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "灵活",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "免费",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "设计师",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "开发者",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "为 ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "该作者尚未撰写任何文章。",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "查看所有作者",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.post.plurals": {
+    "message": "{count} 篇博文",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} 含有标签「{tagName}」",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "跳到主要内容",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.footer.copyright": {
+    "message": "版权所有 © 2025-2026 CBN Ventures LLC。保留所有权利。",
+    "description": "Footer copyright text. The {copyright} placeholder receives the consumer's themeConfig.footer.copyright value as the source-locale fallback; per-locale overrides in i18n code.json usually inline their own text."
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "标签",
+    "description": "The title of the tag list page"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Envoy 品牌缩略图。",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "品牌标识通过 Frame 块路由 — 图像加标题,无需仪式。",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame(无标题)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame(带标题)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  }
+}

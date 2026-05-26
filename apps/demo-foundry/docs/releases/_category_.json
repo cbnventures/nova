@@ -1,0 +1,10 @@
+{
+  "label": "Releases",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Promoting builds to production — alpha/beta/stable channels, Quench-pinned versions, Warden gate enforcement, and Bellows-coordinated rolling deployments with Forge-history rollback."
+  }
+}

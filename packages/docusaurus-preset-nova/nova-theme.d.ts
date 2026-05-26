@@ -27,6 +27,41 @@ declare module '@theme/BackToTopButton' {
   export default function BackToTopButton(props: Props): React.JSX.Element;
 }
 
+declare module '@theme/Blog/Components/Author' {
+  export interface Props {
+    readonly author: {
+      readonly name?: string | undefined;
+      readonly imageURL?: string | undefined;
+      readonly url?: string | undefined;
+      readonly title?: string | undefined;
+      readonly email?: string | undefined;
+      readonly description?: string | undefined;
+      readonly page?: {
+        readonly permalink: string;
+      } | null | undefined;
+      readonly socials?: Readonly<Record<string, string>> | undefined;
+      readonly [key: string]: unknown;
+    };
+    readonly as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | undefined;
+    readonly count?: number | undefined;
+    [key: string]: unknown;
+  }
+
+  export default function Author(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/Blog/Components/Author/Socials' {
+  export interface Props {
+    readonly author: {
+      readonly socials?: Readonly<Record<string, string>>;
+      readonly [key: string]: unknown;
+    };
+    [key: string]: unknown;
+  }
+
+  export default function Socials(props: Props): React.JSX.Element;
+}
+
 declare module '@theme/Blog/Pages/BlogAuthorsListPage' {
   import type {
     AuthorItemProp,
@@ -108,6 +143,14 @@ declare module '@theme/BlogListPage' {
   export default function BlogListPage(props: Props): React.JSX.Element;
 }
 
+declare module '@theme/BlogListPage/StructuredData' {
+  // Note: the `Props` interface for this module is declared by
+  // `@docusaurus/plugin-content-blog`'s upstream `.d.ts`. Re-declaring it
+  // here would interface-merge `sidebar` into our local Props. We rely on
+  // the upstream declaration and only re-declare the default export when
+  // needed (it's already declared upstream too).
+}
+
 declare module '@theme/BlogListPaginator' {
   export interface Props {
     readonly metadata: unknown;
@@ -154,6 +197,22 @@ declare module '@theme/BlogPostPage' {
   }
 
   export default function BlogPostPage(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/BlogPostPage/Metadata' {
+  export interface Props {
+    [key: string]: unknown;
+  }
+
+  export default function BlogPostPageMetadata(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/BlogPostPage/StructuredData' {
+  export interface Props {
+    [key: string]: unknown;
+  }
+
+  export default function BlogPostPageStructuredData(props: Props): React.JSX.Element;
 }
 
 declare module '@theme/BlogPostPaginator' {
@@ -253,6 +312,70 @@ declare module '@theme/ColorModeToggle' {
   export default function ColorModeToggle(props: Props): React.JSX.Element;
 }
 
+declare module '@theme/ContentFooter' {
+  export interface Props {
+    readonly tags?: readonly {
+      readonly permalink: string;
+      readonly label: string;
+      readonly description: string | undefined;
+      [key: string]: unknown;
+    }[];
+    readonly sharePlatforms?: string[];
+    readonly shareUrl?: string;
+    readonly editUrl?: string;
+    readonly lastUpdatedAt?: number;
+    readonly lastUpdatedBy?: string;
+    [key: string]: unknown;
+  }
+
+  export default function ContentFooter(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/ContentFooter/Edit' {
+  export interface Props {
+    readonly editUrl?: string | undefined;
+    readonly lastUpdatedAt?: number | undefined;
+    readonly lastUpdatedBy?: string | undefined;
+    [key: string]: unknown;
+  }
+
+  export default function Edit(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/ContentFooter/Share' {
+  export interface Props {
+    readonly sharePlatforms?: readonly string[] | undefined;
+    readonly shareUrl?: string | undefined;
+    [key: string]: unknown;
+  }
+
+  export default function Share(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/ContentFooter/ShareButton' {
+  export interface Props {
+    readonly platform: string;
+    readonly shareUrl: string;
+    [key: string]: unknown;
+  }
+
+  export default function ShareButton(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/ContentFooter/Tags' {
+  export interface Props {
+    readonly tags?: readonly {
+      readonly permalink: string;
+      readonly label: string;
+      readonly description: string | undefined;
+      [key: string]: unknown;
+    }[] | undefined;
+    [key: string]: unknown;
+  }
+
+  export default function Tags(props: Props): React.JSX.Element;
+}
+
 declare module '@theme/ContentVisibility' {
   export interface Props {
     readonly metadata: Record<string, unknown>;
@@ -280,25 +403,6 @@ declare module '@theme/ContentVisibility/Unlisted' {
   export default function Unlisted(props: Props): React.JSX.Element;
 }
 
-declare module '@theme/ContentFooter' {
-  export interface Props {
-    readonly tags?: readonly {
-      readonly permalink: string;
-      readonly label: string;
-      readonly description: string | undefined;
-      [key: string]: unknown;
-    }[];
-    readonly sharePlatforms?: string[];
-    readonly shareUrl?: string;
-    readonly editUrl?: string;
-    readonly lastUpdatedAt?: number;
-    readonly lastUpdatedBy?: string;
-    [key: string]: unknown;
-  }
-
-  export default function ContentFooter(props: Props): React.JSX.Element;
-}
-
 declare module '@theme/Details' {
   import type { ReactNode } from 'react';
 
@@ -317,6 +421,20 @@ declare module '@theme/DocBreadcrumbs' {
   }
 
   export default function DocBreadcrumbs(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/DocBreadcrumbs/StructuredData' {
+  export interface Props {
+    readonly breadcrumbs: ReadonlyArray<{
+      readonly label: string;
+      readonly href?: string | undefined;
+      readonly type?: string | undefined;
+      [key: string]: unknown;
+    }>;
+    [key: string]: unknown;
+  }
+
+  export default function DocBreadcrumbsStructuredData(props: Props): React.JSX.Element;
 }
 
 declare module '@theme/DocCard' {
@@ -471,10 +589,6 @@ declare module '@theme/DocRoot/Layout/Sidebar' {
   export default function Sidebar(props: Props): React.JSX.Element;
 }
 
-declare module '@theme/DocSidebarMobile' {
-  export default function DocSidebarMobile(): React.JSX.Element | null;
-}
-
 declare module '@theme/DocSidebar' {
   export interface Props {
     readonly path: string;
@@ -543,6 +657,10 @@ declare module '@theme/DocSidebarItems' {
   export default function DocSidebarItems(props: Props): React.JSX.Element;
 }
 
+declare module '@theme/DocSidebarMobile' {
+  export default function DocSidebarMobile(): React.JSX.Element | null;
+}
+
 declare module '@theme/DocTagDocListPage' {
   import type { PropTagDocList } from '@docusaurus/plugin-content-docs';
 
@@ -563,14 +681,6 @@ declare module '@theme/DocTagsListPage' {
   }
 
   export default function DocTagsListPage(props: Props): React.JSX.Element;
-}
-
-declare module '@theme/DocVersionBadge' {
-  export interface Props {
-    [key: string]: unknown;
-  }
-
-  export default function DocVersionBadge(props: Props): React.JSX.Element;
 }
 
 declare module '@theme/DocVersionBanner' {
@@ -664,6 +774,17 @@ declare module '@theme/Heading' {
   export default function Heading(props: Props): React.JSX.Element;
 }
 
+declare module '@theme/IconExternalLink' {
+  import type { CSSProperties } from 'react';
+
+  export interface Props {
+    readonly className?: string | undefined;
+    readonly style?: CSSProperties | undefined;
+  }
+
+  export default function IconExternalLink(props?: Props): React.JSX.Element;
+}
+
 declare module '@theme/LastUpdated' {
   export interface Props {
     readonly lastUpdatedAt?: number | null | undefined;
@@ -713,12 +834,25 @@ declare module '@theme/Loading' {
   export default function Loading(props: Props): React.JSX.Element;
 }
 
-declare module '@theme/Mermaid' {
+declare module '@theme/Logo' {
   export interface Props {
-    readonly value: string;
+    readonly siteLogo: {
+      readonly src: {
+        readonly light: string | undefined;
+        readonly dark: string | undefined;
+      } | undefined;
+      readonly wordmark: {
+        readonly light: string | undefined;
+        readonly dark: string | undefined;
+      } | undefined;
+      readonly title: string | undefined;
+      readonly alt: string;
+    };
+    readonly iconFirst?: boolean | undefined;
+    [key: string]: unknown;
   }
 
-  export default function Mermaid(props: Props): React.JSX.Element | null;
+  export default function Logo(props: Props): React.JSX.Element;
 }
 
 declare module '@theme/MDXComponents' {
@@ -752,6 +886,15 @@ declare module '@theme/MDXPage' {
   }
 
   export default function MDXPage(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/Mermaid' {
+  export interface Props {
+    readonly value: string;
+    [key: string]: unknown;
+  }
+
+  export default function Mermaid(props: Props): React.JSX.Element;
 }
 
 declare module '@theme/Navbar' {
@@ -833,6 +976,29 @@ declare module '@theme/SearchPage' {
   }
 
   export default function SearchPage(props: Props): React.JSX.Element;
+}
+
+declare module '@theme/Showcase' {
+  import type { ReactElement, ReactNode } from 'react';
+
+  export interface ShowcaseItemProps {
+    readonly title: string;
+    readonly children: ReactNode;
+  }
+
+  export interface Props {
+    readonly layoutDescription: string;
+    readonly description: string;
+    readonly children: ReactNode;
+  }
+
+  function Showcase(props: Props): React.JSX.Element;
+
+  namespace Showcase {
+    function Item(props: ShowcaseItemProps): ReactElement;
+  }
+
+  export default Showcase;
 }
 
 declare module '@theme/SiteMetadata' {
@@ -964,16 +1130,6 @@ declare module '@theme/ThemedImage' {
   export default function ThemedImage(props: Props): React.JSX.Element;
 }
 
-declare module 'mark.js' {
-  class Mark {
-    public constructor(element: Element);
-    public mark(term: string): void;
-    public unmark(): void;
-  }
-
-  export default Mark;
-}
-
 declare module 'lunr' {
   interface Builder {
     ref: (fieldName: string) => void;
@@ -996,4 +1152,14 @@ declare module 'lunr' {
   }
 
   export default lunr;
+}
+
+declare module 'mark.js' {
+  class Mark {
+    public constructor(element: Element);
+    public mark(term: string): void;
+    public unmark(): void;
+  }
+
+  export default Mark;
 }

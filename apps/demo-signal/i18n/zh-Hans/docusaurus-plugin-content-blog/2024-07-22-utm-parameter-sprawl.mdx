@@ -1,0 +1,79 @@
+---
+title: "UTM 参数蔓延正在毁掉你的归因数据"
+authors:
+  - "luca"
+tags:
+  - "utm"
+  - "attribution"
+  - "campaign"
+  - "analytics"
+date: "2024-07-22"
+---
+
+我们审计了一家中端 SaaS 公司营销技术栈里的 UTM 参数。他们有 847 个不同的 `utm_campaign` 取值；其中四十三个其实指的是同一个产品发布。变体包括 `spring-launch`、`spring_launch`、`SpringLaunch`、`spring-launch-2024`、`spring-launch-v2` 以及 `spring-launch-final-FINAL`。他们的归因数据并不是错的，而是无法合并。
+
+UTM 蔓延不是一个小小的烦恼，而是一场暗中侵蚀你所有归因模型的数据质量危机。
+
+{/* truncate */}
+
+## 问题的规模
+
+我们采样了 200 个接入 Beacon 的账户的 UTM 数据，找到了一些一致的规律：
+
+| 指标                       | 中位数 | 90 分位数 |
+|--------------------------|-----|--------|
+| 唯一的 `utm_campaign` 取值数   | 312 | 1,840  |
+| 仅拼写不同的重复营销活动比例           | 23% | 41%    |
+| 无主的 UTM 比例               | 34% | 58%    |
+| 缺失 `utm_medium` 的 UTM 比例 | 18% | 29%    |
+
+近四分之一的营销活动标签因命名不一致而重复。三分之一的 UTM 已经没人认得——没人知道它们是谁创建的，也不清楚它们追踪什么。
+
+## 为什么电子表格救不了这件事
+
+通行的建议是"维护一份 UTM 电子表格"。但实践中电子表格总是失败，因为：
+
+1. **没有强约束。**任何人都可以拿任何 UTM 值去创建链接。电子表格是建议，而不是约束。
+2. **没有校验。**一个拼错的 `utm_source` 在视觉上和正确的一模一样——直到你跑出一份报告，发现某个细分只有三次点击。
+3. **没有去重。**当两个团队各自独立地创建 `spring-launch` 与 `spring_launch` 时，没有任何东西会把这次碰撞标出来。
+4. **没有退役机制。**老的营销活动从不被清理。电子表格一直在膨胀，直到没人再相信它。
+
+## Beacon 如何解决 UTM 蔓延
+
+Beacon 把 UTM 参数当作带校验规则的结构化元数据来对待：
+
+```json title="带校验的营销活动模板"
+{
+  "template": "product-launch-{quarter}-{year}",
+  "validation": {
+    "utm_source": ["email", "social", "paid", "organic", "partner"],
+    "utm_medium": ["newsletter", "post", "ad", "blog", "referral"],
+    "utm_campaign": {
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 40
+    }
+  },
+  "defaults": {
+    "utm_source": "email",
+    "utm_medium": "newsletter"
+  }
+}
+```
+
+当团队成员在 Beacon 中创建链接时，UTM 取值会被对照模板校验。非法值在创建时就被拒绝，而不是六周后在分析报告里被人发现。默认值会把缺失字段补全，确保没有一条链接带着不完整的归因上线。
+
+## 查询时归一化
+
+对于本就背着大量历史 UTM 蔓延的账户，Prism 会在归因查询时应用归一化规则：
+
+- 大小写折叠：`SpringLaunch` 与 `springlaunch` 自动合并。
+- 分隔符归一化：`spring-launch` 与 `spring_launch` 解析到同一个营销活动。
+- 别名映射：人工规则将 `spring-launch-v2` 与 `spring-launch-final-FINAL` 合并到一个规范化的活动 ID。
+
+原始数据从未被修改。归一化发生在查询时——这意味着你可以随时调整规则，而不需要重新处理历史数据。
+
+## 真正的代价
+
+我们对样本中位数账户因 UTM 蔓延而损失的归因准确性做了估算：23% 的营销活动数据被拆散在重复标签上。也就是说近四分之一的归因信号被打散成了规模过小、无法据此行动的细分。那些孤立来看显得边缘的营销活动，把它们的碎片合并起来其实表现可观。
+
+清理你的 UTM，或者让 Beacon 替你强制约束。无论选哪一种，都不要让自由文本字段决定你的预算流向何处。

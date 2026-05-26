@@ -1,3 +1,5 @@
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Doc Paginator - Doc Paginator.
  *
@@ -17,12 +19,15 @@ export type ThemeDocPaginatorDocPaginatorNavLink = {
 
 export type ThemeDocPaginatorDocPaginatorPropsClassName = string | undefined;
 
+export type ThemeDocPaginatorDocPaginatorPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocPaginatorDocPaginatorPropsPrevious = ThemeDocPaginatorDocPaginatorNavLink | undefined;
 
 export type ThemeDocPaginatorDocPaginatorPropsNext = ThemeDocPaginatorDocPaginatorNavLink | undefined;
 
 export type ThemeDocPaginatorDocPaginatorProps = {
   className?: ThemeDocPaginatorDocPaginatorPropsClassName;
+  style?: ThemeDocPaginatorDocPaginatorPropsStyle;
   previous?: ThemeDocPaginatorDocPaginatorPropsPrevious;
   next?: ThemeDocPaginatorDocPaginatorPropsNext;
   [key: string]: unknown;

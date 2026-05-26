@@ -1,0 +1,25 @@
+/**
+ * Lantern - `DocItem/Footer` theme overlay.
+ *
+ * Subtle amber hairline drawn across the bottom of the article body -
+ * the page's last whisper before the next-page paginator and meta row.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Footer rail
+ * ============================
+ */
+
+.nova-doc-footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+
+  border-top: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-doc-footer {
+  border-top-color: var(--nova-lantern-border);
+}

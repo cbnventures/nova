@@ -1,6 +1,6 @@
 /**
  * ============================
- * Commons — Social Links
+ * Commons - Social Links
  * ============================
  */
 
@@ -9,4 +9,36 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+/**
+ * ============================
+ * CTA + Footer Adjacency
+ *
+ * When CTA precedes footer, the CTA owns the visual spacing.
+ * Nullify footer's top margin so they sit adjacent.
+ * ============================
+ */
+
+.nova-footer-commons-cta-wrap + .nova-footer-commons {
+  margin-top: 0;
+}
+
+/**
+ * ============================
+ * CTA Block
+ *
+ * Applies whether <aside> (text-only CTA) or <a> (linked CTA).
+ * ============================
+ */
+
+.nova-footer-commons-cta {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nova-footer-commons-cta:hover,
+.nova-footer-commons-cta:focus-visible {
+  text-decoration: none;
 }

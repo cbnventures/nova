@@ -1,0 +1,45 @@
+---
+title: "API Reference"
+sidebar_position: 1
+description: "The Lantern Spoke API — list zones, arm/disarm, replay events, read history. Small on purpose."
+tags:
+  - "reference"
+  - "api"
+---
+
+# API Reference
+
+The Lantern Spoke API is small on purpose. Most households never need it.
+
+## Base URL
+
+```
+https://lantern.local/api
+```
+
+## Endpoints
+
+| Method | Path                      | Description                          |
+|--------|---------------------------|--------------------------------------|
+| `GET`  | `/api/zones`              | List every zone Lantern is watching. |
+| `POST` | `/api/zones/:name/arm`    | Arm a zone by name.                  |
+| `POST` | `/api/zones/:name/disarm` | Disarm a zone by name.               |
+| `GET`  | `/api/events`             | Replay the event stream.             |
+| `GET`  | `/api/history`            | Read the sensor history ledger.      |
+| `GET`  | `/api/mode`               | Get the current household mode.      |
+| `POST` | `/api/mode`               | Set travel, bedtime, or normal mode. |
+
+## Example
+
+```bash
+curl https://lantern.local/api/zones \
+  -H "Authorization: Bearer $LANTERN_TOKEN"
+```
+
+The response lists every zone, its devices, and whether it is currently armed. Nothing more, nothing louder.
+
+## Next Steps
+
+- [Events](/docs/events/overview/) — The stream the API replays.
+- [Sensor History](/docs/events/sensor-history/) — The ledger the API reads from.
+- [Integrations](/docs/zones/integrations/) — Custom integrations using the Spoke API.

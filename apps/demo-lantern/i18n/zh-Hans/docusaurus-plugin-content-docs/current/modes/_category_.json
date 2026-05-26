@@ -1,0 +1,10 @@
+{
+  "label": "模式",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "模式改变屋内的规则。出行模式会将安静区域收紧为监视区域，关闭就寝时段窗口，让门廊变得更加多疑。"
+  }
+}

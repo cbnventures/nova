@@ -1,0 +1,10 @@
+{
+  "label": "Zones",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "A zone is a named room, hallway, or exterior group that Lantern watches together. Trusted handoffs by name or passphrase, and quiet integrations with HomeKit, Threadbare, Spoke, and Canary."
+  }
+}

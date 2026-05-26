@@ -1,0 +1,124 @@
+---
+title: "快速开始"
+sidebar_position: 2
+description: "铸造你的第一条 Beacon 链接，打开 Pulse 实时流，看一次点击实时到达。整个流程六十秒。"
+tags:
+  - "入门"
+  - "教程"
+---
+
+import Details from '@theme/Details';
+
+# 快速开始
+
+铸造你的第一条 Beacon 链接，打开 Pulse 实时流，看一次点击实时到达。整个走完只需六十秒。
+
+## 第 1 步：铸造一条 Beacon 链接
+
+创建一条嵌入了营销活动元数据的 Beacon 链接：
+
+```bash title="创建 Beacon 链接"
+signal beacon create \
+  --url "https://threadbare.example/blog/launch-post" \
+  --domain "go.signal.example" \
+  --campaign "product-launch" \
+  --channel "email" \
+  --variant "hero-cta"
+```
+
+响应：
+
+```json title="Beacon 链接响应"
+{
+  "id": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "shortUrl": "https://go.signal.example/a7x9m2",
+  // highlight-start
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  },
+  // highlight-end
+  "destination": "https://threadbare.example/blog/launch-post",
+  "createdAt": "2025-02-20T09:15:00.000Z"
+}
+```
+
+`attribution` 对象内嵌在链接自身里，不依赖 UTM 参数或 referrer 头。
+
+## 第 2 步：打开 Pulse
+
+在另一个终端中，打开 Pulse 实时流，看点击如何到达：
+
+```bash title="启动 Pulse 实时流"
+signal pulse watch --campaign "product-launch"
+```
+
+Pulse 会打开一条被过滤到你的营销活动的实时流。先让它一直开着。
+
+## 第 3 步：点击链接
+
+在浏览器中打开 `https://go.signal.example/a7x9m2`。两毫秒内，重定向完成。一秒内，Pulse 流就会出现：
+
+```json title="Pulse 事件"
+{
+  "event": "click",
+  "beacon": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "timestamp": "2025-02-20T09:16:42.318Z",
+  "geo": { "country": "US", "region": "CA", "city": "San Francisco" },
+  "device": { "type": "desktop", "os": "macOS", "browser": "Alloy Browser" },
+  "referrer": "direct",
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  }
+}
+```
+
+这就是一次完整归因的点击——营销活动、渠道、变体、设备与地理位置——全程没有任何跟踪像素或页面侧脚本，依然实时被捕获。
+
+## 第 4 步：查看归因
+
+点击发生之后，向 Prism 查询归因路径：
+
+```bash title="查询 Prism"
+signal prism path --trace "trc_8f3a1b2c4d5e6f70"
+```
+
+<Details>
+<summary>完整的 Prism 归因输出</summary>
+
+```json title="Prism 归因路径"
+{
+  "trace": "trc_8f3a1b2c4d5e6f70",
+  "touchpoints": [
+    {
+      "order": 1,
+      "channel": "email",
+      "campaign": "product-launch",
+      "variant": "hero-cta",
+      "timestamp": "2025-02-20T09:16:42.318Z",
+      "weight": 1.0
+    }
+  ],
+  "model": "linear",
+  "status": "open"
+}
+```
+
+仅有一个触点时，全部权重都会落到这次邮件点击上。当用户在多个渠道与更多 Beacon 链接发生交互后，Prism 会构建出更丰富的归因路径。
+
+</Details>
+
+## 刚刚发生了什么
+
+你铸造了一条带嵌入式归因元数据的 Beacon 链接，在 Pulse 实时流中看到一次点击到达，并通过 Prism 查询出归因路径。没有跟踪像素，没有页面侧脚本，没有会被剥离的 UTM 参数。归因就活在链接里。
+
+## 下一步
+
+- [品牌域名](/docs/beacons/branded-domains/) — 在自己的域名上运行 Beacon 链接。
+- [点击归因](/docs/attribution/click-attribution/) — 深入 Prism 的多触点归因模型。
+- [营销活动管理](/docs/campaigns/campaign-management/) — 用 Aperture 快照把链接组织成营销活动。

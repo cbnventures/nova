@@ -283,6 +283,96 @@
         ]
       }
     },
+    "./apps/demo-lantern": {
+      "role": "template",
+      "policy": "freezable",
+      "name": "demo-lantern",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
+    },
+    "./apps/demo-marshal": {
+      "role": "template",
+      "policy": "freezable",
+      "name": "demo-marshal",
+      "recipes": {
+        "cleanup": [
+          true,
+          {
+            "removeUnknownKeys": true,
+            "reorderKeys": true
+          }
+        ],
+        "normalize-artifacts": [
+          true
+        ],
+        "normalize-bundler": [
+          true
+        ],
+        "normalize-dependencies": [
+          true,
+          {
+            "pinDependencyVersions": true,
+            "pinDevDependencyVersions": true
+          }
+        ],
+        "normalize-modules": [
+          true
+        ],
+        "normalize-tooling": [
+          true
+        ],
+        "sync-environment": [
+          true,
+          {
+            "trackNodeLtsVersions": true
+          }
+        ],
+        "sync-identity": [
+          true
+        ],
+        "sync-ownership": [
+          true
+        ]
+      }
+    },
     "./apps/demo-sentinel": {
       "role": "template",
       "policy": "freezable",

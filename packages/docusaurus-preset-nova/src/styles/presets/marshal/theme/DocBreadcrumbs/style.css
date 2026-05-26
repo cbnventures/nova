@@ -1,0 +1,108 @@
+/**
+ * Marshal - `DocBreadcrumbs` theme overlay.
+ *
+ * Filed-under trail above the article - mono uppercase ledger crumbs
+ * separated by a hairline divider drawn in via `::after`. The current
+ * crumb sits in seal-red as the active record marker.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container
+ * ============================
+ */
+
+.nova-breadcrumbs {
+  margin-bottom: 1.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.65rem;
+}
+
+/**
+ * ============================
+ * 2. List
+ * ============================
+ */
+
+.nova-breadcrumbs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+
+  padding: 0;
+  margin: 0;
+
+  list-style: none;
+}
+
+/**
+ * ============================
+ * 3. Item - divider after each crumb
+ * ============================
+ */
+
+.nova-breadcrumbs-item {
+  display: inline-flex;
+  align-items: center;
+
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.nova-breadcrumbs-item:not(:last-child)::after {
+  margin-left: 0.5rem;
+  color: var(--nova-marshal-border);
+  content: "/";
+}
+
+/**
+ * ============================
+ * 4. Link - muted ink, primary on hover
+ * ============================
+ */
+
+.nova-breadcrumbs-link {
+  color: var(--nova-marshal-ink-muted);
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-breadcrumbs-link:hover,
+.nova-breadcrumbs-link:focus-visible {
+  color: var(--nova-color-primary-800);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-breadcrumbs-link:hover,
+[data-theme="dark"] .nova-breadcrumbs-link:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 5. Current crumb - active record seal
+ * ============================
+ */
+
+.nova-breadcrumbs-current {
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-breadcrumbs-current {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 6. Static text crumb
+ * ============================
+ */
+
+.nova-breadcrumbs-text {
+  color: var(--nova-marshal-ink-muted);
+}

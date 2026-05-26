@@ -1,0 +1,103 @@
+---
+title: "事后复盘：拖垮四位客户的一次级联故障"
+authors:
+  - "anders"
+tags:
+  - "incident-response"
+  - "observability"
+  - "monitoring"
+date: "2025-10-06"
+---
+
+2025 年 9 月 29 日 16:42 UTC，一份配错的 Parcel 文件触发了一次级联故障，波及四位客户，在 23 分钟内丢失了 12000 条消息，并成为 Envoy 历史上耗时最长的一次事故。
+
+下面是完整复盘，未做任何删减。
+
+{/* truncate */}
+
+## 时间线
+
+```text title="事故 #112 — 2025-09-29"
+16:42:00  Customer D deploys new relay config with malformed .parcel file
+16:42:00  Parcel parser enters infinite loop on recursive field reference
+16:42:01  CPU on envoy-prod-03 hits 100%
+16:42:03  Courier stops processing relays on envoy-prod-03
+16:42:03  Trellis health check fails → marks envoy-prod-03 as unhealthy
+16:42:04  Trellis redistributes traffic to envoy-prod-01 and envoy-prod-02
+16:42:04  Traffic spike on envoy-prod-01 (from 15k to 25k RPS)
+16:42:08  envoy-prod-01 latency p99 spikes to 940ms
+16:42:15  Glassboard fires P2 alert (latency breach)
+16:42:30  envoy-prod-03 restarts, loads same bad config, enters infinite loop again
+16:42:31  Trellis marks envoy-prod-03 as unhealthy (again)
+16:42:45  Glassboard escalates to P1 (repeated failure + sustained latency)
+16:43:02  On-call engineer acknowledges
+16:44:30  Engineer identifies envoy-prod-03 restart loop in Trellis logs
+16:46:00  Engineer cordons envoy-prod-03 (removed from pool)
+16:46:15  Traffic stabilizes on envoy-prod-01 and envoy-prod-02
+16:47:00  Latency returns to normal
+16:52:00  Root cause identified: recursive $ref in customer D's .parcel file
+16:55:00  Customer D's config rolled back
+17:05:00  envoy-prod-03 restarted with clean config
+17:05:30  All clear
+```
+
+总持续时间：23 分 30 秒。丢失消息：12147 条。受影响客户：4 位（在流量重分配期间共享了 envoy-prod-01 与 envoy-prod-02）。
+
+## 根因
+
+客户 D 的 `.parcel` 文件包含一个循环字段引用：
+
+```text title="出错的 .parcel 文件（简化版）"
+provider "internal-webhook" {
+  extract {
+    user_id   = "$.data.user.id"
+    user_data = "$.data.user"
+    nested    = "$ref:user_data.nested"   # ← 通过 user_data 回到自身
+  }
+}
+```
+
+`$ref:user_data.nested` 引用了 `user_data`，而 `user_data` 包含整个 `$.data.user` 对象——后者又包含一个 `nested` 字段指回同一路径。Parcel 解析器在没有深度限制的情况下沿着引用链一路追下去，陷入了死循环。
+
+## 哪里出错了
+
+三件事一起失效：
+
+1. **没有循环引用校验。** Parcel 解析器只校验语法，不校验引用拓扑。一个循环引用在语法上是合法的。
+2. **客户之间没有 CPU 隔离。** 所有客户的配置都跑在共享的 Courier 实例上。一位客户的坏配置吃掉了共享实例 100% 的 CPU。
+3. **重启循环。** Trellis 重启失败实例，新进程加载同一份坏配置，再次陷入死循环——重启不是恢复，是重复。
+
+## 我们修复了什么
+
+### 修复 1：引用深度上限
+
+Parcel 现在强制 `$ref` 的最大深度为 8。任何超过 8 层的引用链都会在配置加载时被以清晰的错误信息拒绝。
+
+### 修复 2：配置校验闸门
+
+新中继配置在应用到生产之前，要先在一个沙箱 Vial 实例里被校验。沙箱会把一条合成 webhook 走完整条流水线；若沙箱崩溃、进入死循环或超过 5 秒超时，配置就被拒绝。
+
+### 修复 3：每客户 CPU 预算
+
+Courier 现在按客户配置追踪 CPU 时间。若单一客户的中继在 10 秒内消耗超过 40% 的可用 CPU，Courier 会自动挂起该客户的配置并触发 P1 告警，附上客户 ID 与配置哈希。
+
+### 修复 4：感知配置的重启
+
+Trellis 现在会判断失败实例是不是在跑与上一次失败相同的配置。如果配置未变，Trellis 不再重启，而是把实例隔离并通知运维。
+
+## 影响评估
+
+| 客户  | 丢失消息  | 恢复时间     | 直接根因暴露   |
+|-----|-------|----------|----------|
+| A   | 3,412 | 4 分 15 秒 | 流量重分配    |
+| B   | 5,891 | 4 分 15 秒 | 流量重分配    |
+| C   | 2,203 | 4 分 15 秒 | 流量重分配    |
+| D   | 641   | 13 分钟    | 直接（配置错误） |
+
+所有丢失消息都从 Ledger 的预写日志中恢复，并在事故后两小时内全部重放完成。
+
+## 教训
+
+多租户基础设施会以多租户的方式失败。一位客户配置里的缺陷，绝不应该影响到另一位客户的流量。隔离不是可选项——它是"一位客户的坏日子"与"四位客户的坏日子"之间的分界线。
+
+我们越界了。我们不会再越界一次。

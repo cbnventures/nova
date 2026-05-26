@@ -1,0 +1,55 @@
+/**
+ * Sentinel - `EditMetaRow` theme overlay.
+ *
+ * The bottom-of-page edit + last-updated row on standalone MDX pages
+ * (e.g., `/manifesto`). 1px solid neutral divider above, muted neutral
+ * ink that warms to teal on hover. Mirrors the typography tokens used
+ * by `ContentFooter/Edit` so the row reads consistently whether it
+ * appears under a doc article or a standalone page.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container - 1px solid neutral divider
+ * ============================ */
+
+.nova-edit-meta-row {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+
+  border-top: 1px solid var(--nova-color-border);
+}
+
+/* ============================
+ * 2. Edit this page link - muted, warms to teal
+ * ============================ */
+
+.nova-edit-meta-row .nova-edit-this-page {
+  font-size: 0.875rem;
+  color: var(--nova-color-text-muted);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-edit-meta-row .nova-edit-this-page:hover,
+.nova-edit-meta-row .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-edit-meta-row .nova-edit-this-page:hover,
+[data-theme="dark"] .nova-edit-meta-row .nova-edit-this-page:focus-visible {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 3. Last updated stamp
+ * ============================ */
+
+.nova-edit-meta-row .nova-last-updated {
+  font-size: 0.875rem;
+  color: var(--nova-color-text-soft);
+}

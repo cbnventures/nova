@@ -1,11 +1,7 @@
 import Link from '@docusaurus/Link';
-import {
-  useActiveDocContext,
-  useLayoutDocsSidebar,
-} from '@docusaurus/plugin-content-docs/client';
+import { useLayoutDocsSidebar } from '@docusaurus/plugin-content-docs/client';
 
 import type {
-  ThemeNavbarItemDocSidebarNavbarItemActiveDocContext,
   ThemeNavbarItemDocSidebarNavbarItemAriaCurrent,
   ThemeNavbarItemDocSidebarNavbarItemLabel,
   ThemeNavbarItemDocSidebarNavbarItemPath,
@@ -18,9 +14,9 @@ import type {
 /**
  * Theme - Navbar Item - Doc Sidebar Navbar Item - Doc Sidebar Navbar Item.
  *
- * Renders a navigation link to the first document of a named
- * sidebar resolved through the Docusaurus docs plugin, throwing
- * an error when the sidebar has no link.
+ * Renders a link to the first document of a named sidebar resolved through
+ * the docs plugin, throwing an error when the sidebar has no link. Active
+ * state is supplied by the coordinator via `isActiveItem`.
  *
  * @param {ThemeNavbarItemDocSidebarNavbarItemProps} props - Props.
  *
@@ -29,7 +25,6 @@ import type {
  * @since 0.15.0
  */
 function DocSidebarNavbarItem(props: ThemeNavbarItemDocSidebarNavbarItemProps) {
-  const activeDocContext: ThemeNavbarItemDocSidebarNavbarItemActiveDocContext = useActiveDocContext(props['docsPluginId']);
   const sidebarData: ThemeNavbarItemDocSidebarNavbarItemSidebarData = useLayoutDocsSidebar(props['sidebarId'], props['docsPluginId']);
   const sidebarLink: ThemeNavbarItemDocSidebarNavbarItemSidebarLink = sidebarData['link'];
 
@@ -41,8 +36,7 @@ function DocSidebarNavbarItem(props: ThemeNavbarItemDocSidebarNavbarItemProps) {
 
   const label: ThemeNavbarItemDocSidebarNavbarItemLabel = props['label'] ?? sidebarLink['label'];
   const path: ThemeNavbarItemDocSidebarNavbarItemPath = sidebarLink['path'];
-  const sidebarActive: ThemeNavbarItemDocSidebarNavbarItemSidebarActive = activeDocContext['activeDoc'] !== undefined
-    && activeDocContext['activeDoc']['sidebar'] === props['sidebarId'];
+  const sidebarActive: ThemeNavbarItemDocSidebarNavbarItemSidebarActive = props['isActiveItem'] === true;
   const ariaCurrent: ThemeNavbarItemDocSidebarNavbarItemAriaCurrent = (sidebarActive === true) ? 'page' : undefined;
 
   return (

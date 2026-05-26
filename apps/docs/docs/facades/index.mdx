@@ -22,7 +22,7 @@ tags:
   - "design"
 ---
 
-import { Terminology } from '@cbnventures/docusaurus-preset-nova/components';
+import { Terminology } from '@cbnventures/docusaurus-preset-nova/blocks';
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -37,7 +37,7 @@ Use **Nova Facades** to give your site a distinct visual identity. Each facade i
     <ul>
       <li><strong>Complete visual identities</strong> for your site, applied on top of a supported framework.</li>
       <li><strong>Design tokens</strong> generated as CSS custom properties from a simple configuration object.</li>
-      <li><strong>Pre-built components</strong> (Hero, Features, Stats, and more) that respect the active preset.</li>
+      <li><strong>Pre-built blocks</strong> (Hero, Features, Stats, Frame, and more) that respect the active preset.</li>
     </ul>
   </TabItem>
   <TabItem value="when" label="When">
@@ -45,7 +45,7 @@ Use **Nova Facades** to give your site a distinct visual identity. Each facade i
       <li>When your site should look nothing like the default framework theme.</li>
       <li>When you want a cohesive look across colors, typography, shape, depth, and motion.</li>
       <li>When you prefer choosing a preset over assembling a design system.</li>
-      <li>When you want pre-built landing page components that match your site identity.</li>
+      <li>When you want pre-built landing page blocks that match your site identity.</li>
     </ul>
   </TabItem>
   <TabItem value="where" label="Where">
@@ -70,14 +70,16 @@ The facade handles colors, typography, shape, depth, motion, navbar, footer, and
 
 ### Docusaurus Preset
 
-The `@cbnventures/docusaurus-preset-nova` package provides four visual presets for Docusaurus v3 sites. Each preset defines a full visual identity: colors, fonts, shape language, depth treatment, motion behavior, navbar variant, and footer variant.
+The `@cbnventures/docusaurus-preset-nova` package provides six visual presets for Docusaurus v3 sites. Each preset defines a full visual identity: colors, fonts, shape language, depth treatment, motion behavior, navbar variant, and footer variant.
 
-| Preset                                                           | Identity                                                      |
-|------------------------------------------------------------------|---------------------------------------------------------------|
-| **[Foundry](/docs/facades/docusaurus-preset/presets/foundry)**   | Warm orange and amber with rounded shapes and elevated cards. |
-| **[Sentinel](/docs/facades/docusaurus-preset/presets/sentinel)** | Teal and indigo with rounded shapes and flat cards.           |
-| **[Signal](/docs/facades/docusaurus-preset/presets/signal)**     | Rose and amber with sharp shapes and compact density.         |
-| **[Envoy](/docs/facades/docusaurus-preset/presets/envoy)**       | Purple and cyan with rounded shapes and elevated cards.       |
+| Preset                                                           | Identity                                                           |
+|------------------------------------------------------------------|--------------------------------------------------------------------|
+| **[Envoy](/docs/facades/docusaurus-preset/presets/envoy)**       | Purple and cyan with rounded shapes and elevated cards.            |
+| **[Foundry](/docs/facades/docusaurus-preset/presets/foundry)**   | Warm orange and amber with rounded shapes and elevated cards.      |
+| **[Lantern](/docs/facades/docusaurus-preset/presets/lantern)**   | Warm amber and indigo with rounded shapes and elevated cards.      |
+| **[Marshal](/docs/facades/docusaurus-preset/presets/marshal)**   | Documentary green and seal-red with rounded shapes and flat cards. |
+| **[Sentinel](/docs/facades/docusaurus-preset/presets/sentinel)** | Teal and indigo with rounded shapes and flat cards.                |
+| **[Signal](/docs/facades/docusaurus-preset/presets/signal)**     | Rose and amber with sharp shapes and compact density.              |
 
 ## Philosophy
 

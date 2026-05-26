@@ -1,0 +1,86 @@
+/**
+ * Marshal - `DocSidebar` theme overlay.
+ *
+ * Sidebar reads as a filing index. A sharp seal-red chevron marks
+ * collapsible sections. Active items are bolded accent-red with a
+ * double-rule left rail (ledger margin double-rule).
+ *
+ * @since 0.18.0
+ */
+
+/* Divider line scoped to the doc / blog aside column so the border spans the
+   full column height (the inner `.nova-sidebar` is sticky and short). Scoped
+   to `.nova-doc-root` / `.nova-blog-root` to avoid leaking into Footer cta
+   `<aside>` or other unrelated aside markup. */
+.nova-doc-root aside,
+.nova-blog-root aside {
+  border-right: 1px solid var(--nova-marshal-border);
+}
+
+/* ============================
+ * 1. Sidebar Container
+ * ============================ */
+
+.nova-sidebar,
+.nova-sidebar-mobile-content {
+  font-size: 0.85rem;
+}
+
+/* ============================
+ * 2. Version Switcher
+ * ============================ */
+
+/* Sidebar version-switcher trigger - paper-tone button mirroring the navbar
+   color-mode-toggle, adapted to fill the sidebar column width. */
+.nova-sidebar-version-switcher .nova-version-dropdown-summary {
+  padding: 0.5rem 0.75rem;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--nova-marshal-ink);
+  background-color: var(--nova-marshal-bg);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition:
+    color var(--nova-marshal-transition),
+    border-color var(--nova-marshal-transition);
+}
+
+.nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary,
+.nova-sidebar-version-switcher .nova-version-dropdown-summary:hover,
+.nova-sidebar-version-switcher .nova-version-dropdown-summary:focus-visible {
+  color: var(--nova-color-accent-800);
+  border-color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary,
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown-summary:hover,
+[data-theme="dark"] .nova-sidebar-version-switcher .nova-version-dropdown-summary:focus-visible {
+  color: var(--nova-color-accent-300);
+  border-color: var(--nova-color-accent-400);
+}
+
+/* Disclosure caret - sharp chevron-down (no rounded joins), seal-red. */
+.nova-sidebar-version-switcher .nova-version-dropdown-summary::after {
+  display: inline-block;
+  flex-shrink: 0;
+  width: 0.75rem;
+  height: 0.75rem;
+
+  content: "";
+  background-color: currentColor;
+
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+
+  transition: transform var(--nova-marshal-transition);
+}
+
+.nova-sidebar-version-switcher .nova-version-dropdown[open] > .nova-version-dropdown-summary::after {
+  transform: rotate(180deg);
+}
+

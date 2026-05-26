@@ -17,7 +17,13 @@ import type { ThemeTagProps } from '../../types/theme/Tag/index.d.ts';
  */
 function Tag(props: ThemeTagProps) {
   return (
-    <Link className="nova-tag" rel="tag" href={props['permalink']} title={props['description']}>
+    <Link
+      className={(props['className'] !== undefined) ? `nova-tag ${props['className']}` : 'nova-tag'}
+      {...((props['style'] !== undefined) ? { style: props['style'] } : {})}
+      rel="tag"
+      href={props['permalink']}
+      title={props['description']}
+    >
       {props['label']}
       {(props['count'] !== undefined) && (
         <span className="nova-tag-count">

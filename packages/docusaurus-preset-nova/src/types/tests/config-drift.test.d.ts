@@ -24,31 +24,15 @@ export type TestsConfigDriftPresetValue = string;
 
 export type TestsConfigDriftOverrides = OptionsPluginOptions['overrides'];
 
-export type TestsConfigDriftOverridesColorsPrimary = string | undefined;
+export type TestsConfigDriftOverridesColorsPrimary = OptionsPluginOptions['overrides']['colors']['primary'];
 
-export type TestsConfigDriftOverridesColorsAccent = string | undefined;
-
-export type TestsConfigDriftOverridesColorsNeutral = string | undefined;
+export type TestsConfigDriftOverridesColorsSecondary = OptionsPluginOptions['overrides']['colors']['secondary'];
 
 export type TestsConfigDriftOverridesFontsDisplay = string | undefined;
 
 export type TestsConfigDriftOverridesFontsBody = string | undefined;
 
 export type TestsConfigDriftOverridesFontsCode = string | undefined;
-
-export type TestsConfigDriftOverridesShapeRadius = string | undefined;
-
-export type TestsConfigDriftOverridesShapeDensity = string | undefined;
-
-export type TestsConfigDriftOverridesDepthCards = string | undefined;
-
-export type TestsConfigDriftOverridesDepthCodeBlocks = string | undefined;
-
-export type TestsConfigDriftOverridesMotionSpeed = string | undefined;
-
-export type TestsConfigDriftOverridesMotionStaggeredReveals = boolean | undefined;
-
-export type TestsConfigDriftOverridesMotionHoverEffects = boolean | undefined;
 
 export type TestsConfigDriftOverridesNavbar = string | undefined;
 
@@ -122,13 +106,17 @@ export type TestsConfigDriftThemeConfigSiteLogo = Record<string, unknown>;
 
 export type TestsConfigDriftThemeConfigSiteLogoAlt = string;
 
-export type TestsConfigDriftThemeConfigSiteLogoSrc = string;
+export type TestsConfigDriftThemeConfigSiteLogoSrc = Record<string, unknown>;
+
+export type TestsConfigDriftThemeConfigSiteLogoSrcLight = string | undefined;
 
 export type TestsConfigDriftThemeConfigSiteLogoSrcDark = string | undefined;
 
 export type TestsConfigDriftThemeConfigSiteLogoHref = string | undefined;
 
-export type TestsConfigDriftThemeConfigSiteLogoWordmark = string | undefined;
+export type TestsConfigDriftThemeConfigSiteLogoWordmark = Record<string, unknown>;
+
+export type TestsConfigDriftThemeConfigSiteLogoWordmarkLight = string | undefined;
 
 export type TestsConfigDriftThemeConfigSiteLogoWordmarkDark = string | undefined;
 
@@ -194,6 +182,37 @@ export type TestsConfigDriftThemeConfigAnnouncementBarTextColor = string | undef
 
 export type TestsConfigDriftThemeConfigAnnouncementBarIsCloseable = boolean;
 
+export type TestsConfigDriftThemeConfigErrorPages = Record<string, unknown>;
+
+export type TestsConfigDriftThemeConfigErrorPagesNotFound = Record<string, unknown>;
+
+export type TestsConfigDriftThemeConfigErrorPagesNotFoundTitle = string;
+
+export type TestsConfigDriftThemeConfigErrorPagesNotFoundDescription = string;
+
+export type TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeLabel = string;
+
+export type TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeHref = string;
+
+export type TestsConfigDriftThemeConfigErrorPagesErrorPageContent = Record<string, unknown>;
+
+export type TestsConfigDriftThemeConfigErrorPagesErrorPageContentTitle = string;
+
+export type TestsConfigDriftThemeConfigErrorPagesErrorPageContentRetryLabel = string;
+
+export type TestsConfigDriftThemeConfigErrorPagesError = Record<string, unknown>;
+
+export type TestsConfigDriftThemeConfigErrorPagesErrorRetryLabel = string;
+
 export type TestsConfigDriftThemeConfigFooter = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigFooterCta = string | undefined;
+export type TestsConfigDriftThemeConfigFooterCta = string | TestsConfigDriftThemeConfigFooterCtaObject | undefined;
+
+export type TestsConfigDriftThemeConfigFooterCtaObjectLabel = string;
+
+export type TestsConfigDriftThemeConfigFooterCtaObjectHref = string;
+
+export type TestsConfigDriftThemeConfigFooterCtaObject = {
+  label: TestsConfigDriftThemeConfigFooterCtaObjectLabel;
+  href: TestsConfigDriftThemeConfigFooterCtaObjectHref;
+};

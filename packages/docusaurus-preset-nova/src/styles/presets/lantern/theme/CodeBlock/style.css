@@ -1,0 +1,166 @@
+/**
+ * Lantern - `CodeBlock` theme overlay.
+ *
+ * Warm cream paper page with amber hairline border. The title bar carries
+ * an italic Fraunces filename caption. Toolbar actions warm to amber on
+ * hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Code block - warm paper card
+ * ============================
+ */
+
+.nova-code-block {
+  margin: 1.5rem 0;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+  border-radius: 10px;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+}
+
+[data-theme="dark"] .nova-code-block {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 40%);
+  box-shadow: none;
+}
+
+/**
+ * ============================
+ * 2. Title bar - italic Fraunces filename
+ * ============================
+ */
+
+.nova-code-block-title {
+  padding: 0.75rem 1.25rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-bottom: 1px solid color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 60%);
+}
+
+[data-theme="dark"] .nova-code-block-title {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-bottom-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+}
+
+/**
+ * ============================
+ * 3. Pre / shiki - comfortable padding
+ * ============================
+ */
+
+.shiki {
+  padding: 1.25rem 1.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  line-height: 1.7;
+
+  border-radius: 10px;
+  overflow-x: auto;
+}
+
+/**
+ * ============================
+ * 4. Toolbar
+ * ============================
+ */
+
+.nova-code-block-toolbar {
+  padding: 0.75rem 0.5rem 0.75rem 1.25rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-bottom: 1px solid color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 60%);
+}
+
+[data-theme="dark"] .nova-code-block-toolbar {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-bottom-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+}
+
+/**
+ * ============================
+ * 5. Copy / Wrap buttons - amber on hover
+ * ============================
+ */
+
+.nova-code-block-copy,
+.nova-code-block-wrap {
+  padding: 0.25rem 0.5rem;
+
+  color: var(--nova-lantern-ink-muted);
+
+  background-color: transparent;
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 6px;
+
+  transition:
+    color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition);
+}
+
+.nova-code-block-copy:hover,
+.nova-code-block-copy:focus-visible,
+.nova-code-block-wrap:hover,
+.nova-code-block-wrap:focus-visible,
+[data-word-wrap="true"] .nova-code-block-wrap {
+  color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-code-block-copy,
+[data-theme="dark"] .nova-code-block-wrap {
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-code-block-copy:hover,
+[data-theme="dark"] .nova-code-block-copy:focus-visible,
+[data-theme="dark"] .nova-code-block-wrap:hover,
+[data-theme="dark"] .nova-code-block-wrap:focus-visible,
+[data-theme="dark"] [data-word-wrap="true"] .nova-code-block-wrap {
+  color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 6. Expand button - warm cream tail
+ * ============================
+ */
+
+.nova-code-block-expand {
+  color: var(--nova-lantern-ink-muted);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-top: 1px solid color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 60%);
+
+  transition: color var(--nova-lantern-transition);
+}
+
+.nova-code-block-expand:hover,
+.nova-code-block-expand:focus-visible {
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-code-block-expand {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-top-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+}
+
+[data-theme="dark"] .nova-code-block-expand:hover,
+[data-theme="dark"] .nova-code-block-expand:focus-visible {
+  color: var(--nova-color-primary-400);
+}

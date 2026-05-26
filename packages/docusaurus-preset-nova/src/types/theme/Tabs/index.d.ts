@@ -1,12 +1,19 @@
 import type { TabsProps, TabValue } from '@docusaurus/theme-common/internal';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Tabs.
  *
  * @since 0.15.0
  */
-export type ThemeTabsProps = TabsProps;
+export type ThemeTabsPropsClassName = string | undefined;
+
+export type ThemeTabsPropsStyle = CSSProperties | undefined;
+
+export type ThemeTabsProps = TabsProps & {
+  className?: ThemeTabsPropsClassName;
+  style?: ThemeTabsPropsStyle;
+};
 
 export type ThemeTabsIsBrowser = boolean;
 
@@ -70,6 +77,8 @@ export type ThemeTabsTabListHandleKeyDownTarget = HTMLLIElement | undefined;
 export type ThemeTabsHandleHashChangeReturns = undefined;
 
 export type ThemeTabsHashTarget = Element | null;
+
+export type ThemeTabsHashDecodedId = string;
 
 export type ThemeTabsHashPanel = Element | null;
 

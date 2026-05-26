@@ -1,0 +1,10 @@
+{
+  "label": "集成",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "将 Sentinel 接入技术栈的其余部分——Cipher 与身份提供方（Okta、Azure AD、Google Workspace、通用 OIDC/SAML）的集成，以及 EDR（CrowdStrike、Defender、JAMF）数据接入 Watchtower 并由 Drawbridge 强制执行。"
+  }
+}

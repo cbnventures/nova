@@ -1,0 +1,124 @@
+---
+title: "批量操作"
+sidebar_position: 3
+description: "一次调用创建上千条 Beacon 链接。从 CSV 导入、通过 Spoke API 程序化生成、批量管理。"
+tags:
+  - "beacons"
+  - "batch"
+---
+
+# 批量操作
+
+一次调用创建上千条 Beacon 链接。从 CSV 导入、通过 Spoke API 程序化生成、并以批量方式管理链接。
+
+## CSV 导入
+
+准备一个 CSV 文件，每行一条链接。每行把目的地 URL 映射到营销活动元数据：
+
+```csv title="links.csv"
+url,campaign,channel,variant,domain,slug
+https://threadbare.example/pricing,product-launch,email,pricing-direct,go.signal.example,price1
+https://threadbare.example/pricing,product-launch,email,pricing-soft,go.signal.example,price2
+https://threadbare.example/demo,product-launch,social,demo-cta,go.signal.example,demo1
+https://threadbare.example/demo,product-launch,paid,demo-banner,go.signal.example,demo2
+https://threadbare.example/blog/launch,product-launch,email,blog-link,go.signal.example,blog1
+```
+
+## CSV 列参考
+
+| 列          | 必填  | 说明                             |
+|------------|-----|--------------------------------|
+| `url`      | 是   | Beacon 重定向的目的地 URL。            |
+| `campaign` | 是   | 用于归因分组的营销活动名称。                 |
+| `channel`  | 是   | 渠道标识（email、social、paid、event）。 |
+| `variant`  | 否   | 用于 A/B 测试的变体标签。默认值为 `default`。 |
+| `domain`   | 否   | 品牌域名。省略时使用账户默认值。               |
+| `slug`     | 否   | 自定义 slug。省略时自动生成。              |
+| `tags`     | 否   | 逗号分隔的标签，用于筛选。                  |
+| `expires`  | 否   | ISO 8601 格式的过期日期。              |
+
+## 运行导入
+
+```bash title="从 CSV 导入链接"
+signal beacon batch import \
+  --input ./links.csv \
+  --on-duplicate skip \
+  --dry-run
+```
+
+`--dry-run` 标志会校验 CSV 而不创建任何链接。去掉它即可真正执行导入：
+
+```bash title="执行导入"
+signal beacon batch import --input ./links.csv --on-duplicate skip
+```
+
+```json title="批量导入结果"
+{
+  "total": 5,
+  "created": 5,
+  "skipped": 0,
+  "errors": 0,
+  "duration": "340ms"
+}
+```
+
+## Spoke API 批量端点
+
+需要程序化批量创建时，直接使用 Spoke API：
+
+```bash title="Spoke API 批量创建"
+curl -X POST https://api.signal.example/v2/beacons/batch \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "links": [
+      {
+        "url": "https://threadbare.example/pricing",
+        "campaign": "product-launch",
+        "channel": "email",
+        "variant": "pricing-direct"
+      },
+      {
+        "url": "https://threadbare.example/demo",
+        "campaign": "product-launch",
+        "channel": "social",
+        "variant": "demo-cta"
+      }
+    ]
+  }'
+```
+
+批量端点单次请求最多接受 1,000 条链接。
+
+:::warning[速率限制]
+Spoke API 对批量操作启用速率限制。默认套餐为每分钟 10 次批量请求，单次请求最多 1,000 条链接。超出限制会返回 `429 Too Many Requests`，并带 `Retry-After` 头。如需更高额度，请联系 Signal 支持，或在 CLI 中使用 `--throttle` 标志让请求自动节流。
+:::
+
+## 批量更新
+
+批量更新已存在的 Beacon 链接——改目的地、改营销活动或修改元数据：
+
+```bash title="批量更新"
+signal beacon batch update \
+  --input ./updates.csv \
+  --match-by slug
+```
+
+`--match-by` 标志告诉 Signal 用 CSV 中的哪一列来匹配已存在的链接。可选值为 `slug`、`id` 或 `url`。
+
+## 批量导出
+
+将某个营销活动的所有 Beacon 链接导出为 CSV：
+
+```bash title="导出营销活动链接"
+signal beacon batch export \
+  --campaign "product-launch" \
+  --output ./product-launch-links.csv
+```
+
+导出内容包含链接 ID、slug、目的地、归因元数据、点击数与创建时间戳。
+
+## 下一步
+
+- [API 参考](/docs/reference/api-reference/) — 全部端点的完整 Spoke API 文档。
+- [营销活动管理](/docs/campaigns/campaign-management/) — 把批量创建的链接组织成营销活动。

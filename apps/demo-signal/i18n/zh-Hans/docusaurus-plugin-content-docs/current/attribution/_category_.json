@@ -1,0 +1,10 @@
+{
+  "label": "归因",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "跨渠道追踪转化——Prism 的多触点归因为点击流中每一个触点分配权重，Resonance 则发现各活动间受众细分相互重叠的位置。"
+  }
+}

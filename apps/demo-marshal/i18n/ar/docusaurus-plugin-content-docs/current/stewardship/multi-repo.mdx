@@ -1,0 +1,50 @@
+---
+title: "المستودعات المتعدّدة"
+sidebar_position: 2
+description: "يمكن لنسخة واحدة من Marshal أن تُشرف على عشرات المستودعات. لكلّ مستودع لائحته الخاصّة. السياسات تُودَع مرّة وتُطبَّق حيثما تصحّ."
+tags:
+  - "stewardship"
+  - "multi-repo"
+---
+
+# المستودعات المتعدّدة
+
+يمكن لنسخة واحدة من Marshal أن تُشرف على عشرات المستودعات. كلّ مستودع يحتفظ بلائحته الخاصّة. السياسات تُودَع مرّة وتُطبَّق حيثما تصحّ.
+
+## الإيداع عبر المستودعات
+
+```yaml title="policies/org-wide-archival.yml"
+policy: thread-archival
+applies_to: ["issues", "pull-requests"]
+repositories: ["org/*"]
+condition:
+  inactive_days: 365
+action: seal
+```
+
+يقبل حقل `repositories` أحرف البدل. يُوسِّع Marshal القائمة في وقت الإيداع ويَختم السياسة في كلّ لائحة على حِدة.
+
+## نسخ لكلّ مستودع
+
+يمكن لمستودعٍ ما إيداع نسخ يَجبّ السياسة على مستوى المؤسّسة:
+
+```yaml title="repos/org/critical-service/policies/no-archival.yml"
+override: thread-archival
+reason: "Long-running design discussions are normal here."
+```
+
+يقرأ Marshal النسخ، ويُودِعه ضمن لائحة المستودع، ويتوقّف عن تطبيق القاعدة الأمّ على ذلك المستودع.
+
+## قراءة دفتر القيد على مستوى المؤسّسة
+
+```bash
+marshal docket list --org acme --since 30d
+```
+
+يَدمج Marshal كلّ لائحة مستودع في دفتر قيد واحد مرتَّب. مُودَع في ثلاث نُسَخ، حتّى عندما تكون هناك أربعون مستودعًا.
+
+## الخطوات التالية
+
+- [السياسات](/docs/filings/policies/) — إيداع سياسة عبر المستودعات.
+- [مسار التدقيق](/docs/dockets/audit-trail/) — تدقيق مُدمَج عبر المستودعات.
+- [مرجع API](/docs/reference/api-reference/) — استعلامات متعدّدة المستودعات.

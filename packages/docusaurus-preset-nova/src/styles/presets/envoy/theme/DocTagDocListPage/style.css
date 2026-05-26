@@ -1,0 +1,14 @@
+/**
+ * Envoy - `DocTagDocListPage` theme overlay.
+ *
+ * Heavier bottom breath before the violet -> cyan gradient CTA strip that
+ * caps the page. Envoy's polished-SaaS identity wants the page to land
+ * before the CTA arrives; symmetric pacing reads cramped against the
+ * elevated-card depth and gradient surface.
+ *
+ * @since 0.18.0
+ */
+
+.nova-doc-tag-doc-list-page {
+  padding-bottom: calc(var(--nova-section-gap) * 1.25);
+}

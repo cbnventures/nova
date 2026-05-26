@@ -1,0 +1,154 @@
+/**
+ * Lantern - `Admonition` theme overlay.
+ *
+ * Warm cream paper card with a colored left rail keyed by admonition
+ * type (info=blue, tip=green, warning=amber, danger=rust). The title bar
+ * is italic Fraunces with a tinted icon glyph; the body sits below in
+ * comfortable padding. The whole block uses the standard Lantern
+ * transition tokens.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================ */
+
+:root {
+  --nova-lantern-admonition-margin-block: 1.5rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Admonition
+ * ============================ */
+
+:root {
+  --nova-admonition-margin-block: var(--nova-lantern-admonition-margin-block);
+}
+
+/* ============================
+ * 1. Base card - warm paper with amber rail
+ *
+ * Block-margin flows from shared theme/Admonition via the canonical
+ * `--nova-admonition-margin-block` token.
+ * ============================ */
+
+.nova-admonition {
+  padding: 1rem 1.25rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid var(--nova-lantern-border);
+  border-left-width: 4px;
+  border-left-color: var(--nova-color-primary-500);
+  border-radius: 0 8px 8px 0;
+
+  transition:
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition);
+}
+
+@media (max-width: 767px) {
+  .nova-admonition {
+    padding: 0.75rem 1rem;
+  }
+}
+
+[data-theme="dark"] .nova-admonition {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-color: var(--nova-lantern-border);
+}
+
+/* ============================
+ * 2. Heading - italic Fraunces title + tinted icon
+ * ============================ */
+
+.nova-admonition-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin: 0 0 0.5rem;
+}
+
+.nova-admonition-heading strong {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0;
+  color: var(--nova-color-primary-700);
+  text-transform: capitalize;
+}
+
+[data-theme="dark"] .nova-admonition-heading strong {
+  color: var(--nova-color-primary-300);
+}
+
+.nova-admonition-icon {
+  flex-shrink: 0;
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-admonition-icon {
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 3. Body
+ * ============================ */
+
+.nova-admonition-body {
+  font-family: var(--nova-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--nova-lantern-ink);
+}
+
+.nova-admonition-body p:last-child {
+  margin-bottom: 0;
+}
+
+/* ============================
+ * 4. Type variants - colored rails + tinted titles
+ *
+ * The defaults (amber, from primary) cover note + warning + caution.
+ * Info, tip, and danger override via component-tier
+ * --nova-admonition-{type}-{rail,fill,ink} tokens; per-preset values +
+ * light/dark fill mix ratios live in lantern/preset.css.
+ * ============================ */
+
+.nova-admonition[data-admonition-type="info"] {
+  border-left-color: var(--nova-admonition-info-rail);
+  background-color: var(--nova-admonition-info-fill);
+}
+
+.nova-admonition[data-admonition-type="info"] .nova-admonition-heading strong,
+.nova-admonition[data-admonition-type="info"] .nova-admonition-icon {
+  color: var(--nova-admonition-info-ink);
+}
+
+.nova-admonition[data-admonition-type="tip"] {
+  border-left-color: var(--nova-admonition-tip-rail);
+  background-color: var(--nova-admonition-tip-fill);
+}
+
+.nova-admonition[data-admonition-type="tip"] .nova-admonition-heading strong,
+.nova-admonition[data-admonition-type="tip"] .nova-admonition-icon {
+  color: var(--nova-admonition-tip-ink);
+}
+
+.nova-admonition[data-admonition-type="warning"],
+.nova-admonition[data-admonition-type="caution"] {
+  /* warning + caution use the default amber rail - leave as-is */
+}
+
+.nova-admonition[data-admonition-type="danger"] {
+  border-left-color: var(--nova-admonition-danger-rail);
+  background-color: var(--nova-admonition-danger-fill);
+}
+
+.nova-admonition[data-admonition-type="danger"] .nova-admonition-heading strong,
+.nova-admonition[data-admonition-type="danger"] .nova-admonition-icon {
+  color: var(--nova-admonition-danger-ink);
+}

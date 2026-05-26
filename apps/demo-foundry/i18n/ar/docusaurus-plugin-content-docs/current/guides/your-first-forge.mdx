@@ -1,0 +1,162 @@
+---
+title: "أول طَرق لك"
+sidebar_position: 2
+description: "تجوّل في إنشاء مساحة عمل من الصفر — اكتب بيانًا، شغِّل foundry ignite، وافحص القطع المولَّدة."
+tags:
+  - "guides"
+  - "tutorial"
+---
+
+import Details from '@theme/Details';
+
+# أول طَرق لك
+
+يأخذك هذا الدليل في رحلة لإنشاء مساحة عمل من الصفر باستخدام Foundry. ستكتب بيان `.grain`، وتُشغِّل أول طَرق لك، وتفحص الخرج.
+
+## الخطوة 1: إنشاء دليل المشروع
+
+ابدأ بدليل فارغ:
+
+```bash
+mkdir my-project && cd my-project
+```
+
+## الخطوة 2: كتابة البيان
+
+أنشئ ملف `project.grain` في الجذر. هذا هو الملف الوحيد الذي يحتاجه Foundry.
+
+```text title="project.grain"
+# A minimal workspace with two packages.
+workspace "my-project" {
+  lang    = "alloy"
+  target  = "arcline"
+  warden  = ["strict", "conventions"]
+  // highlight-start
+  crucible = auto
+  // highlight-end
+
+  packages {
+    core { type = "library" }
+    api  { type = "service", depends = ["core"] }
+  }
+}
+```
+
+السطر 6 هو التوجيه الأساسي. ضبط `crucible = auto` يُخبر Foundry بتوليد هياكل اختبار من تواقيع الأنواع تلقائيًا. يمكنك أيضًا ضبطه إلى `manual` إن فضّلت كتابة الاختبارات بنفسك.
+
+## الخطوة 3: تشغيل الطَرق
+
+نفِّذ أمر `foundry ignite`:
+
+```bash title="Forge the workspace"
+foundry ignite
+```
+
+يقرأ Foundry بيانك، ويحلّ رسم التبعيات، ويُولِّد قطع الإعداد، ويُهيِّكل كل حزمة.
+
+```text title="Terminal output"
+→ Reading project.grain
+→ Resolved workspace "my-project" with 2 packages
+→ Dependency graph: core → api
+→ Forging package: core (library)
+    ✓ Generated blueprint.grain
+    ✓ Generated .wardenrc.grain (strict + conventions)
+    ✓ Generated alloy.config.grain
+    ✓ Crucible scaffolded 4 test files from 4 type exports
+→ Forging package: api (service)
+    ✓ Generated blueprint.grain
+    ✓ Generated .wardenrc.grain (strict + conventions)
+    ✓ Generated alloy.config.grain
+    ✓ Generated spoke.config.grain (service target)
+    ✓ Crucible scaffolded 6 test files from 6 type exports
+→ Done in 3.8s
+```
+
+## الخطوة 4: فحص الخرج
+
+بعد الطَرق، يبدو دليلك هكذا:
+
+```text title="Generated workspace structure"
+my-project/
+  project.grain
+  packages/
+    core/
+      blueprint.grain
+      .wardenrc.grain
+      alloy.config.grain
+      src/
+      tests/
+        format.assay.al
+        validate.assay.al
+        parse.assay.al
+        transform.assay.al
+    api/
+      blueprint.grain
+      .wardenrc.grain
+      alloy.config.grain
+      spoke.config.grain
+      src/
+      tests/
+        routes.assay.al
+        handlers.assay.al
+        middleware.assay.al
+        auth.assay.al
+        response.assay.al
+        errors.assay.al
+```
+
+كل ملف إعداد مولَّد من البيان. ملفات الاختبار في `tests/` هي هياكل أنشأها Crucible استنادًا إلى تواقيع الأنواع التي وجدها في `src/`.
+
+:::tip
+شغِّل `foundry ignite --dry-run` لمعاينة الخرج الكامل دون كتابة أي ملفات. هذا مفيد للتحقق من بيان جديد قبل الإيداع.
+:::
+
+## الخطوة 5: البناء والاختبار
+
+مع مساحة العمل مطروقة، يمكنك البناء والاختبار فورًا:
+
+```bash title="Build all packages"
+foundry bellows build
+```
+
+```bash title="Run all tests"
+foundry crucible run
+```
+
+يحترم Bellows رسم تبعيات Tongs، لذا تُبنى `core` قبل `api`. يُشغِّل Crucible الاختبارات المُهيكَلة — ستنجح بتأكيدات مؤقّتة حتى تملأ التنفيذ.
+
+<Details>
+<summary>الخرج الكامل للطَرق مع السجل التفصيلي</summary>
+
+```text
+$ foundry ignite --verbose
+[00:00.000] Loading manifest: project.grain
+[00:00.012] Parsed workspace "my-project" (2 packages, 1 dependency edge)
+[00:00.014] Resolving Tongs dependency graph...
+[00:00.015]   core → (no dependencies)
+[00:00.015]   api → [core]
+[00:00.016] Graph resolution complete. 2 nodes, 1 edge, 0 cycles.
+[00:00.018] Forging package: core
+[00:00.024]   Writing blueprint.grain (1.2 KB)
+[00:00.026]   Writing .wardenrc.grain (380 rules, 2 presets)
+[00:00.031]   Writing alloy.config.grain (strict mode)
+[00:00.045]   Crucible: scanning 4 exported types in src/
+[00:00.052]   Crucible: generated 4 test files (format, validate, parse, transform)
+[00:00.054] Forging package: api
+[00:00.058]   Writing blueprint.grain (1.4 KB)
+[00:00.060]   Writing .wardenrc.grain (380 rules, 2 presets)
+[00:00.064]   Writing alloy.config.grain (strict mode)
+[00:00.068]   Writing spoke.config.grain (service target, Arcline deployment)
+[00:00.082]   Crucible: scanning 6 exported types in src/
+[00:00.091]   Crucible: generated 6 test files (routes, handlers, middleware, auth, response, errors)
+[00:00.093] Forge complete. 2 packages, 14 files written.
+[00:03.800] Total time: 3.8s (includes Warden rule generation)
+```
+
+</Details>
+
+## الخطوات التالية
+
+- [البيانات](/docs/guides/manifests/) — تعلّم كل توجيه متاح في ملفات `.grain`.
+- [إدارة مساحة العمل](/docs/guides/workspace-management/) — إدارة التبعيات عبر عشرات الحزم.
+- [خط إنتاج البناء](/docs/pipeline/build-pipeline/) — افهم كيف يعمل تخزين Quench وتوازي Bellows.

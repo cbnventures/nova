@@ -1,0 +1,286 @@
+/**
+ * Lantern - `Navbar/Monolith` theme overlay.
+ *
+ * Sticky warm cream awning with the italic Fraunces brand wordmark centered
+ * and only the hamburger + color-mode toggle floated right. No inline
+ * navigation; all menu items live in the mobile overlay.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Container - sticky warm cream awning
+ * ============================ */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+
+  padding-block: 0.5rem;
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border-bottom: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .navbar {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+}
+
+.nova-navbar-monolith > .nova-container {
+  position: relative;
+}
+
+/* ============================
+ * 2. Brand wordmark - italic Fraunces, centered
+ * ============================ */
+
+.nova-navbar-monolith-brand {
+  display: flex;
+  align-items: center;
+}
+
+.nova-navbar-monolith-brand a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: "opsz" 36;
+  font-size: 1rem;
+  color: var(--nova-lantern-ink);
+
+  transition: color var(--nova-lantern-transition);
+}
+
+.nova-navbar-monolith-brand a:hover,
+.nova-navbar-monolith-brand a:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-monolith-brand a:hover,
+[data-theme="dark"] .nova-navbar-monolith-brand a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+.nova-navbar-monolith-brand img {
+  height: 1.5rem;
+  width: auto;
+}
+
+/* ============================
+ * 3. Hamburger toggle - cream-tinted button
+ * ============================ */
+
+.nova-navbar-monolith .nova-hamburger-toggle {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-navbar-monolith .nova-hamburger-toggle:hover,
+.nova-navbar-monolith .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow);
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-navbar-monolith .nova-hamburger-toggle {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-navbar-monolith .nova-hamburger-toggle:hover,
+[data-theme="dark"] .nova-navbar-monolith .nova-hamburger-toggle:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Color mode toggle - cream-tinted button
+ * ============================ */
+
+.nova-navbar-monolith .nova-color-mode-toggle {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-navbar-monolith .nova-color-mode-toggle:hover,
+.nova-navbar-monolith .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow);
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-navbar-monolith .nova-color-mode-toggle {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-navbar-monolith .nova-color-mode-toggle:hover,
+[data-theme="dark"] .nova-navbar-monolith .nova-color-mode-toggle:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 5. Mobile menu overlay
+ * ============================ */
+
+.nova-navbar-monolith-menu-overlay {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+
+  background-color: color-mix(in srgb, var(--nova-color-text), transparent 40%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-overlay {
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--nova-color-background), #000000 8%), transparent 30%);
+}
+
+/* ============================
+ * 6. Mobile menu panel
+ * ============================ */
+
+.nova-navbar-monolith-menu-panel {
+  background-color: var(--nova-lantern-bg);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--nova-color-primary-700), transparent 80%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-panel {
+  border-color: var(--nova-lantern-border);
+  box-shadow: 0 12px 32px color-mix(in srgb, color-mix(in srgb, var(--nova-color-background), #000000 8%), transparent 50%);
+  background-blend-mode: overlay;
+}
+
+/* ============================
+ * 7. Mobile menu close
+ * ============================ */
+
+.nova-navbar-monolith-menu-close {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 92%);
+  border-color: var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition),
+    border-color var(--nova-lantern-transition),
+    box-shadow var(--nova-lantern-transition);
+}
+
+.nova-navbar-monolith-menu-close:hover,
+.nova-navbar-monolith-menu-close:focus-visible {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+  border-color: var(--nova-color-primary-500);
+  box-shadow: var(--nova-lantern-hover-glow);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-close {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 86%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-close:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-close:focus-visible {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 8. Mobile menu items - mono uppercase carved labels
+ * ============================ */
+
+.nova-navbar-monolith-menu-item {
+  gap: 0.75rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-variation-settings: "opsz" 36;
+  font-size: 1rem;
+  color: var(--nova-lantern-ink);
+  border-radius: 6px;
+
+  transition:
+    color var(--nova-lantern-transition),
+    background-color var(--nova-lantern-transition);
+}
+
+.nova-navbar-monolith-menu-item:hover,
+.nova-navbar-monolith-menu-item:focus-visible {
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-item:hover,
+[data-theme="dark"] .nova-navbar-monolith-menu-item:focus-visible {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+.nova-navbar-monolith-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-800);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-item[aria-current="page"] {
+  color: var(--nova-color-primary-200);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 76%);
+}
+
+.nova-navbar-monolith-menu-panel .nova-navbar-monolith-menu-items a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-navbar-monolith-menu-panel .nova-navbar-monolith-menu-items a[target="_blank"] span::after {
+  background-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * Mobile Menu - Staggered Reveal
+ *
+ * Reuses preset-level `lantern-fade-in-up`. Items stagger 50ms -
+ * preset declares `motion.staggeredReveals: true`.
+ * ============================ */
+
+.nova-navbar-monolith-menu-item {
+  opacity: 0;
+
+  animation: lantern-fade-in-up var(--nova-lantern-transition) forwards;
+  animation-delay: calc(var(--nova-item-index, 0) * 50ms + 50ms);
+}

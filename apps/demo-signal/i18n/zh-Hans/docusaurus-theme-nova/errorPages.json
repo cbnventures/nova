@@ -1,0 +1,26 @@
+{
+  "notFound.title": {
+    "message": "信号丢失。",
+    "description": "The 404 page heading set by the consumer in themeConfig.errorPages.notFound.title"
+  },
+  "notFound.description": {
+    "message": "没有路径与此 URL 匹配。请返回到已知的路由。",
+    "description": "The 404 page description set by the consumer in themeConfig.errorPages.notFound.description"
+  },
+  "notFound.backHomeLabel": {
+    "message": "返回主页",
+    "description": "The 404 page \"Back to home\" CTA label set by the consumer in themeConfig.errorPages.notFound.backHomeLabel"
+  },
+  "errorPageContent.title": {
+    "message": "我们在这里丢失了信号。",
+    "description": "The per-page crash heading set by the consumer in themeConfig.errorPages.errorPageContent.title"
+  },
+  "errorPageContent.retryLabel": {
+    "message": "重新捕获信号",
+    "description": "The per-page crash retry button label set by the consumer in themeConfig.errorPages.errorPageContent.retryLabel"
+  },
+  "error.retryLabel": {
+    "message": "重试追踪",
+    "description": "The top-level error boundary retry button label set by the consumer in themeConfig.errorPages.error.retryLabel"
+  }
+}

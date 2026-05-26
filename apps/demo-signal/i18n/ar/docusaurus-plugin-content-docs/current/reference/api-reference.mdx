@@ -1,0 +1,299 @@
+---
+title: "مرجع API"
+sidebar_position: 1
+description: "مرجع Spoke API الكامل لـ Signal، روابط Beacon، وإسناد Prism، وتدفقات Pulse، ولقطات Aperture، وجماهير Resonance."
+tags:
+  - "reference"
+  - "api"
+---
+
+import Details from '@theme/Details';
+
+# مرجع API
+
+يكشف Signal واجهة REST عبر Spoke. كل ميزة متاحة في واجهة الأوامر متاحة برمجياً. تتطلب جميع الطلبات رمز Bearer في ترويسة `Authorization`.
+
+## عنوان الأساس
+
+```
+https://api.signal.example/v2
+```
+
+## المصادقة
+
+```bash title="طلب مُصادَق"
+curl -H "Authorization: Bearer sk_live_your_api_key" \
+  https://api.signal.example/v2/beacons
+```
+
+تبدأ جميع مفاتيح API بـ `sk_live_` للإنتاج وبـ `sk_test_` لبيئات الاختبار. أنشئ المفاتيح من لوحة Signal أو عبر أمر `signal auth` في واجهة الأوامر.
+
+---
+
+## الروابط
+
+### إنشاء رابط Beacon
+
+| الخاصية  | القيمة             |
+|----------|--------------------|
+| الطريقة  | `POST`             |
+| المسار   | `/v2/beacons`      |
+| المصادقة | رمز Bearer (مطلوب) |
+
+```bash title="إنشاء رابط Beacon"
+curl -X POST https://api.signal.example/v2/beacons \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://threadbare.example/pricing",
+    "domain": "go.signal.example",
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta"
+  }'
+```
+
+<Details>
+<summary>مخطط الاستجابة</summary>
+
+```json title="201 Created"
+{
+  "id": "bcn_01J9K4M7N2P8Q3R5S6T1U0V2",
+  "shortUrl": "https://go.signal.example/a7x9m2",
+  "url": "https://threadbare.example/pricing",
+  "attribution": {
+    "campaign": "product-launch",
+    "channel": "email",
+    "variant": "hero-cta",
+    "trace": "trc_8f3a1b2c4d5e6f70"
+  },
+  "clicks": 0,
+  "createdAt": "2025-02-20T09:15:00.000Z"
+}
+```
+
+</Details>
+
+### عرض روابط Beacon
+
+| الخاصية  | القيمة             |
+|----------|--------------------|
+| الطريقة  | `GET`              |
+| المسار   | `/v2/beacons`      |
+| المصادقة | رمز Bearer (مطلوب) |
+
+| المعامل    | النوع | الافتراضي | الوصف                             |
+|------------|-------|-----------|-----------------------------------|
+| `campaign` | نص    | —         | تصفية بحسب اسم الحملة.            |
+| `channel`  | نص    | —         | تصفية بحسب القناة.                |
+| `domain`   | نص    | —         | تصفية بحسب النطاق الموسوم.        |
+| `limit`    | رقم   | 50        | نتائج لكل صفحة (الحد الأقصى 200). |
+| `cursor`   | نص    | —         | مؤشر التصفّح من الصفحة السابقة.   |
+
+```bash title="عرض روابط حملة"
+curl "https://api.signal.example/v2/beacons?campaign=product-launch&limit=10" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+### تحديث رابط Beacon
+
+| الخاصية  | القيمة             |
+|----------|--------------------|
+| الطريقة  | `PATCH`            |
+| المسار   | `/v2/beacons/:id`  |
+| المصادقة | رمز Bearer (مطلوب) |
+
+```bash title="تحديث عنوان URL الوجهة"
+curl -X PATCH https://api.signal.example/v2/beacons/bcn_01J9K4M7N2P8Q3R5S6T1U0V2 \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "url": "https://threadbare.example/pricing-v2" }'
+```
+
+### حذف رابط Beacon
+
+| الخاصية  | القيمة             |
+|----------|--------------------|
+| الطريقة  | `DELETE`           |
+| المسار   | `/v2/beacons/:id`  |
+| المصادقة | رمز Bearer (مطلوب) |
+
+```bash title="حذف رابط"
+curl -X DELETE https://api.signal.example/v2/beacons/bcn_01J9K4M7N2P8Q3R5S6T1U0V2 \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## التحليلات
+
+### الاستعلام عن النقرات
+
+| الخاصية  | القيمة                 |
+|----------|------------------------|
+| الطريقة  | `GET`                  |
+| المسار   | `/v2/analytics/clicks` |
+| المصادقة | رمز Bearer (مطلوب)     |
+
+| المعامل       | النوع | الافتراضي  | الوصف                                    |
+|---------------|-------|------------|------------------------------------------|
+| `beacon`      | نص    | —          | تصفية بحسب معرّف Beacon.                 |
+| `campaign`    | نص    | —          | تصفية بحسب الحملة.                       |
+| `from`        | نص    | قبل 7 أيام | تاريخ البداية (ISO 8601).                |
+| `to`          | نص    | الآن       | تاريخ النهاية (ISO 8601).                |
+| `granularity` | نص    | `day`      | فترة التجميع: `hour` أو `day` أو `week`. |
+
+```bash title="استعلام تحليلات النقرات"
+curl "https://api.signal.example/v2/analytics/clicks?campaign=product-launch&granularity=day" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+<Details>
+<summary>مخطط الاستجابة</summary>
+
+```json title="200 OK"
+{
+  "campaign": "product-launch",
+  "granularity": "day",
+  "data": [
+    { "date": "2025-02-18", "clicks": 2150, "unique": 1540 },
+    { "date": "2025-02-19", "clicks": 1890, "unique": 1350 },
+    { "date": "2025-02-20", "clicks": 2480, "unique": 1780 }
+  ]
+}
+```
+
+</Details>
+
+### الاستعلام عن مسارات الإسناد
+
+| الخاصية  | القيمة                |
+|----------|-----------------------|
+| الطريقة  | `GET`                 |
+| المسار   | `/v2/analytics/paths` |
+| المصادقة | رمز Bearer (مطلوب)    |
+
+| المعامل    | النوع | الافتراضي | الوصف                                                         |
+|------------|-------|-----------|---------------------------------------------------------------|
+| `trace`    | نص    | —         | معرّف أثر محدد.                                               |
+| `campaign` | نص    | —         | جميع المسارات في حملة.                                        |
+| `model`    | نص    | `linear`  | نموذج الإسناد: `linear` أو `decay` أو `position` أو `custom`. |
+
+```bash title="استعلام مسار إسناد محدد"
+curl "https://api.signal.example/v2/analytics/paths?trace=trc_8f3a1b2c4d5e6f70&model=decay" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## الجماهير
+
+### عرض الشرائح
+
+| الخاصية  | القيمة                   |
+|----------|--------------------------|
+| الطريقة  | `GET`                    |
+| المسار   | `/v2/audiences/segments` |
+| المصادقة | رمز Bearer (مطلوب)       |
+
+### إنشاء شريحة
+
+| الخاصية  | القيمة                   |
+|----------|--------------------------|
+| الطريقة  | `POST`                   |
+| المسار   | `/v2/audiences/segments` |
+| المصادقة | رمز Bearer (مطلوب)       |
+
+```bash title="إنشاء شريحة"
+curl -X POST https://api.signal.example/v2/audiences/segments \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "high-intent-email",
+    "conditions": [
+      { "field": "channel", "operator": "==", "value": "email" },
+      { "field": "clicks", "operator": ">=", "value": 5 }
+    ]
+  }'
+```
+
+### استعلام التداخل
+
+| الخاصية  | القيمة                  |
+|----------|-------------------------|
+| الطريقة  | `POST`                  |
+| المسار   | `/v2/audiences/overlap` |
+| المصادقة | رمز Bearer (مطلوب)      |
+
+```bash title="استعلام تداخل الجمهور"
+curl -X POST https://api.signal.example/v2/audiences/overlap \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{ "segments": ["high-intent-email", "social-clickers"] }'
+```
+
+<Details>
+<summary>مخطط الاستجابة</summary>
+
+```json title="200 OK"
+{
+  "segments": ["high-intent-email", "social-clickers"],
+  "sizes": { "high-intent-email": 4280, "social-clickers": 6120 },
+  "overlap": { "count": 1720, "percent": 40.2 }
+}
+```
+
+</Details>
+
+---
+
+## الحملات
+
+### إنشاء حملة
+
+| الخاصية  | القيمة             |
+|----------|--------------------|
+| الطريقة  | `POST`             |
+| المسار   | `/v2/campaigns`    |
+| المصادقة | رمز Bearer (مطلوب) |
+
+### التقاط لقطة
+
+| الخاصية  | القيمة                        |
+|----------|-------------------------------|
+| الطريقة  | `POST`                        |
+| المسار   | `/v2/campaigns/:id/snapshots` |
+| المصادقة | رمز Bearer (مطلوب)            |
+
+### مقارنة اللقطات
+
+| الخاصية  | القيمة                                |
+|----------|---------------------------------------|
+| الطريقة  | `GET`                                 |
+| المسار   | `/v2/campaigns/:id/snapshots/compare` |
+| المصادقة | رمز Bearer (مطلوب)                    |
+
+| المعامل | النوع | الوصف                          |
+|---------|-------|--------------------------------|
+| `from`  | نص    | تسمية أو معرّف اللقطة الأولى.  |
+| `to`    | نص    | تسمية أو معرّف اللقطة الثانية. |
+
+```bash title="مقارنة لقطتين"
+curl "https://api.signal.example/v2/campaigns/cmp_01J9L2M8N4P6Q7R3S5T0U1V9/snapshots/compare?from=week-1&to=week-2" \
+  -H "Authorization: Bearer sk_live_your_api_key"
+```
+
+---
+
+## اختصارات لوحة المفاتيح (CLI)
+
+تدعم واجهة Signal اختصارات لوحة المفاتيح في الوضع التفاعلي:
+
+| الاختصار                                          | الإجراء                     |
+|---------------------------------------------------|-----------------------------|
+| <kbd>Ctrl</kbd> + <kbd>C</kbd>                    | إلغاء العملية الحالية.      |
+| <kbd>Ctrl</kbd> + <kbd>L</kbd>                    | مسح بث Pulse المباشر.       |
+| <kbd>Ctrl</kbd> + <kbd>R</kbd>                    | تحديث مقاييس الحملة.        |
+| <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>E</kbd> | تصدير العرض الحالي إلى CSV. |
+
+على macOS، استبدل <kbd>Ctrl</kbd> بـ <kbd>Cmd</kbd> لمعظم الاختصارات.

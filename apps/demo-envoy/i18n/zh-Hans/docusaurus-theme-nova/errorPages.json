@@ -1,0 +1,26 @@
+{
+  "notFound.title": {
+    "message": "在部署途中迷路了。",
+    "description": "The 404 page heading set by the consumer in themeConfig.errorPages.notFound.title"
+  },
+  "notFound.description": {
+    "message": "此路由尚未发布——返回项目继续浏览。",
+    "description": "The 404 page description set by the consumer in themeConfig.errorPages.notFound.description"
+  },
+  "notFound.backHomeLabel": {
+    "message": "返回项目",
+    "description": "The 404 page \"Back to home\" CTA label set by the consumer in themeConfig.errorPages.notFound.backHomeLabel"
+  },
+  "errorPageContent.title": {
+    "message": "这一页投递失败了。",
+    "description": "The per-page crash heading set by the consumer in themeConfig.errorPages.errorPageContent.title"
+  },
+  "errorPageContent.retryLabel": {
+    "message": "重新投递",
+    "description": "The per-page crash retry button label set by the consumer in themeConfig.errorPages.errorPageContent.retryLabel"
+  },
+  "error.retryLabel": {
+    "message": "重试投递",
+    "description": "The top-level error boundary retry button label set by the consumer in themeConfig.errorPages.error.retryLabel"
+  }
+}

@@ -1,0 +1,109 @@
+---
+title: "我们为什么不再写配置文件"
+authors:
+  - "elena"
+tags:
+  - "理念"
+  - "清单"
+date: "2025-03-15"
+---
+
+我们做多包工作空间已经做了将近十年。而这十年里，我们一直在被没人维护的配置文件淹没。
+
+{/* truncate */}
+
+## 那种没人察觉的漂移
+
+每个工作空间最初都很干净：一个包，一份 Warden 配置，一份 Alloy 设置。然后第二个包出现，有人把配置从第一个包复制过去。半年后，你有了十二个包、三套不同的 Warden 设置、两套互相冲突的 Alloy 配置，还有一份 Blueprint——它从 core 包里被复制粘贴出来，之后再没被更新过。
+
+我们把它叫做"配置漂移"：构建设置在代码库里悄无声息地一路分化。直到某天新人问"为什么 `api` 包允许隐式 `any`，而 `web` 包不允许？"，才有人注意到它。
+
+## 十二份配置文件长什么样
+
+在我们用 Foundry 之前，典型的工作空间是这样的。每个包都有自己的一整套配置文件：
+
+```text title="之前：每个工作空间 12 份配置"
+my-workspace/
+  .wardenrc.grain
+  alloy.config.grain
+  smelter.config.grain
+  blueprint.grain
+  packages/
+    core/
+      .wardenrc.grain
+      alloy.config.grain
+      smelter.config.grain
+    api/
+      .wardenrc.grain
+      alloy.config.grain
+      smelter.config.grain
+    web/
+      .wardenrc.grain
+      alloy.config.grain
+      smelter.config.grain
+```
+
+十二份文件。四个包。每一份都可以独立漂移。
+
+## 一份清单长什么样
+
+下面是同样的工作空间，用一份 `.grain` 清单描述：
+
+```text title="之后：一份清单"
+# project.grain
+workspace "my-workspace" {
+  lang    = "alloy"
+  warden  = ["strict", "conventions"]
+  smelter = "standard"
+
+  packages {
+    core { type = "library" }
+    api  { type = "service", depends = ["core"] }
+    web  { type = "app", depends = ["core"] }
+  }
+}
+```
+
+一份文件。同一个工作空间。每个包都继承相同的 Warden 规则、相同的 Alloy 设置、相同的 Smelter 配置。当某个包确实需要差异化设置时，就把它写在清单里：
+
+```diff title="project.grain — 单包覆盖"
+  packages {
+    core { type = "library" }
+-   api  { type = "service", depends = ["core"] }
++   api  { type = "service", depends = ["core"], warden = ["strict", "conventions", "api-safety"] }
+    web  { type = "app", depends = ["core"] }
+  }
+```
+
+覆盖是显式的、紧贴它所修改的对象。不再有藏在嵌套目录里、悄悄改变行为的隐式文件。
+
+:::tip
+运行 `foundry ignite --dry-run` 可以查看 Foundry 在不写入文件的情况下会生成什么。这是提交前确认清单的最快方式。
+:::
+
+## 论点
+
+意图应当是声明式的。你描述工作空间长什么样——语言、依赖、规则、目标——工具链负责把剩下的事情补齐。
+
+配置文件是实现细节。它们是工具链无法从你写下的内容里推断出意图所留下的副产物。每次你手工编辑一份 Warden 配置，你都在做一件编译器本可以替你完成的事。
+
+这正是我们打造 Foundry 的原因。不是因为想再做一个 CLI，而是因为想停止在每个项目上写同样的十二份文件，而开始描述我们真正想表达的东西。
+
+## 我们身上发生了什么
+
+把内部工作空间切换到 Foundry 清单之后：
+
+- **配置相关的 bug 降到零。** 不再有"我这边能跑"——那种因为嵌套包里某份过时的 Alloy 配置而引发的故障。
+- **新人上手时间从两小时降到十五分钟。** 工程师只用读一份清单，不再需要在十二份配置文件里寻宝。
+- **Warden 规则一致性从 74% 升到 100%。** 每个包跑相同的规则，例外必须写进清单里。
+
+熔炉不在乎你的意见。它在乎你的清单。写好清单，下游的一切都会跟着稳。
+
+## 试一下
+
+```bash
+spark install foundry
+foundry ignite
+```
+
+两条命令。一份清单。零份配置文件。阅读 [概述](/docs/overview/) 看看它从零跑通的样子。

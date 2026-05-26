@@ -1,8 +1,15 @@
 /**
- * Sentinel — Announcement bar visual styling.
+ * Sentinel - `AnnouncementBar` theme overlay.
+ *
+ * Cool accent-50 wash with accent ink and a quiet accent-200 hairline.
+ * Reads as an observability dashboard alert - informative, low-noise.
  *
  * @since 0.15.0
  */
+
+/* ============================
+ * 1. Container
+ * ============================ */
 
 .nova-announcement-bar {
   background-color: var(--nova-color-accent-50);
@@ -16,10 +23,14 @@
 }
 
 [data-theme="dark"] .nova-announcement-bar {
-  background-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 92%);
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-sentinel-chrome-bg) 90%);
   color: var(--nova-color-accent-300);
   border-bottom-color: color-mix(in srgb, var(--nova-color-accent-500), transparent 85%);
 }
+
+/* ============================
+ * 2. Links
+ * ============================ */
 
 .nova-announcement-bar a {
   color: var(--nova-color-primary-700);
@@ -49,14 +60,4 @@
 
 [data-theme="dark"] .nova-announcement-bar-close {
   color: var(--nova-color-accent-300);
-}
-
-/* ============================
- * 4. Responsive
- * ============================ */
-
-@media (min-width: 640px) {
-  .nova-announcement-bar {
-    font-size: 0.8125rem;
-  }
 }

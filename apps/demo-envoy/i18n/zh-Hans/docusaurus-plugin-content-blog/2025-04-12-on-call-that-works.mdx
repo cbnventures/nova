@@ -1,0 +1,95 @@
+---
+title: "设计一份不把人耗光的值班轮值"
+authors:
+  - "tomas"
+tags:
+  - "on-call"
+  - "latency"
+  - "reliability"
+date: "2025-04-12"
+---
+
+我们第一份值班轮值跑了三个月，第一位工程师就退出了——不是离职，而是退出轮值。她说在值班那一周里根本睡不着，因为告警从来不停；偶尔停下时，她又睁着眼等下一条。
+
+我们不是不会运维，是不会设计值班。
+
+{/* truncate */}
+
+## 最初的轮值
+
+三位工程师、每人一周、7×24 覆盖。所有 Glassboard 告警都进值班手机，所有 Canary 升级都进值班手机，每一条客户反馈也进值班手机——值班工程师是所有事情的第一响应人。
+
+一个典型值班周里：
+
+```text title="值班一周 — 工程师活动日志（节选）"
+Mon 02:14  Alert: delivery latency p99 > 200ms (spoke://analytics)
+           Action: Checked dashboard. Latency dropped before investigation.
+           Resolution: None needed. Auto-resolved.
+           Time spent: 22 minutes (wake up, check, try to sleep again)
+
+Mon 08:47  Alert: error rate > 5/s (hook://payment-confirm)
+           Action: Destination was deploying. Errors cleared in 90s.
+           Resolution: None needed.
+           Time spent: 8 minutes
+
+Tue 03:31  Alert: queue depth > 1000 (canary://ops)
+           Action: Canary endpoint was slow. Queue drained after 4 minutes.
+           Resolution: None needed.
+           Time spent: 35 minutes
+
+Wed 14:22  Alert: dead-letter count > 10 (spoke://crm-sync)
+           Action: CRM endpoint changed auth scheme without notice.
+           Resolution: Updated Cipher config. Replayed dead-lettered messages.
+           Time spent: 2 hours 15 minutes
+```
+
+三天里只有一次真实事故，三次虚惊各偷走了一份睡眠或专注。这种"一可执行对三噪声"的比例正在摧毁士气。
+
+## 改变了什么
+
+我们同时做了三处改动。任何单独一处都不足以解决问题，三处合起来才把值班从负担变成可管理的责任。
+
+### 1. 分级严重程度
+
+并不是每条告警都需要凌晨 3 点叫醒人。我们把告警分成三级：
+
+- **P1 — 立即呼叫。** 服务宕机或正在丢失数据，值班工程师会被叫醒。
+- **P2 — 工作时间通知。** 服务降级但仍可用，消息排到次日清晨。
+- **P3 — 只记录。** 检测到异常但无客户影响，进入 Glassboard 等待每周复盘。
+
+```text title="分级判定 — 由 Glassboard 自动执行"
+IF dead_letter_count > 50 AND duration > 5m    → P1 (page)
+IF error_rate > threshold AND duration > 2m     → P2 (business hours)
+IF latency_p99 > budget AND error_rate < 1/s    → P3 (log only)
+IF queue_depth > 1000 AND growing               → P2 (business hours)
+IF delivery_rate drops > 80% in 60s             → P1 (page)
+```
+
+### 2. 自动修复
+
+Courier 现在能在无人介入的情况下处理瞬时故障。目的地返回 503 时，Courier 退避并重试；若目的地在重试窗口内恢复，就不会触发告警。告警只在重试预算耗尽时才会触发——意味着问题是真实且持续的。
+
+启用自动修复前：每月 312 条告警。
+启用之后：每月 23 条。
+
+### 3. 双人轮值
+
+我们把值班拆成主、副两条线。主值班处理 P1 呼叫，副值班在工作时间处理 P2，P3 永远不会惊动任何人。主副每周互换角色，每人都能在下一轮之前完整休息一周。
+
+## 六个月后的数字
+
+| 指标          | 改造前   | 改造后  |
+|-------------|-------|------|
+| 每值班周告警数     | 18-25 | 2-4  |
+| 每周夜间呼叫数     | 4-7   | 0.3  |
+| 平均确认时间      | 8 分钟  | 2 分钟 |
+| 值班满意度（1-10） | 2.8   | 7.4  |
+| 拒绝轮值的工程师数   | 1     | 0    |
+
+夜间呼叫率每周 0.3——大约每三周才会被叫醒一次。这种节奏是可持续的，是一种人可以连续好几年都待在其中而不被耗光的轮值。
+
+## 教训
+
+值班不是技术问题，是带有技术解法的人性问题。系统必须可靠到大多数故障能自愈；告警必须准确到每一次呼叫都值得被叫醒；轮值必须结构合理到没有人独自承担全部重量。
+
+把系统搭对，轮值会自然成立；搭错了，再精巧的轮值设计也救不了你。

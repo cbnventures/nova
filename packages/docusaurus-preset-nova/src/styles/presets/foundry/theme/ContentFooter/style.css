@@ -1,38 +1,36 @@
 /**
- * Foundry — Content Footer visual styling.
+ * Foundry - `ContentFooter` theme overlay.
+ *
+ * The closing meta row beneath an article - share buttons in muted
+ * neutral chrome that warm to primary on hover. Edit-this-page link in
+ * muted neutral; last-updated stamp quieter still.
  *
  * @since 0.15.0
  */
 
-/* ============================
- * Section Label
- * ============================ */
+/**
+ * ============================
+ * 1. Section label
+ * ============================
+ */
 
 .nova-content-footer-section-label {
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
 }
 
-[data-theme="dark"] .nova-content-footer-section-label {
-  color: var(--nova-color-neutral-400);
-}
-
-/* ============================
- * Share Button
- * ============================ */
+/**
+ * ============================
+ * 2. Share button - muted neutral chrome
+ * ============================
+ */
 
 .nova-content-footer-share-button {
-  color: var(--nova-color-neutral-600);
-  background-color: var(--nova-color-neutral-100);
-  border-color: var(--nova-color-neutral-200);
+  color: var(--nova-color-text-muted);
+  background-color: var(--nova-color-surface-raised);
+  border-color: var(--nova-color-border);
 
   transition: color var(--nova-motion-duration) ease,
               border-color var(--nova-motion-duration) ease;
-}
-
-[data-theme="dark"] .nova-content-footer-share-button {
-  color: var(--nova-color-neutral-300);
-  background-color: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.08);
 }
 
 .nova-content-footer-share-button:hover,
@@ -41,15 +39,23 @@
   border-color: var(--nova-color-primary-300);
 }
 
+[data-theme="dark"] .nova-content-footer-share-button {
+  color: var(--nova-color-text);
+  background-color: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
 [data-theme="dark"] .nova-content-footer-share-button:hover,
 [data-theme="dark"] .nova-content-footer-share-button:focus-visible {
   color: var(--nova-color-primary-400);
   border-color: var(--nova-color-primary-700);
 }
 
-/* ============================
- * Share Copied
- * ============================ */
+/**
+ * ============================
+ * 3. Share copied state
+ * ============================
+ */
 
 .nova-content-footer-share-copied {
   color: var(--nova-color-primary-600);
@@ -61,13 +67,15 @@
   border-color: var(--nova-color-primary-700);
 }
 
-/* ============================
- * Edit This Page
- * ============================ */
+/**
+ * ============================
+ * 4. Edit this page link
+ * ============================
+ */
 
 .nova-content-footer-edit .nova-edit-this-page {
   font-size: 0.875rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   text-decoration: none;
   transition: color var(--nova-motion-duration) ease;
 }
@@ -77,16 +85,26 @@
   color: var(--nova-color-primary-600);
 }
 
+[data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page {
+  color: var(--nova-color-text-muted);
+}
+
 [data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:hover,
 [data-theme="dark"] .nova-content-footer-edit .nova-edit-this-page:focus-visible {
   color: var(--nova-color-primary-400);
 }
 
-/* ============================
- * Last Updated
- * ============================ */
+/**
+ * ============================
+ * 5. Last updated stamp
+ * ============================
+ */
 
 .nova-content-footer-edit .nova-last-updated {
-  font-size: 0.8125rem;
-  color: var(--nova-color-neutral-400);
+  font-size: 0.875rem;
+  color: var(--nova-color-text-muted);
+}
+
+[data-theme="dark"] .nova-content-footer-edit .nova-last-updated {
+  color: var(--nova-color-text-muted);
 }

@@ -63,11 +63,12 @@ function ThemedImage(props: ThemeThemedImageThemedImageProps): ThemeThemedImageT
 
   return (
     <img
+      className={(props['className'] !== undefined) ? `nova-themed-image ${props['className']}` : 'nova-themed-image'}
+      style={props['style']}
       src={src}
       alt={props['alt']}
       width={props['width']}
       height={props['height']}
-      style={props['style']}
     />
   );
 }

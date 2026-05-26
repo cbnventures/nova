@@ -23,7 +23,10 @@ import type {
  */
 function BlogPostItems(props: ThemeBlogPostItemsBlogPostItemsProps) {
   return (
-    <>
+    <div
+      className={(props['className'] !== undefined) ? `nova-blog-post-items ${props['className']}` : 'nova-blog-post-items'}
+      style={props['style']}
+    >
       {
         props['items'].map((item: ThemeBlogPostItemsBlogPostItemsPropsItem) => {
           const blogPostContent: ThemeBlogPostItemsBlogPostItemsPropsItemContent = item['content'];
@@ -40,7 +43,7 @@ function BlogPostItems(props: ThemeBlogPostItemsBlogPostItemsProps) {
           );
         })
       }
-    </>
+    </div>
   );
 }
 

@@ -1,5 +1,9 @@
 /**
- * Signal — Footer (Commons) variant visual styling.
+ * Signal - `Footer/Commons` theme overlay.
+ *
+ * Community-focused footer on neutral-950 with a primary-600 top stripe,
+ * mono uppercase section headings, neutral-bordered social row, and a
+ * flat dark CTA tile capped by a 4px primary stripe.
  *
  * @since 0.15.0
  */
@@ -17,8 +21,8 @@
  * ============================ */
 
 .nova-footer-commons {
-  background-color: var(--nova-color-neutral-950);
-  color: var(--nova-color-neutral-400);
+  background-color: color-mix(in srgb, var(--nova-color-background), #000000 8%);
+  color: var(--nova-color-text-muted);
   padding-top: 2rem;
   padding-bottom: 1rem;
   margin-top: 2rem;
@@ -64,7 +68,7 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--nova-color-neutral-100);
+  color: var(--nova-color-text);
   margin-bottom: 0.75rem;
 }
 
@@ -72,7 +76,7 @@
   padding: 0.25rem 0;
   font-family: var(--nova-font-code);
   font-size: 0.75rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   text-decoration: none;
   transition: color var(--nova-motion-duration) ease;
 }
@@ -90,8 +94,8 @@
 .nova-footer-commons-social {
   justify-content: center;
   padding: 1rem 0;
-  border-top: 1px solid var(--nova-color-neutral-800);
-  border-bottom: 1px solid var(--nova-color-neutral-800);
+  border-top: 1px solid var(--nova-color-border);
+  border-bottom: 1px solid var(--nova-color-border);
 }
 
 .nova-footer-commons-social a {
@@ -100,7 +104,7 @@
   justify-content: center;
   width: 2rem;
   height: 2rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   transition: color var(--nova-motion-duration) ease;
 }
 
@@ -121,6 +125,58 @@
 .nova-footer-commons-legal p {
   font-family: var(--nova-font-code);
   font-size: 0.6875rem;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-muted);
   margin: 0;
+}
+
+/* ============================
+ * CTA - preset signature.
+ * ============================ */
+
+.nova-footer-commons-cta {
+  position: relative;
+  padding-block: 2.5rem;
+  text-align: center;
+  background-color: var(--nova-color-text);
+  overflow: hidden;
+}
+
+[data-theme="dark"] .nova-footer-commons-cta {
+  background-color: color-mix(in srgb, var(--nova-color-background), #000000 8%);
+  border-bottom: 1px solid var(--nova-color-border);
+}
+
+.nova-footer-commons-cta p {
+  position: relative;
+  margin: 0;
+  font-family: var(--nova-font-code);
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--nova-color-text-inverse);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.nova-footer-commons-cta {
+  border-top: 4px solid var(--nova-color-primary-600);
+  transition: background-color var(--nova-motion-duration) ease;
+}
+
+.nova-footer-commons-cta:hover,
+.nova-footer-commons-cta:focus-visible {
+  background-color: var(--nova-color-border);
+}
+
+[data-theme="dark"] .nova-footer-commons-cta:hover,
+[data-theme="dark"] .nova-footer-commons-cta:focus-visible {
+  background-color: var(--nova-color-text);
+}
+
+.nova-footer-commons-cta:hover p,
+.nova-footer-commons-cta:focus-visible p {
+  color: var(--nova-color-primary-400);
+}
+
+.nova-footer-commons-cta-wrap + .nova-footer-commons {
+  border-top-width: 0;
 }

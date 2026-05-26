@@ -1,0 +1,26 @@
+---
+title: "Dockets"
+sidebar_position: 1
+description: "Docket 是 Marshal 在仓库上每一次操作的公开记录。仅可追加、绝不撤销、始终可见。"
+tags:
+  - "dockets"
+---
+
+# Dockets
+
+Docket 是 Marshal 在某个仓库上所采取的每一项操作的公开记录。每一条合上的线程、每一次盖章的批准、每一次到期的接续，都会在这里写下一行。
+
+## Docket 条目
+
+- **FILED** —— 工作流已排队等待执行
+- **STAMPED** —— Marshal 已操作，结果已写入记录
+- **RECEIVED** —— 新到来的工作，等待层级分类
+- **ARCHIVED** —— 线程已封存；案件已合上
+
+Docket 仅可追加。Marshal 从不撤销。Marshal 仅以追加新条目的方式修订。
+
+## 下一步
+
+- [Policies](/docs/filings/policies/) — 什么内容会被钤入 docket。
+- [审计轨迹](/docs/dockets/audit-trail/) — 从头到尾通读 docket。
+- [API 参考](/docs/reference/api-reference/) — 以编程方式查询 docket。

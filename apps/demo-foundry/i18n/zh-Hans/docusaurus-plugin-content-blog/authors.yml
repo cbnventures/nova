@@ -1,0 +1,41 @@
+elena:
+  name: Elena Vasquez
+  title: Foundry 联合创始人
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
+
+kofi:
+  name: Kofi Mensah
+  title: Foundry 性能负责人
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
+
+priya:
+  name: Priya Nair
+  title: Foundry 开发者体验负责人
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures

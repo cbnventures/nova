@@ -16,9 +16,30 @@ export const presetsEnvoyPresetEnvoy: PresetsEnvoyPresetEnvoy = {
     src: '@nova-assets/presets/envoy/logo.svg',
   },
   colors: {
-    primary: '#7c3aed',
-    accent: '#06b6d4',
-    neutral: '#71717a',
+    primary: {
+      light: '#7c3aed',
+      dark: '#7c3aed',
+    },
+    accent: {
+      light: '#06b6d4',
+      dark: '#06b6d4',
+    },
+    text: {
+      light: '#18181b',
+      dark: '#e4e4e7',
+    },
+    border: {
+      light: '#d4d4d8',
+      dark: '#52525b',
+    },
+    warning: {
+      light: '#f59e0b',
+      dark: '#f59e0b',
+    },
+    danger: {
+      light: '#ef4444',
+      dark: '#ef4444',
+    },
   },
   fonts: {
     display: 'Plus Jakarta Sans',
@@ -40,4 +61,7 @@ export const presetsEnvoyPresetEnvoy: PresetsEnvoyPresetEnvoy = {
   },
   navbar: 'compass',
   footer: 'launchpad',
+  cta: {
+    contained: false,
+  },
 };

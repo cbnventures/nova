@@ -26,7 +26,11 @@ function EditThisPage(props: ThemeEditThisPageEditThisPageProps) {
   });
 
   return (
-    <Link className="nova-edit-this-page" to={props['editUrl']}>
+    <Link
+      className={(props['className'] !== undefined) ? `nova-edit-this-page ${props['className']}` : 'nova-edit-this-page'}
+      {...((props['style'] !== undefined) ? { style: props['style'] } : {})}
+      to={props['editUrl']}
+    >
       {linkLabel}
     </Link>
   );

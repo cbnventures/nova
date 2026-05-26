@@ -1,5 +1,5 @@
 /**
- * Foundry — Search bar, dropdown, and results visual styling.
+ * Foundry - Search bar, dropdown, and results visual styling.
  *
  * @since 0.15.0
  */
@@ -10,15 +10,16 @@
 
 .nova-search-bar-input {
   font-family: var(--nova-font-body);
+  border-color: var(--nova-foundry-border);
   border-radius: var(--nova-shape-radius);
-  background-color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-surface-raised);
   transition: border-color var(--nova-motion-duration) ease,
               box-shadow var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-search-bar-input {
-  background-color: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--nova-foundry-surface-faint);
+  border-color: var(--nova-foundry-border-faint);
 }
 
 .nova-search-bar-input:focus {
@@ -38,16 +39,14 @@
 .nova-search-dropdown {
   border-radius: var(--nova-shape-radius);
   border-color: var(--nova-foundry-border);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--nova-foundry-shadow-dropdown);
   background-color: var(--nova-foundry-surface);
-  animation: foundry-scale-in calc(var(--nova-motion-duration) * 1.5) cubic-bezier(0.22, 1, 0.36, 1);
   transform-origin: top right;
 }
 
 [data-theme="dark"] .nova-search-dropdown {
   background-color: var(--nova-foundry-surface-raised);
-  border-color: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 1px rgba(255, 255, 255, 0.1);
+  border-color: var(--nova-foundry-border-faint);
 }
 
 /* ============================
@@ -62,7 +61,7 @@
 
 [data-theme="dark"] .nova-search-result,
 [data-theme="dark"] .nova-search-count {
-  border-bottom-color: rgba(255, 255, 255, 0.08);
+  border-bottom-color: var(--nova-foundry-border-faint);
 }
 
 [data-theme="dark"] .nova-search-result:hover,
@@ -79,21 +78,21 @@
  * 4. Mobile Menu Search
  * ============================ */
 
-/* Mobile search input — full width with clean neutral surface. */
+/* Mobile search input - full width with clean neutral surface. */
 .nova-mobile-menu-search .nova-search-bar-input {
   width: 100%;
   max-width: none;
 
-  background-color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-surface-raised);
   border-radius: var(--nova-shape-radius);
 }
 
 [data-theme="dark"] .nova-mobile-menu-search .nova-search-bar-input {
-  background-color: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.08);
+  background-color: var(--nova-foundry-surface-faint);
+  border-color: var(--nova-foundry-border-faint);
 }
 
-/* Mobile dropdown results — inline without floating treatment. */
+/* Mobile dropdown results - inline without floating treatment. */
 .nova-mobile-menu-search .nova-search-dropdown {
   border: none;
   box-shadow: none;

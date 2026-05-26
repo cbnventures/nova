@@ -1,0 +1,124 @@
+---
+title: "العمليات بالجملة"
+sidebar_position: 3
+description: "أنشئ آلاف روابط Beacon في استدعاء واحد. استورد من CSV، أو ولّد برمجياً عبر Spoke API، وأدر بالجملة."
+tags:
+  - "beacons"
+  - "batch"
+---
+
+# العمليات بالجملة
+
+أنشئ آلاف روابط Beacon في استدعاء واحد. استورد من CSV، أو ولّد برمجياً عبر Spoke API، وأدر الروابط بالجملة.
+
+## استيراد CSV
+
+جهّز ملف CSV بصفّ واحد لكل رابط. يربط كل صف عنوان URL الوجهة ببيانات وصفية للحملة:
+
+```csv title="links.csv"
+url,campaign,channel,variant,domain,slug
+https://threadbare.example/pricing,product-launch,email,pricing-direct,go.signal.example,price1
+https://threadbare.example/pricing,product-launch,email,pricing-soft,go.signal.example,price2
+https://threadbare.example/demo,product-launch,social,demo-cta,go.signal.example,demo1
+https://threadbare.example/demo,product-launch,paid,demo-banner,go.signal.example,demo2
+https://threadbare.example/blog/launch,product-launch,email,blog-link,go.signal.example,blog1
+```
+
+## مرجع أعمدة CSV
+
+| العمود     | مطلوب | الوصف                                             |
+|------------|-------|---------------------------------------------------|
+| `url`      | نعم   | عنوان URL الوجهة لإعادة توجيه Beacon.             |
+| `campaign` | نعم   | اسم الحملة لتجميع الإسناد.                        |
+| `channel`  | نعم   | معرّف القناة (email، social، paid، event).        |
+| `variant`  | لا    | تسمية الصيغة لاختبار A/B. الافتراضي هو `default`. |
+| `domain`   | لا    | نطاق موسوم. يستخدم افتراضي الحساب إن حُذف.        |
+| `slug`     | لا    | معرّف مخصص. يُولَّد تلقائياً إن حُذف.             |
+| `tags`     | لا    | وسوم مفصولة بفاصلة للتصفية.                       |
+| `expires`  | لا    | تاريخ انتهاء بصيغة ISO 8601.                      |
+
+## تشغيل الاستيراد
+
+```bash title="استيراد الروابط من CSV"
+signal beacon batch import \
+  --input ./links.csv \
+  --on-duplicate skip \
+  --dry-run
+```
+
+تُتيح راية `--dry-run` التحقق من CSV دون إنشاء أي روابط. أزلها لتنفيذ الاستيراد:
+
+```bash title="تنفيذ الاستيراد"
+signal beacon batch import --input ./links.csv --on-duplicate skip
+```
+
+```json title="نتيجة استيراد بالجملة"
+{
+  "total": 5,
+  "created": 5,
+  "skipped": 0,
+  "errors": 0,
+  "duration": "340ms"
+}
+```
+
+## نقطة Spoke API للعمليات بالجملة
+
+للإنشاء البرمجي بالجملة، استخدم Spoke API مباشرة:
+
+```bash title="إنشاء بالجملة عبر Spoke API"
+curl -X POST https://api.signal.example/v2/beacons/batch \
+  -H "Authorization: Bearer sk_live_your_api_key" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "links": [
+      {
+        "url": "https://threadbare.example/pricing",
+        "campaign": "product-launch",
+        "channel": "email",
+        "variant": "pricing-direct"
+      },
+      {
+        "url": "https://threadbare.example/demo",
+        "campaign": "product-launch",
+        "channel": "social",
+        "variant": "demo-cta"
+      }
+    ]
+  }'
+```
+
+تقبل نقطة العمليات بالجملة ما يصل إلى 1,000 رابط لكل طلب.
+
+:::warning[حدود المعدل]
+يفرض Spoke API حدود معدل على العمليات بالجملة. تتيح الخطة الافتراضية 10 طلبات بالجملة في الدقيقة، بحد أقصى 1,000 رابط لكل طلب. تجاوز الحد يُعيد استجابة `429 Too Many Requests` مع ترويسة `Retry-After`. للحصول على حدود أعلى، تواصل مع دعم Signal أو استخدم راية `--throttle` في واجهة الأوامر لضبط الإيقاع تلقائياً.
+:::
+
+## التحديث بالجملة
+
+حدّث روابط Beacon الموجودة بالجملة، غيّر الوجهات أو الحملات أو البيانات الوصفية:
+
+```bash title="تحديث بالجملة"
+signal beacon batch update \
+  --input ./updates.csv \
+  --match-by slug
+```
+
+تخبر راية `--match-by` نظام Signal بأي عمود من CSV يجب استخدامه لمطابقة الروابط الموجودة. القيم الصالحة هي `slug` أو `id` أو `url`.
+
+## التصدير بالجملة
+
+صدِّر جميع روابط Beacon لحملة إلى CSV:
+
+```bash title="تصدير روابط الحملة"
+signal beacon batch export \
+  --campaign "product-launch" \
+  --output ./product-launch-links.csv
+```
+
+يتضمن التصدير معرّفات الروابط والمعرّفات النصية والوجهات وبيانات الإسناد وعدد النقرات والطوابع الزمنية للإنشاء.
+
+## الخطوات التالية
+
+- [مرجع API](/docs/reference/api-reference/) — وثائق Spoke API الكاملة لجميع النقاط.
+- [إدارة الحملات](/docs/campaigns/campaign-management/) — نظّم الروابط المُنشَأة بالجملة في حملات.

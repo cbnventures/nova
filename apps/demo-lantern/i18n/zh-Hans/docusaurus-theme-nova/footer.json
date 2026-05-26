@@ -1,0 +1,66 @@
+{
+  "layout.lantern.title": {
+    "message": "Lantern",
+    "description": "Title of footer column \"lantern\""
+  },
+  "layout.community.title": {
+    "message": "社区",
+    "description": "Title of footer column \"community\""
+  },
+  "layout.company.title": {
+    "message": "公司",
+    "description": "Title of footer column \"company\""
+  },
+  "layout.legal.title": {
+    "message": "法律条款",
+    "description": "Title of footer column \"legal\""
+  },
+  "sections.lantern.0.label": {
+    "message": "欢迎",
+    "description": "Label of link 1 in footer section \"lantern\""
+  },
+  "sections.lantern.1.label": {
+    "message": "安装",
+    "description": "Label of link 2 in footer section \"lantern\""
+  },
+  "sections.lantern.2.label": {
+    "message": "API 参考",
+    "description": "Label of link 3 in footer section \"lantern\""
+  },
+  "sections.community.0.label": {
+    "message": "Threadbare",
+    "description": "Label of link 1 in footer section \"community\""
+  },
+  "sections.community.1.label": {
+    "message": "博客",
+    "description": "Label of link 2 in footer section \"community\""
+  },
+  "sections.company.0.label": {
+    "message": "关于我们",
+    "description": "Label of link 1 in footer section \"company\""
+  },
+  "sections.company.1.label": {
+    "message": "招贤纳士",
+    "description": "Label of link 2 in footer section \"company\""
+  },
+  "sections.legal.0.label": {
+    "message": "使用条款",
+    "description": "Label of link 1 in footer section \"legal\""
+  },
+  "sections.legal.1.label": {
+    "message": "隐私政策",
+    "description": "Label of link 2 in footer section \"legal\""
+  },
+  "sections.legal.2.label": {
+    "message": "联系我们",
+    "description": "Label of link 3 in footer section \"legal\""
+  },
+  "cta.label": {
+    "message": "准备回家了吗？",
+    "description": "The footer call-to-action link label"
+  },
+  "copyright": {
+    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
+    "description": "The footer copyright text"
+  }
+}

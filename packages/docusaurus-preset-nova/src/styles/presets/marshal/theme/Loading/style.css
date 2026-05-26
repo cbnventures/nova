@@ -1,0 +1,26 @@
+/**
+ * Marshal - `Loading` theme overlay.
+ *
+ * Seal-red accent ring on a marshal-border trail with a steady linear pace,
+ * matching marshal's archival ledger identity (no glow, no easing curve -
+ * the rotation reads as a stamping motion).
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * Marshal - Loading Spinner
+ * ============================
+ */
+
+.nova-loading-spinner {
+  border-color: var(--nova-marshal-border);
+  border-top-color: var(--nova-color-accent-700);
+
+  animation: nova-loading-spinner-rotate 0.75s linear infinite;
+}
+
+[data-theme="dark"] .nova-loading-spinner {
+  border-top-color: var(--nova-color-accent-300);
+}

@@ -1,33 +1,8 @@
 /**
- * Accessibility — Skip-to-content link and screen reader utilities.
+ * Accessibility - Skip-to-content link and screen reader utilities.
  *
  * @since 0.15.0
  */
-
-/* ============================
- * Skip to Content
- * ============================ */
-
-[role="region"][aria-label="Skip to main content"] a {
-  position: absolute;
-  top: -100%;
-  left: 0;
-  z-index: 9999;
-
-  padding: 0.75rem 1.5rem;
-
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--nova-color-neutral-50);
-  text-decoration: none;
-
-  background-color: var(--nova-color-primary-600, #2563eb);
-  border-radius: 0 0 0.375rem 0;
-}
-
-[role="region"][aria-label="Skip to main content"] a:focus {
-  top: 0;
-}
 
 /* ============================
  * Screen Reader Only
@@ -67,15 +42,16 @@
 }
 
 /* ============================
- * Focus Visible — Base Fallback
+ * Focus Visible - Base Fallback
  * ============================ */
 
 .nova-back-to-top:focus-visible,
 .nova-toc-collapsible-trigger:focus-visible,
 .nova-toc-collapsible-close:focus-visible,
+.nova-sidebar-mobile-trigger:focus-visible,
+.nova-sidebar-mobile-close:focus-visible,
 .nova-tabs-tab:focus-visible,
 .nova-tag:focus-visible,
-.nova-blog-tags-list-link:focus-visible,
 .nova-search-bar-clear:focus-visible,
 .nova-search-result:focus-visible,
 .nova-code-block-copy:focus-visible,
@@ -96,11 +72,12 @@
 
 @media (forced-colors: active) {
   .nova-tag,
-  .nova-blog-tags-list-link,
   .nova-tabs-tab,
   .nova-back-to-top,
   .nova-toc-collapsible-trigger,
   .nova-toc-collapsible-close,
+  .nova-sidebar-mobile-trigger,
+  .nova-sidebar-mobile-close,
   .nova-search-bar-clear,
   .nova-code-block-copy,
   .nova-code-block-wrap,

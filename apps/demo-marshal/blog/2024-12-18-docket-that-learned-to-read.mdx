@@ -1,0 +1,39 @@
+---
+title: "The docket that learned to read its own entries"
+authors:
+  - "yuki"
+tags:
+  - "dockets"
+  - "audit"
+date: "2024-12-18"
+---
+
+The docket was append-only by design. It was searchable by accident. After a few thousand entries, the patterns started reading themselves — *this policy never fires*, *this label never sticks*, *this contributor never returned*.
+
+{/* truncate */}
+
+We added a lightweight index. The docket can now answer *how often was this policy invoked, last quarter?* without the auditor opening a single PDF. The seal still appears on every page.
+
+The index does not replace the docket. The index is a courtesy, the way the audit trail is a courtesy. The docket itself is unchanged — append-only, sealed line by line, persisted to long-term storage on a schedule that has not been altered since the first entry. The index is built from the docket, can be discarded and rebuilt, and is consulted when a question is asked. The docket itself is consulted when the question must be answered to a standard that will be defended in writing.
+
+What the index made possible was a class of question we had not been asking. *Which policies fire most frequently? Which fire never? Which policies fired in the same minute as another, suggesting they may be redundant?* Before the index, these questions required a clerk to read 38,000 entries with a yellow highlighter. After the index, they required a single line:
+
+```bash
+$ marshal docket query --group-by policy --count --since 2024-Q4
+POLICY                              INVOCATIONS
+approval-stamps@v1                  18,402
+stale-thread-archival@v3            12,047
+access-tiers@v4                     5,318
+unclassified@v2                     1,884
+revisions-filing@v1                 1,402
+incident-routing@v2                 187
+sponsor-renewal@v1                  82
+records-historical-rollover@v1      4
+deprecated-archival@v0              0
+```
+
+The last line is the one we read first. A policy that fires zero times in a quarter is either redundant, misconfigured, or guarding a condition that no longer occurs in the repository. In this case the policy was deprecated three quarters ago and never removed from the policy log. The clerk had been reading it, finding nothing, and skipping it on every pass for nine months. The clerk did not mind. The auditor would not have minded either. We removed it because the policy log is read by humans too, and a policy that no longer applies is a small lie in the record.
+
+The middle of the table read more interestingly. `unclassified@v2` fires whenever an incoming work item does not match any other policy. 1,884 invocations in a quarter is not a small number. We investigated the pattern, and found that 1,402 of those came from a single category — duplicate bug reports from an integration that had begun forwarding the same incident multiple times. We filed a new policy, `duplicate-incident-suppression@v1`, and the next quarter's count for `unclassified` dropped to 482. The duplicate suppression policy now fires 1,400 times per quarter and writes a single `FILED` line per match. The docket is unchanged in form. The pattern has been named.
+
+This is what the docket learning to read its own entries means. It is not magic. It is a consequence of writing every action down in the same shape, and then asking simple questions. The clerk does not learn. The docket does not learn. The reader, reading the index, learns. The seal still appears on every page.

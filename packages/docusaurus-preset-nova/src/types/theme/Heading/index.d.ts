@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - Heading.
@@ -15,11 +15,14 @@ export type ThemeHeadingPropsChildren = ReactNode;
 
 export type ThemeHeadingPropsClassName = string | undefined;
 
+export type ThemeHeadingPropsStyle = CSSProperties | undefined;
+
 export type ThemeHeadingProps = {
   as: ThemeHeadingPropsAs;
   id?: ThemeHeadingPropsId;
   children?: ThemeHeadingPropsChildren;
   className?: ThemeHeadingPropsClassName;
+  style?: ThemeHeadingPropsStyle;
   [key: string]: unknown;
 };
 

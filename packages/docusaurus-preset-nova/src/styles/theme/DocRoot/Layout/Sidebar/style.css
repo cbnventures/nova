@@ -1,10 +1,10 @@
 /**
- * DocRoot Layout Sidebar — Shared structural styles.
+ * DocRoot Layout Sidebar - Shared structural styles.
  *
  * @since 0.15.0
  */
 
-/* Hidden on mobile — mobile menu provides navigation. */
+/* Hidden on mobile - mobile menu provides navigation. */
 .nova-doc-root aside {
   display: none;
 }

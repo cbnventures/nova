@@ -1,6 +1,41 @@
 /**
  * ============================
- * Tags List By Letter — List
+ * Tags List By Letter - Section
+ * ============================
+ */
+
+.nova-tags-list-by-letter {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 1024px) {
+  .nova-tags-list-by-letter {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 2.5rem;
+  }
+}
+
+/**
+ * ============================
+ * Tags List By Letter - Letter heading
+ * ============================
+ *
+ * Letter h2 is rendered through @theme/Heading (so it shares the
+ * `.nova-heading` baseline + hash-link anchor), but on this page it acts
+ * as an index divider rather than an in-article section heading. Reset
+ * the per-preset article-h2 margins so the parent grid `gap` governs
+ * spacing predictably.
+ */
+
+.nova-tags-list-by-letter-group .nova-heading {
+  margin-block: 0 0.5rem;
+}
+
+/**
+ * ============================
+ * Tags List By Letter - List
  * ============================
  */
 

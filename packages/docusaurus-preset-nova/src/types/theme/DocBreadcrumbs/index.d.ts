@@ -1,8 +1,20 @@
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Doc Breadcrumbs - Doc Breadcrumbs.
  *
  * @since 0.15.0
  */
+export type ThemeDocBreadcrumbsDocBreadcrumbsPropsClassName = string | undefined;
+
+export type ThemeDocBreadcrumbsDocBreadcrumbsPropsStyle = CSSProperties | undefined;
+
+export type ThemeDocBreadcrumbsDocBreadcrumbsProps = {
+  className?: ThemeDocBreadcrumbsDocBreadcrumbsPropsClassName;
+  style?: ThemeDocBreadcrumbsDocBreadcrumbsPropsStyle;
+  [key: string]: unknown;
+};
+
 export type ThemeDocBreadcrumbsDocBreadcrumbsBreadcrumbs = ThemeDocBreadcrumbsDocBreadcrumbsBreadcrumbItem[] | null;
 
 export type ThemeDocBreadcrumbsDocBreadcrumbsHomePageRoute = Record<string, unknown> | undefined;

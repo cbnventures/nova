@@ -1,0 +1,10 @@
+{
+  "label": "Stewardship",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Marshal 随时间如何运行——按计划的 cron 任务（清理、审计、轮换、标签清扫）在每个整点归档，加上以每仓库一份案卷的方式对多仓库进行监管。"
+  }
+}

@@ -1,0 +1,11 @@
+/**
+ * Signal - `BlogTagsListPage` theme overlay.
+ *
+ * Signal uses tighter pill spacing for dense tag clouds.
+ *
+ * @since 0.18.0
+ */
+
+.nova-blog-tags-list {
+  gap: 0.375rem;
+}

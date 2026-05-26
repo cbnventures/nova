@@ -30,9 +30,17 @@ function ContentVisibility(props: ThemeContentVisibilityContentVisibilityProps) 
         unlisted === true
         || frontMatter['unlisted'] === true
       ) && (
-        <Unlisted />
+        <Unlisted
+          className={(props['className'] !== undefined) ? `nova-content-visibility ${props['className']}` : 'nova-content-visibility'}
+          style={props['style']}
+        />
       )}
-      {(frontMatter['draft'] === true) && <Draft />}
+      {(frontMatter['draft'] === true) && (
+        <Draft
+          className={(props['className'] !== undefined) ? `nova-content-visibility ${props['className']}` : 'nova-content-visibility'}
+          style={props['style']}
+        />
+      )}
     </>
   );
 }

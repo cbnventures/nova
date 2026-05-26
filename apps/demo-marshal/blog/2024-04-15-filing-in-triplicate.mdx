@@ -1,0 +1,69 @@
+---
+title: "Filing in triplicate, but only one of them gets a stamp"
+authors:
+  - "dimitri"
+tags:
+  - "policies"
+  - "dockets"
+date: "2024-04-15"
+---
+
+Every Marshal action is filed three places — the policy log, the docket, and the audit trail. Only one of them gets the seal. The seal is the source of truth. The other two are courtesies for anyone who asks.
+
+{/* truncate */}
+
+The triplicate is not redundancy. It is so that the auditor in 2027 has somewhere to look without asking us.
+
+## Three Records, Three Readers
+
+The policy log records intent. The docket records action. The audit trail records the chain that connects the two. A reader who knows what a thing is supposed to do reads the policy log. A reader who wants to know what happened on a particular afternoon reads the docket. A reader who must explain, in writing, how the action followed from the intent reads the audit trail. The three serve three readers, who may never be the same person, and who may arrive years apart.
+
+## Only the Docket Is Sealed
+
+Only the docket is sealed. The seal is a hash of the entry, the timestamp, and the policy version that produced it. If the docket entry is altered after the fact, the seal no longer matches, and the registrar reports the discrepancy at the next audit. The policy log and the audit trail are not sealed because they are reconstructable from the docket. The reverse is not true. If the docket is destroyed, the record is destroyed. If the audit trail is destroyed, the docket can rebuild it overnight.
+
+A typical filing looks like this in the docket:
+
+```yaml title="dockets/approvals/2024-04-15.yml"
+- id: APR-2024-04-15-0381
+  timestamp: 2024-04-15T14:22:01Z
+  policy: approval-stamps@v1
+  event: pull_request.review_submitted
+  subject: org/relay#1842
+  reviewer: cv@org
+  action: STAMPED
+  seal: sha256:a3f9b4e1c5d26f8e9c3b7a1f4e8d2b5c
+  retention: 7-years
+
+- id: APR-2024-04-15-0382
+  timestamp: 2024-04-15T14:22:47Z
+  policy: approval-stamps@v1
+  event: pull_request.review_submitted
+  subject: org/courier#0934
+  reviewer: nw@org
+  action: FILED
+  seal: sha256:b4e1c5d26f8e9c3b7a1f4e8d2b5c0a3f
+  retention: 90-days
+```
+
+The seal is the last field, written when the entry is finalised. After the seal is written, the entry is closed. No subsequent edit will be accepted; an attempt produces a rejection notice in the registrar's morning summary. The registrar does not investigate further. The notice is itself a docket entry.
+
+## The Auditor's Confirmation
+
+In the two years since triplicate filing was adopted, the auditor has consulted all three records exactly once — not because of a discrepancy, but to confirm that the procedure worked as documented. It did. The auditor's summary recorded the confirmation in a fourth record, one we do not maintain ourselves: the auditor's archive. Triplicate becomes quadruplicate, then, when an outsider reads it. We expect this. The seal travels with the entry. Anyone reading the docket can verify that the entry has not been touched since the moment it was sealed. The auditor does not need our cooperation; the docket cooperates on our behalf.
+
+## Verifying by Hand
+
+A reader who wishes to confirm the seal on any single entry may do so by hand. The procedure is not privileged. The same hash that the registrar computes at sealing time is the hash a reader computes at verification time. The two will agree if the entry has not been altered. If they disagree, the reader has discovered a discrepancy that the registrar's nightly audit would have surfaced the next morning, and is asked to file the discrepancy in the audit docket so that the discovery is itself on the record.
+
+```bash
+$ marshal docket verify --entry APR-2024-04-15-0381
+ENTRY      APR-2024-04-15-0381
+DOCKET     approvals
+POLICY     approval-stamps@v1
+SEAL       sha256:a3f9b4e1c5d26f8e9c3b7a1f4e8d2b5c
+COMPUTED   sha256:a3f9b4e1c5d26f8e9c3b7a1f4e8d2b5c
+STATUS     VERIFIED
+```
+
+The triplicate is filed; the seal is read; the contract holds. The policy log and the audit trail are courtesies. The seal is the contract.

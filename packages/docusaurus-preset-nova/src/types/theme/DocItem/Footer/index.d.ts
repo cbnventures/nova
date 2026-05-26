@@ -1,10 +1,22 @@
 import type { DocContextValue } from '@docusaurus/plugin-content-docs/client';
 
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Doc Item - Footer - Doc Item Footer.
  *
  * @since 0.15.0
  */
+export type ThemeDocItemFooterDocItemFooterPropsClassName = string | undefined;
+
+export type ThemeDocItemFooterDocItemFooterPropsStyle = CSSProperties | undefined;
+
+export type ThemeDocItemFooterDocItemFooterProps = {
+  className?: ThemeDocItemFooterDocItemFooterPropsClassName;
+  style?: ThemeDocItemFooterDocItemFooterPropsStyle;
+  [key: string]: unknown;
+};
+
 export type ThemeDocItemFooterDocItemFooterEditUrl = string | undefined;
 
 export type ThemeDocItemFooterDocItemFooterLastUpdatedAt = number | undefined;

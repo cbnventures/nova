@@ -1,0 +1,340 @@
+/**
+ * Sample - Reference scaffold for preset.css.
+ *
+ * @internal Not user-selectable. This file is the copy-pastable template for
+ *           a new preset's identity layer. Each section explains what the
+ *           shared defaults provide and what the per-preset overlay should
+ *           declare.
+ *
+ * Load order at runtime:
+ *
+ *   1. shared global vars
+ *   2. generated --nova-color-{primary,accent,neutral}-{50..950} scales
+ *      (from preset.ts colors[])
+ *   3. shared block CSS      (src/styles/blocks/**)
+ *   4. shared theme CSS      (src/styles/theme/**)
+ *   5. preset's preset.css   (THIS FILE - declare surface tokens, accessibility
+ *                            floor, scrollbar, links, CTAs, identity rules)
+ *   6. preset's blocks/      (per-block overlays)
+ *   7. preset's theme/       (per-Docusaurus-theme-component overlays)
+ *
+ * Convention guideposts:
+ *
+ *   - Use var(--nova-color-{primary,accent,neutral}-{50..950}) for color values.
+ *   - Use var(--nova-sample-*) tokens for surfaces (rename `sample` -> preset name).
+ *   - Use var(--nova-font-{display,body,code}) for typography.
+ *   - Provide light + dark mode parity for every visible color.
+ *   - Do NOT use @import - the runtime auto-loads the three preset fonts.
+ *     Adding @import bypasses consumer overrides.fonts.* mechanics.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Quality bar for filled-in overlays
+ *
+ * This bar applies to every per-preset overlay file (theme/<X>/style.css and
+ * components/<X>/style.css). Stub scaffolds copied from sample are exempt; the
+ * moment a real rule body lands in a file, the bar applies.
+ *
+ *   1. No raw colors. Color and typography use var(...) only - no hex / rgb /
+ *      rgba in overlay bodies. (Decorative pseudo-elements with rgba shadows
+ *      are an exception, but new ones go through tokens.)
+ *   2. Light + dark parity. Every visible color rule has both a default
+ *      version and a [data-theme="dark"] version.
+ *   3. Touches at least one preset-specific surface token. Reference at least
+ *      one var(--<preset>-*) token from this preset's preset.css. If you need
+ *      a token that doesn't exist, add it here in preset.css first.
+ *   4. Dramatic differentiation. Compared to the same surface in another
+ *      preset at 320 / 576 / 1024 in the variant viewer, the result must look
+ *      unmistakably different - not a tinted variation. A casual observer
+ *      should never confuse two presets.
+ *   5. No global selectors. Component overlays only touch their component's
+ *      own selectors. No html, body, * rules in theme/<X>/style.css.
+ *   6. No tokens from other presets. This file cannot reference --<other>-*.
+ *   7. No magic spacing numbers. Spacing uses Nova grid tokens
+ *      (--nova-grid-{xxs,xs,sm,md,lg,xl,xxl}, --nova-grid-{base,padding,gutter},
+ *      --nova-section-gap, --nova-shape-{gap,padding}) or rems on a 0.25rem
+ *      grid. No raw "padding: 17px" style values.
+ *   8. Top-of-file docstring required. Preset name + component name in title,
+ *      one paragraph on what the overlay does and why, plus @since.
+ *   9. Banner-numbered sections in long files. Past ~30 lines, mark sections
+ *      with banner comments numbered the same way as this file (see section-sign 1, section-sign 2
+ *      above for the format).
+ *
+ * Tiny-surface exception: surfaces with only one visible state (e.g.
+ * SkipToContent) may not satisfy all 9. Document the exception inline in the
+ * overlay's docstring with rationale.
+ *
+ * Identity is non-negotiable. The bar is about discipline, not uniformity -
+ * two presets satisfying every rule may, and should, look nothing alike.
+ * ============================ */
+
+/* ============================
+ * 1. Surface Tokens
+ *
+ * Per-preset surface tokens. Light values on :root (the default state when
+ * data-theme has not yet been applied), dark values inside [data-theme="dark"].
+ * Rename `sample` to the preset's name everywhere when copying.
+ * ============================ */
+
+:root {
+  --nova-sample-bg: var(--nova-color-background);
+  --nova-sample-surface: var(--nova-color-background);
+  --nova-sample-surface-raised: var(--nova-color-surface-raised);
+  --nova-sample-surface-overlay: rgba(255, 255, 255, 0.95);
+  --nova-sample-border: var(--nova-color-border);
+  --nova-sample-border-subtle: color-mix(in srgb, var(--nova-color-border), transparent 50%);
+  --nova-sample-text: var(--nova-color-text);
+  --nova-sample-text-muted: var(--nova-color-text-muted);
+  --nova-sample-text-soft: var(--nova-color-text-soft);
+
+  /* Blog Layout - color tokens (typography lives in the BlogLayout overlay). */
+  --nova-blog-description-color: var(--nova-color-text-muted);
+
+  /* Search - shared structural tokens consumed by theme/SearchBar/style.css
+     and theme/SearchPage/style.css. Each preset.css may override these to
+     match its identity (mark tint, dropdown shadow). */
+  --nova-search-mark-bg: color-mix(in srgb, var(--nova-color-warning-400, #facc15), transparent 60%);
+  --nova-search-dropdown-shadow: 0 4px 6px -1px color-mix(in srgb, #000000, transparent 90%);
+
+  /* Sticky chrome offset - matches the rendered sticky-navbar height (or 0 if
+     non-sticky). Consumed by hash-anchor scroll, sticky sidebars, and TOC.
+     sticky-layout.ts measures .navbar.getBoundingClientRect().height at
+     runtime (window load, resize, route change) and writes the inline value
+     on documentElement; this static CSS value is the initial-paint baseline
+     before hydration. The announcement bar is a sibling of .navbar (not a
+     child) and is non-sticky, so it scrolls out after any scroll and does
+     NOT contribute to the post-scroll sticky chrome - this value is just
+     the navbar height. Sample uses the Docusaurus default navbar height
+     (3.75rem = 60px); each real preset must override this to match its
+     own rendered navbar. */
+  --nova-sample-layout-sticky-top: 60px;
+  --nova-layout-sticky-top: var(--nova-sample-layout-sticky-top);
+}
+
+/* :root prefix prevents cssnano partial-merge from hoisting this dark block ahead of :root. */
+:root[data-theme="dark"] {
+  --nova-sample-bg: var(--nova-color-background);
+  --nova-sample-surface: var(--nova-color-background);
+  --nova-sample-surface-raised: var(--nova-color-surface-raised);
+  --nova-sample-surface-overlay: rgba(0, 0, 0, 0.85);
+
+  /* Search - dark-mode swap of shared structural tokens. */
+  --nova-search-mark-bg: color-mix(in srgb, var(--nova-color-warning-400, #facc15), transparent 70%);
+  --nova-search-dropdown-shadow: 0 4px 6px -1px color-mix(in srgb, #000000, transparent 70%);
+}
+
+/* ============================
+ * 2. Body & Background
+ *
+ * Page-level background and body typography. Use --nova-sample-bg so the
+ * surface token block above drives the visible background.
+ * ============================ */
+
+body {
+  font-family: var(--nova-font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--nova-color-text);
+  background-color: var(--nova-sample-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[data-theme="dark"] body {
+  color: var(--nova-color-text);
+}
+
+/* ============================
+ * 3. Text Selection
+ *
+ * Highlight color when users select text. Convention is a primary or accent
+ * tint with a contrasting text color.
+ * ============================ */
+
+::selection {
+  background-color: var(--nova-color-primary-200);
+  color: var(--nova-color-text);
+}
+
+[data-theme="dark"] ::selection {
+  background-color: var(--nova-color-primary-800);
+  color: var(--nova-color-text);
+}
+
+/* ============================
+ * 4. Focus Outline (REQUIRED - accessibility floor)
+ *
+ * Visible keyboard-focus indicator. The colour and shape may be customized
+ * to match the preset's identity, but the rule itself MUST exist.
+ * ============================ */
+
+:focus-visible {
+  outline: 2px solid var(--nova-color-primary-600);
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] :focus-visible {
+  outline-color: var(--nova-color-primary-400);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================
+ * 5. Reduced Motion (REQUIRED - accessibility floor)
+ *
+ * Users with prefers-reduced-motion: reduce must not see preset animations or
+ * transitions. !important is intentional - this override must win regardless
+ * of how aggressive the preset's identity rules become.
+ * ============================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ============================
+ * 6. Scrollbar (CONVENTION - primary-tinted)
+ *
+ * Subtle scrollbar tint that hints at the preset's primary color. Optional
+ * but expected across the family.
+ * ============================ */
+
+html {
+  scrollbar-color: var(--nova-color-primary-400) transparent;
+}
+
+[data-theme="dark"] html {
+  scrollbar-color: var(--nova-color-primary-700) transparent;
+}
+
+/* ============================
+ * 7. Links (CONVENTION - underlined, primary-tinted)
+ *
+ * Inline links must be visibly underlined and use a primary shade. This
+ * keeps links discoverable across all preset color choices.
+ * ============================ */
+
+a {
+  color: var(--nova-color-primary-600);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] a {
+  color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] a:hover,
+[data-theme="dark"] a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/* ============================
+ * 8. CTA Buttons (CONVENTION - padded, weight 600+)
+ *
+ * Primary and secondary call-to-action buttons. Both must have visible
+ * padding and a font weight of 600 or higher for legibility.
+ * ============================ */
+
+.nova-cta-primary {
+  padding: 0.625rem 1.5rem;
+  background-color: var(--nova-color-primary-600);
+  color: var(--nova-color-text-inverse);
+  font-family: var(--nova-font-body);
+  font-weight: 600;
+  border: 1px solid var(--nova-color-primary-600);
+}
+
+.nova-cta-primary:hover,
+.nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-700);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-cta-primary {
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+}
+
+[data-theme="dark"] .nova-cta-primary:hover,
+[data-theme="dark"] .nova-cta-primary:focus-visible {
+  background-color: var(--nova-color-primary-400);
+  border-color: var(--nova-color-primary-400);
+}
+
+.nova-cta-secondary {
+  padding: 0.625rem 1.5rem;
+  background-color: transparent;
+  color: var(--nova-color-text);
+  font-family: var(--nova-font-body);
+  font-weight: 600;
+  border: 1px solid var(--nova-color-border);
+}
+
+.nova-cta-secondary:hover,
+.nova-cta-secondary:focus-visible {
+  border-color: var(--nova-color-primary-600);
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-cta-secondary {
+  color: var(--nova-color-text-muted);
+  border-color: var(--nova-color-border);
+}
+
+[data-theme="dark"] .nova-cta-secondary:hover,
+[data-theme="dark"] .nova-cta-secondary:focus-visible {
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 9. Identity Layer
+ *
+ * Below this line is where the preset's character lives - custom keyframes,
+ * decorative backgrounds, distinctive typography rules, ambient effects, etc.
+ *
+ * Keep going as far as the design demands. Aggressive identity is encouraged;
+ * consumers can always dial back via overrides.colors / overrides.fonts /
+ * overrides.shape / overrides.depth / overrides.motion.
+ *
+ * Components/<component>/style.css and theme/<Component>/style.css carry the
+ * per-surface identity. Reach into all 9 nova components and as many of the
+ * 99 theme components as the design demands - uncovered surfaces inherit only
+ * the shared structural defaults, which makes the preset feel uneven.
+ *
+ * Patterns lifted from existing presets:
+ *
+ *   - PATTERN-001: Centralize transition / hover-effect timing into a single
+ *     --<preset>-* token in this preset.css. Surfaces consume the token
+ *     instead of redeclaring transition durations inline.
+ *   - PATTERN-002: Decorate section headings with a glyph via h3::before
+ *     using position: absolute. Glyph itself stays preset-specific.
+ *   - PATTERN-003: Render footer / nav link labels as mono uppercase with
+ *     letter-spacing - `font-family: var(--nova-font-code); text-transform:
+ *     uppercase; letter-spacing: 0.04em+;`. Each preset picks exact size,
+ *     weight, and spacing within the recipe.
+ *   - PATTERN-004: Override Mermaid SVG primitives so embedded diagrams pick
+ *     up the preset's palette. Selectors: .mermaid svg .node {rect,circle,
+ *     ellipse,polygon,path}, .mermaid svg .edgePath path, .mermaid svg
+ *     .nodeLabel.
+ * ============================ */

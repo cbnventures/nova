@@ -15,6 +15,7 @@ Read and follow the conventions and rules defined in the files below.
 ### Universal
 
 - [conventions/universal.md](conventions/universal.md) — Workflow, general code style, documentation style, platform build rules, and release notes format.
+- [conventions/documentation.md](conventions/documentation.md) — Documentation conventions (Docusaurus MDX page structure, voice, and style).
 
 ### Per Language
 

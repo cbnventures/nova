@@ -1,15 +1,12 @@
-import Link from '@docusaurus/Link';
 import { PageMetadata } from '@docusaurus/theme-common';
 import { translate } from '@docusaurus/Translate';
+import Author from '@theme/Blog/Components/Author';
 import BlogLayout from '@theme/BlogLayout';
 import Heading from '@theme/Heading';
 
 import type {
-  ThemeBlogPagesBlogAuthorsListPageAuthorImageUrl,
-  ThemeBlogPagesBlogAuthorsListPageAuthorPage,
-  ThemeBlogPagesBlogAuthorsListPageAuthorPermalink,
-  ThemeBlogPagesBlogAuthorsListPageAuthorTitle,
   ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthor,
+  ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthorCount,
   ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageHeading,
   ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageProps,
 } from '../../../../types/theme/Blog/Pages/BlogAuthorsListPage/index.d.ts';
@@ -17,15 +14,15 @@ import type {
 /**
  * Theme - Blog - Pages - Blog Authors List Page - Blog Authors List Page.
  *
- * Renders a grid of author cards with avatars and
- * titles, wrapped in the standard blog layout
- * shell with sidebar navigation.
+ * Renders the `/blog/authors/` index page listing every author declared in
+ * the blog's `authors.yml`. Each author renders via `<Author/>` with avatar,
+ * name, title, post count, and social links.
  *
  * @param {ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageProps} props - Props.
  *
  * @constructor
  *
- * @since 0.15.0
+ * @since 0.18.0
  */
 function BlogAuthorsListPage(props: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageProps) {
   const heading: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageHeading = translate({
@@ -35,49 +32,22 @@ function BlogAuthorsListPage(props: ThemeBlogPagesBlogAuthorsListPageBlogAuthors
   });
 
   return (
-    <BlogLayout sidebar={props['sidebar']}>
+    <BlogLayout
+      sidebar={props['sidebar']}
+      showHeader
+      header={<Heading as="h1">{heading}</Heading>}
+    >
       <PageMetadata title={heading} />
-      <header className="nova-blog-tags-posts-header">
-        <Heading as="h2">{heading}</Heading>
-      </header>
-      <div className="nova-blog-authors-grid">
-        {props['authors'].map((author: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthor) => {
-          const authorImageUrl: ThemeBlogPagesBlogAuthorsListPageAuthorImageUrl = author['imageURL'] as ThemeBlogPagesBlogAuthorsListPageAuthorImageUrl;
-          const authorTitle: ThemeBlogPagesBlogAuthorsListPageAuthorTitle = author['title'] as ThemeBlogPagesBlogAuthorsListPageAuthorTitle;
-          const authorPage: ThemeBlogPagesBlogAuthorsListPageAuthorPage = author['page'] as ThemeBlogPagesBlogAuthorsListPageAuthorPage;
-          const authorPermalink: ThemeBlogPagesBlogAuthorsListPageAuthorPermalink = (authorPage !== null && authorPage !== undefined) ? authorPage['permalink'] : undefined;
-
-          if (authorPermalink !== undefined) {
-            return (
-              <Link className="nova-blog-author-card" to={authorPermalink} key={author['key']}>
-                {(authorImageUrl !== undefined) && (
-                  <img src={authorImageUrl} alt={author['name'] ?? ''} width="48" height="48" />
-                )}
-                <div className="nova-blog-author-card-info">
-                  <strong>{(author['name'] !== undefined) ? author['name'] : author['key']}</strong>
-                  {(authorTitle !== undefined) && (
-                    <span className="nova-blog-author-card-title">{authorTitle}</span>
-                  )}
-                </div>
-              </Link>
-            );
-          }
-
-          return (
-            <div className="nova-blog-author-card" key={author['key']}>
-              {(authorImageUrl !== undefined) && (
-                <img src={authorImageUrl} alt={author['name'] ?? ''} width="48" height="48" />
-              )}
-              <div className="nova-blog-author-card-info">
-                <strong>{(author['name'] !== undefined) ? author['name'] : author['key']}</strong>
-                {(authorTitle !== undefined) && (
-                  <span className="nova-blog-author-card-title">{authorTitle}</span>
-                )}
-              </div>
-            </div>
-          );
-        })}
-      </div>
+      <ul
+        className={(props['className'] !== undefined) ? `nova-blog-authors-list ${props['className']}` : 'nova-blog-authors-list'}
+        style={props['style']}
+      >
+        {props['authors'].map((author: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthor) => (
+          <li key={author['key']} className="nova-blog-authors-list-item">
+            <Author as="h2" author={author} count={author['count'] as ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthorCount} />
+          </li>
+        ))}
+      </ul>
     </BlogLayout>
   );
 }

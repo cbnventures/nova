@@ -292,7 +292,7 @@ export class CliRecipePackageJsonNormalizeDependencies {
       Reflect.deleteProperty(fileContents, 'peerDependenciesMeta');
     }
 
-    // Sync the "bundledDependencies" → "bundleDependencies" merge.
+    // Sync the "bundledDependencies" -> "bundleDependencies" merge.
     if (
       packageBundledDependencies !== undefined // Package "bundledDependencies" is defined.
     ) {

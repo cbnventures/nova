@@ -1,0 +1,110 @@
+/**
+ * Lantern - `DocSidebarMobile` theme overlay.
+ *
+ * Mobile slide-out doc sidebar - warm cream drawer with lantern hairline
+ * borders. Mobile-only chrome (trigger, overlay, panel, header, close)
+ * follows lantern's amber-on-cream identity. Drawer items inherit their
+ * styling from the desktop sidebar overlays via the standard
+ * `.nova-sidebar-link` / `.nova-sidebar-category-summary` cascade.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Trigger Button
+ * ============================ */
+
+.nova-sidebar-mobile-trigger {
+  color: var(--nova-lantern-ink);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 96%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 8px;
+
+  transition: color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-mobile-trigger:hover,
+.nova-sidebar-mobile-trigger:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-color-primary-400);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-trigger {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 90%);
+  border-color: var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-trigger:hover,
+[data-theme="dark"] .nova-sidebar-mobile-trigger:focus-visible {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 84%);
+  border-color: var(--nova-color-primary-500);
+}
+
+/* ============================
+ * 2. Overlay
+ * ============================ */
+
+.nova-sidebar-mobile-overlay {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ============================
+ * 3. Panel
+ * ============================ */
+
+.nova-sidebar-mobile-panel {
+  background-color: var(--nova-lantern-bg);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: 14px 4px 14px 4px;
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--nova-color-primary-700), transparent 80%);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-panel {
+  border-color: var(--nova-lantern-border);
+  box-shadow: 0 12px 32px color-mix(in srgb, color-mix(in srgb, var(--nova-color-background), #000000 8%), transparent 50%);
+}
+
+/* ============================
+ * 4. Header title
+ * ============================ */
+
+.nova-sidebar-mobile-header-title {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: var(--nova-lantern-ink);
+}
+
+/* ============================
+ * 5. Close Button
+ * ============================ */
+
+.nova-sidebar-mobile-close {
+  color: var(--nova-lantern-ink-muted);
+
+  border-radius: 6px;
+
+  transition: color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+.nova-sidebar-mobile-close:hover,
+.nova-sidebar-mobile-close:focus-visible {
+  color: var(--nova-color-primary-700);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
+}
+
+[data-theme="dark"] .nova-sidebar-mobile-close:hover,
+[data-theme="dark"] .nova-sidebar-mobile-close:focus-visible {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 84%);
+}

@@ -1,0 +1,10 @@
+{
+  "label": "Operations",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Running Envoy in production — observability through the Ledger, dashboards, alerting on retry exhaustion, and horizontal scaling across regions."
+  }
+}

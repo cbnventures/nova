@@ -15,9 +15,21 @@ import type {
  * @since 0.15.0
  */
 const shikiThemeMap: LibShikiThemesShikiThemeMap = {
+  envoy: {
+    light: 'catppuccin-latte',
+    dark: 'catppuccin-mocha',
+  },
   foundry: {
     light: 'github-light',
     dark: 'github-dark',
+  },
+  lantern: {
+    light: 'min-light',
+    dark: 'dracula',
+  },
+  marshal: {
+    light: 'solarized-light',
+    dark: 'solarized-dark',
   },
   sentinel: {
     light: 'vitesse-light',
@@ -26,10 +38,6 @@ const shikiThemeMap: LibShikiThemesShikiThemeMap = {
   signal: {
     light: 'rose-pine-dawn',
     dark: 'rose-pine',
-  },
-  envoy: {
-    light: 'catppuccin-latte',
-    dark: 'catppuccin-mocha',
   },
 };
 

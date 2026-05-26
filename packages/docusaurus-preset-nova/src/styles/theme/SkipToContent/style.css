@@ -1,5 +1,67 @@
 /**
- * Skip To Content — Shared structural styles.
+ * SkipToContent - Shared structural styles.
  *
- * @since 0.15.0
+ * Renders the Docusaurus accessibility skip-to-content link as a fixed,
+ * focusable button at the top-left of the viewport. Hidden off-screen by
+ * default; slides into view when keyboard-focused (`:focus-visible`).
+ *
+ * Visual identity (color, surface, border, shadow) lives in each preset.css.
+ * Shape, spacing, and timing tokens live in the per-preset SkipToContent
+ * overlay. Both layers can be overridden by consumers via docusaurus.config.ts
+ * custom CSS.
+ *
+ * @since 0.18.0
  */
+
+.nova-skip-to-content {
+  position: fixed;
+  top: var(--nova-skip-offset, 0.75rem);
+  left: var(--nova-skip-offset, 0.75rem);
+  z-index: 9999;
+
+  padding: var(--nova-skip-padding-y, 0.625rem) var(--nova-skip-padding-x, 1rem);
+
+  font-family: var(--nova-font-display);
+  font-size: 0.875rem;
+  font-weight: var(--nova-skip-font-weight, 600);
+  line-height: 1.2;
+  text-decoration: none;
+
+  color: var(--nova-skip-color, var(--nova-color-background));
+  background-color: var(--nova-skip-bg, var(--nova-color-primary-600));
+  border: var(--nova-skip-border, 1px solid transparent);
+  border-radius: var(--nova-skip-radius, 0.375rem);
+  box-shadow: var(--nova-skip-shadow, 0 4px 12px rgb(0 0 0 / 0.15));
+
+  opacity: 0;
+  pointer-events: none;
+  transform: var(--nova-skip-transform-hidden, translateY(-200%));
+  transition: var(--nova-skip-transition, transform var(--nova-motion-duration) var(--nova-motion-easing), opacity var(--nova-motion-duration) var(--nova-motion-easing));
+}
+
+/* Color guard against preset.css link rules - the `<a>` selectors at preset
+   level (`a:hover`, `a:focus-visible`, and their `[data-theme="dark"]`
+   variants up to specificity 0,2,1) otherwise clobber the bare-class color
+   rule for the skip link. Pin `--nova-skip-color` across every interaction
+   state with matching pseudo-class specificity. */
+.nova-skip-to-content:hover,
+.nova-skip-to-content:focus,
+.nova-skip-to-content:focus-visible {
+  color: var(--nova-skip-color, var(--nova-color-background));
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-skip-to-content,
+[data-theme="dark"] .nova-skip-to-content:hover,
+[data-theme="dark"] .nova-skip-to-content:focus,
+[data-theme="dark"] .nova-skip-to-content:focus-visible {
+  color: var(--nova-skip-color, var(--nova-color-background));
+}
+
+.nova-skip-to-content:focus,
+.nova-skip-to-content:focus-visible {
+  outline: none;
+  opacity: 1;
+  pointer-events: auto;
+  transform: var(--nova-skip-transform-shown, translateY(0));
+}

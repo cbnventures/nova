@@ -1,4 +1,5 @@
 import type { BlogPaginatedMetadata, BlogSidebar, PropBlogPostContent } from '@docusaurus/plugin-content-blog';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Blog List Page - Blog List Page.
@@ -18,10 +19,16 @@ export type ThemeBlogListPageBlogListPagePropsItem = {
 
 export type ThemeBlogListPageBlogListPagePropsItems = readonly ThemeBlogListPageBlogListPagePropsItem[];
 
+export type ThemeBlogListPageBlogListPagePropsClassName = string | undefined;
+
+export type ThemeBlogListPageBlogListPagePropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogListPageBlogListPageProps = {
   sidebar: ThemeBlogListPageBlogListPagePropsSidebar;
   metadata: ThemeBlogListPageBlogListPagePropsMetadata;
   items: ThemeBlogListPageBlogListPagePropsItems;
+  className?: ThemeBlogListPageBlogListPagePropsClassName;
+  style?: ThemeBlogListPageBlogListPagePropsStyle;
   [key: string]: unknown;
 };
 

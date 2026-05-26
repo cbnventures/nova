@@ -1,15 +1,11 @@
 /**
- * Signal — Table visual styling.
+ * Signal - `DocItem/Content` theme overlay.
+ *
+ * Article-rhythm rules (paragraphs, strong, small, hr, lists, blockquote,
+ * tables) live in the `MDXContent` overlay scoped to `.nova-mdx-content`
+ * so they apply uniformly across docs, blog posts, and standalone MDX
+ * pages. This file is reserved for rules that are truly specific to the
+ * doc article shell - none currently exist for signal.
  *
  * @since 0.15.0
  */
-
-/* ============================
- * 1. Table Container
- * ============================ */
-
-/* Dense, compact, left-aligned. Spreadsheet feel. Horizontal scroll on mobile. */
-.table-wrapper {
-  overflow-x: auto;
-  margin-bottom: 1rem;
-}

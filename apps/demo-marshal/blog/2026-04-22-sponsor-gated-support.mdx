@@ -1,0 +1,71 @@
+---
+title: "Three tiers of support, one queue, one clerk"
+authors:
+  - "dimitri"
+tags:
+  - "access-tiers"
+  - "support"
+  - "ledger"
+date: "2026-04-22"
+---
+
+Marshal now routes incoming support tickets by access tier — sponsor, contributor, public — into a single queue with three labels. The label is stamped, not negotiated.
+
+{/* truncate */}
+
+Sponsors are seen first; contributors are seen next; public requests are answered when the queue is light. Every routing decision is filed in the docket.
+
+The single-queue arrangement was chosen over the alternative — three separate queues, one per tier — because the labels carry the routing information already, and a single queue makes the audit trail simpler. A clerk reading the queue from top to bottom processes labels in priority order. A reader scrolling the docket sees the order in which labels were stamped, which is also the order in which they were received, which is also the order in which they will be addressed. There is one number to consult, not three.
+
+The routing policy has been sealed since the tier system was filed. It has not required amendment in the months since:
+
+```yaml title="policies/support-routing.yml"
+policy: support-routing
+version: 3
+sealed: true
+sealed-by: dimitri
+sealed-at: 2025-09-08T10:00:00Z
+
+intake:
+  on-receipt:
+    - lookup: tier
+      from: access-tiers@v5
+    - stamp: tier-label
+    - record:
+        docket: access
+        seal: required
+        retention: 3-years
+    - enqueue:
+        queue: support
+        priority-from: tier
+        order-within-priority: receipt-time
+
+clerk:
+  reads: queue
+  acts-in-order: priority, then receipt-time
+  records-each-action:
+    docket: support
+    stamp: HANDLED
+    seal: required
+```
+
+The `priority-from: tier` directive is the routing rule, and is enforced by the queue itself. A `sponsor`-labelled item enqueued at 14:02 will be processed before a `contributor`-labelled item enqueued at 09:15, because the priority is read from the label and not from the receipt time. Within a single priority, items are processed in receipt order. The clerk cannot reorder items within a priority. The clerk cannot demote a sponsor to a contributor. The clerk reads the labels and proceeds.
+
+The docket entries reflect this. A reader who wants to confirm that the routing is honest reads the access docket alongside the support docket and verifies that the order in which items were handled is consistent with the order in which the labels said they should be handled. Discrepancies are surfaced by the audit, which runs nightly. There have been zero discrepancies in the routing since the policy was sealed.
+
+```bash
+$ marshal docket query --docket support --stamp HANDLED --since 2026-04-21 --limit 8
+TIME      REQUESTER       TIER         DURATION    HANDLER
+09:14:02  acme-co         sponsor      0d:02h      yuki
+10:38:17  beta-labs       sponsor      0d:03h      yuki
+11:02:04  gamma-corp      sponsor      0d:01h      dimitri
+13:22:55  jdoe            contributor  1d:14h      yuki
+14:01:11  mfoo            contributor  2d:08h      yuki
+14:38:42  acme-co         sponsor      0d:01h      cordelia
+15:14:00  cbar            public       4d:22h      dimitri
+15:48:33  pquux           public       5d:11h      yuki
+```
+
+The duration column is the time from receipt to `HANDLED`. The pattern is what the policy promises: sponsor durations are measured in hours, contributor durations in days, public durations in days plural. The numbers are not aspirational; they are the actual durations, computed from the docket. The policy and the practice agree.
+
+The single queue is, in this sense, three queues organised under one heading. The labels do the organising. The clerk does the reading. The docket does the remembering. The auditor, when one arrives, will read the docket and confirm that the labels were honoured. The labels are stamped, not negotiated. That is the whole arrangement.

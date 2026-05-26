@@ -1,8 +1,78 @@
 /**
- * MDX Content — Shared structural styles.
+ * MDX Content - Shared structural styles.
+ *
+ * Owns the `.nova-mdx-content` wrapper class produced by MDXContent/index.tsx
+ * around any MDX-rendered subtree. Because `MDXContent` is mounted by
+ * `DocItem/Content` (docs), `BlogPostItem` (blog), and `MDXPage` (custom
+ * pages like `/manifesto`), anything scoped to `.nova-mdx-content` flows
+ * into all three surfaces - keep page-wide MDX rhythm rules here (or in
+ * the corresponding per-preset MDXContent overlay), not in `DocItem/Content`.
+ * Rules truly specific to the doc article shell (e.g. `.nova-doc-content`
+ * or `.nova-doc-content-header`) belong in `DocItem/Content`.
+ *
+ * Article-rhythm tokens (read below) are overridable from each preset's
+ * MDXContent overlay via the rename+alias chain. The inline `var(name,
+ * default)` shape ensures every preset renders MDX bodies with a
+ * comfortable vertical rhythm - no preset can silently inherit browser
+ * defaults (which produce `p { margin-block: 1em }` and `ul,ol
+ * { padding-inline-start: 40px }`, neither of which fits the design
+ * system spacing rhythm). Class-scoped to `.nova-mdx-content` so non-
+ * article `<p>`, `<ul>`, `<li>` elements in chrome surfaces (navbar
+ * dropdowns, hero subtitles, footer credits) are untouched.
  *
  * @since 0.15.0
  */
+
+/* ============================
+ * Article rhythm - paragraphs, lists, list items
+ *
+ * Symmetric `margin-block` (top + bottom) so prose flows correctly when
+ * preceded by non-margin-collapsing elements (interactive components,
+ * mixed MDX blocks, embedded React subtrees). Adjacent same-element
+ * siblings still collapse to a single gap.
+ *
+ * Selectors wrapped in `:where()` to give content rhythm a specificity
+ * of zero (only the bare element selector counts). This way any
+ * component-class rule like `.nova-tabs-tab { margin: 0 }` wins over
+ * content rhythm without specificity battles. Without this, the
+ * `.nova-mdx-content li` selector (0,1,1) was beating `.nova-tabs-tab`
+ * (0,1,0) and bleeding a 0.25rem bottom margin into tab strips
+ * rendered inside MDX.
+ *
+ * Canonical tokens kept under their original `*-margin-block-end` names
+ * for backwards compatibility with consumer overrides; consumers see no
+ * breaking change (the same scalar now sets both top and bottom).
+ * ============================ */
+
+:where(.nova-mdx-content) p {
+  margin-block: var(--nova-mdx-paragraph-margin-block-end, 1rem);
+}
+
+:where(.nova-mdx-content) ul,
+:where(.nova-mdx-content) ol {
+  padding-left: var(--nova-mdx-list-padding-inline-start, 1.5rem);
+  margin-block: var(--nova-mdx-list-margin-block-end, 1rem);
+}
+
+:where(.nova-mdx-content) li {
+  margin-block: var(--nova-mdx-list-item-margin-block-end, 0.25rem);
+}
+
+/* Reset top margin on the first child of the article so the new
+ * `margin-block-start` value doesn't push the article body down past
+ * the page header rule. Last child reset symmetrically prevents extra
+ * tail-space inside containers with no bottom padding. */
+:where(.nova-mdx-content) > :first-child {
+  margin-block-start: 0;
+}
+
+:where(.nova-mdx-content) > :last-child {
+  margin-block-end: 0;
+}
+
+/* ============================
+ * Blockquote - flush paragraph margins inside callout boundary
+ * ============================ */
 
 .nova-mdx-content blockquote p:first-child {
   margin-top: 0;
@@ -10,18 +80,4 @@
 
 .nova-mdx-content blockquote p:last-child {
   margin-bottom: 0;
-}
-
-/**
- * ============================
- * MDX Content — Table Overflow
- * ============================
- */
-
-.nova-table-scroll {
-  overflow-x: auto;
-}
-
-.nova-table-scroll table {
-  min-width: 0;
 }

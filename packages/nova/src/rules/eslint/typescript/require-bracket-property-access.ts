@@ -181,7 +181,7 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
       const sourceFileName: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionSourceFileName = declaration.getSourceFile().fileName;
 
       if (sourceFileName.includes('node_modules') === false) {
-        // Found a project-defined declaration — flag it.
+        // Found a project-defined declaration - flag it.
         context.report({
           node,
           messageId: 'requireBracketAccess',

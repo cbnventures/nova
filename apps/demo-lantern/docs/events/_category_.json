@@ -1,0 +1,10 @@
+{
+  "label": "Events",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Every motion, contact, and arm/disarm passes through Lantern's event stream. Replay the day, filter by zone, hand off to a hub, or read the sensor history at noon."
+  }
+}

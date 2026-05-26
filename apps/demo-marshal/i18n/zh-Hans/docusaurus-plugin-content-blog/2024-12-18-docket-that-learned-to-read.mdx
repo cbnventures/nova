@@ -1,0 +1,39 @@
+---
+title: "学会读自己条目的那本 docket"
+authors:
+  - "yuki"
+tags:
+  - "dockets"
+  - "audit"
+date: "2024-12-18"
+---
+
+docket 按设计是仅可追加的。它能被检索，是个意外。在累积了几千条之后，规律开始自我显现——*这条 policy 从未触发*、*这枚标签从未粘住*、*这位贡献者从未回来*。
+
+{/* truncate */}
+
+我们加了一个轻量级索引。如今 docket 可以回答*上一季度这条 policy 被触发了多少次？*——而无需让审计员翻开任何一份 PDF。封印仍出现在每一页上。
+
+索引并不替代 docket。索引是一种礼貌，正如审计轨迹是一种礼貌。docket 本身没有变——仅可追加、逐行封印、按一份自第一条条目以来未曾改动的计划写入长期保存。索引由 docket 构建而来，可被丢弃并重建，会在被提问时被查阅。docket 本身则在问题必须以书面形式以可被辩护的标准回答时才被查阅。
+
+索引令一类我们以前不曾提出的问题成为可能。*哪些 policy 触发得最频繁？哪些从不触发？哪些与另一条 policy 在同一分钟内触发，暗示它们可能冗余？* 在有索引之前，这些问题需要一位事务员用一支黄色记号笔通读 38,000 条条目。有了索引之后，它们只需要一行：
+
+```bash
+$ marshal docket query --group-by policy --count --since 2024-Q4
+POLICY                              INVOCATIONS
+approval-stamps@v1                  18,402
+stale-thread-archival@v3            12,047
+access-tiers@v4                     5,318
+unclassified@v2                     1,884
+revisions-filing@v1                 1,402
+incident-routing@v2                 187
+sponsor-renewal@v1                  82
+records-historical-rollover@v1      4
+deprecated-archival@v0              0
+```
+
+最后一行是我们最先读到的那一行。一条 policy 在一个季度内触发零次，要么是冗余，要么是配置失误，要么是其守卫的条件在该仓库中已不再出现。在这个例子中，这条 policy 三个季度前已被废弃，却始终未被从 policy 日志中移除。九个月里，事务员每一次通读都读到它、找不到匹配、再跳过。事务员并不介意。审计员也不会介意。我们把它移除，是因为 policy 日志也会被人读——一条不再适用的 policy，是记录里的一个小小不实之处。
+
+表格中间一段读起来更有意思。`unclassified@v2` 会在新到来的工作未匹配任何其他 policy 时触发。一季度 1,884 次触发，不算一个小数字。我们调查了规律，发现其中 1,402 次都来自同一类——一个会把同一起事件多次转发的集成所引发的重复缺陷报告。我们立卷了一条新 policy，`duplicate-incident-suppression@v1`，下一季度 `unclassified` 的计数降到了 482。重复抑制 policy 现在每个季度触发 1,400 次，每次匹配写下一行 `FILED`。docket 的形式不变。这一规律有了名字。
+
+这就是"docket 学会读自己条目"的意思。它不是魔法。它是把每一次操作都以同一种形态写下来，然后再去问简单问题之后的自然结果。事务员不会学习。docket 也不会学习。读索引的*读者*在学习。封印仍出现在每一页上。

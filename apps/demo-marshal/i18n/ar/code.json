@@ -1,0 +1,642 @@
+{
+  "home.appMarket.label": {
+    "message": "راجع سجلاتك في أي وقت ومن أي مكان",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.description": {
+    "message": "السياسات مسجلة، والسجلات مختومة، والإدارة موثقة.",
+    "description": "Front page BlogPreview section description"
+  },
+  "home.blogPreview.heading": {
+    "message": "أخبار من الديوان",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.features.accessTiers.description": {
+    "message": "وجّه الأعمال الواردة بحسب الرعاة أو المساهمين أو العموم. التسميات يختمها النظام ولا تقبل التفاوض. كل قرار توجيه يُقيَّد في السجل.",
+    "description": "Front page Features card description for Access Tiers"
+  },
+  "home.features.accessTiers.title": {
+    "message": "Access Tiers",
+    "description": "Front page Features card title for Access Tiers"
+  },
+  "home.features.automatedStamps.description": {
+    "message": "يعمل Marshal بموجب تفويضات قائمة. كل عملية تحمل ختماً زمنياً، ومنفّذاً موثقاً، وإشارة إلى السياسة التي أطلقتها.",
+    "description": "Front page Features card description for Automated Stamps"
+  },
+  "home.features.automatedStamps.title": {
+    "message": "Automated Stamps",
+    "description": "Front page Features card title for Automated Stamps"
+  },
+  "home.features.dockets.description": {
+    "message": "كل عملية يقوم بها Marshal تترك سطراً في السجل العام. المواضيع المغلقة، والموافقات المختومة، والمناوبات الدورية، كلها قابلة للإلحاق فقط، ومرئية للجميع، ولا يمكن سحبها أبداً.",
+    "description": "Front page Features card description for Dockets"
+  },
+  "home.features.dockets.title": {
+    "message": "Dockets",
+    "description": "Front page Features card title for Dockets"
+  },
+  "home.features.policies.description": {
+    "message": "اكتب مقطعاً من YAML لوصف كيفية تعامل Marshal مع فئة من الأحداث، من المواضيع الراكدة إلى طلبات السحب المتأخرة وحتى الدعم المقدم بحسب المستوى. لا يقرأ Marshal إلا ما هو مسجل، ولا يختم إلا ما هو مغلق.",
+    "description": "Front page Features card description for Policies"
+  },
+  "home.features.policies.title": {
+    "message": "Policies",
+    "description": "Front page Features card title for Policies"
+  },
+  "home.features.scheduledStewardship.description": {
+    "message": "شغّل عمليات التنظيف والتدقيق والمناوبة عبر cron. ينفّذ Marshal مهامه عند رأس الساعة، ويؤرشف سجلاً بذلك، ثم يمضي قُدُماً. لا حاجة لانتظار من يتذكر من البشر.",
+    "description": "Front page Features card description for Scheduled Stewardship"
+  },
+  "home.features.scheduledStewardship.title": {
+    "message": "Scheduled Stewardship",
+    "description": "Front page Features card title for Scheduled Stewardship"
+  },
+  "home.features.threadArchival.description": {
+    "message": "إغلاق وأرشفة المواضيع التي ظلت صامتة N من الأيام، مع تدوين خطي لكل حالة. كل موضوع مؤرشف يحمل سبب الأرشفة ومساراً لإعادة فتحه.",
+    "description": "Front page Features card description for Thread Archival"
+  },
+  "home.features.threadArchival.title": {
+    "message": "Thread Archival",
+    "description": "Front page Features card title for Thread Archival"
+  },
+  "home.head.title": {
+    "message": "Marshal - التسجيل، الإغلاق، الأتمتة",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.ctaLabel": {
+    "message": "ابدأ الآن",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.eyebrow": {
+    "message": "إدارة المستودع",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "التسجيل، الإغلاق، الأتمتة.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "اعرضه على Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.hero.tagline": {
+    "message": "Marshal هو قسم شؤون المستودع، يوفر إدارة آلية للمشاريع التي تفضل اتباع الإجراءات بدلاً من افتعال الدراما. كل موضوع، وكل تذكرة، وكل مستوى وصول، يُعالج وفق الأصول.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.layout.description": {
+    "message": "Marshal هو قسم شؤون المستودع، يوفر إدارة آلية للمشاريع التي تفضل اتباع الإجراءات بدلاً من افتعال الدراما.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.spotlight.description": {
+    "message": "صِف القواعد، ودَع Marshal يتولى الإجراءات.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.spotlight.heading": {
+    "message": "ملف سياسات واحد، وأختام لكل شيء",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.stats.accessTiers.label": {
+    "message": "مستويات الوصول",
+    "description": "Front page Stats label for access tiers count"
+  },
+  "home.stats.docketEntries.label": {
+    "message": "قيود السجل",
+    "description": "Front page Stats label for docket entries count"
+  },
+  "home.stats.heading": {
+    "message": "الأرقام في لمحة",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.manualClosures.label": {
+    "message": "إغلاقات يدوية",
+    "description": "Front page Stats label for manual closures count"
+  },
+  "home.stats.policyFile.label": {
+    "message": "ملف السياسات",
+    "description": "Front page Stats label for policy file count"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "متاح على iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "نزّل التطبيق المرافق",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "متاح على Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "آخر الأخبار",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "بات Auditor يطبّق إصلاحات تلقائية على مستويي الاتفاقيات والتنسيق، فيما يستطيع Clerk رسم مخطط تبعيات لكل السجلات في مساحة العمل.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Marshal 2.4: Auditor يصلح المستويات تلقائياً، و Clerk يرسم مخطط التبعيات",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "السياسات مسجلة، والسجلات مختومة، والإدارة موثقة.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "أخبار من الديوان",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "بعض الأعمال الواردة لا تطابق أي سياسة؛ علل مصنفة خطأً، وطلبات من خارج هرم المستويات، ومكررات داخل مكررات. يضع Marshal هذه البنود في فئة غير مصنف.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "أرشفة ما لا يندرج في أي فئة",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "كان في المستودع 2,184 قضية مضى عليها أكثر من سنة. أغلق Marshal وأرشف 2,108 منها في ليلة واحدة.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "سنة كاملة من المواضيع الراكدة، أُرشفت في عصر يوم واحد",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "يوجّه Marshal الآن تذاكر الدعم الواردة بحسب مستوى الوصول إلى طابور بثلاث تسميات. التسميات يختمها النظام ولا تقبل التفاوض.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "ثلاثة مستويات دعم، وطابور واحد، وكاتب واحد",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.description": {
+    "message": "كل مكوّن من إعداد Marshal المسبق، معروضاً ببيانات تجريبية.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.featuresIcons.accessTiers.description": {
+    "message": "وجّه الأعمال الواردة بحسب الرعاة أو المساهمين أو العموم. التسميات يختمها النظام ولا تقبل التفاوض.",
+    "description": "Showcase Features (with icons) card description for Access Tiers"
+  },
+  "showcase.featuresIcons.accessTiers.title": {
+    "message": "Access Tiers",
+    "description": "Showcase Features (with icons) card title for Access Tiers"
+  },
+  "showcase.featuresIcons.dockets.description": {
+    "message": "كل عملية يقوم بها Marshal تترك سطراً في السجل العام. المواضيع المغلقة، والموافقات المختومة، والمناوبات الدورية، كلها قابلة للإلحاق فقط.",
+    "description": "Showcase Features (with icons) card description for Dockets"
+  },
+  "showcase.featuresIcons.dockets.title": {
+    "message": "Dockets",
+    "description": "Showcase Features (with icons) card title for Dockets"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "لماذا تختار المستودعات Marshal",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.policies.description": {
+    "message": "اكتب مقطعاً من YAML لوصف كيفية تعامل Marshal مع فئة من الأحداث. لا يقرأ Marshal إلا ما هو مسجل، ولا يختم إلا ما هو مغلق.",
+    "description": "Showcase Features (with icons) card description for Policies"
+  },
+  "showcase.featuresIcons.policies.title": {
+    "message": "Policies",
+    "description": "Showcase Features (with icons) card title for Policies"
+  },
+  "showcase.featuresNoIcons.automatedStamps.description": {
+    "message": "كل عملية تحمل ختماً زمنياً، ومنفّذاً موثقاً، وإشارة إلى السياسة التي أطلقتها.",
+    "description": "Showcase Features (no icons) card description for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.automatedStamps.title": {
+    "message": "Automated Stamps",
+    "description": "Showcase Features (no icons) card title for Automated Stamps"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.description": {
+    "message": "شغّل عمليات التنظيف والتدقيق والمناوبة عبر cron. ينفّذ Marshal مهامه عند رأس الساعة ويؤرشف سجلاً بذلك.",
+    "description": "Showcase Features (no icons) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.scheduledStewardship.title": {
+    "message": "Scheduled Stewardship",
+    "description": "Showcase Features (no icons) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresNoIcons.threadArchival.description": {
+    "message": "إغلاق وأرشفة المواضيع التي ظلت صامتة N من الأيام، مع تدوين خطي لكل حالة، والإبقاء على مسار لإعادة الفتح.",
+    "description": "Showcase Features (no icons) card description for Thread Archival"
+  },
+  "showcase.featuresNoIcons.threadArchival.title": {
+    "message": "Thread Archival",
+    "description": "Showcase Features (no icons) card title for Thread Archival"
+  },
+  "showcase.featuresSix.accessTiers.description": {
+    "message": "الرعاة، والمساهمون، والعموم؛ ثلاثة مستويات، وطابور واحد، وكاتب واحد. تُسنَد التسميات لحظة الاستلام.",
+    "description": "Showcase Features (six items) card description for Access Tiers"
+  },
+  "showcase.featuresSix.accessTiers.title": {
+    "message": "Access Tiers",
+    "description": "Showcase Features (six items) card title for Access Tiers"
+  },
+  "showcase.featuresSix.automatedStamps.description": {
+    "message": "كل عملية يقوم بها Marshal تشير إلى السياسة التي أذنت بها. التفويض يُسجَّل قبل التنفيذ.",
+    "description": "Showcase Features (six items) card description for Automated Stamps"
+  },
+  "showcase.featuresSix.automatedStamps.title": {
+    "message": "Automated Stamps",
+    "description": "Showcase Features (six items) card title for Automated Stamps"
+  },
+  "showcase.featuresSix.dockets.description": {
+    "message": "سجل عام قابل للإلحاق فقط لكل عملية. المواضيع المغلقة، وقرارات التوجيه، والجولات المجدولة، كلها مختومة.",
+    "description": "Showcase Features (six items) card description for Dockets"
+  },
+  "showcase.featuresSix.dockets.title": {
+    "message": "Dockets",
+    "description": "Showcase Features (six items) card title for Dockets"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "قسم واحد يضم كل شيء",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.policies.description": {
+    "message": "صِف القواعد بـ YAML. يقرؤها Marshal وينفّذها ويسجّلها. لا تفاوض في وقت التشغيل.",
+    "description": "Showcase Features (six items) card description for Policies"
+  },
+  "showcase.featuresSix.policies.title": {
+    "message": "Policies",
+    "description": "Showcase Features (six items) card title for Policies"
+  },
+  "showcase.featuresSix.scheduledStewardship.description": {
+    "message": "تنظيف وتدقيق مدفوعان بـ cron. يعمل Marshal وفق الجدول، ولا ينتظر من يتذكر من البشر.",
+    "description": "Showcase Features (six items) card description for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.scheduledStewardship.title": {
+    "message": "Scheduled Stewardship",
+    "description": "Showcase Features (six items) card title for Scheduled Stewardship"
+  },
+  "showcase.featuresSix.threadArchival.description": {
+    "message": "المواضيع الصامتة تُغلق وتُؤرشف وفقاً للسياسة، وكل حالة تحمل إشعاراً مختوماً ومساراً لإعادة الفتح.",
+    "description": "Showcase Features (six items) card description for Thread Archival"
+  },
+  "showcase.featuresSix.threadArchival.title": {
+    "message": "Thread Archival",
+    "description": "Showcase Features (six items) card title for Thread Archival"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "اقرأ الوثائق",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "عرض المكونات",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "كل مكوّن من Marshal، معروض في مكان واحد.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "اعرضه على Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "تعرض هذه الصفحة كل مكوّن من @cbnventures/docusaurus-preset-nova/blocks باستخدام بيانات تجريبية من عالم Marshal، لتتمكن من معاينة شكلها وسلوكها.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "ابدأ الآن",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "التسجيل، الإغلاق، الأتمتة.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Marshal هو قسم شؤون المستودع، يوفر إدارة آلية للمشاريع التي تفضل اتباع الإجراءات بدلاً من افتعال الدراما.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "أو استخدم سجل Loom",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "ثبّت باستخدام Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.installStripText.label": {
+    "message": "تثبيت سريع",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store فقط)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (كلا المتجرين)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play فقط)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (بدون تسمية)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (بدون وصف)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (مع الوصف)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (مع الأيقونات)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (بدون أيقونات وبدون عنوان)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (ست بطاقات بأيقونات مختلطة)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (كامل)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (مبسط)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip (copyTarget: block)",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip (copyTarget: icon)",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (بدون تسمية)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip (copyTarget: text)",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (مع الكود)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (مع نص)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (مع العنوان والوصف)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (بدون عنوان)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (استخدام داخل النص)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (افتراضي)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (بدون تكرار)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (بدون بادئة)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (توقيت بطيء)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.layout.description": {
+    "message": "عرض مكونات Marshal، يوضّح كل مكوّن من docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "ثلاثة أوامر، من الصفر إلى مستودع تحت الإدارة.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "البدء السريع",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "يقرأ Marshal ملف سياساتك، ويُدرج كل سير عمل منطبق في طابور رأس الساعة التالي، ويختم قيداً في السجل لكل عملية. السجل قابل للإلحاق فقط، ولا يُغلق أي شيء في صمت.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "كيف يعمل",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.statsFull.accessTiers.label": {
+    "message": "مستويات الوصول",
+    "description": "Showcase Stats (full) label for access tiers"
+  },
+  "showcase.statsFull.description": {
+    "message": "أرقام رئيسية من دورة إدارة مستودع نموذجية.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.heading": {
+    "message": "مؤشرات Marshal",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.manualClosures.label": {
+    "message": "إغلاقات يدوية",
+    "description": "Showcase Stats (full) label for manual closures"
+  },
+  "showcase.statsFull.policyFile.label": {
+    "message": "ملف السياسات",
+    "description": "Showcase Stats (full) label for policy file"
+  },
+  "showcase.statsFull.threadsArchived.label": {
+    "message": "مواضيع مؤرشفة",
+    "description": "Showcase Stats (full) label for threads archived"
+  },
+  "showcase.statsNoHeading.accessTiers.label": {
+    "message": "مستويات الوصول",
+    "description": "Showcase Stats (no heading) label for access tiers"
+  },
+  "showcase.statsNoHeading.docketEntries.label": {
+    "message": "قيود السجل",
+    "description": "Showcase Stats (no heading) label for docket entries"
+  },
+  "showcase.statsNoHeading.manualActions.label": {
+    "message": "عمليات يدوية",
+    "description": "Showcase Stats (no heading) label for manual actions"
+  },
+  "showcase.statsNoHeading.policyFile.label": {
+    "message": "ملف السياسات",
+    "description": "Showcase Stats (no heading) label for policy file"
+  },
+  "showcase.terminology.accessTier.label": {
+    "message": "مستوى الوصول",
+    "description": "Showcase Terminology displayed text for access tier"
+  },
+  "showcase.terminology.accessTier.title": {
+    "message": "تصنيف للأعمال الواردة بحسب حالة الرعاية أو المساهمة",
+    "description": "Showcase Terminology hover title for access tier"
+  },
+  "showcase.terminology.docket.label": {
+    "message": "سجل",
+    "description": "Showcase Terminology displayed text for docket"
+  },
+  "showcase.terminology.docket.title": {
+    "message": "سجل عام قابل للإلحاق فقط لكل عملية",
+    "description": "Showcase Terminology hover title for docket"
+  },
+  "showcase.terminology.paragraph1.afterDocket": {
+    "message": "، وكل قيد فيه يحمل ",
+    "description": "Showcase Terminology paragraph 1 fragment after docket"
+  },
+  "showcase.terminology.paragraph1.afterPolicy": {
+    "message": " لتنظيم سلوكه على المستودع. كل عملية تُقيَّد في ",
+    "description": "Showcase Terminology paragraph 1 fragment after policy"
+  },
+  "showcase.terminology.paragraph1.afterStamp": {
+    "message": " يشير إلى السياسة التي أذنت بها.",
+    "description": "Showcase Terminology paragraph 1 fragment after stamp"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "يستعمل Marshal ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.paragraph2.afterAccessTier": {
+    "message": " إلى ",
+    "description": "Showcase Terminology paragraph 2 fragment after access tier"
+  },
+  "showcase.terminology.paragraph2.afterQueue": {
+    "message": ". أما المواضيع الصامتة فتُغلق عبر ",
+    "description": "Showcase Terminology paragraph 2 fragment after queue"
+  },
+  "showcase.terminology.paragraph2.afterThreadArchival": {
+    "message": "، مع تدوين خطي لكل حالة.",
+    "description": "Showcase Terminology paragraph 2 fragment after thread archival"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "تُوجَّه الأعمال الواردة وفق ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.policy.label": {
+    "message": "سياسة",
+    "description": "Showcase Terminology displayed text for policy"
+  },
+  "showcase.terminology.policy.title": {
+    "message": "قاعدة مكتوبة لكيفية تعامل Marshal مع فئة من الأحداث",
+    "description": "Showcase Terminology hover title for policy"
+  },
+  "showcase.terminology.queue.label": {
+    "message": "طابور",
+    "description": "Showcase Terminology displayed text for queue"
+  },
+  "showcase.terminology.queue.title": {
+    "message": "قائمة مرتّبة واحدة لكل الأعمال الواردة",
+    "description": "Showcase Terminology hover title for queue"
+  },
+  "showcase.terminology.stamp.label": {
+    "message": "ختم",
+    "description": "Showcase Terminology displayed text for stamp"
+  },
+  "showcase.terminology.stamp.title": {
+    "message": "علامة تفويض مختومة زمنياً للعمليات المنفّذة",
+    "description": "Showcase Terminology hover title for stamp"
+  },
+  "showcase.terminology.threadArchival.label": {
+    "message": "أرشفة المواضيع",
+    "description": "Showcase Terminology displayed text for thread archival"
+  },
+  "showcase.terminology.threadArchival.title": {
+    "message": "إغلاق مدفوع بالسياسات للمواضيع التي تجاوزت عتبة الخمول",
+    "description": "Showcase Terminology hover title for thread archival"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "أحب ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "مرحباً بك في ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "سريع",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "مرن",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "مجاني",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "للمصممين",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "للمطورين",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "صُمِّم ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "لم يكتب هذا المؤلّف أيّ منشورات بعد.",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "عرض جميع المؤلّفين",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.post.plurals": {
+    "message": "منشور واحد|{count} منشورات",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} موسومة بـ \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "تخطّى إلى المحتوى الرئيسي",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.footer.copyright": {
+    "message": "حقوق النشر © 2025-2026 CBN Ventures LLC. جميع الحقوق محفوظة.",
+    "description": "Footer copyright text. The {copyright} placeholder receives the consumer's themeConfig.footer.copyright value as the source-locale fallback; per-locale overrides in i18n code.json usually inline their own text."
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "الوسوم",
+    "description": "The title of the tag list page"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "صورة مصغرة لعلامة Marshal التجارية.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "علامة تجارية مُودَعة داخل كتلة Frame، جاهزة للاستشهاد.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "إطار (بدون تعليق)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "إطار (مع تعليق)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  }
+}

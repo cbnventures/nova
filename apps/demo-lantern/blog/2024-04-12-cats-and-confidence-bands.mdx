@@ -1,0 +1,60 @@
+---
+title: "Cats, squirrels, and the cost of being too sure"
+authors:
+  - "marisol"
+tags:
+  - "motion"
+  - "sensor-history"
+date: "2024-04-12"
+---
+
+A motion sensor that calls everything an intruder is not a security system. It is a doorbell that does not stop ringing. We added confidence bands so the lantern could tell the cat from the door.
+
+{/* truncate */}
+
+Most motion is small. The cat at 3am is small. The wind through the screened porch is small. Lantern now waits for the second signature before it raises a quiet flag.
+
+## The First Loud Month
+
+The first month was loud. Every time the cat passed the hallway sensor, the kitchen tablet chirped. Every time a moth landed on the porch lens, the dashboard flickered. We watched the household start to ignore the alerts — which is the failure mode of every alarm system that has ever existed. An alarm that cries wolf is just a clock that nobody set.
+
+## Signatures and Thresholds
+
+So we sat down with the sensor history and started naming what we were seeing. The cat was a thumbprint of low motion at the floor — about thirty centimeters off the ground, a slow drift across the hallway runner. A person was a column — chest-height, faster, with a step rhythm. The wind was a flutter — high amplitude for a quarter second, then nothing for a long time. The dishwasher was a hum at the kitchen sensor that started at 9:14pm most nights and lasted ninety minutes.
+
+Each pattern got a confidence band. Not a yes or a no — a number between zero and one, with a different threshold for each zone and each mode.
+
+```yaml title="lantern.events.yml"
+confidence:
+  hallway:
+    motion-hallway:
+      cat:        { signature: low-floor-drift,  threshold: 0.85 }
+      person:     { signature: column-rhythm,    threshold: 0.65 }
+      dishwasher: { signature: harmonic-9-14pm,  threshold: 0.40 }
+  porch:
+    motion-front-door:
+      person:     { signature: column-rhythm,    threshold: 0.55 }
+      wind:       { signature: high-flutter,     threshold: 0.95 }
+      cat:        { signature: low-floor-drift,  threshold: 0.90 }
+```
+
+The thresholds matter. The porch is forgiving — it knows the wind, it knows the cat, it has seen everything before. The hallway is stricter, but only at night. A person at 3am needs a low threshold; a person at 3pm is the household, and gets none at all.
+
+## Trust as a Side Effect
+
+What we did not expect was how much the household trusted the system once it stopped lying. The kitchen tablet went weeks without chirping in March. When it chirped on a Saturday, everyone looked up. The cat was on the counter, which was the alert we wanted.
+
+A confidence band is mostly humility. It is the lantern admitting it does not know yet, and waiting for the second signature before it speaks. The cost of being too sure is being ignored. The cost of being a little uncertain is being trusted. We picked the second.
+
+## The Dishwasher That Started Itself
+
+A small follow-up surprised us in March. The dishwasher band fired one Saturday morning at 9:13, almost exactly on schedule, but no dishwasher was running. The kitchen tablet did not chirp — the band was below its alert threshold — but the row got written into the history. We read it at noon and walked downstairs. The dishwasher had started a clean cycle on its own, prompted by a stuck button. The lantern had not warned us, because the pattern was familiar. It had simply written it down. By the time we found the row, we already knew what we were looking at, which was the whole point of the band being where it was.
+
+```bash
+$ lantern history --zone kitchen --since "this morning" --confidence
+09:13   motion-kitchen   harmonic-9-14pm   0.42   below threshold (0.40)   logged
+09:14   motion-kitchen   harmonic-9-14pm   0.51   below threshold           logged
+...
+```
+
+The dishwasher gets a low band on purpose. It is allowed to be present without being announced. When it is on, the row is written. When it is on at the wrong time, the row is still written. The household reads the row when they want to. The kitchen does not raise its voice for the dishwasher, ever. That, too, is humility.

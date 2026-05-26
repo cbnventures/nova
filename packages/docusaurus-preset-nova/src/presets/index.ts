@@ -1,5 +1,7 @@
 import { presetsEnvoyPresetEnvoy } from './envoy/preset.js';
 import { presetsFoundryPresetFoundry } from './foundry/preset.js';
+import { presetsLanternPresetLantern } from './lantern/preset.js';
+import { presetsMarshalPresetMarshal } from './marshal/preset.js';
 import { presetsSentinelPresetSentinel } from './sentinel/preset.js';
 import { presetsSignalPresetSignal } from './signal/preset.js';
 
@@ -17,10 +19,12 @@ import type {
  * @since 0.15.0
  */
 export const presetsIndexNames: PresetsIndexNames = [
+  'envoy',
   'foundry',
+  'lantern',
+  'marshal',
   'sentinel',
   'signal',
-  'envoy',
 ];
 
 /**
@@ -32,8 +36,10 @@ export const presetsIndexNames: PresetsIndexNames = [
  * @since 0.15.0
  */
 export const presetsIndexPresets: PresetsIndexPresets = {
+  envoy: presetsEnvoyPresetEnvoy,
   foundry: presetsFoundryPresetFoundry,
+  lantern: presetsLanternPresetLantern,
+  marshal: presetsMarshalPresetMarshal,
   sentinel: presetsSentinelPresetSentinel,
   signal: presetsSignalPresetSignal,
-  envoy: presetsEnvoyPresetEnvoy,
 };

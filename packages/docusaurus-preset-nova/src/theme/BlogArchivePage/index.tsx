@@ -7,6 +7,7 @@ import Heading from '@theme/Heading';
 
 import type {
   ThemeBlogArchivePageBlogArchivePageDateTimeFormat,
+  ThemeBlogArchivePageBlogArchivePageDescription,
   ThemeBlogArchivePageBlogArchivePageFormattedDate,
   ThemeBlogArchivePageBlogArchivePageHeading,
   ThemeBlogArchivePageBlogArchivePageProps,
@@ -44,20 +45,26 @@ function BlogArchivePage(props: ThemeBlogArchivePageBlogArchivePageProps) {
     message: 'Archive',
     description: 'The heading of the blog archive page',
   });
+  const archiveDescription: ThemeBlogArchivePageBlogArchivePageDescription = translate({
+    id: 'theme.blog.archive.description',
+    message: 'Archive',
+    description: 'The meta description of the blog archive page',
+  });
 
   return (
-    <BlogLayout>
-      <PageMetadata title={heading} />
-      <div className="nova-blog-archive">
-        <header className="nova-blog-tags-posts-header">
-          <Heading as="h2">
-            {heading}
-          </Heading>
-        </header>
+    <BlogLayout
+      showHeader
+      header={<Heading as="h1">{heading}</Heading>}
+    >
+      <PageMetadata title={heading} description={archiveDescription} />
+      <div
+        className={(props['className'] !== undefined) ? `nova-blog-archive ${props['className']}` : 'nova-blog-archive'}
+        style={props['style']}
+      >
         {
           yearGroups.map((yearGroup: ThemeBlogArchivePageYearGroup) => (
             <section key={yearGroup['year']}>
-              <Heading as="h3" id={yearGroup['year']}>
+              <Heading as="h3">
                 {yearGroup['year']}
               </Heading>
               <ul>

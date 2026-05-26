@@ -1,0 +1,27 @@
+/**
+ * Marshal - `Blog/Components/Author/Socials` theme overlay.
+ *
+ * Ledger square: 4px radius, hairline rail, primary-green border on hover.
+ *
+ * @since 0.18.0
+ */
+
+.nova-blog-author-social-link {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 96%);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: var(--nova-marshal-radius-ledger);
+  color: var(--nova-marshal-ink-muted);
+}
+
+.nova-blog-author-social-link:hover,
+.nova-blog-author-social-link:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-color-primary-500);
+  color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-blog-author-social-link:hover,
+[data-theme="dark"] .nova-blog-author-social-link:focus-visible {
+  border-color: var(--nova-color-primary-400);
+  color: var(--nova-color-primary-300);
+}

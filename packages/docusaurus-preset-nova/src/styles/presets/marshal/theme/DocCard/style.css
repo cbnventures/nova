@@ -1,0 +1,113 @@
+/**
+ * Marshal - `DocCard` theme overlay.
+ *
+ * Doc index card - flat hairline ledger paper with 2px corners. Hover
+ * lights a 3px seal-red left rail (no transform, no shadow). Title is
+ * Plex Serif 600 with a small folder/file glyph in primary-700.
+ *
+ * Cards render as `<article class="nova-col-..."><a>...</a></article>`,
+ * so styles target `article[class*="nova-col"] > a` to pick up the
+ * outer link surface without leaking into other articles.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Card surface - flat ledger
+ * ============================
+ */
+
+article[class*="nova-col"] > a {
+  display: block;
+  padding: 1rem;
+
+  text-decoration: none;
+  color: var(--nova-marshal-ink);
+
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-left: 3px solid var(--nova-marshal-border);
+  border-radius: 0 2px 2px 0;
+
+  transition: background-color var(--nova-marshal-transition), border-color var(--nova-marshal-transition), border-left-color var(--nova-marshal-transition);
+}
+
+@media (min-width: 768px) {
+  article[class*="nova-col"] > a {
+    padding: 1.25rem;
+  }
+}
+
+article[class*="nova-col"] > a:hover,
+article[class*="nova-col"] > a:focus-visible {
+  text-decoration: none;
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), #ffffff 96%);
+  border-color: var(--nova-marshal-border);
+  border-left-color: var(--nova-color-accent-600);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 95%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a:hover,
+[data-theme="dark"] article[class*="nova-col"] > a:focus-visible {
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-marshal-bg) 92%);
+  border-left-color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 2. Card heading
+ * ============================
+ */
+
+article[class*="nova-col"] > a h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  margin: 0 0 0.25rem;
+  padding: 0;
+
+  font-family: var(--nova-font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--nova-marshal-ink);
+
+  border: none;
+}
+
+/**
+ * ============================
+ * 3. Card icon - primary green glyph
+ * ============================
+ */
+
+article[class*="nova-col"] > a h2 svg {
+  flex-shrink: 0;
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] article[class*="nova-col"] > a h2 svg {
+  color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Card description
+ * ============================
+ */
+
+article[class*="nova-col"] > a > h2 + p {
+  margin: 0;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--nova-marshal-ink-muted);
+}

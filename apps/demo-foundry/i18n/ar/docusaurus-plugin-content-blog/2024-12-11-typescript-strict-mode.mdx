@@ -1,0 +1,97 @@
+---
+title: "وضع TypeScript الصارم ليس صارمًا بما يكفي"
+authors:
+  - "priya"
+tags:
+  - "typescript"
+  - "warden"
+  - "linting"
+  - "developer-experience"
+date: "2024-12-11"
+---
+
+يُفعِّل وضع `strict` في TypeScript ثمانية أعلام مُترجِم. يحظر `any` الضمني، ويفرض فحوصات null، ويلتقط فئة من العلل تتجاهلها JavaScript العادية تمامًا. لمعظم الفِرَق، هذا يكفي. لمستودع موحَّد بـ 200 حزمة وأنواع مشتركة وعقود عبر الحزم، فهو ليس قريبًا حتى من الكفاية.
+
+شغّلنا كل علم `strict` في اليوم الأول. ثم كتبنا 26 قاعدة Warden فوقه. هذا هو السبب في أن المُترجم وحده لا يكفي، وما الذي نفعله حياله.
+
+{/* truncate */}
+
+## ما يمنحك إيّاه `strict`
+
+يُفعِّل وضع `strict` في TypeScript الأعلام التالية:
+
+- `noImplicitAny`
+- `noImplicitThis`
+- `strictNullChecks`
+- `strictFunctionTypes`
+- `strictBindCallApply`
+- `strictPropertyInitialization`
+- `alwaysStrict`
+- `useUnknownInCatchVariables`
+
+هذه أمور أساسية. إن لم يكن لمشروعك `strict: true`، توقّف عن قراءة هذا المقال واذهب لتفعيله. بقية هذا المقال تفترض أنك فعلت ذلك.
+
+## ما لا يمنحك إياه `strict`
+
+يلتقط المُترجم أخطاء الأنواع. لا يلتقط أخطاء تصميم الأنواع. إليك ثلاثة أنماط تمرّ بوضع `strict` دون تشخيص واحد لكنها تسبّب مشاكل حقيقية على المقياس الكبير.
+
+### النمط 1: `any` ضمني في القيم الافتراضية للمعمَّمات
+
+```typescript title="Passes strict — still dangerous"
+function merge<T = any>(a: T, b: T): T {
+  return { ...a, ...b };
+}
+
+// No type argument provided — T defaults to any
+const result = merge({ name: "foundry" }, { version: 2 });
+// result is any — all type safety is gone
+```
+
+لا يُحذِّر المُترجم لأن `T = any` قيمة افتراضية معمّمة صريحة، لا `any` ضمني. يلتقط Warden هذا بـ `warden/no-generic-any-default`، الذي يحظر `any` كقيمة افتراضية معمّمة.
+
+### النمط 2: توقيعات فهرس غير آمنة
+
+```typescript title="Passes strict — returns undefined at runtime"
+interface Config {
+  [key: string]: string;
+}
+
+const config: Config = { host: "localhost" };
+const port: string = config["port"];
+// port is typed as string, but is actually undefined
+```
+
+أضافت TypeScript 4.1 `noUncheckedIndexedAccess`، لكنه ليس جزءًا من وضع `strict`. معظم الفِرَق لا تعرف بوجوده. يفرضه Warden عبر إعداد Smelter على مستوى البيان — كل مساحة عمل Foundry لديها `noUncheckedIndexedAccess` مُفعَّلًا افتراضيًا.
+
+### النمط 3: تأكيدات الأنواع تُخفي العلل
+
+```typescript title="Passes strict — crashes at runtime"
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+const data: unknown = JSON.parse(response.body);
+const user = data as User;
+// No runtime validation — if data is missing fields, user.email is undefined
+```
+
+تأكيدات الأنواع (`as`) تتجاوز فاحص الأنواع تمامًا. يثق بك المُترجم. لا يثق Warden. تُعلِّم القاعدة `warden/no-unsafe-assertion` كل تعبير `as` يضيق من `unknown` أو `any` دون حارس نوع سابق أو دالة تحقق.
+
+## الـ 26 قاعدة
+
+نظّمنا الـ 26 قاعدة في أربع فئات:
+
+- **أمان الأنواع (9 قواعد).** أنماط تمرّ بالمُترجم لكنها تُنتج `any` أو `undefined` في وقت التشغيل.
+- **عقود API (7 قواعد).** أنماط تجعل الأنواع عبر الحزم هشّة — خصائص اختيارية تُستخدم كمطلوبة، وتعدادات تمييزية بلا فحوصات شاملة، وقيود معمّمات واسعة جدًا.
+- **نظافة الاستيراد (5 قواعد).** الاستيرادات للأنواع فقط، ولا مراجع أنواع دورية، ولا إعادة تصدير لأنواع طرف ثالث.
+- **التسمية والبنية (5 قواعد).** ملفات الأنواع يجب أن تعيش في دليل `types/`، والواجهات يجب أن تستخدم اتفاقية تسمية محدّدة، والتعدادات محظورة لصالح كائنات const.
+
+القائمة الكاملة في توثيق [قواعد Warden](/docs/pipeline/warden-rules/). تتضمّن كل قاعدة مبرّرًا، ومثالًا يمرّ، ومثالًا يفشل.
+
+## المردود
+
+بعد تفعيل هذه القواعد الـ 26 عبر مساحة عملنا الداخلية، تتبّعنا أخطاء الأنواع في وقت التشغيل في الإنتاج لمدة 90 يومًا. انخفضت أخطاء الأنواع — أي التعطّلات أو السلوك غير الصحيح الناجم عن قيمة من نوع مختلف عمّا توقّعته الشيفرة — من متوسّط 4.2 في الأسبوع إلى 0.3 في الأسبوع. معظم الأخطاء المتبقية جاءت من استجابات API خارجية تغيّرت دون إشعار.
+
+وضع `strict` هو الأرضية، لا السقف. يخبرك المُترجم متى تكون الأنواع خاطئة. يخبرك Warden متى تكون الأنواع صحيحة لكنها هشّة.

@@ -1,0 +1,53 @@
+/**
+ * Foundry - `DocSidebarItem/Link` theme overlay.
+ *
+ * Top-level sidebar link styling - neutral ink with industrial steel hover
+ * (slight bg lift, orange left rail) and a tinted-orange active state.
+ * Inner-summary links inherit from the canonical category-summary rules
+ * in shared `theme/DocSidebar/style.css`, which override these bare-class
+ * rules via higher specificity.
+ *
+ * @since 0.18.0
+ */
+
+.nova-sidebar-link {
+  padding: 0.375rem 0.75rem;
+
+  font-size: 0.875rem;
+  color: var(--nova-color-text-muted);
+
+  border-left: 2px solid transparent;
+}
+
+[data-theme="dark"] .nova-sidebar-link {
+  color: var(--nova-color-text-muted);
+}
+
+.nova-sidebar-link:hover,
+.nova-sidebar-link:focus-visible {
+  color: var(--nova-color-text);
+  background-color: var(--nova-color-surface-raised);
+  border-left-color: var(--nova-color-primary-300);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-sidebar-link:hover,
+[data-theme="dark"] .nova-sidebar-link:focus-visible {
+  color: var(--nova-color-text);
+  background-color: rgba(255, 255, 255, 0.04);
+  border-left-color: var(--nova-color-primary-700);
+}
+
+/* Active sidebar link - orange left rail. */
+.nova-sidebar-link[aria-current="page"] {
+  font-weight: 600;
+  color: var(--nova-color-primary-700);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 92%);
+  border-left-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-sidebar-link[aria-current="page"] {
+  color: var(--nova-color-primary-300);
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 85%);
+  border-left-color: var(--nova-color-primary-500);
+}

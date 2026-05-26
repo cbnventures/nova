@@ -1,0 +1,30 @@
+/**
+ * Marshal - `NavbarItem` theme overlay (entry-level wrapper).
+ *
+ * Fallback link colors for the default `.navbar__link` class. Each variant
+ * overrides this with its own scoped Nova-prefixed selectors; this wrapper
+ * only matters if a downstream consumer mounts a Docusaurus default
+ * navbar item that bypasses the variant DOM. Mono uppercase ink with
+ * green primary on hover.
+ *
+ * @since 0.18.0
+ */
+
+.navbar__link {
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nova-marshal-ink);
+  transition: color var(--nova-marshal-transition);
+}
+
+.navbar__link:hover,
+.navbar__link--active {
+  color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .navbar__link:hover,
+[data-theme="dark"] .navbar__link--active {
+  color: var(--nova-color-primary-300);
+}

@@ -13,33 +13,53 @@ export type ThemeNavbarCompassMobileMenuMobileMenuPropsItems = ThemeNavbarItem[]
 
 export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoAlt = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrc = string | undefined;
+export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcLight = string | undefined;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcDark = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmark = string | undefined;
+export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrc = {
+  light: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcLight;
+  dark: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcDark;
+} | undefined;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkLight = string | undefined;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkDark = string | undefined;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmark = {
+  light: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkLight;
+  dark: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkDark;
+} | undefined;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoTitle = string | undefined;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoHref = string | undefined;
 
+export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoTarget = string | undefined;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoRel = string | undefined;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoAriaLabel = string | undefined;
+
 export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogo = {
   alt: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoAlt;
   src: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrc;
-  srcDark: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcDark;
   wordmark: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmark;
-  wordmarkDark: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkDark;
   title: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoTitle;
   href: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoHref;
+  target: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoTarget;
+  rel: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoRel;
+  ariaLabel: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoAriaLabel;
 };
+
+export type ThemeNavbarCompassMobileMenuMobileMenuPropsActiveItemLabel = string | null;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuProps = {
   isOpen: ThemeNavbarCompassMobileMenuMobileMenuPropsIsOpen;
   onClose: ThemeNavbarCompassMobileMenuMobileMenuPropsOnClose;
   items: ThemeNavbarCompassMobileMenuMobileMenuPropsItems;
   siteLogo: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogo;
+  activeItemLabel: ThemeNavbarCompassMobileMenuMobileMenuPropsActiveItemLabel;
 };
 
 export type ThemeNavbarCompassMobileMenuMobileMenuReturns = React.JSX.Element | null;
@@ -52,27 +72,46 @@ export type ThemeNavbarCompassMobileMenuMobileMenuItems = ThemeNavbarItem[];
 
 export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoAlt = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrc = string | undefined;
+export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcLight = string | undefined;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcDark = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmark = string | undefined;
+export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrc = {
+  light: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcLight;
+  dark: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcDark;
+} | undefined;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkLight = string | undefined;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkDark = string | undefined;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmark = {
+  light: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkLight;
+  dark: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkDark;
+} | undefined;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoTitle = string | undefined;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoHref = string | undefined;
 
+export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoTarget = string | undefined;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoRel = string | undefined;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoAriaLabel = string | undefined;
+
 export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogo = {
   alt: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoAlt;
   src: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrc;
-  srcDark: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcDark;
   wordmark: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmark;
-  wordmarkDark: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkDark;
   title: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoTitle;
   href: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoHref;
+  target: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoTarget;
+  rel: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoRel;
+  ariaLabel: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoAriaLabel;
 };
+
+export type ThemeNavbarCompassMobileMenuMobileMenuActiveItemLabel = string | null;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuPanelRef = React.RefObject<HTMLDivElement | null>;
 
@@ -103,6 +142,8 @@ export type ThemeNavbarCompassMobileMenuMobileMenuItemTo = string;
 export type ThemeNavbarCompassMobileMenuMobileMenuItemHref = string;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuLinkProps = Record<string, string>;
+
+export type ThemeNavbarCompassMobileMenuMobileMenuItemIsActive = boolean;
 
 export type ThemeNavbarCompassMobileMenuMobileMenuLinkSpread = Record<string, string>;
 

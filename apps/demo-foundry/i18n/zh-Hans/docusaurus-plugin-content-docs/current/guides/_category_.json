@@ -1,0 +1,10 @@
+{
+  "label": "指南",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "实操指南——通过 Spark 或 Vial 容器安装、编写首个清单、运行 `foundry ignite`，以及使用 Tongs 管理跨包依赖。"
+  }
+}

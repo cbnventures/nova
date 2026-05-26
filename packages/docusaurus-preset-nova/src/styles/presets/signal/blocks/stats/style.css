@@ -1,0 +1,18 @@
+/**
+ * Signal - `stats` component overlay.
+ *
+ * Stats grid layout. Heading / value / label styling already lives in
+ * preset.css; this file adds section-level rhythm.
+ *
+ * @since 0.18.0
+ */
+
+.nova-stats-heading {
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.nova-stats-description {
+  margin-bottom: 2rem;
+  text-align: center;
+}

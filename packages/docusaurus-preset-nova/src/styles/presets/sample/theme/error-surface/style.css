@@ -1,0 +1,31 @@
+/**
+ * Sample - `error-surface` umbrella overlay scaffold.
+ *
+ * @internal Reference template only. The shared structural CSS for this
+ *           umbrella scope lives at:
+ *           theme/error-surface/style.css
+ *
+ * Layered uniformly across all error surfaces (`.nova-not-found`,
+ * `.nova-error-page-content`, `.nova-error`). Section headers below establish
+ * the canonical layout each preset adopts; per-surface tweaks belong in each
+ * component's own preset overlay. Fill bodies with identity-specific rules -
+ * see preset.css for tokens and conventions.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Heading
+ * ============================ */
+
+/* ============================
+ * 2. Body copy
+ * ============================ */
+
+/* ============================
+ * 3. Retry button
+ * ============================ */
+
+/* ============================
+ * 4. Horizontal rule
+ * ============================ */

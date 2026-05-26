@@ -1,11 +1,44 @@
 /**
- * Sentinel — Typography: headings and responsive heading scales.
+ * Sentinel - Typography: headings and responsive heading scales.
+ *
+ * Mobile-base vertical-rhythm margins flow from shared theme/Heading via
+ * canonical `--nova-h{N}-margin-block-start/end` tokens. Sentinel diverges
+ * on h3/h5/h6 bottom margin (slightly looser than baseline). Responsive
+ * `@media` margin overrides stay as bare-tag rules with literal values
+ * because they're sentinel-identity and not shared across presets.
  *
  * @since 0.15.0
  */
 
 /* ============================
+ * 0. Preset-owned rhythm tokens
+ *
+ * Sentinel's civic editorial voice wants slightly more breathing room
+ * below h3/h5/h6 than the baseline allows.
+ * ============================ */
+
+:root {
+  --nova-sentinel-h3-margin-block-end: 0.625rem;
+  --nova-sentinel-h5-margin-block-end: 0.5rem;
+  --nova-sentinel-h6-margin-block-end: 0.5rem;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/Heading
+ * ============================ */
+
+:root {
+  --nova-h3-margin-block-end: var(--nova-sentinel-h3-margin-block-end);
+  --nova-h5-margin-block-end: var(--nova-sentinel-h5-margin-block-end);
+  --nova-h6-margin-block-end: var(--nova-sentinel-h6-margin-block-end);
+}
+
+/* ============================
  * 1. Headings (mobile-first)
+ *
+ * Base margins flow from shared theme/Heading via canonical tokens. This
+ * block sets only typography (font/weight/line-height/letter-spacing/
+ * color/font-size). Responsive `@media` margin overrides live below.
  * ============================ */
 
 h1,
@@ -14,55 +47,34 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--nova-font-display);
   font-weight: 800;
   line-height: 1.15;
   letter-spacing: -0.025em;
-  color: var(--nova-color-neutral-900);
-}
-
-[data-theme="dark"] h1,
-[data-theme="dark"] h2,
-[data-theme="dark"] h3,
-[data-theme="dark"] h4,
-[data-theme="dark"] h5,
-[data-theme="dark"] h6 {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
 }
 
 h1 {
   font-size: 1.75rem;
-  margin-bottom: 1rem;
 }
 
 h2 {
   font-size: 1.375rem;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
 }
 
 h3 {
   font-size: 1.1875rem;
-  margin-top: 1.5rem;
-  margin-bottom: 0.625rem;
 }
 
 h4 {
   font-size: 1.0625rem;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
 }
 
 h5 {
   font-size: 1rem;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
 }
 
 h6 {
   font-size: 0.9375rem;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
 }
 
 @media (min-width: 640px) {

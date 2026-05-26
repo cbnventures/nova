@@ -1,0 +1,15 @@
+/**
+ * Envoy - `DocItem` theme overlay.
+ *
+ * Doc page chrome baseline. The article body styling lives in
+ * `DocItem/Content/style.css` (which targets `.nova-doc-content`); this
+ * file sets the outer-page color/typography defaults that apply to doc
+ * page chrome (paginator, footer, edit-this-page, etc.).
+ *
+ * @since 0.18.0
+ */
+
+.nova-doc-root {
+  color: var(--nova-color-text);
+  background-color: var(--nova-envoy-bg);
+}

@@ -5,6 +5,15 @@ import { describe, it } from 'vitest';
 import { rehypeShiki } from '../../lib/rehype-shiki.js';
 
 import type {
+  TestsLibRehypeShikiAddRemoveCode,
+  TestsLibRehypeShikiAddRemoveExcludesAddMarker,
+  TestsLibRehypeShikiAddRemoveExcludesRemoveMarker,
+  TestsLibRehypeShikiAddRemoveIncludesAdd,
+  TestsLibRehypeShikiAddRemoveIncludesRemove,
+  TestsLibRehypeShikiAddRemoveOutputJson,
+  TestsLibRehypeShikiAddRemoveOutputNode,
+  TestsLibRehypeShikiAddRemoveTransformer,
+  TestsLibRehypeShikiAddRemoveTree,
   TestsLibRehypeShikiDiffCode,
   TestsLibRehypeShikiDiffIncludesAdd,
   TestsLibRehypeShikiDiffIncludesRemove,
@@ -31,6 +40,15 @@ import type {
   TestsLibRehypeShikiMarkerOutputNode,
   TestsLibRehypeShikiMarkerTransformer,
   TestsLibRehypeShikiMarkerTree,
+  TestsLibRehypeShikiMetadataIncludesLanguage,
+  TestsLibRehypeShikiMetadataIncludesLive,
+  TestsLibRehypeShikiMetadataIncludesMetastring,
+  TestsLibRehypeShikiMetadataIncludesShowLineNumbers,
+  TestsLibRehypeShikiMetadataIncludesTitle,
+  TestsLibRehypeShikiMetadataOutputJson,
+  TestsLibRehypeShikiMetadataOutputNode,
+  TestsLibRehypeShikiMetadataTransformer,
+  TestsLibRehypeShikiMetadataTree,
   TestsLibRehypeShikiNoLangIncludesShiki,
   TestsLibRehypeShikiNoLangOutputJson,
   TestsLibRehypeShikiNoLangOutputNode,
@@ -296,6 +314,106 @@ describe('rehypeShiki', async () => {
 
     ok(includesAdd);
     ok(includesRemove);
+
+    return;
+  });
+
+  it('preserves metastring metadata as data attributes on the output code element', async () => {
+    const tree: TestsLibRehypeShikiMetadataTree = {
+      type: 'root',
+      children: [{
+        type: 'element',
+        tagName: 'pre',
+        properties: {},
+        children: [{
+          type: 'element',
+          tagName: 'code',
+          properties: {
+            className: ['language-typescript'],
+            metastring: 'showLineNumbers title="src/relay/handler.ts" live',
+          },
+          children: [{
+            type: 'text',
+            value: 'const x = 1;',
+          }],
+        }],
+      }],
+    };
+
+    const transformer: TestsLibRehypeShikiMetadataTransformer = rehypeShiki({
+      light: 'github-light',
+      dark: 'github-dark',
+    });
+
+    await transformer(tree);
+
+    const outputNode: TestsLibRehypeShikiMetadataOutputNode = (tree['children'] ?? [])[0];
+    const outputJson: TestsLibRehypeShikiMetadataOutputJson = JSON.stringify(outputNode);
+    const includesTitle: TestsLibRehypeShikiMetadataIncludesTitle = outputJson.includes('"data-title":"src/relay/handler.ts"');
+    const includesLanguage: TestsLibRehypeShikiMetadataIncludesLanguage = outputJson.includes('"data-language":"typescript"');
+    const includesShowLineNumbers: TestsLibRehypeShikiMetadataIncludesShowLineNumbers = outputJson.includes('"data-show-line-numbers":"true"');
+    const includesLive: TestsLibRehypeShikiMetadataIncludesLive = outputJson.includes('"data-live":"true"');
+    const includesMetastring: TestsLibRehypeShikiMetadataIncludesMetastring = outputJson.includes('"metastring":"showLineNumbers title=');
+
+    ok(includesTitle);
+    ok(includesLanguage);
+    ok(includesShowLineNumbers);
+    ok(includesLive);
+    ok(includesMetastring);
+
+    return;
+  });
+
+  it('marks add and remove lines from add-start/remove-start magic comments and strips the markers', async () => {
+    const addRemoveCode: TestsLibRehypeShikiAddRemoveCode = [
+      'const a = 1;',
+      '// remove-start',
+      'const removed = "old";',
+      '// remove-end',
+      '// add-start',
+      'const added = "new";',
+      '// add-end',
+      'const c = 3;',
+    ].join('\n');
+
+    const tree: TestsLibRehypeShikiAddRemoveTree = {
+      type: 'root',
+      children: [{
+        type: 'element',
+        tagName: 'pre',
+        properties: {},
+        children: [{
+          type: 'element',
+          tagName: 'code',
+          properties: {
+            className: ['language-typescript'],
+          },
+          children: [{
+            type: 'text',
+            value: addRemoveCode,
+          }],
+        }],
+      }],
+    };
+
+    const transformer: TestsLibRehypeShikiAddRemoveTransformer = rehypeShiki({
+      light: 'github-light',
+      dark: 'github-dark',
+    });
+
+    await transformer(tree);
+
+    const outputNode: TestsLibRehypeShikiAddRemoveOutputNode = (tree['children'] ?? [])[0];
+    const outputJson: TestsLibRehypeShikiAddRemoveOutputJson = JSON.stringify(outputNode);
+    const includesAdd: TestsLibRehypeShikiAddRemoveIncludesAdd = outputJson.includes('data-diff-add');
+    const includesRemove: TestsLibRehypeShikiAddRemoveIncludesRemove = outputJson.includes('data-diff-remove');
+    const excludesAddMarker: TestsLibRehypeShikiAddRemoveExcludesAddMarker = outputJson.includes('add-start') === false && outputJson.includes('add-end') === false;
+    const excludesRemoveMarker: TestsLibRehypeShikiAddRemoveExcludesRemoveMarker = outputJson.includes('remove-start') === false && outputJson.includes('remove-end') === false;
+
+    ok(includesAdd);
+    ok(includesRemove);
+    ok(excludesAddMarker);
+    ok(excludesRemoveMarker);
 
     return;
   });

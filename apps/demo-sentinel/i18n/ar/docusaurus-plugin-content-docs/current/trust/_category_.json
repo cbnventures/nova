@@ -1,0 +1,10 @@
+{
+  "label": "Trust",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "محرّك الثقة في Sentinel — قواعد كتابة السياسات وترتيب التقييم، وتسجيل الأجهزة عبر Garrison مع خطوط الأساس للوضع، وتحكّم الوصول عبر Drawbridge مع منح حسب السياق، وحدود زمنية، وتجاوزات للطوارئ."
+  }
+}

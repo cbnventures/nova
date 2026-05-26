@@ -77,7 +77,11 @@ function BlogSidebar(props: ThemeBlogSidebarBlogSidebarProps) {
     let currentYear: ThemeBlogSidebarBlogSidebarCurrentYear = '';
 
     return (
-      <nav className="nova-blog-sidebar" aria-label={sidebarAriaLabel}>
+      <nav
+        className={(props['className'] !== undefined) ? `nova-blog-sidebar ${props['className']}` : 'nova-blog-sidebar'}
+        style={props['style']}
+        aria-label={sidebarAriaLabel}
+      >
         <strong>{props['sidebar']['title']}</strong>
         {
           props['sidebar']['items'].map((item: ThemeBlogSidebarBlogSidebarItem) => {
@@ -155,7 +159,11 @@ function BlogSidebar(props: ThemeBlogSidebarBlogSidebarProps) {
   }
 
   return (
-    <nav className="nova-blog-sidebar nova-col-12 nova-col-lg-3" aria-label={sidebarAriaLabel}>
+    <nav
+      className={(props['className'] !== undefined) ? `nova-blog-sidebar ${props['className']}` : 'nova-blog-sidebar'}
+      style={props['style']}
+      aria-label={sidebarAriaLabel}
+    >
       <strong>{props['sidebar']['title']}</strong>
       <ul>
         {

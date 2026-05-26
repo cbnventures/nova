@@ -1,6 +1,8 @@
 import Link from '@docusaurus/Link';
 import { useThemeConfig } from '@docusaurus/theme-common';
+import { translate } from '@docusaurus/Translate';
 import DocSidebarItems from '@theme/DocSidebarItems';
+import { useEffect, useState } from 'react';
 
 import { LIB_REGEX_TRAILING_SLASH } from '../../../lib/regex.js';
 
@@ -9,6 +11,7 @@ import type {
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryAriaCurrent,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryAutoCollapseCategories,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryCategoryKey,
+  ThemeDocSidebarItemCategoryDocSidebarItemCategoryCollapseCategoryAriaLabel,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathActivePath,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathItem,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathItemHref,
@@ -17,6 +20,7 @@ import type {
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathResult,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryDetailsElement,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryDocsConfig,
+  ThemeDocSidebarItemCategoryDocSidebarItemCategoryExpandCategoryAriaLabel,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantActivePath,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantItem,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantItemHref,
@@ -26,17 +30,21 @@ import type {
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantResult,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryGrandparentElement,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryHref,
+  ThemeDocSidebarItemCategoryDocSidebarItemCategoryInitialOpenValue,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsActive,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpen,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryLabel,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryNextLevel,
+  ThemeDocSidebarItemCategoryDocSidebarItemCategoryOpenState,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryParentElement,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryProps,
+  ThemeDocSidebarItemCategoryDocSidebarItemCategorySetIsOpenValue,
   ThemeDocSidebarItemCategoryDocSidebarItemCategorySiblingDetails,
   ThemeDocSidebarItemCategoryDocSidebarItemCategorySidebarConfig,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryStateMap,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryStoredState,
+  ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryAriaLabel,
   ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryClickEvent,
   ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryClickTarget,
   ThemeDocSidebarItemCategoryDocSidebarItemCategoryThemeConfig,
@@ -171,15 +179,46 @@ function DocSidebarItemCategory(props: ThemeDocSidebarItemCategoryDocSidebarItem
   const activeDescendant: ThemeDocSidebarItemCategoryDocSidebarItemCategoryActiveDescendant = (isActive === true) ? findActiveDescendant(props['item']['items'], props['activePath']) : undefined;
 
   const storedState: ThemeDocSidebarItemCategoryDocSidebarItemCategoryStoredState = categoryStateMap.get(categoryKey);
-  let isOpenValue: ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue = false;
+  let initialOpenValue: ThemeDocSidebarItemCategoryDocSidebarItemCategoryInitialOpenValue = false;
 
   if (storedState !== undefined) {
-    isOpenValue = storedState;
+    initialOpenValue = storedState;
   }
 
   if (isActive === true) {
-    isOpenValue = true;
+    initialOpenValue = true;
   }
+
+  const openState: ThemeDocSidebarItemCategoryDocSidebarItemCategoryOpenState = useState<ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue>(initialOpenValue);
+  const isOpenValue: ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue = openState[0];
+  const setIsOpenValue: ThemeDocSidebarItemCategoryDocSidebarItemCategorySetIsOpenValue = openState[1];
+
+  // Reopen this category when the active path moves into it.
+  useEffect(() => {
+    if (isActive === true) {
+      setIsOpenValue(true);
+    }
+
+    return undefined;
+  }, [isActive]);
+
+  const collapseCategoryAriaLabel: ThemeDocSidebarItemCategoryDocSidebarItemCategoryCollapseCategoryAriaLabel = translate(
+    {
+      id: 'theme.DocSidebarItem.collapseCategoryAriaLabel',
+      message: 'Collapse sidebar category \'{label}\'',
+      description: 'The ARIA label of the toggle on a collapsible doc sidebar category when it is currently expanded',
+    },
+    { label },
+  );
+  const expandCategoryAriaLabel: ThemeDocSidebarItemCategoryDocSidebarItemCategoryExpandCategoryAriaLabel = translate(
+    {
+      id: 'theme.DocSidebarItem.expandCategoryAriaLabel',
+      message: 'Expand sidebar category \'{label}\'',
+      description: 'The ARIA label of the toggle on a collapsible doc sidebar category when it is currently collapsed',
+    },
+    { label },
+  );
+  const summaryAriaLabel: ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryAriaLabel = (isOpenValue === true) ? collapseCategoryAriaLabel : expandCategoryAriaLabel;
 
   /**
    * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Handle Toggle.
@@ -194,6 +233,8 @@ function DocSidebarItemCategory(props: ThemeDocSidebarItemCategoryDocSidebarItem
   function handleToggle(toggleEvent: ThemeDocSidebarItemCategoryDocSidebarItemCategoryToggleEvent) {
     const detailsElement: ThemeDocSidebarItemCategoryDocSidebarItemCategoryDetailsElement = toggleEvent.currentTarget;
     const isOpen: ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpen = detailsElement.open;
+
+    setIsOpenValue(isOpen);
 
     categoryStateMap.set(categoryKey, isOpen);
 
@@ -231,7 +272,10 @@ function DocSidebarItemCategory(props: ThemeDocSidebarItemCategoryDocSidebarItem
   }
 
   return (
-    <li className="nova-sidebar-item nova-sidebar-category">
+    <li
+      className={(props['className'] !== undefined) ? `nova-sidebar-item nova-sidebar-category ${props['className']}` : 'nova-sidebar-item nova-sidebar-category'}
+      style={props['style']}
+    >
       <details
         className="nova-sidebar-category-details"
         open={(isOpenValue === true) ? true : undefined}
@@ -239,6 +283,7 @@ function DocSidebarItemCategory(props: ThemeDocSidebarItemCategoryDocSidebarItem
       >
         <summary
           className="nova-sidebar-category-summary"
+          aria-label={summaryAriaLabel}
           onClick={(summaryClickEvent: ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryClickEvent) => {
             const clickTarget: ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryClickTarget = summaryClickEvent.target as ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryClickTarget;
 

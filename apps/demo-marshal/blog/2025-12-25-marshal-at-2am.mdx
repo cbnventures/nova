@@ -1,0 +1,54 @@
+---
+title: "Marshal at 2am, on the night before the holiday"
+authors:
+  - "cordelia"
+tags:
+  - "scheduled-stewardship"
+  - "automation"
+date: "2025-12-25"
+---
+
+The cron job ran at 02:00 UTC on the night before the holiday. Twelve thousand stale threads were sealed. Forty-seven were flagged for senior review and parked. The maintainers slept through it.
+
+{/* truncate */}
+
+There is no incident report. There is no commendation. There is a docket entry that reads *STAMPED 02:00:00 UTC: thread-archival policy invoked, 12,047 sealed, 47 deferred*. The clerk does not require thanks.
+
+The schedule was filed in 2024 and has not been altered since. The cadence is nightly; the window is 02:00–04:00 UTC; the action is the standard archival pass. The holiday was not a parameter the schedule recognised. The schedule does not know which day of the year it is, in any sense beyond the calendar. The clerk read the policy at 02:00, found 12,094 threads matching the rule, and proceeded. The clerk did not pause for the holiday. The clerk did not pause for the snow that was falling, in three of the time zones the maintainers were sleeping in.
+
+The archival policy is not new. It has run, at the same hour, every night for two years. Most nights it processes between two and four hundred threads. The night before the holiday it processed twelve thousand because the contributors had been opening fewer issues for the previous week and the existing backlog had aged into the threshold. The clerk did not notice the difference in volume in any sense beyond the count it wrote into the docket. Twelve thousand was a larger number than the previous night's three hundred. The clerk wrote both numbers in the same shape:
+
+```yaml title="dockets/stewardship/2025-12-25.yml"
+- id: STW-2025-12-25-0001
+  timestamp: 2025-12-25T02:00:00Z
+  policy: stale-thread-archival@v3
+  action: RECEIVED
+  scope: org/*
+  matched: 12094
+
+- id: STW-2025-12-25-0002
+  timestamp: 2025-12-25T02:14:22Z
+  policy: stale-thread-archival@v3
+  action: ARCHIVED
+  scope: org/*
+  sealed: 12047
+  deferred: 47
+  reason-deferred: senior-review-required
+  duration: 14m22s
+  seal: sha256:c5d26f8e9c3b7a1f4e8d2b5c0a3f9b4e
+```
+
+The forty-seven deferrals are filed separately. Each is a thread that matched the archival rule but also matched a `requires-senior-review` flag — usually because the thread had been touched by a senior maintainer in its lifetime, or because it referenced an open security advisory, or because it had been linked to from an external incident report. The clerk does not act on those. The clerk parks them in a queue called `stewardship-deferred`, where they wait until a senior maintainer reads them.
+
+```bash
+$ marshal docket query --docket stewardship-deferred --since 2025-12-25 --until 2025-12-26
+COUNT  REASON                              OLDEST                  NEWEST
+12     senior-author                       2024-08-14              2024-12-22
+8      security-advisory-linked            2024-11-01              2024-12-19
+14     external-incident-linked            2024-09-30              2024-12-21
+13     repeated-deferral                   2024-07-22              2024-12-23
+```
+
+The first deferral in the table is from August 2024 and has been deferred sixteen times. The senior maintainer reads the docket on the second working day after the holiday, sees the thirteen `repeated-deferral` items, and decides individually for each whether to clear the deferral or amend the policy to handle the case automatically. The decision is itself a docket entry. The cycle continues.
+
+The maintainers slept through the run because the run did not require them. The run required only the policy, the clerk, and the docket. All three were present at 02:00 UTC. The seal is permanent. The holiday is unchanged.

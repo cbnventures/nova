@@ -1,6 +1,7 @@
 import type { IconifyIcon } from '@iconify/react/offline';
+import type { CSSProperties } from 'react';
 
-import type { SharedPresetFooter } from '../../shared.d.ts';
+import type { SharedPresetCta, SharedPresetFooter } from '../../shared.d.ts';
 
 /**
  * Theme - Footer.
@@ -59,7 +60,16 @@ export type ThemeFooterFooterObjectCopyright = string;
 
 export type ThemeFooterFooterObjectCredit = boolean;
 
-export type ThemeFooterFooterObjectCta = string | undefined;
+export type ThemeFooterCtaObjectLabel = string;
+
+export type ThemeFooterCtaObjectHref = string;
+
+export type ThemeFooterCtaObject = {
+  label: ThemeFooterCtaObjectLabel;
+  href: ThemeFooterCtaObjectHref;
+};
+
+export type ThemeFooterFooterObjectCta = string | ThemeFooterCtaObject | undefined;
 
 export type ThemeFooterFooterObject = {
   sections: ThemeFooterFooterObjectSections;
@@ -68,6 +78,16 @@ export type ThemeFooterFooterObject = {
   copyright: ThemeFooterFooterObjectCopyright;
   credit: ThemeFooterFooterObjectCredit;
   cta?: ThemeFooterFooterObjectCta;
+};
+
+export type ThemeFooterPropsClassName = string | undefined;
+
+export type ThemeFooterPropsStyle = CSSProperties | undefined;
+
+export type ThemeFooterProps = {
+  className?: ThemeFooterPropsClassName;
+  style?: ThemeFooterPropsStyle;
+  [key: string]: unknown;
 };
 
 export type ThemeFooterThemeConfigCast = unknown;
@@ -80,6 +100,8 @@ export type ThemeFooterIndexGlobalData = Record<string, unknown>;
 
 export type ThemeFooterIndexFooterVariant = SharedPresetFooter;
 
+export type ThemeFooterIndexPresetCta = SharedPresetCta;
+
 export type ThemeFooterIndexVariantPropsSections = ThemeFooterSections;
 
 export type ThemeFooterIndexVariantPropsLayout = ThemeFooterLayout;
@@ -90,7 +112,17 @@ export type ThemeFooterIndexVariantPropsCopyright = string;
 
 export type ThemeFooterIndexVariantPropsCredit = boolean;
 
-export type ThemeFooterIndexVariantPropsCta = string | undefined;
+export type ThemeFooterIndexVariantPropsCta = string | ThemeFooterCtaObject | undefined;
+
+export type ThemeFooterIndexVariantPropsCtaContained = boolean;
+
+export type ThemeFooterIndexVariantPropsClassName = string | undefined;
+
+export type ThemeFooterIndexRawCopyright = string;
+
+export type ThemeFooterIndexLocalizedCopyright = string;
+
+export type ThemeFooterIndexVariantPropsStyle = CSSProperties | undefined;
 
 export type ThemeFooterIndexVariantProps = {
   sections: ThemeFooterIndexVariantPropsSections;
@@ -99,4 +131,7 @@ export type ThemeFooterIndexVariantProps = {
   copyright: ThemeFooterIndexVariantPropsCopyright;
   credit: ThemeFooterIndexVariantPropsCredit;
   cta?: ThemeFooterIndexVariantPropsCta;
+  ctaContained: ThemeFooterIndexVariantPropsCtaContained;
+  className?: ThemeFooterIndexVariantPropsClassName;
+  style?: ThemeFooterIndexVariantPropsStyle;
 };

@@ -1,5 +1,11 @@
 import type { OptionsPluginOptions } from '../options.d.ts';
-import type { SharedPreset, SharedPresetFooter, SharedPresetNavbar } from '../shared.d.ts';
+import type {
+  SharedPreset,
+  SharedPresetColorsAccent,
+  SharedPresetColorsPrimary,
+  SharedPresetFooter,
+  SharedPresetNavbar,
+} from '../shared.d.ts';
 
 /**
  * Tests - Options - Resolve Preset.
@@ -12,15 +18,9 @@ export type TestsOptionsResolvedFontsDisplay = string;
 
 export type TestsOptionsResolvedFontsBody = string;
 
-export type TestsOptionsResolvedShapeRadius = string;
+export type TestsOptionsResolvedColorsPrimary = SharedPresetColorsPrimary;
 
-export type TestsOptionsResolvedMotionSpeed = string;
-
-export type TestsOptionsResolvedColorsPrimary = string;
-
-export type TestsOptionsResolvedColorsAccent = string;
-
-export type TestsOptionsResolvedColorsNeutral = string;
+export type TestsOptionsResolvedColorsAccent = SharedPresetColorsAccent;
 
 export type TestsOptionsResolvedNavbar = SharedPresetNavbar;
 
@@ -85,3 +85,17 @@ export type TestsOptionsThemeConfigValidatedBlogLayoutDescription = string;
 export type TestsOptionsThemeConfigValidatedNavbar = Record<string, unknown>;
 
 export type TestsOptionsThemeConfigValidatedNavbarHideOnScroll = boolean;
+
+export type TestsOptionsThemeConfigValidatedErrorPages = Record<string, unknown>;
+
+export type TestsOptionsThemeConfigValidatedErrorPagesNotFound = Record<string, unknown>;
+
+export type TestsOptionsThemeConfigValidatedErrorPagesNotFoundTitle = string;
+
+export type TestsOptionsThemeConfigValidatedErrorPagesErrorPageContent = Record<string, unknown>;
+
+export type TestsOptionsThemeConfigValidatedErrorPagesErrorPageContentTitle = string;
+
+export type TestsOptionsThemeConfigValidatedErrorPagesError = Record<string, unknown>;
+
+export type TestsOptionsThemeConfigValidatedErrorPagesErrorRetryLabel = string;

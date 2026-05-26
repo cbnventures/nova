@@ -1,0 +1,251 @@
+/**
+ * Marshal - `BlogPostItem` theme overlay.
+ *
+ * Each post is a flat ledger sheet - hairline border, 2px corners, NO shadow.
+ * Header carries a mono uppercase seal-red eyebrow date, bold Plex Serif
+ * titles, oldstyle author meta, and a primary-700 read-more eyebrow.
+ *
+ * Documentary aged-paper voice - clamp-based post title (1.75->2.25rem)
+ * for Plex Serif scaling, weighty 1.35rem card title, 0.95 / 1.7 content
+ * rhythm.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 0. Preset-owned blog-post typography tokens
+ * ============================
+ */
+
+:root {
+  --nova-marshal-blog-post-title-size: clamp(1.75rem, 3vw, 2.25rem);
+  --nova-marshal-blog-post-title-size-md: clamp(1.75rem, 3vw, 2.25rem);
+  --nova-marshal-blog-card-title-size: 1.35rem;
+  --nova-marshal-blog-card-title-size-md: 1.4375rem;
+  --nova-marshal-blog-date-size: 0.65rem;
+  --nova-marshal-blog-content-size: 0.95rem;
+  --nova-marshal-blog-content-line-height: 1.7;
+  --nova-marshal-blog-author-size: 0.85rem;
+  --nova-marshal-blog-read-more-size: 0.7rem;
+  --nova-marshal-blog-footer-spacing-top: 2rem;
+}
+
+/**
+ * ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogPostItem + below
+ * ============================
+ */
+
+:root {
+  --nova-blog-post-title-size: var(--nova-marshal-blog-post-title-size);
+  --nova-blog-post-title-size-md: var(--nova-marshal-blog-post-title-size-md);
+  --nova-blog-card-title-size: var(--nova-marshal-blog-card-title-size);
+  --nova-blog-card-title-size-md: var(--nova-marshal-blog-card-title-size-md);
+  --nova-blog-date-size: var(--nova-marshal-blog-date-size);
+  --nova-blog-content-size: var(--nova-marshal-blog-content-size);
+  --nova-blog-content-line-height: var(--nova-marshal-blog-content-line-height);
+  --nova-blog-author-size: var(--nova-marshal-blog-author-size);
+  --nova-blog-read-more-size: var(--nova-marshal-blog-read-more-size);
+  --nova-blog-footer-spacing-top: var(--nova-marshal-blog-footer-spacing-top);
+}
+
+/**
+ * ============================
+ * 1. Item - flat paper sheet
+ * ============================
+ */
+
+.nova-blog-post-item {
+  padding: 1rem;
+
+  background-color: var(--nova-color-surface-raised);
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+
+  transition: border-color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease;
+}
+
+@media (min-width: 480px) {
+  .nova-blog-post-item {
+    padding: 1.5rem;
+  }
+}
+
+.nova-blog-post-item:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), #ffffff 96%);
+  border-color: var(--nova-color-primary-700);
+}
+
+[data-theme="dark"] .nova-blog-post-item {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 92%);
+  border-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-post-item:hover {
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-marshal-bg) 90%);
+  border-color: var(--nova-color-primary-400);
+}
+
+@media (min-width: 768px) {
+  .nova-blog-post-item {
+    padding: 2rem;
+  }
+}
+
+/**
+ * ============================
+ * 2. Header - date eyebrow + title
+ * ============================
+ */
+
+.nova-blog-post-item-header time {
+  display: block;
+  margin-bottom: 0.5rem;
+
+  font-family: var(--nova-font-code);
+  font-size: var(--nova-blog-date-size, 0.65rem);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-blog-post-item-header time {
+  color: var(--nova-color-accent-500);
+}
+
+/* h1 size flows from shared CSS via canonical token
+   (--nova-blog-post-title-size); h2 size is consumed below in this
+   overlay. */
+.nova-blog-post-item-header h1,
+.nova-blog-post-item-header h2 {
+  margin: 0 0 0.75rem;
+
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--nova-marshal-ink);
+}
+
+.nova-blog-post-item-header h1 {
+  letter-spacing: -0.02em;
+}
+
+.nova-blog-post-item-header h2 {
+  font-size: var(--nova-blog-card-title-size, 1.35rem);
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .nova-blog-post-item-header h2 {
+    font-size: var(--nova-blog-card-title-size-md, 1.4375rem);
+  }
+}
+
+.nova-blog-post-item-header h2 a {
+  color: inherit;
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-item-header h2 a:hover,
+.nova-blog-post-item-header h2 a:focus-visible {
+  color: var(--nova-color-primary-700);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-post-item-header h2 a:hover,
+[data-theme="dark"] .nova-blog-post-item-header h2 a:focus-visible {
+  color: var(--nova-color-primary-300);
+}
+
+/**
+ * ============================
+ * 3. Authors - oldstyle byline
+ * ============================
+ */
+
+.nova-blog-post-item-authors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.nova-blog-post-item-author {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nova-blog-post-item-author img {
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+}
+
+.nova-blog-post-item-author span,
+.nova-blog-post-item-author-link {
+  font-family: var(--nova-font-body);
+  font-size: var(--nova-blog-author-size, 0.85rem);
+  font-variant-numeric: oldstyle-nums;
+  color: var(--nova-marshal-ink-muted);
+}
+
+/**
+ * ============================
+ * 4. Content - body copy
+ * ============================
+ */
+
+.nova-blog-post-item-content {
+  font-family: var(--nova-font-body);
+  font-size: var(--nova-blog-content-size, 0.95rem);
+  line-height: var(--nova-blog-content-line-height, 1.7);
+  color: var(--nova-marshal-ink);
+}
+
+/**
+ * ============================
+ * 5. Footer - hairline rule + read-more
+ * ============================
+ */
+
+.nova-blog-post-item-footer {
+  margin-top: var(--nova-blog-footer-spacing-top, 2rem);
+  padding-top: 1.5rem;
+
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-blog-post-item-footer {
+  border-top-color: var(--nova-marshal-border);
+}
+
+.nova-blog-post-item-read-more {
+  font-family: var(--nova-font-code);
+  font-size: var(--nova-blog-read-more-size, 0.7rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--nova-color-primary-700);
+
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+.nova-blog-post-item-read-more:hover,
+.nova-blog-post-item-read-more:focus-visible {
+  color: var(--nova-color-primary-800);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-blog-post-item-read-more {
+  color: var(--nova-color-primary-300);
+}
+
+[data-theme="dark"] .nova-blog-post-item-read-more:hover,
+[data-theme="dark"] .nova-blog-post-item-read-more:focus-visible {
+  color: var(--nova-color-primary-200);
+}

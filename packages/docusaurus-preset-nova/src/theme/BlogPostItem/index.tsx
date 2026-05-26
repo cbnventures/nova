@@ -31,6 +31,7 @@ import type {
   ThemeBlogPostItemBlogPostItemReadingTime,
   ThemeBlogPostItemBlogPostItemReadingTimeLabel,
   ThemeBlogPostItemBlogPostItemReadMore,
+  ThemeBlogPostItemBlogPostItemReadMoreAriaLabel,
   ThemeBlogPostItemBlogPostItemSharePlatforms,
   ThemeBlogPostItemBlogPostItemShareUrl,
   ThemeBlogPostItemBlogPostItemTag,
@@ -105,9 +106,20 @@ function BlogPostItem(props: ThemeBlogPostItemBlogPostItemProps) {
     message: 'Read more',
     description: 'The label for the read more link on truncated blog posts',
   });
+  const readMoreAriaLabel: ThemeBlogPostItemBlogPostItemReadMoreAriaLabel = translate(
+    {
+      id: 'theme.blog.post.readMoreLabel',
+      message: 'Read more about {title}',
+      description: 'The ARIA label for the read more link on truncated blog posts, naming the destination post',
+    },
+    { title },
+  );
 
   return (
-    <article className={articleClassName}>
+    <article
+      className={(props['className'] !== undefined) ? `${articleClassName} ${props['className']}` : articleClassName}
+      style={props['style']}
+    >
       <header className="nova-blog-post-item-header">
         <time dateTime={date}>
           {formattedDate}
@@ -201,7 +213,7 @@ function BlogPostItem(props: ThemeBlogPostItemBlogPostItemProps) {
             </div>
           )}
           {(hasTruncateMarker === true) && (
-            <Link className="nova-blog-post-item-read-more" to={permalink}>
+            <Link className="nova-blog-post-item-read-more" to={permalink} aria-label={readMoreAriaLabel}>
               {readMoreLabel}
             </Link>
           )}

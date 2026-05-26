@@ -1,0 +1,12 @@
+/**
+ * Lantern - `typewriter` component overlay.
+ *
+ * Cycling text component (used in heroes / slogans). Each preset picks
+ * its own typography for the cycling word.
+ *
+ * @since 0.18.0
+ */
+
+.nova-typewriter > * {
+  font-family: var(--nova-font-display);
+}

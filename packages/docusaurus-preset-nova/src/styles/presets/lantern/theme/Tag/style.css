@@ -1,0 +1,38 @@
+/**
+ * Lantern - `Tag` theme overlay.
+ *
+ * The `.nova-tag` base pill is already defined in preset.css; this overlay
+ * adds hover warmth.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Tag pill - hover glow
+ * ============================
+ */
+
+.nova-tag {
+  transition: background-color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease,
+              color var(--nova-motion-duration) ease;
+}
+
+.nova-tag:hover,
+.nova-tag:focus-visible {
+  color: var(--nova-color-primary-900);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
+  border-color: var(--nova-color-primary-500);
+
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-tag:hover,
+[data-theme="dark"] .nova-tag:focus-visible {
+  color: var(--nova-color-primary-200);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 70%);
+  border-color: var(--nova-color-primary-400);
+}

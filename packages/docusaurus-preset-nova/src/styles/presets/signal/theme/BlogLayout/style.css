@@ -1,0 +1,37 @@
+/**
+ * Signal - `BlogLayout` theme overlay.
+ *
+ * Defines per-preset blog typography tokens consumed by the shared
+ * theme/BlogLayout/style.css. Color tokens for blog typography live in
+ * preset.css.
+ *
+ * Terminal-density voice - smallest heading (1.25rem mobile / 1.5rem md
+ * matches signal's body h2 exactly), terminal-cramped 0.125rem spacing,
+ * smallest description (0.8125rem) at tightest line-height (1.5).
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned blog typography tokens
+ * ============================ */
+
+:root {
+  --nova-signal-blog-header-heading-size: 1.25rem;
+  --nova-signal-blog-header-heading-size-md: 1.5rem;
+  --nova-signal-blog-header-heading-spacing: 0.125rem;
+  --nova-signal-blog-description-size: 0.8125rem;
+  --nova-signal-blog-description-line-height: 1.5;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogLayout
+ * ============================ */
+
+:root {
+  --nova-blog-header-heading-size: var(--nova-signal-blog-header-heading-size);
+  --nova-blog-header-heading-size-md: var(--nova-signal-blog-header-heading-size-md);
+  --nova-blog-header-heading-spacing: var(--nova-signal-blog-header-heading-spacing);
+  --nova-blog-description-size: var(--nova-signal-blog-description-size);
+  --nova-blog-description-line-height: var(--nova-signal-blog-description-line-height);
+}

@@ -54,7 +54,11 @@ function Layout(props: ThemeLayoutProps) {
 
       <Navbar />
 
-      <div id={SkipToContentFallbackId}>
+      <div
+        id={SkipToContentFallbackId}
+        className={(props['className'] !== undefined) ? `nova-layout ${props['className']}` : 'nova-layout'}
+        style={props['style']}
+      >
         <ErrorBoundary
           fallback={(params) => (
             <ErrorPageContent

@@ -85,15 +85,33 @@ const config: DocusaurusNovaConfig = {
   // Internationalization.
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: [
+      'en',
+      'zh-Hans',
+      'ar',
+    ],
     path: 'i18n',
     localeConfigs: {
-      en: {
+      'en': {
         label: 'English',
         direction: 'ltr',
         htmlLang: 'en-US',
         calendar: 'gregory',
         path: 'en',
+      },
+      'zh-Hans': {
+        label: '简体中文',
+        direction: 'ltr',
+        htmlLang: 'zh-CN',
+        calendar: 'gregory',
+        path: 'zh-Hans',
+      },
+      'ar': {
+        label: 'العربية',
+        direction: 'rtl',
+        htmlLang: 'ar',
+        calendar: 'gregory',
+        path: 'ar',
       },
     },
   },
@@ -128,26 +146,16 @@ const config: DocusaurusNovaConfig = {
       overrides: {
         colors: {
           primary: undefined,
-          accent: undefined,
-          neutral: undefined,
+          secondary: undefined,
+          text: undefined,
+          border: undefined,
+          warning: undefined,
+          danger: undefined,
         },
         fonts: {
           display: undefined,
           body: undefined,
           code: undefined,
-        },
-        shape: {
-          radius: undefined,
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: undefined,
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
         },
         navbar: undefined,
         footer: undefined,
@@ -161,6 +169,19 @@ const config: DocusaurusNovaConfig = {
           editUrl: 'https://github.com/cbnventures/nova/tree/main/apps/demo-sentinel/',
           showLastUpdateTime: true,
           showLastUpdateAuthor: true,
+          lastVersion: 'current',
+          versions: {
+            'current': {
+              label: 'Current',
+              badge: false,
+              banner: 'none',
+            },
+            '1.0.0': {
+              label: '1.0.0',
+              badge: true,
+              banner: 'unmaintained',
+            },
+          },
         },
         blog: {
           showReadingTime: true,
@@ -180,7 +201,11 @@ const config: DocusaurusNovaConfig = {
             description: 'Threat research, posture advisories, and the philosophy of continuous trust.',
           },
         },
-        pages: undefined,
+        pages: {
+          editUrl: 'https://github.com/cbnventures/nova/tree/main/apps/demo-sentinel/',
+          showLastUpdateTime: true,
+          showLastUpdateAuthor: true,
+        },
         sitemap: {
           lastmod: 'date',
           changefreq: 'weekly',
@@ -225,11 +250,18 @@ const config: DocusaurusNovaConfig = {
       title: 'Sentinel',
       logo: {
         alt: undefined,
-        src: undefined,
-        srcDark: undefined,
+        src: {
+          light: '/images/logo.svg',
+          dark: undefined,
+        },
         href: undefined,
-        wordmark: undefined,
-        wordmarkDark: undefined,
+        target: undefined,
+        rel: undefined,
+        ariaLabel: undefined,
+        wordmark: {
+          light: undefined,
+          dark: undefined,
+        },
         title: undefined,
       },
       image: '/thumbnails/brand.png',
@@ -253,14 +285,13 @@ const config: DocusaurusNovaConfig = {
 
     // Navbar.
     navbar: {
-      title: 'Sentinel',
       hideOnScroll: false,
       items: [
         {
           label: 'Docs',
           position: 'left',
           type: 'doc',
-          docId: 'platform-overview',
+          docId: 'overview',
           icon: 'lucide:book-open',
         },
         {
@@ -275,6 +306,7 @@ const config: DocusaurusNovaConfig = {
           position: 'left',
           type: undefined,
           to: '/docs/category/trust/',
+          activeBaseRegex: '^/docs/(category/)?trust(/|$)',
           icon: 'lucide:shield',
         },
         {
@@ -283,6 +315,17 @@ const config: DocusaurusNovaConfig = {
           type: undefined,
           to: '/blog/',
           icon: 'lucide:pen-line',
+        },
+        {
+          label: 'Manifesto',
+          position: 'left',
+          type: undefined,
+          to: '/manifesto',
+          icon: 'lucide:scroll-text',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
         },
         {
           label: 'GitHub',
@@ -331,8 +374,8 @@ const config: DocusaurusNovaConfig = {
 
     // Announcement Bar.
     announcementBar: {
-      id: 'sentinel-compliance',
-      content: 'Sentinel now supports SOC 2 and ISO 27001 compliance policies.',
+      id: 'sentinel-continuous-2',
+      content: '98 continuously monitored controls. SOC 2 and ISO 27001 ready.',
       backgroundColor: undefined,
       textColor: undefined,
       isCloseable: true,
@@ -341,13 +384,31 @@ const config: DocusaurusNovaConfig = {
     // Back to Top Button.
     backToTopButton: true,
 
+    // Error Pages - overrides Nova's randomized defaults with consumer copy.
+    // Any unset field falls through to the Nova-flavored randomized pool.
+    errorPages: {
+      notFound: {
+        title: 'Route not found in this region.',
+        description: 'We could not match this URL to any monitored endpoint.',
+        backHomeLabel: 'Back to the dashboard',
+        backHomeHref: undefined,
+      },
+      errorPageContent: {
+        title: 'Trust check failed on this page.',
+        retryLabel: 'Re-run the check',
+      },
+      error: {
+        retryLabel: 'Retry the check',
+      },
+    },
+
     // Footer.
     footer: {
       sections: {
-        platform: [
+        sentinel: [
           {
             label: 'Getting Started',
-            href: '/docs/platform-overview/',
+            href: '/docs/overview/',
           },
           {
             label: 'Installation',
@@ -394,9 +455,9 @@ const config: DocusaurusNovaConfig = {
         ],
       },
       layout: {
-        platform: {
-          title: 'Platform',
-          section: 'platform',
+        sentinel: {
+          title: 'Sentinel',
+          section: 'sentinel',
         },
         security: {
           title: 'Security',
@@ -413,7 +474,7 @@ const config: DocusaurusNovaConfig = {
       },
       socialLinks: [
         {
-          icon: 'mdi:facebook',
+          icon: 'ri:facebook-fill',
           href: 'https://www.facebook.com/cbnventures',
           label: 'Facebook',
         },
@@ -423,34 +484,37 @@ const config: DocusaurusNovaConfig = {
           label: 'X',
         },
         {
-          icon: 'mdi:youtube',
+          icon: 'ri:youtube-fill',
           href: 'https://www.youtube.com/@cbnventures',
           label: 'YouTube',
         },
         {
-          icon: 'mdi:instagram',
+          icon: 'ri:instagram-fill',
           href: 'https://www.instagram.com/cbnventures/',
           label: 'Instagram',
         },
         {
-          icon: 'mdi:github',
+          icon: 'ri:github-fill',
           href: 'https://github.com/cbnventures',
           label: 'GitHub',
         },
         {
-          icon: 'mdi:google-play',
+          icon: 'ri:google-play-fill',
           href: 'https://play.google.com/store/apps/dev?id=6419450160526226105',
           label: 'Google Play',
         },
         {
-          icon: 'mdi:linkedin',
+          icon: 'ri:linkedin-fill',
           href: 'https://www.linkedin.com/company/cbnventures/',
           label: 'LinkedIn',
         },
       ],
       copyright: `Copyright \u00A9 2025-${String(new Date().getFullYear())} CBN Ventures LLC. All Rights Reserved.`,
       credit: true,
-      cta: undefined,
+      cta: {
+        label: 'Ready to harden?',
+        href: 'https://nova.cbnventures.io',
+      },
     },
   },
 };

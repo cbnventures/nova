@@ -1,0 +1,57 @@
+---
+title: "What a public ledger feels like, after a year of using one"
+authors:
+  - "cordelia"
+tags:
+  - "dockets"
+  - "philosophy"
+date: "2025-08-15"
+---
+
+A public ledger feels different from a private spreadsheet. Not because the rules change — they do not — but because everyone reading the rules knows the same things you know.
+
+{/* truncate */}
+
+Contributors stopped asking *was this archived on purpose?* The docket already says so. Maintainers stopped writing *the bot did this* in PR comments. The bot has a name. It signed the entry.
+
+A year of public dockets has produced a small but measurable change in how questions are asked. The questions have not gone away; they have moved earlier. A contributor who would once have opened an issue asking *why was my PR closed?* now opens an issue asking *I read the docket entry and the rule it cites — could the rule be revised so this case is not closed?* The first question is a complaint, addressed to a person. The second question is a proposal, addressed to a policy. Both are valid. Only the second is actionable, in the sense that a policy can be amended, sealed, and re-filed, and the next case of its kind will be handled differently.
+
+The maintainers, in turn, have stopped explaining the bot's behaviour in comments. There is nothing to explain. The docket entry includes the policy reference; the policy reference resolves to a sealed document; the sealed document contains the rule that produced the closure. A maintainer who is asked *why did this happen* answers with a link, not a paragraph.
+
+The policy log is itself a public document, and looks something like this in summary:
+
+```yaml title="docs/dockets/policy-log.yml"
+- name: approval-stamps
+  versions: [v1]
+  sealed-by: dimitri
+  first-sealed: 2022-03-14
+  invocations-q3-2025: 5,402
+
+- name: stale-thread-archival
+  versions: [v1, v2, v3]
+  sealed-by: cordelia
+  first-sealed: 2022-09-01
+  current-since: 2024-06-12
+  invocations-q3-2025: 12,884
+
+- name: access-tiers
+  versions: [v1, v2, v3, v4]
+  sealed-by: dimitri
+  first-sealed: 2023-01-08
+  current-since: 2024-08-01
+  invocations-q3-2025: 5,318
+
+- name: duplicate-incident-suppression
+  versions: [v1]
+  sealed-by: yuki
+  first-sealed: 2024-12-21
+  invocations-q3-2025: 1,402
+```
+
+Every policy in the log has been sealed by a named maintainer, on a named date, with a version number. A reader who wants to know how a particular case was handled reads the entry, follows the policy reference to the version, and reads the rule. The reader does not need to ask anyone. The reader does not need permission. The reader is, in this respect, indistinguishable from the auditor.
+
+What we did not anticipate, before the docket was made public, was the way our own behaviour as maintainers would change. We stopped writing rules that we would not be willing to defend in writing. We stopped sealing policies whose preconditions we could not articulate. We stopped invoking policies by hand, because every invocation was visible, and a hand-invoked policy carries a different stamp than a clerk-invoked one — `STAMPED-MANUAL` versus `STAMPED`. The two are filed differently. Both are visible. The difference is meant to be visible.
+
+A year on, the manual stamp is rarer than it was. We invoke policies by hand only when the clerk's preconditions do not match a case we believe should still be acted on. Each manual invocation is a small confession that the policy is incomplete. We try to reduce the count by amending the policy, when we can, and accepting the manual stamp when we cannot.
+
+The ledger is public. The seal is permanent. The questions arrive earlier. The work is the same.

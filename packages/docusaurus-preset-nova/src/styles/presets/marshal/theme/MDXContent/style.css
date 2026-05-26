@@ -1,0 +1,216 @@
+/**
+ * Marshal - `MDXContent` theme overlay.
+ *
+ * The article body - paragraphs, lists, blockquotes, hr - set as archival
+ * prose on paper. Generous line-height, oldstyle marker dots, hairline
+ * rules. Scoped to `.nova-mdx-content`, the wrapper class produced by
+ * `MDXContent`. Because `MDXContent` is mounted by `DocItem/Content`
+ * (docs), `BlogPostItem` (blog), and `MDXPage` (custom pages like
+ * `/manifesto`), the rules in this file apply to all three MDX surfaces -
+ * there is no parallel set in `DocItem/Content`. Note: `article h2::before`
+ * (section-sign N. counter) is already declared in preset.css and is intentionally
+ * untouched. The synthetic `.nova-doc-content-header` row is DocItem-only
+ * and stays in `DocItem/Content/style.css`.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Body wrapper
+ * ============================
+ */
+
+.nova-mdx-content {
+  font-family: var(--nova-font-body);
+  color: var(--nova-marshal-ink);
+}
+
+/**
+ * ============================
+ * 2. Paragraphs
+ * ============================
+ */
+
+/* Block-margin flows from shared theme/MDXContent via the canonical
+ * `--nova-mdx-paragraph-margin-block-end` token (marshal inherits the
+ * 1rem baseline so no preset+component override is defined). */
+.nova-mdx-content p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--nova-marshal-ink);
+}
+
+/**
+ * ============================
+ * 3. Strong and emphasis
+ * ============================
+ */
+
+.nova-mdx-content strong {
+  font-weight: 600;
+  color: var(--nova-marshal-ink);
+}
+
+.nova-mdx-content em {
+  font-style: italic;
+}
+
+/**
+ * ============================
+ * 4. Horizontal rule - double hairline ledger crease
+ * ============================
+ */
+
+.nova-mdx-content hr {
+  position: relative;
+
+  height: 0;
+  margin: 2rem 0;
+
+  border: none;
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+.nova-mdx-content hr::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 0;
+  right: 0;
+
+  border-top: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-mdx-content hr {
+  border-top-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-mdx-content hr::before {
+  border-top-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 5. Lists - square bullets, oldstyle nums
+ * ============================
+ */
+
+/* List padding-inline-start + block-margin + list-item margin flow from
+ * shared theme/MDXContent via canonical tokens (marshal inherits the
+ * 1.5rem / 1rem / 0.25rem baselines so no preset+component overrides
+ * are defined). */
+
+.nova-mdx-content li {
+  line-height: 1.75;
+}
+
+.nova-mdx-content ul > li::marker {
+  color: var(--nova-color-accent-700);
+}
+
+.nova-mdx-content ol {
+  font-variant-numeric: oldstyle-nums;
+}
+
+.nova-mdx-content ol > li::marker {
+  font-family: var(--nova-font-code);
+  font-weight: 600;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-mdx-content ul > li::marker,
+[data-theme="dark"] .nova-mdx-content ol > li::marker {
+  color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 6. Blockquote - official citation with accent-red rail
+ * ============================
+ */
+
+.nova-mdx-content blockquote {
+  margin: 1.5rem 0;
+  padding: 0.75rem 1.25rem;
+
+  font-family: var(--nova-font-body);
+  color: var(--nova-marshal-ink);
+
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-marshal-bg) 96%);
+  border-left: 4px solid var(--nova-color-accent-700);
+  border-radius: 0;
+}
+
+@media (min-width: 768px) {
+  .nova-mdx-content blockquote {
+    padding: 1rem 1.5rem;
+  }
+}
+
+[data-theme="dark"] .nova-mdx-content blockquote {
+  background-color: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-marshal-bg) 90%);
+  border-left-color: var(--nova-color-accent-500);
+}
+
+/**
+ * ============================
+ * 7. Tables - hairline ledger grid
+ * ============================
+ */
+
+.nova-mdx-content table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+
+  font-family: var(--nova-font-body);
+  font-variant-numeric: tabular-nums;
+
+  border: 1px solid var(--nova-marshal-border);
+  border-radius: 2px;
+}
+
+.nova-mdx-content thead {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 30%);
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+.nova-mdx-content th,
+.nova-mdx-content td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--nova-marshal-border);
+}
+
+.nova-mdx-content td {
+  color: var(--nova-marshal-ink);
+}
+
+.nova-mdx-content th {
+  font-family: var(--nova-font-code);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--nova-color-accent-700);
+}
+
+[data-theme="dark"] .nova-mdx-content thead {
+  background-color: color-mix(in srgb, #ffffff, var(--nova-marshal-bg) 86%);
+  border-bottom-color: var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-mdx-content th {
+  color: var(--nova-color-accent-500);
+}
+
+[data-theme="dark"] .nova-mdx-content table,
+[data-theme="dark"] .nova-mdx-content th,
+[data-theme="dark"] .nova-mdx-content td {
+  border-color: var(--nova-marshal-border);
+}
+
+.nova-mdx-content tbody tr:last-child td {
+  border-bottom: none;
+}

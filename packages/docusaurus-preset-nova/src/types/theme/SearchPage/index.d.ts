@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from 'react';
+import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 
 import type { SharedSearchWorkerSearchHit } from '../../shared.d.ts';
 
@@ -7,7 +7,15 @@ import type { SharedSearchWorkerSearchHit } from '../../shared.d.ts';
  *
  * @since 0.15.0
  */
-export type ThemeSearchPageSearchPageProps = Record<string, unknown>;
+export type ThemeSearchPageSearchPagePropsClassName = string | undefined;
+
+export type ThemeSearchPageSearchPagePropsStyle = CSSProperties | undefined;
+
+export type ThemeSearchPageSearchPageProps = {
+  className?: ThemeSearchPageSearchPagePropsClassName;
+  style?: ThemeSearchPageSearchPagePropsStyle;
+  [key: string]: unknown;
+};
 
 export type ThemeSearchPageSearchPageDocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
 
@@ -29,7 +37,15 @@ export type ThemeSearchPageSearchPageQuery = string;
 
 export type ThemeSearchPageSearchPageSetQuery = Dispatch<SetStateAction<ThemeSearchPageSearchPageQuery>>;
 
+export type ThemeSearchPageSearchPageSearchedQueryState = [ThemeSearchPageSearchPageSearchedQuery, ThemeSearchPageSearchPageSetSearchedQuery];
+
+export type ThemeSearchPageSearchPageSearchedQuery = string;
+
+export type ThemeSearchPageSearchPageSetSearchedQuery = Dispatch<SetStateAction<ThemeSearchPageSearchPageSearchedQuery>>;
+
 export type ThemeSearchPageSearchPageDebounceTimerRef = React.RefObject<ReturnType<typeof setTimeout> | undefined>;
+
+export type ThemeSearchPageSearchPageDispatchedQueryRef = React.RefObject<string>;
 
 export type ThemeSearchPageSearchPageHandleInputChangeFunction = (event: ThemeSearchPageSearchPageInputChangeEvent) => void;
 
@@ -45,8 +61,18 @@ export type ThemeSearchPageSearchPageLoading = string;
 
 export type ThemeSearchPageSearchPageNoResults = string;
 
+export type ThemeSearchPageSearchPageSearching = string;
+
+export type ThemeSearchPageSearchPageResultCount = number;
+
+export type ThemeSearchPageSearchPageResultsFound = string;
+
 export type ThemeSearchPageSearchPageResultItem = SharedSearchWorkerSearchHit;
 
 export type ThemeSearchPageSearchPageResultUrl = string;
 
 export type ThemeSearchPageSearchPageResultIndex = number;
+
+export type ThemeSearchPageSearchPageSnippetSegment = SharedSearchWorkerSearchHit['snippetSegments'][number];
+
+export type ThemeSearchPageSearchPageSnippetSegmentIndex = number;

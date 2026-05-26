@@ -1,5 +1,27 @@
 /**
- * Doc Tags List Page — Shared structural styles.
+ * Doc Tags List Page - Shared structural styles.
  *
  * @since 0.15.0
  */
+
+/*
+ * Page padding - symmetric default scaled to each preset's section-gap
+ * pacing (defined in preset.css at three breakpoints). Presets whose
+ * identity calls for asymmetric breath (e.g. polished-SaaS Envoy with its
+ * gradient CTA, hands-on-industrial Foundry) override `padding-bottom`
+ * in their own theme/DocTagsListPage/style.css overlay; presets whose
+ * identity reads as balanced (Lantern paper, Marshal ledger, Sentinel
+ * dashboard, Signal horizon) inherit the symmetric default.
+ */
+.nova-doc-tags-list-page {
+  padding-block: var(--nova-section-gap);
+}
+
+/*
+ * Page-title heading - direct <Heading as="h1"> child of the page <main>,
+ * scoped here so spacing is governed by the page (not by the per-preset
+ * h1 element selector that targets in-article headings).
+ */
+.nova-doc-tags-list-page > .nova-heading {
+  margin-block: 0 1.5rem;
+}

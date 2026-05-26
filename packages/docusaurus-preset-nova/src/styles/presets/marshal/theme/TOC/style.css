@@ -1,0 +1,71 @@
+/**
+ * Marshal - `TOC` theme overlay.
+ *
+ * Sidebar table of contents - a marginal index of section anchors.
+ * Hairline left rule frames the column; entries are muted ink, warming
+ * to full ink on hover.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - marginal index
+ * ============================
+ */
+
+.nova-toc {
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--nova-marshal-border);
+}
+
+[data-theme="dark"] .nova-toc {
+  border-left-color: var(--nova-marshal-border);
+}
+
+/**
+ * ============================
+ * 2. List
+ * ============================
+ */
+
+/* moved to shared theme/TOC/style.css */
+
+.nova-toc-item {
+  margin: 0;
+}
+
+/**
+ * ============================
+ * 3. Link - anchor entry
+ * ============================
+ */
+
+.nova-toc-link {
+  display: block;
+  padding: 0.25rem 0;
+
+  font-family: var(--nova-font-body);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--nova-marshal-ink-muted);
+  text-decoration: none;
+
+  transition: color var(--nova-motion-duration) ease;
+}
+
+[data-theme="dark"] .nova-toc-link {
+  color: var(--nova-marshal-ink-muted);
+}
+
+.nova-toc-link:hover,
+.nova-toc-link:focus-visible {
+  color: var(--nova-marshal-ink);
+  text-decoration: none;
+}
+
+[data-theme="dark"] .nova-toc-link:hover,
+[data-theme="dark"] .nova-toc-link:focus-visible {
+  color: var(--nova-marshal-ink);
+}
+

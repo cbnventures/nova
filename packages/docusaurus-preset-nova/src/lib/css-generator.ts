@@ -1,14 +1,21 @@
 import { Color } from './color.js';
 
 import type {
-  LibCssGeneratorGenerateAccentColor,
-  LibCssGeneratorGenerateAccentLines,
-  LibCssGeneratorGenerateAccentScale,
+  LibCssGeneratorGenerateAccentDarkColor,
+  LibCssGeneratorGenerateAccentDarkLines,
+  LibCssGeneratorGenerateAccentDarkScale,
+  LibCssGeneratorGenerateAccentLightColor,
+  LibCssGeneratorGenerateAccentLightLines,
+  LibCssGeneratorGenerateAccentLightScale,
+  LibCssGeneratorGenerateBorderDark,
+  LibCssGeneratorGenerateBorderLight,
   LibCssGeneratorGenerateColorVariablesLines,
   LibCssGeneratorGenerateColorVariablesReturns,
   LibCssGeneratorGenerateColorVariablesScale,
   LibCssGeneratorGenerateColorVariablesScaleName,
   LibCssGeneratorGenerateColorVariablesShadeLevels,
+  LibCssGeneratorGenerateDangerDark,
+  LibCssGeneratorGenerateDangerLight,
   LibCssGeneratorGenerateDepthLines,
   LibCssGeneratorGenerateDepthVariablesDepth,
   LibCssGeneratorGenerateDepthVariablesLines,
@@ -31,13 +38,13 @@ import type {
   LibCssGeneratorGenerateMotionVariablesMotion,
   LibCssGeneratorGenerateMotionVariablesReturns,
   LibCssGeneratorGenerateMotionVariablesStaggered,
-  LibCssGeneratorGenerateNeutralColor,
-  LibCssGeneratorGenerateNeutralLines,
-  LibCssGeneratorGenerateNeutralScale,
   LibCssGeneratorGenerateOptions,
-  LibCssGeneratorGeneratePrimaryColor,
-  LibCssGeneratorGeneratePrimaryLines,
-  LibCssGeneratorGeneratePrimaryScale,
+  LibCssGeneratorGeneratePrimaryDarkColor,
+  LibCssGeneratorGeneratePrimaryDarkLines,
+  LibCssGeneratorGeneratePrimaryDarkScale,
+  LibCssGeneratorGeneratePrimaryLightColor,
+  LibCssGeneratorGeneratePrimaryLightLines,
+  LibCssGeneratorGeneratePrimaryLightScale,
   LibCssGeneratorGenerateReturns,
   LibCssGeneratorGenerateShapeLines,
   LibCssGeneratorGenerateShapeVariablesDensityGapScale,
@@ -45,6 +52,10 @@ import type {
   LibCssGeneratorGenerateShapeVariablesRadiusValue,
   LibCssGeneratorGenerateShapeVariablesReturns,
   LibCssGeneratorGenerateShapeVariablesShape,
+  LibCssGeneratorGenerateTextDark,
+  LibCssGeneratorGenerateTextLight,
+  LibCssGeneratorGenerateWarningDark,
+  LibCssGeneratorGenerateWarningLight,
 } from '../types/lib/css-generator.d.ts';
 
 /**
@@ -71,17 +82,29 @@ export class CssGenerator {
    * @since 0.15.0
    */
   public static generate(options: LibCssGeneratorGenerateOptions): LibCssGeneratorGenerateReturns {
-    const primaryColor: LibCssGeneratorGeneratePrimaryColor = new Color(options['preset']['colors']['primary']);
-    const accentColor: LibCssGeneratorGenerateAccentColor = new Color(options['preset']['colors']['accent']);
-    const neutralColor: LibCssGeneratorGenerateNeutralColor = new Color(options['preset']['colors']['neutral']);
+    const primaryLightColor: LibCssGeneratorGeneratePrimaryLightColor = new Color(options['preset']['colors']['primary']['light']);
+    const primaryDarkColor: LibCssGeneratorGeneratePrimaryDarkColor = new Color(options['preset']['colors']['primary']['dark']);
+    const accentLightColor: LibCssGeneratorGenerateAccentLightColor = new Color(options['preset']['colors']['accent']['light']);
+    const accentDarkColor: LibCssGeneratorGenerateAccentDarkColor = new Color(options['preset']['colors']['accent']['dark']);
 
-    const primaryScale: LibCssGeneratorGeneratePrimaryScale = primaryColor.generateScale();
-    const accentScale: LibCssGeneratorGenerateAccentScale = accentColor.generateScale();
-    const neutralScale: LibCssGeneratorGenerateNeutralScale = neutralColor.generateScale();
+    const primaryLightScale: LibCssGeneratorGeneratePrimaryLightScale = primaryLightColor.generateScale();
+    const primaryDarkScale: LibCssGeneratorGeneratePrimaryDarkScale = primaryDarkColor.generateScale();
+    const accentLightScale: LibCssGeneratorGenerateAccentLightScale = accentLightColor.generateScale();
+    const accentDarkScale: LibCssGeneratorGenerateAccentDarkScale = accentDarkColor.generateScale();
 
-    const primaryLines: LibCssGeneratorGeneratePrimaryLines = CssGenerator.generateColorVariables('primary', primaryScale);
-    const accentLines: LibCssGeneratorGenerateAccentLines = CssGenerator.generateColorVariables('accent', accentScale);
-    const neutralLines: LibCssGeneratorGenerateNeutralLines = CssGenerator.generateColorVariables('neutral', neutralScale);
+    const primaryLightLines: LibCssGeneratorGeneratePrimaryLightLines = CssGenerator.generateColorVariables('primary', primaryLightScale);
+    const primaryDarkLines: LibCssGeneratorGeneratePrimaryDarkLines = CssGenerator.generateColorVariables('primary', primaryDarkScale);
+    const accentLightLines: LibCssGeneratorGenerateAccentLightLines = CssGenerator.generateColorVariables('accent', accentLightScale);
+    const accentDarkLines: LibCssGeneratorGenerateAccentDarkLines = CssGenerator.generateColorVariables('accent', accentDarkScale);
+
+    const textLight: LibCssGeneratorGenerateTextLight = options['preset']['colors']['text']['light'];
+    const textDark: LibCssGeneratorGenerateTextDark = options['preset']['colors']['text']['dark'];
+    const borderLight: LibCssGeneratorGenerateBorderLight = options['preset']['colors']['border']['light'];
+    const borderDark: LibCssGeneratorGenerateBorderDark = options['preset']['colors']['border']['dark'];
+    const warningLight: LibCssGeneratorGenerateWarningLight = options['preset']['colors']['warning']['light'];
+    const warningDark: LibCssGeneratorGenerateWarningDark = options['preset']['colors']['warning']['dark'];
+    const dangerLight: LibCssGeneratorGenerateDangerLight = options['preset']['colors']['danger']['light'];
+    const dangerDark: LibCssGeneratorGenerateDangerDark = options['preset']['colors']['danger']['dark'];
 
     const fontLines: LibCssGeneratorGenerateFontLines = CssGenerator.generateFontVariables(options['preset']['fonts']);
     const shapeLines: LibCssGeneratorGenerateShapeLines = CssGenerator.generateShapeVariables(options['preset']['shape']);
@@ -91,14 +114,37 @@ export class CssGenerator {
 
     const lines: LibCssGeneratorGenerateLines = [
       ':root {',
-      ...primaryLines,
-      ...accentLines,
-      ...neutralLines,
+      ...primaryLightLines,
+      ...accentLightLines,
+      `  --nova-color-text: ${textLight};`,
+      '  --nova-color-text-muted: color-mix(in srgb, var(--nova-color-text), var(--nova-color-background) 50%);',
+      '  --nova-color-text-soft: color-mix(in srgb, var(--nova-color-text), var(--nova-color-background) 70%);',
+      `  --nova-color-text-inverse: ${textDark};`,
+      `  --nova-color-border: ${borderLight};`,
+      '  --nova-color-border-subtle: color-mix(in srgb, var(--nova-color-border), var(--nova-color-background) 50%);',
+      '  --nova-color-surface-raised: color-mix(in srgb, var(--nova-color-background), var(--nova-color-text) 4%);',
+      `  --nova-color-warning-500: ${warningLight};`,
+      '  --nova-color-warning-400: color-mix(in srgb, var(--nova-color-warning-500), var(--nova-color-background) 30%);',
+      '  --nova-color-warning-bg: color-mix(in srgb, var(--nova-color-warning-500), transparent 94%);',
+      `  --nova-color-danger-500: ${dangerLight};`,
+      '  --nova-color-danger-400: color-mix(in srgb, var(--nova-color-danger-500), var(--nova-color-background) 30%);',
+      '  --nova-color-danger-bg: color-mix(in srgb, var(--nova-color-danger-500), transparent 94%);',
       ...fontLines,
       ...shapeLines,
       ...depthLines,
       ...motionLines,
       ...gridLines['baseLines'],
+      '}',
+      '',
+      ':root[data-theme="dark"] {',
+      ...primaryDarkLines,
+      ...accentDarkLines,
+      `  --nova-color-text: ${textDark};`,
+      `  --nova-color-border: ${borderDark};`,
+      `  --nova-color-warning-500: ${warningDark};`,
+      '  --nova-color-warning-bg: color-mix(in srgb, var(--nova-color-warning-500), transparent 90%);',
+      `  --nova-color-danger-500: ${dangerDark};`,
+      '  --nova-color-danger-bg: color-mix(in srgb, var(--nova-color-danger-500), transparent 90%);',
       '}',
     ];
 
@@ -240,7 +286,7 @@ export class CssGenerator {
 
     if (depth['cards'] === 'flat') {
       lines.push('  --nova-depth-card-shadow: none;');
-      lines.push('  --nova-depth-card-border: 1px solid var(--nova-color-neutral-200);');
+      lines.push('  --nova-depth-card-border: 1px solid var(--nova-color-border);');
       lines.push('  --nova-depth-card-backdrop: none;');
     } else if (depth['cards'] === 'elevated') {
       lines.push('  --nova-depth-card-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);');
@@ -257,7 +303,7 @@ export class CssGenerator {
       lines.push('  --nova-depth-code-border: none;');
     } else if (depth['codeBlocks'] === 'bordered') {
       lines.push('  --nova-depth-code-shadow: none;');
-      lines.push('  --nova-depth-code-border: 1px solid var(--nova-color-neutral-200);');
+      lines.push('  --nova-depth-code-border: 1px solid var(--nova-color-border);');
     } else {
       lines.push('  --nova-depth-code-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);');
       lines.push('  --nova-depth-code-border: none;');
@@ -269,9 +315,9 @@ export class CssGenerator {
   /**
    * Lib - CSS Generator - Generate Motion Variables.
    *
-   * Converts the motion speed keyword into a transition duration
-   * and maps the boolean animation flags into numeric CSS custom
-   * properties for conditional animation logic.
+   * Converts the motion speed keyword into a transition duration, emits
+   * the canonical Nova ease curve as a shared easing token, and maps the
+   * boolean animation flags into numeric CSS custom properties.
    *
    * @param {LibCssGeneratorGenerateMotionVariablesMotion} motion - Motion.
    *
@@ -297,6 +343,7 @@ export class CssGenerator {
 
     return [
       `  --nova-motion-duration: ${duration};`,
+      '  --nova-motion-easing: cubic-bezier(0.22, 1, 0.36, 1);',
       `  --nova-motion-staggered-reveals: ${String(staggered)};`,
       `  --nova-motion-hover-effects: ${String(hover)};`,
     ];

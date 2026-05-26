@@ -13,6 +13,19 @@ import type {
   ThemeLayoutProviderProps,
 } from '../../../types/theme/Layout/Provider/index.d.ts';
 
+// Composed provider stack, computed once at module scope so its identity is
+// stable across renders. Composing inside the render body yields a new
+// component reference per render, which makes React unmount and remount
+// everything below it - stealing focus from any active input.
+const Provider: ThemeLayoutProviderLayoutProviderProvider = composeProviders([
+  ColorModeProvider,
+  AnnouncementBarProvider,
+  ScrollControllerProvider,
+  DocsPreferredVersionContextProvider,
+  PluginHtmlClassNameProvider,
+  NavbarProvider,
+]);
+
 /**
  * Theme - Layout - Provider.
  *
@@ -27,15 +40,6 @@ import type {
  * @since 0.15.0
  */
 function LayoutProvider(props: ThemeLayoutProviderProps) {
-  const Provider: ThemeLayoutProviderLayoutProviderProvider = composeProviders([
-    ColorModeProvider,
-    AnnouncementBarProvider,
-    ScrollControllerProvider,
-    DocsPreferredVersionContextProvider,
-    PluginHtmlClassNameProvider,
-    NavbarProvider,
-  ]);
-
   return <Provider>{props['children']}</Provider>;
 }
 

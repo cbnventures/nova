@@ -1,14 +1,20 @@
 import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
-import { useCallback, useEffect } from 'react';
+import {
+  useCallback, useEffect, useLayoutEffect, useRef,
+} from 'react';
 
 import { useSearchContext } from './search-context.js';
 
 import type {
   ThemeSearchBarSearchInputActiveIndex,
+  ThemeSearchBarSearchInputAnimationEvent,
   ThemeSearchBarSearchInputAriaLabel,
+  ThemeSearchBarSearchInputBody,
+  ThemeSearchBarSearchInputClassName,
   ThemeSearchBarSearchInputClearSearchAriaLabel,
   ThemeSearchBarSearchInputDestinationUrl,
+  ThemeSearchBarSearchInputDirection,
   ThemeSearchBarSearchInputHandleInputChangeFunction,
   ThemeSearchBarSearchInputHandleKeyDownCallbackFunction,
   ThemeSearchBarSearchInputHandleKeyDownFunction,
@@ -17,13 +23,16 @@ import type {
   ThemeSearchBarSearchInputInputKeyboardEvent,
   ThemeSearchBarSearchInputInputRef,
   ThemeSearchBarSearchInputInputValue,
+  ThemeSearchBarSearchInputIsActive,
   ThemeSearchBarSearchInputIsMac,
   ThemeSearchBarSearchInputIsOpen,
   ThemeSearchBarSearchInputIsShortcutMatch,
   ThemeSearchBarSearchInputKeyboardEvent,
   ThemeSearchBarSearchInputNextIndex,
+  ThemeSearchBarSearchInputOnSwapEndFunction,
   ThemeSearchBarSearchInputPlaceholder,
   ThemeSearchBarSearchInputPreviousIndex,
+  ThemeSearchBarSearchInputPreviousIsActiveRef,
   ThemeSearchBarSearchInputProps,
   ThemeSearchBarSearchInputQuery,
   ThemeSearchBarSearchInputResultCount,
@@ -58,6 +67,83 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
   const handleQueryChange: ThemeSearchBarSearchInputHandleQueryChange = searchContext['handleQueryChange'];
   const inputRef: ThemeSearchBarSearchInputInputRef = searchContext['inputRef'];
 
+  const isActive: ThemeSearchBarSearchInputIsActive = (query !== '');
+  const previousIsActiveRef: ThemeSearchBarSearchInputPreviousIsActiveRef = useRef<boolean>(isActive);
+
+  // Mobile-menu body swap animation. When the search activates or
+  // deactivates inside the mobile menu, add a direction-specific class to
+  // the body wrapper so the shared keyframes can run the
+  // collapse-then-expand cycle and flip items/dropdown visibility at the
+  // midpoint. Desktop SearchInput instances no-op because the closest
+  // panel selector misses.
+  //
+  // useLayoutEffect (not useEffect) so the class lands in the same paint
+  // as the React commit that flipped data-search-active and added the
+  // dropdown .closing class - otherwise the browser paints one frame
+  // with the dropdown hidden by the static .closing rule but the body
+  // not yet animating, showing a blank flash.
+  useLayoutEffect(() => {
+    if (previousIsActiveRef.current === isActive) {
+      return;
+    }
+
+    const direction: ThemeSearchBarSearchInputDirection = (isActive === true) ? 'in' : 'out';
+
+    previousIsActiveRef.current = isActive;
+
+    if (inputRef.current === null) {
+      return;
+    }
+
+    if (inputRef.current.closest('.nova-mobile-menu-panel') === null) {
+      return;
+    }
+
+    const body: ThemeSearchBarSearchInputBody = document.querySelector<HTMLDivElement>('.nova-mobile-menu-body');
+
+    if (body === null) {
+      return;
+    }
+
+    const className: ThemeSearchBarSearchInputClassName = `nova-mobile-menu-body-swapping-${direction}`;
+
+    body.classList.add(className);
+
+    // Strip the swap class on animationend so the next swap-in/swap-out starts
+    // a fresh body animation. The body's keyframes (max-height: 100dvh -> 0 ->
+    // 100dvh) used to share a single animation-name across both directions,
+    // which made the browser see the second cycle's animation-name as
+    // unchanged and never replay the collapse - subsequent cycles snapped
+    // instead of sliding. Now the keyframes have direction-specific names
+    // (slide-swap-in / slide-swap-out) so animationend fires per cycle.
+    const onSwapEnd: ThemeSearchBarSearchInputOnSwapEndFunction = (event: ThemeSearchBarSearchInputAnimationEvent) => {
+      if (event.target !== body) {
+        return;
+      }
+
+      // No animationName filter: cssnano in the prod bundle renames keyframes
+      // to single letters (slide-swap-in -> c, slide-swap-out -> d), so a
+      // source-name check would never match in prod and the swap class would
+      // persist forever. The event.target === body check above is enough on
+      // its own - body only ever runs one animation at a time.
+      body.classList.remove(className);
+
+      body.removeEventListener('animationend', onSwapEnd);
+
+      return;
+    };
+
+    body.addEventListener('animationend', onSwapEnd);
+
+    return () => {
+      body.removeEventListener('animationend', onSwapEnd);
+
+      body.classList.remove(className);
+
+      return;
+    };
+  }, [isActive]);
+
   // Global keyboard shortcut (Cmd+K / Ctrl+K).
   useEffect(() => {
     const handleKeyDown: ThemeSearchBarSearchInputHandleKeyDownFunction = (event: ThemeSearchBarSearchInputKeyboardEvent) => {
@@ -86,14 +172,23 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
     };
   }, []);
 
-  // Debounced input change handler.
+  // Input change handler. Drives `isOpen` synchronously off the field
+  // value so the dropdown mounts/unmounts in the same tick as `query`
+  // changes - search-provider also calls `setIsOpen` from inside a 200ms
+  // debounce, but the animation system needs the mount to land at t=0
+  // (start of the swap), not at the debounce midpoint.
   const handleInputChange: ThemeSearchBarSearchInputHandleInputChangeFunction = useCallback((event: ThemeSearchBarSearchInputInputChangeEvent) => {
     const inputValue: ThemeSearchBarSearchInputInputValue = event.target.value;
 
     handleQueryChange(inputValue);
 
+    setIsOpen(inputValue !== '');
+
     return;
-  }, [handleQueryChange]);
+  }, [
+    handleQueryChange,
+    setIsOpen,
+  ]);
 
   // Keyboard navigation within results.
   const handleKeyDown: ThemeSearchBarSearchInputHandleKeyDownCallbackFunction = useCallback((event: ThemeSearchBarSearchInputInputKeyboardEvent) => {
@@ -149,7 +244,10 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
   });
 
   return (
-    <div className="nova-search-bar">
+    <div
+      className="nova-search-bar"
+      data-search-active={(isActive === true) ? 'true' : 'false'}
+    >
       <input
         ref={inputRef}
         className="nova-search-bar-input"

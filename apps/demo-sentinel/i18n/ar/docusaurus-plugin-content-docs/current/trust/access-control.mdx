@@ -1,0 +1,173 @@
+---
+title: "التحكّم في الوصول"
+sidebar_position: 3
+description: "قواعد Drawbridge، ومنح الوصول الواعي بالسياق، والوصول المحدود زمنياً، والتجاوزات الطارئة، ومحفّزات الإلغاء."
+tags:
+  - "trust"
+  - "access control"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# التحكّم في الوصول
+
+Drawbridge هو بوّابة الوصول التكيّفية في Sentinel. يُقيّم سياسات الثقة آنياً ويُترجم النتيجة إلى قرار وصول ملموس، منح أو تضييق أو إلغاء. يمرّ عبر Drawbridge كلّ نفق Filament، وكلّ طلب مورد، وكلّ عبور بين المناطق.
+
+## كيف يُقرّر Drawbridge
+
+يتلقّى Drawbridge تقييم ثقة من Watchtower ويربطه بإحدى ثلاث نتائج:
+
+1. **المنح**، استُوفيت جميع شروط السياسة. يُفتح نفق Filament إلى المورد المطلوب أو يُحافَظ عليه.
+2. **التضييق**، استُوفيت بعض الشروط لكنّ درجة الثقة على الحدّ. يُمنح الوصول مع قيود (للقراءة فقط، أو محدود زمنياً، أو محصور بجزء من المورد).
+3. **الإلغاء**، أخفق شرط واحد أو أكثر. يُغلق نفق Filament فوراً. وعلى المستخدم أن يُعالج المشكلة ويُعيد المصادقة.
+
+```text title="Drawbridge decision flow"
+Watchtower evaluation → trust score 92, all conditions pass
+  → Drawbridge: GRANT full access to api-cluster-east
+
+Watchtower evaluation → trust score 78, posture below threshold
+  → Drawbridge: NARROW access (read-only, 30-minute window)
+
+Watchtower evaluation → trust score 61, MFA expired
+  → Drawbridge: REVOKE — tunnel closed, re-authentication required
+```
+
+## الوصول القياسي
+
+قواعد الوصول القياسي هي الأكثر شيوعاً. تمنح وصولاً كاملاً عند استيفاء جميع شروط السياسة:
+
+<Tabs>
+<TabItem value="standard" label="الوصول القياسي" default>
+
+```text title="policies/standard-access.grain"
+policy "engineering-access" {
+  resource = "engineering-services"
+  effect   = "allow"
+
+  conditions {
+    device.posture   >= 80
+    user.mfa         = true
+    user.role        = ["engineer"]
+    network.location = ["office", "vpn"]
+  }
+
+  on_failure {
+    action = "revoke"
+    notify = "security-ops"
+    log    = "spyglass"
+  }
+}
+```
+
+حين تنجح جميع الشروط، يمنح Drawbridge وصولاً كاملاً. يبقى نفق Filament مفتوحاً حتى التقييم التالي لـ Watchtower. وإن أخفق أيّ شرط في الفحص التالي بعد 90 ثانية، يُلغى الوصول.
+
+</TabItem>
+<TabItem value="emergency" label="الوصول الطارئ">
+
+```text title="policies/emergency-access.grain"
+policy "emergency-access" {
+  resource = "all-services"
+  effect   = "allow"
+  priority = 1
+
+  conditions {
+    user.role    = ["incident-commander"]
+    user.mfa     = true
+    // highlight-start
+    emergency    = true
+    session.age  <= 1800
+    // highlight-end
+  }
+
+  on_failure {
+    action = "revoke"
+    log    = "spyglass"
+  }
+
+  audit {
+    // highlight-start
+    level       = "critical"
+    notify      = ["security-ops", "executive-team"]
+    require_justification = true
+    // highlight-end
+  }
+}
+```
+
+يتجاوز الوصول الطارئ قيود المناطق العادية، لكنّه يتطلّب دور قائد الحادثة، وMFA نشطة، وعلامة طوارئ صريحة. الجلسات محدودة بـ 30 دقيقة. ويُسجَّل كلّ إجراء عند مستوى التدقيق الحرج، ويُبلَّغ الفريق التنفيذي.
+
+</TabItem>
+</Tabs>
+
+:::danger تدقيق الوصول الطارئ
+يُعاد بناء كلّ جلسة وصول طارئ بواسطة Spyglass، وتُعلَّم لمراجعة إلزامية. الوصول الطارئ ليس تجاوزاً، بل استثناء يخضع لتدقيق دقيق. وإساءة استخدامه تُحرّك إلغاء الدور تلقائياً.
+:::
+
+## الوصول المحدود زمنياً
+
+يمكن قصر الوصول على نافذة زمنية محدّدة. خارج النافذة، تُقيَّم السياسة بوصفها مُخفقة، ويُلغي Drawbridge الوصول:
+
+```text title="policies/maintenance-window.grain"
+policy "maintenance-access" {
+  resource = "database-cluster"
+  effect   = "allow"
+
+  conditions {
+    user.role        = ["dba"]
+    device.posture   >= 90
+    // highlight-next-line
+    time.window      = "0 2-4 * * SAT"
+  }
+
+  on_failure {
+    action = "revoke"
+    log    = "spyglass"
+  }
+}
+```
+
+تمنح هذه السياسة وصولاً إلى قاعدة البيانات لمسؤولي قواعد البيانات فقط، يوم السبت فقط بين الساعة 02:00 و04:00، وفقط حين تبلغ درجة الوضع الأمني لجهازهم 90 أو أعلى. وعند الساعة 04:01، يُغلق Drawbridge النفق بصرف النظر عمّا يفعله مسؤول قاعدة البيانات.
+
+## محفّزات الإلغاء
+
+يُلغي Drawbridge الوصول فوراً عند حدوث أيّ ممّا يلي:
+
+| المحفّز                             | المصدر     | الاستجابة                                  |
+|-------------------------------------|------------|--------------------------------------------|
+| انخفاض درجة الوضع الأمني دون العتبة | Watchtower | إغلاق النفق، إعادة المصادقة مطلوبة         |
+| انتهاء جلسة MFA                     | Watchtower | طلب رفع مستوى MFA، تعليق النفق             |
+| تغيّر موقع الشبكة                   | Watchtower | إعادة تقييم السياسة ببيانات الموقع الجديدة |
+| انقطاع اتصال الجهاز                 | Garrison   | إغلاق النفق بعد مهلة 120 ثانية             |
+| إزالة علامة الطوارئ                 | المسؤول    | إنهاء جلسات الطوارئ فوراً                  |
+| تجاوز عمر الجلسة                    | Watchtower | إعادة مصادقة إجباريّة                      |
+| إلغاء يدوي                          | Admin API  | إغلاق فوري للنفق للمستخدم المحدّد          |
+
+الإلغاء ليس رفيقاً. حين يُلغي Drawbridge الوصول، يُنهَى نفق Filament فوراً. ستُخفق الطلبات قيد التنفيذ إلى المورد المحمي. وهذا متعمَّد، إذ يجب ألّا يُسمح للجلسة المُلغاة بإكمال أيّ عمليّات معلّقة.
+
+:::note التضييق قبل الإلغاء
+للموارد غير الحرجة، اضبط معالج `on_failure` لتضييق الوصول قبل إلغائه. هذا يمنح المستخدمين فترة سماح لحفظ عملهم، `action = "narrow"` يُقيّد الوصول للقراءة فقط لمدّة 5 دقائق قبل التصعيد إلى الإلغاء الكامل.
+:::
+
+## مراقبة قرارات الوصول
+
+استعلم عن قرارات Drawbridge آنياً:
+
+```bash title="مراقبة قرارات الوصول"
+sentinel drawbridge watch --resource engineering-services
+```
+
+```text title="مخرجات القرار المباشر"
+Drawbridge — engineering-services
+  [09:15:00] user=j.chen    device=dev_a3b7  → GRANT (score 92, all conditions pass)
+  [09:15:00] user=m.torres  device=dev_f8e2  → GRANT (score 88, all conditions pass)
+  [09:16:30] user=m.torres  device=dev_f8e2  → NARROW (score 79, posture below 80)
+    → Read-only access for 300s, then revoke
+  [09:21:30] user=m.torres  device=dev_f8e2  → REVOKE (grace period expired)
+```
+
+## الخطوات التالية
+
+- [التجزئة الدقيقة](/docs/operations/micro-segmentation/)، كيف تُحدّد مناطق Rampart نطاق الوصول الذي يمنحه Drawbridge.
+- [التدقيق والتحقيق الجنائي](/docs/operations/audit-forensics/)، إعادة بناء كاملة للجلسة لقرارات الوصول.
+- [سياسات الثقة](/docs/trust/trust-policies/)، قواعد السياسة التي تُوجّه قرارات Drawbridge.

@@ -1,0 +1,279 @@
+---
+title: "API 参考"
+sidebar_position: 1
+description: "Envoy 完整的 Spoke API 参考——中继管理、健康检查、主题 CRUD 与投递状态。"
+tags:
+  - "reference"
+  - "api"
+---
+
+import Details from '@theme/Details';
+
+# API 参考
+
+Envoy 通过 Spoke API 提供中继管理、健康监控、投递查看与主题管理。所有端点均返回 JSON，认证沿用为中继端点配置的同一套 Cipher 机制。
+
+## 基础 URL
+
+```
+http://localhost:8090/api
+```
+
+下方所有端点均相对于该基础 URL。
+
+## 中继端点
+
+### 发送消息
+
+```bash title="POST /api/relay/:topic"
+curl -X POST http://localhost:8090/api/relay/infra-alerts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${RELAY_TOKEN}" \
+  -d '{
+    "title": "Manual alert",
+    "body": "Triggered via API.",
+    "priority": 3
+  }'
+```
+
+```json title="响应 — 200 OK"
+{
+  "id": "msg_a1b2c3d4",
+  "status": "delivered",
+  "relay": "manual",
+  "latency_ms": 2.8
+}
+```
+
+### 获取中继状态
+
+```bash title="GET /api/relay/:name/status"
+curl http://localhost:8090/api/relay/threadbare-pushes/status
+```
+
+```json title="响应 — 200 OK"
+{
+  "relay": "threadbare-pushes",
+  "active": true,
+  "messages_today": 47,
+  "delivery_rate": 1.0,
+  "last_delivery": "2025-08-22T14:30:07Z",
+  "dead_lettered": 0
+}
+```
+
+## 健康端点
+
+### 健康检查
+
+```bash title="GET /api/health"
+curl http://localhost:8090/api/health
+```
+
+```json title="响应 — 200 OK"
+{
+  "status": "healthy",
+  "version": "2.1.0",
+  "uptime_seconds": 86412,
+  "components": {
+    "cipher": "ready",
+    "parcel": "ready",
+    "dispatch": "ready",
+    "courier": "ready",
+    "ledger": "ready",
+    "embassy": "ready"
+  }
+}
+```
+
+### 指标
+
+```bash title="GET /api/health/metrics"
+curl http://localhost:8090/api/health/metrics
+```
+
+<Details>
+<summary>完整的指标响应 schema</summary>
+
+```json title="响应 — 200 OK"
+{
+  "relay_count": 4,
+  "messages": {
+    "total": 12847,
+    "delivered": 12842,
+    "dead_lettered": 5,
+    "in_retry": 0
+  },
+  "latency": {
+    "p50_ms": 2.1,
+    "p95_ms": 4.3,
+    "p99_ms": 7.8
+  },
+  "uptime_seconds": 86412,
+  "memory_bytes": 8388608,
+  "goroutines": 24
+}
+```
+
+</Details>
+
+## 主题端点
+
+### 列出主题
+
+```bash title="GET /api/topics"
+curl http://localhost:8090/api/topics
+```
+
+```json title="响应 — 200 OK"
+{
+  "topics": [
+    { "name": "ci-builds", "relays": 2, "messages_today": 31 },
+    { "name": "infra-alerts", "relays": 3, "messages_today": 12 },
+    { "name": "oncall-urgent", "relays": 1, "messages_today": 4 },
+    { "name": "monitoring", "relays": 2, "messages_today": 0 }
+  ]
+}
+```
+
+### 创建主题
+
+```bash title="POST /api/topics"
+curl -X POST http://localhost:8090/api/topics \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+  -d '{ "name": "deploy-alerts", "retention": "30d" }'
+```
+
+```json title="响应 — 201 Created"
+{
+  "topic": "deploy-alerts",
+  "created": true,
+  "retention": "30d"
+}
+```
+
+### 更新主题
+
+```bash title="PATCH /api/topics/:name"
+curl -X PATCH http://localhost:8090/api/topics/deploy-alerts \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}" \
+  -d '{ "retention": "90d" }'
+```
+
+### 删除主题
+
+```bash title="DELETE /api/topics/:name"
+curl -X DELETE http://localhost:8090/api/topics/deploy-alerts \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}"
+```
+
+```json title="响应 — 200 OK"
+{
+  "topic": "deploy-alerts",
+  "deleted": true
+}
+```
+
+## 投递端点
+
+### 列出投递
+
+```bash title="GET /api/deliveries"
+curl "http://localhost:8090/api/deliveries?relay=threadbare-pushes&limit=5"
+```
+
+<Details>
+<summary>完整的投递列表响应 schema</summary>
+
+```json title="响应 — 200 OK"
+{
+  "deliveries": [
+    {
+      "id": "msg_f7a2b8c4",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 1,
+      "latency_ms": 3.1,
+      "timestamp": "2025-08-22T14:30:07Z"
+    },
+    {
+      "id": "msg_e6d5c4b3",
+      "relay": "threadbare-pushes",
+      "status": "delivered",
+      "attempts": 2,
+      "latency_ms": 5.2,
+      "timestamp": "2025-08-22T14:28:41Z"
+    }
+  ],
+  "total": 47,
+  "limit": 5,
+  "offset": 0
+}
+```
+
+</Details>
+
+### 重试一条死信消息
+
+```bash title="POST /api/deliveries/:id/retry"
+curl -X POST http://localhost:8090/api/deliveries/msg_a9b8c7d6/retry \
+  -H "Authorization: Bearer ${ADMIN_TOKEN}"
+```
+
+```json title="响应 — 202 Accepted"
+{
+  "id": "msg_a9b8c7d6",
+  "status": "pending",
+  "message": "Message re-queued for delivery."
+}
+```
+
+### 查看一条投递
+
+```bash title="GET /api/deliveries/:id"
+curl http://localhost:8090/api/deliveries/msg_f7a2b8c4
+```
+
+```json title="响应 — 200 OK"
+{
+  "id": "msg_f7a2b8c4",
+  "relay": "threadbare-pushes",
+  "status": "delivered",
+  "source_ip": "203.0.113.42",
+  "cipher_mode": "hmac-sha256",
+  "attempts": [
+    {
+      "number": 1,
+      "timestamp": "2025-08-22T14:30:07Z",
+      "status_code": 200,
+      "latency_ms": 3.1,
+      "receipt": "confirmed"
+    }
+  ],
+  "payload_hash": "sha256:e3b0c44298fc1c14",
+  "destination": "canary://ci-builds"
+}
+```
+
+## 端点一览
+
+| 方法       | 路径                          | 描述         |
+|----------|-----------------------------|------------|
+| `POST`   | `/api/relay/:topic`         | 向主题发送一条消息。 |
+| `GET`    | `/api/relay/:name/status`   | 获取中继状态与指标。 |
+| `GET`    | `/api/health`               | 健康检查。      |
+| `GET`    | `/api/health/metrics`       | 详细的平台指标。   |
+| `GET`    | `/api/topics`               | 列出所有主题。    |
+| `POST`   | `/api/topics`               | 创建一个新主题。   |
+| `PATCH`  | `/api/topics/:name`         | 更新主题配置。    |
+| `DELETE` | `/api/topics/:name`         | 删除一个主题。    |
+| `GET`    | `/api/deliveries`           | 按条件列出投递。   |
+| `POST`   | `/api/deliveries/:id/retry` | 重试一条死信消息。  |
+| `GET`    | `/api/deliveries/:id`       | 查看单条投递详情。  |
+
+## 下一步
+
+- [配置](/docs/setup/configuration/) — 完整的中继清单参考。
+- [架构](/docs/advanced/architecture/) — 每个 API 端点如何映射到内部组件。

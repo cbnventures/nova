@@ -1,0 +1,10 @@
+{
+  "label": "Intake",
+  "position": 2,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Getting Marshal admitted — install via Spark or the Vial container (the seal ships already pressed), then file your first sealed policy and watch the docket fill in."
+  }
+}

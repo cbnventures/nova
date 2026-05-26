@@ -1,0 +1,41 @@
+tomas:
+  name: "Tomás Reyes"
+  title: 联合创始人，Envoy
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
+
+nneka:
+  name: Nneka Adeyemi
+  title: 基础设施工程师，Envoy
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
+
+anders:
+  name: Anders Lindqvist
+  title: 平台工程师，Envoy
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures

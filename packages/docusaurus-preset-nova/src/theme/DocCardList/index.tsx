@@ -50,7 +50,10 @@ function DocCardList(props: ThemeDocCardListDocCardListProps) {
   const filteredItems: ThemeDocCardListDocCardListFilteredItems = filterDocCardListItems(props['items']);
 
   return (
-    <section className="nova-grid">
+    <section
+      className={(props['className'] !== undefined) ? `nova-grid ${props['className']}` : 'nova-grid'}
+      style={props['style']}
+    >
       {
         filteredItems.map((item: ThemeDocCardListDocCardListItem, index: ThemeDocCardListDocCardListIndex) => (
           <article className="nova-col-12 nova-col-md-6 nova-col-lg-4" key={index}>

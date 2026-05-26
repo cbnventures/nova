@@ -1,0 +1,49 @@
+/**
+ * Sample - `MDXContent` theme component overlay scaffold.
+ *
+ * @internal Reference template only. The shared structural CSS for this
+ *           Docusaurus theme component lives at:
+ *           theme/MDXContent/style.css
+ *
+ * Section headers below establish the canonical layout each preset adopts.
+ * Fill bodies with identity-specific rules - see preset.css for tokens and
+ * conventions.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned rhythm tokens
+ * ============================ */
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/MDXContent
+ * ============================ */
+
+/* ============================
+ * 1. Paragraphs
+ * ============================ */
+
+/* ============================
+ * 2. Inline emphasis
+ * ============================ */
+
+/* ============================
+ * 3. Horizontal rule
+ * ============================ */
+
+/* ============================
+ * 4. Lists
+ * ============================ */
+
+/* ============================
+ * 5. Blockquote
+ * ============================ */
+
+/* ============================
+ * 6. Tables
+ * ============================ */
+
+/* ============================
+ * 7. Selection
+ * ============================ */

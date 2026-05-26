@@ -1,0 +1,179 @@
+---
+title: "策略仿真"
+sidebar_position: 3
+description: "Parapet 沙盒、试运行模式、流量重放与策略差异分析。"
+tags:
+  - "运维"
+  - "仿真"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 策略仿真
+
+Parapet 是 Sentinel 的策略仿真沙盒。它在不修改任何线上策略状态的前提下，把访问策略放到真实的历史流量上进行测试。在新策略进入生产之前，Parapet 回答的问题是：会有什么变化？
+
+## 为什么要仿真
+
+策略变更本身就具有风险。看似正确的一条规则，可能会以意想不到的方式与已有策略相互作用——为本不应有的访问开口，或撤销关键服务账号的访问。Parapet 通过重放已记录的 Filament 隧道流量并产出精确的影响报告，从根本上消除这一风险。
+
+:::warning 仿真不是保证
+Parapet 重放的是历史流量。它揭示了所提议的策略将如何针对过去的连接模式进行评估，但无法预测从未出现过的流量模式。对于新的区域架构或新颖的访问模式，请务必将 Parapet 仿真与人工威胁建模结合使用。
+:::
+
+## 仿真模式
+
+<Tabs>
+<TabItem value="dryrun" label="试运行" default>
+
+试运行模式针对当前设备群评估一份草案策略，不重放流量。它展示当前活跃的会话在新规则下哪些会通过、哪些会失败：
+
+```bash title="试运行仿真"
+sentinel parapet dry-run \
+  --policy draft:tightened-posture \
+  --scope all-devices
+```
+
+```text title="试运行输出"
+Parapet 试运行：tightened-posture
+  策略变更：device.posture >= 80 → device.posture >= 90
+  范围：所有已注册设备（1,247）
+
+  受影响的当前会话：
+    仍将通过：     1,089 (87.3%)
+    将不再通过：   158 (12.7%)
+
+  按平台分布的失败：
+    macOS:    42 台（平均态势 84）
+    Windows:  67 台（平均态势 82）
+    Linux:    31 台（平均态势 86）
+    Android:  18 台（平均态势 79）
+
+  按原因分布的失败：
+    操作系统补丁陈旧：    89
+    防病毒病毒库：        34
+    屏幕锁定超时：        22
+    防火墙未启用：        13
+```
+
+试运行很快——它对当前快照进行评估，而非重放历史流量，所以只需几秒。
+
+</TabItem>
+<TabItem value="replay" label="流量重放">
+
+流量重放会将历史 Filament 隧道记录按所提议的策略集进行处理。它展示在一段时间内，每一次连接会如何被评估：
+
+```bash title="流量重放仿真"
+sentinel parapet simulate \
+  --policy-set production \
+  --include draft:tightened-posture \
+  --traffic-source production-replay \
+  --duration 7d
+```
+
+```text title="重放输出"
+Parapet 仿真报告
+  策略集：       production + draft:tightened-posture
+  流量来源：     production-replay（5,847,291 次连接）
+  时长：         7 天的回放在 43 分 12 秒内完成
+
+  结果：
+    评估的连接数：       5,847,291
+    授予访问：           5,412,447 (92.6%)
+    拒绝访问：           434,844 (7.4%)
+
+  与当前生产的差异：
+    新增授予：    0
+    新增拒绝：    434,844
+    未变化：      5,412,447
+
+  检测到的异常：0
+  发现的横向移动路径：0
+```
+
+流量重放耗时更长，但提供完整全景。差异报告精确展示了相对于当前生产策略集会有什么变化。
+
+</TabItem>
+</Tabs>
+
+## 策略差异
+
+Parapet 可以对两组策略并排比较，针对每个资源展示访问差异：
+
+```bash title="策略差异"
+sentinel parapet diff \
+  --baseline production \
+  --proposed production+draft:tightened-posture
+```
+
+```text title="差异输出"
+Parapet 策略差异
+  基线：production（当前）
+  提议：production + draft:tightened-posture
+
+  资源：api-cluster-east
+    基线：    授予 1,089 个会话
+    提议：    授予 931 个会话
+    差异：    -158 个会话（态势阈值上调）
+
+  资源：data-layer
+    基线：    授予 247 个会话
+    提议：    授予 247 个会话
+    差异：    无变化
+
+  资源：admin-tools
+    基线：    授予 12 个会话
+    提议：    授予 12 个会话
+    差异：    无变化
+
+  汇总：
+    受影响资源：3 个中的 1 个
+    会话总体影响：-158（api-cluster-east 的 13.6%）
+```
+
+## 仿真后的提升
+
+复核仿真结果后，将草案策略提升到生产：
+
+```bash title="仿真后提升"
+sentinel parapet promote \
+  --draft tightened-posture \
+  --simulation-id sim_7f3a2b9c
+```
+
+提升过程会将新策略与其仿真结果在 Spyglass 中关联起来。审计员可以为每一条生产策略追溯到验证它的那一次仿真。
+
+:::note 仿真要求
+任何修改访问条件的策略变更，提升前都必须先通过一次 Parapet 仿真。Sentinel 控制面会强制执行这一点——生产资源默认禁用未经仿真的直接策略应用。
+:::
+
+## 在 Conduit 中自动化仿真
+
+把 Parapet 集成到 Conduit CI 流水线中，可在每次提交时对策略变更进行仿真：
+
+```text title="conduit.grain — 策略仿真步骤"
+pipeline "policy-deploy" {
+  stage "simulate" {
+    run = "sentinel parapet simulate --policy-set production --include $DRAFT_POLICY --duration 24h"
+    fail_on = "anomalies > 0 || new_denials > 500"
+  }
+
+  stage "review" {
+    type    = "manual"
+    approvers = ["security-ops"]
+  }
+
+  stage "promote" {
+    run = "sentinel parapet promote --draft $DRAFT_POLICY --simulation-id $SIM_ID"
+  }
+}
+```
+
+该流水线会运行一次 24 小时的流量重放；若检测到异常或拒绝数超过阈值，则阻断提升；要求安全运营团队人工审批；通过后再自动提升策略。
+
+## 下一步
+
+- [信任策略](/docs/trust/trust-policies/) — Parapet 用以仿真的策略语法。
+- [审计与取证](/docs/operations/audit-forensics/) — 仿真结果如何记录在 Spyglass 中。
+- [API 参考](/docs/reference/api-reference/) — 对 Parapet 仿真与提升端点的程序化访问。

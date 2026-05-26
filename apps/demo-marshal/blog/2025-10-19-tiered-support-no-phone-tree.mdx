@@ -1,0 +1,69 @@
+---
+title: "Tiered support without a phone tree"
+authors:
+  - "dimitri"
+tags:
+  - "access-tiers"
+  - "support"
+date: "2025-10-19"
+---
+
+A phone tree is a tier system that pretends not to be one. Marshal's tier system does not pretend. Sponsor, contributor, public — written down, stamped on receipt, visible in the docket.
+
+{/* truncate */}
+
+The honesty improved the queue. Sponsors waited less, but felt seen. Contributors waited the same, but understood the order. Public requests were answered with care, on the schedule the docket promised.
+
+The schedule was published in the same docket as the requests. A public requester could read, on any given afternoon, that the queue currently contained 12 sponsor items, 38 contributor items, and 144 public items, and that the projected wait for a public request was four to six business days. The number was not a guess. It was a computation, made by reading the queue and the historical rate at which each tier was cleared. The computation was filed in the docket on every refresh — `PROJECTED 2025-10-19T14:00 UTC: sponsor=4h, contributor=2.1d, public=5.3d` — and was visible to anyone who looked.
+
+What this changed, more than anything, was the phrasing of the complaints. A complaint about the queue is now a complaint about the tier, or a complaint about the projection, or a complaint about the policy. It is rarely a complaint about the person who answered the request. The person who answered the request answered it on the schedule the docket promised. The schedule was met. The complaint, if there is one, is structural, and structural complaints are addressed by amending the structure.
+
+The structure is filed:
+
+```yaml title="policies/access-tiers.yml"
+policy: access-tiers
+version: 5
+sealed: true
+
+tiers:
+  sponsor:
+    sla: 1-business-day
+    queue-priority: 1
+    visibility: public
+    members-source: sponsors-registry@v14
+
+  contributor:
+    sla: 5-business-days
+    queue-priority: 2
+    visibility: public
+    members-source: contributors-registry@v9
+
+  public:
+    sla: best-effort
+    queue-priority: 3
+    visibility: public
+    members-source: "*"
+
+projections:
+  cadence: hourly
+  record:
+    docket: access
+    stamp: PROJECTED
+    retention: 90-days
+```
+
+The `visibility: public` field is the change that produced the change in tone. Before that field was added, the tier registry was internal. A requester could see their own tier, but not the tier of others, and not the queue depth at each tier. The tone of complaints was personal — *why is my issue being ignored?* After the field was added, the queue depth at each tier was published in the access docket, refreshed hourly, and any requester could read the projection. The tone shifted. The complaints became structural — *the public queue's projection has been over five days for three weeks; should the SLA be revised, or the staffing increased?*
+
+The second question is easier to act on, because it points to a parameter rather than a person. The parameter is filed. The parameter can be revised. A revision produces a new sealed version of the policy, and the new version is visible in the policy log. The structural complaint becomes a structural change, by procedure rather than persuasion.
+
+```bash
+$ marshal docket query --docket access --stamp PROJECTED --since 2025-10-12 --limit 5
+TIME              SPONSOR   CONTRIB   PUBLIC    QUEUE-DEPTH
+2025-10-12 14:00  3.2h      1.8d      4.1d      178
+2025-10-13 14:00  3.8h      2.0d      4.7d      192
+2025-10-14 14:00  4.1h      2.2d      5.0d      201
+2025-10-15 14:00  4.4h      2.3d      5.4d      214
+2025-10-19 14:00  4.0h      2.1d      5.3d      194
+```
+
+A phone tree hides its tiers behind a menu. Marshal prints the tiers on the receipt. The receipt is in the docket. The docket is public. The wait, when it comes, was promised in writing.

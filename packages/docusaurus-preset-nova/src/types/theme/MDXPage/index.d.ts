@@ -1,6 +1,7 @@
 import type { TOCItem } from '@docusaurus/mdx-loader';
 import type { Assets, MDXPageMetadata, PageFrontMatter } from '@docusaurus/plugin-content-pages';
-import type { ReactNode } from 'react';
+import type { MDXComponents } from 'mdx/types';
+import type { ComponentProps, CSSProperties, ReactNode } from 'react';
 
 /**
  * Theme - MDX Page - MDX Page.
@@ -27,8 +28,14 @@ export type ThemeMdxPageMdxPageContent = {
 
 export type ThemeMdxPageMdxPagePropsContent = ThemeMdxPageMdxPageContent;
 
+export type ThemeMdxPageMdxPagePropsClassName = string | undefined;
+
+export type ThemeMdxPageMdxPagePropsStyle = CSSProperties | undefined;
+
 export type ThemeMdxPageMdxPageProps = {
   content: ThemeMdxPageMdxPagePropsContent;
+  className?: ThemeMdxPageMdxPagePropsClassName;
+  style?: ThemeMdxPageMdxPagePropsStyle;
   [key: string]: unknown;
 };
 
@@ -56,12 +63,27 @@ export type ThemeMdxPageMdxPageTocMaxHeadingLevel = number | undefined;
 
 export type ThemeMdxPageMdxPageCanDisplayEditMetaRow = boolean;
 
+export type ThemeMdxPageMdxPageCanRenderToc = boolean;
+
 export type ThemeMdxPageMdxPageMdxComponent = ThemeMdxPageMdxPageContent;
 
 export type ThemeMdxPageMdxPageMetadataSpread = Record<string, unknown>;
 
 export type ThemeMdxPageMdxPageTocSpread = Record<string, unknown>;
 
-export type ThemeMdxPageMdxPageToc = ReactNode;
-
 export type ThemeMdxPageMdxPageEditMetaRowSpread = Record<string, unknown>;
+
+export type ThemeMdxPageMdxPageMdxComponents = MDXComponents;
+
+export type ThemeMdxPageMdxPageH1OverrideProps = ComponentProps<'h1'>;
+
+/**
+ * Theme - MDX Page - MDX Page - First H State.
+ *
+ * @since 0.15.0
+ */
+export type ThemeMdxPageMdxPageFirstH1State = {
+  rendered: boolean;
+};
+
+export type ThemeMdxPageMdxPageIsFirst = boolean;

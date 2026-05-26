@@ -1,0 +1,136 @@
+---
+title: "التدقيق والتحقيق الجنائي"
+sidebar_position: 2
+description: "إعادة بناء الجلسات بـ Spyglass، والاحتفاظ غير القابل للتعديل بالسجلّات، واستعلامات التدقيق، وتصدير أدلّة الامتثال."
+tags:
+  - "operations"
+  - "audit"
+---
+
+import Details from '@theme/Details';
+
+# التدقيق والتحقيق الجنائي
+
+Spyglass هو محرّك التدقيق والتحقيق الجنائي في Sentinel. يُسجّل كلّ قرار وصول، وكلّ تقييم سياسة، وكلّ حدث عبور منطقة، وكلّ اتصال نفق Filament، تسجيلاً غير قابل للتعديل لمدّة سبع سنوات. الغرض ليس مجرّد الاحتفاظ، بل إعادة البناء. يمكن إعادة تشغيل أيّ جلسة، أو أيّ حادثة، أو أيّ نمط وصول، خطوة بخطوة، من بيانات السجلّ وحدها.
+
+## ما يُسجّله Spyglass
+
+يلتقط Spyglass كلّ حدث في حلقة الثقة في Sentinel:
+
+| نوع الحدث        | المصدر     | البيانات الملتقطة                                                  |
+|------------------|------------|--------------------------------------------------------------------|
+| تقييم السياسة    | Watchtower | المستخدم، الجهاز، المورد، الشروط، الدرجة، النتيجة، الطابع الزمني   |
+| قرار الوصول      | Drawbridge | منح/تضييق/إلغاء، مُعرّف السياسة، مُعرّف النفق، المدّة              |
+| عبور منطقة       | Rampart    | منطقة المصدر، منطقة الهدف، قاعدة العبور، نتيجة تقييم السياسة       |
+| فحص الوضع الأمني | Garrison   | مُعرّف الجهاز، جميع فئات الفحص، الدرجات، نجاح/إخفاق لكلّ فئة       |
+| حدث النفق        | Filament   | مُعرّف النفق، نقاط النهاية، المدّة، البايتات المنقولة، سبب الإغلاق |
+| الوصول الطارئ    | المسؤول    | المستخدم، التبرير، النطاق، المدّة، المُراجِع                       |
+
+جميع الأحداث مُوقّعة تشفيرياً ومُخزّنة في سجلّات للإضافة فقط. ولا يمكن تعديل السجلّات أو حذفها، حتى من قِبَل المسؤولين.
+
+:::info غير قابل للتعديل بحكم التصميم
+تُكتب سجلّات Spyglass إلى مخزون للإضافة فقط بسلسلة تشفيرية. يتضمّن كلّ سجلّ تجزئة (هاش) السجلّ السابق، مُكوّناً سلسلة كاشفة للعبث. وأيّ تعديل لسجلّ تاريخي يكسر السلسلة ويُحرّك تنبيه سلامة.
+:::
+
+## إعادة بناء الجلسات
+
+يستطيع Spyglass إعادة بناء جلسة وصول كاملة من أحداثها المُكوِّنة. هذه أداة التحقيق الجنائي الأساسيّة في التحقيق في الحوادث:
+
+```bash title="إعادة بناء جلسة"
+sentinel spyglass reconstruct \
+  --user j.chen \
+  --device dev_a3b7c9d1 \
+  --period "2025-06-15T09:00:00..2025-06-15T17:00:00"
+```
+
+```text title="مخرجات إعادة بناء الجلسة"
+Session Reconstruction: j.chen @ dev_a3b7c9d1
+Period: 2025-06-15 09:00:00 — 17:00:00
+
+09:01:12  GARRISON   posture check: score 94
+09:01:12  WATCHTOWER evaluation: policy api-access → PASS
+09:01:12  DRAWBRIDGE grant: api-cluster-east (tunnel tun_8a3f)
+09:01:12  RAMPART    zone crossing: internal → api-services (allowed)
+09:15:00  FILAMENT   tunnel tun_8a3f: 2.4 MB transferred
+10:31:12  WATCHTOWER evaluation: policy api-access → PASS (score 94)
+12:01:12  WATCHTOWER evaluation: policy api-access → PASS (score 91)
+13:31:12  WATCHTOWER evaluation: policy api-access → PASS (score 91)
+14:22:47  GARRISON   posture check: score 78 (antivirus definitions stale)
+14:22:47  WATCHTOWER evaluation: policy api-access → FAIL (posture < 85)
+14:22:47  DRAWBRIDGE revoke: api-cluster-east (tunnel tun_8a3f closed)
+14:22:47  RAMPART    zone crossing revoked: internal → api-services
+14:22:48  NOTIFICATION sent to security-ops
+14:45:00  GARRISON   posture check: score 93 (antivirus updated)
+14:45:00  WATCHTOWER evaluation: policy api-access → PASS
+14:45:00  DRAWBRIDGE grant: api-cluster-east (tunnel tun_9b4g)
+
+Session summary:
+  Total evaluations: 8
+  Access grants: 2
+  Access revocations: 1
+  Revocation cause: antivirus definitions exceeded 3-day threshold
+  Time without access: 22 minutes 13 seconds
+```
+
+تُظهر إعادة البناء الدورة الكاملة، المنح الأوّلي، وإعادة التقييم الدوري، والإلغاء حين تدهور الوضع الأمني، وإعادة المنح بعد المعالجة.
+
+## استعلامات التدقيق
+
+يدعم Spyglass استعلامات منظّمة للبحث عبر جميع أنواع الأحداث:
+
+```bash title="استعلام بالمورد والنطاق الزمني"
+sentinel spyglass query \
+  --resource api-cluster-east \
+  --event-type access-decision \
+  --result revoke \
+  --period "2025-06-01..2025-06-30"
+```
+
+```text title="مخرجات الاستعلام"
+Spyglass Query Results: api-cluster-east (revocations, June 2025)
+
+DATE        USER        DEVICE           REASON                    DURATION
+2025-06-04  k.patel     dev_b1a9c3e7     posture < 80              47m
+2025-06-09  m.torres    dev_f8e2d4c6     location anomaly          12m
+2025-06-15  j.chen      dev_a3b7c9d1     antivirus stale           22m
+2025-06-22  r.kim       dev_c5d7e9f1     session age exceeded      immediate
+
+Total revocations: 4
+Mean time to remediation: 20m 15s
+```
+
+<Details>
+<summary>المرجع الكامل لمعاملات الاستعلام</summary>
+
+| المعامل        | النوع | الوصف                                                                                    |
+|----------------|-------|------------------------------------------------------------------------------------------|
+| `--resource`   | سلسلة | التصفية باسم المورد (يدعم البدائل النائبة)                                               |
+| `--user`       | سلسلة | التصفية بهوية المستخدم                                                                   |
+| `--device`     | سلسلة | التصفية بمُعرّف الجهاز                                                                   |
+| `--event-type` | تعداد | `policy-evaluation`, `access-decision`, `zone-crossing`, `posture-check`, `tunnel-event` |
+| `--result`     | تعداد | `pass`, `fail`, `grant`, `narrow`, `revoke`                                              |
+| `--period`     | نطاق  | نطاق تاريخ بصيغة ISO 8601 (`start..end`)                                                 |
+| `--zone`       | سلسلة | التصفية باسم منطقة Rampart                                                               |
+| `--policy`     | سلسلة | التصفية باسم السياسة                                                                     |
+| `--sort`       | تعداد | `time`, `user`, `resource`, `score`                                                      |
+| `--format`     | تعداد | `table`, `json`, `csv`                                                                   |
+
+</Details>
+
+## تصدير الامتثال
+
+يُولّد Spyglass حزم أدلّة امتثال لأُطر العمل القياسية:
+
+```bash title="تصدير أدلّة الامتثال"
+sentinel spyglass export --framework soc2 --period 2025-Q2
+sentinel spyglass export --framework hipaa --period 2025-Q2
+sentinel spyglass export --framework iso27001 --period 2025-Q2
+```
+
+يُنتج كلّ تصدير حزمة أدلّة منظّمة تحتوي على ملخّصات تقييم السياسة، وإحصاءات قرارات الوصول، وتوزيعات فحوصات الوضع الأمني، وسجلّات عبور المناطق، مُنسّقة لإطار الامتثال المحدّد.
+
+## الخطوات التالية
+
+- [محاكاة السياسة](/docs/operations/policy-simulation/)، اختبر تغييرات السياسة مقابل بيانات تدقيق تاريخية.
+- [التجزئة الدقيقة](/docs/operations/micro-segmentation/)، أحداث عبور المناطق التي يُسجّلها Spyglass.
+- [مرجع API](/docs/reference/api-reference/)، وصول برمجي إلى نقاط نهاية استعلام Spyglass والتصدير.

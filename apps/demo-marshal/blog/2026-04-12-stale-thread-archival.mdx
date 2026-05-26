@@ -1,0 +1,56 @@
+---
+title: "One year of stale threads, archived in a single afternoon"
+authors:
+  - "cordelia"
+tags:
+  - "thread-archival"
+  - "scheduled-stewardship"
+date: "2026-04-12"
+---
+
+The repository had 2,184 issues older than a year. Of those, 2,108 were resolved, abandoned, or duplicates. Marshal closed and sealed all 2,108 in a single overnight pass.
+
+{/* truncate */}
+
+The remaining 76 were hand-filed for senior review. Each carries a stamped notice of its current status, the reason for archival, and a path to reopen.
+
+The pass was not a one-time exercise. The pass was the standard archival pass, run on its standard schedule, on a night that happened to find a year's accumulated backlog ready for the threshold. The pass did not work harder than usual. The pass read more rows. The clerk does not get tired of reading rows.
+
+The threshold was not changed for the occasion. The threshold remained 365 days of inactivity. The 2,184 issues that crossed the threshold did so on the same calendar day because they had been opened, in roughly equal numbers, on the same calendar day a year earlier — the consequence of a documentation push in early 2025 that produced a large number of small reports, most of which were resolved within their first week, but which had remained technically open with the resolution comments unmarked. The resolution-comment-detection policy, which was itself filed in late 2024, identified 2,108 of them as resolvable, and the standard archival pass swept the 2,108 into the stewardship docket.
+
+The breakdown was filed in the docket alongside the action:
+
+```yaml title="dockets/stewardship/2026-04-12.yml"
+- id: STW-2026-04-12-0001
+  timestamp: 2026-04-12T03:14:00Z
+  policy: stale-thread-archival@v3
+  action: ARCHIVED
+  scope: org/*
+  matched: 2184
+  sealed: 2108
+  deferred: 76
+  duration: 47m12s
+  seal: sha256:9c3b7a1f4e8d2b5c0a3f9b4e1c5d26f8
+
+  breakdown:
+    resolved-in-comments: 1402
+    abandoned-no-followup: 482
+    duplicate-of-existing: 224
+    deferred-senior-review: 76
+```
+
+The 76 deferred items were each filed under a separate docket entry, with a reference to the parent run and a note explaining why the item required senior review. A handful were security-adjacent. A handful had been touched by a senior maintainer in their lifetime. A handful had been linked to from external incident reports, and the link itself was a reason to defer. The senior maintainer reads them on the morning of the second working day after the pass.
+
+```bash
+$ marshal docket query --docket stewardship-deferred --parent STW-2026-04-12-0001
+COUNT  REASON                              ACTION-PENDING
+24     security-adjacent                   senior-review
+18     senior-author-historical            senior-review
+16     external-incident-linked            senior-review
+11     repeated-deferral                   senior-review
+7      cross-repository-reference          senior-review
+```
+
+A reader who wants to reopen one of the 2,108 sealed items may do so. The seal is permanent, but the issue is not closed in the sense of being inaccessible. It is archived. A reopening produces a new docket entry, stamped `REOPENED`, which references the original archival entry. The original entry is unchanged. The new entry coexists. A reader scrolling the docket sees both — the archive, then the reopening, in the order they occurred. The audit trail accommodates the change because the change was procedural and was filed.
+
+The pass took forty-seven minutes. The maintainers were not informed. The maintainers read the morning summary on the next working day, saw the count, confirmed that the deferred count was within the expected range, and continued with their work. The clerk had done its work. The seal was permanent. The folder, which is not literally a folder anymore, was lighter by 2,108 sheets.

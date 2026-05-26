@@ -1,5 +1,5 @@
 /**
- * Sentinel — Preset identity, design tokens, keyframes, and global visual styles.
+ * Sentinel - Preset identity, design tokens, keyframes, and global visual styles.
  *
  * @since 0.15.0
  */
@@ -9,48 +9,214 @@
  * ============================ */
 
 :root {
-  --nova-grid-padding: 16px;
-  --nova-grid-gutter: 16px;
-  --nova-section-gap: 3rem;
-  --nova-layout-docs-max: 100%;
-  --nova-layout-blog-max: 100%;
-  --nova-color-info-bg: rgba(99, 102, 241, 0.04);
-  --nova-color-info-bg-dark: rgba(99, 102, 241, 0.06);
-  --nova-color-warning-500: #f59e0b;
-  --nova-color-warning-bg: rgba(245, 158, 11, 0.04);
-  --nova-color-warning-bg-dark: rgba(245, 158, 11, 0.06);
-  --nova-color-danger-500: #ef4444;
-  --nova-color-danger-bg: rgba(239, 68, 68, 0.04);
-  --nova-color-danger-bg-dark: rgba(239, 68, 68, 0.06);
+  --nova-sentinel-grid-padding: 16px;
+  --nova-sentinel-grid-gutter: 16px;
+  --nova-sentinel-section-gap: 3rem;
+  --nova-sentinel-layout-docs-max: 100%;
+  --nova-sentinel-layout-blog-max: 100%;
+  --nova-sentinel-color-info-bg: rgba(99, 102, 241, 0.04);
+  --nova-sentinel-color-warning-500: #f59e0b;
+  --nova-sentinel-color-warning-bg: rgba(245, 158, 11, 0.04);
+  --nova-sentinel-color-danger-500: #ef4444;
+  --nova-sentinel-color-danger-bg: rgba(239, 68, 68, 0.04);
+  --nova-color-warning-500: var(--nova-sentinel-color-warning-500);
+  --nova-color-danger-500: var(--nova-sentinel-color-danger-500);
+  --nova-grid-padding: var(--nova-sentinel-grid-padding);
+  --nova-grid-gutter: var(--nova-sentinel-grid-gutter);
+  --nova-section-gap: var(--nova-sentinel-section-gap);
+  --nova-layout-docs-max: var(--nova-sentinel-layout-docs-max);
+  --nova-layout-blog-max: var(--nova-sentinel-layout-blog-max);
+
+  /* Sticky chrome offset - 127px canopy navbar alone (announcement-bar is a
+     sibling of .navbar and is non-sticky, so it scrolls out after any scroll
+     and doesn't contribute to the post-scroll sticky chrome). The 127px is
+     1px navbar bottom-border + 126px canopy nav-row (inner container with
+     gap:normal stacking brand row + items row + padding). 2px shorter than
+     marshal's canopy (which uses gap:12px). Consumed by hash-anchor scroll,
+     sticky sidebars, and TOC. sticky-layout.ts measures
+     .navbar.getBoundingClientRect().height directly at runtime, matching
+     this static value. */
+  --nova-sentinel-layout-sticky-top: 127px;
+  --nova-layout-sticky-top: var(--nova-sentinel-layout-sticky-top);
+  --nova-color-info-bg: var(--nova-sentinel-color-info-bg);
+  --nova-color-warning-bg: var(--nova-sentinel-color-warning-bg);
+  --nova-color-danger-bg: var(--nova-sentinel-color-danger-bg);
+
+  /* Ambient backdrop - fine teal dot grid evoking a console / observability
+     dashboard. 1px dots on a 24px lattice, fixed to the viewport so the
+     pattern stays in place as content scrolls. Reads as structured monitoring
+     surface - quieter than a full grid, sharper than a flat color. */
+  --nova-sentinel-ambient:
+    radial-gradient(circle at center, color-mix(in srgb, var(--nova-color-primary-500), transparent 80%) 1px, transparent 1.5px);
+
+  /* Background recipe - sentinel's observability identity is essentially
+     pure white in light, deep navy in dark. Primary contributes 0.5% in
+     light (barely visible) and 96% black-mix in dark for the navy depth.
+     Background tracks the consumer's primary override. */
+  --nova-color-background: color-mix(in oklab, var(--nova-color-primary-500), #ffffff 99.5%);
+
+  /* Body surface alias - kept for legacy consumers that reference
+     --nova-sentinel-bg directly; resolves through to --nova-color-background. */
+  --nova-sentinel-bg: var(--nova-color-background);
+
+  /* Chrome surface tokens - used by Navbar / Footer / AnnouncementBar
+     wrappers. Light is near-white with a faint teal cast; dark is deep
+     navy. Border tracks the consumer's border token. */
+  --nova-sentinel-chrome-bg: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-color-background) 97%);
+  --nova-sentinel-chrome-bg-translucent: color-mix(in srgb, transparent 5%, var(--nova-sentinel-chrome-bg));
+  --nova-sentinel-chrome-border: var(--nova-color-border);
+  --nova-sentinel-chrome-overlay: rgba(255, 255, 255, 0.06);
+  --nova-sentinel-text: var(--nova-color-text);
+  --nova-sentinel-text-muted: var(--nova-color-text-muted);
+  --nova-sentinel-text-soft: var(--nova-color-text-soft);
+
+  /* Depth tier - sentinel's card + code surfaces both use a hairline border
+     keyed to the consumer's border token. The aliases bridge to the
+     generator-emitted `--nova-depth-*-border` so consumer CSS keeps a stable
+     surface contract regardless of preset. */
+  --nova-sentinel-depth-card-border: 1px solid var(--nova-color-border);
+  --nova-sentinel-depth-code-border: 1px solid var(--nova-color-border);
+  --nova-depth-card-border: var(--nova-sentinel-depth-card-border);
+  --nova-depth-code-border: var(--nova-sentinel-depth-code-border);
+
+  /* Code surface - mode-flipping. Light mode reuses the canonical
+     `--nova-color-surface-raised` for a clean light card that fits sentinel's
+     bright navy/teal palette. Dark mode (override below) keeps the near-black
+     navy slab. Title bar, toolbar, and expand chrome share this surface. */
+  --nova-sentinel-code-bg: var(--nova-color-surface-raised);
+
+  /* App-market button - canonical Apple/Google badge convention: always
+     pure black with light text in both modes. Not mode-flipped. */
+  --nova-sentinel-app-market-bg: #000000;
+
+  /* Search - focus-ring width on inputs (paired with the --nova-color-primary
+     tint used at use sites). */
+  --nova-sentinel-focus-ring-width: 2px;
+
+  /* SkipToContent - color tokens (shape lives in the SkipToContent overlay). */
+  --nova-sentinel-skip-bg: var(--nova-sentinel-chrome-bg);
+  --nova-sentinel-skip-color: var(--nova-sentinel-text);
+  --nova-sentinel-skip-border: 1px solid var(--nova-sentinel-chrome-border);
+  --nova-sentinel-skip-shadow: 0 0 0 2px var(--nova-color-primary-500), 0 4px 12px rgb(0 0 0 / 0.08);
+  --nova-skip-bg: var(--nova-sentinel-skip-bg);
+  --nova-skip-color: var(--nova-sentinel-skip-color);
+  --nova-skip-border: var(--nova-sentinel-skip-border);
+  --nova-skip-shadow: var(--nova-sentinel-skip-shadow);
+
+  /* Blog Layout - color tokens (typography lives in the BlogLayout overlay).
+     Resolves via the cascade-emitted --nova-color-text-soft in light; dark
+     block below shifts to text-muted for slightly louder contrast on navy. */
+  --nova-sentinel-blog-description-color: var(--nova-color-text-soft);
+  --nova-blog-description-color: var(--nova-sentinel-blog-description-color);
+
+  /* Mermaid identity - cluster fill/stroke derive from accent (consumer's
+     secondary seed) tinted with the page background so the cluster reads
+     as a quiet surface in the diagram. Edge stroke and node radius are
+     preset-tuning constants. */
+  --nova-sentinel-mermaid-node-radius: 0.5rem;
+  --nova-sentinel-mermaid-edge-stroke: var(--nova-color-primary-400);
+  --nova-sentinel-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 96%);
+  --nova-sentinel-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 50%);
+  --nova-sentinel-mermaid-cluster-radius: 0.5rem;
+  --nova-mermaid-node-radius: var(--nova-sentinel-mermaid-node-radius);
+  --nova-mermaid-edge-stroke: var(--nova-sentinel-mermaid-edge-stroke);
+  --nova-mermaid-cluster-fill: var(--nova-sentinel-mermaid-cluster-fill);
+  --nova-mermaid-cluster-stroke: var(--nova-sentinel-mermaid-cluster-stroke);
+  --nova-mermaid-cluster-radius: var(--nova-sentinel-mermaid-cluster-radius);
+
+  /* Footer credit-row filter slow-fade - intentionally longer than the system
+     motion-duration to give the credit-row hover its own slower visual rhythm.
+     Component-scoped (Footer only). */
+  --nova-sentinel-footer-filter-duration: 250ms;
+  --nova-footer-filter-duration: var(--nova-sentinel-footer-filter-duration);
+
+  /* Admonition - per-type rail + fill (consumed by the Admonition overlay).
+     Note only overrides the rail (fill inherits the container's tinted bg).
+     Tip's fill uses a color-mix recipe; info/warning/danger fills delegate to
+     the semantic --nova-color-{info,warning,danger}-bg chain so their dark
+     overrides flow through automatically. */
+  --nova-sentinel-admonition-note-rail: var(--nova-color-text-soft);
+  --nova-sentinel-admonition-tip-rail: var(--nova-color-primary-500);
+  --nova-sentinel-admonition-tip-fill: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
+  --nova-sentinel-admonition-info-rail: var(--nova-color-accent-500);
+  --nova-sentinel-admonition-info-fill: var(--nova-color-info-bg);
+  --nova-sentinel-admonition-warning-rail: var(--nova-color-warning-500);
+  --nova-sentinel-admonition-warning-fill: var(--nova-color-warning-bg);
+  --nova-sentinel-admonition-danger-rail: var(--nova-color-danger-500);
+  --nova-sentinel-admonition-danger-fill: var(--nova-color-danger-bg);
+  --nova-admonition-note-rail: var(--nova-sentinel-admonition-note-rail);
+  --nova-admonition-tip-rail: var(--nova-sentinel-admonition-tip-rail);
+  --nova-admonition-tip-fill: var(--nova-sentinel-admonition-tip-fill);
+  --nova-admonition-info-rail: var(--nova-sentinel-admonition-info-rail);
+  --nova-admonition-info-fill: var(--nova-sentinel-admonition-info-fill);
+  --nova-admonition-warning-rail: var(--nova-sentinel-admonition-warning-rail);
+  --nova-admonition-warning-fill: var(--nova-sentinel-admonition-warning-fill);
+  --nova-admonition-danger-rail: var(--nova-sentinel-admonition-danger-rail);
+  --nova-admonition-danger-fill: var(--nova-sentinel-admonition-danger-fill);
 }
 
 @media (min-width: 640px) {
   :root {
-    --nova-section-gap: 3.5rem;
+    --nova-sentinel-section-gap: 3.5rem;
   }
 }
 
 @media (min-width: 768px) {
   :root {
-    --nova-grid-padding: 20px;
-    --nova-grid-gutter: 20px;
+    --nova-sentinel-grid-padding: 20px;
+    --nova-sentinel-grid-gutter: 20px;
   }
 }
 
 @media (min-width: 1024px) {
   :root {
-    --nova-grid-padding: 24px;
-    --nova-grid-gutter: 24px;
-    --nova-section-gap: 5rem;
+    --nova-sentinel-grid-padding: 24px;
+    --nova-sentinel-grid-gutter: 24px;
+    --nova-sentinel-section-gap: 5rem;
   }
 }
 
-[data-theme="dark"] {
-  --nova-depth-card-border: 1px solid var(--nova-color-neutral-800);
-  --nova-depth-code-border: 1px solid var(--nova-color-neutral-800);
-  --nova-sentinel-code-bg: #0a0f14;
-  --nova-sentinel-code-title-bg: #0e1419;
-  --nova-sentinel-footer-bg: #030710;
+/* :root prefix prevents cssnano partial-merge from hoisting this dark block ahead of :root. */
+:root[data-theme="dark"] {
+  /* Background recipe - dark mode deepens primary on black for the navy
+     identity that defines sentinel after dark. */
+  --nova-color-background: color-mix(in oklab, var(--nova-color-primary-500), #000000 96%);
+
+  /* Blog Layout - dark-mode swap (slightly louder contrast on navy). */
+  --nova-sentinel-blog-description-color: var(--nova-color-text-muted);
+
+  /* Semantic palette - dark-mode swap of admonition fills. */
+  --nova-sentinel-color-info-bg: rgba(99, 102, 241, 0.06);
+  --nova-sentinel-color-warning-bg: rgba(245, 158, 11, 0.06);
+  --nova-sentinel-color-danger-bg: rgba(239, 68, 68, 0.06);
+
+  /* SkipToContent - dark-mode swap of skip-bg recipe (slight deepen). */
+  --nova-sentinel-skip-bg: color-mix(in srgb, var(--nova-color-background), #000000 8%);
+  --nova-sentinel-skip-shadow: 0 0 0 2px var(--nova-color-primary-400), 0 4px 16px rgb(0 0 0 / 0.4);
+
+  --nova-sentinel-footer-bg: color-mix(in srgb, var(--nova-color-background), #000000 18%);
+
+  /* Dark ambient - denser dots so the lattice reads against the navy backdrop. */
+  --nova-sentinel-ambient:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--nova-color-primary-500), transparent 65%) 1px, transparent 1.5px);
+
+  /* Dark chrome - deeper primary mix against background. */
+  --nova-sentinel-chrome-bg: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-color-background) 96%);
+  --nova-sentinel-chrome-overlay: rgba(255, 255, 255, 0.04);
+
+  /* Mermaid identity - dark-mode swap (stronger background contribution
+     so clusters read darker against the navy diagram surface). */
+  --nova-sentinel-mermaid-cluster-fill: color-mix(in srgb, var(--nova-color-accent-500), var(--nova-color-background) 90%);
+  --nova-sentinel-mermaid-cluster-stroke: color-mix(in srgb, var(--nova-color-accent-500), transparent 40%);
+
+  /* Admonition - dark-mode swap of tip-fill. info/warning/danger fills
+     auto-resolve via the --nova-sentinel-color-{info,warning,danger}-bg
+     overrides earlier in this block. Rails are stable across modes. */
+  --nova-sentinel-admonition-tip-fill: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
+
+  /* Code surface - dark-mode override. Near-black tinted with primary-500
+     keeps the navy/teal identity sentinel reads as after dark. */
+  --nova-sentinel-code-bg: color-mix(in oklab, var(--nova-color-primary-500), #000000 96%);
 }
 
 html {
@@ -60,28 +226,47 @@ html {
 }
 
 body {
+  position: relative;
+  z-index: 0;
   margin: 0;
   padding: 0;
   font-family: var(--nova-font-body);
   font-size: 16px;
   line-height: 1.7;
-  color: var(--nova-color-neutral-800);
-  background-color: #ffffff;
+  color: var(--nova-color-text);
+  background-color: var(--nova-color-background);
 }
 
-[data-theme="dark"] body {
-  color: var(--nova-color-neutral-200);
-  background-color: #060a0e;
+/* Ambient backdrop layer - fixed dot grid lattice painted behind all content.
+   The token shadow on [data-theme="dark"] swaps the dot intensity automatically. */
+body::before {
+  content: "";
+
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+
+  background-image: var(--nova-sentinel-ambient);
+  background-size: 24px 24px;
+
+  pointer-events: none;
+}
+
+/* Stack page content above the ambient layer. */
+main,
+.main-wrapper {
+  position: relative;
+  z-index: 1;
 }
 
 ::selection {
   background-color: var(--nova-color-primary-200);
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
 }
 
 [data-theme="dark"] ::selection {
   background-color: var(--nova-color-primary-700);
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
 }
 
 *:focus-visible {
@@ -172,7 +357,7 @@ body {
   *,
   *::before,
   *::after {
-    /* !important is intentional — accessibility override must win regardless of specificity. */
+    /* !important is intentional - accessibility override must win regardless of specificity. */
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -210,7 +395,7 @@ a:hover {
   padding: 0.625rem 1.5rem;
   border-radius: var(--nova-shape-radius);
   background-color: var(--nova-color-primary-600);
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
   font-family: var(--nova-font-display);
   font-weight: 700;
   font-size: 0.875rem;
@@ -226,21 +411,28 @@ a:hover {
 .nova-cta-primary:focus-visible {
   background-color: var(--nova-color-primary-700);
   border-color: var(--nova-color-primary-800);
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
 }
 
 [data-theme="dark"] .nova-cta-primary {
-  background-color: var(--nova-color-primary-600);
-  border-color: var(--nova-color-primary-500);
-  color: var(--nova-color-neutral-50);
+  background-color: var(--nova-color-primary-500);
+  /*
+   * Re-pin to text-inverse explicitly so `[data-theme="dark"] a` (which
+   * tints links primary-400) does not steal the color and leave the button
+   * text mint-on-mint and barely visible. text-inverse is already set by
+   * the base rule, but the link override above has higher specificity than
+   * the bare class and would otherwise win.
+   */
+  color: var(--nova-color-text-inverse);
+  border-color: var(--nova-color-primary-400);
 }
 
 [data-theme="dark"] .nova-cta-primary:hover,
 [data-theme="dark"] .nova-cta-primary:focus-visible {
   background-color: var(--nova-color-primary-500);
+  color: var(--nova-color-text-inverse);
   border-color: var(--nova-color-primary-400);
-  color: var(--nova-color-neutral-50);
   box-shadow:
     0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 85%),
     0 0 20px color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
@@ -249,8 +441,8 @@ a:hover {
 .nova-cta-secondary {
   padding: 0.625rem 1.5rem;
   border-radius: var(--nova-shape-radius);
-  border: 1px solid var(--nova-color-neutral-300);
-  color: var(--nova-color-neutral-700);
+  border: 1px solid var(--nova-color-border);
+  color: var(--nova-color-text);
   font-family: var(--nova-font-display);
   font-weight: 600;
   font-size: 0.875rem;
@@ -267,11 +459,6 @@ a:hover {
   color: var(--nova-color-primary-700);
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
   border-color: var(--nova-color-primary-500);
-}
-
-[data-theme="dark"] .nova-cta-secondary {
-  color: var(--nova-color-neutral-300);
-  border-color: var(--nova-color-neutral-700);
 }
 
 [data-theme="dark"] .nova-cta-secondary:hover,
@@ -294,11 +481,12 @@ a:hover {
 }
 
 /* ============================
- * 4. Scrollbar
+ * 5. Scrollbar - thin teal thumb (compact observability)
  * ============================ */
 
 html {
   scrollbar-color: var(--nova-color-primary-300) transparent;
+  scrollbar-width: thin;
 }
 
 [data-theme="dark"] {
@@ -306,7 +494,7 @@ html {
 }
 
 /* ============================
- * 5. Stats & Spotlight
+ * 6. Stats & Spotlight
  * ============================ */
 
 .nova-stats-inner {
@@ -318,23 +506,15 @@ html {
   font-size: 1.375rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
   border: none;
   padding: 0;
-}
-
-[data-theme="dark"] .nova-stats-heading {
-  color: var(--nova-color-neutral-50);
 }
 
 .nova-stats-description {
   font-size: 0.9375rem;
   line-height: 1.7;
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-stats-description {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-stats-grid {
@@ -347,11 +527,7 @@ html {
 }
 
 .nova-stat + .nova-stat {
-  border-left: 1px solid var(--nova-color-neutral-200);
-}
-
-[data-theme="dark"] .nova-stat + .nova-stat {
-  border-left-color: var(--nova-color-neutral-800);
+  border-left: 1px solid var(--nova-color-border);
 }
 
 /* Two-column stat layout: odd items have no left border */
@@ -360,11 +536,7 @@ html {
 }
 
 .nova-stat:nth-child(n+3) {
-  border-top: 1px solid var(--nova-color-neutral-200);
-}
-
-[data-theme="dark"] .nova-stat:nth-child(n+3) {
-  border-top-color: var(--nova-color-neutral-800);
+  border-top: 1px solid var(--nova-color-border);
 }
 
 .nova-stat-value {
@@ -396,8 +568,17 @@ html {
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--nova-color-neutral-500);
+  color: var(--nova-color-text-soft);
   margin: 0;
+}
+
+/*
+ * Dark-mode bump from text-soft (70% mix toward bg) to text-muted (50% mix)
+ * so the eyebrow label reads against the deep navy without losing the
+ * intentionally quiet dashboard aesthetic in light mode.
+ */
+[data-theme="dark"] .nova-stat-label {
+  color: var(--nova-color-text-muted);
 }
 
 @media (min-width: 640px) {
@@ -422,11 +603,7 @@ html {
   }
 
   .nova-stat:nth-child(n+2) {
-    border-left: 1px solid var(--nova-color-neutral-200);
-  }
-
-  [data-theme="dark"] .nova-stat:nth-child(n+2) {
-    border-left-color: var(--nova-color-neutral-800);
+    border-left: 1px solid var(--nova-color-border);
   }
 
   .nova-stat-value {
@@ -457,13 +634,9 @@ html {
   font-size: 1.375rem;
   font-weight: 800;
   letter-spacing: -0.02em;
-  color: var(--nova-color-neutral-900);
+  color: var(--nova-color-text);
   border: none;
   padding: 0;
-}
-
-[data-theme="dark"] .nova-spotlight-heading {
-  color: var(--nova-color-neutral-50);
 }
 
 @media (min-width: 640px) {
@@ -479,44 +652,37 @@ html {
 }
 
 .nova-section-description {
-  color: var(--nova-color-neutral-500);
-}
-
-[data-theme="dark"] .nova-section-description {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-code-snippet {
-  background-color: #fff;
-  border: 1px solid var(--nova-color-neutral-200);
+  background-color: var(--nova-color-background);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-shape-radius);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 [data-theme="dark"] .nova-code-snippet {
   background-color: rgba(0, 0, 0, 0.3);
-  border-color: var(--nova-color-neutral-700);
 }
 
 /* ============================
- * 6. Surface Alt
+ * 7. Surface Alt
  * ============================ */
 
 .nova-surface-alt {
   padding-block: 2.5rem;
-  border-top: 1px solid var(--nova-color-neutral-200);
-  border-bottom: 1px solid var(--nova-color-neutral-200);
+  border-top: 1px solid var(--nova-color-border);
+  border-bottom: 1px solid var(--nova-color-border);
   background:
     radial-gradient(ellipse 60% 40% at 50% 100%, color-mix(in srgb, var(--nova-color-primary-500), transparent 97%) 0%, transparent 70%),
-    var(--nova-color-neutral-50);
+    var(--nova-color-background);
 }
 
 [data-theme="dark"] .nova-surface-alt {
-  border-top-color: var(--nova-color-neutral-800);
-  border-bottom-color: var(--nova-color-neutral-800);
   background:
     radial-gradient(ellipse 60% 40% at 50% 100%, color-mix(in srgb, var(--nova-color-primary-500), transparent 96%) 0%, transparent 70%),
-    var(--nova-color-neutral-950);
+    var(--nova-color-background);
 }
 
 @media (min-width: 640px) {
@@ -532,184 +698,24 @@ html {
 }
 
 /* ============================
- * 7. Typography
+ * 8. Typography
+ *
+ * Article-body paragraph and list-item color + bullet color live in the
+ * MDXContent overlay (scoped to `.nova-mdx-content`) so they only apply
+ * to MDX surfaces (docs + blog + custom pages) - chrome surfaces
+ * (navbar dropdowns, footer credits, hero subtitles) keep their own
+ * class-based styling untouched. Block-margin flows from shared
+ * theme/MDXContent via canonical tokens.
  * ============================ */
-
-p {
-  margin-bottom: 1rem;
-  color: var(--nova-color-neutral-600);
-}
-
-[data-theme="dark"] p {
-  color: var(--nova-color-neutral-300);
-}
-
-li {
-  margin-bottom: 0.25rem;
-  color: var(--nova-color-neutral-600);
-}
-
-[data-theme="dark"] li {
-  color: var(--nova-color-neutral-300);
-}
-
-li::marker {
-  color: var(--nova-color-primary-500);
-}
 
 /* ============================
- * 8. Tabs
+ * 9. Buttons - baseline transition
  * ============================ */
 
-[role="tablist"] {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--nova-color-neutral-200);
-  margin-bottom: 1.5rem;
-  overflow-x: auto;
-}
-
-[data-theme="dark"] [role="tablist"] {
-  border-bottom-color: var(--nova-color-neutral-800);
-}
-
-[role="tab"] {
-  font-family: var(--nova-font-body);
-  font-size: 0.8125rem;
-  font-weight: 500;
-  padding: 0.5rem 0.75rem;
-  color: var(--nova-color-neutral-500);
-  background: none;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  white-space: nowrap;
-  transition:
-    color var(--nova-motion-duration) ease,
-    border-color var(--nova-motion-duration) ease;
-}
-
-[role="tab"]:hover,
-[role="tab"]:focus-visible {
-  color: var(--nova-color-primary-600);
-}
-
-[role="tab"][aria-selected="true"] {
-  color: var(--nova-color-primary-700);
-  border-bottom-color: var(--nova-color-primary-600);
-}
-
-[data-theme="dark"] [role="tab"] {
-  color: var(--nova-color-neutral-400);
-}
-
-[data-theme="dark"] [role="tab"]:hover,
-[data-theme="dark"] [role="tab"]:focus-visible {
-  color: var(--nova-color-primary-300);
-}
-
-[data-theme="dark"] [role="tab"][aria-selected="true"] {
-  color: var(--nova-color-primary-400);
-  border-bottom-color: var(--nova-color-primary-500);
-}
-
-@media (min-width: 768px) {
-  [role="tab"] {
-    font-size: 0.875rem;
-    padding: 0.625rem 1rem;
-  }
-}
-
-button,
-[role="tab"] {
+button {
   transition:
     color var(--nova-motion-duration) ease,
     border-color var(--nova-motion-duration) ease,
     background-color var(--nova-motion-duration) ease;
-}
-
-/* ============================
- * 9. Tables
- * ============================ */
-
-table {
-  width: 100%;
-  min-width: 480px;
-  border-collapse: collapse;
-  margin-bottom: 0;
-  font-size: 0.875rem;
-  border: 1px solid var(--nova-color-neutral-200);
-  border-radius: var(--nova-shape-radius);
-  overflow: hidden;
-}
-
-[data-theme="dark"] table {
-  border-color: var(--nova-color-neutral-800);
-}
-
-thead {
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 96%);
-  border-bottom: 1px solid var(--nova-color-primary-200);
-}
-
-[data-theme="dark"] thead {
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 94%);
-  border-bottom-color: var(--nova-color-primary-800);
-}
-
-th {
-  font-family: var(--nova-font-display);
-  font-weight: 700;
-  font-size: 0.6875rem;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  text-align: left;
-  padding: 0.5rem 0.75rem;
-  color: var(--nova-color-primary-700);
-  white-space: nowrap;
-}
-
-[data-theme="dark"] th {
-  color: var(--nova-color-primary-300);
-}
-
-td {
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--nova-color-neutral-200);
-  color: var(--nova-color-neutral-600);
-  font-size: 0.875rem;
-}
-
-[data-theme="dark"] td {
-  border-bottom-color: var(--nova-color-neutral-800);
-  color: var(--nova-color-neutral-300);
-}
-
-tbody tr:hover td {
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 98%);
-}
-
-[data-theme="dark"] tbody tr:hover td {
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 97%);
-}
-
-@media (min-width: 768px) {
-  table {
-    min-width: 0;
-    font-size: 0.9375rem;
-  }
-
-  th {
-    font-size: 0.75rem;
-    padding: 0.625rem 1rem;
-  }
-
-  td {
-    padding: 0.625rem 1rem;
-  }
-}
-
-tbody tr {
-  transition: background-color var(--nova-motion-duration) ease;
 }
 

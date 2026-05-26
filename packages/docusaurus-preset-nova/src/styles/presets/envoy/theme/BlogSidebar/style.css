@@ -1,5 +1,5 @@
 /**
- * Envoy — Blog Sidebar visual styling.
+ * Envoy - Blog Sidebar visual styling.
  *
  * @since 0.15.0
  */
@@ -22,11 +22,11 @@
  * ============================ */
 
 .nova-blog-sidebar h4 {
-  color: var(--nova-color-neutral-800);
+  color: var(--nova-color-text);
 }
 
 [data-theme="dark"] .nova-blog-sidebar h4 {
-  color: var(--nova-color-neutral-200);
+  color: var(--nova-color-text);
 }
 
 /* ============================
@@ -35,15 +35,15 @@
 
 /* Links with violet hover background matching doc sidebar. */
 .nova-blog-sidebar a {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
   border-radius: var(--nova-envoy-radius-generous);
 
-  transition: color 200ms ease,
-              background-color 200ms ease;
+  transition: color var(--nova-motion-duration) ease,
+              background-color var(--nova-motion-duration) ease;
 }
 
 [data-theme="dark"] .nova-blog-sidebar a {
-  color: var(--nova-color-neutral-400);
+  color: var(--nova-color-text-muted);
 }
 
 .nova-blog-sidebar a:hover,
@@ -59,9 +59,3 @@
 
   background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
 }
-
-/* ============================
- * 4. Sidebar Border
- * ============================ */
-
-/* Aside border and padding inherited from DocSidebar preset (bare aside selector). */

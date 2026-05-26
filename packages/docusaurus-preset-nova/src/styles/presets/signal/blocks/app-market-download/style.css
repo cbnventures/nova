@@ -1,0 +1,80 @@
+/**
+ * Signal - App market download visual styling.
+ *
+ * @since 0.15.0
+ */
+
+/**
+ * ============================
+ * 1. Label
+ * ============================
+ */
+
+.nova-app-market-download-label {
+  font-family: var(--nova-font-code);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--nova-color-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+/**
+ * ============================
+ * 2. Button
+ * ============================
+ */
+
+.nova-app-market-download-button {
+  padding: 0.5rem 1rem;
+
+  color: var(--nova-color-background);
+
+  background-color: var(--nova-color-text);
+  border: 2px solid var(--nova-color-text);
+
+  transition: background-color var(--nova-motion-duration) ease,
+              border-color var(--nova-motion-duration) ease;
+}
+
+.nova-app-market-download-button:hover,
+.nova-app-market-download-button:focus-visible {
+  color: var(--nova-color-text-inverse);
+
+  background-color: var(--nova-color-primary-600);
+  border-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-app-market-download-button {
+  color: var(--nova-color-background);
+}
+
+[data-theme="dark"] .nova-app-market-download-button:hover,
+[data-theme="dark"] .nova-app-market-download-button:focus-visible {
+  color: var(--nova-color-text-inverse);
+
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-500);
+}
+
+/**
+ * ============================
+ * 3. Button Text
+ * ============================
+ */
+
+.nova-app-market-download-button-subtitle {
+  font-size: 0.5rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  line-height: 1.2;
+  opacity: 0.8;
+}
+
+.nova-app-market-download-button-title {
+  font-family: var(--nova-font-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  line-height: 1.2;
+}

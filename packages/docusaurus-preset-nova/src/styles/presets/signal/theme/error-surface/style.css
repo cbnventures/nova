@@ -1,0 +1,80 @@
+/**
+ * Signal - `error-surface` umbrella overlay.
+ *
+ * Sharp terminal error surface (404 / per-page crash / top-level boundary).
+ * Display heading with negative letter spacing, mono code body, flat surface
+ * retry button with rose primary hover and square corners.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 1. Heading
+ * ============================ */
+
+.nova-error-surface h1 {
+  font-family: var(--nova-font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--nova-signal-text);
+}
+
+[data-theme="dark"] .nova-error-surface h1 {
+  color: var(--nova-signal-text);
+}
+
+/* ============================
+ * 2. Body Copy
+ * ============================ */
+
+.nova-error-surface p {
+  font-family: var(--nova-font-code);
+  color: var(--nova-signal-text-muted);
+}
+
+[data-theme="dark"] .nova-error-surface p {
+  color: var(--nova-signal-text-muted);
+}
+
+/* ============================
+ * 3. Retry Button - Flat Slab
+ * ============================ */
+
+.nova-error-surface button {
+  font-family: var(--nova-font-code);
+
+  color: var(--nova-color-text);
+  background-color: var(--nova-signal-bg);
+  border-color: var(--nova-color-border);
+  border-radius: var(--nova-signal-radius-sharp);
+}
+
+[data-theme="dark"] .nova-error-surface button {
+  color: var(--nova-color-text);
+  background-color: var(--nova-signal-bg);
+  border-color: var(--nova-color-border);
+}
+
+.nova-error-surface button:hover,
+.nova-error-surface button:focus-visible {
+  background-color: var(--nova-color-surface-raised);
+  border-color: var(--nova-color-primary-600);
+}
+
+[data-theme="dark"] .nova-error-surface button:hover,
+[data-theme="dark"] .nova-error-surface button:focus-visible {
+  background-color: var(--nova-color-text);
+  border-color: var(--nova-color-primary-400);
+}
+
+/* ============================
+ * 4. Horizontal Rule
+ * ============================ */
+
+.nova-error-surface hr {
+  border-top-color: var(--nova-color-border);
+}
+
+[data-theme="dark"] .nova-error-surface hr {
+  border-top-color: var(--nova-color-border);
+}

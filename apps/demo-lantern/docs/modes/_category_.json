@@ -1,0 +1,10 @@
+{
+  "label": "Modes",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Modes change the rules of the house. Travel tightens quiet zones into watch zones, closes the bedtime windows, and teaches the porch to be more suspicious."
+  }
+}

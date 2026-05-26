@@ -1,0 +1,10 @@
+{
+  "label": "Campaigns",
+  "position": 5,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Tracking campaign performance over time — Aperture captures point-in-time snapshots, compares across time windows, and runs A/B link variants to see what moves."
+  }
+}

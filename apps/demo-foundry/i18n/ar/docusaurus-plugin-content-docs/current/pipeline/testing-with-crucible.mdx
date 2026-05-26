@@ -1,0 +1,157 @@
+---
+title: "الاختبار مع Crucible"
+sidebar_position: 3
+description: "يُولِّد Crucible هياكل اختبار من تواقيع أنواعك. إن كتبت الأنواع فقد وصفت عقد الاختبار بالفعل."
+tags:
+  - "pipeline"
+  - "testing"
+---
+
+# الاختبار مع Crucible
+
+يُولِّد Crucible هياكل اختبار من تواقيع أنواعك. إن كتبت الأنواع فقد وصفت عقد الاختبار. يقرأ Crucible العقد ويكتب البنية المكرّرة.
+
+## كيف يعمل
+
+يفحص Crucible كل توقيع نوع مُصدَّر في حزم مساحة عملك. لكل دالة مُصدَّرة، يُولِّد ملف اختبار يحوي:
+
+- قالب تأكيد يطابق توقيع الدالة.
+- بيانات تجهيز مشتقّة من أنواع المعاملات.
+- اختبار لقطة يلتقط شكل الخرج.
+
+```alloy title="src/utils/format.al — source"
+export function formatDate(timestamp: Numeric): Text {
+  return Temporal.format(timestamp, "YYYY-MM-DD")
+}
+
+export function formatCurrency(amount: Numeric, locale: Text): Text {
+  return Intl.currency(amount, locale)
+}
+```
+
+من هذين التصديرين، يُولِّد Crucible:
+
+```alloy title="tests/format.assay.al — generated scaffold"
+import { formatDate, formatCurrency } from "@my-app/core/utils/format"
+
+// highlight-start
+describe("formatDate", () => {
+  it("returns Text for a valid Numeric input", () => {
+    const result: Text = formatDate(1714780800)
+    expect(result).toMatchSnapshot()
+  })
+})
+// highlight-end
+
+describe("formatCurrency", () => {
+  it("returns Text for valid Numeric and Text inputs", () => {
+    const result: Text = formatCurrency(49.99, "en-US")
+    expect(result).toMatchSnapshot()
+  })
+})
+```
+
+تستخدم قوالب التأكيد اختبار اللقطة افتراضيًا. أول تشغيل يلتقط الخرج. التشغيلات اللاحقة تتأكد أنه لم يتغيّر.
+
+:::tip
+تجاوز أي اختبار مولَّد بتحرير الملف مباشرة. يحترم Crucible التغييرات اليدوية — لا يُعيد توليد اختبارات إلا للدوال التي لا يوجد لها ملف اختبار. اضبط `crucible = manual` في بيانك لمنع كل إعادة توليد بعد الهيكل الأول.
+:::
+
+## تشغيل الاختبارات
+
+```bash title="Run all tests"
+foundry crucible run
+```
+
+```text title="Output"
+  core
+    ✓ format.assay.al (2 tests, 0.8ms)
+    ✓ validate.assay.al (3 tests, 1.2ms)
+    ✓ parse.assay.al (4 tests, 0.9ms)
+  api
+    ✓ routes.assay.al (5 tests, 2.1ms)
+    ✓ handlers.assay.al (4 tests, 1.8ms)
+
+  18 tests passed in 1.4s
+```
+
+## وضع المراقبة
+
+يستطيع Crucible مراقبة تغييرات الملفات وإعادة تشغيل الاختبارات المتأثرة:
+
+```bash title="Watch for changes"
+foundry crucible watch
+```
+
+في وضع المراقبة، يراقب Crucible رسم تبعيات Tongs. حين يتغيّر ملف مصدر، يُعيد تشغيل اختبارات ذلك الملف وكل المعتمدات السفلية. تغيير في `core` يُطلق اختبارات في `core` و`api` و`web`.
+
+## اختبار اللقطات
+
+تلتقط اختبارات لقطة Crucible شكل خرج الدالة. حين يتغيّر الخرج، يفشل الاختبار بفارق يُظهر ما تغيّر.
+
+```text title="Snapshot failure output"
+  ✗ formatDate — snapshot mismatch
+
+  Expected:
+    "2025-05-04"
+
+  Received:
+    "2025/05/04"
+
+  Update snapshot? Run: foundry crucible run --update-snapshots
+```
+
+:::info
+تُخزَّن ملفات اللقطات في دليل `__snapshots__` بجوار كل ملف اختبار. هي نص خام وينبغي إيداعها في التحكم بالإصدار. مراجعة فروق اللقطات أثناء مراجعة الشيفرة تلتقط تغييرات الخرج غير المقصودة.
+:::
+
+## توليد التجهيزات
+
+للدوال ذات أنواع المدخلات المعقّدة، يُولِّد Crucible بيانات تجهيز تلقائيًا:
+
+```alloy title="src/services/order.al — source"
+export interface OrderRequest {
+  customerId: Text
+  items: List<OrderItem>
+  shipping: ShippingMethod
+}
+
+export function processOrder(request: OrderRequest): OrderResult {
+  // ...
+}
+```
+
+```alloy title="tests/order.assay.al — generated with fixtures"
+import { processOrder } from "@my-app/api/services/order"
+
+const fixture: OrderRequest = {
+  customerId: "cust_001",
+  items: [{ sku: "item_001", quantity: 1, price: 29.99 }],
+  shipping: ShippingMethod.Standard,
+}
+
+describe("processOrder", () => {
+  it("returns OrderResult for a valid OrderRequest", () => {
+    const result: OrderResult = processOrder(fixture)
+    expect(result).toMatchSnapshot()
+  })
+})
+```
+
+يستنتج Crucible قيمًا افتراضية معقولة لكل نوع حقل — السلاسل تأخذ معرّفات، والأرقام تأخذ قيمًا واقعية، والتعدادات تأخذ المتغيّر الأول.
+
+## الإعداد
+
+يحترم Crucible توجيه `crucible` في بيانك:
+
+| القيمة   | السلوك                                                         |
+|----------|----------------------------------------------------------------|
+| `auto`   | يُعيد توليد الهياكل في كل طَرق للتصديرات الجديدة أو المتغيّرة. |
+| `manual` | يُولِّد مرة واحدة عند أول طَرق. لا يكتب فوق.                   |
+| `off`    | لا هياكل اختبار. أنت تدير الاختبارات بالكامل.                  |
+
+## الخطوات التالية
+
+- [قواعد Warden](/docs/pipeline/warden-rules/) — قواعد تدقيق تقترن مع Crucible لتغطية جودة شيفرة كاملة.
+- [خط إنتاج البناء](/docs/pipeline/build-pipeline/) — أين يقع Crucible في دورة حياة Forge.
+- [أول طَرق لك](/docs/guides/your-first-forge/) — اطّلع على Crucible في عمله أثناء إعداد مساحة عمل أولية.

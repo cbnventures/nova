@@ -1,0 +1,113 @@
+---
+title: "نمذجة التهديدات بخرائط مناطق Rampart"
+authors:
+  - "ingrid"
+tags:
+  - "rampart"
+  - "threat-research"
+  - "micro-segmentation"
+date: "2026-03-05"
+---
+
+تصف نماذج التهديد التقليديّة الهجمات ضدّ بنية نظام. تسرد الأصول والتهديدات والتخفيفات في وثيقة دقيقة في يوم كتابتها وتقادمها بشكل متزايد بعد ذلك. أردنا نموذج تهديد يبقى حديثاً، نموذجاً مُحتسَباً من طوبولوجيا الشبكة الحيّة، لا مُؤلَّفاً في عرض شرائح.
+
+تُعطينا خرائط مناطق Rampart ذلك. كلّ حدّ منطقة قرار ثقة صريح. وكلّ قاعدة عبور بين منطقتَين تدفّق بيانات موثّق. خريطة المنطقة هي نموذج التهديد، وتُحدَّث في كلّ مرّة تتغيّر فيها سياسة.
+
+{/* truncate */}
+
+## كيف نُنمذج التهديدات الآن
+
+قبل Rampart، بدت جلسات نمذجة التهديد لدينا هكذا:
+
+1. اجمع المعماريّين، ومهندسي الأمن، وأصحاب المنتجات في غرفة.
+2. ارسم بنية النظام على لوح أبيض.
+3. حدّد حدود الثقة.
+4. اسرد التهديدات عند كلّ حدّ.
+5. وثّق التخفيفات.
+6. احفظ الوثيقة ولا تُحدّثها أبداً.
+
+كانت المُخرَجات PDF تصف الشبكة كما كانت في خميس معيّن. بحلول الإثنين التالي، كانت قد نُشرت خدمة جديدة، وأُضيفت قاعدة عبور بين منطقتَين، وصار نموذج التهديد قديماً.
+
+الآن نُولّد نموذج التهديد من طوبولوجيا Rampart الحيّة:
+
+```bash title="Generate threat model from live topology"
+sentinel rampart threat-model \
+  --output markdown \
+  --include-policies \
+  --include-traffic-stats
+```
+
+```text title="Threat model output (excerpt)"
+Rampart Zone Threat Model — Generated 2026-03-05T14:00:00Z
+
+Zone: payments (PCI-scoped)
+  Inbound connections from:
+    - api (policy: api-to-payments, unidirectional)
+    - auth (policy: auth-token-validation, unidirectional)
+  Outbound connections to:
+    - data-layer (policy: payments-to-db, unidirectional)
+    - external (policy: payment-processor-egress, unidirectional)
+  No connections to/from:
+    - edge, web, analytics, admin-tools, ci-cd, monitoring,
+      control-plane, staging, sandbox
+
+  Threat surface:
+    - Inbound: 2 zone-crossing rules from 2 zones
+    - Outbound: 2 zone-crossing rules to 2 zones
+    - Lateral movement: contained — no path to control-plane
+    - Data exfiltration: constrained to payment-processor-egress
+      (destination allowlist: 2 IPs)
+
+  Traffic statistics (last 30 days):
+    - Inbound: 4.2M connections, 99.7% from api zone
+    - Outbound: 1.1M connections, 89% to data-layer
+    - Denied: 847 connections (all from staging — misconfigured test)
+```
+
+كلّ منطقة تحصل على هذا التحليل. سطح التهديد مُحتسَب، لا مُقدَّر. تُصدّق إحصاءات حركة البيانات ما إذا كانت تدفّقات البيانات الفعليّة تُطابق المقصودة. وتكشف الاتصالات المرفوضة سوء تهيئة كان سيبقى دون ملاحظة.
+
+## ما تكشفه الخريطة
+
+أكثر المُخرَجات قيمة ليس التحليل لكلّ منطقة، بل مصفوفة الاتصال. تُظهر المصفوفة، لكلّ زوج من المناطق، ما إذا كان مسار موجوداً وكم قفزة يتطلّب:
+
+```text title="Zone connectivity matrix"
+              edge  web  api  data  pay  auth  admin  ci   mon  ctrl
+    edge        -    1    -    -     -    -     -      -    -    -
+    web         -    -    1    -     -    1     -      -    -    -
+    api         -    -    -    1     1    1     -      -    -    -
+    data        -    -    -    -     -    -     -      -    -    -
+    payments    -    -    -    1     -    -     -      -    -    -
+    auth        -    -    -    -     -    -     -      -    -    -
+    admin       -    -    -    1     -    1     -      -    1    1
+    ci-cd       -    -    -    -     -    -     -      -    -    -
+    monitoring  -    -    -    -     -    -     -      -    -    1
+    control     -    -    -    -     -    -     -      -    -    -
+```
+
+تُوضّح هذه المصفوفة شيئَين فوراً:
+
+- **القابليّة للوصول.** من `edge`، تستطيع الوصول إلى `web` (قفزة واحدة)، ثمّ `api` (قفزتان)، ثمّ `data-layer` (3 قفزات). ذلك أطول مسار من الإنترنت إلى البيانات الدائمة، ويعبر ثلاثة حدود ثقة بثلاث تقييمات سياسة.
+- **العزل.** `ci-cd` لا يمتلك اتصالات صادرة. خطّ بناء مُخترَق لا يستطيع الوصول إلى أيّ منطقة أخرى. `data-layer` لا يمتلك اتصالات صادرة. قاعدة بيانات مُخترَقَة لا تستطيع بدء اتصالات في أيّ مكان.
+
+## تحديث النموذج
+
+يُحدَّث نموذج التهديد تلقائياً لأنّه يُولَّد من مجموعة السياسات. حين يُضيف مهندس أمن قاعدة عبور بين منطقتَين جديدة، يعكسها نموذج التهديد في دورة التوليد التالية. وحين يُحاكي Parapet تغيير سياسة، يُولّد فرقاً مقابل نموذج التهديد الحالي ليرى الفريق بدقّة كيف يُؤثّر التغيير على سطح التهديد.
+
+```bash title="Threat model diff for a proposed policy change"
+sentinel rampart threat-model \
+  --diff draft:new-analytics-egress \
+  --output markdown
+```
+
+```text title="Diff output"
+Zone: analytics
+  + NEW outbound connection to: external
+    Policy: analytics-export-egress (draft)
+    Destination allowlist: 1 IP (data-warehouse.vendor.example)
+
+  Threat surface change:
+    - Data exfiltration: NEW path from analytics to external
+    - Recommendation: verify destination allowlist is minimal
+```
+
+نموذج التهديد ليس وثيقة. إنّه استعلام مقابل الطوبولوجيا الحيّة. لا يستطيع التقادم لأنّه لا يوجد كأثر ثابت. في كلّ مرّة تطرح فيها السؤال، تحصل على الإجابة الحاليّة.

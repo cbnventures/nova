@@ -1,0 +1,10 @@
+{
+  "label": "Beacons",
+  "position": 3,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "Short links that carry the full attribution chain — branded domains with Ironclad certificates, Flare QR codes and deep links bridging physical and digital, and bulk Beacon minting through the Spoke API or CSV import."
+  }
+}

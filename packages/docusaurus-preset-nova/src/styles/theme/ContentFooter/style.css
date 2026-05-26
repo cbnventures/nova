@@ -1,12 +1,12 @@
 /**
- * Content Footer — Shared structural styles.
+ * Content Footer - Shared structural styles.
  *
  * @since 0.15.0
  */
 
 /**
  * ============================
- * Content Footer — Layout
+ * Content Footer - Layout
  * ============================
  */
 
@@ -20,7 +20,7 @@
 
 /**
  * ============================
- * Content Footer — Section
+ * Content Footer - Section
  * ============================
  */
 
@@ -32,7 +32,7 @@
 
 /**
  * ============================
- * Content Footer — Section Label
+ * Content Footer - Section Label
  * ============================
  */
 
@@ -47,7 +47,7 @@
 
 /**
  * ============================
- * Content Footer — Tags
+ * Content Footer - Tags
  * ============================
  */
 
@@ -59,7 +59,7 @@
 
 /**
  * ============================
- * Content Footer — Share
+ * Content Footer - Share
  * ============================
  */
 
@@ -71,7 +71,7 @@
 
 /**
  * ============================
- * Content Footer — Share Button
+ * Content Footer - Share Button
  * ============================
  */
 
@@ -87,7 +87,7 @@
 
   text-decoration: none;
 
-  border: 1px solid var(--nova-color-neutral-200);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-shape-radius);
   background: none;
   cursor: pointer;
@@ -95,12 +95,13 @@
 
 /**
  * ============================
- * Content Footer — Edit
+ * Content Footer - Edit
  * ============================
  */
 
 .nova-content-footer-edit {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 0.25rem;
 }

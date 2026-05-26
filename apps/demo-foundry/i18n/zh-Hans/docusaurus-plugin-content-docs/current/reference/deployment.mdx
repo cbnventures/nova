@@ -1,0 +1,173 @@
+---
+title: "部署"
+sidebar_position: 1
+description: "Foundry 将工作空间交付到三种部署目标——Arcline Cloud、Vial 容器与 Trellis 编排。"
+tags:
+  - "参考"
+  - "部署"
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# 部署
+
+Foundry 将工作空间交付到三种部署目标：Arcline Cloud、Vial 容器与 Trellis 编排。每种目标都在清单中配置，并通过一条命令完成执行。
+
+## 部署目标
+
+<Tabs>
+<TabItem value="arcline" label="Arcline Cloud" default>
+
+Arcline 是一个托管云平台。Foundry 会打包你的服务、置备基础设施，并完成部署——全程无需手工操作。
+
+```bash title="部署到 Arcline"
+foundry deploy --target arcline
+```
+
+```text title="输出"
+→ 为 Arcline 目标构建 api (service)
+→ 使用 Smelter 打包（生产模式）
+→ 打包部署产物 (2.1 MB)
+→ 在 us-east-1 置备 Arcline 实例
+→ 将 api@2.4.1 部署至 arcline://platform-api.us-east-1
+→ 健康检查通过 (340 毫秒内返回 200 OK)
+→ 部署完成。已上线：https://api.platform.arcline.dev
+```
+
+</TabItem>
+<TabItem value="vial" label="Vial 容器">
+
+Vial 根据你的服务包构建容器镜像。镜像包含编译后的源码、运行时依赖以及一层最小基础层。
+
+```bash title="构建并推送 Vial 镜像"
+foundry deploy --target vial
+```
+
+```text title="输出"
+→ 为 Vial 目标构建 api (service)
+→ 根据清单生成 Vialfile
+→ 构建镜像：foundry/platform-api:2.4.1
+→ 镜像大小：18.4 MB (3 层)
+→ 推送到 registry.loom.dev/platform-api:2.4.1
+→ 推送完成。摘要：sha256:a1b2c3d4...
+```
+
+</TabItem>
+<TabItem value="trellis" label="Trellis 编排">
+
+Trellis 是一个容器编排平台。Foundry 会生成部署清单，并将其应用到你的 Trellis 集群。
+
+```bash title="部署到 Trellis"
+foundry deploy --target trellis
+```
+
+```text title="输出"
+→ 为 Trellis 目标构建 api (service)
+→ 生成 Trellis 清单 (3 副本，自动扩缩容)
+→ 应用至集群：production-us-east
+→ 滚动更新：0/3 → 1/3 → 2/3 → 3/3
+→ 所有副本健康。服务可用于 trellis://platform-api:8080
+```
+
+</TabItem>
+</Tabs>
+
+## 部署配置
+
+清单中的 `deploy` 块控制部署行为：
+
+```text title="project.grain — 部署配置"
+workspace "platform" {
+  target = "arcline"
+
+  deploy {
+    region   = "us-east-1"
+    replicas = 3
+    scaling  = "auto"
+    memory   = "512mb"
+    timeout  = "30s"
+  }
+
+  packages {
+    api { type = "service", depends = ["core"] }
+  }
+}
+```
+
+| 指令         | 类型        | 默认值           | 说明                                   |
+|------------|-----------|---------------|--------------------------------------|
+| `region`   | `Text`    | `"us-east-1"` | 部署区域。                                |
+| `replicas` | `Numeric` | `1`           | 运行实例数。                               |
+| `scaling`  | `Text`    | `"manual"`    | 扩缩容模式：`manual`、`auto` 或 `scheduled`。 |
+| `memory`   | `Text`    | `"256mb"`     | 每个实例的内存配额。                           |
+| `timeout`  | `Text`    | `"30s"`       | 健康检查的请求超时。                           |
+| `env`      | `Block`   | 可选            | 运行时注入的环境变量。                          |
+
+## 环境变量
+
+敏感值不应写在清单中。请使用 `env` 块，并引用你的秘密存储：
+
+```text title="project.grain — 环境变量"
+deploy {
+  env {
+    DATABASE_URL = secret("platform/db-url")
+    API_KEY      = secret("platform/api-key")
+  }
+}
+```
+
+`secret()` 函数会在部署时从部署平台的秘密存储中解析值。清单本身永远不会包含明文凭据。
+
+:::danger
+生产环境部署必须显式带上 `--confirm` 参数。运行 `foundry deploy --target arcline` 而不加 `--confirm` 会执行一次演练，打印将要发生的事情但不实际部署。这一安全机制旨在避免不小心的生产发布。
+:::
+
+:::note
+`--confirm` 参数有意不允许通过清单配置。每一次生产部署都必须是命令行上的显式、有意识的决定。
+:::
+
+## 多包部署
+
+当工作空间包含多个服务包时，Foundry 会按依赖顺序部署：
+
+```text title="多服务工作空间的部署"
+$ foundry deploy --target arcline --confirm
+
+→ 部署计划：
+  1. core (library) — 跳过（library 不会被部署）
+  2. auth (service) — 部署至 arcline://auth.us-east-1
+  3. api (service) — 部署至 arcline://api.us-east-1（依赖 auth）
+  4. gateway (service) — 部署至 arcline://gateway.us-east-1（依赖 api、auth）
+
+→ 正在部署 auth@2.4.1...  ✓ (4.2 秒)
+→ 正在部署 api@2.4.1...   ✓ (3.8 秒)
+→ 正在部署 gateway@2.4.1... ✓ (5.1 秒)
+
+→ 所有服务已部署。总用时：13.1 秒
+```
+
+library 类型的包永远不会被直接部署，它们会被打包进依赖它们的服务包中。
+
+## 回滚
+
+如果部署失败或健康检查未通过，Foundry 会自动回滚：
+
+```text title="失败时的自动回滚"
+→ 正在部署 api@2.5.0...
+→ 健康检查失败（30 秒后返回 503）
+→ 正在回滚至 api@2.4.1
+→ 回滚完成。已恢复至先前版本。
+```
+
+如需手动回滚，使用 `--rollback` 参数：
+
+```bash title="手动回滚"
+foundry deploy --target arcline --rollback api@2.4.1 --confirm
+```
+
+## 下一步
+
+- [CLI 参考](/docs/reference/cli-reference/) — `foundry deploy` 的完整参数参考。
+- [构建流水线](/docs/pipeline/build-pipeline/) — Foundry 在部署前如何构建产物。
+- [工作空间管理](/docs/guides/workspace-management/) — 管理多包工作空间。

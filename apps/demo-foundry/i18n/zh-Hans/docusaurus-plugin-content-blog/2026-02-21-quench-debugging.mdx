@@ -1,0 +1,76 @@
+---
+title: "排查一次不该发生的 Quench 缓存未命中"
+authors:
+  - "kofi"
+tags:
+  - "缓存"
+  - "quench"
+  - "性能"
+  - "开发者体验"
+date: "2026-02-21"
+---
+
+上周二，团队一名开发者开了一个工单："Quench 说 `core` 缓存未命中，但我什么都没改 `core`。"她说得没错。源文件没变，依赖没动，清单一字不差。但 Quench 就是每次都在重建 `core`，把一次 3 秒的热构建变成了 14 秒的冷构建。
+
+我们花了两小时把它揪了出来。元凶是一个环境变量。下面是完整的排查故事。
+
+{/* truncate */}
+
+## 第 1 步：检查缓存键
+
+Quench 提供 `diff` 命令，把当前缓存键和上一次缓存条目作比较。这是缓存未命中看起来有问题时第一条该跑的命令。
+
+```text title="Quench 缓存键 diff"
+$ foundry quench diff packages/core
+
+源码哈希：    MATCH  a1b2c3d4...
+依赖哈希：    MATCH  f6e5d4c3...
+清单哈希：    MATCH  1a2b3c4d...
+工具链哈希：  MISS   6f5e4d3c... → 7g6f5e4d...
+```
+
+工具链哈希变了。但没人升级过 Foundry，Node.js 版本也被锁定。工具链指纹里某个地方发生了变化。
+
+## 第 2 步：审视工具链哈希
+
+工具链哈希由流水线中每个工具的版本组合而成。我们把它展开看：
+
+```text title="工具链哈希分解"
+$ foundry quench key --toolchain --verbose packages/core
+
+foundry：          2.4.1    MATCH
+node：             22.11.0  MATCH
+smelter：          5.7.2    MATCH
+warden：           3.1.0    MATCH
+env.NODE_OPTIONS：--max-old-space-size=4096  MISS（先前未设置）
+```
+
+找到了。这位开发者周末在另一个项目里调试内存问题时，把 `NODE_OPTIONS=--max-old-space-size=4096` 加进了她的 shell 配置文件，后来忘了删。Quench 会把部分能影响编译行为的环境变量纳入工具链哈希——`NODE_OPTIONS` 就是其中之一。
+
+## 第 3 步：理解为什么
+
+Quench 哈希那些可能改变构建输出的环境变量。`NODE_OPTIONS` 是合格人选，因为像 `--experimental-vm-modules` 或 `--conditions` 这样的开关会改变模块解析与编译行为。`--max-old-space-size` 内存上限并不改输出，但 Quench 不会去解析 `NODE_OPTIONS` 内部具体哪些 flag 与构建相关——它对整个字符串直接哈希。
+
+这是一个刻意的取舍。要是去解析 `NODE_OPTIONS`、判断哪些 flag 影响构建，就会引入复杂度和"误命中缓存"的风险。整段字符串求哈希是保守做法：它可能引发非必要的重建，但绝不会把过期产物当成结果服务出来。
+
+## 第 4 步：修复
+
+修复很简单：
+
+```bash
+unset NODE_OPTIONS
+foundry ignite
+```
+
+缓存键匹配了。构建用时 3.2 秒。
+
+## 更宽的教训
+
+我们查过的每一次"神秘"缓存未命中，都落在四类原因之一：
+
+- **环境变量变化。** 最常见。Shell 配置文件、`.env` 文件、CI runner 的默认设置都可能贡献。
+- **工具链版本漂移。** 一次 Homebrew 升级让 Node.js 从 22.11.0 跳到 22.12.0。源码完全没变，但编译器版本变了。
+- **基于时钟的运算。** 某个源文件在模块级常量里有 `new Date()`。每次 Smelter 编译，文件的内容哈希都因为日期串嵌入输出而变化。Warden 现在用 `warden/no-runtime-date-in-module-scope` 来标记这种情况。
+- **非确定性依赖。** 某个第三方包在没有变更锁文件的前提下（因为版本范围允许）发了新版本。`package-lock.json` 没变，但依赖哈希变了。我们现在把每条依赖都锁到精确版本。
+
+`foundry quench diff` 是 Foundry 中最有用的调试命令。当构建比预期慢时，先跑 diff，其它都先放下。答案永远在哈希里。

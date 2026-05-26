@@ -1,0 +1,10 @@
+{
+  "label": "Dockets",
+  "position": 4,
+  "collapsible": true,
+  "collapsed": true,
+  "link": {
+    "type": "generated-index",
+    "description": "案卷是 Marshal 的公开记录——只可追加，绝不撤回。从头到尾阅读每一枚印章、每一份归档、每一次覆盖，每一行都附有书记员的签名。"
+  }
+}

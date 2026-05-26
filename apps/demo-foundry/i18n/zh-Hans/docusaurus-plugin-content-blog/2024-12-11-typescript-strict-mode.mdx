@@ -1,0 +1,97 @@
+---
+title: "严格的 TypeScript 还不够严格"
+authors:
+  - "priya"
+tags:
+  - "typescript"
+  - "warden"
+  - "检查"
+  - "开发者体验"
+date: "2024-12-11"
+---
+
+TypeScript 的 `strict` 模式启用了八个编译器开关。它禁止隐式 `any`、强制空值检查，并拦截一类原生 JavaScript 完全忽视的 bug。对大多数团队来说，这就够用了。但对于一个有 200 个包、共享类型、跨包契约的 monorepo，远远不够。
+
+我们第一天就把每一个 `strict` 开关都打开了。之后又在上面写了 26 条 Warden 规则。本文谈的是：为什么编译器自身不够用，以及我们为此做了什么。
+
+{/* truncate */}
+
+## `strict` 给了你什么
+
+TypeScript 的 `strict` 模式启用以下开关：
+
+- `noImplicitAny`
+- `noImplicitThis`
+- `strictNullChecks`
+- `strictFunctionTypes`
+- `strictBindCallApply`
+- `strictPropertyInitialization`
+- `alwaysStrict`
+- `useUnknownInCatchVariables`
+
+这些都是入场券。如果你的项目还没开启 `strict: true`，请先停下来去开启它，再回来读本文。本文之后的内容默认你已经开启了。
+
+## `strict` 没给你的东西
+
+编译器抓的是类型错误，不是类型设计错误。下面三种模式能毫无差错地通过 `strict`，却会在大规模工程中带来真实问题。
+
+### 模式 1：泛型默认值里的隐式 `any`
+
+```typescript title="Passes strict — still dangerous"
+function merge<T = any>(a: T, b: T): T {
+  return { ...a, ...b };
+}
+
+// No type argument provided — T defaults to any
+const result = merge({ name: "foundry" }, { version: 2 });
+// result is any — all type safety is gone
+```
+
+编译器不会警告，因为 `T = any` 是一个显式的泛型默认值，而不是隐式 `any`。Warden 用 `warden/no-generic-any-default` 抓住这种情况——它禁止把 `any` 用作泛型默认值。
+
+### 模式 2：不安全的索引签名
+
+```typescript title="Passes strict — returns undefined at runtime"
+interface Config {
+  [key: string]: string;
+}
+
+const config: Config = { host: "localhost" };
+const port: string = config["port"];
+// port is typed as string, but is actually undefined
+```
+
+TypeScript 4.1 引入了 `noUncheckedIndexedAccess`，但它并不在 `strict` 模式之内。大多数团队并不知道它的存在。Warden 通过清单层面的 Smelter 配置强制启用它——每个 Foundry 工作空间默认开启 `noUncheckedIndexedAccess`。
+
+### 模式 3：类型断言掩盖 bug
+
+```typescript title="Passes strict — crashes at runtime"
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
+const data: unknown = JSON.parse(response.body);
+const user = data as User;
+// No runtime validation — if data is missing fields, user.email is undefined
+```
+
+类型断言（`as`）会完全跳过类型检查。编译器相信你，Warden 不相信你。规则 `warden/no-unsafe-assertion` 会标记每一处把 `unknown` 或 `any` 直接窄化的 `as`，前提是没有前置的类型守卫或校验函数。
+
+## 26 条规则
+
+我们把这 26 条规则分成四类：
+
+- **类型安全（9 条）。** 能通过编译器但在运行时产生 `any` 或 `undefined` 的模式。
+- **API 契约（7 条）。** 让跨包类型变得脆弱的模式——把可选字段当作必填、缺乏穷尽性的可辨识联合、过宽的泛型约束。
+- **导入卫生（5 条）。** 仅类型的导入、不允许循环类型引用、不允许重新导出第三方类型。
+- **命名与结构（5 条）。** 类型文件必须放在 `types/` 目录、接口需遵循特定命名规范、禁止 enum 而改用 `const` 对象。
+
+完整清单见 [Warden 规则](/docs/pipeline/warden-rules/) 文档。每条规则都附有 rationale，以及通过与不通过的示例。
+
+## 收益
+
+在我们内部工作空间启用这 26 条规则后，我们跟踪了 90 天的生产运行时类型错误。所谓类型错误，指的是值的类型与代码预期不符所引发的崩溃或错误行为。频率从每周平均 4.2 起降到 0.3 起。剩下的多数错误，都来自外部 API 在无通知的情况下变更了响应结构。
+
+`strict` 模式是地板，不是天花板。编译器告诉你类型错了；Warden 告诉你类型对了，但还很脆弱。

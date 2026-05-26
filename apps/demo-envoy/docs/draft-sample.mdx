@@ -1,0 +1,17 @@
+---
+title: "Draft Sample"
+sidebar_position: 999
+draft: true
+description: "Working notes on the next routing-fallback iteration. Not finalized."
+tags:
+  - "draft"
+  - "routing"
+---
+
+# Draft Sample
+
+Working notes for the next routing-fallback iteration. When a delivery target rejects three times in a row we currently burn the message into the deadletter ring and page on-call.
+
+Wondering whether there is a softer middle path — a circuit-breaker that flips the channel into hold-and-replay for ninety seconds before paging, with the hold buffered locally so the source side never notices the gap.
+
+The comparison against our current SLO budget (eight minutes p95) needs to happen before this leaves the notebook. There is also an open question about whether the hold introduces ordering risk on out-of-order delivery channels. None of this is decided.

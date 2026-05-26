@@ -1,0 +1,49 @@
+---
+title: "你的第一条 policy"
+sidebar_position: 2
+description: "写一份封印过的 policy，提交它，看 docket 自己填上。三步完成首次立卷。"
+tags:
+  - "setup"
+  - "tutorial"
+---
+
+# 你的第一条 policy
+
+第一条 policy 是一份关于单一事件类别的单一封印文件。从小做起，先提交一次，看 docket 自己填上。
+
+## 第 1 步：编写 policy
+
+```yaml title="policies/stale-threads.yml"
+policy: thread-archival
+applies_to: ["issues", "pull-requests"]
+condition:
+  inactive_days: 365
+action: seal
+notice: "Archived after a year of silence. Reopen by request."
+```
+
+## 第 2 步：提交
+
+```bash
+marshal file policies/stale-threads.yml
+```
+
+Marshal 给这条 policy 钤上立卷编号，并将其加入 docket。
+
+## 第 3 步：观察钤章
+
+```bash
+marshal docket tail
+```
+
+下次有陈旧线程跨过阈值时，Marshal 会将其封存。每一次操作都是公开 ledger 上的一行。
+
+## 刚才发生了什么
+
+你提交了一条 policy，观察到了钤章，并通读了 docket。剩下的都是文书工作——而 Marshal 会替你完成。
+
+## 下一步
+
+- [Policies](/docs/filings/policies/) — 内置的 policy 类型与立卷模式。
+- [Dockets](/docs/dockets/overview/) — 如何通读公开记录。
+- [计划 stewardship](/docs/stewardship/scheduled-stewardship/) — 按 cron 执行清理。

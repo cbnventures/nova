@@ -1,10 +1,19 @@
-import type { Dispatch, SetStateAction } from 'react';
+import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 
 /**
  * Theme - Announcement Bar - Announcement Bar.
  *
  * @since 0.15.0
  */
+export type ThemeAnnouncementBarPropsClassName = string | undefined;
+
+export type ThemeAnnouncementBarPropsStyle = CSSProperties | undefined;
+
+export type ThemeAnnouncementBarProps = {
+  className?: ThemeAnnouncementBarPropsClassName;
+  style?: ThemeAnnouncementBarPropsStyle;
+};
+
 export type ThemeAnnouncementBarReturns = React.JSX.Element | null;
 
 export type ThemeAnnouncementBarThemeConfig = {

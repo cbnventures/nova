@@ -1,4 +1,5 @@
 import type { BlogPaginatedMetadata } from '@docusaurus/plugin-content-blog';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Blog List Paginator - Blog List Paginator.
@@ -7,8 +8,14 @@ import type { BlogPaginatedMetadata } from '@docusaurus/plugin-content-blog';
  */
 export type ThemeBlogListPaginatorBlogListPaginatorPropsMetadata = BlogPaginatedMetadata;
 
+export type ThemeBlogListPaginatorBlogListPaginatorPropsClassName = string | undefined;
+
+export type ThemeBlogListPaginatorBlogListPaginatorPropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogListPaginatorBlogListPaginatorProps = {
   metadata: ThemeBlogListPaginatorBlogListPaginatorPropsMetadata;
+  className?: ThemeBlogListPaginatorBlogListPaginatorPropsClassName;
+  style?: ThemeBlogListPaginatorBlogListPaginatorPropsStyle;
   [key: string]: unknown;
 };
 

@@ -1,5 +1,7 @@
 import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
 
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Doc Category Generated Index Page - Doc Category Generated Index Page.
  *
@@ -51,8 +53,14 @@ export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCateg
 
 export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePropsCategoryGeneratedIndex = ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategoryGeneratedIndex;
 
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePropsClassName = string | undefined;
+
+export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePropsStyle = CSSProperties | undefined;
+
 export type ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageProps = {
   categoryGeneratedIndex: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePropsCategoryGeneratedIndex;
+  className?: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePropsClassName;
+  style?: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePropsStyle;
   [key: string]: unknown;
 };
 

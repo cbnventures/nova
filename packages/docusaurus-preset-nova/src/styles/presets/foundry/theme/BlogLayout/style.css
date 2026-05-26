@@ -1,0 +1,38 @@
+/**
+ * Foundry - `BlogLayout` theme overlay.
+ *
+ * Defines per-preset blog typography tokens consumed by the shared
+ * theme/BlogLayout/style.css. Color tokens for blog typography live in
+ * preset.css.
+ *
+ * Industrial-classic voice - heading anchored to foundry's body h1/h2
+ * progression, foundry's signature deeper rhythm via 0.375rem spacing,
+ * slightly tighter description line-height for industrial typography
+ * density.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned blog typography tokens
+ * ============================ */
+
+:root {
+  --nova-foundry-blog-header-heading-size: 1.5rem;
+  --nova-foundry-blog-header-heading-size-md: 1.75rem;
+  --nova-foundry-blog-header-heading-spacing: 0.375rem;
+  --nova-foundry-blog-description-size: 0.875rem;
+  --nova-foundry-blog-description-line-height: 1.55;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogLayout
+ * ============================ */
+
+:root {
+  --nova-blog-header-heading-size: var(--nova-foundry-blog-header-heading-size);
+  --nova-blog-header-heading-size-md: var(--nova-foundry-blog-header-heading-size-md);
+  --nova-blog-header-heading-spacing: var(--nova-foundry-blog-header-heading-spacing);
+  --nova-blog-description-size: var(--nova-foundry-blog-description-size);
+  --nova-blog-description-line-height: var(--nova-foundry-blog-description-line-height);
+}

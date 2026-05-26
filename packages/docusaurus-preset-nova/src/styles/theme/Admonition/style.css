@@ -1,6 +1,56 @@
 /**
  * ============================
- * Admonition — Heading
+ * Admonition - Tokens
+ *
+ * Component-tier defaults for the 5 admonition variants.
+ * Each variant exposes the same 3 facets (fill, ink, rail)
+ * so per-preset overlays can override symmetrically. Tokens
+ * default to neutral / semantic system colors; preset.css
+ * overlays re-bind these to preset identity primitives.
+ * ============================
+ */
+
+:root {
+  --nova-admonition-note-fill: transparent;
+  --nova-admonition-note-ink: var(--nova-color-text);
+  --nova-admonition-note-rail: var(--nova-color-border);
+
+  --nova-admonition-tip-fill: transparent;
+  --nova-admonition-tip-ink: var(--nova-color-text);
+  --nova-admonition-tip-rail: var(--nova-color-primary-500);
+
+  --nova-admonition-info-fill: var(--nova-color-info-bg);
+  --nova-admonition-info-ink: var(--nova-color-text);
+  --nova-admonition-info-rail: var(--nova-color-primary-500);
+
+  --nova-admonition-warning-fill: var(--nova-color-warning-bg);
+  --nova-admonition-warning-ink: var(--nova-color-text);
+  --nova-admonition-warning-rail: var(--nova-color-warning-500);
+
+  --nova-admonition-danger-fill: var(--nova-color-danger-bg);
+  --nova-admonition-danger-ink: var(--nova-color-text);
+  --nova-admonition-danger-rail: var(--nova-color-danger-500);
+}
+
+/**
+ * ============================
+ * Admonition - Container rhythm
+ *
+ * Symmetric block margin lets the callout sit cleanly between adjacent
+ * paragraphs/lists, with margin-collapse handling overlap. Per-preset
+ * Admonition overlays may override `--nova-admonition-margin-block` via
+ * the rename+alias chain to tighten (signal terminal density) or widen
+ * (lantern/marshal editorial breathing).
+ * ============================
+ */
+
+.nova-admonition {
+  margin: var(--nova-admonition-margin-block, 1.25rem) 0;
+}
+
+/**
+ * ============================
+ * Admonition - Heading
  * ============================
  */
 
@@ -17,7 +67,7 @@
 
 /**
  * ============================
- * Admonition — Icon
+ * Admonition - Icon
  * ============================
  */
 
@@ -27,7 +77,7 @@
 
 /**
  * ============================
- * Admonition — Body
+ * Admonition - Body
  * ============================
  */
 

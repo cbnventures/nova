@@ -1,4 +1,4 @@
-import { strictEqual, throws } from 'node:assert/strict';
+import { deepStrictEqual, strictEqual, throws } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
@@ -9,14 +9,11 @@ import type {
   TestsOptionsJoiSchemaValidateResult,
   TestsOptionsPresetValue,
   TestsOptionsResolvedColorsAccent,
-  TestsOptionsResolvedColorsNeutral,
   TestsOptionsResolvedColorsPrimary,
   TestsOptionsResolvedFontsBody,
   TestsOptionsResolvedFontsDisplay,
   TestsOptionsResolvedFooter,
-  TestsOptionsResolvedMotionSpeed,
   TestsOptionsResolvedNavbar,
-  TestsOptionsResolvedShapeRadius,
   TestsOptionsResolvePresetResult,
   TestsOptionsThemeConfigJoiSchema,
   TestsOptionsThemeConfigJoiSchemaValidateResult,
@@ -24,6 +21,13 @@ import type {
   TestsOptionsThemeConfigValidatedBlogLayout,
   TestsOptionsThemeConfigValidatedBlogLayoutDescription,
   TestsOptionsThemeConfigValidatedBlogLayoutHeading,
+  TestsOptionsThemeConfigValidatedErrorPages,
+  TestsOptionsThemeConfigValidatedErrorPagesError,
+  TestsOptionsThemeConfigValidatedErrorPagesErrorPageContent,
+  TestsOptionsThemeConfigValidatedErrorPagesErrorPageContentTitle,
+  TestsOptionsThemeConfigValidatedErrorPagesErrorRetryLabel,
+  TestsOptionsThemeConfigValidatedErrorPagesNotFound,
+  TestsOptionsThemeConfigValidatedErrorPagesNotFoundTitle,
   TestsOptionsThemeConfigValidatedNavbar,
   TestsOptionsThemeConfigValidatedNavbarHideOnScroll,
   TestsOptionsThemeConfigValidatedResult,
@@ -263,6 +267,134 @@ describe('validateThemeConfig', async () => {
     return;
   });
 
+  it('accepts errorPages with all surfaces and fields populated', () => {
+    const result: TestsOptionsThemeConfigValidatedResult = validateThemeConfig({
+      validate: (schema, themeConfig) => {
+        const joiSchema: TestsOptionsThemeConfigJoiSchema = schema as TestsOptionsThemeConfigJoiSchema;
+        const validated: TestsOptionsThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+
+        if (validated['error'] !== undefined) {
+          throw validated['error'];
+        }
+
+        return validated['value'] as TestsOptionsThemeConfigValidatedResult;
+      },
+      themeConfig: {
+        errorPages: {
+          notFound: {
+            title: 'Lost in deployment.',
+            description: 'This route did not roll out.',
+            backHomeLabel: 'Back to projects',
+            backHomeHref: '/',
+          },
+          errorPageContent: {
+            title: 'Pipeline interrupted.',
+            retryLabel: 'Re-run',
+          },
+          error: {
+            retryLabel: 'Restart',
+          },
+        },
+      },
+    });
+
+    const errorPages: TestsOptionsThemeConfigValidatedErrorPages = result['errorPages'] as TestsOptionsThemeConfigValidatedErrorPages;
+    const notFound: TestsOptionsThemeConfigValidatedErrorPagesNotFound = errorPages['notFound'] as TestsOptionsThemeConfigValidatedErrorPagesNotFound;
+    const notFoundTitle: TestsOptionsThemeConfigValidatedErrorPagesNotFoundTitle = notFound['title'] as TestsOptionsThemeConfigValidatedErrorPagesNotFoundTitle;
+    const errorPageContent: TestsOptionsThemeConfigValidatedErrorPagesErrorPageContent = errorPages['errorPageContent'] as TestsOptionsThemeConfigValidatedErrorPagesErrorPageContent;
+    const errorPageContentTitle: TestsOptionsThemeConfigValidatedErrorPagesErrorPageContentTitle = errorPageContent['title'] as TestsOptionsThemeConfigValidatedErrorPagesErrorPageContentTitle;
+    const error: TestsOptionsThemeConfigValidatedErrorPagesError = errorPages['error'] as TestsOptionsThemeConfigValidatedErrorPagesError;
+    const errorRetryLabel: TestsOptionsThemeConfigValidatedErrorPagesErrorRetryLabel = error['retryLabel'] as TestsOptionsThemeConfigValidatedErrorPagesErrorRetryLabel;
+
+    strictEqual(notFoundTitle, 'Lost in deployment.');
+    strictEqual(errorPageContentTitle, 'Pipeline interrupted.');
+    strictEqual(errorRetryLabel, 'Restart');
+
+    return;
+  });
+
+  it('accepts a partial errorPages config (single field)', () => {
+    const result: TestsOptionsThemeConfigValidatedResult = validateThemeConfig({
+      validate: (schema, themeConfig) => {
+        const joiSchema: TestsOptionsThemeConfigJoiSchema = schema as TestsOptionsThemeConfigJoiSchema;
+        const validated: TestsOptionsThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+
+        if (validated['error'] !== undefined) {
+          throw validated['error'];
+        }
+
+        return validated['value'] as TestsOptionsThemeConfigValidatedResult;
+      },
+      themeConfig: {
+        errorPages: {
+          notFound: {
+            title: 'Signal lost.',
+          },
+        },
+      },
+    });
+
+    const errorPages: TestsOptionsThemeConfigValidatedErrorPages = result['errorPages'] as TestsOptionsThemeConfigValidatedErrorPages;
+    const notFound: TestsOptionsThemeConfigValidatedErrorPagesNotFound = errorPages['notFound'] as TestsOptionsThemeConfigValidatedErrorPagesNotFound;
+    const notFoundTitle: TestsOptionsThemeConfigValidatedErrorPagesNotFoundTitle = notFound['title'] as TestsOptionsThemeConfigValidatedErrorPagesNotFoundTitle;
+
+    strictEqual(notFoundTitle, 'Signal lost.');
+
+    return;
+  });
+
+  it('accepts an empty errorPages object', () => {
+    const result: TestsOptionsThemeConfigValidatedResult = validateThemeConfig({
+      validate: (schema, themeConfig) => {
+        const joiSchema: TestsOptionsThemeConfigJoiSchema = schema as TestsOptionsThemeConfigJoiSchema;
+        const validated: TestsOptionsThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+
+        if (validated['error'] !== undefined) {
+          throw validated['error'];
+        }
+
+        return validated['value'] as TestsOptionsThemeConfigValidatedResult;
+      },
+      themeConfig: {
+        errorPages: {},
+      },
+    });
+
+    const errorPages: TestsOptionsThemeConfigValidatedErrorPages = result['errorPages'] as TestsOptionsThemeConfigValidatedErrorPages;
+
+    strictEqual(typeof errorPages, 'object');
+
+    return;
+  });
+
+  it('rejects errorPages.notFound.title when not a string', () => {
+    throws(() => {
+      validateThemeConfig({
+        validate: (schema, themeConfig) => {
+          const joiSchema: TestsOptionsThemeConfigJoiSchema = schema as TestsOptionsThemeConfigJoiSchema;
+          const validated: TestsOptionsThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+
+          if (validated['error'] !== undefined) {
+            throw validated['error'];
+          }
+
+          return validated['value'] as TestsOptionsThemeConfigValidatedResult;
+        },
+        themeConfig: {
+          errorPages: {
+            notFound: {
+              title: 123,
+            },
+          },
+        },
+      });
+
+      return;
+    });
+
+    return;
+  });
+
   return;
 });
 
@@ -278,26 +410,16 @@ describe('resolvePreset', async () => {
       overrides: {
         colors: {
           primary: undefined,
-          accent: undefined,
-          neutral: undefined,
+          secondary: undefined,
+          text: undefined,
+          border: undefined,
+          warning: undefined,
+          danger: undefined,
         },
         fonts: {
           display: undefined,
           body: undefined,
           code: undefined,
-        },
-        shape: {
-          radius: undefined,
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: undefined,
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
         },
         navbar: undefined,
         footer: undefined,
@@ -330,26 +452,16 @@ describe('resolvePreset', async () => {
       overrides: {
         colors: {
           primary: undefined,
-          accent: undefined,
-          neutral: undefined,
+          secondary: undefined,
+          text: undefined,
+          border: undefined,
+          warning: undefined,
+          danger: undefined,
         },
         fonts: {
           display: 'Inter',
           body: undefined,
           code: undefined,
-        },
-        shape: {
-          radius: undefined,
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: undefined,
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
         },
         navbar: undefined,
         footer: undefined,
@@ -374,132 +486,24 @@ describe('resolvePreset', async () => {
     return;
   });
 
-  it('applies shape override when provided', () => {
-    const result: TestsOptionsResolvePresetResult = resolvePreset({
-      preset: 'foundry',
-      overrides: {
-        colors: {
-          primary: undefined,
-          accent: undefined,
-          neutral: undefined,
-        },
-        fonts: {
-          display: undefined,
-          body: undefined,
-          code: undefined,
-        },
-        shape: {
-          radius: 'pill',
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: undefined,
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
-        },
-        navbar: undefined,
-        footer: undefined,
-      },
-      plugins: {
-        docs: undefined,
-        blog: undefined,
-        pages: undefined,
-        sitemap: undefined,
-      },
-      analytics: {
-        gtm: undefined,
-      },
-      progressBar: true,
-      search: false,
-    });
-
-    const resolvedShapeRadius: TestsOptionsResolvedShapeRadius = result['shape']['radius'];
-
-    strictEqual(resolvedShapeRadius, 'pill');
-
-    return;
-  });
-
-  it('applies motion override when provided', () => {
-    const result: TestsOptionsResolvePresetResult = resolvePreset({
-      preset: 'sentinel',
-      overrides: {
-        colors: {
-          primary: undefined,
-          accent: undefined,
-          neutral: undefined,
-        },
-        fonts: {
-          display: undefined,
-          body: undefined,
-          code: undefined,
-        },
-        shape: {
-          radius: undefined,
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: 'expressive',
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
-        },
-        navbar: undefined,
-        footer: undefined,
-      },
-      plugins: {
-        docs: undefined,
-        blog: undefined,
-        pages: undefined,
-        sitemap: undefined,
-      },
-      analytics: {
-        gtm: undefined,
-      },
-      progressBar: true,
-      search: false,
-    });
-
-    const resolvedMotionSpeed: TestsOptionsResolvedMotionSpeed = result['motion']['speed'];
-
-    strictEqual(resolvedMotionSpeed, 'expressive');
-
-    return;
-  });
-
   it('applies color override when provided', () => {
     const result: TestsOptionsResolvePresetResult = resolvePreset({
       preset: 'foundry',
       overrides: {
         colors: {
-          primary: '#DC2626',
-          accent: undefined,
-          neutral: undefined,
+          primary: {
+            light: '#DC2626', dark: '#DC2626',
+          },
+          secondary: undefined,
+          text: undefined,
+          border: undefined,
+          warning: undefined,
+          danger: undefined,
         },
         fonts: {
           display: undefined,
           body: undefined,
           code: undefined,
-        },
-        shape: {
-          radius: undefined,
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: undefined,
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
         },
         navbar: undefined,
         footer: undefined,
@@ -519,11 +523,13 @@ describe('resolvePreset', async () => {
 
     const resolvedColorsPrimary: TestsOptionsResolvedColorsPrimary = result['colors']['primary'];
     const resolvedColorsAccent: TestsOptionsResolvedColorsAccent = result['colors']['accent'];
-    const resolvedColorsNeutral: TestsOptionsResolvedColorsNeutral = result['colors']['neutral'];
 
-    strictEqual(resolvedColorsPrimary, '#DC2626');
-    strictEqual(resolvedColorsAccent, '#fbbf24');
-    strictEqual(resolvedColorsNeutral, '#78716c');
+    deepStrictEqual(resolvedColorsPrimary, {
+      light: '#DC2626', dark: '#DC2626',
+    });
+    deepStrictEqual(resolvedColorsAccent, {
+      light: '#fbbf24', dark: '#fbbf24',
+    });
 
     return;
   });
@@ -534,26 +540,16 @@ describe('resolvePreset', async () => {
       overrides: {
         colors: {
           primary: undefined,
-          accent: undefined,
-          neutral: undefined,
+          secondary: undefined,
+          text: undefined,
+          border: undefined,
+          warning: undefined,
+          danger: undefined,
         },
         fonts: {
           display: undefined,
           body: undefined,
           code: undefined,
-        },
-        shape: {
-          radius: undefined,
-          density: undefined,
-        },
-        depth: {
-          cards: undefined,
-          codeBlocks: undefined,
-        },
-        motion: {
-          speed: undefined,
-          staggeredReveals: undefined,
-          hoverEffects: undefined,
         },
         navbar: 'monolith',
         footer: undefined,

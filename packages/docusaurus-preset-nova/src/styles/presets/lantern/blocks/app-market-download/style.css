@@ -1,0 +1,124 @@
+/**
+ * Lantern - `app-market-download` component overlay.
+ *
+ * Canonical Apple/Google black badge with italic Fraunces title and
+ * small-caps mono subtitle. Asymmetric paired radii (lantern identity)
+ * and warm-amber glow on hover keep the badge anchored to the rest of
+ * the preset without breaking the App Store / Google Play convention
+ * of pure black + light text.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Section label - italic Fraunces, muted
+ * ============================
+ */
+
+.nova-app-market-download-label {
+  margin-bottom: 1.25rem;
+
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 24;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: var(--nova-lantern-ink-muted);
+}
+
+/**
+ * ============================
+ * 2. Badge - warm paper card
+ * ============================
+ */
+
+.nova-app-market-download-button {
+  padding: 0.75rem 1.25rem;
+
+  color: var(--nova-lantern-app-market-text);
+
+  background-color: var(--nova-lantern-app-market-bg);
+  border: none;
+  border-radius: 12px 4px 12px 4px;
+
+  transition:
+    box-shadow var(--nova-lantern-transition),
+    transform var(--nova-lantern-transition);
+}
+
+.nova-app-market-download-button:nth-child(2n) {
+  border-radius: 4px 12px 4px 12px;
+}
+
+/* Equal width at narrow widths so the alternating asymmetric radii read
+ * as a paired set when stacked. Above 362px the buttons sit side-by-side
+ * and natural width is fine. */
+@media (max-width: 361.98px) {
+  .nova-app-market-download-button {
+    width: 190px;
+    justify-content: center;
+  }
+}
+
+.nova-app-market-download-button:hover,
+.nova-app-market-download-button:focus-visible {
+  color: var(--nova-lantern-app-market-text);
+
+  box-shadow: var(--nova-lantern-hover-glow-strong);
+  transform: var(--nova-lantern-hover-lift);
+}
+
+[data-theme="dark"] .nova-app-market-download-button {
+  color: var(--nova-lantern-app-market-text);
+}
+
+[data-theme="dark"] .nova-app-market-download-button:hover,
+[data-theme="dark"] .nova-app-market-download-button:focus-visible {
+  color: var(--nova-lantern-app-market-text);
+}
+
+/**
+ * ============================
+ * 3. Badge icon - amber tint
+ * ============================
+ */
+
+/* Canonical badge convention: Apple/Google marks render in the same
+   light tone as the button text, matching the App Store / Google Play
+   official badge style on pure black. */
+.nova-app-market-download-button svg {
+  color: var(--nova-lantern-app-market-text);
+}
+
+/**
+ * ============================
+ * 4. Subtitle - small-caps mono
+ * ============================
+ */
+
+.nova-app-market-download-button-subtitle {
+  font-family: var(--nova-font-code);
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  line-height: 1.2;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/**
+ * ============================
+ * 5. Title - italic Fraunces
+ * ============================
+ */
+
+.nova-app-market-download-button-title {
+  font-family: var(--nova-font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30;
+  font-weight: 500;
+  font-size: 1.1rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}

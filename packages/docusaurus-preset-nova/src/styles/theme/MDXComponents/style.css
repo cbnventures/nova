@@ -1,5 +1,17 @@
 /**
- * MDX Components — Shared structural styles.
+ * MDX Components - Shared structural styles.
+ *
+ * Owns styling for any class produced by MDXComponents/index.tsx - currently
+ * just `.nova-table-scroll`, the wrapper that lets wide tables scroll
+ * horizontally inside narrow viewports without pushing page layout.
  *
  * @since 0.15.0
  */
+
+.nova-table-scroll {
+  overflow-x: auto;
+}
+
+.nova-table-scroll table {
+  min-width: 0;
+}

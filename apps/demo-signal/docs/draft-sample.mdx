@@ -1,0 +1,17 @@
+---
+title: "Draft Sample"
+sidebar_position: 999
+draft: true
+description: "Working notes on the conversion-attribution baseline. Not finalized."
+tags:
+  - "draft"
+  - "analytics"
+---
+
+# Draft Sample
+
+The conversion-attribution job has been throwing seven-day moving averages that include the launch-week spike, which means everything downstream is comparing against a recent peak that should really be excluded from the baseline.
+
+The choice is either to backfill a synthetic baseline that linearly bridges the pre-launch and post-launch windows, or to trim the launch week from the rolling window entirely. Notebook sketches say trimming is cleaner and easier to explain to product.
+
+We will write up a one-pager and circulate before touching the cron. Not committing this until Eng-Data signs off.

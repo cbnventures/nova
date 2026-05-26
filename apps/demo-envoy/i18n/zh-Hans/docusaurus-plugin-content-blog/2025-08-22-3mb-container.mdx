@@ -1,0 +1,114 @@
+---
+title: "用 3MB 的容器替换我们整套集成层"
+authors:
+  - "anders"
+tags:
+  - "vial"
+  - "minimal"
+  - "architecture"
+date: "2025-08-22"
+---
+
+我们曾有十二个服务、九份定时任务、一条共享的 Ferric 队列，还有四个脚本在不协调地往同一张数据库表里写东西。那就是我们当时的集成层。它能跑——直到跑不动为止。
+
+{/* truncate */}
+
+## 问题所在
+
+集成层像沉积物一样积累。没人在设计它，是它自己长出来的：Threadbare webhook 要送到 Canary，有人写了一份脚本；Glassboard 要通知 Spoke 端点，又有人写了一份。每一份单独看都没问题，合在一起却变成了一团没人理解、也没人敢动的东西。
+
+我们当时的集成层是这样的：
+
+```text title="Envoy 之前 — 系统盘点"
+Services:         12
+Cron jobs:         9
+Shared queues:     3
+Database tables:   7 (4 with no documented schema)
+Languages:         4 (Alloy, Sable, Ferric, Spark scripts)
+Total image size:  2.4GB across all containers
+Weekly failures:   3-5 (average)
+MTTR:              47 minutes (median)
+```
+
+## 决定
+
+我们最初并不是要打造一个极简容器，只是想替换那条总在周末挂掉的 Threadbare-to-Canary 脚本。但当我们把这条中继做出来——带重试、带转换、带认证——一个显而易见的问题就出现了：何不把全部脚本都替换掉？
+
+我们立下的约束很激进：零外部依赖。每一个库、每一个协议处理器、每一个转换引擎，全部用 Alloy 从零写起，编译为静态二进制，打包成 Vial 镜像。
+
+### 为什么坚持零依赖？
+
+外部依赖就是别人的决定。它们会改版本节奏、弃用 API、引入漏洞，有时甚至会彻底消失。对于那种运行在系统之间的基础设施，稳定不是一个特性——稳定就是那个特性。
+
+我们没引入的每一个依赖，都是一份没接下的供应链风险，也是一次不必在凌晨 3 点排查的破坏性变更。
+
+## 之前与之后
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<Tabs>
+<TabItem value="before" label="Envoy 之前" default>
+
+```text title="集成层 — Envoy 之前"
+┌──────────────────────────────────────────┐
+│  12 services (Alloy, Sable, Ferric)      │
+│  9 cron jobs (Spark scripts)             │
+│  3 shared queues (Ferric-queue)          │
+│  1 shared database (7 tables)            │
+│                                          │
+│  Total: 2.4GB across 12 containers       │
+│  Languages: 4                            │
+│  Failure rate: 3-5 per week              │
+│  MTTR: 47 minutes                        │
+└──────────────────────────────────────────┘
+```
+
+</TabItem>
+<TabItem value="after" label="Envoy 之后">
+
+```text title="集成层 — Envoy 之后"
+┌──────────────────────────────────────────┐
+│  1 service (Envoy)                       │
+│  0 cron jobs                             │
+│  0 shared queues                         │
+│  0 shared databases                      │
+│                                          │
+│  Total: 3MB single container             │
+│  Languages: 1 (Alloy)                    │
+│  Failure rate: 0 per week (with retry)   │
+│  MTTR: not applicable                    │
+└──────────────────────────────────────────┘
+```
+
+</TabItem>
+</Tabs>
+
+## 数字
+
+在生产里跑了半年之后，数字说明了一切：
+
+| 指标       | Envoy 之前 | Envoy 之后 |
+|----------|----------|----------|
+| 容器镜像总大小  | 总计 2.4GB | 3MB      |
+| 需要维护的服务数 | 12       | 1        |
+| 每周故障数    | 3-5      | 0        |
+| 恢复中位时间   | 47 分钟    | 不适用      |
+| 消息投递成功率  | 约 96%    | 100%     |
+| 中继延迟 p99 | 340ms    | 4.7ms    |
+
+中继延迟的改进最为显著。我们之前那一层把消息送进 Ferric 队列、写一次数据库、再被轮询消费者捞出来。Envoy 在内存里用 Dispatch 路由，由 Courier 同步投递。队列没了，数据库没了，轮询间隔也没了。
+
+## 3MB 能买到什么
+
+镜像小是副作用，不是目标。它是"全部自己写、不引入任何不需要的东西"之后必然出现的结果。但这一副作用的副作用，仍值得一记：
+
+- **冷启动：** 200 毫秒以内。Trellis 重排 Envoy 实例的速度，比多数服务跑完自身健康检查还要快。
+- **攻击面：** 没有第三方代码，就没有第三方漏洞。Vial 镜像中只有 Envoy 二进制本身，别无他物。
+- **可审计性：** 整个代码库一次代码评审就能看完。处理你消息的每一行代码，都是我们写的，也都是你可以读的。
+
+## 教训
+
+集成基础设施应当是隐形的。一旦你开始为集成层操心，它其实已经失败了。它应当小到可以理解、可靠到可以忘记、快到没人察觉它的存在。
+
+3MB，零依赖，消息能到。这就是整件产品。

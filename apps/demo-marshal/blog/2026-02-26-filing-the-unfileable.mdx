@@ -1,0 +1,68 @@
+---
+title: "Filing the unfileable"
+authors:
+  - "dimitri"
+tags:
+  - "policies"
+  - "dockets"
+date: "2026-02-26"
+---
+
+Some incoming work does not fit any policy. A misfiled bug. A request from outside the tier system. A duplicate of a duplicate. Marshal files them anyway — under the policy `unclassified`, with a note for senior review.
+
+{/* truncate */}
+
+Senior review used to be a backlog. Now it is twelve entries a quarter. The policies caught up. The unfileable became fileable, slowly, by being filed.
+
+The `unclassified` policy is the floor of the policy log. Every other policy has preconditions; this one does not. A request that has been read by intake and matched against every active policy without finding a match is, by definition, unclassified, and is filed under that policy with a stamp that reads `RECEIVED-UNCLASSIFIED`. The clerk does not act on the request beyond the filing. A senior maintainer reads the unclassified docket, decides whether the request reveals a gap in the policies, and either amends a policy to handle the case or files a one-time disposition.
+
+The policy itself is brief, and has not been amended since 2022:
+
+```yaml title="policies/unclassified.yml"
+policy: unclassified
+version: 2
+sealed: true
+sealed-by: dimitri
+sealed-at: 2022-04-02T11:00:00Z
+
+trigger:
+  - on: intake.no-match
+    after: all-other-policies-evaluated
+
+action:
+  stamp: RECEIVED-UNCLASSIFIED
+  record:
+    docket: incidents
+    seal: required
+    retention: 7-years
+  notify:
+    queue: senior-review
+    cadence: weekly-summary
+
+resolution:
+  - by: senior-maintainer
+  - within: 14-days
+  - record:
+      docket: incidents
+      stamp: RESOLVED-WITH-DISPOSITION
+      seal: required
+      reason-required: true
+```
+
+The interesting field is `reason-required: true`. A senior maintainer who resolves an unclassified entry must record the reason in the docket. The reason is sealed alongside the resolution. Over time, the corpus of reasons becomes its own document — a record of every kind of request that did not fit any policy, and what was done about it. The corpus is read quarterly, as a part of the policy review, and patterns in the reasons become the basis for new policies.
+
+This is how `duplicate-incident-suppression@v1` came to be filed in late 2024. A quarter's worth of unclassified entries showed 1,402 cases with the same reason: *duplicate of a duplicate, integration forwarded the same incident multiple times.* The pattern was named, the policy was filed, the unclassified queue dropped accordingly. The same has happened, in smaller numbers, for several other patterns since.
+
+```bash
+$ marshal docket query --docket incidents --stamp RECEIVED-UNCLASSIFIED --group-by reason --since 2026-Q1
+REASON                                            COUNT
+external-vendor-request                           4
+malformed-issue-template                          3
+spam-flagged-but-meaningful                       2
+new-platform-not-yet-tiered                       2
+ambiguous-tier-membership                         1
+```
+
+The total is twelve, which is the same number it has been for the last four quarters. The unfileable does not go to zero, because there is always a new pattern, a new platform, a new edge. The policies do not aspire to handle every case. They aspire to handle every recurring case, and to file the rest in a way that allows a senior maintainer to read the rest in fifteen minutes. Twelve entries can be read in fifteen minutes. Twelve hundred cannot.
+
+The unfileable is itself a record. The record is sealed. The record is read. The reading produces, on a slow schedule, the next policy. The policy joins the policy log. The unfileable shrinks, briefly, until the next pattern arrives.

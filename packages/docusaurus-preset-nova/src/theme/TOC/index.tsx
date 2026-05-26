@@ -79,7 +79,11 @@ function TOC(props: ThemeTocProps) {
   }
 
   return (
-    <nav className="nova-toc" aria-label={ariaLabel}>
+    <nav
+      className={(props['className'] !== undefined) ? `nova-toc ${props['className']}` : 'nova-toc'}
+      style={props['style']}
+      aria-label={ariaLabel}
+    >
       {TocList(treeItems)}
     </nav>
   );

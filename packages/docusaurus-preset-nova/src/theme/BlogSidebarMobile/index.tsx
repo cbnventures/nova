@@ -168,7 +168,8 @@ function BlogSidebarMobile(props: ThemeBlogSidebarMobileBlogSidebarMobileProps) 
   return (
     <>
       <button
-        className="nova-sidebar-mobile-trigger"
+        className={(props['className'] !== undefined) ? `nova-sidebar-mobile-trigger ${props['className']}` : 'nova-sidebar-mobile-trigger'}
+        style={props['style']}
         type="button"
         onClick={() => {
           setIsOpen(true);

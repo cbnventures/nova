@@ -1,0 +1,197 @@
+---
+title: "البيانات"
+sidebar_position: 3
+description: "بيان ‎.grain هو مصدر الحقيقة الوحيد لمساحة عمل Foundry — الحزم، والتبعيات، والمجموعات المسبقة، وأهداف النشر."
+tags:
+  - "guides"
+  - "manifests"
+---
+
+import Details from '@theme/Details';
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# البيانات
+
+بيان `.grain` هو مصدر الحقيقة الوحيد لمساحة عمل Foundry. يصف ما هو مشروعك — اللغات، والحزم، والتبعيات، والقواعد، وأهداف النشر — ويُولِّد Foundry كل ما عداه منه.
+
+## إعلان مساحة العمل
+
+كل بيان يبدأ بكتلة `workspace`. هذه هي جذر الملف.
+
+```text title="project.grain"
+workspace "my-app" {
+  lang   = "alloy"
+  target = "arcline"
+}
+```
+
+يجب أن يكون اسم مساحة العمل فريدًا. يصبح بادئة لكل معرّفات الحزم المولَّدة وفضاء الأسماء لحلّ تبعيات Tongs.
+
+## كتل الحزم
+
+تُعلَن الحزم داخل مساحة العمل. لكل حزمة اسم ونوع وتوجيهات اختيارية.
+
+```text title="project.grain — packages"
+workspace "my-app" {
+  lang = "alloy"
+
+  packages {
+    core     { type = "library" }
+    api      { type = "service", depends = ["core"] }
+    web      { type = "app", depends = ["core"] }
+    cli      { type = "binary", depends = ["core"] }
+  }
+}
+```
+
+أنواع الحزم المدعومة:
+
+| النوع     | الغرض                           | يُولِّد                                    |
+|-----------|---------------------------------|--------------------------------------------|
+| `library` | شيفرة مشتركة تستهلكها حزم أخرى. | Blueprint وإعداد Warden وإعدادات Alloy.    |
+| `service` | عملية طويلة الأمد بنقاط طرفية.  | كل قطع المكتبة بالإضافة إلى إعداد Spoke.   |
+| `app`     | تطبيق موجَّه للمستخدم.          | كل قطع المكتبة بالإضافة إلى إعداد Smelter. |
+| `binary`  | أداة CLI مستقلة.                | كل قطع المكتبة بالإضافة إلى نقطة الدخول.   |
+
+## تعابير التبعيات
+
+يقبل توجيه `depends` مصفوفة من أسماء الحزم. يتحقق Foundry منها مقابل مساحة العمل ويبني رسم تبعيات Tongs.
+
+```text title="Dependency chain"
+packages {
+  core     { type = "library" }
+  auth     { type = "library", depends = ["core"] }
+  api      { type = "service", depends = ["core", "auth"] }
+}
+```
+
+:::info
+التبعيات الدورية تُرفض في وقت التحليل. إذا اعتمدت `api` على `auth` واعتمدت `auth` على `api`، فسيرفض Foundry الطَرق ويطبع مسار الدورة.
+:::
+
+## مجموعات Warden المسبقة
+
+يتحكم توجيه `warden` في مجموعات قواعد التدقيق المُطبَّقة. يمكنك تحديد مجموعة أو أكثر كمصفوفة.
+
+```text title="Warden preset configuration"
+workspace "my-app" {
+  warden = ["strict", "conventions"]
+}
+```
+
+تتكدّس المجموعات بالترتيب. المجموعات المتأخرة تتجاوز السابقة عند تعارض القواعد. المجموعات المتاحة:
+
+| المجموعة      | القواعد | التركيز                                        |
+|---------------|---------|------------------------------------------------|
+| `strict`      | 220     | أمان الأنواع، والعودة الصريحة، ولا `any` ضمني. |
+| `conventions` | 95      | التسمية، والتصديرات، وبنية الملف.              |
+| `formatting`  | 65      | المسافات، والتعليقات، والاتّساق البصري.        |
+
+## إعداد Crucible
+
+يتحكم توجيه `crucible` في توليد هياكل الاختبار التلقائي.
+
+<Tabs>
+<TabItem value="auto" label="تلقائي" default>
+
+```text title="project.grain — auto mode"
+workspace "my-app" {
+  crucible = auto
+}
+```
+
+يفحص Crucible كل توقيع نوع مُصدَّر ويُولِّد ملف اختبار بقوالب تأكيدات. تُحدَّث ملفات الاختبار عند كل طَرق.
+
+</TabItem>
+<TabItem value="manual" label="يدوي">
+
+```text title="project.grain — manual mode"
+workspace "my-app" {
+  crucible = manual
+}
+```
+
+يُولِّد Crucible أقصاب اختبار مرة واحدة عند أول طَرق. الطَرقات اللاحقة تترك ملفات الاختبار الموجودة دون مساس.
+
+</TabItem>
+<TabItem value="off" label="معطَّل">
+
+```text title="project.grain — disabled"
+workspace "my-app" {
+  crucible = off
+}
+```
+
+لا هياكل اختبار. أنت تدير ملفات الاختبار وحدك بالكامل.
+
+</TabItem>
+</Tabs>
+
+## أهداف النشر
+
+يحدّد توجيه `target` المكان الذي تُنشَر فيه مساحة العمل. يتحكم هذا في قطع النشر التي يُولِّدها Foundry.
+
+```text title="project.grain — deployment target"
+workspace "my-app" {
+  target = "arcline"
+
+  deploy {
+    region   = "us-east-1"
+    replicas = 3
+    scaling  = "auto"
+  }
+}
+```
+
+راجع [النشر](/docs/reference/deployment/) للحصول على القائمة الكاملة لخيارات الهدف وتوجيهات كتلة النشر.
+
+## وراثة البيان
+
+استخدم الكلمة المفتاحية `extend` لمشاركة الإعدادات عبر عدّة مساحات عمل. يرث بيان الابن كل شيء من والديه ويستطيع تجاوز توجيهات بعينها.
+
+```text title="base.grain — shared settings"
+workspace "base" {
+  lang    = "alloy"
+  warden  = ["strict", "conventions"]
+  crucible = auto
+}
+```
+
+```text title="project.grain — extending the base"
+extend "base.grain"
+
+workspace "my-app" {
+  target = "arcline"
+
+  packages {
+    core { type = "library" }
+    api  { type = "service", depends = ["core"] }
+  }
+}
+```
+
+ترث مساحة عمل الابن `lang` و`warden` و`crucible` من القاعدة. فقط `target` و`packages` مُعرَّفان محليًا.
+
+<Details>
+<summary>المرجع الكامل للتوجيهات</summary>
+
+| التوجيه    | النوع    | الافتراضي    | الوصف                                 |
+|------------|----------|--------------|---------------------------------------|
+| `lang`     | `Text`   | `"alloy"`    | اللغة الأساسية لمساحة العمل.          |
+| `target`   | `Text`   | `"local"`    | منصة النشر المستهدفة.                 |
+| `warden`   | `[Text]` | `["strict"]` | مجموعات قواعد التدقيق المراد تطبيقها. |
+| `crucible` | `Enum`   | `auto`       | وضع توليد هياكل الاختبار.             |
+| `smelter`  | `Text`   | `"standard"` | ملف تعريف إعداد المُجمِّع.            |
+| `packages` | `Block`  | مطلوب        | إعلانات الحزم.                        |
+| `deploy`   | `Block`  | اختياري      | إعداد النشر.                          |
+| `rules`    | `Block`  | اختياري      | تجاوزات قاعدة بعينها لـ Warden.       |
+| `extend`   | `Text`   | اختياري      | مسار إلى بيان والد.                   |
+
+</Details>
+
+## الخطوات التالية
+
+- [إدارة مساحة العمل](/docs/guides/workspace-management/) — إدارة التبعيات عبر الحزم باستخدام Tongs.
+- [خط إنتاج البناء](/docs/pipeline/build-pipeline/) — كيف يُحوِّل Quench وBellows البيانات إلى قطع بناء.
+- [قواعد Warden](/docs/pipeline/warden-rules/) — تعمُّق في نظام قواعد التدقيق.

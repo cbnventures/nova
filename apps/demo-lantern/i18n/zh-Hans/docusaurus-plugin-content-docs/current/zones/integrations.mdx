@@ -1,0 +1,37 @@
+---
+title: "集成"
+sidebar_position: 3
+description: "Lantern 首先用 HomeKit 交流，并温和地与屋子里已经住下的其他东西对话——Threadbare、Spoke、Canary。"
+tags:
+  - "分区"
+  - "集成"
+---
+
+# 集成
+
+Lantern 首先用 HomeKit 交流。除此之外，它会轻声地与屋子里已经住下的其他东西对话。
+
+## 内置集成
+
+- **HomeKit Home Hub** — 主集线器，在安装时完成配对
+- **Threadbare** — 用于由家庭维护的、以仓库为驱动的自动化
+- **Spoke** — 将事件中继至内部端点
+- **Canary** — 提供通知，且永远不会喧哗超出必要
+
+## 自定义集成
+
+任何兼容 HomeKit 的配件都可以加入分区。Lantern 不要求认证——它只要求设备知道如何保持安静。
+
+## 配置一项集成
+
+```bash
+lantern integration add canary --topic perimeter-evenings
+```
+
+每项集成只接收它所要求的事件。没有任何广播。
+
+## 下一步
+
+- [事件](/docs/events/overview/) — 每项集成会收到什么。
+- [API 参考](/docs/reference/api-reference/) — 通过 Spoke 接入一项自定义集成。
+- [分区](/docs/zones/overview/) — 限定一项集成能看到哪些分区。

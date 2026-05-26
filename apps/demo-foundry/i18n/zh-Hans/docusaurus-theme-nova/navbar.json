@@ -1,0 +1,26 @@
+{
+  "item.0.label": {
+    "message": "文档",
+    "description": "Label of navbar item 1"
+  },
+  "item.1.label": {
+    "message": "展厅",
+    "description": "Label of navbar item 2"
+  },
+  "item.2.label": {
+    "message": "指南",
+    "description": "Label of navbar item 3"
+  },
+  "item.3.label": {
+    "message": "博客",
+    "description": "Label of navbar item 4"
+  },
+  "item.4.label": {
+    "message": "宣言",
+    "description": "Label of navbar item 5"
+  },
+  "item.6.label": {
+    "message": "GitHub",
+    "description": "Label of navbar item 7"
+  }
+}

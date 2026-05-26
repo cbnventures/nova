@@ -15,7 +15,12 @@ import type { ThemeCodeInlineCodeInlineProps } from '../../types/theme/CodeInlin
  */
 function CodeInline(props: ThemeCodeInlineCodeInlineProps) {
   return (
-    <code className="nova-code-inline">{props['children']}</code>
+    <code
+      className={(props['className'] !== undefined) ? `nova-code-inline ${props['className']}` : 'nova-code-inline'}
+      style={props['style']}
+    >
+      {props['children']}
+    </code>
   );
 }
 

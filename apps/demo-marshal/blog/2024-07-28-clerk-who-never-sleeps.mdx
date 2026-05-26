@@ -1,0 +1,74 @@
+---
+title: "The clerk who never sleeps, and only stamps what is sealed"
+authors:
+  - "yuki"
+tags:
+  - "scheduled-stewardship"
+  - "automation"
+date: "2024-07-28"
+---
+
+The Department's clerk does not sleep. The clerk does not get tired of stale issues. The clerk does not have weekends. The clerk does, however, only act on policies that have been sealed.
+
+{/* truncate */}
+
+Marshal is the clerk. Each policy is a written instruction. Each stamp is an action. Nothing is acted on without authorization. The clerk is patient, but never tardy.
+
+## The Clerk's Cadence
+
+The clerk runs every minute, on a schedule that has not been altered since the first policy was filed. Each run, the clerk reads the policy log for any new sealed policies, then reads the docket for any work that matches a policy's preconditions. If the work matches, the clerk acts. If the work does not match, the clerk does nothing and writes nothing. The docket grows only when the clerk acts. Quiet minutes leave no entry, by design. The clerk does not log its own pulse.
+
+## Authorisation by Seal
+
+A policy that has not been sealed is invisible to the clerk. A policy that has been sealed but later retracted is also invisible. The clerk reads the seal status on each pass. Authorisation is not cached.
+
+```yaml title="policies/stale-thread-archival.yml"
+policy: stale-thread-archival
+version: 3
+sealed: true
+sealed-by: dimitri
+sealed-at: 2024-06-12T09:14:00Z
+
+schedule:
+  cadence: hourly
+  window: 02:00..04:00 UTC
+
+applies-to:
+  repositories: ["org/*"]
+  resource: issues
+
+rules:
+  - when: issue.state == "open" AND issue.last_activity_age > 365d
+    action: archive
+    record:
+      docket: stewardship
+      seal: required
+      retention: 7-years
+      stamp: ARCHIVED
+```
+
+The clerk does not interpret. The rule above either matches or does not. There is no case in which the clerk decides, on a Tuesday in October, that the threshold is *probably* close enough. The threshold is 365 days. A thread aged 364 days is read and skipped. A thread aged 365 days is acted on. The clerk's reliability comes from this — there is nothing to misread, because there is nothing for the clerk to read with judgment.
+
+## Why the Window Exists
+
+The schedule above runs only between 02:00 and 04:00 UTC. Outside the window, the clerk reads the policy and skips it. The window exists so that contributors do not see a hundred archival notifications appear in the middle of their workday. The window is itself a sealed parameter. To move the window, the policy must be re-sealed, by a maintainer with the authority to do so.
+
+In practice, on most nights, the clerk's run produces a single line in the stewardship docket:
+
+```bash
+$ marshal stewardship schedule status --policy stale-thread-archival --last 7d
+DATE        WINDOW          MATCHES   ACTIONS   FAILED
+2024-07-21  02:00-04:00     312       312       0
+2024-07-22  02:00-04:00     287       287       0
+2024-07-23  02:00-04:00     341       341       0
+2024-07-24  02:00-04:00     298       298       0
+2024-07-25  02:00-04:00     303       303       0
+2024-07-26  02:00-04:00     0         0         0
+2024-07-27  02:00-04:00     0         0         0
+```
+
+## The Empty Lines
+
+The two zeroes at the bottom are not failures. They are weekend nights, when contributors had not been opening issues fast enough for any to age out. The clerk worked the same window. The work was empty. The line was still written, because the absence of work is itself recorded — quiet runs are the docket's way of confirming that the schedule did not skip.
+
+The clerk has no opinion about the empty nights. The clerk woke up, read the policy, found nothing matching, wrote the empty line, and waited for the next minute.

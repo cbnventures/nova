@@ -1,0 +1,41 @@
+noor:
+  name: نور خوري
+  title: مسؤولة المناطق، Lantern
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
+
+marisol:
+  name: ماريسول بيلتران
+  title: أنظمة الأحداث، Lantern
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures
+
+theo:
+  name: ثيو أندرسن
+  title: التكاملات، Lantern
+  url: https://nova.cbnventures.io
+  image_url: https://github.com/cbnventures.png
+  page: true
+  socials:
+    facebook: https://www.facebook.com/cbnventures
+    github: https://github.com/cbnventures
+    instagram: https://www.instagram.com/cbnventures/
+    linkedin: https://www.linkedin.com/company/cbnventures/
+    x: https://x.com/cbnventures
+    youtube: https://www.youtube.com/@cbnventures

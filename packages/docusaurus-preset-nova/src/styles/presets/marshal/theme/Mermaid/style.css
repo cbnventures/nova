@@ -1,0 +1,17 @@
+/**
+ * Marshal - `Mermaid` theme overlay.
+ *
+ * Identity flows through tokens defined in marshal/preset.css (light + dark)
+ * which lib/mermaid.ts reads at render time for Layer 1 themeVariables +
+ * Layer 2 themeCSS. This file holds residual decorations only - currently
+ * empty.
+ *
+ * Cluster titles previously used `var(--nova-mermaid-cluster-title-font-family)`
+ * (IBM Plex Mono) at 11px for a chamber-of-records voice, but mono fonts
+ * render wider than the proportional display font mermaid measured the
+ * `<foreignObject>` width against at 13px - the title text overflowed the
+ * cluster border. The cluster title now inherits the themeCSS default
+ * (display font, 13px, weight 600) so the rendered text fits.
+ *
+ * @since 0.18.0
+ */

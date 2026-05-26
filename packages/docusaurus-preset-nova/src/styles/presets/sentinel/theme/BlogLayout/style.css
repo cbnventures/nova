@@ -1,0 +1,58 @@
+/**
+ * Sentinel - `BlogLayout` theme overlay.
+ *
+ * Defines per-preset blog typography tokens consumed by the shared
+ * theme/BlogLayout/style.css. Color tokens for blog typography live in
+ * preset.css.
+ *
+ * Civic editorial voice - heading 1.5rem mobile / 1.75rem md matches
+ * sentinel's body h2 progression (weight-800 bold compensates for size
+ * restraint). 0.375rem signature tight spacing. Description
+ * line-height 1.55 - civic voice trims editorial rhythm.
+ *
+ * Cancels the default `.nova-container` outer gutter at desktop because
+ * Sentinel blog content is intentionally full-width - the sidebar reads
+ * as a docked panel flush against the viewport.
+ *
+ * @since 0.18.0
+ */
+
+/* ============================
+ * 0. Preset-owned blog typography tokens
+ * ============================ */
+
+:root {
+  --nova-sentinel-blog-header-heading-size: 1.5rem;
+  --nova-sentinel-blog-header-heading-size-md: 1.75rem;
+  --nova-sentinel-blog-header-heading-spacing: 0.375rem;
+  --nova-sentinel-blog-description-size: 0.875rem;
+  --nova-sentinel-blog-description-line-height: 1.55;
+}
+
+/* ============================
+ * 0b. Canonical aliases - consumed by shared theme/BlogLayout
+ * ============================ */
+
+:root {
+  --nova-blog-header-heading-size: var(--nova-sentinel-blog-header-heading-size);
+  --nova-blog-header-heading-size-md: var(--nova-sentinel-blog-header-heading-size-md);
+  --nova-blog-header-heading-spacing: var(--nova-sentinel-blog-header-heading-spacing);
+  --nova-blog-description-size: var(--nova-sentinel-blog-description-size);
+  --nova-blog-description-line-height: var(--nova-sentinel-blog-description-line-height);
+}
+
+@media (min-width: 1024px) {
+  .nova-blog-root .nova-container {
+    padding-inline: 0;
+  }
+
+  .nova-blog-root main {
+    padding-right: var(--nova-grid-padding);
+  }
+
+  /* No-sidebar pages (e.g. BlogArchivePage) need left padding on main too,
+     since the sidebar normally provides the visual left buffer. */
+  .nova-blog-root:not(:has(.nova-container > aside)) main {
+    padding-left: var(--nova-grid-padding);
+  }
+}

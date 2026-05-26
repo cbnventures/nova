@@ -1,0 +1,66 @@
+{
+  "layout.lantern.title": {
+    "message": "Lantern",
+    "description": "Title of footer column \"lantern\""
+  },
+  "layout.community.title": {
+    "message": "المجتمع",
+    "description": "Title of footer column \"community\""
+  },
+  "layout.company.title": {
+    "message": "الشركة",
+    "description": "Title of footer column \"company\""
+  },
+  "layout.legal.title": {
+    "message": "الشؤون القانونية",
+    "description": "Title of footer column \"legal\""
+  },
+  "sections.lantern.0.label": {
+    "message": "أهلاً بك",
+    "description": "Label of link 1 in footer section \"lantern\""
+  },
+  "sections.lantern.1.label": {
+    "message": "التثبيت",
+    "description": "Label of link 2 in footer section \"lantern\""
+  },
+  "sections.lantern.2.label": {
+    "message": "مرجع الواجهة البرمجية",
+    "description": "Label of link 3 in footer section \"lantern\""
+  },
+  "sections.community.0.label": {
+    "message": "Threadbare",
+    "description": "Label of link 1 in footer section \"community\""
+  },
+  "sections.community.1.label": {
+    "message": "المدونة",
+    "description": "Label of link 2 in footer section \"community\""
+  },
+  "sections.company.0.label": {
+    "message": "من نحن",
+    "description": "Label of link 1 in footer section \"company\""
+  },
+  "sections.company.1.label": {
+    "message": "الوظائف",
+    "description": "Label of link 2 in footer section \"company\""
+  },
+  "sections.legal.0.label": {
+    "message": "شروط الاستخدام",
+    "description": "Label of link 1 in footer section \"legal\""
+  },
+  "sections.legal.1.label": {
+    "message": "سياسة الخصوصية",
+    "description": "Label of link 2 in footer section \"legal\""
+  },
+  "sections.legal.2.label": {
+    "message": "تواصل معنا",
+    "description": "Label of link 3 in footer section \"legal\""
+  },
+  "cta.label": {
+    "message": "هل أنت مستعد للعودة إلى المنزل؟",
+    "description": "The footer call-to-action link label"
+  },
+  "copyright": {
+    "message": "Copyright © 2025-2026 CBN Ventures LLC. All Rights Reserved.",
+    "description": "The footer copyright text"
+  }
+}

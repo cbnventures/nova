@@ -13,7 +13,7 @@ keywords:
   - "css load order"
   - "preset styling"
   - "base layer"
-  - "component layer"
+  - "block layer"
 tags:
   - "facades"
   - "systems"
@@ -28,7 +28,7 @@ The theme uses a three-layer CSS architecture. Each layer has a clear responsibi
 
 ## Summary
 
-Styles are organized into three layers: **base** (universal resets and utilities), **component** (structural layout for Nova components), and **preset** (visual identity — colors, shapes, depth, and motion). The theme also generates CSS custom properties from the preset configuration at build time.
+Styles are organized into three layers: **base** (universal resets and utilities), **block** (structural layout for Nova blocks), and **preset** (visual identity — colors, shapes, depth, and motion). The theme also generates CSS custom properties from the preset configuration at build time.
 
 ## Three-Layer Model
 
@@ -43,36 +43,37 @@ Universal styles shared across all presets and components.
 | `accessibility.css` | Focus styles, screen reader utilities, reduced motion. |
 | `utilities.css`     | Shared structural patterns for reusable UI elements.   |
 
-### Component Layer
+### Block Layer
 
-Structural styles for the 9 Nova components. No colors, no shadows, no preset-specific values. Only layout, spacing, and responsive behavior.
+Structural styles for the 10 Nova blocks. No colors, no shadows, no preset-specific values. Only layout, spacing, and responsive behavior.
 
-| Directory                                | Purpose                      |
-|------------------------------------------|------------------------------|
-| `styles/components/hero/`                | Hero section layout.         |
-| `styles/components/features/`            | Feature grid layout.         |
-| `styles/components/stats/`               | Stats grid layout.           |
-| `styles/components/spotlight/`           | Spotlight section layout.    |
-| `styles/components/install-strip/`       | Install strip layout.        |
-| `styles/components/blog-preview/`        | Blog preview grid layout.    |
-| `styles/components/app-market-download/` | Download button layout.      |
-| `styles/components/typewriter/`          | Typewriter animation layout. |
-| `styles/components/terminology/`         | Terminology tooltip layout.  |
+| Directory                            | Purpose                      |
+|--------------------------------------|------------------------------|
+| `styles/blocks/app-market-download/` | Download button layout.      |
+| `styles/blocks/blog-preview/`        | Blog preview grid layout.    |
+| `styles/blocks/features/`            | Feature grid layout.         |
+| `styles/blocks/frame/`               | Captioned figure layout.     |
+| `styles/blocks/hero/`                | Hero section layout.         |
+| `styles/blocks/install-strip/`       | Install strip layout.        |
+| `styles/blocks/spotlight/`           | Spotlight section layout.    |
+| `styles/blocks/stats/`               | Stats grid layout.           |
+| `styles/blocks/terminology/`         | Terminology tooltip layout.  |
+| `styles/blocks/typewriter/`          | Typewriter animation layout. |
 
 ### Preset Layer
 
-Visual identity for each preset. Each preset directory contains its own `preset.css`, component overrides, and navbar/footer variant styles.
+Visual identity for each preset. Each preset directory contains its own `preset.css`, block overrides, and navbar/footer variant styles.
 
 ```
-styles/presets/{foundry|sentinel|signal|envoy}/
+styles/presets/{envoy|foundry|lantern|marshal|sentinel|signal}/
 ├── preset.css                     (root variables and base overrides)
-├── components/                    (per-component visual overrides)
+├── blocks/                        (per-block visual overrides)
 │   ├── hero/style.css
 │   ├── features/style.css
 │   └── ...
 └── theme/                         (Docusaurus theme component overrides)
     ├── Navbar/{Bridge|Canopy|Compass|Monolith}/style.css
-    ├── Footer/{Commons|Embassy|Ledger|Launchpad}/style.css
+    ├── Footer/{Commons|Embassy|Launchpad|Ledger}/style.css
     ├── CodeBlock/style.css
     ├── DocSidebar/style.css
     └── ...
@@ -91,9 +92,9 @@ flowchart TD
         GEN[nova-generated.css]
     end
 
-    subgraph Component["Component Layer"]
+    subgraph Block["Block Layer"]
         direction LR
-        C1[Hero] --> C2[Features] --> C3[Stats] --> C4[9 components total]
+        C1[Hero] --> C2[Features] --> C3[Stats] --> C4[10 blocks total]
     end
 
     subgraph Theme["Theme Layer"]
@@ -105,22 +106,22 @@ flowchart TD
         PI[preset.css] --> PO[Component overrides] --> NV[Navbar variant] --> FT[Footer variant]
     end
 
-    Base --> Generated --> Component --> Theme --> Preset
+    Base --> Generated --> Block --> Theme --> Preset
 ```
 
 The theme loads stylesheets in this exact sequence at page mount:
 
 1. **Global resets** — `reset.css`, `grid.css`, `accessibility.css`, `utilities.css`
 2. **Generated CSS** — `nova-generated.css` (CSS custom properties from preset config)
-3. **Shared component styles** — structural layout for all 9 Nova components
+3. **Shared block styles** — structural layout for all 10 Nova blocks
 4. **Shared theme styles** — base styles for 70+ Docusaurus theme components
 5. **Preset identity CSS** — `preset.css` for the active preset
-6. **Preset component overrides** — visual overrides per component per preset
+6. **Preset block overrides** — visual overrides per block per preset
 7. **Preset navbar variant** — styles for the active navbar variant
 8. **Preset footer variant** — styles for the active footer variant
 
 :::info Load Order Matters
-Later stylesheets override earlier ones at the same specificity. The preset layer loads last so it can override component and theme styles without `!important`.
+Later stylesheets override earlier ones at the same specificity. The preset layer loads last so it can override block and theme styles without `!important`.
 :::
 
 ## CSS Custom Properties

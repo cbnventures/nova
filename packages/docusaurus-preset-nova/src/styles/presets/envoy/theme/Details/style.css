@@ -1,5 +1,5 @@
 /**
- * Envoy — Details/collapsible visual styling.
+ * Envoy - Details/collapsible visual styling.
  *
  * @since 0.15.0
  */
@@ -8,16 +8,18 @@
  * 1. Details Container
  * ============================ */
 
+/* Block-margin flows from shared theme/Details via the canonical
+ * `--nova-details-margin-block-end` token (envoy inherits the 1rem
+ * baseline so no preset+component override is defined). */
 .nova-details {
-  margin-bottom: 1rem;
   padding: 0;
-  border: 1px solid var(--nova-color-neutral-200);
+  border: 1px solid var(--nova-color-border);
   border-radius: var(--nova-envoy-radius-generous);
   overflow: hidden;
 }
 
 [data-theme="dark"] .nova-details {
-  border-color: var(--nova-envoy-border-dark);
+  border-color: var(--nova-envoy-border);
 }
 
 /* ============================
@@ -41,11 +43,11 @@
 }
 
 [data-open="true"] > .nova-details-summary {
-  border-bottom: 1px solid var(--nova-color-neutral-200);
+  border-bottom: 1px solid var(--nova-color-border);
 }
 
 [data-theme="dark"] [data-open="true"] > .nova-details-summary {
-  border-bottom-color: var(--nova-envoy-border-dark);
+  border-bottom-color: var(--nova-envoy-border);
 }
 
 /* ============================

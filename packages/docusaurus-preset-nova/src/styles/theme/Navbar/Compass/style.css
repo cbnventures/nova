@@ -1,10 +1,15 @@
 /**
  * ============================
- * Navbar — Compass — Bar Layout
+ * Navbar - Compass - Bar Layout
+ *
+ * Bar height contract: content-driven. Preset overlays do NOT set
+ * `.nova-container { height }` - the bar grows to fit search input + brand
+ * + items + actions. Bridge is the only variant that pins a fixed
+ * container height.
  * ============================
  */
 
-.nova-navbar-compass {
+.nova-navbar-compass > .nova-container {
   display: flex;
   align-items: center;
 }
@@ -16,7 +21,15 @@
 .nova-navbar-compass-items {
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: var(--nova-shape-gap);
+
+  max-width: var(--nova-navbar-compass-items-max-width);
+}
+
+.nova-navbar-compass-items a {
+  display: inline-flex;
+  align-items: center;
 }
 
 .nova-navbar-compass-actions {
@@ -28,7 +41,7 @@
 
 /**
  * ============================
- * Navbar — Compass — Mobile Menu Overlay
+ * Navbar - Compass - Mobile Menu Overlay
  * ============================
  */
 
@@ -47,7 +60,7 @@
 
 /**
  * ============================
- * Navbar — Compass — Mobile Menu Open/Close State
+ * Navbar - Compass - Mobile Menu Open/Close State
  * ============================
  */
 
@@ -81,7 +94,7 @@
 
 /**
  * ============================
- * Navbar — Compass — Mobile Menu Panel
+ * Navbar - Compass - Mobile Menu Panel
  * ============================
  */
 
@@ -106,7 +119,7 @@
 
 /**
  * ============================
- * Navbar — Compass — Mobile Menu Header
+ * Navbar - Compass - Mobile Menu Header
  * ============================
  */
 
@@ -118,7 +131,7 @@
 
 /**
  * ============================
- * Navbar — Compass — Mobile Menu Brand
+ * Navbar - Compass - Mobile Menu Brand
  * ============================
  */
 
@@ -137,7 +150,7 @@
 
 /**
  * ============================
- * Navbar — Compass — Mobile Menu Close
+ * Navbar - Compass - Mobile Menu Close
  * ============================
  */
 
@@ -153,19 +166,15 @@
   padding: 0;
 
   background: none;
-  border: 1px solid var(--nova-color-neutral-300);
+  border: 1px solid var(--nova-color-border);
   border-radius: 0.375rem;
 
   cursor: pointer;
 }
 
-[data-theme="dark"] .nova-navbar-compass-menu-close {
-  border-color: var(--nova-color-neutral-700);
-}
-
 /**
  * ============================
- * Navbar — Compass — Mobile Menu Search
+ * Navbar - Compass - Mobile Menu Search
  * ============================
  */
 
@@ -179,7 +188,7 @@
 
 /**
  * ============================
- * Navbar — Compass — Mobile Menu Items
+ * Navbar - Compass - Mobile Menu Items
  * ============================
  */
 

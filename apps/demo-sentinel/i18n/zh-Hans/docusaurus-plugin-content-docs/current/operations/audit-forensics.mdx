@@ -1,0 +1,136 @@
+---
+title: "审计与取证"
+sidebar_position: 2
+description: "Spyglass 会话还原、不可篡改日志保留、审计查询与合规证据导出。"
+tags:
+  - "运维"
+  - "审计"
+---
+
+import Details from '@theme/Details';
+
+# 审计与取证
+
+Spyglass 是 Sentinel 的审计与取证引擎。它不可篡改地记录每一次访问决策、每一次策略评估、每一次区域跨越事件、每一次 Filament 隧道连接，并保留 7 年。其目的不仅是保留，更是还原——任何会话、任何事件、任何访问模式，都可以仅凭日志数据逐步重放。
+
+## Spyglass 记录什么
+
+Sentinel 信任闭环中的每一个事件都会被 Spyglass 捕获：
+
+| 事件类型 | 来源         | 所记录的数据                             |
+|------|------------|------------------------------------|
+| 策略评估 | Watchtower | 用户、设备、资源、条件、评分、结果、时间戳              |
+| 访问决策 | Drawbridge | grant/narrow/revoke、策略 ID、隧道 ID、时长 |
+| 区域跨越 | Rampart    | 源区域、目标区域、跨越规则、策略评估结果               |
+| 态势检查 | Garrison   | 设备 ID、所有检查类别、各类别评分、通过/失败           |
+| 隧道事件 | Filament   | 隧道 ID、端点、时长、传输字节数、关闭原因             |
+| 紧急访问 | 管理员        | 用户、事由、范围、时长、复核人                    |
+
+所有事件都经过加密签名，并存储于仅追加日志中。记录无法被修改或删除——即使是管理员也不能。
+
+:::info 设计上不可篡改
+Spyglass 日志写入仅追加存储，并采用加密链式结构。每条记录都包含前一条记录的哈希，形成一个具备篡改证据的链。对任何历史记录的修改都会破坏链路并触发完整性告警。
+:::
+
+## 会话还原
+
+Spyglass 可以从一个个事件碎片还原出完整的访问会话。这是事件调查的主要取证工具：
+
+```bash title="还原一个会话"
+sentinel spyglass reconstruct \
+  --user j.chen \
+  --device dev_a3b7c9d1 \
+  --period "2025-06-15T09:00:00..2025-06-15T17:00:00"
+```
+
+```text title="会话还原输出"
+会话还原：j.chen @ dev_a3b7c9d1
+时段：2025-06-15 09:00:00 — 17:00:00
+
+09:01:12  GARRISON   态势检查：评分 94
+09:01:12  WATCHTOWER 评估：策略 api-access → PASS
+09:01:12  DRAWBRIDGE 授予：api-cluster-east（隧道 tun_8a3f）
+09:01:12  RAMPART    区域跨越：internal → api-services（允许）
+09:15:00  FILAMENT   隧道 tun_8a3f：传输 2.4 MB
+10:31:12  WATCHTOWER 评估：策略 api-access → PASS（评分 94）
+12:01:12  WATCHTOWER 评估：策略 api-access → PASS（评分 91）
+13:31:12  WATCHTOWER 评估：策略 api-access → PASS（评分 91）
+14:22:47  GARRISON   态势检查：评分 78（防病毒病毒库陈旧）
+14:22:47  WATCHTOWER 评估：策略 api-access → FAIL（posture < 85）
+14:22:47  DRAWBRIDGE 撤销：api-cluster-east（隧道 tun_8a3f 已关闭）
+14:22:47  RAMPART    区域跨越已撤销：internal → api-services
+14:22:48  NOTIFICATION 已发送至 security-ops
+14:45:00  GARRISON   态势检查：评分 93（防病毒已更新）
+14:45:00  WATCHTOWER 评估：策略 api-access → PASS
+14:45:00  DRAWBRIDGE 授予：api-cluster-east（隧道 tun_9b4g）
+
+会话摘要：
+  总评估次数：8
+  授予访问：2
+  撤销访问：1
+  撤销原因：防病毒病毒库超过 3 天阈值
+  无访问时长：22 分 13 秒
+```
+
+这次还原展现了完整的生命周期：初始授予、周期性重新评估、态势降级后的撤销，以及修复后的重新授予。
+
+## 审计查询
+
+Spyglass 支持跨所有事件类型的结构化查询：
+
+```bash title="按资源与时间范围查询"
+sentinel spyglass query \
+  --resource api-cluster-east \
+  --event-type access-decision \
+  --result revoke \
+  --period "2025-06-01..2025-06-30"
+```
+
+```text title="查询输出"
+Spyglass 查询结果：api-cluster-east（撤销，2025 年 6 月）
+
+DATE        USER        DEVICE           REASON                    DURATION
+2025-06-04  k.patel     dev_b1a9c3e7     posture < 80              47m
+2025-06-09  m.torres    dev_f8e2d4c6     位置异常                   12m
+2025-06-15  j.chen      dev_a3b7c9d1     防病毒陈旧                 22m
+2025-06-22  r.kim       dev_c5d7e9f1     会话时长超限               即刻
+
+总撤销次数：4
+平均修复时长：20 分 15 秒
+```
+
+<Details>
+<summary>完整查询参数参考</summary>
+
+| 参数             | 类型     | 说明                                                                                   |
+|----------------|--------|--------------------------------------------------------------------------------------|
+| `--resource`   | String | 按资源名筛选（支持通配符）                                                                        |
+| `--user`       | String | 按用户身份筛选                                                                              |
+| `--device`     | String | 按设备 ID 筛选                                                                            |
+| `--event-type` | Enum   | `policy-evaluation`、`access-decision`、`zone-crossing`、`posture-check`、`tunnel-event` |
+| `--result`     | Enum   | `pass`、`fail`、`grant`、`narrow`、`revoke`                                              |
+| `--period`     | Range  | ISO 8601 日期范围（`start..end`）                                                          |
+| `--zone`       | String | 按 Rampart 区域名筛选                                                                      |
+| `--policy`     | String | 按策略名筛选                                                                               |
+| `--sort`       | Enum   | `time`、`user`、`resource`、`score`                                                     |
+| `--format`     | Enum   | `table`、`json`、`csv`                                                                 |
+
+</Details>
+
+## 合规导出
+
+Spyglass 可针对标准合规框架生成证据包：
+
+```bash title="导出合规证据"
+sentinel spyglass export --framework soc2 --period 2025-Q2
+sentinel spyglass export --framework hipaa --period 2025-Q2
+sentinel spyglass export --framework iso27001 --period 2025-Q2
+```
+
+每次导出都会产出一个结构化的证据包，包含策略评估汇总、访问决策统计、态势检查分布与区域跨越日志——按目标合规框架的格式整理。
+
+## 下一步
+
+- [策略仿真](/docs/operations/policy-simulation/) — 用历史审计数据测试策略变更。
+- [微隔离](/docs/operations/micro-segmentation/) — Spyglass 记录的区域跨越事件。
+- [API 参考](/docs/reference/api-reference/) — 对 Spyglass 查询与导出端点的程序化访问。

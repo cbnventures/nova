@@ -1,5 +1,7 @@
 import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
 
+import type { CSSProperties } from 'react';
+
 /**
  * Theme - Doc Card List - Doc Card List.
  *
@@ -7,8 +9,14 @@ import type { PropSidebarItem } from '@docusaurus/plugin-content-docs';
  */
 export type ThemeDocCardListDocCardListPropsItems = PropSidebarItem[] | undefined;
 
+export type ThemeDocCardListDocCardListPropsClassName = string | undefined;
+
+export type ThemeDocCardListDocCardListPropsStyle = CSSProperties | undefined;
+
 export type ThemeDocCardListDocCardListProps = {
   items?: ThemeDocCardListDocCardListPropsItems;
+  className?: ThemeDocCardListDocCardListPropsClassName;
+  style?: ThemeDocCardListDocCardListPropsStyle;
   [key: string]: unknown;
 };
 

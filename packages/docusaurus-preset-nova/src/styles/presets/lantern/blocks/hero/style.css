@@ -1,0 +1,117 @@
+/**
+ * Lantern - `hero` component overlay.
+ *
+ * Center-aligned warm cream stage. Italic Fraunces heading already declared
+ * via h1 in preset.css; the component here only adds layout, max-width, and
+ * a softly muted Fraunces tagline. The hero eyebrow class - pulsing amber
+ * dot included - is owned by preset.css and is not redeclared.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Hero stage
+ * ============================
+ */
+
+.nova-hero {
+  position: relative;
+
+  padding: 3rem 0 1rem;
+
+  text-align: center;
+
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .nova-hero {
+    padding: 4rem 0 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nova-hero {
+    padding: 5rem 0 2rem;
+  }
+}
+
+.nova-hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+/**
+ * ============================
+ * 2. Heading - italic Fraunces (lifted to display sizes)
+ * ============================
+ */
+
+.nova-hero-heading {
+  margin-bottom: 1.25rem;
+  max-width: 22ch;
+  margin-inline: auto;
+
+  font-size: clamp(1.75rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  text-wrap: pretty;
+}
+
+/**
+ * ============================
+ * 3. Eyebrow spacing
+ * ============================
+ */
+
+.nova-hero-eyebrow {
+  margin-bottom: 1.25rem;
+}
+
+/**
+ * ============================
+ * 4. Tagline - warm Fraunces upright, muted ink
+ * ============================
+ */
+
+.nova-hero-tagline {
+  margin: 0 auto 2rem;
+  max-width: 40ch;
+
+  font-family: var(--nova-font-display);
+  font-variation-settings: "opsz" 18;
+  font-weight: 400;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--nova-lantern-ink-muted);
+}
+
+@media (min-width: 768px) {
+  .nova-hero-tagline {
+    font-size: 1.15rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/**
+ * ============================
+ * 5. Action row
+ * ============================
+ */
+
+.nova-hero-actions {
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .nova-hero-actions {
+    gap: 1rem;
+  }
+}
+
+/* Mobile - fixed 1.5rem horizontal padding (overrides .nova-container's density-driven --nova-grid-padding). */
+@media (max-width: 1023.98px) {
+  .nova-hero-inner.nova-container {
+    padding-inline: 1.5rem;
+  }
+}

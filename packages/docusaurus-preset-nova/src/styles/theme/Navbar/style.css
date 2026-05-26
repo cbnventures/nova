@@ -1,6 +1,6 @@
 /**
  * ============================
- * Navbar — Container Scoping
+ * Navbar - Container Scoping
  * ============================
  */
 
@@ -10,7 +10,7 @@
 
 /**
  * ============================
- * Navbar — Hide on Scroll
+ * Navbar - Hide on Scroll
  * ============================
  */
 
@@ -26,7 +26,7 @@
 
 /**
  * ============================
- * Navbar — Hamburger Toggle
+ * Navbar - Hamburger Toggle
  * ============================
  */
 
@@ -54,7 +54,7 @@
 
 /**
  * ============================
- * Navbar — Brand Dark Mode
+ * Navbar - Brand Dark Mode
  * ============================
  */
 
@@ -68,4 +68,107 @@
 
 [data-theme="dark"] .nova-brand-dark {
   display: inline;
+}
+
+/**
+ * ============================
+ * Navbar - Items Overflow Measurement
+ *
+ * Hidden duplicate of the items cluster rendered by Bridge / Compass /
+ * Canopy when `useNavbarOverflow` is in play. Sits at position absolute
+ * so children render at their natural widths (no max-width constraint),
+ * lets the hook read each child's `getBoundingClientRect().width`, then
+ * the visible cluster renders the resulting slice.
+ *
+ * Carries the variant's cluster class (`nova-navbar-bridge-items` etc.)
+ * on the SAME element so the per-preset link typography (padding,
+ * font-family, font-size, font-weight) cascades into the measure
+ * children - those declarations affect each child's natural width.
+ * Layout-only properties below use `!important` so the variant's
+ * `display: none` (narrow widths) and `max-width: var(...)` rules
+ * don't kill the measure container; without these overrides, children
+ * would have `width: 0` while the cluster is hidden, `compute()` would
+ * return `count = itemCount`, and the resize-back-to-wide transition
+ * would render every item before `compute()` could clamp them into
+ * `<More>` - the navbar-items flash.
+ * ============================
+ */
+
+.nova-navbar-items-measure {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+
+  display: flex !important;
+  align-items: center;
+  gap: var(--nova-shape-gap);
+
+  max-width: none !important;
+
+  visibility: hidden !important;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/**
+ * ============================
+ * Navbar - Items Overflow Initial-Measure Guard
+ *
+ * Applied to the VISIBLE items cluster by Bridge / Compass / Canopy while
+ * `useNavbarOverflow` is in its pre-compute state (initial state assumes
+ * `visibleCount = itemCount`, so all items render and would visually
+ * overflow `max-width` since `overflow: visible` + `flex-wrap: nowrap`
+ * don't clip). Hidden via `visibility` so the layout box is preserved
+ * (no width reservation in surrounding elements) but the overflowing
+ * items don't paint. After the first `compute()` resolves in
+ * useLayoutEffect, the hook flips `measuring -> false`, the class drops
+ * off, and the cluster reveals with the correct `visibleCount`. One
+ * render cycle, no flash.
+ * ============================
+ */
+
+.nova-navbar-items-measuring {
+  visibility: hidden;
+}
+
+/**
+ * ============================
+ * Navbar - Items Cluster Height Guard
+ *
+ * Shared with Bridge / Compass / Canopy visible item clusters. Each
+ * cluster is `display: flex; flex-wrap: nowrap` with a `max-width`
+ * budget, so flex items can be shrunk below their natural width when
+ * `useNavbarOverflow` is mid-recompute (visibleCount has not yet been
+ * clamped to the new budget). Without this guard, each item's link text
+ * wraps to a second line, doubling the navbar height for one frame
+ * (~12ms) before React re-renders with fewer items + `<More>` - the
+ * navbar-items height-spell. `white-space: nowrap` keeps each link
+ * single-line; over-stuffed items overflow horizontally instead, which
+ * is invisible because the cluster sits between brand and actions.
+ * Matches the measure cluster which also relies on `white-space: nowrap`
+ * to report natural single-line widths to the hook.
+ * ============================
+ */
+
+.nova-navbar-bridge-items,
+.nova-navbar-compass-items,
+.nova-navbar-canopy-items {
+  white-space: nowrap;
+}
+
+/**
+ * ============================
+ * Navbar - Locale Dropdown Trigger
+ *
+ * Cross-preset uniform: every preset declares the same trigger-button
+ * height + horizontal padding (mirrors the color-mode-toggle and pairs
+ * with the navbar-actions cluster height). Promoted to shared baseline
+ * so the dimensions ship once; per-preset overlays still own colors,
+ * borders, radius, typography, and motion.
+ * ============================
+ */
+
+.nova-locale-dropdown-summary {
+  height: 2.25rem;
+  padding: 0 0.625rem;
 }

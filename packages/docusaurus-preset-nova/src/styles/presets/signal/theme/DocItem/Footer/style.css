@@ -1,5 +1,9 @@
 /**
- * Signal — Doc footer visual styling.
+ * Signal - `DocItem/Footer` theme overlay.
+ *
+ * Article-end seal - a 1px neutral-200 hairline rule above and tight
+ * top spacing separate the article body from the meta colophon. Compact
+ * by signal's terminal-density rhythm.
  *
  * @since 0.15.0
  */
@@ -7,9 +11,5 @@
 .nova-doc-footer {
   margin-top: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid var(--nova-color-neutral-200);
-}
-
-[data-theme="dark"] .nova-doc-footer {
-  border-top-color: var(--nova-color-neutral-800);
+  border-top: 1px solid var(--nova-color-border);
 }

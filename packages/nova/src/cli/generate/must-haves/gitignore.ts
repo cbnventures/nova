@@ -241,7 +241,7 @@ export class CliGenerateMustHavesGitignore {
           continue;
         }
 
-        // "Regenerate" selected — run regenerate flow.
+        // "Regenerate" selected - run regenerate flow.
         const result: CliGenerateMustHavesGitignoreRunResult = await CliGenerateMustHavesGitignore.promptRegenerate({
           templateDirectory,
           currentDirectory,
@@ -257,7 +257,7 @@ export class CliGenerateMustHavesGitignore {
       }
     }
 
-    // No file exists — go straight to regenerate.
+    // No file exists - go straight to regenerate.
     const result: CliGenerateMustHavesGitignoreRunResult = await CliGenerateMustHavesGitignore.promptRegenerate({
       templateDirectory,
       currentDirectory,

@@ -1,0 +1,70 @@
+---
+title: "Three classes of incoming work, one queue"
+authors:
+  - "dimitri"
+tags:
+  - "access-tiers"
+  - "support"
+  - "dockets"
+date: "2024-10-08"
+---
+
+Incoming work arrives without explaining itself. Marshal classifies it on receipt — sponsor, contributor, public. The label is stamped, not negotiated. The queue is single, the labels do the routing.
+
+{/* truncate */}
+
+Sponsors are seen first. Contributors are seen next. Public requests are answered when the queue is light. Every classification decision is filed in the docket. Anyone can audit how their request was tiered.
+
+The classification is performed at intake, before any human reads the request. The intake clerk reads the requester's identity from the inbound metadata, looks up the access tier in the sealed registry, and writes a label onto the request. The label is written once. After that, the label travels with the request through every queue, every stamp, and every closure. A request labelled `sponsor` at 14:02 is still labelled `sponsor` at the moment it is sealed and closed, even if that closure does not occur until the following Tuesday.
+
+There is no escalation path that bypasses the label. A public request that complains about urgency is filed under public. A sponsor request that begins with an apology is filed under sponsor. The tier is the tier. Politeness does not change it; impatience does not change it.
+
+The tier registry is sealed and versioned. To move a requester from one tier to another, the registry must be edited by a maintainer with sealing authority, and the change is itself a docket entry:
+
+```yaml title="policies/access-tiers.yml"
+policy: access-tiers
+version: 4
+sealed: true
+
+tiers:
+  sponsor:
+    sla: 1-business-day
+    queue-priority: 1
+    members-source: sponsors-registry@v12
+
+  contributor:
+    sla: 5-business-days
+    queue-priority: 2
+    members-source: contributors-registry@v8
+
+  public:
+    sla: best-effort
+    queue-priority: 3
+    members-source: "*"
+
+intake:
+  on-receipt:
+    - lookup: tier
+    - stamp: tier-label
+    - record:
+        docket: access
+        seal: required
+        retention: 3-years
+```
+
+The `members-source` field is itself a sealed registry, updated when sponsorships begin or end. A sponsor whose contract lapses on the first of the month is reclassified as a contributor on the second. The reclassification is filed. The next request from that account, at 09:14 on the second, is stamped `contributor` regardless of how the previous month's requests were stamped. The label is current, not historical.
+
+What this produced, in operation, is a queue that does not require a triage meeting. The queue's order is the order in which the labels say it should be. The clerk reads the labels and proceeds. A typical morning's intake looks like this:
+
+```bash
+$ marshal docket query --docket access --since 09:00 --until 12:00
+TIME      REQUESTER       TIER         REPO              STAMP
+09:01:14  acme-co         sponsor      org/relay         RECEIVED
+09:14:22  jdoe            contributor  org/courier       RECEIVED
+09:22:01  mfoo            public       org/relay         RECEIVED
+09:38:47  acme-co         sponsor      org/courier       RECEIVED
+10:11:30  beta-labs       sponsor      org/relay         RECEIVED
+11:02:05  cbar            public       org/relay         RECEIVED
+```
+
+The queue is single, but it is not flat. The labels do the work that a phone tree pretends to do, and they do it without making the requester press buttons. The requester's tier is the tier they paid for, contributed to, or did not. The queue is ordered accordingly. The audit trail is open. Anyone may verify their place.

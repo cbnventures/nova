@@ -2,9 +2,10 @@ import {
   BlogPostProvider,
   useBlogPost,
 } from '@docusaurus/plugin-content-blog/client';
-import { PageMetadata } from '@docusaurus/theme-common';
 import BlogLayout from '@theme/BlogLayout';
 import BlogPostItem from '@theme/BlogPostItem';
+import BlogPostPageMetadata from '@theme/BlogPostPage/Metadata';
+import BlogPostPageStructuredData from '@theme/BlogPostPage/StructuredData';
 import BlogPostPaginator from '@theme/BlogPostPaginator';
 import ContentVisibility from '@theme/ContentVisibility';
 import TOC from '@theme/TOC';
@@ -16,8 +17,6 @@ import type {
   ThemeBlogPostPageBlogPostPageContentBlogPost,
   ThemeBlogPostPageBlogPostPageContentCanRenderToc,
   ThemeBlogPostPageBlogPostPageContentHideTableOfContents,
-  ThemeBlogPostPageBlogPostPageContentMetadataImage,
-  ThemeBlogPostPageBlogPostPageContentMetadataSpread,
   ThemeBlogPostPageBlogPostPageContentNextItem,
   ThemeBlogPostPageBlogPostPageContentPaginatorSpread,
   ThemeBlogPostPageBlogPostPageContentPrevItem,
@@ -59,22 +58,6 @@ function BlogPostPageContent(props: ThemeBlogPostPageBlogPostPageContentProps) {
     Reflect.set(tocSpread, 'maxHeadingLevel', tocMaxHeadingLevel);
   }
 
-  const metadataSpread: ThemeBlogPostPageBlogPostPageContentMetadataSpread = {};
-
-  if (blogPost['metadata']['description'] !== undefined) {
-    Reflect.set(metadataSpread, 'description', blogPost['metadata']['description']);
-  }
-
-  if (blogPost['metadata']['frontMatter']['keywords'] !== undefined) {
-    Reflect.set(metadataSpread, 'keywords', blogPost['metadata']['frontMatter']['keywords']);
-  }
-
-  const metadataImage: ThemeBlogPostPageBlogPostPageContentMetadataImage = blogPost['assets']['image'] ?? blogPost['metadata']['frontMatter']['image'];
-
-  if (metadataImage !== undefined) {
-    Reflect.set(metadataSpread, 'image', metadataImage);
-  }
-
   const canRenderToc: ThemeBlogPostPageBlogPostPageContentCanRenderToc = (
     hideTableOfContents !== true
     && blogPost['toc']['length'] > 0
@@ -97,11 +80,14 @@ function BlogPostPageContent(props: ThemeBlogPostPageBlogPostPageContentProps) {
   }
 
   return (
-    <BlogLayout sidebar={props['sidebar']} toc={toc}>
-      <PageMetadata
-        title={blogPost['metadata']['title']}
-        {...metadataSpread}
-      />
+    <BlogLayout
+      sidebar={props['sidebar']}
+      toc={toc}
+      className={(props['className'] !== undefined) ? `nova-blog-post-page ${props['className']}` : 'nova-blog-post-page'}
+      style={props['style']}
+    >
+      <BlogPostPageMetadata />
+      <BlogPostPageStructuredData />
       <ContentVisibility metadata={blogPost['metadata']} />
       {(canRenderToc === true) && (
         <TOCCollapsible toc={blogPost['toc']} {...tocSpread} />
@@ -140,7 +126,11 @@ function BlogPostPage(props: ThemeBlogPostPageBlogPostPageProps) {
 
   return (
     <BlogPostProvider content={props['content']} isBlogPostPage={true}>
-      <BlogPostPageContent sidebar={props['sidebar']}>
+      <BlogPostPageContent
+        sidebar={props['sidebar']}
+        className={props['className']}
+        style={props['style']}
+      >
         {createElement(blogPostContent)}
       </BlogPostPageContent>
     </BlogPostProvider>

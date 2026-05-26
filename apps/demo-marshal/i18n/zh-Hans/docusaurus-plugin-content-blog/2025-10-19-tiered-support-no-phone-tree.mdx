@@ -1,0 +1,69 @@
+---
+title: "没有电话语音树的分级支持"
+authors:
+  - "dimitri"
+tags:
+  - "access-tiers"
+  - "support"
+date: "2025-10-19"
+---
+
+电话语音树是一种假装自己不是分级的分级系统。Marshal 的分级系统不假装。Sponsor、contributor、public——白纸黑字，受理时钤上，在 docket 中可见。
+
+{/* truncate */}
+
+这种坦诚改善了队列。Sponsor 等得更少，但感到被看见。Contributor 等的时间一样长，但理解了顺序。Public 请求按 docket 承诺的节奏被妥善回复。
+
+时刻表与请求一同发布在同一份 docket 里。在任意一个下午，public 请求人都可以读到：队列当前包含 12 个 sponsor 项、38 个 contributor 项、144 个 public 项，public 请求的预计等待时间为 4 到 6 个工作日。这个数字不是猜的。它是一项计算的结果——通过通读队列与每一层级的历史清空速率算出。这次计算在每一次刷新时立卷到 docket——`PROJECTED 2025-10-19T14:00 UTC: sponsor=4h, contributor=2.1d, public=5.3d`——任何看一眼的人都看得见。
+
+这件事改变得最显著的，是抱怨的措辞。一份对队列的抱怨现在要么是对层级的抱怨、对预测的抱怨，要么是对 policy 的抱怨。它已经很少是对回复该请求的那个人的抱怨。回复该请求的那个人，是按 docket 承诺的时刻表回复的。时刻表达成了。如果还有抱怨，那也是结构性的——结构性的抱怨，靠修订结构来处理。
+
+结构是立了卷的：
+
+```yaml title="policies/access-tiers.yml"
+policy: access-tiers
+version: 5
+sealed: true
+
+tiers:
+  sponsor:
+    sla: 1-business-day
+    queue-priority: 1
+    visibility: public
+    members-source: sponsors-registry@v14
+
+  contributor:
+    sla: 5-business-days
+    queue-priority: 2
+    visibility: public
+    members-source: contributors-registry@v9
+
+  public:
+    sla: best-effort
+    queue-priority: 3
+    visibility: public
+    members-source: "*"
+
+projections:
+  cadence: hourly
+  record:
+    docket: access
+    stamp: PROJECTED
+    retention: 90-days
+```
+
+带来语气转变的，是 `visibility: public` 这个字段。在加上这个字段之前，层级注册表是内部的。一位请求人可以看到自己的层级，却看不到他人的层级，也看不到每一层级的队列深度。当时的抱怨语气是私人的——*为什么我的 issue 被忽视？* 在加上这个字段之后，每一层级的队列深度在访问 docket 中发布，每小时刷新，任何请求人都能读到预测。语气也随之转变。抱怨变成了结构性的——*public 队列的预测超过 5 天已经持续了三周；是不是应该修订 SLA，或者增加人手？*
+
+第二种问题更易于处理，因为它指向一个参数，而不是某个人。参数是立了卷的。参数可以被修订。修订会产生该 policy 的一个新封印版本，新版本在 policy 日志中可见。结构性的抱怨靠流程而非劝说，变成结构性的改动。
+
+```bash
+$ marshal docket query --docket access --stamp PROJECTED --since 2025-10-12 --limit 5
+TIME              SPONSOR   CONTRIB   PUBLIC    QUEUE-DEPTH
+2025-10-12 14:00  3.2h      1.8d      4.1d      178
+2025-10-13 14:00  3.8h      2.0d      4.7d      192
+2025-10-14 14:00  4.1h      2.2d      5.0d      201
+2025-10-15 14:00  4.4h      2.3d      5.4d      214
+2025-10-19 14:00  4.0h      2.1d      5.3d      194
+```
+
+电话语音树把它的层级藏在菜单后面。Marshal 把层级印在回执上。回执在 docket 里。docket 是公开的。当那份等待到来时，它在书面上就承诺过。

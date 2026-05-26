@@ -27,6 +27,28 @@ describe('getShikiThemes', async () => {
     return;
   });
 
+  it('returns min-light and dracula themes for lantern preset', () => {
+    const result: TestsLibShikiThemesResult = getShikiThemes('lantern');
+    const light: TestsLibShikiThemesLight = result['light'];
+    const dark: TestsLibShikiThemesDark = result['dark'];
+
+    strictEqual(light, 'min-light');
+    strictEqual(dark, 'dracula');
+
+    return;
+  });
+
+  it('returns solarized themes for marshal preset', () => {
+    const result: TestsLibShikiThemesResult = getShikiThemes('marshal');
+    const light: TestsLibShikiThemesLight = result['light'];
+    const dark: TestsLibShikiThemesDark = result['dark'];
+
+    strictEqual(light, 'solarized-light');
+    strictEqual(dark, 'solarized-dark');
+
+    return;
+  });
+
   it('returns vitesse themes for sentinel preset', () => {
     const result: TestsLibShikiThemesResult = getShikiThemes('sentinel');
     const light: TestsLibShikiThemesLight = result['light'];

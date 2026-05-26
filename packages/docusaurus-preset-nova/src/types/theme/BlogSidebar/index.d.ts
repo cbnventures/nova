@@ -1,4 +1,5 @@
 import type { BlogSidebar, BlogSidebarItem } from '@docusaurus/plugin-content-blog';
+import type { CSSProperties } from 'react';
 
 /**
  * Theme - Blog Sidebar - Blog Sidebar.
@@ -7,8 +8,14 @@ import type { BlogSidebar, BlogSidebarItem } from '@docusaurus/plugin-content-bl
  */
 export type ThemeBlogSidebarBlogSidebarPropsSidebar = BlogSidebar | undefined;
 
+export type ThemeBlogSidebarBlogSidebarPropsClassName = string | undefined;
+
+export type ThemeBlogSidebarBlogSidebarPropsStyle = CSSProperties | undefined;
+
 export type ThemeBlogSidebarBlogSidebarProps = {
   sidebar?: ThemeBlogSidebarBlogSidebarPropsSidebar;
+  className?: ThemeBlogSidebarBlogSidebarPropsClassName;
+  style?: ThemeBlogSidebarBlogSidebarPropsStyle;
   [key: string]: unknown;
 };
 

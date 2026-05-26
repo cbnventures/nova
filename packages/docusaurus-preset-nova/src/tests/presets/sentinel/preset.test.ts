@@ -1,4 +1,4 @@
-import { strictEqual } from 'node:assert/strict';
+import { deepStrictEqual, strictEqual } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
@@ -19,9 +19,18 @@ describe('presetsSentinelPresetSentinel', async () => {
   it('has correct color values', () => {
     const sentinel: TestsPresetsSentinelPresetSentinel = presetsSentinelPresetSentinel;
 
-    strictEqual(sentinel['colors']['primary'], '#0d9488');
-    strictEqual(sentinel['colors']['accent'], '#6366f1');
-    strictEqual(sentinel['colors']['neutral'], '#64748b');
+    deepStrictEqual(sentinel['colors']['primary'], {
+      light: '#0d9488', dark: '#0d9488',
+    });
+    deepStrictEqual(sentinel['colors']['accent'], {
+      light: '#6366f1', dark: '#6366f1',
+    });
+    deepStrictEqual(sentinel['colors']['text'], {
+      light: '#1e293b', dark: '#e2e8f0',
+    });
+    deepStrictEqual(sentinel['colors']['border'], {
+      light: '#cbd5e1', dark: '#334155',
+    });
 
     return;
   });

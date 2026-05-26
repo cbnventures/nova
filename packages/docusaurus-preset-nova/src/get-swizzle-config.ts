@@ -31,6 +31,18 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
           wrap: 'safe',
         },
       },
+      'Blog/Components/Author': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
+      'Blog/Components/Author/Socials': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
       'Blog/Pages/BlogAuthorsListPage': {
         actions: {
           eject: 'safe',
@@ -61,6 +73,12 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
           wrap: 'safe',
         },
       },
+      'BlogListPage/StructuredData': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
       'BlogListPaginator': {
         actions: {
           eject: 'safe',
@@ -85,6 +103,18 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
           wrap: 'safe',
         },
       },
+      'BlogPostPage/Metadata': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
+      'BlogPostPage/StructuredData': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
       'BlogPostPaginator': {
         actions: {
           eject: 'safe',
@@ -92,6 +122,12 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
         },
       },
       'BlogSidebar': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
+      'BlogSidebarMobile': {
         actions: {
           eject: 'safe',
           wrap: 'safe',
@@ -133,6 +169,30 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
           wrap: 'safe',
         },
       },
+      'ContentFooter/Edit': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
+      'ContentFooter/Share': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
+      'ContentFooter/ShareButton': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
+      'ContentFooter/Tags': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
       'ContentVisibility': {
         actions: {
           eject: 'safe',
@@ -158,6 +218,12 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
         },
       },
       'DocBreadcrumbs': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
+      'DocBreadcrumbs/StructuredData': {
         actions: {
           eject: 'safe',
           wrap: 'safe',
@@ -313,12 +379,6 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
           wrap: 'safe',
         },
       },
-      'DocVersionBadge': {
-        actions: {
-          eject: 'safe',
-          wrap: 'safe',
-        },
-      },
       'DocVersionBanner': {
         actions: {
           eject: 'safe',
@@ -373,6 +433,12 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
           wrap: 'safe',
         },
       },
+      'IconExternalLink': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
       'LastUpdated': {
         actions: {
           eject: 'safe',
@@ -397,13 +463,13 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
           wrap: 'safe',
         },
       },
-      'MDXComponents': {
+      'Logo': {
         actions: {
           eject: 'safe',
           wrap: 'safe',
         },
       },
-      'Mermaid': {
+      'MDXComponents': {
         actions: {
           eject: 'safe',
           wrap: 'safe',
@@ -464,6 +530,12 @@ export function getSwizzleConfig(): GetSwizzleConfigGetSwizzleConfigReturns {
         },
       },
       'SearchPage': {
+        actions: {
+          eject: 'safe',
+          wrap: 'safe',
+        },
+      },
+      'Showcase': {
         actions: {
           eject: 'safe',
           wrap: 'safe',

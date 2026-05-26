@@ -6,6 +6,7 @@ import DocRootLayout from '@theme/DocRoot/Layout';
 import NotFoundContent from '@theme/NotFound/Content';
 
 import type {
+  ThemeDocRootDocRootMergedClassName,
   ThemeDocRootDocRootProps,
   ThemeDocRootDocRootRouteMetadata,
 } from '../../types/theme/DocRoot/index.d.ts';
@@ -33,12 +34,17 @@ function DocRoot(props: ThemeDocRootDocRootProps) {
     return <NotFoundContent />;
   }
 
+  const mergedClassName: ThemeDocRootDocRootMergedClassName = (props['className'] !== undefined) ? `nova-doc-root-wrapper ${props['className']}` : 'nova-doc-root-wrapper';
+
   return (
     <DocsSidebarProvider
       name={currentDocRouteMetadata['sidebarName']}
       items={currentDocRouteMetadata['sidebarItems']}
     >
-      <DocRootLayout>
+      <DocRootLayout
+        className={mergedClassName}
+        style={props['style']}
+      >
         {currentDocRouteMetadata['docElement']}
       </DocRootLayout>
     </DocsSidebarProvider>

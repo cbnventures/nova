@@ -1,0 +1,106 @@
+/**
+ * Lantern - `BlogListPaginator` theme overlay.
+ *
+ * Warm cream pill buttons with hairline borders. Active page is the filled
+ * amber primary; navigation pills warm subtly on hover with the soft glow.
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * 1. Container - warm hairline
+ * ============================
+ */
+
+.nova-blog-list-paginator {
+  border-top: 1px solid var(--nova-lantern-border);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator {
+  border-top-color: var(--nova-lantern-border);
+}
+
+/**
+ * ============================
+ * 2. Nav and page pills - warm cream paper
+ * ============================
+ */
+
+.nova-blog-list-paginator-nav,
+.nova-blog-list-paginator-page {
+  font-family: var(--nova-font-body);
+  font-weight: 600;
+  color: var(--nova-color-primary-600);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 94%);
+  border: 1px solid var(--nova-lantern-border);
+  border-radius: var(--nova-shape-radius);
+
+  transition: color var(--nova-motion-duration) ease, background-color var(--nova-motion-duration) ease, border-color var(--nova-motion-duration) ease, box-shadow var(--nova-motion-duration) ease, transform var(--nova-motion-duration) ease;
+}
+
+.nova-blog-list-paginator-nav:hover,
+.nova-blog-list-paginator-nav:focus-visible,
+.nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):hover,
+.nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):focus-visible {
+  color: var(--nova-color-primary-700);
+
+  text-decoration: none;
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 88%);
+  border-color: var(--nova-color-primary-400);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 88%);
+
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-nav,
+[data-theme="dark"] .nova-blog-list-paginator-page {
+  color: var(--nova-color-primary-400);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 88%);
+  border-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-border) 50%);
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-nav:hover,
+[data-theme="dark"] .nova-blog-list-paginator-nav:focus-visible,
+[data-theme="dark"] .nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):hover,
+[data-theme="dark"] .nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):focus-visible {
+  color: var(--nova-color-primary-300);
+
+  background-color: color-mix(in srgb, var(--nova-color-primary-500), var(--nova-lantern-bg) 80%);
+  border-color: var(--nova-color-primary-400);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--nova-color-primary-500), transparent 78%);
+}
+
+/**
+ * ============================
+ * 3. Active page - filled amber pill
+ * ============================
+ */
+
+.nova-blog-list-paginator-page-active {
+  font-weight: 700;
+  color: var(--nova-color-text);
+
+  background-color: var(--nova-color-primary-500);
+  border-color: var(--nova-color-primary-600);
+
+  cursor: default;
+}
+
+[data-theme="dark"] .nova-blog-list-paginator-page-active {
+  color: var(--nova-lantern-bg);
+
+  border-color: var(--nova-color-primary-400);
+}
+
+/**
+ * ============================
+ * 4. Ellipsis - quiet warm muted
+ * ============================
+ */
+
+.nova-blog-list-paginator-ellipsis {
+  color: var(--nova-lantern-ink-muted);
+}

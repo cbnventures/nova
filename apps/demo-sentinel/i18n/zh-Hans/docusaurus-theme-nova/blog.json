@@ -1,0 +1,10 @@
+{
+  "layout.heading": {
+    "message": "博客",
+    "description": "The blog list page heading"
+  },
+  "layout.description": {
+    "message": "威胁研究与态势通告",
+    "description": "The blog list page description below the heading"
+  }
+}

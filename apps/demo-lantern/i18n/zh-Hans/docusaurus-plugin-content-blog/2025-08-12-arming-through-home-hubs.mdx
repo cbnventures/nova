@@ -1,0 +1,53 @@
+---
+title: "无需手机在场，通过 HomeKit Home Hub 布防"
+authors:
+  - "theo"
+tags:
+  - "布防与撤防"
+  - "集成"
+date: "2025-08-12"
+---
+
+手机并不总在房里。集线器通常在。Lantern 可以通过 HomeKit Home Hub 的在场感来布防和撤防——家里人走过音箱时，门廊就已经知道。
+
+{/* truncate */}
+
+这种接力是无形的。没有提示、没有提示音、没有锁屏点击。过道灯调暗一些；门廊读数从*正在看守*转为*正在迎接*。家里人毫无察觉——这正是全部要点。
+
+手机是一位频繁出行的旅客。它在口袋里乘车、在台面上小憩、在错的时间在错的楼层充电。家里人并非时刻把它带在身边。集线器则相反，它住在一处架子上，从不挪窝。它始终在听——以一台架上音箱所能听的那种耐心方式——并能从声音与距离知道是谁刚走进房间。Lantern 读集线器对家庭成员的感知，并把它当作一种柔性信号——不是唯一的信号，但是一种有用的信号。当厨房的集线器识别到家庭成员的声音、而前门刚刚关上时，门廊会从*正在看守*转为*正在迎接*，无需任何人开口宣告。
+
+这场接力只持续两秒。门廊把告警状态减半，过道灯升到傍晚的亮度，仪表盘瓦块从温柔的蓝色变成更暖的奶白。一切都不喧哗。家里人放下一袋杂货，没有注意到这间屋子已经跟自己问过好——这正是我们想要的那种"到家"。
+
+集成在一个文件块里说完。集线器是同侪，不是权威——Lantern 倾听，但 Lantern 仍然自己决定。
+
+```yaml title="lantern.handoffs.yml"
+handoffs:
+  homekit-hub:
+    enabled: true
+    hubs:
+      - id:       kitchen-hub
+        location: kitchen
+        listens-for: [household-voice, household-presence]
+      - id:       living-room-hub
+        location: living-room
+        listens-for: [household-presence]
+    rules:
+      arrival:
+        when:
+          - hub-presence:    household
+          - front-door:      recently-closed
+        then:
+          - porch:    welcoming
+          - hallway:  evening
+      departure:
+        when:
+          - hub-presence:    none-for: 15min
+          - front-door:      recently-closed
+        then:
+          - porch:    watching
+          - hallway:  passive
+```
+
+文件里只有两条规则与一份集线器清单。其他部分刻意留空。我们不希望配置随着家庭一起膨胀——我们希望家庭长进配置里。新搬入的家人不需要新加一行。集线器已经认得他的声音，门廊也已经信任集线器。
+
+我们最喜欢的是它的失败模式。如果集线器被拔掉，规则就会悄无声息地停止触发——门廊保持*正在看守*，过道保持*passive*，这是更安全的默认。家里人当天只能用手机或门口面板。然后集线器重新上线，接力就继续，没人需要去想哪里变了。门廊一直在做同样的工作，只是房里少了一个同侪。

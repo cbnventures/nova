@@ -1,0 +1,56 @@
+---
+title: "一年的陈旧线程，在一个下午之内全部归档"
+authors:
+  - "cordelia"
+tags:
+  - "thread-archival"
+  - "scheduled-stewardship"
+date: "2026-04-12"
+---
+
+仓库里有 2,184 条超过一年的 issue。其中 2,108 条已解决、被遗弃，或是重复。Marshal 在一次通宵遍历里把全部 2,108 条合上并封存。
+
+{/* truncate */}
+
+剩下的 76 条交由高级复核手动立卷。每一条都带着一份钤章过的通告，写明当前状态、归档原因，以及重新打开的路径。
+
+这次遍历并不是一次性的特殊行动。它就是标准的归档遍历，按标准计划运行，恰逢一个夜晚——一年的累计积压正好集中跨过阈值。这次遍历并没有比平时更努力。它只是读了更多的行。事务员不会因为读行而疲倦。
+
+阈值未为这个场合改动。阈值仍然是 365 天的静默期。这 2,184 条跨阈值的 issue 集中落在同一个日历日，是因为它们一年前几乎被开在同一日历日上——那是 2025 年初一次文档推广的后果：大量小型报告，多数在最初一周内被解决，但其解决评论始终未被标记，致使它们在技术上保持"未结"。`resolution-comment-detection` policy 本身在 2024 年底立卷，识别出其中 2,108 条为可解决，标准归档遍历将这 2,108 条扫入 stewardship docket。
+
+明细与该操作一同被立卷到 docket 中：
+
+```yaml title="dockets/stewardship/2026-04-12.yml"
+- id: STW-2026-04-12-0001
+  timestamp: 2026-04-12T03:14:00Z
+  policy: stale-thread-archival@v3
+  action: ARCHIVED
+  scope: org/*
+  matched: 2184
+  sealed: 2108
+  deferred: 76
+  duration: 47m12s
+  seal: sha256:9c3b7a1f4e8d2b5c0a3f9b4e1c5d26f8
+
+  breakdown:
+    resolved-in-comments: 1402
+    abandoned-no-followup: 482
+    duplicate-of-existing: 224
+    deferred-senior-review: 76
+```
+
+被暂搁的 76 条各自有独立的 docket 条目，附上对父次运行的引用，并标注为何这一条需要高级复核。少数是与安全相关的。少数曾在生命周期内被高级维护者触碰过。少数曾被外部事件报告链接过，链接本身就构成暂搁的理由。高级维护者在这次遍历后第二个工作日的早晨通读它们。
+
+```bash
+$ marshal docket query --docket stewardship-deferred --parent STW-2026-04-12-0001
+COUNT  REASON                              ACTION-PENDING
+24     security-adjacent                   senior-review
+18     senior-author-historical            senior-review
+16     external-incident-linked            senior-review
+11     repeated-deferral                   senior-review
+7      cross-repository-reference          senior-review
+```
+
+一位想重新打开 2,108 条已封存项中的某一条的读者可以这样做。封印是永久的，但 issue 并非"无法访问"意义上的关闭。它被归档了。重新打开会产生一条新的 docket 条目，钤为 `REOPENED`，引用原始的归档条目。原始条目不变。新条目与之并列。一位在 docket 中滚动的读者看到二者——归档，再重开，按其发生顺序排列。审计轨迹容纳这次变更，因为这次变更是按流程发生并被立卷的。
+
+这次遍历用了四十七分钟。维护者未被通知。维护者在次日工作日的早晨读到摘要，看到计数，确认暂搁数在预期区间内，便继续他们的工作。事务员完成了它的工作。封印是永久的。那个文件夹——它如今已经不再字面上是文件夹了——轻了 2,108 张。

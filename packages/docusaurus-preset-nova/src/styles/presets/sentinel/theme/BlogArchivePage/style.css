@@ -1,5 +1,5 @@
 /**
- * Sentinel — Blog Archive Page visual styling.
+ * Sentinel - Blog Archive Page visual styling.
  *
  * @since 0.15.0
  */
@@ -10,46 +10,23 @@
   padding-left: 0.75rem;
 
   font-family: var(--nova-font-display);
-  color: var(--nova-color-neutral-800);
+  color: var(--nova-color-text);
 
-  border-bottom: 1px solid var(--nova-color-neutral-200);
+  border-bottom: 1px solid var(--nova-color-border);
   border-left: 3px solid var(--nova-color-primary-500);
 }
 
 [data-theme="dark"] .nova-blog-archive section h3 {
-  color: var(--nova-color-neutral-200);
-
-  border-bottom-color: var(--nova-color-neutral-800);
   border-left-color: var(--nova-color-primary-600);
 }
 
-/* Archive links — left border reveal on hover. */
+/* Archive links - base padding; hover handled by shared CSS (color + bg tint
+   + no underline). Border-left reveal was sentinel's preset-identity flavor
+   but standardized away for cross-preset consistency. */
 .nova-blog-archive a {
-  color: var(--nova-color-neutral-700);
+  color: var(--nova-color-text);
   padding: 0.25rem 0.5rem;
-  border-left: 2px solid transparent;
 
   transition: color var(--nova-motion-duration) ease,
-              border-left-color var(--nova-motion-duration) ease,
               background-color var(--nova-motion-duration) ease;
-}
-
-[data-theme="dark"] .nova-blog-archive a {
-  color: var(--nova-color-neutral-300);
-}
-
-.nova-blog-archive a:hover,
-.nova-blog-archive a:focus-visible {
-  color: var(--nova-color-primary-700);
-  border-left-color: var(--nova-color-primary-500);
-
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 98%);
-}
-
-[data-theme="dark"] .nova-blog-archive a:hover,
-[data-theme="dark"] .nova-blog-archive a:focus-visible {
-  color: var(--nova-color-primary-300);
-  border-left-color: var(--nova-color-primary-500);
-
-  background-color: color-mix(in srgb, var(--nova-color-primary-500), transparent 97%);
 }

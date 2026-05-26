@@ -1,0 +1,61 @@
+---
+title: "Cron jobs as ledger entries"
+authors:
+  - "yuki"
+tags:
+  - "scheduled-stewardship"
+  - "dockets"
+date: "2025-07-04"
+---
+
+A cron job that does not write to the ledger is a cron job that did not happen. Marshal treats every scheduled action as a filing — the schedule itself is sealed, the run is stamped, the result is archived.
+
+{/* truncate */}
+
+The lessons compound. Cron jobs that never run get noticed in the next quarterly audit. Cron jobs that run silently and fail get noticed in the next quarterly audit. The audit notices everything.
+
+The schedule is filed as a policy, in the same shape as every other policy. The cadence is a sealed parameter; the window is a sealed parameter; the action is a reference to another sealed policy. The cron job is therefore not a script that exists somewhere on a server — it is a record in the policy log, which the clerk reads on every pass, and acts on when the cadence comes around. There is no scheduled action that exists outside the policy log. If a maintainer needs a thing to run weekly, the maintainer files a policy. The policy is sealed. The clerk reads it.
+
+A schedule entry looks like this:
+
+```yaml title="policies/quarterly-stewardship-rollover.yml"
+policy: quarterly-stewardship-rollover
+version: 1
+sealed: true
+sealed-by: cordelia
+sealed-at: 2025-04-01T09:00:00Z
+
+schedule:
+  cadence: quarterly
+  window: first-day-of-quarter 04:00 UTC
+  next-run-after: 2025-07-01T04:00:00Z
+
+action:
+  invoke: stewardship-rollover@v2
+  with:
+    quarter: previous
+
+record:
+  docket: stewardship
+  on-start: stamp RECEIVED
+  on-success: stamp ARCHIVED
+  on-failure: stamp REJECTED
+  retention: 7-years
+```
+
+The `on-start`, `on-success`, and `on-failure` fields are the ledger contract. Every run produces at least two entries — one when it begins, one when it ends. A run that produces only the first entry is a run that did not return, and the registrar reports it at the next morning's summary. A run that produces a `REJECTED` entry is a failure, and the failure is on the record without anyone needing to write it there manually. The clerk does not have to remember to log; the policy logs on the clerk's behalf.
+
+In practice, the stewardship docket grows by a small, predictable amount each quarter. Most days the entries are routine — daily archival passes, weekly retention checks, monthly audit verifications. Once a quarter, a larger entry appears, marking the rollover. A reader scrolling the docket sees the rhythm: many small lines, then one larger one, then many small lines again. The pattern is the same every quarter. The quarter is over when the larger line is sealed.
+
+```bash
+$ marshal stewardship schedule status --policy quarterly-stewardship-rollover
+LAST RUN              STATUS      DURATION   ENTRIES
+2025-04-01 04:00 UTC  ARCHIVED    00:14:22   8,402
+2025-07-01 04:00 UTC  ARCHIVED    00:13:48   8,917
+NEXT RUN              SCHEDULED
+2025-10-01 04:00 UTC  PENDING
+```
+
+The `PENDING` line is also a record, of a kind. It is not in the docket — the docket only contains things that have happened — but it is in the schedule, which the clerk reads on every pass. A reader who wants to know what will happen next reads the schedule. A reader who wants to know what happened reads the docket. The two never disagree, because the schedule writes to the docket, and the docket cannot be written to by anyone else.
+
+A cron job that does not write to the ledger is a cron job that did not happen. By the same reasoning, a cron job that wrote to the ledger and was deleted from the schedule is still a cron job that happened — the docket entries remain, the seal verifies, the auditor reads them in 2031 and knows that on July 1, 2025, the rollover ran. The schedule is a forward-facing record. The docket is the backward-facing record. Both are kept. Both are sealed. Neither is forgotten.

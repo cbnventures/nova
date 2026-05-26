@@ -105,7 +105,7 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
       const options: RulesEslintTypescriptNoInlineTypeAnnotationRuleOptions = defaultOptions[0];
       const normalizedFilename: RulesEslintTypescriptNoInlineTypeAnnotationRuleNormalizedFilename = context.filename.replaceAll('\\', '/');
 
-      // Skip .d.ts files — inline types are allowed in type definition files.
+      // Skip .d.ts files - inline types are allowed in type definition files.
       if (normalizedFilename.endsWith('.d.ts') === true) {
         return {};
       }

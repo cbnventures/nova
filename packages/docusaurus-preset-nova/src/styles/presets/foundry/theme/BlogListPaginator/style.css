@@ -1,12 +1,16 @@
 /**
- * Foundry — Blog List Paginator visual styling.
+ * Foundry - Blog List Paginator visual styling.
  *
- * Outlined style — subtle border with background tint on hover.
+ * Outlined style - subtle border with background tint on hover. Strip
+ * right-aligned so the next/last arrows anchor to the industrial column edge.
  *
  * @since 0.15.0
  */
 
+/* Container - right-aligned strip with subtle hairline above. */
 .nova-blog-list-paginator {
+  justify-content: flex-end;
+
   border-top-color: var(--nova-foundry-border-subtle);
 }
 
@@ -14,7 +18,7 @@
   border-top-color: rgba(255, 255, 255, 0.08);
 }
 
-/* Nav links — outlined button. */
+/* Nav links - outlined button. */
 .nova-blog-list-paginator-nav {
   color: var(--nova-color-primary-600);
   font-weight: 600;
@@ -37,6 +41,7 @@
 .nova-blog-list-paginator-nav:focus-visible {
   color: var(--nova-color-primary-700);
 
+  text-decoration: none;
   background: var(--nova-color-primary-50);
   border-color: var(--nova-color-primary-300);
 }
@@ -45,11 +50,12 @@
 [data-theme="dark"] .nova-blog-list-paginator-nav:focus-visible {
   color: var(--nova-color-primary-300);
 
+  text-decoration: none;
   background: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
   border-color: var(--nova-color-primary-700);
 }
 
-/* Page links — outlined button. */
+/* Page links - outlined button. */
 .nova-blog-list-paginator-page {
   color: var(--nova-color-primary-600);
   font-weight: 600;
@@ -68,25 +74,27 @@
   border-color: rgba(255, 255, 255, 0.08);
 }
 
-.nova-blog-list-paginator-page:hover,
-.nova-blog-list-paginator-page:focus-visible {
+.nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):hover,
+.nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):focus-visible {
   color: var(--nova-color-primary-700);
 
+  text-decoration: none;
   background: var(--nova-color-primary-50);
   border-color: var(--nova-color-primary-300);
 }
 
-[data-theme="dark"] .nova-blog-list-paginator-page:hover,
-[data-theme="dark"] .nova-blog-list-paginator-page:focus-visible {
+[data-theme="dark"] .nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):hover,
+[data-theme="dark"] .nova-blog-list-paginator-page:not(.nova-blog-list-paginator-page-active):focus-visible {
   color: var(--nova-color-primary-300);
 
+  text-decoration: none;
   background: color-mix(in srgb, var(--nova-color-primary-500), transparent 90%);
   border-color: var(--nova-color-primary-700);
 }
 
-/* Active page — filled outlined. */
+/* Active page - filled outlined. */
 .nova-blog-list-paginator-page-active {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text-inverse);
   font-weight: 700;
 
   background: var(--nova-color-primary-600);
@@ -97,17 +105,13 @@
 }
 
 [data-theme="dark"] .nova-blog-list-paginator-page-active {
-  color: var(--nova-color-neutral-50);
+  color: var(--nova-color-primary-100);
 
   background: var(--nova-color-primary-500);
   border-color: var(--nova-color-primary-500);
 }
 
-/* Ellipsis — muted. */
+/* Ellipsis - muted. */
 .nova-blog-list-paginator-ellipsis {
-  color: var(--nova-color-neutral-400);
-}
-
-[data-theme="dark"] .nova-blog-list-paginator-ellipsis {
-  color: var(--nova-color-neutral-600);
+  color: var(--nova-color-text-muted);
 }

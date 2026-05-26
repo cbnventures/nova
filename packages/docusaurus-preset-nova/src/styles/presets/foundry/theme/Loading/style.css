@@ -1,0 +1,27 @@
+/**
+ * Foundry - `Loading` theme overlay.
+ *
+ * Hairline 1.5px ring with cobalt primary on the foundry-border-overlay trail
+ * and a steady linear rotation, leaning into foundry's industrial workshop
+ * aesthetic (no glow, no easing curve).
+ *
+ * @since 0.18.0
+ */
+
+/**
+ * ============================
+ * Foundry - Loading Spinner
+ * ============================
+ */
+
+.nova-loading-spinner {
+  border-width: 1.5px;
+  border-color: var(--nova-foundry-border-overlay);
+  border-top-color: var(--nova-color-primary-500);
+
+  animation: nova-loading-spinner-rotate 0.7s linear infinite;
+}
+
+[data-theme="dark"] .nova-loading-spinner {
+  border-top-color: var(--nova-color-primary-400);
+}

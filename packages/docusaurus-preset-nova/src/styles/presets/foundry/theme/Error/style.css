@@ -1,0 +1,10 @@
+/**
+ * Foundry - `Error` theme overlay.
+ *
+ * Per-surface stub - cross-cutting identity for all error surfaces lives on
+ * the umbrella `.nova-error-surface` overlay at
+ * presets/foundry/theme/error-surface/style.css. Add per-surface deltas here
+ * only when this surface needs to differ from the umbrella.
+ *
+ * @since 0.18.0
+ */

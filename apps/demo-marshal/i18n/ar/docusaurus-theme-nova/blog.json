@@ -1,0 +1,10 @@
+{
+  "layout.heading": {
+    "message": "المدونة",
+    "description": "The blog list page heading"
+  },
+  "layout.description": {
+    "message": "نشرات الإدارة",
+    "description": "The blog list page description below the heading"
+  }
+}

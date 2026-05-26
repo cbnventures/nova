@@ -1,0 +1,40 @@
+---
+title: "访问层级"
+sidebar_position: 2
+description: "Marshal 把每一笔新到来的请求归入一个层级——sponsor、contributor、public——并在受理时钤章并路由。"
+tags:
+  - "filings"
+  - "access-tiers"
+---
+
+# 访问层级
+
+Marshal 把每一笔新到来的请求归入一个层级。层级没有商量余地——它们在受理时被钤上印章，并据此路由。
+
+## 三个层级
+
+- **Sponsor** — 队列短，事务员优先回复
+- **Contributor** — 队列即是工作顺序，按立卷日期排
+- **Public** — 队列耐心，但从不沉默
+
+## 印章如何施加
+
+```bash
+marshal classify --by github-sponsor,github-org-member
+```
+
+Marshal 读取请求人的身份状态，施加层级印章，并路由至对应的文件夹。这次钤章本身也会写入 docket。
+
+## 层级覆盖
+
+```bash
+marshal override request-id 4821 --tier contributor --reason "former maintainer"
+```
+
+每一次覆盖都是 ledger 上的一行。Marshal 不会忘记是谁请求了例外，也不会忘记原因。
+
+## 下一步
+
+- [Policies](/docs/filings/policies/) — 层级如何与其他 policy 组合。
+- [Dockets](/docs/dockets/overview/) — 层级归类在哪里被钤章。
+- [审计轨迹](/docs/dockets/audit-trail/) — 复核层级覆盖。

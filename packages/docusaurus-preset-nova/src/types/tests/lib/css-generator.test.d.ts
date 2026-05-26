@@ -11,7 +11,11 @@ export type TestsLibCssGeneratorIncludesPrimary = boolean;
 
 export type TestsLibCssGeneratorIncludesAccent = boolean;
 
-export type TestsLibCssGeneratorIncludesNeutral = boolean;
+export type TestsLibCssGeneratorIncludesText = boolean;
+
+export type TestsLibCssGeneratorIncludesBorder = boolean;
+
+export type TestsLibCssGeneratorIncludesSurface = boolean;
 
 export type TestsLibCssGeneratorIncludesFont = boolean;
 
@@ -20,6 +24,8 @@ export type TestsLibCssGeneratorIncludesShape = boolean;
 export type TestsLibCssGeneratorIncludesDepth = boolean;
 
 export type TestsLibCssGeneratorIncludesMotion = boolean;
+
+export type TestsLibCssGeneratorIncludesMotionEasing = boolean;
 
 export type TestsLibCssGeneratorColorResult = string;
 
@@ -149,6 +155,10 @@ export type TestsLibCssGeneratorNoneMotionIncludesZero = boolean;
 export type TestsLibCssGeneratorExpressiveMotionResult = string;
 
 export type TestsLibCssGeneratorExpressiveMotionIncludesThreeHundred = boolean;
+
+export type TestsLibCssGeneratorMotionEasingResult = string;
+
+export type TestsLibCssGeneratorMotionEasingIncludesCurve = boolean;
 
 /**
  * Tests - Lib - CSS Generator - CssGenerator Generate Shape Variables.

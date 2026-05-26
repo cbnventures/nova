@@ -1,19 +1,11 @@
 /**
- * Sentinel — Table visual styling.
+ * Sentinel - `DocItem/Content` theme overlay.
+ *
+ * Article-rhythm rules (strong, em, small, hr, lists, blockquote, links,
+ * tables) live in the `MDXContent` overlay scoped to `.nova-mdx-content`
+ * so they apply uniformly across docs, blog posts, and standalone MDX
+ * pages. This file is reserved for rules that are truly specific to the
+ * doc article shell - none currently exist for sentinel.
  *
  * @since 0.15.0
  */
-
-/* ============================
- * 1. Table Container
- * ============================ */
-
-.nova-table-wrapper {
-  width: 100%;
-  overflow-x: auto;
-  margin-bottom: 1.5rem;
-}
-
-.nova-table-wrapper + * {
-  margin-top: 0;
-}

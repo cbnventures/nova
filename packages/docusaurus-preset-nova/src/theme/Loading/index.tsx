@@ -48,7 +48,12 @@ function Loading(props: ThemeLoadingProps) {
     const errorMessage: ThemeLoadingErrorMessage = props['error']['message'];
 
     return (
-      <div className="nova-loading" data-state="error" role="alert">
+      <div
+        className={(props['className'] !== undefined) ? `nova-loading ${props['className']}` : 'nova-loading'}
+        style={props['style']}
+        data-state="error"
+        role="alert"
+      >
         <p className="nova-loading-message">
           {errorPrefix}
           {errorMessage}
@@ -66,7 +71,14 @@ function Loading(props: ThemeLoadingProps) {
 
   if (props['timedOut'] === true) {
     return (
-      <div className="nova-loading" data-state="timeout" role="status" aria-live="polite">
+      <div
+        className={(props['className'] !== undefined) ? `nova-loading ${props['className']}` : 'nova-loading'}
+        style={props['style']}
+        data-state="timeout"
+        role="status"
+        aria-live="polite"
+      >
+        <div className="nova-loading-spinner" aria-hidden="true" />
         <p className="nova-loading-message">{timeoutMessage}</p>
         {(props['retry'] !== undefined) && (
           <div className="nova-loading-actions">
@@ -81,7 +93,14 @@ function Loading(props: ThemeLoadingProps) {
 
   if (props['isLoading'] === true && props['pastDelay'] === true) {
     return (
-      <div className="nova-loading" data-state="loading" role="status" aria-live="polite">
+      <div
+        className={(props['className'] !== undefined) ? `nova-loading ${props['className']}` : 'nova-loading'}
+        style={props['style']}
+        data-state="loading"
+        role="status"
+        aria-live="polite"
+      >
+        <div className="nova-loading-spinner" aria-hidden="true" />
         <p className="nova-loading-message">{loadingMessage}</p>
       </div>
     );

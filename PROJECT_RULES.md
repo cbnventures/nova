@@ -384,7 +384,7 @@ apps/docs/
 
 1. All changes committed, `git status --short` is clean.
 2. Changelog consolidated, version bumped.
-3. Commit with version subject line.
+3. Commit with a thematic subject line listing 3-5 themes in imperative form (e.g., `Add changelog dry-run mode, refine release summary output, and harden version bump arithmetic`). The version pointer lives in the tag in step 4, not the subject.
 4. Tag the commit (e.g., `v1.2.0`).
 5. Push commit and tag.
 6. GitHub Release triggers CI workflows.

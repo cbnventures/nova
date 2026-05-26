@@ -1,0 +1,1294 @@
+{
+  "home.layout.description": {
+    "message": "Sentinel evaluates every user, every device, every connection — continuously. Access is not a door. It is a conversation that never ends.",
+    "description": "Front page layout description (meta description for SEO)"
+  },
+  "home.head.title": {
+    "message": "Sentinel - Trust Is a Vulnerability",
+    "description": "Front page browser tab title"
+  },
+  "home.hero.eyebrow": {
+    "message": "Security Platform",
+    "description": "Front page hero eyebrow above the heading"
+  },
+  "home.hero.heading": {
+    "message": "Trust is a vulnerability.",
+    "description": "Front page hero main heading"
+  },
+  "home.hero.tagline": {
+    "message": "Sentinel evaluates every user, every device, every connection — continuously. Access is not a door. It is a conversation that never ends.",
+    "description": "Front page hero tagline beneath the heading"
+  },
+  "home.hero.ctaLabel": {
+    "message": "Explore the Platform",
+    "description": "Front page hero primary call-to-action button label"
+  },
+  "home.hero.secondaryCtaLabel": {
+    "message": "View on Threadbare",
+    "description": "Front page hero secondary call-to-action button label"
+  },
+  "home.features.watchtower.title": {
+    "message": "Watchtower",
+    "description": "Front page Features card title for Watchtower"
+  },
+  "home.features.watchtower.description": {
+    "message": "Continuous posture assessment. Evaluates device health, location, and behavior every 90 seconds. The moment conditions change, Watchtower knows.",
+    "description": "Front page Features card description for Watchtower"
+  },
+  "home.features.drawbridge.title": {
+    "message": "Drawbridge",
+    "description": "Front page Features card title for Drawbridge"
+  },
+  "home.features.drawbridge.description": {
+    "message": "Adaptive access gateway. Grants, narrows, or revokes access in real time based on context — identity, posture, location, and time. No static rules.",
+    "description": "Front page Features card description for Drawbridge"
+  },
+  "home.features.garrison.title": {
+    "message": "Garrison",
+    "description": "Front page Features card title for Garrison"
+  },
+  "home.features.garrison.description": {
+    "message": "Endpoint compliance engine. Enforces policy on every connected device. Disk encryption, OS version, firewall status — all verified before access is granted.",
+    "description": "Front page Features card description for Garrison"
+  },
+  "home.features.rampart.title": {
+    "message": "Rampart",
+    "description": "Front page Features card title for Rampart"
+  },
+  "home.features.rampart.description": {
+    "message": "Micro-segmentation layer. Isolates workloads so lateral movement is impossible. Even if one segment is compromised, the breach stops there.",
+    "description": "Front page Features card description for Rampart"
+  },
+  "home.features.spyglass.title": {
+    "message": "Spyglass",
+    "description": "Front page Features card title for Spyglass"
+  },
+  "home.features.spyglass.description": {
+    "message": "Audit and forensics. Full session reconstruction with 7-year immutable log retention. Every access decision, every policy evaluation, every connection — recorded.",
+    "description": "Front page Features card description for Spyglass"
+  },
+  "home.features.parapet.title": {
+    "message": "Parapet",
+    "description": "Front page Features card title for Parapet"
+  },
+  "home.features.parapet.description": {
+    "message": "Policy simulation sandbox. Test access rules against real traffic before enforcing them. See who gains access, who loses it, and why — without touching production.",
+    "description": "Front page Features card description for Parapet"
+  },
+  "home.stats.heading": {
+    "message": "By the Numbers",
+    "description": "Front page Stats section heading"
+  },
+  "home.stats.cycle.label": {
+    "message": "Re-evaluation cycle",
+    "description": "Front page Stats label for re-evaluation cycle"
+  },
+  "home.stats.tunnels.label": {
+    "message": "Concurrent tunnels",
+    "description": "Front page Stats label for concurrent tunnels"
+  },
+  "home.stats.retention.label": {
+    "message": "Audit retention",
+    "description": "Front page Stats label for audit retention"
+  },
+  "home.stats.latency.label": {
+    "message": "Policy latency",
+    "description": "Front page Stats label for policy latency"
+  },
+  "home.spotlight.heading": {
+    "message": "One Policy, Complete Evaluation",
+    "description": "Front page Spotlight section heading"
+  },
+  "home.spotlight.description": {
+    "message": "Define what trust means. Sentinel enforces it continuously.",
+    "description": "Front page Spotlight description paragraph below the code snippet"
+  },
+  "home.appMarket.label": {
+    "message": "Monitor your fleet on the go",
+    "description": "Front page AppMarketDownload label"
+  },
+  "home.blogPreview.heading": {
+    "message": "Security Bulletin",
+    "description": "Front page BlogPreview section heading"
+  },
+  "home.blogPreview.description": {
+    "message": "Threat research, posture advisories, and the philosophy of continuous trust.",
+    "description": "Front page BlogPreview section description"
+  },
+  "showcase.layout.description": {
+    "message": "Sentinel block showcase demonstrating every block from docusaurus-preset-nova.",
+    "description": "Showcase page layout description (meta description for SEO)"
+  },
+  "showcase.description": {
+    "message": "Every block from the Sentinel preset, rendered with sample data.",
+    "description": "Showcase page sub-description below the title"
+  },
+  "showcase.item.heroFull.title": {
+    "message": "Hero (full)",
+    "description": "Showcase item title for Hero (full variant)"
+  },
+  "showcase.heroFull.eyebrow": {
+    "message": "Block Showcase",
+    "description": "Showcase Hero (full) eyebrow text"
+  },
+  "showcase.heroFull.heading": {
+    "message": "Every Sentinel block, demonstrated in one place.",
+    "description": "Showcase Hero (full) main heading"
+  },
+  "showcase.heroFull.tagline": {
+    "message": "This page renders each block from @cbnventures/docusaurus-preset-nova/blocks with Sentinel-world data so you can see how they look and behave.",
+    "description": "Showcase Hero (full) tagline"
+  },
+  "showcase.heroFull.ctaLabel": {
+    "message": "Read the Docs",
+    "description": "Showcase Hero (full) primary CTA button label"
+  },
+  "showcase.heroFull.secondaryCtaLabel": {
+    "message": "View on Threadbare",
+    "description": "Showcase Hero (full) secondary CTA button label"
+  },
+  "showcase.item.heroMinimal.title": {
+    "message": "Hero (minimal)",
+    "description": "Showcase item title for Hero (minimal variant)"
+  },
+  "showcase.heroMinimal.heading": {
+    "message": "Trust is earned continuously.",
+    "description": "Showcase Hero (minimal) main heading"
+  },
+  "showcase.heroMinimal.tagline": {
+    "message": "Sentinel evaluates every user, every device, every connection — continuously. Access is not a door. It is a conversation that never ends.",
+    "description": "Showcase Hero (minimal) tagline"
+  },
+  "showcase.heroMinimal.ctaLabel": {
+    "message": "Explore the Platform",
+    "description": "Showcase Hero (minimal) primary CTA button label"
+  },
+  "showcase.item.typewriterDefault.title": {
+    "message": "Typewriter (default)",
+    "description": "Showcase item title for Typewriter (default variant)"
+  },
+  "showcase.typewriterDefault.prefix": {
+    "message": "I love ",
+    "description": "Showcase Typewriter (default) prefix text"
+  },
+  "showcase.item.typewriterNoPrefix.title": {
+    "message": "Typewriter (no prefix)",
+    "description": "Showcase item title for Typewriter (no prefix variant)"
+  },
+  "showcase.typewriterNoPrefix.fast": {
+    "message": "Fast",
+    "description": "Showcase Typewriter (no prefix) word 1"
+  },
+  "showcase.typewriterNoPrefix.flexible": {
+    "message": "Flexible",
+    "description": "Showcase Typewriter (no prefix) word 2"
+  },
+  "showcase.typewriterNoPrefix.free": {
+    "message": "Free",
+    "description": "Showcase Typewriter (no prefix) word 3"
+  },
+  "showcase.item.typewriterSlow.title": {
+    "message": "Typewriter (slow timing)",
+    "description": "Showcase item title for Typewriter (slow timing variant)"
+  },
+  "showcase.typewriterSlow.prefix": {
+    "message": "Built for ",
+    "description": "Showcase Typewriter (slow timing) prefix text"
+  },
+  "showcase.typewriterSlow.developers": {
+    "message": "developers",
+    "description": "Showcase Typewriter (slow timing) word 1"
+  },
+  "showcase.typewriterSlow.designers": {
+    "message": "designers",
+    "description": "Showcase Typewriter (slow timing) word 2"
+  },
+  "showcase.item.typewriterNoLoop.title": {
+    "message": "Typewriter (no loop)",
+    "description": "Showcase item title for Typewriter (no loop variant)"
+  },
+  "showcase.typewriterNoLoop.prefix": {
+    "message": "Welcome to ",
+    "description": "Showcase Typewriter (no loop) prefix text"
+  },
+  "showcase.item.installStripIcon.title": {
+    "message": "InstallStrip (copyTarget: icon)",
+    "description": "Showcase item title for InstallStrip (icon copyTarget variant)"
+  },
+  "showcase.installStripIcon.label": {
+    "message": "Install with Spark",
+    "description": "Showcase InstallStrip (icon) label"
+  },
+  "showcase.item.installStripBlock.title": {
+    "message": "InstallStrip (copyTarget: block)",
+    "description": "Showcase item title for InstallStrip (block copyTarget variant)"
+  },
+  "showcase.installStripBlock.label": {
+    "message": "Or use a Vial container",
+    "description": "Showcase InstallStrip (block) label"
+  },
+  "showcase.item.installStripNoLabel.title": {
+    "message": "InstallStrip (no label)",
+    "description": "Showcase item title for InstallStrip (no label variant)"
+  },
+  "showcase.item.installStripText.title": {
+    "message": "InstallStrip (copyTarget: text)",
+    "description": "Showcase item title for InstallStrip (text copyTarget variant)"
+  },
+  "showcase.installStripText.label": {
+    "message": "Quick install",
+    "description": "Showcase InstallStrip (text) label"
+  },
+  "showcase.item.featuresIcons.title": {
+    "message": "Features (with icons)",
+    "description": "Showcase item title for Features (with icons variant)"
+  },
+  "showcase.featuresIcons.heading": {
+    "message": "Why Teams Choose Sentinel",
+    "description": "Showcase Features (with icons) section heading"
+  },
+  "showcase.featuresIcons.watchtower.title": {
+    "message": "Watchtower",
+    "description": "Showcase Features (with icons) card title for Watchtower"
+  },
+  "showcase.featuresIcons.watchtower.description": {
+    "message": "Continuous posture assessment. Evaluates device health, location, and behavior every 90 seconds.",
+    "description": "Showcase Features (with icons) card description for Watchtower"
+  },
+  "showcase.featuresIcons.drawbridge.title": {
+    "message": "Drawbridge",
+    "description": "Showcase Features (with icons) card title for Drawbridge"
+  },
+  "showcase.featuresIcons.drawbridge.description": {
+    "message": "Adaptive access gateway. Grants, narrows, or revokes access in real time based on trust evaluation.",
+    "description": "Showcase Features (with icons) card description for Drawbridge"
+  },
+  "showcase.featuresIcons.garrison.title": {
+    "message": "Garrison",
+    "description": "Showcase Features (with icons) card title for Garrison"
+  },
+  "showcase.featuresIcons.garrison.description": {
+    "message": "Endpoint compliance engine. Enforces policy on every connected device before access is granted.",
+    "description": "Showcase Features (with icons) card description for Garrison"
+  },
+  "showcase.item.featuresNoIcons.title": {
+    "message": "Features (without icons, without heading)",
+    "description": "Showcase item title for Features (no icons, no heading variant)"
+  },
+  "showcase.featuresNoIcons.rampart.title": {
+    "message": "Rampart",
+    "description": "Showcase Features (no icons) card title for Rampart"
+  },
+  "showcase.featuresNoIcons.rampart.description": {
+    "message": "Micro-segmentation layer. Isolates workloads so lateral movement between zones is impossible.",
+    "description": "Showcase Features (no icons) card description for Rampart"
+  },
+  "showcase.featuresNoIcons.spyglass.title": {
+    "message": "Spyglass",
+    "description": "Showcase Features (no icons) card title for Spyglass"
+  },
+  "showcase.featuresNoIcons.spyglass.description": {
+    "message": "Audit and forensics. Full session reconstruction with 7-year immutable log retention.",
+    "description": "Showcase Features (no icons) card description for Spyglass"
+  },
+  "showcase.featuresNoIcons.parapet.title": {
+    "message": "Parapet",
+    "description": "Showcase Features (no icons) card title for Parapet"
+  },
+  "showcase.featuresNoIcons.parapet.description": {
+    "message": "Policy simulation sandbox. Test access rules against real traffic before enforcing them.",
+    "description": "Showcase Features (no icons) card description for Parapet"
+  },
+  "showcase.item.featuresSix.title": {
+    "message": "Features (six items, mixed icons)",
+    "description": "Showcase item title for Features (six items variant)"
+  },
+  "showcase.featuresSix.heading": {
+    "message": "The Complete Trust Engine",
+    "description": "Showcase Features (six items) section heading"
+  },
+  "showcase.featuresSix.watchtower.title": {
+    "message": "Watchtower",
+    "description": "Showcase Features (six items) card title for Watchtower"
+  },
+  "showcase.featuresSix.watchtower.description": {
+    "message": "Evaluates device posture, user identity, network context, and behavioral signals on a continuous 90-second cycle.",
+    "description": "Showcase Features (six items) card description for Watchtower"
+  },
+  "showcase.featuresSix.drawbridge.title": {
+    "message": "Drawbridge",
+    "description": "Showcase Features (six items) card title for Drawbridge"
+  },
+  "showcase.featuresSix.drawbridge.description": {
+    "message": "Translates Watchtower evaluations into concrete access decisions — grant, narrow, or revoke.",
+    "description": "Showcase Features (six items) card description for Drawbridge"
+  },
+  "showcase.featuresSix.garrison.title": {
+    "message": "Garrison",
+    "description": "Showcase Features (six items) card title for Garrison"
+  },
+  "showcase.featuresSix.garrison.description": {
+    "message": "Manages device enrollment, posture baselines, and compliance profiles for every endpoint.",
+    "description": "Showcase Features (six items) card description for Garrison"
+  },
+  "showcase.featuresSix.rampart.title": {
+    "message": "Rampart",
+    "description": "Showcase Features (six items) card title for Rampart"
+  },
+  "showcase.featuresSix.rampart.description": {
+    "message": "Divides infrastructure into isolated zones. Zone crossings require policy evaluation.",
+    "description": "Showcase Features (six items) card description for Rampart"
+  },
+  "showcase.featuresSix.spyglass.title": {
+    "message": "Spyglass",
+    "description": "Showcase Features (six items) card title for Spyglass"
+  },
+  "showcase.featuresSix.spyglass.description": {
+    "message": "Records every access decision, policy evaluation, and zone crossing in an immutable audit chain.",
+    "description": "Showcase Features (six items) card description for Spyglass"
+  },
+  "showcase.featuresSix.parapet.title": {
+    "message": "Parapet",
+    "description": "Showcase Features (six items) card title for Parapet"
+  },
+  "showcase.featuresSix.parapet.description": {
+    "message": "Replays real traffic against draft policies to show the exact access impact before enforcement.",
+    "description": "Showcase Features (six items) card description for Parapet"
+  },
+  "showcase.item.statsFull.title": {
+    "message": "Stats (with heading and description)",
+    "description": "Showcase item title for Stats (full variant)"
+  },
+  "showcase.statsFull.heading": {
+    "message": "Platform Metrics",
+    "description": "Showcase Stats (full) section heading"
+  },
+  "showcase.statsFull.description": {
+    "message": "Key performance indicators across the Sentinel trust engine.",
+    "description": "Showcase Stats (full) section description"
+  },
+  "showcase.statsFull.cycle.label": {
+    "message": "Re-evaluation cycle",
+    "description": "Showcase Stats (full) label for re-evaluation cycle"
+  },
+  "showcase.statsFull.latency.label": {
+    "message": "Policy latency",
+    "description": "Showcase Stats (full) label for policy latency"
+  },
+  "showcase.statsFull.uptime.label": {
+    "message": "Evaluation uptime",
+    "description": "Showcase Stats (full) label for evaluation uptime"
+  },
+  "showcase.statsFull.retention.label": {
+    "message": "Audit retention",
+    "description": "Showcase Stats (full) label for audit retention"
+  },
+  "showcase.item.statsNoHeading.title": {
+    "message": "Stats (without heading)",
+    "description": "Showcase item title for Stats (no heading variant)"
+  },
+  "showcase.statsNoHeading.tunnels.label": {
+    "message": "Concurrent tunnels",
+    "description": "Showcase Stats (no heading) label for concurrent tunnels"
+  },
+  "showcase.statsNoHeading.components.label": {
+    "message": "Components",
+    "description": "Showcase Stats (no heading) label for components"
+  },
+  "showcase.statsNoHeading.zoneTypes.label": {
+    "message": "Zone types",
+    "description": "Showcase Stats (no heading) label for zone types"
+  },
+  "showcase.statsNoHeading.implicitTrust.label": {
+    "message": "Implicit trust",
+    "description": "Showcase Stats (no heading) label for implicit trust"
+  },
+  "showcase.item.spotlightCode.title": {
+    "message": "Spotlight (with code)",
+    "description": "Showcase item title for Spotlight (with code variant)"
+  },
+  "showcase.spotlightCode.heading": {
+    "message": "Quick Start",
+    "description": "Showcase Spotlight (with code) section heading"
+  },
+  "showcase.spotlightCode.description": {
+    "message": "Three commands to go from zero to continuous trust evaluation.",
+    "description": "Showcase Spotlight (with code) description paragraph"
+  },
+  "showcase.item.spotlightText.title": {
+    "message": "Spotlight (with text)",
+    "description": "Showcase item title for Spotlight (with text variant)"
+  },
+  "showcase.spotlightText.heading": {
+    "message": "How It Works",
+    "description": "Showcase Spotlight (with text) section heading"
+  },
+  "showcase.spotlightText.description": {
+    "message": "Sentinel evaluates trust continuously. Watchtower computes a posture score every 90 seconds. Drawbridge enforces the result in real time. Spyglass records every decision immutably. The output is always evidence — not assumption.",
+    "description": "Showcase Spotlight (with text) description paragraph"
+  },
+  "showcase.item.blogPreviewWithDesc.title": {
+    "message": "BlogPreview (with description)",
+    "description": "Showcase item title for BlogPreview (with description variant)"
+  },
+  "showcase.blogPreviewWithDesc.heading": {
+    "message": "Security Bulletin",
+    "description": "Showcase BlogPreview (with description) section heading"
+  },
+  "showcase.blogPreviewWithDesc.description": {
+    "message": "Threat research, posture advisories, and the philosophy of continuous trust.",
+    "description": "Showcase BlogPreview (with description) section description"
+  },
+  "showcase.blogPreviewWithDesc.post1.title": {
+    "message": "The Day We Stopped Trusting the Network",
+    "description": "Showcase BlogPreview sample post 1 title"
+  },
+  "showcase.blogPreviewWithDesc.post1.description": {
+    "message": "The perimeter dissolved and the industry pretended it had not. We built Sentinel because every VPN is a trust assumption.",
+    "description": "Showcase BlogPreview sample post 1 description"
+  },
+  "showcase.blogPreviewWithDesc.post2.title": {
+    "message": "Simulating a Breach We Never Had",
+    "description": "Showcase BlogPreview sample post 2 title"
+  },
+  "showcase.blogPreviewWithDesc.post2.description": {
+    "message": "How Parapet caught a lateral movement path in staging before it reached production.",
+    "description": "Showcase BlogPreview sample post 2 description"
+  },
+  "showcase.blogPreviewWithDesc.post3.title": {
+    "message": "Why Compliance Is Not Security (But You Still Need Both)",
+    "description": "Showcase BlogPreview sample post 3 title"
+  },
+  "showcase.blogPreviewWithDesc.post3.description": {
+    "message": "Passing an audit and being secure are not the same thing. Spyglass bridges the gap.",
+    "description": "Showcase BlogPreview sample post 3 description"
+  },
+  "showcase.item.blogPreviewNoDesc.title": {
+    "message": "BlogPreview (without description)",
+    "description": "Showcase item title for BlogPreview (no description variant)"
+  },
+  "showcase.blogPreviewNoDesc.heading": {
+    "message": "Recent Updates",
+    "description": "Showcase BlogPreview (no description) section heading"
+  },
+  "showcase.blogPreviewNoDesc.post1.title": {
+    "message": "Sentinel 3.4: Parapet Traffic Replay and Rampart Zone Quarantine",
+    "description": "Showcase BlogPreview (no description) sample post title"
+  },
+  "showcase.blogPreviewNoDesc.post1.description": {
+    "message": "Parapet now supports full traffic replay against draft policies, and Rampart can automatically quarantine devices that fail posture checks.",
+    "description": "Showcase BlogPreview (no description) sample post description"
+  },
+  "showcase.item.terminology.title": {
+    "message": "Terminology (inline usage)",
+    "description": "Showcase item title for Terminology inline usage variant"
+  },
+  "showcase.terminology.paragraph1.intro": {
+    "message": "Sentinel uses a ",
+    "description": "Showcase Terminology paragraph 1 intro fragment"
+  },
+  "showcase.terminology.trustPolicy.title": {
+    "message": "access control declaration",
+    "description": "Showcase Terminology hover title for trust policy"
+  },
+  "showcase.terminology.trustPolicy.label": {
+    "message": "trust policy",
+    "description": "Showcase Terminology displayed text for trust policy"
+  },
+  "showcase.terminology.paragraph1.afterTrustPolicy": {
+    "message": " to drive all access decisions. Every enrolled device is monitored by the ",
+    "description": "Showcase Terminology paragraph 1 fragment after trust policy"
+  },
+  "showcase.terminology.garrison.title": {
+    "message": "endpoint compliance agent",
+    "description": "Showcase Terminology hover title for Garrison"
+  },
+  "showcase.terminology.paragraph1.afterGarrison": {
+    "message": " agent, which reports posture data to ",
+    "description": "Showcase Terminology paragraph 1 fragment after Garrison"
+  },
+  "showcase.terminology.watchtower.title": {
+    "message": "continuous trust evaluation engine",
+    "description": "Showcase Terminology hover title for Watchtower"
+  },
+  "showcase.terminology.paragraph1.afterWatchtower": {
+    "message": " for scoring.",
+    "description": "Showcase Terminology paragraph 1 fragment after Watchtower"
+  },
+  "showcase.terminology.paragraph2.intro": {
+    "message": "With the ",
+    "description": "Showcase Terminology paragraph 2 intro fragment"
+  },
+  "showcase.terminology.rampart.title": {
+    "message": "micro-segmentation layer",
+    "description": "Showcase Terminology hover title for Rampart"
+  },
+  "showcase.terminology.paragraph2.afterRampart": {
+    "message": " zone system, workloads are isolated so that even a compromised segment cannot affect ",
+    "description": "Showcase Terminology paragraph 2 fragment after Rampart"
+  },
+  "showcase.terminology.filament.title": {
+    "message": "encrypted tunnel protocol",
+    "description": "Showcase Terminology hover title for Filament"
+  },
+  "showcase.terminology.paragraph2.afterFilament": {
+    "message": " tunnels in adjacent zones. Every decision is recorded in ",
+    "description": "Showcase Terminology paragraph 2 fragment after Filament"
+  },
+  "showcase.terminology.spyglass.title": {
+    "message": "audit and forensics engine",
+    "description": "Showcase Terminology hover title for Spyglass"
+  },
+  "showcase.terminology.paragraph2.afterSpyglass": {
+    "message": " for immutable audit retention.",
+    "description": "Showcase Terminology paragraph 2 fragment after Spyglass"
+  },
+  "showcase.item.frameWithCaption.title": {
+    "message": "Frame (with caption)",
+    "description": "Showcase item title for Frame (with caption variant)"
+  },
+  "showcase.frameWithCaption.caption": {
+    "message": "Brand mark posted on a Frame — solid border, watch-tower steady.",
+    "description": "Showcase Frame (with caption) caption text"
+  },
+  "showcase.frame.imageAlt": {
+    "message": "Sentinel brand thumbnail.",
+    "description": "Showcase Frame image alt text"
+  },
+  "showcase.item.frameNoCaption.title": {
+    "message": "Frame (no caption)",
+    "description": "Showcase item title for Frame (no caption variant)"
+  },
+  "showcase.item.appMarketBoth.title": {
+    "message": "AppMarketDownload (both stores)",
+    "description": "Showcase item title for AppMarketDownload (both stores variant)"
+  },
+  "showcase.appMarketBoth.label": {
+    "message": "Download the companion app",
+    "description": "Showcase AppMarketDownload (both) label"
+  },
+  "showcase.item.appMarketAppStore.title": {
+    "message": "AppMarketDownload (App Store only)",
+    "description": "Showcase item title for AppMarketDownload (App Store only variant)"
+  },
+  "showcase.appMarketAppStore.label": {
+    "message": "Available on iOS",
+    "description": "Showcase AppMarketDownload (App Store only) label"
+  },
+  "showcase.item.appMarketGooglePlay.title": {
+    "message": "AppMarketDownload (Google Play only)",
+    "description": "Showcase item title for AppMarketDownload (Google Play only variant)"
+  },
+  "showcase.appMarketGooglePlay.label": {
+    "message": "Available on Android",
+    "description": "Showcase AppMarketDownload (Google Play only) label"
+  },
+  "showcase.item.appMarketNoLabel.title": {
+    "message": "AppMarketDownload (no label)",
+    "description": "Showcase item title for AppMarketDownload (no label variant)"
+  },
+  "theme.AppMarketDownload.appStoreAriaLabel": {
+    "message": "Download on the App Store",
+    "description": "The ARIA label for the App Store download button"
+  },
+  "theme.AppMarketDownload.appStoreSubtitle": {
+    "message": "Download on the",
+    "description": "The subtitle text above the App Store name"
+  },
+  "theme.AppMarketDownload.appStoreTitle": {
+    "message": "App Store",
+    "description": "The App Store name shown on the download button"
+  },
+  "theme.AppMarketDownload.googlePlayAriaLabel": {
+    "message": "Get it on Google Play",
+    "description": "The ARIA label for the Google Play download button"
+  },
+  "theme.AppMarketDownload.googlePlaySubtitle": {
+    "message": "GET IT ON",
+    "description": "The subtitle text above the Google Play name"
+  },
+  "theme.AppMarketDownload.googlePlayTitle": {
+    "message": "Google Play",
+    "description": "The Google Play name shown on the download button"
+  },
+  "theme.InstallStrip.copied": {
+    "message": "COPIED",
+    "description": "The text shown after copying the install command"
+  },
+  "theme.InstallStrip.copy": {
+    "message": "COPY",
+    "description": "The text shown on the copy button of the install strip"
+  },
+  "theme.InstallStrip.copyAriaLabel": {
+    "message": "Copy to clipboard",
+    "description": "The ARIA label for the install strip copy button"
+  },
+  "theme.BlogPreview.readMore": {
+    "message": "Read more",
+    "description": "The label on the blog preview read more link"
+  },
+  "theme.BlogPreview.noPosts": {
+    "message": "No posts yet",
+    "description": "The placeholder message shown when no blog posts are available"
+  },
+  "theme.search.productionOnly": {
+    "message": "Search is available in production builds only",
+    "description": "The error message when search is used in a non-production build"
+  },
+  "theme.search.unknownInitError": {
+    "message": "Unknown error during init",
+    "description": "The error message when an unknown error occurs during search initialization"
+  },
+  "theme.search.indexNotInitialized": {
+    "message": "Search index not initialized",
+    "description": "The error message when search is attempted before the index is ready"
+  },
+  "theme.search.manifestFetchError": {
+    "message": "Failed to fetch search manifest",
+    "description": "The error message when the search manifest cannot be fetched"
+  },
+  "theme.admonition.note": {
+    "message": "note",
+    "description": "The default heading word for a Note admonition"
+  },
+  "theme.admonition.tip": {
+    "message": "tip",
+    "description": "The default heading word for a Tip admonition"
+  },
+  "theme.admonition.info": {
+    "message": "info",
+    "description": "The default heading word for an Info admonition"
+  },
+  "theme.admonition.warning": {
+    "message": "warning",
+    "description": "The default heading word for a Warning admonition"
+  },
+  "theme.admonition.caution": {
+    "message": "caution",
+    "description": "The default heading word for a Caution admonition"
+  },
+  "theme.admonition.danger": {
+    "message": "danger",
+    "description": "The default heading word for a Danger admonition"
+  },
+  "theme.BackToTopButton.buttonAriaLabel": {
+    "message": "Scroll back to top",
+    "description": "The ARIA label for the back to top button"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "Close announcement",
+    "description": "The ARIA label for the button that closes the announcement bar"
+  },
+  "theme.blog.archive.title": {
+    "message": "Archive",
+    "description": "The heading of the blog archive page"
+  },
+  "theme.blog.archive.description": {
+    "message": "Archive",
+    "description": "The meta description of the blog archive page"
+  },
+  "theme.blog.paginator.navAriaLabel": {
+    "message": "Blog list page navigation",
+    "description": "The ARIA label for the blog list paginator navigation"
+  },
+  "theme.blog.paginator.first": {
+    "message": "First",
+    "description": "The label for the link to the first blog list page"
+  },
+  "theme.blog.paginator.previous": {
+    "message": "Prev",
+    "description": "The label for the link to the previous blog list page"
+  },
+  "theme.blog.paginator.next": {
+    "message": "Next",
+    "description": "The label for the link to the next blog list page"
+  },
+  "theme.blog.paginator.last": {
+    "message": "Last",
+    "description": "The label for the link to the last blog list page"
+  },
+  "theme.blog.post.readingTime.plurals": {
+    "message": "{readingTime} min read",
+    "description": "The label showing estimated reading time for a blog post"
+  },
+  "theme.blog.post.readMore": {
+    "message": "Read more",
+    "description": "The label for the read more link on truncated blog posts"
+  },
+  "theme.blog.post.readMoreLabel": {
+    "message": "Read more about {title}",
+    "description": "The ARIA label for the read more link on truncated blog posts, naming the destination post"
+  },
+  "theme.blog.post.paginator.goBackLabel": {
+    "message": "Go back",
+    "description": "The label for the previous post link in the blog post paginator"
+  },
+  "theme.blog.post.paginator.goBackAriaLabel": {
+    "message": "Go back: {title}",
+    "description": "The ARIA label for the previous post link in the blog post paginator"
+  },
+  "theme.blog.post.paginator.continueReadingLabel": {
+    "message": "Continue reading",
+    "description": "The label for the next post link in the blog post paginator"
+  },
+  "theme.blog.post.paginator.continueReadingAriaLabel": {
+    "message": "Continue reading: {title}",
+    "description": "The ARIA label for the next post link in the blog post paginator"
+  },
+  "theme.blog.post.paginator.navAriaLabel": {
+    "message": "Blog post page navigation",
+    "description": "The ARIA label for the blog post paginator navigation"
+  },
+  "theme.blog.post.paginator.heading": {
+    "message": "Keep reading",
+    "description": "The heading shown above the blog post paginator links"
+  },
+  "theme.blog.sidebar.ariaLabel": {
+    "message": "Blog sidebar",
+    "description": "The ARIA label for the blog sidebar navigation"
+  },
+  "theme.blog.sidebar.authorsLabel": {
+    "message": "Authors",
+    "description": "The label for the authors section in the blog sidebar"
+  },
+  "theme.blog.sidebar.subscribeLabel": {
+    "message": "Subscribe",
+    "description": "The label for the subscribe section in the blog sidebar"
+  },
+  "theme.blog.sidebar.mobileTriggerLabel": {
+    "message": "Sidebar",
+    "description": "The label shown on the mobile blog sidebar trigger button"
+  },
+  "theme.blog.sidebar.mobileOpenAriaLabel": {
+    "message": "Open blog sidebar",
+    "description": "The ARIA label for the button that opens the mobile blog sidebar overlay"
+  },
+  "theme.blog.sidebar.mobileHeaderTitle": {
+    "message": "Sidebar",
+    "description": "The title shown in the mobile blog sidebar overlay header"
+  },
+  "theme.blog.sidebar.mobilePanelAriaLabel": {
+    "message": "Blog sidebar",
+    "description": "The ARIA label for the mobile blog sidebar overlay panel"
+  },
+  "theme.blog.sidebar.mobileCloseAriaLabel": {
+    "message": "Close blog sidebar",
+    "description": "The ARIA label for the button that closes the mobile blog sidebar overlay"
+  },
+  "theme.blog.tagsPostsPage.viewAllTags": {
+    "message": "View All Tags",
+    "description": "The label for the link to the full blog tags list"
+  },
+  "theme.blog.tagsListPage.heading": {
+    "message": "Tags",
+    "description": "The heading of the blog tags list page"
+  },
+  "theme.CodeBlock.wordWrapToggle": {
+    "message": "Toggle word wrap",
+    "description": "The ARIA label for the word wrap toggle button in code blocks"
+  },
+  "theme.CodeBlock.wrapLabel": {
+    "message": "Wrap",
+    "description": "The button text for the word wrap toggle in code blocks"
+  },
+  "theme.CodeBlock.copyButtonAriaLabel": {
+    "message": "Copy code to clipboard",
+    "description": "The ARIA label for the copy button in code blocks"
+  },
+  "theme.CodeBlock.copied": {
+    "message": "Copied!",
+    "description": "The button text shown after code has been copied to clipboard"
+  },
+  "theme.CodeBlock.copy": {
+    "message": "Copy",
+    "description": "The button text for the copy button in code blocks"
+  },
+  "theme.CodeBlock.showMore": {
+    "message": "Show more",
+    "description": "The button text to expand a collapsed code block"
+  },
+  "theme.CodeBlock.showLess": {
+    "message": "Show less",
+    "description": "The button text to collapse an expanded code block"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "Breadcrumbs",
+    "description": "The ARIA label for the breadcrumbs navigation"
+  },
+  "theme.docs.breadcrumbs.home": {
+    "message": "Home",
+    "description": "The ARIA label for the home link in breadcrumbs"
+  },
+  "theme.docs.DocCard.categoryDescription.plurals": {
+    "message": "1 item|{count} items",
+    "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.docs.paginator.navAriaLabel": {
+    "message": "Docs pages",
+    "description": "The ARIA label for the doc paginator navigation"
+  },
+  "theme.docs.paginator.heading": {
+    "message": "Keep reading",
+    "description": "The heading shown above the doc paginator links"
+  },
+  "theme.docs.paginator.goBackLabel": {
+    "message": "Go back",
+    "description": "The label for the previous page link in the doc paginator"
+  },
+  "theme.docs.paginator.continueReadingLabel": {
+    "message": "Continue reading",
+    "description": "The label for the next page link in the doc paginator"
+  },
+  "theme.docs.paginator.goBackAriaLabel": {
+    "message": "Go back: {title}",
+    "description": "The ARIA label for the previous page link in the doc paginator"
+  },
+  "theme.docs.paginator.continueReadingAriaLabel": {
+    "message": "Continue reading: {title}",
+    "description": "The ARIA label for the next page link in the doc paginator"
+  },
+  "theme.docs.sidebar.navAriaLabel": {
+    "message": "Docs sidebar",
+    "description": "The ARIA label for the docs sidebar navigation"
+  },
+  "theme.docs.sidebarMobile.openAriaLabel": {
+    "message": "Open docs navigation",
+    "description": "The ARIA label for the button that opens the mobile docs sidebar"
+  },
+  "theme.docs.sidebarMobile.panelAriaLabel": {
+    "message": "Docs navigation",
+    "description": "The ARIA label for the mobile docs sidebar panel"
+  },
+  "theme.docs.sidebarMobile.headerTitle": {
+    "message": "Navigation",
+    "description": "The title shown in the mobile docs sidebar header"
+  },
+  "theme.docs.sidebarMobile.closeAriaLabel": {
+    "message": "Close navigation",
+    "description": "The ARIA label for the button that closes the mobile docs sidebar"
+  },
+  "theme.docs.versionBanner.message": {
+    "message": "This is documentation for version {versionLabel}.",
+    "description": "The banner message shown when viewing non-latest docs version"
+  },
+  "theme.docs.tagDocListPageTitle.nDocsTagged": {
+    "message": "One doc tagged|{count} docs tagged",
+    "description": "Pluralized label for \"{count} docs tagged\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.docs.tagDocListPageTitle": {
+    "message": "{nDocsTagged} with \"{tagName}\"",
+    "description": "The title of the page for a docs tag"
+  },
+  "theme.docs.tagDocListPage.viewAllTags": {
+    "message": "View all tags",
+    "description": "The label for the link to the full doc tags list"
+  },
+  "theme.docs.tagDocListPage.readDoc": {
+    "message": "Read article",
+    "description": "The label on a tagged-doc card linking to the full doc"
+  },
+  "theme.docs.tagDocListPage.docPosition": {
+    "message": "{position} of {total}",
+    "description": "A position-in-section indicator for a tagged-doc card (e.g. \"3 of 7\" inside the parent category)"
+  },
+  "theme.common.editThisPage": {
+    "message": "Edit this page",
+    "description": "The link label to edit the current page"
+  },
+  "theme.Error.tryAgain": {
+    "message": "Try again",
+    "description": "The label for the button that retries after an error"
+  },
+  "theme.footer.creditPhrases.forged": {
+    "message": "Forged",
+    "description": "Random verb 1 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.crafted": {
+    "message": "Crafted",
+    "description": "Random verb 2 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.assembled": {
+    "message": "Assembled",
+    "description": "Random verb 3 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.conjured": {
+    "message": "Conjured",
+    "description": "Random verb 4 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.woven": {
+    "message": "Woven",
+    "description": "Random verb 5 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.sculpted": {
+    "message": "Sculpted",
+    "description": "Random verb 6 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.summoned": {
+    "message": "Summoned",
+    "description": "Random verb 7 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.brewed": {
+    "message": "Brewed",
+    "description": "Random verb 8 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.sparked": {
+    "message": "Sparked",
+    "description": "Random verb 9 of 10 in the footer credit line"
+  },
+  "theme.footer.creditPhrases.kindled": {
+    "message": "Kindled",
+    "description": "Random verb 10 of 10 in the footer credit line"
+  },
+  "theme.footer.creditSuffix": {
+    "message": " with ",
+    "description": "The suffix between the random verb and the credit links in the footer"
+  },
+  "theme.footer.creditNovaLabel": {
+    "message": "Nova",
+    "description": "The label for the Nova credit link in the footer"
+  },
+  "theme.footer.creditDocusaurusLabel": {
+    "message": "Docusaurus",
+    "description": "The label for the Docusaurus credit link in the footer"
+  },
+  "theme.common.headingLinkTitle": {
+    "message": "Direct link to heading",
+    "description": "Title and aria-label for the hash-link anchor revealed on heading hover or focus"
+  },
+  "theme.lastUpdated.atDate": {
+    "message": " on {date}",
+    "description": "The words used to describe when a document was last updated (date portion)"
+  },
+  "theme.lastUpdated.lastUpdatedAtBy": {
+    "message": "Last updated{atDate}{byUser}",
+    "description": "The sentence used to describe when a document was last updated and by whom"
+  },
+  "theme.lastUpdated.byUser": {
+    "message": " by {user}",
+    "description": "The words used to describe when a document was last updated (author portion)"
+  },
+  "theme.ErrorPageContent.titlePool.0": {
+    "message": "Something went sideways.",
+    "description": "Random per-page crash title 1 of 5"
+  },
+  "theme.ErrorPageContent.titlePool.1": {
+    "message": "This page did not load cleanly.",
+    "description": "Random per-page crash title 2 of 5"
+  },
+  "theme.ErrorPageContent.titlePool.2": {
+    "message": "We hit a snag rendering this page.",
+    "description": "Random per-page crash title 3 of 5"
+  },
+  "theme.ErrorPageContent.titlePool.3": {
+    "message": "The page errored on its way in.",
+    "description": "Random per-page crash title 4 of 5"
+  },
+  "theme.ErrorPageContent.titlePool.4": {
+    "message": "Something tripped up the page.",
+    "description": "Random per-page crash title 5 of 5"
+  },
+  "theme.ErrorPageContent.tryAgain": {
+    "message": "Try again",
+    "description": "The label of the button to try again rendering when the React error boundary captures an error"
+  },
+  "theme.Loading.errorPrefix": {
+    "message": "Error: ",
+    "description": "The prefix shown before an error message during loading"
+  },
+  "theme.Loading.retry": {
+    "message": "Retry",
+    "description": "The label for the retry button shown during a loading error or timeout"
+  },
+  "theme.Loading.timeout": {
+    "message": "Taking a long time...",
+    "description": "The message shown when loading takes too long"
+  },
+  "theme.Loading.loading": {
+    "message": "Loading...",
+    "description": "The message shown while content is being loaded"
+  },
+  "theme.IconExternalLink.ariaLabel": {
+    "message": "(opens in new tab)",
+    "description": "The screen-reader label appended to external links that open in a new tab"
+  },
+  "theme.colorMode.system": {
+    "message": "System",
+    "description": "The screen reader label for system color mode"
+  },
+  "theme.colorMode.light": {
+    "message": "Light",
+    "description": "The screen reader label for light color mode"
+  },
+  "theme.colorMode.dark": {
+    "message": "Dark",
+    "description": "The screen reader label for dark color mode"
+  },
+  "theme.navbar.menuButtonLabel": {
+    "message": "Menu",
+    "description": "The screen reader label for the mobile menu hamburger button"
+  },
+  "theme.NotFound.title": {
+    "message": "Page Not Found",
+    "description": "The title of the 404 page"
+  },
+  "theme.showcase.collapseAll": {
+    "message": "Collapse All",
+    "description": "The button label that collapses every Showcase Item disclosure"
+  },
+  "theme.showcase.expandAll": {
+    "message": "Expand All",
+    "description": "The button label that expands every Showcase Item disclosure"
+  },
+  "theme.showcase.title": {
+    "message": "Block Showcase",
+    "description": "The h1 heading of the Showcase page that introduces the on-page block disclosures"
+  },
+  "theme.SearchPage.title": {
+    "message": "Search",
+    "description": "The title, heading, placeholder, and ARIA label for the search page"
+  },
+  "theme.SearchPage.loading": {
+    "message": "Loading search index...",
+    "description": "The message displayed while the search index is being loaded"
+  },
+  "theme.SearchPage.noResults": {
+    "message": "No results found.",
+    "description": "The message displayed when a search query returns no results"
+  },
+  "theme.SearchPage.resultsFound": {
+    "message": "{count} results found",
+    "description": "The screen reader announcement when search results are found"
+  },
+  "theme.TOC.ariaLabel": {
+    "message": "Table of contents",
+    "description": "The ARIA label for the table of contents navigation"
+  },
+  "theme.TOCCollapsible.openAriaLabel": {
+    "message": "Open table of contents",
+    "description": "The ARIA label for the button that opens the table of contents overlay"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "Table of Contents",
+    "description": "The label for the table of contents trigger button and header title"
+  },
+  "theme.TOCCollapsible.dialogAriaLabel": {
+    "message": "Table of contents",
+    "description": "The ARIA label for the table of contents dialog panel"
+  },
+  "theme.TOCCollapsible.closeAriaLabel": {
+    "message": "Close table of contents",
+    "description": "The ARIA label for the button that closes the table of contents overlay"
+  },
+  "theme.SearchBar.placeholder": {
+    "message": "Search",
+    "description": "The placeholder text for the search input field"
+  },
+  "theme.SearchBar.ariaLabel": {
+    "message": "Search",
+    "description": "The ARIA label for the search input field"
+  },
+  "theme.SearchBar.clearSearchAriaLabel": {
+    "message": "Clear search",
+    "description": "The ARIA label for the button that clears the search input"
+  },
+  "theme.SearchBar.loading": {
+    "message": "Loading search index…",
+    "description": "The message displayed while the search index is being loaded"
+  },
+  "theme.SearchBar.noResults": {
+    "message": "No results found.",
+    "description": "The message displayed when a search query returns no results"
+  },
+  "theme.SearchBar.resultsFound": {
+    "message": "{count} results found",
+    "description": "The screen reader announcement when search results are found"
+  },
+  "theme.contentFooter.editLabel": {
+    "message": "Contribute",
+    "description": "The label for the contribute section in a content footer"
+  },
+  "theme.contentFooter.share.linkCopied": {
+    "message": "Link copied",
+    "description": "The tooltip text shown after the share link has been copied"
+  },
+  "theme.contentFooter.share.copyLink": {
+    "message": "Copy link",
+    "description": "The tooltip and ARIA label for the copy link share button"
+  },
+  "theme.contentFooter.share.copiedText": {
+    "message": "Copied!",
+    "description": "The button text shown after the share link has been copied"
+  },
+  "theme.contentFooter.share.shareOnPlatform": {
+    "message": "Share on {platformLabel}",
+    "description": "The tooltip and ARIA label for a social share button"
+  },
+  "theme.contentFooter.shareLabel": {
+    "message": "Share this",
+    "description": "The label for the share section in a content footer"
+  },
+  "theme.contentFooter.tagsLabel": {
+    "message": "Tags",
+    "description": "The label for the tags section in a content footer"
+  },
+  "theme.contentVisibility.unlistedBanner.title": {
+    "message": "Unlisted page",
+    "description": "The unlisted content banner title"
+  },
+  "theme.contentVisibility.unlistedBanner.message": {
+    "message": "This page is unlisted. Search engines will not index it, and only users having a direct link can access it.",
+    "description": "The unlisted content banner message"
+  },
+  "theme.contentVisibility.draftBanner.title": {
+    "message": "Draft page",
+    "description": "The draft content banner title"
+  },
+  "theme.contentVisibility.draftBanner.message": {
+    "message": "This page is a draft. It will only be visible in dev and be excluded from the production build.",
+    "description": "The draft content banner message"
+  },
+  "theme.DocSidebarItem.collapseCategoryAriaLabel": {
+    "message": "Collapse sidebar category '{label}'",
+    "description": "The ARIA label of the toggle on a collapsible doc sidebar category when it is currently expanded"
+  },
+  "theme.DocSidebarItem.expandCategoryAriaLabel": {
+    "message": "Expand sidebar category '{label}'",
+    "description": "The ARIA label of the toggle on a collapsible doc sidebar category when it is currently collapsed"
+  },
+  "theme.footer.socialLinksAriaLabel": {
+    "message": "Social media links",
+    "description": "The ARIA label for the footer social media links section"
+  },
+  "theme.footer.footerLinksAriaLabel": {
+    "message": "Footer links",
+    "description": "The ARIA label for the footer navigation links section"
+  },
+  "theme.navbar.navAriaLabel": {
+    "message": "Main",
+    "description": "The ARIA label for the main site navigation landmark"
+  },
+  "theme.navbar.openMenuAriaLabel": {
+    "message": "Open menu",
+    "description": "The ARIA label for the button that opens the mobile navigation menu"
+  },
+  "theme.colorMode.toggleAriaLabel": {
+    "message": "Toggle color mode",
+    "description": "The ARIA label for the button that cycles through color modes"
+  },
+  "theme.navbar.mobileMenuAriaLabel": {
+    "message": "Navigation menu",
+    "description": "The ARIA label for the mobile navigation menu dialog"
+  },
+  "theme.navbar.closeMenuAriaLabel": {
+    "message": "Close menu",
+    "description": "The ARIA label for the button that closes the mobile navigation menu"
+  },
+  "theme.navbar.moreLabel": {
+    "message": "More",
+    "description": "The screen-reader label for the navbar overflow More dropdown trigger"
+  },
+  "theme.NotFound.bundles.0.title": {
+    "message": "This page took a wrong turn.",
+    "description": "Random 404 bundle 1 of 5 — title (wrong-turn voice)"
+  },
+  "theme.NotFound.bundles.0.description": {
+    "message": "Let us get you back on the right path.",
+    "description": "Random 404 bundle 1 of 5 — description (wrong-turn voice)"
+  },
+  "theme.NotFound.bundles.0.backHomeLabel": {
+    "message": "Back on track",
+    "description": "Random 404 bundle 1 of 5 — CTA label (wrong-turn voice)"
+  },
+  "theme.NotFound.bundles.1.title": {
+    "message": "This URL is not on our map.",
+    "description": "Random 404 bundle 2 of 5 — title (cartographic voice)"
+  },
+  "theme.NotFound.bundles.1.description": {
+    "message": "It might have moved, or perhaps it never existed at all.",
+    "description": "Random 404 bundle 2 of 5 — description (cartographic voice)"
+  },
+  "theme.NotFound.bundles.1.backHomeLabel": {
+    "message": "Back to charted ground",
+    "description": "Random 404 bundle 2 of 5 — CTA label (cartographic voice)"
+  },
+  "theme.NotFound.bundles.2.title": {
+    "message": "Looks like we lost the trail.",
+    "description": "Random 404 bundle 3 of 5 — title (lost-traveler voice)"
+  },
+  "theme.NotFound.bundles.2.description": {
+    "message": "Try heading back to camp or use the search to find your way.",
+    "description": "Random 404 bundle 3 of 5 — description (lost-traveler voice)"
+  },
+  "theme.NotFound.bundles.2.backHomeLabel": {
+    "message": "Back to camp",
+    "description": "Random 404 bundle 3 of 5 — CTA label (lost-traveler voice)"
+  },
+  "theme.NotFound.bundles.3.title": {
+    "message": "Nothing lives at this address.",
+    "description": "Random 404 bundle 4 of 5 — title (vacant-address voice)"
+  },
+  "theme.NotFound.bundles.3.description": {
+    "message": "If something brought you here, the link is probably out of date.",
+    "description": "Random 404 bundle 4 of 5 — description (vacant-address voice)"
+  },
+  "theme.NotFound.bundles.3.backHomeLabel": {
+    "message": "Back to the lobby",
+    "description": "Random 404 bundle 4 of 5 — CTA label (vacant-address voice)"
+  },
+  "theme.NotFound.bundles.4.title": {
+    "message": "We could not find what you were looking for.",
+    "description": "Random 404 bundle 5 of 5 — title (apologetic voice)"
+  },
+  "theme.NotFound.bundles.4.description": {
+    "message": "Double-check the URL for typos, or head back to start fresh.",
+    "description": "Random 404 bundle 5 of 5 — description (apologetic voice)"
+  },
+  "theme.NotFound.bundles.4.backHomeLabel": {
+    "message": "Back to home",
+    "description": "Random 404 bundle 5 of 5 — CTA label (apologetic voice)"
+  },
+  "theme.docs.sidebar.expandButtonAriaLabel": {
+    "message": "Expand sidebar",
+    "description": "The ARIA label for the button that expands the doc sidebar"
+  },
+  "theme.docs.sidebar.collapseButtonAriaLabel": {
+    "message": "Collapse sidebar",
+    "description": "The ARIA label for the button that collapses the doc sidebar"
+  },
+  "theme.blog.authorsList.pageTitle": {
+    "message": "Authors",
+    "description": "The title of the authors page"
+  },
+  "theme.blog.post.plurals": {
+    "message": "1 post|{count} posts",
+    "description": "Pluralized label for \"{count} posts\". Use as much plural forms (separated by \"|\") as your language support (see https://www.unicode.org/cldr/cldr-aux/charts/34/supplemental/language_plural_rules.html)"
+  },
+  "theme.blog.tagTitle": {
+    "message": "{nPosts} tagged with \"{tagName}\"",
+    "description": "The title of the page for a blog tag"
+  },
+  "theme.blog.author.pageTitle": {
+    "message": "{authorName} - {nPosts}",
+    "description": "The title of the page for a blog author"
+  },
+  "theme.blog.authorsList.viewAll": {
+    "message": "View all authors",
+    "description": "The label of the link targeting the blog authors page"
+  },
+  "theme.blog.author.noPosts": {
+    "message": "This author has not written any posts yet.",
+    "description": "The text for authors with 0 blog post"
+  },
+  "theme.common.skipToMainContent": {
+    "message": "Skip to main content",
+    "description": "The skip to content label used for accessibility, allowing to rapidly navigate to main content with keyboard tab/enter navigation"
+  },
+  "theme.tags.tagsPageTitle": {
+    "message": "Tags",
+    "description": "The title of the tag list page"
+  },
+  "theme.footer.copyright": {
+    "message": "{copyright}",
+    "description": "Footer copyright text. The {copyright} placeholder receives the consumer's themeConfig.footer.copyright value as the source-locale fallback; per-locale overrides in i18n code.json usually inline their own text."
+  }
+}
