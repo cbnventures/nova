@@ -2,16 +2,16 @@ import { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import type {
-  ThemeLastUpdatedLastUpdatedAtDate,
-  ThemeLastUpdatedLastUpdatedByUser,
-  ThemeLastUpdatedLastUpdatedContext,
-  ThemeLastUpdatedLastUpdatedCurrentLocale,
-  ThemeLastUpdatedLastUpdatedDateDate,
-  ThemeLastUpdatedLastUpdatedDateFormattedDate,
-  ThemeLastUpdatedLastUpdatedDateLocale,
-  ThemeLastUpdatedLastUpdatedDatePropsLastUpdatedAt,
-  ThemeLastUpdatedLastUpdatedLabel,
-  ThemeLastUpdatedLastUpdatedProps,
+  Theme_LastUpdated_Index_LastUpdated_AtDate,
+  Theme_LastUpdated_Index_LastUpdated_ByUser,
+  Theme_LastUpdated_Index_LastUpdated_Context,
+  Theme_LastUpdated_Index_LastUpdated_CurrentLocale,
+  Theme_LastUpdated_Index_LastUpdated_Label,
+  Theme_LastUpdated_Index_LastUpdated_Props,
+  Theme_LastUpdated_Index_LastUpdatedDate_Date,
+  Theme_LastUpdated_Index_LastUpdatedDate_FormattedDate,
+  Theme_LastUpdated_Index_LastUpdatedDate_Locale,
+  Theme_LastUpdated_Index_LastUpdatedDate_PropsLastUpdatedAt,
 } from '../../types/theme/LastUpdated/index.d.ts';
 
 /**
@@ -21,21 +21,21 @@ import type {
  * renders it inside a semantic time element with an ISO datetime
  * attribute for machine readability.
  *
- * @param {ThemeLastUpdatedLastUpdatedDatePropsLastUpdatedAt} lastUpdatedAt - Last updated at.
+ * @param {Theme_LastUpdated_Index_LastUpdatedDate_PropsLastUpdatedAt} lastUpdatedAt - Last updated at.
  *
  * @returns {JSX.Element}
  *
  * @since 0.15.0
  */
-function LastUpdatedDate(lastUpdatedAt: ThemeLastUpdatedLastUpdatedDatePropsLastUpdatedAt, locale: ThemeLastUpdatedLastUpdatedDateLocale) {
-  const date: ThemeLastUpdatedLastUpdatedDateDate = new Date(lastUpdatedAt);
-  const formattedDate: ThemeLastUpdatedLastUpdatedDateFormattedDate = date.toLocaleDateString(locale, {
+function LastUpdatedDate(lastUpdatedAt: Theme_LastUpdated_Index_LastUpdatedDate_PropsLastUpdatedAt, locale: Theme_LastUpdated_Index_LastUpdatedDate_Locale) {
+  const date: Theme_LastUpdated_Index_LastUpdatedDate_Date = new Date(lastUpdatedAt);
+  const formattedDate: Theme_LastUpdated_Index_LastUpdatedDate_FormattedDate = date.toLocaleDateString(locale, {
     day: 'numeric',
     month: 'short',
     year: 'numeric',
     timeZone: 'UTC',
   });
-  const atDateLabel: ThemeLastUpdatedLastUpdatedAtDate = translate({
+  const atDateLabel: Theme_LastUpdated_Index_LastUpdated_AtDate = translate({
     id: 'theme.lastUpdated.atDate',
     message: ' on {date}',
     description: 'The words used to describe when a document was last updated (date portion)',
@@ -60,21 +60,21 @@ function LastUpdatedDate(lastUpdatedAt: ThemeLastUpdatedLastUpdatedDatePropsLast
  * and author name, formatting the epoch date into a human-readable
  * UTC date string without framework styling.
  *
- * @param {ThemeLastUpdatedLastUpdatedProps} props - Props.
+ * @param {Theme_LastUpdated_Index_LastUpdated_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function LastUpdated(props: ThemeLastUpdatedLastUpdatedProps) {
-  const lastUpdatedContext: ThemeLastUpdatedLastUpdatedContext = useDocusaurusContext();
-  const currentLocale: ThemeLastUpdatedLastUpdatedCurrentLocale = lastUpdatedContext['i18n']['currentLocale'];
+function LastUpdated(props: Theme_LastUpdated_Index_LastUpdated_Props) {
+  const lastUpdatedContext: Theme_LastUpdated_Index_LastUpdated_Context = useDocusaurusContext();
+  const currentLocale: Theme_LastUpdated_Index_LastUpdated_CurrentLocale = lastUpdatedContext['i18n']['currentLocale'];
 
   if (props['lastUpdatedAt'] === undefined && props['lastUpdatedBy'] === undefined) {
     return undefined;
   }
 
-  const lastUpdatedLabel: ThemeLastUpdatedLastUpdatedLabel = translate({
+  const lastUpdatedLabel: Theme_LastUpdated_Index_LastUpdated_Label = translate({
     id: 'theme.lastUpdated.lastUpdatedAtBy',
     message: 'Last updated{atDate}{byUser}',
     description: 'The sentence used to describe when a document was last updated and by whom',
@@ -82,7 +82,7 @@ function LastUpdated(props: ThemeLastUpdatedLastUpdatedProps) {
     atDate: '',
     byUser: '',
   });
-  const byUserLabel: ThemeLastUpdatedLastUpdatedByUser = translate({
+  const byUserLabel: Theme_LastUpdated_Index_LastUpdated_ByUser = translate({
     id: 'theme.lastUpdated.byUser',
     message: ' by {user}',
     description: 'The words used to describe when a document was last updated (author portion)',

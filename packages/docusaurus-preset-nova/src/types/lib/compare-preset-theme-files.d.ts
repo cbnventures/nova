@@ -3,8 +3,8 @@
  *
  * @since 0.15.0
  */
-export type LibComparePresetThemeFilesComparePresetThemeFilesA = string;
+export type Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_A = string;
 
-export type LibComparePresetThemeFilesComparePresetThemeFilesB = string;
+export type Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_B = string;
 
-export type LibComparePresetThemeFilesComparePresetThemeFilesReturns = number;
+export type Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Returns = number;

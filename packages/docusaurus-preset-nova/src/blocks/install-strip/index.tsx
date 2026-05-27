@@ -3,16 +3,16 @@ import { Icon } from '@iconify/react/offline';
 import { useState } from 'react';
 
 import type {
-  BlocksInstallStripCopied,
-  BlocksInstallStripCopiedText,
-  BlocksInstallStripCopyAriaLabel,
-  BlocksInstallStripCopyButtonText,
-  BlocksInstallStripCopyText,
-  BlocksInstallStripIcon,
-  BlocksInstallStripProps,
-  BlocksInstallStripPropsCopyTarget,
-  BlocksInstallStripSetCopied,
-  BlocksInstallStripState,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_Copied,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_CopiedText,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_CopyAriaLabel,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_CopyButtonText,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_CopyText,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_Icon,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_Props,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_SetCopied,
+  Blocks_InstallStrip_Index_BlocksInstallStrip_State,
 } from '../../types/blocks/install-strip/index.d.ts';
 
 /**
@@ -22,34 +22,34 @@ import type {
  * a monospace font and a click-to-copy button that provides visual
  * feedback on successful copy.
  *
- * @param {BlocksInstallStripProps} props - Props.
+ * @param {Blocks_InstallStrip_Index_BlocksInstallStrip_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlocksInstallStrip(props: BlocksInstallStripProps) {
-  const state: BlocksInstallStripState = useState<BlocksInstallStripCopied>(false);
-  const copied: BlocksInstallStripCopied = state[0];
-  const setCopied: BlocksInstallStripSetCopied = state[1];
-  const copyTarget: BlocksInstallStripPropsCopyTarget = props['copyTarget'] ?? 'icon';
-  const icon: BlocksInstallStripIcon = (copied === true) ? 'lucide:check' : 'lucide:copy';
-  const copiedText: BlocksInstallStripCopiedText = translate({
+function BlocksInstallStrip(props: Blocks_InstallStrip_Index_BlocksInstallStrip_Props) {
+  const state: Blocks_InstallStrip_Index_BlocksInstallStrip_State = useState<Blocks_InstallStrip_Index_BlocksInstallStrip_Copied>(false);
+  const copied: Blocks_InstallStrip_Index_BlocksInstallStrip_Copied = state[0];
+  const setCopied: Blocks_InstallStrip_Index_BlocksInstallStrip_SetCopied = state[1];
+  const copyTarget: Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget = props['copyTarget'] ?? 'icon';
+  const icon: Blocks_InstallStrip_Index_BlocksInstallStrip_Icon = (copied === true) ? 'lucide:check' : 'lucide:copy';
+  const copiedText: Blocks_InstallStrip_Index_BlocksInstallStrip_CopiedText = translate({
     id: 'theme.InstallStrip.copied',
     message: 'COPIED',
     description: 'The text shown after copying the install command',
   });
-  const copyButtonText: BlocksInstallStripCopyButtonText = translate({
+  const copyButtonText: Blocks_InstallStrip_Index_BlocksInstallStrip_CopyButtonText = translate({
     id: 'theme.InstallStrip.copy',
     message: 'COPY',
     description: 'The text shown on the copy button of the install strip',
   });
-  const copyAriaLabel: BlocksInstallStripCopyAriaLabel = translate({
+  const copyAriaLabel: Blocks_InstallStrip_Index_BlocksInstallStrip_CopyAriaLabel = translate({
     id: 'theme.InstallStrip.copyAriaLabel',
     message: 'Copy to clipboard',
     description: 'The ARIA label for the install strip copy button',
   });
-  const copyText: BlocksInstallStripCopyText = (copied === true) ? copiedText : copyButtonText;
+  const copyText: Blocks_InstallStrip_Index_BlocksInstallStrip_CopyText = (copied === true) ? copiedText : copyButtonText;
 
   /**
    * Blocks - Install Strip - Blocks Install Strip - Handle Copy.

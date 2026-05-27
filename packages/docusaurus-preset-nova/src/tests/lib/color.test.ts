@@ -2,52 +2,52 @@ import { ok, strictEqual, throws } from 'node:assert/strict';
 
 import { describe, it } from 'vitest';
 
-import { Color } from '../../lib/color.js';
+import { Runner as Color } from '../../lib/color.js';
 
 import type {
-  TestsLibColorEdgeCaseInstance,
-  TestsLibColorEdgeCaseScale,
-  TestsLibColorEdgeCaseShadeKeys,
-  TestsLibColorGenerateScaleAnchorHex,
-  TestsLibColorGenerateScaleAnchorLightness,
-  TestsLibColorGenerateScaleBlueDiff,
-  TestsLibColorGenerateScaleDarkerHex,
-  TestsLibColorGenerateScaleDarkerLightness,
-  TestsLibColorGenerateScaleExpectedLevel,
-  TestsLibColorGenerateScaleGreenDiff,
-  TestsLibColorGenerateScaleInputBlue,
-  TestsLibColorGenerateScaleInputBlueString,
-  TestsLibColorGenerateScaleInputGreen,
-  TestsLibColorGenerateScaleInputGreenString,
-  TestsLibColorGenerateScaleInputRed,
-  TestsLibColorGenerateScaleInputRedString,
-  TestsLibColorGenerateScaleInstance,
-  TestsLibColorGenerateScaleLighterHex,
-  TestsLibColorGenerateScaleLighterLightness,
-  TestsLibColorGenerateScaleRedDiff,
-  TestsLibColorGenerateScaleResult,
-  TestsLibColorGenerateScaleShade600,
-  TestsLibColorGenerateScaleShade600Blue,
-  TestsLibColorGenerateScaleShade600BlueSlice,
-  TestsLibColorGenerateScaleShade600Green,
-  TestsLibColorGenerateScaleShade600GreenSlice,
-  TestsLibColorGenerateScaleShade600Red,
-  TestsLibColorGenerateScaleShade600RedSlice,
-  TestsLibColorGenerateScaleShadeKeys,
-  TestsLibColorHexToLightnessBlue,
-  TestsLibColorHexToLightnessBlueSlice,
-  TestsLibColorHexToLightnessChannelMax,
-  TestsLibColorHexToLightnessChannelMin,
-  TestsLibColorHexToLightnessGreen,
-  TestsLibColorHexToLightnessGreenSlice,
-  TestsLibColorHexToLightnessHex,
-  TestsLibColorHexToLightnessNormalizedBlue,
-  TestsLibColorHexToLightnessNormalizedGreen,
-  TestsLibColorHexToLightnessNormalizedRed,
-  TestsLibColorHexToLightnessRed,
-  TestsLibColorHexToLightnessRedSlice,
-  TestsLibColorHexToLightnessReturns,
-  TestsLibColorInstance,
+  Tests_Lib_Color_EdgeCaseInstance,
+  Tests_Lib_Color_EdgeCaseScale,
+  Tests_Lib_Color_EdgeCaseShadeKeys,
+  Tests_Lib_Color_GenerateScaleAnchorHex,
+  Tests_Lib_Color_GenerateScaleAnchorLightness,
+  Tests_Lib_Color_GenerateScaleBlueDiff,
+  Tests_Lib_Color_GenerateScaleDarkerHex,
+  Tests_Lib_Color_GenerateScaleDarkerLightness,
+  Tests_Lib_Color_GenerateScaleExpectedLevel,
+  Tests_Lib_Color_GenerateScaleGreenDiff,
+  Tests_Lib_Color_GenerateScaleInputBlue,
+  Tests_Lib_Color_GenerateScaleInputBlueString,
+  Tests_Lib_Color_GenerateScaleInputGreen,
+  Tests_Lib_Color_GenerateScaleInputGreenString,
+  Tests_Lib_Color_GenerateScaleInputRed,
+  Tests_Lib_Color_GenerateScaleInputRedString,
+  Tests_Lib_Color_GenerateScaleInstance,
+  Tests_Lib_Color_GenerateScaleLighterHex,
+  Tests_Lib_Color_GenerateScaleLighterLightness,
+  Tests_Lib_Color_GenerateScaleRedDiff,
+  Tests_Lib_Color_GenerateScaleResult,
+  Tests_Lib_Color_GenerateScaleShade600,
+  Tests_Lib_Color_GenerateScaleShade600Blue,
+  Tests_Lib_Color_GenerateScaleShade600BlueSlice,
+  Tests_Lib_Color_GenerateScaleShade600Green,
+  Tests_Lib_Color_GenerateScaleShade600GreenSlice,
+  Tests_Lib_Color_GenerateScaleShade600Red,
+  Tests_Lib_Color_GenerateScaleShade600RedSlice,
+  Tests_Lib_Color_GenerateScaleShadeKeys,
+  Tests_Lib_Color_HexToLightness_Blue,
+  Tests_Lib_Color_HexToLightness_BlueSlice,
+  Tests_Lib_Color_HexToLightness_ChannelMax,
+  Tests_Lib_Color_HexToLightness_ChannelMin,
+  Tests_Lib_Color_HexToLightness_Green,
+  Tests_Lib_Color_HexToLightness_GreenSlice,
+  Tests_Lib_Color_HexToLightness_Hex,
+  Tests_Lib_Color_HexToLightness_NormalizedBlue,
+  Tests_Lib_Color_HexToLightness_NormalizedGreen,
+  Tests_Lib_Color_HexToLightness_NormalizedRed,
+  Tests_Lib_Color_HexToLightness_Red,
+  Tests_Lib_Color_HexToLightness_RedSlice,
+  Tests_Lib_Color_HexToLightness_Returns,
+  Tests_Lib_Color_Instance,
 } from '../../types/tests/lib/color.test.d.ts';
 
 /**
@@ -57,7 +57,7 @@ import type {
  */
 describe('Color constructor', async () => {
   it('accepts a valid six-digit hex color', () => {
-    const instance: TestsLibColorInstance = new Color('#3B82F6');
+    const instance: Tests_Lib_Color_Instance = new Color('#3B82F6');
 
     ok(instance);
 
@@ -95,7 +95,7 @@ describe('Color constructor', async () => {
   });
 
   it('accepts lowercase hex characters', () => {
-    const instance: TestsLibColorInstance = new Color('#3b82f6');
+    const instance: Tests_Lib_Color_Instance = new Color('#3b82f6');
 
     ok(instance);
 
@@ -103,7 +103,7 @@ describe('Color constructor', async () => {
   });
 
   it('accepts mixed-case hex characters', () => {
-    const instance: TestsLibColorInstance = new Color('#3b82F6');
+    const instance: Tests_Lib_Color_Instance = new Color('#3b82F6');
 
     ok(instance);
 
@@ -120,20 +120,20 @@ describe('Color constructor', async () => {
  */
 describe('Color generateScale', async () => {
   it('returns all eleven shade levels', () => {
-    const instance: TestsLibColorGenerateScaleInstance = new Color('#3B82F6');
-    const result: TestsLibColorGenerateScaleResult = instance.generateScale();
-    const shadeKeys: TestsLibColorGenerateScaleShadeKeys = Object.keys(result);
-    const expectedLevel50: TestsLibColorGenerateScaleExpectedLevel = 50;
-    const expectedLevel100: TestsLibColorGenerateScaleExpectedLevel = 100;
-    const expectedLevel200: TestsLibColorGenerateScaleExpectedLevel = 200;
-    const expectedLevel300: TestsLibColorGenerateScaleExpectedLevel = 300;
-    const expectedLevel400: TestsLibColorGenerateScaleExpectedLevel = 400;
-    const expectedLevel500: TestsLibColorGenerateScaleExpectedLevel = 500;
-    const expectedLevel600: TestsLibColorGenerateScaleExpectedLevel = 600;
-    const expectedLevel700: TestsLibColorGenerateScaleExpectedLevel = 700;
-    const expectedLevel800: TestsLibColorGenerateScaleExpectedLevel = 800;
-    const expectedLevel900: TestsLibColorGenerateScaleExpectedLevel = 900;
-    const expectedLevel950: TestsLibColorGenerateScaleExpectedLevel = 950;
+    const instance: Tests_Lib_Color_GenerateScaleInstance = new Color('#3B82F6');
+    const result: Tests_Lib_Color_GenerateScaleResult = instance.generateScale();
+    const shadeKeys: Tests_Lib_Color_GenerateScaleShadeKeys = Object.keys(result);
+    const expectedLevel50: Tests_Lib_Color_GenerateScaleExpectedLevel = 50;
+    const expectedLevel100: Tests_Lib_Color_GenerateScaleExpectedLevel = 100;
+    const expectedLevel200: Tests_Lib_Color_GenerateScaleExpectedLevel = 200;
+    const expectedLevel300: Tests_Lib_Color_GenerateScaleExpectedLevel = 300;
+    const expectedLevel400: Tests_Lib_Color_GenerateScaleExpectedLevel = 400;
+    const expectedLevel500: Tests_Lib_Color_GenerateScaleExpectedLevel = 500;
+    const expectedLevel600: Tests_Lib_Color_GenerateScaleExpectedLevel = 600;
+    const expectedLevel700: Tests_Lib_Color_GenerateScaleExpectedLevel = 700;
+    const expectedLevel800: Tests_Lib_Color_GenerateScaleExpectedLevel = 800;
+    const expectedLevel900: Tests_Lib_Color_GenerateScaleExpectedLevel = 900;
+    const expectedLevel950: Tests_Lib_Color_GenerateScaleExpectedLevel = 950;
 
     strictEqual(shadeKeys.length, 11);
     ok(result[expectedLevel50] !== undefined);
@@ -152,24 +152,24 @@ describe('Color generateScale', async () => {
   });
 
   it('shade 600 approximates the input color', () => {
-    const instance: TestsLibColorGenerateScaleInstance = new Color('#3B82F6');
-    const result: TestsLibColorGenerateScaleResult = instance.generateScale();
-    const shade600: TestsLibColorGenerateScaleShade600 = result[600];
-    const shade600RedSlice: TestsLibColorGenerateScaleShade600RedSlice = shade600.slice(1, 3);
-    const shade600Red: TestsLibColorGenerateScaleShade600Red = parseInt(shade600RedSlice, 16);
-    const shade600GreenSlice: TestsLibColorGenerateScaleShade600GreenSlice = shade600.slice(3, 5);
-    const shade600Green: TestsLibColorGenerateScaleShade600Green = parseInt(shade600GreenSlice, 16);
-    const shade600BlueSlice: TestsLibColorGenerateScaleShade600BlueSlice = shade600.slice(5, 7);
-    const shade600Blue: TestsLibColorGenerateScaleShade600Blue = parseInt(shade600BlueSlice, 16);
-    const inputRedString: TestsLibColorGenerateScaleInputRedString = '3B';
-    const inputRed: TestsLibColorGenerateScaleInputRed = parseInt(inputRedString, 16);
-    const inputGreenString: TestsLibColorGenerateScaleInputGreenString = '82';
-    const inputGreen: TestsLibColorGenerateScaleInputGreen = parseInt(inputGreenString, 16);
-    const inputBlueString: TestsLibColorGenerateScaleInputBlueString = 'F6';
-    const inputBlue: TestsLibColorGenerateScaleInputBlue = parseInt(inputBlueString, 16);
-    const redDiff: TestsLibColorGenerateScaleRedDiff = Math.abs(shade600Red - inputRed);
-    const greenDiff: TestsLibColorGenerateScaleGreenDiff = Math.abs(shade600Green - inputGreen);
-    const blueDiff: TestsLibColorGenerateScaleBlueDiff = Math.abs(shade600Blue - inputBlue);
+    const instance: Tests_Lib_Color_GenerateScaleInstance = new Color('#3B82F6');
+    const result: Tests_Lib_Color_GenerateScaleResult = instance.generateScale();
+    const shade600: Tests_Lib_Color_GenerateScaleShade600 = result[600];
+    const shade600RedSlice: Tests_Lib_Color_GenerateScaleShade600RedSlice = shade600.slice(1, 3);
+    const shade600Red: Tests_Lib_Color_GenerateScaleShade600Red = parseInt(shade600RedSlice, 16);
+    const shade600GreenSlice: Tests_Lib_Color_GenerateScaleShade600GreenSlice = shade600.slice(3, 5);
+    const shade600Green: Tests_Lib_Color_GenerateScaleShade600Green = parseInt(shade600GreenSlice, 16);
+    const shade600BlueSlice: Tests_Lib_Color_GenerateScaleShade600BlueSlice = shade600.slice(5, 7);
+    const shade600Blue: Tests_Lib_Color_GenerateScaleShade600Blue = parseInt(shade600BlueSlice, 16);
+    const inputRedString: Tests_Lib_Color_GenerateScaleInputRedString = '3B';
+    const inputRed: Tests_Lib_Color_GenerateScaleInputRed = parseInt(inputRedString, 16);
+    const inputGreenString: Tests_Lib_Color_GenerateScaleInputGreenString = '82';
+    const inputGreen: Tests_Lib_Color_GenerateScaleInputGreen = parseInt(inputGreenString, 16);
+    const inputBlueString: Tests_Lib_Color_GenerateScaleInputBlueString = 'F6';
+    const inputBlue: Tests_Lib_Color_GenerateScaleInputBlue = parseInt(inputBlueString, 16);
+    const redDiff: Tests_Lib_Color_GenerateScaleRedDiff = Math.abs(shade600Red - inputRed);
+    const greenDiff: Tests_Lib_Color_GenerateScaleGreenDiff = Math.abs(shade600Green - inputGreen);
+    const blueDiff: Tests_Lib_Color_GenerateScaleBlueDiff = Math.abs(shade600Blue - inputBlue);
 
     ok(redDiff < 30);
     ok(greenDiff < 30);
@@ -179,12 +179,12 @@ describe('Color generateScale', async () => {
   });
 
   it('lighter shades have higher lightness than shade 600', () => {
-    const instance: TestsLibColorGenerateScaleInstance = new Color('#3B82F6');
-    const result: TestsLibColorGenerateScaleResult = instance.generateScale();
-    const anchorHex: TestsLibColorGenerateScaleAnchorHex = result[600];
-    const anchorLightness: TestsLibColorGenerateScaleAnchorLightness = hexToLightness(anchorHex);
-    const lighterHex: TestsLibColorGenerateScaleLighterHex = result[50];
-    const lighterLightness: TestsLibColorGenerateScaleLighterLightness = hexToLightness(lighterHex);
+    const instance: Tests_Lib_Color_GenerateScaleInstance = new Color('#3B82F6');
+    const result: Tests_Lib_Color_GenerateScaleResult = instance.generateScale();
+    const anchorHex: Tests_Lib_Color_GenerateScaleAnchorHex = result[600];
+    const anchorLightness: Tests_Lib_Color_GenerateScaleAnchorLightness = hexToLightness(anchorHex);
+    const lighterHex: Tests_Lib_Color_GenerateScaleLighterHex = result[50];
+    const lighterLightness: Tests_Lib_Color_GenerateScaleLighterLightness = hexToLightness(lighterHex);
 
     ok(lighterLightness > anchorLightness);
 
@@ -192,12 +192,12 @@ describe('Color generateScale', async () => {
   });
 
   it('darker shades have lower lightness than shade 600', () => {
-    const instance: TestsLibColorGenerateScaleInstance = new Color('#3B82F6');
-    const result: TestsLibColorGenerateScaleResult = instance.generateScale();
-    const anchorHex: TestsLibColorGenerateScaleAnchorHex = result[600];
-    const anchorLightness: TestsLibColorGenerateScaleAnchorLightness = hexToLightness(anchorHex);
-    const darkerHex: TestsLibColorGenerateScaleDarkerHex = result[950];
-    const darkerLightness: TestsLibColorGenerateScaleDarkerLightness = hexToLightness(darkerHex);
+    const instance: Tests_Lib_Color_GenerateScaleInstance = new Color('#3B82F6');
+    const result: Tests_Lib_Color_GenerateScaleResult = instance.generateScale();
+    const anchorHex: Tests_Lib_Color_GenerateScaleAnchorHex = result[600];
+    const anchorLightness: Tests_Lib_Color_GenerateScaleAnchorLightness = hexToLightness(anchorHex);
+    const darkerHex: Tests_Lib_Color_GenerateScaleDarkerHex = result[950];
+    const darkerLightness: Tests_Lib_Color_GenerateScaleDarkerLightness = hexToLightness(darkerHex);
 
     ok(darkerLightness < anchorLightness);
 
@@ -214,9 +214,9 @@ describe('Color generateScale', async () => {
  */
 describe('Color edge cases', async () => {
   it('handles pure red', () => {
-    const instance: TestsLibColorEdgeCaseInstance = new Color('#FF0000');
-    const scale: TestsLibColorEdgeCaseScale = instance.generateScale();
-    const shadeKeys: TestsLibColorEdgeCaseShadeKeys = Object.keys(scale);
+    const instance: Tests_Lib_Color_EdgeCaseInstance = new Color('#FF0000');
+    const scale: Tests_Lib_Color_EdgeCaseScale = instance.generateScale();
+    const shadeKeys: Tests_Lib_Color_EdgeCaseShadeKeys = Object.keys(scale);
 
     strictEqual(shadeKeys.length, 11);
 
@@ -224,9 +224,9 @@ describe('Color edge cases', async () => {
   });
 
   it('handles pure white', () => {
-    const instance: TestsLibColorEdgeCaseInstance = new Color('#FFFFFF');
-    const scale: TestsLibColorEdgeCaseScale = instance.generateScale();
-    const shadeKeys: TestsLibColorEdgeCaseShadeKeys = Object.keys(scale);
+    const instance: Tests_Lib_Color_EdgeCaseInstance = new Color('#FFFFFF');
+    const scale: Tests_Lib_Color_EdgeCaseScale = instance.generateScale();
+    const shadeKeys: Tests_Lib_Color_EdgeCaseShadeKeys = Object.keys(scale);
 
     strictEqual(shadeKeys.length, 11);
 
@@ -234,9 +234,9 @@ describe('Color edge cases', async () => {
   });
 
   it('handles pure black', () => {
-    const instance: TestsLibColorEdgeCaseInstance = new Color('#000000');
-    const scale: TestsLibColorEdgeCaseScale = instance.generateScale();
-    const shadeKeys: TestsLibColorEdgeCaseShadeKeys = Object.keys(scale);
+    const instance: Tests_Lib_Color_EdgeCaseInstance = new Color('#000000');
+    const scale: Tests_Lib_Color_EdgeCaseScale = instance.generateScale();
+    const shadeKeys: Tests_Lib_Color_EdgeCaseShadeKeys = Object.keys(scale);
 
     strictEqual(shadeKeys.length, 11);
 
@@ -253,18 +253,18 @@ describe('Color edge cases', async () => {
  * @returns   Hex to lightness.
  * @since 0.15.0
  */
-function hexToLightness(hex: TestsLibColorHexToLightnessHex): TestsLibColorHexToLightnessReturns {
-  const redSlice: TestsLibColorHexToLightnessRedSlice = hex.slice(1, 3);
-  const red: TestsLibColorHexToLightnessRed = parseInt(redSlice, 16);
-  const greenSlice: TestsLibColorHexToLightnessGreenSlice = hex.slice(3, 5);
-  const green: TestsLibColorHexToLightnessGreen = parseInt(greenSlice, 16);
-  const blueSlice: TestsLibColorHexToLightnessBlueSlice = hex.slice(5, 7);
-  const blue: TestsLibColorHexToLightnessBlue = parseInt(blueSlice, 16);
-  const normalizedRed: TestsLibColorHexToLightnessNormalizedRed = red / 255;
-  const normalizedGreen: TestsLibColorHexToLightnessNormalizedGreen = green / 255;
-  const normalizedBlue: TestsLibColorHexToLightnessNormalizedBlue = blue / 255;
-  const channelMax: TestsLibColorHexToLightnessChannelMax = Math.max(normalizedRed, normalizedGreen, normalizedBlue);
-  const channelMin: TestsLibColorHexToLightnessChannelMin = Math.min(normalizedRed, normalizedGreen, normalizedBlue);
+function hexToLightness(hex: Tests_Lib_Color_HexToLightness_Hex): Tests_Lib_Color_HexToLightness_Returns {
+  const redSlice: Tests_Lib_Color_HexToLightness_RedSlice = hex.slice(1, 3);
+  const red: Tests_Lib_Color_HexToLightness_Red = parseInt(redSlice, 16);
+  const greenSlice: Tests_Lib_Color_HexToLightness_GreenSlice = hex.slice(3, 5);
+  const green: Tests_Lib_Color_HexToLightness_Green = parseInt(greenSlice, 16);
+  const blueSlice: Tests_Lib_Color_HexToLightness_BlueSlice = hex.slice(5, 7);
+  const blue: Tests_Lib_Color_HexToLightness_Blue = parseInt(blueSlice, 16);
+  const normalizedRed: Tests_Lib_Color_HexToLightness_NormalizedRed = red / 255;
+  const normalizedGreen: Tests_Lib_Color_HexToLightness_NormalizedGreen = green / 255;
+  const normalizedBlue: Tests_Lib_Color_HexToLightness_NormalizedBlue = blue / 255;
+  const channelMax: Tests_Lib_Color_HexToLightness_ChannelMax = Math.max(normalizedRed, normalizedGreen, normalizedBlue);
+  const channelMin: Tests_Lib_Color_HexToLightness_ChannelMin = Math.min(normalizedRed, normalizedGreen, normalizedBlue);
 
   return (channelMax + channelMin) / 2 * 100;
 }

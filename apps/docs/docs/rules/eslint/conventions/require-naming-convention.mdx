@@ -8,6 +8,7 @@ keywords:
   - "naming convention"
   - "camelCase"
   - "PascalCase"
+  - "UnderscorePascalCase"
   - "UPPER_SNAKE_CASE"
   - "linting"
 tags:
@@ -27,6 +28,8 @@ Enforce context-aware naming conventions because consistent casing per identifie
 The `require-naming-convention` rule checks identifier names against the expected casing for their declaration context.
 
 `UPPER_SNAKE_CASE` is reserved for `const` declarations with immutable values (primitives and regex literals). Arrays, objects, instances, and function return values use `camelCase` even when declared with `const`.
+
+Type aliases default to `UnderscorePascalCase` — segments are individually PascalCased and joined with underscores (for example, `Tests_TypeDeclarations_ExtractObjectTypes_ObjectType`). This pairs with the `require-type-naming` rule, which derives prefixes from the file path in the same format.
 
 ## Why Use This Rule?
 
@@ -63,11 +66,14 @@ The `require-naming-convention` rule checks identifier names against the expecte
       return;
     }
 
-    // PascalCase — classes, types, interfaces, enums.
+    // PascalCase — classes, interfaces, enums.
     class UserService {}
-    type RequestOptions = {};
     interface ApiResponse {}
     enum StatusCode { Ok, NotFound }
+
+    // UnderscorePascalCase — type aliases.
+    type Tests_TypeDeclarations_ExtractObjectTypes_ObjectType = {};
+    type Cli_Utility_Changelog_Generate_Returns = void;
     ```
 
   </TabItem>
@@ -78,6 +84,9 @@ The `require-naming-convention` rule checks identifier names against the expecte
     let MAX_RETRIES = 3;
     function MyFunction() {}
     class myClass {}
+
+    // Glued PascalCase — type aliases must use UnderscorePascalCase.
+    type TestsTypeDeclarationsExtractObjectTypesObjectType = {};
     type myType = string;
     ```
 
@@ -174,22 +183,28 @@ The `require-naming-convention` rule checks identifier names against the expecte
 `ignoreFiles` is an escape hatch for files where this rule genuinely does not apply. It is not intended for routine use.
 :::
 
-| Option                | Type       | Default            | Description                             |
-|-----------------------|------------|--------------------|-----------------------------------------|
-| `classDeclaration`    | `string`   | `PascalCase`       | Casing for class names.                 |
-| `classMethod`         | `string`   | `camelCase`        | Casing for class methods.               |
-| `classProperty`       | `string`   | `camelCase`        | Casing for class properties.            |
-| `constructorVariable` | `string`   | `PascalCase`       | Casing for variables used with `new`.   |
-| `constant`            | `string`   | `UPPER_SNAKE_CASE` | Casing for const with immutable values. |
-| `enum`                | `string`   | `PascalCase`       | Casing for enum declarations.           |
-| `enumMember`          | `string`   | `PascalCase`       | Casing for enum members.                |
-| `function`            | `string`   | `camelCase`        | Casing for function declarations.       |
-| `ignoreFiles`         | `string[]` | `[]`               | File patterns to skip.                  |
-| `interface`           | `string`   | `PascalCase`       | Casing for interfaces.                  |
-| `parameter`           | `string`   | `camelCase`        | Casing for function parameters.         |
-| `reactComponent`      | `string`   | `PascalCase`       | Casing for React component functions.   |
-| `typeAlias`           | `string`   | `PascalCase`       | Casing for type aliases.                |
-| `variable`            | `string`   | `camelCase`        | Casing for let/var variables.           |
+| Option                | Type       | Default                  | Description                             |
+|-----------------------|------------|--------------------------|-----------------------------------------|
+| `classDeclaration`    | `string`   | `PascalCase`             | Casing for class names.                 |
+| `classMethod`         | `string`   | `camelCase`              | Casing for class methods.               |
+| `classProperty`       | `string`   | `camelCase`              | Casing for class properties.            |
+| `constructorVariable` | `string`   | `PascalCase`             | Casing for variables used with `new`.   |
+| `constant`            | `string`   | `UPPER_SNAKE_CASE`       | Casing for const with immutable values. |
+| `enum`                | `string`   | `PascalCase`             | Casing for enum declarations.           |
+| `enumMember`          | `string`   | `PascalCase`             | Casing for enum members.                |
+| `function`            | `string`   | `camelCase`              | Casing for function declarations.       |
+| `ignoreFiles`         | `string[]` | `[]`                     | File patterns to skip.                  |
+| `interface`           | `string`   | `PascalCase`             | Casing for interfaces.                  |
+| `parameter`           | `string`   | `camelCase`              | Casing for function parameters.         |
+| `reactComponent`      | `string`   | `PascalCase`             | Casing for React component functions.   |
+| `typeAlias`           | `string`   | `UnderscorePascalCase`   | Casing for type aliases.                |
+| `variable`            | `string`   | `camelCase`              | Casing for let/var variables.           |
+
+Accepted casing values: `camelCase`, `PascalCase`, `UnderscorePascalCase`, `UPPER_SNAKE_CASE`.
+
+:::caution Migration in 0.18.0
+The default for `typeAlias` changed from `PascalCase` to `UnderscorePascalCase` in 0.18.0 so type aliases align with the prefixes produced by `require-type-naming`. Existing glued names like `CliUtilityChangelog` now fail; rename them to the underscore form (`Cli_Utility_Changelog`) or override the option back to `PascalCase` to defer the change.
+:::
 
 ## Autofix
 

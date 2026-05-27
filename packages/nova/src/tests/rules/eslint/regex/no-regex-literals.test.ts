@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoRegexLiterals } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintRegexNoRegexLiteralsRuleTester } from '../../../../types/tests/rules/eslint/regex/no-regex-literals.test.d.ts';
+import type { Tests_Rules_Eslint_Regex_NoRegexLiterals_RuleTester } from '../../../../types/tests/rules/eslint/regex/no-regex-literals.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Regex - No Regex Literals.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintRegexNoRegexLiteralsRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Regex_NoRegexLiterals_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

@@ -12,33 +12,33 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliUtilityRunScripts } from '../../../cli/utility/run-scripts.js';
+import { Runner as CliUtilityRunScripts } from '../../../cli/utility/run-scripts.js';
 
 import type {
-  TestsCliUtilityRunScriptsRunCapturedOutput,
-  TestsCliUtilityRunScriptsRunCapturedWrites,
-  TestsCliUtilityRunScriptsRunChunkString,
-  TestsCliUtilityRunScriptsRunFileA,
-  TestsCliUtilityRunScriptsRunFileAPath,
-  TestsCliUtilityRunScriptsRunFileB,
-  TestsCliUtilityRunScriptsRunFileBPath,
-  TestsCliUtilityRunScriptsRunIncludesHelloA,
-  TestsCliUtilityRunScriptsRunIncludesHelloB,
-  TestsCliUtilityRunScriptsRunIncludesTaskA,
-  TestsCliUtilityRunScriptsRunIncludesTaskB,
-  TestsCliUtilityRunScriptsRunMissingFilePath,
-  TestsCliUtilityRunScriptsRunOriginalCwd,
-  TestsCliUtilityRunScriptsRunOriginalStdoutWrite,
-  TestsCliUtilityRunScriptsRunOutput,
-  TestsCliUtilityRunScriptsRunOutputPath,
-  TestsCliUtilityRunScriptsRunPackageJson,
-  TestsCliUtilityRunScriptsRunPackageJsonPath,
-  TestsCliUtilityRunScriptsRunProjectRoot,
-  TestsCliUtilityRunScriptsRunRealProjectRoot,
-  TestsCliUtilityRunScriptsRunSandboxRoot,
-  TestsCliUtilityRunScriptsRunSecondRan,
-  TestsCliUtilityRunScriptsRunTemporaryDirectory,
-  TestsCliUtilityRunScriptsRunTemporaryPrefix,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_CapturedOutput,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_CapturedWrites,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ChunkString,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileA,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileAPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileB,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileBPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesHelloA,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesHelloB,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesTaskA,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesTaskB,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MissingFilePath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OriginalCwd,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OriginalStdoutWrite,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_Output,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OutputPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SandboxRoot,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SecondRan,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryDirectory,
+  Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryPrefix,
 } from '../../../types/tests/cli/utility/run-scripts.test.d.ts';
 
 /**
@@ -47,10 +47,10 @@ import type {
  * @since 0.14.0
  */
 describe('CliUtilityRunScripts.run', async () => {
-  const originalCwd: TestsCliUtilityRunScriptsRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliUtilityRunScriptsRunTemporaryDirectory = tmpdir();
-  const temporaryPrefix: TestsCliUtilityRunScriptsRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliUtilityRunScriptsRunSandboxRoot = await mkdtemp(temporaryPrefix);
+  const originalCwd: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryDirectory = tmpdir();
+  const temporaryPrefix: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SandboxRoot = await mkdtemp(temporaryPrefix);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -64,12 +64,12 @@ describe('CliUtilityRunScripts.run', async () => {
   });
 
   it('runs scripts sequentially', async () => {
-    const projectRoot: TestsCliUtilityRunScriptsRunProjectRoot = join(sandboxRoot, 'sequential');
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = join(sandboxRoot, 'sequential');
 
     await mkdir(projectRoot, { recursive: true });
 
     // Create a "package.json" with scripts that write to a shared file.
-    const packageJson: TestsCliUtilityRunScriptsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = JSON.stringify({
       name: 'test-sequential',
       scripts: {
         'build:first': 'node -e "require(\'fs\').appendFileSync(\'output.txt\', \'first\\n\')"',
@@ -77,11 +77,11 @@ describe('CliUtilityRunScripts.run', async () => {
       },
     }, null, 2);
 
-    const packageJsonPath: TestsCliUtilityRunScriptsRunPackageJsonPath = join(projectRoot, 'package.json');
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = join(projectRoot, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const realProjectRoot: TestsCliUtilityRunScriptsRunRealProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
@@ -92,8 +92,8 @@ describe('CliUtilityRunScripts.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const outputPath: TestsCliUtilityRunScriptsRunOutputPath = join(realProjectRoot, 'output.txt');
-    const output: TestsCliUtilityRunScriptsRunOutput = await readFile(outputPath, 'utf-8');
+    const outputPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OutputPath = join(realProjectRoot, 'output.txt');
+    const output: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_Output = await readFile(outputPath, 'utf-8');
 
     strictEqual(output, 'first\nsecond\n');
 
@@ -101,12 +101,12 @@ describe('CliUtilityRunScripts.run', async () => {
   });
 
   it('runs scripts in parallel', async () => {
-    const projectRoot: TestsCliUtilityRunScriptsRunProjectRoot = join(sandboxRoot, 'parallel');
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = join(sandboxRoot, 'parallel');
 
     await mkdir(projectRoot, { recursive: true });
 
     // Create a "package.json" with scripts that create individual marker files.
-    const packageJson: TestsCliUtilityRunScriptsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = JSON.stringify({
       name: 'test-parallel',
       scripts: {
         'task:a': 'node -e "require(\'fs\').writeFileSync(\'a.txt\', \'done\')"',
@@ -114,11 +114,11 @@ describe('CliUtilityRunScripts.run', async () => {
       },
     }, null, 2);
 
-    const packageJsonPath: TestsCliUtilityRunScriptsRunPackageJsonPath = join(projectRoot, 'package.json');
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = join(projectRoot, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const realProjectRoot: TestsCliUtilityRunScriptsRunRealProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
@@ -129,10 +129,10 @@ describe('CliUtilityRunScripts.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const fileAPath: TestsCliUtilityRunScriptsRunFileAPath = join(realProjectRoot, 'a.txt');
-    const fileBPath: TestsCliUtilityRunScriptsRunFileBPath = join(realProjectRoot, 'b.txt');
-    const fileA: TestsCliUtilityRunScriptsRunFileA = await readFile(fileAPath, 'utf-8');
-    const fileB: TestsCliUtilityRunScriptsRunFileB = await readFile(fileBPath, 'utf-8');
+    const fileAPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileAPath = join(realProjectRoot, 'a.txt');
+    const fileBPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileBPath = join(realProjectRoot, 'b.txt');
+    const fileA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileA = await readFile(fileAPath, 'utf-8');
+    const fileB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileB = await readFile(fileBPath, 'utf-8');
 
     strictEqual(fileA, 'done');
     strictEqual(fileB, 'done');
@@ -141,11 +141,11 @@ describe('CliUtilityRunScripts.run', async () => {
   });
 
   it('produces prefixed output in parallel mode', async () => {
-    const projectRoot: TestsCliUtilityRunScriptsRunProjectRoot = join(sandboxRoot, 'parallel-output');
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = join(sandboxRoot, 'parallel-output');
 
     await mkdir(projectRoot, { recursive: true });
 
-    const packageJson: TestsCliUtilityRunScriptsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = JSON.stringify({
       name: 'test-parallel-output',
       scripts: {
         'task:a': 'node -e "process.stdout.write(\'hello-a\\n\')"',
@@ -153,25 +153,25 @@ describe('CliUtilityRunScripts.run', async () => {
       },
     }, null, 2);
 
-    const packageJsonPath: TestsCliUtilityRunScriptsRunPackageJsonPath = join(projectRoot, 'package.json');
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = join(projectRoot, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const realProjectRoot: TestsCliUtilityRunScriptsRunRealProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
     // Capture stdout writes.
-    const capturedWrites: TestsCliUtilityRunScriptsRunCapturedWrites = [];
-    const originalStdoutWrite: TestsCliUtilityRunScriptsRunOriginalStdoutWrite = process.stdout.write;
+    const capturedWrites: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_CapturedWrites = [];
+    const originalStdoutWrite: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OriginalStdoutWrite = process.stdout.write;
 
     process.stdout.write = ((chunk) => {
-      const chunkString: TestsCliUtilityRunScriptsRunChunkString = String(chunk);
+      const chunkString: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ChunkString = String(chunk);
 
       capturedWrites.push(chunkString);
 
       return true;
-    }) as TestsCliUtilityRunScriptsRunOriginalStdoutWrite;
+    }) as Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OriginalStdoutWrite;
 
     try {
       await CliUtilityRunScripts.run({
@@ -185,12 +185,12 @@ describe('CliUtilityRunScripts.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const capturedOutput: TestsCliUtilityRunScriptsRunCapturedOutput = capturedWrites.join('');
+    const capturedOutput: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_CapturedOutput = capturedWrites.join('');
 
-    const includesTaskA: TestsCliUtilityRunScriptsRunIncludesTaskA = capturedOutput.includes('[task:a]');
-    const includesTaskB: TestsCliUtilityRunScriptsRunIncludesTaskB = capturedOutput.includes('[task:b]');
-    const includesHelloA: TestsCliUtilityRunScriptsRunIncludesHelloA = capturedOutput.includes('hello-a');
-    const includesHelloB: TestsCliUtilityRunScriptsRunIncludesHelloB = capturedOutput.includes('hello-b');
+    const includesTaskA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesTaskA = capturedOutput.includes('[task:a]');
+    const includesTaskB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesTaskB = capturedOutput.includes('[task:b]');
+    const includesHelloA: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesHelloA = capturedOutput.includes('hello-a');
+    const includesHelloB: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesHelloB = capturedOutput.includes('hello-b');
 
     strictEqual(includesTaskA, true);
     strictEqual(includesTaskB, true);
@@ -201,22 +201,22 @@ describe('CliUtilityRunScripts.run', async () => {
   });
 
   it('errors when --buffer value is not a positive integer', async () => {
-    const projectRoot: TestsCliUtilityRunScriptsRunProjectRoot = join(sandboxRoot, 'bad-buffer');
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = join(sandboxRoot, 'bad-buffer');
 
     await mkdir(projectRoot, { recursive: true });
 
-    const packageJson: TestsCliUtilityRunScriptsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = JSON.stringify({
       name: 'test-bad-buffer',
       scripts: {
         'task:a': 'echo hello',
       },
     }, null, 2);
 
-    const packageJsonPath: TestsCliUtilityRunScriptsRunPackageJsonPath = join(projectRoot, 'package.json');
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = join(projectRoot, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const realProjectRoot: TestsCliUtilityRunScriptsRunRealProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
@@ -232,11 +232,11 @@ describe('CliUtilityRunScripts.run', async () => {
   });
 
   it('stops on first failure in sequential mode', async () => {
-    const projectRoot: TestsCliUtilityRunScriptsRunProjectRoot = join(sandboxRoot, 'seq-fail');
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = join(sandboxRoot, 'seq-fail');
 
     await mkdir(projectRoot, { recursive: true });
 
-    const packageJson: TestsCliUtilityRunScriptsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = JSON.stringify({
       name: 'test-seq-fail',
       scripts: {
         'step:first': 'node -e "process.exit(1)"',
@@ -244,11 +244,11 @@ describe('CliUtilityRunScripts.run', async () => {
       },
     }, null, 2);
 
-    const packageJsonPath: TestsCliUtilityRunScriptsRunPackageJsonPath = join(projectRoot, 'package.json');
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = join(projectRoot, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const realProjectRoot: TestsCliUtilityRunScriptsRunRealProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
@@ -260,10 +260,10 @@ describe('CliUtilityRunScripts.run', async () => {
     strictEqual(process.exitCode, 1);
 
     // The second script should not have run.
-    let secondRan: TestsCliUtilityRunScriptsRunSecondRan = true;
+    let secondRan: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SecondRan = true;
 
     try {
-      const missingFilePath: TestsCliUtilityRunScriptsRunMissingFilePath = join(realProjectRoot, 'should-not-exist.txt');
+      const missingFilePath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MissingFilePath = join(realProjectRoot, 'should-not-exist.txt');
 
       await readFile(missingFilePath, 'utf-8');
     } catch {
@@ -276,22 +276,22 @@ describe('CliUtilityRunScripts.run', async () => {
   });
 
   it('warns when no scripts match the pattern', async () => {
-    const projectRoot: TestsCliUtilityRunScriptsRunProjectRoot = join(sandboxRoot, 'no-match');
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = join(sandboxRoot, 'no-match');
 
     await mkdir(projectRoot, { recursive: true });
 
-    const packageJson: TestsCliUtilityRunScriptsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = JSON.stringify({
       name: 'test-no-match',
       scripts: {
         'build:transpile': 'echo transpile',
       },
     }, null, 2);
 
-    const packageJsonPath: TestsCliUtilityRunScriptsRunPackageJsonPath = join(projectRoot, 'package.json');
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = join(projectRoot, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const realProjectRoot: TestsCliUtilityRunScriptsRunRealProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
@@ -306,22 +306,22 @@ describe('CliUtilityRunScripts.run', async () => {
   });
 
   it('errors when both --sequential and --parallel are set', async () => {
-    const projectRoot: TestsCliUtilityRunScriptsRunProjectRoot = join(sandboxRoot, 'both-modes');
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = join(sandboxRoot, 'both-modes');
 
     await mkdir(projectRoot, { recursive: true });
 
-    const packageJson: TestsCliUtilityRunScriptsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = JSON.stringify({
       name: 'test-both-modes',
       scripts: {
         'build:transpile': 'echo transpile',
       },
     }, null, 2);
 
-    const packageJsonPath: TestsCliUtilityRunScriptsRunPackageJsonPath = join(projectRoot, 'package.json');
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = join(projectRoot, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const realProjectRoot: TestsCliUtilityRunScriptsRunRealProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
@@ -337,22 +337,22 @@ describe('CliUtilityRunScripts.run', async () => {
   });
 
   it('matches exact script name without wildcard', async () => {
-    const projectRoot: TestsCliUtilityRunScriptsRunProjectRoot = join(sandboxRoot, 'exact-match');
+    const projectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = join(sandboxRoot, 'exact-match');
 
     await mkdir(projectRoot, { recursive: true });
 
-    const packageJson: TestsCliUtilityRunScriptsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = JSON.stringify({
       name: 'test-exact-match',
       scripts: {
         build: 'node -e "require(\'fs\').writeFileSync(\'exact.txt\', \'done\')"',
       },
     }, null, 2);
 
-    const packageJsonPath: TestsCliUtilityRunScriptsRunPackageJsonPath = join(projectRoot, 'package.json');
+    const packageJsonPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = join(projectRoot, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
-    const realProjectRoot: TestsCliUtilityRunScriptsRunRealProjectRoot = await realpath(projectRoot);
+    const realProjectRoot: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = await realpath(projectRoot);
 
     process.chdir(realProjectRoot);
 
@@ -363,8 +363,8 @@ describe('CliUtilityRunScripts.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const outputPath: TestsCliUtilityRunScriptsRunOutputPath = join(realProjectRoot, 'exact.txt');
-    const output: TestsCliUtilityRunScriptsRunOutput = await readFile(outputPath, 'utf-8');
+    const outputPath: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OutputPath = join(realProjectRoot, 'exact.txt');
+    const output: Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_Output = await readFile(outputPath, 'utf-8');
 
     strictEqual(output, 'done');
 

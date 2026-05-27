@@ -1,17 +1,17 @@
-import type { SharedPreset, SharedPresetFooter, SharedPresetNavbar } from '../../../shared.d.ts';
+import type { Shared_Preset, Shared_Preset_Footer, Shared_Preset_Navbar } from '../../../shared.d.ts';
 
 /**
- * Tests - Presets - Sentinel - Preset - PresetsSentinelPresetSentinel Navbar And Footer.
+ * Tests - Presets - Sentinel - Preset - Presets_Sentinel_Preset_Sentinel Navbar And Footer.
  *
  * @since 0.15.0
  */
-export type TestsPresetsSentinelPresetNavbar = SharedPresetNavbar;
+export type Tests_Presets_Sentinel_Preset_Navbar = Shared_Preset_Navbar;
 
-export type TestsPresetsSentinelPresetFooter = SharedPresetFooter;
+export type Tests_Presets_Sentinel_Preset_Footer = Shared_Preset_Footer;
 
 /**
  * Tests - Presets - Sentinel - Preset - Sentinel.
  *
  * @since 0.15.0
  */
-export type TestsPresetsSentinelPresetSentinel = SharedPreset;
+export type Tests_Presets_Sentinel_Preset_Sentinel = Shared_Preset;

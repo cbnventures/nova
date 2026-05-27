@@ -3,7 +3,7 @@ import { useBlogPostStructuredData } from '@docusaurus/plugin-content-blog/clien
 
 import { serializeJsonLd } from '../../../lib/safe-json-ld.js';
 
-import type { ThemeBlogPostPageStructuredDataBlogPostPageStructuredData } from '../../../types/theme/BlogPostPage/StructuredData/index.d.ts';
+import type { Theme_BlogPostPage_StructuredData_Index_BlogPostPageStructuredData } from '../../../types/theme/BlogPostPage/StructuredData/index.d.ts';
 
 /**
  * Theme - Blog Post Page - Structured Data - Blog Post Page Structured Data.
@@ -16,7 +16,7 @@ import type { ThemeBlogPostPageStructuredDataBlogPostPageStructuredData } from '
  * @since 0.18.0
  */
 function BlogPostPageStructuredData() {
-  const structuredData: ThemeBlogPostPageStructuredDataBlogPostPageStructuredData = useBlogPostStructuredData();
+  const structuredData: Theme_BlogPostPage_StructuredData_Index_BlogPostPageStructuredData = useBlogPostStructuredData();
 
   return (
     <Head>

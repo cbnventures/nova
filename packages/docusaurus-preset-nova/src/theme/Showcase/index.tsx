@@ -9,31 +9,31 @@ import {
 import Details from '../Details/index.js';
 
 import type {
-  ThemeShowcaseIndexItemChildren,
-  ThemeShowcaseIndexItemProps,
-  ThemeShowcaseIndexItemReturns,
-  ThemeShowcaseIndexItemTitle,
-  ThemeShowcaseIndexItemUnknownCast,
-  ThemeShowcaseIndexShowcaseAllOpen,
-  ThemeShowcaseIndexShowcaseChildren,
-  ThemeShowcaseIndexShowcaseChildrenArray,
-  ThemeShowcaseIndexShowcaseCollapseAllLabel,
-  ThemeShowcaseIndexShowcaseDescription,
-  ThemeShowcaseIndexShowcaseExpandAllLabel,
-  ThemeShowcaseIndexShowcaseHandleItemToggleIndex,
-  ThemeShowcaseIndexShowcaseHandleItemToggleIsOpen,
-  ThemeShowcaseIndexShowcaseHandleItemTogglePrevious,
-  ThemeShowcaseIndexShowcaseHandleToggleAllNextOpen,
-  ThemeShowcaseIndexShowcaseItemElement,
-  ThemeShowcaseIndexShowcaseItemElements,
-  ThemeShowcaseIndexShowcaseLayoutDescription,
-  ThemeShowcaseIndexShowcaseOpenMap,
-  ThemeShowcaseIndexShowcaseOpenMapState,
-  ThemeShowcaseIndexShowcaseProps,
-  ThemeShowcaseIndexShowcaseReturns,
-  ThemeShowcaseIndexShowcaseSetOpenMap,
-  ThemeShowcaseIndexShowcaseTitleLabel,
-  ThemeShowcaseIndexShowcaseToggleAllLabel,
+  Theme_Showcase_Index_ItemChildren,
+  Theme_Showcase_Index_ItemProps,
+  Theme_Showcase_Index_ItemReturns,
+  Theme_Showcase_Index_ItemTitle,
+  Theme_Showcase_Index_ItemUnknownCast,
+  Theme_Showcase_Index_Showcase_AllOpen,
+  Theme_Showcase_Index_Showcase_Children,
+  Theme_Showcase_Index_Showcase_ChildrenArray,
+  Theme_Showcase_Index_Showcase_CollapseAllLabel,
+  Theme_Showcase_Index_Showcase_Description,
+  Theme_Showcase_Index_Showcase_ExpandAllLabel,
+  Theme_Showcase_Index_Showcase_HandleItemToggle_Index,
+  Theme_Showcase_Index_Showcase_HandleItemToggle_IsOpen,
+  Theme_Showcase_Index_Showcase_HandleItemToggle_Previous,
+  Theme_Showcase_Index_Showcase_HandleToggleAll_NextOpen,
+  Theme_Showcase_Index_ShowcaseItem_Element,
+  Theme_Showcase_Index_ShowcaseItem_Elements,
+  Theme_Showcase_Index_Showcase_LayoutDescription,
+  Theme_Showcase_Index_Showcase_OpenMap,
+  Theme_Showcase_Index_Showcase_OpenMapState,
+  Theme_Showcase_Index_Showcase_Props,
+  Theme_Showcase_Index_Showcase_Returns,
+  Theme_Showcase_Index_Showcase_SetOpenMap,
+  Theme_Showcase_Index_Showcase_TitleLabel,
+  Theme_Showcase_Index_Showcase_ToggleAllLabel,
 } from '../../types/theme/Showcase/index.d.ts';
 
 /**
@@ -43,14 +43,14 @@ import type {
  * showcase. Renders nothing on its own - the parent enumerates Item
  * children and wraps each in a controlled Details disclosure.
  *
- * @param {ThemeShowcaseIndexItemProps} _props - _props.
+ * @param {Theme_Showcase_Index_ItemProps} _props - _props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function ShowcaseItem(_props: ThemeShowcaseIndexItemProps): ThemeShowcaseIndexItemReturns {
-  return null as ThemeShowcaseIndexItemUnknownCast as ThemeShowcaseIndexItemReturns;
+function ShowcaseItem(_props: Theme_Showcase_Index_ItemProps): Theme_Showcase_Index_ItemReturns {
+  return null as Theme_Showcase_Index_ItemUnknownCast as Theme_Showcase_Index_ItemReturns;
 }
 
 /**
@@ -60,51 +60,51 @@ function ShowcaseItem(_props: ThemeShowcaseIndexItemProps): ThemeShowcaseIndexIt
  * a title, description, and Expand/Collapse All toggle. Each Item is a
  * controlled Details - clicks sync the parent's per-item state map.
  *
- * @param {ThemeShowcaseIndexShowcaseProps} props - Props.
+ * @param {Theme_Showcase_Index_Showcase_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function Showcase(props: ThemeShowcaseIndexShowcaseProps): ThemeShowcaseIndexShowcaseReturns {
-  const layoutDescription: ThemeShowcaseIndexShowcaseLayoutDescription = props['layoutDescription'];
-  const description: ThemeShowcaseIndexShowcaseDescription = props['description'];
-  const children: ThemeShowcaseIndexShowcaseChildren = props['children'];
+function Showcase(props: Theme_Showcase_Index_Showcase_Props): Theme_Showcase_Index_Showcase_Returns {
+  const layoutDescription: Theme_Showcase_Index_Showcase_LayoutDescription = props['layoutDescription'];
+  const description: Theme_Showcase_Index_Showcase_Description = props['description'];
+  const children: Theme_Showcase_Index_Showcase_Children = props['children'];
 
-  const childrenArray: ThemeShowcaseIndexShowcaseChildrenArray = Children.toArray(children);
-  const itemElements: ThemeShowcaseIndexShowcaseItemElements = childrenArray.filter(
+  const childrenArray: Theme_Showcase_Index_Showcase_ChildrenArray = Children.toArray(children);
+  const itemElements: Theme_Showcase_Index_ShowcaseItem_Elements = childrenArray.filter(
     (child) => isValidElement(child) === true && child['type'] === ShowcaseItem,
-  ) as ThemeShowcaseIndexShowcaseItemElements;
+  ) as Theme_Showcase_Index_ShowcaseItem_Elements;
 
-  const state: ThemeShowcaseIndexShowcaseOpenMapState = useState<ThemeShowcaseIndexShowcaseOpenMap>({});
-  const openMap: ThemeShowcaseIndexShowcaseOpenMap = state[0];
-  const setOpenMap: ThemeShowcaseIndexShowcaseSetOpenMap = state[1];
+  const state: Theme_Showcase_Index_Showcase_OpenMapState = useState<Theme_Showcase_Index_Showcase_OpenMap>({});
+  const openMap: Theme_Showcase_Index_Showcase_OpenMap = state[0];
+  const setOpenMap: Theme_Showcase_Index_Showcase_SetOpenMap = state[1];
 
-  const allOpen: ThemeShowcaseIndexShowcaseAllOpen = (
+  const allOpen: Theme_Showcase_Index_Showcase_AllOpen = (
     itemElements.length > 0
     && itemElements.every((_item, index) => openMap[index] === true)
   );
 
-  const collapseAllLabel: ThemeShowcaseIndexShowcaseCollapseAllLabel = translate({
+  const collapseAllLabel: Theme_Showcase_Index_Showcase_CollapseAllLabel = translate({
     id: 'theme.showcase.collapseAll',
     message: 'Collapse All',
     description: 'The button label that collapses every Showcase Item disclosure',
   });
-  const expandAllLabel: ThemeShowcaseIndexShowcaseExpandAllLabel = translate({
+  const expandAllLabel: Theme_Showcase_Index_Showcase_ExpandAllLabel = translate({
     id: 'theme.showcase.expandAll',
     message: 'Expand All',
     description: 'The button label that expands every Showcase Item disclosure',
   });
-  const titleLabel: ThemeShowcaseIndexShowcaseTitleLabel = translate({
+  const titleLabel: Theme_Showcase_Index_Showcase_TitleLabel = translate({
     id: 'theme.showcase.title',
     message: 'Block Showcase',
     description: 'The h1 heading of the Showcase page that introduces the on-page block disclosures',
   });
-  const toggleAllLabel: ThemeShowcaseIndexShowcaseToggleAllLabel = (allOpen === true) ? collapseAllLabel : expandAllLabel;
+  const toggleAllLabel: Theme_Showcase_Index_Showcase_ToggleAllLabel = (allOpen === true) ? collapseAllLabel : expandAllLabel;
 
   function handleToggleAll() {
-    const nextOpen: ThemeShowcaseIndexShowcaseHandleToggleAllNextOpen = (allOpen === false);
-    const nextMap: ThemeShowcaseIndexShowcaseOpenMap = {};
+    const nextOpen: Theme_Showcase_Index_Showcase_HandleToggleAll_NextOpen = (allOpen === false);
+    const nextMap: Theme_Showcase_Index_Showcase_OpenMap = {};
 
     itemElements.forEach((_item, index) => {
       Reflect.set(nextMap, index, nextOpen);
@@ -117,8 +117,8 @@ function Showcase(props: ThemeShowcaseIndexShowcaseProps): ThemeShowcaseIndexSho
     return undefined;
   }
 
-  function handleItemToggle(index: ThemeShowcaseIndexShowcaseHandleItemToggleIndex, isOpen: ThemeShowcaseIndexShowcaseHandleItemToggleIsOpen) {
-    setOpenMap((previous: ThemeShowcaseIndexShowcaseHandleItemTogglePrevious) => ({
+  function handleItemToggle(index: Theme_Showcase_Index_Showcase_HandleItemToggle_Index, isOpen: Theme_Showcase_Index_Showcase_HandleItemToggle_IsOpen) {
+    setOpenMap((previous: Theme_Showcase_Index_Showcase_HandleItemToggle_Previous) => ({
       ...previous,
       [index]: isOpen,
     }));
@@ -145,9 +145,9 @@ function Showcase(props: ThemeShowcaseIndexShowcaseProps): ThemeShowcaseIndexSho
             {toggleAllLabel}
           </button>
         </div>
-        {itemElements.map((item: ThemeShowcaseIndexShowcaseItemElement, index) => {
-          const itemTitle: ThemeShowcaseIndexItemTitle = item['props']['title'];
-          const itemChildren: ThemeShowcaseIndexItemChildren = item['props']['children'];
+        {itemElements.map((item: Theme_Showcase_Index_ShowcaseItem_Element, index) => {
+          const itemTitle: Theme_Showcase_Index_ItemTitle = item['props']['title'];
+          const itemChildren: Theme_Showcase_Index_ItemChildren = item['props']['children'];
 
           return (
             <Details

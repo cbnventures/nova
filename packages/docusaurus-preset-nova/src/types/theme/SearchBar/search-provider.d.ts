@@ -5,54 +5,54 @@ import type { Dispatch, SetStateAction } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeSearchBarSearchProviderPropsChildren = React.ReactNode;
+export type Theme_SearchBar_SearchProvider_Props_Children = React.ReactNode;
 
-export type ThemeSearchBarSearchProviderProps = {
-  children: ThemeSearchBarSearchProviderPropsChildren;
+export type Theme_SearchBar_SearchProvider_Props = {
+  children: Theme_SearchBar_SearchProvider_Props_Children;
 };
 
-export type ThemeSearchBarSearchProviderDocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
+export type Theme_SearchBar_SearchProvider_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
 
-export type ThemeSearchBarSearchProviderBaseUrl = string;
+export type Theme_SearchBar_SearchProvider_BaseUrl = string;
 
-export type ThemeSearchBarSearchProviderWorkerUrl = string;
+export type Theme_SearchBar_SearchProvider_WorkerUrl = string;
 
-export type ThemeSearchBarSearchProviderManifestUrl = string;
+export type Theme_SearchBar_SearchProvider_ManifestUrl = string;
 
-export type ThemeSearchBarSearchProviderSearchWorker = import('../../lib/search/use-search-worker.d.ts').LibSearchUseSearchWorkerReturns;
+export type Theme_SearchBar_SearchProvider_SearchWorker = import('../../lib/search/use-search-worker.d.ts').Lib_Search_UseSearchWorker_Returns;
 
-export type ThemeSearchBarSearchProviderQueryState = [ThemeSearchBarSearchProviderQuery, ThemeSearchBarSearchProviderSetQuery];
+export type Theme_SearchBar_SearchProvider_QueryState = [Theme_SearchBar_SearchProvider_Query, Theme_SearchBar_SearchProvider_SetQuery];
 
-export type ThemeSearchBarSearchProviderQuery = string;
+export type Theme_SearchBar_SearchProvider_Query = string;
 
-export type ThemeSearchBarSearchProviderSetQuery = Dispatch<SetStateAction<ThemeSearchBarSearchProviderQuery>>;
+export type Theme_SearchBar_SearchProvider_SetQuery = Dispatch<SetStateAction<Theme_SearchBar_SearchProvider_Query>>;
 
-export type ThemeSearchBarSearchProviderSearchedQueryState = [ThemeSearchBarSearchProviderSearchedQuery, ThemeSearchBarSearchProviderSetSearchedQuery];
+export type Theme_SearchBar_SearchProvider_SearchedQueryState = [Theme_SearchBar_SearchProvider_SearchedQuery, Theme_SearchBar_SearchProvider_SetSearchedQuery];
 
-export type ThemeSearchBarSearchProviderSearchedQuery = string;
+export type Theme_SearchBar_SearchProvider_SearchedQuery = string;
 
-export type ThemeSearchBarSearchProviderSetSearchedQuery = Dispatch<SetStateAction<ThemeSearchBarSearchProviderSearchedQuery>>;
+export type Theme_SearchBar_SearchProvider_SetSearchedQuery = Dispatch<SetStateAction<Theme_SearchBar_SearchProvider_SearchedQuery>>;
 
-export type ThemeSearchBarSearchProviderIsOpenState = [ThemeSearchBarSearchProviderIsOpen, ThemeSearchBarSearchProviderSetIsOpen];
+export type Theme_SearchBar_SearchProvider_IsOpenState = [Theme_SearchBar_SearchProvider_IsOpen, Theme_SearchBar_SearchProvider_SetIsOpen];
 
-export type ThemeSearchBarSearchProviderIsOpen = boolean;
+export type Theme_SearchBar_SearchProvider_IsOpen = boolean;
 
-export type ThemeSearchBarSearchProviderSetIsOpen = Dispatch<SetStateAction<ThemeSearchBarSearchProviderIsOpen>>;
+export type Theme_SearchBar_SearchProvider_SetIsOpen = Dispatch<SetStateAction<Theme_SearchBar_SearchProvider_IsOpen>>;
 
-export type ThemeSearchBarSearchProviderActiveIndexState = [ThemeSearchBarSearchProviderActiveIndex, ThemeSearchBarSearchProviderSetActiveIndex];
+export type Theme_SearchBar_SearchProvider_ActiveIndexState = [Theme_SearchBar_SearchProvider_ActiveIndex, Theme_SearchBar_SearchProvider_SetActiveIndex];
 
-export type ThemeSearchBarSearchProviderActiveIndex = number;
+export type Theme_SearchBar_SearchProvider_ActiveIndex = number;
 
-export type ThemeSearchBarSearchProviderSetActiveIndex = Dispatch<SetStateAction<ThemeSearchBarSearchProviderActiveIndex>>;
+export type Theme_SearchBar_SearchProvider_SetActiveIndex = Dispatch<SetStateAction<Theme_SearchBar_SearchProvider_ActiveIndex>>;
 
-export type ThemeSearchBarSearchProviderInputRef = React.RefObject<HTMLInputElement | null>;
+export type Theme_SearchBar_SearchProvider_InputRef = React.RefObject<HTMLInputElement | null>;
 
-export type ThemeSearchBarSearchProviderDebounceTimerRef = React.RefObject<ReturnType<typeof setTimeout> | undefined>;
+export type Theme_SearchBar_SearchProvider_DebounceTimerRef = React.RefObject<ReturnType<typeof setTimeout> | undefined>;
 
-export type ThemeSearchBarSearchProviderDispatchedQueryRef = React.RefObject<string>;
+export type Theme_SearchBar_SearchProvider_DispatchedQueryRef = React.RefObject<string>;
 
-export type ThemeSearchBarSearchProviderHandleQueryChangeFunction = (value: ThemeSearchBarSearchProviderHandleQueryChangeValue) => void;
+export type Theme_SearchBar_SearchProvider_HandleQueryChangeFunction = (value: Theme_SearchBar_SearchProvider_HandleQueryChangeValue) => void;
 
-export type ThemeSearchBarSearchProviderHandleQueryChangeValue = string;
+export type Theme_SearchBar_SearchProvider_HandleQueryChangeValue = string;
 
-export type ThemeSearchBarSearchProviderContextValue = import('./search-context.d.ts').ThemeSearchBarSearchContextValue;
+export type Theme_SearchBar_SearchProvider_ContextValue = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value;

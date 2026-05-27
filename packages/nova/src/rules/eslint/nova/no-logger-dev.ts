@@ -3,23 +3,23 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeContext,
-  RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeIdentifier,
-  RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeReturns,
-  RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeVariable,
-  RulesEslintNovaNoLoggerDevFindVariableContext,
-  RulesEslintNovaNoLoggerDevFindVariableIdentifier,
-  RulesEslintNovaNoLoggerDevFindVariableReturns,
-  RulesEslintNovaNoLoggerDevFindVariableScopeManager,
-  RulesEslintNovaNoLoggerDevFindVariableVariable,
-  RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallNode,
-  RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallObject,
-  RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallProperty,
-  RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallTypeGuard,
-  RulesEslintNovaNoLoggerDevRuleDefaultOptionsIgnoreFiles,
-  RulesEslintNovaNoLoggerDevRuleObject,
-  RulesEslintNovaNoLoggerDevRuleOptions,
-  RulesEslintNovaNoLoggerDevRuleProperty,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Context,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Identifier,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Returns,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Variable,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Context,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Identifier,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Returns,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_ScopeManager,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Variable,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Node,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Object,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Property,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_TypeGuard,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_RuleObject,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_RuleOptions,
+  Rules_Eslint_Nova_NoLoggerDev_Runner_RuleProperty,
 } from '../../../types/rules/eslint/nova/no-logger-dev.d.ts';
 
 /**
@@ -31,7 +31,7 @@ import type {
  *
  * @since 0.12.0
  */
-export class RulesEslintNovaNoLoggerDev {
+export class Runner {
   /**
    * Rules - ESLint - Nova - No Logger Dev - Rule.
    *
@@ -65,10 +65,10 @@ export class RulesEslintNovaNoLoggerDev {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintNovaNoLoggerDevRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Nova_NoLoggerDev_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintNovaNoLoggerDevRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Nova_NoLoggerDev_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -82,8 +82,8 @@ export class RulesEslintNovaNoLoggerDev {
             return;
           }
 
-          const object: RulesEslintNovaNoLoggerDevRuleObject = node.callee.object;
-          const property: RulesEslintNovaNoLoggerDevRuleProperty = node.callee.property;
+          const object: Rules_Eslint_Nova_NoLoggerDev_Runner_RuleObject = node.callee.object;
+          const property: Rules_Eslint_Nova_NoLoggerDev_Runner_RuleProperty = node.callee.property;
 
           // Ensure the property explicitly reads ".dev" before flagging.
           if (property.type !== 'Identifier' || property.name !== 'dev') {
@@ -101,7 +101,7 @@ export class RulesEslintNovaNoLoggerDev {
           }
 
           // Flag scoped loggers such as "Logger.customize().dev"
-          if (RulesEslintNovaNoLoggerDev.isLoggerCustomizeCall(object) === true) {
+          if (Runner.isLoggerCustomizeCall(object) === true) {
             context.report({
               node,
               messageId: 'removeDev',
@@ -111,7 +111,7 @@ export class RulesEslintNovaNoLoggerDev {
           }
 
           // Catch variables (e.g., "const log = Logger.customize(); log.dev();").
-          if (object.type === 'Identifier' && RulesEslintNovaNoLoggerDev.cameFromLoggerCustomize(context, object) === true) {
+          if (object.type === 'Identifier' && Runner.cameFromLoggerCustomize(context, object) === true) {
             context.report({
               node,
               messageId: 'removeDev',
@@ -133,15 +133,15 @@ export class RulesEslintNovaNoLoggerDev {
    *
    * @private
    *
-   * @param {RulesEslintNovaNoLoggerDevFindVariableContext}    context    - Context.
-   * @param {RulesEslintNovaNoLoggerDevFindVariableIdentifier} identifier - Identifier.
+   * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Context}    context    - Context.
+   * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Identifier} identifier - Identifier.
    *
-   * @returns {RulesEslintNovaNoLoggerDevFindVariableReturns}
+   * @returns {Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Returns}
    *
    * @since 0.12.0
    */
-  private static findVariable(context: RulesEslintNovaNoLoggerDevFindVariableContext, identifier: RulesEslintNovaNoLoggerDevFindVariableIdentifier): RulesEslintNovaNoLoggerDevFindVariableReturns {
-    const scopeManager: RulesEslintNovaNoLoggerDevFindVariableScopeManager = context.sourceCode.scopeManager;
+  private static findVariable(context: Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Context, identifier: Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Identifier): Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Returns {
+    const scopeManager: Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_ScopeManager = context.sourceCode.scopeManager;
 
     if (scopeManager === undefined || scopeManager === null) {
       return undefined;
@@ -149,7 +149,7 @@ export class RulesEslintNovaNoLoggerDev {
 
     // Walk every scope so we can pinpoint the exact variable tied to this identifier.
     for (const scope of scopeManager.scopes) {
-      const variable: RulesEslintNovaNoLoggerDevFindVariableVariable = scope.set.get(identifier.name);
+      const variable: Rules_Eslint_Nova_NoLoggerDev_Runner_FindVariable_Variable = scope.set.get(identifier.name);
 
       // Confirm the identifier we are examining lines up with the variable's reference entry.
       if (variable !== undefined && variable.references.some((reference) => reference.identifier === identifier) === true) {
@@ -169,13 +169,13 @@ export class RulesEslintNovaNoLoggerDev {
    *
    * @private
    *
-   * @param {RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallNode} node - Node.
+   * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Node} node - Node.
    *
    * @returns {boolean}
    *
    * @since 0.12.0
    */
-  private static isLoggerCustomizeCall(node: RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallNode): node is RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallTypeGuard {
+  private static isLoggerCustomizeCall(node: Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Node): node is Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_TypeGuard {
     if (
       node === undefined
       || node === null
@@ -189,8 +189,8 @@ export class RulesEslintNovaNoLoggerDev {
       return false;
     }
 
-    const object: RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallObject = node.callee.object;
-    const property: RulesEslintNovaNoLoggerDevIsLoggerCustomizeCallProperty = node.callee.property;
+    const object: Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Object = node.callee.object;
+    const property: Rules_Eslint_Nova_NoLoggerDev_Runner_IsLoggerCustomizeCall_Property = node.callee.property;
 
     // Treat scoped loggers created via "Logger.customize" as equivalent to the base "Logger".
     return (
@@ -210,15 +210,15 @@ export class RulesEslintNovaNoLoggerDev {
    *
    * @private
    *
-   * @param {RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeContext}    context    - Context.
-   * @param {RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeIdentifier} identifier - Identifier.
+   * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Context}    context    - Context.
+   * @param {Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Identifier} identifier - Identifier.
    *
-   * @returns {RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeReturns}
+   * @returns {Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Returns}
    *
    * @since 0.12.0
    */
-  private static cameFromLoggerCustomize(context: RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeContext, identifier: RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeIdentifier): RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeReturns {
-    const variable: RulesEslintNovaNoLoggerDevCameFromLoggerCustomizeVariable = RulesEslintNovaNoLoggerDev.findVariable(context, identifier);
+  private static cameFromLoggerCustomize(context: Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Context, identifier: Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Identifier): Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Returns {
+    const variable: Rules_Eslint_Nova_NoLoggerDev_Runner_CameFromLoggerCustomize_Variable = Runner.findVariable(context, identifier);
 
     if (variable === undefined) {
       return false;
@@ -230,7 +230,7 @@ export class RulesEslintNovaNoLoggerDev {
         return false;
       }
 
-      return RulesEslintNovaNoLoggerDev.isLoggerCustomizeCall(def.node.init ?? null);
+      return Runner.isLoggerCustomizeCall(def.node.init ?? null);
     });
   }
 }

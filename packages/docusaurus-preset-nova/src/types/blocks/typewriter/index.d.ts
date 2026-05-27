@@ -7,89 +7,89 @@ import type {
  *
  * @since 0.15.0
  */
-export type BlocksTypewriterPropsChildren = ReactNode;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Props_Children = ReactNode;
 
-export type BlocksTypewriterPropsTypeSpeed = number | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Props_TypeSpeed = number | undefined;
 
-export type BlocksTypewriterPropsDeleteSpeed = number | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Props_DeleteSpeed = number | undefined;
 
-export type BlocksTypewriterPropsPauseDuration = number | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Props_PauseDuration = number | undefined;
 
-export type BlocksTypewriterPropsLoop = boolean | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Props_Loop = boolean | undefined;
 
-export type BlocksTypewriterPropsClassName = string | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Props_ClassName = string | undefined;
 
-export type BlocksTypewriterPropsStyle = CSSProperties | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Props_Style = CSSProperties | undefined;
 
-export type BlocksTypewriterProps = {
-  children: BlocksTypewriterPropsChildren;
-  typeSpeed?: BlocksTypewriterPropsTypeSpeed;
-  deleteSpeed?: BlocksTypewriterPropsDeleteSpeed;
-  pauseDuration?: BlocksTypewriterPropsPauseDuration;
-  loop?: BlocksTypewriterPropsLoop;
-  className?: BlocksTypewriterPropsClassName;
-  style?: BlocksTypewriterPropsStyle;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Props = {
+  children: Blocks_Typewriter_Index_BlocksTypewriter_Props_Children;
+  typeSpeed?: Blocks_Typewriter_Index_BlocksTypewriter_Props_TypeSpeed;
+  deleteSpeed?: Blocks_Typewriter_Index_BlocksTypewriter_Props_DeleteSpeed;
+  pauseDuration?: Blocks_Typewriter_Index_BlocksTypewriter_Props_PauseDuration;
+  loop?: Blocks_Typewriter_Index_BlocksTypewriter_Props_Loop;
+  className?: Blocks_Typewriter_Index_BlocksTypewriter_Props_ClassName;
+  style?: Blocks_Typewriter_Index_BlocksTypewriter_Props_Style;
 };
 
-export type BlocksTypewriterWords = string[];
+export type Blocks_Typewriter_Index_BlocksTypewriter_Words = string[];
 
-export type BlocksTypewriterWordElement = ReactElement<BlocksTypewriterWordProps>;
+export type Blocks_Typewriter_Index_BlocksTypewriter_WordElement = ReactElement<Blocks_Typewriter_Index_BlocksTypewriter_WordProps>;
 
-export type BlocksTypewriterRenderedChildren = ReactNode;
+export type Blocks_Typewriter_Index_BlocksTypewriter_RenderedChildren = ReactNode;
 
-export type BlocksTypewriterWordIndex = number;
+export type Blocks_Typewriter_Index_BlocksTypewriter_WordIndex = number;
 
-export type BlocksTypewriterWordIndexState = [BlocksTypewriterWordIndex, BlocksTypewriterSetWordIndex];
+export type Blocks_Typewriter_Index_BlocksTypewriter_WordIndexState = [Blocks_Typewriter_Index_BlocksTypewriter_WordIndex, Blocks_Typewriter_Index_BlocksTypewriter_SetWordIndex];
 
-export type BlocksTypewriterSetWordIndex = Dispatch<SetStateAction<BlocksTypewriterWordIndex>>;
+export type Blocks_Typewriter_Index_BlocksTypewriter_SetWordIndex = Dispatch<SetStateAction<Blocks_Typewriter_Index_BlocksTypewriter_WordIndex>>;
 
-export type BlocksTypewriterCharIndex = number;
+export type Blocks_Typewriter_Index_BlocksTypewriter_CharIndex = number;
 
-export type BlocksTypewriterCharIndexState = [BlocksTypewriterCharIndex, BlocksTypewriterSetCharIndex];
+export type Blocks_Typewriter_Index_BlocksTypewriter_CharIndexState = [Blocks_Typewriter_Index_BlocksTypewriter_CharIndex, Blocks_Typewriter_Index_BlocksTypewriter_SetCharIndex];
 
-export type BlocksTypewriterSetCharIndex = Dispatch<SetStateAction<BlocksTypewriterCharIndex>>;
+export type Blocks_Typewriter_Index_BlocksTypewriter_SetCharIndex = Dispatch<SetStateAction<Blocks_Typewriter_Index_BlocksTypewriter_CharIndex>>;
 
-export type BlocksTypewriterPhase = 'typing' | 'pausing' | 'deleting' | 'gap' | 'done';
+export type Blocks_Typewriter_Index_BlocksTypewriter_Phase = 'typing' | 'pausing' | 'deleting' | 'gap' | 'done';
 
-export type BlocksTypewriterPhaseState = [BlocksTypewriterPhase, BlocksTypewriterSetPhase];
+export type Blocks_Typewriter_Index_BlocksTypewriter_PhaseState = [Blocks_Typewriter_Index_BlocksTypewriter_Phase, Blocks_Typewriter_Index_BlocksTypewriter_SetPhase];
 
-export type BlocksTypewriterSetPhase = Dispatch<SetStateAction<BlocksTypewriterPhase>>;
+export type Blocks_Typewriter_Index_BlocksTypewriter_SetPhase = Dispatch<SetStateAction<Blocks_Typewriter_Index_BlocksTypewriter_Phase>>;
 
-export type BlocksTypewriterTypeSpeed = number;
+export type Blocks_Typewriter_Index_BlocksTypewriter_TypeSpeed = number;
 
-export type BlocksTypewriterDeleteSpeed = number;
+export type Blocks_Typewriter_Index_BlocksTypewriter_DeleteSpeed = number;
 
-export type BlocksTypewriterPauseDuration = number;
+export type Blocks_Typewriter_Index_BlocksTypewriter_PauseDuration = number;
 
-export type BlocksTypewriterLoop = boolean;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Loop = boolean;
 
-export type BlocksTypewriterCurrentWord = string;
+export type Blocks_Typewriter_Index_BlocksTypewriter_CurrentWord = string;
 
-export type BlocksTypewriterDisplayText = string;
+export type Blocks_Typewriter_Index_BlocksTypewriter_DisplayText = string;
 
-export type BlocksTypewriterTimeout = ReturnType<typeof setTimeout> | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_Timeout = ReturnType<typeof setTimeout> | undefined;
 
-export type BlocksTypewriterIsLastWord = boolean;
+export type Blocks_Typewriter_Index_BlocksTypewriter_IsLastWord = boolean;
 
-export type BlocksTypewriterMeasureWord = string;
+export type Blocks_Typewriter_Index_BlocksTypewriter_MeasureWord = string;
 
-export type BlocksTypewriterMeasureIndex = number;
+export type Blocks_Typewriter_Index_BlocksTypewriter_MeasureIndex = number;
 
 /**
  * Blocks - Typewriter - Prefix.
  *
  * @since 0.15.0
  */
-export type BlocksTypewriterPrefixPropsChildren = ReactNode;
+export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Children = ReactNode;
 
-export type BlocksTypewriterPrefixPropsClassName = string | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_ClassName = string | undefined;
 
-export type BlocksTypewriterPrefixPropsStyle = CSSProperties | undefined;
+export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Style = CSSProperties | undefined;
 
-export type BlocksTypewriterPrefixProps = {
-  children: BlocksTypewriterPrefixPropsChildren;
-  className?: BlocksTypewriterPrefixPropsClassName;
-  style?: BlocksTypewriterPrefixPropsStyle;
+export type Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps = {
+  children: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Children;
+  className?: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_ClassName;
+  style?: Blocks_Typewriter_Index_BlocksTypewriter_PrefixProps_Style;
 };
 
 /**
@@ -97,8 +97,8 @@ export type BlocksTypewriterPrefixProps = {
  *
  * @since 0.15.0
  */
-export type BlocksTypewriterWordPropsChildren = string;
+export type Blocks_Typewriter_Index_BlocksTypewriter_WordProps_Children = string;
 
-export type BlocksTypewriterWordProps = {
-  children: BlocksTypewriterWordPropsChildren;
+export type Blocks_Typewriter_Index_BlocksTypewriter_WordProps = {
+  children: Blocks_Typewriter_Index_BlocksTypewriter_WordProps_Children;
 };

@@ -508,7 +508,7 @@ export default [
         },
       ],
 
-      // Require PascalCase for classes/types, camelCase for functions/variables, UPPER_SNAKE for constants.
+      // Require PascalCase for classes, UnderscorePascalCase for type aliases, camelCase for functions/variables, UPPER_SNAKE for constants.
       '@cbnventures/nova/require-naming-convention': [
         'error',
         {
@@ -523,7 +523,7 @@ export default [
           interface: 'PascalCase',
           parameter: 'camelCase',
           reactComponent: 'PascalCase',
-          typeAlias: 'PascalCase',
+          typeAlias: 'UnderscorePascalCase',
           variable: 'camelCase',
         },
       ],

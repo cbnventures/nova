@@ -3,12 +3,12 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintFormattingNoRawTextInCodeCheckJSXTextContext,
-  RulesEslintFormattingNoRawTextInCodeCheckJSXTextNode,
-  RulesEslintFormattingNoRawTextInCodeCheckJSXTextParent,
-  RulesEslintFormattingNoRawTextInCodeCheckJSXTextReturns,
-  RulesEslintFormattingNoRawTextInCodeRuleDefaultOptionsIgnoreFiles,
-  RulesEslintFormattingNoRawTextInCodeRuleOptions,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Context,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Node,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Parent,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Returns,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Formatting_NoRawTextInCode_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/no-raw-text-in-code.d.ts';
 
 /**
@@ -19,7 +19,7 @@ import type {
  *
  * @since 0.13.0
  */
-export class RulesEslintFormattingNoRawTextInCode {
+export class Runner {
   /**
    * Rules - ESLint - Formatting - No Raw Text In Code - Rule.
    *
@@ -52,10 +52,10 @@ export class RulesEslintFormattingNoRawTextInCode {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintFormattingNoRawTextInCodeRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Formatting_NoRawTextInCode_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintFormattingNoRawTextInCodeRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Formatting_NoRawTextInCode_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -64,7 +64,7 @@ export class RulesEslintFormattingNoRawTextInCode {
 
       return {
         JSXText(node) {
-          RulesEslintFormattingNoRawTextInCode.checkJSXText(context, node);
+          Runner.checkJSXText(context, node);
 
           return;
         },
@@ -80,15 +80,15 @@ export class RulesEslintFormattingNoRawTextInCode {
    *
    * @private
    *
-   * @param {RulesEslintFormattingNoRawTextInCodeCheckJSXTextContext} context - Context.
-   * @param {RulesEslintFormattingNoRawTextInCodeCheckJSXTextNode}    node    - Node.
+   * @param {Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Context} context - Context.
+   * @param {Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Node}    node    - Node.
    *
-   * @returns {RulesEslintFormattingNoRawTextInCodeCheckJSXTextReturns}
+   * @returns {Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Returns}
    *
    * @since 0.13.0
    */
-  private static checkJSXText(context: RulesEslintFormattingNoRawTextInCodeCheckJSXTextContext, node: RulesEslintFormattingNoRawTextInCodeCheckJSXTextNode): RulesEslintFormattingNoRawTextInCodeCheckJSXTextReturns {
-    const parent: RulesEslintFormattingNoRawTextInCodeCheckJSXTextParent = node.parent;
+  private static checkJSXText(context: Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Context, node: Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Node): Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Returns {
+    const parent: Rules_Eslint_Formatting_NoRawTextInCode_Runner_CheckJSXText_Parent = node.parent;
 
     if (
       parent !== undefined

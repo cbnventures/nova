@@ -2,10 +2,10 @@ import { translate } from '@docusaurus/Translate';
 import Admonition from '@theme/Admonition';
 
 import type {
-  ThemeContentVisibilityDraftMessage,
-  ThemeContentVisibilityDraftProps,
-  ThemeContentVisibilityDraftReturns,
-  ThemeContentVisibilityDraftTitle,
+  Theme_ContentVisibility_Draft_Index_Draft_Message,
+  Theme_ContentVisibility_Draft_Index_Draft_Props,
+  Theme_ContentVisibility_Draft_Index_Draft_Returns,
+  Theme_ContentVisibility_Draft_Index_Draft_Title,
 } from '../../../types/theme/ContentVisibility/Draft/index.d.ts';
 
 /**
@@ -14,19 +14,19 @@ import type {
  * Renders a caution-styled admonition warning that
  * the current page content is in draft status and not published.
  *
- * @param {ThemeContentVisibilityDraftProps} props - Props.
+ * @param {Theme_ContentVisibility_Draft_Index_Draft_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Draft(props: ThemeContentVisibilityDraftProps): ThemeContentVisibilityDraftReturns {
-  const title: ThemeContentVisibilityDraftTitle = translate({
+function Draft(props: Theme_ContentVisibility_Draft_Index_Draft_Props): Theme_ContentVisibility_Draft_Index_Draft_Returns {
+  const title: Theme_ContentVisibility_Draft_Index_Draft_Title = translate({
     id: 'theme.contentVisibility.draftBanner.title',
     message: 'Draft page',
     description: 'The draft content banner title',
   });
-  const message: ThemeContentVisibilityDraftMessage = translate({
+  const message: Theme_ContentVisibility_Draft_Index_Draft_Message = translate({
     id: 'theme.contentVisibility.draftBanner.message',
     message: 'This page is a draft. It will only be visible in development and excluded from the production build.',
     description: 'The draft content banner message',

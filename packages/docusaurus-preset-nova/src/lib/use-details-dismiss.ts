@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 
 import type {
-  LibUseDetailsDismissDetailsRef,
-  LibUseDetailsDismissHandleKeyDownFunction,
-  LibUseDetailsDismissHandleKeyDownKeyboardEvent,
-  LibUseDetailsDismissHandleMouseDownFunction,
-  LibUseDetailsDismissHandleMouseDownMouseEvent,
-  LibUseDetailsDismissHandleMouseDownMouseTarget,
-  LibUseDetailsDismissReturns,
+  Lib_UseDetailsDismiss_DetailsRef,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown_Function,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown_KeyboardEvent,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_Function,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseEvent,
+  Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget,
+  Lib_UseDetailsDismiss_Returns,
 } from '../types/lib/use-details-dismiss.d.ts';
 
 /**
@@ -17,16 +17,16 @@ import type {
  * it is open. Document-level listeners are bound on mount and cleaned up
  * on unmount, matching the dismissal pattern shared across navbar dropdowns.
  *
- * @param {LibUseDetailsDismissDetailsRef} detailsRef - Details ref.
+ * @param {Lib_UseDetailsDismiss_DetailsRef} detailsRef - Details ref.
  *
- * @returns {LibUseDetailsDismissReturns}
+ * @returns {Lib_UseDetailsDismiss_Returns}
  *
  * @since 0.18.0
  */
-export function useDetailsDismiss(detailsRef: LibUseDetailsDismissDetailsRef): LibUseDetailsDismissReturns {
+export function useDetailsDismiss(detailsRef: Lib_UseDetailsDismiss_DetailsRef): Lib_UseDetailsDismiss_Returns {
   useEffect(() => {
-    const handleMouseDown: LibUseDetailsDismissHandleMouseDownFunction = (event: LibUseDetailsDismissHandleMouseDownMouseEvent) => {
-      const mouseTarget: LibUseDetailsDismissHandleMouseDownMouseTarget = event.target as LibUseDetailsDismissHandleMouseDownMouseTarget;
+    const handleMouseDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_Function = (event: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseEvent) => {
+      const mouseTarget: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget = event.target as Lib_UseDetailsDismiss_UseDetailsDismiss_HandleMouseDown_MouseTarget;
 
       if (
         detailsRef.current !== null
@@ -39,7 +39,7 @@ export function useDetailsDismiss(detailsRef: LibUseDetailsDismissDetailsRef): L
       return undefined;
     };
 
-    const handleKeyDown: LibUseDetailsDismissHandleKeyDownFunction = (event: LibUseDetailsDismissHandleKeyDownKeyboardEvent) => {
+    const handleKeyDown: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown_Function = (event: Lib_UseDetailsDismiss_UseDetailsDismiss_HandleKeyDown_KeyboardEvent) => {
       if (
         event.key === 'Escape'
         && detailsRef.current !== null

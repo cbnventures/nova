@@ -16,17 +16,17 @@ vi.mock('prompts', () => (
   }
 ));
 
-import { CliGenerateGithubIssueTemplate } from '../../../../cli/generate/github/issue-template.js';
-import { LibNovaConfig } from '../../../../lib/nova-config.js';
+import { Runner as CliGenerateGithubIssueTemplate } from '../../../../cli/generate/github/issue-template.js';
+import { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  TestsCliGenerateGithubIssueTemplateRunHeaderArg,
-  TestsCliGenerateGithubIssueTemplateRunIsProjectRootSpy,
-  TestsCliGenerateGithubIssueTemplateRunLoadSpy,
-  TestsCliGenerateGithubIssueTemplateRunSaveCalls,
-  TestsCliGenerateGithubIssueTemplateRunSaveSpy,
-  TestsCliGenerateGithubIssueTemplateRunTargetCall,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_HeaderArg,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_IsProjectRootSpy,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_LoadSpy,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SaveCalls,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SaveSpy,
+  Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_TargetCall,
 } from '../../../../types/tests/cli/generate/github/issue-template.test.d.ts';
 
 /**
@@ -38,7 +38,7 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
   it('sets exit code when not at project root', async () => {
     process.exitCode = 0;
 
-    const isProjectRootSpy: TestsCliGenerateGithubIssueTemplateRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
+    const isProjectRootSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
 
     await CliGenerateGithubIssueTemplate.run({});
 
@@ -52,15 +52,15 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
   });
 
   it('passes the correct header metadata to saveGeneratedFile', async () => {
-    const isProjectRootSpy: TestsCliGenerateGithubIssueTemplateRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const loadSpy: TestsCliGenerateGithubIssueTemplateRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { name: { slug: 'test' } } });
-    const saveSpy: TestsCliGenerateGithubIssueTemplateRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+    const isProjectRootSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ project: { name: { slug: 'test' } } });
+    const saveSpy: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubIssueTemplate.run({ replaceFile: true });
 
-    const calls: TestsCliGenerateGithubIssueTemplateRunSaveCalls = saveSpy['mock']['calls'];
+    const calls: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SaveCalls = saveSpy['mock']['calls'];
 
-    const targetCall: TestsCliGenerateGithubIssueTemplateRunTargetCall = calls.find((call) => (
+    const targetCall: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_TargetCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('ISSUE_TEMPLATE')
       && call[0].endsWith('.yml')
@@ -68,7 +68,7 @@ describe('CliGenerateGithubIssueTemplate.run', () => {
 
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for an ISSUE_TEMPLATE .yml file');
 
-    const headerArg: TestsCliGenerateGithubIssueTemplateRunHeaderArg = targetCall[3];
+    const headerArg: Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_HeaderArg = targetCall[3];
 
     ok(headerArg !== undefined, 'Expected header argument to be defined');
 

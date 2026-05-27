@@ -3,10 +3,10 @@
  *
  * @since 0.18.0
  */
-export type LibSafeJsonLdSerializeJsonLdValue = unknown;
+export type Lib_SafeJsonLd_SerializeJsonLd_Value = unknown;
 
-export type LibSafeJsonLdSerializeJsonLdReturns = string;
+export type Lib_SafeJsonLd_SerializeJsonLd_Returns = string;
 
-export type LibSafeJsonLdSerializeJsonLdLessThanPattern = RegExp;
+export type Lib_SafeJsonLd_SerializeJsonLd_LessThanPattern = RegExp;
 
-export type LibSafeJsonLdSerializeJsonLdRaw = string;
+export type Lib_SafeJsonLd_SerializeJsonLd_Raw = string;

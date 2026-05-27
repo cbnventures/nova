@@ -3,172 +3,172 @@
  *
  * @since 0.15.0
  */
-export type TestsLibCssGeneratorResult = string;
+export type Tests_Lib_CssGenerator_Result = string;
 
-export type TestsLibCssGeneratorIncludesRoot = boolean;
+export type Tests_Lib_CssGenerator_IncludesRoot = boolean;
 
-export type TestsLibCssGeneratorIncludesPrimary = boolean;
+export type Tests_Lib_CssGenerator_IncludesPrimary = boolean;
 
-export type TestsLibCssGeneratorIncludesAccent = boolean;
+export type Tests_Lib_CssGenerator_IncludesAccent = boolean;
 
-export type TestsLibCssGeneratorIncludesText = boolean;
+export type Tests_Lib_CssGenerator_IncludesText = boolean;
 
-export type TestsLibCssGeneratorIncludesBorder = boolean;
+export type Tests_Lib_CssGenerator_IncludesBorder = boolean;
 
-export type TestsLibCssGeneratorIncludesSurface = boolean;
+export type Tests_Lib_CssGenerator_IncludesSurface = boolean;
 
-export type TestsLibCssGeneratorIncludesFont = boolean;
+export type Tests_Lib_CssGenerator_IncludesFont = boolean;
 
-export type TestsLibCssGeneratorIncludesShape = boolean;
+export type Tests_Lib_CssGenerator_IncludesShape = boolean;
 
-export type TestsLibCssGeneratorIncludesDepth = boolean;
+export type Tests_Lib_CssGenerator_IncludesDepth = boolean;
 
-export type TestsLibCssGeneratorIncludesMotion = boolean;
+export type Tests_Lib_CssGenerator_IncludesMotion = boolean;
 
-export type TestsLibCssGeneratorIncludesMotionEasing = boolean;
+export type Tests_Lib_CssGenerator_IncludesMotionEasing = boolean;
 
-export type TestsLibCssGeneratorColorResult = string;
+export type Tests_Lib_CssGenerator_ColorResult = string;
 
-export type TestsLibCssGeneratorColorIncludesFifty = boolean;
+export type Tests_Lib_CssGenerator_ColorIncludesFifty = boolean;
 
-export type TestsLibCssGeneratorColorIncludesNineHundred = boolean;
+export type Tests_Lib_CssGenerator_ColorIncludesNineHundred = boolean;
 
-export type TestsLibCssGeneratorColorIncludesNineFifty = boolean;
+export type Tests_Lib_CssGenerator_ColorIncludesNineFifty = boolean;
 
 /**
  * Tests - Lib - CSS Generator - CssGenerator Generate Depth Variables.
  *
  * @since 0.15.0
  */
-export type TestsLibCssGeneratorFlatResult = string;
+export type Tests_Lib_CssGenerator_FlatResult = string;
 
-export type TestsLibCssGeneratorFlatIncludesNone = boolean;
+export type Tests_Lib_CssGenerator_FlatIncludesNone = boolean;
 
-export type TestsLibCssGeneratorElevatedResult = string;
+export type Tests_Lib_CssGenerator_ElevatedResult = string;
 
-export type TestsLibCssGeneratorElevatedIncludesShadow = boolean;
+export type Tests_Lib_CssGenerator_ElevatedIncludesShadow = boolean;
 
-export type TestsLibCssGeneratorGlassResult = string;
+export type Tests_Lib_CssGenerator_GlassResult = string;
 
-export type TestsLibCssGeneratorGlassIncludesBlur = boolean;
+export type Tests_Lib_CssGenerator_GlassIncludesBlur = boolean;
 
 /**
  * Tests - Lib - CSS Generator - CssGenerator Generate Grid Variables.
  *
  * @since 0.15.0
  */
-export type TestsLibCssGeneratorCompactGridResult = string;
+export type Tests_Lib_CssGenerator_CompactGridResult = string;
 
-export type TestsLibCssGeneratorCompactGridSections = string[];
+export type Tests_Lib_CssGenerator_CompactGridSections = string[];
 
-export type TestsLibCssGeneratorCompactGridRootBlock = string;
+export type Tests_Lib_CssGenerator_CompactGridRootBlock = string;
 
-export type TestsLibCssGeneratorCompactGridIncludesGutterTwelve = boolean;
+export type Tests_Lib_CssGenerator_CompactGridIncludesGutterTwelve = boolean;
 
-export type TestsLibCssGeneratorCompactGridIncludesPaddingTwelve = boolean;
+export type Tests_Lib_CssGenerator_CompactGridIncludesPaddingTwelve = boolean;
 
-export type TestsLibCssGeneratorComfortableGridResult = string;
+export type Tests_Lib_CssGenerator_ComfortableGridResult = string;
 
-export type TestsLibCssGeneratorComfortableGridSections = string[];
+export type Tests_Lib_CssGenerator_ComfortableGridSections = string[];
 
-export type TestsLibCssGeneratorComfortableGridRootBlock = string;
+export type Tests_Lib_CssGenerator_ComfortableGridRootBlock = string;
 
-export type TestsLibCssGeneratorComfortableGridIncludesGutterSixteen = boolean;
+export type Tests_Lib_CssGenerator_ComfortableGridIncludesGutterSixteen = boolean;
 
-export type TestsLibCssGeneratorComfortableGridIncludesPaddingSixteen = boolean;
+export type Tests_Lib_CssGenerator_ComfortableGridIncludesPaddingSixteen = boolean;
 
-export type TestsLibCssGeneratorSpaciousGridResult = string;
+export type Tests_Lib_CssGenerator_SpaciousGridResult = string;
 
-export type TestsLibCssGeneratorSpaciousGridSections = string[];
+export type Tests_Lib_CssGenerator_SpaciousGridSections = string[];
 
-export type TestsLibCssGeneratorSpaciousGridRootBlock = string;
+export type Tests_Lib_CssGenerator_SpaciousGridRootBlock = string;
 
-export type TestsLibCssGeneratorSpaciousGridIncludesGutterTwenty = boolean;
+export type Tests_Lib_CssGenerator_SpaciousGridIncludesGutterTwenty = boolean;
 
-export type TestsLibCssGeneratorSpaciousGridIncludesPaddingTwenty = boolean;
+export type Tests_Lib_CssGenerator_SpaciousGridIncludesPaddingTwenty = boolean;
 
-export type TestsLibCssGeneratorCompactGridMediumSections = string[];
+export type Tests_Lib_CssGenerator_CompactGridMediumSections = string[];
 
-export type TestsLibCssGeneratorCompactGridMediumBlock = string;
+export type Tests_Lib_CssGenerator_CompactGridMediumBlock = string;
 
-export type TestsLibCssGeneratorCompactGridLargeBlock = string;
+export type Tests_Lib_CssGenerator_CompactGridLargeBlock = string;
 
-export type TestsLibCssGeneratorCompactGridMediumIncludesGutterSixteen = boolean;
+export type Tests_Lib_CssGenerator_CompactGridMediumIncludesGutterSixteen = boolean;
 
-export type TestsLibCssGeneratorCompactGridMediumIncludesPaddingSixteen = boolean;
+export type Tests_Lib_CssGenerator_CompactGridMediumIncludesPaddingSixteen = boolean;
 
-export type TestsLibCssGeneratorCompactGridLargeIncludesGutterTwenty = boolean;
+export type Tests_Lib_CssGenerator_CompactGridLargeIncludesGutterTwenty = boolean;
 
-export type TestsLibCssGeneratorCompactGridLargeIncludesPaddingTwenty = boolean;
+export type Tests_Lib_CssGenerator_CompactGridLargeIncludesPaddingTwenty = boolean;
 
-export type TestsLibCssGeneratorComfortableGridMediumSections = string[];
+export type Tests_Lib_CssGenerator_ComfortableGridMediumSections = string[];
 
-export type TestsLibCssGeneratorComfortableGridMediumBlock = string;
+export type Tests_Lib_CssGenerator_ComfortableGridMediumBlock = string;
 
-export type TestsLibCssGeneratorComfortableGridLargeBlock = string;
+export type Tests_Lib_CssGenerator_ComfortableGridLargeBlock = string;
 
-export type TestsLibCssGeneratorComfortableGridMediumIncludesGutterTwenty = boolean;
+export type Tests_Lib_CssGenerator_ComfortableGridMediumIncludesGutterTwenty = boolean;
 
-export type TestsLibCssGeneratorComfortableGridMediumIncludesPaddingTwenty = boolean;
+export type Tests_Lib_CssGenerator_ComfortableGridMediumIncludesPaddingTwenty = boolean;
 
-export type TestsLibCssGeneratorComfortableGridLargeIncludesGutterTwentyFour = boolean;
+export type Tests_Lib_CssGenerator_ComfortableGridLargeIncludesGutterTwentyFour = boolean;
 
-export type TestsLibCssGeneratorComfortableGridLargeIncludesPaddingTwentyFour = boolean;
+export type Tests_Lib_CssGenerator_ComfortableGridLargeIncludesPaddingTwentyFour = boolean;
 
-export type TestsLibCssGeneratorSpaciousGridMediumSections = string[];
+export type Tests_Lib_CssGenerator_SpaciousGridMediumSections = string[];
 
-export type TestsLibCssGeneratorSpaciousGridMediumBlock = string;
+export type Tests_Lib_CssGenerator_SpaciousGridMediumBlock = string;
 
-export type TestsLibCssGeneratorSpaciousGridLargeBlock = string;
+export type Tests_Lib_CssGenerator_SpaciousGridLargeBlock = string;
 
-export type TestsLibCssGeneratorSpaciousGridMediumIncludesGutterTwentyFour = boolean;
+export type Tests_Lib_CssGenerator_SpaciousGridMediumIncludesGutterTwentyFour = boolean;
 
-export type TestsLibCssGeneratorSpaciousGridMediumIncludesPaddingTwentyFour = boolean;
+export type Tests_Lib_CssGenerator_SpaciousGridMediumIncludesPaddingTwentyFour = boolean;
 
-export type TestsLibCssGeneratorSpaciousGridLargeIncludesGutterThirtyTwo = boolean;
+export type Tests_Lib_CssGenerator_SpaciousGridLargeIncludesGutterThirtyTwo = boolean;
 
-export type TestsLibCssGeneratorSpaciousGridLargeIncludesPaddingThirtyTwo = boolean;
+export type Tests_Lib_CssGenerator_SpaciousGridLargeIncludesPaddingThirtyTwo = boolean;
 
-export type TestsLibCssGeneratorGridMediaResult = string;
+export type Tests_Lib_CssGenerator_GridMediaResult = string;
 
-export type TestsLibCssGeneratorGridMediaIncludesFourEighty = boolean;
+export type Tests_Lib_CssGenerator_GridMediaIncludesFourEighty = boolean;
 
-export type TestsLibCssGeneratorGridMediaIncludesSevenSixtyEight = boolean;
+export type Tests_Lib_CssGenerator_GridMediaIncludesSevenSixtyEight = boolean;
 
-export type TestsLibCssGeneratorGridIntegrationResult = string;
+export type Tests_Lib_CssGenerator_GridIntegrationResult = string;
 
-export type TestsLibCssGeneratorGridIntegrationIncludesRoot = boolean;
+export type Tests_Lib_CssGenerator_GridIntegrationIncludesRoot = boolean;
 
-export type TestsLibCssGeneratorGridIntegrationIncludesMedia = boolean;
+export type Tests_Lib_CssGenerator_GridIntegrationIncludesMedia = boolean;
 
-export type TestsLibCssGeneratorGridIntegrationIncludesGutter = boolean;
+export type Tests_Lib_CssGenerator_GridIntegrationIncludesGutter = boolean;
 
 /**
  * Tests - Lib - CSS Generator - CssGenerator Generate Motion Variables.
  *
  * @since 0.15.0
  */
-export type TestsLibCssGeneratorNoneMotionResult = string;
+export type Tests_Lib_CssGenerator_NoneMotionResult = string;
 
-export type TestsLibCssGeneratorNoneMotionIncludesZero = boolean;
+export type Tests_Lib_CssGenerator_NoneMotionIncludesZero = boolean;
 
-export type TestsLibCssGeneratorExpressiveMotionResult = string;
+export type Tests_Lib_CssGenerator_ExpressiveMotionResult = string;
 
-export type TestsLibCssGeneratorExpressiveMotionIncludesThreeHundred = boolean;
+export type Tests_Lib_CssGenerator_ExpressiveMotionIncludesThreeHundred = boolean;
 
-export type TestsLibCssGeneratorMotionEasingResult = string;
+export type Tests_Lib_CssGenerator_MotionEasingResult = string;
 
-export type TestsLibCssGeneratorMotionEasingIncludesCurve = boolean;
+export type Tests_Lib_CssGenerator_MotionEasingIncludesCurve = boolean;
 
 /**
  * Tests - Lib - CSS Generator - CssGenerator Generate Shape Variables.
  *
  * @since 0.15.0
  */
-export type TestsLibCssGeneratorSharpResult = string;
+export type Tests_Lib_CssGenerator_SharpResult = string;
 
-export type TestsLibCssGeneratorSharpIncludesZero = boolean;
+export type Tests_Lib_CssGenerator_SharpIncludesZero = boolean;
 
-export type TestsLibCssGeneratorPillResult = string;
+export type Tests_Lib_CssGenerator_PillResult = string;
 
-export type TestsLibCssGeneratorPillIncludesLargeRadius = boolean;
+export type Tests_Lib_CssGenerator_PillIncludesLargeRadius = boolean;

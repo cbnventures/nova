@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireMultilineConditionGroups } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintFormattingRequireMultilineConditionGroupsRuleTester } from '../../../../types/tests/rules/eslint/formatting/require-multiline-condition-groups.test.d.ts';
+import type { Tests_Rules_Eslint_Formatting_RequireMultilineConditionGroups_RuleTester } from '../../../../types/tests/rules/eslint/formatting/require-multiline-condition-groups.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Formatting - Require Multiline Condition Groups.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintFormattingRequireMultilineConditionGroupsRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Formatting_RequireMultilineConditionGroups_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

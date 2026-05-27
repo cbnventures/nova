@@ -1,11 +1,11 @@
-import type { SharedLoggerCustomizeReturns } from '../../shared.d.ts';
+import type { Shared_LoggerCustomizeReturns } from '../../shared.d.ts';
 
 /**
  * Tests - Toolkit - Logger - Logger Customize.
  *
  * @since 0.13.0
  */
-export type TestsToolkitLoggerLoggerCustomizeScoped = SharedLoggerCustomizeReturns;
+export type Tests_Toolkit_Logger_LoggerCustomize_Scoped = Shared_LoggerCustomizeReturns;
 
 /**
  * Tests - Toolkit - Logger - Logger Output Levels.

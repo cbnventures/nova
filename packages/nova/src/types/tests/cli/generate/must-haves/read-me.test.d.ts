@@ -3,77 +3,77 @@
  *
  * @since 0.18.0
  */
-export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxSandboxRoot = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_SandboxRoot = string;
 
-export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxName = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_Name = string;
 
-export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxReturns = Promise<string>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_Returns = Promise<string>;
 
-export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxProjectDirectory = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_ProjectDirectory = string;
 
-export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxPackageJson = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_PackageJson = string;
 
-export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxPackageJsonPath = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_PackageJsonPath = string;
 
-export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxNovaConfig = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_NovaConfig = string;
 
-export type TestsCliGenerateMustHavesReadMeCreateRoleMatrixSandboxNovaConfigPath = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CreateRoleMatrixSandbox_NovaConfigPath = string;
 
 /**
  * Tests - CLI - Generate - Must Haves - Read Me - Run.
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateMustHavesReadMeRunOriginalCwd = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_OriginalCwd = string;
 
-export type TestsCliGenerateMustHavesReadMeRunTemporaryDirectory = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TemporaryDirectory = string;
 
-export type TestsCliGenerateMustHavesReadMeRunTemporaryPrefix = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TemporaryPrefix = string;
 
-export type TestsCliGenerateMustHavesReadMeRunSandboxRoot = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SandboxRoot = string;
 
-export type TestsCliGenerateMustHavesReadMeRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesReadMeRunLoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesReadMeRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesReadMeRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_SaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined][];
 
-export type TestsCliGenerateMustHavesReadMeRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_TargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
-export type TestsCliGenerateMustHavesReadMeRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;
 
-export type TestsCliGenerateMustHavesReadMeRunProjectDirectory = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ProjectDirectory = string;
 
-export type TestsCliGenerateMustHavesReadMeRunPackageJson = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJson = string;
 
-export type TestsCliGenerateMustHavesReadMeRunPackageJsonPath = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_PackageJsonPath = string;
 
-export type TestsCliGenerateMustHavesReadMeRunNovaConfig = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfig = string;
 
-export type TestsCliGenerateMustHavesReadMeRunNovaConfigPath = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_NovaConfigPath = string;
 
-export type TestsCliGenerateMustHavesReadMeRunReadmePath = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmePath = string;
 
-export type TestsCliGenerateMustHavesReadMeRunReadmeContent = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadmeContent = string;
 
-export type TestsCliGenerateMustHavesReadMeRunHasDocumentationSection = boolean;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasDocumentationSection = boolean;
 
-export type TestsCliGenerateMustHavesReadMeRunHasBrokenLink = boolean;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasBrokenLink = boolean;
 
-export type TestsCliGenerateMustHavesReadMeRunHasIntroductionSection = boolean;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasIntroductionSection = boolean;
 
-export type TestsCliGenerateMustHavesReadMeRunHasPictureBlock = boolean;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasPictureBlock = boolean;
 
-export type TestsCliGenerateMustHavesReadMeRunHasHeaderBlock = boolean;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasHeaderBlock = boolean;
 
-export type TestsCliGenerateMustHavesReadMeRunHasAnchorWrapping = boolean;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasAnchorWrapping = boolean;
 
-export type TestsCliGenerateMustHavesReadMeRunReadContent = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_ReadContent = string;
 
-export type TestsCliGenerateMustHavesReadMeRunExists = boolean;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_Exists = boolean;
 
-export type TestsCliGenerateMustHavesReadMeRunStaleContent = string;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_StaleContent = string;
 
-export type TestsCliGenerateMustHavesReadMeRunHasStaleContent = boolean;
+export type Tests_Cli_Generate_MustHaves_ReadMe_CliGenerateMustHavesReadMeRun_HasStaleContent = boolean;

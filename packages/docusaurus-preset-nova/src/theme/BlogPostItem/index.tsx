@@ -7,38 +7,38 @@ import ContentFooter from '@theme/ContentFooter';
 import MDXContent from '@theme/MDXContent';
 
 import type {
-  ThemeBlogPostItemBlogPostItemArticleClassName,
-  ThemeBlogPostItemBlogPostItemAssetsAuthorImageUrls,
-  ThemeBlogPostItemBlogPostItemAuthor,
-  ThemeBlogPostItemBlogPostItemAuthorImageUrl,
-  ThemeBlogPostItemBlogPostItemAuthorIndex,
-  ThemeBlogPostItemBlogPostItemAuthorPage,
-  ThemeBlogPostItemBlogPostItemAuthorPermalink,
-  ThemeBlogPostItemBlogPostItemAuthors,
-  ThemeBlogPostItemBlogPostItemBlogPost,
-  ThemeBlogPostItemBlogPostItemBlogShareConfig,
-  ThemeBlogPostItemBlogPostItemContext,
-  ThemeBlogPostItemBlogPostItemCurrentLocale,
-  ThemeBlogPostItemBlogPostItemDate,
-  ThemeBlogPostItemBlogPostItemDateObject,
-  ThemeBlogPostItemBlogPostItemFormattedDate,
-  ThemeBlogPostItemBlogPostItemFormattedReadingTime,
-  ThemeBlogPostItemBlogPostItemHasShareButtons,
-  ThemeBlogPostItemBlogPostItemHasTruncateMarker,
-  ThemeBlogPostItemBlogPostItemIsBlogPostPage,
-  ThemeBlogPostItemBlogPostItemPermalink,
-  ThemeBlogPostItemBlogPostItemProps,
-  ThemeBlogPostItemBlogPostItemReadingTime,
-  ThemeBlogPostItemBlogPostItemReadingTimeLabel,
-  ThemeBlogPostItemBlogPostItemReadMore,
-  ThemeBlogPostItemBlogPostItemReadMoreAriaLabel,
-  ThemeBlogPostItemBlogPostItemSharePlatforms,
-  ThemeBlogPostItemBlogPostItemShareUrl,
-  ThemeBlogPostItemBlogPostItemTag,
-  ThemeBlogPostItemBlogPostItemTags,
-  ThemeBlogPostItemBlogPostItemThemeConfig,
-  ThemeBlogPostItemBlogPostItemThemeConfigCast,
-  ThemeBlogPostItemBlogPostItemTitle,
+  Theme_BlogPostItem_Index_BlogPostItem_ArticleClassName,
+  Theme_BlogPostItem_Index_BlogPostItem_AssetsAuthorImageUrls,
+  Theme_BlogPostItem_Index_BlogPostItem_Author,
+  Theme_BlogPostItem_Index_BlogPostItem_AuthorImageUrl,
+  Theme_BlogPostItem_Index_BlogPostItem_AuthorIndex,
+  Theme_BlogPostItem_Index_BlogPostItem_AuthorPage,
+  Theme_BlogPostItem_Index_BlogPostItem_AuthorPermalink,
+  Theme_BlogPostItem_Index_BlogPostItem_Authors,
+  Theme_BlogPostItem_Index_BlogPostItem_BlogPost,
+  Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog,
+  Theme_BlogPostItem_Index_BlogPostItem_Context,
+  Theme_BlogPostItem_Index_BlogPostItem_CurrentLocale,
+  Theme_BlogPostItem_Index_BlogPostItem_Date,
+  Theme_BlogPostItem_Index_BlogPostItem_DateObject,
+  Theme_BlogPostItem_Index_BlogPostItem_FormattedDate,
+  Theme_BlogPostItem_Index_BlogPostItem_FormattedReadingTime,
+  Theme_BlogPostItem_Index_BlogPostItem_HasShareButtons,
+  Theme_BlogPostItem_Index_BlogPostItem_HasTruncateMarker,
+  Theme_BlogPostItem_Index_BlogPostItem_IsBlogPostPage,
+  Theme_BlogPostItem_Index_BlogPostItem_Permalink,
+  Theme_BlogPostItem_Index_BlogPostItem_Props,
+  Theme_BlogPostItem_Index_BlogPostItem_ReadingTime,
+  Theme_BlogPostItem_Index_BlogPostItem_ReadingTimeLabel,
+  Theme_BlogPostItem_Index_BlogPostItem_ReadMore,
+  Theme_BlogPostItem_Index_BlogPostItem_ReadMoreAriaLabel,
+  Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share_Platforms,
+  Theme_BlogPostItem_Index_BlogPostItem_ShareUrl,
+  Theme_BlogPostItem_Index_BlogPostItem_Tag,
+  Theme_BlogPostItem_Index_BlogPostItem_Tags,
+  Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig,
+  Theme_BlogPostItem_Index_BlogPostItem_ThemeConfigCast,
+  Theme_BlogPostItem_Index_BlogPostItem_Title,
 } from '../../types/theme/BlogPostItem/index.d.ts';
 
 /**
@@ -48,28 +48,28 @@ import type {
  * a card view on listing pages and an open-flow view
  * on individual post pages.
  *
- * @param {ThemeBlogPostItemBlogPostItemProps} props - Props.
+ * @param {Theme_BlogPostItem_Index_BlogPostItem_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogPostItem(props: ThemeBlogPostItemBlogPostItemProps) {
-  const context: ThemeBlogPostItemBlogPostItemContext = useDocusaurusContext();
-  const currentLocale: ThemeBlogPostItemBlogPostItemCurrentLocale = context['i18n']['currentLocale'];
-  const blogPost: ThemeBlogPostItemBlogPostItemBlogPost = useBlogPost();
-  const isBlogPostPage: ThemeBlogPostItemBlogPostItemIsBlogPostPage = blogPost['isBlogPostPage'];
-  const title: ThemeBlogPostItemBlogPostItemTitle = blogPost['metadata']['title'];
-  const permalink: ThemeBlogPostItemBlogPostItemPermalink = blogPost['metadata']['permalink'];
-  const date: ThemeBlogPostItemBlogPostItemDate = blogPost['metadata']['date'];
-  const dateObject: ThemeBlogPostItemBlogPostItemDateObject = new Date(date);
-  const formattedDate: ThemeBlogPostItemBlogPostItemFormattedDate = dateObject.toLocaleDateString(currentLocale, {
+function BlogPostItem(props: Theme_BlogPostItem_Index_BlogPostItem_Props) {
+  const context: Theme_BlogPostItem_Index_BlogPostItem_Context = useDocusaurusContext();
+  const currentLocale: Theme_BlogPostItem_Index_BlogPostItem_CurrentLocale = context['i18n']['currentLocale'];
+  const blogPost: Theme_BlogPostItem_Index_BlogPostItem_BlogPost = useBlogPost();
+  const isBlogPostPage: Theme_BlogPostItem_Index_BlogPostItem_IsBlogPostPage = blogPost['isBlogPostPage'];
+  const title: Theme_BlogPostItem_Index_BlogPostItem_Title = blogPost['metadata']['title'];
+  const permalink: Theme_BlogPostItem_Index_BlogPostItem_Permalink = blogPost['metadata']['permalink'];
+  const date: Theme_BlogPostItem_Index_BlogPostItem_Date = blogPost['metadata']['date'];
+  const dateObject: Theme_BlogPostItem_Index_BlogPostItem_DateObject = new Date(date);
+  const formattedDate: Theme_BlogPostItem_Index_BlogPostItem_FormattedDate = dateObject.toLocaleDateString(currentLocale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
-  const readingTime: ThemeBlogPostItemBlogPostItemReadingTime = blogPost['metadata']['readingTime'];
-  const readingTimeLabel: ThemeBlogPostItemBlogPostItemReadingTimeLabel = translate(
+  const readingTime: Theme_BlogPostItem_Index_BlogPostItem_ReadingTime = blogPost['metadata']['readingTime'];
+  const readingTimeLabel: Theme_BlogPostItem_Index_BlogPostItem_ReadingTimeLabel = translate(
     {
       id: 'theme.blog.post.readingTime.plurals',
       message: '{readingTime} min read',
@@ -77,17 +77,17 @@ function BlogPostItem(props: ThemeBlogPostItemBlogPostItemProps) {
     },
     { readingTime: (readingTime !== undefined) ? String(Math.ceil(readingTime)) : '' },
   );
-  const formattedReadingTime: ThemeBlogPostItemBlogPostItemFormattedReadingTime = (readingTime !== undefined) ? readingTimeLabel : '';
-  const hasTruncateMarker: ThemeBlogPostItemBlogPostItemHasTruncateMarker = blogPost['metadata']['hasTruncateMarker'];
-  const authors: ThemeBlogPostItemBlogPostItemAuthors = blogPost['metadata']['authors'];
-  const authorsImageUrls: ThemeBlogPostItemBlogPostItemAssetsAuthorImageUrls = blogPost['assets']['authorsImageUrls'];
-  const tags: ThemeBlogPostItemBlogPostItemTags = blogPost['metadata']['tags'];
+  const formattedReadingTime: Theme_BlogPostItem_Index_BlogPostItem_FormattedReadingTime = (readingTime !== undefined) ? readingTimeLabel : '';
+  const hasTruncateMarker: Theme_BlogPostItem_Index_BlogPostItem_HasTruncateMarker = blogPost['metadata']['hasTruncateMarker'];
+  const authors: Theme_BlogPostItem_Index_BlogPostItem_Authors = blogPost['metadata']['authors'];
+  const authorsImageUrls: Theme_BlogPostItem_Index_BlogPostItem_AssetsAuthorImageUrls = blogPost['assets']['authorsImageUrls'];
+  const tags: Theme_BlogPostItem_Index_BlogPostItem_Tags = blogPost['metadata']['tags'];
 
-  const articleClassName: ThemeBlogPostItemBlogPostItemArticleClassName = (isBlogPostPage === true) ? 'nova-blog-post-item nova-blog-post-item-page' : 'nova-blog-post-item';
+  const articleClassName: Theme_BlogPostItem_Index_BlogPostItem_ArticleClassName = (isBlogPostPage === true) ? 'nova-blog-post-item nova-blog-post-item-page' : 'nova-blog-post-item';
 
-  const themeConfig: ThemeBlogPostItemBlogPostItemThemeConfig = useThemeConfig() as ThemeBlogPostItemBlogPostItemThemeConfigCast as ThemeBlogPostItemBlogPostItemThemeConfig;
-  const blogShareConfig: ThemeBlogPostItemBlogPostItemBlogShareConfig = themeConfig['blog'] as ThemeBlogPostItemBlogPostItemBlogShareConfig;
-  let sharePlatforms: ThemeBlogPostItemBlogPostItemSharePlatforms = [];
+  const themeConfig: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig = useThemeConfig() as Theme_BlogPostItem_Index_BlogPostItem_ThemeConfigCast as Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig;
+  const blogShareConfig: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog = themeConfig['blog'] as Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog;
+  let sharePlatforms: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share_Platforms = [];
 
   if (
     blogShareConfig !== undefined
@@ -96,17 +96,17 @@ function BlogPostItem(props: ThemeBlogPostItemBlogPostItemProps) {
   ) {
     sharePlatforms = blogShareConfig['share']['platforms'];
   }
-  const hasShareButtons: ThemeBlogPostItemBlogPostItemHasShareButtons = (
+  const hasShareButtons: Theme_BlogPostItem_Index_BlogPostItem_HasShareButtons = (
     isBlogPostPage === true
     && sharePlatforms['length'] > 0
   );
-  const shareUrl: ThemeBlogPostItemBlogPostItemShareUrl = (typeof window !== 'undefined') ? window['location']['href'] : '';
-  const readMoreLabel: ThemeBlogPostItemBlogPostItemReadMore = translate({
+  const shareUrl: Theme_BlogPostItem_Index_BlogPostItem_ShareUrl = (typeof window !== 'undefined') ? window['location']['href'] : '';
+  const readMoreLabel: Theme_BlogPostItem_Index_BlogPostItem_ReadMore = translate({
     id: 'theme.blog.post.readMore',
     message: 'Read more',
     description: 'The label for the read more link on truncated blog posts',
   });
-  const readMoreAriaLabel: ThemeBlogPostItemBlogPostItemReadMoreAriaLabel = translate(
+  const readMoreAriaLabel: Theme_BlogPostItem_Index_BlogPostItem_ReadMoreAriaLabel = translate(
     {
       id: 'theme.blog.post.readMoreLabel',
       message: 'Read more about {title}',
@@ -143,10 +143,10 @@ function BlogPostItem(props: ThemeBlogPostItemBlogPostItemProps) {
         ) && (
           <div className="nova-blog-post-item-authors">
             {
-              authors.map((author: ThemeBlogPostItemBlogPostItemAuthor, authorIndex: ThemeBlogPostItemBlogPostItemAuthorIndex) => {
-                const authorImageUrl: ThemeBlogPostItemBlogPostItemAuthorImageUrl = authorsImageUrls[authorIndex] ?? author['imageURL'];
-                const authorPage: ThemeBlogPostItemBlogPostItemAuthorPage = author['page'] as ThemeBlogPostItemBlogPostItemAuthorPage;
-                const authorPermalink: ThemeBlogPostItemBlogPostItemAuthorPermalink = (authorPage !== null && authorPage !== undefined) ? authorPage['permalink'] : undefined;
+              authors.map((author: Theme_BlogPostItem_Index_BlogPostItem_Author, authorIndex: Theme_BlogPostItem_Index_BlogPostItem_AuthorIndex) => {
+                const authorImageUrl: Theme_BlogPostItem_Index_BlogPostItem_AuthorImageUrl = authorsImageUrls[authorIndex] ?? author['imageURL'];
+                const authorPage: Theme_BlogPostItem_Index_BlogPostItem_AuthorPage = author['page'] as Theme_BlogPostItem_Index_BlogPostItem_AuthorPage;
+                const authorPermalink: Theme_BlogPostItem_Index_BlogPostItem_AuthorPermalink = (authorPage !== null && authorPage !== undefined) ? authorPage['permalink'] : undefined;
 
                 return (
                   <div className="nova-blog-post-item-author" key={author['name'] ?? String(authorIndex)}>
@@ -205,7 +205,7 @@ function BlogPostItem(props: ThemeBlogPostItemBlogPostItemProps) {
         <footer className="nova-blog-post-item-footer">
           {(tags['length'] > 0) && (
             <div className="nova-blog-post-item-tags">
-              {tags.map((tag: ThemeBlogPostItemBlogPostItemTag) => (
+              {tags.map((tag: Theme_BlogPostItem_Index_BlogPostItem_Tag) => (
                 <Link className="nova-tag" to={tag['permalink']} key={tag['permalink']}>
                   {tag['label']}
                 </Link>

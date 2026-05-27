@@ -3,12 +3,12 @@
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateMustHavesGitignoreRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesGitignoreRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesGitignoreRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+export type Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_SaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined][];
 
-export type TestsCliGenerateMustHavesGitignoreRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+export type Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_TargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
-export type TestsCliGenerateMustHavesGitignoreRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
+export type Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_HeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;

@@ -3,74 +3,74 @@
  *
  * @since 0.16.3
  */
-export type TestsCliGenerateGithubWorkflowsHelpersBuildArtifactNameResult = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_BuildArtifactNameResult = string;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Build Command.
  *
  * @since 0.16.0
  */
-export type TestsCliGenerateGithubWorkflowsHelpersBuildCommandResult = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_BuildCommandResult = string;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Detect Turbo.
  *
  * @since 0.16.0
  */
-export type TestsCliGenerateGithubWorkflowsHelpersDetectTurboTemporaryDirectory = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_DetectTurboTemporaryDirectory = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersDetectTurboPrefix = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_DetectTurboPrefix = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersDetectTurboProjectDirectory = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_DetectTurboProjectDirectory = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersDetectTurboTurboConfigPath = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_DetectTurboTurboConfigPath = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersDetectTurboResult = boolean;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_DetectTurboResult = boolean;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Render Upload Artifact Steps.
  *
  * @since 0.16.3
  */
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntryArtifactPath = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTargetMetadataEntryArtifactPath = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntryArtifactPaths = TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntryArtifactPath[];
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTargetMetadataEntry_ArtifactPaths = Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTargetMetadataEntryArtifactPath[];
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntry = {
-  artifactPaths: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntryArtifactPaths;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTargetMetadataEntry = {
+  artifactPaths: Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTargetMetadataEntry_ArtifactPaths;
 };
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadata = Record<string, TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetMetadataEntry>;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTargetMetadata = Record<string, Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTargetMetadataEntry>;
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetType = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTarget_Type = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetWorkingDir = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTarget_WorkingDir = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTarget = {
-  type: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetType;
-  workingDir: TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargetWorkingDir;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTarget = {
+  type: Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTarget_Type;
+  workingDir: Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTarget_WorkingDir;
 };
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTargets = TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsTarget[];
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTargets = Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsTarget[];
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsResult = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsResult = string;
 
-export type TestsCliGenerateGithubWorkflowsHelpersRenderUploadArtifactStepsExpected = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_RenderUploadArtifactStepsExpected = string;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Resolve Workspace Name.
  *
  * @since 0.16.0
  */
-export type TestsCliGenerateGithubWorkflowsHelpersResolveWorkspaceNameWorkspaces = Record<string, {
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_ResolveWorkspaceNameWorkspaces = Record<string, {
   name?: string;
 }>;
 
-export type TestsCliGenerateGithubWorkflowsHelpersResolveWorkspaceNameResult = string | undefined;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_ResolveWorkspaceNameResult = string | undefined;
 
 /**
  * Tests - CLI - Generate - GitHub - Workflows Helpers - Slugify Working Dir.
  *
  * @since 0.16.0
  */
-export type TestsCliGenerateGithubWorkflowsHelpersSlugifyWorkingDirResult = string;
+export type Tests_Cli_Generate_Github_WorkflowsHelpers_SlugifyWorkingDirResult = string;

@@ -8,74 +8,74 @@ import type {
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarMobileDocSidebarMobilePropsClassName = string | undefined;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Props_ClassName = string | undefined;
 
-export type ThemeDocSidebarMobileDocSidebarMobilePropsStyle = CSSProperties | undefined;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocSidebarMobileDocSidebarMobileProps = {
-  className?: ThemeDocSidebarMobileDocSidebarMobilePropsClassName;
-  style?: ThemeDocSidebarMobileDocSidebarMobilePropsStyle;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Props = {
+  className?: Theme_DocSidebarMobile_Index_DocSidebarMobile_Props_ClassName;
+  style?: Theme_DocSidebarMobile_Index_DocSidebarMobile_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarMobileDocSidebarMobileBreadcrumbs = PropSidebarBreadcrumbsItem[] | null;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Breadcrumbs = PropSidebarBreadcrumbsItem[] | null;
 
-export type ThemeDocSidebarMobileDocSidebarMobileSidebar = Record<string, unknown> | null;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Sidebar = Record<string, unknown> | null;
 
-export type ThemeDocSidebarMobileDocSidebarMobilePathname = string;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Pathname = string;
 
-export type ThemeDocSidebarMobileDocSidebarMobileIsOpenState = [boolean, ThemeDocSidebarMobileDocSidebarMobileSetIsOpen];
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpenState = [boolean, Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsOpen];
 
-export type ThemeDocSidebarMobileDocSidebarMobileIsOpen = boolean;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpen = boolean;
 
-export type ThemeDocSidebarMobileDocSidebarMobileSetIsOpen = React.Dispatch<React.SetStateAction<boolean>>;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsOpen = React.Dispatch<React.SetStateAction<boolean>>;
 
-export type ThemeDocSidebarMobileDocSidebarMobileIsClosingState = [boolean, ThemeDocSidebarMobileDocSidebarMobileSetIsClosing];
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosingState = [boolean, Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsClosing];
 
-export type ThemeDocSidebarMobileDocSidebarMobileIsClosing = boolean;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosing = boolean;
 
-export type ThemeDocSidebarMobileDocSidebarMobileSetIsClosing = React.Dispatch<React.SetStateAction<boolean>>;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsClosing = React.Dispatch<React.SetStateAction<boolean>>;
 
-export type ThemeDocSidebarMobileDocSidebarMobilePanelRef = RefObject<HTMLDivElement | null>;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelRef = RefObject<HTMLDivElement | null>;
 
-export type ThemeDocSidebarMobileDocSidebarMobileSidebarItems = unknown[];
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_SidebarItems = unknown[];
 
-export type ThemeDocSidebarMobileDocSidebarMobileSeparator = ReactNode;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_Separator = ReactNode;
 
-export type ThemeDocSidebarMobileDocSidebarMobileBreadcrumbItem = PropSidebarBreadcrumbsItem;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbItem = PropSidebarBreadcrumbsItem;
 
-export type ThemeDocSidebarMobileDocSidebarMobileBreadcrumbIndex = number;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbIndex = number;
 
-export type ThemeDocSidebarMobileDocSidebarMobileOverlayClassName = string;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_OverlayClassName = string;
 
-export type ThemeDocSidebarMobileDocSidebarMobileAnimationEvent = React.AnimationEvent<HTMLDivElement>;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_AnimationEvent = React.AnimationEvent<HTMLDivElement>;
 
 /**
  * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile - Handle Click Outside.
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideFunction = (event: ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideMouseEvent) => void;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideFunction = (event: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseEvent) => void;
 
-export type ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
 
-export type ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideMouseTarget = EventTarget;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseTarget = EventTarget;
 
 /**
  * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile - Handle Escape.
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarMobileDocSidebarMobileHandleEscapeFunction = (event: ThemeDocSidebarMobileDocSidebarMobileHandleEscapeKeyboardEvent) => void;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeFunction = (event: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent) => void;
 
-export type ThemeDocSidebarMobileDocSidebarMobileHandleEscapeKeyboardEvent = KeyboardEvent;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent = KeyboardEvent;
 
-export type ThemeDocSidebarMobileDocSidebarMobileFocusTarget = HTMLButtonElement | null;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_FocusTarget = HTMLButtonElement | null;
 
-export type ThemeDocSidebarMobileDocSidebarMobileOpenAriaLabel = string;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_OpenAriaLabel = string;
 
-export type ThemeDocSidebarMobileDocSidebarMobilePanelAriaLabel = string;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelAriaLabel = string;
 
-export type ThemeDocSidebarMobileDocSidebarMobileHeaderTitle = string;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_HeaderTitle = string;
 
-export type ThemeDocSidebarMobileDocSidebarMobileCloseAriaLabel = string;
+export type Theme_DocSidebarMobile_Index_DocSidebarMobile_CloseAriaLabel = string;

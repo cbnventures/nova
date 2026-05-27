@@ -6,35 +6,35 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.13.0
  */
-export type RulesEslintRegexNoRegexLiteralsCheckLiteralContext = Readonly<RuleContext<string, readonly unknown[]>>;
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Context = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type RulesEslintRegexNoRegexLiteralsCheckLiteralNode = TSESTree.Literal;
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Node = TSESTree.Literal;
 
-export type RulesEslintRegexNoRegexLiteralsCheckLiteralOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options_IgnoreFiles = string[];
 
-export type RulesEslintRegexNoRegexLiteralsCheckLiteralOptionsRegexFile = string;
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options_RegexFile = string;
 
-export type RulesEslintRegexNoRegexLiteralsCheckLiteralOptions = Readonly<{
-  ignoreFiles: RulesEslintRegexNoRegexLiteralsCheckLiteralOptionsIgnoreFiles;
-  regexFile: RulesEslintRegexNoRegexLiteralsCheckLiteralOptionsRegexFile;
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options_IgnoreFiles;
+  regexFile: Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Options_RegexFile;
 }>;
 
-export type RulesEslintRegexNoRegexLiteralsCheckLiteralReturns = void;
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_CheckLiteral_Returns = void;
 
 /**
  * Rules - ESLint - Regex - No Regex Literals - Rule.
  *
  * @since 0.13.0
  */
-export type RulesEslintRegexNoRegexLiteralsRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintRegexNoRegexLiteralsRuleDefaultOptionsRegexFile = string;
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleDefaultOptionsRegexFile = string;
 
-export type RulesEslintRegexNoRegexLiteralsRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintRegexNoRegexLiteralsRuleOptionsRegexFile = string;
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleOptions_RegexFile = string;
 
-export type RulesEslintRegexNoRegexLiteralsRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintRegexNoRegexLiteralsRuleOptionsIgnoreFiles;
-  regexFile: RulesEslintRegexNoRegexLiteralsRuleOptionsRegexFile;
+export type Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleOptions_IgnoreFiles;
+  regexFile: Rules_Eslint_Regex_NoRegexLiterals_Runner_RuleOptions_RegexFile;
 }>;

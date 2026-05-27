@@ -1,61 +1,61 @@
-import { Color } from './color.js';
+import { Runner as LibColor } from './color.js';
 
 import type {
-  LibCssGeneratorGenerateAccentDarkColor,
-  LibCssGeneratorGenerateAccentDarkLines,
-  LibCssGeneratorGenerateAccentDarkScale,
-  LibCssGeneratorGenerateAccentLightColor,
-  LibCssGeneratorGenerateAccentLightLines,
-  LibCssGeneratorGenerateAccentLightScale,
-  LibCssGeneratorGenerateBorderDark,
-  LibCssGeneratorGenerateBorderLight,
-  LibCssGeneratorGenerateColorVariablesLines,
-  LibCssGeneratorGenerateColorVariablesReturns,
-  LibCssGeneratorGenerateColorVariablesScale,
-  LibCssGeneratorGenerateColorVariablesScaleName,
-  LibCssGeneratorGenerateColorVariablesShadeLevels,
-  LibCssGeneratorGenerateDangerDark,
-  LibCssGeneratorGenerateDangerLight,
-  LibCssGeneratorGenerateDepthLines,
-  LibCssGeneratorGenerateDepthVariablesDepth,
-  LibCssGeneratorGenerateDepthVariablesLines,
-  LibCssGeneratorGenerateDepthVariablesReturns,
-  LibCssGeneratorGenerateFontLines,
-  LibCssGeneratorGenerateFontVariablesFonts,
-  LibCssGeneratorGenerateFontVariablesReturns,
-  LibCssGeneratorGenerateGridLines,
-  LibCssGeneratorGenerateGridMediaBlocks,
-  LibCssGeneratorGenerateGridVariablesBaseLines,
-  LibCssGeneratorGenerateGridVariablesDensityGutter,
-  LibCssGeneratorGenerateGridVariablesDensityPadding,
-  LibCssGeneratorGenerateGridVariablesMediaBlocks,
-  LibCssGeneratorGenerateGridVariablesReturns,
-  LibCssGeneratorGenerateGridVariablesShape,
-  LibCssGeneratorGenerateLines,
-  LibCssGeneratorGenerateMotionLines,
-  LibCssGeneratorGenerateMotionVariablesDuration,
-  LibCssGeneratorGenerateMotionVariablesHover,
-  LibCssGeneratorGenerateMotionVariablesMotion,
-  LibCssGeneratorGenerateMotionVariablesReturns,
-  LibCssGeneratorGenerateMotionVariablesStaggered,
-  LibCssGeneratorGenerateOptions,
-  LibCssGeneratorGeneratePrimaryDarkColor,
-  LibCssGeneratorGeneratePrimaryDarkLines,
-  LibCssGeneratorGeneratePrimaryDarkScale,
-  LibCssGeneratorGeneratePrimaryLightColor,
-  LibCssGeneratorGeneratePrimaryLightLines,
-  LibCssGeneratorGeneratePrimaryLightScale,
-  LibCssGeneratorGenerateReturns,
-  LibCssGeneratorGenerateShapeLines,
-  LibCssGeneratorGenerateShapeVariablesDensityGapScale,
-  LibCssGeneratorGenerateShapeVariablesDensityPaddingScale,
-  LibCssGeneratorGenerateShapeVariablesRadiusValue,
-  LibCssGeneratorGenerateShapeVariablesReturns,
-  LibCssGeneratorGenerateShapeVariablesShape,
-  LibCssGeneratorGenerateTextDark,
-  LibCssGeneratorGenerateTextLight,
-  LibCssGeneratorGenerateWarningDark,
-  LibCssGeneratorGenerateWarningLight,
+  Lib_CssGenerator_Runner_Generate_AccentDarkColor,
+  Lib_CssGenerator_Runner_Generate_AccentDarkLines,
+  Lib_CssGenerator_Runner_Generate_AccentDarkScale,
+  Lib_CssGenerator_Runner_Generate_AccentLightColor,
+  Lib_CssGenerator_Runner_Generate_AccentLightLines,
+  Lib_CssGenerator_Runner_Generate_AccentLightScale,
+  Lib_CssGenerator_Runner_Generate_BorderDark,
+  Lib_CssGenerator_Runner_Generate_BorderLight,
+  Lib_CssGenerator_Runner_GenerateColorVariables_Lines,
+  Lib_CssGenerator_Runner_GenerateColorVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateColorVariables_Scale,
+  Lib_CssGenerator_Runner_GenerateColorVariables_ScaleName,
+  Lib_CssGenerator_Runner_GenerateColorVariables_ShadeLevels,
+  Lib_CssGenerator_Runner_Generate_DangerDark,
+  Lib_CssGenerator_Runner_Generate_DangerLight,
+  Lib_CssGenerator_Runner_Generate_DepthLines,
+  Lib_CssGenerator_Runner_GenerateDepthVariables_Depth,
+  Lib_CssGenerator_Runner_GenerateDepthVariables_Lines,
+  Lib_CssGenerator_Runner_GenerateDepthVariables_Returns,
+  Lib_CssGenerator_Runner_Generate_FontLines,
+  Lib_CssGenerator_Runner_GenerateFontVariables_Fonts,
+  Lib_CssGenerator_Runner_GenerateFontVariables_Returns,
+  Lib_CssGenerator_Runner_Generate_GridLines,
+  Lib_CssGenerator_Runner_Generate_GridMediaBlocks,
+  Lib_CssGenerator_Runner_GenerateGridVariables_BaseLines,
+  Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter,
+  Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding,
+  Lib_CssGenerator_Runner_GenerateGridVariables_MediaBlocks,
+  Lib_CssGenerator_Runner_GenerateGridVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateGridVariables_Shape,
+  Lib_CssGenerator_Runner_Generate_Lines,
+  Lib_CssGenerator_Runner_Generate_MotionLines,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Duration,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Hover,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Motion,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateMotionVariables_Staggered,
+  Lib_CssGenerator_Runner_Generate_Options,
+  Lib_CssGenerator_Runner_Generate_PrimaryDarkColor,
+  Lib_CssGenerator_Runner_Generate_PrimaryDarkLines,
+  Lib_CssGenerator_Runner_Generate_PrimaryDarkScale,
+  Lib_CssGenerator_Runner_Generate_PrimaryLightColor,
+  Lib_CssGenerator_Runner_Generate_PrimaryLightLines,
+  Lib_CssGenerator_Runner_Generate_PrimaryLightScale,
+  Lib_CssGenerator_Runner_Generate_Returns,
+  Lib_CssGenerator_Runner_Generate_ShapeLines,
+  Lib_CssGenerator_Runner_GenerateShapeVariables_DensityGapScale,
+  Lib_CssGenerator_Runner_GenerateShapeVariables_DensityPaddingScale,
+  Lib_CssGenerator_Runner_GenerateShapeVariables_RadiusValue,
+  Lib_CssGenerator_Runner_GenerateShapeVariables_Returns,
+  Lib_CssGenerator_Runner_GenerateShapeVariables_Shape,
+  Lib_CssGenerator_Runner_Generate_TextDark,
+  Lib_CssGenerator_Runner_Generate_TextLight,
+  Lib_CssGenerator_Runner_Generate_WarningDark,
+  Lib_CssGenerator_Runner_Generate_WarningLight,
 } from '../types/lib/css-generator.d.ts';
 
 /**
@@ -67,7 +67,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class CssGenerator {
+export class Runner {
   /**
    * Lib - CSS Generator - Generate.
    *
@@ -75,44 +75,44 @@ export class CssGenerator {
    * shade scales for each color channel, then assembles all CSS
    * custom properties into a root-scoped style block.
    *
-   * @param {LibCssGeneratorGenerateOptions} options - Options.
+   * @param {Lib_CssGenerator_Runner_Generate_Options} options - Options.
    *
-   * @returns {LibCssGeneratorGenerateReturns}
+   * @returns {Lib_CssGenerator_Runner_Generate_Returns}
    *
    * @since 0.15.0
    */
-  public static generate(options: LibCssGeneratorGenerateOptions): LibCssGeneratorGenerateReturns {
-    const primaryLightColor: LibCssGeneratorGeneratePrimaryLightColor = new Color(options['preset']['colors']['primary']['light']);
-    const primaryDarkColor: LibCssGeneratorGeneratePrimaryDarkColor = new Color(options['preset']['colors']['primary']['dark']);
-    const accentLightColor: LibCssGeneratorGenerateAccentLightColor = new Color(options['preset']['colors']['accent']['light']);
-    const accentDarkColor: LibCssGeneratorGenerateAccentDarkColor = new Color(options['preset']['colors']['accent']['dark']);
+  public static generate(options: Lib_CssGenerator_Runner_Generate_Options): Lib_CssGenerator_Runner_Generate_Returns {
+    const primaryLightColor: Lib_CssGenerator_Runner_Generate_PrimaryLightColor = new LibColor(options['preset']['colors']['primary']['light']);
+    const primaryDarkColor: Lib_CssGenerator_Runner_Generate_PrimaryDarkColor = new LibColor(options['preset']['colors']['primary']['dark']);
+    const accentLightColor: Lib_CssGenerator_Runner_Generate_AccentLightColor = new LibColor(options['preset']['colors']['accent']['light']);
+    const accentDarkColor: Lib_CssGenerator_Runner_Generate_AccentDarkColor = new LibColor(options['preset']['colors']['accent']['dark']);
 
-    const primaryLightScale: LibCssGeneratorGeneratePrimaryLightScale = primaryLightColor.generateScale();
-    const primaryDarkScale: LibCssGeneratorGeneratePrimaryDarkScale = primaryDarkColor.generateScale();
-    const accentLightScale: LibCssGeneratorGenerateAccentLightScale = accentLightColor.generateScale();
-    const accentDarkScale: LibCssGeneratorGenerateAccentDarkScale = accentDarkColor.generateScale();
+    const primaryLightScale: Lib_CssGenerator_Runner_Generate_PrimaryLightScale = primaryLightColor.generateScale();
+    const primaryDarkScale: Lib_CssGenerator_Runner_Generate_PrimaryDarkScale = primaryDarkColor.generateScale();
+    const accentLightScale: Lib_CssGenerator_Runner_Generate_AccentLightScale = accentLightColor.generateScale();
+    const accentDarkScale: Lib_CssGenerator_Runner_Generate_AccentDarkScale = accentDarkColor.generateScale();
 
-    const primaryLightLines: LibCssGeneratorGeneratePrimaryLightLines = CssGenerator.generateColorVariables('primary', primaryLightScale);
-    const primaryDarkLines: LibCssGeneratorGeneratePrimaryDarkLines = CssGenerator.generateColorVariables('primary', primaryDarkScale);
-    const accentLightLines: LibCssGeneratorGenerateAccentLightLines = CssGenerator.generateColorVariables('accent', accentLightScale);
-    const accentDarkLines: LibCssGeneratorGenerateAccentDarkLines = CssGenerator.generateColorVariables('accent', accentDarkScale);
+    const primaryLightLines: Lib_CssGenerator_Runner_Generate_PrimaryLightLines = Runner.generateColorVariables('primary', primaryLightScale);
+    const primaryDarkLines: Lib_CssGenerator_Runner_Generate_PrimaryDarkLines = Runner.generateColorVariables('primary', primaryDarkScale);
+    const accentLightLines: Lib_CssGenerator_Runner_Generate_AccentLightLines = Runner.generateColorVariables('accent', accentLightScale);
+    const accentDarkLines: Lib_CssGenerator_Runner_Generate_AccentDarkLines = Runner.generateColorVariables('accent', accentDarkScale);
 
-    const textLight: LibCssGeneratorGenerateTextLight = options['preset']['colors']['text']['light'];
-    const textDark: LibCssGeneratorGenerateTextDark = options['preset']['colors']['text']['dark'];
-    const borderLight: LibCssGeneratorGenerateBorderLight = options['preset']['colors']['border']['light'];
-    const borderDark: LibCssGeneratorGenerateBorderDark = options['preset']['colors']['border']['dark'];
-    const warningLight: LibCssGeneratorGenerateWarningLight = options['preset']['colors']['warning']['light'];
-    const warningDark: LibCssGeneratorGenerateWarningDark = options['preset']['colors']['warning']['dark'];
-    const dangerLight: LibCssGeneratorGenerateDangerLight = options['preset']['colors']['danger']['light'];
-    const dangerDark: LibCssGeneratorGenerateDangerDark = options['preset']['colors']['danger']['dark'];
+    const textLight: Lib_CssGenerator_Runner_Generate_TextLight = options['preset']['colors']['text']['light'];
+    const textDark: Lib_CssGenerator_Runner_Generate_TextDark = options['preset']['colors']['text']['dark'];
+    const borderLight: Lib_CssGenerator_Runner_Generate_BorderLight = options['preset']['colors']['border']['light'];
+    const borderDark: Lib_CssGenerator_Runner_Generate_BorderDark = options['preset']['colors']['border']['dark'];
+    const warningLight: Lib_CssGenerator_Runner_Generate_WarningLight = options['preset']['colors']['warning']['light'];
+    const warningDark: Lib_CssGenerator_Runner_Generate_WarningDark = options['preset']['colors']['warning']['dark'];
+    const dangerLight: Lib_CssGenerator_Runner_Generate_DangerLight = options['preset']['colors']['danger']['light'];
+    const dangerDark: Lib_CssGenerator_Runner_Generate_DangerDark = options['preset']['colors']['danger']['dark'];
 
-    const fontLines: LibCssGeneratorGenerateFontLines = CssGenerator.generateFontVariables(options['preset']['fonts']);
-    const shapeLines: LibCssGeneratorGenerateShapeLines = CssGenerator.generateShapeVariables(options['preset']['shape']);
-    const depthLines: LibCssGeneratorGenerateDepthLines = CssGenerator.generateDepthVariables(options['preset']['depth']);
-    const motionLines: LibCssGeneratorGenerateMotionLines = CssGenerator.generateMotionVariables(options['preset']['motion']);
-    const gridLines: LibCssGeneratorGenerateGridLines = CssGenerator.generateGridVariables(options['preset']['shape']);
+    const fontLines: Lib_CssGenerator_Runner_Generate_FontLines = Runner.generateFontVariables(options['preset']['fonts']);
+    const shapeLines: Lib_CssGenerator_Runner_Generate_ShapeLines = Runner.generateShapeVariables(options['preset']['shape']);
+    const depthLines: Lib_CssGenerator_Runner_Generate_DepthLines = Runner.generateDepthVariables(options['preset']['depth']);
+    const motionLines: Lib_CssGenerator_Runner_Generate_MotionLines = Runner.generateMotionVariables(options['preset']['motion']);
+    const gridLines: Lib_CssGenerator_Runner_Generate_GridLines = Runner.generateGridVariables(options['preset']['shape']);
 
-    const lines: LibCssGeneratorGenerateLines = [
+    const lines: Lib_CssGenerator_Runner_Generate_Lines = [
       ':root {',
       ...primaryLightLines,
       ...accentLightLines,
@@ -148,7 +148,7 @@ export class CssGenerator {
       '}',
     ];
 
-    const gridMediaBlocks: LibCssGeneratorGenerateGridMediaBlocks = gridLines['mediaBlocks'].join('\n\n');
+    const gridMediaBlocks: Lib_CssGenerator_Runner_Generate_GridMediaBlocks = gridLines['mediaBlocks'].join('\n\n');
 
     return [
       lines.join('\n'),
@@ -164,19 +164,19 @@ export class CssGenerator {
    * produces one CSS custom property declaration per level using
    * the scale name as a namespace prefix.
    *
-   * @param {LibCssGeneratorGenerateColorVariablesScaleName} scaleName - Scale name.
-   * @param {LibCssGeneratorGenerateColorVariablesScale}     scale     - Scale.
+   * @param {Lib_CssGenerator_Runner_GenerateColorVariables_ScaleName} scaleName - Scale name.
+   * @param {Lib_CssGenerator_Runner_GenerateColorVariables_Scale}     scale     - Scale.
    *
    * @private
    *
-   * @returns {LibCssGeneratorGenerateColorVariablesReturns}
+   * @returns {Lib_CssGenerator_Runner_GenerateColorVariables_Returns}
    *
    * @since 0.15.0
    */
-  private static generateColorVariables(scaleName: LibCssGeneratorGenerateColorVariablesScaleName, scale: LibCssGeneratorGenerateColorVariablesScale): LibCssGeneratorGenerateColorVariablesReturns {
-    const lines: LibCssGeneratorGenerateColorVariablesLines = [];
+  private static generateColorVariables(scaleName: Lib_CssGenerator_Runner_GenerateColorVariables_ScaleName, scale: Lib_CssGenerator_Runner_GenerateColorVariables_Scale): Lib_CssGenerator_Runner_GenerateColorVariables_Returns {
+    const lines: Lib_CssGenerator_Runner_GenerateColorVariables_Lines = [];
 
-    const shadeLevels: LibCssGeneratorGenerateColorVariablesShadeLevels = [
+    const shadeLevels: Lib_CssGenerator_Runner_GenerateColorVariables_ShadeLevels = [
       50,
       100,
       200,
@@ -204,15 +204,15 @@ export class CssGenerator {
    * custom properties with appropriate fallback stacks for display,
    * body, and monospace usage.
    *
-   * @param {LibCssGeneratorGenerateFontVariablesFonts} fonts - Fonts.
+   * @param {Lib_CssGenerator_Runner_GenerateFontVariables_Fonts} fonts - Fonts.
    *
    * @private
    *
-   * @returns {LibCssGeneratorGenerateFontVariablesReturns}
+   * @returns {Lib_CssGenerator_Runner_GenerateFontVariables_Returns}
    *
    * @since 0.15.0
    */
-  private static generateFontVariables(fonts: LibCssGeneratorGenerateFontVariablesFonts): LibCssGeneratorGenerateFontVariablesReturns {
+  private static generateFontVariables(fonts: Lib_CssGenerator_Runner_GenerateFontVariables_Fonts): Lib_CssGenerator_Runner_GenerateFontVariables_Returns {
     return [
       `  --nova-font-display: '${fonts['display']}', sans-serif;`,
       `  --nova-font-body: '${fonts['body']}', sans-serif;`,
@@ -227,16 +227,16 @@ export class CssGenerator {
    * density keyword into padding and gap scale values for consistent
    * component spacing.
    *
-   * @param {LibCssGeneratorGenerateShapeVariablesShape} shape - Shape.
+   * @param {Lib_CssGenerator_Runner_GenerateShapeVariables_Shape} shape - Shape.
    *
    * @private
    *
-   * @returns {LibCssGeneratorGenerateShapeVariablesReturns}
+   * @returns {Lib_CssGenerator_Runner_GenerateShapeVariables_Returns}
    *
    * @since 0.15.0
    */
-  private static generateShapeVariables(shape: LibCssGeneratorGenerateShapeVariablesShape): LibCssGeneratorGenerateShapeVariablesReturns {
-    let radiusValue: LibCssGeneratorGenerateShapeVariablesRadiusValue = '0.5rem';
+  private static generateShapeVariables(shape: Lib_CssGenerator_Runner_GenerateShapeVariables_Shape): Lib_CssGenerator_Runner_GenerateShapeVariables_Returns {
+    let radiusValue: Lib_CssGenerator_Runner_GenerateShapeVariables_RadiusValue = '0.5rem';
 
     if (shape['radius'] === 'sharp') {
       radiusValue = '0';
@@ -244,7 +244,7 @@ export class CssGenerator {
       radiusValue = '9999px';
     }
 
-    let densityPaddingScale: LibCssGeneratorGenerateShapeVariablesDensityPaddingScale = '1rem';
+    let densityPaddingScale: Lib_CssGenerator_Runner_GenerateShapeVariables_DensityPaddingScale = '1rem';
 
     if (shape['density'] === 'compact') {
       densityPaddingScale = '0.5rem';
@@ -252,7 +252,7 @@ export class CssGenerator {
       densityPaddingScale = '1.5rem';
     }
 
-    let densityGapScale: LibCssGeneratorGenerateShapeVariablesDensityGapScale = '0.5rem';
+    let densityGapScale: Lib_CssGenerator_Runner_GenerateShapeVariables_DensityGapScale = '0.5rem';
 
     if (shape['density'] === 'compact') {
       densityGapScale = '0.25rem';
@@ -273,16 +273,16 @@ export class CssGenerator {
    * Maps the card and code block depth keywords into shadow and border CSS custom properties
    * that control the visual elevation of surface elements.
    *
-   * @param {LibCssGeneratorGenerateDepthVariablesDepth} depth - Depth.
+   * @param {Lib_CssGenerator_Runner_GenerateDepthVariables_Depth} depth - Depth.
    *
    * @private
    *
-   * @returns {LibCssGeneratorGenerateDepthVariablesReturns}
+   * @returns {Lib_CssGenerator_Runner_GenerateDepthVariables_Returns}
    *
    * @since 0.15.0
    */
-  private static generateDepthVariables(depth: LibCssGeneratorGenerateDepthVariablesDepth): LibCssGeneratorGenerateDepthVariablesReturns {
-    const lines: LibCssGeneratorGenerateDepthVariablesLines = [];
+  private static generateDepthVariables(depth: Lib_CssGenerator_Runner_GenerateDepthVariables_Depth): Lib_CssGenerator_Runner_GenerateDepthVariables_Returns {
+    const lines: Lib_CssGenerator_Runner_GenerateDepthVariables_Lines = [];
 
     if (depth['cards'] === 'flat') {
       lines.push('  --nova-depth-card-shadow: none;');
@@ -319,16 +319,16 @@ export class CssGenerator {
    * the canonical Nova ease curve as a shared easing token, and maps the
    * boolean animation flags into numeric CSS custom properties.
    *
-   * @param {LibCssGeneratorGenerateMotionVariablesMotion} motion - Motion.
+   * @param {Lib_CssGenerator_Runner_GenerateMotionVariables_Motion} motion - Motion.
    *
    * @private
    *
-   * @returns {LibCssGeneratorGenerateMotionVariablesReturns}
+   * @returns {Lib_CssGenerator_Runner_GenerateMotionVariables_Returns}
    *
    * @since 0.15.0
    */
-  private static generateMotionVariables(motion: LibCssGeneratorGenerateMotionVariablesMotion): LibCssGeneratorGenerateMotionVariablesReturns {
-    let duration: LibCssGeneratorGenerateMotionVariablesDuration = '200ms';
+  private static generateMotionVariables(motion: Lib_CssGenerator_Runner_GenerateMotionVariables_Motion): Lib_CssGenerator_Runner_GenerateMotionVariables_Returns {
+    let duration: Lib_CssGenerator_Runner_GenerateMotionVariables_Duration = '200ms';
 
     if (motion['speed'] === 'none') {
       duration = '0ms';
@@ -338,8 +338,8 @@ export class CssGenerator {
       duration = '300ms';
     }
 
-    const staggered: LibCssGeneratorGenerateMotionVariablesStaggered = (motion['staggeredReveals'] === true) ? 1 : 0;
-    const hover: LibCssGeneratorGenerateMotionVariablesHover = (motion['hoverEffects'] === true) ? 1 : 0;
+    const staggered: Lib_CssGenerator_Runner_GenerateMotionVariables_Staggered = (motion['staggeredReveals'] === true) ? 1 : 0;
+    const hover: Lib_CssGenerator_Runner_GenerateMotionVariables_Hover = (motion['hoverEffects'] === true) ? 1 : 0;
 
     return [
       `  --nova-motion-duration: ${duration};`,
@@ -356,17 +356,17 @@ export class CssGenerator {
    * padding values with breakpoint-specific media query blocks
    * for consistent layout-level spacing.
    *
-   * @param {LibCssGeneratorGenerateGridVariablesShape} shape - Shape.
+   * @param {Lib_CssGenerator_Runner_GenerateGridVariables_Shape} shape - Shape.
    *
    * @private
    *
-   * @returns {LibCssGeneratorGenerateGridVariablesReturns}
+   * @returns {Lib_CssGenerator_Runner_GenerateGridVariables_Returns}
    *
    * @since 0.15.0
    */
-  private static generateGridVariables(shape: LibCssGeneratorGenerateGridVariablesShape): LibCssGeneratorGenerateGridVariablesReturns {
-    let densityGutter: LibCssGeneratorGenerateGridVariablesDensityGutter = '16px';
-    let densityPadding: LibCssGeneratorGenerateGridVariablesDensityPadding = '16px';
+  private static generateGridVariables(shape: Lib_CssGenerator_Runner_GenerateGridVariables_Shape): Lib_CssGenerator_Runner_GenerateGridVariables_Returns {
+    let densityGutter: Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter = '16px';
+    let densityPadding: Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding = '16px';
 
     if (shape['density'] === 'compact') {
       densityGutter = '12px';
@@ -376,13 +376,13 @@ export class CssGenerator {
       densityPadding = '20px';
     }
 
-    const baseLines: LibCssGeneratorGenerateGridVariablesBaseLines = [
+    const baseLines: Lib_CssGenerator_Runner_GenerateGridVariables_BaseLines = [
       `  --nova-grid-gutter: ${densityGutter};`,
       `  --nova-grid-padding: ${densityPadding};`,
     ];
 
-    let mediumGutter: LibCssGeneratorGenerateGridVariablesDensityGutter = '20px';
-    let mediumPadding: LibCssGeneratorGenerateGridVariablesDensityPadding = '20px';
+    let mediumGutter: Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter = '20px';
+    let mediumPadding: Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding = '20px';
 
     if (shape['density'] === 'compact') {
       mediumGutter = '16px';
@@ -392,8 +392,8 @@ export class CssGenerator {
       mediumPadding = '24px';
     }
 
-    let largeGutter: LibCssGeneratorGenerateGridVariablesDensityGutter = '24px';
-    let largePadding: LibCssGeneratorGenerateGridVariablesDensityPadding = '24px';
+    let largeGutter: Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter = '24px';
+    let largePadding: Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding = '24px';
 
     if (shape['density'] === 'compact') {
       largeGutter = '20px';
@@ -403,7 +403,7 @@ export class CssGenerator {
       largePadding = '32px';
     }
 
-    const mediaBlocks: LibCssGeneratorGenerateGridVariablesMediaBlocks = [
+    const mediaBlocks: Lib_CssGenerator_Runner_GenerateGridVariables_MediaBlocks = [
       [
         '@media (min-width: 480px) {',
         '  :root {',

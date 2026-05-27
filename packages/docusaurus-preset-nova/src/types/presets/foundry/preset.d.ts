@@ -1,8 +1,8 @@
-import type { SharedPreset } from '../../shared.d.ts';
+import type { Shared_Preset } from '../../shared.d.ts';
 
 /**
  * Presets - Foundry - Preset - Foundry.
  *
  * @since 0.15.0
  */
-export type PresetsFoundryPresetFoundry = SharedPreset;
+export type Presets_Foundry_Preset_Foundry = Shared_Preset;

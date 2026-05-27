@@ -13,24 +13,24 @@ import {
   afterAll, afterEach, beforeEach, describe, it, vi,
 } from 'vitest';
 
-import { ApiNodeReleases } from '../../../../api/node-releases.js';
-import { CliRecipePackageJsonSyncEnvironment } from '../../../../cli/recipe/package-json/sync-environment.js';
+import { Runner as ApiNodeReleases } from '../../../../api/node-releases.js';
+import { Runner as CliRecipePackageJsonSyncEnvironment } from '../../../../cli/recipe/package-json/sync-environment.js';
 
 import type {
-  TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigContents,
-  TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigPath,
-  TestsCliRecipePackageJsonSyncEnvironmentRunOriginalCwd,
-  TestsCliRecipePackageJsonSyncEnvironmentRunOutput,
-  TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonContents,
-  TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonPath,
-  TestsCliRecipePackageJsonSyncEnvironmentRunParsed,
-  TestsCliRecipePackageJsonSyncEnvironmentRunProjectDirectory,
-  TestsCliRecipePackageJsonSyncEnvironmentRunSandboxPath,
-  TestsCliRecipePackageJsonSyncEnvironmentRunSandboxRoot,
-  TestsCliRecipePackageJsonSyncEnvironmentRunTemporaryDirectory,
-  TestsCliRecipePackageJsonSyncEnvironmentRunWorkspaceDirectory,
-  TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonContents,
-  TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_OriginalCwd,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Output,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Parsed,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_SandboxPath,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_SandboxRoot,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_TemporaryDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonPath,
 } from '../../../../types/tests/cli/recipe/package-json/sync-environment.test.d.ts';
 
 /**
@@ -39,10 +39,10 @@ import type {
  * @since 0.14.0
  */
 describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
-  const originalCwd: TestsCliRecipePackageJsonSyncEnvironmentRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunTemporaryDirectory = tmpdir();
-  const sandboxPath: TestsCliRecipePackageJsonSyncEnvironmentRunSandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliRecipePackageJsonSyncEnvironmentRunSandboxRoot = await mkdtemp(sandboxPath);
+  const originalCwd: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_TemporaryDirectory = tmpdir();
+  const sandboxPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_SandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_SandboxRoot = await mkdtemp(sandboxPath);
 
   beforeEach(() => {
     vi.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve(new Response(JSON.stringify({
@@ -75,7 +75,7 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
   });
 
   it('sets exit code when not at project root', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunProjectDirectory = join(sandboxRoot, 'not-project-root');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_ProjectDirectory = join(sandboxRoot, 'not-project-root');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -89,20 +89,20 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
   });
 
   it('skips when no workspaces have the recipe enabled', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunProjectDirectory = join(sandboxRoot, 'no-recipe');
-    const workspaceDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_ProjectDirectory = join(sandboxRoot, 'no-recipe');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonContents = JSON.stringify({
       name: 'test-no-recipe',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -114,8 +114,8 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
     }, null, 2);
@@ -131,8 +131,8 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     // The engines field should not have been added because the recipe is not enabled.
-    const output: TestsCliRecipePackageJsonSyncEnvironmentRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonSyncEnvironmentRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['engines'], undefined);
 
@@ -140,20 +140,20 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
   });
 
   it('adds engines field when missing', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunProjectDirectory = join(sandboxRoot, 'add-engines');
-    const workspaceDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_ProjectDirectory = join(sandboxRoot, 'add-engines');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonContents = JSON.stringify({
       name: 'test-add-engines',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -168,8 +168,8 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
     }, null, 2);
@@ -184,8 +184,8 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonSyncEnvironmentRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonSyncEnvironmentRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Parsed = JSON.parse(output);
 
     strictEqual(typeof parsed['engines'], 'object');
 
@@ -193,20 +193,20 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
   });
 
   it('removes packageManager from non-project role', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunProjectDirectory = join(sandboxRoot, 'remove-pm');
-    const workspaceDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_ProjectDirectory = join(sandboxRoot, 'remove-pm');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonContents = JSON.stringify({
       name: 'test-remove-pm',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -221,8 +221,8 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       packageManager: 'npm@10.0.0',
@@ -238,8 +238,8 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonSyncEnvironmentRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonSyncEnvironmentRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['packageManager'], undefined);
 
@@ -247,20 +247,20 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
   });
 
   it('does not modify files during dry run', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunProjectDirectory = join(sandboxRoot, 'dry-run');
-    const workspaceDirectory: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonSyncEnvironmentRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_PackageJsonContents = JSON.stringify({
       name: 'test-dry-run',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonSyncEnvironmentRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -275,8 +275,8 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonSyncEnvironmentRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       packageManager: 'npm@10.0.0',
@@ -293,8 +293,8 @@ describe('CliRecipePackageJsonSyncEnvironment.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     // The file should not have been modified.
-    const output: TestsCliRecipePackageJsonSyncEnvironmentRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonSyncEnvironmentRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_SyncEnvironment_CliRecipePackageJsonSyncEnvironmentRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['packageManager'], 'npm@10.0.0');
 

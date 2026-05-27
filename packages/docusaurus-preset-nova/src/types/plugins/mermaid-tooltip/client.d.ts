@@ -3,48 +3,48 @@
  *
  * @since 0.17.0
  */
-export type PluginsMermaidTooltipClientTooltipEl = HTMLDivElement | null;
+export type Plugins_MermaidTooltip_Client_TooltipEl = HTMLDivElement | null;
 
-export type PluginsMermaidTooltipClientHoveredNode = SVGGElement | null;
+export type Plugins_MermaidTooltip_Client_HoveredNode = SVGGElement | null;
 
-export type PluginsMermaidTooltipClientGetOrCreateTooltipEl = HTMLDivElement;
+export type Plugins_MermaidTooltip_Client_GetOrCreateTooltip_El = HTMLDivElement;
 
-export type PluginsMermaidTooltipClientFindClickableTarget = EventTarget | null;
+export type Plugins_MermaidTooltip_Client_FindClickable_Target = EventTarget | null;
 
-export type PluginsMermaidTooltipClientFindClickableReturns = SVGGElement | null;
+export type Plugins_MermaidTooltip_Client_FindClickable_Returns = SVGGElement | null;
 
-export type PluginsMermaidTooltipClientFindClickableMatch = Element | null;
+export type Plugins_MermaidTooltip_Client_FindClickable_Match = Element | null;
 
-export type PluginsMermaidTooltipClientFindClickableUnknown = unknown;
+export type Plugins_MermaidTooltip_Client_FindClickable_Unknown = unknown;
 
-export type PluginsMermaidTooltipClientShowForX = number;
+export type Plugins_MermaidTooltip_Client_ShowFor_X = number;
 
-export type PluginsMermaidTooltipClientShowForY = number;
+export type Plugins_MermaidTooltip_Client_ShowFor_Y = number;
 
-export type PluginsMermaidTooltipClientShowForReturns = undefined;
+export type Plugins_MermaidTooltip_Client_ShowFor_Returns = undefined;
 
-export type PluginsMermaidTooltipClientShowForTitle = string | null;
+export type Plugins_MermaidTooltip_Client_ShowFor_Title = string | null;
 
-export type PluginsMermaidTooltipClientShowForStash = DOMStringMap;
+export type Plugins_MermaidTooltip_Client_ShowFor_Stash = DOMStringMap;
 
-export type PluginsMermaidTooltipClientShowForEl = HTMLDivElement;
+export type Plugins_MermaidTooltip_Client_ShowFor_El = HTMLDivElement;
 
-export type PluginsMermaidTooltipClientHideForReturns = undefined;
+export type Plugins_MermaidTooltip_Client_HideFor_Returns = undefined;
 
-export type PluginsMermaidTooltipClientHideForStash = DOMStringMap;
+export type Plugins_MermaidTooltip_Client_HideFor_Stash = DOMStringMap;
 
-export type PluginsMermaidTooltipClientHideForStashed = string | undefined;
+export type Plugins_MermaidTooltip_Client_HideFor_Stashed = string | undefined;
 
-export type PluginsMermaidTooltipClientPointeroverReturns = undefined;
+export type Plugins_MermaidTooltip_Client_Pointerover_Returns = undefined;
 
-export type PluginsMermaidTooltipClientPointeroverNode = SVGGElement | null;
+export type Plugins_MermaidTooltip_Client_Pointerover_Node = SVGGElement | null;
 
-export type PluginsMermaidTooltipClientPointermoveReturns = undefined;
+export type Plugins_MermaidTooltip_Client_Pointermove_Returns = undefined;
 
-export type PluginsMermaidTooltipClientClickReturns = undefined;
+export type Plugins_MermaidTooltip_Client_Click_Returns = undefined;
 
-export type PluginsMermaidTooltipClientClickTarget = Element;
+export type Plugins_MermaidTooltip_Client_Click_Target = Element;
 
-export type PluginsMermaidTooltipClientClickAnchor = HTMLAnchorElement | null;
+export type Plugins_MermaidTooltip_Client_Click_Anchor = HTMLAnchorElement | null;
 
-export type PluginsMermaidTooltipClientClickHref = string | null;
+export type Plugins_MermaidTooltip_Client_Click_Href = string | null;

@@ -15,48 +15,48 @@ import {
 } from 'react';
 
 import type {
-  LibUseNavbarOverflowBudgetPixels,
-  LibUseNavbarOverflowCancelled,
-  LibUseNavbarOverflowChildElement,
-  LibUseNavbarOverflowChildrenWidths,
-  LibUseNavbarOverflowChildWidth,
-  LibUseNavbarOverflowComputeReturns,
-  LibUseNavbarOverflowContainerElement,
-  LibUseNavbarOverflowCount,
-  LibUseNavbarOverflowCumulative,
-  LibUseNavbarOverflowGap,
-  LibUseNavbarOverflowHasOverflow,
-  LibUseNavbarOverflowInput,
-  LibUseNavbarOverflowIsLast,
-  LibUseNavbarOverflowItemCount,
-  LibUseNavbarOverflowMaybeChildWidth,
-  LibUseNavbarOverflowMeasureRef,
-  LibUseNavbarOverflowMeasuring,
-  LibUseNavbarOverflowMeasuringState,
-  LibUseNavbarOverflowMoreReservation,
-  LibUseNavbarOverflowObserver,
-  LibUseNavbarOverflowParseLengthInput,
-  LibUseNavbarOverflowParseLengthNumeric,
-  LibUseNavbarOverflowParseLengthReturns,
-  LibUseNavbarOverflowParseLengthRootFontSize,
-  LibUseNavbarOverflowProposed,
-  LibUseNavbarOverflowReturns,
-  LibUseNavbarOverflowSetMeasuring,
-  LibUseNavbarOverflowSetVisibleCount,
-  LibUseNavbarOverflowTriggerPixels,
-  LibUseNavbarOverflowVisibleCount,
-  LibUseNavbarOverflowVisibleCountState,
+  Lib_UseNavbarOverflow_BudgetPixels,
+  Lib_UseNavbarOverflow_Cancelled,
+  Lib_UseNavbarOverflow_ChildElement,
+  Lib_UseNavbarOverflow_ChildrenWidths,
+  Lib_UseNavbarOverflow_ChildWidth,
+  Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns,
+  Lib_UseNavbarOverflow_ContainerElement,
+  Lib_UseNavbarOverflow_Count,
+  Lib_UseNavbarOverflow_Cumulative,
+  Lib_UseNavbarOverflow_Gap,
+  Lib_UseNavbarOverflow_HasOverflow,
+  Lib_UseNavbarOverflow_Input,
+  Lib_UseNavbarOverflow_IsLast,
+  Lib_UseNavbarOverflow_ItemCount,
+  Lib_UseNavbarOverflow_MaybeChildWidth,
+  Lib_UseNavbarOverflow_MeasureRef,
+  Lib_UseNavbarOverflow_Measuring,
+  Lib_UseNavbarOverflow_MeasuringState,
+  Lib_UseNavbarOverflow_MoreReservation,
+  Lib_UseNavbarOverflow_Observer,
+  Lib_UseNavbarOverflow_ParseLength_Input,
+  Lib_UseNavbarOverflow_ParseLength_Numeric,
+  Lib_UseNavbarOverflow_ParseLength_Returns,
+  Lib_UseNavbarOverflow_ParseLength_RootFontSize,
+  Lib_UseNavbarOverflow_Proposed,
+  Lib_UseNavbarOverflow_Returns,
+  Lib_UseNavbarOverflow_SetMeasuring,
+  Lib_UseNavbarOverflow_SetVisibleCount,
+  Lib_UseNavbarOverflow_TriggerPixels,
+  Lib_UseNavbarOverflow_VisibleCount,
+  Lib_UseNavbarOverflow_VisibleCountState,
 } from '../types/lib/use-navbar-overflow.d.ts';
 
-function parseLength(value: LibUseNavbarOverflowParseLengthInput): LibUseNavbarOverflowParseLengthReturns {
-  const numeric: LibUseNavbarOverflowParseLengthNumeric = parseFloat(value);
+function parseLength(value: Lib_UseNavbarOverflow_ParseLength_Input): Lib_UseNavbarOverflow_ParseLength_Returns {
+  const numeric: Lib_UseNavbarOverflow_ParseLength_Numeric = parseFloat(value);
 
   if (Number.isNaN(numeric) === true) {
     return 0;
   }
 
   if (value.endsWith('rem') === true) {
-    const rootFontSize: LibUseNavbarOverflowParseLengthRootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const rootFontSize: Lib_UseNavbarOverflow_ParseLength_RootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
 
     return numeric * rootFontSize;
   }
@@ -64,17 +64,17 @@ function parseLength(value: LibUseNavbarOverflowParseLengthInput): LibUseNavbarO
   return numeric;
 }
 
-export function useNavbarOverflow(input: LibUseNavbarOverflowInput): LibUseNavbarOverflowReturns {
-  const itemCount: LibUseNavbarOverflowItemCount = input['items'].length;
-  const measureRef: LibUseNavbarOverflowMeasureRef = useRef<LibUseNavbarOverflowContainerElement | null>(null);
-  const visibleCountState: LibUseNavbarOverflowVisibleCountState = useState<LibUseNavbarOverflowVisibleCount>(itemCount);
-  const visibleCount: LibUseNavbarOverflowVisibleCount = visibleCountState[0];
-  const setVisibleCount: LibUseNavbarOverflowSetVisibleCount = visibleCountState[1];
-  const measuringState: LibUseNavbarOverflowMeasuringState = useState<LibUseNavbarOverflowMeasuring>(true);
-  const measuring: LibUseNavbarOverflowMeasuring = measuringState[0];
-  const setMeasuring: LibUseNavbarOverflowSetMeasuring = measuringState[1];
+export function useNavbarOverflow(input: Lib_UseNavbarOverflow_Input): Lib_UseNavbarOverflow_Returns {
+  const itemCount: Lib_UseNavbarOverflow_ItemCount = input['items'].length;
+  const measureRef: Lib_UseNavbarOverflow_MeasureRef = useRef<Lib_UseNavbarOverflow_ContainerElement | null>(null);
+  const visibleCountState: Lib_UseNavbarOverflow_VisibleCountState = useState<Lib_UseNavbarOverflow_VisibleCount>(itemCount);
+  const visibleCount: Lib_UseNavbarOverflow_VisibleCount = visibleCountState[0];
+  const setVisibleCount: Lib_UseNavbarOverflow_SetVisibleCount = visibleCountState[1];
+  const measuringState: Lib_UseNavbarOverflow_MeasuringState = useState<Lib_UseNavbarOverflow_Measuring>(true);
+  const measuring: Lib_UseNavbarOverflow_Measuring = measuringState[0];
+  const setMeasuring: Lib_UseNavbarOverflow_SetMeasuring = measuringState[1];
 
-  function compute(): LibUseNavbarOverflowComputeReturns {
+  function compute(): Lib_UseNavbarOverflow_UseNavbarOverflow_Compute_Returns {
     if (measureRef.current === null) {
       return undefined;
     }
@@ -83,31 +83,31 @@ export function useNavbarOverflow(input: LibUseNavbarOverflowInput): LibUseNavba
       return undefined;
     }
 
-    const container: LibUseNavbarOverflowContainerElement = measureRef.current;
-    const budgetRaw: LibUseNavbarOverflowParseLengthInput = getComputedStyle(document.documentElement).getPropertyValue(input['budgetVariable']).trim();
-    const triggerRaw: LibUseNavbarOverflowParseLengthInput = getComputedStyle(document.documentElement).getPropertyValue(input['triggerVariable']).trim();
-    const budgetPixels: LibUseNavbarOverflowBudgetPixels = parseLength(budgetRaw);
-    const triggerPixels: LibUseNavbarOverflowTriggerPixels = parseLength(triggerRaw);
-    const gap: LibUseNavbarOverflowGap = parseFloat(getComputedStyle(container).gap) || 0;
+    const container: Lib_UseNavbarOverflow_ContainerElement = measureRef.current;
+    const budgetRaw: Lib_UseNavbarOverflow_ParseLength_Input = getComputedStyle(document.documentElement).getPropertyValue(input['budgetVariable']).trim();
+    const triggerRaw: Lib_UseNavbarOverflow_ParseLength_Input = getComputedStyle(document.documentElement).getPropertyValue(input['triggerVariable']).trim();
+    const budgetPixels: Lib_UseNavbarOverflow_BudgetPixels = parseLength(budgetRaw);
+    const triggerPixels: Lib_UseNavbarOverflow_TriggerPixels = parseLength(triggerRaw);
+    const gap: Lib_UseNavbarOverflow_Gap = parseFloat(getComputedStyle(container).gap) || 0;
 
-    const childrenWidths: LibUseNavbarOverflowChildrenWidths = Array.from(container.children).map(
-      (child: LibUseNavbarOverflowChildElement) => child.getBoundingClientRect().width,
+    const childrenWidths: Lib_UseNavbarOverflow_ChildrenWidths = Array.from(container.children).map(
+      (child: Lib_UseNavbarOverflow_ChildElement) => child.getBoundingClientRect().width,
     );
 
-    let cumulative: LibUseNavbarOverflowCumulative = 0;
-    let count: LibUseNavbarOverflowCount = 0;
+    let cumulative: Lib_UseNavbarOverflow_Cumulative = 0;
+    let count: Lib_UseNavbarOverflow_Count = 0;
 
     for (let i = 0; i < childrenWidths.length; i += 1) {
-      const childWidth: LibUseNavbarOverflowMaybeChildWidth = childrenWidths[i];
+      const childWidth: Lib_UseNavbarOverflow_MaybeChildWidth = childrenWidths[i];
 
       if (childWidth === undefined) {
         continue;
       }
 
-      const width: LibUseNavbarOverflowChildWidth = childWidth;
-      const proposed: LibUseNavbarOverflowProposed = cumulative + ((i > 0) ? gap : 0) + width;
-      const isLast: LibUseNavbarOverflowIsLast = (i === childrenWidths.length - 1);
-      const moreReservation: LibUseNavbarOverflowMoreReservation = (isLast === true) ? 0 : (triggerPixels + gap);
+      const width: Lib_UseNavbarOverflow_ChildWidth = childWidth;
+      const proposed: Lib_UseNavbarOverflow_Proposed = cumulative + ((i > 0) ? gap : 0) + width;
+      const isLast: Lib_UseNavbarOverflow_IsLast = (i === childrenWidths.length - 1);
+      const moreReservation: Lib_UseNavbarOverflow_MoreReservation = (isLast === true) ? 0 : (triggerPixels + gap);
 
       if (proposed + moreReservation > budgetPixels) {
         break;
@@ -135,7 +135,7 @@ export function useNavbarOverflow(input: LibUseNavbarOverflowInput): LibUseNavba
       return undefined;
     }
 
-    let cancelled: LibUseNavbarOverflowCancelled = false;
+    let cancelled: Lib_UseNavbarOverflow_Cancelled = false;
 
     document.fonts.ready.then(() => {
       if (cancelled === true) {
@@ -160,7 +160,7 @@ export function useNavbarOverflow(input: LibUseNavbarOverflowInput): LibUseNavba
       return undefined;
     }
 
-    const observer: LibUseNavbarOverflowObserver = new ResizeObserver(() => {
+    const observer: Lib_UseNavbarOverflow_Observer = new ResizeObserver(() => {
       compute();
 
       return undefined;
@@ -179,7 +179,7 @@ export function useNavbarOverflow(input: LibUseNavbarOverflowInput): LibUseNavba
     };
   }, [itemCount]);
 
-  const hasOverflow: LibUseNavbarOverflowHasOverflow = (visibleCount < itemCount);
+  const hasOverflow: Lib_UseNavbarOverflow_HasOverflow = (visibleCount < itemCount);
 
   return {
     measureRef,

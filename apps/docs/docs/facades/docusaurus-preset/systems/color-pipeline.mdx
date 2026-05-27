@@ -23,13 +23,13 @@ tags:
 
 # Color Pipeline
 
-Each preset color (primary, accent, neutral) is a single hex value that passes through a generation pipeline to produce an 11-level shade scale.
+Each preset declares six color categories, each as a `{ light, dark }` hex pair. The two brand colors — `primary` and `secondary` — pass through a generation pipeline to produce 11-level shade scales. The remaining four (`text`, `border`, `warning`, `danger`) are used as single values plus a handful of derived `color-mix` tokens.
 
 ## Summary
 
-The pipeline converts a hex color to HSL, then interpolates lightness and adjusts saturation to produce 11 shades (50 through 950). Each shade is converted back to hex and written as a CSS custom property.
+For brand colors, the pipeline converts a hex color to HSL, then interpolates lightness and adjusts saturation to produce 11 shades (50 through 950). Each shade is converted back to hex and written as a CSS custom property.
 
-The base color sits at the 600 level.
+The base color sits at the 600 level. The pipeline runs twice per brand color — once for `light` and once for `dark` — producing a full light-mode scale on `:root` and a full dark-mode override under `:root[data-theme="dark"]`.
 
 ## How It Works
 
@@ -96,7 +96,29 @@ For the Foundry primary color `#ea580c`:
 | `--nova-color-primary-900` | ↓         |
 | `--nova-color-primary-950` | Darkest   |
 
-The same pipeline runs for `accent` and `neutral`, producing 33 CSS custom properties total (11 per color channel).
+The same shade-scale pipeline runs for `secondary`, which is emitted under the `--nova-color-accent-*` namespace for backward compatibility with existing preset CSS.
+
+### Non-Brand Color Tokens
+
+The remaining four color categories (`text`, `border`, `warning`, `danger`) write a single base token per category plus a small set of derived tokens computed at the CSS layer via `color-mix`:
+
+| Property                     | Source                                                       |
+|------------------------------|--------------------------------------------------------------|
+| `--nova-color-text`          | `text.light` (and `text.dark` under `[data-theme="dark"]`)   |
+| `--nova-color-text-muted`    | `color-mix` of `--nova-color-text` and the background        |
+| `--nova-color-text-soft`     | `color-mix` of `--nova-color-text` and the background        |
+| `--nova-color-text-inverse`  | `text.dark` (always the dark-mode hex, used for inverse UI)  |
+| `--nova-color-border`        | `border.light` (and `border.dark` in dark mode)              |
+| `--nova-color-border-subtle` | `color-mix` of `--nova-color-border` and the background      |
+| `--nova-color-surface-raised`| `color-mix` of background and `--nova-color-text`            |
+| `--nova-color-warning-500`   | `warning.light` (and `warning.dark` in dark mode)            |
+| `--nova-color-warning-400`   | `color-mix` of `--nova-color-warning-500` and background     |
+| `--nova-color-warning-bg`    | `color-mix` of `--nova-color-warning-500` and transparent    |
+| `--nova-color-danger-500`    | `danger.light` (and `danger.dark` in dark mode)              |
+| `--nova-color-danger-400`    | `color-mix` of `--nova-color-danger-500` and background      |
+| `--nova-color-danger-bg`     | `color-mix` of `--nova-color-danger-500` and transparent     |
+
+In total, a single resolved preset emits 22 brand shade tokens (11 primary + 11 secondary/accent) plus 13 non-brand color tokens under `:root`, for 35 color custom properties.
 
 ## Using Color Tokens
 
@@ -104,12 +126,12 @@ Reference the generated tokens in your CSS:
 
 ```css
 .my-element {
-  color: var(--nova-color-primary-600);
-  background-color: var(--nova-color-neutral-50);
+  color: var(--nova-color-text);
+  background-color: var(--nova-color-primary-50);
   border-color: var(--nova-color-accent-200);
 }
 ```
 
-Lighter shades (50–400) work well for backgrounds and borders. The base shade (600) is the brand color.
+Lighter primary/secondary shades (50–400) work well for backgrounds and borders. The base shade (600) is the brand color.
 
-Darker shades (700–950) work well for text and emphasis.
+Darker primary/secondary shades (700–950) work well for emphasis and on-color foregrounds. Use `--nova-color-text` (rather than a dark primary shade) for body copy so the color tracks the active color mode automatically.

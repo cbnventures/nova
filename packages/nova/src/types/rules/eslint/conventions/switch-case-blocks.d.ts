@@ -6,43 +6,43 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.13.0
  */
-export type RulesEslintConventionsSwitchCaseBlocksCheckCaseContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsSwitchCaseBlocksCheckCaseNode = TSESTree.SwitchCase;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Node = TSESTree.SwitchCase;
 
-export type RulesEslintConventionsSwitchCaseBlocksCheckCaseReturns = void;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Returns = void;
 
-export type RulesEslintConventionsSwitchCaseBlocksCheckCaseConsequent = TSESTree.Statement[];
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Consequent = TSESTree.Statement[];
 
-export type RulesEslintConventionsSwitchCaseBlocksCheckCaseFirstConsequent = TSESTree.Statement | undefined;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_FirstConsequent = TSESTree.Statement | undefined;
 
 /**
  * Rules - ESLint - Conventions - Switch Case Blocks - Check Switch Statement.
  *
  * @since 0.13.0
  */
-export type RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementNode = TSESTree.SwitchStatement;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Node = TSESTree.SwitchStatement;
 
-export type RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementReturns = void;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Returns = void;
 
-export type RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementHasDefault = boolean;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_HasDefault = boolean;
 
 /**
  * Rules - ESLint - Conventions - Switch Case Blocks - Rule.
  *
  * @since 0.13.0
  */
-export type RulesEslintConventionsSwitchCaseBlocksRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintConventionsSwitchCaseBlocksRuleDefaultOptionsRequireDefault = boolean;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsRequireDefault = boolean;
 
-export type RulesEslintConventionsSwitchCaseBlocksRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintConventionsSwitchCaseBlocksRuleOptionsRequireDefault = boolean;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions_RequireDefault = boolean;
 
-export type RulesEslintConventionsSwitchCaseBlocksRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintConventionsSwitchCaseBlocksRuleOptionsIgnoreFiles;
-  requireDefault: RulesEslintConventionsSwitchCaseBlocksRuleOptionsRequireDefault;
+export type Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions_IgnoreFiles;
+  requireDefault: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions_RequireDefault;
 }>;

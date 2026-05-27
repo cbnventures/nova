@@ -6,19 +6,19 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocItemMetadataDocItemMetadataPropsClassName = string | undefined;
+export type Theme_DocItem_Metadata_Index_DocItemMetadata_Props_ClassName = string | undefined;
 
-export type ThemeDocItemMetadataDocItemMetadataPropsStyle = CSSProperties | undefined;
+export type Theme_DocItem_Metadata_Index_DocItemMetadata_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocItemMetadataDocItemMetadataProps = {
-  className?: ThemeDocItemMetadataDocItemMetadataPropsClassName;
-  style?: ThemeDocItemMetadataDocItemMetadataPropsStyle;
+export type Theme_DocItem_Metadata_Index_DocItemMetadata_Props = {
+  className?: Theme_DocItem_Metadata_Index_DocItemMetadata_Props_ClassName;
+  style?: Theme_DocItem_Metadata_Index_DocItemMetadata_Props_Style;
 };
 
-export type ThemeDocItemMetadataDocItemMetadataDoc = DocContextValue;
+export type Theme_DocItem_Metadata_Index_DocItemMetadata_Doc = DocContextValue;
 
-export type ThemeDocItemMetadataDocItemMetadataSpread = Record<string, unknown>;
+export type Theme_DocItem_Metadata_Index_DocItemMetadata_Spread = Record<string, unknown>;
 
-export type ThemeDocItemMetadataDocItemMetadataImage = string | undefined;
+export type Theme_DocItem_Metadata_Index_DocItemMetadata_Image = string | undefined;
 
-export type ThemeDocItemMetadataDocItemMetadataMergedClassName = string;
+export type Theme_DocItem_Metadata_Index_DocItemMetadata_MergedClassName = string;

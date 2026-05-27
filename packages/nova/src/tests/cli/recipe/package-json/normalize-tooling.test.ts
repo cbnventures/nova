@@ -14,23 +14,23 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliRecipePackageJsonNormalizeTooling } from '../../../../cli/recipe/package-json/normalize-tooling.js';
+import { Runner as CliRecipePackageJsonNormalizeTooling } from '../../../../cli/recipe/package-json/normalize-tooling.js';
 
 import type {
-  TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigContents,
-  TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigPath,
-  TestsCliRecipePackageJsonNormalizeToolingRunOriginalCwd,
-  TestsCliRecipePackageJsonNormalizeToolingRunOutput,
-  TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonContents,
-  TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonPath,
-  TestsCliRecipePackageJsonNormalizeToolingRunParsed,
-  TestsCliRecipePackageJsonNormalizeToolingRunProjectDirectory,
-  TestsCliRecipePackageJsonNormalizeToolingRunSandboxPath,
-  TestsCliRecipePackageJsonNormalizeToolingRunSandboxRoot,
-  TestsCliRecipePackageJsonNormalizeToolingRunTemporaryDirectory,
-  TestsCliRecipePackageJsonNormalizeToolingRunWorkspaceDirectory,
-  TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonContents,
-  TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_OriginalCwd,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SandboxPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SandboxRoot,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_TemporaryDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonPath,
 } from '../../../../types/tests/cli/recipe/package-json/normalize-tooling.test.d.ts';
 
 /**
@@ -39,10 +39,10 @@ import type {
  * @since 0.14.0
  */
 describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
-  const originalCwd: TestsCliRecipePackageJsonNormalizeToolingRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliRecipePackageJsonNormalizeToolingRunTemporaryDirectory = tmpdir();
-  const sandboxPath: TestsCliRecipePackageJsonNormalizeToolingRunSandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliRecipePackageJsonNormalizeToolingRunSandboxRoot = await mkdtemp(sandboxPath);
+  const originalCwd: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_TemporaryDirectory = tmpdir();
+  const sandboxPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_SandboxRoot = await mkdtemp(sandboxPath);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -56,7 +56,7 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
   });
 
   it('sets exit code when not at project root', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeToolingRunProjectDirectory = join(sandboxRoot, 'not-project-root');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ProjectDirectory = join(sandboxRoot, 'not-project-root');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -70,20 +70,20 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
   });
 
   it('skips when no workspaces have the recipe enabled', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeToolingRunProjectDirectory = join(sandboxRoot, 'no-recipe');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeToolingRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ProjectDirectory = join(sandboxRoot, 'no-recipe');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonContents = JSON.stringify({
       name: 'test-no-recipe',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -95,8 +95,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       config: {},
@@ -113,8 +113,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     // The empty config should still be there because the recipe is not enabled.
-    const output: TestsCliRecipePackageJsonNormalizeToolingRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeToolingRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Parsed = JSON.parse(output);
 
     strictEqual(typeof parsed['config'], 'object');
 
@@ -122,20 +122,20 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
   });
 
   it('adds scripts when missing', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeToolingRunProjectDirectory = join(sandboxRoot, 'add-scripts');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeToolingRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ProjectDirectory = join(sandboxRoot, 'add-scripts');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonContents = JSON.stringify({
       name: 'test-add-scripts',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -150,8 +150,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
     }, null, 2);
@@ -166,8 +166,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonNormalizeToolingRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeToolingRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Parsed = JSON.parse(output);
 
     deepStrictEqual(parsed['scripts'], {});
 
@@ -175,20 +175,20 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
   });
 
   it('removes workspaces from non-project role', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeToolingRunProjectDirectory = join(sandboxRoot, 'remove-workspaces');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeToolingRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ProjectDirectory = join(sandboxRoot, 'remove-workspaces');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonContents = JSON.stringify({
       name: 'test-remove-workspaces',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -203,8 +203,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       workspaces: ['packages/*'],
@@ -220,8 +220,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonNormalizeToolingRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeToolingRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['workspaces'], undefined);
 
@@ -229,20 +229,20 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
   });
 
   it('removes empty config', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeToolingRunProjectDirectory = join(sandboxRoot, 'remove-config');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeToolingRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ProjectDirectory = join(sandboxRoot, 'remove-config');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonContents = JSON.stringify({
       name: 'test-remove-config',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -257,8 +257,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       config: {},
@@ -274,8 +274,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonNormalizeToolingRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeToolingRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['config'], undefined);
 
@@ -283,20 +283,20 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
   });
 
   it('does not modify files during dry run', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeToolingRunProjectDirectory = join(sandboxRoot, 'dry-run');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeToolingRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_PackageJsonContents = JSON.stringify({
       name: 'test-dry-run',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeToolingRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -311,8 +311,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeToolingRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       config: {},
@@ -329,8 +329,8 @@ describe('CliRecipePackageJsonNormalizeTooling.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     // The file should not have been modified.
-    const output: TestsCliRecipePackageJsonNormalizeToolingRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeToolingRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeTooling_CliRecipePackageJsonNormalizeToolingRun_Parsed = JSON.parse(output);
 
     strictEqual(typeof parsed['config'], 'object');
 

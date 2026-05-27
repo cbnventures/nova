@@ -11,165 +11,165 @@ import type {
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemLabel = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Label = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemHref = string | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Href = string | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemItems = PropSidebarItem[];
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Items = PropSidebarItem[];
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemCollapsible = boolean | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Collapsible = boolean | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemCollapsed = boolean | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Collapsed = boolean | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItem = {
-  label: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemLabel;
-  href?: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemHref;
-  items: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemItems;
-  collapsible?: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemCollapsible;
-  collapsed?: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItemCollapsed;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item = {
+  label: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Label;
+  href?: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Href;
+  items: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Items;
+  collapsible?: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Collapsible;
+  collapsed?: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item_Collapsed;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsActivePath = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_ActivePath = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsLevel = number;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Level = number;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsClassName = string | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_ClassName = string | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsStyle = CSSProperties | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryProps = {
-  item: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsItem;
-  activePath: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsActivePath;
-  level: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsLevel;
-  className?: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsClassName;
-  style?: ThemeDocSidebarItemCategoryDocSidebarItemCategoryPropsStyle;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props = {
+  item: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Item;
+  activePath: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_ActivePath;
+  level: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Level;
+  className?: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_ClassName;
+  style?: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryThemeConfigCast = unknown;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ThemeConfigCast = unknown;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryThemeConfig = Record<string, unknown>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ThemeConfig = Record<string, unknown>;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryDocsConfigSidebar = ThemeDocSidebarItemCategoryDocSidebarItemCategorySidebarConfig;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DocsConfig_Sidebar = Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SidebarConfig;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryDocsConfig = {
-  sidebar: ThemeDocSidebarItemCategoryDocSidebarItemCategoryDocsConfigSidebar;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DocsConfig = {
+  sidebar: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DocsConfig_Sidebar;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySidebarConfigAutoCollapseCategories = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SidebarConfig_AutoCollapseCategories = boolean;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySidebarConfig = {
-  autoCollapseCategories: ThemeDocSidebarItemCategoryDocSidebarItemCategorySidebarConfigAutoCollapseCategories;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SidebarConfig = {
+  autoCollapseCategories: Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SidebarConfig_AutoCollapseCategories;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryAutoCollapseCategories = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_AutoCollapseCategories = boolean;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryHref = string | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Href = string | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryLabel = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_Label = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryNextLevel = number;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_NextLevel = number;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryAriaCurrent = 'page' | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_AriaCurrent = 'page' | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryCategoryKey = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_CategoryKey = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsActive = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsActive = boolean;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryStoredState = boolean | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_StoredState = boolean | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryInitialOpenValue = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_InitialOpenValue = boolean;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryOpenState = [
-  ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue,
-  ThemeDocSidebarItemCategoryDocSidebarItemCategorySetIsOpenValue,
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_OpenState = [
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpenValue,
+  Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SetIsOpenValue,
 ];
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpenValue = boolean;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySetIsOpenValue = Dispatch<SetStateAction<ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpenValue>>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SetIsOpenValue = Dispatch<SetStateAction<Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpenValue>>;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryCollapseCategoryAriaLabel = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_CollapseCategoryAriaLabel = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryExpandCategoryAriaLabel = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ExpandCategoryAriaLabel = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryAriaLabel = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryAriaLabel = string;
 
 /**
  * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Contains Active Path.
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathItems = PropSidebarItem[];
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Items = PropSidebarItem[];
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathActivePath = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ActivePath = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathResult = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Result = boolean;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathItem = Record<string, unknown>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_Item = Record<string, unknown>;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathItemHref = string | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ItemHref = string | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryContainsActivePathItemItems = PropSidebarItem[] | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ContainsActivePath_ItemItems = PropSidebarItem[] | undefined;
 
 /**
  * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Find Active Descendant.
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantItems = PropSidebarItem[];
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Items = PropSidebarItem[];
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantActivePath = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_ActivePath = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantResult = ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantMatch | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Result = Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Match | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantMatch = {
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Match = {
   label: string;
   href: string;
 };
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantItem = Record<string, unknown>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Item = Record<string, unknown>;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantItemHref = string | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_ItemHref = string | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantItemLabel = string;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_ItemLabel = string;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantItemItems = PropSidebarItem[] | undefined;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_ItemItems = PropSidebarItem[] | undefined;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryActiveDescendant = ThemeDocSidebarItemCategoryDocSidebarItemCategoryFindActiveDescendantResult;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ActiveDescendant = Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_FindActiveDescendant_Result;
 
 /**
  * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Handle Toggle.
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryToggleEvent = SyntheticEvent<HTMLDetailsElement>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ToggleEvent = SyntheticEvent<HTMLDetailsElement>;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryDetailsElement = HTMLDetailsElement;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_DetailsElement = HTMLDetailsElement;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryIsOpen = boolean;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_IsOpen = boolean;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryParentElement = HTMLElement | null;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_ParentElement = HTMLElement | null;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryGrandparentElement = HTMLElement | null;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_GrandparentElement = HTMLElement | null;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySiblingDetails = NodeListOf<HTMLDetailsElement>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SiblingDetails = NodeListOf<HTMLDetailsElement>;
 
 /**
  * Theme - Doc Sidebar Item - Category - Doc Sidebar Item Category - Summary Click.
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryClickEvent = React.MouseEvent<HTMLElement>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickEvent = React.MouseEvent<HTMLElement>;
 
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategorySummaryClickTarget = Element;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_SummaryClickTarget = Element;
 
 /**
  * Theme - Doc Sidebar Item - Category - State Map.
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemCategoryDocSidebarItemCategoryStateMap = Map<string, boolean>;
+export type Theme_DocSidebarItem_Category_Index_DocSidebarItemCategory_StateMap = Map<string, boolean>;

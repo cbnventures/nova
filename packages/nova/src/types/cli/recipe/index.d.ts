@@ -1,6 +1,6 @@
 import type {
-  SharedNovaConfigGithubRecipeName,
-  SharedNovaConfigWorkspaceRecipeName,
+  Shared_NovaConfigGithubRecipeName as SharedNovaConfigGithubRecipeName,
+  Shared_NovaConfigWorkspaceRecipeName as SharedNovaConfigWorkspaceRecipeName,
 } from '../../shared.d.ts';
 
 /**
@@ -8,34 +8,34 @@ import type {
  *
  * @since 0.14.0
  */
-export type CliRecipeRegistry = {
-  'github': CliRecipeRegistryEntry[];
-  'package-json': CliRecipeRegistryEntry[];
+export type Cli_Recipe_Registry = {
+  'github': Cli_Recipe_RegistryEntry[];
+  'package-json': Cli_Recipe_RegistryEntry[];
 };
 
-export type CliRecipeRegistryCategory = keyof CliRecipeRegistry;
+export type Cli_Recipe_RegistryCategory = keyof Cli_Recipe_Registry;
 
 /**
  * CLI - Recipe - Registry Entry.
  *
  * @since 0.14.0
  */
-export type CliRecipeRegistryEntryName = SharedNovaConfigGithubRecipeName | SharedNovaConfigWorkspaceRecipeName;
+export type Cli_Recipe_RegistryEntry_Name = SharedNovaConfigGithubRecipeName | SharedNovaConfigWorkspaceRecipeName;
 
-export type CliRecipeRegistryEntryRunOptionsDryRun = true;
+export type Cli_Recipe_RegistryEntryRunOptions_DryRun = true;
 
-export type CliRecipeRegistryEntryRunOptionsReplaceFile = true;
+export type Cli_Recipe_RegistryEntryRunOptions_ReplaceFile = true;
 
-export type CliRecipeRegistryEntryRunOptions = {
-  dryRun?: CliRecipeRegistryEntryRunOptionsDryRun;
-  replaceFile?: CliRecipeRegistryEntryRunOptionsReplaceFile;
+export type Cli_Recipe_RegistryEntryRunOptions = {
+  dryRun?: Cli_Recipe_RegistryEntryRunOptions_DryRun;
+  replaceFile?: Cli_Recipe_RegistryEntryRunOptions_ReplaceFile;
 };
 
-export type CliRecipeRegistryEntryRunReturns = Promise<void>;
+export type Cli_Recipe_RegistryEntryRunReturns = Promise<void>;
 
-export type CliRecipeRegistryEntryRun = (options: CliRecipeRegistryEntryRunOptions) => CliRecipeRegistryEntryRunReturns;
+export type Cli_Recipe_RegistryEntry_Run = (options: Cli_Recipe_RegistryEntryRunOptions) => Cli_Recipe_RegistryEntryRunReturns;
 
-export type CliRecipeRegistryEntry = {
-  name: CliRecipeRegistryEntryName;
-  run: CliRecipeRegistryEntryRun;
+export type Cli_Recipe_RegistryEntry = {
+  name: Cli_Recipe_RegistryEntry_Name;
+  run: Cli_Recipe_RegistryEntry_Run;
 };

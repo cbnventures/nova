@@ -5,11 +5,11 @@ import {
 import DocCard from '@theme/DocCard';
 
 import type {
-  ThemeDocCardListDocCardListFilteredItems,
-  ThemeDocCardListDocCardListForCurrentSidebarSidebarItems,
-  ThemeDocCardListDocCardListIndex,
-  ThemeDocCardListDocCardListItem,
-  ThemeDocCardListDocCardListProps,
+  Theme_DocCardList_Index_DocCardList_FilteredItems,
+  Theme_DocCardList_Index_DocCardList_Index,
+  Theme_DocCardList_Index_DocCardList_Item,
+  Theme_DocCardList_Index_DocCardList_Props,
+  Theme_DocCardList_Index_DocCardListForCurrentSidebar_SidebarItems,
 } from '../../types/theme/DocCardList/index.d.ts';
 
 /**
@@ -24,7 +24,7 @@ import type {
  * @since 0.15.0
  */
 function DocCardListForCurrentSidebar() {
-  const items: ThemeDocCardListDocCardListForCurrentSidebarSidebarItems = useCurrentSidebarSiblings();
+  const items: Theme_DocCardList_Index_DocCardListForCurrentSidebar_SidebarItems = useCurrentSidebarSiblings();
 
   return <DocCardList items={items} />;
 }
@@ -36,18 +36,18 @@ function DocCardListForCurrentSidebar() {
  * filtering out unlisted items, or falling back to the current
  * sidebar siblings when no items are provided.
  *
- * @param {ThemeDocCardListDocCardListProps} props - Props.
+ * @param {Theme_DocCardList_Index_DocCardList_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocCardList(props: ThemeDocCardListDocCardListProps) {
+function DocCardList(props: Theme_DocCardList_Index_DocCardList_Props) {
   if (props['items'] === undefined) {
     return <DocCardListForCurrentSidebar />;
   }
 
-  const filteredItems: ThemeDocCardListDocCardListFilteredItems = filterDocCardListItems(props['items']);
+  const filteredItems: Theme_DocCardList_Index_DocCardList_FilteredItems = filterDocCardListItems(props['items']);
 
   return (
     <section
@@ -55,7 +55,7 @@ function DocCardList(props: ThemeDocCardListDocCardListProps) {
       style={props['style']}
     >
       {
-        filteredItems.map((item: ThemeDocCardListDocCardListItem, index: ThemeDocCardListDocCardListIndex) => (
+        filteredItems.map((item: Theme_DocCardList_Index_DocCardList_Item, index: Theme_DocCardList_Index_DocCardList_Index) => (
           <article className="nova-col-12 nova-col-md-6 nova-col-lg-4" key={index}>
             <DocCard item={item} />
           </article>

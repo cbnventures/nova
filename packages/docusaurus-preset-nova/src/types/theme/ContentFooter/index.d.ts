@@ -5,51 +5,51 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeContentFooterContentFooterPropsTagPermalink = string;
+export type Theme_ContentFooter_Index_ContentFooter_PropsTag_Permalink = string;
 
-export type ThemeContentFooterContentFooterPropsTagLabel = string;
+export type Theme_ContentFooter_Index_ContentFooter_PropsTag_Label = string;
 
-export type ThemeContentFooterContentFooterPropsTagDescription = string | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_PropsTag_Description = string | undefined;
 
-export type ThemeContentFooterContentFooterPropsTag = {
-  permalink: ThemeContentFooterContentFooterPropsTagPermalink;
-  label: ThemeContentFooterContentFooterPropsTagLabel;
-  description: ThemeContentFooterContentFooterPropsTagDescription;
+export type Theme_ContentFooter_Index_ContentFooter_PropsTag = {
+  permalink: Theme_ContentFooter_Index_ContentFooter_PropsTag_Permalink;
+  label: Theme_ContentFooter_Index_ContentFooter_PropsTag_Label;
+  description: Theme_ContentFooter_Index_ContentFooter_PropsTag_Description;
   [key: string]: unknown;
 };
 
-export type ThemeContentFooterContentFooterPropsTags = ThemeContentFooterContentFooterPropsTag[] | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_Props_Tags = Theme_ContentFooter_Index_ContentFooter_PropsTag[] | undefined;
 
-export type ThemeContentFooterContentFooterPropsSharePlatforms = string[] | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_Props_SharePlatforms = string[] | undefined;
 
-export type ThemeContentFooterContentFooterPropsShareUrl = string | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_Props_ShareUrl = string | undefined;
 
-export type ThemeContentFooterContentFooterPropsEditUrl = string | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_Props_EditUrl = string | undefined;
 
-export type ThemeContentFooterContentFooterPropsLastUpdatedAt = number | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_Props_LastUpdatedAt = number | undefined;
 
-export type ThemeContentFooterContentFooterPropsLastUpdatedBy = string | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_Props_LastUpdatedBy = string | undefined;
 
-export type ThemeContentFooterContentFooterPropsClassName = string | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_Props_ClassName = string | undefined;
 
-export type ThemeContentFooterContentFooterPropsStyle = CSSProperties | undefined;
+export type Theme_ContentFooter_Index_ContentFooter_Props_Style = CSSProperties | undefined;
 
-export type ThemeContentFooterContentFooterProps = {
-  tags?: ThemeContentFooterContentFooterPropsTags;
-  sharePlatforms?: ThemeContentFooterContentFooterPropsSharePlatforms;
-  shareUrl?: ThemeContentFooterContentFooterPropsShareUrl;
-  editUrl?: ThemeContentFooterContentFooterPropsEditUrl;
-  lastUpdatedAt?: ThemeContentFooterContentFooterPropsLastUpdatedAt;
-  lastUpdatedBy?: ThemeContentFooterContentFooterPropsLastUpdatedBy;
-  className?: ThemeContentFooterContentFooterPropsClassName;
-  style?: ThemeContentFooterContentFooterPropsStyle;
+export type Theme_ContentFooter_Index_ContentFooter_Props = {
+  tags?: Theme_ContentFooter_Index_ContentFooter_Props_Tags;
+  sharePlatforms?: Theme_ContentFooter_Index_ContentFooter_Props_SharePlatforms;
+  shareUrl?: Theme_ContentFooter_Index_ContentFooter_Props_ShareUrl;
+  editUrl?: Theme_ContentFooter_Index_ContentFooter_Props_EditUrl;
+  lastUpdatedAt?: Theme_ContentFooter_Index_ContentFooter_Props_LastUpdatedAt;
+  lastUpdatedBy?: Theme_ContentFooter_Index_ContentFooter_Props_LastUpdatedBy;
+  className?: Theme_ContentFooter_Index_ContentFooter_Props_ClassName;
+  style?: Theme_ContentFooter_Index_ContentFooter_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeContentFooterContentFooterCanDisplayTags = boolean;
+export type Theme_ContentFooter_Index_ContentFooter_CanDisplayTags = boolean;
 
-export type ThemeContentFooterContentFooterCanDisplayShare = boolean;
+export type Theme_ContentFooter_Index_ContentFooter_CanDisplayShare = boolean;
 
-export type ThemeContentFooterContentFooterCanDisplayEdit = boolean;
+export type Theme_ContentFooter_Index_ContentFooter_CanDisplayEdit = boolean;
 
-export type ThemeContentFooterContentFooterCanDisplayFooter = boolean;
+export type Theme_ContentFooter_Index_ContentFooter_CanDisplayFooter = boolean;

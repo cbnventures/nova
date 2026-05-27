@@ -3,40 +3,40 @@
  *
  * @since 0.15.0
  */
-export type TestsCliScaffoldAppViteRunOriginalCwd = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_OriginalCwd = string;
 
-export type TestsCliScaffoldAppViteRunTemporaryDirectory = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_TemporaryDirectory = string;
 
-export type TestsCliScaffoldAppViteRunTemporaryBase = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_TemporaryBase = string;
 
-export type TestsCliScaffoldAppViteRunSandboxRoot = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_SandboxRoot = string;
 
-export type TestsCliScaffoldAppViteRunRootDirectory = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootDirectory = string;
 
-export type TestsCliScaffoldAppViteRunChildDirectory = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildDirectory = string;
 
-export type TestsCliScaffoldAppViteRunRootPackageJson = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootPackageJson = string;
 
-export type TestsCliScaffoldAppViteRunRootPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootPackageJsonPath = string;
 
-export type TestsCliScaffoldAppViteRunChildPackageJson = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildPackageJson = string;
 
-export type TestsCliScaffoldAppViteRunChildPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildPackageJsonPath = string;
 
-export type TestsCliScaffoldAppViteRunProjectDirectory = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ProjectDirectory = string;
 
-export type TestsCliScaffoldAppViteRunExists = boolean;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_Exists = boolean;
 
-export type TestsCliScaffoldAppViteRunDryRunOutputPath = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_DryRunOutputPath = string;
 
-export type TestsCliScaffoldAppViteRunWorkspacePackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_WorkspacePackageJsonPath = string;
 
-export type TestsCliScaffoldAppViteRunViteConfigPath = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ViteConfigPath = string;
 
-export type TestsCliScaffoldAppViteRunIndexHtmlPath = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_IndexHtmlPath = string;
 
-export type TestsCliScaffoldAppViteRunMainTsPath = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_MainTsPath = string;
 
-export type TestsCliScaffoldAppViteRunPackageJson = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_PackageJson = string;
 
-export type TestsCliScaffoldAppViteRunPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_PackageJsonPath = string;

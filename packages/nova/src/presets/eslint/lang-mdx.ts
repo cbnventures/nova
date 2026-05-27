@@ -1,7 +1,7 @@
 import * as mdxParser from 'eslint-mdx';
 import * as mdxPlugin from 'eslint-plugin-mdx';
 
-import type { PresetsEslintLangMdxConfigConfig } from '../../types/presets/eslint/lang-mdx.d.ts';
+import type { Presets_Eslint_LangMdx_ConfigConfig } from '../../types/presets/eslint/lang-mdx.d.ts';
 
 /**
  * Presets - ESLint - Lang MDX - Config.
@@ -11,7 +11,7 @@ import type { PresetsEslintLangMdxConfigConfig } from '../../types/presets/eslin
  *
  * @since 0.11.0
  */
-const config: PresetsEslintLangMdxConfigConfig = [{
+const config: Presets_Eslint_LangMdx_ConfigConfig = [{
   name: 'nova/lang-mdx',
   files: ['**/*.mdx'],
   languageOptions: {

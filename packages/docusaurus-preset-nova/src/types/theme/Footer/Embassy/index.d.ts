@@ -6,115 +6,115 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeFooterEmbassyIndexSection = ThemeFooterEmbassyIndexSectionLink[];
+export type Theme_Footer_Embassy_Index_Section = Theme_Footer_Embassy_Index_SectionLink[];
 
-export type ThemeFooterEmbassyIndexSections = Record<string, ThemeFooterEmbassyIndexSection>;
+export type Theme_Footer_Embassy_Index_Sections = Record<string, Theme_Footer_Embassy_Index_Section>;
 
-export type ThemeFooterEmbassyIndexLayoutSlotTitle = string | undefined;
+export type Theme_Footer_Embassy_Index_LayoutSlot_Title = string | undefined;
 
-export type ThemeFooterEmbassyIndexLayoutSlotSection = string;
+export type Theme_Footer_Embassy_Index_LayoutSlot_Section = string;
 
-export type ThemeFooterEmbassyIndexLayoutSlot = {
-  title?: ThemeFooterEmbassyIndexLayoutSlotTitle;
-  section: ThemeFooterEmbassyIndexLayoutSlotSection;
+export type Theme_Footer_Embassy_Index_LayoutSlot = {
+  title?: Theme_Footer_Embassy_Index_LayoutSlot_Title;
+  section: Theme_Footer_Embassy_Index_LayoutSlot_Section;
 };
 
-export type ThemeFooterEmbassyIndexLayout = Record<string, ThemeFooterEmbassyIndexLayoutSlot>;
+export type Theme_Footer_Embassy_Index_Layout = Record<string, Theme_Footer_Embassy_Index_LayoutSlot>;
 
-export type ThemeFooterEmbassyIndexSocialLinks = ThemeFooterEmbassyIndexSocialLink[];
+export type Theme_Footer_Embassy_Index_SocialLinks = Theme_Footer_Embassy_Index_SocialLink[];
 
-export type ThemeFooterEmbassyIndexCopyright = string;
+export type Theme_Footer_Embassy_Index_Copyright = string;
 
-export type ThemeFooterEmbassyIndexCredit = boolean;
+export type Theme_Footer_Embassy_Index_Credit = boolean;
 
-export type ThemeFooterEmbassyIndexCtaObjectLabel = string;
+export type Theme_Footer_Embassy_Index_CtaObject_Label = string;
 
-export type ThemeFooterEmbassyIndexCtaObjectHref = string;
+export type Theme_Footer_Embassy_Index_CtaObject_Href = string;
 
-export type ThemeFooterEmbassyIndexCtaObject = {
-  label: ThemeFooterEmbassyIndexCtaObjectLabel;
-  href: ThemeFooterEmbassyIndexCtaObjectHref;
+export type Theme_Footer_Embassy_Index_CtaObject = {
+  label: Theme_Footer_Embassy_Index_CtaObject_Label;
+  href: Theme_Footer_Embassy_Index_CtaObject_Href;
 };
 
-export type ThemeFooterEmbassyIndexCta = string | ThemeFooterEmbassyIndexCtaObject | undefined;
+export type Theme_Footer_Embassy_Index_Cta = string | Theme_Footer_Embassy_Index_CtaObject | undefined;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsSections = ThemeFooterEmbassyIndexSections;
+export type Theme_Footer_Embassy_Index_Embassy_Props_Sections = Theme_Footer_Embassy_Index_Sections;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsLayout = ThemeFooterEmbassyIndexLayout;
+export type Theme_Footer_Embassy_Index_Embassy_Props_Layout = Theme_Footer_Embassy_Index_Layout;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsSocialLinks = ThemeFooterEmbassyIndexSocialLinks;
+export type Theme_Footer_Embassy_Index_Embassy_Props_SocialLinks = Theme_Footer_Embassy_Index_SocialLinks;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsCopyright = ThemeFooterEmbassyIndexCopyright;
+export type Theme_Footer_Embassy_Index_Embassy_Props_Copyright = Theme_Footer_Embassy_Index_Copyright;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsCredit = ThemeFooterEmbassyIndexCredit;
+export type Theme_Footer_Embassy_Index_Embassy_Props_Credit = Theme_Footer_Embassy_Index_Credit;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsCta = ThemeFooterEmbassyIndexCta;
+export type Theme_Footer_Embassy_Index_Embassy_Props_Cta = Theme_Footer_Embassy_Index_Cta;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsCtaContained = boolean;
+export type Theme_Footer_Embassy_Index_Embassy_Props_CtaContained = boolean;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsClassName = string | undefined;
+export type Theme_Footer_Embassy_Index_Embassy_Props_ClassName = string | undefined;
 
-export type ThemeFooterEmbassyIndexEmbassyPropsStyle = CSSProperties | undefined;
+export type Theme_Footer_Embassy_Index_Embassy_Props_Style = CSSProperties | undefined;
 
-export type ThemeFooterEmbassyIndexEmbassyProps = {
-  sections: ThemeFooterEmbassyIndexEmbassyPropsSections;
-  layout: ThemeFooterEmbassyIndexEmbassyPropsLayout;
-  socialLinks: ThemeFooterEmbassyIndexEmbassyPropsSocialLinks;
-  copyright: ThemeFooterEmbassyIndexEmbassyPropsCopyright;
-  credit: ThemeFooterEmbassyIndexEmbassyPropsCredit;
-  cta?: ThemeFooterEmbassyIndexEmbassyPropsCta;
-  ctaContained: ThemeFooterEmbassyIndexEmbassyPropsCtaContained;
-  className?: ThemeFooterEmbassyIndexEmbassyPropsClassName;
-  style?: ThemeFooterEmbassyIndexEmbassyPropsStyle;
+export type Theme_Footer_Embassy_Index_Embassy_Props = {
+  sections: Theme_Footer_Embassy_Index_Embassy_Props_Sections;
+  layout: Theme_Footer_Embassy_Index_Embassy_Props_Layout;
+  socialLinks: Theme_Footer_Embassy_Index_Embassy_Props_SocialLinks;
+  copyright: Theme_Footer_Embassy_Index_Embassy_Props_Copyright;
+  credit: Theme_Footer_Embassy_Index_Embassy_Props_Credit;
+  cta?: Theme_Footer_Embassy_Index_Embassy_Props_Cta;
+  ctaContained: Theme_Footer_Embassy_Index_Embassy_Props_CtaContained;
+  className?: Theme_Footer_Embassy_Index_Embassy_Props_ClassName;
+  style?: Theme_Footer_Embassy_Index_Embassy_Props_Style;
 };
 
-export type ThemeFooterEmbassyIndexEmbassyReturns = React.JSX.Element;
+export type Theme_Footer_Embassy_Index_Embassy_Returns = React.JSX.Element;
 
-export type ThemeFooterEmbassyIndexEmbassySections = ThemeFooterEmbassyIndexSections;
+export type Theme_Footer_Embassy_Index_Embassy_Sections = Theme_Footer_Embassy_Index_Sections;
 
-export type ThemeFooterEmbassyIndexEmbassyLayout = ThemeFooterEmbassyIndexLayout;
+export type Theme_Footer_Embassy_Index_Embassy_Layout = Theme_Footer_Embassy_Index_Layout;
 
-export type ThemeFooterEmbassyIndexEmbassySocialLinks = ThemeFooterEmbassyIndexSocialLinks;
+export type Theme_Footer_Embassy_Index_Embassy_SocialLinks = Theme_Footer_Embassy_Index_SocialLinks;
 
-export type ThemeFooterEmbassyIndexEmbassyCopyright = ThemeFooterEmbassyIndexCopyright;
+export type Theme_Footer_Embassy_Index_Embassy_Copyright = Theme_Footer_Embassy_Index_Copyright;
 
-export type ThemeFooterEmbassyIndexEmbassyCredit = ThemeFooterEmbassyIndexCredit;
+export type Theme_Footer_Embassy_Index_Embassy_Credit = Theme_Footer_Embassy_Index_Credit;
 
-export type ThemeFooterEmbassyIndexEmbassyCta = ThemeFooterEmbassyIndexCta;
+export type Theme_Footer_Embassy_Index_Embassy_Cta = Theme_Footer_Embassy_Index_Cta;
 
-export type ThemeFooterEmbassyIndexEmbassyCtaContained = boolean;
+export type Theme_Footer_Embassy_Index_Embassy_CtaContained = boolean;
 
-export type ThemeFooterEmbassyIndexEmbassyFooterClassName = string;
+export type Theme_Footer_Embassy_Index_Embassy_FooterClassName = string;
 
-export type ThemeFooterEmbassyIndexEmbassyLayoutEntries = [string, ThemeFooterEmbassyIndexLayoutSlot][];
+export type Theme_Footer_Embassy_Index_Embassy_LayoutEntries = [string, Theme_Footer_Embassy_Index_LayoutSlot][];
 
-export type ThemeFooterEmbassyIndexEmbassySocialLinksAriaLabel = string;
+export type Theme_Footer_Embassy_Index_Embassy_SocialLinksAriaLabel = string;
 
-export type ThemeFooterEmbassyIndexEmbassyExternalLinkAriaLabel = string;
+export type Theme_Footer_Embassy_Index_Embassy_ExternalLinkAriaLabel = string;
 
-export type ThemeFooterEmbassyIndexSocialLinkIcon = string | IconifyIcon;
+export type Theme_Footer_Embassy_Index_SocialLink_Icon = string | IconifyIcon;
 
-export type ThemeFooterEmbassyIndexSocialLinkHref = string;
+export type Theme_Footer_Embassy_Index_SocialLink_Href = string;
 
-export type ThemeFooterEmbassyIndexSocialLinkLabel = string;
+export type Theme_Footer_Embassy_Index_SocialLink_Label = string;
 
-export type ThemeFooterEmbassyIndexSocialLink = {
-  icon: ThemeFooterEmbassyIndexSocialLinkIcon;
-  href: ThemeFooterEmbassyIndexSocialLinkHref;
-  label: ThemeFooterEmbassyIndexSocialLinkLabel;
+export type Theme_Footer_Embassy_Index_SocialLink = {
+  icon: Theme_Footer_Embassy_Index_SocialLink_Icon;
+  href: Theme_Footer_Embassy_Index_SocialLink_Href;
+  label: Theme_Footer_Embassy_Index_SocialLink_Label;
 };
 
-export type ThemeFooterEmbassyIndexEmbassySocialLinkLabel = string;
+export type Theme_Footer_Embassy_Index_Embassy_SocialLinkLabel = string;
 
-export type ThemeFooterEmbassyIndexEmbassyLayoutEntry = [string, ThemeFooterEmbassyIndexLayoutSlot];
+export type Theme_Footer_Embassy_Index_Embassy_LayoutEntry = [string, Theme_Footer_Embassy_Index_LayoutSlot];
 
-export type ThemeFooterEmbassyIndexEmbassySectionLinks = ThemeFooterEmbassyIndexSectionLink[];
+export type Theme_Footer_Embassy_Index_Embassy_SectionLinks = Theme_Footer_Embassy_Index_SectionLink[];
 
-export type ThemeFooterEmbassyIndexSectionLinkLabel = string;
+export type Theme_Footer_Embassy_Index_SectionLink_Label = string;
 
-export type ThemeFooterEmbassyIndexSectionLinkHref = string;
+export type Theme_Footer_Embassy_Index_SectionLink_Href = string;
 
-export type ThemeFooterEmbassyIndexSectionLink = {
-  label: ThemeFooterEmbassyIndexSectionLinkLabel;
-  href: ThemeFooterEmbassyIndexSectionLinkHref;
+export type Theme_Footer_Embassy_Index_SectionLink = {
+  label: Theme_Footer_Embassy_Index_SectionLink_Label;
+  href: Theme_Footer_Embassy_Index_SectionLink_Href;
 };

@@ -3,53 +3,53 @@
  *
  * @since 0.18.0
  */
-export type TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxSandboxRoot = string;
+export type Tests_Cli_Generate_MustHaves_License_CreateRoleMatrixSandbox_SandboxRoot = string;
 
-export type TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxName = string;
+export type Tests_Cli_Generate_MustHaves_License_CreateRoleMatrixSandbox_Name = string;
 
-export type TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxReturns = Promise<string>;
+export type Tests_Cli_Generate_MustHaves_License_CreateRoleMatrixSandbox_Returns = Promise<string>;
 
-export type TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxProjectDirectory = string;
+export type Tests_Cli_Generate_MustHaves_License_CreateRoleMatrixSandbox_ProjectDirectory = string;
 
-export type TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxPackageJson = string;
+export type Tests_Cli_Generate_MustHaves_License_CreateRoleMatrixSandbox_PackageJson = string;
 
-export type TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxPackageJsonPath = string;
+export type Tests_Cli_Generate_MustHaves_License_CreateRoleMatrixSandbox_PackageJsonPath = string;
 
-export type TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxNovaConfig = string;
+export type Tests_Cli_Generate_MustHaves_License_CreateRoleMatrixSandbox_NovaConfig = string;
 
-export type TestsCliGenerateMustHavesLicenseCreateRoleMatrixSandboxNovaConfigPath = string;
+export type Tests_Cli_Generate_MustHaves_License_CreateRoleMatrixSandbox_NovaConfigPath = string;
 
 /**
  * Tests - CLI - Generate - Must Haves - License - Run.
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateMustHavesLicenseRunOriginalCwd = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_OriginalCwd = string;
 
-export type TestsCliGenerateMustHavesLicenseRunTemporaryDirectory = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_TemporaryDirectory = string;
 
-export type TestsCliGenerateMustHavesLicenseRunTemporaryPrefix = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_TemporaryPrefix = string;
 
-export type TestsCliGenerateMustHavesLicenseRunSandboxRoot = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_SandboxRoot = string;
 
-export type TestsCliGenerateMustHavesLicenseRunProjectDirectory = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_ProjectDirectory = string;
 
-export type TestsCliGenerateMustHavesLicenseRunPackageJson = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_PackageJson = string;
 
-export type TestsCliGenerateMustHavesLicenseRunPackageJsonPath = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_PackageJsonPath = string;
 
-export type TestsCliGenerateMustHavesLicenseRunNovaConfig = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_NovaConfig = string;
 
-export type TestsCliGenerateMustHavesLicenseRunNovaConfigPath = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_NovaConfigPath = string;
 
-export type TestsCliGenerateMustHavesLicenseRunExists = boolean;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_Exists = boolean;
 
-export type TestsCliGenerateMustHavesLicenseRunLicensePath = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_LicensePath = string;
 
-export type TestsCliGenerateMustHavesLicenseRunResult = 'cancelled' | 'completed';
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_Result = 'cancelled' | 'completed';
 
-export type TestsCliGenerateMustHavesLicenseRunReadContent = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_ReadContent = string;
 
-export type TestsCliGenerateMustHavesLicenseRunStaleContent = string;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_StaleContent = string;
 
-export type TestsCliGenerateMustHavesLicenseRunHasStaleContent = boolean;
+export type Tests_Cli_Generate_MustHaves_License_CliGenerateMustHavesLicenseRun_HasStaleContent = boolean;

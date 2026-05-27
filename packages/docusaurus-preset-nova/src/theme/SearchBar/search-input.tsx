@@ -7,40 +7,40 @@ import {
 import { useSearchContext } from './search-context.js';
 
 import type {
-  ThemeSearchBarSearchInputActiveIndex,
-  ThemeSearchBarSearchInputAnimationEvent,
-  ThemeSearchBarSearchInputAriaLabel,
-  ThemeSearchBarSearchInputBody,
-  ThemeSearchBarSearchInputClassName,
-  ThemeSearchBarSearchInputClearSearchAriaLabel,
-  ThemeSearchBarSearchInputDestinationUrl,
-  ThemeSearchBarSearchInputDirection,
-  ThemeSearchBarSearchInputHandleInputChangeFunction,
-  ThemeSearchBarSearchInputHandleKeyDownCallbackFunction,
-  ThemeSearchBarSearchInputHandleKeyDownFunction,
-  ThemeSearchBarSearchInputHandleQueryChange,
-  ThemeSearchBarSearchInputInputChangeEvent,
-  ThemeSearchBarSearchInputInputKeyboardEvent,
-  ThemeSearchBarSearchInputInputRef,
-  ThemeSearchBarSearchInputInputValue,
-  ThemeSearchBarSearchInputIsActive,
-  ThemeSearchBarSearchInputIsMac,
-  ThemeSearchBarSearchInputIsOpen,
-  ThemeSearchBarSearchInputIsShortcutMatch,
-  ThemeSearchBarSearchInputKeyboardEvent,
-  ThemeSearchBarSearchInputNextIndex,
-  ThemeSearchBarSearchInputOnSwapEndFunction,
-  ThemeSearchBarSearchInputPlaceholder,
-  ThemeSearchBarSearchInputPreviousIndex,
-  ThemeSearchBarSearchInputPreviousIsActiveRef,
-  ThemeSearchBarSearchInputProps,
-  ThemeSearchBarSearchInputQuery,
-  ThemeSearchBarSearchInputResultCount,
-  ThemeSearchBarSearchInputResults,
-  ThemeSearchBarSearchInputSearchContext,
-  ThemeSearchBarSearchInputSelectedResult,
-  ThemeSearchBarSearchInputSetActiveIndex,
-  ThemeSearchBarSearchInputSetIsOpen,
+  Theme_SearchBar_SearchInput_ActiveIndex,
+  Theme_SearchBar_SearchInput_AnimationEvent,
+  Theme_SearchBar_SearchInput_AriaLabel,
+  Theme_SearchBar_SearchInput_Body,
+  Theme_SearchBar_SearchInput_ClassName,
+  Theme_SearchBar_SearchInput_ClearSearchAriaLabel,
+  Theme_SearchBar_SearchInput_DestinationUrl,
+  Theme_SearchBar_SearchInput_Direction,
+  Theme_SearchBar_SearchInput_HandleInputChangeFunction,
+  Theme_SearchBar_SearchInput_HandleQueryChange,
+  Theme_SearchBar_SearchInput_InputChangeEvent,
+  Theme_SearchBar_SearchInput_InputKeyboardEvent,
+  Theme_SearchBar_SearchInput_InputRef,
+  Theme_SearchBar_SearchInput_InputValue,
+  Theme_SearchBar_SearchInput_IsActive,
+  Theme_SearchBar_SearchInput_IsMac,
+  Theme_SearchBar_SearchInput_IsOpen,
+  Theme_SearchBar_SearchInput_IsShortcutMatch,
+  Theme_SearchBar_SearchInput_KeyboardEvent,
+  Theme_SearchBar_SearchInput_NextIndex,
+  Theme_SearchBar_SearchInput_Placeholder,
+  Theme_SearchBar_SearchInput_PreviousIndex,
+  Theme_SearchBar_SearchInput_PreviousIsActiveRef,
+  Theme_SearchBar_SearchInput_Props,
+  Theme_SearchBar_SearchInput_Query,
+  Theme_SearchBar_SearchInput_ResultCount,
+  Theme_SearchBar_SearchInput_Results,
+  Theme_SearchBar_SearchInput_SearchContext,
+  Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_CallbackFunction,
+  Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_Function,
+  Theme_SearchBar_SearchInput_SearchInput_OnSwapEnd_Function,
+  Theme_SearchBar_SearchInput_SelectedResult,
+  Theme_SearchBar_SearchInput_SetActiveIndex,
+  Theme_SearchBar_SearchInput_SetIsOpen,
 } from '../../types/theme/SearchBar/search-input.d.ts';
 
 /**
@@ -50,25 +50,25 @@ import type {
  * global Cmd+K / Ctrl+K shortcut, and handles keyboard navigation
  * for cycling through search results via arrow keys.
  *
- * @param {ThemeSearchBarSearchInputProps} _props - _props.
+ * @param {Theme_SearchBar_SearchInput_Props} _props - _props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function SearchInput(_props: ThemeSearchBarSearchInputProps) {
-  const searchContext: ThemeSearchBarSearchInputSearchContext = useSearchContext();
-  const query: ThemeSearchBarSearchInputQuery = searchContext['query'];
-  const isOpen: ThemeSearchBarSearchInputIsOpen = searchContext['isOpen'];
-  const setIsOpen: ThemeSearchBarSearchInputSetIsOpen = searchContext['setIsOpen'];
-  const activeIndex: ThemeSearchBarSearchInputActiveIndex = searchContext['activeIndex'];
-  const setActiveIndex: ThemeSearchBarSearchInputSetActiveIndex = searchContext['setActiveIndex'];
-  const results: ThemeSearchBarSearchInputResults = searchContext['results'];
-  const handleQueryChange: ThemeSearchBarSearchInputHandleQueryChange = searchContext['handleQueryChange'];
-  const inputRef: ThemeSearchBarSearchInputInputRef = searchContext['inputRef'];
+function SearchInput(_props: Theme_SearchBar_SearchInput_Props) {
+  const searchContext: Theme_SearchBar_SearchInput_SearchContext = useSearchContext();
+  const query: Theme_SearchBar_SearchInput_Query = searchContext['query'];
+  const isOpen: Theme_SearchBar_SearchInput_IsOpen = searchContext['isOpen'];
+  const setIsOpen: Theme_SearchBar_SearchInput_SetIsOpen = searchContext['setIsOpen'];
+  const activeIndex: Theme_SearchBar_SearchInput_ActiveIndex = searchContext['activeIndex'];
+  const setActiveIndex: Theme_SearchBar_SearchInput_SetActiveIndex = searchContext['setActiveIndex'];
+  const results: Theme_SearchBar_SearchInput_Results = searchContext['results'];
+  const handleQueryChange: Theme_SearchBar_SearchInput_HandleQueryChange = searchContext['handleQueryChange'];
+  const inputRef: Theme_SearchBar_SearchInput_InputRef = searchContext['inputRef'];
 
-  const isActive: ThemeSearchBarSearchInputIsActive = (query !== '');
-  const previousIsActiveRef: ThemeSearchBarSearchInputPreviousIsActiveRef = useRef<boolean>(isActive);
+  const isActive: Theme_SearchBar_SearchInput_IsActive = (query !== '');
+  const previousIsActiveRef: Theme_SearchBar_SearchInput_PreviousIsActiveRef = useRef<boolean>(isActive);
 
   // Mobile-menu body swap animation. When the search activates or
   // deactivates inside the mobile menu, add a direction-specific class to
@@ -87,7 +87,7 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
       return;
     }
 
-    const direction: ThemeSearchBarSearchInputDirection = (isActive === true) ? 'in' : 'out';
+    const direction: Theme_SearchBar_SearchInput_Direction = (isActive === true) ? 'in' : 'out';
 
     previousIsActiveRef.current = isActive;
 
@@ -99,13 +99,13 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
       return;
     }
 
-    const body: ThemeSearchBarSearchInputBody = document.querySelector<HTMLDivElement>('.nova-mobile-menu-body');
+    const body: Theme_SearchBar_SearchInput_Body = document.querySelector<HTMLDivElement>('.nova-mobile-menu-body');
 
     if (body === null) {
       return;
     }
 
-    const className: ThemeSearchBarSearchInputClassName = `nova-mobile-menu-body-swapping-${direction}`;
+    const className: Theme_SearchBar_SearchInput_ClassName = `nova-mobile-menu-body-swapping-${direction}`;
 
     body.classList.add(className);
 
@@ -116,7 +116,7 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
     // unchanged and never replay the collapse - subsequent cycles snapped
     // instead of sliding. Now the keyframes have direction-specific names
     // (slide-swap-in / slide-swap-out) so animationend fires per cycle.
-    const onSwapEnd: ThemeSearchBarSearchInputOnSwapEndFunction = (event: ThemeSearchBarSearchInputAnimationEvent) => {
+    const onSwapEnd: Theme_SearchBar_SearchInput_SearchInput_OnSwapEnd_Function = (event: Theme_SearchBar_SearchInput_AnimationEvent) => {
       if (event.target !== body) {
         return;
       }
@@ -146,9 +146,9 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
 
   // Global keyboard shortcut (Cmd+K / Ctrl+K).
   useEffect(() => {
-    const handleKeyDown: ThemeSearchBarSearchInputHandleKeyDownFunction = (event: ThemeSearchBarSearchInputKeyboardEvent) => {
-      const isMac: ThemeSearchBarSearchInputIsMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
-      const isShortcutMatch: ThemeSearchBarSearchInputIsShortcutMatch = (isMac === true) ? (event.metaKey === true && event.key === 'k') : (event.ctrlKey === true && event.key === 'k');
+    const handleKeyDown: Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_Function = (event: Theme_SearchBar_SearchInput_KeyboardEvent) => {
+      const isMac: Theme_SearchBar_SearchInput_IsMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+      const isShortcutMatch: Theme_SearchBar_SearchInput_IsShortcutMatch = (isMac === true) ? (event.metaKey === true && event.key === 'k') : (event.ctrlKey === true && event.key === 'k');
 
       if (isShortcutMatch === true) {
         event.preventDefault();
@@ -177,8 +177,8 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
   // changes - search-provider also calls `setIsOpen` from inside a 200ms
   // debounce, but the animation system needs the mount to land at t=0
   // (start of the swap), not at the debounce midpoint.
-  const handleInputChange: ThemeSearchBarSearchInputHandleInputChangeFunction = useCallback((event: ThemeSearchBarSearchInputInputChangeEvent) => {
-    const inputValue: ThemeSearchBarSearchInputInputValue = event.target.value;
+  const handleInputChange: Theme_SearchBar_SearchInput_HandleInputChangeFunction = useCallback((event: Theme_SearchBar_SearchInput_InputChangeEvent) => {
+    const inputValue: Theme_SearchBar_SearchInput_InputValue = event.target.value;
 
     handleQueryChange(inputValue);
 
@@ -191,28 +191,28 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
   ]);
 
   // Keyboard navigation within results.
-  const handleKeyDown: ThemeSearchBarSearchInputHandleKeyDownCallbackFunction = useCallback((event: ThemeSearchBarSearchInputInputKeyboardEvent) => {
-    const resultCount: ThemeSearchBarSearchInputResultCount = results.length;
+  const handleKeyDown: Theme_SearchBar_SearchInput_SearchInput_HandleKeyDown_CallbackFunction = useCallback((event: Theme_SearchBar_SearchInput_InputKeyboardEvent) => {
+    const resultCount: Theme_SearchBar_SearchInput_ResultCount = results.length;
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
 
-      const nextIndex: ThemeSearchBarSearchInputNextIndex = (activeIndex + 1 < resultCount) ? activeIndex + 1 : 0;
+      const nextIndex: Theme_SearchBar_SearchInput_NextIndex = (activeIndex + 1 < resultCount) ? activeIndex + 1 : 0;
 
       setActiveIndex(nextIndex);
     } else if (event.key === 'ArrowUp') {
       event.preventDefault();
 
-      const previousIndex: ThemeSearchBarSearchInputPreviousIndex = (activeIndex - 1 >= 0) ? activeIndex - 1 : resultCount - 1;
+      const previousIndex: Theme_SearchBar_SearchInput_PreviousIndex = (activeIndex - 1 >= 0) ? activeIndex - 1 : resultCount - 1;
 
       setActiveIndex(previousIndex);
     } else if (event.key === 'Enter') {
       event.preventDefault();
 
-      const selectedResult: ThemeSearchBarSearchInputSelectedResult = results[activeIndex];
+      const selectedResult: Theme_SearchBar_SearchInput_SelectedResult = results[activeIndex];
 
       if (selectedResult !== undefined) {
-        const destinationUrl: ThemeSearchBarSearchInputDestinationUrl = `${selectedResult['path']}?_highlight=${encodeURIComponent(query)}`;
+        const destinationUrl: Theme_SearchBar_SearchInput_DestinationUrl = `${selectedResult['path']}?_highlight=${encodeURIComponent(query)}`;
 
         window.location.href = destinationUrl;
       }
@@ -227,17 +227,17 @@ function SearchInput(_props: ThemeSearchBarSearchInputProps) {
     query,
   ]);
 
-  const searchPlaceholder: ThemeSearchBarSearchInputPlaceholder = translate({
+  const searchPlaceholder: Theme_SearchBar_SearchInput_Placeholder = translate({
     id: 'theme.SearchBar.placeholder',
     message: 'Search',
     description: 'The placeholder text for the search input field',
   });
-  const searchAriaLabel: ThemeSearchBarSearchInputAriaLabel = translate({
+  const searchAriaLabel: Theme_SearchBar_SearchInput_AriaLabel = translate({
     id: 'theme.SearchBar.ariaLabel',
     message: 'Search',
     description: 'The ARIA label for the search input field',
   });
-  const clearSearchAriaLabel: ThemeSearchBarSearchInputClearSearchAriaLabel = translate({
+  const clearSearchAriaLabel: Theme_SearchBar_SearchInput_ClearSearchAriaLabel = translate({
     id: 'theme.SearchBar.clearSearchAriaLabel',
     message: 'Clear search',
     description: 'The ARIA label for the button that clears the search input',

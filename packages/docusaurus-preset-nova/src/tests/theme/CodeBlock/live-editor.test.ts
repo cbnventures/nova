@@ -5,8 +5,8 @@ import { describe, it } from 'vitest';
 import { isSandpackSupported } from '../../../theme/CodeBlock/live-editor.js';
 
 import type {
-  TestsThemeCodeBlockLiveEditorLanguage,
-  TestsThemeCodeBlockLiveEditorResult,
+  Tests_Theme_CodeBlock_LiveEditor_Language,
+  Tests_Theme_CodeBlock_LiveEditor_Result,
 } from '../../../types/tests/theme/CodeBlock/live-editor.test.d.ts';
 
 /**
@@ -16,8 +16,8 @@ import type {
  */
 describe('isSandpackSupported', async () => {
   it('returns true for tsx', () => {
-    const language: TestsThemeCodeBlockLiveEditorLanguage = 'tsx';
-    const result: TestsThemeCodeBlockLiveEditorResult = isSandpackSupported(language);
+    const language: Tests_Theme_CodeBlock_LiveEditor_Language = 'tsx';
+    const result: Tests_Theme_CodeBlock_LiveEditor_Result = isSandpackSupported(language);
 
     strictEqual(result, true);
 
@@ -25,8 +25,8 @@ describe('isSandpackSupported', async () => {
   });
 
   it('returns true for typescript', () => {
-    const language: TestsThemeCodeBlockLiveEditorLanguage = 'typescript';
-    const result: TestsThemeCodeBlockLiveEditorResult = isSandpackSupported(language);
+    const language: Tests_Theme_CodeBlock_LiveEditor_Language = 'typescript';
+    const result: Tests_Theme_CodeBlock_LiveEditor_Result = isSandpackSupported(language);
 
     strictEqual(result, true);
 
@@ -34,8 +34,8 @@ describe('isSandpackSupported', async () => {
   });
 
   it('returns true for vue', () => {
-    const language: TestsThemeCodeBlockLiveEditorLanguage = 'vue';
-    const result: TestsThemeCodeBlockLiveEditorResult = isSandpackSupported(language);
+    const language: Tests_Theme_CodeBlock_LiveEditor_Language = 'vue';
+    const result: Tests_Theme_CodeBlock_LiveEditor_Result = isSandpackSupported(language);
 
     strictEqual(result, true);
 
@@ -43,8 +43,8 @@ describe('isSandpackSupported', async () => {
   });
 
   it('returns false for rust', () => {
-    const language: TestsThemeCodeBlockLiveEditorLanguage = 'rust';
-    const result: TestsThemeCodeBlockLiveEditorResult = isSandpackSupported(language);
+    const language: Tests_Theme_CodeBlock_LiveEditor_Language = 'rust';
+    const result: Tests_Theme_CodeBlock_LiveEditor_Result = isSandpackSupported(language);
 
     strictEqual(result, false);
 
@@ -52,8 +52,8 @@ describe('isSandpackSupported', async () => {
   });
 
   it('returns false for python', () => {
-    const language: TestsThemeCodeBlockLiveEditorLanguage = 'python';
-    const result: TestsThemeCodeBlockLiveEditorResult = isSandpackSupported(language);
+    const language: Tests_Theme_CodeBlock_LiveEditor_Language = 'python';
+    const result: Tests_Theme_CodeBlock_LiveEditor_Result = isSandpackSupported(language);
 
     strictEqual(result, false);
 

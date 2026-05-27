@@ -3,66 +3,66 @@
  *
  * @since 0.14.0
  */
-export type TestsCliUtilityChangelogRunOriginalCwd = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_OriginalCwd = string;
 
-export type TestsCliUtilityChangelogRunTemporaryDirectory = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_TemporaryDirectory = string;
 
-export type TestsCliUtilityChangelogRunSandboxPrefix = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SandboxPrefix = string;
 
-export type TestsCliUtilityChangelogRunSandboxRoot = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_SandboxRoot = string;
 
-export type TestsCliUtilityChangelogRunProjectDirectory = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ProjectDirectory = string;
 
-export type TestsCliUtilityChangelogRunPackageJsonPath = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PackageJsonPath = string;
 
-export type TestsCliUtilityChangelogRunPackageJsonContents = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PackageJsonContents = string;
 
-export type TestsCliUtilityChangelogRunConfigPath = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ConfigPath = string;
 
-export type TestsCliUtilityChangelogRunConfigContents = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ConfigContents = string;
 
-export type TestsCliUtilityChangelogRunChangelogDirectory = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ChangelogDirectory = string;
 
-export type TestsCliUtilityChangelogRunFiles = string[];
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_Files = string[];
 
-export type TestsCliUtilityChangelogRunMdFiles = string[];
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_MdFiles = string[];
 
-export type TestsCliUtilityChangelogRunMdFile = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_MdFile = string;
 
-export type TestsCliUtilityChangelogRunEntryPath = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_EntryPath = string;
 
-export type TestsCliUtilityChangelogRunContent = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_Content = string;
 
-export type TestsCliUtilityChangelogRunHasPackage = boolean;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_HasPackage = boolean;
 
-export type TestsCliUtilityChangelogRunHasCategory = boolean;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_HasCategory = boolean;
 
-export type TestsCliUtilityChangelogRunHasBump = boolean;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_HasBump = boolean;
 
-export type TestsCliUtilityChangelogRunHasMessage = boolean;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_HasMessage = boolean;
 
-export type TestsCliUtilityChangelogRunWorkspaceDirectory = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_WorkspaceDirectory = string;
 
-export type TestsCliUtilityChangelogRunWorkspacePackagePath = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_WorkspacePackagePath = string;
 
-export type TestsCliUtilityChangelogRunWorkspacePackageContents = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_WorkspacePackageContents = string;
 
-export type TestsCliUtilityChangelogRunEntryContents = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_EntryContents = string;
 
-export type TestsCliUtilityChangelogRunUpdatedPackagePath = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_UpdatedPackagePath = string;
 
-export type TestsCliUtilityChangelogRunPackageJsonRaw = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PackageJsonRaw = string;
 
-export type TestsCliUtilityChangelogRunPackageJson = Record<string, unknown>;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_PackageJson = Record<string, unknown>;
 
-export type TestsCliUtilityChangelogRunChangelogPath = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ChangelogPath = string;
 
-export type TestsCliUtilityChangelogRunChangelogContent = string;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_ChangelogContent = string;
 
-export type TestsCliUtilityChangelogRunHasVersion = boolean;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_HasVersion = boolean;
 
-export type TestsCliUtilityChangelogRunHasFeature = boolean;
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_HasFeature = boolean;
 
-export type TestsCliUtilityChangelogRunRemainingFiles = string[];
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RemainingFiles = string[];
 
-export type TestsCliUtilityChangelogRunRemainingMdFiles = string[];
+export type Tests_Cli_Utility_Changelog_CliUtilityChangelogRun_RemainingMdFiles = string[];

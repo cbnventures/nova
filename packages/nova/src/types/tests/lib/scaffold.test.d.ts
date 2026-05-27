@@ -1,26 +1,26 @@
-import type { SharedMonorepoContext } from '../../shared.d.ts';
+import type { Shared_MonorepoContext } from '../../shared.d.ts';
 
 /**
  * Tests - Lib - Scaffold - Detect Monorepo Context.
  *
  * @since 0.15.0
  */
-export type TestsLibScaffoldDetectMonorepoContextOriginalCwd = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_OriginalCwd = string;
 
-export type TestsLibScaffoldDetectMonorepoContextTemporaryDirectory = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_TemporaryDirectory = string;
 
-export type TestsLibScaffoldDetectMonorepoContextTemporaryPrefix = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_TemporaryPrefix = string;
 
-export type TestsLibScaffoldDetectMonorepoContextSandboxRoot = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_SandboxRoot = string;
 
-export type TestsLibScaffoldDetectMonorepoContextProjectDirectory = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_ProjectDirectory = string;
 
-export type TestsLibScaffoldDetectMonorepoContextResolvedDirectory = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_ResolvedDirectory = string;
 
-export type TestsLibScaffoldDetectMonorepoContextResult = SharedMonorepoContext;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_Result = Shared_MonorepoContext;
 
-export type TestsLibScaffoldDetectMonorepoContextPackageJson = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_PackageJson = string;
 
-export type TestsLibScaffoldDetectMonorepoContextPackageContents = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_PackageContents = string;
 
-export type TestsLibScaffoldDetectMonorepoContextPackageJsonPath = string;
+export type Tests_Lib_Scaffold_DetectMonorepoContext_PackageJsonPath = string;

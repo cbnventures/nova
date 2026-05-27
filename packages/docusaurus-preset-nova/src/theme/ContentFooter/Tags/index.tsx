@@ -2,9 +2,9 @@ import { translate } from '@docusaurus/Translate';
 import Tag from '@theme/Tag';
 
 import type {
-  ThemeContentFooterTagsLabel,
-  ThemeContentFooterTagsProps,
-  ThemeContentFooterTagsTag,
+  Theme_ContentFooter_Tags_Index_Tags_Label,
+  Theme_ContentFooter_Tags_Index_Tags_Props,
+  Theme_ContentFooter_Tags_Index_Tags_Tag,
 } from '../../../types/theme/ContentFooter/Tags/index.d.ts';
 
 /**
@@ -13,18 +13,18 @@ import type {
  * Renders the tags section of a content footer - a labeled row
  * of tag pills for the current page.
  *
- * @param {ThemeContentFooterTagsProps} props - Props.
+ * @param {Theme_ContentFooter_Tags_Index_Tags_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function Tags(props: ThemeContentFooterTagsProps) {
+function Tags(props: Theme_ContentFooter_Tags_Index_Tags_Props) {
   if (props['tags'] === undefined || props['tags']['length'] === 0) {
     return undefined;
   }
 
-  const tagsLabel: ThemeContentFooterTagsLabel = translate({
+  const tagsLabel: Theme_ContentFooter_Tags_Index_Tags_Label = translate({
     id: 'theme.contentFooter.tagsLabel',
     message: 'Tags',
     description: 'The label for the tags section in a content footer',
@@ -37,7 +37,7 @@ function Tags(props: ThemeContentFooterTagsProps) {
     >
       <span className="nova-content-footer-section-label">{tagsLabel}</span>
       <div className="nova-content-footer-tags">
-        {props['tags'].map((tag: ThemeContentFooterTagsTag) => (
+        {props['tags'].map((tag: Theme_ContentFooter_Tags_Index_Tags_Tag) => (
           <Tag key={tag['permalink']} permalink={tag['permalink']} label={tag['label']} description={tag['description']} />
         ))}
       </div>

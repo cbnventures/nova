@@ -4,8 +4,8 @@ import Layout from '@theme/Layout';
 import NotFoundContent from '@theme/NotFound/Content';
 
 import type {
-  ThemeNotFoundNotFoundTitle,
-  ThemeNotFoundProps,
+  Theme_NotFound_Index_NotFound_Title,
+  Theme_NotFound_Index_NotFound_Props,
 } from '../../types/theme/NotFound/index.d.ts';
 
 /**
@@ -15,14 +15,14 @@ import type {
  * metadata title set to "Page Not Found" and the not-found
  * content body.
  *
- * @param {ThemeNotFoundProps} props - Props.
+ * @param {Theme_NotFound_Index_NotFound_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function NotFound(props: ThemeNotFoundProps) {
-  const title: ThemeNotFoundNotFoundTitle = translate({
+function NotFound(props: Theme_NotFound_Index_NotFound_Props) {
+  const title: Theme_NotFound_Index_NotFound_Title = translate({
     id: 'theme.NotFound.title',
     message: 'Page Not Found',
     description: 'The title of the 404 page',

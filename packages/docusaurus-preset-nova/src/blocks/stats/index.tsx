@@ -1,6 +1,6 @@
 import Heading from '@theme/Heading';
 
-import type { BlocksStatsProps } from '../../types/blocks/stats/index.d.ts';
+import type { Blocks_Stats_Index_BlocksStats_Props } from '../../types/blocks/stats/index.d.ts';
 
 /**
  * Blocks - Stats.
@@ -9,13 +9,13 @@ import type { BlocksStatsProps } from '../../types/blocks/stats/index.d.ts';
  * with descriptive labels in a responsive two-to-four column layout
  * with optional heading and description above the grid.
  *
- * @param {BlocksStatsProps} props - Props.
+ * @param {Blocks_Stats_Index_BlocksStats_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlocksStats(props: BlocksStatsProps) {
+function BlocksStats(props: Blocks_Stats_Index_BlocksStats_Props) {
   return (
     <section
       className={(props['className'] !== undefined) ? `nova-stats ${props['className']}` : 'nova-stats'}

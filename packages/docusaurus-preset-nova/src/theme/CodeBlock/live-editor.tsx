@@ -1,12 +1,12 @@
 import { Sandpack } from '@codesandbox/sandpack-react';
 
 import type {
-  ThemeCodeBlockLiveEditorIsSandpackSupportedLanguage,
-  ThemeCodeBlockLiveEditorIsSandpackSupportedReturns,
-  ThemeCodeBlockLiveEditorLiveEditorProps,
-  ThemeCodeBlockLiveEditorLiveEditorSandpackTemplate,
-  ThemeCodeBlockLiveEditorSupportedLanguages,
-  ThemeCodeBlockLiveEditorTemplateMap,
+  Theme_CodeBlock_LiveEditor_IsSandpackSupported_Language,
+  Theme_CodeBlock_LiveEditor_IsSandpackSupported_Returns,
+  Theme_CodeBlock_LiveEditor_LiveEditor_Props,
+  Theme_CodeBlock_LiveEditor_LiveEditor_SandpackTemplate,
+  Theme_CodeBlock_LiveEditor_SupportedLanguages,
+  Theme_CodeBlock_LiveEditor_TemplateMap,
 } from '../../types/theme/CodeBlock/live-editor.d.ts';
 
 /**
@@ -18,7 +18,7 @@ import type {
  *
  * @since 0.15.0
  */
-const templateMap: ThemeCodeBlockLiveEditorTemplateMap = {
+const templateMap: Theme_CodeBlock_LiveEditor_TemplateMap = {
   js: 'vanilla',
   javascript: 'vanilla',
   ts: 'vanilla-ts',
@@ -39,7 +39,7 @@ const templateMap: ThemeCodeBlockLiveEditorTemplateMap = {
  *
  * @since 0.15.0
  */
-const supportedLanguages: ThemeCodeBlockLiveEditorSupportedLanguages = Object.keys(templateMap);
+const supportedLanguages: Theme_CodeBlock_LiveEditor_SupportedLanguages = Object.keys(templateMap);
 
 /**
  * Theme - Code Block - Live Editor - Is Sandpack Supported.
@@ -48,13 +48,13 @@ const supportedLanguages: ThemeCodeBlockLiveEditorSupportedLanguages = Object.ke
  * Sandpack template available for interactive code
  * editing and live preview.
  *
- * @param {ThemeCodeBlockLiveEditorIsSandpackSupportedLanguage} language - Language.
+ * @param {Theme_CodeBlock_LiveEditor_IsSandpackSupported_Language} language - Language.
  *
- * @returns {ThemeCodeBlockLiveEditorIsSandpackSupportedReturns}
+ * @returns {Theme_CodeBlock_LiveEditor_IsSandpackSupported_Returns}
  *
  * @since 0.15.0
  */
-export function isSandpackSupported(language: ThemeCodeBlockLiveEditorIsSandpackSupportedLanguage): ThemeCodeBlockLiveEditorIsSandpackSupportedReturns {
+export function isSandpackSupported(language: Theme_CodeBlock_LiveEditor_IsSandpackSupported_Language): Theme_CodeBlock_LiveEditor_IsSandpackSupported_Returns {
   return supportedLanguages.includes(language);
 }
 
@@ -65,14 +65,14 @@ export function isSandpackSupported(language: ThemeCodeBlockLiveEditorIsSandpack
  * Sandpack runtime, mapping the given language to the appropriate
  * template for the editing environment.
  *
- * @param {ThemeCodeBlockLiveEditorLiveEditorProps} props - Props.
+ * @param {Theme_CodeBlock_LiveEditor_LiveEditor_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function LiveEditor(props: ThemeCodeBlockLiveEditorLiveEditorProps) {
-  const template: ThemeCodeBlockLiveEditorLiveEditorSandpackTemplate = (templateMap[props['language']] ?? 'vanilla') as ThemeCodeBlockLiveEditorLiveEditorSandpackTemplate;
+function LiveEditor(props: Theme_CodeBlock_LiveEditor_LiveEditor_Props) {
+  const template: Theme_CodeBlock_LiveEditor_LiveEditor_SandpackTemplate = (templateMap[props['language']] ?? 'vanilla') as Theme_CodeBlock_LiveEditor_LiveEditor_SandpackTemplate;
 
   return (
     <Sandpack

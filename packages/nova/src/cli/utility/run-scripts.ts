@@ -8,54 +8,54 @@ import chalk from 'chalk';
 import { Logger } from '../../toolkit/index.js';
 
 import type {
-  CliUtilityRunScriptsGetNpmCommandReturns,
-  CliUtilityRunScriptsMatchScriptsPattern,
-  CliUtilityRunScriptsMatchScriptsPrefix,
-  CliUtilityRunScriptsMatchScriptsReturns,
-  CliUtilityRunScriptsMatchScriptsScripts,
-  CliUtilityRunScriptsReadPackageJsonPackageJsonPath,
-  CliUtilityRunScriptsReadPackageJsonRaw,
-  CliUtilityRunScriptsReadPackageJsonReturns,
-  CliUtilityRunScriptsRunBufferMs,
-  CliUtilityRunScriptsRunExitCode,
-  CliUtilityRunScriptsRunMatchedScripts,
-  CliUtilityRunScriptsRunOptions,
-  CliUtilityRunScriptsRunPackageJson,
-  CliUtilityRunScriptsRunParallelBufferMs,
-  CliUtilityRunScriptsRunParallelChild,
-  CliUtilityRunScriptsRunParallelChildren,
-  CliUtilityRunScriptsRunParallelColoredPrefix,
-  CliUtilityRunScriptsRunParallelColorFunction,
-  CliUtilityRunScriptsRunParallelColorFunctions,
-  CliUtilityRunScriptsRunParallelColorIndex,
-  CliUtilityRunScriptsRunParallelExitPromise,
-  CliUtilityRunScriptsRunParallelExitPromises,
-  CliUtilityRunScriptsRunParallelExitResults,
-  CliUtilityRunScriptsRunParallelFailed,
-  CliUtilityRunScriptsRunParallelFlushInterval,
-  CliUtilityRunScriptsRunParallelFlushQueue,
-  CliUtilityRunScriptsRunParallelFormattedLine,
-  CliUtilityRunScriptsRunParallelForwardSignal,
-  CliUtilityRunScriptsRunParallelHandleData,
-  CliUtilityRunScriptsRunParallelLastFlushedScript,
-  CliUtilityRunScriptsRunParallelLines,
-  CliUtilityRunScriptsRunParallelMatchedScripts,
-  CliUtilityRunScriptsRunParallelNpmCommand,
-  CliUtilityRunScriptsRunParallelPartial,
-  CliUtilityRunScriptsRunParallelPartialLines,
-  CliUtilityRunScriptsRunParallelPrefix,
-  CliUtilityRunScriptsRunParallelPrefixes,
-  CliUtilityRunScriptsRunParallelQueue,
-  CliUtilityRunScriptsRunParallelReturns,
-  CliUtilityRunScriptsRunParallelScript,
-  CliUtilityRunScriptsRunParallelText,
-  CliUtilityRunScriptsRunPattern,
-  CliUtilityRunScriptsRunReturns,
-  CliUtilityRunScriptsRunScripts,
-  CliUtilityRunScriptsSpawnScriptChild,
-  CliUtilityRunScriptsSpawnScriptNpmCommand,
-  CliUtilityRunScriptsSpawnScriptReturns,
-  CliUtilityRunScriptsSpawnScriptScript,
+  Cli_Utility_RunScripts_Runner_GetNpmCommand_Returns,
+  Cli_Utility_RunScripts_Runner_MatchScripts_Pattern,
+  Cli_Utility_RunScripts_Runner_MatchScripts_Prefix,
+  Cli_Utility_RunScripts_Runner_MatchScripts_Returns,
+  Cli_Utility_RunScripts_Runner_MatchScripts_Scripts,
+  Cli_Utility_RunScripts_Runner_ReadPackageJson_PackageJsonPath,
+  Cli_Utility_RunScripts_Runner_ReadPackageJson_Raw,
+  Cli_Utility_RunScripts_Runner_ReadPackageJson_Returns,
+  Cli_Utility_RunScripts_Runner_Run_BufferMs,
+  Cli_Utility_RunScripts_Runner_Run_ExitCode,
+  Cli_Utility_RunScripts_Runner_Run_MatchedScripts,
+  Cli_Utility_RunScripts_Runner_Run_Options,
+  Cli_Utility_RunScripts_Runner_Run_PackageJson,
+  Cli_Utility_RunScripts_Runner_Run_Pattern,
+  Cli_Utility_RunScripts_Runner_Run_Returns,
+  Cli_Utility_RunScripts_Runner_Run_Scripts,
+  Cli_Utility_RunScripts_Runner_RunParallel_BufferMs,
+  Cli_Utility_RunScripts_Runner_RunParallel_Child,
+  Cli_Utility_RunScripts_Runner_RunParallel_Children,
+  Cli_Utility_RunScripts_Runner_RunParallel_ColoredPrefix,
+  Cli_Utility_RunScripts_Runner_RunParallel_ColorFunction,
+  Cli_Utility_RunScripts_Runner_RunParallel_ColorFunctions,
+  Cli_Utility_RunScripts_Runner_RunParallel_ColorIndex,
+  Cli_Utility_RunScripts_Runner_RunParallel_ExitPromise,
+  Cli_Utility_RunScripts_Runner_RunParallel_ExitPromises,
+  Cli_Utility_RunScripts_Runner_RunParallel_ExitResults,
+  Cli_Utility_RunScripts_Runner_RunParallel_Failed,
+  Cli_Utility_RunScripts_Runner_RunParallel_FlushInterval,
+  Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue,
+  Cli_Utility_RunScripts_Runner_RunParallel_FormattedLine,
+  Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal,
+  Cli_Utility_RunScripts_Runner_RunParallel_HandleData,
+  Cli_Utility_RunScripts_Runner_RunParallel_LastFlushedScript,
+  Cli_Utility_RunScripts_Runner_RunParallel_Lines,
+  Cli_Utility_RunScripts_Runner_RunParallel_MatchedScripts,
+  Cli_Utility_RunScripts_Runner_RunParallel_NpmCommand,
+  Cli_Utility_RunScripts_Runner_RunParallel_Partial,
+  Cli_Utility_RunScripts_Runner_RunParallel_PartialLines,
+  Cli_Utility_RunScripts_Runner_RunParallel_Prefix,
+  Cli_Utility_RunScripts_Runner_RunParallel_Prefixes,
+  Cli_Utility_RunScripts_Runner_RunParallel_Queue,
+  Cli_Utility_RunScripts_Runner_RunParallel_Returns,
+  Cli_Utility_RunScripts_Runner_RunParallel_Script,
+  Cli_Utility_RunScripts_Runner_RunParallel_Text,
+  Cli_Utility_RunScripts_Runner_SpawnScript_Child,
+  Cli_Utility_RunScripts_Runner_SpawnScript_NpmCommand,
+  Cli_Utility_RunScripts_Runner_SpawnScript_Returns,
+  Cli_Utility_RunScripts_Runner_SpawnScript_Script,
 } from '../../types/cli/utility/run-scripts.d.ts';
 
 /**
@@ -67,20 +67,20 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliUtilityRunScripts {
+export class Runner {
   /**
    * CLI - Utility - Run Scripts - Run.
    *
    * Validates options, reads package.json, matches scripts by pattern, then spawns them
    * sequentially or in parallel depending on the selected mode.
    *
-   * @param {CliUtilityRunScriptsRunOptions} options - Options.
+   * @param {Cli_Utility_RunScripts_Runner_Run_Options} options - Options.
    *
-   * @returns {CliUtilityRunScriptsRunReturns}
+   * @returns {Cli_Utility_RunScripts_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static async run(options: CliUtilityRunScriptsRunOptions): CliUtilityRunScriptsRunReturns {
+  public static async run(options: Cli_Utility_RunScripts_Runner_Run_Options): Cli_Utility_RunScripts_Runner_Run_Returns {
     if (options['pattern'] === undefined) {
       Logger.error('A script name pattern is required (e.g., "build:*").');
 
@@ -105,10 +105,10 @@ export class CliUtilityRunScripts {
       return;
     }
 
-    const pattern: CliUtilityRunScriptsRunPattern = options['pattern'];
+    const pattern: Cli_Utility_RunScripts_Runner_Run_Pattern = options['pattern'];
 
     // Read the "package.json" from the current working directory.
-    const packageJson: CliUtilityRunScriptsRunPackageJson = await CliUtilityRunScripts.readPackageJson();
+    const packageJson: Cli_Utility_RunScripts_Runner_Run_PackageJson = await Runner.readPackageJson();
 
     if (packageJson === undefined) {
       Logger.error('No "package.json" found in the current directory.');
@@ -118,7 +118,7 @@ export class CliUtilityRunScripts {
       return;
     }
 
-    const scripts: CliUtilityRunScriptsRunScripts = packageJson['scripts'] as CliUtilityRunScriptsRunScripts;
+    const scripts: Cli_Utility_RunScripts_Runner_Run_Scripts = packageJson['scripts'] as Cli_Utility_RunScripts_Runner_Run_Scripts;
 
     if (scripts === undefined) {
       Logger.warn('No "scripts" field found in "package.json".');
@@ -127,7 +127,7 @@ export class CliUtilityRunScripts {
     }
 
     // Match scripts by the provided pattern.
-    const matchedScripts: CliUtilityRunScriptsRunMatchedScripts = CliUtilityRunScripts.matchScripts(scripts, pattern);
+    const matchedScripts: Cli_Utility_RunScripts_Runner_Run_MatchedScripts = Runner.matchScripts(scripts, pattern);
 
     if (matchedScripts.length === 0) {
       Logger.warn(`No scripts matched the pattern "${pattern}".`);
@@ -142,7 +142,7 @@ export class CliUtilityRunScripts {
       for (const matchedScript of matchedScripts) {
         process.stdout.write(`\n┌─ ${chalk.cyan(matchedScript)} ──\n`);
 
-        const exitCode: CliUtilityRunScriptsRunExitCode = await CliUtilityRunScripts.spawnScript(matchedScript);
+        const exitCode: Cli_Utility_RunScripts_Runner_Run_ExitCode = await Runner.spawnScript(matchedScript);
 
         if (exitCode !== 0) {
           process.stderr.write(`└─ ${chalk.cyan(matchedScript)} ── ${chalk.red(`✗ (exit code ${exitCode})`)}\n`);
@@ -159,7 +159,7 @@ export class CliUtilityRunScripts {
     }
 
     if (options['parallel'] === true) {
-      const bufferMs: CliUtilityRunScriptsRunBufferMs = Number(options['buffer'] ?? '500');
+      const bufferMs: Cli_Utility_RunScripts_Runner_Run_BufferMs = Number(options['buffer'] ?? '500');
 
       if (
         Number.isNaN(bufferMs) === true
@@ -173,7 +173,7 @@ export class CliUtilityRunScripts {
         return;
       }
 
-      await CliUtilityRunScripts.runParallel(matchedScripts, bufferMs);
+      await Runner.runParallel(matchedScripts, bufferMs);
 
       return;
     }
@@ -189,15 +189,15 @@ export class CliUtilityRunScripts {
    *
    * @private
    *
-   * @returns {CliUtilityRunScriptsReadPackageJsonReturns}
+   * @returns {Cli_Utility_RunScripts_Runner_ReadPackageJson_Returns}
    *
    * @since 0.14.0
    */
-  private static async readPackageJson(): CliUtilityRunScriptsReadPackageJsonReturns {
-    const packageJsonPath: CliUtilityRunScriptsReadPackageJsonPackageJsonPath = resolve(process.cwd(), 'package.json');
+  private static async readPackageJson(): Cli_Utility_RunScripts_Runner_ReadPackageJson_Returns {
+    const packageJsonPath: Cli_Utility_RunScripts_Runner_ReadPackageJson_PackageJsonPath = resolve(process.cwd(), 'package.json');
 
     try {
-      const raw: CliUtilityRunScriptsReadPackageJsonRaw = await readFile(packageJsonPath, 'utf-8');
+      const raw: Cli_Utility_RunScripts_Runner_ReadPackageJson_Raw = await readFile(packageJsonPath, 'utf-8');
 
       return JSON.parse(raw);
     } catch {
@@ -213,11 +213,11 @@ export class CliUtilityRunScripts {
    *
    * @private
    *
-   * @returns {CliUtilityRunScriptsGetNpmCommandReturns}
+   * @returns {Cli_Utility_RunScripts_Runner_GetNpmCommand_Returns}
    *
    * @since 0.14.0
    */
-  private static getNpmCommand(): CliUtilityRunScriptsGetNpmCommandReturns {
+  private static getNpmCommand(): Cli_Utility_RunScripts_Runner_GetNpmCommand_Returns {
     return (platform() === 'win32') ? 'npm.cmd' : 'npm';
   }
 
@@ -227,18 +227,18 @@ export class CliUtilityRunScripts {
    * Filters script names by a trailing-wildcard pattern like "build:*" or returns an exact
    * match. Called by run to determine which to execute.
    *
-   * @param {CliUtilityRunScriptsMatchScriptsScripts} scripts - Scripts.
-   * @param {CliUtilityRunScriptsMatchScriptsPattern} pattern - Pattern.
+   * @param {Cli_Utility_RunScripts_Runner_MatchScripts_Scripts} scripts - Scripts.
+   * @param {Cli_Utility_RunScripts_Runner_MatchScripts_Pattern} pattern - Pattern.
    *
    * @private
    *
-   * @returns {CliUtilityRunScriptsMatchScriptsReturns}
+   * @returns {Cli_Utility_RunScripts_Runner_MatchScripts_Returns}
    *
    * @since 0.14.0
    */
-  private static matchScripts(scripts: CliUtilityRunScriptsMatchScriptsScripts, pattern: CliUtilityRunScriptsMatchScriptsPattern): CliUtilityRunScriptsMatchScriptsReturns {
+  private static matchScripts(scripts: Cli_Utility_RunScripts_Runner_MatchScripts_Scripts, pattern: Cli_Utility_RunScripts_Runner_MatchScripts_Pattern): Cli_Utility_RunScripts_Runner_MatchScripts_Returns {
     if (pattern.endsWith('*') === true) {
-      const prefix: CliUtilityRunScriptsMatchScriptsPrefix = pattern.slice(0, -1);
+      const prefix: Cli_Utility_RunScripts_Runner_MatchScripts_Prefix = pattern.slice(0, -1);
 
       return Object.keys(scripts).filter(
         (scriptName) => scriptName.startsWith(prefix),
@@ -258,19 +258,19 @@ export class CliUtilityRunScripts {
    * Spawns a single npm run command with inherited stdio for real-time output. Used by
    * sequential mode to stream output as scripts run.
    *
-   * @param {CliUtilityRunScriptsSpawnScriptScript} script - Script.
+   * @param {Cli_Utility_RunScripts_Runner_SpawnScript_Script} script - Script.
    *
    * @private
    *
-   * @returns {CliUtilityRunScriptsSpawnScriptReturns}
+   * @returns {Cli_Utility_RunScripts_Runner_SpawnScript_Returns}
    *
    * @since 0.14.0
    */
-  private static spawnScript(script: CliUtilityRunScriptsSpawnScriptScript): CliUtilityRunScriptsSpawnScriptReturns {
-    const npmCommand: CliUtilityRunScriptsSpawnScriptNpmCommand = CliUtilityRunScripts.getNpmCommand();
+  private static spawnScript(script: Cli_Utility_RunScripts_Runner_SpawnScript_Script): Cli_Utility_RunScripts_Runner_SpawnScript_Returns {
+    const npmCommand: Cli_Utility_RunScripts_Runner_SpawnScript_NpmCommand = Runner.getNpmCommand();
 
     return new Promise((promiseResolve, reject) => {
-      const child: CliUtilityRunScriptsSpawnScriptChild = spawn(npmCommand, [
+      const child: Cli_Utility_RunScripts_Runner_SpawnScript_Child = spawn(npmCommand, [
         'run',
         script,
       ], {
@@ -301,20 +301,20 @@ export class CliUtilityRunScripts {
    * with colored prefixes, and uses a time-windowed log queue
    * to group lines from the same script visually.
    *
-   * @param {CliUtilityRunScriptsRunParallelMatchedScripts} matchedScripts - Matched scripts.
-   * @param {CliUtilityRunScriptsRunParallelBufferMs}       bufferMs       - Buffer ms.
+   * @param {Cli_Utility_RunScripts_Runner_RunParallel_MatchedScripts} matchedScripts - Matched scripts.
+   * @param {Cli_Utility_RunScripts_Runner_RunParallel_BufferMs}       bufferMs       - Buffer ms.
    *
    * @private
    *
-   * @returns {CliUtilityRunScriptsRunParallelReturns}
+   * @returns {Cli_Utility_RunScripts_Runner_RunParallel_Returns}
    *
    * @since 0.15.0
    */
-  private static async runParallel(matchedScripts: CliUtilityRunScriptsRunParallelMatchedScripts, bufferMs: CliUtilityRunScriptsRunParallelBufferMs): CliUtilityRunScriptsRunParallelReturns {
-    const npmCommand: CliUtilityRunScriptsRunParallelNpmCommand = CliUtilityRunScripts.getNpmCommand();
+  private static async runParallel(matchedScripts: Cli_Utility_RunScripts_Runner_RunParallel_MatchedScripts, bufferMs: Cli_Utility_RunScripts_Runner_RunParallel_BufferMs): Cli_Utility_RunScripts_Runner_RunParallel_Returns {
+    const npmCommand: Cli_Utility_RunScripts_Runner_RunParallel_NpmCommand = Runner.getNpmCommand();
 
     // Build color-coded prefixes for each script.
-    const colorFunctions: CliUtilityRunScriptsRunParallelColorFunctions = [
+    const colorFunctions: Cli_Utility_RunScripts_Runner_RunParallel_ColorFunctions = [
       chalk.cyan,
       chalk.yellow,
       chalk.magenta,
@@ -322,28 +322,28 @@ export class CliUtilityRunScripts {
       chalk.blue,
       chalk.red,
     ];
-    const prefixes: CliUtilityRunScriptsRunParallelPrefixes = new Map();
+    const prefixes: Cli_Utility_RunScripts_Runner_RunParallel_Prefixes = new Map();
 
-    for (let colorIndex: CliUtilityRunScriptsRunParallelColorIndex = 0; colorIndex < matchedScripts.length; colorIndex += 1) {
-      const script: CliUtilityRunScriptsRunParallelScript = matchedScripts[colorIndex] as CliUtilityRunScriptsRunParallelScript;
-      const colorFunction: CliUtilityRunScriptsRunParallelColorFunction = colorFunctions[colorIndex % colorFunctions.length] as CliUtilityRunScriptsRunParallelColorFunction;
-      const coloredPrefix: CliUtilityRunScriptsRunParallelColoredPrefix = colorFunction(`[${script}]`);
+    for (let colorIndex: Cli_Utility_RunScripts_Runner_RunParallel_ColorIndex = 0; colorIndex < matchedScripts.length; colorIndex += 1) {
+      const script: Cli_Utility_RunScripts_Runner_RunParallel_Script = matchedScripts[colorIndex] as Cli_Utility_RunScripts_Runner_RunParallel_Script;
+      const colorFunction: Cli_Utility_RunScripts_Runner_RunParallel_ColorFunction = colorFunctions[colorIndex % colorFunctions.length] as Cli_Utility_RunScripts_Runner_RunParallel_ColorFunction;
+      const coloredPrefix: Cli_Utility_RunScripts_Runner_RunParallel_ColoredPrefix = colorFunction(`[${script}]`);
 
       prefixes.set(script, coloredPrefix);
     }
 
     // Shared queue and state.
-    const queue: CliUtilityRunScriptsRunParallelQueue = [];
-    const partialLines: CliUtilityRunScriptsRunParallelPartialLines = new Map();
-    const children: CliUtilityRunScriptsRunParallelChildren = [];
-    const exitPromises: CliUtilityRunScriptsRunParallelExitPromises = [];
+    const queue: Cli_Utility_RunScripts_Runner_RunParallel_Queue = [];
+    const partialLines: Cli_Utility_RunScripts_Runner_RunParallel_PartialLines = new Map();
+    const children: Cli_Utility_RunScripts_Runner_RunParallel_Children = [];
+    const exitPromises: Cli_Utility_RunScripts_Runner_RunParallel_ExitPromises = [];
 
-    let lastFlushedScript: CliUtilityRunScriptsRunParallelLastFlushedScript = '';
+    let lastFlushedScript: Cli_Utility_RunScripts_Runner_RunParallel_LastFlushedScript = '';
 
     // Flush all queued lines with prefixes and blank-line separators.
-    const flushQueue: CliUtilityRunScriptsRunParallelFlushQueue = () => {
+    const flushQueue: Cli_Utility_RunScripts_Runner_RunParallel_FlushQueue = () => {
       for (const entry of queue) {
-        const prefix: CliUtilityRunScriptsRunParallelPrefix = prefixes.get(entry['script']) ?? `[${entry['script']}]`;
+        const prefix: Cli_Utility_RunScripts_Runner_RunParallel_Prefix = prefixes.get(entry['script']) ?? `[${entry['script']}]`;
 
         if (lastFlushedScript !== '' && lastFlushedScript !== entry['script']) {
           process.stdout.write('\n');
@@ -351,7 +351,7 @@ export class CliUtilityRunScripts {
 
         lastFlushedScript = entry['script'];
 
-        const formattedLine: CliUtilityRunScriptsRunParallelFormattedLine = `${prefix} ${entry['line']}\n`;
+        const formattedLine: Cli_Utility_RunScripts_Runner_RunParallel_FormattedLine = `${prefix} ${entry['line']}\n`;
 
         if (entry['stream'] === 'stderr') {
           process.stderr.write(formattedLine);
@@ -367,7 +367,7 @@ export class CliUtilityRunScripts {
 
     // Spawn all scripts with piped stdio.
     for (const script of matchedScripts) {
-      const child: CliUtilityRunScriptsRunParallelChild = spawn(npmCommand, [
+      const child: Cli_Utility_RunScripts_Runner_RunParallel_Child = spawn(npmCommand, [
         'run',
         script,
       ], {
@@ -380,12 +380,12 @@ export class CliUtilityRunScripts {
       partialLines.set(script, '');
 
       // Handle incoming data by splitting into lines and queuing.
-      const handleData: CliUtilityRunScriptsRunParallelHandleData = (data, stream) => {
-        const text: CliUtilityRunScriptsRunParallelText = (partialLines.get(script) ?? '') + data.toString();
-        const lines: CliUtilityRunScriptsRunParallelLines = text.split('\n');
+      const handleData: Cli_Utility_RunScripts_Runner_RunParallel_HandleData = (data, stream) => {
+        const text: Cli_Utility_RunScripts_Runner_RunParallel_Text = (partialLines.get(script) ?? '') + data.toString();
+        const lines: Cli_Utility_RunScripts_Runner_RunParallel_Lines = text.split('\n');
 
         // Hold the last segment as a partial line.
-        const partial: CliUtilityRunScriptsRunParallelPartial = lines.pop() ?? '';
+        const partial: Cli_Utility_RunScripts_Runner_RunParallel_Partial = lines.pop() ?? '';
 
         partialLines.set(script, partial);
 
@@ -415,9 +415,9 @@ export class CliUtilityRunScripts {
       });
 
       // Track exit and flush remaining partial line.
-      const exitPromise: CliUtilityRunScriptsRunParallelExitPromise = new Promise((promiseResolve) => {
+      const exitPromise: Cli_Utility_RunScripts_Runner_RunParallel_ExitPromise = new Promise((promiseResolve) => {
         child.on('close', (code) => {
-          const partial: CliUtilityRunScriptsRunParallelPartial = partialLines.get(script) ?? '';
+          const partial: Cli_Utility_RunScripts_Runner_RunParallel_Partial = partialLines.get(script) ?? '';
 
           if (partial.length > 0) {
             queue.push({
@@ -467,10 +467,10 @@ export class CliUtilityRunScripts {
     }
 
     // Start periodic flushing.
-    const flushInterval: CliUtilityRunScriptsRunParallelFlushInterval = setInterval(flushQueue, bufferMs);
+    const flushInterval: Cli_Utility_RunScripts_Runner_RunParallel_FlushInterval = setInterval(flushQueue, bufferMs);
 
     // Forward signals to children.
-    const forwardSignal: CliUtilityRunScriptsRunParallelForwardSignal = (signal) => {
+    const forwardSignal: Cli_Utility_RunScripts_Runner_RunParallel_ForwardSignal = (signal) => {
       for (const child of children) {
         child.kill(signal);
       }
@@ -491,13 +491,13 @@ export class CliUtilityRunScripts {
     });
 
     // Wait for all children to exit.
-    const exitResults: CliUtilityRunScriptsRunParallelExitResults = await Promise.allSettled(exitPromises);
+    const exitResults: Cli_Utility_RunScripts_Runner_RunParallel_ExitResults = await Promise.allSettled(exitPromises);
 
     // Final flush and cleanup.
     clearInterval(flushInterval);
     flushQueue();
 
-    const failed: CliUtilityRunScriptsRunParallelFailed = exitResults.some(
+    const failed: Cli_Utility_RunScripts_Runner_RunParallel_Failed = exitResults.some(
       (exitResult) => exitResult.status === 'rejected'
         || (
           exitResult.status === 'fulfilled'

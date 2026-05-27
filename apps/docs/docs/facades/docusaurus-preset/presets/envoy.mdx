@@ -59,19 +59,21 @@ The full default configuration for the Envoy preset:
 {
   preset: 'envoy',
   // Default values (no overrides needed):
-  // colors.primary:          '#7c3aed'
-  // colors.accent:           '#06b6d4'
-  // colors.neutral:          '#71717a'
+  // colors.primary.light:    '#7c3aed'
+  // colors.primary.dark:     '#7c3aed'
+  // colors.secondary.light:  '#06b6d4'
+  // colors.secondary.dark:   '#06b6d4'
+  // colors.text.light:       '#18181b'
+  // colors.text.dark:        '#e4e4e7'
+  // colors.border.light:     '#d4d4d8'
+  // colors.border.dark:      '#52525b'
+  // colors.warning.light:    '#f59e0b'
+  // colors.warning.dark:     '#f59e0b'
+  // colors.danger.light:     '#ef4444'
+  // colors.danger.dark:      '#ef4444'
   // fonts.display:           'Plus Jakarta Sans'
   // fonts.body:              'Inter'
   // fonts.code:              'JetBrains Mono'
-  // shape.radius:            'rounded'
-  // shape.density:           'comfortable'
-  // depth.cards:             'elevated'
-  // depth.codeBlocks:        'bordered'
-  // motion.speed:            'normal'
-  // motion.staggeredReveals: true
-  // motion.hoverEffects:     true
   // navbar:                  'compass'
   // footer:                  'launchpad'
 }
@@ -89,15 +91,18 @@ Override any category to customize the Envoy identity. Unspecified values keep t
   preset: 'envoy',
   overrides: {
     colors: {
-      primary: '#7c3aed',
-      accent: '#06b6d4',
-      neutral: '#71717a',
+      primary:   { light: '#7c3aed', dark: '#7c3aed' },
+      secondary: { light: '#06b6d4', dark: '#06b6d4' },
+      text:      { light: '#18181b', dark: '#e4e4e7' },
+      border:    { light: '#d4d4d8', dark: '#52525b' },
+      warning:   { light: '#f59e0b', dark: '#f59e0b' },
+      danger:    { light: '#ef4444', dark: '#ef4444' },
     },
   },
 }
 ```
 
-Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+Each color category accepts a `{ light, dark }` pair. The `primary` and `secondary` colors expand to 11-level shade scales (50 through 950) as CSS custom properties.
 
   </TabItem>
   <TabItem value="fonts" label="Fonts">
@@ -116,25 +121,6 @@ Each color generates an 11-level shade scale (50–950) as CSS custom properties
 ```
 
 Font families are set as CSS custom properties. Google Fonts are loaded automatically.
-
-  </TabItem>
-  <TabItem value="shape" label="Shape & Depth">
-
-```ts title="docusaurus.config.ts"
-{
-  preset: 'envoy',
-  overrides: {
-    shape: {
-      radius: 'rounded',
-      density: 'comfortable',
-    },
-    depth: {
-      cards: 'elevated',
-      codeBlocks: 'bordered',
-    },
-  },
-}
-```
 
   </TabItem>
 </Tabs>

@@ -3,14 +3,14 @@ import { translate } from '@docusaurus/Translate';
 import { filterToc, treeifyToc } from '../../lib/toc.js';
 
 import type {
-  ThemeTocItems,
-  ThemeTocListItem,
-  ThemeTocListItems,
-  ThemeTocMaxHeadingLevel,
-  ThemeTocMinHeadingLevel,
-  ThemeTocProps,
-  ThemeTocTocAriaLabel,
-  ThemeTocTreeItems,
+  Theme_Toc_Index_Items,
+  Theme_Toc_Index_ListItem,
+  Theme_Toc_Index_ListItems,
+  Theme_Toc_Index_MaxHeadingLevel,
+  Theme_Toc_Index_MinHeadingLevel,
+  Theme_Toc_Index_Props,
+  Theme_Toc_Index_TocAriaLabel,
+  Theme_Toc_Index_TreeItems,
 } from '../../types/theme/TOC/index.d.ts';
 
 /**
@@ -20,13 +20,13 @@ import type {
  * table-of-contents items, linking each heading by its anchor
  * identifier and nesting child items.
  *
- * @param {ThemeTocListItems} items - Items.
+ * @param {Theme_Toc_Index_ListItems} items - Items.
  *
  * @returns {JSX.Element | undefined}
  *
  * @since 0.15.0
  */
-function TocList(items: ThemeTocListItems) {
+function TocList(items: Theme_Toc_Index_ListItems) {
   if (items === undefined || items['length'] === 0) {
     return undefined;
   }
@@ -34,7 +34,7 @@ function TocList(items: ThemeTocListItems) {
   return (
     <ul className="nova-toc-list">
       {
-        items.map((item: ThemeTocListItem) => (
+        items.map((item: Theme_Toc_Index_ListItem) => (
           <li className="nova-toc-item" key={item['id']}>
             <a className="nova-toc-link" href={`#${item['id']}`} dangerouslySetInnerHTML={{ __html: item['value'] }} />
             {TocList(item['children'])}
@@ -52,17 +52,17 @@ function TocList(items: ThemeTocListItems) {
  * recursive table of contents built from heading items,
  * providing in-page anchor links.
  *
- * @param {ThemeTocProps} props - Props.
+ * @param {Theme_Toc_Index_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function TOC(props: ThemeTocProps) {
-  const items: ThemeTocItems = props['toc'];
-  const minHeadingLevel: ThemeTocMinHeadingLevel = (props['minHeadingLevel'] !== undefined) ? props['minHeadingLevel'] : 2;
-  const maxHeadingLevel: ThemeTocMaxHeadingLevel = (props['maxHeadingLevel'] !== undefined) ? props['maxHeadingLevel'] : 3;
-  const ariaLabel: ThemeTocTocAriaLabel = translate({
+function TOC(props: Theme_Toc_Index_Props) {
+  const items: Theme_Toc_Index_Items = props['toc'];
+  const minHeadingLevel: Theme_Toc_Index_MinHeadingLevel = (props['minHeadingLevel'] !== undefined) ? props['minHeadingLevel'] : 2;
+  const maxHeadingLevel: Theme_Toc_Index_MaxHeadingLevel = (props['maxHeadingLevel'] !== undefined) ? props['maxHeadingLevel'] : 3;
+  const ariaLabel: Theme_Toc_Index_TocAriaLabel = translate({
     id: 'theme.TOC.ariaLabel',
     message: 'Table of contents',
     description: 'The ARIA label for the table of contents navigation',
@@ -72,7 +72,7 @@ function TOC(props: ThemeTocProps) {
     return undefined;
   }
 
-  const treeItems: ThemeTocTreeItems = filterToc(treeifyToc(items), minHeadingLevel, maxHeadingLevel);
+  const treeItems: Theme_Toc_Index_TreeItems = filterToc(treeifyToc(items), minHeadingLevel, maxHeadingLevel);
 
   if (treeItems['length'] === 0) {
     return undefined;

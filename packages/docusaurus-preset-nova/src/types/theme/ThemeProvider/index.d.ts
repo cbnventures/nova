@@ -5,8 +5,8 @@ import type { ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeThemeProviderThemeProviderPropsChildren = ReactNode;
+export type Theme_ThemeProvider_Index_ThemeProvider_Props_Children = ReactNode;
 
-export type ThemeThemeProviderThemeProviderProps = {
-  children: ThemeThemeProviderThemeProviderPropsChildren;
+export type Theme_ThemeProvider_Index_ThemeProvider_Props = {
+  children: Theme_ThemeProvider_Index_ThemeProvider_Props_Children;
 };

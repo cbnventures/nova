@@ -3,8 +3,8 @@ import Heading from '@theme/Heading';
 import TagsListByLetter from '@theme/TagsListByLetter';
 
 import type {
-  ThemeDocTagsListPageDocTagsListPageProps,
-  ThemeDocTagsListPageDocTagsListPageTitle,
+  Theme_DocTagsListPage_Index_DocTagsListPage_Props,
+  Theme_DocTagsListPage_Index_DocTagsListPage_Title,
 } from '../../types/theme/DocTagsListPage/index.d.ts';
 
 /**
@@ -14,14 +14,14 @@ import type {
  * by letter, with a translated heading and page metadata
  * for search engine discovery.
  *
- * @param {ThemeDocTagsListPageDocTagsListPageProps} props - Props.
+ * @param {Theme_DocTagsListPage_Index_DocTagsListPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocTagsListPage(props: ThemeDocTagsListPageDocTagsListPageProps) {
-  const title: ThemeDocTagsListPageDocTagsListPageTitle = translateTagsPageTitle();
+function DocTagsListPage(props: Theme_DocTagsListPage_Index_DocTagsListPage_Props) {
+  const title: Theme_DocTagsListPage_Index_DocTagsListPage_Title = translateTagsPageTitle();
 
   return (
     <>

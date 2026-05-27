@@ -3,80 +3,80 @@
  *
  * @since 0.18.0
  */
-export type LibUseNavbarActiveItemItem = {
-  type?: LibUseNavbarActiveItemItemType;
-  label?: LibUseNavbarActiveItemItemLabel;
-  to?: LibUseNavbarActiveItemItemTo;
-  href?: LibUseNavbarActiveItemItemHref;
-  activeBaseRegex?: LibUseNavbarActiveItemItemActiveBaseRegex;
-  claimBase?: LibUseNavbarActiveItemItemClaimBase;
+export type Lib_UseNavbarActiveItem_Item = {
+  type?: Lib_UseNavbarActiveItem_Item_Type;
+  label?: Lib_UseNavbarActiveItem_Item_Label;
+  to?: Lib_UseNavbarActiveItem_Item_To;
+  href?: Lib_UseNavbarActiveItem_Item_Href;
+  activeBaseRegex?: Lib_UseNavbarActiveItem_Item_ActiveBaseRegex;
+  claimBase?: Lib_UseNavbarActiveItem_Item_ClaimBase;
   [key: string]: unknown;
 };
 
-export type LibUseNavbarActiveItemItems = readonly LibUseNavbarActiveItemItem[];
+export type Lib_UseNavbarActiveItem_Items = readonly Lib_UseNavbarActiveItem_Item[];
 
-export type LibUseNavbarActiveItemItemType = string | undefined;
+export type Lib_UseNavbarActiveItem_Item_Type = string | undefined;
 
-export type LibUseNavbarActiveItemItemLabel = string | undefined;
+export type Lib_UseNavbarActiveItem_Item_Label = string | undefined;
 
-export type LibUseNavbarActiveItemItemTo = string | undefined;
+export type Lib_UseNavbarActiveItem_Item_To = string | undefined;
 
-export type LibUseNavbarActiveItemItemHref = string | undefined;
+export type Lib_UseNavbarActiveItem_Item_Href = string | undefined;
 
-export type LibUseNavbarActiveItemItemActiveBaseRegex = string | undefined;
+export type Lib_UseNavbarActiveItem_Item_ActiveBaseRegex = string | undefined;
 
-export type LibUseNavbarActiveItemItemClaimBase = string | undefined;
+export type Lib_UseNavbarActiveItem_Item_ClaimBase = string | undefined;
 
 /**
  * Lib - Use Navbar Active Item - Get Claim Length.
  *
  * @since 0.18.0
  */
-export type LibUseNavbarActiveItemGetClaimLengthPathname = string;
+export type Lib_UseNavbarActiveItem_GetClaimLength_Pathname = string;
 
-export type LibUseNavbarActiveItemGetClaimLengthReturns = number | null;
+export type Lib_UseNavbarActiveItem_GetClaimLength_Returns = number | null;
 
-export type LibUseNavbarActiveItemGetClaimLengthMatch = RegExpMatchArray | null;
+export type Lib_UseNavbarActiveItem_GetClaimLength_Match = RegExpMatchArray | null;
 
-export type LibUseNavbarActiveItemGetClaimLengthMatchedSubstring = string;
+export type Lib_UseNavbarActiveItem_GetClaimLength_MatchedSubstring = string;
 
-export type LibUseNavbarActiveItemGetClaimLengthClaimBase = string | undefined;
+export type Lib_UseNavbarActiveItem_GetClaimLength_ClaimBase = string | undefined;
 
-export type LibUseNavbarActiveItemGetClaimLengthTo = string | undefined;
+export type Lib_UseNavbarActiveItem_GetClaimLength_To = string | undefined;
 
-export type LibUseNavbarActiveItemGetClaimLengthBase = string | undefined;
+export type Lib_UseNavbarActiveItem_GetClaimLength_Base = string | undefined;
 
-export type LibUseNavbarActiveItemGetClaimLengthNormalized = string;
+export type Lib_UseNavbarActiveItem_GetClaimLength_Normalized = string;
 
 /**
  * Lib - Use Navbar Active Item - Non Link Types.
  *
  * @since 0.18.0
  */
-export type LibUseNavbarActiveItemNonLinkTypes = ReadonlySet<string>;
+export type Lib_UseNavbarActiveItem_NonLinkTypes = ReadonlySet<string>;
 
 /**
  * Lib - Use Navbar Active Item - Normalize Base.
  *
  * @since 0.18.0
  */
-export type LibUseNavbarActiveItemNormalizeBaseInput = string;
+export type Lib_UseNavbarActiveItem_NormalizeBase_Input = string;
 
-export type LibUseNavbarActiveItemNormalizeBaseReturns = string;
+export type Lib_UseNavbarActiveItem_NormalizeBase_Returns = string;
 
 /**
  * Lib - Use Navbar Active Item - Use Navbar Active Item.
  *
  * @since 0.18.0
  */
-export type LibUseNavbarActiveItemReturns = string | null;
+export type Lib_UseNavbarActiveItem_Returns = string | null;
 
-export type LibUseNavbarActiveItemPathname = string;
+export type Lib_UseNavbarActiveItem_Pathname = string;
 
-export type LibUseNavbarActiveItemBestKey = string | null;
+export type Lib_UseNavbarActiveItem_BestKey = string | null;
 
-export type LibUseNavbarActiveItemBestScore = number;
+export type Lib_UseNavbarActiveItem_BestScore = number;
 
-export type LibUseNavbarActiveItemItemLabelOrSkip = string | undefined;
+export type Lib_UseNavbarActiveItem_ItemLabelOrSkip = string | undefined;
 
-export type LibUseNavbarActiveItemClaimLength = number | null;
+export type Lib_UseNavbarActiveItem_ClaimLength = number | null;

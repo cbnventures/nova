@@ -1,59 +1,59 @@
-import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { SharedGeneratorRunResult, SharedNovaConfig } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult as SharedGeneratorRunResult, Shared_NovaConfig as SharedNovaConfig } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - GitHub - Funding - Run.
  *
  * @since 0.15.0
  */
-export type CliGenerateGithubFundingRunOptionsDryRun = true;
+export type Cli_Generate_Github_Funding_Runner_Run_Options_DryRun = true;
 
-export type CliGenerateGithubFundingRunOptionsReplaceFile = true;
+export type Cli_Generate_Github_Funding_Runner_Run_Options_ReplaceFile = true;
 
-export type CliGenerateGithubFundingRunOptions = {
-  dryRun?: CliGenerateGithubFundingRunOptionsDryRun;
-  replaceFile?: CliGenerateGithubFundingRunOptionsReplaceFile;
+export type Cli_Generate_Github_Funding_Runner_Run_Options = {
+  dryRun?: Cli_Generate_Github_Funding_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Generate_Github_Funding_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliGenerateGithubFundingRunReturns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_Github_Funding_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
 
-export type CliGenerateGithubFundingRunCurrentDirectory = string;
+export type Cli_Generate_Github_Funding_Runner_Run_CurrentDirectory = string;
 
-export type CliGenerateGithubFundingRunIsAtProjectRoot = boolean;
+export type Cli_Generate_Github_Funding_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliGenerateGithubFundingRunIsDryRun = boolean;
+export type Cli_Generate_Github_Funding_Runner_Run_IsDryRun = boolean;
 
-export type CliGenerateGithubFundingRunIsReplaceFile = boolean;
+export type Cli_Generate_Github_Funding_Runner_Run_IsReplaceFile = boolean;
 
-export type CliGenerateGithubFundingRunReplaceFileNotice = string;
+export type Cli_Generate_Github_Funding_Runner_Run_ReplaceFileNotice = string;
 
-export type CliGenerateGithubFundingRunNovaConfig = LibNovaConfig;
+export type Cli_Generate_Github_Funding_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type CliGenerateGithubFundingRunWorkingFile = SharedNovaConfig;
+export type Cli_Generate_Github_Funding_Runner_Run_WorkingFile = SharedNovaConfig;
 
-export type CliGenerateGithubFundingRunUrls = SharedNovaConfig['urls'];
+export type Cli_Generate_Github_Funding_Runner_Run_Urls = SharedNovaConfig['urls'];
 
-export type CliGenerateGithubFundingRunFundSources = string[];
+export type Cli_Generate_Github_Funding_Runner_Run_FundSources = string[];
 
-export type CliGenerateGithubFundingRunGithubSponsor = string;
+export type Cli_Generate_Github_Funding_Runner_Run_GithubSponsor = string;
 
-export type CliGenerateGithubFundingRunCustomDonations = string[];
+export type Cli_Generate_Github_Funding_Runner_Run_CustomDonations = string[];
 
-export type CliGenerateGithubFundingRunIsGitHubSponsor = boolean;
+export type Cli_Generate_Github_Funding_Runner_Run_IsGitHubSponsor = boolean;
 
-export type CliGenerateGithubFundingRunTemplateDirectory = string;
+export type Cli_Generate_Github_Funding_Runner_Run_TemplateDirectory = string;
 
-export type CliGenerateGithubFundingRunTemplatePath = string;
+export type Cli_Generate_Github_Funding_Runner_Run_TemplatePath = string;
 
-export type CliGenerateGithubFundingRunTemplate = string;
+export type Cli_Generate_Github_Funding_Runner_Run_Template = string;
 
-export type CliGenerateGithubFundingRunStripped = string;
+export type Cli_Generate_Github_Funding_Runner_Run_Stripped = string;
 
-export type CliGenerateGithubFundingRunCustomDonationSeparator = string;
+export type Cli_Generate_Github_Funding_Runner_Run_CustomDonationSeparator = string;
 
-export type CliGenerateGithubFundingRunCustomDonationList = string;
+export type Cli_Generate_Github_Funding_Runner_Run_CustomDonationList = string;
 
-export type CliGenerateGithubFundingRunContent = string;
+export type Cli_Generate_Github_Funding_Runner_Run_Content = string;
 
-export type CliGenerateGithubFundingRunTargetPath = string;
+export type Cli_Generate_Github_Funding_Runner_Run_TargetPath = string;

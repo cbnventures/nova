@@ -3,25 +3,25 @@
  *
  * @since 0.15.0
  */
-export type SharedBorderCharactersTopLeft = string;
+export type Shared_BorderCharacters_TopLeft = string;
 
-export type SharedBorderCharactersTopRight = string;
+export type Shared_BorderCharacters_TopRight = string;
 
-export type SharedBorderCharactersBottomLeft = string;
+export type Shared_BorderCharacters_BottomLeft = string;
 
-export type SharedBorderCharactersBottomRight = string;
+export type Shared_BorderCharacters_BottomRight = string;
 
-export type SharedBorderCharactersHorizontal = string;
+export type Shared_BorderCharacters_Horizontal = string;
 
-export type SharedBorderCharactersVertical = string;
+export type Shared_BorderCharacters_Vertical = string;
 
-export type SharedBorderCharacters = {
-  topLeft: SharedBorderCharactersTopLeft;
-  topRight: SharedBorderCharactersTopRight;
-  bottomLeft: SharedBorderCharactersBottomLeft;
-  bottomRight: SharedBorderCharactersBottomRight;
-  horizontal: SharedBorderCharactersHorizontal;
-  vertical: SharedBorderCharactersVertical;
+export type Shared_BorderCharacters = {
+  topLeft: Shared_BorderCharacters_TopLeft;
+  topRight: Shared_BorderCharacters_TopRight;
+  bottomLeft: Shared_BorderCharacters_BottomLeft;
+  bottomRight: Shared_BorderCharacters_BottomRight;
+  horizontal: Shared_BorderCharacters_Horizontal;
+  vertical: Shared_BorderCharacters_Vertical;
 };
 
 /**
@@ -29,29 +29,29 @@ export type SharedBorderCharacters = {
  *
  * @since 0.11.0
  */
-export type SharedBorderStyle = 'box' | 'round' | 'thick';
+export type Shared_BorderStyle = 'box' | 'round' | 'thick';
 
 /**
  * Shared - Changelog Entry.
  *
  * @since 0.13.0
  */
-export type SharedChangelogEntryPackage = string;
+export type Shared_ChangelogEntry_Package = string;
 
-export type SharedChangelogEntryCategory = 'updated' | 'fixed' | 'added' | 'removed';
+export type Shared_ChangelogEntry_Category = 'updated' | 'fixed' | 'added' | 'removed';
 
-export type SharedChangelogEntryBump = 'major' | 'minor' | 'patch';
+export type Shared_ChangelogEntry_Bump = 'major' | 'minor' | 'patch';
 
-export type SharedChangelogEntryMessage = string;
+export type Shared_ChangelogEntry_Message = string;
 
-export type SharedChangelogEntryFilePath = string;
+export type Shared_ChangelogEntry_FilePath = string;
 
-export type SharedChangelogEntry = {
-  package: SharedChangelogEntryPackage;
-  category: SharedChangelogEntryCategory;
-  bump: SharedChangelogEntryBump;
-  message: SharedChangelogEntryMessage;
-  filePath: SharedChangelogEntryFilePath;
+export type Shared_ChangelogEntry = {
+  package: Shared_ChangelogEntry_Package;
+  category: Shared_ChangelogEntry_Category;
+  bump: Shared_ChangelogEntry_Bump;
+  message: Shared_ChangelogEntry_Message;
+  filePath: Shared_ChangelogEntry_FilePath;
 };
 
 /**
@@ -59,28 +59,28 @@ export type SharedChangelogEntry = {
  *
  * @since 0.13.0
  */
-export type SharedChangelogOptionsRecord = true;
+export type Shared_ChangelogOptions_Record = true;
 
-export type SharedChangelogOptionsRelease = true;
+export type Shared_ChangelogOptions_Release = true;
 
-export type SharedChangelogOptionsPackage = string;
+export type Shared_ChangelogOptions_Package = string;
 
-export type SharedChangelogOptionsCategory = string;
+export type Shared_ChangelogOptions_Category = string;
 
-export type SharedChangelogOptionsBump = string;
+export type Shared_ChangelogOptions_Bump = string;
 
-export type SharedChangelogOptionsMessage = string;
+export type Shared_ChangelogOptions_Message = string;
 
-export type SharedChangelogOptionsDryRun = true;
+export type Shared_ChangelogOptions_DryRun = true;
 
-export type SharedChangelogOptions = {
-  record?: SharedChangelogOptionsRecord;
-  release?: SharedChangelogOptionsRelease;
-  package?: SharedChangelogOptionsPackage;
-  category?: SharedChangelogOptionsCategory;
-  bump?: SharedChangelogOptionsBump;
-  message?: SharedChangelogOptionsMessage;
-  dryRun?: SharedChangelogOptionsDryRun;
+export type Shared_ChangelogOptions = {
+  record?: Shared_ChangelogOptions_Record;
+  release?: Shared_ChangelogOptions_Release;
+  package?: Shared_ChangelogOptions_Package;
+  category?: Shared_ChangelogOptions_Category;
+  bump?: Shared_ChangelogOptions_Bump;
+  message?: Shared_ChangelogOptions_Message;
+  dryRun?: Shared_ChangelogOptions_DryRun;
 };
 
 /**
@@ -88,71 +88,71 @@ export type SharedChangelogOptions = {
  *
  * @since 0.11.0
  */
-export type SharedDialogAction = 'save' | 'cancel' | 'back';
+export type Shared_DialogAction = 'save' | 'cancel' | 'back';
 
 /**
  * Shared - Entity Menu Action.
  *
  * @since 0.11.0
  */
-export type SharedEntityMenuActionAddKind = 'add';
+export type Shared_EntityMenuActionAdd_Kind = 'add';
 
-export type SharedEntityMenuActionAdd = {
-  kind: SharedEntityMenuActionAddKind;
+export type Shared_EntityMenuActionAdd = {
+  kind: Shared_EntityMenuActionAdd_Kind;
 };
 
-export type SharedEntityMenuActionEditKind = 'edit';
+export type Shared_EntityMenuActionEdit_Kind = 'edit';
 
-export type SharedEntityMenuActionEditIndex = number;
+export type Shared_EntityMenuActionEdit_Index = number;
 
-export type SharedEntityMenuActionEdit = {
-  kind: SharedEntityMenuActionEditKind;
-  index: SharedEntityMenuActionEditIndex;
+export type Shared_EntityMenuActionEdit = {
+  kind: Shared_EntityMenuActionEdit_Kind;
+  index: Shared_EntityMenuActionEdit_Index;
 };
 
-export type SharedEntityMenuActionRemoveKind = 'remove';
+export type Shared_EntityMenuActionRemove_Kind = 'remove';
 
-export type SharedEntityMenuActionRemoveIndex = number;
+export type Shared_EntityMenuActionRemove_Index = number;
 
-export type SharedEntityMenuActionRemove = {
-  kind: SharedEntityMenuActionRemoveKind;
-  index: SharedEntityMenuActionRemoveIndex;
+export type Shared_EntityMenuActionRemove = {
+  kind: Shared_EntityMenuActionRemove_Kind;
+  index: Shared_EntityMenuActionRemove_Index;
 };
 
-export type SharedEntityMenuActionBackKind = 'back';
+export type Shared_EntityMenuActionBack_Kind = 'back';
 
-export type SharedEntityMenuActionBack = {
-  kind: SharedEntityMenuActionBackKind;
+export type Shared_EntityMenuActionBack = {
+  kind: Shared_EntityMenuActionBack_Kind;
 };
 
-export type SharedEntityMenuAction =
-  SharedEntityMenuActionAdd
-  | SharedEntityMenuActionEdit
-  | SharedEntityMenuActionRemove
-  | SharedEntityMenuActionBack;
+export type Shared_EntityMenuAction =
+  Shared_EntityMenuActionAdd
+  | Shared_EntityMenuActionEdit
+  | Shared_EntityMenuActionRemove
+  | Shared_EntityMenuActionBack;
 
 /**
  * Shared - Env Entry.
  *
  * @since 0.15.0
  */
-export type SharedEnvEntryKey = string;
+export type Shared_EnvEntry_Key = string;
 
-export type SharedEnvEntryValue = string;
+export type Shared_EnvEntry_Value = string;
 
-export type SharedEnvEntry = {
-  key: SharedEnvEntryKey;
-  value: SharedEnvEntryValue;
+export type Shared_EnvEntry = {
+  key: Shared_EnvEntry_Key;
+  value: Shared_EnvEntry_Value;
 };
 
-export type SharedEnvEntries = SharedEnvEntry[];
+export type Shared_EnvEntries = Shared_EnvEntry[];
 
 /**
  * Shared - Fund Platform.
  *
  * @since 0.15.0
  */
-export type SharedFundPlatformId =
+export type Shared_FundPlatform_Id =
   'github-sponsors'
   | 'paypal'
   | 'open-collective'
@@ -162,23 +162,23 @@ export type SharedFundPlatformId =
   | 'liberapay'
   | 'unknown';
 
-export type SharedFundPlatformUrl = string;
+export type Shared_FundPlatform_Url = string;
 
-export type SharedFundPlatformLogo = string;
+export type Shared_FundPlatform_Logo = string;
 
-export type SharedFundPlatformLabel = string;
+export type Shared_FundPlatform_Label = string;
 
-export type SharedFundPlatformAlt = string;
+export type Shared_FundPlatform_Alt = string;
 
-export type SharedFundPlatformColor = string;
+export type Shared_FundPlatform_Color = string;
 
-export type SharedFundPlatform = {
-  id: SharedFundPlatformId;
-  url: SharedFundPlatformUrl;
-  logo: SharedFundPlatformLogo;
-  label: SharedFundPlatformLabel;
-  alt: SharedFundPlatformAlt;
-  color: SharedFundPlatformColor;
+export type Shared_FundPlatform = {
+  id: Shared_FundPlatform_Id;
+  url: Shared_FundPlatform_Url;
+  logo: Shared_FundPlatform_Logo;
+  label: Shared_FundPlatform_Label;
+  alt: Shared_FundPlatform_Alt;
+  color: Shared_FundPlatform_Color;
 };
 
 /**
@@ -186,33 +186,33 @@ export type SharedFundPlatform = {
  *
  * @since 0.15.0
  */
-export type SharedGeneratorRunResult = 'completed' | 'cancelled';
+export type Shared_GeneratorRunResult = 'completed' | 'cancelled';
 
 /**
  * Shared - Item Pretty Names.
  *
  * @since 0.11.0
  */
-export type SharedItemPrettyNames = Record<string, string>;
+export type Shared_ItemPrettyNames = Record<string, string>;
 
 /**
  * Shared - JSDoc Hierarchy Create Options.
  *
  * @since 0.15.0
  */
-export type SharedJsdocHierarchyCreateOptionsAnchorDirectories = string[];
+export type Shared_JsdocHierarchyCreateOptionsAnchorDirectories = string[];
 
-export type SharedJsdocHierarchyCreateOptionsIgnoreFiles = string[];
+export type Shared_JsdocHierarchyCreateOptionsIgnoreFiles = string[];
 
-export type SharedJsdocHierarchyCreateOptionsKnownNames = Record<string, string>;
+export type Shared_JsdocHierarchyCreateOptionsKnownNames = Record<string, string>;
 
-export type SharedJsdocHierarchyCreateOptionsStripDirectories = string[];
+export type Shared_JsdocHierarchyCreateOptionsStripDirectories = string[];
 
-export type SharedJsdocHierarchyCreateOptions = Readonly<{
-  anchorDirectories: SharedJsdocHierarchyCreateOptionsAnchorDirectories;
-  ignoreFiles: SharedJsdocHierarchyCreateOptionsIgnoreFiles;
-  knownNames: SharedJsdocHierarchyCreateOptionsKnownNames;
-  stripDirectories: SharedJsdocHierarchyCreateOptionsStripDirectories;
+export type Shared_JsdocHierarchyCreateOptions = Readonly<{
+  anchorDirectories: Shared_JsdocHierarchyCreateOptionsAnchorDirectories;
+  ignoreFiles: Shared_JsdocHierarchyCreateOptionsIgnoreFiles;
+  knownNames: Shared_JsdocHierarchyCreateOptionsKnownNames;
+  stripDirectories: Shared_JsdocHierarchyCreateOptionsStripDirectories;
 }>;
 
 /**
@@ -220,13 +220,13 @@ export type SharedJsdocHierarchyCreateOptions = Readonly<{
  *
  * @since 0.15.0
  */
-export type SharedJsdocHierarchyFindSummaryInfoResultIndex = number;
+export type Shared_JsdocHierarchyFindSummaryInfoResult_Index = number;
 
-export type SharedJsdocHierarchyFindSummaryInfoResultText = string;
+export type Shared_JsdocHierarchyFindSummaryInfoResult_Text = string;
 
-export type SharedJsdocHierarchyFindSummaryInfoResult = {
-  index: SharedJsdocHierarchyFindSummaryInfoResultIndex;
-  text: SharedJsdocHierarchyFindSummaryInfoResultText;
+export type Shared_JsdocHierarchyFindSummaryInfoResult = {
+  index: Shared_JsdocHierarchyFindSummaryInfoResult_Index;
+  text: Shared_JsdocHierarchyFindSummaryInfoResult_Text;
 };
 
 /**
@@ -234,10 +234,10 @@ export type SharedJsdocHierarchyFindSummaryInfoResult = {
  *
  * @since 0.13.0
  */
-export type SharedLinuxOsReleaseEntry = string;
+export type Shared_LinuxOsReleaseEntry = string;
 
-export type SharedLinuxOsReleaseEntries = {
-  [key: string]: SharedLinuxOsReleaseEntry;
+export type Shared_LinuxOsReleaseEntries = {
+  [key: string]: Shared_LinuxOsReleaseEntry;
 };
 
 /**
@@ -245,16 +245,16 @@ export type SharedLinuxOsReleaseEntries = {
  *
  * @since 0.15.0
  */
-export type SharedLoggerCustomizeReturnsMessage = unknown[];
+export type Shared_LoggerCustomizeReturnsMessage = unknown[];
 
-export type SharedLoggerCustomizeReturnsMethodReturns = void;
+export type Shared_LoggerCustomizeReturnsMethodReturns = void;
 
-export type SharedLoggerCustomizeReturns = {
-  debug(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
-  dev(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
-  info(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
-  warn(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
-  error(...message: SharedLoggerCustomizeReturnsMessage): SharedLoggerCustomizeReturnsMethodReturns;
+export type Shared_LoggerCustomizeReturns = {
+  debug(...message: Shared_LoggerCustomizeReturnsMessage): Shared_LoggerCustomizeReturnsMethodReturns;
+  dev(...message: Shared_LoggerCustomizeReturnsMessage): Shared_LoggerCustomizeReturnsMethodReturns;
+  info(...message: Shared_LoggerCustomizeReturnsMessage): Shared_LoggerCustomizeReturnsMethodReturns;
+  warn(...message: Shared_LoggerCustomizeReturnsMessage): Shared_LoggerCustomizeReturnsMethodReturns;
+  error(...message: Shared_LoggerCustomizeReturnsMessage): Shared_LoggerCustomizeReturnsMethodReturns;
 };
 
 /**
@@ -262,7 +262,7 @@ export type SharedLoggerCustomizeReturns = {
  *
  * @since 0.11.0
  */
-export type SharedLogLevel =
+export type Shared_LogLevel =
   'debug'
   | 'dev'
   | 'info'
@@ -274,22 +274,22 @@ export type SharedLogLevel =
  *
  * @since 0.11.0
  */
-export type SharedLogOptionsName = string;
+export type Shared_LogOptions_Name = string;
 
-export type SharedLogOptionsType = 'function' | 'method' | 'test';
+export type Shared_LogOptions_Type = 'function' | 'method' | 'test';
 
-export type SharedLogOptionsPurpose = string;
+export type Shared_LogOptions_Purpose = string;
 
-export type SharedLogOptionsPadTop = number;
+export type Shared_LogOptions_PadTop = number;
 
-export type SharedLogOptionsPadBottom = number;
+export type Shared_LogOptions_PadBottom = number;
 
-export type SharedLogOptions = {
-  name?: SharedLogOptionsName;
-  type?: SharedLogOptionsType;
-  purpose?: SharedLogOptionsPurpose;
-  padTop?: SharedLogOptionsPadTop;
-  padBottom?: SharedLogOptionsPadBottom;
+export type Shared_LogOptions = {
+  name?: Shared_LogOptions_Name;
+  type?: Shared_LogOptions_Type;
+  purpose?: Shared_LogOptions_Purpose;
+  padTop?: Shared_LogOptions_PadTop;
+  padBottom?: Shared_LogOptions_PadBottom;
 };
 
 /**
@@ -297,16 +297,16 @@ export type SharedLogOptions = {
  *
  * @since 0.15.0
  */
-export type SharedLogQueueEntryScript = string;
+export type Shared_LogQueueEntry_Script = string;
 
-export type SharedLogQueueEntryStream = 'stdout' | 'stderr';
+export type Shared_LogQueueEntry_Stream = 'stdout' | 'stderr';
 
-export type SharedLogQueueEntryLine = string;
+export type Shared_LogQueueEntry_Line = string;
 
-export type SharedLogQueueEntry = {
-  script: SharedLogQueueEntryScript;
-  stream: SharedLogQueueEntryStream;
-  line: SharedLogQueueEntryLine;
+export type Shared_LogQueueEntry = {
+  script: Shared_LogQueueEntry_Script;
+  stream: Shared_LogQueueEntry_Stream;
+  line: Shared_LogQueueEntry_Line;
 };
 
 /**
@@ -314,51 +314,51 @@ export type SharedLogQueueEntry = {
  *
  * @since 0.15.0
  */
-export type SharedMonorepoContextMonorepoContext = 'monorepo';
+export type Shared_MonorepoContextMonorepo_Context = 'monorepo';
 
-export type SharedMonorepoContextMonorepo = {
-  context: SharedMonorepoContextMonorepoContext;
+export type Shared_MonorepoContextMonorepo = {
+  context: Shared_MonorepoContextMonorepo_Context;
 };
 
-export type SharedMonorepoContextWorkspaceContext = 'workspace';
+export type Shared_MonorepoContextWorkspace_Context = 'workspace';
 
-export type SharedMonorepoContextWorkspaceRoot = string;
+export type Shared_MonorepoContextWorkspace_Root = string;
 
-export type SharedMonorepoContextWorkspace = {
-  context: SharedMonorepoContextWorkspaceContext;
-  root: SharedMonorepoContextWorkspaceRoot;
+export type Shared_MonorepoContextWorkspace = {
+  context: Shared_MonorepoContextWorkspace_Context;
+  root: Shared_MonorepoContextWorkspace_Root;
 };
 
-export type SharedMonorepoContextStandaloneContext = 'standalone';
+export type Shared_MonorepoContextStandalone_Context = 'standalone';
 
-export type SharedMonorepoContextStandalone = {
-  context: SharedMonorepoContextStandaloneContext;
+export type Shared_MonorepoContextStandalone = {
+  context: Shared_MonorepoContextStandalone_Context;
 };
 
-export type SharedMonorepoContextNestedContext = 'nested';
+export type Shared_MonorepoContextNested_Context = 'nested';
 
-export type SharedMonorepoContextNested = {
-  context: SharedMonorepoContextNestedContext;
+export type Shared_MonorepoContextNested = {
+  context: Shared_MonorepoContextNested_Context;
 };
 
-export type SharedMonorepoContext =
-  SharedMonorepoContextMonorepo
-  | SharedMonorepoContextWorkspace
-  | SharedMonorepoContextStandalone
-  | SharedMonorepoContextNested;
+export type Shared_MonorepoContext =
+  Shared_MonorepoContextMonorepo
+  | Shared_MonorepoContextWorkspace
+  | Shared_MonorepoContextStandalone
+  | Shared_MonorepoContextNested;
 
 /**
  * Shared - Normalized Result.
  *
  * @since 0.13.0
  */
-export type SharedNormalizedResultResult = true | string;
+export type Shared_NormalizedResult_Result = true | string;
 
-export type SharedNormalizedResultSanitized<ReturnType> = ReturnType | undefined;
+export type Shared_NormalizedResult_Sanitized<ReturnType> = ReturnType | undefined;
 
-export type SharedNormalizedResult<ReturnType> = {
-  result: SharedNormalizedResultResult;
-  sanitized: SharedNormalizedResultSanitized<ReturnType>;
+export type Shared_NormalizedResult<ReturnType> = {
+  result: Shared_NormalizedResult_Result;
+  sanitized: Shared_NormalizedResult_Sanitized<ReturnType>;
 };
 
 /**
@@ -366,33 +366,33 @@ export type SharedNormalizedResult<ReturnType> = {
  *
  * @since 0.11.0
  */
-export type SharedNovaConfigProjectNameSlug = string;
+export type Shared_NovaConfig_Project_Name_Slug = string;
 
-export type SharedNovaConfigProjectNameTitle = string;
+export type Shared_NovaConfig_Project_Name_Title = string;
 
-export type SharedNovaConfigProjectName = {
-  slug?: SharedNovaConfigProjectNameSlug;
-  title?: SharedNovaConfigProjectNameTitle;
+export type Shared_NovaConfig_Project_Name = {
+  slug?: Shared_NovaConfig_Project_Name_Slug;
+  title?: Shared_NovaConfig_Project_Name_Title;
 };
 
-export type SharedNovaConfigProjectDescriptionShort = string;
+export type Shared_NovaConfig_Project_Description_Short = string;
 
-export type SharedNovaConfigProjectDescriptionLong = string;
+export type Shared_NovaConfig_Project_Description_Long = string;
 
-export type SharedNovaConfigProjectDescription = {
-  short?: SharedNovaConfigProjectDescriptionShort;
-  long?: SharedNovaConfigProjectDescriptionLong;
+export type Shared_NovaConfig_Project_Description = {
+  short?: Shared_NovaConfig_Project_Description_Short;
+  long?: Shared_NovaConfig_Project_Description_Long;
 };
 
-export type SharedNovaConfigProjectKeyword = string;
+export type Shared_NovaConfigProjectKeyword = string;
 
-export type SharedNovaConfigProjectKeywords = SharedNovaConfigProjectKeyword[];
+export type Shared_NovaConfig_Project_Keywords = Shared_NovaConfigProjectKeyword[];
 
-export type SharedNovaConfigProjectLegalName = string;
+export type Shared_NovaConfig_Project_LegalName = string;
 
-export type SharedNovaConfigProjectPronouns = 'personal' | 'business';
+export type Shared_NovaConfig_Project_Pronouns = 'personal' | 'business';
 
-export type SharedNovaConfigProjectPlatform =
+export type Shared_NovaConfigProjectPlatform =
   'nodejs'
   | 'swift'
   | 'android'
@@ -405,11 +405,11 @@ export type SharedNovaConfigProjectPlatform =
   | 'linux'
   | 'windows';
 
-export type SharedNovaConfigProjectPlatforms = SharedNovaConfigProjectPlatform[];
+export type Shared_NovaConfig_Project_Platforms = Shared_NovaConfigProjectPlatform[];
 
-export type SharedNovaConfigProjectStartingYear = number;
+export type Shared_NovaConfig_Project_StartingYear = number;
 
-export type SharedNovaConfigProjectLicense =
+export type Shared_NovaConfig_Project_License =
   'AGPL-3.0'
   | 'Apache-2.0'
   | 'BSD-2-Clause'
@@ -425,133 +425,133 @@ export type SharedNovaConfigProjectLicense =
   | 'Proprietary'
   | 'Unlicense';
 
-export type SharedNovaConfigProject = {
-  name?: SharedNovaConfigProjectName;
-  description?: SharedNovaConfigProjectDescription;
-  keywords?: SharedNovaConfigProjectKeywords;
-  legalName?: SharedNovaConfigProjectLegalName;
-  pronouns?: SharedNovaConfigProjectPronouns;
-  platforms?: SharedNovaConfigProjectPlatforms;
-  startingYear?: SharedNovaConfigProjectStartingYear;
-  license?: SharedNovaConfigProjectLicense;
+export type Shared_NovaConfig_Project = {
+  name?: Shared_NovaConfig_Project_Name;
+  description?: Shared_NovaConfig_Project_Description;
+  keywords?: Shared_NovaConfig_Project_Keywords;
+  legalName?: Shared_NovaConfig_Project_LegalName;
+  pronouns?: Shared_NovaConfig_Project_Pronouns;
+  platforms?: Shared_NovaConfig_Project_Platforms;
+  startingYear?: Shared_NovaConfig_Project_StartingYear;
+  license?: Shared_NovaConfig_Project_License;
 };
 
-export type SharedNovaConfigEntityName = string;
+export type Shared_NovaConfigEntity_Name = string;
 
-export type SharedNovaConfigEntityEmail = string;
+export type Shared_NovaConfigEntity_Email = string;
 
-export type SharedNovaConfigEntityUrl = string;
+export type Shared_NovaConfigEntity_Url = string;
 
-export type SharedNovaConfigEntityRole = 'author' | 'contributor' | 'supporter';
+export type Shared_NovaConfigEntityRole = 'author' | 'contributor' | 'supporter';
 
-export type SharedNovaConfigEntityRoles = SharedNovaConfigEntityRole[];
+export type Shared_NovaConfigEntity_Roles = Shared_NovaConfigEntityRole[];
 
-export type SharedNovaConfigEntity = {
-  name?: SharedNovaConfigEntityName;
-  email?: SharedNovaConfigEntityEmail;
-  url?: SharedNovaConfigEntityUrl;
-  roles?: SharedNovaConfigEntityRoles;
+export type Shared_NovaConfigEntity = {
+  name?: Shared_NovaConfigEntity_Name;
+  email?: Shared_NovaConfigEntity_Email;
+  url?: Shared_NovaConfigEntity_Url;
+  roles?: Shared_NovaConfigEntity_Roles;
 };
 
-export type SharedNovaConfigEntities = SharedNovaConfigEntity[];
+export type Shared_NovaConfig_Entities = Shared_NovaConfigEntity[];
 
-export type SharedNovaConfigEmailsBugs = string;
+export type Shared_NovaConfig_Emails_Bugs = string;
 
-export type SharedNovaConfigEmails = {
-  bugs?: SharedNovaConfigEmailsBugs;
+export type Shared_NovaConfig_Emails = {
+  bugs?: Shared_NovaConfig_Emails_Bugs;
 };
 
-export type SharedNovaConfigGithubOwner = string;
+export type Shared_NovaConfig_Github_Owner = string;
 
-export type SharedNovaConfigGithubRepo = string;
+export type Shared_NovaConfig_Github_Repo = string;
 
-export type SharedNovaConfigGithubRecipeName =
+export type Shared_NovaConfigGithubRecipeName =
   'sync-features'
   | 'sync-identity'
   | 'sync-policies';
 
-export type SharedNovaConfigGithubRecipes = {
-  [K in SharedNovaConfigGithubRecipeName]?: boolean;
+export type Shared_NovaConfig_Github_Recipes = {
+  [K in Shared_NovaConfigGithubRecipeName]?: boolean;
 };
 
-export type SharedNovaConfigGithubTopics = string[];
+export type Shared_NovaConfig_Github_Topics = string[];
 
-export type SharedNovaConfigGithubFeatures = {
+export type Shared_NovaConfig_Github_Features = {
   issues?: boolean;
   wiki?: boolean;
   projects?: boolean;
   discussions?: boolean;
 };
 
-export type SharedNovaConfigGithubPoliciesMergeMethods = {
+export type Shared_NovaConfig_Github_Policies_MergeMethods = {
   merge?: boolean;
   squash?: boolean;
   rebase?: boolean;
 };
 
-export type SharedNovaConfigGithubPolicies = {
+export type Shared_NovaConfig_Github_Policies = {
   visibility?: 'public' | 'private' | 'internal';
   defaultBranch?: string;
-  mergeMethods?: SharedNovaConfigGithubPoliciesMergeMethods;
+  mergeMethods?: Shared_NovaConfig_Github_Policies_MergeMethods;
   autoDeleteHeadBranch?: boolean;
 };
 
-export type SharedNovaConfigGithub = {
-  owner?: SharedNovaConfigGithubOwner;
-  repo?: SharedNovaConfigGithubRepo;
-  recipes?: SharedNovaConfigGithubRecipes;
-  topics?: SharedNovaConfigGithubTopics;
-  features?: SharedNovaConfigGithubFeatures;
-  policies?: SharedNovaConfigGithubPolicies;
+export type Shared_NovaConfig_Github = {
+  owner?: Shared_NovaConfig_Github_Owner;
+  repo?: Shared_NovaConfig_Github_Repo;
+  recipes?: Shared_NovaConfig_Github_Recipes;
+  topics?: Shared_NovaConfig_Github_Topics;
+  features?: Shared_NovaConfig_Github_Features;
+  policies?: Shared_NovaConfig_Github_Policies;
 };
 
-export type SharedNovaConfigUrlsHomepage = string;
+export type Shared_NovaConfig_Urls_Homepage = string;
 
-export type SharedNovaConfigUrlsRepository = string;
+export type Shared_NovaConfig_Urls_Repository = string;
 
-export type SharedNovaConfigUrlsBugs = string;
+export type Shared_NovaConfig_Urls_Bugs = string;
 
-export type SharedNovaConfigUrlsLicense = string;
+export type Shared_NovaConfig_Urls_License = string;
 
-export type SharedNovaConfigUrlsLogo = string;
+export type Shared_NovaConfig_Urls_Logo = string;
 
-export type SharedNovaConfigUrlsDocker = string;
+export type Shared_NovaConfig_Urls_Docker = string;
 
-export type SharedNovaConfigUrlsDocumentation = string;
+export type Shared_NovaConfig_Urls_Documentation = string;
 
-export type SharedNovaConfigUrlsNpm = string;
+export type Shared_NovaConfig_Urls_Npm = string;
 
-export type SharedNovaConfigUrlsFundSource = string;
+export type Shared_NovaConfigUrlsFundSource = string;
 
-export type SharedNovaConfigUrlsFundSources = SharedNovaConfigUrlsFundSource[];
+export type Shared_NovaConfig_Urls_FundSources = Shared_NovaConfigUrlsFundSource[];
 
-export type SharedNovaConfigUrlsPrivacyPolicy = string;
+export type Shared_NovaConfig_Urls_PrivacyPolicy = string;
 
-export type SharedNovaConfigUrlsTermsOfUse = string;
+export type Shared_NovaConfig_Urls_TermsOfUse = string;
 
-export type SharedNovaConfigUrls = {
-  homepage?: SharedNovaConfigUrlsHomepage;
-  repository?: SharedNovaConfigUrlsRepository;
-  bugs?: SharedNovaConfigUrlsBugs;
-  license?: SharedNovaConfigUrlsLicense;
-  logo?: SharedNovaConfigUrlsLogo;
-  docker?: SharedNovaConfigUrlsDocker;
-  documentation?: SharedNovaConfigUrlsDocumentation;
-  npm?: SharedNovaConfigUrlsNpm;
-  fundSources?: SharedNovaConfigUrlsFundSources;
-  privacyPolicy?: SharedNovaConfigUrlsPrivacyPolicy;
-  termsOfUse?: SharedNovaConfigUrlsTermsOfUse;
+export type Shared_NovaConfig_Urls = {
+  homepage?: Shared_NovaConfig_Urls_Homepage;
+  repository?: Shared_NovaConfig_Urls_Repository;
+  bugs?: Shared_NovaConfig_Urls_Bugs;
+  license?: Shared_NovaConfig_Urls_License;
+  logo?: Shared_NovaConfig_Urls_Logo;
+  docker?: Shared_NovaConfig_Urls_Docker;
+  documentation?: Shared_NovaConfig_Urls_Documentation;
+  npm?: Shared_NovaConfig_Urls_Npm;
+  fundSources?: Shared_NovaConfig_Urls_FundSources;
+  privacyPolicy?: Shared_NovaConfig_Urls_PrivacyPolicy;
+  termsOfUse?: Shared_NovaConfig_Urls_TermsOfUse;
 };
 
-export type SharedNovaConfigWorkspaceName = string;
+export type Shared_NovaConfigWorkspace_Name = string;
 
-export type SharedNovaConfigWorkspaceDisplayName = string;
+export type Shared_NovaConfigWorkspace_DisplayName = string;
 
-export type SharedNovaConfigWorkspaceRole = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
+export type Shared_NovaConfigWorkspace_Role = 'project' | 'docs' | 'config' | 'app' | 'package' | 'tool' | 'template';
 
-export type SharedNovaConfigWorkspacePolicy = 'freezable' | 'trackable' | 'distributable';
+export type Shared_NovaConfigWorkspace_Policy = 'freezable' | 'trackable' | 'distributable';
 
-export type SharedNovaConfigWorkspaceRecipeName =
+export type Shared_NovaConfigWorkspaceRecipeName =
   'cleanup'
   | 'normalize-artifacts'
   | 'normalize-bundler'
@@ -562,119 +562,119 @@ export type SharedNovaConfigWorkspaceRecipeName =
   | 'sync-identity'
   | 'sync-ownership';
 
-export type SharedNovaConfigWorkspaceRecipeEnabled = boolean;
+export type Shared_NovaConfigWorkspaceRecipeEnabled = boolean;
 
-export type SharedNovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
+export type Shared_NovaConfigWorkspaceRecipeSettings = Record<string, boolean>;
 
-export type SharedNovaConfigWorkspaceRecipeTupleWithSettings = [SharedNovaConfigWorkspaceRecipeEnabled, SharedNovaConfigWorkspaceRecipeSettings];
+export type Shared_NovaConfigWorkspaceRecipeTupleWithSettings = [Shared_NovaConfigWorkspaceRecipeEnabled, Shared_NovaConfigWorkspaceRecipeSettings];
 
-export type SharedNovaConfigWorkspaceRecipeTupleWithoutSettings = [SharedNovaConfigWorkspaceRecipeEnabled];
+export type Shared_NovaConfigWorkspaceRecipeTupleWithoutSettings = [Shared_NovaConfigWorkspaceRecipeEnabled];
 
-export type SharedNovaConfigWorkspaceRecipeTuple = SharedNovaConfigWorkspaceRecipeTupleWithSettings | SharedNovaConfigWorkspaceRecipeTupleWithoutSettings;
+export type Shared_NovaConfigWorkspaceRecipeTuple = Shared_NovaConfigWorkspaceRecipeTupleWithSettings | Shared_NovaConfigWorkspaceRecipeTupleWithoutSettings;
 
-export type SharedNovaConfigWorkspaceRecipes = {
-  [key in SharedNovaConfigWorkspaceRecipeName]?: SharedNovaConfigWorkspaceRecipeTuple;
+export type Shared_NovaConfigWorkspace_Recipes = {
+  [key in Shared_NovaConfigWorkspaceRecipeName]?: Shared_NovaConfigWorkspaceRecipeTuple;
 };
 
-export type SharedNovaConfigWorkspace = {
-  name: SharedNovaConfigWorkspaceName;
-  displayName?: SharedNovaConfigWorkspaceDisplayName;
-  role: SharedNovaConfigWorkspaceRole;
-  policy: SharedNovaConfigWorkspacePolicy;
-  recipes?: SharedNovaConfigWorkspaceRecipes;
+export type Shared_NovaConfigWorkspace = {
+  name: Shared_NovaConfigWorkspace_Name;
+  displayName?: Shared_NovaConfigWorkspace_DisplayName;
+  role: Shared_NovaConfigWorkspace_Role;
+  policy: Shared_NovaConfigWorkspace_Policy;
+  recipes?: Shared_NovaConfigWorkspace_Recipes;
 };
 
-export type SharedNovaConfigWorkspaces = {
-  [key: string]: SharedNovaConfigWorkspace;
+export type Shared_NovaConfig_Workspaces = {
+  [key: string]: Shared_NovaConfigWorkspace;
 };
 
-export type SharedNovaConfigWorkflowSuffix = string;
+export type Shared_NovaConfigWorkflow_Suffix = string;
 
-export type SharedNovaConfigWorkflowTemplate = string;
+export type Shared_NovaConfigWorkflow_Template = string;
 
-export type SharedNovaConfigWorkflowTrigger = string;
+export type Shared_NovaConfigWorkflowTrigger = string;
 
-export type SharedNovaConfigWorkflowTriggers = SharedNovaConfigWorkflowTrigger[];
+export type Shared_NovaConfigWorkflow_Triggers = Shared_NovaConfigWorkflowTrigger[];
 
-export type SharedNovaConfigWorkflowDependsOn = string[];
+export type Shared_NovaConfigWorkflow_DependsOn = string[];
 
-export type SharedNovaConfigWorkflowScope = string;
+export type Shared_NovaConfigWorkflowScope = string;
 
-export type SharedNovaConfigWorkflowScopes = SharedNovaConfigWorkflowScope[];
+export type Shared_NovaConfigWorkflow_Scopes = Shared_NovaConfigWorkflowScope[];
 
-export type SharedNovaConfigWorkflowTargetType = string;
+export type Shared_NovaConfigWorkflowTarget_Type = string;
 
-export type SharedNovaConfigWorkflowTargetWorkingDir = string;
+export type Shared_NovaConfigWorkflowTarget_WorkingDir = string;
 
-export type SharedNovaConfigWorkflowTargetNeedsEntry = string;
+export type Shared_NovaConfigWorkflowTargetNeedsEntry = string;
 
-export type SharedNovaConfigWorkflowTargetNeeds = SharedNovaConfigWorkflowTargetNeedsEntry[];
+export type Shared_NovaConfigWorkflowTarget_Needs = Shared_NovaConfigWorkflowTargetNeedsEntry[];
 
-export type SharedNovaConfigWorkflowTarget = {
-  type: SharedNovaConfigWorkflowTargetType;
-  workingDir: SharedNovaConfigWorkflowTargetWorkingDir;
-  needs?: SharedNovaConfigWorkflowTargetNeeds;
+export type Shared_NovaConfigWorkflowTarget = {
+  type: Shared_NovaConfigWorkflowTarget_Type;
+  workingDir: Shared_NovaConfigWorkflowTarget_WorkingDir;
+  needs?: Shared_NovaConfigWorkflowTarget_Needs;
 };
 
-export type SharedNovaConfigWorkflowTargets = SharedNovaConfigWorkflowTarget[];
+export type Shared_NovaConfigWorkflow_Targets = Shared_NovaConfigWorkflowTarget[];
 
-export type SharedNovaConfigWorkflowSettingsKey = string;
+export type Shared_NovaConfigWorkflowSettingsKey = string;
 
-export type SharedNovaConfigWorkflowSettingsValue = string;
+export type Shared_NovaConfigWorkflowSettingsValue = string;
 
-export type SharedNovaConfigWorkflowSettings = {
-  [key: SharedNovaConfigWorkflowSettingsKey]: SharedNovaConfigWorkflowSettingsValue;
+export type Shared_NovaConfigWorkflow_Settings = {
+  [key: Shared_NovaConfigWorkflowSettingsKey]: Shared_NovaConfigWorkflowSettingsValue;
 };
 
-export type SharedNovaConfigWorkflow = {
-  'template': SharedNovaConfigWorkflowTemplate;
-  'suffix': SharedNovaConfigWorkflowSuffix;
-  'triggers': SharedNovaConfigWorkflowTriggers;
-  'depends-on'?: SharedNovaConfigWorkflowDependsOn;
-  'scopes'?: SharedNovaConfigWorkflowScopes;
-  'targets'?: SharedNovaConfigWorkflowTargets;
-  'settings'?: SharedNovaConfigWorkflowSettings;
+export type Shared_NovaConfigWorkflow = {
+  'template': Shared_NovaConfigWorkflow_Template;
+  'suffix': Shared_NovaConfigWorkflow_Suffix;
+  'triggers': Shared_NovaConfigWorkflow_Triggers;
+  'depends-on'?: Shared_NovaConfigWorkflow_DependsOn;
+  'scopes'?: Shared_NovaConfigWorkflow_Scopes;
+  'targets'?: Shared_NovaConfigWorkflow_Targets;
+  'settings'?: Shared_NovaConfigWorkflow_Settings;
 };
 
-export type SharedNovaConfigWorkflows = SharedNovaConfigWorkflow[];
+export type Shared_NovaConfig_Workflows = Shared_NovaConfigWorkflow[];
 
-export type SharedNovaConfig = {
-  project?: SharedNovaConfigProject;
-  entities?: SharedNovaConfigEntities;
-  emails?: SharedNovaConfigEmails;
-  github?: SharedNovaConfigGithub;
-  workflows?: SharedNovaConfigWorkflows;
-  urls?: SharedNovaConfigUrls;
-  workspaces?: SharedNovaConfigWorkspaces;
+export type Shared_NovaConfig = {
+  project?: Shared_NovaConfig_Project;
+  entities?: Shared_NovaConfig_Entities;
+  emails?: Shared_NovaConfig_Emails;
+  github?: Shared_NovaConfig_Github;
+  workflows?: Shared_NovaConfig_Workflows;
+  urls?: Shared_NovaConfig_Urls;
+  workspaces?: Shared_NovaConfig_Workspaces;
 };
 
-export type SharedNovaConfigConfig = SharedNovaConfig;
+export type Shared_NovaConfigConfig = Shared_NovaConfig;
 
 /**
  * Shared - Nova Config Category.
  *
  * @since 0.11.0
  */
-export type SharedNovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows';
+export type Shared_NovaConfigCategory = 'project' | 'entities' | 'emails' | 'github' | 'urls' | 'workspaces' | 'workflows';
 
 /**
  * Shared - Prompt With Cancel.
  *
  * @since 0.15.0
  */
-export type SharedPromptWithCancelResolvedCancelled = false;
+export type Shared_PromptWithCancelResolved_Cancelled = false;
 
-export type SharedPromptWithCancelResolvedResult<Keys extends string, Result> = Record<Keys, Result>;
+export type Shared_PromptWithCancelResolved_Result<Keys extends string, Result> = Record<Keys, Result>;
 
-export type SharedPromptWithCancelResolved<Keys extends string, Result> = {
-  cancelled: SharedPromptWithCancelResolvedCancelled;
-  result: SharedPromptWithCancelResolvedResult<Keys, Result>;
+export type Shared_PromptWithCancelResolved<Keys extends string, Result> = {
+  cancelled: Shared_PromptWithCancelResolved_Cancelled;
+  result: Shared_PromptWithCancelResolved_Result<Keys, Result>;
 };
 
-export type SharedPromptWithCancelRejectCancelled = true;
+export type Shared_PromptWithCancelReject_Cancelled = true;
 
-export type SharedPromptWithCancelReject = {
-  cancelled: SharedPromptWithCancelRejectCancelled;
+export type Shared_PromptWithCancelReject = {
+  cancelled: Shared_PromptWithCancelReject_Cancelled;
 };
 
 /**
@@ -682,19 +682,19 @@ export type SharedPromptWithCancelReject = {
  *
  * @since 0.15.0
  */
-export type SharedRunScriptsOptionsPattern = string;
+export type Shared_RunScriptsOptions_Pattern = string;
 
-export type SharedRunScriptsOptionsSequential = true | undefined;
+export type Shared_RunScriptsOptions_Sequential = true | undefined;
 
-export type SharedRunScriptsOptionsParallel = true | undefined;
+export type Shared_RunScriptsOptions_Parallel = true | undefined;
 
-export type SharedRunScriptsOptionsBuffer = string | undefined;
+export type Shared_RunScriptsOptions_Buffer = string | undefined;
 
-export type SharedRunScriptsOptions = {
-  pattern?: SharedRunScriptsOptionsPattern;
-  sequential?: SharedRunScriptsOptionsSequential;
-  parallel?: SharedRunScriptsOptionsParallel;
-  buffer?: SharedRunScriptsOptionsBuffer;
+export type Shared_RunScriptsOptions = {
+  pattern?: Shared_RunScriptsOptions_Pattern;
+  sequential?: Shared_RunScriptsOptions_Sequential;
+  parallel?: Shared_RunScriptsOptions_Parallel;
+  buffer?: Shared_RunScriptsOptions_Buffer;
 };
 
 /**
@@ -702,19 +702,19 @@ export type SharedRunScriptsOptions = {
  *
  * @since 0.15.0
  */
-export type SharedScaffoldConfigMode = 'monorepo' | 'workspace';
+export type Shared_ScaffoldConfig_Mode = 'monorepo' | 'workspace';
 
-export type SharedScaffoldConfigName = string;
+export type Shared_ScaffoldConfig_Name = string;
 
-export type SharedScaffoldConfigOutputDirectory = string;
+export type Shared_ScaffoldConfig_OutputDirectory = string;
 
-export type SharedScaffoldConfigWorkspaceName = string;
+export type Shared_ScaffoldConfig_WorkspaceName = string;
 
-export type SharedScaffoldConfig = {
-  mode: SharedScaffoldConfigMode;
-  name: SharedScaffoldConfigName;
-  outputDirectory: SharedScaffoldConfigOutputDirectory;
-  workspaceName: SharedScaffoldConfigWorkspaceName;
+export type Shared_ScaffoldConfig = {
+  mode: Shared_ScaffoldConfig_Mode;
+  name: Shared_ScaffoldConfig_Name;
+  outputDirectory: Shared_ScaffoldConfig_OutputDirectory;
+  workspaceName: Shared_ScaffoldConfig_WorkspaceName;
 };
 
 /**
@@ -722,16 +722,16 @@ export type SharedScaffoldConfig = {
  *
  * @since 0.15.0
  */
-export type SharedShellOutputTextOut = string;
+export type Shared_ShellOutput_TextOut = string;
 
-export type SharedShellOutputTextError = string;
+export type Shared_ShellOutput_TextError = string;
 
-export type SharedShellOutputCode = number;
+export type Shared_ShellOutput_Code = number;
 
-export type SharedShellOutput = {
-  textOut: SharedShellOutputTextOut;
-  textError: SharedShellOutputTextError;
-  code: SharedShellOutputCode;
+export type Shared_ShellOutput = {
+  textOut: Shared_ShellOutput_TextOut;
+  textError: Shared_ShellOutput_TextError;
+  code: Shared_ShellOutput_Code;
 };
 
 /**
@@ -739,21 +739,21 @@ export type SharedShellOutput = {
  *
  * @since 0.11.0
  */
-export type SharedTextAlign = 'left' | 'center' | 'right';
+export type Shared_TextAlign = 'left' | 'center' | 'right';
 
 /**
  * Shared - URL Protocol.
  *
  * @since 0.11.0
  */
-export type SharedUrlProtocol = 'generic' | 'repository';
+export type Shared_UrlProtocol = 'generic' | 'repository';
 
 /**
  * Shared - Windows Registry Keys.
  *
  * @since 0.13.0
  */
-export type SharedWindowsRegistryKeyType =
+export type Shared_WindowsRegistryKey_Type =
   'REG_NONE'
   | 'REG_SZ'
   | 'REG_EXPAND_SZ'
@@ -769,15 +769,15 @@ export type SharedWindowsRegistryKeyType =
   | 'REG_QWORD'
   | 'REG_QWORD_LITTLE_ENDIAN';
 
-export type SharedWindowsRegistryKeyData = string;
+export type Shared_WindowsRegistryKey_Data = string;
 
-export type SharedWindowsRegistryKey = {
-  type: SharedWindowsRegistryKeyType;
-  data: SharedWindowsRegistryKeyData;
+export type Shared_WindowsRegistryKey = {
+  type: Shared_WindowsRegistryKey_Type;
+  data: Shared_WindowsRegistryKey_Data;
 };
 
-export type SharedWindowsRegistryKeys = {
-  [key: string]: SharedWindowsRegistryKey;
+export type Shared_WindowsRegistryKeys = {
+  [key: string]: Shared_WindowsRegistryKey;
 };
 
 /**
@@ -785,16 +785,16 @@ export type SharedWindowsRegistryKeys = {
  *
  * @since 0.20.0
  */
-export type SharedWorkflowTemplatePermissionRead = 'read';
+export type Shared_WorkflowTemplatePermissionRead = 'read';
 
-export type SharedWorkflowTemplatePermissionWrite = 'write';
+export type Shared_WorkflowTemplatePermissionWrite = 'write';
 
-export type SharedWorkflowTemplatePermission = SharedWorkflowTemplatePermissionRead | SharedWorkflowTemplatePermissionWrite;
+export type Shared_WorkflowTemplatePermission = Shared_WorkflowTemplatePermissionRead | Shared_WorkflowTemplatePermissionWrite;
 
-export type SharedWorkflowTemplatePermissionKey = string;
+export type Shared_WorkflowTemplatePermissionKey = string;
 
-export type SharedWorkflowTemplatePermissions = {
-  [key: SharedWorkflowTemplatePermissionKey]: SharedWorkflowTemplatePermission;
+export type Shared_WorkflowTemplatePermissions = {
+  [key: Shared_WorkflowTemplatePermissionKey]: Shared_WorkflowTemplatePermission;
 };
 
 /**
@@ -802,27 +802,27 @@ export type SharedWorkflowTemplatePermissions = {
  *
  * @since 0.20.0
  */
-export type SharedWorkflowTemplateTargetDescription = string;
+export type Shared_WorkflowTemplateTarget_Description = string;
 
-export type SharedWorkflowTemplateTargetArtifactPath = string;
+export type Shared_WorkflowTemplateTargetArtifactPath = string;
 
-export type SharedWorkflowTemplateTargetArtifactPaths = SharedWorkflowTemplateTargetArtifactPath[];
+export type Shared_WorkflowTemplateTarget_ArtifactPaths = Shared_WorkflowTemplateTargetArtifactPath[];
 
-export type SharedWorkflowTemplateTargetVariables = SharedWorkflowTemplateVariables;
+export type Shared_WorkflowTemplateTarget_Variables = Shared_WorkflowTemplateVariables;
 
-export type SharedWorkflowTemplateTargetPermissions = SharedWorkflowTemplatePermissions;
+export type Shared_WorkflowTemplateTarget_Permissions = Shared_WorkflowTemplatePermissions;
 
-export type SharedWorkflowTemplateTarget = {
-  description: SharedWorkflowTemplateTargetDescription;
-  artifactPaths: SharedWorkflowTemplateTargetArtifactPaths;
-  variables: SharedWorkflowTemplateTargetVariables;
-  permissions: SharedWorkflowTemplateTargetPermissions;
+export type Shared_WorkflowTemplateTarget = {
+  description: Shared_WorkflowTemplateTarget_Description;
+  artifactPaths: Shared_WorkflowTemplateTarget_ArtifactPaths;
+  variables: Shared_WorkflowTemplateTarget_Variables;
+  permissions: Shared_WorkflowTemplateTarget_Permissions;
 };
 
-export type SharedWorkflowTemplateTargetType = string;
+export type Shared_WorkflowTemplateTargetType = string;
 
-export type SharedWorkflowTemplateTargets = {
-  [key: SharedWorkflowTemplateTargetType]: SharedWorkflowTemplateTarget;
+export type Shared_WorkflowTemplateTargets = {
+  [key: Shared_WorkflowTemplateTargetType]: Shared_WorkflowTemplateTarget;
 };
 
 /**
@@ -830,34 +830,34 @@ export type SharedWorkflowTemplateTargets = {
  *
  * @since 0.20.0
  */
-export type SharedWorkflowTemplateVariableFormatSecret = 'secret';
+export type Shared_WorkflowTemplateVariableFormatSecret = 'secret';
 
-export type SharedWorkflowTemplateVariableFormatVar = 'var';
+export type Shared_WorkflowTemplateVariableFormatVar = 'var';
 
-export type SharedWorkflowTemplateVariableFormatLiteral = 'literal';
+export type Shared_WorkflowTemplateVariableFormatLiteral = 'literal';
 
-export type SharedWorkflowTemplateVariableFormat = SharedWorkflowTemplateVariableFormatSecret | SharedWorkflowTemplateVariableFormatVar | SharedWorkflowTemplateVariableFormatLiteral;
+export type Shared_WorkflowTemplateVariable_Format = Shared_WorkflowTemplateVariableFormatSecret | Shared_WorkflowTemplateVariableFormatVar | Shared_WorkflowTemplateVariableFormatLiteral;
 
-export type SharedWorkflowTemplateVariableDefault = string;
+export type Shared_WorkflowTemplateVariable_Default = string;
 
-export type SharedWorkflowTemplateVariableAuto = true;
+export type Shared_WorkflowTemplateVariable_Auto = true;
 
-export type SharedWorkflowTemplateVariableDescription = string;
+export type Shared_WorkflowTemplateVariable_Description = string;
 
-export type SharedWorkflowTemplateVariableExample = string;
+export type Shared_WorkflowTemplateVariable_Example = string;
 
-export type SharedWorkflowTemplateVariable = {
-  format: SharedWorkflowTemplateVariableFormat;
-  default?: SharedWorkflowTemplateVariableDefault;
-  auto?: SharedWorkflowTemplateVariableAuto;
-  description?: SharedWorkflowTemplateVariableDescription;
-  example?: SharedWorkflowTemplateVariableExample;
+export type Shared_WorkflowTemplateVariable = {
+  format: Shared_WorkflowTemplateVariable_Format;
+  default?: Shared_WorkflowTemplateVariable_Default;
+  auto?: Shared_WorkflowTemplateVariable_Auto;
+  description?: Shared_WorkflowTemplateVariable_Description;
+  example?: Shared_WorkflowTemplateVariable_Example;
 };
 
-export type SharedWorkflowTemplateVariableName = string;
+export type Shared_WorkflowTemplateVariableName = string;
 
-export type SharedWorkflowTemplateVariables = {
-  [key: SharedWorkflowTemplateVariableName]: SharedWorkflowTemplateVariable;
+export type Shared_WorkflowTemplateVariables = {
+  [key: Shared_WorkflowTemplateVariableName]: Shared_WorkflowTemplateVariable;
 };
 
 /**
@@ -865,14 +865,14 @@ export type SharedWorkflowTemplateVariables = {
  *
  * @since 0.13.0
  */
-export type SharedWorkspaceManifestManifest = SharedNovaConfigWorkspace;
+export type Shared_WorkspaceManifest_Manifest = Shared_NovaConfigWorkspace;
 
-export type SharedWorkspaceManifestFilePath = string;
+export type Shared_WorkspaceManifest_FilePath = string;
 
-export type SharedWorkspaceManifestFileContents = Record<string, unknown>;
+export type Shared_WorkspaceManifest_FileContents = Record<string, unknown>;
 
-export type SharedWorkspaceManifest = {
-  manifest: SharedWorkspaceManifestManifest;
-  filePath: SharedWorkspaceManifestFilePath;
-  fileContents: SharedWorkspaceManifestFileContents;
+export type Shared_WorkspaceManifest = {
+  manifest: Shared_WorkspaceManifest_Manifest;
+  filePath: Shared_WorkspaceManifest_FilePath;
+  fileContents: Shared_WorkspaceManifest_FileContents;
 };

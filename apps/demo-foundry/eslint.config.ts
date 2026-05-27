@@ -521,7 +521,7 @@ export default [
           interface: 'PascalCase',
           parameter: 'camelCase',
           reactComponent: 'PascalCase',
-          typeAlias: 'PascalCase',
+          typeAlias: 'UnderscorePascalCase',
           variable: 'camelCase',
         },
       ],

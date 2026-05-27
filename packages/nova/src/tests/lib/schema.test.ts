@@ -8,10 +8,10 @@ import {
 } from '../../lib/schema.js';
 
 import type {
-  TestsLibSchemaNodeReleasesScheduleEntryOrUndefined,
-  TestsLibSchemaNodeReleasesScheduleResult,
-  TestsLibSchemaSpdxLicenseEntryOrUndefined,
-  TestsLibSchemaSpdxLicensesResult,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined,
+  Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result,
+  Tests_Lib_Schema_SpdxLicenseEntryOrUndefined,
+  Tests_Lib_Schema_SpdxLicensesResult,
 } from '../../types/tests/lib/schema.test.d.ts';
 
 /**
@@ -21,7 +21,7 @@ import type {
  */
 describe('libSchemaNodeReleasesSchedule', async () => {
   it('accepts schedule with multiple entries', () => {
-    const result: TestsLibSchemaNodeReleasesScheduleResult = libSchemaNodeReleasesSchedule.parse({
+    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result = libSchemaNodeReleasesSchedule.parse({
       'v18': {
         lts: '2022-10-25',
         end: '2025-04-30',
@@ -35,9 +35,9 @@ describe('libSchemaNodeReleasesSchedule', async () => {
 
     strictEqual(Object.keys(result).length, 3);
 
-    const v18: TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = result['v18'];
-    const v19: TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = result['v19'];
-    const v20: TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = result['v20'];
+    const v18: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = result['v18'];
+    const v19: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = result['v19'];
+    const v20: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = result['v20'];
 
     if (v18 === undefined) {
       fail('Expected v18 to be defined');
@@ -59,7 +59,7 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('accepts empty schedule', () => {
-    const result: TestsLibSchemaNodeReleasesScheduleResult = libSchemaNodeReleasesSchedule.parse({});
+    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result = libSchemaNodeReleasesSchedule.parse({});
 
     strictEqual(Object.keys(result).length, 0);
 
@@ -67,7 +67,7 @@ describe('libSchemaNodeReleasesSchedule', async () => {
   });
 
   it('accepts single entry', () => {
-    const result: TestsLibSchemaNodeReleasesScheduleResult = libSchemaNodeReleasesSchedule.parse({
+    const result: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result = libSchemaNodeReleasesSchedule.parse({
       'v22': {
         lts: '2024-10-29',
         end: '2027-04-30',
@@ -76,7 +76,7 @@ describe('libSchemaNodeReleasesSchedule', async () => {
 
     strictEqual(Object.keys(result).length, 1);
 
-    const v22: TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = result['v22'];
+    const v22: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = result['v22'];
 
     if (v22 === undefined) {
       fail('Expected v22 to be defined');
@@ -153,7 +153,7 @@ describe('libSchemaNodeReleasesSchedule', async () => {
  */
 describe('libSchemaSpdxLicensesResponse', async () => {
   it('accepts response with multiple licenses', () => {
-    const result: TestsLibSchemaSpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
+    const result: Tests_Lib_Schema_SpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
       licenses: [
         { licenseId: 'MIT' },
         { licenseId: 'Apache-2.0' },
@@ -163,9 +163,9 @@ describe('libSchemaSpdxLicensesResponse', async () => {
 
     strictEqual(result['licenses'].length, 3);
 
-    const license0: TestsLibSchemaSpdxLicenseEntryOrUndefined = result['licenses'][0];
-    const license1: TestsLibSchemaSpdxLicenseEntryOrUndefined = result['licenses'][1];
-    const license2: TestsLibSchemaSpdxLicenseEntryOrUndefined = result['licenses'][2];
+    const license0: Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = result['licenses'][0];
+    const license1: Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = result['licenses'][1];
+    const license2: Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = result['licenses'][2];
 
     if (license0 === undefined) {
       fail('Expected license at index 0');
@@ -187,7 +187,7 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('accepts response with empty licenses array', () => {
-    const result: TestsLibSchemaSpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
+    const result: Tests_Lib_Schema_SpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
       licenses: [],
     });
 
@@ -197,13 +197,13 @@ describe('libSchemaSpdxLicensesResponse', async () => {
   });
 
   it('accepts response with single license', () => {
-    const result: TestsLibSchemaSpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
+    const result: Tests_Lib_Schema_SpdxLicensesResult = libSchemaSpdxLicensesResponse.parse({
       licenses: [{ licenseId: 'ISC' }],
     });
 
     strictEqual(result['licenses'].length, 1);
 
-    const license0: TestsLibSchemaSpdxLicenseEntryOrUndefined = result['licenses'][0];
+    const license0: Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = result['licenses'][0];
 
     if (license0 === undefined) {
       fail('Expected license at index 0');

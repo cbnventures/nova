@@ -12,34 +12,34 @@ import { createPortal } from 'react-dom';
 import { filterToc, treeifyToc } from '../../lib/toc.js';
 
 import type {
-  ThemeTocCollapsibleTocCollapsibleAnimationEvent,
-  ThemeTocCollapsibleTocCollapsibleCloseAriaLabel,
-  ThemeTocCollapsibleTocCollapsibleDialogAriaLabel,
-  ThemeTocCollapsibleTocCollapsibleFocusTarget,
-  ThemeTocCollapsibleTocCollapsibleHandleClickOutsideFunction,
-  ThemeTocCollapsibleTocCollapsibleHandleClickOutsideMouseEvent,
-  ThemeTocCollapsibleTocCollapsibleHandleClickOutsideMouseTarget,
-  ThemeTocCollapsibleTocCollapsibleHandleEscapeFunction,
-  ThemeTocCollapsibleTocCollapsibleHandleEscapeKeyboardEvent,
-  ThemeTocCollapsibleTocCollapsibleIsClosing,
-  ThemeTocCollapsibleTocCollapsibleIsClosingState,
-  ThemeTocCollapsibleTocCollapsibleIsOpen,
-  ThemeTocCollapsibleTocCollapsibleIsOpenState,
-  ThemeTocCollapsibleTocCollapsibleItems,
-  ThemeTocCollapsibleTocCollapsibleMaxHeadingLevel,
-  ThemeTocCollapsibleTocCollapsibleMinHeadingLevel,
-  ThemeTocCollapsibleTocCollapsibleOpenAriaLabel,
-  ThemeTocCollapsibleTocCollapsibleOverlayClassName,
-  ThemeTocCollapsibleTocCollapsiblePanelRef,
-  ThemeTocCollapsibleTocCollapsiblePathname,
-  ThemeTocCollapsibleTocCollapsibleProps,
-  ThemeTocCollapsibleTocCollapsibleSetIsClosing,
-  ThemeTocCollapsibleTocCollapsibleSetIsOpen,
-  ThemeTocCollapsibleTocCollapsibleTreeItems,
-  ThemeTocCollapsibleTocCollapsibleTriggerLabel,
-  ThemeTocCollapsibleTocListItem,
-  ThemeTocCollapsibleTocListItems,
-  ThemeTocCollapsibleTocListOnLinkClick,
+  Theme_TocCollapsible_Index_TocCollapsibleAnimationEvent,
+  Theme_TocCollapsible_Index_TocCollapsibleCloseAriaLabel,
+  Theme_TocCollapsible_Index_TocCollapsibleDialogAriaLabel,
+  Theme_TocCollapsible_Index_TocCollapsibleFocusTarget,
+  Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideFunction,
+  Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseEvent,
+  Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseTarget,
+  Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeFunction,
+  Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeKeyboardEvent,
+  Theme_TocCollapsible_Index_TocCollapsibleIsClosing,
+  Theme_TocCollapsible_Index_TocCollapsibleIsClosingState,
+  Theme_TocCollapsible_Index_TocCollapsibleIsOpen,
+  Theme_TocCollapsible_Index_TocCollapsibleIsOpenState,
+  Theme_TocCollapsible_Index_TocCollapsibleItems,
+  Theme_TocCollapsible_Index_TocCollapsibleMaxHeadingLevel,
+  Theme_TocCollapsible_Index_TocCollapsibleMinHeadingLevel,
+  Theme_TocCollapsible_Index_TocCollapsibleOpenAriaLabel,
+  Theme_TocCollapsible_Index_TocCollapsibleOverlayClassName,
+  Theme_TocCollapsible_Index_TocCollapsiblePanelRef,
+  Theme_TocCollapsible_Index_TocCollapsiblePathname,
+  Theme_TocCollapsible_Index_TocCollapsibleProps,
+  Theme_TocCollapsible_Index_TocCollapsibleSetIsClosing,
+  Theme_TocCollapsible_Index_TocCollapsibleSetIsOpen,
+  Theme_TocCollapsible_Index_TocCollapsibleTreeItems,
+  Theme_TocCollapsible_Index_TocCollapsibleTriggerLabel,
+  Theme_TocCollapsible_Index_TocListItem,
+  Theme_TocCollapsible_Index_TocListItems,
+  Theme_TocCollapsible_Index_TocListOnLinkClick,
 } from '../../types/theme/TOCCollapsible/index.d.ts';
 
 /**
@@ -49,14 +49,14 @@ import type {
  * table-of-contents items, linking each heading by its anchor
  * identifier and nesting child items.
  *
- * @param {ThemeTocCollapsibleTocListItems}       items       - Items.
- * @param {ThemeTocCollapsibleTocListOnLinkClick} onLinkClick - On link click.
+ * @param {Theme_TocCollapsible_Index_TocListItems}       items       - Items.
+ * @param {Theme_TocCollapsible_Index_TocListOnLinkClick} onLinkClick - On link click.
  *
  * @returns {JSX.Element | undefined}
  *
  * @since 0.15.0
  */
-function TocList(items: ThemeTocCollapsibleTocListItems, onLinkClick: ThemeTocCollapsibleTocListOnLinkClick) {
+function TocList(items: Theme_TocCollapsible_Index_TocListItems, onLinkClick: Theme_TocCollapsible_Index_TocListOnLinkClick) {
   if (items === undefined || items['length'] === 0) {
     return undefined;
   }
@@ -64,7 +64,7 @@ function TocList(items: ThemeTocCollapsibleTocListItems, onLinkClick: ThemeTocCo
   return (
     <ul className="nova-toc-list">
       {
-        items.map((item: ThemeTocCollapsibleTocListItem) => (
+        items.map((item: Theme_TocCollapsible_Index_TocListItem) => (
           <li className="nova-toc-item" key={item['id']}>
             <a className="nova-toc-link" href={`#${item['id']}`} onClick={onLinkClick} dangerouslySetInnerHTML={{ __html: item['value'] }} />
             {TocList(item['children'], onLinkClick)}
@@ -82,43 +82,43 @@ function TocList(items: ThemeTocCollapsibleTocListItems, onLinkClick: ThemeTocCo
  * overlay panel containing the table of contents, with keyboard
  * and click-outside dismissal.
  *
- * @param {ThemeTocCollapsibleTocCollapsibleProps} props - Props.
+ * @param {Theme_TocCollapsible_Index_TocCollapsibleProps} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
-  const items: ThemeTocCollapsibleTocCollapsibleItems = props['toc'];
-  const minHeadingLevel: ThemeTocCollapsibleTocCollapsibleMinHeadingLevel = (props['minHeadingLevel'] !== undefined) ? props['minHeadingLevel'] : 2;
-  const maxHeadingLevel: ThemeTocCollapsibleTocCollapsibleMaxHeadingLevel = (props['maxHeadingLevel'] !== undefined) ? props['maxHeadingLevel'] : 3;
-  const pathname: ThemeTocCollapsibleTocCollapsiblePathname = useLocation()['pathname'];
+function TOCCollapsible(props: Theme_TocCollapsible_Index_TocCollapsibleProps) {
+  const items: Theme_TocCollapsible_Index_TocCollapsibleItems = props['toc'];
+  const minHeadingLevel: Theme_TocCollapsible_Index_TocCollapsibleMinHeadingLevel = (props['minHeadingLevel'] !== undefined) ? props['minHeadingLevel'] : 2;
+  const maxHeadingLevel: Theme_TocCollapsible_Index_TocCollapsibleMaxHeadingLevel = (props['maxHeadingLevel'] !== undefined) ? props['maxHeadingLevel'] : 3;
+  const pathname: Theme_TocCollapsible_Index_TocCollapsiblePathname = useLocation()['pathname'];
 
-  const isOpenState: ThemeTocCollapsibleTocCollapsibleIsOpenState = useState<ThemeTocCollapsibleTocCollapsibleIsOpen>(false);
-  const isOpen: ThemeTocCollapsibleTocCollapsibleIsOpen = isOpenState[0];
-  const setIsOpen: ThemeTocCollapsibleTocCollapsibleSetIsOpen = isOpenState[1];
+  const isOpenState: Theme_TocCollapsible_Index_TocCollapsibleIsOpenState = useState<Theme_TocCollapsible_Index_TocCollapsibleIsOpen>(false);
+  const isOpen: Theme_TocCollapsible_Index_TocCollapsibleIsOpen = isOpenState[0];
+  const setIsOpen: Theme_TocCollapsible_Index_TocCollapsibleSetIsOpen = isOpenState[1];
 
-  const isClosingState: ThemeTocCollapsibleTocCollapsibleIsClosingState = useState<ThemeTocCollapsibleTocCollapsibleIsClosing>(false);
-  const isClosing: ThemeTocCollapsibleTocCollapsibleIsClosing = isClosingState[0];
-  const setIsClosing: ThemeTocCollapsibleTocCollapsibleSetIsClosing = isClosingState[1];
+  const isClosingState: Theme_TocCollapsible_Index_TocCollapsibleIsClosingState = useState<Theme_TocCollapsible_Index_TocCollapsibleIsClosing>(false);
+  const isClosing: Theme_TocCollapsible_Index_TocCollapsibleIsClosing = isClosingState[0];
+  const setIsClosing: Theme_TocCollapsible_Index_TocCollapsibleSetIsClosing = isClosingState[1];
 
-  const panelRef: ThemeTocCollapsibleTocCollapsiblePanelRef = useRef<HTMLDivElement>(null);
-  const openAriaLabel: ThemeTocCollapsibleTocCollapsibleOpenAriaLabel = translate({
+  const panelRef: Theme_TocCollapsible_Index_TocCollapsiblePanelRef = useRef<HTMLDivElement>(null);
+  const openAriaLabel: Theme_TocCollapsible_Index_TocCollapsibleOpenAriaLabel = translate({
     id: 'theme.TOCCollapsible.openAriaLabel',
     message: 'Open table of contents',
     description: 'The ARIA label for the button that opens the table of contents overlay',
   });
-  const triggerLabel: ThemeTocCollapsibleTocCollapsibleTriggerLabel = translate({
+  const triggerLabel: Theme_TocCollapsible_Index_TocCollapsibleTriggerLabel = translate({
     id: 'theme.TOCCollapsible.toggleButtonLabel',
     message: 'Table of Contents',
     description: 'The label for the table of contents trigger button and header title',
   });
-  const dialogAriaLabel: ThemeTocCollapsibleTocCollapsibleDialogAriaLabel = translate({
+  const dialogAriaLabel: Theme_TocCollapsible_Index_TocCollapsibleDialogAriaLabel = translate({
     id: 'theme.TOCCollapsible.dialogAriaLabel',
     message: 'Table of contents',
     description: 'The ARIA label for the table of contents dialog panel',
   });
-  const closeAriaLabel: ThemeTocCollapsibleTocCollapsibleCloseAriaLabel = translate({
+  const closeAriaLabel: Theme_TocCollapsible_Index_TocCollapsibleCloseAriaLabel = translate({
     id: 'theme.TOCCollapsible.closeAriaLabel',
     message: 'Close table of contents',
     description: 'The ARIA label for the button that closes the table of contents overlay',
@@ -133,7 +133,7 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
    *
    * @since 0.15.0
    */
-  const handleEscape: ThemeTocCollapsibleTocCollapsibleHandleEscapeFunction = useCallback((event: ThemeTocCollapsibleTocCollapsibleHandleEscapeKeyboardEvent) => {
+  const handleEscape: Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeFunction = useCallback((event: Theme_TocCollapsible_Index_TocCollapsibleHandleEscapeKeyboardEvent) => {
     if (event.key === 'Escape') {
       setIsClosing(true);
     }
@@ -150,8 +150,8 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
    *
    * @since 0.15.0
    */
-  const handleClickOutside: ThemeTocCollapsibleTocCollapsibleHandleClickOutsideFunction = useCallback((event: ThemeTocCollapsibleTocCollapsibleHandleClickOutsideMouseEvent) => {
-    const mouseTarget: ThemeTocCollapsibleTocCollapsibleHandleClickOutsideMouseTarget = event.target;
+  const handleClickOutside: Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideFunction = useCallback((event: Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseEvent) => {
+    const mouseTarget: Theme_TocCollapsible_Index_TocCollapsibleHandleClickOutsideMouseTarget = event.target;
 
     if (mouseTarget === event.currentTarget) {
       setIsClosing(true);
@@ -187,7 +187,7 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
   // Focus close button when dialog opens.
   useEffect(() => {
     if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: ThemeTocCollapsibleTocCollapsibleFocusTarget = panelRef['current'].querySelector('.nova-toc-collapsible-close') as ThemeTocCollapsibleTocCollapsibleFocusTarget;
+      const focusTarget: Theme_TocCollapsible_Index_TocCollapsibleFocusTarget = panelRef['current'].querySelector('.nova-toc-collapsible-close') as Theme_TocCollapsible_Index_TocCollapsibleFocusTarget;
 
       if (focusTarget !== null) {
         focusTarget.focus();
@@ -201,7 +201,7 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
     return undefined;
   }
 
-  const treeItems: ThemeTocCollapsibleTocCollapsibleTreeItems = filterToc(treeifyToc(items), minHeadingLevel, maxHeadingLevel);
+  const treeItems: Theme_TocCollapsible_Index_TocCollapsibleTreeItems = filterToc(treeifyToc(items), minHeadingLevel, maxHeadingLevel);
 
   if (treeItems['length'] === 0) {
     return undefined;
@@ -226,7 +226,7 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
       </button>
 
       {(isOpen === true) && (() => {
-        let overlayClassName: ThemeTocCollapsibleTocCollapsibleOverlayClassName = 'nova-toc-collapsible-overlay nova-toc-collapsible-open';
+        let overlayClassName: Theme_TocCollapsible_Index_TocCollapsibleOverlayClassName = 'nova-toc-collapsible-overlay nova-toc-collapsible-open';
 
         if (isClosing === true) {
           overlayClassName = 'nova-toc-collapsible-overlay nova-toc-collapsible-closing';
@@ -237,7 +237,7 @@ function TOCCollapsible(props: ThemeTocCollapsibleTocCollapsibleProps) {
             className={overlayClassName}
             onClick={handleClickOutside}
             role="presentation"
-            onAnimationEnd={(_event: ThemeTocCollapsibleTocCollapsibleAnimationEvent) => {
+            onAnimationEnd={(_event: Theme_TocCollapsible_Index_TocCollapsibleAnimationEvent) => {
               if (isClosing === true) {
                 setIsOpen(false);
                 setIsClosing(false);

@@ -11,28 +11,28 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliScaffoldAppNextjs } from '../../../../cli/scaffold/app/nextjs.js';
+import { Runner as CliScaffoldAppNextjs } from '../../../../cli/scaffold/app/nextjs.js';
 
 import type {
-  TestsCliScaffoldAppNextjsRunChildDirectory,
-  TestsCliScaffoldAppNextjsRunChildPackageJson,
-  TestsCliScaffoldAppNextjsRunChildPackageJsonPath,
-  TestsCliScaffoldAppNextjsRunDryRunOutputPath,
-  TestsCliScaffoldAppNextjsRunExists,
-  TestsCliScaffoldAppNextjsRunNextConfigPath,
-  TestsCliScaffoldAppNextjsRunNovaConfigPath,
-  TestsCliScaffoldAppNextjsRunOriginalCwd,
-  TestsCliScaffoldAppNextjsRunPackageJson,
-  TestsCliScaffoldAppNextjsRunPackageJsonPath,
-  TestsCliScaffoldAppNextjsRunPageTsxPath,
-  TestsCliScaffoldAppNextjsRunProjectDirectory,
-  TestsCliScaffoldAppNextjsRunRootDirectory,
-  TestsCliScaffoldAppNextjsRunRootPackageJson,
-  TestsCliScaffoldAppNextjsRunRootPackageJsonPath,
-  TestsCliScaffoldAppNextjsRunSandboxRoot,
-  TestsCliScaffoldAppNextjsRunTemporaryBase,
-  TestsCliScaffoldAppNextjsRunTemporaryDirectory,
-  TestsCliScaffoldAppNextjsRunWorkspacePackageJsonPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildDirectory,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildPackageJson,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildPackageJsonPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_DryRunOutputPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_Exists,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_NextConfigPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_NovaConfigPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_OriginalCwd,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PackageJson,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PackageJsonPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PageTsxPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ProjectDirectory,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootDirectory,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootPackageJson,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootPackageJsonPath,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_SandboxRoot,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_TemporaryBase,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_TemporaryDirectory,
+  Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_WorkspacePackageJsonPath,
 } from '../../../../types/tests/cli/scaffold/app/nextjs.test.d.ts';
 
 /**
@@ -41,10 +41,10 @@ import type {
  * @since 0.15.0
  */
 describe.skip('CliScaffoldAppNextjs.run', async () => {
-  const originalCwd: TestsCliScaffoldAppNextjsRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliScaffoldAppNextjsRunTemporaryDirectory = tmpdir();
-  const temporaryBase: TestsCliScaffoldAppNextjsRunTemporaryBase = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliScaffoldAppNextjsRunSandboxRoot = await mkdtemp(temporaryBase);
+  const originalCwd: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_TemporaryDirectory = tmpdir();
+  const temporaryBase: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_TemporaryBase = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_SandboxRoot = await mkdtemp(temporaryBase);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -58,21 +58,21 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
   });
 
   it('exits with error when inside child workspace', async () => {
-    const rootDirectory: TestsCliScaffoldAppNextjsRunRootDirectory = join(sandboxRoot, 'nested-root');
-    const childDirectory: TestsCliScaffoldAppNextjsRunChildDirectory = join(rootDirectory, 'apps', 'child');
+    const rootDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootDirectory = join(sandboxRoot, 'nested-root');
+    const childDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildDirectory = join(rootDirectory, 'apps', 'child');
 
     await mkdir(childDirectory, { recursive: true });
 
-    const rootPackageJson: TestsCliScaffoldAppNextjsRunRootPackageJson = JSON.stringify({
+    const rootPackageJson: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootPackageJson = JSON.stringify({
       name: 'root', workspaces: ['apps/*'],
     }, null, 2);
 
-    const rootPackageJsonPath: TestsCliScaffoldAppNextjsRunRootPackageJsonPath = join(rootDirectory, 'package.json');
+    const rootPackageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootPackageJsonPath = join(rootDirectory, 'package.json');
 
     await writeFile(rootPackageJsonPath, `${rootPackageJson}\n`, 'utf-8');
 
-    const childPackageJson: TestsCliScaffoldAppNextjsRunChildPackageJson = JSON.stringify({ name: 'child' }, null, 2);
-    const childPackageJsonPath: TestsCliScaffoldAppNextjsRunChildPackageJsonPath = join(childDirectory, 'package.json');
+    const childPackageJson: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildPackageJson = JSON.stringify({ name: 'child' }, null, 2);
+    const childPackageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildPackageJsonPath = join(childDirectory, 'package.json');
 
     await writeFile(childPackageJsonPath, `${childPackageJson}\n`, 'utf-8');
 
@@ -86,12 +86,12 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
   });
 
   it('exits with error for standalone project', async () => {
-    const projectDirectory: TestsCliScaffoldAppNextjsRunProjectDirectory = join(sandboxRoot, 'standalone');
+    const projectDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ProjectDirectory = join(sandboxRoot, 'standalone');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliScaffoldAppNextjsRunPackageJson = JSON.stringify({ name: 'standalone' }, null, 2);
-    const packageJsonPath: TestsCliScaffoldAppNextjsRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJson: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PackageJson = JSON.stringify({ name: 'standalone' }, null, 2);
+    const packageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
@@ -105,7 +105,7 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
   });
 
   it('respects dry-run', async () => {
-    const projectDirectory: TestsCliScaffoldAppNextjsRunProjectDirectory = join(sandboxRoot, 'dry-run');
+    const projectDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -118,9 +118,9 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
       output: './my-app',
     });
 
-    let exists: TestsCliScaffoldAppNextjsRunExists = true;
+    let exists: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_Exists = true;
 
-    const dryRunOutputPath: TestsCliScaffoldAppNextjsRunDryRunOutputPath = join(projectDirectory, 'my-app');
+    const dryRunOutputPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_DryRunOutputPath = join(projectDirectory, 'my-app');
 
     try {
       await access(dryRunOutputPath);
@@ -134,7 +134,7 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
   });
 
   it('creates monorepo in empty directory', async () => {
-    const projectDirectory: TestsCliScaffoldAppNextjsRunProjectDirectory = join(sandboxRoot, 'monorepo-test');
+    const projectDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ProjectDirectory = join(sandboxRoot, 'monorepo-test');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -147,17 +147,17 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
     });
 
     // Verify root files were created.
-    const rootPackageJsonPath: TestsCliScaffoldAppNextjsRunRootPackageJsonPath = join(projectDirectory, 'my-app', 'package.json');
-    const novaConfigPath: TestsCliScaffoldAppNextjsRunNovaConfigPath = join(projectDirectory, 'my-app', 'nova.config.json');
+    const rootPackageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootPackageJsonPath = join(projectDirectory, 'my-app', 'package.json');
+    const novaConfigPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_NovaConfigPath = join(projectDirectory, 'my-app', 'nova.config.json');
 
     await access(rootPackageJsonPath);
 
     await access(novaConfigPath);
 
     // Verify workspace files were created.
-    const workspacePackageJsonPath: TestsCliScaffoldAppNextjsRunWorkspacePackageJsonPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'package.json');
-    const nextConfigPath: TestsCliScaffoldAppNextjsRunNextConfigPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'next.config.mjs');
-    const pageTsxPath: TestsCliScaffoldAppNextjsRunPageTsxPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'src', 'app', 'page.tsx');
+    const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_WorkspacePackageJsonPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'package.json');
+    const nextConfigPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_NextConfigPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'next.config.mjs');
+    const pageTsxPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PageTsxPath = join(projectDirectory, 'my-app', 'apps', 'nextjs', 'src', 'app', 'page.tsx');
 
     await access(workspacePackageJsonPath);
 
@@ -169,14 +169,14 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
   });
 
   it('adds workspace at monorepo root', async () => {
-    const projectDirectory: TestsCliScaffoldAppNextjsRunProjectDirectory = join(sandboxRoot, 'workspace-test');
+    const projectDirectory: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ProjectDirectory = join(sandboxRoot, 'workspace-test');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliScaffoldAppNextjsRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PackageJson = JSON.stringify({
       name: 'root', workspaces: ['apps/*'],
     }, null, 2);
-    const packageJsonPath: TestsCliScaffoldAppNextjsRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
@@ -189,9 +189,9 @@ describe.skip('CliScaffoldAppNextjs.run', async () => {
     });
 
     // Verify workspace files were created.
-    const workspacePackageJsonPath: TestsCliScaffoldAppNextjsRunWorkspacePackageJsonPath = join(projectDirectory, 'apps', 'nextjs', 'package.json');
-    const nextConfigPath: TestsCliScaffoldAppNextjsRunNextConfigPath = join(projectDirectory, 'apps', 'nextjs', 'next.config.mjs');
-    const pageTsxPath: TestsCliScaffoldAppNextjsRunPageTsxPath = join(projectDirectory, 'apps', 'nextjs', 'src', 'app', 'page.tsx');
+    const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'nextjs', 'package.json');
+    const nextConfigPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_NextConfigPath = join(projectDirectory, 'apps', 'nextjs', 'next.config.mjs');
+    const pageTsxPath: Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PageTsxPath = join(projectDirectory, 'apps', 'nextjs', 'src', 'app', 'page.tsx');
 
     await access(workspacePackageJsonPath);
 

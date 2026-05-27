@@ -1,4 +1,4 @@
-import type { PresetsSentinelPresetSentinel } from '../../types/presets/sentinel/preset.d.ts';
+import type { Presets_Sentinel_Preset_Sentinel } from '../../types/presets/sentinel/preset.d.ts';
 
 /**
  * Presets - Sentinel - Preset - Sentinel.
@@ -8,7 +8,7 @@ import type { PresetsSentinelPresetSentinel } from '../../types/presets/sentinel
  *
  * @since 0.15.0
  */
-export const presetsSentinelPresetSentinel: PresetsSentinelPresetSentinel = {
+export const presetsSentinelPresetSentinel: Presets_Sentinel_Preset_Sentinel = {
   logo: {
     title: 'Sentinel',
     alt: 'Sentinel',

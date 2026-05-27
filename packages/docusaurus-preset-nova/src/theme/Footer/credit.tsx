@@ -4,18 +4,18 @@ import { usePluginData } from '@docusaurus/useGlobalData';
 import IconExternalLink from '@theme/IconExternalLink';
 
 import type {
-  ThemeFooterCreditCreditDocusaurusLabel,
-  ThemeFooterCreditCreditDocusaurusUrl,
-  ThemeFooterCreditCreditNovaLabel,
-  ThemeFooterCreditCreditNovaUrl,
-  ThemeFooterCreditCreditPhraseIndex,
-  ThemeFooterCreditCreditPhrases,
-  ThemeFooterCreditCreditSuffix,
-  ThemeFooterCreditCreditText,
-  ThemeFooterCreditCreditUtmSource,
-  ThemeFooterCreditDocusaurusContext,
-  ThemeFooterCreditGlobalData,
-  ThemeFooterCreditReturns,
+  Theme_Footer_Credit_CreditDocusaurusLabel,
+  Theme_Footer_Credit_CreditDocusaurusUrl,
+  Theme_Footer_Credit_CreditNovaLabel,
+  Theme_Footer_Credit_CreditNovaUrl,
+  Theme_Footer_Credit_CreditPhraseIndex,
+  Theme_Footer_Credit_CreditPhrases,
+  Theme_Footer_Credit_CreditSuffix,
+  Theme_Footer_Credit_CreditText,
+  Theme_Footer_Credit_CreditUtmSource,
+  Theme_Footer_Credit_DocusaurusContext,
+  Theme_Footer_Credit_GlobalData,
+  Theme_Footer_Credit_Returns,
 } from '../../types/theme/Footer/credit.d.ts';
 
 /**
@@ -29,13 +29,13 @@ import type {
  *
  * @since 0.15.0
  */
-function FooterCredit(): ThemeFooterCreditReturns {
-  const docusaurusContext: ThemeFooterCreditDocusaurusContext = useDocusaurusContext();
-  const creditUtmSource: ThemeFooterCreditCreditUtmSource = new URL(docusaurusContext.siteConfig.url).hostname;
-  const creditNovaUrl: ThemeFooterCreditCreditNovaUrl = `https://nova.cbnventures.io?utm_source=${creditUtmSource}&utm_medium=referral&utm_campaign=nova-preset-credit`;
-  const creditDocusaurusUrl: ThemeFooterCreditCreditDocusaurusUrl = `https://docusaurus.io?utm_source=${creditUtmSource}&utm_medium=referral&utm_campaign=nova-preset-credit`;
+function FooterCredit(): Theme_Footer_Credit_Returns {
+  const docusaurusContext: Theme_Footer_Credit_DocusaurusContext = useDocusaurusContext();
+  const creditUtmSource: Theme_Footer_Credit_CreditUtmSource = new URL(docusaurusContext.siteConfig.url).hostname;
+  const creditNovaUrl: Theme_Footer_Credit_CreditNovaUrl = `https://nova.cbnventures.io?utm_source=${creditUtmSource}&utm_medium=referral&utm_campaign=nova-preset-credit`;
+  const creditDocusaurusUrl: Theme_Footer_Credit_CreditDocusaurusUrl = `https://docusaurus.io?utm_source=${creditUtmSource}&utm_medium=referral&utm_campaign=nova-preset-credit`;
 
-  const creditPhrases: ThemeFooterCreditCreditPhrases = [
+  const creditPhrases: Theme_Footer_Credit_CreditPhrases = [
     translate({
       id: 'theme.footer.creditPhrases.forged',
       message: 'Forged',
@@ -88,21 +88,21 @@ function FooterCredit(): ThemeFooterCreditReturns {
     }),
   ];
 
-  const globalData: ThemeFooterCreditGlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as ThemeFooterCreditGlobalData;
-  const creditPhraseIndex: ThemeFooterCreditCreditPhraseIndex = (typeof globalData['creditPhraseIndex'] === 'number') ? globalData['creditPhraseIndex'] : 0;
+  const globalData: Theme_Footer_Credit_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Theme_Footer_Credit_GlobalData;
+  const creditPhraseIndex: Theme_Footer_Credit_CreditPhraseIndex = (typeof globalData['creditPhraseIndex'] === 'number') ? globalData['creditPhraseIndex'] : 0;
 
-  const creditSuffix: ThemeFooterCreditCreditSuffix = translate({
+  const creditSuffix: Theme_Footer_Credit_CreditSuffix = translate({
     id: 'theme.footer.creditSuffix',
     message: ' with ',
     description: 'The suffix between the random verb and the credit links in the footer',
   });
-  const creditText: ThemeFooterCreditCreditText = `${creditPhrases[creditPhraseIndex]}${creditSuffix}`;
-  const creditNovaLabel: ThemeFooterCreditCreditNovaLabel = translate({
+  const creditText: Theme_Footer_Credit_CreditText = `${creditPhrases[creditPhraseIndex]}${creditSuffix}`;
+  const creditNovaLabel: Theme_Footer_Credit_CreditNovaLabel = translate({
     id: 'theme.footer.creditNovaLabel',
     message: 'Nova',
     description: 'The label for the Nova credit link in the footer',
   });
-  const creditDocusaurusLabel: ThemeFooterCreditCreditDocusaurusLabel = translate({
+  const creditDocusaurusLabel: Theme_Footer_Credit_CreditDocusaurusLabel = translate({
     id: 'theme.footer.creditDocusaurusLabel',
     message: 'Docusaurus',
     description: 'The label for the Docusaurus credit link in the footer',

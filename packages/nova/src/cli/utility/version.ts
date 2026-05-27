@@ -29,113 +29,113 @@ import {
 import { MarkdownTable } from '../../toolkit/index.js';
 
 import type {
-  CliUtilityVersionGetBrowserVersionAppPath,
-  CliUtilityVersionGetBrowserVersionBrowsers,
-  CliUtilityVersionGetBrowserVersionCurrentPlatform,
-  CliUtilityVersionGetBrowserVersionDarwinAppName,
-  CliUtilityVersionGetBrowserVersionDarwinEntries,
-  CliUtilityVersionGetBrowserVersionDarwinHasSystem,
-  CliUtilityVersionGetBrowserVersionDarwinHasUser,
-  CliUtilityVersionGetBrowserVersionDarwinKey,
-  CliUtilityVersionGetBrowserVersionDarwinMacosAppVersion,
-  CliUtilityVersionGetBrowserVersionDarwinPairs,
-  CliUtilityVersionGetBrowserVersionDarwinPathResults,
-  CliUtilityVersionGetBrowserVersionDarwinSupportedBrowsers,
-  CliUtilityVersionGetBrowserVersionDarwinSystem,
-  CliUtilityVersionGetBrowserVersionDarwinUser,
-  CliUtilityVersionGetBrowserVersionDarwinVersionResponse,
-  CliUtilityVersionGetBrowserVersionLinuxCliToolVersion,
-  CliUtilityVersionGetBrowserVersionLinuxCommandName,
-  CliUtilityVersionGetBrowserVersionLinuxCommandResponse,
-  CliUtilityVersionGetBrowserVersionLinuxEntries,
-  CliUtilityVersionGetBrowserVersionLinuxKey,
-  CliUtilityVersionGetBrowserVersionLinuxPairs,
-  CliUtilityVersionGetBrowserVersionLinuxSupportedBrowsers,
-  CliUtilityVersionGetBrowserVersionLinuxVersionResponse,
-  CliUtilityVersionGetBrowserVersionReturns,
-  CliUtilityVersionGetBrowserVersionWindowsEntries,
-  CliUtilityVersionGetBrowserVersionWindowsExeName,
-  CliUtilityVersionGetBrowserVersionWindowsExePath,
-  CliUtilityVersionGetBrowserVersionWindowsKey,
-  CliUtilityVersionGetBrowserVersionWindowsPairs,
-  CliUtilityVersionGetBrowserVersionWindowsQuery,
-  CliUtilityVersionGetBrowserVersionWindowsSupportedBrowsers,
-  CliUtilityVersionGetBrowserVersionWindowsWindowsAppVersion,
-  CliUtilityVersionGetEnvironmentManagerVersionEnvResults,
-  CliUtilityVersionGetEnvironmentManagerVersionManagers,
-  CliUtilityVersionGetEnvironmentManagerVersionNvmPosixMatch,
-  CliUtilityVersionGetEnvironmentManagerVersionNvmPosixMatchResult,
-  CliUtilityVersionGetEnvironmentManagerVersionNvmVersion,
-  CliUtilityVersionGetEnvironmentManagerVersionNvmWindowsMatch,
-  CliUtilityVersionGetEnvironmentManagerVersionNvmWindowsMatchResult,
-  CliUtilityVersionGetEnvironmentManagerVersionReturns,
-  CliUtilityVersionGetEnvironmentManagerVersionVoltaMatch,
-  CliUtilityVersionGetEnvironmentManagerVersionVoltaMatchResult,
-  CliUtilityVersionGetEnvironmentManagerVersionVoltaVersion,
-  CliUtilityVersionGetInterpreterVersionInterpreterResults,
-  CliUtilityVersionGetInterpreterVersionInterpreters,
-  CliUtilityVersionGetInterpreterVersionJavaMatch,
-  CliUtilityVersionGetInterpreterVersionJavaMatchBuild,
-  CliUtilityVersionGetInterpreterVersionJavaMatchDistribution,
-  CliUtilityVersionGetInterpreterVersionJavaMatchVersion,
-  CliUtilityVersionGetInterpreterVersionJavaVersion,
-  CliUtilityVersionGetInterpreterVersionReturns,
-  CliUtilityVersionGetInterpreterVersionRustMatch,
-  CliUtilityVersionGetInterpreterVersionRustMatchBuildDate,
-  CliUtilityVersionGetInterpreterVersionRustMatchBuildHash,
-  CliUtilityVersionGetInterpreterVersionRustMatchSource,
-  CliUtilityVersionGetInterpreterVersionRustMatchVersion,
-  CliUtilityVersionGetInterpreterVersionRustVersion,
-  CliUtilityVersionGetNodeVersionBunMatch,
-  CliUtilityVersionGetNodeVersionBunMatchResult,
-  CliUtilityVersionGetNodeVersionBunVersion,
-  CliUtilityVersionGetNodeVersionNodeJsMatch,
-  CliUtilityVersionGetNodeVersionNodeJsMatchResult,
-  CliUtilityVersionGetNodeVersionNodeJsVersion,
-  CliUtilityVersionGetNodeVersionNodeResults,
-  CliUtilityVersionGetNodeVersionNpmMatch,
-  CliUtilityVersionGetNodeVersionNpmMatchResult,
-  CliUtilityVersionGetNodeVersionNpmVersion,
-  CliUtilityVersionGetNodeVersionPnpmMatch,
-  CliUtilityVersionGetNodeVersionPnpmMatchResult,
-  CliUtilityVersionGetNodeVersionPnpmVersion,
-  CliUtilityVersionGetNodeVersionReturns,
-  CliUtilityVersionGetNodeVersionTools,
-  CliUtilityVersionGetNodeVersionYarnMatch,
-  CliUtilityVersionGetNodeVersionYarnMatchResult,
-  CliUtilityVersionGetNodeVersionYarnVersion,
-  CliUtilityVersionGetOsVersionArchitecture,
-  CliUtilityVersionGetOsVersionBuild,
-  CliUtilityVersionGetOsVersionBuildVersion,
-  CliUtilityVersionGetOsVersionCurrentBuild,
-  CliUtilityVersionGetOsVersionCurrentBuildEntry,
-  CliUtilityVersionGetOsVersionCurrentBuildNumberEntry,
-  CliUtilityVersionGetOsVersionCurrentPlatform,
-  CliUtilityVersionGetOsVersionCurrentVersion,
-  CliUtilityVersionGetOsVersionDarwinResults,
-  CliUtilityVersionGetOsVersionDisplayVersionEntry,
-  CliUtilityVersionGetOsVersionKernel,
-  CliUtilityVersionGetOsVersionName,
-  CliUtilityVersionGetOsVersionOsRelease,
-  CliUtilityVersionGetOsVersionProductName,
-  CliUtilityVersionGetOsVersionProductNameEntry,
-  CliUtilityVersionGetOsVersionProductVersion,
-  CliUtilityVersionGetOsVersionRegistryQuery,
-  CliUtilityVersionGetOsVersionReleaseIdEntry,
-  CliUtilityVersionGetOsVersionReturns,
-  CliUtilityVersionGetOsVersionUpdateBuildRevision,
-  CliUtilityVersionGetOsVersionUpdateBuildRevisionEntry,
-  CliUtilityVersionPrintCategory,
-  CliUtilityVersionPrintList,
-  CliUtilityVersionPrintReturns,
-  CliUtilityVersionPrintRowKey,
-  CliUtilityVersionPrintRowsByKey,
-  CliUtilityVersionPrintRowValue,
-  CliUtilityVersionPrintTable,
-  CliUtilityVersionRunList,
-  CliUtilityVersionRunOptions,
-  CliUtilityVersionRunReturns,
-  CliUtilityVersionRunTasks,
+  Cli_Utility_Version_Runner_GetBrowserVersion_AppPath,
+  Cli_Utility_Version_Runner_GetBrowserVersion_Browsers,
+  Cli_Utility_Version_Runner_GetBrowserVersion_CurrentPlatform,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinAppName,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinEntries,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinHasSystem,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinHasUser,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinKey,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinMacosAppVersion,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinPairs,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinPathResults,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinSupportedBrowsers,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinSystem,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinUser,
+  Cli_Utility_Version_Runner_GetBrowserVersion_DarwinVersionResponse,
+  Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCliToolVersion,
+  Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCommandName,
+  Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCommandResponse,
+  Cli_Utility_Version_Runner_GetBrowserVersion_LinuxEntries,
+  Cli_Utility_Version_Runner_GetBrowserVersion_LinuxKey,
+  Cli_Utility_Version_Runner_GetBrowserVersion_LinuxPairs,
+  Cli_Utility_Version_Runner_GetBrowserVersion_LinuxSupportedBrowsers,
+  Cli_Utility_Version_Runner_GetBrowserVersion_LinuxVersionResponse,
+  Cli_Utility_Version_Runner_GetBrowserVersion_Returns,
+  Cli_Utility_Version_Runner_GetBrowserVersion_WindowsEntries,
+  Cli_Utility_Version_Runner_GetBrowserVersion_WindowsExeName,
+  Cli_Utility_Version_Runner_GetBrowserVersion_WindowsExePath,
+  Cli_Utility_Version_Runner_GetBrowserVersion_WindowsKey,
+  Cli_Utility_Version_Runner_GetBrowserVersion_WindowsPairs,
+  Cli_Utility_Version_Runner_GetBrowserVersion_WindowsQuery,
+  Cli_Utility_Version_Runner_GetBrowserVersion_WindowsSupportedBrowsers,
+  Cli_Utility_Version_Runner_GetBrowserVersion_WindowsWindowsAppVersion,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_EnvResults,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_Managers,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmPosixMatch,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmPosixMatchResult,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmVersion,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmWindowsMatch,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmWindowsMatchResult,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_Returns,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaMatch,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaMatchResult,
+  Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaVersion,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_InterpreterResults,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_Interpreters,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatch,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchBuild,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchDistribution,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchVersion,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_JavaVersion,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_Returns,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatch,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchBuildDate,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchBuildHash,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchSource,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchVersion,
+  Cli_Utility_Version_Runner_GetInterpreterVersion_RustVersion,
+  Cli_Utility_Version_Runner_GetNodeVersion_BunMatch,
+  Cli_Utility_Version_Runner_GetNodeVersion_BunMatchResult,
+  Cli_Utility_Version_Runner_GetNodeVersion_BunVersion,
+  Cli_Utility_Version_Runner_GetNodeVersion_NodeJsMatch,
+  Cli_Utility_Version_Runner_GetNodeVersion_NodeJsMatchResult,
+  Cli_Utility_Version_Runner_GetNodeVersion_NodeJsVersion,
+  Cli_Utility_Version_Runner_GetNodeVersion_NodeResults,
+  Cli_Utility_Version_Runner_GetNodeVersion_NpmMatch,
+  Cli_Utility_Version_Runner_GetNodeVersion_NpmMatchResult,
+  Cli_Utility_Version_Runner_GetNodeVersion_NpmVersion,
+  Cli_Utility_Version_Runner_GetNodeVersion_PnpmMatch,
+  Cli_Utility_Version_Runner_GetNodeVersion_PnpmMatchResult,
+  Cli_Utility_Version_Runner_GetNodeVersion_PnpmVersion,
+  Cli_Utility_Version_Runner_GetNodeVersion_Returns,
+  Cli_Utility_Version_Runner_GetNodeVersion_Tools,
+  Cli_Utility_Version_Runner_GetNodeVersion_YarnMatch,
+  Cli_Utility_Version_Runner_GetNodeVersion_YarnMatchResult,
+  Cli_Utility_Version_Runner_GetNodeVersion_YarnVersion,
+  Cli_Utility_Version_Runner_GetOsVersion_Architecture,
+  Cli_Utility_Version_Runner_GetOsVersion_Build,
+  Cli_Utility_Version_Runner_GetOsVersion_BuildVersion,
+  Cli_Utility_Version_Runner_GetOsVersion_CurrentBuild,
+  Cli_Utility_Version_Runner_GetOsVersion_CurrentBuildEntry,
+  Cli_Utility_Version_Runner_GetOsVersion_CurrentBuildNumberEntry,
+  Cli_Utility_Version_Runner_GetOsVersion_CurrentPlatform,
+  Cli_Utility_Version_Runner_GetOsVersion_CurrentVersion,
+  Cli_Utility_Version_Runner_GetOsVersion_DarwinResults,
+  Cli_Utility_Version_Runner_GetOsVersion_DisplayVersionEntry,
+  Cli_Utility_Version_Runner_GetOsVersion_Kernel,
+  Cli_Utility_Version_Runner_GetOsVersion_Name,
+  Cli_Utility_Version_Runner_GetOsVersion_OsRelease,
+  Cli_Utility_Version_Runner_GetOsVersion_ProductName,
+  Cli_Utility_Version_Runner_GetOsVersion_ProductNameEntry,
+  Cli_Utility_Version_Runner_GetOsVersion_ProductVersion,
+  Cli_Utility_Version_Runner_GetOsVersion_RegistryQuery,
+  Cli_Utility_Version_Runner_GetOsVersion_ReleaseIdEntry,
+  Cli_Utility_Version_Runner_GetOsVersion_Returns,
+  Cli_Utility_Version_Runner_GetOsVersion_UpdateBuildRevision,
+  Cli_Utility_Version_Runner_GetOsVersion_UpdateBuildRevisionEntry,
+  Cli_Utility_Version_Runner_Print_Category,
+  Cli_Utility_Version_Runner_Print_List,
+  Cli_Utility_Version_Runner_Print_Returns,
+  Cli_Utility_Version_Runner_Print_RowKey,
+  Cli_Utility_Version_Runner_Print_RowsByKey,
+  Cli_Utility_Version_Runner_Print_RowValue,
+  Cli_Utility_Version_Runner_Print_Table,
+  Cli_Utility_Version_Runner_Run_List,
+  Cli_Utility_Version_Runner_Run_Options,
+  Cli_Utility_Version_Runner_Run_Returns,
+  Cli_Utility_Version_Runner_Run_Tasks,
 } from '../../types/cli/utility/version.d.ts';
 
 /**
@@ -146,21 +146,21 @@ import type {
  *
  * @since 0.11.0
  */
-export class CliUtilityVersion {
+export class Runner {
   /**
    * CLI - Utility - Version - Run.
    *
    * Dispatches version-detection tasks in parallel based on the
    * selected flags (--node, --os, etc.) and prints results as formatted tables.
    *
-   * @param {CliUtilityVersionRunOptions} options - Options.
+   * @param {Cli_Utility_Version_Runner_Run_Options} options - Options.
    *
-   * @returns {CliUtilityVersionRunReturns}
+   * @returns {Cli_Utility_Version_Runner_Run_Returns}
    *
    * @since 0.11.0
    */
-  public static async run(options: CliUtilityVersionRunOptions): CliUtilityVersionRunReturns {
-    const tasks: CliUtilityVersionRunTasks = [];
+  public static async run(options: Cli_Utility_Version_Runner_Run_Options): Cli_Utility_Version_Runner_Run_Returns {
+    const tasks: Cli_Utility_Version_Runner_Run_Tasks = [];
 
     // Node.js + Tools.
     if (
@@ -168,7 +168,7 @@ export class CliUtilityVersion {
       || options['all'] === true
       || Object.keys(options).length === 0
     ) {
-      tasks.push(CliUtilityVersion.getNodeVersion().then((response) => [
+      tasks.push(Runner.getNodeVersion().then((response) => [
         'node',
         response,
       ]));
@@ -180,7 +180,7 @@ export class CliUtilityVersion {
       || options['all'] === true
       || Object.keys(options).length === 0
     ) {
-      tasks.push(CliUtilityVersion.getEnvironmentManagerVersion().then((response) => [
+      tasks.push(Runner.getEnvironmentManagerVersion().then((response) => [
         'env',
         response,
       ]));
@@ -192,7 +192,7 @@ export class CliUtilityVersion {
       || options['all'] === true
       || Object.keys(options).length === 0
     ) {
-      tasks.push(CliUtilityVersion.getOsVersion().then((response) => [
+      tasks.push(Runner.getOsVersion().then((response) => [
         'os',
         response,
       ]));
@@ -204,7 +204,7 @@ export class CliUtilityVersion {
       || options['all'] === true
       || Object.keys(options).length === 0
     ) {
-      tasks.push(CliUtilityVersion.getBrowserVersion().then((response) => [
+      tasks.push(Runner.getBrowserVersion().then((response) => [
         'browsers',
         response,
       ]));
@@ -216,17 +216,17 @@ export class CliUtilityVersion {
       || options['all'] === true
       || Object.keys(options).length === 0
     ) {
-      tasks.push(CliUtilityVersion.getInterpreterVersion().then((response) => [
+      tasks.push(Runner.getInterpreterVersion().then((response) => [
         'interpreters',
         response,
       ]));
     }
 
     // Run all async calls in parallel and convert the results back to the list.
-    const list: CliUtilityVersionRunList = Object.fromEntries(await Promise.all(tasks));
+    const list: Cli_Utility_Version_Runner_Run_List = Object.fromEntries(await Promise.all(tasks));
 
     // Print out the versions to the console.
-    CliUtilityVersion.print(list);
+    Runner.print(list);
 
     return;
   }
@@ -239,12 +239,12 @@ export class CliUtilityVersion {
    *
    * @private
    *
-   * @returns {CliUtilityVersionGetNodeVersionReturns}
+   * @returns {Cli_Utility_Version_Runner_GetNodeVersion_Returns}
    *
    * @since 0.11.0
    */
-  private static async getNodeVersion(): CliUtilityVersionGetNodeVersionReturns {
-    const nodeResults: CliUtilityVersionGetNodeVersionNodeResults = await Promise.all([
+  private static async getNodeVersion(): Cli_Utility_Version_Runner_GetNodeVersion_Returns {
+    const nodeResults: Cli_Utility_Version_Runner_GetNodeVersion_NodeResults = await Promise.all([
       executeShell('node --version'),
       executeShell('npm --version'),
       executeShell('yarn --version'),
@@ -252,18 +252,18 @@ export class CliUtilityVersion {
       executeShell('bun --version'),
     ]);
 
-    const nodeJsVersion: CliUtilityVersionGetNodeVersionNodeJsVersion = nodeResults[0];
-    const npmVersion: CliUtilityVersionGetNodeVersionNpmVersion = nodeResults[1];
-    const yarnVersion: CliUtilityVersionGetNodeVersionYarnVersion = nodeResults[2];
-    const pnpmVersion: CliUtilityVersionGetNodeVersionPnpmVersion = nodeResults[3];
-    const bunVersion: CliUtilityVersionGetNodeVersionBunVersion = nodeResults[4];
+    const nodeJsVersion: Cli_Utility_Version_Runner_GetNodeVersion_NodeJsVersion = nodeResults[0];
+    const npmVersion: Cli_Utility_Version_Runner_GetNodeVersion_NpmVersion = nodeResults[1];
+    const yarnVersion: Cli_Utility_Version_Runner_GetNodeVersion_YarnVersion = nodeResults[2];
+    const pnpmVersion: Cli_Utility_Version_Runner_GetNodeVersion_PnpmVersion = nodeResults[3];
+    const bunVersion: Cli_Utility_Version_Runner_GetNodeVersion_BunVersion = nodeResults[4];
 
-    let tools: CliUtilityVersionGetNodeVersionTools = {};
+    let tools: Cli_Utility_Version_Runner_GetNodeVersion_Tools = {};
 
     // Attempt to retrieve the Node.js version.
     if (nodeJsVersion['code'] === 0) {
-      const matchResult: CliUtilityVersionGetNodeVersionNodeJsMatchResult = nodeJsVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const match: CliUtilityVersionGetNodeVersionNodeJsMatch = (matchResult !== null) ? matchResult[1] : undefined;
+      const matchResult: Cli_Utility_Version_Runner_GetNodeVersion_NodeJsMatchResult = nodeJsVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const match: Cli_Utility_Version_Runner_GetNodeVersion_NodeJsMatch = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -275,8 +275,8 @@ export class CliUtilityVersion {
 
     // Attempt to retrieve the Node Package Manager (npm) version.
     if (npmVersion['code'] === 0) {
-      const matchResult: CliUtilityVersionGetNodeVersionNpmMatchResult = npmVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const match: CliUtilityVersionGetNodeVersionNpmMatch = (matchResult !== null) ? matchResult[1] : undefined;
+      const matchResult: Cli_Utility_Version_Runner_GetNodeVersion_NpmMatchResult = npmVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const match: Cli_Utility_Version_Runner_GetNodeVersion_NpmMatch = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -288,8 +288,8 @@ export class CliUtilityVersion {
 
     // Attempt to retrieve the Yarn version.
     if (yarnVersion['code'] === 0) {
-      const matchResult: CliUtilityVersionGetNodeVersionYarnMatchResult = yarnVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const match: CliUtilityVersionGetNodeVersionYarnMatch = (matchResult !== null) ? matchResult[1] : undefined;
+      const matchResult: Cli_Utility_Version_Runner_GetNodeVersion_YarnMatchResult = yarnVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const match: Cli_Utility_Version_Runner_GetNodeVersion_YarnMatch = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -301,8 +301,8 @@ export class CliUtilityVersion {
 
     // Attempt to retrieve the Performant Node Package Manager (pnpm) version.
     if (pnpmVersion['code'] === 0) {
-      const matchResult: CliUtilityVersionGetNodeVersionPnpmMatchResult = pnpmVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const match: CliUtilityVersionGetNodeVersionPnpmMatch = (matchResult !== null) ? matchResult[1] : undefined;
+      const matchResult: Cli_Utility_Version_Runner_GetNodeVersion_PnpmMatchResult = pnpmVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const match: Cli_Utility_Version_Runner_GetNodeVersion_PnpmMatch = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -314,8 +314,8 @@ export class CliUtilityVersion {
 
     // Attempt to retrieve the Bun version.
     if (bunVersion['code'] === 0) {
-      const matchResult: CliUtilityVersionGetNodeVersionBunMatchResult = bunVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const match: CliUtilityVersionGetNodeVersionBunMatch = (matchResult !== null) ? matchResult[1] : undefined;
+      const matchResult: Cli_Utility_Version_Runner_GetNodeVersion_BunMatchResult = bunVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const match: Cli_Utility_Version_Runner_GetNodeVersion_BunMatch = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         tools = {
@@ -336,25 +336,25 @@ export class CliUtilityVersion {
    *
    * @private
    *
-   * @returns {CliUtilityVersionGetEnvironmentManagerVersionReturns}
+   * @returns {Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_Returns}
    *
    * @since 0.11.0
    */
-  private static async getEnvironmentManagerVersion(): CliUtilityVersionGetEnvironmentManagerVersionReturns {
-    const envResults: CliUtilityVersionGetEnvironmentManagerVersionEnvResults = await Promise.all([
+  private static async getEnvironmentManagerVersion(): Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_Returns {
+    const envResults: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_EnvResults = await Promise.all([
       executeShell('nvm --version'),
       executeShell('volta --version'),
     ]);
 
-    const nvmVersion: CliUtilityVersionGetEnvironmentManagerVersionNvmVersion = envResults[0];
-    const voltaVersion: CliUtilityVersionGetEnvironmentManagerVersionVoltaVersion = envResults[1];
+    const nvmVersion: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmVersion = envResults[0];
+    const voltaVersion: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaVersion = envResults[1];
 
-    let managers: CliUtilityVersionGetEnvironmentManagerVersionManagers = {};
+    let managers: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_Managers = {};
 
     // Attempt to retrieve the Node Version Manager (nvm-posix) version.
     if (platform() !== 'win32' && nvmVersion['code'] === 0) {
-      const matchResult: CliUtilityVersionGetEnvironmentManagerVersionNvmPosixMatchResult = nvmVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const match: CliUtilityVersionGetEnvironmentManagerVersionNvmPosixMatch = (matchResult !== null) ? matchResult[1] : undefined;
+      const matchResult: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmPosixMatchResult = nvmVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const match: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmPosixMatch = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         managers = {
@@ -366,8 +366,8 @@ export class CliUtilityVersion {
 
     // Attempt to retrieve the Node Version Manager for Windows (nvm-windows) version.
     if (platform() === 'win32' && nvmVersion['code'] === 0) {
-      const matchResult: CliUtilityVersionGetEnvironmentManagerVersionNvmWindowsMatchResult = nvmVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const match: CliUtilityVersionGetEnvironmentManagerVersionNvmWindowsMatch = (matchResult !== null) ? matchResult[1] : undefined;
+      const matchResult: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmWindowsMatchResult = nvmVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const match: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmWindowsMatch = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         managers = {
@@ -379,8 +379,8 @@ export class CliUtilityVersion {
 
     // Attempt to retrieve the Volta version.
     if (voltaVersion['code'] === 0) {
-      const matchResult: CliUtilityVersionGetEnvironmentManagerVersionVoltaMatchResult = voltaVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
-      const match: CliUtilityVersionGetEnvironmentManagerVersionVoltaMatch = (matchResult !== null) ? matchResult[1] : undefined;
+      const matchResult: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaMatchResult = voltaVersion['textOut'].match(LIB_REGEX_PATTERN_SEMVER);
+      const match: Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaMatch = (matchResult !== null) ? matchResult[1] : undefined;
 
       if (match !== undefined) {
         managers = {
@@ -401,30 +401,30 @@ export class CliUtilityVersion {
    *
    * @private
    *
-   * @returns {CliUtilityVersionGetOsVersionReturns}
+   * @returns {Cli_Utility_Version_Runner_GetOsVersion_Returns}
    *
    * @since 0.11.0
    */
-  private static async getOsVersion(): CliUtilityVersionGetOsVersionReturns {
-    const currentPlatform: CliUtilityVersionGetOsVersionCurrentPlatform = platform();
-    const architecture: CliUtilityVersionGetOsVersionArchitecture = arch();
-    const kernel: CliUtilityVersionGetOsVersionKernel = release();
+  private static async getOsVersion(): Cli_Utility_Version_Runner_GetOsVersion_Returns {
+    const currentPlatform: Cli_Utility_Version_Runner_GetOsVersion_CurrentPlatform = platform();
+    const architecture: Cli_Utility_Version_Runner_GetOsVersion_Architecture = arch();
+    const kernel: Cli_Utility_Version_Runner_GetOsVersion_Kernel = release();
 
-    let name: CliUtilityVersionGetOsVersionName = currentPlatform;
-    let currentVersion: CliUtilityVersionGetOsVersionCurrentVersion = version();
-    let build: CliUtilityVersionGetOsVersionBuild = '—';
+    let name: Cli_Utility_Version_Runner_GetOsVersion_Name = currentPlatform;
+    let currentVersion: Cli_Utility_Version_Runner_GetOsVersion_CurrentVersion = version();
+    let build: Cli_Utility_Version_Runner_GetOsVersion_Build = '—';
 
     // macOS.
     if (currentPlatform === 'darwin') {
-      const darwinResults: CliUtilityVersionGetOsVersionDarwinResults = await Promise.all([
+      const darwinResults: Cli_Utility_Version_Runner_GetOsVersion_DarwinResults = await Promise.all([
         executeShell('sw_vers -productName'),
         executeShell('sw_vers -productVersion'),
         executeShell('sw_vers -buildVersion'),
       ]);
 
-      const productName: CliUtilityVersionGetOsVersionProductName = darwinResults[0];
-      const productVersion: CliUtilityVersionGetOsVersionProductVersion = darwinResults[1];
-      const buildVersion: CliUtilityVersionGetOsVersionBuildVersion = darwinResults[2];
+      const productName: Cli_Utility_Version_Runner_GetOsVersion_ProductName = darwinResults[0];
+      const productVersion: Cli_Utility_Version_Runner_GetOsVersion_ProductVersion = darwinResults[1];
+      const buildVersion: Cli_Utility_Version_Runner_GetOsVersion_BuildVersion = darwinResults[2];
 
       name = productName['textOut'] ?? 'macOS';
       currentVersion = productVersion['textOut'] ?? currentVersion;
@@ -433,15 +433,15 @@ export class CliUtilityVersion {
 
     // Windows.
     if (currentPlatform === 'win32') {
-      const registryQuery: CliUtilityVersionGetOsVersionRegistryQuery = await parseWindowsRegistryQuery('HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion');
-      const currentBuildEntry: CliUtilityVersionGetOsVersionCurrentBuildEntry = registryQuery['CurrentBuild'];
-      const currentBuildNumberEntry: CliUtilityVersionGetOsVersionCurrentBuildNumberEntry = registryQuery['CurrentBuildNumber'];
-      const updateBuildRevisionEntry: CliUtilityVersionGetOsVersionUpdateBuildRevisionEntry = registryQuery['UBR'];
-      const productNameEntry: CliUtilityVersionGetOsVersionProductNameEntry = registryQuery['ProductName'];
-      const displayVersionEntry: CliUtilityVersionGetOsVersionDisplayVersionEntry = registryQuery['DisplayVersion'];
-      const releaseIdEntry: CliUtilityVersionGetOsVersionReleaseIdEntry = registryQuery['ReleaseId'];
+      const registryQuery: Cli_Utility_Version_Runner_GetOsVersion_RegistryQuery = await parseWindowsRegistryQuery('HKLM\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion');
+      const currentBuildEntry: Cli_Utility_Version_Runner_GetOsVersion_CurrentBuildEntry = registryQuery['CurrentBuild'];
+      const currentBuildNumberEntry: Cli_Utility_Version_Runner_GetOsVersion_CurrentBuildNumberEntry = registryQuery['CurrentBuildNumber'];
+      const updateBuildRevisionEntry: Cli_Utility_Version_Runner_GetOsVersion_UpdateBuildRevisionEntry = registryQuery['UBR'];
+      const productNameEntry: Cli_Utility_Version_Runner_GetOsVersion_ProductNameEntry = registryQuery['ProductName'];
+      const displayVersionEntry: Cli_Utility_Version_Runner_GetOsVersion_DisplayVersionEntry = registryQuery['DisplayVersion'];
+      const releaseIdEntry: Cli_Utility_Version_Runner_GetOsVersion_ReleaseIdEntry = registryQuery['ReleaseId'];
 
-      let currentBuild: CliUtilityVersionGetOsVersionCurrentBuild = undefined;
+      let currentBuild: Cli_Utility_Version_Runner_GetOsVersion_CurrentBuild = undefined;
 
       if (currentBuildEntry !== undefined) {
         currentBuild = currentBuildEntry['data'];
@@ -449,7 +449,7 @@ export class CliUtilityVersion {
         currentBuild = currentBuildNumberEntry['data'];
       }
 
-      const updateBuildRevision: CliUtilityVersionGetOsVersionUpdateBuildRevision = (updateBuildRevisionEntry !== undefined) ? updateBuildRevisionEntry['data'] : undefined;
+      const updateBuildRevision: Cli_Utility_Version_Runner_GetOsVersion_UpdateBuildRevision = (updateBuildRevisionEntry !== undefined) ? updateBuildRevisionEntry['data'] : undefined;
 
       name = (productNameEntry !== undefined) ? productNameEntry['data'] : 'Windows';
 
@@ -470,7 +470,7 @@ export class CliUtilityVersion {
 
     // Linux.
     if (currentPlatform === 'linux') {
-      const osRelease: CliUtilityVersionGetOsVersionOsRelease = await parseLinuxOsReleaseFile();
+      const osRelease: Cli_Utility_Version_Runner_GetOsVersion_OsRelease = await parseLinuxOsReleaseFile();
 
       name = osRelease['NAME'] ?? 'Linux';
       currentVersion = osRelease['VERSION'] ?? '—';
@@ -494,18 +494,18 @@ export class CliUtilityVersion {
    *
    * @private
    *
-   * @returns {CliUtilityVersionGetBrowserVersionReturns}
+   * @returns {Cli_Utility_Version_Runner_GetBrowserVersion_Returns}
    *
    * @since 0.11.0
    */
-  private static async getBrowserVersion(): CliUtilityVersionGetBrowserVersionReturns {
-    const currentPlatform: CliUtilityVersionGetBrowserVersionCurrentPlatform = platform();
+  private static async getBrowserVersion(): Cli_Utility_Version_Runner_GetBrowserVersion_Returns {
+    const currentPlatform: Cli_Utility_Version_Runner_GetBrowserVersion_CurrentPlatform = platform();
 
-    let browsers: CliUtilityVersionGetBrowserVersionBrowsers = {};
+    let browsers: Cli_Utility_Version_Runner_GetBrowserVersion_Browsers = {};
 
     // macOS (must have "./Contents/Info" file and "CFBundleShortVersionString" key).
     if (currentPlatform === 'darwin') {
-      const supportedBrowsers: CliUtilityVersionGetBrowserVersionDarwinSupportedBrowsers = {
+      const supportedBrowsers: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinSupportedBrowsers = {
         chrome: 'Google Chrome.app',
         safari: 'Safari.app',
         edge: 'Microsoft Edge.app',
@@ -515,22 +515,22 @@ export class CliUtilityVersion {
         vivaldi: 'Vivaldi.app',
         libreWolf: 'LibreWolf.app',
       };
-      const pairs: CliUtilityVersionGetBrowserVersionDarwinPairs = await Promise.allSettled(
+      const pairs: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinPairs = await Promise.allSettled(
         Object.entries(supportedBrowsers).map(async (supportedBrowser) => {
-          const key: CliUtilityVersionGetBrowserVersionDarwinKey = supportedBrowser[0];
-          const appName: CliUtilityVersionGetBrowserVersionDarwinAppName = supportedBrowser[1];
-          const system: CliUtilityVersionGetBrowserVersionDarwinSystem = `/Applications/${appName}`;
-          const user: CliUtilityVersionGetBrowserVersionDarwinUser = `${process.env['HOME'] ?? ''}/Applications/${appName}`;
+          const key: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinKey = supportedBrowser[0];
+          const appName: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinAppName = supportedBrowser[1];
+          const system: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinSystem = `/Applications/${appName}`;
+          const user: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinUser = `${process.env['HOME'] ?? ''}/Applications/${appName}`;
 
-          const pathResults: CliUtilityVersionGetBrowserVersionDarwinPathResults = await Promise.all([
+          const pathResults: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinPathResults = await Promise.all([
             pathExists(system),
             pathExists(user),
           ]);
 
-          const hasSystem: CliUtilityVersionGetBrowserVersionDarwinHasSystem = pathResults[0];
-          const hasUser: CliUtilityVersionGetBrowserVersionDarwinHasUser = pathResults[1];
+          const hasSystem: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinHasSystem = pathResults[0];
+          const hasUser: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinHasUser = pathResults[1];
 
-          let appPath: CliUtilityVersionGetBrowserVersionAppPath = null;
+          let appPath: Cli_Utility_Version_Runner_GetBrowserVersion_AppPath = null;
 
           if (hasSystem === true) {
             appPath = system;
@@ -542,13 +542,13 @@ export class CliUtilityVersion {
             return null;
           }
 
-          const versionResponse: CliUtilityVersionGetBrowserVersionDarwinVersionResponse = await executeShell(`defaults read "${appPath}/Contents/Info" CFBundleShortVersionString`);
+          const versionResponse: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinVersionResponse = await executeShell(`defaults read "${appPath}/Contents/Info" CFBundleShortVersionString`);
 
           if (versionResponse['code'] !== 0) {
             return null;
           }
 
-          const macosAppVersion: CliUtilityVersionGetBrowserVersionDarwinMacosAppVersion = versionResponse['textOut'].trim();
+          const macosAppVersion: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinMacosAppVersion = versionResponse['textOut'].trim();
 
           return [
             key,
@@ -556,7 +556,7 @@ export class CliUtilityVersion {
           ] as const;
         }),
       );
-      const entries: CliUtilityVersionGetBrowserVersionDarwinEntries = pairs
+      const entries: Cli_Utility_Version_Runner_GetBrowserVersion_DarwinEntries = pairs
         .filter((result) => result.status === 'fulfilled')
         .map((result) => result.value)
         .filter((value) => value !== null);
@@ -569,7 +569,7 @@ export class CliUtilityVersion {
 
     // Windows (must be registered into "App Paths" and have "VersionInfo.ProductVersion" key).
     if (currentPlatform === 'win32') {
-      const supportedBrowsers: CliUtilityVersionGetBrowserVersionWindowsSupportedBrowsers = {
+      const supportedBrowsers: Cli_Utility_Version_Runner_GetBrowserVersion_WindowsSupportedBrowsers = {
         chrome: 'chrome.exe',
         edge: 'msedge.exe',
         firefox: 'firefox.exe',
@@ -577,11 +577,11 @@ export class CliUtilityVersion {
         brave: 'brave.exe',
         vivaldi: 'vivaldi.exe',
       };
-      const pairs: CliUtilityVersionGetBrowserVersionWindowsPairs = await Promise.allSettled(
+      const pairs: Cli_Utility_Version_Runner_GetBrowserVersion_WindowsPairs = await Promise.allSettled(
         Object.entries(supportedBrowsers).map(async (supportedBrowser) => {
-          const key: CliUtilityVersionGetBrowserVersionWindowsKey = supportedBrowser[0];
-          const exeName: CliUtilityVersionGetBrowserVersionWindowsExeName = supportedBrowser[1];
-          const query: CliUtilityVersionGetBrowserVersionWindowsQuery = await parseWindowsRegistryQuery([
+          const key: Cli_Utility_Version_Runner_GetBrowserVersion_WindowsKey = supportedBrowser[0];
+          const exeName: Cli_Utility_Version_Runner_GetBrowserVersion_WindowsExeName = supportedBrowser[1];
+          const query: Cli_Utility_Version_Runner_GetBrowserVersion_WindowsQuery = await parseWindowsRegistryQuery([
             `HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\App Paths\\${exeName}`,
             `HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\${exeName}`,
             `HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\App Paths\\${exeName}`,
@@ -593,13 +593,13 @@ export class CliUtilityVersion {
           }
 
           // Access the "(Default)" key's data.
-          let exePath: CliUtilityVersionGetBrowserVersionWindowsExePath = query['(Default)']['data'];
+          let exePath: Cli_Utility_Version_Runner_GetBrowserVersion_WindowsExePath = query['(Default)']['data'];
 
           // Remove double quotes from the ends of the string.
           exePath = exePath.replace(LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE, '$1');
 
           // Get the product version through the PowerShell command via Command Prompt.
-          const windowsAppVersion: CliUtilityVersionGetBrowserVersionWindowsWindowsAppVersion = (await executeShell(`powershell -Command "(Get-Item '${exePath}').VersionInfo.ProductVersion"`))['textOut'].trim();
+          const windowsAppVersion: Cli_Utility_Version_Runner_GetBrowserVersion_WindowsWindowsAppVersion = (await executeShell(`powershell -Command "(Get-Item '${exePath}').VersionInfo.ProductVersion"`))['textOut'].trim();
 
           return [
             key,
@@ -607,7 +607,7 @@ export class CliUtilityVersion {
           ] as const;
         }),
       );
-      const entries: CliUtilityVersionGetBrowserVersionWindowsEntries = pairs
+      const entries: Cli_Utility_Version_Runner_GetBrowserVersion_WindowsEntries = pairs
         .filter((result) => result.status === 'fulfilled')
         .map((result) => result.value)
         .filter((value) => value !== null);
@@ -620,7 +620,7 @@ export class CliUtilityVersion {
 
     // Linux (must have a command that exists in PATH and supports the "--version" argument).
     if (currentPlatform === 'linux') {
-      const supportedBrowsers: CliUtilityVersionGetBrowserVersionLinuxSupportedBrowsers = {
+      const supportedBrowsers: Cli_Utility_Version_Runner_GetBrowserVersion_LinuxSupportedBrowsers = {
         'chrome': 'google-chrome',
         'firefox': 'firefox',
         'brave': 'brave-browser',
@@ -629,24 +629,24 @@ export class CliUtilityVersion {
         'edge': 'microsoft-edge',
         'libreWolf': 'librewolf',
       };
-      const pairs: CliUtilityVersionGetBrowserVersionLinuxPairs = await Promise.allSettled(
+      const pairs: Cli_Utility_Version_Runner_GetBrowserVersion_LinuxPairs = await Promise.allSettled(
         Object.entries(supportedBrowsers).map(async (supportedBrowser) => {
-          const key: CliUtilityVersionGetBrowserVersionLinuxKey = supportedBrowser[0];
-          const commandName: CliUtilityVersionGetBrowserVersionLinuxCommandName = supportedBrowser[1];
-          const commandResponse: CliUtilityVersionGetBrowserVersionLinuxCommandResponse = await executeShell(`command -v ${commandName}`);
+          const key: Cli_Utility_Version_Runner_GetBrowserVersion_LinuxKey = supportedBrowser[0];
+          const commandName: Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCommandName = supportedBrowser[1];
+          const commandResponse: Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCommandResponse = await executeShell(`command -v ${commandName}`);
 
           // The browser isn't installed.
           if (commandResponse['code'] !== 0) {
             return null;
           }
 
-          const versionResponse: CliUtilityVersionGetBrowserVersionLinuxVersionResponse = await executeShell(`${commandName} --version`);
+          const versionResponse: Cli_Utility_Version_Runner_GetBrowserVersion_LinuxVersionResponse = await executeShell(`${commandName} --version`);
 
           if (versionResponse['code'] !== 0) {
             return null;
           }
 
-          const cliToolVersion: CliUtilityVersionGetBrowserVersionLinuxCliToolVersion = versionResponse['textOut'].trim().replace(LIB_REGEX_PATTERN_LEADING_NON_DIGITS, '');
+          const cliToolVersion: Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCliToolVersion = versionResponse['textOut'].trim().replace(LIB_REGEX_PATTERN_LEADING_NON_DIGITS, '');
 
           return [
             key,
@@ -654,7 +654,7 @@ export class CliUtilityVersion {
           ] as const;
         }),
       );
-      const entries: CliUtilityVersionGetBrowserVersionLinuxEntries = pairs
+      const entries: Cli_Utility_Version_Runner_GetBrowserVersion_LinuxEntries = pairs
         .filter((result) => result.status === 'fulfilled')
         .map((result) => result.value)
         .filter((value) => value !== null);
@@ -676,29 +676,29 @@ export class CliUtilityVersion {
    *
    * @private
    *
-   * @returns {CliUtilityVersionGetInterpreterVersionReturns}
+   * @returns {Cli_Utility_Version_Runner_GetInterpreterVersion_Returns}
    *
    * @since 0.11.0
    */
-  private static async getInterpreterVersion(): CliUtilityVersionGetInterpreterVersionReturns {
-    const interpreterResults: CliUtilityVersionGetInterpreterVersionInterpreterResults = await Promise.all([
+  private static async getInterpreterVersion(): Cli_Utility_Version_Runner_GetInterpreterVersion_Returns {
+    const interpreterResults: Cli_Utility_Version_Runner_GetInterpreterVersion_InterpreterResults = await Promise.all([
       executeShell('java --version'),
       executeShell('rustc --version'),
     ]);
 
-    const javaVersion: CliUtilityVersionGetInterpreterVersionJavaVersion = interpreterResults[0];
-    const rustVersion: CliUtilityVersionGetInterpreterVersionRustVersion = interpreterResults[1];
+    const javaVersion: Cli_Utility_Version_Runner_GetInterpreterVersion_JavaVersion = interpreterResults[0];
+    const rustVersion: Cli_Utility_Version_Runner_GetInterpreterVersion_RustVersion = interpreterResults[1];
 
-    let interpreters: CliUtilityVersionGetInterpreterVersionInterpreters = {};
+    let interpreters: Cli_Utility_Version_Runner_GetInterpreterVersion_Interpreters = {};
 
     // Attempt to retrieve the Java version.
     if (javaVersion['code'] === 0) {
-      const match: CliUtilityVersionGetInterpreterVersionJavaMatch = javaVersion['textOut'].match(new RegExp(LIB_REGEX_PATTERN_JAVA_VERSION_LINE, 'mi'));
+      const match: Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatch = javaVersion['textOut'].match(new RegExp(LIB_REGEX_PATTERN_JAVA_VERSION_LINE, 'mi'));
 
       if (match !== null) {
-        const matchVersion: CliUtilityVersionGetInterpreterVersionJavaMatchVersion = match[1] ?? 'N/A';
-        const matchDistribution: CliUtilityVersionGetInterpreterVersionJavaMatchDistribution = match[2] ?? 'N/A';
-        const matchBuild: CliUtilityVersionGetInterpreterVersionJavaMatchBuild = match[4] ?? 'N/A';
+        const matchVersion: Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchVersion = match[1] ?? 'N/A';
+        const matchDistribution: Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchDistribution = match[2] ?? 'N/A';
+        const matchBuild: Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchBuild = match[4] ?? 'N/A';
 
         interpreters = {
           ...interpreters,
@@ -709,13 +709,13 @@ export class CliUtilityVersion {
 
     // Attempt to retrieve the Rust version.
     if (rustVersion['code'] === 0) {
-      const match: CliUtilityVersionGetInterpreterVersionRustMatch = rustVersion['textOut'].match(LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
+      const match: Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatch = rustVersion['textOut'].match(LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
 
       if (match !== null) {
-        const matchVersion: CliUtilityVersionGetInterpreterVersionRustMatchVersion = match[1] ?? 'N/A';
-        const matchBuildHash: CliUtilityVersionGetInterpreterVersionRustMatchBuildHash = match[2] ?? 'N/A';
-        const matchBuildDate: CliUtilityVersionGetInterpreterVersionRustMatchBuildDate = match[3] ?? 'N/A';
-        const matchSource: CliUtilityVersionGetInterpreterVersionRustMatchSource = match[4] ?? 'rustup';
+        const matchVersion: Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchVersion = match[1] ?? 'N/A';
+        const matchBuildHash: Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchBuildHash = match[2] ?? 'N/A';
+        const matchBuildDate: Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchBuildDate = match[3] ?? 'N/A';
+        const matchSource: Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchSource = match[4] ?? 'rustup';
 
         interpreters = {
           ...interpreters,
@@ -733,19 +733,19 @@ export class CliUtilityVersion {
    * Renders each version category as a labeled MarkdownTable with
    * pretty-printed brand names. Skips categories that have no detected tools.
    *
-   * @param {CliUtilityVersionPrintList} list - List.
+   * @param {Cli_Utility_Version_Runner_Print_List} list - List.
    *
    * @private
    *
-   * @returns {CliUtilityVersionPrintReturns}
+   * @returns {Cli_Utility_Version_Runner_Print_Returns}
    *
    * @since 0.11.0
    */
-  private static print(list: CliUtilityVersionPrintList): CliUtilityVersionPrintReturns {
+  private static print(list: Cli_Utility_Version_Runner_Print_List): Cli_Utility_Version_Runner_Print_Returns {
     // Each category maps to a rows-by-key object used to render a single two-column table.
     for (const listEntry of Object.entries(list)) {
-      const category: CliUtilityVersionPrintCategory = listEntry[0];
-      const rowsByKey: CliUtilityVersionPrintRowsByKey = listEntry[1];
+      const category: Cli_Utility_Version_Runner_Print_Category = listEntry[0];
+      const rowsByKey: Cli_Utility_Version_Runner_Print_RowsByKey = listEntry[1];
 
       // Skip empty objects.
       if (Object.keys(rowsByKey).length === 0) {
@@ -753,7 +753,7 @@ export class CliUtilityVersion {
       }
 
       // Build the table.
-      const table: CliUtilityVersionPrintTable = new MarkdownTable([
+      const table: Cli_Utility_Version_Runner_Print_Table = new MarkdownTable([
         chalk.bold.yellow(libItemPrettyNamesColumnTitle[`key-${category}`] ?? 'Key'),
         chalk.bold.yellow(libItemPrettyNamesColumnTitle[`value-${category}`] ?? 'Value'),
       ], {
@@ -763,8 +763,8 @@ export class CliUtilityVersion {
 
       // Push data into the table.
       for (const rowsByKeyEntry of Object.entries(rowsByKey)) {
-        const rowKey: CliUtilityVersionPrintRowKey = rowsByKeyEntry[0];
-        const rowValue: CliUtilityVersionPrintRowValue = rowsByKeyEntry[1];
+        const rowKey: Cli_Utility_Version_Runner_Print_RowKey = rowsByKeyEntry[0];
+        const rowValue: Cli_Utility_Version_Runner_Print_RowValue = rowsByKeyEntry[1];
 
         table.addRow([
           (

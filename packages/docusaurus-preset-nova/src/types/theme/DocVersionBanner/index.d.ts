@@ -5,26 +5,26 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocVersionBannerDocVersionBannerPropsClassName = string | undefined;
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Props_ClassName = string | undefined;
 
-export type ThemeDocVersionBannerDocVersionBannerPropsStyle = CSSProperties | undefined;
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocVersionBannerDocVersionBannerProps = {
-  className?: ThemeDocVersionBannerDocVersionBannerPropsClassName;
-  style?: ThemeDocVersionBannerDocVersionBannerPropsStyle;
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Props = {
+  className?: Theme_DocVersionBanner_Index_DocVersionBanner_Props_ClassName;
+  style?: Theme_DocVersionBanner_Index_DocVersionBanner_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocVersionBannerDocVersionBannerVersion = {
-  isLast: ThemeDocVersionBannerDocVersionBannerVersionIsLast;
-  label: ThemeDocVersionBannerDocVersionBannerVersionLabel;
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Version = {
+  isLast: Theme_DocVersionBanner_Index_DocVersionBanner_Version_IsLast;
+  label: Theme_DocVersionBanner_Index_DocVersionBanner_Version_Label;
   [key: string]: unknown;
 };
 
-export type ThemeDocVersionBannerDocVersionBannerVersionIsLast = boolean;
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Version_IsLast = boolean;
 
-export type ThemeDocVersionBannerDocVersionBannerVersionLabel = string;
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Version_Label = string;
 
-export type ThemeDocVersionBannerDocVersionBannerMessage = string;
+export type Theme_DocVersionBanner_Index_DocVersionBanner_Message = string;
 
-export type ThemeDocVersionBannerDocVersionBannerBannerMessage = string;
+export type Theme_DocVersionBanner_Index_DocVersionBanner_BannerMessage = string;

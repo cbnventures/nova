@@ -3,66 +3,66 @@
  *
  * @since 0.14.0
  */
-export type TestsFrontmatterFrontmatterValidationCwd = string;
+export type Tests_Frontmatter_FrontmatterValidation_Cwd = string;
 
-export type TestsFrontmatterFrontmatterValidationContentDirs = string[];
+export type Tests_Frontmatter_FrontmatterValidation_ContentDirs = string[];
 
-export type TestsFrontmatterFrontmatterValidationMdFiles = string[];
+export type Tests_Frontmatter_FrontmatterValidation_MdFiles = string[];
 
-export type TestsFrontmatterFrontmatterValidationContentPath = string;
+export type Tests_Frontmatter_FrontmatterValidation_ContentPath = string;
 
-export type TestsFrontmatterFrontmatterValidationEntries = string[];
+export type Tests_Frontmatter_FrontmatterValidation_Entries = string[];
 
-export type TestsFrontmatterFrontmatterValidationExt = string;
+export type Tests_Frontmatter_FrontmatterValidation_Ext = string;
 
-export type TestsFrontmatterFrontmatterValidationFailures = string[];
+export type Tests_Frontmatter_FrontmatterValidation_Failures = string[];
 
-export type TestsFrontmatterFrontmatterValidationWarnings = string[];
+export type Tests_Frontmatter_FrontmatterValidation_Warnings = string[];
 
-export type TestsFrontmatterFrontmatterValidationFilePath = string;
+export type Tests_Frontmatter_FrontmatterValidation_FilePath = string;
 
-export type TestsFrontmatterFrontmatterValidationContent = string;
+export type Tests_Frontmatter_FrontmatterValidation_Content = string;
 
-export type TestsFrontmatterFrontmatterValidationEndIndex = number;
+export type Tests_Frontmatter_FrontmatterValidation_EndIndex = number;
 
-export type TestsFrontmatterFrontmatterValidationFrontmatter = string;
+export type Tests_Frontmatter_FrontmatterValidation_Frontmatter = string;
 
-export type TestsFrontmatterFrontmatterValidationBody = string;
+export type Tests_Frontmatter_FrontmatterValidation_Body = string;
 
-export type TestsFrontmatterFrontmatterValidationFileName = string;
+export type Tests_Frontmatter_FrontmatterValidation_FileName = string;
 
-export type TestsFrontmatterFrontmatterValidationIsBlogPost = boolean;
+export type Tests_Frontmatter_FrontmatterValidation_IsBlogPost = boolean;
 
-export type TestsFrontmatterFrontmatterValidationIsPlaceholder = boolean;
+export type Tests_Frontmatter_FrontmatterValidation_IsPlaceholder = boolean;
 
-export type TestsFrontmatterFrontmatterValidationTarget = string[];
+export type Tests_Frontmatter_FrontmatterValidation_Target = string[];
 
-export type TestsFrontmatterFrontmatterValidationRequiredFields = string[];
+export type Tests_Frontmatter_FrontmatterValidation_RequiredFields = string[];
 
-export type TestsFrontmatterFrontmatterValidationFieldSource = string;
+export type Tests_Frontmatter_FrontmatterValidation_FieldSource = string;
 
-export type TestsFrontmatterFrontmatterValidationFieldRegex = RegExp;
+export type Tests_Frontmatter_FrontmatterValidation_FieldRegex = RegExp;
 
-export type TestsFrontmatterFrontmatterValidationIdMatch = RegExpExecArray | null;
+export type Tests_Frontmatter_FrontmatterValidation_IdMatch = RegExpExecArray | null;
 
-export type TestsFrontmatterFrontmatterValidationId = string;
+export type Tests_Frontmatter_FrontmatterValidation_Id = string;
 
-export type TestsFrontmatterFrontmatterValidationExpectedId = string;
+export type Tests_Frontmatter_FrontmatterValidation_ExpectedId = string;
 
-export type TestsFrontmatterFrontmatterValidationDescMatch = RegExpExecArray | null;
+export type Tests_Frontmatter_FrontmatterValidation_DescMatch = RegExpExecArray | null;
 
-export type TestsFrontmatterFrontmatterValidationKeywordsIndex = number;
+export type Tests_Frontmatter_FrontmatterValidation_KeywordsIndex = number;
 
-export type TestsFrontmatterFrontmatterValidationAfterKeywords = string;
+export type Tests_Frontmatter_FrontmatterValidation_AfterKeywords = string;
 
-export type TestsFrontmatterFrontmatterValidationKeywordLines = string[];
+export type Tests_Frontmatter_FrontmatterValidation_KeywordLines = string[];
 
-export type TestsFrontmatterFrontmatterValidationLines = string[];
+export type Tests_Frontmatter_FrontmatterValidation_Lines = string[];
 
-export type TestsFrontmatterFrontmatterValidationLine = string | undefined;
+export type Tests_Frontmatter_FrontmatterValidation_Line = string | undefined;
 
-export type TestsFrontmatterFrontmatterValidationTagsIndex = number;
+export type Tests_Frontmatter_FrontmatterValidation_TagsIndex = number;
 
-export type TestsFrontmatterFrontmatterValidationAfterTags = string;
+export type Tests_Frontmatter_FrontmatterValidation_AfterTags = string;
 
-export type TestsFrontmatterFrontmatterValidationTagLines = string[];
+export type Tests_Frontmatter_FrontmatterValidation_TagLines = string[];

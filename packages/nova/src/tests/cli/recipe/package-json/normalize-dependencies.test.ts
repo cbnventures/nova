@@ -11,27 +11,27 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliRecipePackageJsonNormalizeDependencies } from '../../../../cli/recipe/package-json/normalize-dependencies.js';
+import { Runner as CliRecipePackageJsonNormalizeDependencies } from '../../../../cli/recipe/package-json/normalize-dependencies.js';
 
 import type {
-  TestsCliRecipePackageJsonNormalizeDependenciesRunBundleDependencies,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunIncludesChalk,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunIncludesLodash,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunIsBundleDepsArray,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigContents,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigPath,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunOriginalCwd,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunOutput,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonContents,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonPath,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunParsed,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunProjectDirectory,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunSandboxPath,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunSandboxRoot,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunTemporaryDirectory,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspaceDirectory,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonContents,
-  TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_BundleDependencies,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_IncludesChalk,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_IncludesLodash,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_IsBundleDepsArray,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_OriginalCwd,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_SandboxPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_SandboxRoot,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_TemporaryDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonPath,
 } from '../../../../types/tests/cli/recipe/package-json/normalize-dependencies.test.d.ts';
 
 /**
@@ -40,10 +40,10 @@ import type {
  * @since 0.14.0
  */
 describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
-  const originalCwd: TestsCliRecipePackageJsonNormalizeDependenciesRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunTemporaryDirectory = tmpdir();
-  const sandboxPath: TestsCliRecipePackageJsonNormalizeDependenciesRunSandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliRecipePackageJsonNormalizeDependenciesRunSandboxRoot = await mkdtemp(sandboxPath);
+  const originalCwd: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_TemporaryDirectory = tmpdir();
+  const sandboxPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_SandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_SandboxRoot = await mkdtemp(sandboxPath);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -57,7 +57,7 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
   });
 
   it('sets exit code when not at project root', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunProjectDirectory = join(sandboxRoot, 'not-project-root');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_ProjectDirectory = join(sandboxRoot, 'not-project-root');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -71,20 +71,20 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
   });
 
   it('skips when no workspaces have the recipe enabled', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunProjectDirectory = join(sandboxRoot, 'no-recipe');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_ProjectDirectory = join(sandboxRoot, 'no-recipe');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonContents = JSON.stringify({
       name: 'test-no-recipe',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -96,8 +96,8 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       dependencies: {},
@@ -114,8 +114,8 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     // The empty dependencies should still be there because the recipe is not enabled.
-    const output: TestsCliRecipePackageJsonNormalizeDependenciesRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeDependenciesRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Parsed = JSON.parse(output);
 
     strictEqual(typeof parsed['dependencies'], 'object');
 
@@ -123,20 +123,20 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
   });
 
   it('removes empty dependency fields', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunProjectDirectory = join(sandboxRoot, 'remove-empty');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_ProjectDirectory = join(sandboxRoot, 'remove-empty');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonContents = JSON.stringify({
       name: 'test-remove-empty',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -151,8 +151,8 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       dependencies: {},
@@ -172,8 +172,8 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonNormalizeDependenciesRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeDependenciesRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['dependencies'], undefined);
     strictEqual(parsed['devDependencies'], undefined);
@@ -185,20 +185,20 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
   });
 
   it('merges bundledDependencies into bundleDependencies', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunProjectDirectory = join(sandboxRoot, 'merge-bundled');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_ProjectDirectory = join(sandboxRoot, 'merge-bundled');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonContents = JSON.stringify({
       name: 'test-merge-bundled',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -213,8 +213,8 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       dependencies: {
@@ -234,14 +234,14 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonNormalizeDependenciesRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeDependenciesRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['bundledDependencies'], undefined);
-    const isBundleDepsArray: TestsCliRecipePackageJsonNormalizeDependenciesRunIsBundleDepsArray = Array.isArray(parsed['bundleDependencies']);
-    const bundleDependencies: TestsCliRecipePackageJsonNormalizeDependenciesRunBundleDependencies = parsed['bundleDependencies'] as TestsCliRecipePackageJsonNormalizeDependenciesRunBundleDependencies;
-    const includesLodash: TestsCliRecipePackageJsonNormalizeDependenciesRunIncludesLodash = bundleDependencies.includes('lodash');
-    const includesChalk: TestsCliRecipePackageJsonNormalizeDependenciesRunIncludesChalk = bundleDependencies.includes('chalk');
+    const isBundleDepsArray: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_IsBundleDepsArray = Array.isArray(parsed['bundleDependencies']);
+    const bundleDependencies: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_BundleDependencies = parsed['bundleDependencies'] as Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_BundleDependencies;
+    const includesLodash: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_IncludesLodash = bundleDependencies.includes('lodash');
+    const includesChalk: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_IncludesChalk = bundleDependencies.includes('chalk');
 
     strictEqual(isBundleDepsArray, true);
     strictEqual(includesLodash, true);
@@ -251,20 +251,20 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
   });
 
   it('does not modify files during dry run', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunProjectDirectory = join(sandboxRoot, 'dry-run');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeDependenciesRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_PackageJsonContents = JSON.stringify({
       name: 'test-dry-run',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeDependenciesRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -279,8 +279,8 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeDependenciesRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       dependencies: {},
@@ -297,8 +297,8 @@ describe('CliRecipePackageJsonNormalizeDependencies.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     // The file should not have been modified.
-    const output: TestsCliRecipePackageJsonNormalizeDependenciesRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeDependenciesRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeDependencies_CliRecipePackageJsonNormalizeDependenciesRun_Parsed = JSON.parse(output);
 
     strictEqual(typeof parsed['dependencies'], 'object');
 

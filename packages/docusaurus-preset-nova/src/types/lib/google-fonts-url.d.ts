@@ -3,31 +3,31 @@
  *
  * @since 0.17.0
  */
-export type LibGoogleFontsUrlBuildGoogleFontsUrlBaseUrl = string;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_BaseUrl = string;
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlFamilyName = string;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Family_Name = string;
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlFamilyAxis = string;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Family_Axis = string;
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlFamilies = LibGoogleFontsUrlBuildGoogleFontsUrlFamily[];
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Families = Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Family[];
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlDisplay = 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Display = 'auto' | 'block' | 'swap' | 'fallback' | 'optional';
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlReturns = string;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Returns = string;
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlSpacePattern = RegExp;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_SpacePattern = RegExp;
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlFamilyParts = string[];
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_FamilyParts = string[];
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlFamily = {
-  name: LibGoogleFontsUrlBuildGoogleFontsUrlFamilyName;
-  axis: LibGoogleFontsUrlBuildGoogleFontsUrlFamilyAxis;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Family = {
+  name: Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Family_Name;
+  axis: Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Family_Axis;
 };
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlFamilyPart = string;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_FamilyPart = string;
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlEncodedName = string;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_EncodedName = string;
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlQuery = string;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_Query = string;
 
-export type LibGoogleFontsUrlBuildGoogleFontsUrlDisplayPart = string;
+export type Lib_GoogleFontsUrl_BuildGoogleFontsUrl_DisplayPart = string;

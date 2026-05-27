@@ -2,15 +2,15 @@
  * any section header so they are exempt from the section ordering and
  * cross-section reference rules enforced by type-declarations.test.ts. */
 
-export type TestsDemoCoverageDemoRecord = Record<string, unknown>;
+export type Tests_DemoCoverage_DemoRecord = Record<string, unknown>;
 
-export type TestsDemoCoverageDemoEntryName = string;
+export type Tests_DemoCoverage_DemoEntryName = string;
 
-export type TestsDemoCoverageDemoEntryPath = string;
+export type Tests_DemoCoverage_DemoEntryPath = string;
 
-export type TestsDemoCoverageDemoEntry = {
-  readonly name: TestsDemoCoverageDemoEntryName;
-  readonly path: TestsDemoCoverageDemoEntryPath;
+export type Tests_DemoCoverage_DemoEntry = {
+  readonly name: Tests_DemoCoverage_DemoEntryName;
+  readonly path: Tests_DemoCoverage_DemoEntryPath;
 };
 
 /**
@@ -18,124 +18,124 @@ export type TestsDemoCoverageDemoEntry = {
  *
  * @since 0.18.0
  */
-export type TestsDemoCoverageDemoCoverageDerived = readonly string[];
+export type Tests_DemoCoverage_DemoCoverage_Derived = readonly string[];
 
-export type TestsDemoCoverageDemoCoverageDerivedSet = Set<string>;
+export type Tests_DemoCoverage_DemoCoverage_DerivedSet = Set<string>;
 
-export type TestsDemoCoverageDemoCoverageRegistrySet = Set<string>;
+export type Tests_DemoCoverage_DemoCoverage_RegistrySet = Set<string>;
 
-export type TestsDemoCoverageDemoCoverageMissingInRegistry = string[];
+export type Tests_DemoCoverage_DemoCoverage_MissingInRegistry = string[];
 
-export type TestsDemoCoverageDemoCoverageStaleInRegistry = string[];
+export type Tests_DemoCoverage_DemoCoverage_StaleInRegistry = string[];
 
-export type TestsDemoCoverageDemoCoverageRegistryMessage = string;
+export type Tests_DemoCoverage_DemoCoverage_RegistryMessage = string;
 
-export type TestsDemoCoverageDemoCoverageDemo = TestsDemoCoverageDemoEntry;
+export type Tests_DemoCoverage_DemoCoverage_Demo = Tests_DemoCoverage_DemoEntry;
 
-export type TestsDemoCoverageDemoCoverageDemoParam = TestsDemoCoverageDemoEntry;
+export type Tests_DemoCoverage_DemoCoverage_DemoParam = Tests_DemoCoverage_DemoEntry;
 
-export type TestsDemoCoverageDemoCoverageConfig = TestsDemoCoverageDemoRecord;
+export type Tests_DemoCoverage_DemoCoverage_Config = Tests_DemoCoverage_DemoRecord;
 
-export type TestsDemoCoverageDemoCoverageMisses = string[];
+export type Tests_DemoCoverage_DemoCoverage_Misses = string[];
 
-export type TestsDemoCoverageDemoCoverageLeaf = string;
+export type Tests_DemoCoverage_DemoCoverage_Leaf = string;
 
-export type TestsDemoCoverageDemoCoverageValue = string | null;
+export type Tests_DemoCoverage_DemoCoverage_Value = string | null;
 
-export type TestsDemoCoverageDemoCoverageMessage = string;
+export type Tests_DemoCoverage_DemoCoverage_Message = string;
 
 /**
  * Tests - Demo Coverage - Demos.
  *
  * @since 0.18.0
  */
-export type TestsDemoCoverageDemos = readonly TestsDemoCoverageDemoEntry[];
+export type Tests_DemoCoverage_Demos = readonly Tests_DemoCoverage_DemoEntry[];
 
 /**
  * Tests - Demo Coverage - Derive Required Leaf Paths.
  *
  * @since 0.18.0
  */
-export type TestsDemoCoverageDeriveRequiredLeafPathsTypeFilePath = string;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeFilePath = string;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsReturns = Promise<readonly string[]>;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_Returns = Promise<readonly string[]>;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFileText = string;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_FileText = string;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsObjectTypes = Map<string, Map<string, string>>;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_ObjectTypes = Map<string, Map<string, string>>;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsBlockPattern = RegExp;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockPattern = RegExp;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsBlockMatch = RegExpExecArray | null;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockMatch = RegExpExecArray | null;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsTypeName = string;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeName = string;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsBlockBody = string;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockBody = string;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFields = Map<string, string>;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_Fields = Map<string, string>;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFieldPattern = RegExp;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldPattern = RegExp;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFieldMatch = RegExpExecArray | null;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldMatch = RegExpExecArray | null;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFieldName = string;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldName = string;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFieldExpression = string;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldExpression = string;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFieldTypeMatch = RegExpMatchArray | null;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldTypeMatch = RegExpMatchArray | null;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFieldType = string;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldType = string;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsLeaves = string[];
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_Leaves = string[];
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsWalkStack = TestsDemoCoverageDeriveRequiredLeafPathsWalkEntry[];
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkStack = Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry[];
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsWalkEntryTypeName = string;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry_TypeName = string;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsWalkEntryPath = string[];
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry_Path = string[];
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsWalkEntry = {
-  typeName: TestsDemoCoverageDeriveRequiredLeafPathsWalkEntryTypeName;
-  path: TestsDemoCoverageDeriveRequiredLeafPathsWalkEntryPath;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry = {
+  typeName: Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry_TypeName;
+  path: Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry_Path;
 };
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsEntryFields = TestsDemoCoverageDeriveRequiredLeafPathsFields | undefined;
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_EntryFields = Tests_DemoCoverage_DeriveRequiredLeafPaths_Fields | undefined;
 
-export type TestsDemoCoverageDeriveRequiredLeafPathsFieldEntry = readonly [string, string];
+export type Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldEntry = readonly [string, string];
 
 /**
  * Tests - Demo Coverage - Get Package Root.
  *
  * @since 0.18.0
  */
-export type TestsDemoCoverageGetPackageRootReturns = string;
+export type Tests_DemoCoverage_GetPackageRoot_Returns = string;
 
-export type TestsDemoCoverageGetPackageRootCurrentFilePath = string;
+export type Tests_DemoCoverage_GetPackageRoot_CurrentFilePath = string;
 
-export type TestsDemoCoverageGetPackageRootCurrentFileDirectory = string;
+export type Tests_DemoCoverage_GetPackageRoot_CurrentFileDirectory = string;
 
 /**
  * Tests - Demo Coverage - Get Repo Root.
  *
  * @since 0.18.0
  */
-export type TestsDemoCoverageGetRepoRootReturns = string;
+export type Tests_DemoCoverage_GetRepoRoot_Returns = string;
 
 /**
  * Tests - Demo Coverage - Load Demo Config.
  *
  * @since 0.18.0
  */
-export type TestsDemoCoverageLoadDemoConfigDemoPath = string;
+export type Tests_DemoCoverage_LoadDemoConfig_DemoPath = string;
 
-export type TestsDemoCoverageLoadDemoConfigReturns = Promise<TestsDemoCoverageDemoRecord>;
+export type Tests_DemoCoverage_LoadDemoConfig_Returns = Promise<Tests_DemoCoverage_DemoRecord>;
 
-export type TestsDemoCoverageLoadDemoConfigConfigUrl = string;
+export type Tests_DemoCoverage_LoadDemoConfig_ConfigUrl = string;
 
-export type TestsDemoCoverageLoadDemoConfigModuleDefault = TestsDemoCoverageDemoRecord;
+export type Tests_DemoCoverage_LoadDemoConfig_Module_Default = Tests_DemoCoverage_DemoRecord;
 
-export type TestsDemoCoverageLoadDemoConfigModule = {
-  default: TestsDemoCoverageLoadDemoConfigModuleDefault;
+export type Tests_DemoCoverage_LoadDemoConfig_Module = {
+  default: Tests_DemoCoverage_LoadDemoConfig_Module_Default;
 };
 
 /**
@@ -143,23 +143,23 @@ export type TestsDemoCoverageLoadDemoConfigModule = {
  *
  * @since 0.18.0
  */
-export type TestsDemoCoverageRequiredLeafPaths = readonly string[];
+export type Tests_DemoCoverage_RequiredLeafPaths = readonly string[];
 
 /**
  * Tests - Demo Coverage - Resolve Leaf.
  *
  * @since 0.18.0
  */
-export type TestsDemoCoverageResolveLeafConfig = TestsDemoCoverageDemoRecord;
+export type Tests_DemoCoverage_ResolveLeaf_Config = Tests_DemoCoverage_DemoRecord;
 
-export type TestsDemoCoverageResolveLeafPath = string;
+export type Tests_DemoCoverage_ResolveLeaf_Path = string;
 
-export type TestsDemoCoverageResolveLeafReturns = string | null;
+export type Tests_DemoCoverage_ResolveLeaf_Returns = string | null;
 
-export type TestsDemoCoverageResolveLeafSegments = readonly string[];
+export type Tests_DemoCoverage_ResolveLeaf_Segments = readonly string[];
 
-export type TestsDemoCoverageResolveLeafCursor = unknown;
+export type Tests_DemoCoverage_ResolveLeaf_Cursor = unknown;
 
-export type TestsDemoCoverageResolveLeafIndex = number;
+export type Tests_DemoCoverage_ResolveLeaf_Index = number;
 
-export type TestsDemoCoverageResolveLeafSegment = string;
+export type Tests_DemoCoverage_ResolveLeaf_Segment = string;

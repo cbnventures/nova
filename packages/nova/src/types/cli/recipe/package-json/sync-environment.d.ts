@@ -1,12 +1,12 @@
-import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
-  SharedNovaConfigConfig,
-  SharedNovaConfigWorkspace,
-  SharedNovaConfigWorkspaceRecipes,
-  SharedNovaConfigWorkspaceRecipeSettings,
-  SharedNovaConfigWorkspaceRecipeTuple,
-  SharedWorkspaceManifest,
+  Shared_NovaConfigConfig as SharedNovaConfigConfig,
+  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
+  Shared_NovaConfigWorkspace_Recipes as SharedNovaConfigWorkspaceRecipes,
+  Shared_NovaConfigWorkspaceRecipeSettings as SharedNovaConfigWorkspaceRecipeSettings,
+  Shared_NovaConfigWorkspaceRecipeTuple as SharedNovaConfigWorkspaceRecipeTuple,
+  Shared_WorkspaceManifest as SharedWorkspaceManifest,
 } from '../../../shared.d.ts';
 
 /**
@@ -14,127 +14,127 @@ import type {
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonSyncEnvironmentHandleWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Returns = Promise<void>;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleFileContents = Record<string, unknown>;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_FileContents = Record<string, unknown>;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleManifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Manifest = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonSyncEnvironmentHandlePackageEngines = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageEngines = unknown;
 
-export type CliRecipePackageJsonSyncEnvironmentHandlePackageOs = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageOs = unknown;
 
-export type CliRecipePackageJsonSyncEnvironmentHandlePackageCpu = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageCpu = unknown;
 
-export type CliRecipePackageJsonSyncEnvironmentHandlePackageLibc = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageLibc = unknown;
 
-export type CliRecipePackageJsonSyncEnvironmentHandlePackageDevEngines = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_PackageDevEngines = unknown;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleLtsConstraint = string | undefined;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_LtsConstraint = string | undefined;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Recipes = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleRecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleRecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_RecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleTrackNodeLtsVersions = boolean;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_TrackNodeLtsVersions = boolean;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleExistingNode = string;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_ExistingNode = string;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleLtsMatches = RegExpExecArray[];
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_LtsMatches = RegExpExecArray[];
 
-export type CliRecipePackageJsonSyncEnvironmentHandleLtsMajors = number[];
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_LtsMajors = number[];
 
-export type CliRecipePackageJsonSyncEnvironmentHandleBranches = string[];
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_Branches = string[];
 
-export type CliRecipePackageJsonSyncEnvironmentHandleCoversAll = boolean;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_CoversAll = boolean;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleGeMatch = RegExpMatchArray | null;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_GeMatch = RegExpMatchArray | null;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleMajorMatch = RegExpMatchArray | null;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Handle_MajorMatch = RegExpMatchArray | null;
 
 /**
  * CLI - Recipe - package.json - Sync Environment - Handle Corepack.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonSyncEnvironmentHandleCorepackWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleCorepackReturns = void;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Returns = void;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleCorepackFileContents = Record<string, unknown>;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_FileContents = Record<string, unknown>;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleCorepackManifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_Manifest = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonSyncEnvironmentHandleCorepackPackageManager = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_HandleCorepack_PackageManager = unknown;
 
 /**
  * CLI - Recipe - package.json - Sync Environment - Is Empty.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonSyncEnvironmentIsEmptyValue = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Value = unknown;
 
-export type CliRecipePackageJsonSyncEnvironmentIsEmptyReturns = boolean;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_IsEmpty_Returns = boolean;
 
 /**
  * CLI - Recipe - package.json - Sync Environment - Run.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonSyncEnvironmentRunOptionsDryRun = true;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Options_DryRun = true;
 
-export type CliRecipePackageJsonSyncEnvironmentRunOptionsReplaceFile = true;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Options_ReplaceFile = true;
 
-export type CliRecipePackageJsonSyncEnvironmentRunOptions = {
-  dryRun?: CliRecipePackageJsonSyncEnvironmentRunOptionsDryRun;
-  replaceFile?: CliRecipePackageJsonSyncEnvironmentRunOptionsReplaceFile;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Options = {
+  dryRun?: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliRecipePackageJsonSyncEnvironmentRunReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Returns = Promise<void>;
 
-export type CliRecipePackageJsonSyncEnvironmentRunCurrentDirectory = string;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_CurrentDirectory = string;
 
-export type CliRecipePackageJsonSyncEnvironmentRunIsAtProjectRoot = boolean;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliRecipePackageJsonSyncEnvironmentRunIsDryRun = boolean;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_IsDryRun = boolean;
 
-export type CliRecipePackageJsonSyncEnvironmentRunIsReplaceFile = boolean;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_IsReplaceFile = boolean;
 
-export type CliRecipePackageJsonSyncEnvironmentRunReplaceFileNotice = string;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_ReplaceFileNotice = string;
 
-export type CliRecipePackageJsonSyncEnvironmentRunNovaConfig = LibNovaConfig;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type CliRecipePackageJsonSyncEnvironmentRunWorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkingFile = SharedNovaConfigConfig;
 
-export type CliRecipePackageJsonSyncEnvironmentRunWorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonSyncEnvironmentRunEligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonSyncEnvironmentRunWorkspaceConfigFilter = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspaceConfigFilter = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonSyncEnvironmentRunWorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_WorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type CliRecipePackageJsonSyncEnvironmentRunRecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_RecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
-export type CliRecipePackageJsonSyncEnvironmentRunWorkspaces = SharedWorkspaceManifest[];
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_Run_Workspaces = SharedWorkspaceManifest[];
 
 /**
  * CLI - Recipe - package.json - Sync Environment - Sync Node Constraint.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_SyncNodeConstraint_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintConstraint = string;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_SyncNodeConstraint_Constraint = string;
 
-export type CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintReturns = void;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_SyncNodeConstraint_Returns = void;
 
-export type CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintEngines = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_SyncNodeConstraint_Engines = unknown;
 
-export type CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintCurrentNode = unknown;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_SyncNodeConstraint_CurrentNode = unknown;
 
-export type CliRecipePackageJsonSyncEnvironmentSyncNodeConstraintPrevious = string;
+export type Cli_Recipe_PackageJson_SyncEnvironment_Runner_SyncNodeConstraint_Previous = string;

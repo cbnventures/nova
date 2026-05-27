@@ -1,17 +1,17 @@
-import { CliRecipeGithubSyncFeatures } from './github/sync-features.js';
-import { CliRecipeGithubSyncIdentity } from './github/sync-identity.js';
-import { CliRecipeGithubSyncPolicies } from './github/sync-policies.js';
-import { CliRecipePackageJsonCleanup } from './package-json/cleanup.js';
-import { CliRecipePackageJsonNormalizeArtifacts } from './package-json/normalize-artifacts.js';
-import { CliRecipePackageJsonNormalizeBundler } from './package-json/normalize-bundler.js';
-import { CliRecipePackageJsonNormalizeDependencies } from './package-json/normalize-dependencies.js';
-import { CliRecipePackageJsonNormalizeModules } from './package-json/normalize-modules.js';
-import { CliRecipePackageJsonNormalizeTooling } from './package-json/normalize-tooling.js';
-import { CliRecipePackageJsonSyncEnvironment } from './package-json/sync-environment.js';
-import { CliRecipePackageJsonSyncIdentity } from './package-json/sync-identity.js';
-import { CliRecipePackageJsonSyncOwnership } from './package-json/sync-ownership.js';
+import { Runner as CliRecipeGithubSyncFeatures } from './github/sync-features.js';
+import { Runner as CliRecipeGithubSyncIdentity } from './github/sync-identity.js';
+import { Runner as CliRecipeGithubSyncPolicies } from './github/sync-policies.js';
+import { Runner as CliRecipePackageJsonCleanup } from './package-json/cleanup.js';
+import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './package-json/normalize-artifacts.js';
+import { Runner as CliRecipePackageJsonNormalizeBundler } from './package-json/normalize-bundler.js';
+import { Runner as CliRecipePackageJsonNormalizeDependencies } from './package-json/normalize-dependencies.js';
+import { Runner as CliRecipePackageJsonNormalizeModules } from './package-json/normalize-modules.js';
+import { Runner as CliRecipePackageJsonNormalizeTooling } from './package-json/normalize-tooling.js';
+import { Runner as CliRecipePackageJsonSyncEnvironment } from './package-json/sync-environment.js';
+import { Runner as CliRecipePackageJsonSyncIdentity } from './package-json/sync-identity.js';
+import { Runner as CliRecipePackageJsonSyncOwnership } from './package-json/sync-ownership.js';
 
-import type { CliRecipeRegistry } from '../../types/cli/recipe/index.d.ts';
+import type { Cli_Recipe_Registry } from '../../types/cli/recipe/index.d.ts';
 
 /**
  * CLI - Recipe - Registry.
@@ -21,7 +21,7 @@ import type { CliRecipeRegistry } from '../../types/cli/recipe/index.d.ts';
  *
  * @since 0.14.0
  */
-export const registry: CliRecipeRegistry = {
+export const registry: Cli_Recipe_Registry = {
   'github': [
     {
       name: 'sync-features',

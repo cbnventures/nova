@@ -2,13 +2,13 @@ import Link from '@docusaurus/Link';
 import { Icon } from '@iconify/react/offline';
 
 import type {
-  ThemeBlogComponentsAuthorSocialsEntries,
-  ThemeBlogComponentsAuthorSocialsIconConfig,
-  ThemeBlogComponentsAuthorSocialsIconConfigMap,
-  ThemeBlogComponentsAuthorSocialsLink,
-  ThemeBlogComponentsAuthorSocialsPlatform,
-  ThemeBlogComponentsAuthorSocialsProps,
-  ThemeBlogComponentsAuthorSocialsSocials,
+  Theme_Blog_Components_Author_Socials_Index_Socials_Entries,
+  Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig,
+  Theme_Blog_Components_Author_Socials_Index_Socials_IconConfigMap,
+  Theme_Blog_Components_Author_Socials_Index_Socials_Link,
+  Theme_Blog_Components_Author_Socials_Index_Socials_Platform,
+  Theme_Blog_Components_Author_Socials_Index_Socials_Props,
+  Theme_Blog_Components_Author_Socials_Index_Socials,
 } from '../../../../../types/theme/Blog/Components/Author/Socials/index.d.ts';
 
 /**
@@ -20,7 +20,7 @@ import type {
  *
  * @since 0.18.0
  */
-const socialIconConfigs: ThemeBlogComponentsAuthorSocialsIconConfigMap = {
+const socialIconConfigs: Theme_Blog_Components_Author_Socials_Index_Socials_IconConfigMap = {
   twitter: {
     icon: 'ri:twitter-fill', label: 'Twitter',
   },
@@ -69,15 +69,15 @@ const socialIconConfigs: ThemeBlogComponentsAuthorSocialsIconConfigMap = {
  * known platform (X, GitHub, LinkedIn, etc.) gets a branded Iconify glyph;
  * unknown keys fall back to a generic link icon labeled with the platform name.
  *
- * @param {ThemeBlogComponentsAuthorSocialsProps} props - Props.
+ * @param {Theme_Blog_Components_Author_Socials_Index_Socials_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function Socials(props: ThemeBlogComponentsAuthorSocialsProps) {
-  const socials: ThemeBlogComponentsAuthorSocialsSocials = props['author']['socials'] ?? {};
-  const entries: ThemeBlogComponentsAuthorSocialsEntries = Object.entries(socials);
+function Socials(props: Theme_Blog_Components_Author_Socials_Index_Socials_Props) {
+  const socials: Theme_Blog_Components_Author_Socials_Index_Socials = props['author']['socials'] ?? {};
+  const entries: Theme_Blog_Components_Author_Socials_Index_Socials_Entries = Object.entries(socials);
 
   return (
     <div
@@ -85,9 +85,9 @@ function Socials(props: ThemeBlogComponentsAuthorSocialsProps) {
       style={props['style']}
     >
       {entries.map((entry) => {
-        const platform: ThemeBlogComponentsAuthorSocialsPlatform = entry[0];
-        const link: ThemeBlogComponentsAuthorSocialsLink = entry[1];
-        const config: ThemeBlogComponentsAuthorSocialsIconConfig = socialIconConfigs[platform] ?? {
+        const platform: Theme_Blog_Components_Author_Socials_Index_Socials_Platform = entry[0];
+        const link: Theme_Blog_Components_Author_Socials_Index_Socials_Link = entry[1];
+        const config: Theme_Blog_Components_Author_Socials_Index_Socials_IconConfig = socialIconConfigs[platform] ?? {
           icon: 'ri:links-fill', label: platform,
         };
 

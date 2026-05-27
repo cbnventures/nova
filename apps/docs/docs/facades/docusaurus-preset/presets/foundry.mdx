@@ -59,19 +59,21 @@ The full default configuration for the Foundry preset:
 {
   preset: 'foundry',
   // Default values (no overrides needed):
-  // colors.primary:          '#ea580c'
-  // colors.accent:           '#fbbf24'
-  // colors.neutral:          '#78716c'
+  // colors.primary.light:    '#ea580c'
+  // colors.primary.dark:     '#ea580c'
+  // colors.secondary.light:  '#fbbf24'
+  // colors.secondary.dark:   '#fbbf24'
+  // colors.text.light:       '#1c1917'
+  // colors.text.dark:        '#e7e5e4'
+  // colors.border.light:     '#d6d3d1'
+  // colors.border.dark:      '#57534e'
+  // colors.warning.light:    '#f59e0b'
+  // colors.warning.dark:     '#f59e0b'
+  // colors.danger.light:     '#ef4444'
+  // colors.danger.dark:      '#ef4444'
   // fonts.display:           'Plus Jakarta Sans'
   // fonts.body:              'Inter'
   // fonts.code:              'Fira Code'
-  // shape.radius:            'rounded'
-  // shape.density:           'comfortable'
-  // depth.cards:             'elevated'
-  // depth.codeBlocks:        'bordered'
-  // motion.speed:            'normal'
-  // motion.staggeredReveals: true
-  // motion.hoverEffects:     true
   // navbar:                  'bridge'
   // footer:                  'commons'
 }
@@ -89,15 +91,18 @@ Override any category to customize the Foundry identity. Unspecified values keep
   preset: 'foundry',
   overrides: {
     colors: {
-      primary: '#ea580c',
-      accent: '#fbbf24',
-      neutral: '#78716c',
+      primary:   { light: '#ea580c', dark: '#ea580c' },
+      secondary: { light: '#fbbf24', dark: '#fbbf24' },
+      text:      { light: '#1c1917', dark: '#e7e5e4' },
+      border:    { light: '#d6d3d1', dark: '#57534e' },
+      warning:   { light: '#f59e0b', dark: '#f59e0b' },
+      danger:    { light: '#ef4444', dark: '#ef4444' },
     },
   },
 }
 ```
 
-Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+Each color category accepts a `{ light, dark }` pair. The `primary` and `secondary` colors expand to 11-level shade scales (50 through 950) as CSS custom properties.
 
   </TabItem>
   <TabItem value="fonts" label="Fonts">
@@ -116,25 +121,6 @@ Each color generates an 11-level shade scale (50–950) as CSS custom properties
 ```
 
 Font families are set as CSS custom properties. Google Fonts are loaded automatically.
-
-  </TabItem>
-  <TabItem value="shape" label="Shape & Depth">
-
-```ts title="docusaurus.config.ts"
-{
-  preset: 'foundry',
-  overrides: {
-    shape: {
-      radius: 'rounded',
-      density: 'comfortable',
-    },
-    depth: {
-      cards: 'elevated',
-      codeBlocks: 'bordered',
-    },
-  },
-}
-```
 
   </TabItem>
 </Tabs>

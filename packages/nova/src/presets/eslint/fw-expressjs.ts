@@ -1,4 +1,4 @@
-import type { PresetsEslintFwExpressjsConfigConfig } from '../../types/presets/eslint/fw-expressjs.d.ts';
+import type { Presets_Eslint_FwExpressjs_ConfigConfig } from '../../types/presets/eslint/fw-expressjs.d.ts';
 
 /**
  * Presets - ESLint - FW Express.js - Config.
@@ -8,7 +8,7 @@ import type { PresetsEslintFwExpressjsConfigConfig } from '../../types/presets/e
  *
  * @since 0.11.0
  */
-const config: PresetsEslintFwExpressjsConfigConfig = [{
+const config: Presets_Eslint_FwExpressjs_ConfigConfig = [{
   name: 'nova/fw-expressjs/ignored-files',
   ignores: [],
 }];

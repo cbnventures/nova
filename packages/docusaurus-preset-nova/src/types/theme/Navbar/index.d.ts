@@ -13,8 +13,8 @@ import type {
 } from 'react';
 
 import type {
-  SharedPresetLogo,
-  SharedPresetNavbar,
+  Shared_Preset_Logo,
+  Shared_Preset_Navbar,
 } from '../../shared.d.ts';
 
 /**
@@ -22,293 +22,293 @@ import type {
  *
  * @since 0.15.0
  */
-export type ThemeNavbarPropsClassName = string | undefined;
+export type Theme_Navbar_Index_Navbar_Props_ClassName = string | undefined;
 
-export type ThemeNavbarPropsStyle = CSSProperties | undefined;
+export type Theme_Navbar_Index_Navbar_Props_Style = CSSProperties | undefined;
 
-export type ThemeNavbarProps = {
-  className?: ThemeNavbarPropsClassName;
-  style?: ThemeNavbarPropsStyle;
+export type Theme_Navbar_Index_Navbar_Props = {
+  className?: Theme_Navbar_Index_Navbar_Props_ClassName;
+  style?: Theme_Navbar_Index_Navbar_Props_Style;
 };
 
-export type ThemeNavbarThemeConfigCast = unknown;
+export type Theme_Navbar_Index_Navbar_ThemeConfigCast = unknown;
 
-export type ThemeNavbarThemeConfig = Record<string, unknown>;
+export type Theme_Navbar_Index_Navbar_ThemeConfig = Record<string, unknown>;
 
-export type ThemeNavbarSiteConfigTitle = string;
+export type Theme_Navbar_Index_Navbar_SiteConfig_Title = string;
 
-export type ThemeNavbarSiteConfig = {
-  title: ThemeNavbarSiteConfigTitle;
+export type Theme_Navbar_Index_Navbar_SiteConfig = {
+  title: Theme_Navbar_Index_Navbar_SiteConfig_Title;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarNavbarConfigTitle = string | undefined;
+export type Theme_Navbar_Index_Navbar_Config_Title = string | undefined;
 
-export type ThemeNavbarNavbarConfigItems = ThemeNavbarItem[];
+export type Theme_Navbar_Index_Navbar_Config_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarNavbarConfig = {
-  title: ThemeNavbarNavbarConfigTitle;
-  items: ThemeNavbarNavbarConfigItems;
+export type Theme_Navbar_Index_Navbar_Config = {
+  title: Theme_Navbar_Index_Navbar_Config_Title;
+  items: Theme_Navbar_Index_Navbar_Config_Items;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarColorMode = 'light' | 'dark';
+export type Theme_Navbar_Index_Navbar_ColorMode = 'light' | 'dark';
 
-export type ThemeNavbarColorModeStateColorMode = ThemeNavbarColorMode;
+export type Theme_Navbar_Index_Navbar_ColorModeStateColorMode = Theme_Navbar_Index_Navbar_ColorMode;
 
-export type ThemeNavbarColorModeStateColorModeChoice = ThemeNavbarColorModeChoice;
+export type Theme_Navbar_Index_Navbar_ColorModeStateColorModeChoice = Theme_Navbar_Index_Navbar_ColorModeChoice;
 
-export type ThemeNavbarColorModeStateSetColorMode = ThemeNavbarSetColorMode;
+export type Theme_Navbar_Index_Navbar_ColorModeStateSetColorMode = Theme_Navbar_Index_Navbar_SetColorMode;
 
-export type ThemeNavbarColorModeState = {
-  readonly colorMode: ThemeNavbarColorModeStateColorMode;
-  readonly colorModeChoice: ThemeNavbarColorModeStateColorModeChoice;
-  readonly setColorMode: ThemeNavbarColorModeStateSetColorMode;
+export type Theme_Navbar_Index_Navbar_ColorModeState = {
+  readonly colorMode: Theme_Navbar_Index_Navbar_ColorModeStateColorMode;
+  readonly colorModeChoice: Theme_Navbar_Index_Navbar_ColorModeStateColorModeChoice;
+  readonly setColorMode: Theme_Navbar_Index_Navbar_ColorModeStateSetColorMode;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarColorModeChoice = ThemeNavbarColorMode | null;
+export type Theme_Navbar_Index_Navbar_ColorModeChoice = Theme_Navbar_Index_Navbar_ColorMode | null;
 
-export type ThemeNavbarSetColorMode = (colorMode: ThemeNavbarColorModeChoice) => void;
+export type Theme_Navbar_Index_Navbar_SetColorMode = (colorMode: Theme_Navbar_Index_Navbar_ColorModeChoice) => void;
 
-export type ThemeNavbarSiteTitle = string;
+export type Theme_Navbar_Index_Navbar_SiteTitle = string;
 
-export type ThemeNavbarIndexPluginData = Record<string, unknown>;
+export type Theme_Navbar_Index_PluginData = Record<string, unknown>;
 
-export type ThemeNavbarIndexPresetLogo = SharedPresetLogo | undefined;
+export type Theme_Navbar_Index_PresetLogo = Shared_Preset_Logo | undefined;
 
-export type ThemeNavbarIndexUserLogo = Record<string, unknown> | undefined;
+export type Theme_Navbar_Index_UserLogo = Record<string, unknown> | undefined;
 
-export type ThemeNavbarIndexUserLogoSrcLight = string | undefined;
+export type Theme_Navbar_Index_UserLogoSrc_Light = string | undefined;
 
-export type ThemeNavbarIndexUserLogoSrcDark = string | undefined;
+export type Theme_Navbar_Index_UserLogoSrc_Dark = string | undefined;
 
-export type ThemeNavbarIndexUserLogoSrc = {
-  light: ThemeNavbarIndexUserLogoSrcLight;
-  dark: ThemeNavbarIndexUserLogoSrcDark;
+export type Theme_Navbar_Index_UserLogoSrc = {
+  light: Theme_Navbar_Index_UserLogoSrc_Light;
+  dark: Theme_Navbar_Index_UserLogoSrc_Dark;
 } | undefined;
 
-export type ThemeNavbarIndexUserLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Index_UserLogoWordmark_Light = string | undefined;
 
-export type ThemeNavbarIndexUserLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Index_UserLogoWordmark_Dark = string | undefined;
 
-export type ThemeNavbarIndexUserLogoWordmark = {
-  light: ThemeNavbarIndexUserLogoWordmarkLight;
-  dark: ThemeNavbarIndexUserLogoWordmarkDark;
+export type Theme_Navbar_Index_UserLogoWordmark = {
+  light: Theme_Navbar_Index_UserLogoWordmark_Light;
+  dark: Theme_Navbar_Index_UserLogoWordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarIndexUserLogoTitle = string | undefined;
+export type Theme_Navbar_Index_UserLogoTitle = string | undefined;
 
-export type ThemeNavbarIndexUserLogoAlt = string | undefined;
+export type Theme_Navbar_Index_UserLogoAlt = string | undefined;
 
-export type ThemeNavbarIndexUserLogoHref = string | undefined;
+export type Theme_Navbar_Index_UserLogoHref = string | undefined;
 
-export type ThemeNavbarIndexUserLogoTarget = string | undefined;
+export type Theme_Navbar_Index_UserLogoTarget = string | undefined;
 
-export type ThemeNavbarIndexUserLogoRel = string | undefined;
+export type Theme_Navbar_Index_UserLogoRel = string | undefined;
 
-export type ThemeNavbarIndexUserLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Index_UserLogoAriaLabel = string | undefined;
 
-export type ThemeNavbarIndexPresetLogoSrc = string | undefined;
+export type Theme_Navbar_Index_PresetLogoSrc = string | undefined;
 
-export type ThemeNavbarIndexPresetLogoTitle = string | undefined;
+export type Theme_Navbar_Index_PresetLogoTitle = string | undefined;
 
-export type ThemeNavbarIndexPresetLogoAlt = string | undefined;
+export type Theme_Navbar_Index_PresetLogoAlt = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoSrc = {
-  light: ThemeNavbarIndexSiteLogoSrcLight;
-  dark: ThemeNavbarIndexSiteLogoSrcDark;
+export type Theme_Navbar_Index_SiteLogo_Src = {
+  light: Theme_Navbar_Index_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Index_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarIndexSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoWordmark = {
-  light: ThemeNavbarIndexSiteLogoWordmarkLight;
-  dark: ThemeNavbarIndexSiteLogoWordmarkDark;
+export type Theme_Navbar_Index_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Index_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Index_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarIndexSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoAlt = string;
+export type Theme_Navbar_Index_SiteLogo_Alt = string;
 
-export type ThemeNavbarIndexSiteLogoHref = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoRel = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarIndexSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Index_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarIndexSiteLogo = {
-  src: ThemeNavbarIndexSiteLogoSrc;
-  wordmark: ThemeNavbarIndexSiteLogoWordmark;
-  title: ThemeNavbarIndexSiteLogoTitle;
-  alt: ThemeNavbarIndexSiteLogoAlt;
-  href: ThemeNavbarIndexSiteLogoHref;
-  target: ThemeNavbarIndexSiteLogoTarget;
-  rel: ThemeNavbarIndexSiteLogoRel;
-  ariaLabel: ThemeNavbarIndexSiteLogoAriaLabel;
+export type Theme_Navbar_Index_SiteLogo = {
+  src: Theme_Navbar_Index_SiteLogo_Src;
+  wordmark: Theme_Navbar_Index_SiteLogo_Wordmark;
+  title: Theme_Navbar_Index_SiteLogo_Title;
+  alt: Theme_Navbar_Index_SiteLogo_Alt;
+  href: Theme_Navbar_Index_SiteLogo_Href;
+  target: Theme_Navbar_Index_SiteLogo_Target;
+  rel: Theme_Navbar_Index_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Index_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarIndexHideOnScroll = boolean;
+export type Theme_Navbar_Index_HideOnScroll = boolean;
 
-export type ThemeNavbarItems = ThemeNavbarItem[];
+export type Theme_Navbar_Index_Navbar_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarItemLabel = string;
+export type Theme_Navbar_Index_Navbar_Item_Label = string;
 
-export type ThemeNavbarItemTo = string | undefined;
+export type Theme_Navbar_Index_Navbar_Item_To = string | undefined;
 
-export type ThemeNavbarItemHref = string | undefined;
+export type Theme_Navbar_Index_Navbar_Item_Href = string | undefined;
 
-export type ThemeNavbarItem = {
-  label: ThemeNavbarItemLabel;
-  to?: ThemeNavbarItemTo;
-  href?: ThemeNavbarItemHref;
+export type Theme_Navbar_Index_Navbar_Item = {
+  label: Theme_Navbar_Index_Navbar_Item_Label;
+  to?: Theme_Navbar_Index_Navbar_Item_To;
+  href?: Theme_Navbar_Index_Navbar_Item_Href;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarIndexGlobalData = Record<string, unknown>;
+export type Theme_Navbar_Index_GlobalData = Record<string, unknown>;
 
-export type ThemeNavbarIndexNavbarVariant = SharedPresetNavbar;
+export type Theme_Navbar_Index_Navbar_Variant = Shared_Preset_Navbar;
 
-export type ThemeNavbarIndexNavbarHiddenState = [ThemeNavbarIndexNavbarHidden, ThemeNavbarIndexSetNavbarHidden];
+export type Theme_Navbar_Index_Navbar_HiddenState = [Theme_Navbar_Index_Navbar_Hidden, Theme_Navbar_Index_SetNavbarHidden];
 
-export type ThemeNavbarIndexNavbarHidden = boolean;
+export type Theme_Navbar_Index_Navbar_Hidden = boolean;
 
-export type ThemeNavbarIndexSetNavbarHidden = Dispatch<SetStateAction<ThemeNavbarIndexNavbarHidden>>;
+export type Theme_Navbar_Index_SetNavbarHidden = Dispatch<SetStateAction<Theme_Navbar_Index_Navbar_Hidden>>;
 
-export type ThemeNavbarIndexLastScrollPositionRef = RefObject<number>;
+export type Theme_Navbar_Index_LastScrollPositionRef = RefObject<number>;
 
-export type ThemeNavbarIndexIsMenuOpenState = [ThemeNavbarIndexIsMenuOpen, ThemeNavbarIndexSetIsMenuOpen];
+export type Theme_Navbar_Index_IsMenuOpenState = [Theme_Navbar_Index_IsMenuOpen, Theme_Navbar_Index_SetIsMenuOpen];
 
-export type ThemeNavbarIndexIsMenuOpen = boolean;
+export type Theme_Navbar_Index_IsMenuOpen = boolean;
 
-export type ThemeNavbarIndexSetIsMenuOpen = Dispatch<SetStateAction<ThemeNavbarIndexIsMenuOpen>>;
+export type Theme_Navbar_Index_SetIsMenuOpen = Dispatch<SetStateAction<Theme_Navbar_Index_IsMenuOpen>>;
 
-export type ThemeNavbarNavbarColorModeSystemLabel = string;
+export type Theme_Navbar_Index_Navbar_ColorModeSystemLabel = string;
 
-export type ThemeNavbarNavbarColorModeLightLabel = string;
+export type Theme_Navbar_Index_Navbar_ColorModeLightLabel = string;
 
-export type ThemeNavbarNavbarColorModeDarkLabel = string;
+export type Theme_Navbar_Index_Navbar_ColorModeDarkLabel = string;
 
-export type ThemeNavbarNavbarMenuButtonLabel = string;
+export type Theme_Navbar_Index_Navbar_MenuButtonLabel = string;
 
-export type ThemeNavbarColorModeLabel = ReactNode;
+export type Theme_Navbar_Index_Navbar_ColorModeLabel = ReactNode;
 
-export type ThemeNavbarIndexHamburgerLabel = ReactNode;
+export type Theme_Navbar_Index_HamburgerLabel = ReactNode;
 
-export type ThemeNavbarIndexNavbarClassName = string;
+export type Theme_Navbar_Index_Navbar_ClassName = string;
 
-export type ThemeNavbarIndexVariantPropsSiteLogo = ThemeNavbarIndexSiteLogo;
+export type Theme_Navbar_Index_VariantProps_SiteLogo = Theme_Navbar_Index_SiteLogo;
 
-export type ThemeNavbarIndexVariantPropsItems = ThemeNavbarItems;
+export type Theme_Navbar_Index_VariantProps_Items = Theme_Navbar_Index_Navbar_Items;
 
-export type ThemeNavbarIndexVariantPropsActionItems = ThemeNavbarItems;
+export type Theme_Navbar_Index_VariantProps_ActionItems = Theme_Navbar_Index_Navbar_Items;
 
-export type ThemeNavbarIndexVariantPropsColorModeLabel = ThemeNavbarColorModeLabel;
+export type Theme_Navbar_Index_VariantProps_ColorModeLabel = Theme_Navbar_Index_Navbar_ColorModeLabel;
 
-export type ThemeNavbarIndexVariantPropsOnColorModeToggle = () => void;
+export type Theme_Navbar_Index_VariantProps_OnColorModeToggle = () => void;
 
-export type ThemeNavbarIndexVariantPropsHamburgerLabel = ReactNode;
+export type Theme_Navbar_Index_VariantProps_HamburgerLabel = ReactNode;
 
-export type ThemeNavbarIndexVariantPropsOnMenuToggle = () => void;
+export type Theme_Navbar_Index_VariantProps_OnMenuToggle = () => void;
 
-export type ThemeNavbarIndexVariantPropsActiveItemLabel = string | null;
+export type Theme_Navbar_Index_VariantProps_ActiveItemLabel = string | null;
 
-export type ThemeNavbarIndexVariantProps = {
-  siteLogo: ThemeNavbarIndexVariantPropsSiteLogo;
-  items: ThemeNavbarIndexVariantPropsItems;
-  actionItems: ThemeNavbarIndexVariantPropsActionItems;
-  colorModeLabel: ThemeNavbarIndexVariantPropsColorModeLabel;
-  onColorModeToggle: ThemeNavbarIndexVariantPropsOnColorModeToggle;
-  hamburgerLabel: ThemeNavbarIndexVariantPropsHamburgerLabel;
-  onMenuToggle: ThemeNavbarIndexVariantPropsOnMenuToggle;
-  activeItemLabel: ThemeNavbarIndexVariantPropsActiveItemLabel;
+export type Theme_Navbar_Index_VariantProps = {
+  siteLogo: Theme_Navbar_Index_VariantProps_SiteLogo;
+  items: Theme_Navbar_Index_VariantProps_Items;
+  actionItems: Theme_Navbar_Index_VariantProps_ActionItems;
+  colorModeLabel: Theme_Navbar_Index_VariantProps_ColorModeLabel;
+  onColorModeToggle: Theme_Navbar_Index_VariantProps_OnColorModeToggle;
+  hamburgerLabel: Theme_Navbar_Index_VariantProps_HamburgerLabel;
+  onMenuToggle: Theme_Navbar_Index_VariantProps_OnMenuToggle;
+  activeItemLabel: Theme_Navbar_Index_VariantProps_ActiveItemLabel;
 };
 
-export type ThemeNavbarIndexSvgFilterDefinition = ReactNode;
+export type Theme_Navbar_Index_SvgFilterDefinition = ReactNode;
 
-export type ThemeNavbarItemLinkTo = string;
+export type Theme_Navbar_Index_Navbar_ItemLinkTo = string;
 
-export type ThemeNavbarItemSpread = Record<string, unknown>;
+export type Theme_Navbar_Index_Navbar_ItemSpread = Record<string, unknown>;
 
 /**
  * Theme - Navbar - Navbar.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarIndexActionItemTypes = Set<string>;
+export type Theme_Navbar_Index_ActionItemTypes = Set<string>;
 
-export type ThemeNavbarIndexActionItemType = string;
+export type Theme_Navbar_Index_ActionItemType = string;
 
-export type ThemeNavbarIndexThemeChoice = string | null;
+export type Theme_Navbar_Index_ThemeChoice = string | null;
 
 /**
  * Theme - Navbar - Navbar - Apply System Mode.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarIndexSystemColorMode = 'light' | 'dark';
+export type Theme_Navbar_Index_SystemColorMode = 'light' | 'dark';
 
-export type ThemeNavbarIndexMediaQuery = MediaQueryList;
+export type Theme_Navbar_Index_MediaQuery = MediaQueryList;
 
 /**
  * Theme - Navbar - Navbar - Handle Scroll.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarIndexCurrentScrollPosition = number;
+export type Theme_Navbar_Index_CurrentScrollPosition = number;
 
-export type ThemeNavbarIndexIsScrollingDown = boolean;
+export type Theme_Navbar_Index_IsScrollingDown = boolean;
 
 /**
  * Theme - Navbar - Navbar - Resolve Mobile Items.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarIndexAllDocsData = Record<string, GlobalPluginData>;
+export type Theme_Navbar_Index_AllDocsData = Record<string, GlobalPluginData>;
 
-export type ThemeNavbarIndexResolvedItems = ThemeNavbarItem[];
+export type Theme_Navbar_Index_ResolvedItems = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarIndexResolvedItemType = string | undefined;
+export type Theme_Navbar_Index_ResolvedItemType = string | undefined;
 
-export type ThemeNavbarIndexResolvedItemPluginId = string;
+export type Theme_Navbar_Index_ResolvedItemPluginId = string;
 
-export type ThemeNavbarIndexResolvedItemPluginData = GlobalPluginData | undefined;
+export type Theme_Navbar_Index_ResolvedItemPluginData = GlobalPluginData | undefined;
 
-export type ThemeNavbarIndexResolvedItemDocId = string;
+export type Theme_Navbar_Index_ResolvedItemDocId = string;
 
-export type ThemeNavbarIndexResolvedItemAllDocs = GlobalDoc[];
+export type Theme_Navbar_Index_ResolvedItemAllDocs = GlobalDoc[];
 
-export type ThemeNavbarIndexResolvedItemVersion = GlobalVersion;
+export type Theme_Navbar_Index_ResolvedItemVersion = GlobalVersion;
 
-export type ThemeNavbarIndexResolvedItemMatchedDoc = GlobalDoc | undefined;
+export type Theme_Navbar_Index_ResolvedItemMatchedDoc = GlobalDoc | undefined;
 
-export type ThemeNavbarIndexResolvedItemDocCandidate = GlobalDoc;
+export type Theme_Navbar_Index_ResolvedItemDocCandidate = GlobalDoc;
 
-export type ThemeNavbarIndexResolvedItem = ThemeNavbarItem;
+export type Theme_Navbar_Index_ResolvedItem = Theme_Navbar_Index_Navbar_Item;
 
-export type ThemeNavbarIndexResolvedItemSidebarId = string;
+export type Theme_Navbar_Index_ResolvedItemSidebarId = string;
 
-export type ThemeNavbarIndexResolvedItemMatchedVersion = GlobalVersion | undefined;
+export type Theme_Navbar_Index_ResolvedItemMatchedVersion = GlobalVersion | undefined;
 
-export type ThemeNavbarIndexResolvedItemVersionSidebarsOrUndefined = Record<string, GlobalSidebar> | undefined;
+export type Theme_Navbar_Index_ResolvedItemVersionSidebarsOrUndefined = Record<string, GlobalSidebar> | undefined;
 
-export type ThemeNavbarIndexResolvedItemSidebar = GlobalSidebar | undefined;
+export type Theme_Navbar_Index_ResolvedItemSidebar = GlobalSidebar | undefined;
 
-export type ThemeNavbarIndexResolvedItemVersionSidebars = Record<string, GlobalSidebar>;
+export type Theme_Navbar_Index_ResolvedItemVersionSidebars = Record<string, GlobalSidebar>;
 
-export type ThemeNavbarIndexResolvedItemSidebarLinkLabel = string;
+export type Theme_Navbar_Index_ResolvedItemSidebarLink_Label = string;
 
-export type ThemeNavbarIndexResolvedItemSidebarLinkPath = string;
+export type Theme_Navbar_Index_ResolvedItemSidebarLink_Path = string;
 
-export type ThemeNavbarIndexResolvedItemSidebarLink = {
-  label: ThemeNavbarIndexResolvedItemSidebarLinkLabel;
-  path: ThemeNavbarIndexResolvedItemSidebarLinkPath;
+export type Theme_Navbar_Index_ResolvedItemSidebarLink = {
+  label: Theme_Navbar_Index_ResolvedItemSidebarLink_Label;
+  path: Theme_Navbar_Index_ResolvedItemSidebarLink_Path;
 } | undefined;

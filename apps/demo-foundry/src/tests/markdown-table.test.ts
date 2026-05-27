@@ -6,29 +6,29 @@ import { MarkdownTable } from '@cbnventures/nova/toolkit';
 import { describe, it } from 'vitest';
 
 import type {
-  TestsMarkdownTableMarkdowntableValidationContent,
-  TestsMarkdownTableMarkdowntableValidationContentDirs,
-  TestsMarkdownTableMarkdowntableValidationContentPath,
-  TestsMarkdownTableMarkdowntableValidationCurrentTable,
-  TestsMarkdownTableMarkdowntableValidationCwd,
-  TestsMarkdownTableMarkdowntableValidationDataRows,
-  TestsMarkdownTableMarkdowntableValidationDelimiterLine,
-  TestsMarkdownTableMarkdowntableValidationEntries,
-  TestsMarkdownTableMarkdowntableValidationExt,
-  TestsMarkdownTableMarkdowntableValidationFailures,
-  TestsMarkdownTableMarkdowntableValidationFilePath,
-  TestsMarkdownTableMarkdowntableValidationHeaderLine,
-  TestsMarkdownTableMarkdowntableValidationHeaders,
-  TestsMarkdownTableMarkdowntableValidationInCodeBlock,
-  TestsMarkdownTableMarkdowntableValidationLines,
-  TestsMarkdownTableMarkdowntableValidationMdFiles,
-  TestsMarkdownTableMarkdowntableValidationOriginal,
-  TestsMarkdownTableMarkdowntableValidationParseCells,
-  TestsMarkdownTableMarkdowntableValidationParsedCells,
-  TestsMarkdownTableMarkdowntableValidationRendered,
-  TestsMarkdownTableMarkdowntableValidationTable,
-  TestsMarkdownTableMarkdowntableValidationTableLines,
-  TestsMarkdownTableMarkdowntableValidationTables,
+  Tests_MarkdownTable_MarkdownTableValidation_Content,
+  Tests_MarkdownTable_MarkdownTableValidation_ContentDirs,
+  Tests_MarkdownTable_MarkdownTableValidation_ContentPath,
+  Tests_MarkdownTable_MarkdownTableValidation_CurrentTable,
+  Tests_MarkdownTable_MarkdownTableValidation_Cwd,
+  Tests_MarkdownTable_MarkdownTableValidation_DataRows,
+  Tests_MarkdownTable_MarkdownTableValidation_DelimiterLine,
+  Tests_MarkdownTable_MarkdownTableValidation_Entries,
+  Tests_MarkdownTable_MarkdownTableValidation_Ext,
+  Tests_MarkdownTable_MarkdownTableValidation_Failures,
+  Tests_MarkdownTable_MarkdownTableValidation_FilePath,
+  Tests_MarkdownTable_MarkdownTableValidation_HeaderLine,
+  Tests_MarkdownTable_MarkdownTableValidation_Headers,
+  Tests_MarkdownTable_MarkdownTableValidation_InCodeBlock,
+  Tests_MarkdownTable_MarkdownTableValidation_Lines,
+  Tests_MarkdownTable_MarkdownTableValidation_MdFiles,
+  Tests_MarkdownTable_MarkdownTableValidation_Original,
+  Tests_MarkdownTable_MarkdownTableValidation_ParseCells,
+  Tests_MarkdownTable_MarkdownTableValidation_ParsedCells,
+  Tests_MarkdownTable_MarkdownTableValidation_Rendered,
+  Tests_MarkdownTable_MarkdownTableValidation_Table,
+  Tests_MarkdownTable_MarkdownTableValidation_TableLines,
+  Tests_MarkdownTable_MarkdownTableValidation_Tables,
 } from '@site/src/types/tests/markdown-table.test.d.ts';
 
 /**
@@ -38,19 +38,19 @@ import type {
  */
 describe('MarkdownTable validation', async () => {
   it('all documentation tables match MarkdownTable output', async () => {
-    const cwd: TestsMarkdownTableMarkdowntableValidationCwd = process.cwd();
-    const contentDirs: TestsMarkdownTableMarkdowntableValidationContentDirs = [
+    const cwd: Tests_MarkdownTable_MarkdownTableValidation_Cwd = process.cwd();
+    const contentDirs: Tests_MarkdownTable_MarkdownTableValidation_ContentDirs = [
       'docs',
       'blog',
     ];
-    const mdFiles: TestsMarkdownTableMarkdowntableValidationMdFiles = [];
+    const mdFiles: Tests_MarkdownTable_MarkdownTableValidation_MdFiles = [];
 
     for (const contentDir of contentDirs) {
-      const contentPath: TestsMarkdownTableMarkdowntableValidationContentPath = resolve(cwd, contentDir);
-      const entries: TestsMarkdownTableMarkdowntableValidationEntries = await readdir(contentPath, { recursive: true });
+      const contentPath: Tests_MarkdownTable_MarkdownTableValidation_ContentPath = resolve(cwd, contentDir);
+      const entries: Tests_MarkdownTable_MarkdownTableValidation_Entries = await readdir(contentPath, { recursive: true });
 
       for (const entry of entries) {
-        const ext: TestsMarkdownTableMarkdowntableValidationExt = extname(entry);
+        const ext: Tests_MarkdownTable_MarkdownTableValidation_Ext = extname(entry);
 
         if (ext === '.md' || ext === '.mdx') {
           mdFiles.push(join(contentDir, entry));
@@ -62,7 +62,7 @@ describe('MarkdownTable validation', async () => {
      * Replace escaped pipes with a placeholder before splitting,
      * then restore as raw pipes so MarkdownTable can re-escape them.
      */
-    const parseCells: TestsMarkdownTableMarkdowntableValidationParseCells = (row) => {
+    const parseCells: Tests_MarkdownTable_MarkdownTableValidation_ParseCells = (row) => {
       return row
         .replaceAll('\\|', '\x00')
         .split('|')
@@ -70,16 +70,16 @@ describe('MarkdownTable validation', async () => {
         .map((cell) => cell.trim().replaceAll('\x00', '|'));
     };
 
-    const failures: TestsMarkdownTableMarkdowntableValidationFailures = [];
+    const failures: Tests_MarkdownTable_MarkdownTableValidation_Failures = [];
 
     for (const mdFile of mdFiles) {
-      const filePath: TestsMarkdownTableMarkdowntableValidationFilePath = join(cwd, mdFile);
-      const content: TestsMarkdownTableMarkdowntableValidationContent = await readFile(filePath, 'utf-8');
-      const lines: TestsMarkdownTableMarkdowntableValidationLines = content.split('\n');
-      const tables: TestsMarkdownTableMarkdowntableValidationTables = [];
+      const filePath: Tests_MarkdownTable_MarkdownTableValidation_FilePath = join(cwd, mdFile);
+      const content: Tests_MarkdownTable_MarkdownTableValidation_Content = await readFile(filePath, 'utf-8');
+      const lines: Tests_MarkdownTable_MarkdownTableValidation_Lines = content.split('\n');
+      const tables: Tests_MarkdownTable_MarkdownTableValidation_Tables = [];
 
-      let currentTable: TestsMarkdownTableMarkdowntableValidationCurrentTable = [];
-      let inCodeBlock: TestsMarkdownTableMarkdowntableValidationInCodeBlock = false;
+      let currentTable: Tests_MarkdownTable_MarkdownTableValidation_CurrentTable = [];
+      let inCodeBlock: Tests_MarkdownTable_MarkdownTableValidation_InCodeBlock = false;
 
       for (const line of lines) {
         if (line.trimStart().startsWith('```') === true) {
@@ -114,14 +114,14 @@ describe('MarkdownTable validation', async () => {
       }
 
       for (let i = 0; i < tables.length; i += 1) {
-        const tableLines: TestsMarkdownTableMarkdowntableValidationTableLines = tables[i];
+        const tableLines: Tests_MarkdownTable_MarkdownTableValidation_TableLines = tables[i];
 
         if (tableLines === undefined) {
           continue;
         }
 
-        const headerLine: TestsMarkdownTableMarkdowntableValidationHeaderLine = tableLines[0];
-        const delimiterLine: TestsMarkdownTableMarkdowntableValidationDelimiterLine = tableLines[1];
+        const headerLine: Tests_MarkdownTable_MarkdownTableValidation_HeaderLine = tableLines[0];
+        const delimiterLine: Tests_MarkdownTable_MarkdownTableValidation_DelimiterLine = tableLines[1];
 
         if (headerLine === undefined || delimiterLine === undefined) {
           continue;
@@ -132,20 +132,20 @@ describe('MarkdownTable validation', async () => {
           continue;
         }
 
-        const headers: TestsMarkdownTableMarkdowntableValidationHeaders = parseCells(headerLine);
-        const dataRows: TestsMarkdownTableMarkdowntableValidationDataRows = tableLines.slice(2);
+        const headers: Tests_MarkdownTable_MarkdownTableValidation_Headers = parseCells(headerLine);
+        const dataRows: Tests_MarkdownTable_MarkdownTableValidation_DataRows = tableLines.slice(2);
 
         try {
-          const table: TestsMarkdownTableMarkdowntableValidationTable = new MarkdownTable(headers);
+          const table: Tests_MarkdownTable_MarkdownTableValidation_Table = new MarkdownTable(headers);
 
           for (const row of dataRows) {
-            const parsedCells: TestsMarkdownTableMarkdowntableValidationParsedCells = parseCells(row);
+            const parsedCells: Tests_MarkdownTable_MarkdownTableValidation_ParsedCells = parseCells(row);
 
             table.addRow(parsedCells);
           }
 
-          const rendered: TestsMarkdownTableMarkdowntableValidationRendered = table.render();
-          const original: TestsMarkdownTableMarkdowntableValidationOriginal = tableLines.map((tableLine) => tableLine.trimEnd()).join('\n');
+          const rendered: Tests_MarkdownTable_MarkdownTableValidation_Rendered = table.render();
+          const original: Tests_MarkdownTable_MarkdownTableValidation_Original = tableLines.map((tableLine) => tableLine.trimEnd()).join('\n');
 
           if (rendered !== original) {
             failures.push(`${mdFile} (table ${i + 1})`);

@@ -6,9 +6,9 @@ import DocRootLayout from '@theme/DocRoot/Layout';
 import NotFoundContent from '@theme/NotFound/Content';
 
 import type {
-  ThemeDocRootDocRootMergedClassName,
-  ThemeDocRootDocRootProps,
-  ThemeDocRootDocRootRouteMetadata,
+  Theme_DocRoot_Index_DocRoot_MergedClassName,
+  Theme_DocRoot_Index_DocRoot_Props,
+  Theme_DocRoot_Index_DocRoot_RouteMetadata,
 } from '../../types/theme/DocRoot/index.d.ts';
 
 /**
@@ -18,14 +18,14 @@ import type {
  * matched document in a sidebar provider and layout shell,
  * falling back to the not-found page for invalid routes.
  *
- * @param {ThemeDocRootDocRootProps} props - Props.
+ * @param {Theme_DocRoot_Index_DocRoot_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocRoot(props: ThemeDocRootDocRootProps) {
-  const currentDocRouteMetadata: ThemeDocRootDocRootRouteMetadata = useDocRootMetadata(props);
+function DocRoot(props: Theme_DocRoot_Index_DocRoot_Props) {
+  const currentDocRouteMetadata: Theme_DocRoot_Index_DocRoot_RouteMetadata = useDocRootMetadata(props);
 
   if (
     currentDocRouteMetadata === null
@@ -34,7 +34,7 @@ function DocRoot(props: ThemeDocRootDocRootProps) {
     return <NotFoundContent />;
   }
 
-  const mergedClassName: ThemeDocRootDocRootMergedClassName = (props['className'] !== undefined) ? `nova-doc-root-wrapper ${props['className']}` : 'nova-doc-root-wrapper';
+  const mergedClassName: Theme_DocRoot_Index_DocRoot_MergedClassName = (props['className'] !== undefined) ? `nova-doc-root-wrapper ${props['className']}` : 'nova-doc-root-wrapper';
 
   return (
     <DocsSidebarProvider

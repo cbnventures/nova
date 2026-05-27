@@ -5,9 +5,9 @@ import DocSidebarItems from '@theme/DocSidebarItems';
 import DocsVersionDropdownNavbarItem from '../NavbarItem/docs-version-dropdown-navbar-item.js';
 
 import type {
-  ThemeDocSidebarDocSidebarNavAriaLabel,
-  ThemeDocSidebarDocSidebarProps,
-  ThemeDocSidebarDocSidebarVersions,
+  Theme_DocSidebar_Index_DocSidebar_NavAriaLabel,
+  Theme_DocSidebar_Index_DocSidebar_Props,
+  Theme_DocSidebar_Index_DocSidebar_Versions,
 } from '../../types/theme/DocSidebar/index.d.ts';
 
 /**
@@ -17,19 +17,19 @@ import type {
  * items, with no desktop/mobile split, no logo, and no collapse decoration.
  * The version switcher only renders when more than one version is configured.
  *
- * @param {ThemeDocSidebarDocSidebarProps} props - Props.
+ * @param {Theme_DocSidebar_Index_DocSidebar_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocSidebar(props: ThemeDocSidebarDocSidebarProps) {
-  const navAriaLabel: ThemeDocSidebarDocSidebarNavAriaLabel = translate({
+function DocSidebar(props: Theme_DocSidebar_Index_DocSidebar_Props) {
+  const navAriaLabel: Theme_DocSidebar_Index_DocSidebar_NavAriaLabel = translate({
     id: 'theme.docs.sidebar.navAriaLabel',
     message: 'Docs sidebar',
     description: 'The ARIA label for the docs sidebar navigation',
   });
-  const versions: ThemeDocSidebarDocSidebarVersions = useVersions(undefined);
+  const versions: Theme_DocSidebar_Index_DocSidebar_Versions = useVersions(undefined);
 
   return (
     <nav

@@ -1,15 +1,16 @@
-import type { PresetsSignalPresetSignal } from '../../types/presets/signal/preset.d.ts';
+import type { Presets_Signal_Preset_Signal } from '../../types/presets/signal/preset.d.ts';
 
 /**
  * Presets - Signal - Preset - Signal.
  *
- * Branded-short-links documentation site preset with Space Grotesk display
- * font, Inter body font, and JetBrains Mono code font paired with sharp
- * shapes and flat card depth.
+ * Branded-short-links documentation site preset pairing a red (Tailwind
+ * red-600 `#dc2626`) primary with amber (Tailwind amber-500 `#f59e0b`)
+ * accent. Space Grotesk display font, Inter body font, and JetBrains Mono
+ * code font with sharp shapes and flat card depth.
  *
  * @since 0.15.0
  */
-export const presetsSignalPresetSignal: PresetsSignalPresetSignal = {
+export const presetsSignalPresetSignal: Presets_Signal_Preset_Signal = {
   logo: {
     title: 'Signal',
     alt: 'Signal',

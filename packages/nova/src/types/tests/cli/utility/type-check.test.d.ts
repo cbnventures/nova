@@ -3,20 +3,20 @@
  *
  * @since 0.14.0
  */
-export type TestsCliUtilityTypeCheckRunOriginalCwd = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_OriginalCwd = string;
 
-export type TestsCliUtilityTypeCheckRunTemporaryDirectory = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryDirectory = string;
 
-export type TestsCliUtilityTypeCheckRunTemporaryPrefix = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryPrefix = string;
 
-export type TestsCliUtilityTypeCheckRunSandboxDirectory = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxDirectory = string;
 
-export type TestsCliUtilityTypeCheckRunSandboxRoot = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxRoot = string;
 
-export type TestsCliUtilityTypeCheckRunProjectDirectory = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory = string;
 
-export type TestsCliUtilityTypeCheckRunTsconfigPath = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigPath = string;
 
-export type TestsCliUtilityTypeCheckRunTsconfigContents = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigContents = string;
 
-export type TestsCliUtilityTypeCheckRunIndexPath = string;
+export type Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IndexPath = string;

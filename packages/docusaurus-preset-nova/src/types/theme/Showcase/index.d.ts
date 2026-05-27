@@ -12,80 +12,80 @@ import type {
  *
  * @since 0.18.0
  */
-export type ThemeShowcaseIndexShowcasePropsLayoutDescription = string;
+export type Theme_Showcase_Index_Showcase_Props_LayoutDescription = string;
 
-export type ThemeShowcaseIndexShowcasePropsDescription = string;
+export type Theme_Showcase_Index_Showcase_Props_Description = string;
 
-export type ThemeShowcaseIndexShowcasePropsChildren = ReactNode;
+export type Theme_Showcase_Index_Showcase_Props_Children = ReactNode;
 
-export type ThemeShowcaseIndexShowcasePropsClassName = string | undefined;
+export type Theme_Showcase_Index_Showcase_Props_ClassName = string | undefined;
 
-export type ThemeShowcaseIndexShowcasePropsStyle = CSSProperties | undefined;
+export type Theme_Showcase_Index_Showcase_Props_Style = CSSProperties | undefined;
 
-export type ThemeShowcaseIndexShowcaseProps = {
-  layoutDescription: ThemeShowcaseIndexShowcasePropsLayoutDescription;
-  description: ThemeShowcaseIndexShowcasePropsDescription;
-  children: ThemeShowcaseIndexShowcasePropsChildren;
-  className?: ThemeShowcaseIndexShowcasePropsClassName;
-  style?: ThemeShowcaseIndexShowcasePropsStyle;
+export type Theme_Showcase_Index_Showcase_Props = {
+  layoutDescription: Theme_Showcase_Index_Showcase_Props_LayoutDescription;
+  description: Theme_Showcase_Index_Showcase_Props_Description;
+  children: Theme_Showcase_Index_Showcase_Props_Children;
+  className?: Theme_Showcase_Index_Showcase_Props_ClassName;
+  style?: Theme_Showcase_Index_Showcase_Props_Style;
 };
 
-export type ThemeShowcaseIndexShowcaseReturns = React.JSX.Element;
+export type Theme_Showcase_Index_Showcase_Returns = React.JSX.Element;
 
-export type ThemeShowcaseIndexShowcaseLayoutDescription = string;
+export type Theme_Showcase_Index_Showcase_LayoutDescription = string;
 
-export type ThemeShowcaseIndexShowcaseDescription = string;
+export type Theme_Showcase_Index_Showcase_Description = string;
 
-export type ThemeShowcaseIndexShowcaseChildren = ReactNode;
+export type Theme_Showcase_Index_Showcase_Children = ReactNode;
 
-export type ThemeShowcaseIndexShowcaseChildrenArray = ReturnType<typeof Children.toArray>;
+export type Theme_Showcase_Index_Showcase_ChildrenArray = ReturnType<typeof Children.toArray>;
 
-export type ThemeShowcaseIndexShowcaseItemElements = ThemeShowcaseIndexShowcaseItemElement[];
+export type Theme_Showcase_Index_ShowcaseItem_Elements = Theme_Showcase_Index_ShowcaseItem_Element[];
 
-export type ThemeShowcaseIndexShowcaseOpenMap = Record<number, boolean>;
+export type Theme_Showcase_Index_Showcase_OpenMap = Record<number, boolean>;
 
-export type ThemeShowcaseIndexShowcaseOpenMapState = [ThemeShowcaseIndexShowcaseOpenMap, ThemeShowcaseIndexShowcaseSetOpenMap];
+export type Theme_Showcase_Index_Showcase_OpenMapState = [Theme_Showcase_Index_Showcase_OpenMap, Theme_Showcase_Index_Showcase_SetOpenMap];
 
-export type ThemeShowcaseIndexShowcaseSetOpenMap = Dispatch<SetStateAction<ThemeShowcaseIndexShowcaseOpenMap>>;
+export type Theme_Showcase_Index_Showcase_SetOpenMap = Dispatch<SetStateAction<Theme_Showcase_Index_Showcase_OpenMap>>;
 
-export type ThemeShowcaseIndexShowcaseAllOpen = boolean;
+export type Theme_Showcase_Index_Showcase_AllOpen = boolean;
 
-export type ThemeShowcaseIndexShowcaseCollapseAllLabel = string;
+export type Theme_Showcase_Index_Showcase_CollapseAllLabel = string;
 
-export type ThemeShowcaseIndexShowcaseExpandAllLabel = string;
+export type Theme_Showcase_Index_Showcase_ExpandAllLabel = string;
 
-export type ThemeShowcaseIndexShowcaseTitleLabel = string;
+export type Theme_Showcase_Index_Showcase_TitleLabel = string;
 
-export type ThemeShowcaseIndexShowcaseToggleAllLabel = string;
+export type Theme_Showcase_Index_Showcase_ToggleAllLabel = string;
 
-export type ThemeShowcaseIndexShowcaseHandleToggleAllNextOpen = boolean;
+export type Theme_Showcase_Index_Showcase_HandleToggleAll_NextOpen = boolean;
 
-export type ThemeShowcaseIndexShowcaseHandleItemToggleIndex = number;
+export type Theme_Showcase_Index_Showcase_HandleItemToggle_Index = number;
 
-export type ThemeShowcaseIndexShowcaseHandleItemToggleIsOpen = boolean;
+export type Theme_Showcase_Index_Showcase_HandleItemToggle_IsOpen = boolean;
 
-export type ThemeShowcaseIndexShowcaseHandleItemTogglePrevious = ThemeShowcaseIndexShowcaseOpenMap;
+export type Theme_Showcase_Index_Showcase_HandleItemToggle_Previous = Theme_Showcase_Index_Showcase_OpenMap;
 
-export type ThemeShowcaseIndexShowcaseItemElement = ReactElement<ThemeShowcaseIndexItemProps>;
+export type Theme_Showcase_Index_ShowcaseItem_Element = ReactElement<Theme_Showcase_Index_ItemProps>;
 
 /**
  * Theme - Showcase - Item.
  *
  * @since 0.18.0
  */
-export type ThemeShowcaseIndexItemPropsTitle = string;
+export type Theme_Showcase_Index_ItemProps_Title = string;
 
-export type ThemeShowcaseIndexItemPropsChildren = ReactNode;
+export type Theme_Showcase_Index_ItemProps_Children = ReactNode;
 
-export type ThemeShowcaseIndexItemProps = {
-  title: ThemeShowcaseIndexItemPropsTitle;
-  children: ThemeShowcaseIndexItemPropsChildren;
+export type Theme_Showcase_Index_ItemProps = {
+  title: Theme_Showcase_Index_ItemProps_Title;
+  children: Theme_Showcase_Index_ItemProps_Children;
 };
 
-export type ThemeShowcaseIndexItemReturns = ReactElement;
+export type Theme_Showcase_Index_ItemReturns = ReactElement;
 
-export type ThemeShowcaseIndexItemUnknownCast = unknown;
+export type Theme_Showcase_Index_ItemUnknownCast = unknown;
 
-export type ThemeShowcaseIndexItemTitle = string;
+export type Theme_Showcase_Index_ItemTitle = string;
 
-export type ThemeShowcaseIndexItemChildren = ReactNode;
+export type Theme_Showcase_Index_ItemChildren = ReactNode;

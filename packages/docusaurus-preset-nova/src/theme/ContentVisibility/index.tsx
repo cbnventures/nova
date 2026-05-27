@@ -2,9 +2,9 @@ import Draft from '@theme/ContentVisibility/Draft';
 import Unlisted from '@theme/ContentVisibility/Unlisted';
 
 import type {
-  ThemeContentVisibilityContentVisibilityFrontMatter,
-  ThemeContentVisibilityContentVisibilityProps,
-  ThemeContentVisibilityContentVisibilityUnlisted,
+  Theme_ContentVisibility_Index_ContentVisibility_FrontMatter,
+  Theme_ContentVisibility_Index_ContentVisibility_Props,
+  Theme_ContentVisibility_Index_ContentVisibility_Unlisted,
 } from '../../types/theme/ContentVisibility/index.d.ts';
 
 /**
@@ -14,15 +14,15 @@ import type {
  * based on the metadata and front matter visibility flags
  * provided by the Docusaurus content plugins.
  *
- * @param {ThemeContentVisibilityContentVisibilityProps} props - Props.
+ * @param {Theme_ContentVisibility_Index_ContentVisibility_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function ContentVisibility(props: ThemeContentVisibilityContentVisibilityProps) {
-  const unlisted: ThemeContentVisibilityContentVisibilityUnlisted = props['metadata']['unlisted'];
-  const frontMatter: ThemeContentVisibilityContentVisibilityFrontMatter = props['metadata']['frontMatter'];
+function ContentVisibility(props: Theme_ContentVisibility_Index_ContentVisibility_Props) {
+  const unlisted: Theme_ContentVisibility_Index_ContentVisibility_Unlisted = props['metadata']['unlisted'];
+  const frontMatter: Theme_ContentVisibility_Index_ContentVisibility_FrontMatter = props['metadata']['frontMatter'];
 
   return (
     <>

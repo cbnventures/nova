@@ -6,23 +6,23 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocItemPaginatorDocItemPaginatorPropsClassName = string | undefined;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_Props_ClassName = string | undefined;
 
-export type ThemeDocItemPaginatorDocItemPaginatorPropsStyle = CSSProperties | undefined;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocItemPaginatorDocItemPaginatorProps = {
-  className?: ThemeDocItemPaginatorDocItemPaginatorPropsClassName;
-  style?: ThemeDocItemPaginatorDocItemPaginatorPropsStyle;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_Props = {
+  className?: Theme_DocItem_Paginator_Index_DocItemPaginator_Props_ClassName;
+  style?: Theme_DocItem_Paginator_Index_DocItemPaginator_Props_Style;
 };
 
-export type ThemeDocItemPaginatorDocItemPaginatorDoc = DocContextValue;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_Doc = DocContextValue;
 
-export type ThemeDocItemPaginatorDocItemPaginatorGlobalData = Record<string, unknown>;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_GlobalData = Record<string, unknown>;
 
-export type ThemeDocItemPaginatorDocItemPaginatorDocDescriptions = Record<string, string>;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_DocDescriptions = Record<string, string>;
 
-export type ThemeDocItemPaginatorDocItemPaginatorSpread = Record<string, unknown>;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_Spread = Record<string, unknown>;
 
-export type ThemeDocItemPaginatorDocItemPaginatorDescription = string | undefined;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_Description = string | undefined;
 
-export type ThemeDocItemPaginatorDocItemPaginatorMergedClassName = string;
+export type Theme_DocItem_Paginator_Index_DocItemPaginator_MergedClassName = string;

@@ -3,11 +3,11 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintSyntaxNoOptionalChainingCheckChainExpressionContext,
-  RulesEslintSyntaxNoOptionalChainingCheckChainExpressionNode,
-  RulesEslintSyntaxNoOptionalChainingCheckChainExpressionReturns,
-  RulesEslintSyntaxNoOptionalChainingRuleDefaultOptionsIgnoreFiles,
-  RulesEslintSyntaxNoOptionalChainingRuleOptions,
+  Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Context,
+  Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Node,
+  Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Returns,
+  Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleOptions,
 } from '../../../types/rules/eslint/syntax/no-optional-chaining.d.ts';
 
 /**
@@ -18,7 +18,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintSyntaxNoOptionalChaining {
+export class Runner {
   /**
    * Rules - ESLint - Syntax - No Optional Chaining - Rule.
    *
@@ -51,10 +51,10 @@ export class RulesEslintSyntaxNoOptionalChaining {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintSyntaxNoOptionalChainingRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintSyntaxNoOptionalChainingRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -63,7 +63,7 @@ export class RulesEslintSyntaxNoOptionalChaining {
 
       return {
         ChainExpression(node) {
-          RulesEslintSyntaxNoOptionalChaining.checkChainExpression(context, node);
+          Runner.checkChainExpression(context, node);
 
           return;
         },
@@ -79,14 +79,14 @@ export class RulesEslintSyntaxNoOptionalChaining {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoOptionalChainingCheckChainExpressionContext} context - Context.
-   * @param {RulesEslintSyntaxNoOptionalChainingCheckChainExpressionNode}    node    - Node.
+   * @param {Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Context} context - Context.
+   * @param {Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Node}    node    - Node.
    *
-   * @returns {RulesEslintSyntaxNoOptionalChainingCheckChainExpressionReturns}
+   * @returns {Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Returns}
    *
    * @since 0.15.0
    */
-  private static checkChainExpression(context: RulesEslintSyntaxNoOptionalChainingCheckChainExpressionContext, node: RulesEslintSyntaxNoOptionalChainingCheckChainExpressionNode): RulesEslintSyntaxNoOptionalChainingCheckChainExpressionReturns {
+  private static checkChainExpression(context: Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Context, node: Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Node): Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Returns {
     context.report({
       node,
       messageId: 'noOptionalChaining',

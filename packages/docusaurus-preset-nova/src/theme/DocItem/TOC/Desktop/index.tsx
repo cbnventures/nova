@@ -2,10 +2,10 @@ import { useDoc } from '@docusaurus/plugin-content-docs/client';
 import TOC from '@theme/TOC';
 
 import type {
-  ThemeDocItemTocDesktopDocItemTocDesktopDoc,
-  ThemeDocItemTocDesktopDocItemTocDesktopMergedClassName,
-  ThemeDocItemTocDesktopDocItemTocDesktopProps,
-  ThemeDocItemTocDesktopDocItemTocDesktopTocSpread,
+  Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopDoc,
+  Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopMergedClassName,
+  Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps,
+  Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopTocSpread,
 } from '../../../../types/theme/DocItem/TOC/Desktop/index.d.ts';
 
 /**
@@ -15,15 +15,15 @@ import type {
  * using heading data and level constraints from the current
  * doc front matter.
  *
- * @param {ThemeDocItemTocDesktopDocItemTocDesktopProps} props - Props.
+ * @param {Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocItemTOCDesktop(props: ThemeDocItemTocDesktopDocItemTocDesktopProps) {
-  const doc: ThemeDocItemTocDesktopDocItemTocDesktopDoc = useDoc();
-  const tocSpread: ThemeDocItemTocDesktopDocItemTocDesktopTocSpread = {};
+function DocItemTOCDesktop(props: Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps) {
+  const doc: Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopDoc = useDoc();
+  const tocSpread: Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopTocSpread = {};
 
   if (doc['frontMatter']['toc_min_heading_level'] !== undefined) {
     Reflect.set(tocSpread, 'minHeadingLevel', doc['frontMatter']['toc_min_heading_level']);
@@ -33,7 +33,7 @@ function DocItemTOCDesktop(props: ThemeDocItemTocDesktopDocItemTocDesktopProps) 
     Reflect.set(tocSpread, 'maxHeadingLevel', doc['frontMatter']['toc_max_heading_level']);
   }
 
-  const mergedClassName: ThemeDocItemTocDesktopDocItemTocDesktopMergedClassName = (props['className'] !== undefined) ? `nova-doc-item-toc-desktop ${props['className']}` : 'nova-doc-item-toc-desktop';
+  const mergedClassName: Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopMergedClassName = (props['className'] !== undefined) ? `nova-doc-item-toc-desktop ${props['className']}` : 'nova-doc-item-toc-desktop';
 
   return (
     <TOC

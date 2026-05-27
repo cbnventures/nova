@@ -16,79 +16,79 @@ import {
 } from '../lib/regex.js';
 
 import type {
-  TestsLayeredScopeExtractRuleTriplesAllowDuplicatePattern,
-  TestsLayeredScopeExtractRuleTriplesAllowed,
-  TestsLayeredScopeExtractRuleTriplesBlockStart,
-  TestsLayeredScopeExtractRuleTriplesBody,
-  TestsLayeredScopeExtractRuleTriplesChar,
-  TestsLayeredScopeExtractRuleTriplesColon,
-  TestsLayeredScopeExtractRuleTriplesDeclaration,
-  TestsLayeredScopeExtractRuleTriplesDepth,
-  TestsLayeredScopeExtractRuleTriplesIndex,
-  TestsLayeredScopeExtractRuleTriplesInner,
-  TestsLayeredScopeExtractRuleTriplesNested,
-  TestsLayeredScopeExtractRuleTriplesPrelude,
-  TestsLayeredScopeExtractRuleTriplesPreludeStart,
-  TestsLayeredScopeExtractRuleTriplesProperty,
-  TestsLayeredScopeExtractRuleTriplesRawValue,
-  TestsLayeredScopeExtractRuleTriplesReturns,
-  TestsLayeredScopeExtractRuleTriplesSelector,
-  TestsLayeredScopeExtractRuleTriplesSource,
-  TestsLayeredScopeExtractRuleTriplesStripped,
-  TestsLayeredScopeExtractRuleTriplesTriples,
-  TestsLayeredScopeExtractRuleTriplesValue,
-  TestsLayeredScopeExtractRuleTriplesWhitespacePattern,
-  TestsLayeredScopeGetPackageRootCurrentFileDirectory,
-  TestsLayeredScopeGetPackageRootCurrentFilePath,
-  TestsLayeredScopeGetPackageRootReturns,
-  TestsLayeredScopeLayeredScopeCombinedKeys,
-  TestsLayeredScopeLayeredScopeDryMessage,
-  TestsLayeredScopeLayeredScopeDuplicates,
-  TestsLayeredScopeLayeredScopeFamilies,
-  TestsLayeredScopeLayeredScopeFamily,
-  TestsLayeredScopeLayeredScopeFamilyParam,
-  TestsLayeredScopeLayeredScopeHasUmbrellaAndMember,
-  TestsLayeredScopeLayeredScopeLiterals,
-  TestsLayeredScopeLayeredScopeMember,
-  TestsLayeredScopeLayeredScopeMemberParam,
-  TestsLayeredScopeLayeredScopeMembershipMessage,
-  TestsLayeredScopeLayeredScopeMissing,
-  TestsLayeredScopeLayeredScopePerPresetMember,
-  TestsLayeredScopeLayeredScopePerPresetMemberFiles,
-  TestsLayeredScopeLayeredScopePerPresetMemberTriples,
-  TestsLayeredScopeLayeredScopePerPresetUmbrella,
-  TestsLayeredScopeLayeredScopePerPresetUmbrellaByPreset,
-  TestsLayeredScopeLayeredScopePerPresetUmbrellaFiles,
-  TestsLayeredScopeLayeredScopePerPresetUmbrellaTriples,
-  TestsLayeredScopeLayeredScopePreset,
-  TestsLayeredScopeLayeredScopePresetMatch,
-  TestsLayeredScopeLayeredScopePresetPathPattern,
-  TestsLayeredScopeLayeredScopeSharedMemberPath,
-  TestsLayeredScopeLayeredScopeSharedMemberTriples,
-  TestsLayeredScopeLayeredScopeSharedUmbrellaKeys,
-  TestsLayeredScopeLayeredScopeSharedUmbrellaPath,
-  TestsLayeredScopeLayeredScopeSharedUmbrellaTriples,
-  TestsLayeredScopeLayeredScopeTokens,
-  TestsLayeredScopeLayeredScopeTsxPath,
-  TestsLayeredScopeReadClassNameLiteralsCapture,
-  TestsLayeredScopeReadClassNameLiteralsContent,
-  TestsLayeredScopeReadClassNameLiteralsFilePath,
-  TestsLayeredScopeReadClassNameLiteralsLiterals,
-  TestsLayeredScopeReadClassNameLiteralsMatch,
-  TestsLayeredScopeReadClassNameLiteralsMergeCapture,
-  TestsLayeredScopeReadClassNameLiteralsMergeMatch,
-  TestsLayeredScopeReadClassNameLiteralsMergePattern,
-  TestsLayeredScopeReadClassNameLiteralsPattern,
-  TestsLayeredScopeReadClassNameLiteralsReturns,
-  TestsLayeredScopeReadClassNameLiteralsWhitespacePattern,
-  TestsLayeredScopeReadTriplesContent,
-  TestsLayeredScopeReadTriplesFilePath,
-  TestsLayeredScopeReadTriplesReturns,
-  TestsLayeredScopeStripBlockCommentsPattern,
-  TestsLayeredScopeStripBlockCommentsReturns,
-  TestsLayeredScopeStripBlockCommentsSource,
-  TestsLayeredScopeTripleKeyReturns,
-  TestsLayeredScopeTripleKeyTriple,
+  Tests_LayeredScope_ExtractRuleTriples_AllowDuplicatePattern,
+  Tests_LayeredScope_ExtractRuleTriples_Allowed,
+  Tests_LayeredScope_ExtractRuleTriples_BlockStart,
+  Tests_LayeredScope_ExtractRuleTriples_Body,
+  Tests_LayeredScope_ExtractRuleTriples_Char,
+  Tests_LayeredScope_ExtractRuleTriples_Colon,
+  Tests_LayeredScope_ExtractRuleTriples_Declaration,
+  Tests_LayeredScope_ExtractRuleTriples_Depth,
+  Tests_LayeredScope_ExtractRuleTriples_Index,
+  Tests_LayeredScope_ExtractRuleTriples_Inner,
+  Tests_LayeredScope_ExtractRuleTriples_Nested,
+  Tests_LayeredScope_ExtractRuleTriples_Prelude,
+  Tests_LayeredScope_ExtractRuleTriples_PreludeStart,
+  Tests_LayeredScope_ExtractRuleTriples_Property,
+  Tests_LayeredScope_ExtractRuleTriples_RawValue,
+  Tests_LayeredScope_ExtractRuleTriples_Returns,
+  Tests_LayeredScope_ExtractRuleTriples_Selector,
+  Tests_LayeredScope_ExtractRuleTriples_Source,
+  Tests_LayeredScope_ExtractRuleTriples_Stripped,
+  Tests_LayeredScope_ExtractRuleTriples_Triples,
+  Tests_LayeredScope_ExtractRuleTriples_Value,
+  Tests_LayeredScope_ExtractRuleTriples_WhitespacePattern,
+  Tests_LayeredScope_GetPackageRoot_CurrentFileDirectory,
+  Tests_LayeredScope_GetPackageRoot_CurrentFilePath,
+  Tests_LayeredScope_GetPackageRoot_Returns,
+  Tests_LayeredScope_LayeredScope_CombinedKeys,
+  Tests_LayeredScope_LayeredScope_DryMessage,
+  Tests_LayeredScope_LayeredScope_Duplicates,
+  Tests_LayeredScope_LayeredScope_Families,
+  Tests_LayeredScope_LayeredScope_Family,
+  Tests_LayeredScope_LayeredScope_FamilyParam,
+  Tests_LayeredScope_LayeredScope_HasUmbrellaAndMember,
+  Tests_LayeredScope_LayeredScope_Literals,
+  Tests_LayeredScope_LayeredScope_Member,
+  Tests_LayeredScope_LayeredScope_MemberParam,
+  Tests_LayeredScope_LayeredScope_MembershipMessage,
+  Tests_LayeredScope_LayeredScope_Missing,
+  Tests_LayeredScope_LayeredScope_PerPresetMember,
+  Tests_LayeredScope_LayeredScope_PerPresetMemberFiles,
+  Tests_LayeredScope_LayeredScope_PerPresetMemberTriples,
+  Tests_LayeredScope_LayeredScope_PerPresetUmbrella,
+  Tests_LayeredScope_LayeredScope_PerPresetUmbrellaByPreset,
+  Tests_LayeredScope_LayeredScope_PerPresetUmbrellaFiles,
+  Tests_LayeredScope_LayeredScope_PerPresetUmbrellaTriples,
+  Tests_LayeredScope_LayeredScope_Preset,
+  Tests_LayeredScope_LayeredScope_PresetMatch,
+  Tests_LayeredScope_LayeredScope_PresetPathPattern,
+  Tests_LayeredScope_LayeredScope_SharedMemberPath,
+  Tests_LayeredScope_LayeredScope_SharedMemberTriples,
+  Tests_LayeredScope_LayeredScope_SharedUmbrellaKeys,
+  Tests_LayeredScope_LayeredScope_SharedUmbrellaPath,
+  Tests_LayeredScope_LayeredScope_SharedUmbrellaTriples,
+  Tests_LayeredScope_LayeredScope_Tokens,
+  Tests_LayeredScope_LayeredScope_TsxPath,
+  Tests_LayeredScope_ReadClassNameLiterals_Capture,
+  Tests_LayeredScope_ReadClassNameLiterals_Content,
+  Tests_LayeredScope_ReadClassNameLiterals_FilePath,
+  Tests_LayeredScope_ReadClassNameLiterals_Literals,
+  Tests_LayeredScope_ReadClassNameLiterals_Match,
+  Tests_LayeredScope_ReadClassNameLiterals_MergeCapture,
+  Tests_LayeredScope_ReadClassNameLiterals_MergeMatch,
+  Tests_LayeredScope_ReadClassNameLiterals_MergePattern,
+  Tests_LayeredScope_ReadClassNameLiterals_Pattern,
+  Tests_LayeredScope_ReadClassNameLiterals_Returns,
+  Tests_LayeredScope_ReadClassNameLiterals_WhitespacePattern,
+  Tests_LayeredScope_ReadTriples_Content,
+  Tests_LayeredScope_ReadTriples_FilePath,
+  Tests_LayeredScope_ReadTriples_Returns,
+  Tests_LayeredScope_StripBlockComments_Pattern,
+  Tests_LayeredScope_StripBlockComments_Returns,
+  Tests_LayeredScope_StripBlockComments_Source,
+  Tests_LayeredScope_TripleKey_Returns,
+  Tests_LayeredScope_TripleKey_Triple,
 } from '../types/tests/layered-scope.test.d.ts';
 
 /**
@@ -104,7 +104,7 @@ import type {
  *
  * @since 0.18.0
  */
-const layeredScopeFamilies: TestsLayeredScopeLayeredScopeFamilies = [{
+const layeredScopeFamilies: Tests_LayeredScope_LayeredScope_Families = [{
   umbrella: 'nova-error-surface',
   sharedUmbrellaFile: 'src/styles/theme/error-surface/style.css',
   perPresetUmbrellaGlob: 'src/styles/presets/*/theme/error-surface/style.css',
@@ -144,32 +144,32 @@ const layeredScopeFamilies: TestsLayeredScopeLayeredScopeFamilies = [{
  *
  * @since 0.18.0
  */
-function extractRuleTriples(source: TestsLayeredScopeExtractRuleTriplesSource): TestsLayeredScopeExtractRuleTriplesReturns {
-  const stripped: TestsLayeredScopeExtractRuleTriplesStripped = stripBlockComments(source);
-  const triples: TestsLayeredScopeExtractRuleTriplesTriples = [];
-  const allowDuplicatePattern: TestsLayeredScopeExtractRuleTriplesAllowDuplicatePattern = new RegExp(LIB_REGEX_LAYERED_SCOPE_ALLOW_DUPLICATE_COMMENT.source, 'g');
-  const whitespacePattern: TestsLayeredScopeExtractRuleTriplesWhitespacePattern = new RegExp(LIB_REGEX_WHITESPACE_RUN.source, 'g');
+function extractRuleTriples(source: Tests_LayeredScope_ExtractRuleTriples_Source): Tests_LayeredScope_ExtractRuleTriples_Returns {
+  const stripped: Tests_LayeredScope_ExtractRuleTriples_Stripped = stripBlockComments(source);
+  const triples: Tests_LayeredScope_ExtractRuleTriples_Triples = [];
+  const allowDuplicatePattern: Tests_LayeredScope_ExtractRuleTriples_AllowDuplicatePattern = new RegExp(LIB_REGEX_LAYERED_SCOPE_ALLOW_DUPLICATE_COMMENT.source, 'g');
+  const whitespacePattern: Tests_LayeredScope_ExtractRuleTriples_WhitespacePattern = new RegExp(LIB_REGEX_WHITESPACE_RUN.source, 'g');
 
-  let depth: TestsLayeredScopeExtractRuleTriplesDepth = 0;
-  let blockStart: TestsLayeredScopeExtractRuleTriplesBlockStart = 0;
-  let preludeStart: TestsLayeredScopeExtractRuleTriplesPreludeStart = 0;
-  let allowed: TestsLayeredScopeExtractRuleTriplesAllowed = false;
+  let depth: Tests_LayeredScope_ExtractRuleTriples_Depth = 0;
+  let blockStart: Tests_LayeredScope_ExtractRuleTriples_BlockStart = 0;
+  let preludeStart: Tests_LayeredScope_ExtractRuleTriples_PreludeStart = 0;
+  let allowed: Tests_LayeredScope_ExtractRuleTriples_Allowed = false;
 
-  for (let index: TestsLayeredScopeExtractRuleTriplesIndex = 0; index < stripped.length; index += 1) {
-    const char: TestsLayeredScopeExtractRuleTriplesChar = stripped[index] ?? '';
+  for (let index: Tests_LayeredScope_ExtractRuleTriples_Index = 0; index < stripped.length; index += 1) {
+    const char: Tests_LayeredScope_ExtractRuleTriples_Char = stripped[index] ?? '';
 
     if (char === '{') {
       if (depth === 0) {
-        const prelude: TestsLayeredScopeExtractRuleTriplesPrelude = stripped.slice(preludeStart, index).trim();
+        const prelude: Tests_LayeredScope_ExtractRuleTriples_Prelude = stripped.slice(preludeStart, index).trim();
 
         if (prelude.startsWith('@') === true) {
           // At-rule. Walk to its matching close brace; skip emitting triples.
-          let nested: TestsLayeredScopeExtractRuleTriplesNested = 1;
+          let nested: Tests_LayeredScope_ExtractRuleTriples_Nested = 1;
 
           index += 1;
 
           while (index < stripped.length && nested > 0) {
-            const inner: TestsLayeredScopeExtractRuleTriplesInner = stripped[index] ?? '';
+            const inner: Tests_LayeredScope_ExtractRuleTriples_Inner = stripped[index] ?? '';
 
             if (inner === '{') {
               nested += 1;
@@ -194,31 +194,31 @@ function extractRuleTriples(source: TestsLayeredScopeExtractRuleTriplesSource): 
       }
     } else if (char === '}') {
       if (depth === 1) {
-        const prelude: TestsLayeredScopeExtractRuleTriplesPrelude = stripped.slice(preludeStart, blockStart - 1).trim();
-        const body: TestsLayeredScopeExtractRuleTriplesBody = stripped.slice(blockStart, index);
+        const prelude: Tests_LayeredScope_ExtractRuleTriples_Prelude = stripped.slice(preludeStart, blockStart - 1).trim();
+        const body: Tests_LayeredScope_ExtractRuleTriples_Body = stripped.slice(blockStart, index);
 
         if (allowed === false) {
-          const selector: TestsLayeredScopeExtractRuleTriplesSelector = prelude
+          const selector: Tests_LayeredScope_ExtractRuleTriples_Selector = prelude
             .replace(allowDuplicatePattern, '')
             .replace(whitespacePattern, ' ')
             .trim();
 
           for (const declaration of body.split(';')) {
-            const declarationText: TestsLayeredScopeExtractRuleTriplesDeclaration = declaration;
-            const colon: TestsLayeredScopeExtractRuleTriplesColon = declarationText.indexOf(':');
+            const declarationText: Tests_LayeredScope_ExtractRuleTriples_Declaration = declaration;
+            const colon: Tests_LayeredScope_ExtractRuleTriples_Colon = declarationText.indexOf(':');
 
             if (colon === -1) {
               continue;
             }
 
-            const property: TestsLayeredScopeExtractRuleTriplesProperty = declarationText.slice(0, colon).trim();
-            const rawValue: TestsLayeredScopeExtractRuleTriplesRawValue = declarationText.slice(colon + 1).trim();
+            const property: Tests_LayeredScope_ExtractRuleTriples_Property = declarationText.slice(0, colon).trim();
+            const rawValue: Tests_LayeredScope_ExtractRuleTriples_RawValue = declarationText.slice(colon + 1).trim();
 
             if (property === '' || rawValue === '') {
               continue;
             }
 
-            const value: TestsLayeredScopeExtractRuleTriplesValue = rawValue.replace(whitespacePattern, ' ');
+            const value: Tests_LayeredScope_ExtractRuleTriples_Value = rawValue.replace(whitespacePattern, ' ');
 
             triples.push({
               selector,
@@ -247,9 +247,9 @@ function extractRuleTriples(source: TestsLayeredScopeExtractRuleTriplesSource): 
  *
  * @since 0.18.0
  */
-function getPackageRoot(): TestsLayeredScopeGetPackageRootReturns {
-  const currentFilePath: TestsLayeredScopeGetPackageRootCurrentFilePath = fileURLToPath(import.meta.url);
-  const currentFileDirectory: TestsLayeredScopeGetPackageRootCurrentFileDirectory = dirname(currentFilePath);
+function getPackageRoot(): Tests_LayeredScope_GetPackageRoot_Returns {
+  const currentFilePath: Tests_LayeredScope_GetPackageRoot_CurrentFilePath = fileURLToPath(import.meta.url);
+  const currentFileDirectory: Tests_LayeredScope_GetPackageRoot_CurrentFileDirectory = dirname(currentFilePath);
 
   return resolve(currentFileDirectory, '..', '..');
 }
@@ -264,17 +264,17 @@ function getPackageRoot(): TestsLayeredScopeGetPackageRootReturns {
  *
  * @since 0.18.0
  */
-async function readClassNameLiterals(filePath: TestsLayeredScopeReadClassNameLiteralsFilePath): TestsLayeredScopeReadClassNameLiteralsReturns {
-  const content: TestsLayeredScopeReadClassNameLiteralsContent = await readFile(filePath, 'utf-8');
-  const pattern: TestsLayeredScopeReadClassNameLiteralsPattern = new RegExp(LIB_REGEX_JSX_CLASS_NAME.source, 'g');
-  const mergePattern: TestsLayeredScopeReadClassNameLiteralsMergePattern = new RegExp(LIB_REGEX_JSX_CLASS_NAME_MERGE_FALLBACK.source, 'g');
-  const whitespacePattern: TestsLayeredScopeReadClassNameLiteralsWhitespacePattern = new RegExp(LIB_REGEX_WHITESPACE_RUN.source, 'g');
-  const literals: TestsLayeredScopeReadClassNameLiteralsLiterals = [];
+async function readClassNameLiterals(filePath: Tests_LayeredScope_ReadClassNameLiterals_FilePath): Tests_LayeredScope_ReadClassNameLiterals_Returns {
+  const content: Tests_LayeredScope_ReadClassNameLiterals_Content = await readFile(filePath, 'utf-8');
+  const pattern: Tests_LayeredScope_ReadClassNameLiterals_Pattern = new RegExp(LIB_REGEX_JSX_CLASS_NAME.source, 'g');
+  const mergePattern: Tests_LayeredScope_ReadClassNameLiterals_MergePattern = new RegExp(LIB_REGEX_JSX_CLASS_NAME_MERGE_FALLBACK.source, 'g');
+  const whitespacePattern: Tests_LayeredScope_ReadClassNameLiterals_WhitespacePattern = new RegExp(LIB_REGEX_WHITESPACE_RUN.source, 'g');
+  const literals: Tests_LayeredScope_ReadClassNameLiterals_Literals = [];
 
-  let match: TestsLayeredScopeReadClassNameLiteralsMatch = pattern.exec(content);
+  let match: Tests_LayeredScope_ReadClassNameLiterals_Match = pattern.exec(content);
 
   while (match !== null) {
-    const capture: TestsLayeredScopeReadClassNameLiteralsCapture = match[1];
+    const capture: Tests_LayeredScope_ReadClassNameLiterals_Capture = match[1];
 
     if (capture !== undefined) {
       literals.push(capture.replace(whitespacePattern, ' ').trim());
@@ -283,10 +283,10 @@ async function readClassNameLiterals(filePath: TestsLayeredScopeReadClassNameLit
     match = pattern.exec(content);
   }
 
-  let mergeMatch: TestsLayeredScopeReadClassNameLiteralsMergeMatch = mergePattern.exec(content);
+  let mergeMatch: Tests_LayeredScope_ReadClassNameLiterals_MergeMatch = mergePattern.exec(content);
 
   while (mergeMatch !== null) {
-    const mergeCapture: TestsLayeredScopeReadClassNameLiteralsMergeCapture = mergeMatch[1];
+    const mergeCapture: Tests_LayeredScope_ReadClassNameLiterals_MergeCapture = mergeMatch[1];
 
     if (mergeCapture !== undefined) {
       literals.push(mergeCapture.replace(whitespacePattern, ' ').trim());
@@ -309,9 +309,9 @@ async function readClassNameLiterals(filePath: TestsLayeredScopeReadClassNameLit
  *
  * @since 0.18.0
  */
-async function readTriples(filePath: TestsLayeredScopeReadTriplesFilePath): TestsLayeredScopeReadTriplesReturns {
+async function readTriples(filePath: Tests_LayeredScope_ReadTriples_FilePath): Tests_LayeredScope_ReadTriples_Returns {
   try {
-    const content: TestsLayeredScopeReadTriplesContent = await readFile(filePath, 'utf-8');
+    const content: Tests_LayeredScope_ReadTriples_Content = await readFile(filePath, 'utf-8');
 
     return extractRuleTriples(content);
   } catch {
@@ -329,8 +329,8 @@ async function readTriples(filePath: TestsLayeredScopeReadTriplesFilePath): Test
  *
  * @since 0.18.0
  */
-function stripBlockComments(source: TestsLayeredScopeStripBlockCommentsSource): TestsLayeredScopeStripBlockCommentsReturns {
-  const pattern: TestsLayeredScopeStripBlockCommentsPattern = new RegExp(LIB_REGEX_CSS_BLOCK_COMMENT.source, 'g');
+function stripBlockComments(source: Tests_LayeredScope_StripBlockComments_Source): Tests_LayeredScope_StripBlockComments_Returns {
+  const pattern: Tests_LayeredScope_StripBlockComments_Pattern = new RegExp(LIB_REGEX_CSS_BLOCK_COMMENT.source, 'g');
 
   return source.replace(pattern, (match) => {
     if (match.includes('layered-scope:allow-duplicate') === true) {
@@ -351,7 +351,7 @@ function stripBlockComments(source: TestsLayeredScopeStripBlockCommentsSource): 
  *
  * @since 0.18.0
  */
-function tripleKey(triple: TestsLayeredScopeTripleKeyTriple): TestsLayeredScopeTripleKeyReturns {
+function tripleKey(triple: Tests_LayeredScope_TripleKey_Triple): Tests_LayeredScope_TripleKey_Returns {
   return `${triple['selector']}|${triple['property']}|${triple['value']}`;
 }
 
@@ -375,18 +375,18 @@ function tripleKey(triple: TestsLayeredScopeTripleKeyTriple): TestsLayeredScopeT
  */
 describe('layered scope', () => {
   for (const family of layeredScopeFamilies) {
-    const familyContext: TestsLayeredScopeLayeredScopeFamily = family;
+    const familyContext: Tests_LayeredScope_LayeredScope_Family = family;
 
     it(`every member of '${familyContext['umbrella']}' renders the umbrella class in its tsx`, async () => {
-      const familyParam: TestsLayeredScopeLayeredScopeFamilyParam = familyContext;
-      const missing: TestsLayeredScopeLayeredScopeMissing = [];
+      const familyParam: Tests_LayeredScope_LayeredScope_FamilyParam = familyContext;
+      const missing: Tests_LayeredScope_LayeredScope_Missing = [];
 
       for (const member of familyParam['members']) {
-        const memberParam: TestsLayeredScopeLayeredScopeMemberParam = member;
-        const tsxPath: TestsLayeredScopeLayeredScopeTsxPath = resolve(getPackageRoot(), memberParam['tsx']);
-        const literals: TestsLayeredScopeLayeredScopeLiterals = await readClassNameLiterals(tsxPath);
-        const hasUmbrellaAndMember: TestsLayeredScopeLayeredScopeHasUmbrellaAndMember = literals.some((literal) => {
-          const tokens: TestsLayeredScopeLayeredScopeTokens = literal.split(' ');
+        const memberParam: Tests_LayeredScope_LayeredScope_MemberParam = member;
+        const tsxPath: Tests_LayeredScope_LayeredScope_TsxPath = resolve(getPackageRoot(), memberParam['tsx']);
+        const literals: Tests_LayeredScope_LayeredScope_Literals = await readClassNameLiterals(tsxPath);
+        const hasUmbrellaAndMember: Tests_LayeredScope_LayeredScope_HasUmbrellaAndMember = literals.some((literal) => {
+          const tokens: Tests_LayeredScope_LayeredScope_Tokens = literal.split(' ');
 
           return tokens.includes(familyParam['umbrella']) === true && tokens.includes(memberParam['class']) === true;
         });
@@ -396,7 +396,7 @@ describe('layered scope', () => {
         }
       }
 
-      const message: TestsLayeredScopeLayeredScopeMembershipMessage = [
+      const message: Tests_LayeredScope_LayeredScope_MembershipMessage = [
         `Members of '${familyParam['umbrella']}' missing the umbrella class in their TSX render:`,
         ...missing,
       ].join('\n');
@@ -407,34 +407,34 @@ describe('layered scope', () => {
     });
 
     it(`no member of '${familyContext['umbrella']}' duplicates an umbrella triple`, async () => {
-      const familyParam: TestsLayeredScopeLayeredScopeFamilyParam = familyContext;
-      const sharedUmbrellaPath: TestsLayeredScopeLayeredScopeSharedUmbrellaPath = resolve(getPackageRoot(), familyParam['sharedUmbrellaFile']);
-      const sharedUmbrellaTriples: TestsLayeredScopeLayeredScopeSharedUmbrellaTriples = await readTriples(sharedUmbrellaPath);
-      const sharedUmbrellaKeys: TestsLayeredScopeLayeredScopeSharedUmbrellaKeys = new Set(sharedUmbrellaTriples.map(tripleKey));
-      const duplicates: TestsLayeredScopeLayeredScopeDuplicates = [];
-      const presetPathPattern: TestsLayeredScopeLayeredScopePresetPathPattern = new RegExp(LIB_REGEX_PRESET_PATH_SEGMENT.source);
+      const familyParam: Tests_LayeredScope_LayeredScope_FamilyParam = familyContext;
+      const sharedUmbrellaPath: Tests_LayeredScope_LayeredScope_SharedUmbrellaPath = resolve(getPackageRoot(), familyParam['sharedUmbrellaFile']);
+      const sharedUmbrellaTriples: Tests_LayeredScope_LayeredScope_SharedUmbrellaTriples = await readTriples(sharedUmbrellaPath);
+      const sharedUmbrellaKeys: Tests_LayeredScope_LayeredScope_SharedUmbrellaKeys = new Set(sharedUmbrellaTriples.map(tripleKey));
+      const duplicates: Tests_LayeredScope_LayeredScope_Duplicates = [];
+      const presetPathPattern: Tests_LayeredScope_LayeredScope_PresetPathPattern = new RegExp(LIB_REGEX_PRESET_PATH_SEGMENT.source);
 
-      const perPresetUmbrellaFiles: TestsLayeredScopeLayeredScopePerPresetUmbrellaFiles = await glob(familyParam['perPresetUmbrellaGlob'], { cwd: getPackageRoot() });
-      const perPresetUmbrellaByPreset: TestsLayeredScopeLayeredScopePerPresetUmbrellaByPreset = new Map();
+      const perPresetUmbrellaFiles: Tests_LayeredScope_LayeredScope_PerPresetUmbrellaFiles = await glob(familyParam['perPresetUmbrellaGlob'], { cwd: getPackageRoot() });
+      const perPresetUmbrellaByPreset: Tests_LayeredScope_LayeredScope_PerPresetUmbrellaByPreset = new Map();
 
       for (const perPresetUmbrella of perPresetUmbrellaFiles) {
-        const perPresetUmbrellaRelative: TestsLayeredScopeLayeredScopePerPresetUmbrella = perPresetUmbrella;
-        const presetMatch: TestsLayeredScopeLayeredScopePresetMatch = perPresetUmbrellaRelative.match(presetPathPattern);
+        const perPresetUmbrellaRelative: Tests_LayeredScope_LayeredScope_PerPresetUmbrella = perPresetUmbrella;
+        const presetMatch: Tests_LayeredScope_LayeredScope_PresetMatch = perPresetUmbrellaRelative.match(presetPathPattern);
 
         if (presetMatch === null || presetMatch[1] === undefined) {
           continue;
         }
 
-        const preset: TestsLayeredScopeLayeredScopePreset = presetMatch[1];
-        const triples: TestsLayeredScopeLayeredScopePerPresetUmbrellaTriples = await readTriples(resolve(getPackageRoot(), perPresetUmbrellaRelative));
+        const preset: Tests_LayeredScope_LayeredScope_Preset = presetMatch[1];
+        const triples: Tests_LayeredScope_LayeredScope_PerPresetUmbrellaTriples = await readTriples(resolve(getPackageRoot(), perPresetUmbrellaRelative));
 
         perPresetUmbrellaByPreset.set(preset, triples);
       }
 
       for (const member of familyParam['members']) {
-        const memberParam: TestsLayeredScopeLayeredScopeMember = member;
-        const sharedMemberPath: TestsLayeredScopeLayeredScopeSharedMemberPath = resolve(getPackageRoot(), memberParam['sharedFile']);
-        const sharedMemberTriples: TestsLayeredScopeLayeredScopeSharedMemberTriples = await readTriples(sharedMemberPath);
+        const memberParam: Tests_LayeredScope_LayeredScope_Member = member;
+        const sharedMemberPath: Tests_LayeredScope_LayeredScope_SharedMemberPath = resolve(getPackageRoot(), memberParam['sharedFile']);
+        const sharedMemberTriples: Tests_LayeredScope_LayeredScope_SharedMemberTriples = await readTriples(sharedMemberPath);
 
         for (const triple of sharedMemberTriples) {
           if (sharedUmbrellaKeys.has(tripleKey(triple)) === true) {
@@ -442,23 +442,23 @@ describe('layered scope', () => {
           }
         }
 
-        const perPresetMemberFiles: TestsLayeredScopeLayeredScopePerPresetMemberFiles = await glob(memberParam['perPresetGlob'], { cwd: getPackageRoot() });
+        const perPresetMemberFiles: Tests_LayeredScope_LayeredScope_PerPresetMemberFiles = await glob(memberParam['perPresetGlob'], { cwd: getPackageRoot() });
 
         for (const perPresetMember of perPresetMemberFiles) {
-          const perPresetMemberRelative: TestsLayeredScopeLayeredScopePerPresetMember = perPresetMember;
-          const presetMatch: TestsLayeredScopeLayeredScopePresetMatch = perPresetMemberRelative.match(presetPathPattern);
+          const perPresetMemberRelative: Tests_LayeredScope_LayeredScope_PerPresetMember = perPresetMember;
+          const presetMatch: Tests_LayeredScope_LayeredScope_PresetMatch = perPresetMemberRelative.match(presetPathPattern);
 
           if (presetMatch === null || presetMatch[1] === undefined) {
             continue;
           }
 
-          const preset: TestsLayeredScopeLayeredScopePreset = presetMatch[1];
-          const perPresetUmbrellaTriples: TestsLayeredScopeLayeredScopePerPresetUmbrellaTriples = perPresetUmbrellaByPreset.get(preset) ?? [];
-          const combinedKeys: TestsLayeredScopeLayeredScopeCombinedKeys = new Set([
+          const preset: Tests_LayeredScope_LayeredScope_Preset = presetMatch[1];
+          const perPresetUmbrellaTriples: Tests_LayeredScope_LayeredScope_PerPresetUmbrellaTriples = perPresetUmbrellaByPreset.get(preset) ?? [];
+          const combinedKeys: Tests_LayeredScope_LayeredScope_CombinedKeys = new Set([
             ...sharedUmbrellaKeys,
             ...perPresetUmbrellaTriples.map(tripleKey),
           ]);
-          const perPresetMemberTriples: TestsLayeredScopeLayeredScopePerPresetMemberTriples = await readTriples(resolve(getPackageRoot(), perPresetMemberRelative));
+          const perPresetMemberTriples: Tests_LayeredScope_LayeredScope_PerPresetMemberTriples = await readTriples(resolve(getPackageRoot(), perPresetMemberRelative));
 
           for (const triple of perPresetMemberTriples) {
             if (combinedKeys.has(tripleKey(triple)) === true) {
@@ -468,7 +468,7 @@ describe('layered scope', () => {
         }
       }
 
-      const message: TestsLayeredScopeLayeredScopeDryMessage = [
+      const message: Tests_LayeredScope_LayeredScope_DryMessage = [
         `Member files duplicate '${familyParam['umbrella']}' umbrella triples (annotate intentional overrides with /* layered-scope:allow-duplicate */):`,
         ...duplicates,
       ].join('\n');

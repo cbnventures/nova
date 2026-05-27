@@ -4,8 +4,8 @@ import { useBreadcrumbsStructuredData } from '@docusaurus/plugin-content-docs/cl
 import { serializeJsonLd } from '../../../lib/safe-json-ld.js';
 
 import type {
-  ThemeDocBreadcrumbsStructuredDataDocBreadcrumbsStructuredData,
-  ThemeDocBreadcrumbsStructuredDataDocBreadcrumbsStructuredDataProps,
+  Theme_DocBreadcrumbs_StructuredData_Index_DocBreadcrumbsStructuredData,
+  Theme_DocBreadcrumbs_StructuredData_Index_DocBreadcrumbsStructuredData_Props,
 } from '../../../types/theme/DocBreadcrumbs/StructuredData/index.d.ts';
 
 /**
@@ -15,14 +15,14 @@ import type {
  * derived from the sidebar breadcrumb trail. Enables Google to render
  * breadcrumbs directly in search results.
  *
- * @param {ThemeDocBreadcrumbsStructuredDataDocBreadcrumbsStructuredDataProps} props - Props.
+ * @param {Theme_DocBreadcrumbs_StructuredData_Index_DocBreadcrumbsStructuredData_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function DocBreadcrumbsStructuredData(props: ThemeDocBreadcrumbsStructuredDataDocBreadcrumbsStructuredDataProps) {
-  const structuredData: ThemeDocBreadcrumbsStructuredDataDocBreadcrumbsStructuredData = useBreadcrumbsStructuredData({
+function DocBreadcrumbsStructuredData(props: Theme_DocBreadcrumbs_StructuredData_Index_DocBreadcrumbsStructuredData_Props) {
+  const structuredData: Theme_DocBreadcrumbs_StructuredData_Index_DocBreadcrumbsStructuredData = useBreadcrumbsStructuredData({
     breadcrumbs: props['breadcrumbs'],
   });
 

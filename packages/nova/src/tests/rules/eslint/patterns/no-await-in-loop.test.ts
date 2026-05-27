@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoAwaitInLoop } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintPatternsNoAwaitInLoopRuleTester } from '../../../../types/tests/rules/eslint/patterns/no-await-in-loop.test.d.ts';
+import type { Tests_Rules_Eslint_Patterns_NoAwaitInLoop_RuleTester } from '../../../../types/tests/rules/eslint/patterns/no-await-in-loop.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Patterns - No Await In Loop.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintPatternsNoAwaitInLoopRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Patterns_NoAwaitInLoop_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

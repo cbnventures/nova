@@ -5,24 +5,24 @@ import { usePluginData } from '@docusaurus/useGlobalData';
 import Heading from '@theme/Heading';
 
 import type {
-  ThemeNotFoundContentNotFoundContentActiveBundle,
-  ThemeNotFoundContentNotFoundContentBackHomeHref,
-  ThemeNotFoundContentNotFoundContentBackHomeHrefOverride,
-  ThemeNotFoundContentNotFoundContentBackHomeLabel,
-  ThemeNotFoundContentNotFoundContentBackHomeLabelOverride,
-  ThemeNotFoundContentNotFoundContentBaseUrl,
-  ThemeNotFoundContentNotFoundContentBundleIndex,
-  ThemeNotFoundContentNotFoundContentBundles,
-  ThemeNotFoundContentNotFoundContentDescription,
-  ThemeNotFoundContentNotFoundContentDescriptionOverride,
-  ThemeNotFoundContentNotFoundContentDocusaurusContext,
-  ThemeNotFoundContentNotFoundContentErrorPages,
-  ThemeNotFoundContentNotFoundContentGlobalData,
-  ThemeNotFoundContentNotFoundContentNotFoundOverrides,
-  ThemeNotFoundContentNotFoundContentThemeConfig,
-  ThemeNotFoundContentNotFoundContentTitle,
-  ThemeNotFoundContentNotFoundContentTitleOverride,
-  ThemeNotFoundContentProps,
+  Theme_NotFound_Content_Index_NotFoundContent_ActiveBundle,
+  Theme_NotFound_Content_Index_NotFoundContent_BackHomeHref,
+  Theme_NotFound_Content_Index_NotFoundContent_BackHomeHrefOverride,
+  Theme_NotFound_Content_Index_NotFoundContent_BackHomeLabel,
+  Theme_NotFound_Content_Index_NotFoundContent_BackHomeLabelOverride,
+  Theme_NotFound_Content_Index_NotFoundContent_BaseUrl,
+  Theme_NotFound_Content_Index_NotFoundContent_BundleIndex,
+  Theme_NotFound_Content_Index_NotFoundContent_Bundles,
+  Theme_NotFound_Content_Index_NotFoundContent_Description,
+  Theme_NotFound_Content_Index_NotFoundContent_DescriptionOverride,
+  Theme_NotFound_Content_Index_NotFoundContent_DocusaurusContext,
+  Theme_NotFound_Content_Index_NotFoundContent_ErrorPages,
+  Theme_NotFound_Content_Index_NotFoundContent_GlobalData,
+  Theme_NotFound_Content_Index_NotFoundContent_NotFoundOverrides,
+  Theme_NotFound_Content_Index_NotFoundContent_ThemeConfig,
+  Theme_NotFound_Content_Index_NotFoundContent_Title,
+  Theme_NotFound_Content_Index_NotFoundContent_TitleOverride,
+  Theme_NotFound_Content_Index_Props,
 } from '../../../types/theme/NotFound/Content/index.d.ts';
 
 /**
@@ -32,25 +32,25 @@ import type {
  * picked as a thematic bundle at build time and read from plugin global data
  * at render time, so SSR HTML and client hydration match (no flash).
  *
- * @param {ThemeNotFoundContentProps} props - Props.
+ * @param {Theme_NotFound_Content_Index_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function NotFoundContent(props: ThemeNotFoundContentProps) {
-  const docusaurusContext: ThemeNotFoundContentNotFoundContentDocusaurusContext = useDocusaurusContext();
-  const baseUrl: ThemeNotFoundContentNotFoundContentBaseUrl = docusaurusContext['siteConfig']['baseUrl'];
-  const themeConfig: ThemeNotFoundContentNotFoundContentThemeConfig = docusaurusContext['siteConfig']['themeConfig'] as ThemeNotFoundContentNotFoundContentThemeConfig;
-  const errorPages: ThemeNotFoundContentNotFoundContentErrorPages = themeConfig['errorPages'] as ThemeNotFoundContentNotFoundContentErrorPages;
-  const notFoundOverrides: ThemeNotFoundContentNotFoundContentNotFoundOverrides = (errorPages !== undefined && errorPages !== null) ? errorPages['notFound'] as ThemeNotFoundContentNotFoundContentNotFoundOverrides : undefined;
+function NotFoundContent(props: Theme_NotFound_Content_Index_Props) {
+  const docusaurusContext: Theme_NotFound_Content_Index_NotFoundContent_DocusaurusContext = useDocusaurusContext();
+  const baseUrl: Theme_NotFound_Content_Index_NotFoundContent_BaseUrl = docusaurusContext['siteConfig']['baseUrl'];
+  const themeConfig: Theme_NotFound_Content_Index_NotFoundContent_ThemeConfig = docusaurusContext['siteConfig']['themeConfig'] as Theme_NotFound_Content_Index_NotFoundContent_ThemeConfig;
+  const errorPages: Theme_NotFound_Content_Index_NotFoundContent_ErrorPages = themeConfig['errorPages'] as Theme_NotFound_Content_Index_NotFoundContent_ErrorPages;
+  const notFoundOverrides: Theme_NotFound_Content_Index_NotFoundContent_NotFoundOverrides = (errorPages !== undefined && errorPages !== null) ? errorPages['notFound'] as Theme_NotFound_Content_Index_NotFoundContent_NotFoundOverrides : undefined;
 
-  const titleOverride: ThemeNotFoundContentNotFoundContentTitleOverride = (notFoundOverrides !== undefined && notFoundOverrides !== null) ? notFoundOverrides['title'] as ThemeNotFoundContentNotFoundContentTitleOverride : undefined;
-  const descriptionOverride: ThemeNotFoundContentNotFoundContentDescriptionOverride = (notFoundOverrides !== undefined && notFoundOverrides !== null) ? notFoundOverrides['description'] as ThemeNotFoundContentNotFoundContentDescriptionOverride : undefined;
-  const backHomeLabelOverride: ThemeNotFoundContentNotFoundContentBackHomeLabelOverride = (notFoundOverrides !== undefined && notFoundOverrides !== null) ? notFoundOverrides['backHomeLabel'] as ThemeNotFoundContentNotFoundContentBackHomeLabelOverride : undefined;
-  const backHomeHrefOverride: ThemeNotFoundContentNotFoundContentBackHomeHrefOverride = (notFoundOverrides !== undefined && notFoundOverrides !== null) ? notFoundOverrides['backHomeHref'] as ThemeNotFoundContentNotFoundContentBackHomeHrefOverride : undefined;
+  const titleOverride: Theme_NotFound_Content_Index_NotFoundContent_TitleOverride = (notFoundOverrides !== undefined && notFoundOverrides !== null) ? notFoundOverrides['title'] as Theme_NotFound_Content_Index_NotFoundContent_TitleOverride : undefined;
+  const descriptionOverride: Theme_NotFound_Content_Index_NotFoundContent_DescriptionOverride = (notFoundOverrides !== undefined && notFoundOverrides !== null) ? notFoundOverrides['description'] as Theme_NotFound_Content_Index_NotFoundContent_DescriptionOverride : undefined;
+  const backHomeLabelOverride: Theme_NotFound_Content_Index_NotFoundContent_BackHomeLabelOverride = (notFoundOverrides !== undefined && notFoundOverrides !== null) ? notFoundOverrides['backHomeLabel'] as Theme_NotFound_Content_Index_NotFoundContent_BackHomeLabelOverride : undefined;
+  const backHomeHrefOverride: Theme_NotFound_Content_Index_NotFoundContent_BackHomeHrefOverride = (notFoundOverrides !== undefined && notFoundOverrides !== null) ? notFoundOverrides['backHomeHref'] as Theme_NotFound_Content_Index_NotFoundContent_BackHomeHrefOverride : undefined;
 
-  const bundles: ThemeNotFoundContentNotFoundContentBundles = [
+  const bundles: Theme_NotFound_Content_Index_NotFoundContent_Bundles = [
     {
       title: translate({
         id: 'theme.NotFound.bundles.0.title',
@@ -138,14 +138,14 @@ function NotFoundContent(props: ThemeNotFoundContentProps) {
     },
   ];
 
-  const globalData: ThemeNotFoundContentNotFoundContentGlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as ThemeNotFoundContentNotFoundContentGlobalData;
-  const bundleIndex: ThemeNotFoundContentNotFoundContentBundleIndex = (typeof globalData['notFoundBundleIndex'] === 'number') ? globalData['notFoundBundleIndex'] : 0;
-  const activeBundle: ThemeNotFoundContentNotFoundContentActiveBundle = bundles[bundleIndex] ?? bundles[0] as ThemeNotFoundContentNotFoundContentActiveBundle;
+  const globalData: Theme_NotFound_Content_Index_NotFoundContent_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Theme_NotFound_Content_Index_NotFoundContent_GlobalData;
+  const bundleIndex: Theme_NotFound_Content_Index_NotFoundContent_BundleIndex = (typeof globalData['notFoundBundleIndex'] === 'number') ? globalData['notFoundBundleIndex'] : 0;
+  const activeBundle: Theme_NotFound_Content_Index_NotFoundContent_ActiveBundle = bundles[bundleIndex] ?? bundles[0] as Theme_NotFound_Content_Index_NotFoundContent_ActiveBundle;
 
-  const title: ThemeNotFoundContentNotFoundContentTitle = (titleOverride !== undefined && titleOverride !== '') ? titleOverride : activeBundle['title'];
-  const description: ThemeNotFoundContentNotFoundContentDescription = (descriptionOverride !== undefined && descriptionOverride !== '') ? descriptionOverride : activeBundle['description'];
-  const backHomeLabel: ThemeNotFoundContentNotFoundContentBackHomeLabel = (backHomeLabelOverride !== undefined && backHomeLabelOverride !== '') ? backHomeLabelOverride : activeBundle['backHomeLabel'];
-  const backHomeHref: ThemeNotFoundContentNotFoundContentBackHomeHref = (backHomeHrefOverride !== undefined && backHomeHrefOverride !== '') ? backHomeHrefOverride : baseUrl;
+  const title: Theme_NotFound_Content_Index_NotFoundContent_Title = (titleOverride !== undefined && titleOverride !== '') ? titleOverride : activeBundle['title'];
+  const description: Theme_NotFound_Content_Index_NotFoundContent_Description = (descriptionOverride !== undefined && descriptionOverride !== '') ? descriptionOverride : activeBundle['description'];
+  const backHomeLabel: Theme_NotFound_Content_Index_NotFoundContent_BackHomeLabel = (backHomeLabelOverride !== undefined && backHomeLabelOverride !== '') ? backHomeLabelOverride : activeBundle['backHomeLabel'];
+  const backHomeHref: Theme_NotFound_Content_Index_NotFoundContent_BackHomeHref = (backHomeHrefOverride !== undefined && backHomeHrefOverride !== '') ? backHomeHrefOverride : baseUrl;
 
   return (
     <main

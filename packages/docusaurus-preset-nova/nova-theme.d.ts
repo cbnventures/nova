@@ -946,9 +946,9 @@ declare module '@theme/SearchBar' {
     [key: string]: unknown;
   }
 
-  export function useSearchContext(): import('./src/types/theme/SearchBar/search-context.d.ts').ThemeSearchBarSearchContextValue;
+  export function useSearchContext(): import('./src/types/theme/SearchBar/search-context.d.ts').Theme_SearchBar_SearchContext_Value;
 
-  export const searchContext: React.Context<import('./src/types/theme/SearchBar/search-context.d.ts').ThemeSearchBarSearchContextValue | undefined>;
+  export const searchContext: React.Context<import('./src/types/theme/SearchBar/search-context.d.ts').Theme_SearchBar_SearchContext_Value | undefined>;
 
   export function SearchInput(props: Props): React.JSX.Element;
 

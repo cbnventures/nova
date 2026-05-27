@@ -5,4 +5,4 @@ import type { Linter } from 'eslint';
  *
  * @since 0.11.0
  */
-export type PresetsEslintRuntimeServiceWorkerConfigConfig = Linter.Config[];
+export type Presets_Eslint_RuntimeServiceWorker_ConfigConfig = Linter.Config[];

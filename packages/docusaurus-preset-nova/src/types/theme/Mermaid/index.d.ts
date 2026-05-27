@@ -1,61 +1,61 @@
 import type { CSSProperties } from 'react';
 
-import type { SharedMermaidRenderOutput } from '../../shared.d.ts';
+import type { Shared_MermaidRenderOutput } from '../../shared.d.ts';
 
 /**
  * Theme - Mermaid - Content.
  *
  * @since 0.15.0
  */
-export type ThemeMermaidContentPropsValue = string;
+export type Theme_Mermaid_Index_Mermaid_ContentProps_Value = string;
 
-export type ThemeMermaidContentPropsClassName = string | undefined;
+export type Theme_Mermaid_Index_Mermaid_ContentProps_ClassName = string | undefined;
 
-export type ThemeMermaidContentPropsStyle = CSSProperties | undefined;
+export type Theme_Mermaid_Index_Mermaid_ContentProps_Style = CSSProperties | undefined;
 
-export type ThemeMermaidContentProps = {
-  value: ThemeMermaidContentPropsValue;
-  className?: ThemeMermaidContentPropsClassName;
-  style?: ThemeMermaidContentPropsStyle;
+export type Theme_Mermaid_Index_Mermaid_ContentProps = {
+  value: Theme_Mermaid_Index_Mermaid_ContentProps_Value;
+  className?: Theme_Mermaid_Index_Mermaid_ContentProps_ClassName;
+  style?: Theme_Mermaid_Index_Mermaid_ContentProps_Style;
   [key: string]: unknown;
 };
 
-export type ThemeMermaidContentReturns = React.JSX.Element | null;
+export type Theme_Mermaid_Index_Mermaid_ContentReturns = React.JSX.Element | null;
 
-export type ThemeMermaidContentRenderResult = SharedMermaidRenderOutput | null;
+export type Theme_Mermaid_Index_Mermaid_ContentRenderResult = Shared_MermaidRenderOutput | null;
 
-export type ThemeMermaidContentContainerRef = React.RefObject<HTMLDivElement | null>;
+export type Theme_Mermaid_Index_Mermaid_ContentContainerRef = React.RefObject<HTMLDivElement | null>;
 
-export type ThemeMermaidContentClassName = string;
+export type Theme_Mermaid_Index_Mermaid_ContentClassName = string;
 
 /**
  * Theme - Mermaid - Mermaid.
  *
  * @since 0.15.0
  */
-export type ThemeMermaidMermaidPropsValue = string;
+export type Theme_Mermaid_Index_Mermaid_Props_Value = string;
 
-export type ThemeMermaidMermaidPropsClassName = string | undefined;
+export type Theme_Mermaid_Index_Mermaid_Props_ClassName = string | undefined;
 
-export type ThemeMermaidMermaidPropsStyle = CSSProperties | undefined;
+export type Theme_Mermaid_Index_Mermaid_Props_Style = CSSProperties | undefined;
 
-export type ThemeMermaidMermaidProps = {
-  value: ThemeMermaidMermaidPropsValue;
-  className?: ThemeMermaidMermaidPropsClassName;
-  style?: ThemeMermaidMermaidPropsStyle;
+export type Theme_Mermaid_Index_Mermaid_Props = {
+  value: Theme_Mermaid_Index_Mermaid_Props_Value;
+  className?: Theme_Mermaid_Index_Mermaid_Props_ClassName;
+  style?: Theme_Mermaid_Index_Mermaid_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeMermaidMermaidReturns = React.JSX.Element;
+export type Theme_Mermaid_Index_Mermaid_Returns = React.JSX.Element;
 
-export type ThemeMermaidMermaidColorModeState = [ThemeMermaidMermaidColorMode, ThemeMermaidMermaidSetColorMode];
+export type Theme_Mermaid_Index_Mermaid_ColorModeState = [Theme_Mermaid_Index_Mermaid_ColorMode, Theme_Mermaid_Index_Mermaid_SetColorMode];
 
-export type ThemeMermaidMermaidColorMode = string;
+export type Theme_Mermaid_Index_Mermaid_ColorMode = string;
 
-export type ThemeMermaidMermaidSetColorMode = React.Dispatch<React.SetStateAction<ThemeMermaidMermaidColorMode>>;
+export type Theme_Mermaid_Index_Mermaid_SetColorMode = React.Dispatch<React.SetStateAction<Theme_Mermaid_Index_Mermaid_ColorMode>>;
 
-export type ThemeMermaidMermaidCurrentTheme = string | null;
+export type Theme_Mermaid_Index_Mermaid_CurrentTheme = string | null;
 
-export type ThemeMermaidMermaidObserver = MutationObserver;
+export type Theme_Mermaid_Index_Mermaid_Observer = MutationObserver;
 
-export type ThemeMermaidMermaidTheme = string | null;
+export type Theme_Mermaid_Index_Mermaid_Theme = string | null;

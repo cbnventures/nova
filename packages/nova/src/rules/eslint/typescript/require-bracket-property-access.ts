@@ -3,23 +3,23 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionChecker,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionContext,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionDeclarations,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionNeedsParens,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionNode,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionObjectText,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionObjectType,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionParserServices,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionPropertyName,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionReturns,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionSourceFileName,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionSymbol,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionTsNode,
-  RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionWrappedText,
-  RulesEslintTypescriptRequireBracketPropertyAccessRuleDefaultOptionsAllowedProperties,
-  RulesEslintTypescriptRequireBracketPropertyAccessRuleDefaultOptionsIgnoreFiles,
-  RulesEslintTypescriptRequireBracketPropertyAccessRuleOptions,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Checker,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Declarations,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_NeedsParens,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectText,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectType,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ParserServices,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_PropertyName,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_SourceFileName,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Symbol,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_TsNode,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_WrappedText,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsAllowedProperties,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/require-bracket-property-access.d.ts';
 
 /**
@@ -30,7 +30,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintTypescriptRequireBracketPropertyAccess {
+export class Runner {
   /**
    * Rules - ESLint - TypeScript - Require Bracket Property Access - Rule.
    *
@@ -70,11 +70,11 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
       }],
     },
     defaultOptions: [{
-      allowedProperties: [] as RulesEslintTypescriptRequireBracketPropertyAccessRuleDefaultOptionsAllowedProperties,
-      ignoreFiles: [] as RulesEslintTypescriptRequireBracketPropertyAccessRuleDefaultOptionsIgnoreFiles,
+      allowedProperties: [] as Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsAllowedProperties,
+      ignoreFiles: [] as Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintTypescriptRequireBracketPropertyAccessRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -92,7 +92,7 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
 
       return {
         MemberExpression(node) {
-          RulesEslintTypescriptRequireBracketPropertyAccess.checkMemberExpression(context, node, options);
+          Runner.checkMemberExpression(context, node, options);
 
           return;
         },
@@ -108,15 +108,15 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionContext} context - Context.
-   * @param {RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionNode}    node    - Node.
-   * @param {RulesEslintTypescriptRequireBracketPropertyAccessRuleOptions}                  options - Options.
+   * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context} context - Context.
+   * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node}    node    - Node.
+   * @param {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions}                   options - Options.
    *
-   * @returns {RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionReturns}
+   * @returns {Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns}
    *
    * @since 0.15.0
    */
-  private static checkMemberExpression(context: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionContext, node: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionNode, options: RulesEslintTypescriptRequireBracketPropertyAccessRuleOptions): RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionReturns {
+  private static checkMemberExpression(context: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context, node: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node, options: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions): Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns {
     // Skip computed access (already bracket notation).
     if (node.computed === true) {
       return;
@@ -145,7 +145,7 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
       return;
     }
 
-    const propertyName: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionPropertyName = node.property.name;
+    const propertyName: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_PropertyName = node.property.name;
 
     // Skip allowed properties.
     if (options['allowedProperties'].includes(propertyName) === true) {
@@ -153,10 +153,10 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
     }
 
     // Use TypeScript type checker to determine if the property is project-defined.
-    const parserServices: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionParserServices = ESLintUtils.getParserServices(context);
-    const checker: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionChecker = parserServices.program.getTypeChecker();
-    const tsNode: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionTsNode = parserServices.esTreeNodeToTSNodeMap.get(node.object);
-    const objectType: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionObjectType = checker.getTypeAtLocation(tsNode);
+    const parserServices: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ParserServices = ESLintUtils.getParserServices(context);
+    const checker: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Checker = parserServices.program.getTypeChecker();
+    const tsNode: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_TsNode = parserServices.esTreeNodeToTSNodeMap.get(node.object);
+    const objectType: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectType = checker.getTypeAtLocation(tsNode);
 
     // Allow class instance property access.
     if (objectType.isClass() === true) {
@@ -164,13 +164,13 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
     }
 
     // Check if the property's declaration is from node_modules (built-in, third-party).
-    const symbol: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionSymbol = objectType.getProperty(propertyName);
+    const symbol: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Symbol = objectType.getProperty(propertyName);
 
     if (symbol === undefined) {
       return;
     }
 
-    const declarations: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionDeclarations = symbol.getDeclarations();
+    const declarations: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Declarations = symbol.getDeclarations();
 
     if (declarations === undefined || declarations.length === 0) {
       return;
@@ -178,7 +178,7 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
 
     // If all declarations are from node_modules, allow dot notation.
     for (const declaration of declarations) {
-      const sourceFileName: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionSourceFileName = declaration.getSourceFile().fileName;
+      const sourceFileName: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_SourceFileName = declaration.getSourceFile().fileName;
 
       if (sourceFileName.includes('node_modules') === false) {
         // Found a project-defined declaration - flag it.
@@ -190,9 +190,9 @@ export class RulesEslintTypescriptRequireBracketPropertyAccess {
             propertyName,
           },
           fix(fixer) {
-            const objectText: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionObjectText = context.sourceCode.getText(node.object);
-            const needsParens: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionNeedsParens = node.object.type === 'AwaitExpression';
-            const wrappedText: RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionWrappedText = (needsParens === true) ? `(${objectText})` : objectText;
+            const objectText: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectText = context.sourceCode.getText(node.object);
+            const needsParens: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_NeedsParens = node.object.type === 'AwaitExpression';
+            const wrappedText: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_WrappedText = (needsParens === true) ? `(${objectText})` : objectText;
 
             return fixer.replaceText(node, `${wrappedText}['${propertyName}']`);
           },

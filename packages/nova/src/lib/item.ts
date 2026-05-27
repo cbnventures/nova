@@ -1,35 +1,35 @@
 import type {
-  LibItemAllowedPoliciesByRole,
-  LibItemAllowedRecipes,
-  LibItemAllowedRoles,
-  LibItemBundlerKeys,
-  LibItemChangelogAdjectives,
-  LibItemChangelogCategoryBumpMap,
-  LibItemChangelogNouns,
-  LibItemChangelogOrderedCategories,
-  LibItemChangelogValidBumps,
-  LibItemChangelogValidCategories,
-  LibItemChangelogVerbs,
-  LibItemCorepackKeys,
-  LibItemEcosystemKeys,
-  LibItemEmailFields,
-  LibItemGenericProtocols,
-  LibItemNodeJsKeys,
-  LibItemNpmKeys,
-  LibItemPrettyNamesAbbreviation,
-  LibItemPrettyNamesBrand,
-  LibItemPrettyNamesCategory,
-  LibItemPrettyNamesColumnTitle,
-  LibItemPrettyNamesKeyword,
-  LibItemPrettyNamesType,
-  LibItemRepositoryProtocols,
-  LibItemSideEffectsEsnextRoles,
-  LibItemSkipDirectories,
-  LibItemSortOrderKeys,
-  LibItemSyncRoles,
-  LibItemTypesModuleRoles,
-  LibItemUrlFields,
-  LibItemValidEntityRoles,
+  Lib_Item_AllowedPoliciesByRole,
+  Lib_Item_AllowedRecipes,
+  Lib_Item_AllowedRoles,
+  Lib_Item_BundlerKeys,
+  Lib_Item_ChangelogAdjectives,
+  Lib_Item_ChangelogCategoryBumpMap,
+  Lib_Item_ChangelogNouns,
+  Lib_Item_ChangelogOrderedCategories,
+  Lib_Item_ChangelogValidBumps,
+  Lib_Item_ChangelogValidCategories,
+  Lib_Item_ChangelogVerbs,
+  Lib_Item_CorepackKeys,
+  Lib_Item_EcosystemKeys,
+  Lib_Item_EmailFields,
+  Lib_Item_GenericProtocols,
+  Lib_Item_NodeJsKeys,
+  Lib_Item_NpmKeys,
+  Lib_Item_PrettyNamesAbbreviation,
+  Lib_Item_PrettyNamesBrand,
+  Lib_Item_PrettyNamesCategory,
+  Lib_Item_PrettyNamesColumnTitle,
+  Lib_Item_PrettyNamesKeyword,
+  Lib_Item_PrettyNamesType,
+  Lib_Item_RepositoryProtocols,
+  Lib_Item_SideEffectsEsnextRoles,
+  Lib_Item_SkipDirectories,
+  Lib_Item_SortOrderKeys,
+  Lib_Item_SyncRoles,
+  Lib_Item_TypesModuleRoles,
+  Lib_Item_UrlFields,
+  Lib_Item_ValidEntityRoles,
 } from '../types/lib/item.d.ts';
 
 /**
@@ -40,7 +40,7 @@ import type {
  *
  * @since 0.11.0
  */
-export const libItemAllowedPoliciesByRole: LibItemAllowedPoliciesByRole = {
+export const libItemAllowedPoliciesByRole: Lib_Item_AllowedPoliciesByRole = {
   project: ['freezable'],
   config: [
     'freezable',
@@ -70,7 +70,7 @@ export const libItemAllowedPoliciesByRole: LibItemAllowedPoliciesByRole = {
  *
  * @since 0.11.0
  */
-export const libItemAllowedRecipes: LibItemAllowedRecipes = [
+export const libItemAllowedRecipes: Lib_Item_AllowedRecipes = [
   'cleanup',
   'normalize-artifacts',
   'normalize-bundler',
@@ -90,7 +90,7 @@ export const libItemAllowedRecipes: LibItemAllowedRecipes = [
  *
  * @since 0.11.0
  */
-export const libItemAllowedRoles: LibItemAllowedRoles = [
+export const libItemAllowedRoles: Lib_Item_AllowedRoles = [
   'project',
   'docs',
   'config',
@@ -108,7 +108,7 @@ export const libItemAllowedRoles: LibItemAllowedRoles = [
  *
  * @since 0.11.0
  */
-export const libItemChangelogAdjectives: LibItemChangelogAdjectives = [
+export const libItemChangelogAdjectives: Lib_Item_ChangelogAdjectives = [
   'afraid',
   'bold',
   'brave',
@@ -169,7 +169,7 @@ export const libItemChangelogAdjectives: LibItemChangelogAdjectives = [
  *
  * @since 0.11.0
  */
-export const libItemChangelogCategoryBumpMap: LibItemChangelogCategoryBumpMap = {
+export const libItemChangelogCategoryBumpMap: Lib_Item_ChangelogCategoryBumpMap = {
   added: 'minor',
   updated: 'minor',
   fixed: 'patch',
@@ -184,7 +184,7 @@ export const libItemChangelogCategoryBumpMap: LibItemChangelogCategoryBumpMap = 
  *
  * @since 0.11.0
  */
-export const libItemChangelogNouns: LibItemChangelogNouns = [
+export const libItemChangelogNouns: Lib_Item_ChangelogNouns = [
   'ants',
   'bags',
   'bats',
@@ -245,7 +245,7 @@ export const libItemChangelogNouns: LibItemChangelogNouns = [
  *
  * @since 0.11.0
  */
-export const libItemChangelogOrderedCategories: LibItemChangelogOrderedCategories = [
+export const libItemChangelogOrderedCategories: Lib_Item_ChangelogOrderedCategories = [
   'updated',
   'fixed',
   'added',
@@ -260,7 +260,7 @@ export const libItemChangelogOrderedCategories: LibItemChangelogOrderedCategorie
  *
  * @since 0.11.0
  */
-export const libItemChangelogValidBumps: LibItemChangelogValidBumps = [
+export const libItemChangelogValidBumps: Lib_Item_ChangelogValidBumps = [
   'major',
   'minor',
   'patch',
@@ -274,7 +274,7 @@ export const libItemChangelogValidBumps: LibItemChangelogValidBumps = [
  *
  * @since 0.11.0
  */
-export const libItemChangelogValidCategories: LibItemChangelogValidCategories = [
+export const libItemChangelogValidCategories: Lib_Item_ChangelogValidCategories = [
   'added',
   'updated',
   'fixed',
@@ -289,7 +289,7 @@ export const libItemChangelogValidCategories: LibItemChangelogValidCategories = 
  *
  * @since 0.11.0
  */
-export const libItemChangelogVerbs: LibItemChangelogVerbs = [
+export const libItemChangelogVerbs: Lib_Item_ChangelogVerbs = [
   'ask',
   'bake',
   'bite',
@@ -350,7 +350,7 @@ export const libItemChangelogVerbs: LibItemChangelogVerbs = [
  *
  * @since 0.11.0
  */
-export const libItemGenericProtocols: LibItemGenericProtocols = [
+export const libItemGenericProtocols: Lib_Item_GenericProtocols = [
   'http:',
   'https:',
 ];
@@ -363,7 +363,7 @@ export const libItemGenericProtocols: LibItemGenericProtocols = [
  *
  * @since 0.11.0
  */
-export const libItemSyncRoles: LibItemSyncRoles = [
+export const libItemSyncRoles: Lib_Item_SyncRoles = [
   'project',
   'docs',
   'config',
@@ -379,7 +379,7 @@ export const libItemSyncRoles: LibItemSyncRoles = [
  *
  * @since 0.11.0
  */
-export const libItemValidEntityRoles: LibItemValidEntityRoles = [
+export const libItemValidEntityRoles: Lib_Item_ValidEntityRoles = [
   'author',
   'contributor',
   'supporter',
@@ -393,7 +393,7 @@ export const libItemValidEntityRoles: LibItemValidEntityRoles = [
  *
  * @since 0.11.0
  */
-export const libItemSideEffectsEsnextRoles: LibItemSideEffectsEsnextRoles = ['package'];
+export const libItemSideEffectsEsnextRoles: Lib_Item_SideEffectsEsnextRoles = ['package'];
 
 /**
  * Lib - Item - Types Module Roles.
@@ -403,7 +403,7 @@ export const libItemSideEffectsEsnextRoles: LibItemSideEffectsEsnextRoles = ['pa
  *
  * @since 0.11.0
  */
-export const libItemTypesModuleRoles: LibItemTypesModuleRoles = [
+export const libItemTypesModuleRoles: Lib_Item_TypesModuleRoles = [
   'config',
   'package',
   'tool',
@@ -417,7 +417,7 @@ export const libItemTypesModuleRoles: LibItemTypesModuleRoles = [
  *
  * @since 0.11.0
  */
-export const libItemEmailFields: LibItemEmailFields = ['bugs'];
+export const libItemEmailFields: Lib_Item_EmailFields = ['bugs'];
 
 /**
  * Lib - Item - URL Fields.
@@ -427,7 +427,7 @@ export const libItemEmailFields: LibItemEmailFields = ['bugs'];
  *
  * @since 0.11.0
  */
-export const libItemUrlFields: LibItemUrlFields = [
+export const libItemUrlFields: Lib_Item_UrlFields = [
   'homepage',
   'repository',
   'bugs',
@@ -448,7 +448,7 @@ export const libItemUrlFields: LibItemUrlFields = [
  *
  * @since 0.11.0
  */
-export const libItemBundlerKeys: LibItemBundlerKeys = [
+export const libItemBundlerKeys: Lib_Item_BundlerKeys = [
 
   // TypeScript (Microsoft).
   'types',
@@ -471,7 +471,7 @@ export const libItemBundlerKeys: LibItemBundlerKeys = [
  *
  * @since 0.11.0
  */
-export const libItemCorepackKeys: LibItemCorepackKeys = ['packageManager'];
+export const libItemCorepackKeys: Lib_Item_CorepackKeys = ['packageManager'];
 
 /**
  * Lib - Item - Ecosystem Keys.
@@ -482,7 +482,7 @@ export const libItemCorepackKeys: LibItemCorepackKeys = ['packageManager'];
  *
  * @since 0.18.0
  */
-export const libItemEcosystemKeys: LibItemEcosystemKeys = ['displayName'];
+export const libItemEcosystemKeys: Lib_Item_EcosystemKeys = ['displayName'];
 
 /**
  * Lib - Item - Node Js Keys.
@@ -492,7 +492,7 @@ export const libItemEcosystemKeys: LibItemEcosystemKeys = ['displayName'];
  *
  * @since 0.11.0
  */
-export const libItemNodeJsKeys: LibItemNodeJsKeys = [
+export const libItemNodeJsKeys: Lib_Item_NodeJsKeys = [
 
   // Identity & Discovery.
   'name',
@@ -512,7 +512,7 @@ export const libItemNodeJsKeys: LibItemNodeJsKeys = [
  *
  * @since 0.11.0
  */
-export const libItemNpmKeys: LibItemNpmKeys = [
+export const libItemNpmKeys: Lib_Item_NpmKeys = [
 
   // Identity & Discovery.
   'name',
@@ -576,7 +576,7 @@ export const libItemNpmKeys: LibItemNpmKeys = [
  *
  * @since 0.11.0
  */
-export const libItemSortOrderKeys: LibItemSortOrderKeys = [
+export const libItemSortOrderKeys: Lib_Item_SortOrderKeys = [
 
   // Identity (part 1).
   'name',
@@ -655,7 +655,7 @@ export const libItemSortOrderKeys: LibItemSortOrderKeys = [
  *
  * @since 0.15.0
  */
-export const libItemPrettyNamesAbbreviation: LibItemPrettyNamesAbbreviation = {
+export const libItemPrettyNamesAbbreviation: Lib_Item_PrettyNamesAbbreviation = {
   'ai': 'AI',
   'ansi': 'ANSI',
   'api': 'API',
@@ -704,7 +704,7 @@ export const libItemPrettyNamesAbbreviation: LibItemPrettyNamesAbbreviation = {
  *
  * @since 0.11.0
  */
-export const libItemPrettyNamesBrand: LibItemPrettyNamesBrand = {
+export const libItemPrettyNamesBrand: Lib_Item_PrettyNamesBrand = {
   'brave': 'Brave Browser',
   'bun': 'Bun',
   'chrome': 'Google Chrome',
@@ -733,7 +733,7 @@ export const libItemPrettyNamesBrand: LibItemPrettyNamesBrand = {
  *
  * @since 0.11.0
  */
-export const libItemPrettyNamesCategory: LibItemPrettyNamesCategory = {
+export const libItemPrettyNamesCategory: Lib_Item_PrettyNamesCategory = {
   'browsers': 'Web Browsers',
   'env': 'Environment Managers',
   'interpreters': 'Interpreters / Runtimes',
@@ -749,7 +749,7 @@ export const libItemPrettyNamesCategory: LibItemPrettyNamesCategory = {
  *
  * @since 0.11.0
  */
-export const libItemPrettyNamesColumnTitle: LibItemPrettyNamesColumnTitle = {
+export const libItemPrettyNamesColumnTitle: Lib_Item_PrettyNamesColumnTitle = {
   'key-browsers': 'Browser',
   'key-env': 'Manager',
   'key-interpreters': 'Program',
@@ -770,7 +770,7 @@ export const libItemPrettyNamesColumnTitle: LibItemPrettyNamesColumnTitle = {
  *
  * @since 0.15.0
  */
-export const libItemPrettyNamesKeyword: LibItemPrettyNamesKeyword = {
+export const libItemPrettyNamesKeyword: Lib_Item_PrettyNamesKeyword = {
   'eslint': 'ESLint',
   'esnext': 'ESNext',
   'express': 'Express.js',
@@ -794,7 +794,7 @@ export const libItemPrettyNamesKeyword: LibItemPrettyNamesKeyword = {
  *
  * @since 0.11.0
  */
-export const libItemPrettyNamesType: LibItemPrettyNamesType = {
+export const libItemPrettyNamesType: Lib_Item_PrettyNamesType = {
   'architecture': 'OS Architecture',
   'build': 'OS Build',
   'kernel': 'OS Kernel',
@@ -810,7 +810,7 @@ export const libItemPrettyNamesType: LibItemPrettyNamesType = {
  *
  * @since 0.11.0
  */
-export const libItemRepositoryProtocols: LibItemRepositoryProtocols = [
+export const libItemRepositoryProtocols: Lib_Item_RepositoryProtocols = [
   'git:',
   'git+https:',
   'git+ssh:',
@@ -827,7 +827,7 @@ export const libItemRepositoryProtocols: LibItemRepositoryProtocols = [
  *
  * @since 0.11.0
  */
-export const libItemSkipDirectories: LibItemSkipDirectories = [
+export const libItemSkipDirectories: Lib_Item_SkipDirectories = [
   'node_modules',
   'dist',
   'build',

@@ -1,10 +1,10 @@
-export type LibShikiThemesThemePairLight = string;
+export type Lib_ShikiThemes_ThemePair_Light = string;
 
-export type LibShikiThemesThemePairDark = string;
+export type Lib_ShikiThemes_ThemePair_Dark = string;
 
-export type LibShikiThemesThemePair = {
-  light: LibShikiThemesThemePairLight;
-  dark: LibShikiThemesThemePairDark;
+export type Lib_ShikiThemes_ThemePair = {
+  light: Lib_ShikiThemes_ThemePair_Light;
+  dark: Lib_ShikiThemes_ThemePair_Dark;
 };
 
 /**
@@ -12,15 +12,15 @@ export type LibShikiThemesThemePair = {
  *
  * @since 0.15.0
  */
-export type LibShikiThemesGetShikiThemesPresetName = string;
+export type Lib_ShikiThemes_GetShikiThemes_PresetName = string;
 
-export type LibShikiThemesGetShikiThemesReturns = LibShikiThemesThemePair;
+export type Lib_ShikiThemes_GetShikiThemes_Returns = Lib_ShikiThemes_ThemePair;
 
-export type LibShikiThemesGetShikiThemesResult = LibShikiThemesThemePair | undefined;
+export type Lib_ShikiThemes_GetShikiThemes_Result = Lib_ShikiThemes_ThemePair | undefined;
 
 /**
  * Lib - Shiki Themes - Shiki Theme Map.
  *
  * @since 0.15.0
  */
-export type LibShikiThemesShikiThemeMap = Record<string, LibShikiThemesThemePair>;
+export type Lib_ShikiThemes_ShikiThemeMap = Record<string, Lib_ShikiThemes_ThemePair>;

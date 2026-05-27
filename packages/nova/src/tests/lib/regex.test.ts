@@ -14,6 +14,7 @@ import {
   LIB_REGEX_LINEBREAK_CRLF_OR_LF,
   LIB_REGEX_PATTERN_ANSI,
   LIB_REGEX_PATTERN_ANSI_START,
+  LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE,
   LIB_REGEX_PATTERN_DIGITS,
   LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE,
   LIB_REGEX_PATTERN_EMAIL_SIMPLE,
@@ -35,14 +36,14 @@ import {
 } from '../../lib/regex.js';
 
 import type {
-  TestsLibRegexPatternDoubleQuotedStringCaptureMatches,
-  TestsLibRegexPatternLeadingNonDigitsMatches,
-  TestsLibRegexPatternRangeCaptureRemainderMatches,
-  TestsLibRegexPatternRegistryQueryLineMatches,
-  TestsLibRegexPatternRustcVersionLineMatches,
-  TestsLibRegexPatternSemverMatches,
-  TestsLibRegexPatternSemverMatchGroups,
-  TestsLibRegexVersionRangePatternsMatches,
+  Tests_Lib_Regex_PatternDoubleQuotedStringCaptureMatches,
+  Tests_Lib_Regex_PatternLeadingNonDigitsMatches,
+  Tests_Lib_Regex_PatternRangeCaptureRemainderMatches,
+  Tests_Lib_Regex_PatternRegistryQueryLineMatches,
+  Tests_Lib_Regex_PatternRustcVersionLineMatches,
+  Tests_Lib_Regex_PatternSemverMatches,
+  Tests_Lib_Regex_PatternSemverMatchGroups,
+  Tests_Lib_Regex_VersionRangePatterns_Matches,
 } from '../../types/tests/lib/regex.test.d.ts';
 
 /**
@@ -151,6 +152,45 @@ describe('ANSI patterns', async () => {
 });
 
 /**
+ * Tests - Lib - Regex - Pattern Casing Underscore Pascal Case.
+ *
+ * @since 0.18.0
+ */
+describe('LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE', async () => {
+  it('matches a single PascalCase chunk', () => {
+    match('Foo', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+
+    return;
+  });
+
+  it('matches multiple PascalCase chunks joined by underscores', () => {
+    match('Tests_TypeDeclarations_Foo_Bar', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+
+    return;
+  });
+
+  it('does not match a lowercase start', () => {
+    doesNotMatch('foo_Bar', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+
+    return;
+  });
+
+  it('does not match double underscores', () => {
+    doesNotMatch('Foo__Bar', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+
+    return;
+  });
+
+  it('does not match a trailing underscore', () => {
+    doesNotMatch('Foo_', LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE);
+
+    return;
+  });
+
+  return;
+});
+
+/**
  * Tests - Lib - Regex - Pattern Digits.
  *
  * @since 0.13.0
@@ -178,7 +218,7 @@ describe('LIB_REGEX_PATTERN_DIGITS', async () => {
  */
 describe('LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE', async () => {
   it('captures content between double quotes', () => {
-    const matches: TestsLibRegexPatternDoubleQuotedStringCaptureMatches = '"hello world"'.match(LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
+    const matches: Tests_Lib_Regex_PatternDoubleQuotedStringCaptureMatches = '"hello world"'.match(LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -286,7 +326,7 @@ describe('LIB_REGEX_PATTERN_LEADING_NEWLINES', async () => {
  */
 describe('LIB_REGEX_PATTERN_LEADING_NON_DIGITS', async () => {
   it('matches leading non-digit characters', () => {
-    const matches: TestsLibRegexPatternLeadingNonDigitsMatches = 'abc123'.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
+    const matches: Tests_Lib_Regex_PatternLeadingNonDigitsMatches = 'abc123'.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -298,7 +338,7 @@ describe('LIB_REGEX_PATTERN_LEADING_NON_DIGITS', async () => {
   });
 
   it('returns empty match when string starts with digit', () => {
-    const matches: TestsLibRegexPatternLeadingNonDigitsMatches = '123abc'.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
+    const matches: Tests_Lib_Regex_PatternLeadingNonDigitsMatches = '123abc'.match(LIB_REGEX_PATTERN_LEADING_NON_DIGITS);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -382,7 +422,7 @@ describe('LIB_REGEX_PATTERN_NOVA_PREFIX', async () => {
  */
 describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   it('captures remainder after caret prefix', () => {
-    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '^1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '^1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -394,7 +434,7 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   });
 
   it('captures remainder after tilde prefix', () => {
-    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '~1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '~1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -406,7 +446,7 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   });
 
   it('captures remainder after >= prefix', () => {
-    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '>=1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '>=1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -418,7 +458,7 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   });
 
   it('captures remainder after > prefix', () => {
-    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '>1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '>1.2.3'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -430,7 +470,7 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   });
 
   it('captures remainder after <= prefix', () => {
-    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '<=2.0.0'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '<=2.0.0'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -442,7 +482,7 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
   });
 
   it('captures remainder after < prefix', () => {
-    const matches: TestsLibRegexPatternRangeCaptureRemainderMatches = '<2.0.0'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
+    const matches: Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = '<2.0.0'.match(LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -487,7 +527,7 @@ describe('LIB_REGEX_PATTERN_RANGE_CAPTURE_REMAINDER', async () => {
  */
 describe('version range patterns', async () => {
   it('LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR captures major from >= range', () => {
-    const matches: TestsLibRegexVersionRangePatternsMatches = '>=18'.match(LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
+    const matches: Tests_Lib_Regex_VersionRangePatterns_Matches = '>=18'.match(LIB_REGEX_PATTERN_RANGE_GREATER_EQUAL_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -505,7 +545,7 @@ describe('version range patterns', async () => {
   });
 
   it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from caret range', () => {
-    const matches: TestsLibRegexVersionRangePatternsMatches = '^20'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
+    const matches: Tests_Lib_Regex_VersionRangePatterns_Matches = '^20'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -517,7 +557,7 @@ describe('version range patterns', async () => {
   });
 
   it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from tilde range', () => {
-    const matches: TestsLibRegexVersionRangePatternsMatches = '~18'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
+    const matches: Tests_Lib_Regex_VersionRangePatterns_Matches = '~18'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -529,7 +569,7 @@ describe('version range patterns', async () => {
   });
 
   it('LIB_REGEX_PATTERN_RANGE_MAJOR captures major from bare number', () => {
-    const matches: TestsLibRegexVersionRangePatternsMatches = '22'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
+    const matches: Tests_Lib_Regex_VersionRangePatterns_Matches = '22'.match(LIB_REGEX_PATTERN_RANGE_MAJOR);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -550,7 +590,7 @@ describe('version range patterns', async () => {
  */
 describe('LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE', async () => {
   it('matches Windows registry line', () => {
-    const matches: TestsLibRegexPatternRegistryQueryLineMatches = '    ProductName    REG_SZ    Windows 10 Pro'.match(LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
+    const matches: Tests_Lib_Regex_PatternRegistryQueryLineMatches = '    ProductName    REG_SZ    Windows 10 Pro'.match(LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -579,7 +619,7 @@ describe('LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE', async () => {
  */
 describe('LIB_REGEX_PATTERN_RUSTC_VERSION_LINE', async () => {
   it('matches rustc version output', () => {
-    const matches: TestsLibRegexPatternRustcVersionLineMatches = 'rustc 1.75.0 (82e1608df 2023-12-21)'.match(LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
+    const matches: Tests_Lib_Regex_PatternRustcVersionLineMatches = 'rustc 1.75.0 (82e1608df 2023-12-21)'.match(LIB_REGEX_PATTERN_RUSTC_VERSION_LINE);
 
     if (matches === null) {
       fail('Expected regex to match');
@@ -608,13 +648,13 @@ describe('LIB_REGEX_PATTERN_RUSTC_VERSION_LINE', async () => {
  */
 describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   it('matches simple semver', () => {
-    const matches: TestsLibRegexPatternSemverMatches = '1.2.3'.match(LIB_REGEX_PATTERN_SEMVER);
+    const matches: Tests_Lib_Regex_PatternSemverMatches = '1.2.3'.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups: TestsLibRegexPatternSemverMatchGroups = matches.groups;
+    const matchGroups: Tests_Lib_Regex_PatternSemverMatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
@@ -626,13 +666,13 @@ describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   });
 
   it('matches semver with prerelease', () => {
-    const matches: TestsLibRegexPatternSemverMatches = '1.0.0-beta.1'.match(LIB_REGEX_PATTERN_SEMVER);
+    const matches: Tests_Lib_Regex_PatternSemverMatches = '1.0.0-beta.1'.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups: TestsLibRegexPatternSemverMatchGroups = matches.groups;
+    const matchGroups: Tests_Lib_Regex_PatternSemverMatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
@@ -644,13 +684,13 @@ describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   });
 
   it('matches semver with build metadata', () => {
-    const matches: TestsLibRegexPatternSemverMatches = '1.0.0+build.123'.match(LIB_REGEX_PATTERN_SEMVER);
+    const matches: Tests_Lib_Regex_PatternSemverMatches = '1.0.0+build.123'.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups: TestsLibRegexPatternSemverMatchGroups = matches.groups;
+    const matchGroups: Tests_Lib_Regex_PatternSemverMatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');
@@ -662,13 +702,13 @@ describe('LIB_REGEX_PATTERN_SEMVER', async () => {
   });
 
   it('matches semver embedded in text', () => {
-    const matches: TestsLibRegexPatternSemverMatches = 'version 2.5.10 released'.match(LIB_REGEX_PATTERN_SEMVER);
+    const matches: Tests_Lib_Regex_PatternSemverMatches = 'version 2.5.10 released'.match(LIB_REGEX_PATTERN_SEMVER);
 
     if (matches === null) {
       fail('Expected regex to match');
     }
 
-    const matchGroups: TestsLibRegexPatternSemverMatchGroups = matches.groups;
+    const matchGroups: Tests_Lib_Regex_PatternSemverMatchGroups = matches.groups;
 
     if (matchGroups === undefined) {
       fail('Expected match groups');

@@ -11,25 +11,25 @@ import { Children, isValidElement } from 'react';
 import type { ReactElement, ReactNode } from 'react';
 
 import type {
-  ThemeMdxComponentsMdxCodeBlockSpread,
-  ThemeMdxComponentsMdxCodeChildren,
-  ThemeMdxComponentsMdxCodeIsInline,
-  ThemeMdxComponentsMdxCodeLanguage,
-  ThemeMdxComponentsMdxCodeLive,
-  ThemeMdxComponentsMdxCodeMetastring,
-  ThemeMdxComponentsMdxCodeProps,
-  ThemeMdxComponentsMdxCodeShowLineNumbers,
-  ThemeMdxComponentsMdxCodeTitle,
-  ThemeMdxComponentsMdxComponentsProps,
-  ThemeMdxComponentsMdxDetailsChildren,
-  ThemeMdxComponentsMdxDetailsItems,
-  ThemeMdxComponentsMdxDetailsProps,
-  ThemeMdxComponentsMdxDetailsSummary,
-  ThemeMdxComponentsMdxHeadingAs,
-  ThemeMdxComponentsMdxHeadingId,
-  ThemeMdxComponentsMdxHeadingProps,
-  ThemeMdxComponentsMdxPreProps,
-  ThemeMdxComponentsMdxTableProps,
+  Theme_MdxComponents_Index_MdxCode_BlockSpread,
+  Theme_MdxComponents_Index_MdxCode_Children,
+  Theme_MdxComponents_Index_MdxCode_IsInline,
+  Theme_MdxComponents_Index_MdxCode_Language,
+  Theme_MdxComponents_Index_MdxCode_Live,
+  Theme_MdxComponents_Index_MdxCode_Metastring,
+  Theme_MdxComponents_Index_MdxCode_Props,
+  Theme_MdxComponents_Index_MdxCode_ShowLineNumbers,
+  Theme_MdxComponents_Index_MdxCode_Title,
+  Theme_MdxComponents_Index_MdxComponentsProps,
+  Theme_MdxComponents_Index_MdxDetails_Children,
+  Theme_MdxComponents_Index_MdxDetails_Items,
+  Theme_MdxComponents_Index_MdxDetails_Props,
+  Theme_MdxComponents_Index_MdxDetails_Summary,
+  Theme_MdxComponents_Index_MdxHeading_As,
+  Theme_MdxComponents_Index_MdxHeading_Id,
+  Theme_MdxComponents_Index_MdxHeading_Props,
+  Theme_MdxComponents_Index_MdxPre_Props,
+  Theme_MdxComponents_Index_MdxTable_Props,
 } from '../../types/theme/MDXComponents/index.d.ts';
 
 /**
@@ -39,15 +39,15 @@ import type {
  * code block depending on whether the content contains
  * newlines or multiple elements.
  *
- * @param {ThemeMdxComponentsMdxCodeProps} props - Props.
+ * @param {Theme_MdxComponents_Index_MdxCode_Props} props - Props.
  *
  * @returns {JSX.Element}
  *
  * @since 0.15.0
  */
-function MdxCode(props: ThemeMdxComponentsMdxCodeProps) {
-  const children: ThemeMdxComponentsMdxCodeChildren = props['children'] as ReactNode;
-  const isInline: ThemeMdxComponentsMdxCodeIsInline = (
+function MdxCode(props: Theme_MdxComponents_Index_MdxCode_Props) {
+  const children: Theme_MdxComponents_Index_MdxCode_Children = props['children'] as ReactNode;
+  const isInline: Theme_MdxComponents_Index_MdxCode_IsInline = (
     typeof children !== 'undefined'
     && Children.toArray(children).every(
       (element) => typeof element === 'string' && element.includes('\n') !== true,
@@ -58,13 +58,13 @@ function MdxCode(props: ThemeMdxComponentsMdxCodeProps) {
     return <CodeInline>{children}</CodeInline>;
   }
 
-  const language: ThemeMdxComponentsMdxCodeLanguage = (typeof props['data-language'] === 'string') ? props['data-language'] : undefined;
-  const title: ThemeMdxComponentsMdxCodeTitle = (typeof props['data-title'] === 'string') ? props['data-title'] : undefined;
-  const metastring: ThemeMdxComponentsMdxCodeMetastring = (typeof props['metastring'] === 'string') ? props['metastring'] : undefined;
-  const showLineNumbers: ThemeMdxComponentsMdxCodeShowLineNumbers = props['data-show-line-numbers'] === 'true';
-  const live: ThemeMdxComponentsMdxCodeLive = props['data-live'] === 'true';
+  const language: Theme_MdxComponents_Index_MdxCode_Language = (typeof props['data-language'] === 'string') ? props['data-language'] : undefined;
+  const title: Theme_MdxComponents_Index_MdxCode_Title = (typeof props['data-title'] === 'string') ? props['data-title'] : undefined;
+  const metastring: Theme_MdxComponents_Index_MdxCode_Metastring = (typeof props['metastring'] === 'string') ? props['metastring'] : undefined;
+  const showLineNumbers: Theme_MdxComponents_Index_MdxCode_ShowLineNumbers = props['data-show-line-numbers'] === 'true';
+  const live: Theme_MdxComponents_Index_MdxCode_Live = props['data-live'] === 'true';
 
-  const codeBlockSpread: ThemeMdxComponentsMdxCodeBlockSpread = {
+  const codeBlockSpread: Theme_MdxComponents_Index_MdxCode_BlockSpread = {
     showLineNumbers,
     live,
   };
@@ -95,13 +95,13 @@ function MdxCode(props: ThemeMdxComponentsMdxCodeProps) {
  * wrapper element, since the Code component already handles
  * block rendering.
  *
- * @param {ThemeMdxComponentsMdxPreProps} props - Props.
+ * @param {Theme_MdxComponents_Index_MdxPre_Props} props - Props.
  *
  * @returns {JSX.Element}
  *
  * @since 0.15.0
  */
-function MdxPre(props: ThemeMdxComponentsMdxPreProps) {
+function MdxPre(props: Theme_MdxComponents_Index_MdxPre_Props) {
   return <>{props['children'] as ReactNode}</>;
 }
 
@@ -112,15 +112,15 @@ function MdxPre(props: ThemeMdxComponentsMdxPreProps) {
  * to the theme Heading component with the as
  * prop forwarded.
  *
- * @param {ThemeMdxComponentsMdxHeadingProps} props - Props.
+ * @param {Theme_MdxComponents_Index_MdxHeading_Props} props - Props.
  *
  * @returns {JSX.Element}
  *
  * @since 0.15.0
  */
-function MdxHeading(props: ThemeMdxComponentsMdxHeadingProps) {
-  const headingAs: ThemeMdxComponentsMdxHeadingAs = props['as'] as ThemeMdxComponentsMdxHeadingAs;
-  const headingId: ThemeMdxComponentsMdxHeadingId = props['id'] as ThemeMdxComponentsMdxHeadingId;
+function MdxHeading(props: Theme_MdxComponents_Index_MdxHeading_Props) {
+  const headingAs: Theme_MdxComponents_Index_MdxHeading_As = props['as'] as Theme_MdxComponents_Index_MdxHeading_As;
+  const headingId: Theme_MdxComponents_Index_MdxHeading_Id = props['id'] as Theme_MdxComponents_Index_MdxHeading_Id;
 
   return (
     <Heading
@@ -139,18 +139,18 @@ function MdxHeading(props: ThemeMdxComponentsMdxHeadingProps) {
  * passing each to the theme Details component as
  * separate props.
  *
- * @param {ThemeMdxComponentsMdxDetailsProps} props - Props.
+ * @param {Theme_MdxComponents_Index_MdxDetails_Props} props - Props.
  *
  * @returns {JSX.Element}
  *
  * @since 0.15.0
  */
-function MdxDetails(props: ThemeMdxComponentsMdxDetailsProps) {
-  const items: ThemeMdxComponentsMdxDetailsItems = Children.toArray(props['children'] as ReactNode);
-  const summary: ThemeMdxComponentsMdxDetailsSummary = items.find(
+function MdxDetails(props: Theme_MdxComponents_Index_MdxDetails_Props) {
+  const items: Theme_MdxComponents_Index_MdxDetails_Items = Children.toArray(props['children'] as ReactNode);
+  const summary: Theme_MdxComponents_Index_MdxDetails_Summary = items.find(
     (item) => isValidElement(item) === true && item['type'] === 'summary',
   );
-  const children: ThemeMdxComponentsMdxDetailsChildren = <>{items.filter((item) => item !== summary)}</>;
+  const children: Theme_MdxComponents_Index_MdxDetails_Children = <>{items.filter((item) => item !== summary)}</>;
 
   return (
     <Details summary={summary as ReactElement} {...props}>
@@ -166,13 +166,13 @@ function MdxDetails(props: ThemeMdxComponentsMdxDetailsProps) {
  * container so wide tables do not push the page layout
  * beyond the viewport on narrow screens.
  *
- * @param {ThemeMdxComponentsMdxTableProps} props - Props.
+ * @param {Theme_MdxComponents_Index_MdxTable_Props} props - Props.
  *
  * @returns {JSX.Element}
  *
  * @since 0.15.0
  */
-function MdxTable(props: ThemeMdxComponentsMdxTableProps) {
+function MdxTable(props: Theme_MdxComponents_Index_MdxTable_Props) {
   return (
     <div className="nova-table-scroll">
       <table {...props} />
@@ -200,12 +200,12 @@ const mdxComponents = {
   li: 'li',
   table: MdxTable,
   img: 'img',
-  h1: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h1" {...props} />,
-  h2: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h2" {...props} />,
-  h3: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h3" {...props} />,
-  h4: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h4" {...props} />,
-  h5: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h5" {...props} />,
-  h6: (props: ThemeMdxComponentsMdxComponentsProps) => <MdxHeading as="h6" {...props} />,
+  h1: (props: Theme_MdxComponents_Index_MdxComponentsProps) => <MdxHeading as="h1" {...props} />,
+  h2: (props: Theme_MdxComponents_Index_MdxComponentsProps) => <MdxHeading as="h2" {...props} />,
+  h3: (props: Theme_MdxComponents_Index_MdxComponentsProps) => <MdxHeading as="h3" {...props} />,
+  h4: (props: Theme_MdxComponents_Index_MdxComponentsProps) => <MdxHeading as="h4" {...props} />,
+  h5: (props: Theme_MdxComponents_Index_MdxComponentsProps) => <MdxHeading as="h5" {...props} />,
+  h6: (props: Theme_MdxComponents_Index_MdxComponentsProps) => <MdxHeading as="h6" {...props} />,
   admonition: Admonition,
   mermaid: Mermaid,
   Mermaid,

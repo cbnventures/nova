@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import type {
-  ThemeThemedImageThemedImageColorMode,
-  ThemeThemedImageThemedImageColorModeState,
-  ThemeThemedImageThemedImageCurrentTheme,
-  ThemeThemedImageThemedImageObserver,
-  ThemeThemedImageThemedImageProps,
-  ThemeThemedImageThemedImageReturns,
-  ThemeThemedImageThemedImageSetColorMode,
-  ThemeThemedImageThemedImageSrc,
-  ThemeThemedImageThemedImageTheme,
+  Theme_ThemedImage_Index_ThemedImage_ColorMode,
+  Theme_ThemedImage_Index_ThemedImage_ColorModeState,
+  Theme_ThemedImage_Index_ThemedImage_CurrentTheme,
+  Theme_ThemedImage_Index_ThemedImage_Observer,
+  Theme_ThemedImage_Index_ThemedImage_Props,
+  Theme_ThemedImage_Index_ThemedImage_Returns,
+  Theme_ThemedImage_Index_ThemedImage_SetColorMode,
+  Theme_ThemedImage_Index_ThemedImage_Src,
+  Theme_ThemedImage_Index_ThemedImage_Theme,
 } from '../../types/theme/ThemedImage/index.d.ts';
 
 /**
@@ -19,26 +19,26 @@ import type {
  * source variants based on the document data-theme attribute,
  * observing mutations to stay synchronized with color mode changes.
  *
- * @param {ThemeThemedImageThemedImageProps} props - Props.
+ * @param {Theme_ThemedImage_Index_ThemedImage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function ThemedImage(props: ThemeThemedImageThemedImageProps): ThemeThemedImageThemedImageReturns {
-  const colorModeState: ThemeThemedImageThemedImageColorModeState = useState('light' as ThemeThemedImageThemedImageColorMode);
-  const colorMode: ThemeThemedImageThemedImageColorMode = colorModeState[0];
-  const setColorMode: ThemeThemedImageThemedImageSetColorMode = colorModeState[1];
+function ThemedImage(props: Theme_ThemedImage_Index_ThemedImage_Props): Theme_ThemedImage_Index_ThemedImage_Returns {
+  const colorModeState: Theme_ThemedImage_Index_ThemedImage_ColorModeState = useState('light' as Theme_ThemedImage_Index_ThemedImage_ColorMode);
+  const colorMode: Theme_ThemedImage_Index_ThemedImage_ColorMode = colorModeState[0];
+  const setColorMode: Theme_ThemedImage_Index_ThemedImage_SetColorMode = colorModeState[1];
 
   useEffect(() => {
-    const currentTheme: ThemeThemedImageThemedImageCurrentTheme = document.documentElement.getAttribute('data-theme');
+    const currentTheme: Theme_ThemedImage_Index_ThemedImage_CurrentTheme = document.documentElement.getAttribute('data-theme');
 
     if (currentTheme !== null) {
       setColorMode(currentTheme);
     }
 
-    const observer: ThemeThemedImageThemedImageObserver = new MutationObserver(() => {
-      const theme: ThemeThemedImageThemedImageTheme = document.documentElement.getAttribute('data-theme');
+    const observer: Theme_ThemedImage_Index_ThemedImage_Observer = new MutationObserver(() => {
+      const theme: Theme_ThemedImage_Index_ThemedImage_Theme = document.documentElement.getAttribute('data-theme');
 
       if (theme !== null) {
         setColorMode(theme);
@@ -59,7 +59,7 @@ function ThemedImage(props: ThemeThemedImageThemedImageProps): ThemeThemedImageT
     };
   }, []);
 
-  const src: ThemeThemedImageThemedImageSrc = (colorMode === 'dark') ? props['sources']['dark'] : props['sources']['light'];
+  const src: Theme_ThemedImage_Index_ThemedImage_Src = (colorMode === 'dark') ? props['sources']['dark'] : props['sources']['light'];
 
   return (
     <img

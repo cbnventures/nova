@@ -5,4 +5,4 @@ import type { RuleTester } from '@typescript-eslint/rule-tester';
  *
  * @since 0.15.0
  */
-export type TestsRulesEslintJsdocRequireJsdocSinceRuleTester = RuleTester;
+export type Tests_Rules_Eslint_Jsdoc_RequireJsdocSince_RuleTester = RuleTester;

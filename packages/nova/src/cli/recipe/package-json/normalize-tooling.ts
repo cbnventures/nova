@@ -5,7 +5,7 @@ import {
 
 import chalk from 'chalk';
 
-import { LibNovaConfig } from '../../../lib/nova-config.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
   isPlainObject,
   isProjectRoot,
@@ -16,32 +16,32 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliRecipePackageJsonNormalizeToolingHandleFileContents,
-  CliRecipePackageJsonNormalizeToolingHandleFilePath,
-  CliRecipePackageJsonNormalizeToolingHandleHasBindingGyp,
-  CliRecipePackageJsonNormalizeToolingHandleManifest,
-  CliRecipePackageJsonNormalizeToolingHandlePackageConfig,
-  CliRecipePackageJsonNormalizeToolingHandlePackageGypfile,
-  CliRecipePackageJsonNormalizeToolingHandlePackageScripts,
-  CliRecipePackageJsonNormalizeToolingHandlePackageWorkspaces,
-  CliRecipePackageJsonNormalizeToolingHandleReturns,
-  CliRecipePackageJsonNormalizeToolingHandleWorkspace,
-  CliRecipePackageJsonNormalizeToolingIsEmptyReturns,
-  CliRecipePackageJsonNormalizeToolingIsEmptyValue,
-  CliRecipePackageJsonNormalizeToolingRunCurrentDirectory,
-  CliRecipePackageJsonNormalizeToolingRunEligibleWorkspaces,
-  CliRecipePackageJsonNormalizeToolingRunIsAtProjectRoot,
-  CliRecipePackageJsonNormalizeToolingRunIsDryRun,
-  CliRecipePackageJsonNormalizeToolingRunIsReplaceFile,
-  CliRecipePackageJsonNormalizeToolingRunOptions,
-  CliRecipePackageJsonNormalizeToolingRunRecipeTupleFilter,
-  CliRecipePackageJsonNormalizeToolingRunReplaceFileNotice,
-  CliRecipePackageJsonNormalizeToolingRunReturns,
-  CliRecipePackageJsonNormalizeToolingRunWorkingFile,
-  CliRecipePackageJsonNormalizeToolingRunWorkingFileWorkspaces,
-  CliRecipePackageJsonNormalizeToolingRunWorkspaceConfigFilter,
-  CliRecipePackageJsonNormalizeToolingRunWorkspaceRecipesFilter,
-  CliRecipePackageJsonNormalizeToolingRunWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FileContents,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FilePath,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageConfig,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageGypfile,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageScripts,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Returns,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Value,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_CurrentDirectory,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_EligibleWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_IsAtProjectRoot,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_IsDryRun,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_IsReplaceFile,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Options,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ReplaceFileNotice,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Returns,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkingFile,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkingFileWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkspaceRecipesFilter,
+  Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/normalize-tooling.d.ts';
 
 /**
@@ -53,22 +53,22 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliRecipePackageJsonNormalizeTooling {
+export class Runner {
   /**
    * CLI - Recipe - package.json - Normalize Tooling - Run.
    *
    * Loads nova.config.json, filters eligible workspaces, then normalizes tooling fields in
    * each manifest. Supports dry-run and replace-file.
    *
-   * @param {CliRecipePackageJsonNormalizeToolingRunOptions} options - Options.
+   * @param {Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Options} options - Options.
    *
-   * @returns {CliRecipePackageJsonNormalizeToolingRunReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static async run(options: CliRecipePackageJsonNormalizeToolingRunOptions): CliRecipePackageJsonNormalizeToolingRunReturns {
-    const currentDirectory: CliRecipePackageJsonNormalizeToolingRunCurrentDirectory = process.cwd();
-    const isAtProjectRoot: CliRecipePackageJsonNormalizeToolingRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Options): Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Returns {
+    const currentDirectory: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_CurrentDirectory = process.cwd();
+    const isAtProjectRoot: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_IsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -76,31 +76,31 @@ export class CliRecipePackageJsonNormalizeTooling {
       return;
     }
 
-    const isDryRun: CliRecipePackageJsonNormalizeToolingRunIsDryRun = options['dryRun'] === true;
-    const isReplaceFile: CliRecipePackageJsonNormalizeToolingRunIsReplaceFile = options['replaceFile'] === true;
+    const isDryRun: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isReplaceFile: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice: CliRecipePackageJsonNormalizeToolingRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_ReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const workingFile: CliRecipePackageJsonNormalizeToolingRunWorkingFile = await new LibNovaConfig().load();
-    const workingFileWorkspaces: CliRecipePackageJsonNormalizeToolingRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
+    const workingFile: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-tooling. No workspaces detected in the "nova.config.json" file.');
 
@@ -108,15 +108,15 @@ export class CliRecipePackageJsonNormalizeTooling {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces: CliRecipePackageJsonNormalizeToolingRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: CliRecipePackageJsonNormalizeToolingRunWorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: CliRecipePackageJsonNormalizeToolingRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
+    const eligibleWorkspaces: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: CliRecipePackageJsonNormalizeToolingRunRecipeTupleFilter = workspaceRecipes['normalize-tooling'];
+      const recipeTuple: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_RecipeTupleFilter = workspaceRecipes['normalize-tooling'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -127,21 +127,21 @@ export class CliRecipePackageJsonNormalizeTooling {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-tooling. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces: CliRecipePackageJsonNormalizeToolingRunWorkspaces = await loadWorkspaceManifests({
+    const workspaces: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Run_Workspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-tooling. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -149,18 +149,18 @@ export class CliRecipePackageJsonNormalizeTooling {
     }
 
     Logger.customize({
-      name: 'CliRecipePackageJsonNormalizeTooling.run',
+      name: 'Runner.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for normalize-tooling.`);
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.run',
+        name: 'Runner.run',
         purpose: 'iteration',
       }).info(`Running normalize-tooling for the "${workspace['manifest']['name']}" workspace ...`);
 
-      await CliRecipePackageJsonNormalizeTooling.handle(workspace);
+      await Runner.handle(workspace);
 
       if (isDryRun === true) {
         continue;
@@ -178,32 +178,32 @@ export class CliRecipePackageJsonNormalizeTooling {
    * Processes scripts, gypfile, config, and workspaces for one workspace. Adds gypfile when
    * binding.gyp exists and no install scripts.
    *
-   * @param {CliRecipePackageJsonNormalizeToolingHandleWorkspace} workspace - Workspace.
+   * @param {Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonNormalizeToolingHandleReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Returns}
    *
    * @since 0.14.0
    */
-  private static async handle(workspace: CliRecipePackageJsonNormalizeToolingHandleWorkspace): CliRecipePackageJsonNormalizeToolingHandleReturns {
-    const fileContents: CliRecipePackageJsonNormalizeToolingHandleFileContents = workspace['fileContents'];
-    const filePath: CliRecipePackageJsonNormalizeToolingHandleFilePath = workspace['filePath'];
-    const manifest: CliRecipePackageJsonNormalizeToolingHandleManifest = workspace['manifest'];
+  private static async handle(workspace: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Workspace): Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Returns {
+    const fileContents: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FileContents = workspace['fileContents'];
+    const filePath: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_FilePath = workspace['filePath'];
+    const manifest: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_Manifest = workspace['manifest'];
 
-    const packageScripts: CliRecipePackageJsonNormalizeToolingHandlePackageScripts = fileContents['scripts'];
-    const packageGypfile: CliRecipePackageJsonNormalizeToolingHandlePackageGypfile = fileContents['gypfile'];
-    const packageConfig: CliRecipePackageJsonNormalizeToolingHandlePackageConfig = fileContents['config'];
-    const packageWorkspaces: CliRecipePackageJsonNormalizeToolingHandlePackageWorkspaces = fileContents['workspaces'];
+    const packageScripts: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageScripts = fileContents['scripts'];
+    const packageGypfile: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageGypfile = fileContents['gypfile'];
+    const packageConfig: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageConfig = fileContents['config'];
+    const packageWorkspaces: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_PackageWorkspaces = fileContents['workspaces'];
 
-    const hasBindingGyp: CliRecipePackageJsonNormalizeToolingHandleHasBindingGyp = await pathExists(join(dirname(filePath), 'binding.gyp'));
+    const hasBindingGyp: Cli_Recipe_PackageJson_NormalizeTooling_Runner_Handle_HasBindingGyp = await pathExists(join(dirname(filePath), 'binding.gyp'));
 
     // Sync the "scripts" field.
     if (
       packageScripts === undefined // Package "scripts" is missing.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.handle',
+        name: 'Runner.handle',
         purpose: 'scripts',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "scripts" as an empty object ...`);
 
@@ -216,7 +216,7 @@ export class CliRecipePackageJsonNormalizeTooling {
       && hasBindingGyp === false // "binding.gyp" file is missing.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.handle',
+        name: 'Runner.handle',
         purpose: 'gypfile',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "gypfile". No "binding.gyp" file is found.`);
 
@@ -234,7 +234,7 @@ export class CliRecipePackageJsonNormalizeTooling {
       )
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.handle',
+        name: 'Runner.handle',
         purpose: 'gypfile',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "gypfile" as the npm default ...`);
 
@@ -244,10 +244,10 @@ export class CliRecipePackageJsonNormalizeTooling {
     // Sync the "config" field.
     if (
       packageConfig !== undefined // Package "config" is defined.
-      && CliRecipePackageJsonNormalizeTooling.isEmpty(packageConfig) === true // Package "config" is empty.
+      && Runner.isEmpty(packageConfig) === true // Package "config" is empty.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.handle',
+        name: 'Runner.handle',
         purpose: 'config',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "config" ...`);
 
@@ -260,7 +260,7 @@ export class CliRecipePackageJsonNormalizeTooling {
       && manifest['role'] !== 'project' // Workspace role is not "project".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.handle',
+        name: 'Runner.handle',
         purpose: 'workspaces',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "workspaces". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -270,7 +270,7 @@ export class CliRecipePackageJsonNormalizeTooling {
       && packageWorkspaces === undefined // Package "workspaces" is missing.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeTooling.handle',
+        name: 'Runner.handle',
         purpose: 'workspaces',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Adding "workspaces" as an empty array ...`);
 
@@ -287,15 +287,15 @@ export class CliRecipePackageJsonNormalizeTooling {
    * string, an empty array, or an object with no keys.
    * Used by handle to decide when to remove fields.
    *
-   * @param {CliRecipePackageJsonNormalizeToolingIsEmptyValue} value - Value.
+   * @param {Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Value} value - Value.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonNormalizeToolingIsEmptyReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Returns}
    *
    * @since 0.14.0
    */
-  private static isEmpty(value: CliRecipePackageJsonNormalizeToolingIsEmptyValue): CliRecipePackageJsonNormalizeToolingIsEmptyReturns {
+  private static isEmpty(value: Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Value): Cli_Recipe_PackageJson_NormalizeTooling_Runner_IsEmpty_Returns {
     if (value === null || value === undefined) {
       return true;
     }

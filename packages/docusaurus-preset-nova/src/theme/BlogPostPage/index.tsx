@@ -13,19 +13,19 @@ import TOCCollapsible from '@theme/TOCCollapsible';
 import { createElement } from 'react';
 
 import type {
-  ThemeBlogPostPageBlogPostPageBlogPostContent,
-  ThemeBlogPostPageBlogPostPageContentBlogPost,
-  ThemeBlogPostPageBlogPostPageContentCanRenderToc,
-  ThemeBlogPostPageBlogPostPageContentHideTableOfContents,
-  ThemeBlogPostPageBlogPostPageContentNextItem,
-  ThemeBlogPostPageBlogPostPageContentPaginatorSpread,
-  ThemeBlogPostPageBlogPostPageContentPrevItem,
-  ThemeBlogPostPageBlogPostPageContentProps,
-  ThemeBlogPostPageBlogPostPageContentToc,
-  ThemeBlogPostPageBlogPostPageContentTocMaxHeadingLevel,
-  ThemeBlogPostPageBlogPostPageContentTocMinHeadingLevel,
-  ThemeBlogPostPageBlogPostPageContentTocSpread,
-  ThemeBlogPostPageBlogPostPageProps,
+  Theme_BlogPostPage_Index_BlogPostPage_BlogPostContent,
+  Theme_BlogPostPage_Index_BlogPostPageContent_BlogPost,
+  Theme_BlogPostPage_Index_BlogPostPageContent_CanRenderToc,
+  Theme_BlogPostPage_Index_BlogPostPageContent_HideTableOfContents,
+  Theme_BlogPostPage_Index_BlogPostPageContent_NextItem,
+  Theme_BlogPostPage_Index_BlogPostPageContent_PaginatorSpread,
+  Theme_BlogPostPage_Index_BlogPostPageContent_PrevItem,
+  Theme_BlogPostPage_Index_BlogPostPageContent_Props,
+  Theme_BlogPostPage_Index_BlogPostPageContent_Toc,
+  Theme_BlogPostPage_Index_BlogPostPageContent_TocMaxHeadingLevel,
+  Theme_BlogPostPage_Index_BlogPostPageContent_TocMinHeadingLevel,
+  Theme_BlogPostPage_Index_BlogPostPageContent_TocSpread,
+  Theme_BlogPostPage_Index_BlogPostPage_Props,
 } from '../../types/theme/BlogPostPage/index.d.ts';
 
 /**
@@ -35,20 +35,20 @@ import type {
  * table of contents and previous/next post navigation, using the
  * BlogPostProvider context for metadata access.
  *
- * @param {ThemeBlogPostPageBlogPostPageContentProps} props - Props.
+ * @param {Theme_BlogPostPage_Index_BlogPostPageContent_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogPostPageContent(props: ThemeBlogPostPageBlogPostPageContentProps) {
-  const blogPost: ThemeBlogPostPageBlogPostPageContentBlogPost = useBlogPost();
-  const nextItem: ThemeBlogPostPageBlogPostPageContentNextItem = blogPost['metadata']['nextItem'];
-  const prevItem: ThemeBlogPostPageBlogPostPageContentPrevItem = blogPost['metadata']['prevItem'];
-  const hideTableOfContents: ThemeBlogPostPageBlogPostPageContentHideTableOfContents = blogPost['metadata']['frontMatter']['hide_table_of_contents'];
-  const tocMinHeadingLevel: ThemeBlogPostPageBlogPostPageContentTocMinHeadingLevel = blogPost['metadata']['frontMatter']['toc_min_heading_level'];
-  const tocMaxHeadingLevel: ThemeBlogPostPageBlogPostPageContentTocMaxHeadingLevel = blogPost['metadata']['frontMatter']['toc_max_heading_level'];
-  const tocSpread: ThemeBlogPostPageBlogPostPageContentTocSpread = {};
+function BlogPostPageContent(props: Theme_BlogPostPage_Index_BlogPostPageContent_Props) {
+  const blogPost: Theme_BlogPostPage_Index_BlogPostPageContent_BlogPost = useBlogPost();
+  const nextItem: Theme_BlogPostPage_Index_BlogPostPageContent_NextItem = blogPost['metadata']['nextItem'];
+  const prevItem: Theme_BlogPostPage_Index_BlogPostPageContent_PrevItem = blogPost['metadata']['prevItem'];
+  const hideTableOfContents: Theme_BlogPostPage_Index_BlogPostPageContent_HideTableOfContents = blogPost['metadata']['frontMatter']['hide_table_of_contents'];
+  const tocMinHeadingLevel: Theme_BlogPostPage_Index_BlogPostPageContent_TocMinHeadingLevel = blogPost['metadata']['frontMatter']['toc_min_heading_level'];
+  const tocMaxHeadingLevel: Theme_BlogPostPage_Index_BlogPostPageContent_TocMaxHeadingLevel = blogPost['metadata']['frontMatter']['toc_max_heading_level'];
+  const tocSpread: Theme_BlogPostPage_Index_BlogPostPageContent_TocSpread = {};
 
   if (tocMinHeadingLevel !== undefined) {
     Reflect.set(tocSpread, 'minHeadingLevel', tocMinHeadingLevel);
@@ -58,18 +58,18 @@ function BlogPostPageContent(props: ThemeBlogPostPageBlogPostPageContentProps) {
     Reflect.set(tocSpread, 'maxHeadingLevel', tocMaxHeadingLevel);
   }
 
-  const canRenderToc: ThemeBlogPostPageBlogPostPageContentCanRenderToc = (
+  const canRenderToc: Theme_BlogPostPage_Index_BlogPostPageContent_CanRenderToc = (
     hideTableOfContents !== true
     && blogPost['toc']['length'] > 0
   );
 
-  let toc: ThemeBlogPostPageBlogPostPageContentToc = undefined;
+  let toc: Theme_BlogPostPage_Index_BlogPostPageContent_Toc = undefined;
 
   if (canRenderToc === true) {
     toc = <TOC toc={blogPost['toc']} {...tocSpread} />;
   }
 
-  const paginatorSpread: ThemeBlogPostPageBlogPostPageContentPaginatorSpread = {};
+  const paginatorSpread: Theme_BlogPostPage_Index_BlogPostPageContent_PaginatorSpread = {};
 
   if (nextItem !== undefined) {
     Reflect.set(paginatorSpread, 'nextItem', nextItem);
@@ -115,14 +115,14 @@ function BlogPostPageContent(props: ThemeBlogPostPageBlogPostPageContentProps) {
  * context, rendering the MDX content component as a child with
  * full sidebar and navigation support.
  *
- * @param {ThemeBlogPostPageBlogPostPageProps} props - Props.
+ * @param {Theme_BlogPostPage_Index_BlogPostPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogPostPage(props: ThemeBlogPostPageBlogPostPageProps) {
-  const blogPostContent: ThemeBlogPostPageBlogPostPageBlogPostContent = props['content'];
+function BlogPostPage(props: Theme_BlogPostPage_Index_BlogPostPage_Props) {
+  const blogPostContent: Theme_BlogPostPage_Index_BlogPostPage_BlogPostContent = props['content'];
 
   return (
     <BlogPostProvider content={props['content']} isBlogPostPage={true}>

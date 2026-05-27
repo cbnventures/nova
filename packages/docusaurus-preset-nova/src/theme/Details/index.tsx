@@ -7,18 +7,18 @@ import {
 } from 'react';
 
 import type {
-  ThemeDetailsChildren,
-  ThemeDetailsChildrenArray,
-  ThemeDetailsExtractedSummary,
-  ThemeDetailsFilteredChildren,
-  ThemeDetailsIsOpen,
-  ThemeDetailsOnToggle,
-  ThemeDetailsOpen,
-  ThemeDetailsProps,
-  ThemeDetailsReturns,
-  ThemeDetailsSetIsOpen,
-  ThemeDetailsState,
-  ThemeDetailsSummary,
+  Theme_Details_Index_Details_Children,
+  Theme_Details_Index_Details_ChildrenArray,
+  Theme_Details_Index_Details_ExtractedSummary,
+  Theme_Details_Index_Details_FilteredChildren,
+  Theme_Details_Index_Details_IsOpen,
+  Theme_Details_Index_Details_OnToggle,
+  Theme_Details_Index_Details_Open,
+  Theme_Details_Index_Details_Props,
+  Theme_Details_Index_Details_Returns,
+  Theme_Details_Index_Details_SetIsOpen,
+  Theme_Details_Index_Details_State,
+  Theme_Details_Index_Details_Summary,
 } from '../../types/theme/Details/index.d.ts';
 
 /**
@@ -28,20 +28,20 @@ import type {
  * transition, a chevron rotation indicator, and border styling
  * from Nova CSS variables.
  *
- * @param {ThemeDetailsProps} props - Props.
+ * @param {Theme_Details_Index_Details_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Details(props: ThemeDetailsProps): ThemeDetailsReturns {
-  const summary: ThemeDetailsSummary = props['summary'];
-  const children: ThemeDetailsChildren = props['children'];
-  const open: ThemeDetailsOpen = props['open'];
-  const onToggle: ThemeDetailsOnToggle = props['onToggle'] as ThemeDetailsOnToggle;
-  const state: ThemeDetailsState = useState<ThemeDetailsIsOpen>((open !== undefined) ? (open === true) : false);
-  const isOpen: ThemeDetailsIsOpen = state[0];
-  const setIsOpen: ThemeDetailsSetIsOpen = state[1];
+function Details(props: Theme_Details_Index_Details_Props): Theme_Details_Index_Details_Returns {
+  const summary: Theme_Details_Index_Details_Summary = props['summary'];
+  const children: Theme_Details_Index_Details_Children = props['children'];
+  const open: Theme_Details_Index_Details_Open = props['open'];
+  const onToggle: Theme_Details_Index_Details_OnToggle = props['onToggle'] as Theme_Details_Index_Details_OnToggle;
+  const state: Theme_Details_Index_Details_State = useState<Theme_Details_Index_Details_IsOpen>((open !== undefined) ? (open === true) : false);
+  const isOpen: Theme_Details_Index_Details_IsOpen = state[0];
+  const setIsOpen: Theme_Details_Index_Details_SetIsOpen = state[1];
 
   useEffect(() => {
     if (open !== undefined) {
@@ -55,15 +55,15 @@ function Details(props: ThemeDetailsProps): ThemeDetailsReturns {
   ]);
 
   // If summary is not provided as a prop, extract it from children.
-  let extractedSummary: ThemeDetailsExtractedSummary = undefined;
-  let filteredChildren: ThemeDetailsFilteredChildren = children;
+  let extractedSummary: Theme_Details_Index_Details_ExtractedSummary = undefined;
+  let filteredChildren: Theme_Details_Index_Details_FilteredChildren = children;
 
   if (summary === undefined) {
-    const childrenArray: ThemeDetailsChildrenArray = Children.toArray(children);
+    const childrenArray: Theme_Details_Index_Details_ChildrenArray = Children.toArray(children);
 
     extractedSummary = childrenArray.find(
       (item) => isValidElement(item) === true && item['type'] === 'summary',
-    ) as ThemeDetailsExtractedSummary;
+    ) as Theme_Details_Index_Details_ExtractedSummary;
     filteredChildren = <>{childrenArray.filter((item) => item !== extractedSummary)}</>;
   }
 
@@ -77,8 +77,8 @@ function Details(props: ThemeDetailsProps): ThemeDetailsReturns {
         className="nova-details-summary"
         type="button"
         onClick={() => {
-          setIsOpen((previous: ThemeDetailsIsOpen) => {
-            const next: ThemeDetailsIsOpen = (previous === false);
+          setIsOpen((previous: Theme_Details_Index_Details_IsOpen) => {
+            const next: Theme_Details_Index_Details_IsOpen = (previous === false);
 
             if (onToggle !== undefined) {
               onToggle(next);

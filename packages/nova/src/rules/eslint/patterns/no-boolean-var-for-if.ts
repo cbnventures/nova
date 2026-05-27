@@ -3,21 +3,21 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationBody,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationContext,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationDeclarator,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationIfTest,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationInit,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNextStatement,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNode,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNodeIndex,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationParent,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationReferences,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationReturns,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationVariable,
-  RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationVarName,
-  RulesEslintPatternsNoBooleanVarForIfRuleDefaultOptionsIgnoreFiles,
-  RulesEslintPatternsNoBooleanVarForIfRuleOptions,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Body,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Context,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Declarator,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_IfTest,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Init,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_NextStatement,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Node,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_NodeIndex,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Parent,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_References,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Returns,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Variable,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_VarName,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-boolean-var-for-if.d.ts';
 
 /**
@@ -28,7 +28,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintPatternsNoBooleanVarForIf {
+export class Runner {
   /**
    * Rules - ESLint - Patterns - No Boolean Var For If - Rule.
    *
@@ -61,10 +61,10 @@ export class RulesEslintPatternsNoBooleanVarForIf {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintPatternsNoBooleanVarForIfRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintPatternsNoBooleanVarForIfRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -73,7 +73,7 @@ export class RulesEslintPatternsNoBooleanVarForIf {
 
       return {
         VariableDeclaration(node) {
-          RulesEslintPatternsNoBooleanVarForIf.checkVariableDeclaration(context, node);
+          Runner.checkVariableDeclaration(context, node);
 
           return;
         },
@@ -90,14 +90,14 @@ export class RulesEslintPatternsNoBooleanVarForIf {
    *
    * @private
    *
-   * @param {RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationContext} context - Context.
-   * @param {RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNode}    node    - Node.
+   * @param {Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Context} context - Context.
+   * @param {Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Node}    node    - Node.
    *
-   * @returns {RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationReturns}
+   * @returns {Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Returns}
    *
    * @since 0.15.0
    */
-  private static checkVariableDeclaration(context: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationContext, node: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNode): RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationReturns {
+  private static checkVariableDeclaration(context: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Context, node: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Node): Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Returns {
     if (node.kind !== 'const') {
       return;
     }
@@ -106,7 +106,7 @@ export class RulesEslintPatternsNoBooleanVarForIf {
       return;
     }
 
-    const declarator: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationDeclarator = node.declarations[0];
+    const declarator: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Declarator = node.declarations[0];
 
     if (declarator === undefined) {
       return;
@@ -116,7 +116,7 @@ export class RulesEslintPatternsNoBooleanVarForIf {
       return;
     }
 
-    const init: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationInit = declarator.init;
+    const init: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Init = declarator.init;
 
     if (init === undefined || init === null) {
       return;
@@ -127,8 +127,8 @@ export class RulesEslintPatternsNoBooleanVarForIf {
       return;
     }
 
-    const varName: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationVarName = declarator.id.name;
-    const parent: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationParent = node.parent;
+    const varName: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_VarName = declarator.id.name;
+    const parent: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Parent = node.parent;
 
     if (
       parent === undefined
@@ -141,33 +141,33 @@ export class RulesEslintPatternsNoBooleanVarForIf {
       return;
     }
 
-    const body: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationBody = parent.body;
-    const nodeIndex: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNodeIndex = body.indexOf(node);
+    const body: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Body = parent.body;
+    const nodeIndex: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_NodeIndex = body.indexOf(node);
 
     if (nodeIndex < 0 || nodeIndex >= body.length - 1) {
       return;
     }
 
-    const nextStatement: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNextStatement = body[nodeIndex + 1];
+    const nextStatement: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_NextStatement = body[nodeIndex + 1];
 
     if (nextStatement === undefined || nextStatement.type !== 'IfStatement') {
       return;
     }
 
-    const ifTest: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationIfTest = nextStatement.test;
+    const ifTest: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_IfTest = nextStatement.test;
 
     if (ifTest.type !== 'Identifier' || ifTest.name !== varName) {
       return;
     }
 
     // Verify the variable is referenced exactly once using scope analysis.
-    const variable: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationVariable = context.sourceCode.getScope(node).variables.find((scopeVariable) => scopeVariable.name === varName);
+    const variable: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Variable = context.sourceCode.getScope(node).variables.find((scopeVariable) => scopeVariable.name === varName);
 
     if (variable === undefined) {
       return;
     }
 
-    const references: RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationReferences = variable.references.filter((reference) => reference.isRead() === true);
+    const references: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_References = variable.references.filter((reference) => reference.isRead() === true);
 
     if (references.length !== 1) {
       return;

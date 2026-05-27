@@ -6,88 +6,88 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogListPaginatorBlogListPaginatorPropsMetadata = BlogPaginatedMetadata;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Props_Metadata = BlogPaginatedMetadata;
 
-export type ThemeBlogListPaginatorBlogListPaginatorPropsClassName = string | undefined;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Props_ClassName = string | undefined;
 
-export type ThemeBlogListPaginatorBlogListPaginatorPropsStyle = CSSProperties | undefined;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogListPaginatorBlogListPaginatorProps = {
-  metadata: ThemeBlogListPaginatorBlogListPaginatorPropsMetadata;
-  className?: ThemeBlogListPaginatorBlogListPaginatorPropsClassName;
-  style?: ThemeBlogListPaginatorBlogListPaginatorPropsStyle;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Props = {
+  metadata: Theme_BlogListPaginator_Index_BlogListPaginator_Props_Metadata;
+  className?: Theme_BlogListPaginator_Index_BlogListPaginator_Props_ClassName;
+  style?: Theme_BlogListPaginator_Index_BlogListPaginator_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogListPaginatorBlogListPaginatorPage = number;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Page = number;
 
-export type ThemeBlogListPaginatorBlogListPaginatorTotalPages = number;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_TotalPages = number;
 
-export type ThemeBlogListPaginatorBlogListPaginatorPermalink = string;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Permalink = string;
 
-export type ThemeBlogListPaginatorBlogListPaginatorBasePath = string;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_BasePath = string;
 
-export type ThemeBlogListPaginatorBlogListPaginatorPageNumbers = ThemeBlogListPaginatorBlogListPaginatorPageNumbersEntry[];
+export type Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbers = Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbersEntry[];
 
-export type ThemeBlogListPaginatorBlogListPaginatorNavAriaLabel = string;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_NavAriaLabel = string;
 
-export type ThemeBlogListPaginatorBlogListPaginatorFirst = string;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_First = string;
 
-export type ThemeBlogListPaginatorBlogListPaginatorPrevious = string;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Previous = string;
 
-export type ThemeBlogListPaginatorBlogListPaginatorNext = string;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Next = string;
 
-export type ThemeBlogListPaginatorBlogListPaginatorLast = string;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_Last = string;
 
-export type ThemeBlogListPaginatorBlogListPaginatorPageNumbersEntry = number | '...';
+export type Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbersEntry = number | '...';
 
-export type ThemeBlogListPaginatorBlogListPaginatorMapIndex = number;
+export type Theme_BlogListPaginator_Index_BlogListPaginator_MapIndex = number;
 
 /**
  * Theme - Blog List Paginator - Get Base Path.
  *
  * @since 0.16.0
  */
-export type ThemeBlogListPaginatorGetBasePathPermalink = string;
+export type Theme_BlogListPaginator_Index_GetBasePath_Permalink = string;
 
-export type ThemeBlogListPaginatorGetBasePathPage = number;
+export type Theme_BlogListPaginator_Index_GetBasePath_Page = number;
 
-export type ThemeBlogListPaginatorGetBasePathBasePath = string;
+export type Theme_BlogListPaginator_Index_GetBasePath_BasePath = string;
 
 /**
  * Theme - Blog List Paginator - Get Page Numbers.
  *
  * @since 0.16.0
  */
-export type ThemeBlogListPaginatorGetPageNumbersCurrentPage = number;
+export type Theme_BlogListPaginator_Index_GetPageNumbers_CurrentPage = number;
 
-export type ThemeBlogListPaginatorGetPageNumbersTotalPages = number;
+export type Theme_BlogListPaginator_Index_GetPageNumbers_TotalPages = number;
 
-export type ThemeBlogListPaginatorGetPageNumbersPageNumbersEntry = number | '...';
+export type Theme_BlogListPaginator_Index_GetPageNumbers_PageNumbersEntry = number | '...';
 
-export type ThemeBlogListPaginatorGetPageNumbersPageNumbers = ThemeBlogListPaginatorGetPageNumbersPageNumbersEntry[];
+export type Theme_BlogListPaginator_Index_GetPageNumbers_PageNumbers = Theme_BlogListPaginator_Index_GetPageNumbers_PageNumbersEntry[];
 
-export type ThemeBlogListPaginatorGetPageNumbersAllPages = ThemeBlogListPaginatorGetPageNumbersPageNumbersEntry[];
+export type Theme_BlogListPaginator_Index_GetPageNumbers_AllPages = Theme_BlogListPaginator_Index_GetPageNumbers_PageNumbersEntry[];
 
-export type ThemeBlogListPaginatorGetPageNumbersIndex = number;
+export type Theme_BlogListPaginator_Index_GetPageNumbers_Index = number;
 
-export type ThemeBlogListPaginatorGetPageNumbersVisibleSet = Set<number>;
+export type Theme_BlogListPaginator_Index_GetPageNumbers_VisibleSet = Set<number>;
 
-export type ThemeBlogListPaginatorGetPageNumbersSortedPages = number[];
+export type Theme_BlogListPaginator_Index_GetPageNumbers_SortedPages = number[];
 
-export type ThemeBlogListPaginatorGetPageNumbersSortedPagesComparatorFirst = number;
+export type Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesComparatorFirst = number;
 
-export type ThemeBlogListPaginatorGetPageNumbersSortedPagesComparatorSecond = number;
+export type Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesComparatorSecond = number;
 
-export type ThemeBlogListPaginatorGetPageNumbersSortedPagesEntry = number | undefined;
+export type Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesEntry = number | undefined;
 
 /**
  * Theme - Blog List Paginator - Get Page URL.
  *
  * @since 0.16.0
  */
-export type ThemeBlogListPaginatorGetPageUrlBasePath = string;
+export type Theme_BlogListPaginator_Index_GetPageUrl_BasePath = string;
 
-export type ThemeBlogListPaginatorGetPageUrlPageNumber = number;
+export type Theme_BlogListPaginator_Index_GetPageUrl_PageNumber = number;
 
-export type ThemeBlogListPaginatorGetPageUrlPageUrl = string;
+export type Theme_BlogListPaginator_Index_GetPageUrl_PageUrl = string;

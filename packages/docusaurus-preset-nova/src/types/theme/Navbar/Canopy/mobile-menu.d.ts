@@ -1,170 +1,170 @@
-import type { ThemeNavbarItem } from '../index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../index.d.ts';
 
 /**
  * Theme - Navbar - Canopy - Mobile Menu.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsIsOpen = boolean;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_IsOpen = boolean;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsOnClose = () => void;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_OnClose = () => void;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsItems = ThemeNavbarItem[];
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoAlt = string;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Alt = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrc = {
-  light: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcLight;
-  dark: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrcDark;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Src = {
+  light: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmark = {
-  light: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkLight;
-  dark: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmarkDark;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoHref = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoRel = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogo = {
-  alt: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoAlt;
-  src: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoSrc;
-  wordmark: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoWordmark;
-  title: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoTitle;
-  href: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoHref;
-  target: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoTarget;
-  rel: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoRel;
-  ariaLabel: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogoAriaLabel;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo = {
+  alt: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Alt;
+  src: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Src;
+  wordmark: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark;
+  title: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Title;
+  href: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Href;
+  target: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Target;
+  rel: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPropsActiveItemLabel = string | null;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_ActiveItemLabel = string | null;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuProps = {
-  isOpen: ThemeNavbarCanopyMobileMenuMobileMenuPropsIsOpen;
-  onClose: ThemeNavbarCanopyMobileMenuMobileMenuPropsOnClose;
-  items: ThemeNavbarCanopyMobileMenuMobileMenuPropsItems;
-  siteLogo: ThemeNavbarCanopyMobileMenuMobileMenuPropsSiteLogo;
-  activeItemLabel: ThemeNavbarCanopyMobileMenuMobileMenuPropsActiveItemLabel;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props = {
+  isOpen: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_IsOpen;
+  onClose: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_OnClose;
+  items: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_Items;
+  siteLogo: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_SiteLogo;
+  activeItemLabel: Theme_Navbar_Canopy_MobileMenu_MobileMenu_Props_ActiveItemLabel;
 };
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuReturns = React.JSX.Element | null;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Returns = React.JSX.Element | null;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuIsOpen = boolean;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_IsOpen = boolean;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuOnClose = () => void;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_OnClose = () => void;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuItems = ThemeNavbarItem[];
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoAlt = string;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Alt = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrc = {
-  light: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcLight;
-  dark: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrcDark;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Src = {
+  light: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmark = {
-  light: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkLight;
-  dark: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmarkDark;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoHref = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoRel = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSiteLogo = {
-  alt: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoAlt;
-  src: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoSrc;
-  wordmark: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoWordmark;
-  title: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoTitle;
-  href: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoHref;
-  target: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoTarget;
-  rel: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoRel;
-  ariaLabel: ThemeNavbarCanopyMobileMenuMobileMenuSiteLogoAriaLabel;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo = {
+  alt: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Alt;
+  src: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Src;
+  wordmark: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Wordmark;
+  title: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Title;
+  href: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Href;
+  target: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Target;
+  rel: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Canopy_MobileMenu_MobileMenu_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuActiveItemLabel = string | null;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_ActiveItemLabel = string | null;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuPanelRef = React.RefObject<HTMLDivElement | null>;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_PanelRef = React.RefObject<HTMLDivElement | null>;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuIsClosing = boolean;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_IsClosing = boolean;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuIsClosingState = [ThemeNavbarCanopyMobileMenuMobileMenuIsClosing, ThemeNavbarCanopyMobileMenuMobileMenuSetIsClosing];
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_IsClosingState = [Theme_Navbar_Canopy_MobileMenu_MobileMenu_IsClosing, Theme_Navbar_Canopy_MobileMenu_MobileMenu_SetIsClosing];
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuSetIsClosing = React.Dispatch<React.SetStateAction<ThemeNavbarCanopyMobileMenuMobileMenuIsClosing>>;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_SetIsClosing = React.Dispatch<React.SetStateAction<Theme_Navbar_Canopy_MobileMenu_MobileMenu_IsClosing>>;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuAriaLabel = string;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_AriaLabel = string;
 
-export type ThemeNavbarCanopyMobileMenuCloseMenuAriaLabel = string;
+export type Theme_Navbar_Canopy_MobileMenu_CloseMenuAriaLabel = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuOverlayClassName = string;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_OverlayClassName = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuAnimationEvent = React.AnimationEvent<HTMLDivElement>;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_AnimationEvent = React.AnimationEvent<HTMLDivElement>;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuItemIndex = number;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_ItemIndex = number;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuItemIcon = string | undefined;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_ItemIcon = string | undefined;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuDefaultIcon = string;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_DefaultIcon = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuItemStyle = React.CSSProperties;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_ItemStyle = React.CSSProperties;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuItemTo = string;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_ItemTo = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuItemHref = string;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_ItemHref = string;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuLinkProps = Record<string, string>;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_LinkProps = Record<string, string>;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuItemIsActive = boolean;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_ItemIsActive = boolean;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuLinkSpread = Record<string, string>;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_LinkSpread = Record<string, string>;
 
 /**
  * Theme - Navbar - Canopy - Mobile Menu - Mobile Menu - Handle Click Outside.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarCanopyMobileMenuMobileMenuHandleClickOutsideFunction = (event: ThemeNavbarCanopyMobileMenuMobileMenuHandleClickOutsideMouseEvent) => void;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_HandleClickOutsideFunction = (event: Theme_Navbar_Canopy_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent) => void;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuHandleClickOutsideMouseEvent = React.MouseEvent<HTMLDivElement>;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent = React.MouseEvent<HTMLDivElement>;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuHandleClickOutsideMouseTarget = EventTarget | null;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget = EventTarget | null;
 
 /**
  * Theme - Navbar - Canopy - Mobile Menu - Mobile Menu - Handle Escape.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarCanopyMobileMenuMobileMenuHandleEscapeFunction = (event: ThemeNavbarCanopyMobileMenuMobileMenuHandleEscapeKeyboardEvent) => void;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_HandleEscapeFunction = (event: Theme_Navbar_Canopy_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent) => void;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuHandleEscapeKeyboardEvent = KeyboardEvent;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent = KeyboardEvent;
 
-export type ThemeNavbarCanopyMobileMenuMobileMenuFocusTarget = HTMLButtonElement | null;
+export type Theme_Navbar_Canopy_MobileMenu_MobileMenu_FocusTarget = HTMLButtonElement | null;

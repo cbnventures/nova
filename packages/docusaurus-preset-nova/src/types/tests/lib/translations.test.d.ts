@@ -1,7 +1,7 @@
 import type {
-  LibTranslationsApplyParamsThemeConfig,
-  LibTranslationsApplyReturns,
-  LibTranslationsExtractReturns,
+  Lib_Translations_Runner_Apply_Params_ThemeConfig,
+  Lib_Translations_Runner_Apply_Returns,
+  Lib_Translations_Runner_Extract_Returns,
 } from '../../lib/translations.d.ts';
 
 /**
@@ -9,13 +9,13 @@ import type {
  *
  * @since 0.18.0
  */
-export type TestsLibTranslationsApplyResult = LibTranslationsApplyReturns;
+export type Tests_Lib_Translations_ApplyResult = Lib_Translations_Runner_Apply_Returns;
 
-export type TestsLibTranslationsApplyThemeConfig = LibTranslationsApplyParamsThemeConfig;
+export type Tests_Lib_Translations_ApplyThemeConfig = Lib_Translations_Runner_Apply_Params_ThemeConfig;
 
 /**
  * Tests - Lib - Translations - Extract.
  *
  * @since 0.18.0
  */
-export type TestsLibTranslationsExtractResult = LibTranslationsExtractReturns;
+export type Tests_Lib_Translations_ExtractResult = Lib_Translations_Runner_Extract_Returns;

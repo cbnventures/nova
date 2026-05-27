@@ -3,20 +3,20 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionContext,
-  RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionCurr,
-  RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionMaxInline,
-  RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionNode,
-  RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionOperandCount,
-  RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionOperands,
-  RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionPrev,
-  RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionReturns,
-  RulesEslintFormattingRequireMultilineConditionsCollectOperandsNode,
-  RulesEslintFormattingRequireMultilineConditionsCollectOperandsReturns,
-  RulesEslintFormattingRequireMultilineConditionsRuleDefaultOptionsIgnoreFiles,
-  RulesEslintFormattingRequireMultilineConditionsRuleDefaultOptionsMaxInline,
-  RulesEslintFormattingRequireMultilineConditionsRuleMaxInline,
-  RulesEslintFormattingRequireMultilineConditionsRuleOptions,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Context,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Curr,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_MaxInline,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Node,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_OperandCount,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Operands,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Prev,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Returns,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Node,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Returns,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_RuleDefaultOptionsMaxInline,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_RuleMaxInline,
+  Rules_Eslint_Formatting_RequireMultilineConditions_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/require-multiline-conditions.d.ts';
 
 /**
@@ -27,7 +27,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintFormattingRequireMultilineConditions {
+export class Runner {
   /**
    * Rules - ESLint - Formatting - Require Multiline Conditions - Rule.
    *
@@ -63,12 +63,12 @@ export class RulesEslintFormattingRequireMultilineConditions {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintFormattingRequireMultilineConditionsRuleDefaultOptionsIgnoreFiles,
-      maxInline: 2 as RulesEslintFormattingRequireMultilineConditionsRuleDefaultOptionsMaxInline,
+      ignoreFiles: [] as Rules_Eslint_Formatting_RequireMultilineConditions_Runner_RuleDefaultOptionsIgnoreFiles,
+      maxInline: 2 as Rules_Eslint_Formatting_RequireMultilineConditions_Runner_RuleDefaultOptionsMaxInline,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintFormattingRequireMultilineConditionsRuleOptions = defaultOptions[0];
-      const maxInline: RulesEslintFormattingRequireMultilineConditionsRuleMaxInline = options['maxInline'];
+      const options: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_RuleOptions = defaultOptions[0];
+      const maxInline: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_RuleMaxInline = options['maxInline'];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -77,7 +77,7 @@ export class RulesEslintFormattingRequireMultilineConditions {
 
       return {
         LogicalExpression(node) {
-          RulesEslintFormattingRequireMultilineConditions.checkLogicalExpression(context, node, maxInline);
+          Runner.checkLogicalExpression(context, node, maxInline);
 
           return;
         },
@@ -93,22 +93,22 @@ export class RulesEslintFormattingRequireMultilineConditions {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionContext}   context   - Context.
-   * @param {RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionNode}      node      - Node.
-   * @param {RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionMaxInline} maxInline - Max inline.
+   * @param {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Context}   context   - Context.
+   * @param {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Node}      node      - Node.
+   * @param {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_MaxInline} maxInline - Max inline.
    *
-   * @returns {RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionReturns}
+   * @returns {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Returns}
    *
    * @since 0.15.0
    */
-  private static checkLogicalExpression(context: RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionContext, node: RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionNode, maxInline: RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionMaxInline): RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionReturns {
+  private static checkLogicalExpression(context: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Context, node: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Node, maxInline: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_MaxInline): Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Returns {
     // Only process the outermost logical expression.
     if (node.parent.type === 'LogicalExpression') {
       return;
     }
 
-    const operands: RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionOperands = RulesEslintFormattingRequireMultilineConditions.collectOperands(node);
-    const operandCount: RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionOperandCount = operands.length;
+    const operands: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Operands = Runner.collectOperands(node);
+    const operandCount: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_OperandCount = operands.length;
 
     if (operandCount <= maxInline) {
       return;
@@ -116,8 +116,8 @@ export class RulesEslintFormattingRequireMultilineConditions {
 
     // Check if any two consecutive operands share the same start line.
     for (let i = 1; i < operands.length; i += 1) {
-      const prev: RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionPrev = operands[i - 1];
-      const curr: RulesEslintFormattingRequireMultilineConditionsCheckLogicalExpressionCurr = operands[i];
+      const prev: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Prev = operands[i - 1];
+      const curr: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CheckLogicalExpression_Curr = operands[i];
 
       if (prev === undefined || curr === undefined) {
         continue;
@@ -148,23 +148,23 @@ export class RulesEslintFormattingRequireMultilineConditions {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequireMultilineConditionsCollectOperandsNode} node - Node.
+   * @param {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingRequireMultilineConditionsCollectOperandsReturns}
+   * @returns {Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Returns}
    *
    * @since 0.15.0
    */
-  private static collectOperands(node: RulesEslintFormattingRequireMultilineConditionsCollectOperandsNode): RulesEslintFormattingRequireMultilineConditionsCollectOperandsReturns {
-    const operands: RulesEslintFormattingRequireMultilineConditionsCollectOperandsReturns = [];
+  private static collectOperands(node: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Node): Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Returns {
+    const operands: Rules_Eslint_Formatting_RequireMultilineConditions_Runner_CollectOperands_Returns = [];
 
     if (node.left.type === 'LogicalExpression') {
-      operands.push(...RulesEslintFormattingRequireMultilineConditions.collectOperands(node.left));
+      operands.push(...Runner.collectOperands(node.left));
     } else {
       operands.push(node.left);
     }
 
     if (node.right.type === 'LogicalExpression') {
-      operands.push(...RulesEslintFormattingRequireMultilineConditions.collectOperands(node.right));
+      operands.push(...Runner.collectOperands(node.right));
     } else {
       operands.push(node.right);
     }

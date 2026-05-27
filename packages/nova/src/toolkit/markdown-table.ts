@@ -1,47 +1,47 @@
 import { LIB_REGEX_CHARACTER_PIPE, LIB_REGEX_LINEBREAK_CRLF_OR_LF, LIB_REGEX_PATTERN_ANSI } from '../lib/regex.js';
 
 import type {
-  ToolkitMarkdownTableAddRowReturns,
-  ToolkitMarkdownTableAddRowRow,
-  ToolkitMarkdownTableComputeColumnWidthsColumnsLength,
-  ToolkitMarkdownTableComputeColumnWidthsColumnWidth,
-  ToolkitMarkdownTableComputeColumnWidthsReturns,
-  ToolkitMarkdownTableComputeColumnWidthsRows,
-  ToolkitMarkdownTableComputeColumnWidthsStrippedCell,
-  ToolkitMarkdownTableConstructorHeaders,
-  ToolkitMarkdownTableConstructorOptions,
-  ToolkitMarkdownTableEscapeCellLinebreakPattern,
-  ToolkitMarkdownTableEscapeCellPipePattern,
-  ToolkitMarkdownTableEscapeCellReturns,
-  ToolkitMarkdownTableEscapeCellValue,
-  ToolkitMarkdownTableFormatDelimiterColumnCells,
-  ToolkitMarkdownTableFormatDelimiterColumnWidths,
-  ToolkitMarkdownTableFormatDelimiterDelimiter,
-  ToolkitMarkdownTableFormatDelimiterMinimumWidth,
-  ToolkitMarkdownTableFormatDelimiterReturns,
-  ToolkitMarkdownTableFormatDelimiterRowBody,
-  ToolkitMarkdownTableFormatDelimiterUsePaddedDelimiter,
-  ToolkitMarkdownTableFormatRowCells,
-  ToolkitMarkdownTableFormatRowEscapedCell,
-  ToolkitMarkdownTableFormatRowEscapedCells,
-  ToolkitMarkdownTableFormatRowReturns,
-  ToolkitMarkdownTableFormatRowWidths,
-  ToolkitMarkdownTableHeaders,
-  ToolkitMarkdownTableMinimumColumnWidth,
-  ToolkitMarkdownTablePadCellPadding,
-  ToolkitMarkdownTablePadCellReturns,
-  ToolkitMarkdownTablePadCellString,
-  ToolkitMarkdownTablePadCellWidth,
-  ToolkitMarkdownTablePadDelimiterRow,
-  ToolkitMarkdownTableRenderBody,
-  ToolkitMarkdownTableRenderColumnWidths,
-  ToolkitMarkdownTableRenderDelimiter,
-  ToolkitMarkdownTableRenderHeader,
-  ToolkitMarkdownTableRenderReturns,
-  ToolkitMarkdownTableRows,
-  ToolkitMarkdownTableStripAnsiColorsPattern,
-  ToolkitMarkdownTableStripAnsiColorsReturns,
-  ToolkitMarkdownTableStripAnsiColorsString,
+  Toolkit_MarkdownTable_AddRow_Returns,
+  Toolkit_MarkdownTable_AddRow_Row,
+  Toolkit_MarkdownTable_ComputeColumnWidths_ColumnsLength,
+  Toolkit_MarkdownTable_ComputeColumnWidths_ColumnWidth,
+  Toolkit_MarkdownTable_ComputeColumnWidths_Returns,
+  Toolkit_MarkdownTable_ComputeColumnWidths_Rows,
+  Toolkit_MarkdownTable_ComputeColumnWidths_StrippedCell,
+  Toolkit_MarkdownTable_Constructor_Headers,
+  Toolkit_MarkdownTable_Constructor_Options,
+  Toolkit_MarkdownTable_EscapeCell_LinebreakPattern,
+  Toolkit_MarkdownTable_EscapeCell_PipePattern,
+  Toolkit_MarkdownTable_EscapeCell_Returns,
+  Toolkit_MarkdownTable_EscapeCell_Value,
+  Toolkit_MarkdownTable_FormatDelimiter_ColumnCells,
+  Toolkit_MarkdownTable_FormatDelimiter_ColumnWidths,
+  Toolkit_MarkdownTable_FormatDelimiter_Delimiter,
+  Toolkit_MarkdownTable_FormatDelimiter_MinimumWidth,
+  Toolkit_MarkdownTable_FormatDelimiter_Returns,
+  Toolkit_MarkdownTable_FormatDelimiter_RowBody,
+  Toolkit_MarkdownTable_FormatDelimiter_UsePaddedDelimiter,
+  Toolkit_MarkdownTable_FormatRow_Cells,
+  Toolkit_MarkdownTable_FormatRow_EscapedCell,
+  Toolkit_MarkdownTable_FormatRow_EscapedCells,
+  Toolkit_MarkdownTable_FormatRow_Returns,
+  Toolkit_MarkdownTable_FormatRow_Widths,
+  Toolkit_MarkdownTable_Headers,
+  Toolkit_MarkdownTable_MinimumColumnWidth,
+  Toolkit_MarkdownTable_PadCell_Padding,
+  Toolkit_MarkdownTable_PadCell_Returns,
+  Toolkit_MarkdownTable_PadCell_String,
+  Toolkit_MarkdownTable_PadCell_Width,
+  Toolkit_MarkdownTable_PadDelimiterRow,
+  Toolkit_MarkdownTable_Render_Body,
+  Toolkit_MarkdownTable_Render_ColumnWidths,
+  Toolkit_MarkdownTable_Render_Delimiter,
+  Toolkit_MarkdownTable_Render_Header,
+  Toolkit_MarkdownTable_Render_Returns,
+  Toolkit_MarkdownTable_Rows,
+  Toolkit_MarkdownTable_StripAnsiColors_Pattern,
+  Toolkit_MarkdownTable_StripAnsiColors_Returns,
+  Toolkit_MarkdownTable_StripAnsiColors_String,
 } from '../types/toolkit/markdown-table.d.ts';
 
 /**
@@ -63,7 +63,7 @@ class ToolkitMarkdownTable {
    *
    * @since 0.11.0
    */
-  readonly #headers: ToolkitMarkdownTableHeaders;
+  readonly #headers: Toolkit_MarkdownTable_Headers;
 
   /**
    * Toolkit - Markdown Table - Minimum Column Width.
@@ -75,7 +75,7 @@ class ToolkitMarkdownTable {
    *
    * @since 0.11.0
    */
-  readonly #minimumColumnWidth: ToolkitMarkdownTableMinimumColumnWidth;
+  readonly #minimumColumnWidth: Toolkit_MarkdownTable_MinimumColumnWidth;
 
   /**
    * Toolkit - Markdown Table - Pad Delimiter Row.
@@ -87,7 +87,7 @@ class ToolkitMarkdownTable {
    *
    * @since 0.11.0
    */
-  readonly #padDelimiterRow: ToolkitMarkdownTablePadDelimiterRow;
+  readonly #padDelimiterRow: Toolkit_MarkdownTable_PadDelimiterRow;
 
   /**
    * Toolkit - Markdown Table - Rows.
@@ -99,7 +99,7 @@ class ToolkitMarkdownTable {
    *
    * @since 0.11.0
    */
-  readonly #rows: ToolkitMarkdownTableRows;
+  readonly #rows: Toolkit_MarkdownTable_Rows;
 
   /**
    * Toolkit - Markdown Table - Constructor.
@@ -107,12 +107,12 @@ class ToolkitMarkdownTable {
    * Validates headers and stores rendering options. Throws if
    * headers is empty since a table without columns cannot produce valid markdown output.
    *
-   * @param {ToolkitMarkdownTableConstructorHeaders} headers   - Headers.
-   * @param {ToolkitMarkdownTableConstructorOptions} [options] - Options.
+   * @param {Toolkit_MarkdownTable_Constructor_Headers} headers   - Headers.
+   * @param {Toolkit_MarkdownTable_Constructor_Options} [options] - Options.
    *
    * @since 0.11.0
    */
-  public constructor(headers: ToolkitMarkdownTableConstructorHeaders, options?: ToolkitMarkdownTableConstructorOptions) {
+  public constructor(headers: Toolkit_MarkdownTable_Constructor_Headers, options?: Toolkit_MarkdownTable_Constructor_Options) {
     if (Array.isArray(headers) === false || headers.length === 0) {
       throw new Error('"headers" must be a non-empty array');
     }
@@ -132,13 +132,13 @@ class ToolkitMarkdownTable {
    * Appends a data row and returns the instance for chaining.
    * Throws if the row length does not match the number of headers.
    *
-   * @param {ToolkitMarkdownTableAddRowRow} row - Row.
+   * @param {Toolkit_MarkdownTable_AddRow_Row} row - Row.
    *
-   * @returns {ToolkitMarkdownTableAddRowReturns}
+   * @returns {Toolkit_MarkdownTable_AddRow_Returns}
    *
    * @since 0.11.0
    */
-  public addRow(row: ToolkitMarkdownTableAddRowRow): ToolkitMarkdownTableAddRowReturns {
+  public addRow(row: Toolkit_MarkdownTable_AddRow_Row): Toolkit_MarkdownTable_AddRow_Returns {
     if (this.#headers.length !== row.length) {
       throw new Error('Length of "rows" must equal length of "headers"');
     }
@@ -155,16 +155,16 @@ class ToolkitMarkdownTable {
    * Computes column widths, then assembles the header row,
    * delimiter row, and body rows into a single pipe-delimited markdown string.
    *
-   * @returns {ToolkitMarkdownTableRenderReturns}
+   * @returns {Toolkit_MarkdownTable_Render_Returns}
    *
    * @since 0.11.0
    */
-  public render(): ToolkitMarkdownTableRenderReturns {
-    const columnWidths: ToolkitMarkdownTableRenderColumnWidths = this.computeColumnWidths();
+  public render(): Toolkit_MarkdownTable_Render_Returns {
+    const columnWidths: Toolkit_MarkdownTable_Render_ColumnWidths = this.computeColumnWidths();
 
-    const header: ToolkitMarkdownTableRenderHeader = this.formatRow(this.#headers, columnWidths);
-    const delimiter: ToolkitMarkdownTableRenderDelimiter = this.formatDelimiter(columnWidths);
-    const body: ToolkitMarkdownTableRenderBody = this.#rows.map((row) => this.formatRow(row, columnWidths)).join('\n');
+    const header: Toolkit_MarkdownTable_Render_Header = this.formatRow(this.#headers, columnWidths);
+    const delimiter: Toolkit_MarkdownTable_Render_Delimiter = this.formatDelimiter(columnWidths);
+    const body: Toolkit_MarkdownTable_Render_Body = this.#rows.map((row) => this.formatRow(row, columnWidths)).join('\n');
 
     return [
       header,
@@ -179,17 +179,17 @@ class ToolkitMarkdownTable {
    * Replaces pipe characters with backslash-escaped pipes and
    * collapses linebreaks into spaces so cell content never breaks markdown table syntax.
    *
-   * @param {ToolkitMarkdownTableEscapeCellValue} value - Value.
+   * @param {Toolkit_MarkdownTable_EscapeCell_Value} value - Value.
    *
    * @private
    *
-   * @returns {ToolkitMarkdownTableEscapeCellReturns}
+   * @returns {Toolkit_MarkdownTable_EscapeCell_Returns}
    *
    * @since 0.11.0
    */
-  private escapeCell(value: ToolkitMarkdownTableEscapeCellValue): ToolkitMarkdownTableEscapeCellReturns {
-    const pipePattern: ToolkitMarkdownTableEscapeCellPipePattern = new RegExp(LIB_REGEX_CHARACTER_PIPE, 'g');
-    const linebreakPattern: ToolkitMarkdownTableEscapeCellLinebreakPattern = new RegExp(LIB_REGEX_LINEBREAK_CRLF_OR_LF, 'g');
+  private escapeCell(value: Toolkit_MarkdownTable_EscapeCell_Value): Toolkit_MarkdownTable_EscapeCell_Returns {
+    const pipePattern: Toolkit_MarkdownTable_EscapeCell_PipePattern = new RegExp(LIB_REGEX_CHARACTER_PIPE, 'g');
+    const linebreakPattern: Toolkit_MarkdownTable_EscapeCell_LinebreakPattern = new RegExp(LIB_REGEX_LINEBREAK_CRLF_OR_LF, 'g');
 
     return value
       .replace(pipePattern, '\\|')
@@ -204,22 +204,22 @@ class ToolkitMarkdownTable {
    *
    * @private
    *
-   * @returns {ToolkitMarkdownTableComputeColumnWidthsReturns}
+   * @returns {Toolkit_MarkdownTable_ComputeColumnWidths_Returns}
    *
    * @since 0.11.0
    */
-  private computeColumnWidths(): ToolkitMarkdownTableComputeColumnWidthsReturns {
-    const columnsLength: ToolkitMarkdownTableComputeColumnWidthsColumnsLength = this.#headers.length;
-    const rows: ToolkitMarkdownTableComputeColumnWidthsRows = [
+  private computeColumnWidths(): Toolkit_MarkdownTable_ComputeColumnWidths_Returns {
+    const columnsLength: Toolkit_MarkdownTable_ComputeColumnWidths_ColumnsLength = this.#headers.length;
+    const rows: Toolkit_MarkdownTable_ComputeColumnWidths_Rows = [
       this.#headers,
       ...this.#rows,
     ];
-    const widths: ToolkitMarkdownTableComputeColumnWidthsReturns = [];
+    const widths: Toolkit_MarkdownTable_ComputeColumnWidths_Returns = [];
 
     for (let columnIndex = 0; columnIndex < columnsLength; columnIndex += 1) {
       // Return the column width that is the largest.
-      const columnWidth: ToolkitMarkdownTableComputeColumnWidthsColumnWidth = Math.max(this.#minimumColumnWidth, ...rows.map((row) => {
-        const strippedCell: ToolkitMarkdownTableComputeColumnWidthsStrippedCell = this.stripAnsiColors(row[columnIndex] ?? '');
+      const columnWidth: Toolkit_MarkdownTable_ComputeColumnWidths_ColumnWidth = Math.max(this.#minimumColumnWidth, ...rows.map((row) => {
+        const strippedCell: Toolkit_MarkdownTable_ComputeColumnWidths_StrippedCell = this.stripAnsiColors(row[columnIndex] ?? '');
 
         return this.escapeCell(strippedCell).length;
       }));
@@ -236,17 +236,17 @@ class ToolkitMarkdownTable {
    * Right-pads a cell string with spaces to reach the target column
    * width. Uses ANSI-stripped length so colored text aligns correctly in the output.
    *
-   * @param {ToolkitMarkdownTablePadCellString} string - String.
-   * @param {ToolkitMarkdownTablePadCellWidth}  width  - Width.
+   * @param {Toolkit_MarkdownTable_PadCell_String} string - String.
+   * @param {Toolkit_MarkdownTable_PadCell_Width}  width  - Width.
    *
    * @private
    *
-   * @returns {ToolkitMarkdownTablePadCellReturns}
+   * @returns {Toolkit_MarkdownTable_PadCell_Returns}
    *
    * @since 0.11.0
    */
-  private padCell(string: ToolkitMarkdownTablePadCellString, width: ToolkitMarkdownTablePadCellWidth): ToolkitMarkdownTablePadCellReturns {
-    const padding: ToolkitMarkdownTablePadCellPadding = Math.max(0, width - this.stripAnsiColors(string).length);
+  private padCell(string: Toolkit_MarkdownTable_PadCell_String, width: Toolkit_MarkdownTable_PadCell_Width): Toolkit_MarkdownTable_PadCell_Returns {
+    const padding: Toolkit_MarkdownTable_PadCell_Padding = Math.max(0, width - this.stripAnsiColors(string).length);
 
     return `${string}${' '.repeat(padding)}`;
   }
@@ -257,18 +257,18 @@ class ToolkitMarkdownTable {
    * Escapes and pads each cell then joins them with pipe
    * separators. Called for both the header row and each data row during render.
    *
-   * @param {ToolkitMarkdownTableFormatRowCells}  cells  - Cells.
-   * @param {ToolkitMarkdownTableFormatRowWidths} widths - Widths.
+   * @param {Toolkit_MarkdownTable_FormatRow_Cells}  cells  - Cells.
+   * @param {Toolkit_MarkdownTable_FormatRow_Widths} widths - Widths.
    *
    * @private
    *
-   * @returns {ToolkitMarkdownTableFormatRowReturns}
+   * @returns {Toolkit_MarkdownTable_FormatRow_Returns}
    *
    * @since 0.11.0
    */
-  private formatRow(cells: ToolkitMarkdownTableFormatRowCells, widths: ToolkitMarkdownTableFormatRowWidths): ToolkitMarkdownTableFormatRowReturns {
-    const escapedCells: ToolkitMarkdownTableFormatRowEscapedCells = cells.map((cell, cellIndex) => {
-      const escapedCell: ToolkitMarkdownTableFormatRowEscapedCell = this.escapeCell(cell);
+  private formatRow(cells: Toolkit_MarkdownTable_FormatRow_Cells, widths: Toolkit_MarkdownTable_FormatRow_Widths): Toolkit_MarkdownTable_FormatRow_Returns {
+    const escapedCells: Toolkit_MarkdownTable_FormatRow_EscapedCells = cells.map((cell, cellIndex) => {
+      const escapedCell: Toolkit_MarkdownTable_FormatRow_EscapedCell = this.escapeCell(cell);
 
       return this.padCell(escapedCell, widths[cellIndex] ?? 0);
     });
@@ -282,24 +282,24 @@ class ToolkitMarkdownTable {
    * Builds the separator row between the header and body. Uses
    * dashes sized to each column width and toggles padded or compact pipe style.
    *
-   * @param {ToolkitMarkdownTableFormatDelimiterColumnWidths} columnWidths - Column widths.
+   * @param {Toolkit_MarkdownTable_FormatDelimiter_ColumnWidths} columnWidths - Column widths.
    *
    * @private
    *
-   * @returns {ToolkitMarkdownTableFormatDelimiterReturns}
+   * @returns {Toolkit_MarkdownTable_FormatDelimiter_Returns}
    *
    * @since 0.11.0
    */
-  private formatDelimiter(columnWidths: ToolkitMarkdownTableFormatDelimiterColumnWidths): ToolkitMarkdownTableFormatDelimiterReturns {
-    const minimumWidth: ToolkitMarkdownTableFormatDelimiterMinimumWidth = this.#minimumColumnWidth;
-    const usePaddedDelimiter: ToolkitMarkdownTableFormatDelimiterUsePaddedDelimiter = this.#padDelimiterRow;
+  private formatDelimiter(columnWidths: Toolkit_MarkdownTable_FormatDelimiter_ColumnWidths): Toolkit_MarkdownTable_FormatDelimiter_Returns {
+    const minimumWidth: Toolkit_MarkdownTable_FormatDelimiter_MinimumWidth = this.#minimumColumnWidth;
+    const usePaddedDelimiter: Toolkit_MarkdownTable_FormatDelimiter_UsePaddedDelimiter = this.#padDelimiterRow;
 
-    const columnCells: ToolkitMarkdownTableFormatDelimiterColumnCells = columnWidths.map((columnWidth) => {
+    const columnCells: Toolkit_MarkdownTable_FormatDelimiter_ColumnCells = columnWidths.map((columnWidth) => {
       return '-'.repeat(columnWidth > minimumWidth ? columnWidth : minimumWidth);
     });
 
-    const delimiter: ToolkitMarkdownTableFormatDelimiterDelimiter = (usePaddedDelimiter === true) ? ' | ' : '-|-';
-    const rowBody: ToolkitMarkdownTableFormatDelimiterRowBody = columnCells.join(delimiter);
+    const delimiter: Toolkit_MarkdownTable_FormatDelimiter_Delimiter = (usePaddedDelimiter === true) ? ' | ' : '-|-';
+    const rowBody: Toolkit_MarkdownTable_FormatDelimiter_RowBody = columnCells.join(delimiter);
 
     return (usePaddedDelimiter === true) ? `| ${rowBody} |` : `|-${rowBody}-|`;
   }
@@ -310,16 +310,16 @@ class ToolkitMarkdownTable {
    * Removes ANSI escape sequences from a string so visible character
    * length can be measured accurately for column width and padding calculations.
    *
-   * @param {ToolkitMarkdownTableStripAnsiColorsString} string - String.
+   * @param {Toolkit_MarkdownTable_StripAnsiColors_String} string - String.
    *
    * @private
    *
-   * @returns {ToolkitMarkdownTableStripAnsiColorsReturns}
+   * @returns {Toolkit_MarkdownTable_StripAnsiColors_Returns}
    *
    * @since 0.11.0
    */
-  private stripAnsiColors(string: ToolkitMarkdownTableStripAnsiColorsString): ToolkitMarkdownTableStripAnsiColorsReturns {
-    const pattern: ToolkitMarkdownTableStripAnsiColorsPattern = new RegExp(LIB_REGEX_PATTERN_ANSI, 'g');
+  private stripAnsiColors(string: Toolkit_MarkdownTable_StripAnsiColors_String): Toolkit_MarkdownTable_StripAnsiColors_Returns {
+    const pattern: Toolkit_MarkdownTable_StripAnsiColors_Pattern = new RegExp(LIB_REGEX_PATTERN_ANSI, 'g');
 
     return string.replace(pattern, '');
   }

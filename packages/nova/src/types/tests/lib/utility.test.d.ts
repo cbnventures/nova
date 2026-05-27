@@ -1,11 +1,11 @@
 import type { Stats } from 'node:fs';
 
 import type {
-  SharedLinuxOsReleaseEntries,
-  SharedShellOutput,
-  SharedWindowsRegistryKey,
-  SharedWindowsRegistryKeys,
-  SharedWorkspaceManifest,
+  Shared_LinuxOsReleaseEntries,
+  Shared_ShellOutput,
+  Shared_WindowsRegistryKey,
+  Shared_WindowsRegistryKeys,
+  Shared_WorkspaceManifest,
 } from '../../shared.d.ts';
 
 /**
@@ -13,9 +13,9 @@ import type {
  *
  * @since 0.16.3
  */
-export type TestsLibUtilityBuildGeneratedFileHeaderResult = string;
+export type Tests_Lib_Utility_BuildGeneratedFileHeader_Result = string;
 
-export type TestsLibUtilityBuildGeneratedFileHeaderThrew = boolean;
+export type Tests_Lib_Utility_BuildGeneratedFileHeader_Threw = boolean;
 
 /**
  * Tests - Lib - Utility - Compare Semver.
@@ -28,369 +28,369 @@ export type TestsLibUtilityBuildGeneratedFileHeaderThrew = boolean;
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityCurrentTimestampResult = string;
+export type Tests_Lib_Utility_CurrentTimestamp_Result = string;
 
-export type TestsLibUtilityCurrentTimestampStartsWithBracket = boolean;
+export type Tests_Lib_Utility_CurrentTimestamp_StartsWithBracket = boolean;
 
-export type TestsLibUtilityCurrentTimestampEndsWithBracket = boolean;
+export type Tests_Lib_Utility_CurrentTimestamp_EndsWithBracket = boolean;
 
-export type TestsLibUtilityCurrentTimestampPattern = RegExp;
+export type Tests_Lib_Utility_CurrentTimestamp_Pattern = RegExp;
 
-export type TestsLibUtilityCurrentTimestampResults = Set<string>;
+export type Tests_Lib_Utility_CurrentTimestamp_Results = Set<string>;
 
-export type TestsLibUtilityCurrentTimestampTimestamp = string;
+export type Tests_Lib_Utility_CurrentTimestamp_Timestamp = string;
 
 /**
  * Tests - Lib - Utility - Detect Shell.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityDetectShellResult = string;
+export type Tests_Lib_Utility_DetectShell_Result = string;
 
-export type TestsLibUtilityDetectShellKnownShells = string[];
+export type Tests_Lib_Utility_DetectShell_KnownShells = string[];
 
-export type TestsLibUtilityDetectShellIsKnownShell = boolean;
+export type Tests_Lib_Utility_DetectShell_IsKnownShell = boolean;
 
 /**
  * Tests - Lib - Utility - Discover Paths With File.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityDiscoverPathsWithFileOriginalCwd = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_OriginalCwd = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileTemporaryDirectory = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_TemporaryDirectory = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileSandboxPrefix = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SandboxPrefix = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileSandboxRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_SandboxRoot = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileProjectRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_ProjectRoot = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileAppRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_AppRoot = string;
 
-export type TestsLibUtilityDiscoverPathsWithFilePackageRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_PackageRoot = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileNodeRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_NodeRoot = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileDotHiddenRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_DotHiddenRoot = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileProjectPackage = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_ProjectPackage = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileAppPackage = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_AppPackage = string;
 
-export type TestsLibUtilityDiscoverPathsWithFilePackagePackage = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_PackagePackage = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileNodePackage = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_NodePackage = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileDotHiddenPackage = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_DotHiddenPackage = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileRealProjectRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_RealProjectRoot = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileAbsolutePaths = string[];
+export type Tests_Lib_Utility_DiscoverPathsWithFile_AbsolutePaths = string[];
 
-export type TestsLibUtilityDiscoverPathsWithFileRelativePaths = string[];
+export type Tests_Lib_Utility_DiscoverPathsWithFile_RelativePaths = string[];
 
-export type TestsLibUtilityDiscoverPathsWithFileAppStuffRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_AppStuffRoot = string;
 
-export type TestsLibUtilityDiscoverPathsWithFileRealAppStuffRoot = string;
+export type Tests_Lib_Utility_DiscoverPathsWithFile_RealAppStuffRoot = string;
 
 /**
  * Tests - Lib - Utility - Execute Shell.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityExecuteShellResult = SharedShellOutput;
+export type Tests_Lib_Utility_ExecuteShell_Result = Shared_ShellOutput;
 
-export type TestsLibUtilityExecuteShellIncludesHello = boolean;
+export type Tests_Lib_Utility_ExecuteShell_IncludesHello = boolean;
 
 /**
  * Tests - Lib - Utility - Is Command Exists.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityIsCommandExistsResult = boolean;
+export type Tests_Lib_Utility_IsCommandExists_Result = boolean;
 
 /**
  * Tests - Lib - Utility - Is Execute Shell Error.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityIsExecuteShellErrorResult = boolean;
+export type Tests_Lib_Utility_IsExecuteShellError_Result = boolean;
 
-export type TestsLibUtilityIsExecuteShellErrorError = Record<string, unknown>;
+export type Tests_Lib_Utility_IsExecuteShellError_Error = Record<string, unknown>;
 
 /**
  * Tests - Lib - Utility - Is File Identical.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityIsFileIdenticalTemporaryDirectory = string;
+export type Tests_Lib_Utility_IsFileIdentical_TemporaryDirectory = string;
 
-export type TestsLibUtilityIsFileIdenticalSandboxPrefix = string;
+export type Tests_Lib_Utility_IsFileIdentical_SandboxPrefix = string;
 
-export type TestsLibUtilityIsFileIdenticalSandboxRoot = string;
+export type Tests_Lib_Utility_IsFileIdentical_SandboxRoot = string;
 
-export type TestsLibUtilityIsFileIdenticalFilePath = string;
+export type Tests_Lib_Utility_IsFileIdentical_FilePath = string;
 
-export type TestsLibUtilityIsFileIdenticalResult = boolean;
+export type Tests_Lib_Utility_IsFileIdentical_Result = boolean;
 
-export type TestsLibUtilityIsFileIdenticalContents = Record<string, unknown>;
+export type Tests_Lib_Utility_IsFileIdentical_Contents = Record<string, unknown>;
 
-export type TestsLibUtilityIsFileIdenticalContentsJson = string;
+export type Tests_Lib_Utility_IsFileIdentical_ContentsJson = string;
 
-export type TestsLibUtilityIsFileIdenticalExistingContents = Record<string, unknown>;
+export type Tests_Lib_Utility_IsFileIdentical_ExistingContents = Record<string, unknown>;
 
-export type TestsLibUtilityIsFileIdenticalProposedContents = Record<string, unknown>;
+export type Tests_Lib_Utility_IsFileIdentical_ProposedContents = Record<string, unknown>;
 
-export type TestsLibUtilityIsFileIdenticalExistingJson = string;
+export type Tests_Lib_Utility_IsFileIdentical_ExistingJson = string;
 
 /**
  * Tests - Lib - Utility - Is Plain Object.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityIsPlainObjectResult = boolean;
+export type Tests_Lib_Utility_IsPlainObject_Result = boolean;
 
-export type TestsLibUtilityIsPlainObjectPlainObject = Record<string, unknown>;
+export type Tests_Lib_Utility_IsPlainObject_PlainObject = Record<string, unknown>;
 
-export type TestsLibUtilityIsPlainObjectNullPrototypeObject = Record<string, unknown>;
+export type Tests_Lib_Utility_IsPlainObject_NullPrototypeObject = Record<string, unknown>;
 
 /**
  * Tests - Lib - Utility - Is Project Root.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityIsProjectRootOriginalCwd = string;
+export type Tests_Lib_Utility_IsProjectRoot_OriginalCwd = string;
 
-export type TestsLibUtilityIsProjectRootTemporaryDirectory = string;
+export type Tests_Lib_Utility_IsProjectRoot_TemporaryDirectory = string;
 
-export type TestsLibUtilityIsProjectRootSandboxPrefix = string;
+export type Tests_Lib_Utility_IsProjectRoot_SandboxPrefix = string;
 
-export type TestsLibUtilityIsProjectRootSandboxRoot = string;
+export type Tests_Lib_Utility_IsProjectRoot_SandboxRoot = string;
 
-export type TestsLibUtilityIsProjectRootProjectRoot = string;
+export type Tests_Lib_Utility_IsProjectRoot_ProjectRoot = string;
 
-export type TestsLibUtilityIsProjectRootPackageJsonPath = string;
+export type Tests_Lib_Utility_IsProjectRoot_PackageJsonPath = string;
 
-export type TestsLibUtilityIsProjectRootRealProjectRoot = string;
+export type Tests_Lib_Utility_IsProjectRoot_RealProjectRoot = string;
 
-export type TestsLibUtilityIsProjectRootResult = boolean;
+export type Tests_Lib_Utility_IsProjectRoot_Result = boolean;
 
-export type TestsLibUtilityIsProjectRootEmptyDirectory = string;
+export type Tests_Lib_Utility_IsProjectRoot_EmptyDirectory = string;
 
-export type TestsLibUtilityIsProjectRootRealEmptyDirectory = string;
+export type Tests_Lib_Utility_IsProjectRoot_RealEmptyDirectory = string;
 
-export type TestsLibUtilityIsProjectRootAppRoot = string;
+export type Tests_Lib_Utility_IsProjectRoot_AppRoot = string;
 
-export type TestsLibUtilityIsProjectRootProjectPackage = string;
+export type Tests_Lib_Utility_IsProjectRoot_ProjectPackage = string;
 
-export type TestsLibUtilityIsProjectRootAppPackage = string;
+export type Tests_Lib_Utility_IsProjectRoot_AppPackage = string;
 
-export type TestsLibUtilityIsProjectRootRealAppRoot = string;
+export type Tests_Lib_Utility_IsProjectRoot_RealAppRoot = string;
 
 /**
  * Tests - Lib - Utility - Load Workspace Manifests.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityLoadWorkspaceManifestsTemporaryDirectory = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_TemporaryDirectory = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsSandboxPrefix = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_SandboxPrefix = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsSandboxRoot = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_SandboxRoot = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsProjectRoot = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_ProjectRoot = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsPackageDirectory = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_PackageDirectory = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsRootPackageJson = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_RootPackageJson = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsCorePackageJson = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_CorePackageJson = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsRootPackagePath = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_RootPackagePath = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsCorePackagePath = string;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_CorePackagePath = string;
 
-export type TestsLibUtilityLoadWorkspaceManifestsResult = SharedWorkspaceManifest[];
+export type Tests_Lib_Utility_LoadWorkspaceManifests_Result = Shared_WorkspaceManifest[];
 
-export type TestsLibUtilityLoadWorkspaceManifestsFirstWorkspace = SharedWorkspaceManifest | undefined;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_FirstWorkspace = Shared_WorkspaceManifest | undefined;
 
-export type TestsLibUtilityLoadWorkspaceManifestsSecondWorkspace = SharedWorkspaceManifest | undefined;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_SecondWorkspace = Shared_WorkspaceManifest | undefined;
 
-export type TestsLibUtilityLoadWorkspaceManifestsOnlyWorkspace = SharedWorkspaceManifest | undefined;
+export type Tests_Lib_Utility_LoadWorkspaceManifests_OnlyWorkspace = Shared_WorkspaceManifest | undefined;
 
 /**
  * Tests - Lib - Utility - Normalize Route Segment.
  *
  * @since 0.17.1
  */
-export type TestsLibUtilityNormalizeRouteSegmentCaseInput = string;
+export type Tests_Lib_Utility_NormalizeRouteSegment_Case_Input = string;
 
-export type TestsLibUtilityNormalizeRouteSegmentCaseExpected = string;
+export type Tests_Lib_Utility_NormalizeRouteSegment_Case_Expected = string;
 
-export type TestsLibUtilityNormalizeRouteSegmentCaseDescription = string;
+export type Tests_Lib_Utility_NormalizeRouteSegment_Case_Description = string;
 
-export type TestsLibUtilityNormalizeRouteSegmentCase = {
-  input: TestsLibUtilityNormalizeRouteSegmentCaseInput;
-  expected: TestsLibUtilityNormalizeRouteSegmentCaseExpected;
-  description: TestsLibUtilityNormalizeRouteSegmentCaseDescription;
+export type Tests_Lib_Utility_NormalizeRouteSegment_Case = {
+  input: Tests_Lib_Utility_NormalizeRouteSegment_Case_Input;
+  expected: Tests_Lib_Utility_NormalizeRouteSegment_Case_Expected;
+  description: Tests_Lib_Utility_NormalizeRouteSegment_Case_Description;
 };
 
-export type TestsLibUtilityNormalizeRouteSegmentCases = ReadonlyArray<TestsLibUtilityNormalizeRouteSegmentCase>;
+export type Tests_Lib_Utility_NormalizeRouteSegment_Cases = ReadonlyArray<Tests_Lib_Utility_NormalizeRouteSegment_Case>;
 
-export type TestsLibUtilityNormalizeRouteSegmentResult = string;
+export type Tests_Lib_Utility_NormalizeRouteSegment_Result = string;
 
 /**
  * Tests - Lib - Utility - Parse Linux OS Release Text.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityParseLinuxOsReleaseTextText = string;
+export type Tests_Lib_Utility_ParseLinuxOsReleaseText_Text = string;
 
-export type TestsLibUtilityParseLinuxOsReleaseTextResult = SharedLinuxOsReleaseEntries;
+export type Tests_Lib_Utility_ParseLinuxOsReleaseText_Result = Shared_LinuxOsReleaseEntries;
 
-export type TestsLibUtilityParseLinuxOsReleaseTextResultKeys = string[];
+export type Tests_Lib_Utility_ParseLinuxOsReleaseText_ResultKeys = string[];
 
 /**
  * Tests - Lib - Utility - Parse Windows Registry Text.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityParseWindowsRegistryTextText = string;
+export type Tests_Lib_Utility_ParseWindowsRegistryText_Text = string;
 
-export type TestsLibUtilityParseWindowsRegistryTextResult = SharedWindowsRegistryKeys;
+export type Tests_Lib_Utility_ParseWindowsRegistryText_Result = Shared_WindowsRegistryKeys;
 
-export type TestsLibUtilityParseWindowsRegistryTextProductName = SharedWindowsRegistryKey | undefined;
+export type Tests_Lib_Utility_ParseWindowsRegistryText_ProductName = Shared_WindowsRegistryKey | undefined;
 
-export type TestsLibUtilityParseWindowsRegistryTextCurrentMajorVersionNumber = SharedWindowsRegistryKey | undefined;
+export type Tests_Lib_Utility_ParseWindowsRegistryText_CurrentMajorVersionNumber = Shared_WindowsRegistryKey | undefined;
 
-export type TestsLibUtilityParseWindowsRegistryTextResultKeys = string[];
+export type Tests_Lib_Utility_ParseWindowsRegistryText_ResultKeys = string[];
 
-export type TestsLibUtilityParseWindowsRegistryTextCurrentBuild = SharedWindowsRegistryKey | undefined;
+export type Tests_Lib_Utility_ParseWindowsRegistryText_CurrentBuild = Shared_WindowsRegistryKey | undefined;
 
 /**
  * Tests - Lib - Utility - Path Exists.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityPathExistsTemporaryDirectory = string;
+export type Tests_Lib_Utility_PathExists_TemporaryDirectory = string;
 
-export type TestsLibUtilityPathExistsTemporaryPrefix = string;
+export type Tests_Lib_Utility_PathExists_TemporaryPrefix = string;
 
-export type TestsLibUtilityPathExistsSandboxDirectory = string;
+export type Tests_Lib_Utility_PathExists_SandboxDirectory = string;
 
-export type TestsLibUtilityPathExistsTemporaryFile = string;
+export type Tests_Lib_Utility_PathExists_TemporaryFile = string;
 
-export type TestsLibUtilityPathExistsResult = boolean;
+export type Tests_Lib_Utility_PathExists_Result = boolean;
 
-export type TestsLibUtilityPathExistsNonExistentPath = string;
+export type Tests_Lib_Utility_PathExists_NonExistentPath = string;
 
 /**
  * Tests - Lib - Utility - Rename File With Date.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilityRenameFileWithDateTemporaryDirectory = string;
+export type Tests_Lib_Utility_RenameFileWithDate_TemporaryDirectory = string;
 
-export type TestsLibUtilityRenameFileWithDateSandboxPrefix = string;
+export type Tests_Lib_Utility_RenameFileWithDate_SandboxPrefix = string;
 
-export type TestsLibUtilityRenameFileWithDateSandboxRoot = string;
+export type Tests_Lib_Utility_RenameFileWithDate_SandboxRoot = string;
 
-export type TestsLibUtilityRenameFileWithDateFilePath = string;
+export type Tests_Lib_Utility_RenameFileWithDate_FilePath = string;
 
-export type TestsLibUtilityRenameFileWithDateResult = boolean;
+export type Tests_Lib_Utility_RenameFileWithDate_Result = boolean;
 
-export type TestsLibUtilityRenameFileWithDateOriginalExists = boolean;
+export type Tests_Lib_Utility_RenameFileWithDate_OriginalExists = boolean;
 
-export type TestsLibUtilityRenameFileWithDateFiles = string[];
+export type Tests_Lib_Utility_RenameFileWithDate_Files = string[];
 
-export type TestsLibUtilityRenameFileWithDateRenamedFile = string | undefined;
+export type Tests_Lib_Utility_RenameFileWithDate_RenamedFile = string | undefined;
 
-export type TestsLibUtilityRenameFileWithDateMatchesBackupPattern = boolean;
+export type Tests_Lib_Utility_RenameFileWithDate_MatchesBackupPattern = boolean;
 
-export type TestsLibUtilityRenameFileWithDateSubDirectory = string;
+export type Tests_Lib_Utility_RenameFileWithDate_SubDirectory = string;
 
-export type TestsLibUtilityRenameFileWithDateNow = Date;
+export type Tests_Lib_Utility_RenameFileWithDate_Now = Date;
 
-export type TestsLibUtilityRenameFileWithDateTimestamp = string;
+export type Tests_Lib_Utility_RenameFileWithDate_Timestamp = string;
 
-export type TestsLibUtilityRenameFileWithDateExistingName = string;
+export type Tests_Lib_Utility_RenameFileWithDate_ExistingName = string;
 
-export type TestsLibUtilityRenameFileWithDateExistingFilePath = string;
+export type Tests_Lib_Utility_RenameFileWithDate_ExistingFilePath = string;
 
-export type TestsLibUtilityRenameFileWithDateSecondFile = string | undefined;
+export type Tests_Lib_Utility_RenameFileWithDate_SecondFile = string | undefined;
 
 /**
  * Tests - Lib - Utility - SaveGeneratedFile (with Header).
  *
  * @since 0.16.3
  */
-export type TestsLibUtilitySaveGeneratedFileWithHeaderOriginalCwd = string;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_OriginalCwd = string;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderSandboxRoot = string;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_SandboxRoot = string;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderProjectDirectory = string;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_ProjectDirectory = string;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderTargetPath = string;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_TargetPath = string;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderWritten = string;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_Written = string;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderExpectedHeader = string;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_ExpectedHeader = string;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsCommand = string;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_HeaderOptions_Command = string;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsDocsSlug = string;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_HeaderOptions_DocsSlug = string;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsMode = 'strict' | 'fillable';
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_HeaderOptions_Mode = 'strict' | 'fillable';
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptions = {
-  command: TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsCommand;
-  docsSlug: TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsDocsSlug;
-  mode: TestsLibUtilitySaveGeneratedFileWithHeaderHeaderOptionsMode;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_HeaderOptions = {
+  command: Tests_Lib_Utility_SaveGeneratedFileWithHeader_HeaderOptions_Command;
+  docsSlug: Tests_Lib_Utility_SaveGeneratedFileWithHeader_HeaderOptions_DocsSlug;
+  mode: Tests_Lib_Utility_SaveGeneratedFileWithHeader_HeaderOptions_Mode;
 };
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderFirstWrite = Stats;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_FirstWrite = Stats;
 
-export type TestsLibUtilitySaveGeneratedFileWithHeaderSecondWrite = Stats;
+export type Tests_Lib_Utility_SaveGeneratedFileWithHeader_SecondWrite = Stats;
 
 /**
  * Tests - Lib - Utility - Save Workspace Manifest.
  *
  * @since 0.12.0
  */
-export type TestsLibUtilitySaveWorkspaceManifestTemporaryDirectory = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_TemporaryDirectory = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestSandboxPrefix = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_SandboxPrefix = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestSandboxRoot = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_SandboxRoot = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestFilePath = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_FilePath = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestFileDirectory = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_FileDirectory = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestOriginal = Record<string, unknown>;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_Original = Record<string, unknown>;
 
-export type TestsLibUtilitySaveWorkspaceManifestOriginalJson = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_OriginalJson = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestModified = Record<string, unknown>;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_Modified = Record<string, unknown>;
 
-export type TestsLibUtilitySaveWorkspaceManifestWrittenRaw = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_WrittenRaw = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestWritten = Record<string, unknown>;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_Written = Record<string, unknown>;
 
-export type TestsLibUtilitySaveWorkspaceManifestContents = Record<string, unknown>;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_Contents = Record<string, unknown>;
 
-export type TestsLibUtilitySaveWorkspaceManifestContentsJson = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_ContentsJson = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestStatBefore = Stats;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_StatBefore = Stats;
 
-export type TestsLibUtilitySaveWorkspaceManifestStatAfter = Stats;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_StatAfter = Stats;
 
-export type TestsLibUtilitySaveWorkspaceManifestSubDirectory = string;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_SubDirectory = string;
 
-export type TestsLibUtilitySaveWorkspaceManifestFiles = string[];
+export type Tests_Lib_Utility_SaveWorkspaceManifest_Files = string[];
 
-export type TestsLibUtilitySaveWorkspaceManifestBackupFile = string | undefined;
+export type Tests_Lib_Utility_SaveWorkspaceManifest_BackupFile = string | undefined;
 
 /**
  * Tests - Lib - Utility - Shell Quote.

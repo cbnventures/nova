@@ -7,21 +7,21 @@ import { useRef } from 'react';
 import { useDetailsDismiss } from '../../lib/use-details-dismiss.js';
 
 import type {
-  ThemeNavbarItemLocaleDropdownNavbarItemActiveLocale,
-  ThemeNavbarItemLocaleDropdownNavbarItemAlternatePageUtils,
-  ThemeNavbarItemLocaleDropdownNavbarItemContext,
-  ThemeNavbarItemLocaleDropdownNavbarItemDetailsRef,
-  ThemeNavbarItemLocaleDropdownNavbarItemHref,
-  ThemeNavbarItemLocaleDropdownNavbarItemItemClassName,
-  ThemeNavbarItemLocaleDropdownNavbarItemItems,
-  ThemeNavbarItemLocaleDropdownNavbarItemLabel,
-  ThemeNavbarItemLocaleDropdownNavbarItemLocaleConfig,
-  ThemeNavbarItemLocaleDropdownNavbarItemLocaleConfigs,
-  ThemeNavbarItemLocaleDropdownNavbarItemLocales,
-  ThemeNavbarItemLocaleDropdownNavbarItemLocaleUrl,
-  ThemeNavbarItemLocaleDropdownNavbarItemProps,
-  ThemeNavbarItemLocaleDropdownNavbarItemShortLabel,
-  ThemeNavbarItemLocaleDropdownNavbarItemShortLabelMap,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_ActiveLocale,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_AlternatePageUtils,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_Context,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_DetailsRef,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_Href,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_ItemClassName,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_Items,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_Label,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleConfig,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleConfigs,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_Locales,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleUrl,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_Props,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_ShortLabel,
+  Theme_NavbarItem_LocaleDropdownNavbarItem_ShortLabelMap,
 } from '../../types/theme/NavbarItem/index.d.ts';
 
 /**
@@ -31,29 +31,29 @@ import type {
  * `i18n.currentLocale` and each item URL is built via `useAlternatePageUtils`
  * so locale-prefixed `baseUrl` values (e.g. `/zh-Hans/`) are handled correctly.
  *
- * @param {ThemeNavbarItemLocaleDropdownNavbarItemProps} props - Props.
+ * @param {Theme_NavbarItem_LocaleDropdownNavbarItem_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function LocaleDropdownNavbarItem(props: ThemeNavbarItemLocaleDropdownNavbarItemProps) {
-  const context: ThemeNavbarItemLocaleDropdownNavbarItemContext = useDocusaurusContext();
-  const locales: ThemeNavbarItemLocaleDropdownNavbarItemLocales = context['i18n']['locales'];
-  const localeConfigs: ThemeNavbarItemLocaleDropdownNavbarItemLocaleConfigs = context['i18n']['localeConfigs'];
-  const activeLocale: ThemeNavbarItemLocaleDropdownNavbarItemActiveLocale = context['i18n']['currentLocale'];
-  const alternatePageUtils: ThemeNavbarItemLocaleDropdownNavbarItemAlternatePageUtils = useAlternatePageUtils();
-  const dropdownItemsBefore: ThemeNavbarItemLocaleDropdownNavbarItemItems = (props['dropdownItemsBefore'] ?? []) as ThemeNavbarItemLocaleDropdownNavbarItemItems;
-  const dropdownItemsAfter: ThemeNavbarItemLocaleDropdownNavbarItemItems = (props['dropdownItemsAfter'] ?? []) as ThemeNavbarItemLocaleDropdownNavbarItemItems;
+function LocaleDropdownNavbarItem(props: Theme_NavbarItem_LocaleDropdownNavbarItem_Props) {
+  const context: Theme_NavbarItem_LocaleDropdownNavbarItem_Context = useDocusaurusContext();
+  const locales: Theme_NavbarItem_LocaleDropdownNavbarItem_Locales = context['i18n']['locales'];
+  const localeConfigs: Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleConfigs = context['i18n']['localeConfigs'];
+  const activeLocale: Theme_NavbarItem_LocaleDropdownNavbarItem_ActiveLocale = context['i18n']['currentLocale'];
+  const alternatePageUtils: Theme_NavbarItem_LocaleDropdownNavbarItem_AlternatePageUtils = useAlternatePageUtils();
+  const dropdownItemsBefore: Theme_NavbarItem_LocaleDropdownNavbarItem_Items = (props['dropdownItemsBefore'] ?? []) as Theme_NavbarItem_LocaleDropdownNavbarItem_Items;
+  const dropdownItemsAfter: Theme_NavbarItem_LocaleDropdownNavbarItem_Items = (props['dropdownItemsAfter'] ?? []) as Theme_NavbarItem_LocaleDropdownNavbarItem_Items;
 
-  const detailsRef: ThemeNavbarItemLocaleDropdownNavbarItemDetailsRef = useRef<HTMLDetailsElement | null>(null);
+  const detailsRef: Theme_NavbarItem_LocaleDropdownNavbarItem_DetailsRef = useRef<HTMLDetailsElement | null>(null);
 
   useDetailsDismiss(detailsRef);
 
   // Built-in short labels for the 19 locales aligned with the Vylos app's
   // localization set. Falls back to title-cased first two characters of the
   // locale code for any unmapped locale (e.g., "pt" -> "Pt").
-  const shortLabelMap: ThemeNavbarItemLocaleDropdownNavbarItemShortLabelMap = {
+  const shortLabelMap: Theme_NavbarItem_LocaleDropdownNavbarItem_ShortLabelMap = {
     'ar': 'Ar',
     'ca': 'Ca',
     'de': 'De',
@@ -74,9 +74,9 @@ function LocaleDropdownNavbarItem(props: ThemeNavbarItemLocaleDropdownNavbarItem
     'zh-Hans': '简',
     'zh-Hant': '繁',
   };
-  const fallbackShortLabel: ThemeNavbarItemLocaleDropdownNavbarItemShortLabel = activeLocale.slice(0, 1).toUpperCase()
+  const fallbackShortLabel: Theme_NavbarItem_LocaleDropdownNavbarItem_ShortLabel = activeLocale.slice(0, 1).toUpperCase()
     + activeLocale.slice(1, 2).toLowerCase();
-  const shortLabel: ThemeNavbarItemLocaleDropdownNavbarItemShortLabel = shortLabelMap[activeLocale]
+  const shortLabel: Theme_NavbarItem_LocaleDropdownNavbarItem_ShortLabel = shortLabelMap[activeLocale]
     ?? fallbackShortLabel;
 
   return (
@@ -90,7 +90,7 @@ function LocaleDropdownNavbarItem(props: ThemeNavbarItemLocaleDropdownNavbarItem
         {
           dropdownItemsBefore.map((item) => (
             <li key={item['label']} className="nova-locale-dropdown-item">
-              <Link className="nova-locale-dropdown-item-link" to={item['to'] as ThemeNavbarItemLocaleDropdownNavbarItemHref}>
+              <Link className="nova-locale-dropdown-item-link" to={item['to'] as Theme_NavbarItem_LocaleDropdownNavbarItem_Href}>
                 {item['label']}
               </Link>
             </li>
@@ -98,13 +98,13 @@ function LocaleDropdownNavbarItem(props: ThemeNavbarItemLocaleDropdownNavbarItem
         }
         {
           locales.map((locale) => {
-            const localeConfig: ThemeNavbarItemLocaleDropdownNavbarItemLocaleConfig = localeConfigs[locale];
-            const localeLabel: ThemeNavbarItemLocaleDropdownNavbarItemLabel = (localeConfig !== undefined) ? localeConfig['label'] : locale;
-            const localeUrl: ThemeNavbarItemLocaleDropdownNavbarItemLocaleUrl = alternatePageUtils.createUrl({
+            const localeConfig: Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleConfig = localeConfigs[locale];
+            const localeLabel: Theme_NavbarItem_LocaleDropdownNavbarItem_Label = (localeConfig !== undefined) ? localeConfig['label'] : locale;
+            const localeUrl: Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleUrl = alternatePageUtils.createUrl({
               locale,
               fullyQualified: false,
             });
-            const itemClassName: ThemeNavbarItemLocaleDropdownNavbarItemItemClassName = (locale === activeLocale) ? 'nova-locale-dropdown-item nova-locale-dropdown-item--active' : 'nova-locale-dropdown-item';
+            const itemClassName: Theme_NavbarItem_LocaleDropdownNavbarItem_ItemClassName = (locale === activeLocale) ? 'nova-locale-dropdown-item nova-locale-dropdown-item--active' : 'nova-locale-dropdown-item';
 
             return (
               <li key={locale} className={itemClassName}>
@@ -123,7 +123,7 @@ function LocaleDropdownNavbarItem(props: ThemeNavbarItemLocaleDropdownNavbarItem
         {
           dropdownItemsAfter.map((item) => (
             <li key={item['label']} className="nova-locale-dropdown-item">
-              <Link className="nova-locale-dropdown-item-link" to={item['to'] as ThemeNavbarItemLocaleDropdownNavbarItemHref}>
+              <Link className="nova-locale-dropdown-item-link" to={item['to'] as Theme_NavbarItem_LocaleDropdownNavbarItem_Href}>
                 {item['label']}
               </Link>
             </li>

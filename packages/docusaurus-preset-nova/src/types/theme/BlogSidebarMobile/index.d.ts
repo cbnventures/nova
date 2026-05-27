@@ -6,67 +6,67 @@ import type { CSSProperties, MouseEvent, RefObject } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogSidebarMobileBlogSidebarMobilePropsSidebar = BlogSidebar | undefined;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props_Sidebar = BlogSidebar | undefined;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobilePropsClassName = string | undefined;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props_ClassName = string | undefined;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobilePropsStyle = CSSProperties | undefined;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileProps = {
-  sidebar?: ThemeBlogSidebarMobileBlogSidebarMobilePropsSidebar;
-  className?: ThemeBlogSidebarMobileBlogSidebarMobilePropsClassName;
-  style?: ThemeBlogSidebarMobileBlogSidebarMobilePropsStyle;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props = {
+  sidebar?: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props_Sidebar;
+  className?: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props_ClassName;
+  style?: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogSidebarMobileBlogSidebarMobilePathname = string;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Pathname = string;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileIsOpenState = [boolean, ThemeBlogSidebarMobileBlogSidebarMobileSetIsOpen];
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpenState = [boolean, Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsOpen];
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileIsOpen = boolean;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpen = boolean;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileSetIsOpen = React.Dispatch<React.SetStateAction<boolean>>;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsOpen = React.Dispatch<React.SetStateAction<boolean>>;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileIsClosingState = [boolean, ThemeBlogSidebarMobileBlogSidebarMobileSetIsClosing];
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosingState = [boolean, Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing];
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileIsClosing = boolean;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing = boolean;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileSetIsClosing = React.Dispatch<React.SetStateAction<boolean>>;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing = React.Dispatch<React.SetStateAction<boolean>>;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobilePanelRef = RefObject<HTMLDivElement | null>;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef = RefObject<HTMLDivElement | null>;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileTriggerLabel = string;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_TriggerLabel = string;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileOpenAriaLabel = string;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OpenAriaLabel = string;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileHeaderTitle = string;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HeaderTitle = string;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobilePanelAriaLabel = string;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelAriaLabel = string;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileCloseAriaLabel = string;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_CloseAriaLabel = string;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileOverlayClassName = string;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OverlayClassName = string;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileAnimationEvent = React.AnimationEvent<HTMLDivElement>;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_AnimationEvent = React.AnimationEvent<HTMLDivElement>;
 
 /**
  * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Click Outside.
  *
  * @since 0.15.0
  */
-export type ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideFunction = (event: ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideMouseEvent) => void;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction = (event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent) => void;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent = MouseEvent<HTMLDivElement>;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideMouseTarget = EventTarget;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseTarget = EventTarget;
 
 /**
  * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Escape.
  *
  * @since 0.15.0
  */
-export type ThemeBlogSidebarMobileBlogSidebarMobileHandleEscapeFunction = (event: ThemeBlogSidebarMobileBlogSidebarMobileHandleEscapeKeyboardEvent) => void;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeFunction = (event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent) => void;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileHandleEscapeKeyboardEvent = KeyboardEvent;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent = KeyboardEvent;
 
-export type ThemeBlogSidebarMobileBlogSidebarMobileFocusTarget = HTMLButtonElement | null;
+export type Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget = HTMLButtonElement | null;

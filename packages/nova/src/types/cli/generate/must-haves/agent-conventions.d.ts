@@ -1,47 +1,47 @@
-import type { SharedGeneratorRunResult } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult as SharedGeneratorRunResult } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Agent Conventions - Run.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesAgentConventionsRunOptionsDryRun = true;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_Options_DryRun = true;
 
-export type CliGenerateMustHavesAgentConventionsRunOptionsReplaceFile = true;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_Options_ReplaceFile = true;
 
-export type CliGenerateMustHavesAgentConventionsRunOptions = {
-  dryRun?: CliGenerateMustHavesAgentConventionsRunOptionsDryRun;
-  replaceFile?: CliGenerateMustHavesAgentConventionsRunOptionsReplaceFile;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_Options = {
+  dryRun?: Cli_Generate_MustHaves_AgentConventions_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Generate_MustHaves_AgentConventions_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliGenerateMustHavesAgentConventionsRunReturns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
 
-export type CliGenerateMustHavesAgentConventionsRunCurrentDirectory = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_CurrentDirectory = string;
 
-export type CliGenerateMustHavesAgentConventionsRunIsAtProjectRoot = boolean;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliGenerateMustHavesAgentConventionsRunIsDryRun = boolean;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_IsDryRun = boolean;
 
-export type CliGenerateMustHavesAgentConventionsRunIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesAgentConventionsRunReplaceFileNotice = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_ReplaceFileNotice = string;
 
-export type CliGenerateMustHavesAgentConventionsRunTemplateDirectory = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_TemplateDirectory = string;
 
-export type CliGenerateMustHavesAgentConventionsRunRootFiles = string[];
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_RootFiles = string[];
 
-export type CliGenerateMustHavesAgentConventionsRunUserEditedFiles = Set<string>;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_UserEditedFiles = Set<string>;
 
-export type CliGenerateMustHavesAgentConventionsRunConventionFiles = string[];
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_ConventionFiles = string[];
 
-export type CliGenerateMustHavesAgentConventionsRunTemplateFileName = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_TemplateFileName = string;
 
-export type CliGenerateMustHavesAgentConventionsRunTemplatePath = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_TemplatePath = string;
 
-export type CliGenerateMustHavesAgentConventionsRunTargetPath = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_TargetPath = string;
 
-export type CliGenerateMustHavesAgentConventionsRunContent = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_Content = string;
 
-export type CliGenerateMustHavesAgentConventionsRunDisplayPath = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_DisplayPath = string;
 
-export type CliGenerateMustHavesAgentConventionsRunNextStepsMessage = string;
+export type Cli_Generate_MustHaves_AgentConventions_Runner_Run_NextStepsMessage = string;

@@ -1,28 +1,28 @@
-import type { CliRecipeRegistryCategory } from '../../../cli/recipe/index.d.ts';
+import type { Cli_Recipe_RegistryCategory } from '../../../cli/recipe/index.d.ts';
 
 /**
  * Tests - CLI - Utility - Run Recipes - Run.
  *
  * @since 0.14.0
  */
-export type TestsCliUtilityRunRecipesRunOriginalCwd = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_OriginalCwd = string;
 
-export type TestsCliUtilityRunRecipesRunTemporaryDirectory = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_TemporaryDirectory = string;
 
-export type TestsCliUtilityRunRecipesRunTemporaryPrefix = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_TemporaryPrefix = string;
 
-export type TestsCliUtilityRunRecipesRunSandboxRoot = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_SandboxRoot = string;
 
-export type TestsCliUtilityRunRecipesRunProjectDirectory = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ProjectDirectory = string;
 
-export type TestsCliUtilityRunRecipesRunPackageJsonPath = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonPath = string;
 
-export type TestsCliUtilityRunRecipesRunPackageJsonContents = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_PackageJsonContents = string;
 
-export type TestsCliUtilityRunRecipesRunNovaConfigPath = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigPath = string;
 
-export type TestsCliUtilityRunRecipesRunNovaConfigContents = string;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_NovaConfigContents = string;
 
-export type TestsCliUtilityRunRecipesRunExitCode = string | number | null | undefined;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_ExitCode = string | number | null | undefined;
 
-export type TestsCliUtilityRunRecipesRunUnknownCategory = CliRecipeRegistryCategory;
+export type Tests_Cli_Utility_RunRecipes_CliUtilityRunRecipesRun_UnknownCategory = Cli_Recipe_RegistryCategory;

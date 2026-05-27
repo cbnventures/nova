@@ -7,9 +7,9 @@ import { afterAll, describe, it } from 'vitest';
 import { RequireBracketPropertyAccess } from '../../../../rules/eslint/index.js';
 
 import type {
-  TestsRulesEslintTypescriptRequireBracketPropertyAccessCurrentDirectory,
-  TestsRulesEslintTypescriptRequireBracketPropertyAccessRuleTester,
-  TestsRulesEslintTypescriptRequireBracketPropertyAccessTsconfigRootDirectory,
+  Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_CurrentDirectory,
+  Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_RuleTester,
+  Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_TsconfigRootDirectory,
 } from '../../../../types/tests/rules/eslint/typescript/require-bracket-property-access.test.d.ts';
 
 /**
@@ -21,10 +21,10 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const currentDirectory: TestsRulesEslintTypescriptRequireBracketPropertyAccessCurrentDirectory = process.cwd();
-const tsconfigRootDirectory: TestsRulesEslintTypescriptRequireBracketPropertyAccessTsconfigRootDirectory = join(currentDirectory, 'src', 'tests');
+const currentDirectory: Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_CurrentDirectory = process.cwd();
+const tsconfigRootDirectory: Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_TsconfigRootDirectory = join(currentDirectory, 'src', 'tests');
 
-const ruleTester: TestsRulesEslintTypescriptRequireBracketPropertyAccessRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

@@ -6,29 +6,29 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemsDocSidebarItemsPropsItems = readonly PropSidebarItem[];
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Props_Items = readonly PropSidebarItem[];
 
-export type ThemeDocSidebarItemsDocSidebarItemsPropsActivePath = string;
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Props_ActivePath = string;
 
-export type ThemeDocSidebarItemsDocSidebarItemsPropsLevel = number;
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Props_Level = number;
 
-export type ThemeDocSidebarItemsDocSidebarItemsPropsClassName = string | undefined;
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Props_ClassName = string | undefined;
 
-export type ThemeDocSidebarItemsDocSidebarItemsPropsStyle = CSSProperties | undefined;
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocSidebarItemsDocSidebarItemsProps = {
-  items: ThemeDocSidebarItemsDocSidebarItemsPropsItems;
-  activePath: ThemeDocSidebarItemsDocSidebarItemsPropsActivePath;
-  level: ThemeDocSidebarItemsDocSidebarItemsPropsLevel;
-  className?: ThemeDocSidebarItemsDocSidebarItemsPropsClassName;
-  style?: ThemeDocSidebarItemsDocSidebarItemsPropsStyle;
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Props = {
+  items: Theme_DocSidebarItems_Index_DocSidebarItems_Props_Items;
+  activePath: Theme_DocSidebarItems_Index_DocSidebarItems_Props_ActivePath;
+  level: Theme_DocSidebarItems_Index_DocSidebarItems_Props_Level;
+  className?: Theme_DocSidebarItems_Index_DocSidebarItems_Props_ClassName;
+  style?: Theme_DocSidebarItems_Index_DocSidebarItems_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemsDocSidebarItemsVisibleItems = PropSidebarItem[];
+export type Theme_DocSidebarItems_Index_DocSidebarItems_VisibleItems = PropSidebarItem[];
 
-export type ThemeDocSidebarItemsDocSidebarItemsItem = PropSidebarItem;
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Item = PropSidebarItem;
 
-export type ThemeDocSidebarItemsDocSidebarItemsIndex = number;
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Index = number;
 
-export type ThemeDocSidebarItemsDocSidebarItemsSpread = Record<string, unknown>;
+export type Theme_DocSidebarItems_Index_DocSidebarItems_Spread = Record<string, unknown>;

@@ -11,18 +11,18 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliUtilityTypeCheck } from '../../../cli/utility/type-check.js';
+import { Runner as CliUtilityTypeCheck } from '../../../cli/utility/type-check.js';
 
 import type {
-  TestsCliUtilityTypeCheckRunIndexPath,
-  TestsCliUtilityTypeCheckRunOriginalCwd,
-  TestsCliUtilityTypeCheckRunProjectDirectory,
-  TestsCliUtilityTypeCheckRunSandboxDirectory,
-  TestsCliUtilityTypeCheckRunSandboxRoot,
-  TestsCliUtilityTypeCheckRunTemporaryDirectory,
-  TestsCliUtilityTypeCheckRunTemporaryPrefix,
-  TestsCliUtilityTypeCheckRunTsconfigContents,
-  TestsCliUtilityTypeCheckRunTsconfigPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IndexPath,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_OriginalCwd,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxRoot,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryDirectory,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryPrefix,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigContents,
+  Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigPath,
 } from '../../../types/tests/cli/utility/type-check.test.d.ts';
 
 /**
@@ -31,11 +31,11 @@ import type {
  * @since 0.14.0
  */
 describe('CliUtilityTypeCheck.run', async () => {
-  const originalCwd: TestsCliUtilityTypeCheckRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliUtilityTypeCheckRunTemporaryDirectory = tmpdir();
-  const temporaryPrefix: TestsCliUtilityTypeCheckRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxDirectory: TestsCliUtilityTypeCheckRunSandboxDirectory = await mkdtemp(temporaryPrefix);
-  const sandboxRoot: TestsCliUtilityTypeCheckRunSandboxRoot = await realpath(sandboxDirectory);
+  const originalCwd: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryDirectory = tmpdir();
+  const temporaryPrefix: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxDirectory = await mkdtemp(temporaryPrefix);
+  const sandboxRoot: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_SandboxRoot = await realpath(sandboxDirectory);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -49,12 +49,12 @@ describe('CliUtilityTypeCheck.run', async () => {
   });
 
   it('reports no errors for valid TypeScript', async () => {
-    const projectDirectory: TestsCliUtilityTypeCheckRunProjectDirectory = join(sandboxRoot, 'valid-ts');
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory = join(sandboxRoot, 'valid-ts');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const tsconfigPath: TestsCliUtilityTypeCheckRunTsconfigPath = join(projectDirectory, 'tsconfig.json');
-    const tsconfigContents: TestsCliUtilityTypeCheckRunTsconfigContents = JSON.stringify({
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigContents = JSON.stringify({
       compilerOptions: {
         strict: true,
         noEmit: true,
@@ -64,7 +64,7 @@ describe('CliUtilityTypeCheck.run', async () => {
 
     await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
 
-    const indexPath: TestsCliUtilityTypeCheckRunIndexPath = join(projectDirectory, 'index.ts');
+    const indexPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IndexPath = join(projectDirectory, 'index.ts');
 
     await writeFile(indexPath, 'const greeting: string = "hello";\nconsole.log(greeting);\n', 'utf-8');
 
@@ -80,12 +80,12 @@ describe('CliUtilityTypeCheck.run', async () => {
   });
 
   it('sets exit code for invalid TypeScript', async () => {
-    const projectDirectory: TestsCliUtilityTypeCheckRunProjectDirectory = join(sandboxRoot, 'invalid-ts');
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory = join(sandboxRoot, 'invalid-ts');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const tsconfigPath: TestsCliUtilityTypeCheckRunTsconfigPath = join(projectDirectory, 'tsconfig.json');
-    const tsconfigContents: TestsCliUtilityTypeCheckRunTsconfigContents = JSON.stringify({
+    const tsconfigPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigPath = join(projectDirectory, 'tsconfig.json');
+    const tsconfigContents: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_TsconfigContents = JSON.stringify({
       compilerOptions: {
         strict: true,
         noEmit: true,
@@ -95,7 +95,7 @@ describe('CliUtilityTypeCheck.run', async () => {
 
     await writeFile(tsconfigPath, tsconfigContents, 'utf-8');
 
-    const indexPath: TestsCliUtilityTypeCheckRunIndexPath = join(projectDirectory, 'index.ts');
+    const indexPath: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_IndexPath = join(projectDirectory, 'index.ts');
 
     await writeFile(indexPath, 'const greeting: number = "hello";\n', 'utf-8');
 
@@ -111,7 +111,7 @@ describe('CliUtilityTypeCheck.run', async () => {
   });
 
   it('errors when no tsconfig.json found', async () => {
-    const projectDirectory: TestsCliUtilityTypeCheckRunProjectDirectory = join(sandboxRoot, 'no-tsconfig');
+    const projectDirectory: Tests_Cli_Utility_TypeCheck_CliUtilityTypeCheckRun_ProjectDirectory = join(sandboxRoot, 'no-tsconfig');
 
     await mkdir(projectDirectory, { recursive: true });
 

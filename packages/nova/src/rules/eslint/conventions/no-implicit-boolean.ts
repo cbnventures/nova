@@ -3,24 +3,24 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintConventionsNoImplicitBooleanCheckConditionContext,
-  RulesEslintConventionsNoImplicitBooleanCheckConditionNode,
-  RulesEslintConventionsNoImplicitBooleanCheckConditionReturns,
-  RulesEslintConventionsNoImplicitBooleanCheckConditionTest,
-  RulesEslintConventionsNoImplicitBooleanCheckNegationContext,
-  RulesEslintConventionsNoImplicitBooleanCheckNegationNode,
-  RulesEslintConventionsNoImplicitBooleanCheckNegationReturns,
-  RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanArgument,
-  RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanNode,
-  RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanReturns,
-  RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestCurrent,
-  RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestNode,
-  RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestReturns,
-  RulesEslintConventionsNoImplicitBooleanReportImplicitNodesContext,
-  RulesEslintConventionsNoImplicitBooleanReportImplicitNodesReturns,
-  RulesEslintConventionsNoImplicitBooleanReportImplicitNodesTest,
-  RulesEslintConventionsNoImplicitBooleanRuleDefaultOptionsIgnoreFiles,
-  RulesEslintConventionsNoImplicitBooleanRuleOptions,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Context,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Test,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Context,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Argument,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Current,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Node,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Context,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Returns,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Test,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/no-implicit-boolean.d.ts';
 
 /**
@@ -31,7 +31,7 @@ import type {
  *
  * @since 0.14.0
  */
-export class RulesEslintConventionsNoImplicitBoolean {
+export class Runner {
   /**
    * Rules - ESLint - Conventions - No Implicit Boolean - Rule.
    *
@@ -64,10 +64,10 @@ export class RulesEslintConventionsNoImplicitBoolean {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintConventionsNoImplicitBooleanRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintConventionsNoImplicitBooleanRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -76,32 +76,32 @@ export class RulesEslintConventionsNoImplicitBoolean {
 
       return {
         IfStatement(node) {
-          RulesEslintConventionsNoImplicitBoolean.checkCondition(context, node);
+          Runner.checkCondition(context, node);
 
           return;
         },
         WhileStatement(node) {
-          RulesEslintConventionsNoImplicitBoolean.checkCondition(context, node);
+          Runner.checkCondition(context, node);
 
           return;
         },
         DoWhileStatement(node) {
-          RulesEslintConventionsNoImplicitBoolean.checkCondition(context, node);
+          Runner.checkCondition(context, node);
 
           return;
         },
         ForStatement(node) {
-          RulesEslintConventionsNoImplicitBoolean.checkCondition(context, node);
+          Runner.checkCondition(context, node);
 
           return;
         },
         ConditionalExpression(node) {
-          RulesEslintConventionsNoImplicitBoolean.checkCondition(context, node);
+          Runner.checkCondition(context, node);
 
           return;
         },
         UnaryExpression(node) {
-          RulesEslintConventionsNoImplicitBoolean.checkNegation(context, node);
+          Runner.checkNegation(context, node);
 
           return;
         },
@@ -117,21 +117,21 @@ export class RulesEslintConventionsNoImplicitBoolean {
    *
    * @private
    *
-   * @param {RulesEslintConventionsNoImplicitBooleanCheckConditionContext} context - Context.
-   * @param {RulesEslintConventionsNoImplicitBooleanCheckConditionNode}    node    - Node.
+   * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Node}    node    - Node.
    *
-   * @returns {RulesEslintConventionsNoImplicitBooleanCheckConditionReturns}
+   * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Returns}
    *
    * @since 0.14.0
    */
-  private static checkCondition(context: RulesEslintConventionsNoImplicitBooleanCheckConditionContext, node: RulesEslintConventionsNoImplicitBooleanCheckConditionNode): RulesEslintConventionsNoImplicitBooleanCheckConditionReturns {
-    const test: RulesEslintConventionsNoImplicitBooleanCheckConditionTest = node.test;
+  private static checkCondition(context: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Context, node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Returns {
+    const test: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Test = node.test;
 
     if (test === undefined || test === null) {
       return;
     }
 
-    RulesEslintConventionsNoImplicitBoolean.reportImplicitNodes(context, test);
+    Runner.reportImplicitNodes(context, test);
 
     return;
   }
@@ -144,24 +144,24 @@ export class RulesEslintConventionsNoImplicitBoolean {
    *
    * @private
    *
-   * @param {RulesEslintConventionsNoImplicitBooleanCheckNegationContext} context - Context.
-   * @param {RulesEslintConventionsNoImplicitBooleanCheckNegationNode}    node    - Node.
+   * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Node}    node    - Node.
    *
-   * @returns {RulesEslintConventionsNoImplicitBooleanCheckNegationReturns}
+   * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Returns}
    *
    * @since 0.15.0
    */
-  private static checkNegation(context: RulesEslintConventionsNoImplicitBooleanCheckNegationContext, node: RulesEslintConventionsNoImplicitBooleanCheckNegationNode): RulesEslintConventionsNoImplicitBooleanCheckNegationReturns {
+  private static checkNegation(context: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Context, node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Returns {
     if (node.operator !== '!') {
       return;
     }
 
     // Skip if already inside a condition test (handled by condition visitors).
-    if (RulesEslintConventionsNoImplicitBoolean.isInsideConditionTest(node) === true) {
+    if (Runner.isInsideConditionTest(node) === true) {
       return;
     }
 
-    if (RulesEslintConventionsNoImplicitBoolean.isImplicitBoolean(node) === true) {
+    if (Runner.isImplicitBoolean(node) === true) {
       context.report({
         node,
         messageId: 'requireExplicitCheck',
@@ -179,14 +179,14 @@ export class RulesEslintConventionsNoImplicitBoolean {
    *
    * @private
    *
-   * @param {RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestNode} node - Node.
+   * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Node} node - Node.
    *
-   * @returns {RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestReturns}
+   * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Returns}
    *
    * @since 0.15.0
    */
-  private static isInsideConditionTest(node: RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestNode): RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestReturns {
-    let current: RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestCurrent = node.parent;
+  private static isInsideConditionTest(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Returns {
+    let current: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Current = node.parent;
 
     while (current !== undefined && current !== null) {
       if (
@@ -218,13 +218,13 @@ export class RulesEslintConventionsNoImplicitBoolean {
    *
    * @private
    *
-   * @param {RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanNode} node - Node.
+   * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Node} node - Node.
    *
-   * @returns {RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanReturns}
+   * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Returns}
    *
    * @since 0.14.0
    */
-  private static isImplicitBoolean(node: RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanNode): RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanReturns {
+  private static isImplicitBoolean(node: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Node): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Returns {
     // Bare identifier (e.g., `value`).
     if (node.type === 'Identifier') {
       return true;
@@ -242,12 +242,12 @@ export class RulesEslintConventionsNoImplicitBoolean {
 
     // Await expression (e.g., `await pathExists(p)`).
     if (node.type === 'AwaitExpression') {
-      return RulesEslintConventionsNoImplicitBoolean.isImplicitBoolean(node.argument);
+      return Runner.isImplicitBoolean(node.argument);
     }
 
     // Negated expression (e.g., `!value`, `!items.length`, `!fn()`).
     if (node.type === 'UnaryExpression' && node.operator === '!') {
-      const argument: RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanArgument = node.argument;
+      const argument: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Argument = node.argument;
 
       return argument.type === 'Identifier'
         || argument.type === 'MemberExpression'
@@ -266,23 +266,23 @@ export class RulesEslintConventionsNoImplicitBoolean {
    *
    * @private
    *
-   * @param {RulesEslintConventionsNoImplicitBooleanReportImplicitNodesContext} context - Context.
-   * @param {RulesEslintConventionsNoImplicitBooleanReportImplicitNodesTest}    test    - Test.
+   * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Test}    test    - Test.
    *
-   * @returns {RulesEslintConventionsNoImplicitBooleanReportImplicitNodesReturns}
+   * @returns {Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Returns}
    *
    * @since 0.14.0
    */
-  private static reportImplicitNodes(context: RulesEslintConventionsNoImplicitBooleanReportImplicitNodesContext, test: RulesEslintConventionsNoImplicitBooleanReportImplicitNodesTest): RulesEslintConventionsNoImplicitBooleanReportImplicitNodesReturns {
+  private static reportImplicitNodes(context: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Context, test: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Test): Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Returns {
     // For logical expressions, check each operand recursively.
     if (test.type === 'LogicalExpression') {
-      RulesEslintConventionsNoImplicitBoolean.reportImplicitNodes(context, test.left);
-      RulesEslintConventionsNoImplicitBoolean.reportImplicitNodes(context, test.right);
+      Runner.reportImplicitNodes(context, test.left);
+      Runner.reportImplicitNodes(context, test.right);
 
       return;
     }
 
-    if (RulesEslintConventionsNoImplicitBoolean.isImplicitBoolean(test) === true) {
+    if (Runner.isImplicitBoolean(test) === true) {
       context.report({
         node: test,
         messageId: 'requireExplicitCheck',

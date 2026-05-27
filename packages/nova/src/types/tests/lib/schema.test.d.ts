@@ -3,34 +3,34 @@
  *
  * @since 0.13.0
  */
-export type TestsLibSchemaNodeReleasesScheduleEntryLts = string | undefined;
+export type Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Entry_Lts = string | undefined;
 
-export type TestsLibSchemaNodeReleasesScheduleEntryEnd = string;
+export type Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Entry_End = string;
 
-export type TestsLibSchemaNodeReleasesScheduleEntry = {
-  lts?: TestsLibSchemaNodeReleasesScheduleEntryLts;
-  end: TestsLibSchemaNodeReleasesScheduleEntryEnd;
+export type Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Entry = {
+  lts?: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Entry_Lts;
+  end: Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Entry_End;
 };
 
-export type TestsLibSchemaNodeReleasesScheduleResult = Record<string, TestsLibSchemaNodeReleasesScheduleEntry>;
+export type Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Result = Record<string, Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Entry>;
 
-export type TestsLibSchemaNodeReleasesScheduleEntryOrUndefined = TestsLibSchemaNodeReleasesScheduleEntry | undefined;
+export type Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_EntryOrUndefined = Tests_Lib_Schema_LibSchemaNodeReleasesSchedule_Entry | undefined;
 
 /**
  * Tests - Lib - Schema - SPDX Licenses Response.
  *
  * @since 0.13.0
  */
-export type TestsLibSchemaSpdxLicenseEntryLicenseId = string;
+export type Tests_Lib_Schema_SpdxLicenseEntry_LicenseId = string;
 
-export type TestsLibSchemaSpdxLicenseEntry = {
-  licenseId: TestsLibSchemaSpdxLicenseEntryLicenseId;
+export type Tests_Lib_Schema_SpdxLicenseEntry = {
+  licenseId: Tests_Lib_Schema_SpdxLicenseEntry_LicenseId;
 };
 
-export type TestsLibSchemaSpdxLicensesResultLicenses = TestsLibSchemaSpdxLicenseEntry[];
+export type Tests_Lib_Schema_SpdxLicensesResult_Licenses = Tests_Lib_Schema_SpdxLicenseEntry[];
 
-export type TestsLibSchemaSpdxLicensesResult = {
-  licenses: TestsLibSchemaSpdxLicensesResultLicenses;
+export type Tests_Lib_Schema_SpdxLicensesResult = {
+  licenses: Tests_Lib_Schema_SpdxLicensesResult_Licenses;
 };
 
-export type TestsLibSchemaSpdxLicenseEntryOrUndefined = TestsLibSchemaSpdxLicenseEntry | undefined;
+export type Tests_Lib_Schema_SpdxLicenseEntryOrUndefined = Tests_Lib_Schema_SpdxLicenseEntry | undefined;

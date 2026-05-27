@@ -2,10 +2,10 @@ import { useVisibleSidebarItems } from '@docusaurus/plugin-content-docs/client';
 import DocSidebarItem from '@theme/DocSidebarItem';
 
 import type {
-  ThemeDocSidebarItemsDocSidebarItemsIndex,
-  ThemeDocSidebarItemsDocSidebarItemsItem,
-  ThemeDocSidebarItemsDocSidebarItemsProps,
-  ThemeDocSidebarItemsDocSidebarItemsVisibleItems,
+  Theme_DocSidebarItems_Index_DocSidebarItems_Index,
+  Theme_DocSidebarItems_Index_DocSidebarItems_Item,
+  Theme_DocSidebarItems_Index_DocSidebarItems_Props,
+  Theme_DocSidebarItems_Index_DocSidebarItems_VisibleItems,
 } from '../../types/theme/DocSidebarItems/index.d.ts';
 
 /**
@@ -15,19 +15,19 @@ import type {
  * DocSidebarItem component, forwarding the active path and
  * nesting level without any expanded-state context.
  *
- * @param {ThemeDocSidebarItemsDocSidebarItemsProps} props - Props.
+ * @param {Theme_DocSidebarItems_Index_DocSidebarItems_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocSidebarItems(props: ThemeDocSidebarItemsDocSidebarItemsProps) {
-  const visibleItems: ThemeDocSidebarItemsDocSidebarItemsVisibleItems = useVisibleSidebarItems(props['items'], props['activePath']);
+function DocSidebarItems(props: Theme_DocSidebarItems_Index_DocSidebarItems_Props) {
+  const visibleItems: Theme_DocSidebarItems_Index_DocSidebarItems_VisibleItems = useVisibleSidebarItems(props['items'], props['activePath']);
 
   return (
     <>
       {
-        visibleItems.map((item: ThemeDocSidebarItemsDocSidebarItemsItem, index: ThemeDocSidebarItemsDocSidebarItemsIndex) => (
+        visibleItems.map((item: Theme_DocSidebarItems_Index_DocSidebarItems_Item, index: Theme_DocSidebarItems_Index_DocSidebarItems_Index) => (
           <DocSidebarItem
             key={index}
             item={item}

@@ -3,50 +3,50 @@
  *
  * @since 0.14.0
  */
-export type TestsCliUtilityRunScriptsRunOriginalCwd = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OriginalCwd = string;
 
-export type TestsCliUtilityRunScriptsRunTemporaryDirectory = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryDirectory = string;
 
-export type TestsCliUtilityRunScriptsRunTemporaryPrefix = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_TemporaryPrefix = string;
 
-export type TestsCliUtilityRunScriptsRunSandboxRoot = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SandboxRoot = string;
 
-export type TestsCliUtilityRunScriptsRunProjectRoot = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ProjectRoot = string;
 
-export type TestsCliUtilityRunScriptsRunPackageJson = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJson = string;
 
-export type TestsCliUtilityRunScriptsRunPackageJsonPath = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_PackageJsonPath = string;
 
-export type TestsCliUtilityRunScriptsRunRealProjectRoot = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_RealProjectRoot = string;
 
-export type TestsCliUtilityRunScriptsRunOutputPath = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OutputPath = string;
 
-export type TestsCliUtilityRunScriptsRunOutput = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_Output = string;
 
-export type TestsCliUtilityRunScriptsRunFileAPath = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileAPath = string;
 
-export type TestsCliUtilityRunScriptsRunFileBPath = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileBPath = string;
 
-export type TestsCliUtilityRunScriptsRunFileA = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileA = string;
 
-export type TestsCliUtilityRunScriptsRunFileB = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_FileB = string;
 
-export type TestsCliUtilityRunScriptsRunCapturedWrites = string[];
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_CapturedWrites = string[];
 
-export type TestsCliUtilityRunScriptsRunOriginalStdoutWrite = typeof process.stdout.write;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_OriginalStdoutWrite = typeof process.stdout.write;
 
-export type TestsCliUtilityRunScriptsRunChunkString = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_ChunkString = string;
 
-export type TestsCliUtilityRunScriptsRunCapturedOutput = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_CapturedOutput = string;
 
-export type TestsCliUtilityRunScriptsRunIncludesTaskA = boolean;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesTaskA = boolean;
 
-export type TestsCliUtilityRunScriptsRunIncludesTaskB = boolean;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesTaskB = boolean;
 
-export type TestsCliUtilityRunScriptsRunIncludesHelloA = boolean;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesHelloA = boolean;
 
-export type TestsCliUtilityRunScriptsRunIncludesHelloB = boolean;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_IncludesHelloB = boolean;
 
-export type TestsCliUtilityRunScriptsRunSecondRan = boolean;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_SecondRan = boolean;
 
-export type TestsCliUtilityRunScriptsRunMissingFilePath = string;
+export type Tests_Cli_Utility_RunScripts_CliUtilityRunScriptsRun_MissingFilePath = string;

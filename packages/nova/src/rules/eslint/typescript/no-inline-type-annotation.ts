@@ -3,32 +3,32 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionContext,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionNode,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionReturns,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionTypeNode,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionTypeParameterNames,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationContext,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationNode,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationReturns,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationTypeNode,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationTypeParameterNames,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorAncestor,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorContext,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorInsideFunction,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorNode,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorParent,
-  RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorReturns,
-  RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersCurrent,
-  RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersNames,
-  RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersNode,
-  RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersReturns,
-  RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsNode,
-  RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsReturns,
-  RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsTypeParameterNames,
-  RulesEslintTypescriptNoInlineTypeAnnotationRuleDefaultOptionsIgnoreFiles,
-  RulesEslintTypescriptNoInlineTypeAnnotationRuleNormalizedFilename,
-  RulesEslintTypescriptNoInlineTypeAnnotationRuleOptions,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Context,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Node,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Returns,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_TypeNode,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_TypeParameterNames,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Context,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Node,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Returns,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_TypeNode,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_TypeParameterNames,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Ancestor,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Context,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_InsideFunction,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Node,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Parent,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Returns,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Current,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Names,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Node,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Returns,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Node,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Returns,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_TypeParameterNames,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleNormalizedFilename,
+  Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/no-inline-type-annotation.d.ts';
 
 /**
@@ -39,7 +39,7 @@ import type {
  *
  * @since 0.14.0
  */
-export class RulesEslintTypescriptNoInlineTypeAnnotation {
+export class Runner {
   /**
    * Rules - ESLint - TypeScript - No Inline Type Annotation - Callback Methods.
    *
@@ -99,11 +99,11 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintTypescriptNoInlineTypeAnnotationRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintTypescriptNoInlineTypeAnnotationRuleOptions = defaultOptions[0];
-      const normalizedFilename: RulesEslintTypescriptNoInlineTypeAnnotationRuleNormalizedFilename = context.filename.replaceAll('\\', '/');
+      const options: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleOptions = defaultOptions[0];
+      const normalizedFilename: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_RuleNormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Skip .d.ts files - inline types are allowed in type definition files.
       if (normalizedFilename.endsWith('.d.ts') === true) {
@@ -117,17 +117,17 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
 
       return {
         TSAsExpression(node) {
-          RulesEslintTypescriptNoInlineTypeAnnotation.checkAsExpression(context, node);
+          Runner.checkAsExpression(context, node);
 
           return;
         },
         TSTypeAnnotation(node) {
-          RulesEslintTypescriptNoInlineTypeAnnotation.checkTypeAnnotation(context, node);
+          Runner.checkTypeAnnotation(context, node);
 
           return;
         },
         VariableDeclarator(node) {
-          RulesEslintTypescriptNoInlineTypeAnnotation.checkVariableDeclarator(context, node);
+          Runner.checkVariableDeclarator(context, node);
 
           return;
         },
@@ -144,15 +144,15 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionContext} context - Context.
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionNode}    node    - Node.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Context} context - Context.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Node}    node    - Node.
    *
-   * @returns {RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionReturns}
+   * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Returns}
    *
    * @since 0.15.0
    */
-  private static checkAsExpression(context: RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionContext, node: RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionNode): RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionReturns {
-    const typeNode: RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionTypeNode = node.typeAnnotation;
+  private static checkAsExpression(context: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Context, node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Node): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_Returns {
+    const typeNode: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_TypeNode = node.typeAnnotation;
 
     // Allow TSTypeReference when all type arguments are enclosing type parameters.
     if (typeNode.type === 'TSTypeReference') {
@@ -160,9 +160,9 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
         return;
       }
 
-      const typeParameterNames: RulesEslintTypescriptNoInlineTypeAnnotationCheckAsExpressionTypeParameterNames = RulesEslintTypescriptNoInlineTypeAnnotation.collectEnclosingTypeParameters(node);
+      const typeParameterNames: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckAsExpression_TypeParameterNames = Runner.collectEnclosingTypeParameters(node);
 
-      if (RulesEslintTypescriptNoInlineTypeAnnotation.hasOnlyTypeParameterArguments(typeNode, typeParameterNames) === true) {
+      if (Runner.hasOnlyTypeParameterArguments(typeNode, typeParameterNames) === true) {
         return;
       }
     }
@@ -184,15 +184,15 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersNode} node - Node.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Node} node - Node.
    *
-   * @returns {RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersReturns}
+   * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Returns}
    *
    * @since 0.14.0
    */
-  private static collectEnclosingTypeParameters(node: RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersNode): RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersReturns {
-    const names: RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersNames = new Set();
-    let current: RulesEslintTypescriptNoInlineTypeAnnotationCollectEnclosingTypeParametersCurrent = node.parent;
+  private static collectEnclosingTypeParameters(node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Node): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Returns {
+    const names: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Names = new Set();
+    let current: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CollectEnclosingTypeParameters_Current = node.parent;
 
     while (
       current !== undefined
@@ -225,14 +225,14 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsNode}               node               - Node.
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsTypeParameterNames} typeParameterNames - Type parameter names.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Node}               node               - Node.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_TypeParameterNames} typeParameterNames - Type parameter names.
    *
-   * @returns {RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsReturns}
+   * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Returns}
    *
    * @since 0.14.0
    */
-  private static hasOnlyTypeParameterArguments(node: RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsNode, typeParameterNames: RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsTypeParameterNames): RulesEslintTypescriptNoInlineTypeAnnotationHasOnlyTypeParameterArgumentsReturns {
+  private static hasOnlyTypeParameterArguments(node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Node, typeParameterNames: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_TypeParameterNames): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_HasOnlyTypeParameterArguments_Returns {
     if (node.typeArguments === undefined) {
       return true;
     }
@@ -255,15 +255,15 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationContext} context - Context.
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationNode}    node    - Node.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Context} context - Context.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Node}    node    - Node.
    *
-   * @returns {RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationReturns}
+   * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Returns}
    *
    * @since 0.14.0
    */
-  private static checkTypeAnnotation(context: RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationContext, node: RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationNode): RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationReturns {
-    const typeNode: RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationTypeNode = node.typeAnnotation;
+  private static checkTypeAnnotation(context: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Context, node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Node): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_Returns {
+    const typeNode: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_TypeNode = node.typeAnnotation;
 
     // Allow type predicates (e.g., `value is MyType`).
     if (typeNode.type === 'TSTypePredicate') {
@@ -276,9 +276,9 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
         return;
       }
 
-      const typeParameterNames: RulesEslintTypescriptNoInlineTypeAnnotationCheckTypeAnnotationTypeParameterNames = RulesEslintTypescriptNoInlineTypeAnnotation.collectEnclosingTypeParameters(node);
+      const typeParameterNames: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckTypeAnnotation_TypeParameterNames = Runner.collectEnclosingTypeParameters(node);
 
-      if (RulesEslintTypescriptNoInlineTypeAnnotation.hasOnlyTypeParameterArguments(typeNode, typeParameterNames) === true) {
+      if (Runner.hasOnlyTypeParameterArguments(typeNode, typeParameterNames) === true) {
         return;
       }
     }
@@ -300,14 +300,14 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorContext} context - Context.
-   * @param {RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorNode}    node    - Node.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Context} context - Context.
+   * @param {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Node}    node    - Node.
    *
-   * @returns {RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorReturns}
+   * @returns {Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Returns}
    *
    * @since 0.14.0
    */
-  private static checkVariableDeclarator(context: RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorContext, node: RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorNode): RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorReturns {
+  private static checkVariableDeclarator(context: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Context, node: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Node): Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Returns {
     // Only check identifiers (skip destructuring).
     if (node.id.type !== 'Identifier') {
       return;
@@ -319,7 +319,7 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
     }
 
     // Only check const/let inside function/method bodies.
-    const parent: RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorParent = node.parent;
+    const parent: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Parent = node.parent;
 
     if (parent === undefined || parent.type !== 'VariableDeclaration') {
       return;
@@ -330,8 +330,8 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
     }
 
     // Skip top-level declarations (not inside a function/method body).
-    let ancestor: RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorAncestor = parent.parent;
-    let insideFunction: RulesEslintTypescriptNoInlineTypeAnnotationCheckVariableDeclaratorInsideFunction = false;
+    let ancestor: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_Ancestor = parent.parent;
+    let insideFunction: Rules_Eslint_Typescript_NoInlineTypeAnnotation_Runner_CheckVariableDeclarator_InsideFunction = false;
 
     while (ancestor !== undefined && ancestor !== null) {
       if (
@@ -375,7 +375,7 @@ export class RulesEslintTypescriptNoInlineTypeAnnotation {
       && parent.parent.parent.type === 'CallExpression'
       && parent.parent.parent.callee.type === 'MemberExpression'
       && parent.parent.parent.callee.property.type === 'Identifier'
-      && RulesEslintTypescriptNoInlineTypeAnnotation.#callbackMethods.has(parent.parent.parent.callee.property.name) === true
+      && Runner.#callbackMethods.has(parent.parent.parent.callee.property.name) === true
     ) {
       return;
     }

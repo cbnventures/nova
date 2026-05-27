@@ -6,81 +6,81 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramReturns = void;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Returns = void;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllComments = TSESTree.Comment[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllComments = TSESTree.Comment[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramLines = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Lines = string[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParamLines = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParamLines = string[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramNameStartPositions = number[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_NameStartPositions = number[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramDashPositions = number[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashPositions = number[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatch = RegExpExecArray | null;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Match = RegExpExecArray | null;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchType = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchType = string | undefined;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchName = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchName = string | undefined;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchDash = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchDash = string | undefined;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeEndIndex = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeEndIndex = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramNameStartIndex = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_NameStartIndex = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramDashIndex = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashIndex = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllTypeEndsSame = boolean;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllTypeEndsSame = boolean;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllNameStartsSame = boolean;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllNameStartsSame = boolean;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllDashesSame = boolean;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllDashesSame = boolean;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedLines = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLines = string[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMaxTypeLength = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MaxTypeLength = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMaxNameLength = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MaxNameLength = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryIndex = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Index = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryPrefix = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Prefix = string;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryType = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Type = string;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryName = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Name = string;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryDescription = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Description = string;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntry = {
-  index: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryIndex;
-  prefix: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryPrefix;
-  type: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryType;
-  name: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryName;
-  description: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntryDescription;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry = {
+  index: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Index;
+  prefix: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Prefix;
+  type: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Type;
+  name: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Name;
+  description: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry_Description;
 };
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntries = RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntry[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntries = Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntry[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedLine = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLine = string | undefined;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixMatch = RegExpMatchArray | null;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Match = RegExpMatchArray | null;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeLength = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeLength = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeWithBraces = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeWithBraces = string;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramPadAfterType = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_PadAfterType = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramPadAfterName = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_PadAfterName = number;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramRebuiltLine = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_RebuiltLine = string;
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedValue = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedValue = string;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Fix Pattern.
@@ -99,10 +99,10 @@ export type RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedValue = s
  *
  * @since 0.15.0
  */
-export type RulesEslintJsdocRequireJsdocParamAlignmentRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintJsdocRequireJsdocParamAlignmentRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintJsdocRequireJsdocParamAlignmentRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions_IgnoreFiles;
 }>;

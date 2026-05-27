@@ -1,15 +1,15 @@
-import type { PresetsSamplePresetSample } from '../../types/presets/sample/preset.d.ts';
+import type { Presets_Sample_Preset_Sample } from '../../types/presets/sample/preset.d.ts';
 
 /**
  * Presets - Sample - Preset - Sample.
  *
  * Reference template only - NOT a user-selectable preset; excluded from
- * `SharedPresetName` and the registry. Defaults are intentionally neutral so a
+ * `Shared_PresetName` and the registry. Defaults are intentionally neutral so a
  * copy-paste produces a runnable but visually unopinionated starting point.
  *
  * @since 0.18.0
  */
-export const presetsSamplePresetSample: PresetsSamplePresetSample = {
+export const presetsSamplePresetSample: Presets_Sample_Preset_Sample = {
   logo: {
     title: 'Sample',
     alt: 'Sample',

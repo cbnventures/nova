@@ -2,35 +2,35 @@ import Link from '@docusaurus/Link';
 import { translate } from '@docusaurus/Translate';
 
 import type {
-  ThemeBlogListPaginatorBlogListPaginatorBasePath,
-  ThemeBlogListPaginatorBlogListPaginatorFirst,
-  ThemeBlogListPaginatorBlogListPaginatorLast,
-  ThemeBlogListPaginatorBlogListPaginatorMapIndex,
-  ThemeBlogListPaginatorBlogListPaginatorNavAriaLabel,
-  ThemeBlogListPaginatorBlogListPaginatorNext,
-  ThemeBlogListPaginatorBlogListPaginatorPage,
-  ThemeBlogListPaginatorBlogListPaginatorPageNumbers,
-  ThemeBlogListPaginatorBlogListPaginatorPageNumbersEntry,
-  ThemeBlogListPaginatorBlogListPaginatorPermalink,
-  ThemeBlogListPaginatorBlogListPaginatorPrevious,
-  ThemeBlogListPaginatorBlogListPaginatorProps,
-  ThemeBlogListPaginatorBlogListPaginatorTotalPages,
-  ThemeBlogListPaginatorGetBasePathBasePath,
-  ThemeBlogListPaginatorGetBasePathPage,
-  ThemeBlogListPaginatorGetBasePathPermalink,
-  ThemeBlogListPaginatorGetPageNumbersAllPages,
-  ThemeBlogListPaginatorGetPageNumbersCurrentPage,
-  ThemeBlogListPaginatorGetPageNumbersIndex,
-  ThemeBlogListPaginatorGetPageNumbersPageNumbers,
-  ThemeBlogListPaginatorGetPageNumbersSortedPages,
-  ThemeBlogListPaginatorGetPageNumbersSortedPagesComparatorFirst,
-  ThemeBlogListPaginatorGetPageNumbersSortedPagesComparatorSecond,
-  ThemeBlogListPaginatorGetPageNumbersSortedPagesEntry,
-  ThemeBlogListPaginatorGetPageNumbersTotalPages,
-  ThemeBlogListPaginatorGetPageNumbersVisibleSet,
-  ThemeBlogListPaginatorGetPageUrlBasePath,
-  ThemeBlogListPaginatorGetPageUrlPageNumber,
-  ThemeBlogListPaginatorGetPageUrlPageUrl,
+  Theme_BlogListPaginator_Index_BlogListPaginator_BasePath,
+  Theme_BlogListPaginator_Index_BlogListPaginator_First,
+  Theme_BlogListPaginator_Index_BlogListPaginator_Last,
+  Theme_BlogListPaginator_Index_BlogListPaginator_MapIndex,
+  Theme_BlogListPaginator_Index_BlogListPaginator_NavAriaLabel,
+  Theme_BlogListPaginator_Index_BlogListPaginator_Next,
+  Theme_BlogListPaginator_Index_BlogListPaginator_Page,
+  Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbers,
+  Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbersEntry,
+  Theme_BlogListPaginator_Index_BlogListPaginator_Permalink,
+  Theme_BlogListPaginator_Index_BlogListPaginator_Previous,
+  Theme_BlogListPaginator_Index_BlogListPaginator_Props,
+  Theme_BlogListPaginator_Index_BlogListPaginator_TotalPages,
+  Theme_BlogListPaginator_Index_GetBasePath_BasePath,
+  Theme_BlogListPaginator_Index_GetBasePath_Page,
+  Theme_BlogListPaginator_Index_GetBasePath_Permalink,
+  Theme_BlogListPaginator_Index_GetPageNumbers_AllPages,
+  Theme_BlogListPaginator_Index_GetPageNumbers_CurrentPage,
+  Theme_BlogListPaginator_Index_GetPageNumbers_Index,
+  Theme_BlogListPaginator_Index_GetPageNumbers_PageNumbers,
+  Theme_BlogListPaginator_Index_GetPageNumbers_SortedPages,
+  Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesComparatorFirst,
+  Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesComparatorSecond,
+  Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesEntry,
+  Theme_BlogListPaginator_Index_GetPageNumbers_TotalPages,
+  Theme_BlogListPaginator_Index_GetPageNumbers_VisibleSet,
+  Theme_BlogListPaginator_Index_GetPageUrl_BasePath,
+  Theme_BlogListPaginator_Index_GetPageUrl_PageNumber,
+  Theme_BlogListPaginator_Index_GetPageUrl_PageUrl,
 } from '../../types/theme/BlogListPaginator/index.d.ts';
 
 /**
@@ -40,14 +40,14 @@ import type {
  * the trailing page segment when on pages beyond the first, returning
  * the root blog path used to construct all page URLs.
  *
- * @param {ThemeBlogListPaginatorGetBasePathPermalink} permalink - Permalink.
- * @param {ThemeBlogListPaginatorGetBasePathPage}      page      - Page.
+ * @param {Theme_BlogListPaginator_Index_GetBasePath_Permalink} permalink - Permalink.
+ * @param {Theme_BlogListPaginator_Index_GetBasePath_Page}      page      - Page.
  *
- * @returns {ThemeBlogListPaginatorGetBasePathBasePath}
+ * @returns {Theme_BlogListPaginator_Index_GetBasePath_BasePath}
  *
  * @since 0.16.0
  */
-function getBasePath(permalink: ThemeBlogListPaginatorGetBasePathPermalink, page: ThemeBlogListPaginatorGetBasePathPage): ThemeBlogListPaginatorGetBasePathBasePath {
+function getBasePath(permalink: Theme_BlogListPaginator_Index_GetBasePath_Permalink, page: Theme_BlogListPaginator_Index_GetBasePath_Page): Theme_BlogListPaginator_Index_GetBasePath_BasePath {
   if (page === 1) {
     return permalink;
   }
@@ -62,14 +62,14 @@ function getBasePath(permalink: ThemeBlogListPaginatorGetBasePathPermalink, page
  * the page segment to the base path, returning the base
  * path directly for page one.
  *
- * @param {ThemeBlogListPaginatorGetPageUrlBasePath}   basePath   - Base path.
- * @param {ThemeBlogListPaginatorGetPageUrlPageNumber} pageNumber - Page number.
+ * @param {Theme_BlogListPaginator_Index_GetPageUrl_BasePath}   basePath   - Base path.
+ * @param {Theme_BlogListPaginator_Index_GetPageUrl_PageNumber} pageNumber - Page number.
  *
- * @returns {ThemeBlogListPaginatorGetPageUrlPageUrl}
+ * @returns {Theme_BlogListPaginator_Index_GetPageUrl_PageUrl}
  *
  * @since 0.16.0
  */
-function getPageUrl(basePath: ThemeBlogListPaginatorGetPageUrlBasePath, pageNumber: ThemeBlogListPaginatorGetPageUrlPageNumber): ThemeBlogListPaginatorGetPageUrlPageUrl {
+function getPageUrl(basePath: Theme_BlogListPaginator_Index_GetPageUrl_BasePath, pageNumber: Theme_BlogListPaginator_Index_GetPageUrl_PageNumber): Theme_BlogListPaginator_Index_GetPageUrl_PageUrl {
   if (pageNumber === 1) {
     return basePath;
   }
@@ -84,25 +84,25 @@ function getPageUrl(basePath: ThemeBlogListPaginatorGetPageUrlBasePath, pageNumb
  * strip, always including the first page, last page, and one neighbor on each
  * side of the current page, with ellipsis replacing gaps of two or more pages.
  *
- * @param {ThemeBlogListPaginatorGetPageNumbersCurrentPage} currentPage - Current page.
- * @param {ThemeBlogListPaginatorGetPageNumbersTotalPages}  totalPages  - Total pages.
+ * @param {Theme_BlogListPaginator_Index_GetPageNumbers_CurrentPage} currentPage - Current page.
+ * @param {Theme_BlogListPaginator_Index_GetPageNumbers_TotalPages}  totalPages  - Total pages.
  *
- * @returns {ThemeBlogListPaginatorGetPageNumbersPageNumbers}
+ * @returns {Theme_BlogListPaginator_Index_GetPageNumbers_PageNumbers}
  *
  * @since 0.16.0
  */
-function getPageNumbers(currentPage: ThemeBlogListPaginatorGetPageNumbersCurrentPage, totalPages: ThemeBlogListPaginatorGetPageNumbersTotalPages): ThemeBlogListPaginatorGetPageNumbersPageNumbers {
+function getPageNumbers(currentPage: Theme_BlogListPaginator_Index_GetPageNumbers_CurrentPage, totalPages: Theme_BlogListPaginator_Index_GetPageNumbers_TotalPages): Theme_BlogListPaginator_Index_GetPageNumbers_PageNumbers {
   if (totalPages <= 7) {
-    const allPages: ThemeBlogListPaginatorGetPageNumbersAllPages = [];
+    const allPages: Theme_BlogListPaginator_Index_GetPageNumbers_AllPages = [];
 
-    for (let index: ThemeBlogListPaginatorGetPageNumbersIndex = 1; index <= totalPages; index += 1) {
+    for (let index: Theme_BlogListPaginator_Index_GetPageNumbers_Index = 1; index <= totalPages; index += 1) {
       allPages.push(index);
     }
 
     return allPages;
   }
 
-  const visibleSet: ThemeBlogListPaginatorGetPageNumbersVisibleSet = new Set<number>();
+  const visibleSet: Theme_BlogListPaginator_Index_GetPageNumbers_VisibleSet = new Set<number>();
 
   visibleSet.add(1);
   visibleSet.add(totalPages);
@@ -117,18 +117,18 @@ function getPageNumbers(currentPage: ThemeBlogListPaginatorGetPageNumbersCurrent
     visibleSet.add(currentPage + 1);
   }
 
-  const sortedPages: ThemeBlogListPaginatorGetPageNumbersSortedPages = Array.from(visibleSet).sort((first: ThemeBlogListPaginatorGetPageNumbersSortedPagesComparatorFirst, second: ThemeBlogListPaginatorGetPageNumbersSortedPagesComparatorSecond) => first - second);
-  const pageNumbers: ThemeBlogListPaginatorGetPageNumbersPageNumbers = [];
+  const sortedPages: Theme_BlogListPaginator_Index_GetPageNumbers_SortedPages = Array.from(visibleSet).sort((first: Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesComparatorFirst, second: Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesComparatorSecond) => first - second);
+  const pageNumbers: Theme_BlogListPaginator_Index_GetPageNumbers_PageNumbers = [];
 
-  for (let index: ThemeBlogListPaginatorGetPageNumbersIndex = 0; index < sortedPages.length; index += 1) {
-    const entry: ThemeBlogListPaginatorGetPageNumbersSortedPagesEntry = sortedPages[index];
+  for (let index: Theme_BlogListPaginator_Index_GetPageNumbers_Index = 0; index < sortedPages.length; index += 1) {
+    const entry: Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesEntry = sortedPages[index];
 
     if (entry === undefined) {
       continue;
     }
 
     if (index > 0) {
-      const previousEntry: ThemeBlogListPaginatorGetPageNumbersSortedPagesEntry = sortedPages[index - 1];
+      const previousEntry: Theme_BlogListPaginator_Index_GetPageNumbers_SortedPagesEntry = sortedPages[index - 1];
 
       if (previousEntry !== undefined && entry - previousEntry > 1) {
         pageNumbers.push('...');
@@ -148,45 +148,45 @@ function getPageNumbers(currentPage: ThemeBlogListPaginatorGetPageNumbersCurrent
  * numbered page links with ellipsis truncation, next, and last
  * controls for paginated blog listing pages.
  *
- * @param {ThemeBlogListPaginatorBlogListPaginatorProps} props - Props.
+ * @param {Theme_BlogListPaginator_Index_BlogListPaginator_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogListPaginator(props: ThemeBlogListPaginatorBlogListPaginatorProps) {
-  const page: ThemeBlogListPaginatorBlogListPaginatorPage = props['metadata']['page'];
-  const totalPages: ThemeBlogListPaginatorBlogListPaginatorTotalPages = props['metadata']['totalPages'];
+function BlogListPaginator(props: Theme_BlogListPaginator_Index_BlogListPaginator_Props) {
+  const page: Theme_BlogListPaginator_Index_BlogListPaginator_Page = props['metadata']['page'];
+  const totalPages: Theme_BlogListPaginator_Index_BlogListPaginator_TotalPages = props['metadata']['totalPages'];
 
   if (totalPages <= 1) {
     return undefined;
   }
 
-  const permalink: ThemeBlogListPaginatorBlogListPaginatorPermalink = props['metadata']['permalink'];
-  const basePath: ThemeBlogListPaginatorBlogListPaginatorBasePath = getBasePath(permalink, page);
-  const pageNumbers: ThemeBlogListPaginatorBlogListPaginatorPageNumbers = getPageNumbers(page, totalPages);
+  const permalink: Theme_BlogListPaginator_Index_BlogListPaginator_Permalink = props['metadata']['permalink'];
+  const basePath: Theme_BlogListPaginator_Index_BlogListPaginator_BasePath = getBasePath(permalink, page);
+  const pageNumbers: Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbers = getPageNumbers(page, totalPages);
 
-  const navAriaLabel: ThemeBlogListPaginatorBlogListPaginatorNavAriaLabel = translate({
+  const navAriaLabel: Theme_BlogListPaginator_Index_BlogListPaginator_NavAriaLabel = translate({
     id: 'theme.blog.paginator.navAriaLabel',
     message: 'Blog list page navigation',
     description: 'The ARIA label for the blog list paginator navigation',
   });
-  const first: ThemeBlogListPaginatorBlogListPaginatorFirst = translate({
+  const first: Theme_BlogListPaginator_Index_BlogListPaginator_First = translate({
     id: 'theme.blog.paginator.first',
     message: 'First',
     description: 'The label for the link to the first blog list page',
   });
-  const previous: ThemeBlogListPaginatorBlogListPaginatorPrevious = translate({
+  const previous: Theme_BlogListPaginator_Index_BlogListPaginator_Previous = translate({
     id: 'theme.blog.paginator.previous',
     message: 'Prev',
     description: 'The label for the link to the previous blog list page',
   });
-  const next: ThemeBlogListPaginatorBlogListPaginatorNext = translate({
+  const next: Theme_BlogListPaginator_Index_BlogListPaginator_Next = translate({
     id: 'theme.blog.paginator.next',
     message: 'Next',
     description: 'The label for the link to the next blog list page',
   });
-  const last: ThemeBlogListPaginatorBlogListPaginatorLast = translate({
+  const last: Theme_BlogListPaginator_Index_BlogListPaginator_Last = translate({
     id: 'theme.blog.paginator.last',
     message: 'Last',
     description: 'The label for the link to the last blog list page',
@@ -208,7 +208,7 @@ function BlogListPaginator(props: ThemeBlogListPaginatorBlogListPaginatorProps) 
           </Link>
         </>
       )}
-      {pageNumbers.map((entry: ThemeBlogListPaginatorBlogListPaginatorPageNumbersEntry, index: ThemeBlogListPaginatorBlogListPaginatorMapIndex) => {
+      {pageNumbers.map((entry: Theme_BlogListPaginator_Index_BlogListPaginator_PageNumbersEntry, index: Theme_BlogListPaginator_Index_BlogListPaginator_MapIndex) => {
         if (entry === '...') {
           return (
             <span key={`ellipsis-${String(index)}`} className="nova-blog-list-paginator-ellipsis">

@@ -7,16 +7,16 @@ import {
 } from 'react';
 
 import type {
-  ThemeBackToTopButtonButtonAriaLabel,
-  ThemeBackToTopButtonCurrentScrollPosition,
-  ThemeBackToTopButtonEnabled,
-  ThemeBackToTopButtonIsVisible,
-  ThemeBackToTopButtonIsVisibleState,
-  ThemeBackToTopButtonProps,
-  ThemeBackToTopButtonReturns,
-  ThemeBackToTopButtonScrollThreshold,
-  ThemeBackToTopButtonSetIsVisible,
-  ThemeBackToTopButtonThemeConfig,
+  Theme_BackToTopButton_Index_BackToTopButton_ButtonAriaLabel,
+  Theme_BackToTopButton_Index_BackToTopButton_CurrentScrollPosition,
+  Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton,
+  Theme_BackToTopButton_Index_BackToTopButton_IsVisible,
+  Theme_BackToTopButton_Index_BackToTopButton_IsVisibleState,
+  Theme_BackToTopButton_Index_BackToTopButton_Props,
+  Theme_BackToTopButton_Index_BackToTopButton_Returns,
+  Theme_BackToTopButton_Index_BackToTopButton_ScrollThreshold,
+  Theme_BackToTopButton_Index_BackToTopButton_SetIsVisible,
+  Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig,
 } from '../../types/theme/BackToTopButton/index.d.ts';
 
 /**
@@ -30,13 +30,13 @@ import type {
  *
  * @since 0.15.0
  */
-function BackToTopButton(props: ThemeBackToTopButtonProps): ThemeBackToTopButtonReturns {
-  const themeConfig: ThemeBackToTopButtonThemeConfig = useThemeConfig() as ThemeBackToTopButtonThemeConfig;
-  const enabled: ThemeBackToTopButtonEnabled = themeConfig['backToTopButton'] ?? true;
-  const scrollThreshold: ThemeBackToTopButtonScrollThreshold = 300;
-  const isVisibleState: ThemeBackToTopButtonIsVisibleState = useState<ThemeBackToTopButtonIsVisible>(false);
-  const isVisible: ThemeBackToTopButtonIsVisible = isVisibleState[0];
-  const setIsVisible: ThemeBackToTopButtonSetIsVisible = isVisibleState[1];
+function BackToTopButton(props: Theme_BackToTopButton_Index_BackToTopButton_Props): Theme_BackToTopButton_Index_BackToTopButton_Returns {
+  const themeConfig: Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig = useThemeConfig() as Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig;
+  const enabled: Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton = themeConfig['backToTopButton'] ?? true;
+  const scrollThreshold: Theme_BackToTopButton_Index_BackToTopButton_ScrollThreshold = 300;
+  const isVisibleState: Theme_BackToTopButton_Index_BackToTopButton_IsVisibleState = useState<Theme_BackToTopButton_Index_BackToTopButton_IsVisible>(false);
+  const isVisible: Theme_BackToTopButton_Index_BackToTopButton_IsVisible = isVisibleState[0];
+  const setIsVisible: Theme_BackToTopButton_Index_BackToTopButton_SetIsVisible = isVisibleState[1];
 
   useEffect(() => {
     /**
@@ -48,7 +48,7 @@ function BackToTopButton(props: ThemeBackToTopButtonProps): ThemeBackToTopButton
      * @since 0.15.0
      */
     function handleScroll() {
-      const currentScrollPosition: ThemeBackToTopButtonCurrentScrollPosition = window.scrollY;
+      const currentScrollPosition: Theme_BackToTopButton_Index_BackToTopButton_CurrentScrollPosition = window.scrollY;
 
       setIsVisible(currentScrollPosition > scrollThreshold);
 
@@ -68,7 +68,7 @@ function BackToTopButton(props: ThemeBackToTopButtonProps): ThemeBackToTopButton
     return null;
   }
 
-  const buttonAriaLabel: ThemeBackToTopButtonButtonAriaLabel = translate({
+  const buttonAriaLabel: Theme_BackToTopButton_Index_BackToTopButton_ButtonAriaLabel = translate({
     id: 'theme.BackToTopButton.buttonAriaLabel',
     message: 'Scroll back to top',
     description: 'The ARIA label for the back to top button',

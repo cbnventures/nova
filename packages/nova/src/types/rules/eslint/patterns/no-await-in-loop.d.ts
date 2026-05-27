@@ -12,76 +12,76 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitNode = TSESTree.AwaitExpression;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Node = TSESTree.AwaitExpression;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_IgnoreFiles = string[];
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsAllowForOf = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_AllowForOf = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsAllowWhile = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_AllowWhile = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsAllowForIn = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_AllowForIn = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsAllowFor = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_AllowFor = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitOptions = Readonly<{
-  ignoreFiles: RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsIgnoreFiles;
-  allowForOf: RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsAllowForOf;
-  allowWhile: RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsAllowWhile;
-  allowForIn: RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsAllowForIn;
-  allowFor: RulesEslintPatternsNoAwaitInLoopCheckAwaitOptionsAllowFor;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_IgnoreFiles;
+  allowForOf: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_AllowForOf;
+  allowWhile: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_AllowWhile;
+  allowForIn: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_AllowForIn;
+  allowFor: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options_AllowFor;
 }>;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitReturns = void;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Returns = void;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitDisallowedLoopTypes = Set<string>;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_DisallowedLoopTypes = Set<string>;
 
-export type RulesEslintPatternsNoAwaitInLoopCheckAwaitEnclosingLoop = TSESTree.Node | undefined;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_EnclosingLoop = TSESTree.Node | undefined;
 
 /**
  * Rules - ESLint - Patterns - No Await In Loop - Get Enclosing Loop.
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopNode = TSESTree.Node;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Node = TSESTree.Node;
 
-export type RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopDisallowedLoopTypes = Set<string>;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_DisallowedLoopTypes = Set<string>;
 
-export type RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopReturns = TSESTree.Node | undefined;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Returns = TSESTree.Node | undefined;
 
-export type RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopCurrent = TSESTree.Node | undefined;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Current = TSESTree.Node | undefined;
 
 /**
  * Rules - ESLint - Patterns - No Await In Loop - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowFor = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowFor = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowForIn = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowForIn = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowForOf = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowForOf = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowWhile = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowWhile = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintPatternsNoAwaitInLoopRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintPatternsNoAwaitInLoopRuleOptionsAllowForOf = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_AllowForOf = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopRuleOptionsAllowWhile = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_AllowWhile = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopRuleOptionsAllowForIn = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_AllowForIn = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopRuleOptionsAllowFor = boolean;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_AllowFor = boolean;
 
-export type RulesEslintPatternsNoAwaitInLoopRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintPatternsNoAwaitInLoopRuleOptionsIgnoreFiles;
-  allowForOf: RulesEslintPatternsNoAwaitInLoopRuleOptionsAllowForOf;
-  allowWhile: RulesEslintPatternsNoAwaitInLoopRuleOptionsAllowWhile;
-  allowForIn: RulesEslintPatternsNoAwaitInLoopRuleOptionsAllowForIn;
-  allowFor: RulesEslintPatternsNoAwaitInLoopRuleOptionsAllowFor;
+export type Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_IgnoreFiles;
+  allowForOf: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_AllowForOf;
+  allowWhile: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_AllowWhile;
+  allowForIn: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_AllowForIn;
+  allowFor: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions_AllowFor;
 }>;

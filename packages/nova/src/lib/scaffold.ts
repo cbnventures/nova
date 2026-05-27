@@ -8,115 +8,115 @@ import { LIB_REGEX_PLACEHOLDER_PROJECT_SLUG } from './regex.js';
 import { discoverPathsWithFile, resolveTemplatePath, saveGeneratedFile } from './utility.js';
 
 import type {
-  LibScaffoldCollectFilesDirectory,
-  LibScaffoldCollectFilesEntries,
-  LibScaffoldCollectFilesEntryPath,
-  LibScaffoldCollectFilesFiles,
-  LibScaffoldCollectFilesPrefix,
-  LibScaffoldCollectFilesReturns,
-  LibScaffoldCreateMonorepoRootAppsDirectory,
-  LibScaffoldCreateMonorepoRootCurrentDirectory,
-  LibScaffoldCreateMonorepoRootNovaConfigContent,
-  LibScaffoldCreateMonorepoRootNovaConfigPath,
-  LibScaffoldCreateMonorepoRootNovaConfigRelativePath,
-  LibScaffoldCreateMonorepoRootOutputDirectory,
-  LibScaffoldCreateMonorepoRootPackageJsonContent,
-  LibScaffoldCreateMonorepoRootPackageJsonPath,
-  LibScaffoldCreateMonorepoRootPackageJsonRelativePath,
-  LibScaffoldCreateMonorepoRootPackagesDirectory,
-  LibScaffoldCreateMonorepoRootProjectSlug,
-  LibScaffoldCreateMonorepoRootProjectTitle,
-  LibScaffoldCreateMonorepoRootReturns,
-  LibScaffoldCreateWorkspaceDirectoryBasePath,
-  LibScaffoldCreateWorkspaceDirectoryReturns,
-  LibScaffoldCreateWorkspaceDirectoryWorkspaceDirectory,
-  LibScaffoldCreateWorkspaceDirectoryWorkspaceName,
-  LibScaffoldDetectMonorepoContextCurrentWorkingDirectory,
-  LibScaffoldDetectMonorepoContextLocations,
-  LibScaffoldDetectMonorepoContextParsedPackageJson,
-  LibScaffoldDetectMonorepoContextReturns,
-  LibScaffoldLoadGeneratorAgentConventionsModule,
-  LibScaffoldLoadGeneratorDotenvModule,
-  LibScaffoldLoadGeneratorEditorconfigModule,
-  LibScaffoldLoadGeneratorFundingModule,
-  LibScaffoldLoadGeneratorGitignoreModule,
-  LibScaffoldLoadGeneratorIssueTemplateModule,
-  LibScaffoldLoadGeneratorLicenseModule,
-  LibScaffoldLoadGeneratorName,
-  LibScaffoldLoadGeneratorReadMeModule,
-  LibScaffoldLoadGeneratorReturns,
-  LibScaffoldLoadGeneratorWorkflowsModule,
-  LibScaffoldPromptPostScaffoldGeneratorsAnswers,
-  LibScaffoldPromptPostScaffoldGeneratorsCancelled,
-  LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoices,
-  LibScaffoldPromptPostScaffoldGeneratorsGeneratorModule,
-  LibScaffoldPromptPostScaffoldGeneratorsGeneratorResult,
-  LibScaffoldPromptPostScaffoldGeneratorsOriginalCwd,
-  LibScaffoldPromptPostScaffoldGeneratorsOutputDirectory,
-  LibScaffoldPromptPostScaffoldGeneratorsReturns,
-  LibScaffoldPromptPostScaffoldGeneratorsSelected,
-  LibScaffoldPromptScaffoldOptionsCancelled,
-  LibScaffoldPromptScaffoldOptionsContext,
-  LibScaffoldPromptScaffoldOptionsCurrentDirectory,
-  LibScaffoldPromptScaffoldOptionsDefaults,
-  LibScaffoldPromptScaffoldOptionsDirectoryAnswers,
-  LibScaffoldPromptScaffoldOptionsDirectoryChoice,
-  LibScaffoldPromptScaffoldOptionsDirectoryChoices,
-  LibScaffoldPromptScaffoldOptionsInitialAnswers,
-  LibScaffoldPromptScaffoldOptionsInitialPrev,
-  LibScaffoldPromptScaffoldOptionsNameValue,
-  LibScaffoldPromptScaffoldOptionsOutputAnswers,
-  LibScaffoldPromptScaffoldOptionsOutputValue,
-  LibScaffoldPromptScaffoldOptionsPromptsAnswers,
-  LibScaffoldPromptScaffoldOptionsQuestions,
-  LibScaffoldPromptScaffoldOptionsResolvedInitialWorkspaceName,
-  LibScaffoldPromptScaffoldOptionsResolvedName,
-  LibScaffoldPromptScaffoldOptionsResolvedOutput,
-  LibScaffoldPromptScaffoldOptionsResolvedOutputDirectory,
-  LibScaffoldPromptScaffoldOptionsResolvedWorkspaceName,
-  LibScaffoldPromptScaffoldOptionsReturns,
-  LibScaffoldPromptScaffoldOptionsWorkspaceNameValue,
-  LibScaffoldRegisterWorkspaceInConfigCategory,
-  LibScaffoldRegisterWorkspaceInConfigConfigFilePath,
-  LibScaffoldRegisterWorkspaceInConfigConfigName,
-  LibScaffoldRegisterWorkspaceInConfigParsedConfig,
-  LibScaffoldRegisterWorkspaceInConfigParsedWorkspaces,
-  LibScaffoldRegisterWorkspaceInConfigProject,
-  LibScaffoldRegisterWorkspaceInConfigProjectName,
-  LibScaffoldRegisterWorkspaceInConfigProjectSlug,
-  LibScaffoldRegisterWorkspaceInConfigRaw,
-  LibScaffoldRegisterWorkspaceInConfigReturns,
-  LibScaffoldRegisterWorkspaceInConfigRole,
-  LibScaffoldRegisterWorkspaceInConfigWorkspaceName,
-  LibScaffoldRegisterWorkspaceInConfigWorkspaceRelPath,
-  LibScaffoldRegisterWorkspaceInConfigWorkspaces,
-  LibScaffoldRunScaffoldCategory,
-  LibScaffoldRunScaffoldConfig,
-  LibScaffoldRunScaffoldConfigFilePath,
-  LibScaffoldRunScaffoldConfigRoot,
-  LibScaffoldRunScaffoldContext,
-  LibScaffoldRunScaffoldCurrentDirectory,
-  LibScaffoldRunScaffoldImportMetaUrl,
-  LibScaffoldRunScaffoldIsDryRun,
-  LibScaffoldRunScaffoldModePrefix,
-  LibScaffoldRunScaffoldOptions,
-  LibScaffoldRunScaffoldReturns,
-  LibScaffoldRunScaffoldTemplateDirectory,
-  LibScaffoldRunScaffoldTemplateSubpath,
-  LibScaffoldRunScaffoldTypeName,
-  LibScaffoldRunScaffoldWorkspaceDirectory,
-  LibScaffoldWriteTemplateFilesContent,
-  LibScaffoldWriteTemplateFilesCurrentDirectory,
-  LibScaffoldWriteTemplateFilesEntries,
-  LibScaffoldWriteTemplateFilesPattern,
-  LibScaffoldWriteTemplateFilesRelativePath,
-  LibScaffoldWriteTemplateFilesReplacements,
-  LibScaffoldWriteTemplateFilesReturns,
-  LibScaffoldWriteTemplateFilesSourcePath,
-  LibScaffoldWriteTemplateFilesTargetDirectory,
-  LibScaffoldWriteTemplateFilesTargetPath,
-  LibScaffoldWriteTemplateFilesTemplateDirectory,
-  LibScaffoldWriteTemplateFilesValue,
+  Lib_Scaffold_CollectFiles_Directory,
+  Lib_Scaffold_CollectFiles_Entries,
+  Lib_Scaffold_CollectFiles_EntryPath,
+  Lib_Scaffold_CollectFiles_Files,
+  Lib_Scaffold_CollectFiles_Prefix,
+  Lib_Scaffold_CollectFiles_Returns,
+  Lib_Scaffold_CreateMonorepoRoot_AppsDirectory,
+  Lib_Scaffold_CreateMonorepoRoot_CurrentDirectory,
+  Lib_Scaffold_CreateMonorepoRoot_NovaConfigContent,
+  Lib_Scaffold_CreateMonorepoRoot_NovaConfigPath,
+  Lib_Scaffold_CreateMonorepoRoot_NovaConfigRelativePath,
+  Lib_Scaffold_CreateMonorepoRoot_OutputDirectory,
+  Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent,
+  Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath,
+  Lib_Scaffold_CreateMonorepoRoot_PackageJsonRelativePath,
+  Lib_Scaffold_CreateMonorepoRoot_PackagesDirectory,
+  Lib_Scaffold_CreateMonorepoRoot_ProjectSlug,
+  Lib_Scaffold_CreateMonorepoRoot_ProjectTitle,
+  Lib_Scaffold_CreateMonorepoRoot_Returns,
+  Lib_Scaffold_CreateWorkspaceDirectory_BasePath,
+  Lib_Scaffold_CreateWorkspaceDirectory_Returns,
+  Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceDirectory,
+  Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceName,
+  Lib_Scaffold_DetectMonorepoContext_CurrentWorkingDirectory,
+  Lib_Scaffold_DetectMonorepoContext_Locations,
+  Lib_Scaffold_DetectMonorepoContext_ParsedPackageJson,
+  Lib_Scaffold_DetectMonorepoContext_Returns,
+  Lib_Scaffold_LoadGenerator_AgentConventionsModule,
+  Lib_Scaffold_LoadGenerator_DotenvModule,
+  Lib_Scaffold_LoadGenerator_EditorconfigModule,
+  Lib_Scaffold_LoadGenerator_FundingModule,
+  Lib_Scaffold_LoadGenerator_GitignoreModule,
+  Lib_Scaffold_LoadGenerator_IssueTemplateModule,
+  Lib_Scaffold_LoadGenerator_LicenseModule,
+  Lib_Scaffold_LoadGenerator_Name,
+  Lib_Scaffold_LoadGenerator_ReadMeModule,
+  Lib_Scaffold_LoadGenerator_Returns,
+  Lib_Scaffold_LoadGenerator_WorkflowsModule,
+  Lib_Scaffold_PromptPostScaffoldGenerators_Answers,
+  Lib_Scaffold_PromptPostScaffoldGenerators_Cancelled,
+  Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoices,
+  Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorModule,
+  Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult,
+  Lib_Scaffold_PromptPostScaffoldGenerators_OriginalCwd,
+  Lib_Scaffold_PromptPostScaffoldGenerators_OutputDirectory,
+  Lib_Scaffold_PromptPostScaffoldGenerators_Returns,
+  Lib_Scaffold_PromptPostScaffoldGenerators_Selected,
+  Lib_Scaffold_PromptScaffoldOptions_Cancelled,
+  Lib_Scaffold_PromptScaffoldOptions_Context,
+  Lib_Scaffold_PromptScaffoldOptions_CurrentDirectory,
+  Lib_Scaffold_PromptScaffoldOptions_Defaults,
+  Lib_Scaffold_PromptScaffoldOptions_DirectoryAnswers,
+  Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice,
+  Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices,
+  Lib_Scaffold_PromptScaffoldOptions_InitialAnswers,
+  Lib_Scaffold_PromptScaffoldOptions_InitialPrev,
+  Lib_Scaffold_PromptScaffoldOptions_NameValue,
+  Lib_Scaffold_PromptScaffoldOptions_OutputAnswers,
+  Lib_Scaffold_PromptScaffoldOptions_OutputValue,
+  Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers,
+  Lib_Scaffold_PromptScaffoldOptions_Questions,
+  Lib_Scaffold_PromptScaffoldOptions_ResolvedInitialWorkspaceName,
+  Lib_Scaffold_PromptScaffoldOptions_ResolvedName,
+  Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput,
+  Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory,
+  Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName,
+  Lib_Scaffold_PromptScaffoldOptions_Returns,
+  Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Category,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Project,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName,
+  Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Raw,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Returns,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Role,
+  Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName,
+  Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath,
+  Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces,
+  Lib_Scaffold_RunScaffold_Category,
+  Lib_Scaffold_RunScaffold_Config,
+  Lib_Scaffold_RunScaffold_ConfigFilePath,
+  Lib_Scaffold_RunScaffold_ConfigRoot,
+  Lib_Scaffold_RunScaffold_Context,
+  Lib_Scaffold_RunScaffold_CurrentDirectory,
+  Lib_Scaffold_RunScaffold_ImportMetaUrl,
+  Lib_Scaffold_RunScaffold_IsDryRun,
+  Lib_Scaffold_RunScaffold_ModePrefix,
+  Lib_Scaffold_RunScaffold_Options,
+  Lib_Scaffold_RunScaffold_Returns,
+  Lib_Scaffold_RunScaffold_TemplateDirectory,
+  Lib_Scaffold_RunScaffold_TemplateSubpath,
+  Lib_Scaffold_RunScaffold_TypeName,
+  Lib_Scaffold_RunScaffold_WorkspaceDirectory,
+  Lib_Scaffold_WriteTemplateFiles_Content,
+  Lib_Scaffold_WriteTemplateFiles_CurrentDirectory,
+  Lib_Scaffold_WriteTemplateFiles_Entries,
+  Lib_Scaffold_WriteTemplateFiles_Pattern,
+  Lib_Scaffold_WriteTemplateFiles_RelativePath,
+  Lib_Scaffold_WriteTemplateFiles_Replacements,
+  Lib_Scaffold_WriteTemplateFiles_Returns,
+  Lib_Scaffold_WriteTemplateFiles_SourcePath,
+  Lib_Scaffold_WriteTemplateFiles_TargetDirectory,
+  Lib_Scaffold_WriteTemplateFiles_TargetPath,
+  Lib_Scaffold_WriteTemplateFiles_TemplateDirectory,
+  Lib_Scaffold_WriteTemplateFiles_Value,
 } from '../types/lib/scaffold.d.ts';
 
 /**
@@ -125,14 +125,14 @@ import type {
  * Walks backward from the current directory to find package.json files and determines
  * whether this is a monorepo root, a nested workspace, or standalone.
  *
- * @param {LibScaffoldDetectMonorepoContextCurrentWorkingDirectory} currentWorkingDirectory - Current working directory.
+ * @param {Lib_Scaffold_DetectMonorepoContext_CurrentWorkingDirectory} currentWorkingDirectory - Current working directory.
  *
- * @returns {LibScaffoldDetectMonorepoContextReturns}
+ * @returns {Lib_Scaffold_DetectMonorepoContext_Returns}
  *
  * @since 0.15.0
  */
-export async function detectMonorepoContext(currentWorkingDirectory: LibScaffoldDetectMonorepoContextCurrentWorkingDirectory): LibScaffoldDetectMonorepoContextReturns {
-  const locations: LibScaffoldDetectMonorepoContextLocations = await discoverPathsWithFile('package.json', 'backward');
+export async function detectMonorepoContext(currentWorkingDirectory: Lib_Scaffold_DetectMonorepoContext_CurrentWorkingDirectory): Lib_Scaffold_DetectMonorepoContext_Returns {
+  const locations: Lib_Scaffold_DetectMonorepoContext_Locations = await discoverPathsWithFile('package.json', 'backward');
 
   // No package.json found anywhere - safe to create a new monorepo.
   if (locations.length === 0) {
@@ -151,7 +151,7 @@ export async function detectMonorepoContext(currentWorkingDirectory: LibScaffold
   }
 
   // Package.json is in currentWorkingDirectory - check for workspaces field.
-  const parsedPackageJson: LibScaffoldDetectMonorepoContextParsedPackageJson = JSON.parse(await fs.readFile(join(currentWorkingDirectory, 'package.json'), 'utf-8'));
+  const parsedPackageJson: Lib_Scaffold_DetectMonorepoContext_ParsedPackageJson = JSON.parse(await fs.readFile(join(currentWorkingDirectory, 'package.json'), 'utf-8'));
 
   if (parsedPackageJson['workspaces'] !== undefined) {
     return {
@@ -168,25 +168,25 @@ export async function detectMonorepoContext(currentWorkingDirectory: LibScaffold
  * Collects project name, workspace name, and output directory through interactive
  * prompts. Adapts the question flow based on monorepo or workspace mode.
  *
- * @param {LibScaffoldPromptScaffoldOptionsContext}  context  - Context.
- * @param {LibScaffoldPromptScaffoldOptionsDefaults} defaults - Defaults.
+ * @param {Lib_Scaffold_PromptScaffoldOptions_Context}  context  - Context.
+ * @param {Lib_Scaffold_PromptScaffoldOptions_Defaults} defaults - Defaults.
  *
- * @returns {LibScaffoldPromptScaffoldOptionsReturns}
+ * @returns {Lib_Scaffold_PromptScaffoldOptions_Returns}
  *
  * @since 0.15.0
  */
-export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOptionsContext, defaults: LibScaffoldPromptScaffoldOptionsDefaults): LibScaffoldPromptScaffoldOptionsReturns {
-  const currentDirectory: LibScaffoldPromptScaffoldOptionsCurrentDirectory = process.cwd();
+export async function promptScaffoldOptions(context: Lib_Scaffold_PromptScaffoldOptions_Context, defaults: Lib_Scaffold_PromptScaffoldOptions_Defaults): Lib_Scaffold_PromptScaffoldOptions_Returns {
+  const currentDirectory: Lib_Scaffold_PromptScaffoldOptions_CurrentDirectory = process.cwd();
 
-  let cancelled: LibScaffoldPromptScaffoldOptionsCancelled = false;
+  let cancelled: Lib_Scaffold_PromptScaffoldOptions_Cancelled = false;
 
   if (context['context'] === 'monorepo') {
     // Monorepo mode - prompt for project name, workspace name, and output directory.
-    const nameValue: LibScaffoldPromptScaffoldOptionsNameValue = defaults['name'] ?? undefined;
-    const outputValue: LibScaffoldPromptScaffoldOptionsOutputValue = defaults['output'] ?? undefined;
-    const workspaceNameValue: LibScaffoldPromptScaffoldOptionsWorkspaceNameValue = defaults['workspaceName'] ?? undefined;
+    const nameValue: Lib_Scaffold_PromptScaffoldOptions_NameValue = defaults['name'] ?? undefined;
+    const outputValue: Lib_Scaffold_PromptScaffoldOptions_OutputValue = defaults['output'] ?? undefined;
+    const workspaceNameValue: Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue = defaults['workspaceName'] ?? undefined;
 
-    const questions: LibScaffoldPromptScaffoldOptionsQuestions = [];
+    const questions: Lib_Scaffold_PromptScaffoldOptions_Questions = [];
 
     if (nameValue === undefined) {
       questions.push({
@@ -206,7 +206,7 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
       });
     }
 
-    const answers: LibScaffoldPromptScaffoldOptionsPromptsAnswers = await prompts(questions, {
+    const answers: Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = await prompts(questions, {
       onCancel: () => false,
     });
 
@@ -222,12 +222,12 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
       return undefined;
     }
 
-    const resolvedName: LibScaffoldPromptScaffoldOptionsResolvedName = (nameValue ?? answers['name']) as LibScaffoldPromptScaffoldOptionsResolvedName;
-    const resolvedWorkspaceName: LibScaffoldPromptScaffoldOptionsResolvedWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as LibScaffoldPromptScaffoldOptionsResolvedWorkspaceName;
+    const resolvedName: Lib_Scaffold_PromptScaffoldOptions_ResolvedName = (nameValue ?? answers['name']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedName;
+    const resolvedWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName;
 
     // Early return if --output is provided.
     if (outputValue !== undefined) {
-      const resolvedOutputDirectory: LibScaffoldPromptScaffoldOptionsResolvedOutputDirectory = resolve(currentDirectory, outputValue);
+      const resolvedOutputDirectory: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory = resolve(currentDirectory, outputValue);
 
       return {
         mode: 'monorepo',
@@ -238,7 +238,7 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
     }
 
     // Prompt for directory choice.
-    const directoryChoices: LibScaffoldPromptScaffoldOptionsDirectoryChoices = [
+    const directoryChoices: Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices = [
       {
         title: 'Create a new directory',
         value: 'new-directory',
@@ -249,7 +249,7 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
       },
     ];
 
-    const directoryAnswers: LibScaffoldPromptScaffoldOptionsDirectoryAnswers = await prompts({
+    const directoryAnswers: Lib_Scaffold_PromptScaffoldOptions_DirectoryAnswers = await prompts({
       type: 'select',
       name: 'directoryChoice',
       message: 'Where should the project be created?',
@@ -267,7 +267,7 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
       return undefined;
     }
 
-    const directoryChoice: LibScaffoldPromptScaffoldOptionsDirectoryChoice = directoryAnswers['directoryChoice'] as LibScaffoldPromptScaffoldOptionsDirectoryChoice;
+    const directoryChoice: Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice = directoryAnswers['directoryChoice'] as Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice;
 
     if (directoryChoice === 'current-directory') {
       return {
@@ -279,7 +279,7 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
     }
 
     // Prompt for output directory path.
-    const outputAnswers: LibScaffoldPromptScaffoldOptionsOutputAnswers = await prompts({
+    const outputAnswers: Lib_Scaffold_PromptScaffoldOptions_OutputAnswers = await prompts({
       type: 'text',
       name: 'output',
       message: 'Output directory:',
@@ -296,7 +296,7 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
       return undefined;
     }
 
-    const resolvedOutput: LibScaffoldPromptScaffoldOptionsResolvedOutput = outputAnswers['output'] as LibScaffoldPromptScaffoldOptionsResolvedOutput;
+    const resolvedOutput: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput = outputAnswers['output'] as Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput;
 
     return {
       mode: 'monorepo',
@@ -307,11 +307,11 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
   }
 
   // Workspace mode - prompt for package name, workspace name, and output directory.
-  const nameValue: LibScaffoldPromptScaffoldOptionsNameValue = defaults['name'] ?? undefined;
-  const outputValue: LibScaffoldPromptScaffoldOptionsOutputValue = defaults['output'] ?? undefined;
-  const workspaceNameValue: LibScaffoldPromptScaffoldOptionsWorkspaceNameValue = defaults['workspaceName'] ?? undefined;
+  const nameValue: Lib_Scaffold_PromptScaffoldOptions_NameValue = defaults['name'] ?? undefined;
+  const outputValue: Lib_Scaffold_PromptScaffoldOptions_OutputValue = defaults['output'] ?? undefined;
+  const workspaceNameValue: Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue = defaults['workspaceName'] ?? undefined;
 
-  const questions: LibScaffoldPromptScaffoldOptionsQuestions = [];
+  const questions: Lib_Scaffold_PromptScaffoldOptions_Questions = [];
 
   if (nameValue === undefined) {
     questions.push({
@@ -336,15 +336,15 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
       type: 'text' as const,
       name: 'output',
       message: 'Output directory:',
-      initial: (_prev: LibScaffoldPromptScaffoldOptionsInitialPrev, answers: LibScaffoldPromptScaffoldOptionsInitialAnswers) => {
-        const resolvedInitialWorkspaceName: LibScaffoldPromptScaffoldOptionsResolvedInitialWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as LibScaffoldPromptScaffoldOptionsResolvedInitialWorkspaceName;
+      initial: (_prev: Lib_Scaffold_PromptScaffoldOptions_InitialPrev, answers: Lib_Scaffold_PromptScaffoldOptions_InitialAnswers) => {
+        const resolvedInitialWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolvedInitialWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedInitialWorkspaceName;
 
         return `./apps/${resolvedInitialWorkspaceName}`;
       },
     });
   }
 
-  const answers: LibScaffoldPromptScaffoldOptionsPromptsAnswers = await prompts(questions, {
+  const answers: Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = await prompts(questions, {
     onCancel: () => false,
   });
 
@@ -364,9 +364,9 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
     return undefined;
   }
 
-  const resolvedName: LibScaffoldPromptScaffoldOptionsResolvedName = (nameValue ?? answers['name']) as LibScaffoldPromptScaffoldOptionsResolvedName;
-  const resolvedWorkspaceName: LibScaffoldPromptScaffoldOptionsResolvedWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as LibScaffoldPromptScaffoldOptionsResolvedWorkspaceName;
-  const resolvedOutput: LibScaffoldPromptScaffoldOptionsResolvedOutput = (outputValue ?? answers['output']) as LibScaffoldPromptScaffoldOptionsResolvedOutput;
+  const resolvedName: Lib_Scaffold_PromptScaffoldOptions_ResolvedName = (nameValue ?? answers['name']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedName;
+  const resolvedWorkspaceName: Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName = (workspaceNameValue ?? answers['workspaceName']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName;
+  const resolvedOutput: Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput = (outputValue ?? answers['output']) as Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput;
 
   return {
     mode: 'workspace',
@@ -382,15 +382,15 @@ export async function promptScaffoldOptions(context: LibScaffoldPromptScaffoldOp
  * Creates the target directory for a new workspace under the given base path using
  * the workspace name as the folder name.
  *
- * @param {LibScaffoldCreateWorkspaceDirectoryBasePath}      basePath      - Base path.
- * @param {LibScaffoldCreateWorkspaceDirectoryWorkspaceName} workspaceName - Workspace name.
+ * @param {Lib_Scaffold_CreateWorkspaceDirectory_BasePath}      basePath      - Base path.
+ * @param {Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceName} workspaceName - Workspace name.
  *
- * @returns {LibScaffoldCreateWorkspaceDirectoryReturns}
+ * @returns {Lib_Scaffold_CreateWorkspaceDirectory_Returns}
  *
  * @since 0.15.0
  */
-export async function createWorkspaceDirectory(basePath: LibScaffoldCreateWorkspaceDirectoryBasePath, workspaceName: LibScaffoldCreateWorkspaceDirectoryWorkspaceName): LibScaffoldCreateWorkspaceDirectoryReturns {
-  const workspaceDirectory: LibScaffoldCreateWorkspaceDirectoryWorkspaceDirectory = join(basePath, workspaceName);
+export async function createWorkspaceDirectory(basePath: Lib_Scaffold_CreateWorkspaceDirectory_BasePath, workspaceName: Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceName): Lib_Scaffold_CreateWorkspaceDirectory_Returns {
+  const workspaceDirectory: Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceDirectory = join(basePath, workspaceName);
 
   await fs.mkdir(workspaceDirectory, { recursive: true });
 
@@ -408,35 +408,35 @@ export async function createWorkspaceDirectory(basePath: LibScaffoldCreateWorksp
  * Reads every file from the template directory, applies placeholder replacements,
  * and writes the results into the target directory using saveGeneratedFile.
  *
- * @param {LibScaffoldWriteTemplateFilesTemplateDirectory} templateDirectory - Template directory.
- * @param {LibScaffoldWriteTemplateFilesTargetDirectory}   targetDirectory   - Target directory.
- * @param {LibScaffoldWriteTemplateFilesReplacements}      replacements      - Replacements.
+ * @param {Lib_Scaffold_WriteTemplateFiles_TemplateDirectory} templateDirectory - Template directory.
+ * @param {Lib_Scaffold_WriteTemplateFiles_TargetDirectory}   targetDirectory   - Target directory.
+ * @param {Lib_Scaffold_WriteTemplateFiles_Replacements}      replacements      - Replacements.
  *
- * @returns {LibScaffoldWriteTemplateFilesReturns}
+ * @returns {Lib_Scaffold_WriteTemplateFiles_Returns}
  *
  * @since 0.15.0
  */
-export async function writeTemplateFiles(templateDirectory: LibScaffoldWriteTemplateFilesTemplateDirectory, targetDirectory: LibScaffoldWriteTemplateFilesTargetDirectory, replacements: LibScaffoldWriteTemplateFilesReplacements): LibScaffoldWriteTemplateFilesReturns {
-  const currentDirectory: LibScaffoldWriteTemplateFilesCurrentDirectory = process.cwd();
-  const entries: LibScaffoldWriteTemplateFilesEntries = await collectFiles(templateDirectory, '');
+export async function writeTemplateFiles(templateDirectory: Lib_Scaffold_WriteTemplateFiles_TemplateDirectory, targetDirectory: Lib_Scaffold_WriteTemplateFiles_TargetDirectory, replacements: Lib_Scaffold_WriteTemplateFiles_Replacements): Lib_Scaffold_WriteTemplateFiles_Returns {
+  const currentDirectory: Lib_Scaffold_WriteTemplateFiles_CurrentDirectory = process.cwd();
+  const entries: Lib_Scaffold_WriteTemplateFiles_Entries = await collectFiles(templateDirectory, '');
 
   for (const entry of entries) {
-    const sourcePath: LibScaffoldWriteTemplateFilesSourcePath = join(templateDirectory, entry);
-    const targetPath: LibScaffoldWriteTemplateFilesTargetPath = join(targetDirectory, entry);
+    const sourcePath: Lib_Scaffold_WriteTemplateFiles_SourcePath = join(templateDirectory, entry);
+    const targetPath: Lib_Scaffold_WriteTemplateFiles_TargetPath = join(targetDirectory, entry);
 
-    let content: LibScaffoldWriteTemplateFilesContent = await fs.readFile(sourcePath, 'utf-8');
+    let content: Lib_Scaffold_WriteTemplateFiles_Content = await fs.readFile(sourcePath, 'utf-8');
 
     // Apply placeholder replacements.
     for (const replacement of replacements) {
-      const pattern: LibScaffoldWriteTemplateFilesPattern = replacement[0];
-      const value: LibScaffoldWriteTemplateFilesValue = replacement[1];
+      const pattern: Lib_Scaffold_WriteTemplateFiles_Pattern = replacement[0];
+      const value: Lib_Scaffold_WriteTemplateFiles_Value = replacement[1];
 
       content = content.replace(new RegExp(pattern.source, 'g'), value);
     }
 
     await saveGeneratedFile(targetPath, content, true);
 
-    const relativePath: LibScaffoldWriteTemplateFilesRelativePath = relative(currentDirectory, targetPath);
+    const relativePath: Lib_Scaffold_WriteTemplateFiles_RelativePath = relative(currentDirectory, targetPath);
 
     Logger.customize({
       name: 'writeTemplateFiles',
@@ -453,18 +453,18 @@ export async function writeTemplateFiles(templateDirectory: LibScaffoldWriteTemp
  * Recursively lists all files in a template directory while skipping the .novaignore
  * marker used by workspace discovery.
  *
- * @param {LibScaffoldCollectFilesDirectory} directory - Directory.
- * @param {LibScaffoldCollectFilesPrefix}    prefix    - Prefix.
+ * @param {Lib_Scaffold_CollectFiles_Directory} directory - Directory.
+ * @param {Lib_Scaffold_CollectFiles_Prefix}    prefix    - Prefix.
  *
  * @private
  *
- * @returns {LibScaffoldCollectFilesReturns}
+ * @returns {Lib_Scaffold_CollectFiles_Returns}
  *
  * @since 0.15.0
  */
-async function collectFiles(directory: LibScaffoldCollectFilesDirectory, prefix: LibScaffoldCollectFilesPrefix): LibScaffoldCollectFilesReturns {
-  const entries: LibScaffoldCollectFilesEntries = await fs.readdir(directory, { withFileTypes: true });
-  const files: LibScaffoldCollectFilesFiles = [];
+async function collectFiles(directory: Lib_Scaffold_CollectFiles_Directory, prefix: Lib_Scaffold_CollectFiles_Prefix): Lib_Scaffold_CollectFiles_Returns {
+  const entries: Lib_Scaffold_CollectFiles_Entries = await fs.readdir(directory, { withFileTypes: true });
+  const files: Lib_Scaffold_CollectFiles_Files = [];
 
   for (const entry of entries) {
     // Skip the ignore marker used by workspace discovery.
@@ -472,7 +472,7 @@ async function collectFiles(directory: LibScaffoldCollectFilesDirectory, prefix:
       continue;
     }
 
-    const entryPath: LibScaffoldCollectFilesEntryPath = (prefix === '') ? entry.name : `${prefix}/${entry.name}`;
+    const entryPath: Lib_Scaffold_CollectFiles_EntryPath = (prefix === '') ? entry.name : `${prefix}/${entry.name}`;
 
     if (entry.isDirectory() === true) {
       files.push(...await collectFiles(join(directory, entry.name), entryPath));
@@ -490,28 +490,28 @@ async function collectFiles(directory: LibScaffoldCollectFilesDirectory, prefix:
  * Generates the top-level monorepo structure with apps and packages directories, a root
  * package.json with workspaces, and a baseline nova.config.json for the project.
  *
- * @param {LibScaffoldCreateMonorepoRootOutputDirectory} outputDirectory - Output directory.
- * @param {LibScaffoldCreateMonorepoRootProjectSlug}     projectSlug     - Project slug.
+ * @param {Lib_Scaffold_CreateMonorepoRoot_OutputDirectory} outputDirectory - Output directory.
+ * @param {Lib_Scaffold_CreateMonorepoRoot_ProjectSlug}     projectSlug     - Project slug.
  *
- * @returns {LibScaffoldCreateMonorepoRootReturns}
+ * @returns {Lib_Scaffold_CreateMonorepoRoot_Returns}
  *
  * @since 0.15.0
  */
-export async function createMonorepoRoot(outputDirectory: LibScaffoldCreateMonorepoRootOutputDirectory, projectSlug: LibScaffoldCreateMonorepoRootProjectSlug): LibScaffoldCreateMonorepoRootReturns {
-  const currentDirectory: LibScaffoldCreateMonorepoRootCurrentDirectory = process.cwd();
+export async function createMonorepoRoot(outputDirectory: Lib_Scaffold_CreateMonorepoRoot_OutputDirectory, projectSlug: Lib_Scaffold_CreateMonorepoRoot_ProjectSlug): Lib_Scaffold_CreateMonorepoRoot_Returns {
+  const currentDirectory: Lib_Scaffold_CreateMonorepoRoot_CurrentDirectory = process.cwd();
 
   await fs.mkdir(outputDirectory, { recursive: true });
 
-  const appsDirectory: LibScaffoldCreateMonorepoRootAppsDirectory = join(outputDirectory, 'apps');
+  const appsDirectory: Lib_Scaffold_CreateMonorepoRoot_AppsDirectory = join(outputDirectory, 'apps');
 
   await fs.mkdir(appsDirectory, { recursive: true });
 
-  const packagesDirectory: LibScaffoldCreateMonorepoRootPackagesDirectory = join(outputDirectory, 'packages');
+  const packagesDirectory: Lib_Scaffold_CreateMonorepoRoot_PackagesDirectory = join(outputDirectory, 'packages');
 
   await fs.mkdir(packagesDirectory, { recursive: true });
 
   // Create root package.json.
-  const packageJsonContent: LibScaffoldCreateMonorepoRootPackageJsonContent = {
+  const packageJsonContent: Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent = {
     name: `${projectSlug}-project`,
     version: '0.0.0',
     private: true,
@@ -527,11 +527,11 @@ export async function createMonorepoRoot(outputDirectory: LibScaffoldCreateMonor
     },
   };
 
-  const packageJsonPath: LibScaffoldCreateMonorepoRootPackageJsonPath = join(outputDirectory, 'package.json');
+  const packageJsonPath: Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath = join(outputDirectory, 'package.json');
 
   await fs.writeFile(packageJsonPath, `${JSON.stringify(packageJsonContent, null, 2)}\n`, 'utf-8');
 
-  const packageJsonRelativePath: LibScaffoldCreateMonorepoRootPackageJsonRelativePath = relative(currentDirectory, packageJsonPath);
+  const packageJsonRelativePath: Lib_Scaffold_CreateMonorepoRoot_PackageJsonRelativePath = relative(currentDirectory, packageJsonPath);
 
   Logger.customize({
     name: 'createMonorepoRoot',
@@ -539,12 +539,12 @@ export async function createMonorepoRoot(outputDirectory: LibScaffoldCreateMonor
   }).info(`Created "${packageJsonRelativePath}".`);
 
   // Create baseline nova.config.json.
-  const projectTitle: LibScaffoldCreateMonorepoRootProjectTitle = projectSlug
+  const projectTitle: Lib_Scaffold_CreateMonorepoRoot_ProjectTitle = projectSlug
     .split('-')
     .map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
     .join(' ');
 
-  const novaConfigContent: LibScaffoldCreateMonorepoRootNovaConfigContent = {
+  const novaConfigContent: Lib_Scaffold_CreateMonorepoRoot_NovaConfigContent = {
     project: {
       name: {
         slug: projectSlug,
@@ -560,11 +560,11 @@ export async function createMonorepoRoot(outputDirectory: LibScaffoldCreateMonor
     },
   };
 
-  const novaConfigPath: LibScaffoldCreateMonorepoRootNovaConfigPath = join(outputDirectory, 'nova.config.json');
+  const novaConfigPath: Lib_Scaffold_CreateMonorepoRoot_NovaConfigPath = join(outputDirectory, 'nova.config.json');
 
   await fs.writeFile(novaConfigPath, `${JSON.stringify(novaConfigContent, null, 2)}\n`, 'utf-8');
 
-  const novaConfigRelativePath: LibScaffoldCreateMonorepoRootNovaConfigRelativePath = relative(currentDirectory, novaConfigPath);
+  const novaConfigRelativePath: Lib_Scaffold_CreateMonorepoRoot_NovaConfigRelativePath = relative(currentDirectory, novaConfigPath);
 
   Logger.customize({
     name: 'createMonorepoRoot',
@@ -580,16 +580,16 @@ export async function createMonorepoRoot(outputDirectory: LibScaffoldCreateMonor
  * Presents a multi-select prompt after scaffolding completes so the user can run
  * generators like editorconfig, gitignore, license, and workflows.
  *
- * @param {LibScaffoldPromptPostScaffoldGeneratorsOutputDirectory} outputDirectory - Output directory.
+ * @param {Lib_Scaffold_PromptPostScaffoldGenerators_OutputDirectory} outputDirectory - Output directory.
  *
- * @returns {LibScaffoldPromptPostScaffoldGeneratorsReturns}
+ * @returns {Lib_Scaffold_PromptPostScaffoldGenerators_Returns}
  *
  * @since 0.15.0
  */
-export async function promptPostScaffoldGenerators(outputDirectory: LibScaffoldPromptPostScaffoldGeneratorsOutputDirectory): LibScaffoldPromptPostScaffoldGeneratorsReturns {
-  let cancelled: LibScaffoldPromptPostScaffoldGeneratorsCancelled = false;
+export async function promptPostScaffoldGenerators(outputDirectory: Lib_Scaffold_PromptPostScaffoldGenerators_OutputDirectory): Lib_Scaffold_PromptPostScaffoldGenerators_Returns {
+  let cancelled: Lib_Scaffold_PromptPostScaffoldGenerators_Cancelled = false;
 
-  const generatorChoices: LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoices = [
+  const generatorChoices: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoices = [
     {
       title: 'editorconfig', description: 'Consistent coding styles across editors', value: 'editorconfig',
     },
@@ -619,7 +619,7 @@ export async function promptPostScaffoldGenerators(outputDirectory: LibScaffoldP
     },
   ];
 
-  const answers: LibScaffoldPromptPostScaffoldGeneratorsAnswers = await prompts({
+  const answers: Lib_Scaffold_PromptPostScaffoldGenerators_Answers = await prompts({
     type: 'multiselect',
     name: 'generators',
     message: 'Run generators? (space to select, enter to confirm)',
@@ -637,7 +637,7 @@ export async function promptPostScaffoldGenerators(outputDirectory: LibScaffoldP
     return;
   }
 
-  const selected: LibScaffoldPromptPostScaffoldGeneratorsSelected = answers['generators'] as LibScaffoldPromptPostScaffoldGeneratorsSelected;
+  const selected: Lib_Scaffold_PromptPostScaffoldGenerators_Selected = answers['generators'] as Lib_Scaffold_PromptPostScaffoldGenerators_Selected;
 
   if (selected.length === 0) {
     Logger.customize({
@@ -649,7 +649,7 @@ export async function promptPostScaffoldGenerators(outputDirectory: LibScaffoldP
   }
 
   // Change to the scaffolded directory and run selected generators.
-  const originalCwd: LibScaffoldPromptPostScaffoldGeneratorsOriginalCwd = process.cwd();
+  const originalCwd: Lib_Scaffold_PromptPostScaffoldGenerators_OriginalCwd = process.cwd();
 
   process.chdir(outputDirectory);
 
@@ -660,10 +660,10 @@ export async function promptPostScaffoldGenerators(outputDirectory: LibScaffoldP
     }).info(`Running generator "${generatorName}" ...`);
 
     try {
-      const generatorModule: LibScaffoldPromptPostScaffoldGeneratorsGeneratorModule = await loadGenerator(generatorName);
+      const generatorModule: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorModule = await loadGenerator(generatorName);
 
       if (generatorModule !== undefined) {
-        const generatorResult: LibScaffoldPromptPostScaffoldGeneratorsGeneratorResult = await generatorModule({ replaceFile: true });
+        const generatorResult: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult = await generatorModule({ replaceFile: true });
 
         if (generatorResult === 'cancelled') {
           Logger.customize({
@@ -698,68 +698,68 @@ export async function promptPostScaffoldGenerators(outputDirectory: LibScaffoldP
  * Dynamically imports a generator module by name and returns a callback
  * that invokes its run method. Called by promptPostScaffoldGenerators.
  *
- * @param {LibScaffoldLoadGeneratorName} name - Name.
+ * @param {Lib_Scaffold_LoadGenerator_Name} name - Name.
  *
  * @private
  *
- * @returns {LibScaffoldLoadGeneratorReturns}
+ * @returns {Lib_Scaffold_LoadGenerator_Returns}
  *
  * @since 0.15.0
  */
-async function loadGenerator(name: LibScaffoldLoadGeneratorName): LibScaffoldLoadGeneratorReturns {
+async function loadGenerator(name: Lib_Scaffold_LoadGenerator_Name): Lib_Scaffold_LoadGenerator_Returns {
   switch (name) {
     case 'editorconfig': {
-      const editorconfigModule: LibScaffoldLoadGeneratorEditorconfigModule = await import('../cli/generate/must-haves/editorconfig.js');
+      const editorconfigModule: Lib_Scaffold_LoadGenerator_EditorconfigModule = await import('../cli/generate/must-haves/editorconfig.js');
 
-      return (options) => editorconfigModule['CliGenerateMustHavesEditorconfig'].run(options);
+      return (options) => editorconfigModule['Runner'].run(options);
     }
 
     case 'gitignore': {
-      const gitignoreModule: LibScaffoldLoadGeneratorGitignoreModule = await import('../cli/generate/must-haves/gitignore.js');
+      const gitignoreModule: Lib_Scaffold_LoadGenerator_GitignoreModule = await import('../cli/generate/must-haves/gitignore.js');
 
-      return (options) => gitignoreModule['CliGenerateMustHavesGitignore'].run(options);
+      return (options) => gitignoreModule['Runner'].run(options);
     }
 
     case 'dotenv': {
-      const dotenvModule: LibScaffoldLoadGeneratorDotenvModule = await import('../cli/generate/must-haves/dotenv.js');
+      const dotenvModule: Lib_Scaffold_LoadGenerator_DotenvModule = await import('../cli/generate/must-haves/dotenv.js');
 
-      return (options) => dotenvModule['CliGenerateMustHavesDotenv'].run(options);
+      return (options) => dotenvModule['Runner'].run(options);
     }
 
     case 'license': {
-      const licenseModule: LibScaffoldLoadGeneratorLicenseModule = await import('../cli/generate/must-haves/license.js');
+      const licenseModule: Lib_Scaffold_LoadGenerator_LicenseModule = await import('../cli/generate/must-haves/license.js');
 
-      return (options) => licenseModule['CliGenerateMustHavesLicense'].run(options);
+      return (options) => licenseModule['Runner'].run(options);
     }
 
     case 'read-me': {
-      const readMeModule: LibScaffoldLoadGeneratorReadMeModule = await import('../cli/generate/must-haves/read-me.js');
+      const readMeModule: Lib_Scaffold_LoadGenerator_ReadMeModule = await import('../cli/generate/must-haves/read-me.js');
 
-      return (options) => readMeModule['CliGenerateMustHavesReadMe'].run(options);
+      return (options) => readMeModule['Runner'].run(options);
     }
 
     case 'agent-conventions': {
-      const agentConventionsModule: LibScaffoldLoadGeneratorAgentConventionsModule = await import('../cli/generate/must-haves/agent-conventions.js');
+      const agentConventionsModule: Lib_Scaffold_LoadGenerator_AgentConventionsModule = await import('../cli/generate/must-haves/agent-conventions.js');
 
-      return (options) => agentConventionsModule['CliGenerateMustHavesAgentConventions'].run(options);
+      return (options) => agentConventionsModule['Runner'].run(options);
     }
 
     case 'funding': {
-      const fundingModule: LibScaffoldLoadGeneratorFundingModule = await import('../cli/generate/github/funding.js');
+      const fundingModule: Lib_Scaffold_LoadGenerator_FundingModule = await import('../cli/generate/github/funding.js');
 
-      return (options) => fundingModule['CliGenerateGithubFunding'].run(options);
+      return (options) => fundingModule['Runner'].run(options);
     }
 
     case 'issue-template': {
-      const issueTemplateModule: LibScaffoldLoadGeneratorIssueTemplateModule = await import('../cli/generate/github/issue-template.js');
+      const issueTemplateModule: Lib_Scaffold_LoadGenerator_IssueTemplateModule = await import('../cli/generate/github/issue-template.js');
 
-      return (options) => issueTemplateModule['CliGenerateGithubIssueTemplate'].run(options);
+      return (options) => issueTemplateModule['Runner'].run(options);
     }
 
     case 'workflows': {
-      const workflowsModule: LibScaffoldLoadGeneratorWorkflowsModule = await import('../cli/generate/github/workflows.js');
+      const workflowsModule: Lib_Scaffold_LoadGenerator_WorkflowsModule = await import('../cli/generate/github/workflows.js');
 
-      return (options) => workflowsModule['CliGenerateGithubWorkflows'].run(options);
+      return (options) => workflowsModule['Runner'].run(options);
     }
 
     default: {
@@ -779,22 +779,22 @@ async function loadGenerator(name: LibScaffoldLoadGeneratorName): LibScaffoldLoa
  * Adds a workspace entry to nova.config.json so the CLI recognizes the new workspace for
  * recipes, generators, and other project-wide operations.
  *
- * @param {LibScaffoldRegisterWorkspaceInConfigConfigFilePath}   configFilePath   - Config file path.
- * @param {LibScaffoldRegisterWorkspaceInConfigWorkspaceRelPath} workspaceRelPath - Workspace rel path.
- * @param {LibScaffoldRegisterWorkspaceInConfigWorkspaceName}    workspaceName    - Workspace name.
- * @param {LibScaffoldRegisterWorkspaceInConfigCategory}         category         - Category.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath}   configFilePath   - Config file path.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath} workspaceRelPath - Workspace rel path.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName}    workspaceName    - Workspace name.
+ * @param {Lib_Scaffold_RegisterWorkspaceInConfig_Category}         category         - Category.
  *
- * @returns {LibScaffoldRegisterWorkspaceInConfigReturns}
+ * @returns {Lib_Scaffold_RegisterWorkspaceInConfig_Returns}
  *
  * @since 0.15.0
  */
-export async function registerWorkspaceInConfig(configFilePath: LibScaffoldRegisterWorkspaceInConfigConfigFilePath, workspaceRelPath: LibScaffoldRegisterWorkspaceInConfigWorkspaceRelPath, workspaceName: LibScaffoldRegisterWorkspaceInConfigWorkspaceName, category: LibScaffoldRegisterWorkspaceInConfigCategory): LibScaffoldRegisterWorkspaceInConfigReturns {
-  let parsedConfig: LibScaffoldRegisterWorkspaceInConfigParsedConfig = undefined;
+export async function registerWorkspaceInConfig(configFilePath: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath, workspaceRelPath: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath, workspaceName: Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName, category: Lib_Scaffold_RegisterWorkspaceInConfig_Category): Lib_Scaffold_RegisterWorkspaceInConfig_Returns {
+  let parsedConfig: Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = undefined;
 
   try {
-    const raw: LibScaffoldRegisterWorkspaceInConfigRaw = await fs.readFile(configFilePath, 'utf-8');
+    const raw: Lib_Scaffold_RegisterWorkspaceInConfig_Raw = await fs.readFile(configFilePath, 'utf-8');
 
-    parsedConfig = JSON.parse(raw) as LibScaffoldRegisterWorkspaceInConfigParsedConfig;
+    parsedConfig = JSON.parse(raw) as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig;
   } catch {
     Logger.customize({
       name: 'registerWorkspaceInConfig',
@@ -809,9 +809,9 @@ export async function registerWorkspaceInConfig(configFilePath: LibScaffoldRegis
   }
 
   // Get project slug from config.
-  const project: LibScaffoldRegisterWorkspaceInConfigProject = parsedConfig['project'] as LibScaffoldRegisterWorkspaceInConfigProject;
-  const projectName: LibScaffoldRegisterWorkspaceInConfigProjectName = (project !== undefined) ? project['name'] as LibScaffoldRegisterWorkspaceInConfigProjectName : undefined;
-  const projectSlug: LibScaffoldRegisterWorkspaceInConfigProjectSlug = (projectName !== undefined) ? projectName['slug'] as LibScaffoldRegisterWorkspaceInConfigProjectSlug : undefined;
+  const project: Lib_Scaffold_RegisterWorkspaceInConfig_Project = parsedConfig['project'] as Lib_Scaffold_RegisterWorkspaceInConfig_Project;
+  const projectName: Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName = (project !== undefined) ? project['name'] as Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName : undefined;
+  const projectSlug: Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug = (projectName !== undefined) ? projectName['slug'] as Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug : undefined;
 
   if (projectSlug === undefined) {
     Logger.customize({
@@ -823,11 +823,11 @@ export async function registerWorkspaceInConfig(configFilePath: LibScaffoldRegis
   }
 
   // Determine role and config name based on category.
-  const role: LibScaffoldRegisterWorkspaceInConfigRole = (category === 'docs') ? 'docs' : 'app';
-  const configName: LibScaffoldRegisterWorkspaceInConfigConfigName = (role === 'docs') ? `${projectSlug}-docs` : `${projectSlug}-app-${workspaceName}`;
+  const role: Lib_Scaffold_RegisterWorkspaceInConfig_Role = (category === 'docs') ? 'docs' : 'app';
+  const configName: Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = (role === 'docs') ? `${projectSlug}-docs` : `${projectSlug}-app-${workspaceName}`;
 
   // Add workspace entry.
-  const workspaces: LibScaffoldRegisterWorkspaceInConfigWorkspaces = (parsedConfig['workspaces'] as LibScaffoldRegisterWorkspaceInConfigParsedWorkspaces) ?? {};
+  const workspaces: Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = (parsedConfig['workspaces'] as Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces) ?? {};
 
   Reflect.set(workspaces, workspaceRelPath, {
     name: configName,
@@ -854,19 +854,19 @@ export async function registerWorkspaceInConfig(configFilePath: LibScaffoldRegis
  * Orchestrates the full scaffold workflow: detects context, prompts for options,
  * writes template files, registers the workspace, and runs generators.
  *
- * @param {LibScaffoldRunScaffoldOptions}         options         - Options.
- * @param {LibScaffoldRunScaffoldCategory}        category        - Category.
- * @param {LibScaffoldRunScaffoldTypeName}        typeName        - Type name.
- * @param {LibScaffoldRunScaffoldTemplateSubpath} templateSubpath - Template subpath.
- * @param {LibScaffoldRunScaffoldImportMetaUrl}   importMetaUrl   - Import meta url.
+ * @param {Lib_Scaffold_RunScaffold_Options}         options         - Options.
+ * @param {Lib_Scaffold_RunScaffold_Category}        category        - Category.
+ * @param {Lib_Scaffold_RunScaffold_TypeName}        typeName        - Type name.
+ * @param {Lib_Scaffold_RunScaffold_TemplateSubpath} templateSubpath - Template subpath.
+ * @param {Lib_Scaffold_RunScaffold_ImportMetaUrl}   importMetaUrl   - Import meta url.
  *
- * @returns {LibScaffoldRunScaffoldReturns}
+ * @returns {Lib_Scaffold_RunScaffold_Returns}
  *
  * @since 0.15.0
  */
-export async function runScaffold(options: LibScaffoldRunScaffoldOptions, category: LibScaffoldRunScaffoldCategory, typeName: LibScaffoldRunScaffoldTypeName, templateSubpath: LibScaffoldRunScaffoldTemplateSubpath, importMetaUrl: LibScaffoldRunScaffoldImportMetaUrl): LibScaffoldRunScaffoldReturns {
-  const currentDirectory: LibScaffoldRunScaffoldCurrentDirectory = process.cwd();
-  const isDryRun: LibScaffoldRunScaffoldIsDryRun = options['dryRun'] === true;
+export async function runScaffold(options: Lib_Scaffold_RunScaffold_Options, category: Lib_Scaffold_RunScaffold_Category, typeName: Lib_Scaffold_RunScaffold_TypeName, templateSubpath: Lib_Scaffold_RunScaffold_TemplateSubpath, importMetaUrl: Lib_Scaffold_RunScaffold_ImportMetaUrl): Lib_Scaffold_RunScaffold_Returns {
+  const currentDirectory: Lib_Scaffold_RunScaffold_CurrentDirectory = process.cwd();
+  const isDryRun: Lib_Scaffold_RunScaffold_IsDryRun = options['dryRun'] === true;
 
   if (isDryRun === true) {
     Logger.customize({
@@ -876,7 +876,7 @@ export async function runScaffold(options: LibScaffoldRunScaffoldOptions, catego
   }
 
   // Detect Monorepo Context.
-  const context: LibScaffoldRunScaffoldContext = await detectMonorepoContext(currentDirectory);
+  const context: Lib_Scaffold_RunScaffold_Context = await detectMonorepoContext(currentDirectory);
 
   if (context['context'] === 'nested') {
     Logger.customize({
@@ -906,7 +906,7 @@ export async function runScaffold(options: LibScaffoldRunScaffoldOptions, catego
   }).info(`Detected mode: ${context['context']}.`);
 
   // Prompt for scaffold configuration.
-  const config: LibScaffoldRunScaffoldConfig = await promptScaffoldOptions(context, {
+  const config: Lib_Scaffold_RunScaffold_Config = await promptScaffoldOptions(context, {
     name: options['name'],
     output: options['output'],
     typeName,
@@ -928,7 +928,7 @@ export async function runScaffold(options: LibScaffoldRunScaffoldOptions, catego
   }).info(`Scaffolding ${category} ${typeName} "${config['name']}" in "${config['outputDirectory']}".`);
 
   if (isDryRun === true) {
-    const modePrefix: LibScaffoldRunScaffoldModePrefix = (config['mode'] === 'monorepo') ? 'monorepo root + ' : '';
+    const modePrefix: Lib_Scaffold_RunScaffold_ModePrefix = (config['mode'] === 'monorepo') ? 'monorepo root + ' : '';
 
     Logger.customize({
       name: 'CliScaffold.run',
@@ -944,12 +944,12 @@ export async function runScaffold(options: LibScaffoldRunScaffoldOptions, catego
   }
 
   // Determine workspace output directory.
-  const workspaceDirectory: LibScaffoldRunScaffoldWorkspaceDirectory = (config['mode'] === 'monorepo') ? join(config['outputDirectory'], 'apps', config['workspaceName']) : config['outputDirectory'];
+  const workspaceDirectory: Lib_Scaffold_RunScaffold_WorkspaceDirectory = (config['mode'] === 'monorepo') ? join(config['outputDirectory'], 'apps', config['workspaceName']) : config['outputDirectory'];
 
   await fs.mkdir(workspaceDirectory, { recursive: true });
 
   // Resolve template path and write files.
-  const templateDirectory: LibScaffoldRunScaffoldTemplateDirectory = resolveTemplatePath(importMetaUrl, templateSubpath);
+  const templateDirectory: Lib_Scaffold_RunScaffold_TemplateDirectory = resolveTemplatePath(importMetaUrl, templateSubpath);
 
   await writeTemplateFiles(templateDirectory, workspaceDirectory, new Map([[
     LIB_REGEX_PLACEHOLDER_PROJECT_SLUG,
@@ -957,8 +957,8 @@ export async function runScaffold(options: LibScaffoldRunScaffoldOptions, catego
   ]]));
 
   // Register workspace in nova.config.json.
-  const configRoot: LibScaffoldRunScaffoldConfigRoot = (config['mode'] === 'monorepo') ? config['outputDirectory'] : currentDirectory;
-  const configFilePath: LibScaffoldRunScaffoldConfigFilePath = join(configRoot, 'nova.config.json');
+  const configRoot: Lib_Scaffold_RunScaffold_ConfigRoot = (config['mode'] === 'monorepo') ? config['outputDirectory'] : currentDirectory;
+  const configFilePath: Lib_Scaffold_RunScaffold_ConfigFilePath = join(configRoot, 'nova.config.json');
 
   await registerWorkspaceInConfig(configFilePath, `./${relative(configRoot, workspaceDirectory)}`, config['workspaceName'], category);
 

@@ -3,20 +3,20 @@ import { libSchemaNodeReleasesSchedule } from '../lib/schema.js';
 import { Logger } from '../toolkit/index.js';
 
 import type {
-  ApiNodeReleasesConstraint,
-  ApiNodeReleasesFetchLtsVersionsActiveLtsMajors,
-  ApiNodeReleasesFetchLtsVersionsEntry,
-  ApiNodeReleasesFetchLtsVersionsErrorMessage,
-  ApiNodeReleasesFetchLtsVersionsKey,
-  ApiNodeReleasesFetchLtsVersionsMajor,
-  ApiNodeReleasesFetchLtsVersionsResponse,
-  ApiNodeReleasesFetchLtsVersionsResponseData,
-  ApiNodeReleasesFetchLtsVersionsReturns,
-  ApiNodeReleasesFetchLtsVersionsSchedule,
-  ApiNodeReleasesFetchLtsVersionsStrippedKey,
-  ApiNodeReleasesFetchLtsVersionsToday,
-  ApiNodeReleasesPopulated,
-  ApiNodeReleasesResetForTestingReturns,
+  Api_NodeReleases_Runner_Constraint,
+  Api_NodeReleases_Runner_FetchLtsVersions_ActiveLtsMajors,
+  Api_NodeReleases_Runner_FetchLtsVersions_Entry,
+  Api_NodeReleases_Runner_FetchLtsVersions_ErrorMessage,
+  Api_NodeReleases_Runner_FetchLtsVersions_Key,
+  Api_NodeReleases_Runner_FetchLtsVersions_Major,
+  Api_NodeReleases_Runner_FetchLtsVersions_Response,
+  Api_NodeReleases_Runner_FetchLtsVersions_ResponseData,
+  Api_NodeReleases_Runner_FetchLtsVersions_Returns,
+  Api_NodeReleases_Runner_FetchLtsVersions_Schedule,
+  Api_NodeReleases_Runner_FetchLtsVersions_StrippedKey,
+  Api_NodeReleases_Runner_FetchLtsVersions_Today,
+  Api_NodeReleases_Runner_Populated,
+  Api_NodeReleases_Runner_ResetForTesting_Returns,
 } from '../types/api/node-releases.d.ts';
 
 /**
@@ -28,7 +28,7 @@ import type {
  *
  * @since 0.13.0
  */
-export class ApiNodeReleases {
+export class Runner {
   /**
    * API - Node Releases - Constraint.
    *
@@ -39,7 +39,7 @@ export class ApiNodeReleases {
    *
    * @since 0.13.0
    */
-  static #constraint: ApiNodeReleasesConstraint;
+  static #constraint: Api_NodeReleases_Runner_Constraint;
 
   /**
    * API - Node Releases - Populated.
@@ -51,7 +51,7 @@ export class ApiNodeReleases {
    *
    * @since 0.13.0
    */
-  static #populated: ApiNodeReleasesPopulated;
+  static #populated: Api_NodeReleases_Runner_Populated;
 
   /**
    * API - Node Releases - Fetch LTS Versions.
@@ -59,48 +59,48 @@ export class ApiNodeReleases {
    * Downloads the release schedule from GitHub, filters for active LTS versions, and builds a
    * semver constraint string. Returns the cached value on repeat calls.
    *
-   * @returns {ApiNodeReleasesFetchLtsVersionsReturns}
+   * @returns {Api_NodeReleases_Runner_FetchLtsVersions_Returns}
    *
    * @since 0.13.0
    */
-  public static async fetchLtsVersions(): ApiNodeReleasesFetchLtsVersionsReturns {
-    if (ApiNodeReleases.#populated === true) {
-      return ApiNodeReleases.#constraint;
+  public static async fetchLtsVersions(): Api_NodeReleases_Runner_FetchLtsVersions_Returns {
+    if (Runner.#populated === true) {
+      return Runner.#constraint;
     }
 
     try {
-      const response: ApiNodeReleasesFetchLtsVersionsResponse = await fetch('https://raw.githubusercontent.com/nodejs/Release/main/schedule.json');
+      const response: Api_NodeReleases_Runner_FetchLtsVersions_Response = await fetch('https://raw.githubusercontent.com/nodejs/Release/main/schedule.json');
 
       if (response.ok === false) {
         Logger.customize({
-          name: 'ApiNodeReleases',
+          name: 'Runner',
           purpose: 'fetch',
         }).warn(`Failed to fetch Node.js release schedule. HTTP status: ${response.status}`);
 
-        ApiNodeReleases.#populated = true;
+        Runner.#populated = true;
 
         return undefined;
       }
 
-      const responseData: ApiNodeReleasesFetchLtsVersionsResponseData = await response.json<ApiNodeReleasesFetchLtsVersionsResponseData>();
+      const responseData: Api_NodeReleases_Runner_FetchLtsVersions_ResponseData = await response.json<Api_NodeReleases_Runner_FetchLtsVersions_ResponseData>();
 
-      const schedule: ApiNodeReleasesFetchLtsVersionsSchedule = libSchemaNodeReleasesSchedule.parse(responseData);
-      const today: ApiNodeReleasesFetchLtsVersionsToday = new Date().toISOString().slice(0, 10);
+      const schedule: Api_NodeReleases_Runner_FetchLtsVersions_Schedule = libSchemaNodeReleasesSchedule.parse(responseData);
+      const today: Api_NodeReleases_Runner_FetchLtsVersions_Today = new Date().toISOString().slice(0, 10);
 
       // Collect major versions where LTS has started and end-of-life has not passed.
-      const activeLtsMajors: ApiNodeReleasesFetchLtsVersionsActiveLtsMajors = [];
+      const activeLtsMajors: Api_NodeReleases_Runner_FetchLtsVersions_ActiveLtsMajors = [];
 
       for (const scheduleEntry of Object.entries(schedule)) {
-        const key: ApiNodeReleasesFetchLtsVersionsKey = scheduleEntry[0];
-        const entry: ApiNodeReleasesFetchLtsVersionsEntry = scheduleEntry[1];
+        const key: Api_NodeReleases_Runner_FetchLtsVersions_Key = scheduleEntry[0];
+        const entry: Api_NodeReleases_Runner_FetchLtsVersions_Entry = scheduleEntry[1];
 
         if (
           typeof entry['lts'] === 'string'
           && entry['lts'] <= today
           && entry['end'] >= today
         ) {
-          const strippedKey: ApiNodeReleasesFetchLtsVersionsStrippedKey = key.replace(LIB_REGEX_PATTERN_LEADING_V, '');
-          const major: ApiNodeReleasesFetchLtsVersionsMajor = parseInt(strippedKey, 10);
+          const strippedKey: Api_NodeReleases_Runner_FetchLtsVersions_StrippedKey = key.replace(LIB_REGEX_PATTERN_LEADING_V, '');
+          const major: Api_NodeReleases_Runner_FetchLtsVersions_Major = parseInt(strippedKey, 10);
 
           if (Number.isNaN(major) === false) {
             activeLtsMajors.push(major);
@@ -110,35 +110,35 @@ export class ApiNodeReleases {
 
       if (activeLtsMajors.length === 0) {
         Logger.customize({
-          name: 'ApiNodeReleases',
+          name: 'Runner',
           purpose: 'parse',
         }).warn('No active LTS versions found in Node.js release schedule.');
 
-        ApiNodeReleases.#populated = true;
+        Runner.#populated = true;
 
         return undefined;
       }
 
       // Build constraint targeting all active LTS versions (e.g., "^18 || ^20 || ^22").
-      ApiNodeReleases.#constraint = activeLtsMajors
+      Runner.#constraint = activeLtsMajors
         .sort((a, b) => a - b)
         .map((major) => `^${major}`)
         .join(' || ');
-      ApiNodeReleases.#populated = true;
+      Runner.#populated = true;
 
-      return ApiNodeReleases.#constraint;
+      return Runner.#constraint;
     } catch (error) {
-      const errorMessage: ApiNodeReleasesFetchLtsVersionsErrorMessage = [
+      const errorMessage: Api_NodeReleases_Runner_FetchLtsVersions_ErrorMessage = [
         'Failed to fetch Node.js release schedule.',
         error,
       ].join('\n');
 
       Logger.customize({
-        name: 'ApiNodeReleases',
+        name: 'Runner',
         purpose: 'fetch',
       }).warn(errorMessage);
 
-      ApiNodeReleases.#populated = true;
+      Runner.#populated = true;
 
       return undefined;
     }
@@ -150,13 +150,13 @@ export class ApiNodeReleases {
    * Clears the cached constraint and populated flag
    * so tests can exercise the fetch path from a clean state.
    *
-   * @returns {ApiNodeReleasesResetForTestingReturns}
+   * @returns {Api_NodeReleases_Runner_ResetForTesting_Returns}
    *
    * @since 0.13.0
    */
-  public static resetForTesting(): ApiNodeReleasesResetForTestingReturns {
-    ApiNodeReleases.#constraint = undefined;
-    ApiNodeReleases.#populated = undefined;
+  public static resetForTesting(): Api_NodeReleases_Runner_ResetForTesting_Returns {
+    Runner.#constraint = undefined;
+    Runner.#populated = undefined;
 
     return;
   }

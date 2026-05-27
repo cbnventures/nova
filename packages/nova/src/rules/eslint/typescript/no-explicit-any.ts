@@ -3,11 +3,11 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordContext,
-  RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordNode,
-  RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordReturns,
-  RulesEslintTypescriptNoExplicitAnyRuleDefaultOptionsIgnoreFiles,
-  RulesEslintTypescriptNoExplicitAnyRuleOptions,
+  Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Context,
+  Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Node,
+  Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Returns,
+  Rules_Eslint_Typescript_NoExplicitAny_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Typescript_NoExplicitAny_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/no-explicit-any.d.ts';
 
 /**
@@ -19,7 +19,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintTypescriptNoExplicitAny {
+export class Runner {
   /**
    * Rules - ESLint - TypeScript - No Explicit Any - Rule.
    *
@@ -53,10 +53,10 @@ export class RulesEslintTypescriptNoExplicitAny {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintTypescriptNoExplicitAnyRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Typescript_NoExplicitAny_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintTypescriptNoExplicitAnyRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Typescript_NoExplicitAny_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -65,7 +65,7 @@ export class RulesEslintTypescriptNoExplicitAny {
 
       return {
         TSAnyKeyword(node) {
-          RulesEslintTypescriptNoExplicitAny.checkAnyKeyword(context, node);
+          Runner.checkAnyKeyword(context, node);
 
           return;
         },
@@ -82,14 +82,14 @@ export class RulesEslintTypescriptNoExplicitAny {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordContext} context - Context.
-   * @param {RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordNode}    node    - Node.
+   * @param {Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Context} context - Context.
+   * @param {Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Node}    node    - Node.
    *
-   * @returns {RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordReturns}
+   * @returns {Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Returns}
    *
    * @since 0.15.0
    */
-  private static checkAnyKeyword(context: RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordContext, node: RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordNode): RulesEslintTypescriptNoExplicitAnyCheckAnyKeywordReturns {
+  private static checkAnyKeyword(context: Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Context, node: Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Node): Rules_Eslint_Typescript_NoExplicitAny_Runner_CheckAnyKeyword_Returns {
     context.report({
       node,
       messageId: 'noExplicitAny',

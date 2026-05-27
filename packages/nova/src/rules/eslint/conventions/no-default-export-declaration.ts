@@ -3,13 +3,13 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationContext,
-  RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationDeclarationText,
-  RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationName,
-  RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationNode,
-  RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationReturns,
-  RulesEslintConventionsNoDefaultExportDeclarationRuleDefaultOptionsIgnoreFiles,
-  RulesEslintConventionsNoDefaultExportDeclarationRuleOptions,
+  Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Context,
+  Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_DeclarationText,
+  Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Name,
+  Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Node,
+  Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Returns,
+  Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/no-default-export-declaration.d.ts';
 
 /**
@@ -20,7 +20,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintConventionsNoDefaultExportDeclaration {
+export class Runner {
   /**
    * Rules - ESLint - Conventions - No Default Export Declaration - Rule.
    *
@@ -54,10 +54,10 @@ export class RulesEslintConventionsNoDefaultExportDeclaration {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintConventionsNoDefaultExportDeclarationRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintConventionsNoDefaultExportDeclarationRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -66,7 +66,7 @@ export class RulesEslintConventionsNoDefaultExportDeclaration {
 
       return {
         ExportDefaultDeclaration(node) {
-          RulesEslintConventionsNoDefaultExportDeclaration.checkExportDefaultDeclaration(context, node);
+          Runner.checkExportDefaultDeclaration(context, node);
 
           return;
         },
@@ -82,14 +82,14 @@ export class RulesEslintConventionsNoDefaultExportDeclaration {
    *
    * @private
    *
-   * @param {RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationContext} context - Context.
-   * @param {RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationNode}    node    - Node.
+   * @param {Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Node}    node    - Node.
    *
-   * @returns {RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationReturns}
+   * @returns {Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Returns}
    *
    * @since 0.15.0
    */
-  private static checkExportDefaultDeclaration(context: RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationContext, node: RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationNode): RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationReturns {
+  private static checkExportDefaultDeclaration(context: Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Context, node: Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Node): Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Returns {
     // Only flag function and class declarations attached to export default.
     if (
       node['declaration']['type'] !== 'FunctionDeclaration'
@@ -98,7 +98,7 @@ export class RulesEslintConventionsNoDefaultExportDeclaration {
       return;
     }
 
-    const name: RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationName = ('id' in node['declaration'] && node['declaration']['id'] !== null) ? node['declaration']['id']['name'] : 'anonymous';
+    const name: Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Name = ('id' in node['declaration'] && node['declaration']['id'] !== null) ? node['declaration']['id']['name'] : 'anonymous';
 
     // Skip anonymous declarations - cannot be separated.
     if (name === 'anonymous') {
@@ -112,7 +112,7 @@ export class RulesEslintConventionsNoDefaultExportDeclaration {
         name,
       },
       fix(fixer) {
-        const declarationText: RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationDeclarationText = context.sourceCode.getText(node['declaration']);
+        const declarationText: Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_DeclarationText = context.sourceCode.getText(node['declaration']);
 
         return [
           fixer.replaceText(node, declarationText),

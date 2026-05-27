@@ -3,27 +3,27 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionBody,
-  RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionChainLength,
-  RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionContext,
-  RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionMaxChainLength,
-  RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionMaxNestedArrows,
-  RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionNestedCount,
-  RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionNode,
-  RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionReturns,
-  RulesEslintFormattingNoComplexArrowConciseCountChainLengthCount,
-  RulesEslintFormattingNoComplexArrowConciseCountChainLengthCurrent,
-  RulesEslintFormattingNoComplexArrowConciseCountChainLengthNode,
-  RulesEslintFormattingNoComplexArrowConciseCountChainLengthReturns,
-  RulesEslintFormattingNoComplexArrowConciseCountNestedArrowsCount,
-  RulesEslintFormattingNoComplexArrowConciseCountNestedArrowsNode,
-  RulesEslintFormattingNoComplexArrowConciseCountNestedArrowsReturns,
-  RulesEslintFormattingNoComplexArrowConciseRuleDefaultOptionsIgnoreFiles,
-  RulesEslintFormattingNoComplexArrowConciseRuleDefaultOptionsMaxChainLength,
-  RulesEslintFormattingNoComplexArrowConciseRuleDefaultOptionsMaxNestedArrows,
-  RulesEslintFormattingNoComplexArrowConciseRuleMaxChainLength,
-  RulesEslintFormattingNoComplexArrowConciseRuleMaxNestedArrows,
-  RulesEslintFormattingNoComplexArrowConciseRuleOptions,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Body,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_ChainLength,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Context,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_MaxChainLength,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_MaxNestedArrows,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_NestedCount,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Node,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Returns,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Count,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Current,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Node,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Returns,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Count,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Node,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Returns,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxChainLength,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxNestedArrows,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxChainLength,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxNestedArrows,
+  Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/no-complex-arrow-concise.d.ts';
 
 /**
@@ -34,7 +34,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintFormattingNoComplexArrowConcise {
+export class Runner {
   /**
    * Rules - ESLint - Formatting - No Complex Arrow Concise - Rule.
    *
@@ -74,14 +74,14 @@ export class RulesEslintFormattingNoComplexArrowConcise {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintFormattingNoComplexArrowConciseRuleDefaultOptionsIgnoreFiles,
-      maxChainLength: 2 as RulesEslintFormattingNoComplexArrowConciseRuleDefaultOptionsMaxChainLength,
-      maxNestedArrows: 1 as RulesEslintFormattingNoComplexArrowConciseRuleDefaultOptionsMaxNestedArrows,
+      ignoreFiles: [] as Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsIgnoreFiles,
+      maxChainLength: 2 as Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxChainLength,
+      maxNestedArrows: 1 as Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleDefaultOptionsMaxNestedArrows,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintFormattingNoComplexArrowConciseRuleOptions = defaultOptions[0];
-      const maxNestedArrows: RulesEslintFormattingNoComplexArrowConciseRuleMaxNestedArrows = options['maxNestedArrows'];
-      const maxChainLength: RulesEslintFormattingNoComplexArrowConciseRuleMaxChainLength = options['maxChainLength'];
+      const options: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleOptions = defaultOptions[0];
+      const maxNestedArrows: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxNestedArrows = options['maxNestedArrows'];
+      const maxChainLength: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_RuleMaxChainLength = options['maxChainLength'];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -90,7 +90,7 @@ export class RulesEslintFormattingNoComplexArrowConcise {
 
       return {
         ArrowFunctionExpression(node) {
-          RulesEslintFormattingNoComplexArrowConcise.checkArrowFunction(context, node, maxNestedArrows, maxChainLength);
+          Runner.checkArrowFunction(context, node, maxNestedArrows, maxChainLength);
 
           return;
         },
@@ -106,25 +106,25 @@ export class RulesEslintFormattingNoComplexArrowConcise {
    *
    * @private
    *
-   * @param {RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionContext}         context         - Context.
-   * @param {RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionNode}            node            - Node.
-   * @param {RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionMaxNestedArrows} maxNestedArrows - Max nested arrows.
-   * @param {RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionMaxChainLength}  maxChainLength  - Max chain length.
+   * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Context}         context         - Context.
+   * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Node}            node            - Node.
+   * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_MaxNestedArrows} maxNestedArrows - Max nested arrows.
+   * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_MaxChainLength}  maxChainLength  - Max chain length.
    *
-   * @returns {RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionReturns}
+   * @returns {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Returns}
    *
    * @since 0.15.0
    */
-  private static checkArrowFunction(context: RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionContext, node: RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionNode, maxNestedArrows: RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionMaxNestedArrows, maxChainLength: RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionMaxChainLength): RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionReturns {
+  private static checkArrowFunction(context: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Context, node: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Node, maxNestedArrows: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_MaxNestedArrows, maxChainLength: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_MaxChainLength): Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Returns {
     // Only check concise arrow bodies (no block body).
     if (node.body.type === 'BlockStatement') {
       return;
     }
 
-    const body: RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionBody = node.body;
+    const body: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_Body = node.body;
 
     // Check nested arrow count.
-    const nestedCount: RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionNestedCount = RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(body);
+    const nestedCount: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_NestedCount = Runner.countNestedArrows(body);
 
     if (nestedCount > maxNestedArrows) {
       context.report({
@@ -140,7 +140,7 @@ export class RulesEslintFormattingNoComplexArrowConcise {
     }
 
     // Check chain length.
-    const chainLength: RulesEslintFormattingNoComplexArrowConciseCheckArrowFunctionChainLength = RulesEslintFormattingNoComplexArrowConcise.countChainLength(body);
+    const chainLength: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CheckArrowFunction_ChainLength = Runner.countChainLength(body);
 
     if (chainLength > maxChainLength) {
       context.report({
@@ -164,15 +164,15 @@ export class RulesEslintFormattingNoComplexArrowConcise {
    *
    * @private
    *
-   * @param {RulesEslintFormattingNoComplexArrowConciseCountChainLengthNode} node - Node.
+   * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingNoComplexArrowConciseCountChainLengthReturns}
+   * @returns {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Returns}
    *
    * @since 0.15.0
    */
-  private static countChainLength(node: RulesEslintFormattingNoComplexArrowConciseCountChainLengthNode): RulesEslintFormattingNoComplexArrowConciseCountChainLengthReturns {
-    let count: RulesEslintFormattingNoComplexArrowConciseCountChainLengthCount = 0;
-    let current: RulesEslintFormattingNoComplexArrowConciseCountChainLengthCurrent = node;
+  private static countChainLength(node: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Node): Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Returns {
+    let count: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Count = 0;
+    let current: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountChainLength_Current = node;
 
     while (
       current.type === 'CallExpression'
@@ -193,48 +193,48 @@ export class RulesEslintFormattingNoComplexArrowConcise {
    *
    * @private
    *
-   * @param {RulesEslintFormattingNoComplexArrowConciseCountNestedArrowsNode} node - Node.
+   * @param {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingNoComplexArrowConciseCountNestedArrowsReturns}
+   * @returns {Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Returns}
    *
    * @since 0.15.0
    */
-  private static countNestedArrows(node: RulesEslintFormattingNoComplexArrowConciseCountNestedArrowsNode): RulesEslintFormattingNoComplexArrowConciseCountNestedArrowsReturns {
+  private static countNestedArrows(node: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Node): Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Returns {
     if (node.type === 'ArrowFunctionExpression') {
       return 1;
     }
 
-    let count: RulesEslintFormattingNoComplexArrowConciseCountNestedArrowsCount = 0;
+    let count: Rules_Eslint_Formatting_NoComplexArrowConcise_Runner_CountNestedArrows_Count = 0;
 
     if ('arguments' in node && Array.isArray(node.arguments) === true) {
       for (const argument of node.arguments) {
-        count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(argument);
+        count += Runner.countNestedArrows(argument);
       }
     }
 
     if ('callee' in node && node.callee !== undefined) {
-      count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(node.callee);
+      count += Runner.countNestedArrows(node.callee);
     }
 
     if ('object' in node && node.object !== undefined) {
-      count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(node.object);
+      count += Runner.countNestedArrows(node.object);
     }
 
     if ('property' in node && node.property !== undefined) {
-      count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(node.property);
+      count += Runner.countNestedArrows(node.property);
     }
 
     if ('elements' in node && Array.isArray(node.elements) === true) {
       for (const element of node.elements) {
         if (element !== null) {
-          count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(element);
+          count += Runner.countNestedArrows(element);
         }
       }
     }
 
     if ('properties' in node && Array.isArray(node.properties) === true) {
       for (const property of node.properties) {
-        count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(property);
+        count += Runner.countNestedArrows(property);
       }
     }
 
@@ -245,12 +245,12 @@ export class RulesEslintFormattingNoComplexArrowConcise {
       && typeof node.value === 'object'
       && 'type' in node.value
     ) {
-      count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(node.value);
+      count += Runner.countNestedArrows(node.value);
     }
 
     if ('expressions' in node && Array.isArray(node.expressions) === true) {
       for (const expression of node.expressions) {
-        count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(expression);
+        count += Runner.countNestedArrows(expression);
       }
     }
 
@@ -260,7 +260,7 @@ export class RulesEslintFormattingNoComplexArrowConcise {
       && typeof node.left === 'object'
       && 'type' in node.left
     ) {
-      count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(node.left);
+      count += Runner.countNestedArrows(node.left);
     }
 
     if (
@@ -269,7 +269,7 @@ export class RulesEslintFormattingNoComplexArrowConcise {
       && typeof node.right === 'object'
       && 'type' in node.right
     ) {
-      count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(node.right);
+      count += Runner.countNestedArrows(node.right);
     }
 
     if (
@@ -279,7 +279,7 @@ export class RulesEslintFormattingNoComplexArrowConcise {
       && node.consequent !== null
       && 'type' in node.consequent
     ) {
-      count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(node.consequent);
+      count += Runner.countNestedArrows(node.consequent);
     }
 
     if (
@@ -289,7 +289,7 @@ export class RulesEslintFormattingNoComplexArrowConcise {
       && typeof node.alternate === 'object'
       && 'type' in node.alternate
     ) {
-      count += RulesEslintFormattingNoComplexArrowConcise.countNestedArrows(node.alternate);
+      count += Runner.countNestedArrows(node.alternate);
     }
 
     return count;

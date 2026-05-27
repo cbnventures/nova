@@ -3,38 +3,38 @@
  *
  * @since 0.15.0
  */
-export type TestsCliScaffoldDocsDocusaurusRunOriginalCwd = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_OriginalCwd = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunTemporaryDirectory = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_TemporaryDirectory = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunTemporaryBase = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_TemporaryBase = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunSandboxRoot = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_SandboxRoot = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunRootDirectory = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_RootDirectory = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunChildDirectory = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ChildDirectory = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunRootPackageJson = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_RootPackageJson = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunRootPackageJsonPath = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_RootPackageJsonPath = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunChildPackageJson = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ChildPackageJson = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunChildPackageJsonPath = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ChildPackageJsonPath = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunProjectDirectory = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_ProjectDirectory = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunExists = boolean;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_Exists = boolean;
 
-export type TestsCliScaffoldDocsDocusaurusRunDryRunOutputPath = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_DryRunOutputPath = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunWorkspacePackageJsonPath = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_WorkspacePackageJsonPath = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunDocusaurusConfigPath = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_DocusaurusConfigPath = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunIntroMdPath = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_IntroMdPath = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunPackageJson = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_PackageJson = string;
 
-export type TestsCliScaffoldDocsDocusaurusRunPackageJsonPath = string;
+export type Tests_Cli_Scaffold_Docs_Docusaurus_CliScaffoldDocsDocusaurusRun_PackageJsonPath = string;

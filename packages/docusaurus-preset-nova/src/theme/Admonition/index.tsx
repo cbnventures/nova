@@ -2,11 +2,11 @@ import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 
 import type {
-  ThemeAdmonitionIconName,
-  ThemeAdmonitionIcons,
-  ThemeAdmonitionProps,
-  ThemeAdmonitionTitle,
-  ThemeAdmonitionTypeLabels,
+  Theme_Admonition_Index_Admonition_IconName,
+  Theme_Admonition_Index_Admonition_Icons,
+  Theme_Admonition_Index_Admonition_Props,
+  Theme_Admonition_Index_Admonition_Title,
+  Theme_Admonition_Index_Admonition_TypeLabels,
 } from '../../types/theme/Admonition/index.d.ts';
 
 /**
@@ -18,7 +18,7 @@ import type {
  *
  * @since 0.15.0
  */
-const admonitionIcons: ThemeAdmonitionIcons = {
+const admonitionIcons: Theme_Admonition_Index_Admonition_Icons = {
   note: 'lucide:pencil',
   tip: 'lucide:lightbulb',
   info: 'lucide:info',
@@ -36,7 +36,7 @@ const admonitionIcons: ThemeAdmonitionIcons = {
  *
  * @since 0.18.0
  */
-const admonitionTypeLabels: ThemeAdmonitionTypeLabels = {
+const admonitionTypeLabels: Theme_Admonition_Index_Admonition_TypeLabels = {
   note: translate({
     id: 'theme.admonition.note',
     message: 'note',
@@ -76,19 +76,19 @@ const admonitionTypeLabels: ThemeAdmonitionTypeLabels = {
  * title, and content area, applying nova and legacy class names
  * for preset CSS compatibility.
  *
- * @param {ThemeAdmonitionProps} props - Props.
+ * @param {Theme_Admonition_Index_Admonition_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Admonition(props: ThemeAdmonitionProps) {
-  const title: ThemeAdmonitionTitle = (
+function Admonition(props: Theme_Admonition_Index_Admonition_Props) {
+  const title: Theme_Admonition_Index_Admonition_Title = (
     props['title']
     ?? admonitionTypeLabels[props['type']]
     ?? props['type']
   );
-  const iconName: ThemeAdmonitionIconName = admonitionIcons[props['type']] ?? 'lucide:info';
+  const iconName: Theme_Admonition_Index_Admonition_IconName = admonitionIcons[props['type']] ?? 'lucide:info';
 
   return (
     <div

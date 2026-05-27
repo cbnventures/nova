@@ -7,38 +7,38 @@ import {
   vi,
 } from 'vitest';
 
-import { CliRecipeGithubSyncFeatures } from '../../../../cli/recipe/github/sync-features.js';
-import { LibNovaConfig } from '../../../../lib/nova-config.js';
+import { Runner as CliRecipeGithubSyncFeatures } from '../../../../cli/recipe/github/sync-features.js';
+import { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 import * as toolkit from '../../../../toolkit/index.js';
 
 import type {
-  TestsCliRecipeGithubSyncFeaturesRunAuthCall,
-  TestsCliRecipeGithubSyncFeaturesRunCustomizedErrorCalls,
-  TestsCliRecipeGithubSyncFeaturesRunCustomizedLoggerMock,
-  TestsCliRecipeGithubSyncFeaturesRunEditCall,
-  TestsCliRecipeGithubSyncFeaturesRunEditCalls,
-  TestsCliRecipeGithubSyncFeaturesRunErrorCalls,
-  TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy,
-  TestsCliRecipeGithubSyncFeaturesRunHasAuthError,
-  TestsCliRecipeGithubSyncFeaturesRunHasGhNotInstalled,
-  TestsCliRecipeGithubSyncFeaturesRunHasGithubBlockWarn,
-  TestsCliRecipeGithubSyncFeaturesRunHasMalformedJsonError,
-  TestsCliRecipeGithubSyncFeaturesRunHasNoValuesWarn,
-  TestsCliRecipeGithubSyncFeaturesRunHasOwnerRepoWarn,
-  TestsCliRecipeGithubSyncFeaturesRunHasRateLimitError,
-  TestsCliRecipeGithubSyncFeaturesRunHasUndefinedPermissionError,
-  TestsCliRecipeGithubSyncFeaturesRunHasVersionError,
-  TestsCliRecipeGithubSyncFeaturesRunHasWriteError,
-  TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy,
-  TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy,
-  TestsCliRecipeGithubSyncFeaturesRunLoadSpy,
-  TestsCliRecipeGithubSyncFeaturesRunLoggerCustomizeReturn,
-  TestsCliRecipeGithubSyncFeaturesRunLoggerCustomizeSpy,
-  TestsCliRecipeGithubSyncFeaturesRunLoggerErrorSpy,
-  TestsCliRecipeGithubSyncFeaturesRunLoggerWarnSpy,
-  TestsCliRecipeGithubSyncFeaturesRunViewCall,
-  TestsCliRecipeGithubSyncFeaturesRunWarnCalls,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_AuthCall,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_CustomizedErrorCalls,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_CustomizedLoggerMock,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCall,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCalls,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ErrorCalls,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasAuthError,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasGhNotInstalled,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasGithubBlockWarn,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasMalformedJsonError,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasNoValuesWarn,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasOwnerRepoWarn,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasRateLimitError,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasUndefinedPermissionError,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasVersionError,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasWriteError,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerCustomizeReturn,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerCustomizeSpy,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerErrorSpy,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerWarnSpy,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ViewCall,
+  Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_WarnCalls,
 } from '../../../../types/tests/cli/recipe/github/sync-features.test.d.ts';
 
 /**
@@ -56,9 +56,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('recipe disabled returns silently without executeShell mutation calls', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -68,7 +68,7 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
       textOut: '',
       textError: '',
       code: 0,
@@ -88,25 +88,25 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('github block missing logs warn and returns without exitCode', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({});
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({});
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
       textOut: '',
       textError: '',
       code: 0,
     });
 
-    const loggerWarnSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
+    const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
     await CliRecipeGithubSyncFeatures.run({});
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
-    const warnCalls: TestsCliRecipeGithubSyncFeaturesRunWarnCalls = loggerWarnSpy['mock']['calls'];
+    const warnCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_WarnCalls = loggerWarnSpy['mock']['calls'];
 
-    const hasGithubBlockWarn: TestsCliRecipeGithubSyncFeaturesRunHasGithubBlockWarn = warnCalls.some((call) => (
+    const hasGithubBlockWarn: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasGithubBlockWarn = warnCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('"github" block was not found') === true
     ));
@@ -125,9 +125,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('owner or repo missing logs warn and returns without exitCode', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         recipes: {
@@ -136,21 +136,21 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
       textOut: '',
       textError: '',
       code: 0,
     });
 
-    const loggerWarnSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
+    const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
     await CliRecipeGithubSyncFeatures.run({});
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
-    const warnCalls: TestsCliRecipeGithubSyncFeaturesRunWarnCalls = loggerWarnSpy['mock']['calls'];
+    const warnCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_WarnCalls = loggerWarnSpy['mock']['calls'];
 
-    const hasOwnerRepoWarn: TestsCliRecipeGithubSyncFeaturesRunHasOwnerRepoWarn = warnCalls.some((call) => (
+    const hasOwnerRepoWarn: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasOwnerRepoWarn = warnCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('"github.owner" and "github.repo"') === true
     ));
@@ -169,9 +169,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('gh not on PATH logs error and sets exitCode=1', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -181,15 +181,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(false);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(false);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
       textOut: '',
       textError: '',
       code: 0,
     });
 
-    const loggerErrorSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
+    const loggerErrorSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
 
     await CliRecipeGithubSyncFeatures.run({});
 
@@ -197,9 +197,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
 
     strictEqual(executeShellSpy['mock']['calls'].length, 0);
 
-    const errorCalls: TestsCliRecipeGithubSyncFeaturesRunErrorCalls = loggerErrorSpy['mock']['calls'];
+    const errorCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ErrorCalls = loggerErrorSpy['mock']['calls'];
 
-    const hasGhNotInstalled: TestsCliRecipeGithubSyncFeaturesRunHasGhNotInstalled = errorCalls.some((call) => (
+    const hasGhNotInstalled: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasGhNotInstalled = errorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('"gh" CLI is not installed') === true
     ));
@@ -220,9 +220,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('gh version below minimum logs error and sets exitCode=1', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -232,23 +232,23 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockResolvedValue({
       textOut: 'gh version 2.30.0 (2023-10-01)',
       textError: '',
       code: 0,
     });
 
-    const loggerErrorSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
+    const loggerErrorSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
 
     await CliRecipeGithubSyncFeatures.run({});
 
     strictEqual(process.exitCode, 1);
 
-    const errorCalls: TestsCliRecipeGithubSyncFeaturesRunErrorCalls = loggerErrorSpy['mock']['calls'];
+    const errorCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ErrorCalls = loggerErrorSpy['mock']['calls'];
 
-    const hasVersionError: TestsCliRecipeGithubSyncFeaturesRunHasVersionError = errorCalls.some((call) => (
+    const hasVersionError: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasVersionError = errorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('below the required minimum') === true
     ));
@@ -269,9 +269,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('gh not authenticated logs error and sets exitCode=1', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -281,9 +281,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -307,15 +307,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       });
     });
 
-    const loggerErrorSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
+    const loggerErrorSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
 
     await CliRecipeGithubSyncFeatures.run({});
 
     strictEqual(process.exitCode, 1);
 
-    const errorCalls: TestsCliRecipeGithubSyncFeaturesRunErrorCalls = loggerErrorSpy['mock']['calls'];
+    const errorCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ErrorCalls = loggerErrorSpy['mock']['calls'];
 
-    const hasAuthError: TestsCliRecipeGithubSyncFeaturesRunHasAuthError = errorCalls.some((call) => (
+    const hasAuthError: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasAuthError = errorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('"gh" CLI is not authenticated') === true
     ));
@@ -336,9 +336,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('repo view returns READ permission logs error and sets exitCode=1', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -351,9 +351,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -388,15 +388,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       });
     });
 
-    const loggerErrorSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
+    const loggerErrorSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerErrorSpy = vi.spyOn(toolkit['Logger'], 'error').mockReturnValue(undefined);
 
     await CliRecipeGithubSyncFeatures.run({});
 
     strictEqual(process.exitCode, 1);
 
-    const errorCalls: TestsCliRecipeGithubSyncFeaturesRunErrorCalls = loggerErrorSpy['mock']['calls'];
+    const errorCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ErrorCalls = loggerErrorSpy['mock']['calls'];
 
-    const hasWriteError: TestsCliRecipeGithubSyncFeaturesRunHasWriteError = errorCalls.some((call) => (
+    const hasWriteError: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasWriteError = errorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('does not have write access') === true
     ));
@@ -417,9 +417,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('all four features defined calls gh repo edit with all four enable flags', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -435,9 +435,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -474,9 +474,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
 
     await CliRecipeGithubSyncFeatures.run({});
 
-    const calls: TestsCliRecipeGithubSyncFeaturesRunEditCalls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCalls = executeShellSpy['mock']['calls'];
 
-    const editCall: TestsCliRecipeGithubSyncFeaturesRunEditCall = calls.find((call) => (
+    const editCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh repo edit') === true
     ));
@@ -515,9 +515,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('only issues defined calls gh repo edit with only --enable-issues flag', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -530,9 +530,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -569,9 +569,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
 
     await CliRecipeGithubSyncFeatures.run({});
 
-    const calls: TestsCliRecipeGithubSyncFeaturesRunEditCalls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCalls = executeShellSpy['mock']['calls'];
 
-    const editCall: TestsCliRecipeGithubSyncFeaturesRunEditCall = calls.find((call) => (
+    const editCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh repo edit') === true
     ));
@@ -613,9 +613,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('only wiki and discussions defined calls gh repo edit with only those two flags', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -629,9 +629,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -668,9 +668,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
 
     await CliRecipeGithubSyncFeatures.run({});
 
-    const calls: TestsCliRecipeGithubSyncFeaturesRunEditCalls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCalls = executeShellSpy['mock']['calls'];
 
-    const editCall: TestsCliRecipeGithubSyncFeaturesRunEditCall = calls.find((call) => (
+    const editCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh repo edit') === true
     ));
@@ -711,9 +711,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('features block exists but all fields undefined logs warn and makes no gh repo edit call', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -724,9 +724,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -761,22 +761,22 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       });
     });
 
-    const loggerWarnSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
+    const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
     await CliRecipeGithubSyncFeatures.run({});
 
-    const calls: TestsCliRecipeGithubSyncFeaturesRunEditCalls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCalls = executeShellSpy['mock']['calls'];
 
-    const editCall: TestsCliRecipeGithubSyncFeaturesRunEditCall = calls.find((call) => (
+    const editCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh repo edit') === true
     ));
 
     strictEqual(editCall, undefined, 'Expected no gh repo edit call');
 
-    const warnCalls: TestsCliRecipeGithubSyncFeaturesRunWarnCalls = loggerWarnSpy['mock']['calls'];
+    const warnCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_WarnCalls = loggerWarnSpy['mock']['calls'];
 
-    const hasNoValuesWarn: TestsCliRecipeGithubSyncFeaturesRunHasNoValuesWarn = warnCalls.some((call) => (
+    const hasNoValuesWarn: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasNoValuesWarn = warnCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('No values found under "github.features"') === true
     ));
@@ -797,9 +797,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('features block missing logs warn and makes no gh repo edit call', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -809,9 +809,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -846,22 +846,22 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       });
     });
 
-    const loggerWarnSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
+    const loggerWarnSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerWarnSpy = vi.spyOn(toolkit['Logger'], 'warn').mockReturnValue(undefined);
 
     await CliRecipeGithubSyncFeatures.run({});
 
-    const calls: TestsCliRecipeGithubSyncFeaturesRunEditCalls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCalls = executeShellSpy['mock']['calls'];
 
-    const editCall: TestsCliRecipeGithubSyncFeaturesRunEditCall = calls.find((call) => (
+    const editCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh repo edit') === true
     ));
 
     strictEqual(editCall, undefined, 'Expected no gh repo edit call');
 
-    const warnCalls: TestsCliRecipeGithubSyncFeaturesRunWarnCalls = loggerWarnSpy['mock']['calls'];
+    const warnCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_WarnCalls = loggerWarnSpy['mock']['calls'];
 
-    const hasNoValuesWarn: TestsCliRecipeGithubSyncFeaturesRunHasNoValuesWarn = warnCalls.some((call) => (
+    const hasNoValuesWarn: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasNoValuesWarn = warnCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('No values found under "github.features"') === true
     ));
@@ -882,9 +882,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('dryRun true runs precheck calls but skips gh repo edit call', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -898,9 +898,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -937,16 +937,16 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
 
     await CliRecipeGithubSyncFeatures.run({ dryRun: true });
 
-    const calls: TestsCliRecipeGithubSyncFeaturesRunEditCalls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCalls = executeShellSpy['mock']['calls'];
 
-    const editCall: TestsCliRecipeGithubSyncFeaturesRunEditCall = calls.find((call) => (
+    const editCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh repo edit') === true
     ));
 
-    const authCall: TestsCliRecipeGithubSyncFeaturesRunAuthCall = calls.find((call) => call[0] === 'gh auth status');
+    const authCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_AuthCall = calls.find((call) => call[0] === 'gh auth status');
 
-    const viewCall: TestsCliRecipeGithubSyncFeaturesRunViewCall = calls.find((call) => (
+    const viewCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ViewCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh repo view') === true
     ));
@@ -969,9 +969,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('gh repo edit returns code=1 sets exitCode=1 and logs error', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -984,9 +984,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1048,9 +1048,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('gh repo edit with rate limit in stderr logs rate-limit-specific error', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -1063,9 +1063,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1114,7 +1114,7 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       });
     });
 
-    const customizedLoggerMock: TestsCliRecipeGithubSyncFeaturesRunCustomizedLoggerMock = {
+    const customizedLoggerMock: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_CustomizedLoggerMock = {
       debug: vi.fn(),
       dev: vi.fn(),
       info: vi.fn(),
@@ -1122,15 +1122,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       error: vi.fn(),
     };
 
-    const loggerCustomizeSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as TestsCliRecipeGithubSyncFeaturesRunLoggerCustomizeReturn);
+    const loggerCustomizeSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerCustomizeReturn);
 
     await CliRecipeGithubSyncFeatures.run({});
 
     strictEqual(process.exitCode, 1);
 
-    const customizedErrorCalls: TestsCliRecipeGithubSyncFeaturesRunCustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
+    const customizedErrorCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_CustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
 
-    const hasRateLimitError: TestsCliRecipeGithubSyncFeaturesRunHasRateLimitError = customizedErrorCalls.some((call) => (
+    const hasRateLimitError: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasRateLimitError = customizedErrorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('rate limit exceeded') === true
     ));
@@ -1151,9 +1151,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('sets exitCode=1 when gh repo view returns malformed JSON', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -1166,9 +1166,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1203,7 +1203,7 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       });
     });
 
-    const customizedLoggerMock: TestsCliRecipeGithubSyncFeaturesRunCustomizedLoggerMock = {
+    const customizedLoggerMock: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_CustomizedLoggerMock = {
       debug: vi.fn(),
       dev: vi.fn(),
       info: vi.fn(),
@@ -1211,15 +1211,15 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       error: vi.fn(),
     };
 
-    const loggerCustomizeSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as TestsCliRecipeGithubSyncFeaturesRunLoggerCustomizeReturn);
+    const loggerCustomizeSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerCustomizeReturn);
 
     await CliRecipeGithubSyncFeatures.run({});
 
     strictEqual(process.exitCode, 1);
 
-    const customizedErrorCalls: TestsCliRecipeGithubSyncFeaturesRunCustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
+    const customizedErrorCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_CustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
 
-    const hasMalformedJsonError: TestsCliRecipeGithubSyncFeaturesRunHasMalformedJsonError = customizedErrorCalls.some((call) => (
+    const hasMalformedJsonError: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasMalformedJsonError = customizedErrorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('Could not parse') === true
     ));
@@ -1240,9 +1240,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
   });
 
   it('sets exitCode=1 when gh repo view returns valid JSON without viewerPermission', async () => {
-    const isProjectRootSpy: TestsCliRecipeGithubSyncFeaturesRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const isProjectRootSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
 
-    const loadSpy: TestsCliRecipeGithubSyncFeaturesRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
+    const loadSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({
       github: {
         owner: 'test-owner',
         repo: 'test-repo',
@@ -1255,9 +1255,9 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       },
     });
 
-    const isCommandExistsSpy: TestsCliRecipeGithubSyncFeaturesRunIsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
+    const isCommandExistsSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_IsCommandExistsSpy = vi.spyOn(utility, 'isCommandExists').mockResolvedValue(true);
 
-    const executeShellSpy: TestsCliRecipeGithubSyncFeaturesRunExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
+    const executeShellSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_ExecuteShellSpy = vi.spyOn(utility, 'executeShell').mockImplementation((cmd) => {
       if (cmd === 'gh --version') {
         return Promise.resolve({
           textOut: 'gh version 2.50.0 (2024-01-01)',
@@ -1292,7 +1292,7 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       });
     });
 
-    const customizedLoggerMock: TestsCliRecipeGithubSyncFeaturesRunCustomizedLoggerMock = {
+    const customizedLoggerMock: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_CustomizedLoggerMock = {
       debug: vi.fn(),
       dev: vi.fn(),
       info: vi.fn(),
@@ -1300,24 +1300,24 @@ describe('CliRecipeGithubSyncFeatures.run', () => {
       error: vi.fn(),
     };
 
-    const loggerCustomizeSpy: TestsCliRecipeGithubSyncFeaturesRunLoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as TestsCliRecipeGithubSyncFeaturesRunLoggerCustomizeReturn);
+    const loggerCustomizeSpy: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_LoggerCustomizeReturn);
 
     await CliRecipeGithubSyncFeatures.run({});
 
     strictEqual(process.exitCode, 1);
 
-    const customizedErrorCalls: TestsCliRecipeGithubSyncFeaturesRunCustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
+    const customizedErrorCalls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_CustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
 
-    const hasUndefinedPermissionError: TestsCliRecipeGithubSyncFeaturesRunHasUndefinedPermissionError = customizedErrorCalls.some((call) => (
+    const hasUndefinedPermissionError: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_HasUndefinedPermissionError = customizedErrorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('Could not determine permission') === true
     ));
 
     ok(hasUndefinedPermissionError, 'Expected error about undetermined permission');
 
-    const calls: TestsCliRecipeGithubSyncFeaturesRunEditCalls = executeShellSpy['mock']['calls'];
+    const calls: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCalls = executeShellSpy['mock']['calls'];
 
-    const editCall: TestsCliRecipeGithubSyncFeaturesRunEditCall = calls.find((call) => (
+    const editCall: Tests_Cli_Recipe_Github_SyncFeatures_CliRecipeGithubSyncFeaturesRun_EditCall = calls.find((call) => (
       typeof call[0] === 'string'
       && call[0].includes('gh repo edit') === true
     ));

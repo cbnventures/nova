@@ -9,126 +9,126 @@ import { dirname, resolve } from 'path';
 import { readDefaultCodeTranslationMessages } from '@docusaurus/theme-translations';
 
 import { comparePresetThemeFiles } from './lib/compare-preset-theme-files.js';
-import { CssGenerator } from './lib/css-generator.js';
+import { Runner as LibCssGenerator } from './lib/css-generator.js';
 import { filterPresetThemeFile } from './lib/filter-preset-theme-file.js';
 import { buildGoogleFontsUrl } from './lib/google-fonts-url.js';
 import { buildSearchIndex } from './lib/search/indexer.js';
-import { Translations } from './lib/translations.js';
+import { Runner as LibTranslations } from './lib/translations.js';
 import { resolvePreset } from './options.js';
 import { announcementBarInit } from './scripts/announcement-bar-init.js';
 import { colorModeInit } from './scripts/color-mode-init.js';
 import { dataAttributeQuery } from './scripts/data-attribute-query.js';
 
 import type {
-  IndexDocusaurusThemeNovaDefaultActiveFooterPrefix,
-  IndexDocusaurusThemeNovaDefaultActiveNavbarPrefix,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContent,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginData,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPosts,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPostMetadata,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersions,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContent,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginData,
-  IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDocs,
-  IndexDocusaurusThemeNovaDefaultAnnouncementBar,
-  IndexDocusaurusThemeNovaDefaultConfigurePostCssPostCssOptions,
-  IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPlugin,
-  IndexDocusaurusThemeNovaDefaultConfigureWebpackAssetsDirectory,
-  IndexDocusaurusThemeNovaDefaultContentLoadedActions,
-  IndexDocusaurusThemeNovaDefaultContentLoadedArgs,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthor,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthors,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthor,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogPost,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogPosts,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenAuthorKeys,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenPostPermalinks,
-  IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue,
-  IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseCount,
-  IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseIndexValue,
-  IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue,
-  IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions,
-  IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleCount,
-  IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleIndexValue,
-  IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleCount,
-  IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleIndexValue,
-  IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue,
-  IndexDocusaurusThemeNovaDefaultContext,
-  IndexDocusaurusThemeNovaDefaultCssAccessibilityPath,
-  IndexDocusaurusThemeNovaDefaultCssBlockFileName,
-  IndexDocusaurusThemeNovaDefaultCssBlockFiles,
-  IndexDocusaurusThemeNovaDefaultCssBlocksDirectory,
-  IndexDocusaurusThemeNovaDefaultCssGridPath,
-  IndexDocusaurusThemeNovaDefaultCssPresetBlockFileName,
-  IndexDocusaurusThemeNovaDefaultCssPresetBlockFiles,
-  IndexDocusaurusThemeNovaDefaultCssPresetBlocksDirectory,
-  IndexDocusaurusThemeNovaDefaultCssPresetDirectory,
-  IndexDocusaurusThemeNovaDefaultCssPresetPath,
-  IndexDocusaurusThemeNovaDefaultCssPresetThemeDirectory,
-  IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName,
-  IndexDocusaurusThemeNovaDefaultCssPresetThemeFiles,
-  IndexDocusaurusThemeNovaDefaultCssResetPath,
-  IndexDocusaurusThemeNovaDefaultCssThemeDirectory,
-  IndexDocusaurusThemeNovaDefaultCssThemeFileName,
-  IndexDocusaurusThemeNovaDefaultCssThemeFiles,
-  IndexDocusaurusThemeNovaDefaultCssUtilitiesPath,
-  IndexDocusaurusThemeNovaDefaultCurrentDirectory,
-  IndexDocusaurusThemeNovaDefaultCurrentLocale,
-  IndexDocusaurusThemeNovaDefaultGeneratedCss,
-  IndexDocusaurusThemeNovaDefaultGeneratedCssDirectory,
-  IndexDocusaurusThemeNovaDefaultGeneratedCssPath,
-  IndexDocusaurusThemeNovaDefaultGetClientModulesClientModules,
-  IndexDocusaurusThemeNovaDefaultGetClientModulesNprogressCssPath,
-  IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesNovaTranslationsDirPath,
-  IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeCommonMessages,
-  IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeNovaMessages,
-  IndexDocusaurusThemeNovaDefaultGetPathsToWatchBlocksPath,
-  IndexDocusaurusThemeNovaDefaultGetPathsToWatchLibPath,
-  IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths,
-  IndexDocusaurusThemeNovaDefaultGoogleFontsUrl,
-  IndexDocusaurusThemeNovaDefaultI18nConfig,
-  IndexDocusaurusThemeNovaDefaultInjectHtmlTagsAnnouncementBarInit,
-  IndexDocusaurusThemeNovaDefaultInjectHtmlTagsColorModeInit,
-  IndexDocusaurusThemeNovaDefaultInjectHtmlTagsHeadTags,
-  IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPreBodyScriptEntries,
-  IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPreBodyTags,
-  IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPresetVariantInit,
-  IndexDocusaurusThemeNovaDefaultIsRtl,
-  IndexDocusaurusThemeNovaDefaultLocaleConfig,
-  IndexDocusaurusThemeNovaDefaultLocaleConfigs,
-  IndexDocusaurusThemeNovaDefaultLocaleDirection,
-  IndexDocusaurusThemeNovaDefaultNprogressCssPath,
-  IndexDocusaurusThemeNovaDefaultOptions,
-  IndexDocusaurusThemeNovaDefaultPostBuildArgs,
-  IndexDocusaurusThemeNovaDefaultPostBuildSearchConfigCast,
-  IndexDocusaurusThemeNovaDefaultPresetLogoContent,
-  IndexDocusaurusThemeNovaDefaultPresetLogoDataUri,
-  IndexDocusaurusThemeNovaDefaultPresetLogoPath,
-  IndexDocusaurusThemeNovaDefaultPresetLogoSrc,
-  IndexDocusaurusThemeNovaDefaultPresetName,
-  IndexDocusaurusThemeNovaDefaultProgressBarConfig,
-  IndexDocusaurusThemeNovaDefaultResolvedPreset,
-  IndexDocusaurusThemeNovaDefaultReturns,
-  IndexDocusaurusThemeNovaDefaultSearchConfig,
-  IndexDocusaurusThemeNovaDefaultSiteConfig,
-  IndexDocusaurusThemeNovaDefaultSiteDirectory,
-  IndexDocusaurusThemeNovaDefaultSiteStorage,
-  IndexDocusaurusThemeNovaDefaultStickyLayoutPath,
-  IndexDocusaurusThemeNovaDefaultThemeConfig,
-  IndexDocusaurusThemeNovaDefaultThemePath,
-  IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParams,
-  IndexDocusaurusThemeNovaDefaultTypeScriptThemePath,
+  Index_Runner_Default_ActiveFooterPrefix,
+  Index_Runner_Default_ActiveNavbarPrefix,
+  Index_Runner_Default_AllContentLoaded_AllContent,
+  Index_Runner_Default_AllContentLoaded_Args,
+  Index_Runner_Default_AllContentLoaded_BlogPluginContent,
+  Index_Runner_Default_AllContentLoaded_BlogPluginData,
+  Index_Runner_Default_AllContentLoaded_BlogPluginPosts,
+  Index_Runner_Default_AllContentLoaded_BlogPostMetadata,
+  Index_Runner_Default_AllContentLoaded_DocsLoadedVersions,
+  Index_Runner_Default_AllContentLoaded_DocsPluginContent,
+  Index_Runner_Default_AllContentLoaded_DocsPluginData,
+  Index_Runner_Default_AllContentLoaded_DocsVersionDocs,
+  Index_Runner_Default_AnnouncementBar,
+  Index_Runner_Default_ConfigurePostCss_PostCssOptions,
+  Index_Runner_Default_ConfigurePostCss_RtlPlugin,
+  Index_Runner_Default_ConfigureWebpack_AssetsDirectory,
+  Index_Runner_Default_ContentLoaded_Actions,
+  Index_Runner_Default_ContentLoaded_Args,
+  Index_Runner_Default_ContentLoaded_BlogAuthor,
+  Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL,
+  Index_Runner_Default_ContentLoaded_BlogAuthor_Key,
+  Index_Runner_Default_ContentLoaded_BlogAuthor_Name,
+  Index_Runner_Default_ContentLoaded_BlogAuthorPage,
+  Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink,
+  Index_Runner_Default_ContentLoaded_BlogAuthors,
+  Index_Runner_Default_ContentLoaded_BlogDateValue,
+  Index_Runner_Default_ContentLoaded_BlogDescriptionValue,
+  Index_Runner_Default_ContentLoaded_BlogFileAuthor,
+  Index_Runner_Default_ContentLoaded_BlogFileAuthors,
+  Index_Runner_Default_ContentLoaded_BlogPermalinkValue,
+  Index_Runner_Default_ContentLoaded_BlogPost,
+  Index_Runner_Default_ContentLoaded_BlogPosts,
+  Index_Runner_Default_ContentLoaded_BlogSeenAuthorKeys,
+  Index_Runner_Default_ContentLoaded_BlogSeenPostPermalinks,
+  Index_Runner_Default_ContentLoaded_BlogTitleValue,
+  Index_Runner_Default_ContentLoaded_CreditPhraseCount,
+  Index_Runner_Default_ContentLoaded_CreditPhraseIndexValue,
+  Index_Runner_Default_ContentLoaded_DescriptionValue,
+  Index_Runner_Default_ContentLoaded_DocDescriptions,
+  Index_Runner_Default_ContentLoaded_ErrorPageContentTitleCount,
+  Index_Runner_Default_ContentLoaded_ErrorPageContentTitleIndexValue,
+  Index_Runner_Default_ContentLoaded_NotFoundBundleCount,
+  Index_Runner_Default_ContentLoaded_NotFoundBundleIndexValue,
+  Index_Runner_Default_ContentLoaded_PermalinkValue,
+  Index_Runner_Default_Context,
+  Index_Runner_Default_CssAccessibilityPath,
+  Index_Runner_Default_CssBlockFileName,
+  Index_Runner_Default_CssBlockFiles,
+  Index_Runner_Default_CssBlocksDirectory,
+  Index_Runner_Default_CssGridPath,
+  Index_Runner_Default_CssPresetBlockFileName,
+  Index_Runner_Default_CssPresetBlockFiles,
+  Index_Runner_Default_CssPresetBlocksDirectory,
+  Index_Runner_Default_CssPresetDirectory,
+  Index_Runner_Default_CssPresetPath,
+  Index_Runner_Default_CssPresetThemeDirectory,
+  Index_Runner_Default_CssPresetThemeFileName,
+  Index_Runner_Default_CssPresetThemeFiles,
+  Index_Runner_Default_CssResetPath,
+  Index_Runner_Default_CssThemeDirectory,
+  Index_Runner_Default_CssThemeFileName,
+  Index_Runner_Default_CssThemeFiles,
+  Index_Runner_Default_CssUtilitiesPath,
+  Index_Runner_Default_CurrentDirectory,
+  Index_Runner_Default_CurrentLocale,
+  Index_Runner_Default_GeneratedCss,
+  Index_Runner_Default_GeneratedCssDirectory,
+  Index_Runner_Default_GeneratedCssPath,
+  Index_Runner_Default_GetClientModules_ClientModules,
+  Index_Runner_Default_GetClientModules_NprogressCssPath,
+  Index_Runner_Default_GetDefaultCodeTranslationMessages_NovaTranslationsDirPath,
+  Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeCommonMessages,
+  Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeNovaMessages,
+  Index_Runner_Default_GetPathsToWatch_BlocksPath,
+  Index_Runner_Default_GetPathsToWatch_LibPath,
+  Index_Runner_Default_GetPathsToWatch_Paths,
+  Index_Runner_Default_GoogleFontsUrl,
+  Index_Runner_Default_I18nConfig,
+  Index_Runner_Default_InjectHtmlTags_AnnouncementBarInit,
+  Index_Runner_Default_InjectHtmlTags_ColorModeInit,
+  Index_Runner_Default_InjectHtmlTags_HeadTags,
+  Index_Runner_Default_InjectHtmlTags_PreBodyScriptEntries,
+  Index_Runner_Default_InjectHtmlTags_PreBodyTags,
+  Index_Runner_Default_InjectHtmlTags_PresetVariantInit,
+  Index_Runner_Default_IsRtl,
+  Index_Runner_Default_LocaleConfig,
+  Index_Runner_Default_LocaleConfigs,
+  Index_Runner_Default_LocaleDirection,
+  Index_Runner_Default_NprogressCssPath,
+  Index_Runner_Default_Options,
+  Index_Runner_Default_PostBuild_Args,
+  Index_Runner_Default_PostBuild_SearchConfigCast,
+  Index_Runner_Default_PresetLogoContent,
+  Index_Runner_Default_PresetLogoDataUri,
+  Index_Runner_Default_PresetLogoPath,
+  Index_Runner_Default_PresetLogoSrc,
+  Index_Runner_Default_PresetName,
+  Index_Runner_Default_ProgressBarConfig,
+  Index_Runner_Default_ResolvedPreset,
+  Index_Runner_Default_Returns,
+  Index_Runner_Default_SearchConfig,
+  Index_Runner_Default_SiteConfig,
+  Index_Runner_Default_SiteDirectory,
+  Index_Runner_Default_SiteStorage,
+  Index_Runner_Default_StickyLayoutPath,
+  Index_Runner_Default_ThemeConfig,
+  Index_Runner_Default_ThemePath,
+  Index_Runner_Default_TranslateThemeConfig_Params,
+  Index_Runner_Default_TypeScriptThemePath,
 } from './types/index.d.ts';
 
 /**
@@ -140,7 +140,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class DocusaurusThemeNova {
+export class Runner {
   /**
    * Index - Docusaurus Theme Nova - Default.
    *
@@ -148,30 +148,30 @@ export class DocusaurusThemeNova {
    * CSS from the resolved configuration, and returns the plugin object with
    * theme, translation, PostCSS, and asset hooks.
    *
-   * @param {IndexDocusaurusThemeNovaDefaultContext} context - Context.
-   * @param {IndexDocusaurusThemeNovaDefaultOptions} options - Options.
+   * @param {Index_Runner_Default_Context} context - Context.
+   * @param {Index_Runner_Default_Options} options - Options.
    *
-   * @returns {IndexDocusaurusThemeNovaDefaultReturns}
+   * @returns {Index_Runner_Default_Returns}
    *
    * @since 0.15.0
    */
-  public static default(context: IndexDocusaurusThemeNovaDefaultContext, options: IndexDocusaurusThemeNovaDefaultOptions): IndexDocusaurusThemeNovaDefaultReturns {
-    const resolvedPreset: IndexDocusaurusThemeNovaDefaultResolvedPreset = resolvePreset(options);
+  public static default(context: Index_Runner_Default_Context, options: Index_Runner_Default_Options): Index_Runner_Default_Returns {
+    const resolvedPreset: Index_Runner_Default_ResolvedPreset = resolvePreset(options);
 
-    const generatedCss: IndexDocusaurusThemeNovaDefaultGeneratedCss = CssGenerator.generate({
+    const generatedCss: Index_Runner_Default_GeneratedCss = LibCssGenerator.generate({
       preset: resolvedPreset,
     });
 
     // Write generated CSS to a static file so webpack can bundle and cache it.
-    const siteDirectory: IndexDocusaurusThemeNovaDefaultSiteDirectory = context['siteDir'];
-    const generatedCssDirectory: IndexDocusaurusThemeNovaDefaultGeneratedCssDirectory = resolve(siteDirectory, '.docusaurus/docusaurus-theme-nova');
-    const generatedCssPath: IndexDocusaurusThemeNovaDefaultGeneratedCssPath = resolve(generatedCssDirectory, 'nova-generated.css');
+    const siteDirectory: Index_Runner_Default_SiteDirectory = context['siteDir'];
+    const generatedCssDirectory: Index_Runner_Default_GeneratedCssDirectory = resolve(siteDirectory, '.docusaurus/docusaurus-theme-nova');
+    const generatedCssPath: Index_Runner_Default_GeneratedCssPath = resolve(generatedCssDirectory, 'nova-generated.css');
 
     mkdirSync(generatedCssDirectory, { recursive: true });
 
     writeFileSync(generatedCssPath, generatedCss, 'utf-8');
 
-    const googleFontsUrl: IndexDocusaurusThemeNovaDefaultGoogleFontsUrl = buildGoogleFontsUrl(
+    const googleFontsUrl: Index_Runner_Default_GoogleFontsUrl = buildGoogleFontsUrl(
       [
         {
           name: resolvedPreset['fonts']['display'],
@@ -189,65 +189,65 @@ export class DocusaurusThemeNova {
       'block',
     );
 
-    const presetName: IndexDocusaurusThemeNovaDefaultPresetName = options['preset'];
-    const currentDirectory: IndexDocusaurusThemeNovaDefaultCurrentDirectory = dirname(__filename);
+    const presetName: Index_Runner_Default_PresetName = options['preset'];
+    const currentDirectory: Index_Runner_Default_CurrentDirectory = dirname(__filename);
 
     // Resolve preset logo to a data URI so it works as an <img src> at runtime.
-    const presetLogoSrc: IndexDocusaurusThemeNovaDefaultPresetLogoSrc = resolvedPreset['logo']['src'];
-    const assetsDirectory: IndexDocusaurusThemeNovaDefaultConfigureWebpackAssetsDirectory = resolve(currentDirectory, '../../assets');
-    const presetLogoPath: IndexDocusaurusThemeNovaDefaultPresetLogoPath = resolve(assetsDirectory, presetLogoSrc.replace('@nova-assets/', ''));
-    const presetLogoContent: IndexDocusaurusThemeNovaDefaultPresetLogoContent = readFileSync(presetLogoPath, 'utf-8');
-    const presetLogoDataUri: IndexDocusaurusThemeNovaDefaultPresetLogoDataUri = `data:image/svg+xml;base64,${Buffer.from(presetLogoContent).toString('base64')}`;
+    const presetLogoSrc: Index_Runner_Default_PresetLogoSrc = resolvedPreset['logo']['src'];
+    const assetsDirectory: Index_Runner_Default_ConfigureWebpack_AssetsDirectory = resolve(currentDirectory, '../../assets');
+    const presetLogoPath: Index_Runner_Default_PresetLogoPath = resolve(assetsDirectory, presetLogoSrc.replace('@nova-assets/', ''));
+    const presetLogoContent: Index_Runner_Default_PresetLogoContent = readFileSync(presetLogoPath, 'utf-8');
+    const presetLogoDataUri: Index_Runner_Default_PresetLogoDataUri = `data:image/svg+xml;base64,${Buffer.from(presetLogoContent).toString('base64')}`;
 
-    const themePath: IndexDocusaurusThemeNovaDefaultThemePath = `${currentDirectory}/theme`;
-    const typeScriptThemePath: IndexDocusaurusThemeNovaDefaultTypeScriptThemePath = resolve(currentDirectory, '../src/theme');
-    const blocksPath: IndexDocusaurusThemeNovaDefaultGetPathsToWatchBlocksPath = `${currentDirectory}/blocks`;
-    const libPath: IndexDocusaurusThemeNovaDefaultGetPathsToWatchLibPath = `${currentDirectory}/lib`;
-    const pathsToWatch: IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths = [
+    const themePath: Index_Runner_Default_ThemePath = `${currentDirectory}/theme`;
+    const typeScriptThemePath: Index_Runner_Default_TypeScriptThemePath = resolve(currentDirectory, '../src/theme');
+    const blocksPath: Index_Runner_Default_GetPathsToWatch_BlocksPath = `${currentDirectory}/blocks`;
+    const libPath: Index_Runner_Default_GetPathsToWatch_LibPath = `${currentDirectory}/lib`;
+    const pathsToWatch: Index_Runner_Default_GetPathsToWatch_Paths = [
       blocksPath,
       libPath,
     ];
 
     // Global CSS files.
-    const cssResetPath: IndexDocusaurusThemeNovaDefaultCssResetPath = resolve(currentDirectory, 'styles/reset.css');
-    const cssGridPath: IndexDocusaurusThemeNovaDefaultCssGridPath = resolve(currentDirectory, 'styles/grid.css');
-    const cssAccessibilityPath: IndexDocusaurusThemeNovaDefaultCssAccessibilityPath = resolve(currentDirectory, 'styles/accessibility.css');
-    const cssUtilitiesPath: IndexDocusaurusThemeNovaDefaultCssUtilitiesPath = resolve(currentDirectory, 'styles/utilities.css');
+    const cssResetPath: Index_Runner_Default_CssResetPath = resolve(currentDirectory, 'styles/reset.css');
+    const cssGridPath: Index_Runner_Default_CssGridPath = resolve(currentDirectory, 'styles/grid.css');
+    const cssAccessibilityPath: Index_Runner_Default_CssAccessibilityPath = resolve(currentDirectory, 'styles/accessibility.css');
+    const cssUtilitiesPath: Index_Runner_Default_CssUtilitiesPath = resolve(currentDirectory, 'styles/utilities.css');
 
     // Shared block and theme CSS files.
-    const cssBlocksDirectory: IndexDocusaurusThemeNovaDefaultCssBlocksDirectory = resolve(currentDirectory, 'styles/blocks');
-    const cssBlockFiles: IndexDocusaurusThemeNovaDefaultCssBlockFiles = readdirSync(cssBlocksDirectory, { recursive: true }).filter((fileName: IndexDocusaurusThemeNovaDefaultCssBlockFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssBlockFileName) => resolve(cssBlocksDirectory, String(fileName)));
-    const cssThemeDirectory: IndexDocusaurusThemeNovaDefaultCssThemeDirectory = resolve(currentDirectory, 'styles/theme');
-    const cssThemeFiles: IndexDocusaurusThemeNovaDefaultCssThemeFiles = readdirSync(cssThemeDirectory, { recursive: true }).filter((fileName: IndexDocusaurusThemeNovaDefaultCssThemeFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssThemeFileName) => resolve(cssThemeDirectory, String(fileName)));
+    const cssBlocksDirectory: Index_Runner_Default_CssBlocksDirectory = resolve(currentDirectory, 'styles/blocks');
+    const cssBlockFiles: Index_Runner_Default_CssBlockFiles = readdirSync(cssBlocksDirectory, { recursive: true }).filter((fileName: Index_Runner_Default_CssBlockFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: Index_Runner_Default_CssBlockFileName) => resolve(cssBlocksDirectory, String(fileName)));
+    const cssThemeDirectory: Index_Runner_Default_CssThemeDirectory = resolve(currentDirectory, 'styles/theme');
+    const cssThemeFiles: Index_Runner_Default_CssThemeFiles = readdirSync(cssThemeDirectory, { recursive: true }).filter((fileName: Index_Runner_Default_CssThemeFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: Index_Runner_Default_CssThemeFileName) => resolve(cssThemeDirectory, String(fileName)));
 
     // Preset CSS files.
-    const cssPresetDirectory: IndexDocusaurusThemeNovaDefaultCssPresetDirectory = resolve(currentDirectory, `styles/presets/${presetName}`);
-    const cssPresetPath: IndexDocusaurusThemeNovaDefaultCssPresetPath = resolve(cssPresetDirectory, 'preset.css');
-    const cssPresetBlocksDirectory: IndexDocusaurusThemeNovaDefaultCssPresetBlocksDirectory = resolve(cssPresetDirectory, 'blocks');
-    const cssPresetBlockFiles: IndexDocusaurusThemeNovaDefaultCssPresetBlockFiles = readdirSync(cssPresetBlocksDirectory, { recursive: true }).filter((fileName: IndexDocusaurusThemeNovaDefaultCssPresetBlockFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: IndexDocusaurusThemeNovaDefaultCssPresetBlockFileName) => resolve(cssPresetBlocksDirectory, String(fileName)));
-    const cssPresetThemeDirectory: IndexDocusaurusThemeNovaDefaultCssPresetThemeDirectory = resolve(cssPresetDirectory, 'theme');
-    const activeNavbarPrefix: IndexDocusaurusThemeNovaDefaultActiveNavbarPrefix = `Navbar/${resolvedPreset['navbar'].charAt(0).toUpperCase()}${resolvedPreset['navbar'].slice(1)}/`;
-    const activeFooterPrefix: IndexDocusaurusThemeNovaDefaultActiveFooterPrefix = `Footer/${resolvedPreset['footer'].charAt(0).toUpperCase()}${resolvedPreset['footer'].slice(1)}/`;
-    const cssPresetThemeFiles: IndexDocusaurusThemeNovaDefaultCssPresetThemeFiles = readdirSync(cssPresetThemeDirectory, { recursive: true }).filter(
-      (fileName: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName) => filterPresetThemeFile(String(fileName), activeNavbarPrefix, activeFooterPrefix),
+    const cssPresetDirectory: Index_Runner_Default_CssPresetDirectory = resolve(currentDirectory, `styles/presets/${presetName}`);
+    const cssPresetPath: Index_Runner_Default_CssPresetPath = resolve(cssPresetDirectory, 'preset.css');
+    const cssPresetBlocksDirectory: Index_Runner_Default_CssPresetBlocksDirectory = resolve(cssPresetDirectory, 'blocks');
+    const cssPresetBlockFiles: Index_Runner_Default_CssPresetBlockFiles = readdirSync(cssPresetBlocksDirectory, { recursive: true }).filter((fileName: Index_Runner_Default_CssPresetBlockFileName) => String(fileName).endsWith('style.css')).sort().map((fileName: Index_Runner_Default_CssPresetBlockFileName) => resolve(cssPresetBlocksDirectory, String(fileName)));
+    const cssPresetThemeDirectory: Index_Runner_Default_CssPresetThemeDirectory = resolve(cssPresetDirectory, 'theme');
+    const activeNavbarPrefix: Index_Runner_Default_ActiveNavbarPrefix = `Navbar/${resolvedPreset['navbar'].charAt(0).toUpperCase()}${resolvedPreset['navbar'].slice(1)}/`;
+    const activeFooterPrefix: Index_Runner_Default_ActiveFooterPrefix = `Footer/${resolvedPreset['footer'].charAt(0).toUpperCase()}${resolvedPreset['footer'].slice(1)}/`;
+    const cssPresetThemeFiles: Index_Runner_Default_CssPresetThemeFiles = readdirSync(cssPresetThemeDirectory, { recursive: true }).filter(
+      (fileName: Index_Runner_Default_CssPresetThemeFileName) => filterPresetThemeFile(String(fileName), activeNavbarPrefix, activeFooterPrefix),
     ).sort(
-      (a: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName, b: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName) => comparePresetThemeFiles(String(a), String(b)),
-    ).map((fileName: IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName) => resolve(cssPresetThemeDirectory, String(fileName)));
+      (a: Index_Runner_Default_CssPresetThemeFileName, b: Index_Runner_Default_CssPresetThemeFileName) => comparePresetThemeFiles(String(a), String(b)),
+    ).map((fileName: Index_Runner_Default_CssPresetThemeFileName) => resolve(cssPresetThemeDirectory, String(fileName)));
 
-    const i18nConfig: IndexDocusaurusThemeNovaDefaultI18nConfig = context['i18n'] as IndexDocusaurusThemeNovaDefaultI18nConfig;
-    const currentLocale: IndexDocusaurusThemeNovaDefaultCurrentLocale = i18nConfig['currentLocale'];
-    const localeConfigs: IndexDocusaurusThemeNovaDefaultLocaleConfigs = i18nConfig['localeConfigs'];
-    const localeConfig: IndexDocusaurusThemeNovaDefaultLocaleConfig = localeConfigs[currentLocale] as IndexDocusaurusThemeNovaDefaultLocaleConfig;
-    const localeDirection: IndexDocusaurusThemeNovaDefaultLocaleDirection = localeConfig['direction'];
-    const isRtl: IndexDocusaurusThemeNovaDefaultIsRtl = localeDirection === 'rtl';
-    const siteStorage: IndexDocusaurusThemeNovaDefaultSiteStorage = context['siteStorage'] as IndexDocusaurusThemeNovaDefaultSiteStorage;
-    const siteConfig: IndexDocusaurusThemeNovaDefaultSiteConfig = context['siteConfig'] as IndexDocusaurusThemeNovaDefaultSiteConfig;
-    const themeConfig: IndexDocusaurusThemeNovaDefaultThemeConfig = siteConfig['themeConfig'] as IndexDocusaurusThemeNovaDefaultThemeConfig;
-    const announcementBar: IndexDocusaurusThemeNovaDefaultAnnouncementBar = themeConfig['announcementBar'] as IndexDocusaurusThemeNovaDefaultAnnouncementBar;
+    const i18nConfig: Index_Runner_Default_I18nConfig = context['i18n'] as Index_Runner_Default_I18nConfig;
+    const currentLocale: Index_Runner_Default_CurrentLocale = i18nConfig['currentLocale'];
+    const localeConfigs: Index_Runner_Default_LocaleConfigs = i18nConfig['localeConfigs'];
+    const localeConfig: Index_Runner_Default_LocaleConfig = localeConfigs[currentLocale] as Index_Runner_Default_LocaleConfig;
+    const localeDirection: Index_Runner_Default_LocaleDirection = localeConfig['direction'];
+    const isRtl: Index_Runner_Default_IsRtl = localeDirection === 'rtl';
+    const siteStorage: Index_Runner_Default_SiteStorage = context['siteStorage'] as Index_Runner_Default_SiteStorage;
+    const siteConfig: Index_Runner_Default_SiteConfig = context['siteConfig'] as Index_Runner_Default_SiteConfig;
+    const themeConfig: Index_Runner_Default_ThemeConfig = siteConfig['themeConfig'] as Index_Runner_Default_ThemeConfig;
+    const announcementBar: Index_Runner_Default_AnnouncementBar = themeConfig['announcementBar'] as Index_Runner_Default_AnnouncementBar;
 
-    const progressBarConfig: IndexDocusaurusThemeNovaDefaultProgressBarConfig = options['progressBar'];
-    const nprogressCssPath: IndexDocusaurusThemeNovaDefaultNprogressCssPath = require.resolve('nprogress/nprogress.css');
-    const searchConfig: IndexDocusaurusThemeNovaDefaultSearchConfig = options['search'] as IndexDocusaurusThemeNovaDefaultSearchConfig;
+    const progressBarConfig: Index_Runner_Default_ProgressBarConfig = options['progressBar'];
+    const nprogressCssPath: Index_Runner_Default_NprogressCssPath = require.resolve('nprogress/nprogress.css');
+    const searchConfig: Index_Runner_Default_SearchConfig = options['search'] as Index_Runner_Default_SearchConfig;
 
     return {
       name: 'docusaurus-theme-nova',
@@ -287,7 +287,7 @@ export class DocusaurusThemeNova {
        * extraction in addition to `getThemePath()`, so `translate()` calls in
        * `blocks/` and `lib/` get picked up by `docusaurus write-translations`.
        *
-       * @returns {IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths}
+       * @returns {Index_Runner_Default_GetPathsToWatch_Paths}
        *
        * @since 0.18.0
        */
@@ -307,9 +307,9 @@ export class DocusaurusThemeNova {
        * @since 0.15.0
        */
       getClientModules() {
-        const stickyLayoutPath: IndexDocusaurusThemeNovaDefaultStickyLayoutPath = resolve(currentDirectory, 'lib/sticky-layout.js');
+        const stickyLayoutPath: Index_Runner_Default_StickyLayoutPath = resolve(currentDirectory, 'lib/sticky-layout.js');
 
-        const clientModules: IndexDocusaurusThemeNovaDefaultGetClientModulesClientModules = [
+        const clientModules: Index_Runner_Default_GetClientModules_ClientModules = [
           cssResetPath,
           cssGridPath,
           cssAccessibilityPath,
@@ -324,7 +324,7 @@ export class DocusaurusThemeNova {
         ];
 
         if (progressBarConfig !== false) {
-          const nprogressCssModule: IndexDocusaurusThemeNovaDefaultGetClientModulesNprogressCssPath = resolve(nprogressCssPath);
+          const nprogressCssModule: Index_Runner_Default_GetClientModules_NprogressCssPath = resolve(nprogressCssPath);
 
           clientModules.push(nprogressCssModule);
         }
@@ -339,12 +339,12 @@ export class DocusaurusThemeNova {
        * scripts that initialize color mode, announcement bar dismiss
        * state, data attribute query strings, and preset variants.
        *
-       * @returns {{ headTags: IndexDocusaurusThemeNovaDefaultInjectHtmlTagsHeadTags, preBodyTags: IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPreBodyTags }}
+       * @returns {{ headTags: Index_Runner_Default_InjectHtmlTags_HeadTags, preBodyTags: Index_Runner_Default_InjectHtmlTags_PreBodyTags }}
        *
        * @since 0.15.0
        */
       injectHtmlTags() {
-        const headTags: IndexDocusaurusThemeNovaDefaultInjectHtmlTagsHeadTags = [
+        const headTags: Index_Runner_Default_InjectHtmlTags_HeadTags = [
           {
             tagName: 'link',
             attributes: {
@@ -370,12 +370,12 @@ export class DocusaurusThemeNova {
           },
         ];
 
-        const colorModeScript: IndexDocusaurusThemeNovaDefaultInjectHtmlTagsColorModeInit = colorModeInit({
+        const colorModeScript: Index_Runner_Default_InjectHtmlTags_ColorModeInit = colorModeInit({
           siteStorage,
           themeConfig,
         });
 
-        const preBodyScriptEntries: IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPreBodyScriptEntries = [
+        const preBodyScriptEntries: Index_Runner_Default_InjectHtmlTags_PreBodyScriptEntries = [
           {
             tagName: 'script',
             innerHTML: colorModeScript,
@@ -386,7 +386,7 @@ export class DocusaurusThemeNova {
           },
         ];
 
-        const presetVariantInit: IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPresetVariantInit = [
+        const presetVariantInit: Index_Runner_Default_InjectHtmlTags_PresetVariantInit = [
           '(function() {',
           `  document.documentElement.setAttribute('data-navbar-variant', '${resolvedPreset['navbar']}');`,
           `  document.documentElement.setAttribute('data-footer-variant', '${resolvedPreset['footer']}');`,
@@ -399,7 +399,7 @@ export class DocusaurusThemeNova {
         });
 
         if (announcementBar !== undefined) {
-          const announcementBarScript: IndexDocusaurusThemeNovaDefaultInjectHtmlTagsAnnouncementBarInit = announcementBarInit({
+          const announcementBarScript: Index_Runner_Default_InjectHtmlTags_AnnouncementBarInit = announcementBarInit({
             siteStorage,
           });
 
@@ -409,7 +409,7 @@ export class DocusaurusThemeNova {
           });
         }
 
-        const preBodyTags: IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPreBodyTags = preBodyScriptEntries;
+        const preBodyTags: Index_Runner_Default_InjectHtmlTags_PreBodyTags = preBodyScriptEntries;
 
         return {
           headTags,
@@ -423,15 +423,15 @@ export class DocusaurusThemeNova {
        * Appends an RTL CSS transformation plugin to the PostCSS pipeline
        * when the current locale direction is right-to-left.
        *
-       * @param {IndexDocusaurusThemeNovaDefaultConfigurePostCssPostCssOptions} postCssOptions - Post css options.
+       * @param {Index_Runner_Default_ConfigurePostCss_PostCssOptions} postCssOptions - Post css options.
        *
-       * @returns {IndexDocusaurusThemeNovaDefaultConfigurePostCssPostCssOptions}
+       * @returns {Index_Runner_Default_ConfigurePostCss_PostCssOptions}
        *
        * @since 0.15.0
        */
-      configurePostCss(postCssOptions: IndexDocusaurusThemeNovaDefaultConfigurePostCssPostCssOptions) {
+      configurePostCss(postCssOptions: Index_Runner_Default_ConfigurePostCss_PostCssOptions) {
         if (isRtl === true) {
-          const rtlPlugin: IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPlugin = require('rtlcss');
+          const rtlPlugin: Index_Runner_Default_ConfigurePostCss_RtlPlugin = require('rtlcss');
 
           postCssOptions['plugins'].push(rtlPlugin);
         }
@@ -472,7 +472,7 @@ export class DocusaurusThemeNova {
        * @since 0.15.0
        */
       getTranslationFiles() {
-        return Translations.extract({ themeConfig });
+        return LibTranslations.extract({ themeConfig });
       },
 
       /**
@@ -487,14 +487,14 @@ export class DocusaurusThemeNova {
        * @since 0.15.0
        */
       async getDefaultCodeTranslationMessages() {
-        const novaTranslationsDirPath: IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesNovaTranslationsDirPath = resolve(currentDirectory, '../../translations/locales');
+        const novaTranslationsDirPath: Index_Runner_Default_GetDefaultCodeTranslationMessages_NovaTranslationsDirPath = resolve(currentDirectory, '../../translations/locales');
 
-        const themeCommonMessages: IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeCommonMessages = await readDefaultCodeTranslationMessages({
+        const themeCommonMessages: Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeCommonMessages = await readDefaultCodeTranslationMessages({
           locale: currentLocale,
           name: 'theme-common',
         });
 
-        const themeNovaMessages: IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeNovaMessages = await readDefaultCodeTranslationMessages({
+        const themeNovaMessages: Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeNovaMessages = await readDefaultCodeTranslationMessages({
           dirPath: novaTranslationsDirPath,
           locale: currentLocale,
           name: 'theme-nova',
@@ -513,14 +513,14 @@ export class DocusaurusThemeNova {
        * spliced into the navbar, announcement bar, footer, and blog areas,
        * falling back to source strings when a translation key is missing.
        *
-       * @param {IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParams} params - Params.
+       * @param {Index_Runner_Default_TranslateThemeConfig_Params} params - Params.
        *
        * @returns {Record<string, unknown>}
        *
        * @since 0.15.0
        */
-      translateThemeConfig(params: IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParams) {
-        return Translations.apply({
+      translateThemeConfig(params: Index_Runner_Default_TranslateThemeConfig_Params) {
+        return LibTranslations.apply({
           themeConfig: params['themeConfig'],
           translationFiles: params['translationFiles'],
         });
@@ -533,19 +533,19 @@ export class DocusaurusThemeNova {
        * the serialized lunr index, document manifest, and worker script
        * to the build output directory.
        *
-       * @param {IndexDocusaurusThemeNovaDefaultPostBuildArgs} postBuildArgs - Post build args.
+       * @param {Index_Runner_Default_PostBuild_Args} postBuildArgs - Post build args.
        *
        * @returns {Promise<void>}
        *
        * @since 0.15.0
        */
-      async postBuild(postBuildArgs: IndexDocusaurusThemeNovaDefaultPostBuildArgs) {
+      async postBuild(postBuildArgs: Index_Runner_Default_PostBuild_Args) {
         if (searchConfig !== undefined && searchConfig !== false) {
           buildSearchIndex({
             outDir: postBuildArgs['outDir'],
             routesPaths: postBuildArgs['routesPaths'],
             baseUrl: postBuildArgs['siteConfig']['baseUrl'],
-            searchConfig: searchConfig as IndexDocusaurusThemeNovaDefaultPostBuildSearchConfigCast,
+            searchConfig: searchConfig as Index_Runner_Default_PostBuild_SearchConfigCast,
           });
         }
 
@@ -558,14 +558,14 @@ export class DocusaurusThemeNova {
        * Registers the /search route pointing to the SearchPage theme
        * component when search is enabled in the plugin options.
        *
-       * @param {IndexDocusaurusThemeNovaDefaultContentLoadedArgs} contentLoadedArgs - Content loaded args.
+       * @param {Index_Runner_Default_ContentLoaded_Args} contentLoadedArgs - Content loaded args.
        *
        * @returns {Promise<void>}
        *
        * @since 0.15.0
        */
-      async contentLoaded(contentLoadedArgs: IndexDocusaurusThemeNovaDefaultContentLoadedArgs) {
-        const actions: IndexDocusaurusThemeNovaDefaultContentLoadedActions = contentLoadedArgs['actions'];
+      async contentLoaded(contentLoadedArgs: Index_Runner_Default_ContentLoaded_Args) {
+        const actions: Index_Runner_Default_ContentLoaded_Actions = contentLoadedArgs['actions'];
 
         if (searchConfig !== undefined && searchConfig !== false) {
           actions.addRoute({
@@ -585,29 +585,29 @@ export class DocusaurusThemeNova {
        * the in-memory content of the docs and blog plugins, then writes
        * the combined global data used by theme components.
        *
-       * @param {IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs} allContentLoadedArgs - All content loaded args.
+       * @param {Index_Runner_Default_AllContentLoaded_Args} allContentLoadedArgs - All content loaded args.
        *
        * @returns {Promise<void>}
        *
        * @since 0.15.0
        */
-      async allContentLoaded(allContentLoadedArgs: IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs) {
-        const allContent: IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent = allContentLoadedArgs['allContent'];
-        const actions: IndexDocusaurusThemeNovaDefaultContentLoadedActions = allContentLoadedArgs['actions'] as IndexDocusaurusThemeNovaDefaultContentLoadedActions;
+      async allContentLoaded(allContentLoadedArgs: Index_Runner_Default_AllContentLoaded_Args) {
+        const allContent: Index_Runner_Default_AllContentLoaded_AllContent = allContentLoadedArgs['allContent'];
+        const actions: Index_Runner_Default_ContentLoaded_Actions = allContentLoadedArgs['actions'] as Index_Runner_Default_ContentLoaded_Actions;
 
         // Build a permalink-to-description map from the docs plugin's
         // in-memory loaded versions.
-        const docDescriptions: IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions = {};
-        const docsPluginData: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginData = allContent['docusaurus-plugin-content-docs'];
-        const docsPluginContent: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContent = (docsPluginData !== undefined) ? docsPluginData['default'] as IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContent : undefined;
-        const docsLoadedVersions: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersions = (docsPluginContent !== undefined && docsPluginContent['loadedVersions'] !== undefined) ? docsPluginContent['loadedVersions'] : [];
+        const docDescriptions: Index_Runner_Default_ContentLoaded_DocDescriptions = {};
+        const docsPluginData: Index_Runner_Default_AllContentLoaded_DocsPluginData = allContent['docusaurus-plugin-content-docs'];
+        const docsPluginContent: Index_Runner_Default_AllContentLoaded_DocsPluginContent = (docsPluginData !== undefined) ? docsPluginData['default'] as Index_Runner_Default_AllContentLoaded_DocsPluginContent : undefined;
+        const docsLoadedVersions: Index_Runner_Default_AllContentLoaded_DocsLoadedVersions = (docsPluginContent !== undefined && docsPluginContent['loadedVersions'] !== undefined) ? docsPluginContent['loadedVersions'] : [];
 
         for (const docsLoadedVersion of docsLoadedVersions) {
-          const docsVersionDocs: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDocs = (docsLoadedVersion['docs'] !== undefined) ? docsLoadedVersion['docs'] : [];
+          const docsVersionDocs: Index_Runner_Default_AllContentLoaded_DocsVersionDocs = (docsLoadedVersion['docs'] !== undefined) ? docsLoadedVersion['docs'] : [];
 
           for (const docEntry of docsVersionDocs) {
-            const permalinkValue: IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue = docEntry['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue;
-            const descriptionValue: IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue = docEntry['description'] as IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue;
+            const permalinkValue: Index_Runner_Default_ContentLoaded_PermalinkValue = docEntry['permalink'] as Index_Runner_Default_ContentLoaded_PermalinkValue;
+            const descriptionValue: Index_Runner_Default_ContentLoaded_DescriptionValue = docEntry['description'] as Index_Runner_Default_ContentLoaded_DescriptionValue;
 
             if (
               permalinkValue !== undefined
@@ -621,21 +621,21 @@ export class DocusaurusThemeNova {
 
         // Build a blog posts array and unique authors list
         // from the blog plugin's in-memory posts.
-        const blogPosts: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPosts = [];
-        const blogSeenPostPermalinks: IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenPostPermalinks = new Set();
-        const blogAuthors: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthors = [];
-        const blogSeenAuthorKeys: IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenAuthorKeys = new Set();
+        const blogPosts: Index_Runner_Default_ContentLoaded_BlogPosts = [];
+        const blogSeenPostPermalinks: Index_Runner_Default_ContentLoaded_BlogSeenPostPermalinks = new Set();
+        const blogAuthors: Index_Runner_Default_ContentLoaded_BlogAuthors = [];
+        const blogSeenAuthorKeys: Index_Runner_Default_ContentLoaded_BlogSeenAuthorKeys = new Set();
 
-        const blogPluginData: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginData = allContent['docusaurus-plugin-content-blog'];
-        const blogPluginContent: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContent = (blogPluginData !== undefined) ? blogPluginData['default'] as IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContent : undefined;
-        const blogPluginPosts: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPosts = (blogPluginContent !== undefined && blogPluginContent['blogPosts'] !== undefined) ? blogPluginContent['blogPosts'] : [];
+        const blogPluginData: Index_Runner_Default_AllContentLoaded_BlogPluginData = allContent['docusaurus-plugin-content-blog'];
+        const blogPluginContent: Index_Runner_Default_AllContentLoaded_BlogPluginContent = (blogPluginData !== undefined) ? blogPluginData['default'] as Index_Runner_Default_AllContentLoaded_BlogPluginContent : undefined;
+        const blogPluginPosts: Index_Runner_Default_AllContentLoaded_BlogPluginPosts = (blogPluginContent !== undefined && blogPluginContent['blogPosts'] !== undefined) ? blogPluginContent['blogPosts'] : [];
 
         for (const blogPluginPost of blogPluginPosts) {
-          const blogPostMetadata: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPostMetadata = (blogPluginPost['metadata'] !== undefined) ? blogPluginPost['metadata'] : {};
-          const blogTitleValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue = blogPostMetadata['title'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue;
-          const blogPermalinkValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue = blogPostMetadata['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue;
-          const blogDescriptionValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue = blogPostMetadata['description'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue;
-          const blogDateValue: IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue = blogPostMetadata['date'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue;
+          const blogPostMetadata: Index_Runner_Default_AllContentLoaded_BlogPostMetadata = (blogPluginPost['metadata'] !== undefined) ? blogPluginPost['metadata'] : {};
+          const blogTitleValue: Index_Runner_Default_ContentLoaded_BlogTitleValue = blogPostMetadata['title'] as Index_Runner_Default_ContentLoaded_BlogTitleValue;
+          const blogPermalinkValue: Index_Runner_Default_ContentLoaded_BlogPermalinkValue = blogPostMetadata['permalink'] as Index_Runner_Default_ContentLoaded_BlogPermalinkValue;
+          const blogDescriptionValue: Index_Runner_Default_ContentLoaded_BlogDescriptionValue = blogPostMetadata['description'] as Index_Runner_Default_ContentLoaded_BlogDescriptionValue;
+          const blogDateValue: Index_Runner_Default_ContentLoaded_BlogDateValue = blogPostMetadata['date'] as Index_Runner_Default_ContentLoaded_BlogDateValue;
 
           if (
             blogTitleValue !== undefined
@@ -647,7 +647,7 @@ export class DocusaurusThemeNova {
           ) {
             blogSeenPostPermalinks.add(blogPermalinkValue);
 
-            const blogPost: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPost = {
+            const blogPost: Index_Runner_Default_ContentLoaded_BlogPost = {
               title: blogTitleValue,
               description: blogDescriptionValue,
               permalink: blogPermalinkValue,
@@ -657,11 +657,11 @@ export class DocusaurusThemeNova {
             blogPosts.push(blogPost);
           }
 
-          const blogPostAuthors: IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors = (blogPostMetadata['authors'] !== undefined) ? blogPostMetadata['authors'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors : [];
+          const blogPostAuthors: Index_Runner_Default_ContentLoaded_BlogFileAuthors = (blogPostMetadata['authors'] !== undefined) ? blogPostMetadata['authors'] as Index_Runner_Default_ContentLoaded_BlogFileAuthors : [];
 
           for (const blogPostAuthor of blogPostAuthors) {
-            const authorRaw: IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthor = blogPostAuthor;
-            const authorKey: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey = authorRaw['key'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey;
+            const authorRaw: Index_Runner_Default_ContentLoaded_BlogFileAuthor = blogPostAuthor;
+            const authorKey: Index_Runner_Default_ContentLoaded_BlogAuthor_Key = authorRaw['key'] as Index_Runner_Default_ContentLoaded_BlogAuthor_Key;
 
             if (authorKey === undefined || blogSeenAuthorKeys.has(authorKey) === true) {
               continue;
@@ -669,12 +669,12 @@ export class DocusaurusThemeNova {
 
             blogSeenAuthorKeys.add(authorKey);
 
-            const authorName: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName = authorRaw['name'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName;
-            const authorImageUrl: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl = authorRaw['imageURL'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl;
-            const authorPage: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage = authorRaw['page'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage;
-            const authorPermalink: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink = (authorPage !== undefined && authorPage !== null) ? authorPage['permalink'] as IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink : undefined;
+            const authorName: Index_Runner_Default_ContentLoaded_BlogAuthor_Name = authorRaw['name'] as Index_Runner_Default_ContentLoaded_BlogAuthor_Name;
+            const authorImageUrl: Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL = authorRaw['imageURL'] as Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL;
+            const authorPage: Index_Runner_Default_ContentLoaded_BlogAuthorPage = authorRaw['page'] as Index_Runner_Default_ContentLoaded_BlogAuthorPage;
+            const authorPermalink: Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink = (authorPage !== undefined && authorPage !== null) ? authorPage['permalink'] as Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink : undefined;
 
-            const blogAuthor: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthor = {
+            const blogAuthor: Index_Runner_Default_ContentLoaded_BlogAuthor = {
               imageURL: authorImageUrl,
               key: authorKey,
               name: authorName,
@@ -688,13 +688,13 @@ export class DocusaurusThemeNova {
         // Build-time random indices for surfaces that pick from a phrase pool.
         // Computed once per build so SSR HTML matches client hydration - no
         // visible flash from useEffect-time randomization.
-        const notFoundBundleCount: IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleCount = 5;
-        const errorPageContentTitleCount: IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleCount = 5;
-        const creditPhraseCount: IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseCount = 10;
+        const notFoundBundleCount: Index_Runner_Default_ContentLoaded_NotFoundBundleCount = 5;
+        const errorPageContentTitleCount: Index_Runner_Default_ContentLoaded_ErrorPageContentTitleCount = 5;
+        const creditPhraseCount: Index_Runner_Default_ContentLoaded_CreditPhraseCount = 10;
 
-        const notFoundBundleIndex: IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleIndexValue = Math.floor(Math.random() * notFoundBundleCount);
-        const errorPageContentTitleIndex: IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleIndexValue = Math.floor(Math.random() * errorPageContentTitleCount);
-        const creditPhraseIndex: IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseIndexValue = Math.floor(Math.random() * creditPhraseCount);
+        const notFoundBundleIndex: Index_Runner_Default_ContentLoaded_NotFoundBundleIndexValue = Math.floor(Math.random() * notFoundBundleCount);
+        const errorPageContentTitleIndex: Index_Runner_Default_ContentLoaded_ErrorPageContentTitleIndexValue = Math.floor(Math.random() * errorPageContentTitleCount);
+        const creditPhraseIndex: Index_Runner_Default_ContentLoaded_CreditPhraseIndexValue = Math.floor(Math.random() * creditPhraseCount);
 
         actions.setGlobalData({
           blogAuthors,
@@ -722,4 +722,4 @@ export class DocusaurusThemeNova {
 export { getSwizzleConfig } from './get-swizzle-config.js';
 export { validateOptions, validateThemeConfig } from './options.js';
 
-export default DocusaurusThemeNova['default'];
+export default Runner['default'];

@@ -3,19 +3,19 @@
  *
  * @since 0.15.0
  */
-export type CliScaffoldAppExpressjsRunOptionsDryRun = true;
+export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_DryRun = true;
 
-export type CliScaffoldAppExpressjsRunOptionsName = string;
+export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_Name = string;
 
-export type CliScaffoldAppExpressjsRunOptionsOutput = string;
+export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_Output = string;
 
-export type CliScaffoldAppExpressjsRunOptionsWorkspaceName = string;
+export type Cli_Scaffold_App_Expressjs_Runner_Run_Options_WorkspaceName = string;
 
-export type CliScaffoldAppExpressjsRunOptions = {
-  dryRun?: CliScaffoldAppExpressjsRunOptionsDryRun;
-  name?: CliScaffoldAppExpressjsRunOptionsName;
-  output?: CliScaffoldAppExpressjsRunOptionsOutput;
-  workspaceName?: CliScaffoldAppExpressjsRunOptionsWorkspaceName;
+export type Cli_Scaffold_App_Expressjs_Runner_Run_Options = {
+  dryRun?: Cli_Scaffold_App_Expressjs_Runner_Run_Options_DryRun;
+  name?: Cli_Scaffold_App_Expressjs_Runner_Run_Options_Name;
+  output?: Cli_Scaffold_App_Expressjs_Runner_Run_Options_Output;
+  workspaceName?: Cli_Scaffold_App_Expressjs_Runner_Run_Options_WorkspaceName;
 };
 
-export type CliScaffoldAppExpressjsRunReturns = Promise<void>;
+export type Cli_Scaffold_App_Expressjs_Runner_Run_Returns = Promise<void>;

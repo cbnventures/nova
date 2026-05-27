@@ -5,37 +5,37 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeLoadingPropsIsLoading = boolean;
+export type Theme_Loading_Index_Loading_Props_IsLoading = boolean;
 
-export type ThemeLoadingPropsPastDelay = boolean;
+export type Theme_Loading_Index_Loading_Props_PastDelay = boolean;
 
-export type ThemeLoadingPropsTimedOut = boolean;
+export type Theme_Loading_Index_Loading_Props_TimedOut = boolean;
 
-export type ThemeLoadingPropsError = Error | null | undefined;
+export type Theme_Loading_Index_Loading_Props_Error = Error | null | undefined;
 
-export type ThemeLoadingPropsRetry = (() => void) | undefined;
+export type Theme_Loading_Index_Loading_Props_Retry = (() => void) | undefined;
 
-export type ThemeLoadingPropsClassName = string | undefined;
+export type Theme_Loading_Index_Loading_Props_ClassName = string | undefined;
 
-export type ThemeLoadingPropsStyle = CSSProperties | undefined;
+export type Theme_Loading_Index_Loading_Props_Style = CSSProperties | undefined;
 
-export type ThemeLoadingProps = {
-  isLoading: ThemeLoadingPropsIsLoading;
-  pastDelay: ThemeLoadingPropsPastDelay;
-  timedOut: ThemeLoadingPropsTimedOut;
-  error: ThemeLoadingPropsError;
-  retry: ThemeLoadingPropsRetry;
-  className?: ThemeLoadingPropsClassName;
-  style?: ThemeLoadingPropsStyle;
+export type Theme_Loading_Index_Loading_Props = {
+  isLoading: Theme_Loading_Index_Loading_Props_IsLoading;
+  pastDelay: Theme_Loading_Index_Loading_Props_PastDelay;
+  timedOut: Theme_Loading_Index_Loading_Props_TimedOut;
+  error: Theme_Loading_Index_Loading_Props_Error;
+  retry: Theme_Loading_Index_Loading_Props_Retry;
+  className?: Theme_Loading_Index_Loading_Props_ClassName;
+  style?: Theme_Loading_Index_Loading_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeLoadingLoadingErrorPrefix = string;
+export type Theme_Loading_Index_Loading_ErrorPrefix = string;
 
-export type ThemeLoadingLoadingRetry = string;
+export type Theme_Loading_Index_Loading_Retry = string;
 
-export type ThemeLoadingLoadingTimeout = string;
+export type Theme_Loading_Index_Loading_Timeout = string;
 
-export type ThemeLoadingLoadingLoading = string;
+export type Theme_Loading_Index_Loading_Loading = string;
 
-export type ThemeLoadingErrorMessage = string;
+export type Theme_Loading_Index_Loading_ErrorMessage = string;

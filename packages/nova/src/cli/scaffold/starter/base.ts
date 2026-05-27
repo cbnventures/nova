@@ -6,21 +6,21 @@ import { createMonorepoRoot, detectMonorepoContext, promptPostScaffoldGenerators
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliScaffoldStarterBaseRunCancelled,
-  CliScaffoldStarterBaseRunContext,
-  CliScaffoldStarterBaseRunCurrentDirectory,
-  CliScaffoldStarterBaseRunDirectoryAnswers,
-  CliScaffoldStarterBaseRunDirectoryChoices,
-  CliScaffoldStarterBaseRunIsDryRun,
-  CliScaffoldStarterBaseRunNameAnswers,
-  CliScaffoldStarterBaseRunNameQuestions,
-  CliScaffoldStarterBaseRunOptions,
-  CliScaffoldStarterBaseRunOutputAnswers,
-  CliScaffoldStarterBaseRunOutputDirectory,
-  CliScaffoldStarterBaseRunResolvedName,
-  CliScaffoldStarterBaseRunResolvedOutput,
-  CliScaffoldStarterBaseRunReturns,
-  CliScaffoldStarterBaseRunSelectedDirectoryChoice,
+  Cli_Scaffold_Starter_Base_Runner_Run_Cancelled,
+  Cli_Scaffold_Starter_Base_Runner_Run_Context,
+  Cli_Scaffold_Starter_Base_Runner_Run_CurrentDirectory,
+  Cli_Scaffold_Starter_Base_Runner_Run_DirectoryAnswers,
+  Cli_Scaffold_Starter_Base_Runner_Run_DirectoryChoices,
+  Cli_Scaffold_Starter_Base_Runner_Run_IsDryRun,
+  Cli_Scaffold_Starter_Base_Runner_Run_NameAnswers,
+  Cli_Scaffold_Starter_Base_Runner_Run_NameQuestions,
+  Cli_Scaffold_Starter_Base_Runner_Run_Options,
+  Cli_Scaffold_Starter_Base_Runner_Run_OutputAnswers,
+  Cli_Scaffold_Starter_Base_Runner_Run_OutputDirectory,
+  Cli_Scaffold_Starter_Base_Runner_Run_ResolvedName,
+  Cli_Scaffold_Starter_Base_Runner_Run_ResolvedOutput,
+  Cli_Scaffold_Starter_Base_Runner_Run_Returns,
+  Cli_Scaffold_Starter_Base_Runner_Run_SelectedDirectoryChoice,
 } from '../../../types/cli/scaffold/starter/base.d.ts';
 
 /**
@@ -32,36 +32,36 @@ import type {
  *
  * @since 0.15.0
  */
-export class CliScaffoldStarterBase {
+export class Runner {
   /**
    * CLI - Scaffold - Starter - Base - Run.
    *
    * Entry point invoked by the CLI nova scaffold starter command. Detects context, prompts for
    * project name and output directory, then creates the monorepo root.
    *
-   * @param {CliScaffoldStarterBaseRunOptions} options - Options.
+   * @param {Cli_Scaffold_Starter_Base_Runner_Run_Options} options - Options.
    *
-   * @returns {CliScaffoldStarterBaseRunReturns}
+   * @returns {Cli_Scaffold_Starter_Base_Runner_Run_Returns}
    *
    * @since 0.15.0
    */
-  public static async run(options: CliScaffoldStarterBaseRunOptions): CliScaffoldStarterBaseRunReturns {
-    const currentDirectory: CliScaffoldStarterBaseRunCurrentDirectory = process.cwd();
-    const isDryRun: CliScaffoldStarterBaseRunIsDryRun = options['dryRun'] === true;
+  public static async run(options: Cli_Scaffold_Starter_Base_Runner_Run_Options): Cli_Scaffold_Starter_Base_Runner_Run_Returns {
+    const currentDirectory: Cli_Scaffold_Starter_Base_Runner_Run_CurrentDirectory = process.cwd();
+    const isDryRun: Cli_Scaffold_Starter_Base_Runner_Run_IsDryRun = options['dryRun'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliScaffoldStarterBase.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     // Detect monorepo context.
-    const context: CliScaffoldStarterBaseRunContext = await detectMonorepoContext(currentDirectory);
+    const context: Cli_Scaffold_Starter_Base_Runner_Run_Context = await detectMonorepoContext(currentDirectory);
 
     if (context['context'] === 'nested') {
       Logger.customize({
-        name: 'CliScaffoldStarterBase.run',
+        name: 'Runner.run',
         purpose: 'context',
       }).error('Re-run this command from the monorepo root directory.');
 
@@ -72,7 +72,7 @@ export class CliScaffoldStarterBase {
 
     if (context['context'] === 'standalone') {
       Logger.customize({
-        name: 'CliScaffoldStarterBase.run',
+        name: 'Runner.run',
         purpose: 'context',
       }).error('Found a standalone project. Run from an empty directory to create a new monorepo.');
 
@@ -83,7 +83,7 @@ export class CliScaffoldStarterBase {
 
     if (context['context'] === 'workspace') {
       Logger.customize({
-        name: 'CliScaffoldStarterBase.run',
+        name: 'Runner.run',
         purpose: 'context',
       }).error('Already at a monorepo root. Use scaffold app or scaffold docs to add workspaces.');
 
@@ -92,10 +92,10 @@ export class CliScaffoldStarterBase {
       return;
     }
 
-    let cancelled: CliScaffoldStarterBaseRunCancelled = false;
+    let cancelled: Cli_Scaffold_Starter_Base_Runner_Run_Cancelled = false;
 
     // Prompt for project name.
-    const nameQuestions: CliScaffoldStarterBaseRunNameQuestions = [];
+    const nameQuestions: Cli_Scaffold_Starter_Base_Runner_Run_NameQuestions = [];
 
     if (options['name'] === undefined) {
       nameQuestions.push({
@@ -106,7 +106,7 @@ export class CliScaffoldStarterBase {
       });
     }
 
-    const nameAnswers: CliScaffoldStarterBaseRunNameAnswers = await prompts(nameQuestions, {
+    const nameAnswers: Cli_Scaffold_Starter_Base_Runner_Run_NameAnswers = await prompts(nameQuestions, {
       onCancel: () => false,
     });
 
@@ -118,15 +118,15 @@ export class CliScaffoldStarterBase {
       return;
     }
 
-    const resolvedName: CliScaffoldStarterBaseRunResolvedName = (options['name'] ?? nameAnswers['name']) as CliScaffoldStarterBaseRunResolvedName;
+    const resolvedName: Cli_Scaffold_Starter_Base_Runner_Run_ResolvedName = (options['name'] ?? nameAnswers['name']) as Cli_Scaffold_Starter_Base_Runner_Run_ResolvedName;
 
     // Determine output directory.
-    let outputDirectory: CliScaffoldStarterBaseRunOutputDirectory = undefined;
+    let outputDirectory: Cli_Scaffold_Starter_Base_Runner_Run_OutputDirectory = undefined;
 
     if (options['output'] !== undefined) {
       outputDirectory = resolve(currentDirectory, options['output']);
     } else {
-      const directoryChoices: CliScaffoldStarterBaseRunDirectoryChoices = [
+      const directoryChoices: Cli_Scaffold_Starter_Base_Runner_Run_DirectoryChoices = [
         {
           title: 'Create a new directory',
           value: 'new-directory',
@@ -137,7 +137,7 @@ export class CliScaffoldStarterBase {
         },
       ];
 
-      const directoryAnswers: CliScaffoldStarterBaseRunDirectoryAnswers = await prompts({
+      const directoryAnswers: Cli_Scaffold_Starter_Base_Runner_Run_DirectoryAnswers = await prompts({
         type: 'select',
         name: 'directoryChoice',
         message: 'Where should the project be created?',
@@ -155,12 +155,12 @@ export class CliScaffoldStarterBase {
         return;
       }
 
-      const selectedDirectoryChoice: CliScaffoldStarterBaseRunSelectedDirectoryChoice = directoryAnswers['directoryChoice'] as CliScaffoldStarterBaseRunSelectedDirectoryChoice;
+      const selectedDirectoryChoice: Cli_Scaffold_Starter_Base_Runner_Run_SelectedDirectoryChoice = directoryAnswers['directoryChoice'] as Cli_Scaffold_Starter_Base_Runner_Run_SelectedDirectoryChoice;
 
       if (selectedDirectoryChoice === 'current-directory') {
         outputDirectory = currentDirectory;
       } else {
-        const outputAnswers: CliScaffoldStarterBaseRunOutputAnswers = await prompts({
+        const outputAnswers: Cli_Scaffold_Starter_Base_Runner_Run_OutputAnswers = await prompts({
           type: 'text',
           name: 'output',
           message: 'Output directory:',
@@ -177,7 +177,7 @@ export class CliScaffoldStarterBase {
           return;
         }
 
-        const resolvedOutput: CliScaffoldStarterBaseRunResolvedOutput = outputAnswers['output'] as CliScaffoldStarterBaseRunResolvedOutput;
+        const resolvedOutput: Cli_Scaffold_Starter_Base_Runner_Run_ResolvedOutput = outputAnswers['output'] as Cli_Scaffold_Starter_Base_Runner_Run_ResolvedOutput;
 
         outputDirectory = resolve(currentDirectory, resolvedOutput);
       }
@@ -188,7 +188,7 @@ export class CliScaffoldStarterBase {
     }
 
     Logger.customize({
-      name: 'CliScaffoldStarterBase.run',
+      name: 'Runner.run',
       purpose: 'config',
     }).info(`Scaffolding starter monorepo "${resolvedName}" in "${outputDirectory}".`);
 
@@ -200,7 +200,7 @@ export class CliScaffoldStarterBase {
     await createMonorepoRoot(outputDirectory, resolvedName);
 
     Logger.customize({
-      name: 'CliScaffoldStarterBase.run',
+      name: 'Runner.run',
       purpose: 'complete',
     }).info('Scaffold complete for starter monorepo.');
 

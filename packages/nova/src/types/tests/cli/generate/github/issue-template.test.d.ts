@@ -3,14 +3,14 @@
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateGithubIssueTemplateRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubIssueTemplateRunLoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubIssueTemplateRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubIssueTemplateRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_SaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined][];
 
-export type TestsCliGenerateGithubIssueTemplateRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_TargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
-export type TestsCliGenerateGithubIssueTemplateRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
+export type Tests_Cli_Generate_Github_IssueTemplate_CliGenerateGithubIssueTemplateRun_HeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;

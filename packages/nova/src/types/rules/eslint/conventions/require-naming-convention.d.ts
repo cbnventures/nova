@@ -6,260 +6,260 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckCasingName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckCasing_Name = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckCasingExpected = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckCasing_Expected = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckCasingReturns = boolean;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckCasing_Returns = boolean;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Class Declaration.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckClassDeclarationContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassDeclarationNode = TSESTree.ClassDeclaration;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_Node = TSESTree.ClassDeclaration;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassDeclarationClassDeclaration = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_ClassDeclaration = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassDeclarationReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassDeclarationName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassDeclaration_Name = string;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Class Method.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckClassMethodContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassMethodNode = TSESTree.MethodDefinition;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_Node = TSESTree.MethodDefinition;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassMethodClassMethod = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_ClassMethod = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassMethodReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassMethodName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassMethod_Name = string;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Class Property.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckClassPropertyContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassPropertyNode = TSESTree.PropertyDefinition;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Node = TSESTree.PropertyDefinition;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassPropertyClassProperty = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_ClassProperty = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassPropertyReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckClassPropertyName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckClassProperty_Name = string;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Enum Declaration.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckEnumDeclarationContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckEnumDeclarationNode = TSESTree.TSEnumDeclaration;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Node = TSESTree.TSEnumDeclaration;
 
-export type RulesEslintConventionsRequireNamingConventionCheckEnumDeclarationEnum = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Enum = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckEnumDeclarationEnumMember = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_EnumMember = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckEnumDeclarationReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckEnumDeclarationName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_Name = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckEnumDeclarationMemberName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckEnumDeclaration_MemberName = string;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Function Declaration.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationNode = TSESTree.FunctionDeclaration;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Node = TSESTree.FunctionDeclaration;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationFunction = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Function = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationReactComponent = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ReactComponent = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationParameter = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Parameter = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_Name = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationIsUppercaseStart = boolean;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_IsUppercaseStart = boolean;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationExpectedCasing = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ExpectedCasing = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckFunctionDeclarationExpectedContext = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckFunctionDeclaration_ExpectedContext = string;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Interface Declaration.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckInterfaceDeclarationContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckInterfaceDeclarationNode = TSESTree.TSInterfaceDeclaration;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Node = TSESTree.TSInterfaceDeclaration;
 
-export type RulesEslintConventionsRequireNamingConventionCheckInterfaceDeclarationInterface = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Interface = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckInterfaceDeclarationReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckInterfaceDeclarationName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckInterfaceDeclaration_Name = string;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Parameter.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckParameterContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckParameterNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Node = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
 
-export type RulesEslintConventionsRequireNamingConventionCheckParameterParameter = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Parameter = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckParameterReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckParameterName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckParameter_Name = string;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Type Alias Declaration.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckTypeAliasDeclarationContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckTypeAliasDeclarationNode = TSESTree.TSTypeAliasDeclaration;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_Node = TSESTree.TSTypeAliasDeclaration;
 
-export type RulesEslintConventionsRequireNamingConventionCheckTypeAliasDeclarationTypeAlias = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_TypeAlias = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckTypeAliasDeclarationReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckTypeAliasDeclarationName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckTypeAliasDeclaration_Name = string;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Check Variable Declarator.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorNode = TSESTree.VariableDeclarator;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Node = TSESTree.VariableDeclarator;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorVariable = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Variable = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorConstant = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Constant = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorConstructorVariable = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_ConstructorVariable = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorReturns = void;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Returns = void;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorName = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Name = string;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorParent = TSESTree.Node;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Parent = TSESTree.Node;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorInit = TSESTree.Expression | null;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Init = TSESTree.Expression | null;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorScope = ReturnType<typeof import('@typescript-eslint/utils/ts-eslint').SourceCode.prototype.getScope>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Scope = ReturnType<typeof import('@typescript-eslint/utils/ts-eslint').SourceCode.prototype.getScope>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorScopeVariable = ReturnType<Map<string, import('@typescript-eslint/utils/ts-eslint').Scope.Variable>['get']>;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_ScopeVariable = ReturnType<Map<string, import('@typescript-eslint/utils/ts-eslint').Scope.Variable>['get']>;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorIsConstructor = boolean;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_IsConstructor = boolean;
 
-export type RulesEslintConventionsRequireNamingConventionCheckVariableDeclaratorReference = import('@typescript-eslint/utils/ts-eslint').Scope.Reference;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_CheckVariableDeclarator_Reference = import('@typescript-eslint/utils/ts-eslint').Scope.Reference;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Is Immutable Value.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionIsImmutableValueNode = TSESTree.Expression | null;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Node = TSESTree.Expression | null;
 
-export type RulesEslintConventionsRequireNamingConventionIsImmutableValueReturns = boolean;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_IsImmutableValue_Returns = boolean;
 
 /**
  * Rules - ESLint - Conventions - Require Naming Convention - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsClassDeclaration = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsClassDeclaration = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsConstructorVariable = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsConstructorVariable = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsClassMethod = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsClassMethod = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsClassProperty = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsClassProperty = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsConstant = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsConstant = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsEnum = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsEnum = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsEnumMember = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsEnumMember = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsFunction = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsFunction = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsInterface = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsInterface = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsParameter = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsParameter = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsReactComponent = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsReactComponent = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsTypeAlias = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsTypeAlias = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleDefaultOptionsVariable = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleDefaultOptionsVariable = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsVariable = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Variable = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsConstructorVariable = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ConstructorVariable = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsConstant = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Constant = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsFunction = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Function = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsParameter = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Parameter = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsReactComponent = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ReactComponent = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsClassDeclaration = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ClassDeclaration = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsClassProperty = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ClassProperty = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsClassMethod = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ClassMethod = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsTypeAlias = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_TypeAlias = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsInterface = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Interface = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsEnum = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Enum = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptionsEnumMember = string;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_EnumMember = string;
 
-export type RulesEslintConventionsRequireNamingConventionRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintConventionsRequireNamingConventionRuleOptionsIgnoreFiles;
-  variable: RulesEslintConventionsRequireNamingConventionRuleOptionsVariable;
-  constructorVariable: RulesEslintConventionsRequireNamingConventionRuleOptionsConstructorVariable;
-  constant: RulesEslintConventionsRequireNamingConventionRuleOptionsConstant;
-  function: RulesEslintConventionsRequireNamingConventionRuleOptionsFunction;
-  parameter: RulesEslintConventionsRequireNamingConventionRuleOptionsParameter;
-  reactComponent: RulesEslintConventionsRequireNamingConventionRuleOptionsReactComponent;
-  classDeclaration: RulesEslintConventionsRequireNamingConventionRuleOptionsClassDeclaration;
-  classProperty: RulesEslintConventionsRequireNamingConventionRuleOptionsClassProperty;
-  classMethod: RulesEslintConventionsRequireNamingConventionRuleOptionsClassMethod;
-  typeAlias: RulesEslintConventionsRequireNamingConventionRuleOptionsTypeAlias;
-  interface: RulesEslintConventionsRequireNamingConventionRuleOptionsInterface;
-  enum: RulesEslintConventionsRequireNamingConventionRuleOptionsEnum;
-  enumMember: RulesEslintConventionsRequireNamingConventionRuleOptionsEnumMember;
+export type Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_IgnoreFiles;
+  variable: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Variable;
+  constructorVariable: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ConstructorVariable;
+  constant: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Constant;
+  function: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Function;
+  parameter: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Parameter;
+  reactComponent: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ReactComponent;
+  classDeclaration: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ClassDeclaration;
+  classProperty: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ClassProperty;
+  classMethod: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_ClassMethod;
+  typeAlias: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_TypeAlias;
+  interface: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Interface;
+  enum: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_Enum;
+  enumMember: Rules_Eslint_Conventions_RequireNamingConvention_Runner_RuleOptions_EnumMember;
 }>;

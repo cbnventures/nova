@@ -6,51 +6,51 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintJsdocRequireJsdocBodyCheckProgramContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintJsdocRequireJsdocBodyCheckProgramReturns = void;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns = void;
 
-export type RulesEslintJsdocRequireJsdocBodyCheckProgramAllComments = TSESTree.Comment[];
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_AllComments = TSESTree.Comment[];
 
-export type RulesEslintJsdocRequireJsdocBodyCheckProgramLines = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Lines = string[];
 
-export type RulesEslintJsdocRequireJsdocBodyCheckProgramFoundSummary = boolean;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FoundSummary = boolean;
 
-export type RulesEslintJsdocRequireJsdocBodyCheckProgramPastSummary = boolean;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary = boolean;
 
-export type RulesEslintJsdocRequireJsdocBodyCheckProgramBodyLineCount = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLineCount = number;
 
-export type RulesEslintJsdocRequireJsdocBodyCheckProgramTrimmed = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed = string;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Body - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMaxLines = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxLines = number;
 
-export type RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMaxWidth = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxWidth = number;
 
-export type RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMinLines = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMinLines = number;
 
-export type RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsSkipDirectories = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsSkipDirectories = string[];
 
-export type RulesEslintJsdocRequireJsdocBodyRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintJsdocRequireJsdocBodyRuleOptionsMaxLines = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_MaxLines = number;
 
-export type RulesEslintJsdocRequireJsdocBodyRuleOptionsMaxWidth = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_MaxWidth = number;
 
-export type RulesEslintJsdocRequireJsdocBodyRuleOptionsMinLines = number;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_MinLines = number;
 
-export type RulesEslintJsdocRequireJsdocBodyRuleOptionsSkipDirectories = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_SkipDirectories = string[];
 
-export type RulesEslintJsdocRequireJsdocBodyRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintJsdocRequireJsdocBodyRuleOptionsIgnoreFiles;
-  maxLines: RulesEslintJsdocRequireJsdocBodyRuleOptionsMaxLines;
-  maxWidth: RulesEslintJsdocRequireJsdocBodyRuleOptionsMaxWidth;
-  minLines: RulesEslintJsdocRequireJsdocBodyRuleOptionsMinLines;
-  skipDirectories: RulesEslintJsdocRequireJsdocBodyRuleOptionsSkipDirectories;
+export type Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_IgnoreFiles;
+  maxLines: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_MaxLines;
+  maxWidth: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_MaxWidth;
+  minLines: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_MinLines;
+  skipDirectories: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions_SkipDirectories;
 }>;

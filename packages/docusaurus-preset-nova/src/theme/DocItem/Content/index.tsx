@@ -3,9 +3,9 @@ import Heading from '@theme/Heading';
 import MDXContent from '@theme/MDXContent';
 
 import type {
-  ThemeDocItemContentDocItemContentProps,
-  ThemeDocItemContentUseSyntheticTitleDoc,
-  ThemeDocItemContentUseSyntheticTitleSyntheticTitle,
+  Theme_DocItem_Content_Index_DocItemContent_Props,
+  Theme_DocItem_Content_Index_UseSyntheticTitle_Doc,
+  Theme_DocItem_Content_Index_UseSyntheticTitle_SyntheticTitle,
 } from '../../../types/theme/DocItem/Content/index.d.ts';
 
 /**
@@ -15,12 +15,12 @@ import type {
  * or null when the content already provides a top-level heading
  * or the title is explicitly hidden.
  *
- * @returns {ThemeDocItemContentUseSyntheticTitleSyntheticTitle}
+ * @returns {Theme_DocItem_Content_Index_UseSyntheticTitle_SyntheticTitle}
  *
  * @since 0.15.0
  */
-function useSyntheticTitle(): ThemeDocItemContentUseSyntheticTitleSyntheticTitle {
-  const doc: ThemeDocItemContentUseSyntheticTitleDoc = useDoc();
+function useSyntheticTitle(): Theme_DocItem_Content_Index_UseSyntheticTitle_SyntheticTitle {
+  const doc: Theme_DocItem_Content_Index_UseSyntheticTitle_Doc = useDoc();
 
   if (
     doc['frontMatter']['hide_title'] === true
@@ -39,14 +39,14 @@ function useSyntheticTitle(): ThemeDocItemContentUseSyntheticTitleSyntheticTitle
  * markdown does not contain a top-level heading, wrapping children
  * in the MDXContent provider.
  *
- * @param {ThemeDocItemContentDocItemContentProps} props - Props.
+ * @param {Theme_DocItem_Content_Index_DocItemContent_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocItemContent(props: ThemeDocItemContentDocItemContentProps) {
-  const syntheticTitle: ThemeDocItemContentUseSyntheticTitleSyntheticTitle = useSyntheticTitle();
+function DocItemContent(props: Theme_DocItem_Content_Index_DocItemContent_Props) {
+  const syntheticTitle: Theme_DocItem_Content_Index_UseSyntheticTitle_SyntheticTitle = useSyntheticTitle();
 
   return (
     <div

@@ -5,24 +5,24 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.18.0
  */
-export type ThemeContentFooterEditPropsEditUrl = string | undefined;
+export type Theme_ContentFooter_Edit_Index_Edit_Props_EditUrl = string | undefined;
 
-export type ThemeContentFooterEditPropsLastUpdatedAt = number | undefined;
+export type Theme_ContentFooter_Edit_Index_Edit_Props_LastUpdatedAt = number | undefined;
 
-export type ThemeContentFooterEditPropsLastUpdatedBy = string | undefined;
+export type Theme_ContentFooter_Edit_Index_Edit_Props_LastUpdatedBy = string | undefined;
 
-export type ThemeContentFooterEditPropsClassName = string | undefined;
+export type Theme_ContentFooter_Edit_Index_Edit_Props_ClassName = string | undefined;
 
-export type ThemeContentFooterEditPropsStyle = CSSProperties | undefined;
+export type Theme_ContentFooter_Edit_Index_Edit_Props_Style = CSSProperties | undefined;
 
-export type ThemeContentFooterEditProps = {
-  editUrl?: ThemeContentFooterEditPropsEditUrl;
-  lastUpdatedAt?: ThemeContentFooterEditPropsLastUpdatedAt;
-  lastUpdatedBy?: ThemeContentFooterEditPropsLastUpdatedBy;
-  className?: ThemeContentFooterEditPropsClassName;
-  style?: ThemeContentFooterEditPropsStyle;
+export type Theme_ContentFooter_Edit_Index_Edit_Props = {
+  editUrl?: Theme_ContentFooter_Edit_Index_Edit_Props_EditUrl;
+  lastUpdatedAt?: Theme_ContentFooter_Edit_Index_Edit_Props_LastUpdatedAt;
+  lastUpdatedBy?: Theme_ContentFooter_Edit_Index_Edit_Props_LastUpdatedBy;
+  className?: Theme_ContentFooter_Edit_Index_Edit_Props_ClassName;
+  style?: Theme_ContentFooter_Edit_Index_Edit_Props_Style;
 };
 
-export type ThemeContentFooterEditLabel = string;
+export type Theme_ContentFooter_Edit_Index_Edit_Label = string;
 
-export type ThemeContentFooterEditLastUpdatedSpread = Record<string, unknown>;
+export type Theme_ContentFooter_Edit_Index_Edit_LastUpdatedSpread = Record<string, unknown>;

@@ -6,27 +6,27 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingRequireTernaryParensCheckConditionalExpressionContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintFormattingRequireTernaryParensCheckConditionalExpressionNode = TSESTree.ConditionalExpression;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Node = TSESTree.ConditionalExpression;
 
-export type RulesEslintFormattingRequireTernaryParensCheckConditionalExpressionReturns = void;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_Returns = void;
 
-export type RulesEslintFormattingRequireTernaryParensCheckConditionalExpressionSourceText = string;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_SourceText = string;
 
-export type RulesEslintFormattingRequireTernaryParensCheckConditionalExpressionTestStart = number;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_TestStart = number;
 
-export type RulesEslintFormattingRequireTernaryParensCheckConditionalExpressionCharBefore = string | undefined;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_CheckConditionalExpression_CharBefore = string | undefined;
 
 /**
  * Rules - ESLint - Formatting - Require Ternary Parens - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingRequireTernaryParensRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintFormattingRequireTernaryParensRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintFormattingRequireTernaryParensRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintFormattingRequireTernaryParensRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_RequireTernaryParens_Runner_RuleOptions_IgnoreFiles;
 }>;

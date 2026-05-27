@@ -1,17 +1,17 @@
 import type { TranslationFile } from '@docusaurus/types';
 
 import type {
-  OptionsPluginOptions,
-  OptionsPluginOptionsProgressBar,
-  OptionsPluginOptionsSearch,
+  Options_PluginOptions,
+  Options_PluginOptions_ProgressBar,
+  Options_PluginOptions_Search,
 } from './options.d.ts';
 import type {
-  SharedPreset,
-  SharedPresetCta,
-  SharedPresetFooter,
-  SharedPresetLogo,
-  SharedPresetName,
-  SharedPresetNavbar,
+  Shared_Preset,
+  Shared_Preset_Cta,
+  Shared_Preset_Footer,
+  Shared_Preset_Logo,
+  Shared_PresetName,
+  Shared_Preset_Navbar,
 } from './shared.d.ts';
 
 /**
@@ -19,289 +19,289 @@ import type {
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultContextSiteDir = string;
+export type Index_Runner_Default_Context_SiteDir = string;
 
-export type IndexDocusaurusThemeNovaDefaultContext = {
-  siteDir: IndexDocusaurusThemeNovaDefaultContextSiteDir;
+export type Index_Runner_Default_Context = {
+  siteDir: Index_Runner_Default_Context_SiteDir;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultOptions = OptionsPluginOptions;
+export type Index_Runner_Default_Options = Options_PluginOptions;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsName = string;
+export type Index_Runner_Default_Returns_Name = string;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsGetThemePath = () => string;
+export type Index_Runner_Default_Returns_GetThemePath = () => string;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsGetTypeScriptThemePath = () => string;
+export type Index_Runner_Default_Returns_GetTypeScriptThemePath = () => string;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsGetClientModules = () => string[];
+export type Index_Runner_Default_Returns_GetClientModules = () => string[];
 
-export type IndexDocusaurusThemeNovaDefaultReturnsGetPathsToWatch = () => string[];
+export type Index_Runner_Default_Returns_GetPathsToWatch = () => string[];
 
-export type IndexDocusaurusThemeNovaDefaultReturnsInjectHtmlTagsHeadTags = IndexDocusaurusThemeNovaDefaultInjectHtmlTagsHeadTags;
+export type Index_Runner_Default_ReturnsInjectHtmlTagsHeadTags = Index_Runner_Default_InjectHtmlTags_HeadTags;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsInjectHtmlTagsPreBodyTags = IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPreBodyTags;
+export type Index_Runner_Default_ReturnsInjectHtmlTagsPreBodyTags = Index_Runner_Default_InjectHtmlTags_PreBodyTags;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsInjectHtmlTags = () => {
-  headTags: IndexDocusaurusThemeNovaDefaultReturnsInjectHtmlTagsHeadTags;
-  preBodyTags: IndexDocusaurusThemeNovaDefaultReturnsInjectHtmlTagsPreBodyTags;
+export type Index_Runner_Default_Returns_InjectHtmlTags = () => {
+  headTags: Index_Runner_Default_ReturnsInjectHtmlTagsHeadTags;
+  preBodyTags: Index_Runner_Default_ReturnsInjectHtmlTagsPreBodyTags;
 };
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCssPostCssOptionsPlugins = unknown[];
+export type Index_Runner_Default_ReturnsConfigurePostCssPostCssOptions_Plugins = unknown[];
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCssPostCssOptions = {
-  plugins: IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCssPostCssOptionsPlugins;
+export type Index_Runner_Default_ReturnsConfigurePostCssPostCssOptions = {
+  plugins: Index_Runner_Default_ReturnsConfigurePostCssPostCssOptions_Plugins;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCssReturnsPlugins = unknown[];
+export type Index_Runner_Default_ReturnsConfigurePostCssReturns_Plugins = unknown[];
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCssReturns = {
-  plugins: IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCssReturnsPlugins;
+export type Index_Runner_Default_ReturnsConfigurePostCssReturns = {
+  plugins: Index_Runner_Default_ReturnsConfigurePostCssReturns_Plugins;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCss = (postCssOptions: IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCssPostCssOptions) => IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCssReturns;
+export type Index_Runner_Default_Returns_ConfigurePostCss = (postCssOptions: Index_Runner_Default_ReturnsConfigurePostCssPostCssOptions) => Index_Runner_Default_ReturnsConfigurePostCssReturns;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpackReturnsResolveAlias = Record<string, string>;
+export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve_Alias = Record<string, string>;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpackReturnsResolve = {
-  alias: IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpackReturnsResolveAlias;
+export type Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve = {
+  alias: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve_Alias;
 };
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpackReturns = {
-  resolve: IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpackReturnsResolve;
+export type Index_Runner_Default_ReturnsConfigureWebpackReturns = {
+  resolve: Index_Runner_Default_ReturnsConfigureWebpackReturns_Resolve;
 };
 
-export type IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpack = () => IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpackReturns;
+export type Index_Runner_Default_Returns_ConfigureWebpack = () => Index_Runner_Default_ReturnsConfigureWebpackReturns;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsGetTranslationFiles = () => TranslationFile[];
+export type Index_Runner_Default_Returns_GetTranslationFiles = () => TranslationFile[];
 
-export type IndexDocusaurusThemeNovaDefaultReturnsGetDefaultCodeTranslationMessages = () => Promise<Record<string, string>>;
+export type Index_Runner_Default_Returns_GetDefaultCodeTranslationMessages = () => Promise<Record<string, string>>;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParamsThemeConfig = Record<string, unknown>;
+export type Index_Runner_Default_ReturnsTranslateThemeConfigParams_ThemeConfig = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParamsTranslationFiles = TranslationFile[];
+export type Index_Runner_Default_ReturnsTranslateThemeConfigParams_TranslationFiles = TranslationFile[];
 
-export type IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParams = {
-  themeConfig: IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParamsThemeConfig;
-  translationFiles: IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParamsTranslationFiles;
+export type Index_Runner_Default_ReturnsTranslateThemeConfigParams = {
+  themeConfig: Index_Runner_Default_ReturnsTranslateThemeConfigParams_ThemeConfig;
+  translationFiles: Index_Runner_Default_ReturnsTranslateThemeConfigParams_TranslationFiles;
 };
 
-export type IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfig = (params: IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfigParams) => Record<string, unknown>;
+export type Index_Runner_Default_Returns_TranslateThemeConfig = (params: Index_Runner_Default_ReturnsTranslateThemeConfigParams) => Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsPostBuild = (postBuildArgs: IndexDocusaurusThemeNovaDefaultPostBuildArgs) => Promise<void>;
+export type Index_Runner_Default_Returns_PostBuild = (postBuildArgs: Index_Runner_Default_PostBuild_Args) => Promise<void>;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsContentLoaded = (contentLoadedArgs: IndexDocusaurusThemeNovaDefaultContentLoadedArgs) => Promise<void>;
+export type Index_Runner_Default_Returns_ContentLoaded = (contentLoadedArgs: Index_Runner_Default_ContentLoaded_Args) => Promise<void>;
 
-export type IndexDocusaurusThemeNovaDefaultReturnsAllContentLoaded = (allContentLoadedArgs: IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs) => Promise<void>;
+export type Index_Runner_Default_Returns_AllContentLoaded = (allContentLoadedArgs: Index_Runner_Default_AllContentLoaded_Args) => Promise<void>;
 
-export type IndexDocusaurusThemeNovaDefaultReturns = {
-  name: IndexDocusaurusThemeNovaDefaultReturnsName;
-  getThemePath: IndexDocusaurusThemeNovaDefaultReturnsGetThemePath;
-  getTypeScriptThemePath: IndexDocusaurusThemeNovaDefaultReturnsGetTypeScriptThemePath;
-  getClientModules: IndexDocusaurusThemeNovaDefaultReturnsGetClientModules;
-  getPathsToWatch: IndexDocusaurusThemeNovaDefaultReturnsGetPathsToWatch;
-  injectHtmlTags: IndexDocusaurusThemeNovaDefaultReturnsInjectHtmlTags;
-  configurePostCss: IndexDocusaurusThemeNovaDefaultReturnsConfigurePostCss;
-  configureWebpack: IndexDocusaurusThemeNovaDefaultReturnsConfigureWebpack;
-  getTranslationFiles: IndexDocusaurusThemeNovaDefaultReturnsGetTranslationFiles;
-  getDefaultCodeTranslationMessages: IndexDocusaurusThemeNovaDefaultReturnsGetDefaultCodeTranslationMessages;
-  translateThemeConfig: IndexDocusaurusThemeNovaDefaultReturnsTranslateThemeConfig;
-  postBuild: IndexDocusaurusThemeNovaDefaultReturnsPostBuild;
-  contentLoaded: IndexDocusaurusThemeNovaDefaultReturnsContentLoaded;
-  allContentLoaded: IndexDocusaurusThemeNovaDefaultReturnsAllContentLoaded;
+export type Index_Runner_Default_Returns = {
+  name: Index_Runner_Default_Returns_Name;
+  getThemePath: Index_Runner_Default_Returns_GetThemePath;
+  getTypeScriptThemePath: Index_Runner_Default_Returns_GetTypeScriptThemePath;
+  getClientModules: Index_Runner_Default_Returns_GetClientModules;
+  getPathsToWatch: Index_Runner_Default_Returns_GetPathsToWatch;
+  injectHtmlTags: Index_Runner_Default_Returns_InjectHtmlTags;
+  configurePostCss: Index_Runner_Default_Returns_ConfigurePostCss;
+  configureWebpack: Index_Runner_Default_Returns_ConfigureWebpack;
+  getTranslationFiles: Index_Runner_Default_Returns_GetTranslationFiles;
+  getDefaultCodeTranslationMessages: Index_Runner_Default_Returns_GetDefaultCodeTranslationMessages;
+  translateThemeConfig: Index_Runner_Default_Returns_TranslateThemeConfig;
+  postBuild: Index_Runner_Default_Returns_PostBuild;
+  contentLoaded: Index_Runner_Default_Returns_ContentLoaded;
+  allContentLoaded: Index_Runner_Default_Returns_AllContentLoaded;
 };
 
-export type IndexDocusaurusThemeNovaDefaultResolvedPreset = SharedPreset;
+export type Index_Runner_Default_ResolvedPreset = Shared_Preset;
 
-export type IndexDocusaurusThemeNovaDefaultGeneratedCss = string;
+export type Index_Runner_Default_GeneratedCss = string;
 
-export type IndexDocusaurusThemeNovaDefaultSiteDirectory = string;
+export type Index_Runner_Default_SiteDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultGeneratedCssDirectory = string;
+export type Index_Runner_Default_GeneratedCssDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultGeneratedCssPath = string;
+export type Index_Runner_Default_GeneratedCssPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultGoogleFontsUrl = string;
+export type Index_Runner_Default_GoogleFontsUrl = string;
 
-export type IndexDocusaurusThemeNovaDefaultPresetName = SharedPresetName;
+export type Index_Runner_Default_PresetName = Shared_PresetName;
 
-export type IndexDocusaurusThemeNovaDefaultCurrentDirectory = string;
+export type Index_Runner_Default_CurrentDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultThemePath = string;
+export type Index_Runner_Default_ThemePath = string;
 
-export type IndexDocusaurusThemeNovaDefaultTypeScriptThemePath = string;
+export type Index_Runner_Default_TypeScriptThemePath = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssResetPath = string;
+export type Index_Runner_Default_CssResetPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssGridPath = string;
+export type Index_Runner_Default_CssGridPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssAccessibilityPath = string;
+export type Index_Runner_Default_CssAccessibilityPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssUtilitiesPath = string;
+export type Index_Runner_Default_CssUtilitiesPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssBlocksDirectory = string;
+export type Index_Runner_Default_CssBlocksDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssBlockFiles = string[];
+export type Index_Runner_Default_CssBlockFiles = string[];
 
-export type IndexDocusaurusThemeNovaDefaultCssBlockFileName = string | Buffer;
+export type Index_Runner_Default_CssBlockFileName = string | Buffer;
 
-export type IndexDocusaurusThemeNovaDefaultCssThemeDirectory = string;
+export type Index_Runner_Default_CssThemeDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssThemeFiles = string[];
+export type Index_Runner_Default_CssThemeFiles = string[];
 
-export type IndexDocusaurusThemeNovaDefaultCssThemeFileName = string | Buffer;
+export type Index_Runner_Default_CssThemeFileName = string | Buffer;
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetDirectory = string;
+export type Index_Runner_Default_CssPresetDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetPath = string;
+export type Index_Runner_Default_CssPresetPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetBlocksDirectory = string;
+export type Index_Runner_Default_CssPresetBlocksDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetBlockFiles = string[];
+export type Index_Runner_Default_CssPresetBlockFiles = string[];
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetBlockFileName = string | Buffer;
+export type Index_Runner_Default_CssPresetBlockFileName = string | Buffer;
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetThemeDirectory = string;
+export type Index_Runner_Default_CssPresetThemeDirectory = string;
 
-export type IndexDocusaurusThemeNovaDefaultActiveNavbarPrefix = string;
+export type Index_Runner_Default_ActiveNavbarPrefix = string;
 
-export type IndexDocusaurusThemeNovaDefaultActiveFooterPrefix = string;
+export type Index_Runner_Default_ActiveFooterPrefix = string;
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetThemeFiles = string[];
+export type Index_Runner_Default_CssPresetThemeFiles = string[];
 
-export type IndexDocusaurusThemeNovaDefaultCssPresetThemeFileName = string | Buffer;
+export type Index_Runner_Default_CssPresetThemeFileName = string | Buffer;
 
-export type IndexDocusaurusThemeNovaDefaultI18nConfigCurrentLocale = string;
+export type Index_Runner_Default_I18nConfig_CurrentLocale = string;
 
-export type IndexDocusaurusThemeNovaDefaultI18nConfigLocaleConfigs = Record<string, unknown>;
+export type Index_Runner_Default_I18nConfig_LocaleConfigs = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultI18nConfig = {
-  currentLocale: IndexDocusaurusThemeNovaDefaultI18nConfigCurrentLocale;
-  localeConfigs: IndexDocusaurusThemeNovaDefaultI18nConfigLocaleConfigs;
+export type Index_Runner_Default_I18nConfig = {
+  currentLocale: Index_Runner_Default_I18nConfig_CurrentLocale;
+  localeConfigs: Index_Runner_Default_I18nConfig_LocaleConfigs;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultCurrentLocale = string;
+export type Index_Runner_Default_CurrentLocale = string;
 
-export type IndexDocusaurusThemeNovaDefaultLocaleConfigs = Record<string, unknown>;
+export type Index_Runner_Default_LocaleConfigs = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultLocaleConfigDirection = string;
+export type Index_Runner_Default_LocaleConfig_Direction = string;
 
-export type IndexDocusaurusThemeNovaDefaultLocaleConfig = {
-  direction: IndexDocusaurusThemeNovaDefaultLocaleConfigDirection;
+export type Index_Runner_Default_LocaleConfig = {
+  direction: Index_Runner_Default_LocaleConfig_Direction;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultLocaleDirection = string;
+export type Index_Runner_Default_LocaleDirection = string;
 
-export type IndexDocusaurusThemeNovaDefaultIsRtl = boolean;
+export type Index_Runner_Default_IsRtl = boolean;
 
-export type IndexDocusaurusThemeNovaDefaultSiteStorageType = string;
+export type Index_Runner_Default_SiteStorage_Type = string;
 
-export type IndexDocusaurusThemeNovaDefaultSiteStorageNamespace = string;
+export type Index_Runner_Default_SiteStorage_Namespace = string;
 
-export type IndexDocusaurusThemeNovaDefaultSiteStorage = {
-  type: IndexDocusaurusThemeNovaDefaultSiteStorageType;
-  namespace: IndexDocusaurusThemeNovaDefaultSiteStorageNamespace;
+export type Index_Runner_Default_SiteStorage = {
+  type: Index_Runner_Default_SiteStorage_Type;
+  namespace: Index_Runner_Default_SiteStorage_Namespace;
 };
 
-export type IndexDocusaurusThemeNovaDefaultSiteConfigThemeConfig = Record<string, unknown>;
+export type Index_Runner_Default_SiteConfig_ThemeConfig = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultSiteConfig = {
-  themeConfig: IndexDocusaurusThemeNovaDefaultSiteConfigThemeConfig;
+export type Index_Runner_Default_SiteConfig = {
+  themeConfig: Index_Runner_Default_SiteConfig_ThemeConfig;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultThemeConfig = Record<string, unknown>;
+export type Index_Runner_Default_ThemeConfig = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultAnnouncementBar = Record<string, unknown> | undefined;
+export type Index_Runner_Default_AnnouncementBar = Record<string, unknown> | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultProgressBarConfig = OptionsPluginOptionsProgressBar;
+export type Index_Runner_Default_ProgressBarConfig = Options_PluginOptions_ProgressBar;
 
-export type IndexDocusaurusThemeNovaDefaultNprogressCssPath = string;
+export type Index_Runner_Default_NprogressCssPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultSearchConfig = OptionsPluginOptionsSearch | undefined;
+export type Index_Runner_Default_SearchConfig = Options_PluginOptions_Search | undefined;
 
 /**
  * Index - Docusaurus Theme Nova - Default - All Content Loaded.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedArgsAllContent = IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent;
+export type Index_Runner_Default_AllContentLoaded_Args_AllContent = Index_Runner_Default_AllContentLoaded_AllContent;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedArgsActions = Record<string, unknown>;
+export type Index_Runner_Default_AllContentLoaded_Args_Actions = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedArgs = {
-  allContent: IndexDocusaurusThemeNovaDefaultAllContentLoadedArgsAllContent;
-  actions: IndexDocusaurusThemeNovaDefaultAllContentLoadedArgsActions;
+export type Index_Runner_Default_AllContentLoaded_Args = {
+  allContent: Index_Runner_Default_AllContentLoaded_Args_AllContent;
+  actions: Index_Runner_Default_AllContentLoaded_Args_Actions;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedAllContent = Record<string, Record<string, unknown>>;
+export type Index_Runner_Default_AllContentLoaded_AllContent = Record<string, Record<string, unknown>>;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginData = Record<string, unknown> | undefined;
+export type Index_Runner_Default_AllContentLoaded_DocsPluginData = Record<string, unknown> | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContentLoadedVersions = IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersions;
+export type Index_Runner_Default_AllContentLoaded_DocsPluginContent_LoadedVersions = Index_Runner_Default_AllContentLoaded_DocsLoadedVersions;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContent = {
-  loadedVersions?: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsPluginContentLoadedVersions;
+export type Index_Runner_Default_AllContentLoaded_DocsPluginContent = {
+  loadedVersions?: Index_Runner_Default_AllContentLoaded_DocsPluginContent_LoadedVersions;
   [key: string]: unknown;
 } | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersionDocs = IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDocs;
+export type Index_Runner_Default_AllContentLoaded_DocsLoadedVersion_Docs = Index_Runner_Default_AllContentLoaded_DocsVersionDocs;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersion = {
-  docs?: IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersionDocs;
+export type Index_Runner_Default_AllContentLoaded_DocsLoadedVersion = {
+  docs?: Index_Runner_Default_AllContentLoaded_DocsLoadedVersion_Docs;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersions = IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsLoadedVersion[];
+export type Index_Runner_Default_AllContentLoaded_DocsLoadedVersions = Index_Runner_Default_AllContentLoaded_DocsLoadedVersion[];
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDoc = Record<string, unknown>;
+export type Index_Runner_Default_AllContentLoaded_DocsVersionDoc = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDocs = IndexDocusaurusThemeNovaDefaultAllContentLoadedDocsVersionDoc[];
+export type Index_Runner_Default_AllContentLoaded_DocsVersionDocs = Index_Runner_Default_AllContentLoaded_DocsVersionDoc[];
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginData = Record<string, unknown> | undefined;
+export type Index_Runner_Default_AllContentLoaded_BlogPluginData = Record<string, unknown> | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContentBlogPosts = IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPosts;
+export type Index_Runner_Default_AllContentLoaded_BlogPluginContent_BlogPosts = Index_Runner_Default_AllContentLoaded_BlogPluginPosts;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContent = {
-  blogPosts?: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginContentBlogPosts;
+export type Index_Runner_Default_AllContentLoaded_BlogPluginContent = {
+  blogPosts?: Index_Runner_Default_AllContentLoaded_BlogPluginContent_BlogPosts;
   [key: string]: unknown;
 } | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPostMetadata = IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPostMetadata;
+export type Index_Runner_Default_AllContentLoaded_BlogPluginPost_Metadata = Index_Runner_Default_AllContentLoaded_BlogPostMetadata;
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPost = {
-  metadata?: IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPostMetadata;
+export type Index_Runner_Default_AllContentLoaded_BlogPluginPost = {
+  metadata?: Index_Runner_Default_AllContentLoaded_BlogPluginPost_Metadata;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPosts = IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPluginPost[];
+export type Index_Runner_Default_AllContentLoaded_BlogPluginPosts = Index_Runner_Default_AllContentLoaded_BlogPluginPost[];
 
-export type IndexDocusaurusThemeNovaDefaultAllContentLoadedBlogPostMetadata = Record<string, unknown>;
+export type Index_Runner_Default_AllContentLoaded_BlogPostMetadata = Record<string, unknown>;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Configure Post Css.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultConfigurePostCssPostCssOptionsPlugins = unknown[];
+export type Index_Runner_Default_ConfigurePostCss_PostCssOptions_Plugins = unknown[];
 
-export type IndexDocusaurusThemeNovaDefaultConfigurePostCssPostCssOptions = {
-  plugins: IndexDocusaurusThemeNovaDefaultConfigurePostCssPostCssOptionsPlugins;
+export type Index_Runner_Default_ConfigurePostCss_PostCssOptions = {
+  plugins: Index_Runner_Default_ConfigurePostCss_PostCssOptions_Plugins;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPluginPostcssPlugin = string;
+export type Index_Runner_Default_ConfigurePostCss_RtlPlugin_PostcssPlugin = string;
 
-export type IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPluginPrepare = (result: unknown) => Record<string, unknown>;
+export type Index_Runner_Default_ConfigurePostCss_RtlPlugin_Prepare = (result: unknown) => Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPlugin = {
-  postcssPlugin: IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPluginPostcssPlugin;
-  prepare: IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPluginPrepare;
+export type Index_Runner_Default_ConfigurePostCss_RtlPlugin = {
+  postcssPlugin: Index_Runner_Default_ConfigurePostCss_RtlPlugin_PostcssPlugin;
+  prepare: Index_Runner_Default_ConfigurePostCss_RtlPlugin_Prepare;
 };
 
 /**
@@ -309,176 +309,176 @@ export type IndexDocusaurusThemeNovaDefaultConfigurePostCssRtlPlugin = {
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultConfigureWebpackAssetsDirectory = string;
+export type Index_Runner_Default_ConfigureWebpack_AssetsDirectory = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Content Loaded.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultContentLoadedArgsActions = IndexDocusaurusThemeNovaDefaultContentLoadedActions;
+export type Index_Runner_Default_ContentLoaded_Args_Actions = Index_Runner_Default_ContentLoaded_Actions;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedArgs = {
-  actions: IndexDocusaurusThemeNovaDefaultContentLoadedArgsActions;
+export type Index_Runner_Default_ContentLoaded_Args = {
+  actions: Index_Runner_Default_ContentLoaded_Args_Actions;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRoute = (config: IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRouteConfig) => void;
+export type Index_Runner_Default_ContentLoaded_Actions_AddRoute = (config: Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig) => void;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedActionsSetGlobalData = (data: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalData) => void;
+export type Index_Runner_Default_ContentLoaded_Actions_SetGlobalData = (data: Index_Runner_Default_ContentLoaded_GlobalData) => void;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedActions = {
-  addRoute: IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRoute;
-  setGlobalData: IndexDocusaurusThemeNovaDefaultContentLoadedActionsSetGlobalData;
+export type Index_Runner_Default_ContentLoaded_Actions = {
+  addRoute: Index_Runner_Default_ContentLoaded_Actions_AddRoute;
+  setGlobalData: Index_Runner_Default_ContentLoaded_Actions_SetGlobalData;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataBlogAuthors = IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthor[];
+export type Index_Runner_Default_ContentLoaded_GlobalData_BlogAuthors = Index_Runner_Default_ContentLoaded_BlogAuthor[];
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataBlogPosts = IndexDocusaurusThemeNovaDefaultContentLoadedBlogPosts;
+export type Index_Runner_Default_ContentLoaded_GlobalData_BlogPosts = Index_Runner_Default_ContentLoaded_BlogPosts;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataDocDescriptions = IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions;
+export type Index_Runner_Default_ContentLoaded_GlobalData_DocDescriptions = Index_Runner_Default_ContentLoaded_DocDescriptions;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataNavbarVariant = SharedPresetNavbar;
+export type Index_Runner_Default_ContentLoaded_GlobalData_NavbarVariant = Shared_Preset_Navbar;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataFooterVariant = SharedPresetFooter;
+export type Index_Runner_Default_ContentLoaded_GlobalData_FooterVariant = Shared_Preset_Footer;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataPresetLogo = SharedPresetLogo;
+export type Index_Runner_Default_ContentLoaded_GlobalData_PresetLogo = Shared_Preset_Logo;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataPresetCta = SharedPresetCta;
+export type Index_Runner_Default_ContentLoaded_GlobalData_PresetCta = Shared_Preset_Cta;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataNotFoundBundleIndex = number;
+export type Index_Runner_Default_ContentLoaded_GlobalData_NotFoundBundleIndex = number;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataErrorPageContentTitleIndex = number;
+export type Index_Runner_Default_ContentLoaded_GlobalData_ErrorPageContentTitleIndex = number;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataCreditPhraseIndex = number;
+export type Index_Runner_Default_ContentLoaded_GlobalData_CreditPhraseIndex = number;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedGlobalData = {
-  blogAuthors: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataBlogAuthors;
-  blogPosts: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataBlogPosts;
-  docDescriptions: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataDocDescriptions;
-  navbarVariant: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataNavbarVariant;
-  footerVariant: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataFooterVariant;
-  presetCta: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataPresetCta;
-  presetLogo: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataPresetLogo;
-  notFoundBundleIndex: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataNotFoundBundleIndex;
-  errorPageContentTitleIndex: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataErrorPageContentTitleIndex;
-  creditPhraseIndex: IndexDocusaurusThemeNovaDefaultContentLoadedGlobalDataCreditPhraseIndex;
+export type Index_Runner_Default_ContentLoaded_GlobalData = {
+  blogAuthors: Index_Runner_Default_ContentLoaded_GlobalData_BlogAuthors;
+  blogPosts: Index_Runner_Default_ContentLoaded_GlobalData_BlogPosts;
+  docDescriptions: Index_Runner_Default_ContentLoaded_GlobalData_DocDescriptions;
+  navbarVariant: Index_Runner_Default_ContentLoaded_GlobalData_NavbarVariant;
+  footerVariant: Index_Runner_Default_ContentLoaded_GlobalData_FooterVariant;
+  presetCta: Index_Runner_Default_ContentLoaded_GlobalData_PresetCta;
+  presetLogo: Index_Runner_Default_ContentLoaded_GlobalData_PresetLogo;
+  notFoundBundleIndex: Index_Runner_Default_ContentLoaded_GlobalData_NotFoundBundleIndex;
+  errorPageContentTitleIndex: Index_Runner_Default_ContentLoaded_GlobalData_ErrorPageContentTitleIndex;
+  creditPhraseIndex: Index_Runner_Default_ContentLoaded_GlobalData_CreditPhraseIndex;
 };
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedDocDescriptions = Record<string, string>;
+export type Index_Runner_Default_ContentLoaded_DocDescriptions = Record<string, string>;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedPermalinkValue = string;
+export type Index_Runner_Default_ContentLoaded_PermalinkValue = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedDescriptionValue = string;
+export type Index_Runner_Default_ContentLoaded_DescriptionValue = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogPosts = IndexDocusaurusThemeNovaDefaultContentLoadedBlogPost[];
+export type Index_Runner_Default_ContentLoaded_BlogPosts = Index_Runner_Default_ContentLoaded_BlogPost[];
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenPostPermalinks = Set<string>;
+export type Index_Runner_Default_ContentLoaded_BlogSeenPostPermalinks = Set<string>;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthors = IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthor[];
+export type Index_Runner_Default_ContentLoaded_BlogAuthors = Index_Runner_Default_ContentLoaded_BlogAuthor[];
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogSeenAuthorKeys = Set<string>;
+export type Index_Runner_Default_ContentLoaded_BlogSeenAuthorKeys = Set<string>;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogTitleValue = string;
+export type Index_Runner_Default_ContentLoaded_BlogTitleValue = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogPermalinkValue = string;
+export type Index_Runner_Default_ContentLoaded_BlogPermalinkValue = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogDescriptionValue = string;
+export type Index_Runner_Default_ContentLoaded_BlogDescriptionValue = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogDateValue = string;
+export type Index_Runner_Default_ContentLoaded_BlogDateValue = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogPostTitle = string;
+export type Index_Runner_Default_ContentLoaded_BlogPost_Title = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogPostDescription = string;
+export type Index_Runner_Default_ContentLoaded_BlogPost_Description = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogPostPermalink = string;
+export type Index_Runner_Default_ContentLoaded_BlogPost_Permalink = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogPostDate = string;
+export type Index_Runner_Default_ContentLoaded_BlogPost_Date = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogPost = {
-  title: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPostTitle;
-  description: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPostDescription;
-  permalink: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPostPermalink;
-  date: IndexDocusaurusThemeNovaDefaultContentLoadedBlogPostDate;
+export type Index_Runner_Default_ContentLoaded_BlogPost = {
+  title: Index_Runner_Default_ContentLoaded_BlogPost_Title;
+  description: Index_Runner_Default_ContentLoaded_BlogPost_Description;
+  permalink: Index_Runner_Default_ContentLoaded_BlogPost_Permalink;
+  date: Index_Runner_Default_ContentLoaded_BlogPost_Date;
 };
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthors = Record<string, unknown>[];
+export type Index_Runner_Default_ContentLoaded_BlogFileAuthors = Record<string, unknown>[];
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogFileAuthor = Record<string, unknown>;
+export type Index_Runner_Default_ContentLoaded_BlogFileAuthor = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey = string;
+export type Index_Runner_Default_ContentLoaded_BlogAuthor_Key = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName = string | undefined;
+export type Index_Runner_Default_ContentLoaded_BlogAuthor_Name = string | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl = string | undefined;
+export type Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL = string | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPage = Record<string, unknown> | undefined;
+export type Index_Runner_Default_ContentLoaded_BlogAuthorPage = Record<string, unknown> | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink = string | undefined;
+export type Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink = string | undefined;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthor = {
-  imageURL: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorImageUrl;
-  key: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorKey;
-  name: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorName;
-  permalink: IndexDocusaurusThemeNovaDefaultContentLoadedBlogAuthorPermalink;
+export type Index_Runner_Default_ContentLoaded_BlogAuthor = {
+  imageURL: Index_Runner_Default_ContentLoaded_BlogAuthor_ImageURL;
+  key: Index_Runner_Default_ContentLoaded_BlogAuthor_Key;
+  name: Index_Runner_Default_ContentLoaded_BlogAuthor_Name;
+  permalink: Index_Runner_Default_ContentLoaded_BlogAuthor_Permalink;
 };
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRouteConfigPath = string;
+export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Path = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRouteConfigComponent = string;
+export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Component = string;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRouteConfig = {
-  path: IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRouteConfigPath;
-  component: IndexDocusaurusThemeNovaDefaultContentLoadedActionsAddRouteConfigComponent;
+export type Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig = {
+  path: Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Path;
+  component: Index_Runner_Default_ContentLoaded_ActionsAddRouteConfig_Component;
   exact?: boolean;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleCount = number;
+export type Index_Runner_Default_ContentLoaded_NotFoundBundleCount = number;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleCount = number;
+export type Index_Runner_Default_ContentLoaded_ErrorPageContentTitleCount = number;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseCount = number;
+export type Index_Runner_Default_ContentLoaded_CreditPhraseCount = number;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedNotFoundBundleIndexValue = number;
+export type Index_Runner_Default_ContentLoaded_NotFoundBundleIndexValue = number;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedErrorPageContentTitleIndexValue = number;
+export type Index_Runner_Default_ContentLoaded_ErrorPageContentTitleIndexValue = number;
 
-export type IndexDocusaurusThemeNovaDefaultContentLoadedCreditPhraseIndexValue = number;
+export type Index_Runner_Default_ContentLoaded_CreditPhraseIndexValue = number;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Client Modules.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultStickyLayoutPath = string;
+export type Index_Runner_Default_StickyLayoutPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultGetClientModulesClientModules = string[];
+export type Index_Runner_Default_GetClientModules_ClientModules = string[];
 
-export type IndexDocusaurusThemeNovaDefaultGetClientModulesNprogressCssPath = string;
+export type Index_Runner_Default_GetClientModules_NprogressCssPath = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Default Code Translation Messages.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesNovaTranslationsDirPath = string;
+export type Index_Runner_Default_GetDefaultCodeTranslationMessages_NovaTranslationsDirPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeCommonMessages = Record<string, string>;
+export type Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeCommonMessages = Record<string, string>;
 
-export type IndexDocusaurusThemeNovaDefaultGetDefaultCodeTranslationMessagesThemeNovaMessages = Record<string, string>;
+export type Index_Runner_Default_GetDefaultCodeTranslationMessages_ThemeNovaMessages = Record<string, string>;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Paths To Watch.
  *
  * @since 0.18.0
  */
-export type IndexDocusaurusThemeNovaDefaultGetPathsToWatchBlocksPath = string;
+export type Index_Runner_Default_GetPathsToWatch_BlocksPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultGetPathsToWatchLibPath = string;
+export type Index_Runner_Default_GetPathsToWatch_LibPath = string;
 
-export type IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths = string[];
+export type Index_Runner_Default_GetPathsToWatch_Paths = string[];
 
 /**
  * Index - Docusaurus Theme Nova - Default - Get Theme Path.
@@ -503,92 +503,92 @@ export type IndexDocusaurusThemeNovaDefaultGetPathsToWatchPaths = string[];
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultInjectHtmlTagsHeadTags = Array<{
+export type Index_Runner_Default_InjectHtmlTags_HeadTags = Array<{
   tagName: string;
   attributes?: Record<string, string | boolean>;
   innerHTML?: string;
 }>;
 
-export type IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPreBodyTags = Array<{
+export type Index_Runner_Default_InjectHtmlTags_PreBodyTags = Array<{
   tagName: string;
   attributes?: Record<string, string | boolean>;
   innerHTML?: string;
 }>;
 
-export type IndexDocusaurusThemeNovaDefaultInjectHtmlTagsColorModeInit = string;
+export type Index_Runner_Default_InjectHtmlTags_ColorModeInit = string;
 
-export type IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPreBodyScriptEntries = Array<{
+export type Index_Runner_Default_InjectHtmlTags_PreBodyScriptEntries = Array<{
   tagName: string;
   innerHTML: string;
 }>;
 
-export type IndexDocusaurusThemeNovaDefaultInjectHtmlTagsPresetVariantInit = string;
+export type Index_Runner_Default_InjectHtmlTags_PresetVariantInit = string;
 
-export type IndexDocusaurusThemeNovaDefaultInjectHtmlTagsAnnouncementBarInit = string;
+export type Index_Runner_Default_InjectHtmlTags_AnnouncementBarInit = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Post Build.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultPostBuildArgsOutDir = string;
+export type Index_Runner_Default_PostBuild_Args_OutDir = string;
 
-export type IndexDocusaurusThemeNovaDefaultPostBuildArgsRoutesPaths = string[];
+export type Index_Runner_Default_PostBuild_Args_RoutesPaths = string[];
 
-export type IndexDocusaurusThemeNovaDefaultPostBuildArgsSiteConfigBaseUrl = string;
+export type Index_Runner_Default_PostBuild_Args_SiteConfig_BaseUrl = string;
 
-export type IndexDocusaurusThemeNovaDefaultPostBuildArgsSiteConfig = {
-  baseUrl: IndexDocusaurusThemeNovaDefaultPostBuildArgsSiteConfigBaseUrl;
+export type Index_Runner_Default_PostBuild_Args_SiteConfig = {
+  baseUrl: Index_Runner_Default_PostBuild_Args_SiteConfig_BaseUrl;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultPostBuildArgs = {
-  outDir: IndexDocusaurusThemeNovaDefaultPostBuildArgsOutDir;
-  routesPaths: IndexDocusaurusThemeNovaDefaultPostBuildArgsRoutesPaths;
-  siteConfig: IndexDocusaurusThemeNovaDefaultPostBuildArgsSiteConfig;
+export type Index_Runner_Default_PostBuild_Args = {
+  outDir: Index_Runner_Default_PostBuild_Args_OutDir;
+  routesPaths: Index_Runner_Default_PostBuild_Args_RoutesPaths;
+  siteConfig: Index_Runner_Default_PostBuild_Args_SiteConfig;
   [key: string]: unknown;
 };
 
-export type IndexDocusaurusThemeNovaDefaultPostBuildSearchConfigCast = Record<string, unknown>;
+export type Index_Runner_Default_PostBuild_SearchConfigCast = Record<string, unknown>;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Preset Logo Content.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultPresetLogoContent = string;
+export type Index_Runner_Default_PresetLogoContent = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Preset Logo Data Uri.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultPresetLogoDataUri = string;
+export type Index_Runner_Default_PresetLogoDataUri = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Preset Logo Path.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultPresetLogoPath = string;
+export type Index_Runner_Default_PresetLogoPath = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Preset Logo Src.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultPresetLogoSrc = string;
+export type Index_Runner_Default_PresetLogoSrc = string;
 
 /**
  * Index - Docusaurus Theme Nova - Default - Translate Theme Config.
  *
  * @since 0.15.0
  */
-export type IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParamsThemeConfig = Record<string, unknown>;
+export type Index_Runner_Default_TranslateThemeConfig_Params_ThemeConfig = Record<string, unknown>;
 
-export type IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParamsTranslationFiles = TranslationFile[];
+export type Index_Runner_Default_TranslateThemeConfig_Params_TranslationFiles = TranslationFile[];
 
-export type IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParams = {
-  themeConfig: IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParamsThemeConfig;
-  translationFiles: IndexDocusaurusThemeNovaDefaultTranslateThemeConfigParamsTranslationFiles;
+export type Index_Runner_Default_TranslateThemeConfig_Params = {
+  themeConfig: Index_Runner_Default_TranslateThemeConfig_Params_ThemeConfig;
+  translationFiles: Index_Runner_Default_TranslateThemeConfig_Params_TranslationFiles;
 };

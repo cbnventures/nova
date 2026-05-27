@@ -7,9 +7,9 @@ import { PageMetadata } from '@docusaurus/theme-common';
 import SearchMetadata from '@theme/SearchMetadata';
 
 import type {
-  ThemeDocVersionRootDocVersionRootProps,
-  ThemeDocVersionRootDocVersionRootRendered,
-  ThemeDocVersionRootDocVersionRootSearchTag,
+  Theme_DocVersionRoot_Index_DocVersionRoot_Props,
+  Theme_DocVersionRoot_Index_DocVersionRoot_Rendered,
+  Theme_DocVersionRoot_Index_DocVersionRoot_SearchTag,
 } from '../../types/theme/DocVersionRoot/index.d.ts';
 
 /**
@@ -19,15 +19,15 @@ import type {
  * context provider and injects search and noindex metadata
  * based on the active version configuration.
  *
- * @param {ThemeDocVersionRootDocVersionRootProps} props - Props.
+ * @param {Theme_DocVersionRoot_Index_DocVersionRoot_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocVersionRoot(props: ThemeDocVersionRootDocVersionRootProps) {
-  const rendered: ThemeDocVersionRootDocVersionRootRendered = renderRoutes(props['route']['routes']);
-  const searchTag: ThemeDocVersionRootDocVersionRootSearchTag = getDocsVersionSearchTag(
+function DocVersionRoot(props: Theme_DocVersionRoot_Index_DocVersionRoot_Props) {
+  const rendered: Theme_DocVersionRoot_Index_DocVersionRoot_Rendered = renderRoutes(props['route']['routes']);
+  const searchTag: Theme_DocVersionRoot_Index_DocVersionRoot_SearchTag = getDocsVersionSearchTag(
     props['version']['pluginId'],
     props['version']['version'],
   );

@@ -1,24 +1,24 @@
-import type { LibNovaConfig } from '../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 
 import type {
-  SharedNovaConfigConfig,
-  SharedNovaConfigEntities,
-  SharedNovaConfigEntity,
-  SharedNovaConfigGithub,
-  SharedNovaConfigGithubFeatures,
-  SharedNovaConfigGithubPolicies,
-  SharedNovaConfigGithubPoliciesMergeMethods,
-  SharedNovaConfigGithubRecipes,
-  SharedNovaConfigGithubTopics,
-  SharedNovaConfigProject,
-  SharedNovaConfigProjectLicense,
-  SharedNovaConfigProjectName,
-  SharedNovaConfigUrls,
-  SharedNovaConfigWorkflow,
-  SharedNovaConfigWorkflows,
-  SharedNovaConfigWorkspace,
-  SharedNovaConfigWorkspaceRecipes,
-  SharedNovaConfigWorkspaces,
+  Shared_NovaConfig_Entities,
+  Shared_NovaConfig_Github,
+  Shared_NovaConfig_Github_Features,
+  Shared_NovaConfig_Github_Policies,
+  Shared_NovaConfig_Github_Policies_MergeMethods,
+  Shared_NovaConfig_Github_Recipes,
+  Shared_NovaConfig_Github_Topics,
+  Shared_NovaConfig_Project,
+  Shared_NovaConfig_Project_License,
+  Shared_NovaConfig_Project_Name,
+  Shared_NovaConfig_Urls,
+  Shared_NovaConfig_Workflows,
+  Shared_NovaConfig_Workspaces,
+  Shared_NovaConfigConfig,
+  Shared_NovaConfigEntity,
+  Shared_NovaConfigWorkflow,
+  Shared_NovaConfigWorkspace,
+  Shared_NovaConfigWorkspace_Recipes,
 } from '../../shared.d.ts';
 
 /**
@@ -26,154 +26,154 @@ import type {
  *
  * @since 0.22.0
  */
-export type TestsLibNovaConfigSharednovaconfigParseGithubOriginalCwd = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubOriginalCwd = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubTemporaryDirectory = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubTemporaryDirectory = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubSandboxPrefix = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubSandboxPrefix = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubSandboxRoot = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubSandboxRoot = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubConfig = LibNovaConfig;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = LibNovaConfig;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubLoaded = SharedNovaConfigConfig;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = Shared_NovaConfigConfig;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = SharedNovaConfigGithub | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub = Shared_NovaConfig_Github | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubRecipes = SharedNovaConfigGithubRecipes | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubRecipes = Shared_NovaConfig_Github_Recipes | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubTopics = SharedNovaConfigGithubTopics | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubTopics = Shared_NovaConfig_Github_Topics | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubFeatures = SharedNovaConfigGithubFeatures | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubFeatures = Shared_NovaConfig_Github_Features | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPolicies = SharedNovaConfigGithubPolicies | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubPolicies = Shared_NovaConfig_Github_Policies | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods = SharedNovaConfigGithubPoliciesMergeMethods | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods = Shared_NovaConfig_Github_Policies_MergeMethods | undefined;
 
 /**
  * Tests - Lib - Nova Config - parseWorkflows (via load).
  *
  * @since 0.20.0
  */
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsOriginalCwd = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsOriginalCwd = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsTemporaryDirectory = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsTemporaryDirectory = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsSandboxPrefix = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSandboxPrefix = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsSandboxRoot = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSandboxRoot = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = string;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = LibNovaConfig;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = LibNovaConfig;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = SharedNovaConfigConfig;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = Shared_NovaConfigConfig;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows = SharedNovaConfigWorkflows | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows = Shared_NovaConfig_Workflows | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsFirstWorkflow = SharedNovaConfigWorkflow | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsFirstWorkflow = Shared_NovaConfigWorkflow | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigParseWorkflowsSecondWorkflow = SharedNovaConfigWorkflow | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSecondWorkflow = Shared_NovaConfigWorkflow | undefined;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfig Constructor.
+ * Tests - Lib - Nova Config - Shared_NovaConfig Constructor.
  *
  * @since 0.13.0
  */
-export type TestsLibNovaConfigSharednovaconfigConstructorConfig = LibNovaConfig;
+export type Tests_Lib_NovaConfig_SharednovaconfigConstructorConfig = LibNovaConfig;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfig Load.
+ * Tests - Lib - Nova Config - Shared_NovaConfig Load.
  *
  * @since 0.13.0
  */
-export type TestsLibNovaConfigSharednovaconfigLoadOriginalCwd = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadOriginalCwd = string;
 
-export type TestsLibNovaConfigSharednovaconfigLoadTemporaryDirectory = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadTemporaryDirectory = string;
 
-export type TestsLibNovaConfigSharednovaconfigLoadSandboxPrefix = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadSandboxPrefix = string;
 
-export type TestsLibNovaConfigSharednovaconfigLoadSandboxRoot = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadSandboxRoot = string;
 
-export type TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = string;
 
-export type TestsLibNovaConfigSharednovaconfigLoadConfigData = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadConfigData = Record<string, unknown>;
 
-export type TestsLibNovaConfigSharednovaconfigLoadConfigPath = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = string;
 
-export type TestsLibNovaConfigSharednovaconfigLoadConfigContents = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = string;
 
-export type TestsLibNovaConfigSharednovaconfigLoadConfig = LibNovaConfig;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = LibNovaConfig;
 
-export type TestsLibNovaConfigSharednovaconfigLoadLoaded = SharedNovaConfigConfig;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = Shared_NovaConfigConfig;
 
-export type TestsLibNovaConfigSharednovaconfigLoadLoadedProject = SharedNovaConfigProject | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = Shared_NovaConfig_Project | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigLoadLoadedProjectName = SharedNovaConfigProjectName | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProjectName = Shared_NovaConfig_Project_Name | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = SharedNovaConfigWorkspaces | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedWorkspaces = Shared_NovaConfig_Workspaces | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = SharedNovaConfigWorkspace | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadRootWorkspace = Shared_NovaConfigWorkspace | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigLoadCoreWorkspace = SharedNovaConfigWorkspace | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadCoreWorkspace = Shared_NovaConfigWorkspace | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigLoadRootRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadRootRecipes = Shared_NovaConfigWorkspace_Recipes | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigLoadRecipeKeys = string[];
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadRecipeKeys = string[];
 
-export type TestsLibNovaConfigSharednovaconfigLoadLoadedEntities = SharedNovaConfigEntities | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedEntities = Shared_NovaConfig_Entities | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigLoadFirstEntity = SharedNovaConfigEntity | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadFirstEntity = Shared_NovaConfigEntity | undefined;
 
-export type TestsLibNovaConfigSharednovaconfigLoadLicenses = SharedNovaConfigProjectLicense[];
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadLicenses = Shared_NovaConfig_Project_License[];
 
-export type TestsLibNovaConfigSharednovaconfigLoadLoadedUrls = SharedNovaConfigUrls | undefined;
+export type Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedUrls = Shared_NovaConfig_Urls | undefined;
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfig Set And Save.
+ * Tests - Lib - Nova Config - Shared_NovaConfig Set And Save.
  *
  * @since 0.13.0
  */
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveOriginalCwd = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveOriginalCwd = string;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveTemporaryDirectory = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveTemporaryDirectory = string;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveSandboxPrefix = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveSandboxPrefix = string;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveSandboxRoot = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveSandboxRoot = string;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveProjectDirectory = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveProjectDirectory = string;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveConfig = LibNovaConfig;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveConfig = LibNovaConfig;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveFilePath = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFilePath = string;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveFileContents = string;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFileContents = string;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsed = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsed = Record<string, unknown>;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProject = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProject = Record<string, unknown>;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProjectName = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProjectName = Record<string, unknown>;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProjectDescription = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProjectDescription = Record<string, unknown>;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspaces = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspaces = Record<string, unknown>;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspace = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspace = Record<string, unknown>;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsedEntities = Record<string, unknown>[];
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedEntities = Record<string, unknown>[];
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsedEntity = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedEntity = Record<string, unknown>;
 
-export type TestsLibNovaConfigSharednovaconfigSetAndSaveParsedUrls = Record<string, unknown>;
+export type Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedUrls = Record<string, unknown>;

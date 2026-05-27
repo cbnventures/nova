@@ -10,102 +10,102 @@ import {
   LIB_REGEX_PATTERN_WHITESPACE,
 } from '../lib/regex.js';
 import { Bootstrap, CLIHeader, Logger } from '../toolkit/index.js';
-import { CliGenerateGithubFunding } from './generate/github/funding.js';
-import { CliGenerateGithubIssueTemplate } from './generate/github/issue-template.js';
-import { CliGenerateGithubWorkflows } from './generate/github/workflows.js';
-import { CliGenerateMustHavesAgentConventions } from './generate/must-haves/agent-conventions.js';
-import { CliGenerateMustHavesDotenv } from './generate/must-haves/dotenv.js';
-import { CliGenerateMustHavesEditorconfig } from './generate/must-haves/editorconfig.js';
-import { CliGenerateMustHavesGitignore } from './generate/must-haves/gitignore.js';
-import { CliGenerateMustHavesLicense } from './generate/must-haves/license.js';
-import { CliGenerateMustHavesReadMe } from './generate/must-haves/read-me.js';
-import { CliRecipeGithubSyncFeatures } from './recipe/github/sync-features.js';
-import { CliRecipeGithubSyncIdentity } from './recipe/github/sync-identity.js';
-import { CliRecipeGithubSyncPolicies } from './recipe/github/sync-policies.js';
-import { CliRecipePackageJsonCleanup } from './recipe/package-json/cleanup.js';
-import { CliRecipePackageJsonNormalizeArtifacts } from './recipe/package-json/normalize-artifacts.js';
-import { CliRecipePackageJsonNormalizeBundler } from './recipe/package-json/normalize-bundler.js';
-import { CliRecipePackageJsonNormalizeDependencies } from './recipe/package-json/normalize-dependencies.js';
-import { CliRecipePackageJsonNormalizeModules } from './recipe/package-json/normalize-modules.js';
-import { CliRecipePackageJsonNormalizeTooling } from './recipe/package-json/normalize-tooling.js';
-import { CliRecipePackageJsonSyncEnvironment } from './recipe/package-json/sync-environment.js';
-import { CliRecipePackageJsonSyncIdentity } from './recipe/package-json/sync-identity.js';
-import { CliRecipePackageJsonSyncOwnership } from './recipe/package-json/sync-ownership.js';
-import { CliScaffoldAppExpressjs } from './scaffold/app/expressjs.js';
-import { CliScaffoldAppNextjs } from './scaffold/app/nextjs.js';
-import { CliScaffoldAppVite } from './scaffold/app/vite.js';
-import { CliScaffoldAppWorkers } from './scaffold/app/workers.js';
-import { CliScaffoldDocsDocusaurus } from './scaffold/docs/docusaurus.js';
-import { CliScaffoldStarterBase } from './scaffold/starter/base.js';
-import { CliUtilityChangelog } from './utility/changelog.js';
-import { CliUtilityInitialize } from './utility/initialize.js';
-import { CliUtilityRunRecipes } from './utility/run-recipes.js';
-import { CliUtilityRunScripts } from './utility/run-scripts.js';
-import { CliUtilityTranspile } from './utility/transpile.js';
-import { CliUtilityTypeCheck } from './utility/type-check.js';
-import { CliUtilityVersion } from './utility/version.js';
+import { Runner as CliGenerateGithubFunding } from './generate/github/funding.js';
+import { Runner as CliGenerateGithubIssueTemplate } from './generate/github/issue-template.js';
+import { Runner as CliGenerateGithubWorkflows } from './generate/github/workflows.js';
+import { Runner as CliGenerateMustHavesAgentConventions } from './generate/must-haves/agent-conventions.js';
+import { Runner as CliGenerateMustHavesDotenv } from './generate/must-haves/dotenv.js';
+import { Runner as CliGenerateMustHavesEditorconfig } from './generate/must-haves/editorconfig.js';
+import { Runner as CliGenerateMustHavesGitignore } from './generate/must-haves/gitignore.js';
+import { Runner as CliGenerateMustHavesLicense } from './generate/must-haves/license.js';
+import { Runner as CliGenerateMustHavesReadMe } from './generate/must-haves/read-me.js';
+import { Runner as CliRecipeGithubSyncFeatures } from './recipe/github/sync-features.js';
+import { Runner as CliRecipeGithubSyncIdentity } from './recipe/github/sync-identity.js';
+import { Runner as CliRecipeGithubSyncPolicies } from './recipe/github/sync-policies.js';
+import { Runner as CliRecipePackageJsonCleanup } from './recipe/package-json/cleanup.js';
+import { Runner as CliRecipePackageJsonNormalizeArtifacts } from './recipe/package-json/normalize-artifacts.js';
+import { Runner as CliRecipePackageJsonNormalizeBundler } from './recipe/package-json/normalize-bundler.js';
+import { Runner as CliRecipePackageJsonNormalizeDependencies } from './recipe/package-json/normalize-dependencies.js';
+import { Runner as CliRecipePackageJsonNormalizeModules } from './recipe/package-json/normalize-modules.js';
+import { Runner as CliRecipePackageJsonNormalizeTooling } from './recipe/package-json/normalize-tooling.js';
+import { Runner as CliRecipePackageJsonSyncEnvironment } from './recipe/package-json/sync-environment.js';
+import { Runner as CliRecipePackageJsonSyncIdentity } from './recipe/package-json/sync-identity.js';
+import { Runner as CliRecipePackageJsonSyncOwnership } from './recipe/package-json/sync-ownership.js';
+import { Runner as CliScaffoldAppExpressjs } from './scaffold/app/expressjs.js';
+import { Runner as CliScaffoldAppNextjs } from './scaffold/app/nextjs.js';
+import { Runner as CliScaffoldAppVite } from './scaffold/app/vite.js';
+import { Runner as CliScaffoldAppWorkers } from './scaffold/app/workers.js';
+import { Runner as CliScaffoldDocsDocusaurus } from './scaffold/docs/docusaurus.js';
+import { Runner as CliScaffoldStarterBase } from './scaffold/starter/base.js';
+import { Runner as CliUtilityChangelog } from './utility/changelog.js';
+import { Runner as CliUtilityInitialize } from './utility/initialize.js';
+import { Runner as CliUtilityRunRecipes } from './utility/run-recipes.js';
+import { Runner as CliUtilityRunScripts } from './utility/run-scripts.js';
+import { Runner as CliUtilityTranspile } from './utility/transpile.js';
+import { Runner as CliUtilityTypeCheck } from './utility/type-check.js';
+import { Runner as CliUtilityVersion } from './utility/version.js';
 
 import type {
-  CliConstructorHeaderText,
-  CliEnvDir,
-  CliExecuteCommandCommand,
-  CliExecuteCommandCommandLabel,
-  CliExecuteCommandOptions,
-  CliExecuteCommandReturns,
-  CliExecuteCommandTarget,
-  CliGetCommandUsageAliasCommand,
-  CliGetCommandUsageAliasLine,
-  CliGetCommandUsageAliasLineStripped,
-  CliGetCommandUsageCommand,
-  CliGetCommandUsageCommandAliases,
-  CliGetCommandUsageCommandName,
-  CliGetCommandUsageCommandUsage,
-  CliGetCommandUsageFullCommand,
-  CliGetCommandUsageFullLine,
-  CliGetCommandUsageFullLineStripped,
-  CliGetCommandUsageParentAliasSeparated,
-  CliGetCommandUsageParentCommand,
-  CliGetCommandUsageParentCommandAliases,
-  CliGetCommandUsageParentCommandName,
-  CliGetCommandUsageReturns,
-  CliGetCommandUsageUsagePipeSeparator,
-  CliGetHeaderReturns,
-  CliGetSubcommandTermCategory,
-  CliGetSubcommandTermCategoryPipeSeparator,
-  CliGetSubcommandTermCommand,
-  CliGetSubcommandTermNames,
-  CliGetSubcommandTermReturns,
-  CliGetSubcommandTermUsage,
-  CliHandleCliErrorProcessedText,
-  CliHandleCliErrorReturns,
-  CliHandleCliErrorText,
-  CliProgram,
-  CliRegisterCommandsGenerateGenerate,
-  CliRegisterCommandsGenerateGenerateGitHub,
-  CliRegisterCommandsGenerateGenerateMustHaves,
-  CliRegisterCommandsRecipeRecipe,
-  CliRegisterCommandsRecipeRecipeGithub,
-  CliRegisterCommandsRecipeRecipeGithubOptions,
-  CliRegisterCommandsRecipeRecipePackageJson,
-  CliRegisterCommandsReturns,
-  CliRegisterCommandsScaffoldScaffold,
-  CliRegisterCommandsScaffoldScaffoldApp,
-  CliRegisterCommandsScaffoldScaffoldDocs,
-  CliRegisterCommandsScaffoldScaffoldStarter,
-  CliRegisterCommandsUtilityRunRecipesOptions,
-  CliRegisterCommandsUtilityRunScriptsOptions,
-  CliRegisterCommandsUtilityUtility,
-  CliStyleTextCategoryFunctions,
-  CliStyleTextCategoryStyles,
-  CliStyleTextColoredText,
-  CliStyleTextReturns,
-  CliStyleTextText,
-  CliStyleTextTitleFunctions,
-  CliStyleTextTitleStyles,
-  CliStyleTextType,
+  Cli_ConstructorHeaderText,
+  Cli_EnvDir,
+  Cli_ExecuteCommandCommand,
+  Cli_ExecuteCommandCommandLabel,
+  Cli_ExecuteCommandOptions,
+  Cli_ExecuteCommandReturns,
+  Cli_ExecuteCommandTarget,
+  Cli_GetCommandUsageAliasCommand,
+  Cli_GetCommandUsageAliasLine,
+  Cli_GetCommandUsageAliasLineStripped,
+  Cli_GetCommandUsageCommand,
+  Cli_GetCommandUsageCommandAliases,
+  Cli_GetCommandUsageCommandName,
+  Cli_GetCommandUsageCommandUsage,
+  Cli_GetCommandUsageFullCommand,
+  Cli_GetCommandUsageFullLine,
+  Cli_GetCommandUsageFullLineStripped,
+  Cli_GetCommandUsageParentAliasSeparated,
+  Cli_GetCommandUsageParentCommand,
+  Cli_GetCommandUsageParentCommandAliases,
+  Cli_GetCommandUsageParentCommandName,
+  Cli_GetCommandUsageReturns,
+  Cli_GetCommandUsageUsagePipeSeparator,
+  Cli_GetHeaderReturns,
+  Cli_GetSubcommandTermCategory,
+  Cli_GetSubcommandTermCategoryPipeSeparator,
+  Cli_GetSubcommandTermCommand,
+  Cli_GetSubcommandTermNames,
+  Cli_GetSubcommandTermReturns,
+  Cli_GetSubcommandTermUsage,
+  Cli_HandleCliErrorProcessedText,
+  Cli_HandleCliErrorReturns,
+  Cli_HandleCliErrorText,
+  Cli_Program,
+  Cli_RegisterCommandsGenerateGenerate,
+  Cli_RegisterCommandsGenerateGenerateGitHub,
+  Cli_RegisterCommandsGenerateGenerateMustHaves,
+  Cli_RegisterCommandsRecipeRecipe,
+  Cli_RegisterCommandsRecipeRecipeGithub,
+  Cli_RegisterCommandsRecipeRecipeGithubOptions,
+  Cli_RegisterCommandsRecipeRecipePackageJson,
+  Cli_RegisterCommandsReturns,
+  Cli_RegisterCommandsScaffoldScaffold,
+  Cli_RegisterCommandsScaffoldScaffoldApp,
+  Cli_RegisterCommandsScaffoldScaffoldDocs,
+  Cli_RegisterCommandsScaffoldScaffoldStarter,
+  Cli_RegisterCommandsUtilityRunRecipesOptions,
+  Cli_RegisterCommandsUtilityRunScriptsOptions,
+  Cli_RegisterCommandsUtilityUtility,
+  Cli_StyleTextCategoryFunctions,
+  Cli_StyleTextCategoryStyles,
+  Cli_StyleTextColoredText,
+  Cli_StyleTextReturns,
+  Cli_StyleTextText,
+  Cli_StyleTextTitleFunctions,
+  Cli_StyleTextTitleStyles,
+  Cli_StyleTextType,
 } from '../types/cli/index.d.ts';
 
-const envDir: CliEnvDir = Bootstrap.resolveFileDir('nova', '.env', [
+const envDir: Cli_EnvDir = Bootstrap.resolveFileDir('nova', '.env', [
   'cwd',
   'project-root',
   'config-dir',
@@ -135,7 +135,7 @@ class CLI {
    *
    * @since 0.11.0
    */
-  readonly #program: CliProgram = new Command() as CliProgram;
+  readonly #program: Cli_Program = new Command() as Cli_Program;
 
   /**
    * CLI - Constructor.
@@ -147,7 +147,7 @@ class CLI {
    */
   public constructor() {
     (async () => {
-      const headerText: CliConstructorHeaderText = this.getHeader();
+      const headerText: Cli_ConstructorHeaderText = this.getHeader();
 
       this.#program
         .name('nova')
@@ -191,11 +191,11 @@ class CLI {
    *
    * @private
    *
-   * @returns {CliRegisterCommandsReturns}
+   * @returns {Cli_RegisterCommandsReturns}
    *
    * @since 0.11.0
    */
-  private registerCommands(): CliRegisterCommandsReturns {
+  private registerCommands(): Cli_RegisterCommandsReturns {
     /**
      * CLI - Register Commands - Generate.
      *
@@ -204,7 +204,7 @@ class CLI {
      *
      * @since 0.11.0
      */
-    const generate: CliRegisterCommandsGenerateGenerate = this.#program
+    const generate: Cli_RegisterCommandsGenerateGenerate = this.#program
       .command('generate')
       .alias('gen')
       .usage('<subcommand> [options]')
@@ -212,7 +212,7 @@ class CLI {
       .commandsGroup('Subcommands:')
       .helpCommand(false);
 
-    const generateGitHub: CliRegisterCommandsGenerateGenerateGitHub = generate
+    const generateGitHub: Cli_RegisterCommandsGenerateGenerateGitHub = generate
       .command('github')
       .alias('gh')
       .usage('<subcommand> [options]')
@@ -257,7 +257,7 @@ class CLI {
         return;
       });
 
-    const generateMustHaves: CliRegisterCommandsGenerateGenerateMustHaves = generate
+    const generateMustHaves: Cli_RegisterCommandsGenerateGenerateMustHaves = generate
       .command('must-haves')
       .alias('must')
       .usage('<subcommand> [options]')
@@ -349,7 +349,7 @@ class CLI {
      *
      * @since 0.11.0
      */
-    const recipe: CliRegisterCommandsRecipeRecipe = this.#program
+    const recipe: Cli_RegisterCommandsRecipeRecipe = this.#program
       .command('recipe')
       .alias('rcp')
       .usage('<subcommand> [options]')
@@ -357,7 +357,7 @@ class CLI {
       .commandsGroup('Subcommands:')
       .helpCommand(false);
 
-    const recipePackageJson: CliRegisterCommandsRecipeRecipePackageJson = recipe
+    const recipePackageJson: Cli_RegisterCommandsRecipeRecipePackageJson = recipe
       .command('package-json')
       .alias('pkg')
       .usage('<subcommand> [options]')
@@ -482,7 +482,7 @@ class CLI {
         return;
       });
 
-    const recipeGithub: CliRegisterCommandsRecipeRecipeGithub = recipe
+    const recipeGithub: Cli_RegisterCommandsRecipeRecipeGithub = recipe
       .command('github')
       .alias('gh')
       .usage('[subcommand] [options]')
@@ -491,12 +491,12 @@ class CLI {
       .helpCommand(false)
       .option('-d, --dry-run', 'Preview changes without executing gh commands')
       .action(async (options) => {
-        const runRecipesOptions: CliRegisterCommandsUtilityRunRecipesOptions = {
-          ...(options as CliRegisterCommandsRecipeRecipeGithubOptions),
+        const runRecipesOptions: Cli_RegisterCommandsUtilityRunRecipesOptions = {
+          ...(options as Cli_RegisterCommandsRecipeRecipeGithubOptions),
           category: 'github',
         };
 
-        await this.executeCommand<CliRegisterCommandsUtilityRunRecipesOptions>(runRecipesOptions, CliUtilityRunRecipes['run']);
+        await this.executeCommand<Cli_RegisterCommandsUtilityRunRecipesOptions>(runRecipesOptions, CliUtilityRunRecipes['run']);
 
         return;
       });
@@ -545,7 +545,7 @@ class CLI {
      *
      * @since 0.11.0
      */
-    const scaffold: CliRegisterCommandsScaffoldScaffold = this.#program
+    const scaffold: Cli_RegisterCommandsScaffoldScaffold = this.#program
       .command('scaffold')
       .alias('scaf')
       .usage('<subcommand> [options]')
@@ -553,7 +553,7 @@ class CLI {
       .commandsGroup('Subcommands:')
       .helpCommand(false);
 
-    const scaffoldApp: CliRegisterCommandsScaffoldScaffoldApp = scaffold
+    const scaffoldApp: Cli_RegisterCommandsScaffoldScaffoldApp = scaffold
       .command('app')
       .usage('<subcommand> [options]')
       .description('Scaffold workspaces')
@@ -618,7 +618,7 @@ class CLI {
         return;
       });
 
-    const scaffoldDocs: CliRegisterCommandsScaffoldScaffoldDocs = scaffold
+    const scaffoldDocs: Cli_RegisterCommandsScaffoldScaffoldDocs = scaffold
       .command('docs')
       .usage('<subcommand> [options]')
       .description('Scaffold documentation workspaces')
@@ -639,7 +639,7 @@ class CLI {
         return;
       });
 
-    const scaffoldStarter: CliRegisterCommandsScaffoldScaffoldStarter = scaffold
+    const scaffoldStarter: Cli_RegisterCommandsScaffoldScaffoldStarter = scaffold
       .command('starter')
       .alias('start')
       .usage('<subcommand> [options]')
@@ -668,7 +668,7 @@ class CLI {
      *
      * @since 0.11.0
      */
-    const utility: CliRegisterCommandsUtilityUtility = this.#program
+    const utility: Cli_RegisterCommandsUtilityUtility = this.#program
       .command('utility')
       .alias('util')
       .usage('<subcommand> [options]')
@@ -730,12 +730,12 @@ class CLI {
       .option('-p, --parallel', 'Run matched scripts concurrently')
       .option('-b, --buffer <ms>', 'Flush interval in ms for parallel log grouping (default: 500)')
       .action(async (pattern, options) => {
-        const runScriptsOptions: CliRegisterCommandsUtilityRunScriptsOptions = {
+        const runScriptsOptions: Cli_RegisterCommandsUtilityRunScriptsOptions = {
           ...options,
           pattern,
         };
 
-        await this.executeCommand<CliRegisterCommandsUtilityRunScriptsOptions>(runScriptsOptions, CliUtilityRunScripts['run']);
+        await this.executeCommand<Cli_RegisterCommandsUtilityRunScriptsOptions>(runScriptsOptions, CliUtilityRunScripts['run']);
 
         return;
       });
@@ -790,23 +790,23 @@ class CLI {
    * Prints the CLI header and the currently running command label, then delegates to the
    * target handler. Every leaf command in registerCommands calls this.
    *
-   * @param {CliExecuteCommandOptions} options - Options.
-   * @param {CliExecuteCommandTarget}  target  - Target.
+   * @param {Cli_ExecuteCommandOptions} options - Options.
+   * @param {Cli_ExecuteCommandTarget}  target  - Target.
    *
    * @private
    *
-   * @returns {CliExecuteCommandReturns}
+   * @returns {Cli_ExecuteCommandReturns}
    *
    * @since 0.11.0
    */
-  private async executeCommand<Options>(options: CliExecuteCommandOptions<Options>, target: CliExecuteCommandTarget<Options>): CliExecuteCommandReturns {
-    const command: CliExecuteCommandCommand = process.argv.join(' ').match(LIB_REGEX_PATTERN_NOVA_PREFIX);
+  private async executeCommand<Options>(options: Cli_ExecuteCommandOptions<Options>, target: Cli_ExecuteCommandTarget<Options>): Cli_ExecuteCommandReturns {
+    const command: Cli_ExecuteCommandCommand = process.argv.join(' ').match(LIB_REGEX_PATTERN_NOVA_PREFIX);
 
     // Write the header.
     process.stdout.write(`${this.getHeader()}\n`);
 
     // Write the running method.
-    const commandLabel: CliExecuteCommandCommandLabel = (command !== null) ? command[0] : 'N/A';
+    const commandLabel: Cli_ExecuteCommandCommandLabel = (command !== null) ? command[0] : 'N/A';
 
     process.stdout.write(`${chalk.bold.bgBlue('CURRENTLY RUNNING:')} ${commandLabel}\n\n`);
 
@@ -824,11 +824,11 @@ class CLI {
    *
    * @private
    *
-   * @returns {CliGetHeaderReturns}
+   * @returns {Cli_GetHeaderReturns}
    *
    * @since 0.11.0
    */
-  private getHeader(): CliGetHeaderReturns {
+  private getHeader(): Cli_GetHeaderReturns {
     return CLIHeader.render(
       [
         chalk.yellowBright.bold(`Nova v${packageJson['version']}`),
@@ -852,42 +852,42 @@ class CLI {
    * Builds the usage string shown in help output by walking the command ancestry. When aliases
    * differ from names, an alias-based line is appended.
    *
-   * @param {CliGetCommandUsageCommand} command - Command.
+   * @param {Cli_GetCommandUsageCommand} command - Command.
    *
    * @private
    *
-   * @returns {CliGetCommandUsageReturns}
+   * @returns {Cli_GetCommandUsageReturns}
    *
    * @since 0.11.0
    */
-  private getCommandUsage(command: CliGetCommandUsageCommand): CliGetCommandUsageReturns {
-    const commandName: CliGetCommandUsageCommandName = command.name();
-    const commandAliases: CliGetCommandUsageCommandAliases = command.aliases();
-    const commandUsage: CliGetCommandUsageCommandUsage = command.usage();
+  private getCommandUsage(command: Cli_GetCommandUsageCommand): Cli_GetCommandUsageReturns {
+    const commandName: Cli_GetCommandUsageCommandName = command.name();
+    const commandAliases: Cli_GetCommandUsageCommandAliases = command.aliases();
+    const commandUsage: Cli_GetCommandUsageCommandUsage = command.usage();
 
     // Store the command path here.
-    const fullCommand: CliGetCommandUsageFullCommand = [
+    const fullCommand: Cli_GetCommandUsageFullCommand = [
       this.styleText('usage', commandUsage),
       commandName,
     ];
 
-    const usagePipeSeparator: CliGetCommandUsageUsagePipeSeparator = this.styleText('usage', '|');
-    const aliasCommand: CliGetCommandUsageAliasCommand = [
+    const usagePipeSeparator: Cli_GetCommandUsageUsagePipeSeparator = this.styleText('usage', '|');
+    const aliasCommand: Cli_GetCommandUsageAliasCommand = [
       this.styleText('usage', commandUsage),
       ...(commandAliases.length > 0) ? [commandAliases.join(usagePipeSeparator)] : [commandName],
     ];
 
-    let parentCommand: CliGetCommandUsageParentCommand = command.parent;
+    let parentCommand: Cli_GetCommandUsageParentCommand = command.parent;
 
     // Walk backwards.
     while (parentCommand !== null) {
-      const parentCommandName: CliGetCommandUsageParentCommandName = parentCommand.name();
-      const parentCommandAliases: CliGetCommandUsageParentCommandAliases = parentCommand.aliases();
+      const parentCommandName: Cli_GetCommandUsageParentCommandName = parentCommand.name();
+      const parentCommandAliases: Cli_GetCommandUsageParentCommandAliases = parentCommand.aliases();
 
       fullCommand.push(parentCommandName);
 
       if (parentCommandAliases.length > 0) {
-        const parentAliasSeparated: CliGetCommandUsageParentAliasSeparated = parentCommandAliases.join(usagePipeSeparator);
+        const parentAliasSeparated: Cli_GetCommandUsageParentAliasSeparated = parentCommandAliases.join(usagePipeSeparator);
 
         aliasCommand.push(parentAliasSeparated);
       } else {
@@ -897,12 +897,12 @@ class CLI {
       parentCommand = parentCommand.parent;
     }
 
-    const fullLine: CliGetCommandUsageFullLine = fullCommand.reverse().join(' ');
-    const aliasLine: CliGetCommandUsageAliasLine = aliasCommand.reverse().join(' ');
+    const fullLine: Cli_GetCommandUsageFullLine = fullCommand.reverse().join(' ');
+    const aliasLine: Cli_GetCommandUsageAliasLine = aliasCommand.reverse().join(' ');
 
     // Strip ANSI codes before comparing to avoid false mismatches from styling.
-    const fullLineStripped: CliGetCommandUsageFullLineStripped = fullLine.replace(new RegExp(LIB_REGEX_PATTERN_ANSI, 'g'), '');
-    const aliasLineStripped: CliGetCommandUsageAliasLineStripped = aliasLine.replace(new RegExp(LIB_REGEX_PATTERN_ANSI, 'g'), '');
+    const fullLineStripped: Cli_GetCommandUsageFullLineStripped = fullLine.replace(new RegExp(LIB_REGEX_PATTERN_ANSI, 'g'), '');
+    const aliasLineStripped: Cli_GetCommandUsageAliasLineStripped = aliasLine.replace(new RegExp(LIB_REGEX_PATTERN_ANSI, 'g'), '');
 
     if (fullLineStripped === aliasLineStripped) {
       return fullLine;
@@ -920,22 +920,22 @@ class CLI {
    * Formats the name and aliases of a subcommand for display in help listings. Applies color
    * based on whether the item is top-level or nested.
    *
-   * @param {CliGetSubcommandTermCommand} command - Command.
+   * @param {Cli_GetSubcommandTermCommand} command - Command.
    *
    * @private
    *
-   * @returns {CliGetSubcommandTermReturns}
+   * @returns {Cli_GetSubcommandTermReturns}
    *
    * @since 0.11.0
    */
-  private getSubcommandTerm(command: CliGetSubcommandTermCommand): CliGetSubcommandTermReturns {
-    const category: CliGetSubcommandTermCategory = (command.parent !== null && command.parent.parent === null) ? 'commands' : 'subcommands';
-    const categoryPipeSeparator: CliGetSubcommandTermCategoryPipeSeparator = this.styleText(category, '|');
-    const names: CliGetSubcommandTermNames = [
+  private getSubcommandTerm(command: Cli_GetSubcommandTermCommand): Cli_GetSubcommandTermReturns {
+    const category: Cli_GetSubcommandTermCategory = (command.parent !== null && command.parent.parent === null) ? 'commands' : 'subcommands';
+    const categoryPipeSeparator: Cli_GetSubcommandTermCategoryPipeSeparator = this.styleText(category, '|');
+    const names: Cli_GetSubcommandTermNames = [
       command.name(),
       ...command.aliases(),
     ].join(categoryPipeSeparator);
-    const usage: CliGetSubcommandTermUsage = command.usage();
+    const usage: Cli_GetSubcommandTermUsage = command.usage();
 
     return (usage !== '') ? `${names} ${this.styleText(category, usage)}` : names;
   }
@@ -946,17 +946,17 @@ class CLI {
    * Applies chalk color to help output text based on category type and per-title overrides.
    * Called by configureHelp callbacks for consistent style.
    *
-   * @param {CliStyleTextType} type - Type.
-   * @param {CliStyleTextText} text - Text.
+   * @param {Cli_StyleTextType} type - Type.
+   * @param {Cli_StyleTextText} text - Text.
    *
    * @private
    *
-   * @returns {CliStyleTextReturns}
+   * @returns {Cli_StyleTextReturns}
    *
    * @since 0.11.0
    */
-  private styleText(type: CliStyleTextType, text: CliStyleTextText): CliStyleTextReturns {
-    const categoryStyles: CliStyleTextCategoryStyles = {
+  private styleText(type: Cli_StyleTextType, text: Cli_StyleTextText): Cli_StyleTextReturns {
+    const categoryStyles: Cli_StyleTextCategoryStyles = {
       commands: [chalk.blue],
       description: [chalk.dim],
       subcommands: [chalk.magenta],
@@ -964,17 +964,17 @@ class CLI {
       usage: [chalk.green],
     };
 
-    const titleStyles: CliStyleTextTitleStyles = {
+    const titleStyles: Cli_StyleTextTitleStyles = {
       'Commands:': [chalk.blue],
       'Options:': [chalk.cyan],
       'Subcommands:': [chalk.magenta],
       'Usage:': [chalk.green],
     };
 
-    const categoryFunctions: CliStyleTextCategoryFunctions = Reflect.get(categoryStyles, type) ?? [];
-    const titleFunctions: CliStyleTextTitleFunctions = Reflect.get(titleStyles, text) ?? [];
+    const categoryFunctions: Cli_StyleTextCategoryFunctions = Reflect.get(categoryStyles, type) ?? [];
+    const titleFunctions: Cli_StyleTextTitleFunctions = Reflect.get(titleStyles, text) ?? [];
 
-    let coloredText: CliStyleTextColoredText = text;
+    let coloredText: Cli_StyleTextColoredText = text;
 
     // Apply category type coloring.
     for (const categoryFunction of categoryFunctions) {
@@ -997,16 +997,16 @@ class CLI {
    * Strips ANSI codes and Commander's "error:" prefix from error messages, normalizes
    * whitespace, then routes cleaned text through Logger.error.
    *
-   * @param {CliHandleCliErrorText} text - Text.
+   * @param {Cli_HandleCliErrorText} text - Text.
    *
    * @private
    *
-   * @returns {CliHandleCliErrorReturns}
+   * @returns {Cli_HandleCliErrorReturns}
    *
    * @since 0.11.0
    */
-  private handleCliError(text: CliHandleCliErrorText): CliHandleCliErrorReturns {
-    let processedText: CliHandleCliErrorProcessedText = text.replace(new RegExp(LIB_REGEX_PATTERN_ERROR_PREFIX.source, 'i'), '');
+  private handleCliError(text: Cli_HandleCliErrorText): Cli_HandleCliErrorReturns {
+    let processedText: Cli_HandleCliErrorProcessedText = text.replace(new RegExp(LIB_REGEX_PATTERN_ERROR_PREFIX.source, 'i'), '');
 
     // Strip ANSI coloring.
     processedText = processedText.replace(LIB_REGEX_PATTERN_ANSI, '');

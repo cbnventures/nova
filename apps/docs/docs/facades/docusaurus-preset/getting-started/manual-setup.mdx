@@ -52,7 +52,7 @@ The `preset` field is required. Choose one of `'envoy'`, `'foundry'`, `'lantern'
 
 ## Override Defaults
 
-Pass an `overrides` object to customize individual values without switching presets:
+Pass an `overrides` object to customize individual values without switching presets. Each color category accepts a `{ light, dark }` pair, and either key can be omitted to keep the preset default for that mode:
 
 ```ts title="docusaurus.config.ts"
 presets: [[
@@ -61,7 +61,7 @@ presets: [[
     preset: 'envoy',
     overrides: {
       colors: {
-        primary: '#2563eb',
+        primary: { light: '#2563eb', dark: '#60a5fa' },
       },
       navbar: 'canopy',
     },
@@ -69,4 +69,4 @@ presets: [[
 ]],
 ```
 
-For the full list of override options, see **[Preset Options](/docs/facades/docusaurus-preset/reference/preset-options)**.
+Only `colors`, `fonts`, `navbar`, and `footer` are overridable. For the full list of override options, see **[Preset Options](/docs/facades/docusaurus-preset/reference/preset-options)**.

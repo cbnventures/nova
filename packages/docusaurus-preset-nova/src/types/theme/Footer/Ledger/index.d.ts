@@ -6,117 +6,117 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeFooterLedgerIndexSection = ThemeFooterLedgerIndexSectionLink[];
+export type Theme_Footer_Ledger_Index_Section = Theme_Footer_Ledger_Index_SectionLink[];
 
-export type ThemeFooterLedgerIndexSections = Record<string, ThemeFooterLedgerIndexSection>;
+export type Theme_Footer_Ledger_Index_Sections = Record<string, Theme_Footer_Ledger_Index_Section>;
 
-export type ThemeFooterLedgerIndexLayoutSlotTitle = string | undefined;
+export type Theme_Footer_Ledger_Index_LayoutSlot_Title = string | undefined;
 
-export type ThemeFooterLedgerIndexLayoutSlotSection = string;
+export type Theme_Footer_Ledger_Index_LayoutSlot_Section = string;
 
-export type ThemeFooterLedgerIndexLayoutSlot = {
-  title?: ThemeFooterLedgerIndexLayoutSlotTitle;
-  section: ThemeFooterLedgerIndexLayoutSlotSection;
+export type Theme_Footer_Ledger_Index_LayoutSlot = {
+  title?: Theme_Footer_Ledger_Index_LayoutSlot_Title;
+  section: Theme_Footer_Ledger_Index_LayoutSlot_Section;
 };
 
-export type ThemeFooterLedgerIndexLayout = Record<string, ThemeFooterLedgerIndexLayoutSlot>;
+export type Theme_Footer_Ledger_Index_Layout = Record<string, Theme_Footer_Ledger_Index_LayoutSlot>;
 
-export type ThemeFooterLedgerIndexSocialLinks = ThemeFooterLedgerIndexSocialLink[];
+export type Theme_Footer_Ledger_Index_SocialLinks = Theme_Footer_Ledger_Index_SocialLink[];
 
-export type ThemeFooterLedgerIndexCopyright = string;
+export type Theme_Footer_Ledger_Index_Copyright = string;
 
-export type ThemeFooterLedgerIndexCredit = boolean;
+export type Theme_Footer_Ledger_Index_Credit = boolean;
 
-export type ThemeFooterLedgerIndexCtaObjectLabel = string;
+export type Theme_Footer_Ledger_Index_CtaObject_Label = string;
 
-export type ThemeFooterLedgerIndexCtaObjectHref = string;
+export type Theme_Footer_Ledger_Index_CtaObject_Href = string;
 
-export type ThemeFooterLedgerIndexCtaObject = {
-  label: ThemeFooterLedgerIndexCtaObjectLabel;
-  href: ThemeFooterLedgerIndexCtaObjectHref;
+export type Theme_Footer_Ledger_Index_CtaObject = {
+  label: Theme_Footer_Ledger_Index_CtaObject_Label;
+  href: Theme_Footer_Ledger_Index_CtaObject_Href;
 };
 
-export type ThemeFooterLedgerIndexCta = string | ThemeFooterLedgerIndexCtaObject | undefined;
+export type Theme_Footer_Ledger_Index_Cta = string | Theme_Footer_Ledger_Index_CtaObject | undefined;
 
-export type ThemeFooterLedgerIndexLedgerPropsSections = ThemeFooterLedgerIndexSections;
+export type Theme_Footer_Ledger_Index_Ledger_Props_Sections = Theme_Footer_Ledger_Index_Sections;
 
-export type ThemeFooterLedgerIndexLedgerPropsLayout = ThemeFooterLedgerIndexLayout;
+export type Theme_Footer_Ledger_Index_Ledger_Props_Layout = Theme_Footer_Ledger_Index_Layout;
 
-export type ThemeFooterLedgerIndexLedgerPropsSocialLinks = ThemeFooterLedgerIndexSocialLinks;
+export type Theme_Footer_Ledger_Index_Ledger_Props_SocialLinks = Theme_Footer_Ledger_Index_SocialLinks;
 
-export type ThemeFooterLedgerIndexLedgerPropsCopyright = ThemeFooterLedgerIndexCopyright;
+export type Theme_Footer_Ledger_Index_Ledger_Props_Copyright = Theme_Footer_Ledger_Index_Copyright;
 
-export type ThemeFooterLedgerIndexLedgerPropsCredit = ThemeFooterLedgerIndexCredit;
+export type Theme_Footer_Ledger_Index_Ledger_Props_Credit = Theme_Footer_Ledger_Index_Credit;
 
-export type ThemeFooterLedgerIndexLedgerPropsCta = ThemeFooterLedgerIndexCta;
+export type Theme_Footer_Ledger_Index_Ledger_Props_Cta = Theme_Footer_Ledger_Index_Cta;
 
-export type ThemeFooterLedgerIndexLedgerPropsCtaContained = boolean;
+export type Theme_Footer_Ledger_Index_Ledger_Props_CtaContained = boolean;
 
-export type ThemeFooterLedgerIndexLedgerPropsClassName = string | undefined;
+export type Theme_Footer_Ledger_Index_Ledger_Props_ClassName = string | undefined;
 
-export type ThemeFooterLedgerIndexLedgerPropsStyle = CSSProperties | undefined;
+export type Theme_Footer_Ledger_Index_Ledger_Props_Style = CSSProperties | undefined;
 
-export type ThemeFooterLedgerIndexLedgerProps = {
-  sections: ThemeFooterLedgerIndexLedgerPropsSections;
-  layout: ThemeFooterLedgerIndexLedgerPropsLayout;
-  socialLinks: ThemeFooterLedgerIndexLedgerPropsSocialLinks;
-  copyright: ThemeFooterLedgerIndexLedgerPropsCopyright;
-  credit: ThemeFooterLedgerIndexLedgerPropsCredit;
-  cta?: ThemeFooterLedgerIndexLedgerPropsCta;
-  ctaContained: ThemeFooterLedgerIndexLedgerPropsCtaContained;
-  className?: ThemeFooterLedgerIndexLedgerPropsClassName;
-  style?: ThemeFooterLedgerIndexLedgerPropsStyle;
+export type Theme_Footer_Ledger_Index_Ledger_Props = {
+  sections: Theme_Footer_Ledger_Index_Ledger_Props_Sections;
+  layout: Theme_Footer_Ledger_Index_Ledger_Props_Layout;
+  socialLinks: Theme_Footer_Ledger_Index_Ledger_Props_SocialLinks;
+  copyright: Theme_Footer_Ledger_Index_Ledger_Props_Copyright;
+  credit: Theme_Footer_Ledger_Index_Ledger_Props_Credit;
+  cta?: Theme_Footer_Ledger_Index_Ledger_Props_Cta;
+  ctaContained: Theme_Footer_Ledger_Index_Ledger_Props_CtaContained;
+  className?: Theme_Footer_Ledger_Index_Ledger_Props_ClassName;
+  style?: Theme_Footer_Ledger_Index_Ledger_Props_Style;
 };
 
-export type ThemeFooterLedgerIndexLedgerReturns = React.JSX.Element;
+export type Theme_Footer_Ledger_Index_Ledger_Returns = React.JSX.Element;
 
-export type ThemeFooterLedgerIndexLedgerSections = ThemeFooterLedgerIndexSections;
+export type Theme_Footer_Ledger_Index_Ledger_Sections = Theme_Footer_Ledger_Index_Sections;
 
-export type ThemeFooterLedgerIndexLedgerLayout = ThemeFooterLedgerIndexLayout;
+export type Theme_Footer_Ledger_Index_Ledger_Layout = Theme_Footer_Ledger_Index_Layout;
 
-export type ThemeFooterLedgerIndexLedgerSocialLinks = ThemeFooterLedgerIndexSocialLinks;
+export type Theme_Footer_Ledger_Index_Ledger_SocialLinks = Theme_Footer_Ledger_Index_SocialLinks;
 
-export type ThemeFooterLedgerIndexLedgerCopyright = ThemeFooterLedgerIndexCopyright;
+export type Theme_Footer_Ledger_Index_Ledger_Copyright = Theme_Footer_Ledger_Index_Copyright;
 
-export type ThemeFooterLedgerIndexLedgerCredit = ThemeFooterLedgerIndexCredit;
+export type Theme_Footer_Ledger_Index_Ledger_Credit = Theme_Footer_Ledger_Index_Credit;
 
-export type ThemeFooterLedgerIndexLedgerCta = ThemeFooterLedgerIndexCta;
+export type Theme_Footer_Ledger_Index_Ledger_Cta = Theme_Footer_Ledger_Index_Cta;
 
-export type ThemeFooterLedgerIndexLedgerCtaContained = boolean;
+export type Theme_Footer_Ledger_Index_Ledger_CtaContained = boolean;
 
-export type ThemeFooterLedgerIndexLedgerFooterClassName = string;
+export type Theme_Footer_Ledger_Index_Ledger_FooterClassName = string;
 
-export type ThemeFooterLedgerIndexLedgerFooterLinksAriaLabel = string;
+export type Theme_Footer_Ledger_Index_Ledger_FooterLinksAriaLabel = string;
 
-export type ThemeFooterLedgerIndexLedgerSocialLinksAriaLabel = string;
+export type Theme_Footer_Ledger_Index_Ledger_SocialLinksAriaLabel = string;
 
-export type ThemeFooterLedgerIndexLedgerExternalLinkAriaLabel = string;
+export type Theme_Footer_Ledger_Index_Ledger_ExternalLinkAriaLabel = string;
 
-export type ThemeFooterLedgerIndexLedgerFirstLayoutSlot = ThemeFooterLedgerIndexLayoutSlot | undefined;
+export type Theme_Footer_Ledger_Index_Ledger_FirstLayoutSlot = Theme_Footer_Ledger_Index_LayoutSlot | undefined;
 
-export type ThemeFooterLedgerIndexLedgerFirstSectionKey = string | undefined;
+export type Theme_Footer_Ledger_Index_Ledger_FirstSectionKey = string | undefined;
 
-export type ThemeFooterLedgerIndexLedgerFirstSectionLinks = ThemeFooterLedgerIndexSectionLink[];
+export type Theme_Footer_Ledger_Index_Ledger_FirstSectionLinks = Theme_Footer_Ledger_Index_SectionLink[];
 
-export type ThemeFooterLedgerIndexSectionLinkLabel = string;
+export type Theme_Footer_Ledger_Index_SectionLink_Label = string;
 
-export type ThemeFooterLedgerIndexSectionLinkHref = string;
+export type Theme_Footer_Ledger_Index_SectionLink_Href = string;
 
-export type ThemeFooterLedgerIndexSectionLink = {
-  label: ThemeFooterLedgerIndexSectionLinkLabel;
-  href: ThemeFooterLedgerIndexSectionLinkHref;
+export type Theme_Footer_Ledger_Index_SectionLink = {
+  label: Theme_Footer_Ledger_Index_SectionLink_Label;
+  href: Theme_Footer_Ledger_Index_SectionLink_Href;
 };
 
-export type ThemeFooterLedgerIndexSocialLinkIcon = string | IconifyIcon;
+export type Theme_Footer_Ledger_Index_SocialLink_Icon = string | IconifyIcon;
 
-export type ThemeFooterLedgerIndexSocialLinkHref = string;
+export type Theme_Footer_Ledger_Index_SocialLink_Href = string;
 
-export type ThemeFooterLedgerIndexSocialLinkLabel = string;
+export type Theme_Footer_Ledger_Index_SocialLink_Label = string;
 
-export type ThemeFooterLedgerIndexSocialLink = {
-  icon: ThemeFooterLedgerIndexSocialLinkIcon;
-  href: ThemeFooterLedgerIndexSocialLinkHref;
-  label: ThemeFooterLedgerIndexSocialLinkLabel;
+export type Theme_Footer_Ledger_Index_SocialLink = {
+  icon: Theme_Footer_Ledger_Index_SocialLink_Icon;
+  href: Theme_Footer_Ledger_Index_SocialLink_Href;
+  label: Theme_Footer_Ledger_Index_SocialLink_Label;
 };
 
-export type ThemeFooterLedgerIndexLedgerSocialLinkLabel = string;
+export type Theme_Footer_Ledger_Index_Ledger_SocialLinkLabel = string;

@@ -10,36 +10,36 @@ import { useSearchHighlight } from '../../lib/search/use-search-highlight.js';
 import { useSearchWorker } from '../../lib/search/use-search-worker.js';
 
 import type {
-  ThemeSearchPageSearchPageBaseUrl,
-  ThemeSearchPageSearchPageDebounceTimerRef,
-  ThemeSearchPageSearchPageDispatchedQueryRef,
-  ThemeSearchPageSearchPageDocusaurusContext,
-  ThemeSearchPageSearchPageHandleInputChangeFunction,
-  ThemeSearchPageSearchPageInitialQuery,
-  ThemeSearchPageSearchPageInputChangeEvent,
-  ThemeSearchPageSearchPageInputValue,
-  ThemeSearchPageSearchPageLoading,
-  ThemeSearchPageSearchPageManifestUrl,
-  ThemeSearchPageSearchPageNewUrl,
-  ThemeSearchPageSearchPageNoResults,
-  ThemeSearchPageSearchPageProps,
-  ThemeSearchPageSearchPageQuery,
-  ThemeSearchPageSearchPageQueryState,
-  ThemeSearchPageSearchPageResultCount,
-  ThemeSearchPageSearchPageResultItem,
-  ThemeSearchPageSearchPageResultsFound,
-  ThemeSearchPageSearchPageResultUrl,
-  ThemeSearchPageSearchPageSearchedQuery,
-  ThemeSearchPageSearchPageSearchedQueryState,
-  ThemeSearchPageSearchPageSearching,
-  ThemeSearchPageSearchPageSearchParams,
-  ThemeSearchPageSearchPageSearchWorker,
-  ThemeSearchPageSearchPageSetQuery,
-  ThemeSearchPageSearchPageSetSearchedQuery,
-  ThemeSearchPageSearchPageSnippetSegment,
-  ThemeSearchPageSearchPageSnippetSegmentIndex,
-  ThemeSearchPageSearchPageTitle,
-  ThemeSearchPageSearchPageWorkerUrl,
+  Theme_SearchPage_Index_SearchPage_BaseUrl,
+  Theme_SearchPage_Index_SearchPage_DebounceTimerRef,
+  Theme_SearchPage_Index_SearchPage_DispatchedQueryRef,
+  Theme_SearchPage_Index_SearchPage_DocusaurusContext,
+  Theme_SearchPage_Index_SearchPage_HandleInputChangeFunction,
+  Theme_SearchPage_Index_SearchPage_InitialQuery,
+  Theme_SearchPage_Index_SearchPage_InputChangeEvent,
+  Theme_SearchPage_Index_SearchPage_InputValue,
+  Theme_SearchPage_Index_SearchPage_Loading,
+  Theme_SearchPage_Index_SearchPage_ManifestUrl,
+  Theme_SearchPage_Index_SearchPage_NewUrl,
+  Theme_SearchPage_Index_SearchPage_NoResults,
+  Theme_SearchPage_Index_SearchPage_Props,
+  Theme_SearchPage_Index_SearchPage_Query,
+  Theme_SearchPage_Index_SearchPage_QueryState,
+  Theme_SearchPage_Index_SearchPage_ResultCount,
+  Theme_SearchPage_Index_SearchPage_ResultItem,
+  Theme_SearchPage_Index_SearchPage_ResultsFound,
+  Theme_SearchPage_Index_SearchPage_ResultUrl,
+  Theme_SearchPage_Index_SearchPage_SearchedQuery,
+  Theme_SearchPage_Index_SearchPage_SearchedQueryState,
+  Theme_SearchPage_Index_SearchPage_Searching,
+  Theme_SearchPage_Index_SearchPage_SearchParams,
+  Theme_SearchPage_Index_SearchPage_SearchWorker,
+  Theme_SearchPage_Index_SearchPage_SetQuery,
+  Theme_SearchPage_Index_SearchPage_SetSearchedQuery,
+  Theme_SearchPage_Index_SearchPage_SnippetSegment,
+  Theme_SearchPage_Index_SearchPage_SnippetSegmentIndex,
+  Theme_SearchPage_Index_SearchPage_Title,
+  Theme_SearchPage_Index_SearchPage_WorkerUrl,
 } from '../../types/theme/SearchPage/index.d.ts';
 
 /**
@@ -49,36 +49,36 @@ import type {
  * query from the URL, dispatches debounced searches to the worker thread,
  * displays result links with snippet previews, and activates term highlighting.
  *
- * @param {ThemeSearchPageSearchPageProps} props - Props.
+ * @param {Theme_SearchPage_Index_SearchPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function SearchPage(props: ThemeSearchPageSearchPageProps) {
-  const docusaurusContext: ThemeSearchPageSearchPageDocusaurusContext = useDocusaurusContext();
-  const baseUrl: ThemeSearchPageSearchPageBaseUrl = docusaurusContext['siteConfig']['baseUrl'];
+function SearchPage(props: Theme_SearchPage_Index_SearchPage_Props) {
+  const docusaurusContext: Theme_SearchPage_Index_SearchPage_DocusaurusContext = useDocusaurusContext();
+  const baseUrl: Theme_SearchPage_Index_SearchPage_BaseUrl = docusaurusContext['siteConfig']['baseUrl'];
 
-  const workerUrl: ThemeSearchPageSearchPageWorkerUrl = `${baseUrl}search-worker.js`;
-  const manifestUrl: ThemeSearchPageSearchPageManifestUrl = `${baseUrl}search-manifest.json`;
+  const workerUrl: Theme_SearchPage_Index_SearchPage_WorkerUrl = `${baseUrl}search-worker.js`;
+  const manifestUrl: Theme_SearchPage_Index_SearchPage_ManifestUrl = `${baseUrl}search-manifest.json`;
 
-  const searchWorker: ThemeSearchPageSearchPageSearchWorker = useSearchWorker({
+  const searchWorker: Theme_SearchPage_Index_SearchPage_SearchWorker = useSearchWorker({
     workerUrl, manifestUrl,
   });
 
-  const searchParams: ThemeSearchPageSearchPageSearchParams = (typeof window !== 'undefined') ? new URLSearchParams(window.location.search) : new URLSearchParams();
-  const initialQuery: ThemeSearchPageSearchPageInitialQuery = searchParams.get('q') ?? '';
+  const searchParams: Theme_SearchPage_Index_SearchPage_SearchParams = (typeof window !== 'undefined') ? new URLSearchParams(window.location.search) : new URLSearchParams();
+  const initialQuery: Theme_SearchPage_Index_SearchPage_InitialQuery = searchParams.get('q') ?? '';
 
-  const queryState: ThemeSearchPageSearchPageQueryState = useState<ThemeSearchPageSearchPageQuery>(initialQuery);
-  const query: ThemeSearchPageSearchPageQuery = queryState[0];
-  const setQuery: ThemeSearchPageSearchPageSetQuery = queryState[1];
+  const queryState: Theme_SearchPage_Index_SearchPage_QueryState = useState<Theme_SearchPage_Index_SearchPage_Query>(initialQuery);
+  const query: Theme_SearchPage_Index_SearchPage_Query = queryState[0];
+  const setQuery: Theme_SearchPage_Index_SearchPage_SetQuery = queryState[1];
 
-  const searchedQueryState: ThemeSearchPageSearchPageSearchedQueryState = useState<ThemeSearchPageSearchPageSearchedQuery>('');
-  const searchedQuery: ThemeSearchPageSearchPageSearchedQuery = searchedQueryState[0];
-  const setSearchedQuery: ThemeSearchPageSearchPageSetSearchedQuery = searchedQueryState[1];
+  const searchedQueryState: Theme_SearchPage_Index_SearchPage_SearchedQueryState = useState<Theme_SearchPage_Index_SearchPage_SearchedQuery>('');
+  const searchedQuery: Theme_SearchPage_Index_SearchPage_SearchedQuery = searchedQueryState[0];
+  const setSearchedQuery: Theme_SearchPage_Index_SearchPage_SetSearchedQuery = searchedQueryState[1];
 
-  const debounceTimerRef: ThemeSearchPageSearchPageDebounceTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const dispatchedQueryRef: ThemeSearchPageSearchPageDispatchedQueryRef = useRef<string>('');
+  const debounceTimerRef: Theme_SearchPage_Index_SearchPage_DebounceTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const dispatchedQueryRef: Theme_SearchPage_Index_SearchPage_DispatchedQueryRef = useRef<string>('');
 
   useSearchHighlight({ enabled: true });
 
@@ -109,8 +109,8 @@ function SearchPage(props: ThemeSearchPageSearchPageProps) {
   ]);
 
   // Debounced search and URL update on input change.
-  const handleInputChange: ThemeSearchPageSearchPageHandleInputChangeFunction = useCallback((event: ThemeSearchPageSearchPageInputChangeEvent) => {
-    const inputValue: ThemeSearchPageSearchPageInputValue = event.target.value;
+  const handleInputChange: Theme_SearchPage_Index_SearchPage_HandleInputChangeFunction = useCallback((event: Theme_SearchPage_Index_SearchPage_InputChangeEvent) => {
+    const inputValue: Theme_SearchPage_Index_SearchPage_InputValue = event.target.value;
 
     setQuery(inputValue);
 
@@ -124,7 +124,7 @@ function SearchPage(props: ThemeSearchPageSearchPageProps) {
 
         searchWorker.search(inputValue);
 
-        const newUrl: ThemeSearchPageSearchPageNewUrl = `${window.location.pathname}?q=${encodeURIComponent(inputValue)}`;
+        const newUrl: Theme_SearchPage_Index_SearchPage_NewUrl = `${window.location.pathname}?q=${encodeURIComponent(inputValue)}`;
 
         window.history.replaceState(null, '', newUrl);
       } else {
@@ -147,29 +147,29 @@ function SearchPage(props: ThemeSearchPageSearchPageProps) {
     return;
   }, [searchWorker['search']]);
 
-  const searchTitle: ThemeSearchPageSearchPageTitle = translate({
+  const searchTitle: Theme_SearchPage_Index_SearchPage_Title = translate({
     id: 'theme.SearchPage.title',
     message: 'Search',
     description: 'The title, heading, placeholder, and ARIA label for the search page',
   });
-  const searchLoading: ThemeSearchPageSearchPageLoading = translate({
+  const searchLoading: Theme_SearchPage_Index_SearchPage_Loading = translate({
     id: 'theme.SearchPage.loading',
     message: 'Loading search index...',
     description: 'The message displayed while the search index is being loaded',
   });
-  const searchNoResults: ThemeSearchPageSearchPageNoResults = translate({
+  const searchNoResults: Theme_SearchPage_Index_SearchPage_NoResults = translate({
     id: 'theme.SearchPage.noResults',
     message: 'No results found.',
     description: 'The message displayed when a search query returns no results',
   });
-  const searchSearching: ThemeSearchPageSearchPageSearching = translate({
+  const searchSearching: Theme_SearchPage_Index_SearchPage_Searching = translate({
     id: 'theme.SearchPage.searching',
     message: 'Searching...',
     description: 'The message displayed while the query is being processed and fresh results have not yet returned',
   });
 
-  const resultCount: ThemeSearchPageSearchPageResultCount = searchWorker['results'].length;
-  const resultsFound: ThemeSearchPageSearchPageResultsFound = translate(
+  const resultCount: Theme_SearchPage_Index_SearchPage_ResultCount = searchWorker['results'].length;
+  const resultsFound: Theme_SearchPage_Index_SearchPage_ResultsFound = translate(
     {
       id: 'theme.SearchPage.resultsFound',
       message: '{count} results found',
@@ -243,15 +243,15 @@ function SearchPage(props: ThemeSearchPageSearchPageProps) {
 
           {(searchWorker['results'].length > 0) && (
             <ul className="nova-search-page-list">
-              {searchWorker['results'].map((resultItem: ThemeSearchPageSearchPageResultItem) => {
-                const resultUrl: ThemeSearchPageSearchPageResultUrl = `${resultItem['path']}?_highlight=${encodeURIComponent(query)}`;
+              {searchWorker['results'].map((resultItem: Theme_SearchPage_Index_SearchPage_ResultItem) => {
+                const resultUrl: Theme_SearchPage_Index_SearchPage_ResultUrl = `${resultItem['path']}?_highlight=${encodeURIComponent(query)}`;
 
                 return (
                   <li key={resultItem['path']} className="nova-search-page-item">
                     <a href={resultUrl}>
                       <span className="nova-search-page-item-title">{resultItem['title']}</span>
                       <span className="nova-search-page-item-snippet">
-                        {resultItem['snippetSegments'].map((segment: ThemeSearchPageSearchPageSnippetSegment, segmentIndex: ThemeSearchPageSearchPageSnippetSegmentIndex) => {
+                        {resultItem['snippetSegments'].map((segment: Theme_SearchPage_Index_SearchPage_SnippetSegment, segmentIndex: Theme_SearchPage_Index_SearchPage_SnippetSegmentIndex) => {
                           if (segment['highlight'] === true) {
                             return (
                               <span key={segmentIndex} className="nova-search-page-item-highlight">

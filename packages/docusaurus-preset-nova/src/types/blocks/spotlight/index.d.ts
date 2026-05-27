@@ -1,26 +1,26 @@
 import type { CSSProperties, ReactNode } from 'react';
 
-import type { SharedSurface } from '../../shared.d.ts';
+import type { Shared_Surface } from '../../shared.d.ts';
 
 /**
  * Blocks - Spotlight.
  *
  * @since 0.15.0
  */
-export type BlocksSpotlightPropsHeading = string;
+export type Blocks_Spotlight_Index_BlocksSpotlight_Props_Heading = string;
 
-export type BlocksSpotlightPropsChildren = ReactNode;
+export type Blocks_Spotlight_Index_BlocksSpotlight_Props_Children = ReactNode;
 
-export type BlocksSpotlightPropsSurface = SharedSurface | undefined;
+export type Blocks_Spotlight_Index_BlocksSpotlight_Props_Surface = Shared_Surface | undefined;
 
-export type BlocksSpotlightPropsClassName = string | undefined;
+export type Blocks_Spotlight_Index_BlocksSpotlight_Props_ClassName = string | undefined;
 
-export type BlocksSpotlightPropsStyle = CSSProperties | undefined;
+export type Blocks_Spotlight_Index_BlocksSpotlight_Props_Style = CSSProperties | undefined;
 
-export type BlocksSpotlightProps = {
-  heading: BlocksSpotlightPropsHeading;
-  children: BlocksSpotlightPropsChildren;
-  surface?: BlocksSpotlightPropsSurface;
-  className?: BlocksSpotlightPropsClassName;
-  style?: BlocksSpotlightPropsStyle;
+export type Blocks_Spotlight_Index_BlocksSpotlight_Props = {
+  heading: Blocks_Spotlight_Index_BlocksSpotlight_Props_Heading;
+  children: Blocks_Spotlight_Index_BlocksSpotlight_Props_Children;
+  surface?: Blocks_Spotlight_Index_BlocksSpotlight_Props_Surface;
+  className?: Blocks_Spotlight_Index_BlocksSpotlight_Props_ClassName;
+  style?: Blocks_Spotlight_Index_BlocksSpotlight_Props_Style;
 };

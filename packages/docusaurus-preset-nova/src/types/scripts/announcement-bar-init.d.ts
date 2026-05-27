@@ -3,25 +3,25 @@
  *
  * @since 0.15.0
  */
-export type ScriptsAnnouncementBarInitAnnouncementBarInitOptionsSiteStorageType = string;
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_Options_SiteStorage_Type = string;
 
-export type ScriptsAnnouncementBarInitAnnouncementBarInitOptionsSiteStorageNamespace = string;
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_Options_SiteStorage_Namespace = string;
 
-export type ScriptsAnnouncementBarInitAnnouncementBarInitOptionsSiteStorage = {
-  type: ScriptsAnnouncementBarInitAnnouncementBarInitOptionsSiteStorageType;
-  namespace: ScriptsAnnouncementBarInitAnnouncementBarInitOptionsSiteStorageNamespace;
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_Options_SiteStorage = {
+  type: Scripts_AnnouncementBarInit_AnnouncementBarInit_Options_SiteStorage_Type;
+  namespace: Scripts_AnnouncementBarInit_AnnouncementBarInit_Options_SiteStorage_Namespace;
 };
 
-export type ScriptsAnnouncementBarInitAnnouncementBarInitOptions = {
-  siteStorage: ScriptsAnnouncementBarInitAnnouncementBarInitOptionsSiteStorage;
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_Options = {
+  siteStorage: Scripts_AnnouncementBarInit_AnnouncementBarInit_Options_SiteStorage;
 };
 
-export type ScriptsAnnouncementBarInitAnnouncementBarInitReturns = string;
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_Returns = string;
 
-export type ScriptsAnnouncementBarInitAnnouncementBarInitDismissStorageKey = string;
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_DismissStorageKey = string;
 
-export type ScriptsAnnouncementBarInitAnnouncementBarInitDismissDataAttribute = string;
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_DismissDataAttribute = string;
 
-export type ScriptsAnnouncementBarInitAnnouncementBarInitLines = string[];
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_Lines = string[];
 
-export type ScriptsAnnouncementBarInitAnnouncementBarInitResult = string;
+export type Scripts_AnnouncementBarInit_AnnouncementBarInit_Result = string;

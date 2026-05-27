@@ -8,13 +8,13 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliUtilityVersion } from '../../../cli/utility/version.js';
+import { Runner as CliUtilityVersion } from '../../../cli/utility/version.js';
 
 import type {
-  TestsCliUtilityVersionRunOriginalCwd,
-  TestsCliUtilityVersionRunSandboxRoot,
-  TestsCliUtilityVersionRunTemporaryDirectory,
-  TestsCliUtilityVersionRunTemporaryPrefix,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_OriginalCwd,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_SandboxRoot,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryDirectory,
+  Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryPrefix,
 } from '../../../types/tests/cli/utility/version.test.d.ts';
 
 /**
@@ -23,10 +23,10 @@ import type {
  * @since 0.14.0
  */
 describe('CliUtilityVersion.run', async () => {
-  const originalCwd: TestsCliUtilityVersionRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliUtilityVersionRunTemporaryDirectory = tmpdir();
-  const temporaryPrefix: TestsCliUtilityVersionRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliUtilityVersionRunSandboxRoot = await mkdtemp(temporaryPrefix);
+  const originalCwd: Tests_Cli_Utility_Version_CliUtilityVersionRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryDirectory = tmpdir();
+  const temporaryPrefix: Tests_Cli_Utility_Version_CliUtilityVersionRun_TemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Utility_Version_CliUtilityVersionRun_SandboxRoot = await mkdtemp(temporaryPrefix);
 
   afterAll(async () => {
     process.chdir(originalCwd);

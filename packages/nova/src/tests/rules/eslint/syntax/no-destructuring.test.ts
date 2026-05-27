@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoDestructuring } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintSyntaxNoDestructuringRuleTester } from '../../../../types/tests/rules/eslint/syntax/no-destructuring.test.d.ts';
+import type { Tests_Rules_Eslint_Syntax_NoDestructuring_RuleTester } from '../../../../types/tests/rules/eslint/syntax/no-destructuring.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Syntax - No Destructuring.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintSyntaxNoDestructuringRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Syntax_NoDestructuring_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

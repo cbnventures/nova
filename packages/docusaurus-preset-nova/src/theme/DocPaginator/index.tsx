@@ -3,13 +3,13 @@ import { translate } from '@docusaurus/Translate';
 import { Icon } from '@iconify/react/offline';
 
 import type {
-  ThemeDocPaginatorDocPaginatorContinueReadingAriaLabel,
-  ThemeDocPaginatorDocPaginatorContinueReadingLabel,
-  ThemeDocPaginatorDocPaginatorGoBackAriaLabel,
-  ThemeDocPaginatorDocPaginatorGoBackLabel,
-  ThemeDocPaginatorDocPaginatorHeading,
-  ThemeDocPaginatorDocPaginatorNavAriaLabel,
-  ThemeDocPaginatorDocPaginatorProps,
+  Theme_DocPaginator_Index_DocPaginator_ContinueReadingAriaLabel,
+  Theme_DocPaginator_Index_DocPaginator_ContinueReadingLabel,
+  Theme_DocPaginator_Index_DocPaginator_GoBackAriaLabel,
+  Theme_DocPaginator_Index_DocPaginator_GoBackLabel,
+  Theme_DocPaginator_Index_DocPaginator_Heading,
+  Theme_DocPaginator_Index_DocPaginator_NavAriaLabel,
+  Theme_DocPaginator_Index_DocPaginator_Props,
 } from '../../types/theme/DocPaginator/index.d.ts';
 
 /**
@@ -19,33 +19,33 @@ import type {
  * with previous and next navigation links, each showing the
  * target page title and an optional description excerpt.
  *
- * @param {ThemeDocPaginatorDocPaginatorProps} props - Props.
+ * @param {Theme_DocPaginator_Index_DocPaginator_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocPaginator(props: ThemeDocPaginatorDocPaginatorProps) {
+function DocPaginator(props: Theme_DocPaginator_Index_DocPaginator_Props) {
   if (props['previous'] === undefined && props['next'] === undefined) {
     return null;
   }
 
-  const navAriaLabel: ThemeDocPaginatorDocPaginatorNavAriaLabel = translate({
+  const navAriaLabel: Theme_DocPaginator_Index_DocPaginator_NavAriaLabel = translate({
     id: 'theme.docs.paginator.navAriaLabel',
     message: 'Docs pages',
     description: 'The ARIA label for the doc paginator navigation',
   });
-  const heading: ThemeDocPaginatorDocPaginatorHeading = translate({
+  const heading: Theme_DocPaginator_Index_DocPaginator_Heading = translate({
     id: 'theme.docs.paginator.heading',
     message: 'Keep reading',
     description: 'The heading shown above the doc paginator links',
   });
-  const goBackLabel: ThemeDocPaginatorDocPaginatorGoBackLabel = translate({
+  const goBackLabel: Theme_DocPaginator_Index_DocPaginator_GoBackLabel = translate({
     id: 'theme.docs.paginator.goBackLabel',
     message: 'Go back',
     description: 'The label for the previous page link in the doc paginator',
   });
-  const continueReadingLabel: ThemeDocPaginatorDocPaginatorContinueReadingLabel = translate({
+  const continueReadingLabel: Theme_DocPaginator_Index_DocPaginator_ContinueReadingLabel = translate({
     id: 'theme.docs.paginator.continueReadingLabel',
     message: 'Continue reading',
     description: 'The label for the next page link in the doc paginator',
@@ -60,7 +60,7 @@ function DocPaginator(props: ThemeDocPaginatorDocPaginatorProps) {
       <div className="nova-doc-paginator-heading">{heading}</div>
       <div className="nova-doc-paginator-links">
         {(props['previous'] !== undefined) && (() => {
-          const goBackAriaLabel: ThemeDocPaginatorDocPaginatorGoBackAriaLabel = translate(
+          const goBackAriaLabel: Theme_DocPaginator_Index_DocPaginator_GoBackAriaLabel = translate(
             {
               id: 'theme.docs.paginator.goBackAriaLabel',
               message: 'Go back: {title}',
@@ -88,7 +88,7 @@ function DocPaginator(props: ThemeDocPaginatorDocPaginatorProps) {
           );
         })()}
         {(props['next'] !== undefined) && (() => {
-          const continueReadingAriaLabel: ThemeDocPaginatorDocPaginatorContinueReadingAriaLabel = translate(
+          const continueReadingAriaLabel: Theme_DocPaginator_Index_DocPaginator_ContinueReadingAriaLabel = translate(
             {
               id: 'theme.docs.paginator.continueReadingAriaLabel',
               message: 'Continue reading: {title}',

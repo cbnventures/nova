@@ -1,41 +1,41 @@
 import type { IconifyIcon } from '@iconify/react/offline';
 import type { CSSProperties, ReactNode } from 'react';
 
-import type { SharedSurface } from '../../shared.d.ts';
+import type { Shared_Surface } from '../../shared.d.ts';
 
 /**
  * Blocks - Features.
  *
  * @since 0.15.0
  */
-export type BlocksFeaturesItemIcon = string | IconifyIcon;
+export type Blocks_Features_Index_BlocksFeatures_Item_Icon = string | IconifyIcon;
 
-export type BlocksFeaturesItemTitle = string;
+export type Blocks_Features_Index_BlocksFeatures_Item_Title = string;
 
-export type BlocksFeaturesItemDescription = string | ReactNode;
+export type Blocks_Features_Index_BlocksFeatures_Item_Description = string | ReactNode;
 
-export type BlocksFeaturesItem = {
-  icon?: BlocksFeaturesItemIcon;
-  title: BlocksFeaturesItemTitle;
-  description: BlocksFeaturesItemDescription;
+export type Blocks_Features_Index_BlocksFeatures_Item = {
+  icon?: Blocks_Features_Index_BlocksFeatures_Item_Icon;
+  title: Blocks_Features_Index_BlocksFeatures_Item_Title;
+  description: Blocks_Features_Index_BlocksFeatures_Item_Description;
 };
 
-export type BlocksFeaturesItems = BlocksFeaturesItem[];
+export type Blocks_Features_Index_BlocksFeatures_Items = Blocks_Features_Index_BlocksFeatures_Item[];
 
-export type BlocksFeaturesPropsItems = BlocksFeaturesItem[];
+export type Blocks_Features_Index_BlocksFeatures_Props_Items = Blocks_Features_Index_BlocksFeatures_Item[];
 
-export type BlocksFeaturesPropsHeading = string | undefined;
+export type Blocks_Features_Index_BlocksFeatures_Props_Heading = string | undefined;
 
-export type BlocksFeaturesPropsSurface = SharedSurface | undefined;
+export type Blocks_Features_Index_BlocksFeatures_Props_Surface = Shared_Surface | undefined;
 
-export type BlocksFeaturesPropsClassName = string | undefined;
+export type Blocks_Features_Index_BlocksFeatures_Props_ClassName = string | undefined;
 
-export type BlocksFeaturesPropsStyle = CSSProperties | undefined;
+export type Blocks_Features_Index_BlocksFeatures_Props_Style = CSSProperties | undefined;
 
-export type BlocksFeaturesProps = {
-  heading?: BlocksFeaturesPropsHeading;
-  items: BlocksFeaturesPropsItems;
-  surface?: BlocksFeaturesPropsSurface;
-  className?: BlocksFeaturesPropsClassName;
-  style?: BlocksFeaturesPropsStyle;
+export type Blocks_Features_Index_BlocksFeatures_Props = {
+  heading?: Blocks_Features_Index_BlocksFeatures_Props_Heading;
+  items: Blocks_Features_Index_BlocksFeatures_Props_Items;
+  surface?: Blocks_Features_Index_BlocksFeatures_Props_Surface;
+  className?: Blocks_Features_Index_BlocksFeatures_Props_ClassName;
+  style?: Blocks_Features_Index_BlocksFeatures_Props_Style;
 };

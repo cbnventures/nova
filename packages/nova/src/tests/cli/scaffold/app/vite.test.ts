@@ -11,28 +11,28 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliScaffoldAppVite } from '../../../../cli/scaffold/app/vite.js';
+import { Runner as CliScaffoldAppVite } from '../../../../cli/scaffold/app/vite.js';
 
 import type {
-  TestsCliScaffoldAppViteRunChildDirectory,
-  TestsCliScaffoldAppViteRunChildPackageJson,
-  TestsCliScaffoldAppViteRunChildPackageJsonPath,
-  TestsCliScaffoldAppViteRunDryRunOutputPath,
-  TestsCliScaffoldAppViteRunExists,
-  TestsCliScaffoldAppViteRunIndexHtmlPath,
-  TestsCliScaffoldAppViteRunMainTsPath,
-  TestsCliScaffoldAppViteRunOriginalCwd,
-  TestsCliScaffoldAppViteRunPackageJson,
-  TestsCliScaffoldAppViteRunPackageJsonPath,
-  TestsCliScaffoldAppViteRunProjectDirectory,
-  TestsCliScaffoldAppViteRunRootDirectory,
-  TestsCliScaffoldAppViteRunRootPackageJson,
-  TestsCliScaffoldAppViteRunRootPackageJsonPath,
-  TestsCliScaffoldAppViteRunSandboxRoot,
-  TestsCliScaffoldAppViteRunTemporaryBase,
-  TestsCliScaffoldAppViteRunTemporaryDirectory,
-  TestsCliScaffoldAppViteRunViteConfigPath,
-  TestsCliScaffoldAppViteRunWorkspacePackageJsonPath,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildDirectory,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildPackageJson,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildPackageJsonPath,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_DryRunOutputPath,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_Exists,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_IndexHtmlPath,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_MainTsPath,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_OriginalCwd,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_PackageJson,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_PackageJsonPath,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ProjectDirectory,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootDirectory,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootPackageJson,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootPackageJsonPath,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_SandboxRoot,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_TemporaryBase,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_TemporaryDirectory,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ViteConfigPath,
+  Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_WorkspacePackageJsonPath,
 } from '../../../../types/tests/cli/scaffold/app/vite.test.d.ts';
 
 /**
@@ -41,10 +41,10 @@ import type {
  * @since 0.15.0
  */
 describe.skip('CliScaffoldAppVite.run', async () => {
-  const originalCwd: TestsCliScaffoldAppViteRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliScaffoldAppViteRunTemporaryDirectory = tmpdir();
-  const temporaryBase: TestsCliScaffoldAppViteRunTemporaryBase = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliScaffoldAppViteRunSandboxRoot = await mkdtemp(temporaryBase);
+  const originalCwd: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_TemporaryDirectory = tmpdir();
+  const temporaryBase: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_TemporaryBase = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_SandboxRoot = await mkdtemp(temporaryBase);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -58,21 +58,21 @@ describe.skip('CliScaffoldAppVite.run', async () => {
   });
 
   it('exits with error when inside child workspace', async () => {
-    const rootDirectory: TestsCliScaffoldAppViteRunRootDirectory = join(sandboxRoot, 'nested-root');
-    const childDirectory: TestsCliScaffoldAppViteRunChildDirectory = join(rootDirectory, 'apps', 'child');
+    const rootDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootDirectory = join(sandboxRoot, 'nested-root');
+    const childDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildDirectory = join(rootDirectory, 'apps', 'child');
 
     await mkdir(childDirectory, { recursive: true });
 
-    const rootPackageJson: TestsCliScaffoldAppViteRunRootPackageJson = JSON.stringify({
+    const rootPackageJson: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootPackageJson = JSON.stringify({
       name: 'root', workspaces: ['apps/*'],
     }, null, 2);
 
-    const rootPackageJsonPath: TestsCliScaffoldAppViteRunRootPackageJsonPath = join(rootDirectory, 'package.json');
+    const rootPackageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_RootPackageJsonPath = join(rootDirectory, 'package.json');
 
     await writeFile(rootPackageJsonPath, `${rootPackageJson}\n`, 'utf-8');
 
-    const childPackageJson: TestsCliScaffoldAppViteRunChildPackageJson = JSON.stringify({ name: 'child' }, null, 2);
-    const childPackageJsonPath: TestsCliScaffoldAppViteRunChildPackageJsonPath = join(childDirectory, 'package.json');
+    const childPackageJson: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildPackageJson = JSON.stringify({ name: 'child' }, null, 2);
+    const childPackageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ChildPackageJsonPath = join(childDirectory, 'package.json');
 
     await writeFile(childPackageJsonPath, `${childPackageJson}\n`, 'utf-8');
 
@@ -86,7 +86,7 @@ describe.skip('CliScaffoldAppVite.run', async () => {
   });
 
   it('respects dry-run', async () => {
-    const projectDirectory: TestsCliScaffoldAppViteRunProjectDirectory = join(sandboxRoot, 'dry-run');
+    const projectDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -99,9 +99,9 @@ describe.skip('CliScaffoldAppVite.run', async () => {
       output: './my-vite-app',
     });
 
-    let exists: TestsCliScaffoldAppViteRunExists = true;
+    let exists: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_Exists = true;
 
-    const dryRunOutputPath: TestsCliScaffoldAppViteRunDryRunOutputPath = join(projectDirectory, 'my-vite-app');
+    const dryRunOutputPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_DryRunOutputPath = join(projectDirectory, 'my-vite-app');
 
     try {
       await access(dryRunOutputPath);
@@ -115,7 +115,7 @@ describe.skip('CliScaffoldAppVite.run', async () => {
   });
 
   it('creates monorepo in empty directory', async () => {
-    const projectDirectory: TestsCliScaffoldAppViteRunProjectDirectory = join(sandboxRoot, 'monorepo-test');
+    const projectDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ProjectDirectory = join(sandboxRoot, 'monorepo-test');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -128,10 +128,10 @@ describe.skip('CliScaffoldAppVite.run', async () => {
     });
 
     // Verify workspace files were created.
-    const workspacePackageJsonPath: TestsCliScaffoldAppViteRunWorkspacePackageJsonPath = join(projectDirectory, 'my-vite-app', 'apps', 'vite', 'package.json');
-    const viteConfigPath: TestsCliScaffoldAppViteRunViteConfigPath = join(projectDirectory, 'my-vite-app', 'apps', 'vite', 'vite.config.mts');
-    const indexHtmlPath: TestsCliScaffoldAppViteRunIndexHtmlPath = join(projectDirectory, 'my-vite-app', 'apps', 'vite', 'index.html');
-    const mainTsPath: TestsCliScaffoldAppViteRunMainTsPath = join(projectDirectory, 'my-vite-app', 'apps', 'vite', 'src', 'main.ts');
+    const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_WorkspacePackageJsonPath = join(projectDirectory, 'my-vite-app', 'apps', 'vite', 'package.json');
+    const viteConfigPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ViteConfigPath = join(projectDirectory, 'my-vite-app', 'apps', 'vite', 'vite.config.mts');
+    const indexHtmlPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_IndexHtmlPath = join(projectDirectory, 'my-vite-app', 'apps', 'vite', 'index.html');
+    const mainTsPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_MainTsPath = join(projectDirectory, 'my-vite-app', 'apps', 'vite', 'src', 'main.ts');
 
     await access(workspacePackageJsonPath);
 
@@ -145,12 +145,12 @@ describe.skip('CliScaffoldAppVite.run', async () => {
   });
 
   it('exits with error for standalone project', async () => {
-    const projectDirectory: TestsCliScaffoldAppViteRunProjectDirectory = join(sandboxRoot, 'standalone');
+    const projectDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ProjectDirectory = join(sandboxRoot, 'standalone');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliScaffoldAppViteRunPackageJson = JSON.stringify({ name: 'standalone' }, null, 2);
-    const packageJsonPath: TestsCliScaffoldAppViteRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJson: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_PackageJson = JSON.stringify({ name: 'standalone' }, null, 2);
+    const packageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
@@ -164,14 +164,14 @@ describe.skip('CliScaffoldAppVite.run', async () => {
   });
 
   it('adds workspace at monorepo root', async () => {
-    const projectDirectory: TestsCliScaffoldAppViteRunProjectDirectory = join(sandboxRoot, 'workspace-test');
+    const projectDirectory: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ProjectDirectory = join(sandboxRoot, 'workspace-test');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliScaffoldAppViteRunPackageJson = JSON.stringify({
+    const packageJson: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_PackageJson = JSON.stringify({
       name: 'root', workspaces: ['apps/*'],
     }, null, 2);
-    const packageJsonPath: TestsCliScaffoldAppViteRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
@@ -184,9 +184,9 @@ describe.skip('CliScaffoldAppVite.run', async () => {
     });
 
     // Verify workspace files were created.
-    const workspacePackageJsonPath: TestsCliScaffoldAppViteRunWorkspacePackageJsonPath = join(projectDirectory, 'apps', 'vite', 'package.json');
-    const viteConfigPath: TestsCliScaffoldAppViteRunViteConfigPath = join(projectDirectory, 'apps', 'vite', 'vite.config.mts');
-    const mainTsPath: TestsCliScaffoldAppViteRunMainTsPath = join(projectDirectory, 'apps', 'vite', 'src', 'main.ts');
+    const workspacePackageJsonPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_WorkspacePackageJsonPath = join(projectDirectory, 'apps', 'vite', 'package.json');
+    const viteConfigPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_ViteConfigPath = join(projectDirectory, 'apps', 'vite', 'vite.config.mts');
+    const mainTsPath: Tests_Cli_Scaffold_App_Vite_CliScaffoldAppViteRun_MainTsPath = join(projectDirectory, 'apps', 'vite', 'src', 'main.ts');
 
     await access(workspacePackageJsonPath);
 

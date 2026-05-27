@@ -5,13 +5,13 @@ import {
 } from '@docusaurus/plugin-content-docs/client';
 
 import type {
-  ThemeNavbarItemDocNavbarItemActiveDocContext,
-  ThemeNavbarItemDocNavbarItemAriaCurrent,
-  ThemeNavbarItemDocNavbarItemLabel,
-  ThemeNavbarItemDocNavbarItemLayoutDoc,
-  ThemeNavbarItemDocNavbarItemPageActive,
-  ThemeNavbarItemDocNavbarItemPath,
-  ThemeNavbarItemDocNavbarItemProps,
+  Theme_NavbarItem_DocNavbarItem_ActiveDocContext,
+  Theme_NavbarItem_DocNavbarItem_AriaCurrent,
+  Theme_NavbarItem_DocNavbarItem_Label,
+  Theme_NavbarItem_DocNavbarItem_LayoutDoc,
+  Theme_NavbarItem_DocNavbarItem_PageActive,
+  Theme_NavbarItem_DocNavbarItem_Path,
+  Theme_NavbarItem_DocNavbarItem_Props,
 } from '../../types/theme/NavbarItem/index.d.ts';
 
 /**
@@ -21,16 +21,16 @@ import type {
  * the docs plugin, hiding the item when the target is null or unlisted.
  * Active state is supplied by the coordinator via `isActiveItem`.
  *
- * @param {ThemeNavbarItemDocNavbarItemProps} props - Props.
+ * @param {Theme_NavbarItem_DocNavbarItem_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocNavbarItem(props: ThemeNavbarItemDocNavbarItemProps) {
-  const activeDocContext: ThemeNavbarItemDocNavbarItemActiveDocContext = useActiveDocContext(props['docsPluginId']);
-  const layoutDoc: ThemeNavbarItemDocNavbarItemLayoutDoc = useLayoutDoc(props['docId'], props['docsPluginId']);
-  const pageActive: ThemeNavbarItemDocNavbarItemPageActive = props['isActiveItem'] === true;
+function DocNavbarItem(props: Theme_NavbarItem_DocNavbarItem_Props) {
+  const activeDocContext: Theme_NavbarItem_DocNavbarItem_ActiveDocContext = useActiveDocContext(props['docsPluginId']);
+  const layoutDoc: Theme_NavbarItem_DocNavbarItem_LayoutDoc = useLayoutDoc(props['docId'], props['docsPluginId']);
+  const pageActive: Theme_NavbarItem_DocNavbarItem_PageActive = props['isActiveItem'] === true;
 
   // Draft and unlisted items are not displayed in the navbar. Unlisted items
   // are still shown when the user is reading them, so the sidebar check
@@ -48,9 +48,9 @@ function DocNavbarItem(props: ThemeNavbarItemDocNavbarItemProps) {
     return undefined;
   }
 
-  const label: ThemeNavbarItemDocNavbarItemLabel = props['label'] ?? layoutDoc['id'];
-  const path: ThemeNavbarItemDocNavbarItemPath = layoutDoc['path'];
-  const ariaCurrent: ThemeNavbarItemDocNavbarItemAriaCurrent = (pageActive === true) ? 'page' : undefined;
+  const label: Theme_NavbarItem_DocNavbarItem_Label = props['label'] ?? layoutDoc['id'];
+  const path: Theme_NavbarItem_DocNavbarItem_Path = layoutDoc['path'];
+  const ariaCurrent: Theme_NavbarItem_DocNavbarItem_AriaCurrent = (pageActive === true) ? 'page' : undefined;
 
   return (
     <Link to={path} aria-current={ariaCurrent}>

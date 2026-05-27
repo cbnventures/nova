@@ -2,8 +2,8 @@ import EditThisPage from '@theme/EditThisPage';
 import LastUpdated from '@theme/LastUpdated';
 
 import type {
-  ThemeEditMetaRowEditMetaRowLastUpdatedSpread,
-  ThemeEditMetaRowEditMetaRowProps,
+  Theme_EditMetaRow_Index_EditMetaRow_LastUpdatedSpread,
+  Theme_EditMetaRow_Index_EditMetaRow_Props,
 } from '../../types/theme/EditMetaRow/index.d.ts';
 
 /**
@@ -13,14 +13,14 @@ import type {
  * content, conditionally showing each section only when the
  * corresponding props are provided.
  *
- * @param {ThemeEditMetaRowEditMetaRowProps} props - Props.
+ * @param {Theme_EditMetaRow_Index_EditMetaRow_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function EditMetaRow(props: ThemeEditMetaRowEditMetaRowProps) {
-  const lastUpdatedSpread: ThemeEditMetaRowEditMetaRowLastUpdatedSpread = {};
+function EditMetaRow(props: Theme_EditMetaRow_Index_EditMetaRow_Props) {
+  const lastUpdatedSpread: Theme_EditMetaRow_Index_EditMetaRow_LastUpdatedSpread = {};
 
   if (props['lastUpdatedAt'] !== undefined) {
     Reflect.set(lastUpdatedSpread, 'lastUpdatedAt', props['lastUpdatedAt']);

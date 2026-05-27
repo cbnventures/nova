@@ -3,13 +3,13 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintConventionsRequireUndefinedInitCheckDeclaratorContext,
-  RulesEslintConventionsRequireUndefinedInitCheckDeclaratorGrandparent,
-  RulesEslintConventionsRequireUndefinedInitCheckDeclaratorNode,
-  RulesEslintConventionsRequireUndefinedInitCheckDeclaratorParent,
-  RulesEslintConventionsRequireUndefinedInitCheckDeclaratorReturns,
-  RulesEslintConventionsRequireUndefinedInitRuleDefaultOptionsIgnoreFiles,
-  RulesEslintConventionsRequireUndefinedInitRuleOptions,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Context,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Grandparent,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Node,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Parent,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Returns,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Conventions_RequireUndefinedInit_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-undefined-init.d.ts';
 
 /**
@@ -20,7 +20,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintConventionsRequireUndefinedInit {
+export class Runner {
   /**
    * Rules - ESLint - Conventions - Require Undefined Init - Rule.
    *
@@ -54,10 +54,10 @@ export class RulesEslintConventionsRequireUndefinedInit {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintConventionsRequireUndefinedInitRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Conventions_RequireUndefinedInit_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintConventionsRequireUndefinedInitRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -66,7 +66,7 @@ export class RulesEslintConventionsRequireUndefinedInit {
 
       return {
         VariableDeclarator(node) {
-          RulesEslintConventionsRequireUndefinedInit.checkDeclarator(context, node);
+          Runner.checkDeclarator(context, node);
 
           return;
         },
@@ -82,16 +82,16 @@ export class RulesEslintConventionsRequireUndefinedInit {
    *
    * @private
    *
-   * @param {RulesEslintConventionsRequireUndefinedInitCheckDeclaratorContext} context - Context.
-   * @param {RulesEslintConventionsRequireUndefinedInitCheckDeclaratorNode}    node    - Node.
+   * @param {Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Node}    node    - Node.
    *
-   * @returns {RulesEslintConventionsRequireUndefinedInitCheckDeclaratorReturns}
+   * @returns {Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Returns}
    *
    * @since 0.15.0
    */
-  private static checkDeclarator(context: RulesEslintConventionsRequireUndefinedInitCheckDeclaratorContext, node: RulesEslintConventionsRequireUndefinedInitCheckDeclaratorNode): RulesEslintConventionsRequireUndefinedInitCheckDeclaratorReturns {
+  private static checkDeclarator(context: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Context, node: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Node): Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Returns {
     // Only check let declarations (const requires an initializer, var is banned).
-    const parent: RulesEslintConventionsRequireUndefinedInitCheckDeclaratorParent = node.parent;
+    const parent: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Parent = node.parent;
 
     if (parent === undefined || parent.type !== 'VariableDeclaration') {
       return;
@@ -102,7 +102,7 @@ export class RulesEslintConventionsRequireUndefinedInit {
     }
 
     // Skip for-in/for-of loop variables.
-    const grandparent: RulesEslintConventionsRequireUndefinedInitCheckDeclaratorGrandparent = parent.parent;
+    const grandparent: Rules_Eslint_Conventions_RequireUndefinedInit_Runner_CheckDeclarator_Grandparent = parent.parent;
 
     if (
       grandparent !== undefined

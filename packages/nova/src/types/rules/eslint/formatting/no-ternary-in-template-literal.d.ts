@@ -6,21 +6,21 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralNode = TSESTree.TemplateLiteral;
+export type Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Node = TSESTree.TemplateLiteral;
 
-export type RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralReturns = void;
+export type Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Returns = void;
 
 /**
  * Rules - ESLint - Formatting - No Ternary In Template Literal - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingNoTernaryInTemplateLiteralRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintFormattingNoTernaryInTemplateLiteralRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintFormattingNoTernaryInTemplateLiteralRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintFormattingNoTernaryInTemplateLiteralRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_RuleOptions_IgnoreFiles;
 }>;

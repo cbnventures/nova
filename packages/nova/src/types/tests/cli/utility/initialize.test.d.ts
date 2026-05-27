@@ -1,8 +1,8 @@
 import type { PromptObject } from 'prompts';
 
 import type {
-  CliUtilityInitializePromptWorkspacesFormOptions,
-  CliUtilityInitializePromptWorkspacesFormReturns,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Options,
+  Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Returns,
 } from '../../../cli/utility/initialize.d.ts';
 
 /**
@@ -10,60 +10,60 @@ import type {
  *
  * @since 0.18.0
  */
-export type TestsCliUtilityInitializeIsNonEmptyLiteralInputResult = true | string;
+export type Tests_Cli_Utility_Initialize_CliUtilityInitializeIsNonEmptyLiteralInput_Result = true | string;
 
 /**
  * Tests - CLI - Utility - Initialize - Prompt Workspaces Form Display Name Capture.
  *
  * @since 0.18.0
  */
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureCapturedQuestion = PromptObject;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_CapturedQuestion = PromptObject;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureCapturedQuestions = TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureCapturedQuestion[];
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_CapturedQuestions = Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_CapturedQuestion[];
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureScriptedAnswer = unknown;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ScriptedAnswer = unknown;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureScriptedAnswers = Record<string, TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureScriptedAnswer>;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ScriptedAnswers = Record<string, Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ScriptedAnswer>;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureMockQuestionsArg = PromptObject | PromptObject[];
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_MockQuestionsArg = PromptObject | PromptObject[];
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureQuestion = TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureCapturedQuestion;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_Question = Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_CapturedQuestion;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureRawName = unknown;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_RawName = unknown;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureName = string;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_Name = string;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureHasAnswer = boolean;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_HasAnswer = boolean;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureAnswer = TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureScriptedAnswer;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_Answer = Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ScriptedAnswer;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureMockResponse = Record<string, TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureScriptedAnswer>;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_MockResponse = Record<string, Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ScriptedAnswer>;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureForm = (options: CliUtilityInitializePromptWorkspacesFormOptions) => CliUtilityInitializePromptWorkspacesFormReturns;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_Form = (options: Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Options) => Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Returns;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureFormOptions = CliUtilityInitializePromptWorkspacesFormOptions;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_FormOptions = Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Options;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureFormResult = Awaited<CliUtilityInitializePromptWorkspacesFormReturns>;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_FormResult = Awaited<Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Returns>;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureDisplayNameQuestion = PromptObject | undefined;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_DisplayNameQuestion = PromptObject | undefined;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureQuestionIndex = number;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_QuestionIndex = number;
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureExistingWorkspace = CliUtilityInitializePromptWorkspacesFormOptions['existingWorkspace'];
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_ExistingWorkspace = Cli_Utility_Initialize_Runner_PromptWorkspacesForm_Options['existingWorkspace'];
 
-export type TestsCliUtilityInitializePromptWorkspacesFormDisplayNameCaptureDisplayNameInitial = unknown;
+export type Tests_Cli_Utility_Initialize_PromptWorkspacesFormDisplayNameCapture_DisplayNameInitial = unknown;
 
 /**
  * Tests - CLI - Utility - Initialize - Run.
  *
  * @since 0.14.0
  */
-export type TestsCliUtilityInitializeRunOriginalCwd = string;
+export type Tests_Cli_Utility_Initialize_CliUtilityInitializeRun_OriginalCwd = string;
 
-export type TestsCliUtilityInitializeRunTemporaryDirectory = string;
+export type Tests_Cli_Utility_Initialize_CliUtilityInitializeRun_TemporaryDirectory = string;
 
-export type TestsCliUtilityInitializeRunTemporaryPrefix = string;
+export type Tests_Cli_Utility_Initialize_CliUtilityInitializeRun_TemporaryPrefix = string;
 
-export type TestsCliUtilityInitializeRunSandboxRoot = string;
+export type Tests_Cli_Utility_Initialize_CliUtilityInitializeRun_SandboxRoot = string;
 
-export type TestsCliUtilityInitializeRunProjectDirectory = string;
+export type Tests_Cli_Utility_Initialize_CliUtilityInitializeRun_ProjectDirectory = string;

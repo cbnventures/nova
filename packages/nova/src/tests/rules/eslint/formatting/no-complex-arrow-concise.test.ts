@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoComplexArrowConcise } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintFormattingNoComplexArrowConciseRuleTester } from '../../../../types/tests/rules/eslint/formatting/no-complex-arrow-concise.test.d.ts';
+import type { Tests_Rules_Eslint_Formatting_NoComplexArrowConcise_RuleTester } from '../../../../types/tests/rules/eslint/formatting/no-complex-arrow-concise.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Formatting - No Complex Arrow Concise.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintFormattingNoComplexArrowConciseRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Formatting_NoComplexArrowConcise_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

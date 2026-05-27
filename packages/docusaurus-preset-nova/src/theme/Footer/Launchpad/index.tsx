@@ -6,24 +6,24 @@ import FooterCredit from '../credit.js';
 import FooterCta from '../cta.js';
 
 import type {
-  ThemeFooterLaunchpadIndexLaunchpadCopyright,
-  ThemeFooterLaunchpadIndexLaunchpadCredit,
-  ThemeFooterLaunchpadIndexLaunchpadCta,
-  ThemeFooterLaunchpadIndexLaunchpadCtaContained,
-  ThemeFooterLaunchpadIndexLaunchpadExternalLinkAriaLabel,
-  ThemeFooterLaunchpadIndexLaunchpadFooterClassName,
-  ThemeFooterLaunchpadIndexLaunchpadLayout,
-  ThemeFooterLaunchpadIndexLaunchpadLayoutEntries,
-  ThemeFooterLaunchpadIndexLaunchpadLayoutEntry,
-  ThemeFooterLaunchpadIndexLaunchpadProps,
-  ThemeFooterLaunchpadIndexLaunchpadReturns,
-  ThemeFooterLaunchpadIndexLaunchpadSectionLinks,
-  ThemeFooterLaunchpadIndexLaunchpadSections,
-  ThemeFooterLaunchpadIndexLaunchpadSocialLinkLabel,
-  ThemeFooterLaunchpadIndexLaunchpadSocialLinks,
-  ThemeFooterLaunchpadIndexLaunchpadSocialLinksAriaLabel,
-  ThemeFooterLaunchpadIndexSectionLink,
-  ThemeFooterLaunchpadIndexSocialLink,
+  Theme_Footer_Launchpad_Index_Launchpad_Copyright,
+  Theme_Footer_Launchpad_Index_Launchpad_Credit,
+  Theme_Footer_Launchpad_Index_Launchpad_Cta,
+  Theme_Footer_Launchpad_Index_Launchpad_CtaContained,
+  Theme_Footer_Launchpad_Index_Launchpad_ExternalLinkAriaLabel,
+  Theme_Footer_Launchpad_Index_Launchpad_FooterClassName,
+  Theme_Footer_Launchpad_Index_Launchpad_Layout,
+  Theme_Footer_Launchpad_Index_Launchpad_LayoutEntries,
+  Theme_Footer_Launchpad_Index_Launchpad_LayoutEntry,
+  Theme_Footer_Launchpad_Index_Launchpad_Props,
+  Theme_Footer_Launchpad_Index_Launchpad_Returns,
+  Theme_Footer_Launchpad_Index_Launchpad_SectionLinks,
+  Theme_Footer_Launchpad_Index_Launchpad_Sections,
+  Theme_Footer_Launchpad_Index_Launchpad_SocialLinkLabel,
+  Theme_Footer_Launchpad_Index_Launchpad_SocialLinks,
+  Theme_Footer_Launchpad_Index_Launchpad_SocialLinksAriaLabel,
+  Theme_Footer_Launchpad_Index_SectionLink,
+  Theme_Footer_Launchpad_Index_SocialLink,
 } from '../../../types/theme/Footer/Launchpad/index.d.ts';
 
 /**
@@ -33,28 +33,28 @@ import type {
  * condensed link columns arranged by layout entries, social
  * media icons, and a legal bar with copyright.
  *
- * @param {ThemeFooterLaunchpadIndexLaunchpadProps} props - Props.
+ * @param {Theme_Footer_Launchpad_Index_Launchpad_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Launchpad(props: ThemeFooterLaunchpadIndexLaunchpadProps): ThemeFooterLaunchpadIndexLaunchpadReturns {
-  const sections: ThemeFooterLaunchpadIndexLaunchpadSections = props['sections'];
-  const layout: ThemeFooterLaunchpadIndexLaunchpadLayout = props['layout'];
-  const socialLinks: ThemeFooterLaunchpadIndexLaunchpadSocialLinks = props['socialLinks'];
-  const copyright: ThemeFooterLaunchpadIndexLaunchpadCopyright = props['copyright'];
-  const credit: ThemeFooterLaunchpadIndexLaunchpadCredit = props['credit'];
-  const cta: ThemeFooterLaunchpadIndexLaunchpadCta = props['cta'];
-  const ctaContained: ThemeFooterLaunchpadIndexLaunchpadCtaContained = props['ctaContained'];
-  const footerClassName: ThemeFooterLaunchpadIndexLaunchpadFooterClassName = 'nova-footer-launchpad';
-  const layoutEntries: ThemeFooterLaunchpadIndexLaunchpadLayoutEntries = Object.entries(layout) as ThemeFooterLaunchpadIndexLaunchpadLayoutEntries;
-  const socialLinksAriaLabel: ThemeFooterLaunchpadIndexLaunchpadSocialLinksAriaLabel = translate({
+function Launchpad(props: Theme_Footer_Launchpad_Index_Launchpad_Props): Theme_Footer_Launchpad_Index_Launchpad_Returns {
+  const sections: Theme_Footer_Launchpad_Index_Launchpad_Sections = props['sections'];
+  const layout: Theme_Footer_Launchpad_Index_Launchpad_Layout = props['layout'];
+  const socialLinks: Theme_Footer_Launchpad_Index_Launchpad_SocialLinks = props['socialLinks'];
+  const copyright: Theme_Footer_Launchpad_Index_Launchpad_Copyright = props['copyright'];
+  const credit: Theme_Footer_Launchpad_Index_Launchpad_Credit = props['credit'];
+  const cta: Theme_Footer_Launchpad_Index_Launchpad_Cta = props['cta'];
+  const ctaContained: Theme_Footer_Launchpad_Index_Launchpad_CtaContained = props['ctaContained'];
+  const footerClassName: Theme_Footer_Launchpad_Index_Launchpad_FooterClassName = 'nova-footer-launchpad';
+  const layoutEntries: Theme_Footer_Launchpad_Index_Launchpad_LayoutEntries = Object.entries(layout) as Theme_Footer_Launchpad_Index_Launchpad_LayoutEntries;
+  const socialLinksAriaLabel: Theme_Footer_Launchpad_Index_Launchpad_SocialLinksAriaLabel = translate({
     id: 'theme.footer.socialLinksAriaLabel',
     message: 'Social media links',
     description: 'The ARIA label for the footer social media links section',
   });
-  const externalLinkAriaLabel: ThemeFooterLaunchpadIndexLaunchpadExternalLinkAriaLabel = translate({
+  const externalLinkAriaLabel: Theme_Footer_Launchpad_Index_Launchpad_ExternalLinkAriaLabel = translate({
     id: 'theme.IconExternalLink.ariaLabel',
     message: '(opens in new tab)',
     description: 'The screen-reader label appended to external links that open in a new tab',
@@ -69,8 +69,8 @@ function Launchpad(props: ThemeFooterLaunchpadIndexLaunchpadProps): ThemeFooterL
           style={props['style']}
         >
           {
-            layoutEntries.map((layoutEntry: ThemeFooterLaunchpadIndexLaunchpadLayoutEntry) => {
-              const sectionLinks: ThemeFooterLaunchpadIndexLaunchpadSectionLinks = (sections[layoutEntry[1]['section']] ?? []) as ThemeFooterLaunchpadIndexLaunchpadSectionLinks;
+            layoutEntries.map((layoutEntry: Theme_Footer_Launchpad_Index_Launchpad_LayoutEntry) => {
+              const sectionLinks: Theme_Footer_Launchpad_Index_Launchpad_SectionLinks = (sections[layoutEntry[1]['section']] ?? []) as Theme_Footer_Launchpad_Index_Launchpad_SectionLinks;
 
               return (
                 <nav key={layoutEntry[0]} aria-label={layoutEntry[1]['title'] ?? layoutEntry[0]}>
@@ -81,7 +81,7 @@ function Launchpad(props: ThemeFooterLaunchpadIndexLaunchpadProps): ThemeFooterL
                   )}
                   <ul>
                     {
-                      sectionLinks.map((sectionLink: ThemeFooterLaunchpadIndexSectionLink) => (
+                      sectionLinks.map((sectionLink: Theme_Footer_Launchpad_Index_SectionLink) => (
                         <li key={sectionLink['label']}>
                           <Link to={sectionLink['href']}>
                             {sectionLink['label']}
@@ -101,8 +101,8 @@ function Launchpad(props: ThemeFooterLaunchpadIndexLaunchpadProps): ThemeFooterL
           aria-label={socialLinksAriaLabel}
         >
           {
-            socialLinks.map((socialLink: ThemeFooterLaunchpadIndexSocialLink) => {
-              const socialLinkLabel: ThemeFooterLaunchpadIndexLaunchpadSocialLinkLabel = `${socialLink['label']} ${externalLinkAriaLabel}`;
+            socialLinks.map((socialLink: Theme_Footer_Launchpad_Index_SocialLink) => {
+              const socialLinkLabel: Theme_Footer_Launchpad_Index_Launchpad_SocialLinkLabel = `${socialLink['label']} ${externalLinkAriaLabel}`;
 
               return (
                 <a

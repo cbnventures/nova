@@ -7,35 +7,35 @@ import type { libSchemaSpdxLicensesResponse } from '../../lib/schema.js';
  *
  * @since 0.13.0
  */
-export type ApiSpdxLicensesFetchLicensesReturns = Promise<Set<string> | undefined>;
+export type Api_SpdxLicenses_Runner_FetchLicenses_Returns = Promise<Set<string> | undefined>;
 
-export type ApiSpdxLicensesFetchLicensesHttpResponse = Response;
+export type Api_SpdxLicenses_Runner_FetchLicenses_HttpResponse = Response;
 
-export type ApiSpdxLicensesFetchLicensesResponseData = unknown;
+export type Api_SpdxLicenses_Runner_FetchLicenses_ResponseData = unknown;
 
-export type ApiSpdxLicensesFetchLicensesResponse = z.infer<typeof libSchemaSpdxLicensesResponse>;
+export type Api_SpdxLicenses_Runner_FetchLicenses_Response = z.infer<typeof libSchemaSpdxLicensesResponse>;
 
-export type ApiSpdxLicensesFetchLicensesLicenseIds = string[];
+export type Api_SpdxLicenses_Runner_FetchLicenses_LicenseIds = string[];
 
-export type ApiSpdxLicensesFetchLicensesErrorMessage = string;
+export type Api_SpdxLicenses_Runner_FetchLicenses_ErrorMessage = string;
 
 /**
  * API - SPDX Licenses - Licenses.
  *
  * @since 0.13.0
  */
-export type ApiSpdxLicensesLicenses = Set<string> | undefined;
+export type Api_SpdxLicenses_Runner_Licenses = Set<string> | undefined;
 
 /**
  * API - SPDX Licenses - Populated.
  *
  * @since 0.13.0
  */
-export type ApiSpdxLicensesPopulated = boolean | undefined;
+export type Api_SpdxLicenses_Runner_Populated = boolean | undefined;
 
 /**
  * API - SPDX Licenses - Reset For Testing.
  *
  * @since 0.13.0
  */
-export type ApiSpdxLicensesResetForTestingReturns = void;
+export type Api_SpdxLicenses_Runner_ResetForTesting_Returns = void;

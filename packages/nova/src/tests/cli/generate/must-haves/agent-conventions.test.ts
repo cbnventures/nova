@@ -11,23 +11,23 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliGenerateMustHavesAgentConventions } from '../../../../cli/generate/must-haves/agent-conventions.js';
+import { Runner as CliGenerateMustHavesAgentConventions } from '../../../../cli/generate/must-haves/agent-conventions.js';
 
 import type {
-  TestsCliGenerateMustHavesAgentConventionsRunAgentsMdPath,
-  TestsCliGenerateMustHavesAgentConventionsRunClaudeMdPath,
-  TestsCliGenerateMustHavesAgentConventionsRunCursorrulesPath,
-  TestsCliGenerateMustHavesAgentConventionsRunExists,
-  TestsCliGenerateMustHavesAgentConventionsRunOriginalCwd,
-  TestsCliGenerateMustHavesAgentConventionsRunPackageJson,
-  TestsCliGenerateMustHavesAgentConventionsRunPackageJsonPath,
-  TestsCliGenerateMustHavesAgentConventionsRunProjectDirectory,
-  TestsCliGenerateMustHavesAgentConventionsRunProjectRulesMdPath,
-  TestsCliGenerateMustHavesAgentConventionsRunSandboxRoot,
-  TestsCliGenerateMustHavesAgentConventionsRunTemporaryDirectory,
-  TestsCliGenerateMustHavesAgentConventionsRunTemporaryPrefix,
-  TestsCliGenerateMustHavesAgentConventionsRunUniversalMdPath,
-  TestsCliGenerateMustHavesAgentConventionsRunVisionMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_AgentsMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ClaudeMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_CursorrulesPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_Exists,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_OriginalCwd,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_PackageJson,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_PackageJsonPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ProjectDirectory,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ProjectRulesMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_SandboxRoot,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_TemporaryDirectory,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_TemporaryPrefix,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_UniversalMdPath,
+  Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_VisionMdPath,
 } from '../../../../types/tests/cli/generate/must-haves/agent-conventions.test.d.ts';
 
 /**
@@ -36,10 +36,10 @@ import type {
  * @since 0.15.0
  */
 describe('CliGenerateMustHavesAgentConventions.run', async () => {
-  const originalCwd: TestsCliGenerateMustHavesAgentConventionsRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliGenerateMustHavesAgentConventionsRunTemporaryDirectory = tmpdir();
-  const temporaryPrefix: TestsCliGenerateMustHavesAgentConventionsRunTemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliGenerateMustHavesAgentConventionsRunSandboxRoot = await mkdtemp(temporaryPrefix);
+  const originalCwd: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_TemporaryDirectory = tmpdir();
+  const temporaryPrefix: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_TemporaryPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_SandboxRoot = await mkdtemp(temporaryPrefix);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -53,7 +53,7 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
   });
 
   it('sets exit code when not at project root', async () => {
-    const projectDirectory: TestsCliGenerateMustHavesAgentConventionsRunProjectDirectory = join(sandboxRoot, 'not-project-root');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ProjectDirectory = join(sandboxRoot, 'not-project-root');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -67,13 +67,13 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
   });
 
   it('respects dry-run', async () => {
-    const projectDirectory: TestsCliGenerateMustHavesAgentConventionsRunProjectDirectory = join(sandboxRoot, 'dry-run');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliGenerateMustHavesAgentConventionsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
 
-    const packageJsonPath: TestsCliGenerateMustHavesAgentConventionsRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
@@ -81,10 +81,10 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
 
     await CliGenerateMustHavesAgentConventions.run({ dryRun: true });
 
-    let exists: TestsCliGenerateMustHavesAgentConventionsRunExists = true;
+    let exists: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_Exists = true;
 
     try {
-      const claudeMdPath: TestsCliGenerateMustHavesAgentConventionsRunClaudeMdPath = join(projectDirectory, 'CLAUDE.md');
+      const claudeMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ClaudeMdPath = join(projectDirectory, 'CLAUDE.md');
 
       await access(claudeMdPath);
     } catch {
@@ -97,13 +97,13 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
   });
 
   it('generates files from template', async () => {
-    const projectDirectory: TestsCliGenerateMustHavesAgentConventionsRunProjectDirectory = join(sandboxRoot, 'generates-files');
+    const projectDirectory: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ProjectDirectory = join(sandboxRoot, 'generates-files');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const packageJson: TestsCliGenerateMustHavesAgentConventionsRunPackageJson = JSON.stringify({ name: 'test' }, null, 2);
+    const packageJson: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_PackageJson = JSON.stringify({ name: 'test' }, null, 2);
 
-    const packageJsonPath: TestsCliGenerateMustHavesAgentConventionsRunPackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_PackageJsonPath = join(projectDirectory, 'package.json');
 
     await writeFile(packageJsonPath, `${packageJson}\n`, 'utf-8');
 
@@ -111,12 +111,12 @@ describe('CliGenerateMustHavesAgentConventions.run', async () => {
 
     await CliGenerateMustHavesAgentConventions.run({});
 
-    const cursorrulesPath: TestsCliGenerateMustHavesAgentConventionsRunCursorrulesPath = join(projectDirectory, '.cursorrules');
-    const claudeMdPath: TestsCliGenerateMustHavesAgentConventionsRunClaudeMdPath = join(projectDirectory, 'CLAUDE.md');
-    const agentsMdPath: TestsCliGenerateMustHavesAgentConventionsRunAgentsMdPath = join(projectDirectory, 'AGENTS.md');
-    const visionMdPath: TestsCliGenerateMustHavesAgentConventionsRunVisionMdPath = join(projectDirectory, 'VISION.md');
-    const projectRulesMdPath: TestsCliGenerateMustHavesAgentConventionsRunProjectRulesMdPath = join(projectDirectory, 'PROJECT_RULES.md');
-    const universalMdPath: TestsCliGenerateMustHavesAgentConventionsRunUniversalMdPath = join(projectDirectory, 'conventions', 'universal.md');
+    const cursorrulesPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_CursorrulesPath = join(projectDirectory, '.cursorrules');
+    const claudeMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ClaudeMdPath = join(projectDirectory, 'CLAUDE.md');
+    const agentsMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_AgentsMdPath = join(projectDirectory, 'AGENTS.md');
+    const visionMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_VisionMdPath = join(projectDirectory, 'VISION.md');
+    const projectRulesMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_ProjectRulesMdPath = join(projectDirectory, 'PROJECT_RULES.md');
+    const universalMdPath: Tests_Cli_Generate_MustHaves_AgentConventions_CliGenerateMustHavesAgentConventionsRun_UniversalMdPath = join(projectDirectory, 'conventions', 'universal.md');
 
     await access(cursorrulesPath);
 

@@ -31,18 +31,18 @@ Use the [`nova utility initialize`](/docs/cli/utilities/initialize) wizard to cr
 
 Describes the project identity, display info, and build metadata.
 
-| Field               | Type       | Description                                                                                         |
-|---------------------|------------|-----------------------------------------------------------------------------------------------------|
-| `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only (max 214 chars).       |
-| `name.title`        | `string`   | Human-readable project name for display.                                                            |
-| `description.short` | `string`   | One-line summary used in `package.json` and meta tags.                                              |
-| `description.long`  | `string`   | Extended description for README and documentation pages.                                            |
-| `keywords`          | `string[]` | Search keywords (max 50 characters each).                                                           |
-| `legalName`         | `string`   | Legal entity name used in LICENSE and copyright notices.                                            |
-| `pronouns`          | `string`   | Controls first-person wording in generated files: `"business"` (we/our) or `"individual"` (I/my).   |
-| `platforms`         | `string[]` | Supported platforms for bug report dropdowns (e.g., `"nodejs"`, `"macos"`, `"linux"`, `"windows"`). |
-| `startingYear`      | `number`   | Year the project began (integer >= 1970). Used in LICENSE copyright ranges.                         |
-| `license`           | `string`   | SPDX license identifier (e.g., `"MIT"`, `"Apache-2.0"`, `"Proprietary"`).                           |
+| Field               | Type       | Description                                                                                                                                                                                                                          |
+|---------------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name.slug`         | `string`   | URL-safe project identifier. Letters, numbers, hyphens, and underscores only. The 214-character npm limit is enforced by the `nova utility initialize` wizard; the parser only requires a non-empty trimmed string.                  |
+| `name.title`        | `string`   | Human-readable project name for display.                                                                                                                                                                                             |
+| `description.short` | `string`   | One-line summary used in `package.json` and meta tags.                                                                                                                                                                               |
+| `description.long`  | `string`   | Extended description for README and documentation pages.                                                                                                                                                                             |
+| `keywords`          | `string[]` | Search keywords (max 50 characters each).                                                                                                                                                                                            |
+| `legalName`         | `string`   | Legal entity name used in LICENSE and copyright notices.                                                                                                                                                                             |
+| `pronouns`          | `string`   | Controls first-person wording in generated files. One of `"business"` (we/our) or `"personal"` (I/my).                                                                                                                               |
+| `platforms`         | `string[]` | Supported platforms for bug report dropdowns. One or more of `"nodejs"`, `"swift"`, `"android"`, `"java"`, `"kotlin"`, `"csharp"`, `"php"`, `"python"`, `"macos"`, `"linux"`, `"windows"`. Unknown values are dropped.               |
+| `startingYear`      | `number`   | Year the project began (integer >= 1970). Used in LICENSE copyright ranges.                                                                                                                                                          |
+| `license`           | `string`   | License identifier. One of `"AGPL-3.0"`, `"Apache-2.0"`, `"BSD-2-Clause"`, `"BSD-3-Clause"`, `"BSL-1.0"`, `"CC0-1.0"`, `"EPL-2.0"`, `"GPL-2.0"`, `"GPL-3.0"`, `"LGPL-2.1"`, `"MIT"`, `"MPL-2.0"`, `"Proprietary"`, or `"Unlicense"`. |
 
 ```json
 {
@@ -111,6 +111,82 @@ Canonical contact addresses referenced by tools and metadata.
 }
 ```
 
+## `github`
+
+Identifies the GitHub repository and configures repository-level metadata that the GitHub recipes synchronize. Consumed by [`nova generate github`](/docs/cli/generators/github) commands.
+
+| Field      | Type       | Description                                                                                                                       |
+|------------|------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| `owner`    | `string`   | Repository owner (user or organization). Must match `/^[A-Za-z0-9-]+$/`.                                                          |
+| `repo`     | `string`   | Repository name. Must match `/^[A-Za-z0-9._-]+$/`.                                                                                |
+| `recipes`  | `object`   | Optional. Toggles for repository-level sync recipes. See [Recipes Fields](#recipes-fields) below.                                 |
+| `topics`   | `string[]` | Optional. Repository topics. An empty array is preserved and clears topics on sync.                                               |
+| `features` | `object`   | Optional. Toggles for repository features (issues, wiki, projects, discussions). See [Features Fields](#features-fields) below.   |
+| `policies` | `object`   | Optional. Repository policy settings (visibility, default branch, merge methods, branch deletion). See [Policies Fields](#policies-fields) below. |
+
+### Recipes Fields
+
+Booleans that enable or disable each repository-level sync recipe.
+
+| Field            | Type      | Description                                                              |
+|------------------|-----------|--------------------------------------------------------------------------|
+| `sync-identity`  | `boolean` | Optional. Synchronizes repository description, homepage, and topics.     |
+| `sync-features`  | `boolean` | Optional. Synchronizes the repository feature toggles in `features`.     |
+| `sync-policies`  | `boolean` | Optional. Synchronizes the repository policy settings in `policies`.     |
+
+### Features Fields
+
+Booleans controlling which repository features are enabled. Each field is optional; omitted fields leave the corresponding GitHub setting untouched.
+
+| Field         | Type      | Description                                |
+|---------------|-----------|--------------------------------------------|
+| `issues`      | `boolean` | Optional. Enables the Issues tab.          |
+| `wiki`        | `boolean` | Optional. Enables the Wiki tab.            |
+| `projects`    | `boolean` | Optional. Enables the Projects tab.        |
+| `discussions` | `boolean` | Optional. Enables the Discussions tab.     |
+
+### Policies Fields
+
+Repository policy settings. Each field is optional.
+
+| Field                  | Type      | Description                                                                                                |
+|------------------------|-----------|------------------------------------------------------------------------------------------------------------|
+| `visibility`           | `string`  | Optional. One of `"public"`, `"private"`, or `"internal"`.                                                 |
+| `defaultBranch`        | `string`  | Optional. Default branch name (e.g., `"main"`).                                                            |
+| `mergeMethods`         | `object`  | Optional. Per-method enablement: `merge`, `squash`, `rebase`. Each is a boolean.                           |
+| `autoDeleteHeadBranch` | `boolean` | Optional. When `true`, GitHub deletes the head branch after a pull request is merged.                      |
+
+```json
+{
+  "github": {
+    "owner": "example-org",
+    "repo": "example-project",
+    "recipes": {
+      "sync-identity": true,
+      "sync-features": true,
+      "sync-policies": true
+    },
+    "topics": ["nova", "monorepo", "typescript"],
+    "features": {
+      "issues": true,
+      "wiki": false,
+      "projects": false,
+      "discussions": true
+    },
+    "policies": {
+      "visibility": "public",
+      "defaultBranch": "main",
+      "mergeMethods": {
+        "merge": false,
+        "squash": true,
+        "rebase": false
+      },
+      "autoDeleteHeadBranch": true
+    }
+  }
+}
+```
+
 ## `workflows`
 
 An array of GitHub Actions workflow entries consumed by [`nova generate github workflows`](/docs/cli/generators/github/workflows). Each entry maps to one generated `.yml` file.
@@ -131,7 +207,7 @@ Each entry in the `targets` array pins one publish destination to a workspace.
 
 | Field        | Type       | Description                                                                                                                                                              |
 |--------------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `type`       | `string`   | One of: `"npm"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages-docusaurus"`, `"github-pages-docusaurus"`, `"aws-amplify-nextjs"`, `"vercel-nextjs"`. |
+| `type`       | `string`   | One of: `"npm"`, `"github-action"`, `"github-packages"`, `"docker-hub"`, `"ghcr"`, `"cloudflare-pages-docusaurus"`, `"github-pages-docusaurus"`, `"aws-amplify-nextjs"`, `"vercel-nextjs"`. |
 | `workingDir` | `string`   | Path to the workspace that owns the target (e.g., `"./packages/nova"`).                                                                                                  |
 | `needs`      | `string[]` | Optional. Working directories of other same-type targets that must finish publishing before this one starts.                                                             |
 
@@ -205,8 +281,8 @@ Canonical links with validation and normalization.
 | `license`       | `string`   | License file URL.                                                                                    |
 | `logo`          | `string`   | Project logo URL.                                                                                    |
 | `documentation` | `string`   | Documentation site URL.                                                                              |
-| `github`        | `string`   | GitHub repository URL.                                                                               |
 | `npm`           | `string`   | npm package page URL.                                                                                |
+| `docker`        | `string`   | Docker image registry page URL.                                                                      |
 | `fundSources`   | `string[]` | Funding URLs (entered comma-separated in the wizard, saved as a list).                               |
 | `privacyPolicy` | `string`   | Privacy policy URL. Appears in generated GitHub issue templates.                                     |
 | `termsOfUse`    | `string`   | Terms of use URL. Appears in generated GitHub issue templates.                                       |
@@ -220,8 +296,8 @@ Canonical links with validation and normalization.
     "license": "https://github.com/example/example-project/blob/main/LICENSE",
     "logo": "https://example.com/assets/logo.svg",
     "documentation": "https://docs.example.com/project",
-    "github": "https://github.com/example/example-project",
     "npm": "https://www.npmjs.com/package/example-project",
+    "docker": "https://hub.docker.com/r/example/example-project",
     "fundSources": [
       "https://github.com/sponsors/example",
       "https://opencollective.com/example"
@@ -236,12 +312,13 @@ Canonical links with validation and normalization.
 
 A map of relative paths to <Terminology title="package" to="/docs/quickstart/terminology#nova-concepts" color={true}>workspace</Terminology> definitions. Each key is a path from the <Terminology title="multi-package repo" to="/docs/quickstart/terminology#git-and-workflow" color={true}>monorepo</Terminology> root (e.g., `"./"`, `"./apps/docs"`, `"./packages/nova"`).
 
-| Field     | Type     | Description                                                                                                                                                                                                                                       |
-|-----------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`    | `string` | Package name for `package.json`.                                                                                                                                                                                                                  |
-| `role`    | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                          |
-| `policy`  | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                        |
-| `recipes` | `object` | Optional. Enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> and their settings, keyed by recipe name. Each value is a tuple: `[enabled]` or `[enabled, settings]`. |
+| Field         | Type     | Description                                                                                                                                                                                                                                       |
+|---------------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `name`        | `string` | Package name for `package.json`. Must follow the naming pattern for its role. See [Workspace Rules](/docs/quickstart/workspace-rules#workspace-naming) for details.                                                                              |
+| `displayName` | `string` | Optional. Human-readable label used by Nova commands and tooling (e.g., status output, generated docs).                                                                                                                                          |
+| `role`        | `string` | Workspace role: `"project"`, `"docs"`, `"config"`, `"app"`, `"package"`, `"tool"`, or `"template"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                          |
+| `policy`      | `string` | Workspace policy: `"freezable"`, `"trackable"`, or `"distributable"`. See [Workspace Rules](/docs/quickstart/workspace-rules) for details.                                                                                                        |
+| `recipes`     | `object` | Optional. Enabled <Terminology title="transform script" to="/docs/quickstart/terminology#nova-concepts" color={true}>recipes</Terminology> and their settings, keyed by recipe name. Each value is a tuple: `[enabled]` or `[enabled, settings]`. |
 
 ```json
 {
@@ -259,6 +336,7 @@ A map of relative paths to <Terminology title="package" to="/docs/quickstart/ter
     },
     "./packages/nova": {
       "name": "@company/example",
+      "displayName": "Example Core",
       "role": "package",
       "policy": "distributable",
       "recipes": {

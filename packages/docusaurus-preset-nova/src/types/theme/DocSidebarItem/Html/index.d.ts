@@ -5,28 +5,28 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsItemValue = string;
+export type Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_Item_Value = string;
 
-export type ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsItem = {
-  value: ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsItemValue;
+export type Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_Item = {
+  value: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_Item_Value;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsActivePath = string;
+export type Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_ActivePath = string;
 
-export type ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsLevel = number;
+export type Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_Level = number;
 
-export type ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsClassName = string | undefined;
+export type Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_ClassName = string | undefined;
 
-export type ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsStyle = CSSProperties | undefined;
+export type Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocSidebarItemHtmlDocSidebarItemHtmlProps = {
-  item: ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsItem;
-  activePath: ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsActivePath;
-  level: ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsLevel;
-  className?: ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsClassName;
-  style?: ThemeDocSidebarItemHtmlDocSidebarItemHtmlPropsStyle;
+export type Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props = {
+  item: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_Item;
+  activePath: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_ActivePath;
+  level: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_Level;
+  className?: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_ClassName;
+  style?: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemHtmlDocSidebarItemHtmlValue = string;
+export type Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Value = string;

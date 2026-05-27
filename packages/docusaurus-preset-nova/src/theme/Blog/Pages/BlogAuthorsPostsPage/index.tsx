@@ -12,10 +12,10 @@ import BlogListPaginator from '@theme/BlogListPaginator';
 import BlogPostItems from '@theme/BlogPostItems';
 
 import type {
-  ThemeBlogPagesBlogAuthorsPostsPageBlogAuthorsPostsPageDescription,
-  ThemeBlogPagesBlogAuthorsPostsPageBlogAuthorsPostsPageProps,
-  ThemeBlogPagesBlogAuthorsPostsPageBlogAuthorsPostsPageTitle,
-  ThemeBlogPagesBlogAuthorsPostsPageViewAllAuthorsLinkBlogMetadata,
+  Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Description,
+  Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Props,
+  Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Title,
+  Theme_Blog_Pages_BlogAuthorsPostsPage_Index_ViewAllAuthorsLink_BlogMetadata,
 } from '../../../../types/theme/Blog/Pages/BlogAuthorsPostsPage/index.d.ts';
 
 /**
@@ -29,7 +29,7 @@ import type {
  * @since 0.18.0
  */
 function ViewAllAuthorsLink() {
-  const blogMetadata: ThemeBlogPagesBlogAuthorsPostsPageViewAllAuthorsLinkBlogMetadata = useBlogMetadata();
+  const blogMetadata: Theme_Blog_Pages_BlogAuthorsPostsPage_Index_ViewAllAuthorsLink_BlogMetadata = useBlogMetadata();
 
   return (
     <Link className="nova-blog-author-posts-view-all" href={blogMetadata['authorsListPath']}>
@@ -45,15 +45,15 @@ function ViewAllAuthorsLink() {
  * author. Header shows the author profile (avatar, name, description, socials)
  * above the paginated post list with a "view all authors" link back.
  *
- * @param {ThemeBlogPagesBlogAuthorsPostsPageBlogAuthorsPostsPageProps} props - Props.
+ * @param {Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function BlogAuthorsPostsPage(props: ThemeBlogPagesBlogAuthorsPostsPageBlogAuthorsPostsPageProps) {
-  const title: ThemeBlogPagesBlogAuthorsPostsPageBlogAuthorsPostsPageTitle = useBlogAuthorPageTitle(props['author']);
-  const description: ThemeBlogPagesBlogAuthorsPostsPageBlogAuthorsPostsPageDescription = props['author']['description'];
+function BlogAuthorsPostsPage(props: Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Props) {
+  const title: Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Title = useBlogAuthorPageTitle(props['author']);
+  const description: Theme_Blog_Pages_BlogAuthorsPostsPage_Index_BlogAuthorsPostsPage_Description = props['author']['description'];
 
   return (
     <BlogLayout

@@ -1,4 +1,4 @@
-import type { LibConstantsDocsBaseUrl, LibConstantsGhMinVersion } from '../types/lib/constants.d.ts';
+import type { Lib_Constants_DocsBaseUrl, Lib_Constants_GhMinVersion } from '../types/lib/constants.d.ts';
 
 /**
  * Lib - Constants - Docs Base URL.
@@ -8,7 +8,7 @@ import type { LibConstantsDocsBaseUrl, LibConstantsGhMinVersion } from '../types
  *
  * @since 0.16.3
  */
-export const LIB_CONSTANTS_DOCS_BASE_URL: LibConstantsDocsBaseUrl = 'https://nova.cbnventures.io';
+export const LIB_CONSTANTS_DOCS_BASE_URL: Lib_Constants_DocsBaseUrl = 'https://nova.cbnventures.io';
 
 /**
  * Lib - Constants - Lib Gh Min Version.
@@ -19,4 +19,4 @@ export const LIB_CONSTANTS_DOCS_BASE_URL: LibConstantsDocsBaseUrl = 'https://nov
  *
  * @since 0.18.0
  */
-export const LIB_GH_MIN_VERSION: LibConstantsGhMinVersion = '2.40.0';
+export const LIB_GH_MIN_VERSION: Lib_Constants_GhMinVersion = '2.40.0';

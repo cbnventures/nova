@@ -7,7 +7,7 @@ import HtmlNavbarItem from './html-navbar-item.js';
 import LocaleDropdownNavbarItem from './locale-dropdown-navbar-item.js';
 import SearchNavbarItem from './search-navbar-item.js';
 
-import type { ThemeNavbarItemComponentTypesMap } from '../../types/theme/NavbarItem/index.d.ts';
+import type { Theme_NavbarItem_ComponentTypes_Map } from '../../types/theme/NavbarItem/index.d.ts';
 
 /**
  * Theme - Navbar Item - Component Types - Component Types.
@@ -18,7 +18,7 @@ import type { ThemeNavbarItemComponentTypesMap } from '../../types/theme/NavbarI
  *
  * @since 0.15.0
  */
-const componentTypes: ThemeNavbarItemComponentTypesMap = {
+const componentTypes: Theme_NavbarItem_ComponentTypes_Map = {
   default: DefaultNavbarItem,
   doc: DocNavbarItem,
   docSidebar: DocSidebarNavbarItem,

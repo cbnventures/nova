@@ -6,27 +6,27 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralNode = TSESTree.Literal;
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Node = TSESTree.Literal;
 
-export type RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralReturns = void;
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Returns = void;
 
-export type RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralParent = TSESTree.Node | undefined;
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Parent = TSESTree.Node | undefined;
 
-export type RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralIsRegExpArgument = boolean;
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_IsRegExpArgument = boolean;
 
-export type RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralTemplateCurly = string;
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_TemplateCurly = string;
 
 /**
  * Rules - ESLint - Patterns - No Template Curly In String - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoTemplateCurlyInStringRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintPatternsNoTemplateCurlyInStringRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintPatternsNoTemplateCurlyInStringRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintPatternsNoTemplateCurlyInStringRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_RuleOptions_IgnoreFiles;
 }>;

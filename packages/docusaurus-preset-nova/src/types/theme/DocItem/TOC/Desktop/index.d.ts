@@ -6,17 +6,17 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocItemTocDesktopDocItemTocDesktopPropsClassName = string | undefined;
+export type Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps_ClassName = string | undefined;
 
-export type ThemeDocItemTocDesktopDocItemTocDesktopPropsStyle = CSSProperties | undefined;
+export type Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps_Style = CSSProperties | undefined;
 
-export type ThemeDocItemTocDesktopDocItemTocDesktopProps = {
-  className?: ThemeDocItemTocDesktopDocItemTocDesktopPropsClassName;
-  style?: ThemeDocItemTocDesktopDocItemTocDesktopPropsStyle;
+export type Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps = {
+  className?: Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps_ClassName;
+  style?: Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopProps_Style;
 };
 
-export type ThemeDocItemTocDesktopDocItemTocDesktopDoc = DocContextValue;
+export type Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopDoc = DocContextValue;
 
-export type ThemeDocItemTocDesktopDocItemTocDesktopTocSpread = Record<string, unknown>;
+export type Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopTocSpread = Record<string, unknown>;
 
-export type ThemeDocItemTocDesktopDocItemTocDesktopMergedClassName = string;
+export type Theme_DocItem_Toc_Desktop_Index_DocItemTocDesktopMergedClassName = string;

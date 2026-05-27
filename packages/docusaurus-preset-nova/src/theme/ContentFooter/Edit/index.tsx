@@ -3,9 +3,9 @@ import EditThisPage from '@theme/EditThisPage';
 import LastUpdated from '@theme/LastUpdated';
 
 import type {
-  ThemeContentFooterEditLabel,
-  ThemeContentFooterEditLastUpdatedSpread,
-  ThemeContentFooterEditProps,
+  Theme_ContentFooter_Edit_Index_Edit_Label,
+  Theme_ContentFooter_Edit_Index_Edit_LastUpdatedSpread,
+  Theme_ContentFooter_Edit_Index_Edit_Props,
 } from '../../../types/theme/ContentFooter/Edit/index.d.ts';
 
 /**
@@ -15,13 +15,13 @@ import type {
  * row containing the last-updated stamp and an edit-this-page link
  * for collaborators.
  *
- * @param {ThemeContentFooterEditProps} props - Props.
+ * @param {Theme_ContentFooter_Edit_Index_Edit_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function Edit(props: ThemeContentFooterEditProps) {
+function Edit(props: Theme_ContentFooter_Edit_Index_Edit_Props) {
   if (
     props['editUrl'] === undefined
     && props['lastUpdatedAt'] === undefined
@@ -30,12 +30,12 @@ function Edit(props: ThemeContentFooterEditProps) {
     return undefined;
   }
 
-  const editLabel: ThemeContentFooterEditLabel = translate({
+  const editLabel: Theme_ContentFooter_Edit_Index_Edit_Label = translate({
     id: 'theme.contentFooter.editLabel',
     message: 'Contribute',
     description: 'The label for the contribute section in a content footer',
   });
-  const lastUpdatedSpread: ThemeContentFooterEditLastUpdatedSpread = {};
+  const lastUpdatedSpread: Theme_ContentFooter_Edit_Index_Edit_LastUpdatedSpread = {};
 
   if (props['lastUpdatedAt'] !== undefined) {
     Reflect.set(lastUpdatedSpread, 'lastUpdatedAt', props['lastUpdatedAt']);

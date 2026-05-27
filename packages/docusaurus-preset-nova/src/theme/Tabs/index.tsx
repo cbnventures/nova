@@ -10,29 +10,29 @@ import {
 } from 'react';
 
 import type {
-  ThemeTabsContainerRef,
-  ThemeTabsEffectCleanupReturns,
-  ThemeTabsHandleHashChangeReturns,
-  ThemeTabsHashDecodedId,
-  ThemeTabsHashPanel,
-  ThemeTabsHashTabValue,
-  ThemeTabsHashTarget,
-  ThemeTabsIsBrowser,
-  ThemeTabsProps,
-  ThemeTabsSanitizedChildren,
-  ThemeTabsTabListAriaControls,
-  ThemeTabsTabListHandleKeyDownCurrentIndex,
-  ThemeTabsTabListHandleKeyDownEvent,
-  ThemeTabsTabListHandleKeyDownNextIndex,
-  ThemeTabsTabListHandleKeyDownNextTabValue,
-  ThemeTabsTabListHandleKeyDownParentElement,
-  ThemeTabsTabListHandleKeyDownReturns,
-  ThemeTabsTabListHandleKeyDownTarget,
-  ThemeTabsTabListIsSelected,
-  ThemeTabsTabListTabId,
-  ThemeTabsTabListTabsResult,
-  ThemeTabsTabListTabValue,
-  ThemeTabsTabsResult,
+  Theme_Tabs_Index_Tabs_ContainerRef,
+  Theme_Tabs_Index_Tabs_EffectCleanupReturns,
+  Theme_Tabs_Index_Tabs_HandleHashChange_Returns,
+  Theme_Tabs_Index_Tabs_HashDecodedId,
+  Theme_Tabs_Index_Tabs_HashPanel,
+  Theme_Tabs_Index_Tabs_HashTabValue,
+  Theme_Tabs_Index_Tabs_HashTarget,
+  Theme_Tabs_Index_Tabs_IsBrowser,
+  Theme_Tabs_Index_Tabs_Props,
+  Theme_Tabs_Index_Tabs_SanitizedChildren,
+  Theme_Tabs_Index_TabList_AriaControls,
+  Theme_Tabs_Index_TabList_HandleKeyDown_CurrentIndex,
+  Theme_Tabs_Index_TabList_HandleKeyDown_Event,
+  Theme_Tabs_Index_TabList_HandleKeyDown_NextIndex,
+  Theme_Tabs_Index_TabList_HandleKeyDown_NextTabValue,
+  Theme_Tabs_Index_TabList_HandleKeyDown_ParentElement,
+  Theme_Tabs_Index_TabList_HandleKeyDown_Returns,
+  Theme_Tabs_Index_TabList_HandleKeyDown_Target,
+  Theme_Tabs_Index_TabList_IsSelected,
+  Theme_Tabs_Index_TabList_TabId,
+  Theme_Tabs_Index_TabList_TabsResult,
+  Theme_Tabs_Index_TabList_TabValue,
+  Theme_Tabs_Index_Tabs_Result,
 } from '../../types/theme/Tabs/index.d.ts';
 
 /**
@@ -42,13 +42,13 @@ import type {
  * and click handlers, highlighting the currently selected tab
  * without any framework-specific styling.
  *
- * @param {ThemeTabsTabListTabsResult} tabs - Tabs.
+ * @param {Theme_Tabs_Index_TabList_TabsResult} tabs - Tabs.
  *
  * @returns {JSX.Element}
  *
  * @since 0.15.0
  */
-function TabList(tabs: ThemeTabsTabListTabsResult) {
+function TabList(tabs: Theme_Tabs_Index_TabList_TabsResult) {
   /**
    * Theme - Tabs - Tab List - Handle Key Down.
    *
@@ -56,13 +56,13 @@ function TabList(tabs: ThemeTabsTabListTabsResult) {
    * WAI-ARIA tabs pattern with arrow keys, Home, and End support
    * for cycling through tabs and focusing the newly selected tab.
    *
-   * @param {ThemeTabsTabListHandleKeyDownEvent} event - Event.
+   * @param {Theme_Tabs_Index_TabList_HandleKeyDown_Event} event - Event.
    *
    * @since 0.15.0
    */
-  function handleKeyDown(event: ThemeTabsTabListHandleKeyDownEvent): ThemeTabsTabListHandleKeyDownReturns {
-    const currentIndex: ThemeTabsTabListHandleKeyDownCurrentIndex = tabs['tabValues'].findIndex((tabValue: ThemeTabsTabListTabValue) => tabValue['value'] === tabs['selectedValue']);
-    let nextIndex: ThemeTabsTabListHandleKeyDownNextIndex = currentIndex;
+  function handleKeyDown(event: Theme_Tabs_Index_TabList_HandleKeyDown_Event): Theme_Tabs_Index_TabList_HandleKeyDown_Returns {
+    const currentIndex: Theme_Tabs_Index_TabList_HandleKeyDown_CurrentIndex = tabs['tabValues'].findIndex((tabValue: Theme_Tabs_Index_TabList_TabValue) => tabValue['value'] === tabs['selectedValue']);
+    let nextIndex: Theme_Tabs_Index_TabList_HandleKeyDown_NextIndex = currentIndex;
 
     if (event['key'] === 'ArrowRight') {
       event.preventDefault();
@@ -80,7 +80,7 @@ function TabList(tabs: ThemeTabsTabListTabsResult) {
       return undefined;
     }
 
-    const nextTabValue: ThemeTabsTabListHandleKeyDownNextTabValue = tabs['tabValues'][nextIndex];
+    const nextTabValue: Theme_Tabs_Index_TabList_HandleKeyDown_NextTabValue = tabs['tabValues'][nextIndex];
 
     if (nextTabValue === undefined) {
       return undefined;
@@ -88,13 +88,13 @@ function TabList(tabs: ThemeTabsTabListTabsResult) {
 
     tabs.selectValue(nextTabValue['value']);
 
-    const parentElement: ThemeTabsTabListHandleKeyDownParentElement = event['currentTarget']['parentElement'];
+    const parentElement: Theme_Tabs_Index_TabList_HandleKeyDown_ParentElement = event['currentTarget']['parentElement'];
 
     if (parentElement === null) {
       return undefined;
     }
 
-    const target: ThemeTabsTabListHandleKeyDownTarget = parentElement.querySelectorAll<HTMLLIElement>('.nova-tabs-tab')[nextIndex];
+    const target: Theme_Tabs_Index_TabList_HandleKeyDown_Target = parentElement.querySelectorAll<HTMLLIElement>('.nova-tabs-tab')[nextIndex];
 
     if (target !== undefined) {
       target.focus();
@@ -106,10 +106,10 @@ function TabList(tabs: ThemeTabsTabListTabsResult) {
   return (
     <ul className="nova-tabs-list" role="tablist" aria-orientation="horizontal">
       {
-        tabs['tabValues'].map((tabValue: ThemeTabsTabListTabValue) => {
-          const tabId: ThemeTabsTabListTabId = `nova-tab-${tabValue['value']}`;
-          const ariaControls: ThemeTabsTabListAriaControls = `nova-tabpanel-${tabValue['value']}`;
-          const isSelected: ThemeTabsTabListIsSelected = tabs['selectedValue'] === tabValue['value'];
+        tabs['tabValues'].map((tabValue: Theme_Tabs_Index_TabList_TabValue) => {
+          const tabId: Theme_Tabs_Index_TabList_TabId = `nova-tab-${tabValue['value']}`;
+          const ariaControls: Theme_Tabs_Index_TabList_AriaControls = `nova-tabpanel-${tabValue['value']}`;
+          const isSelected: Theme_Tabs_Index_TabList_IsSelected = tabs['selectedValue'] === tabValue['value'];
 
           return (
             <li
@@ -144,17 +144,17 @@ function TabList(tabs: ThemeTabsTabListTabsResult) {
  * panels, using Docusaurus tab state management for synchronized
  * selection without framework-specific styling.
  *
- * @param {ThemeTabsProps} props - Props.
+ * @param {Theme_Tabs_Index_Tabs_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Tabs(props: ThemeTabsProps) {
-  const isBrowser: ThemeTabsIsBrowser = useIsBrowser();
-  const containerRef: ThemeTabsContainerRef = useRef<HTMLDivElement>(null);
-  const tabs: ThemeTabsTabsResult = useTabsContextValue(props);
-  const sanitizedChildren: ThemeTabsSanitizedChildren = sanitizeTabsChildren(props['children']);
+function Tabs(props: Theme_Tabs_Index_Tabs_Props) {
+  const isBrowser: Theme_Tabs_Index_Tabs_IsBrowser = useIsBrowser();
+  const containerRef: Theme_Tabs_Index_Tabs_ContainerRef = useRef<HTMLDivElement>(null);
+  const tabs: Theme_Tabs_Index_Tabs_Result = useTabsContextValue(props);
+  const sanitizedChildren: Theme_Tabs_Index_Tabs_SanitizedChildren = sanitizeTabsChildren(props['children']);
 
   useEffect(() => {
     /**
@@ -166,7 +166,7 @@ function Tabs(props: ThemeTabsProps) {
      *
      * @since 0.15.0
      */
-    function handleHashChange(): ThemeTabsHandleHashChangeReturns {
+    function handleHashChange(): Theme_Tabs_Index_Tabs_HandleHashChange_Returns {
       if (window.location.hash === '') {
         return undefined;
       }
@@ -180,10 +180,10 @@ function Tabs(props: ThemeTabsProps) {
       // form is not a valid CSS selector, so decode and re-escape before
       // querying. `decodeURIComponent` can throw on malformed input — wrap
       // defensively so a bad hash doesn't crash the page.
-      let hashTarget: ThemeTabsHashTarget = null;
+      let hashTarget: Theme_Tabs_Index_Tabs_HashTarget = null;
 
       try {
-        const decodedId: ThemeTabsHashDecodedId = decodeURIComponent(window.location.hash.slice(1));
+        const decodedId: Theme_Tabs_Index_Tabs_HashDecodedId = decodeURIComponent(window.location.hash.slice(1));
         hashTarget = containerRef['current'].querySelector(`#${CSS.escape(decodedId)}`);
       } catch {
         return undefined;
@@ -193,13 +193,13 @@ function Tabs(props: ThemeTabsProps) {
         return undefined;
       }
 
-      const hashPanel: ThemeTabsHashPanel = hashTarget.closest('.nova-tabs-panel');
+      const hashPanel: Theme_Tabs_Index_Tabs_HashPanel = hashTarget.closest('.nova-tabs-panel');
 
       if (hashPanel === null) {
         return undefined;
       }
 
-      const hashTabValue: ThemeTabsHashTabValue = hashPanel.getAttribute('data-value') ?? undefined;
+      const hashTabValue: Theme_Tabs_Index_Tabs_HashTabValue = hashPanel.getAttribute('data-value') ?? undefined;
 
       if (hashTabValue !== undefined && hashTabValue !== tabs['selectedValue']) {
         tabs.selectValue(hashTabValue);
@@ -212,7 +212,7 @@ function Tabs(props: ThemeTabsProps) {
 
     window.addEventListener('hashchange', handleHashChange);
 
-    return (): ThemeTabsEffectCleanupReturns => {
+    return (): Theme_Tabs_Index_Tabs_EffectCleanupReturns => {
       window.removeEventListener('hashchange', handleHashChange);
 
       return undefined;

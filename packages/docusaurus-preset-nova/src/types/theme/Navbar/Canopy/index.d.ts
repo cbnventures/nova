@@ -1,149 +1,149 @@
 import type { CSSProperties, ReactNode } from 'react';
 
-import type { ThemeNavbarItem } from '../index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../index.d.ts';
 
 /**
  * Theme - Navbar - Canopy.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoAlt = string;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Alt = string;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoSrc = {
-  light: ThemeNavbarCanopyIndexCanopyPropsSiteLogoSrcLight;
-  dark: ThemeNavbarCanopyIndexCanopyPropsSiteLogoSrcDark;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Src = {
+  light: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoWordmark = {
-  light: ThemeNavbarCanopyIndexCanopyPropsSiteLogoWordmarkLight;
-  dark: ThemeNavbarCanopyIndexCanopyPropsSiteLogoWordmarkDark;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoHref = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoRel = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsSiteLogo = {
-  alt: ThemeNavbarCanopyIndexCanopyPropsSiteLogoAlt;
-  src: ThemeNavbarCanopyIndexCanopyPropsSiteLogoSrc;
-  wordmark: ThemeNavbarCanopyIndexCanopyPropsSiteLogoWordmark;
-  title: ThemeNavbarCanopyIndexCanopyPropsSiteLogoTitle;
-  href: ThemeNavbarCanopyIndexCanopyPropsSiteLogoHref;
-  target: ThemeNavbarCanopyIndexCanopyPropsSiteLogoTarget;
-  rel: ThemeNavbarCanopyIndexCanopyPropsSiteLogoRel;
-  ariaLabel: ThemeNavbarCanopyIndexCanopyPropsSiteLogoAriaLabel;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo = {
+  alt: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Alt;
+  src: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Src;
+  wordmark: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Wordmark;
+  title: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Title;
+  href: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Href;
+  target: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Target;
+  rel: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarCanopyIndexCanopyPropsItems = ThemeNavbarItem[];
+export type Theme_Navbar_Canopy_Index_Canopy_Props_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCanopyIndexCanopyPropsActionItems = ThemeNavbarItem[];
+export type Theme_Navbar_Canopy_Index_Canopy_Props_ActionItems = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCanopyIndexCanopyPropsColorModeLabel = ReactNode;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_ColorModeLabel = ReactNode;
 
-export type ThemeNavbarCanopyIndexCanopyPropsOnColorModeToggle = () => void;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_OnColorModeToggle = () => void;
 
-export type ThemeNavbarCanopyIndexCanopyPropsHamburgerLabel = ReactNode;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_HamburgerLabel = ReactNode;
 
-export type ThemeNavbarCanopyIndexCanopyPropsOnMenuToggle = () => void;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_OnMenuToggle = () => void;
 
-export type ThemeNavbarCanopyIndexCanopyPropsActiveItemLabel = string | null;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_ActiveItemLabel = string | null;
 
-export type ThemeNavbarCanopyIndexCanopyPropsClassName = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_ClassName = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyPropsStyle = CSSProperties | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_Props_Style = CSSProperties | undefined;
 
-export type ThemeNavbarCanopyIndexCanopyProps = {
-  siteLogo: ThemeNavbarCanopyIndexCanopyPropsSiteLogo;
-  items: ThemeNavbarCanopyIndexCanopyPropsItems;
-  actionItems: ThemeNavbarCanopyIndexCanopyPropsActionItems;
-  colorModeLabel: ThemeNavbarCanopyIndexCanopyPropsColorModeLabel;
-  onColorModeToggle: ThemeNavbarCanopyIndexCanopyPropsOnColorModeToggle;
-  hamburgerLabel: ThemeNavbarCanopyIndexCanopyPropsHamburgerLabel;
-  onMenuToggle: ThemeNavbarCanopyIndexCanopyPropsOnMenuToggle;
-  activeItemLabel: ThemeNavbarCanopyIndexCanopyPropsActiveItemLabel;
-  className?: ThemeNavbarCanopyIndexCanopyPropsClassName;
-  style?: ThemeNavbarCanopyIndexCanopyPropsStyle;
+export type Theme_Navbar_Canopy_Index_Canopy_Props = {
+  siteLogo: Theme_Navbar_Canopy_Index_Canopy_Props_SiteLogo;
+  items: Theme_Navbar_Canopy_Index_Canopy_Props_Items;
+  actionItems: Theme_Navbar_Canopy_Index_Canopy_Props_ActionItems;
+  colorModeLabel: Theme_Navbar_Canopy_Index_Canopy_Props_ColorModeLabel;
+  onColorModeToggle: Theme_Navbar_Canopy_Index_Canopy_Props_OnColorModeToggle;
+  hamburgerLabel: Theme_Navbar_Canopy_Index_Canopy_Props_HamburgerLabel;
+  onMenuToggle: Theme_Navbar_Canopy_Index_Canopy_Props_OnMenuToggle;
+  activeItemLabel: Theme_Navbar_Canopy_Index_Canopy_Props_ActiveItemLabel;
+  className?: Theme_Navbar_Canopy_Index_Canopy_Props_ClassName;
+  style?: Theme_Navbar_Canopy_Index_Canopy_Props_Style;
 };
 
-export type ThemeNavbarCanopyIndexCanopyReturns = React.JSX.Element;
+export type Theme_Navbar_Canopy_Index_Canopy_Returns = React.JSX.Element;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoAlt = string;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Alt = string;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoSrc = {
-  light: ThemeNavbarCanopyIndexCanopySiteLogoSrcLight;
-  dark: ThemeNavbarCanopyIndexCanopySiteLogoSrcDark;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Src = {
+  light: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoWordmark = {
-  light: ThemeNavbarCanopyIndexCanopySiteLogoWordmarkLight;
-  dark: ThemeNavbarCanopyIndexCanopySiteLogoWordmarkDark;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoTitle = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoHref = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoTarget = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoRel = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarCanopyIndexCanopySiteLogo = {
-  alt: ThemeNavbarCanopyIndexCanopySiteLogoAlt;
-  src: ThemeNavbarCanopyIndexCanopySiteLogoSrc;
-  wordmark: ThemeNavbarCanopyIndexCanopySiteLogoWordmark;
-  title: ThemeNavbarCanopyIndexCanopySiteLogoTitle;
-  href: ThemeNavbarCanopyIndexCanopySiteLogoHref;
-  target: ThemeNavbarCanopyIndexCanopySiteLogoTarget;
-  rel: ThemeNavbarCanopyIndexCanopySiteLogoRel;
-  ariaLabel: ThemeNavbarCanopyIndexCanopySiteLogoAriaLabel;
+export type Theme_Navbar_Canopy_Index_Canopy_SiteLogo = {
+  alt: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Alt;
+  src: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Src;
+  wordmark: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Wordmark;
+  title: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Title;
+  href: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Href;
+  target: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Target;
+  rel: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Canopy_Index_Canopy_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarCanopyIndexCanopyItems = ThemeNavbarItem[];
+export type Theme_Navbar_Canopy_Index_Canopy_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCanopyIndexCanopyActionItems = ThemeNavbarItem[];
+export type Theme_Navbar_Canopy_Index_Canopy_ActionItems = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCanopyIndexCanopyColorModeLabel = ReactNode;
+export type Theme_Navbar_Canopy_Index_Canopy_ColorModeLabel = ReactNode;
 
-export type ThemeNavbarCanopyIndexCanopyOnColorModeToggle = () => void;
+export type Theme_Navbar_Canopy_Index_Canopy_OnColorModeToggle = () => void;
 
-export type ThemeNavbarCanopyIndexCanopyHamburgerLabel = ReactNode;
+export type Theme_Navbar_Canopy_Index_Canopy_HamburgerLabel = ReactNode;
 
-export type ThemeNavbarCanopyIndexCanopyOnMenuToggle = () => void;
+export type Theme_Navbar_Canopy_Index_Canopy_OnMenuToggle = () => void;
 
-export type ThemeNavbarCanopyIndexCanopyActiveItemLabel = string | null;
+export type Theme_Navbar_Canopy_Index_Canopy_ActiveItemLabel = string | null;
 
-export type ThemeNavbarCanopyIndexCanopyNavbarClassName = string;
+export type Theme_Navbar_Canopy_Index_Canopy_NavbarClassName = string;
 
-export type ThemeNavbarCanopyIndexCanopyNavAriaLabel = string;
+export type Theme_Navbar_Canopy_Index_Canopy_NavAriaLabel = string;
 
-export type ThemeNavbarCanopyIndexCanopyOpenMenuAriaLabel = string;
+export type Theme_Navbar_Canopy_Index_Canopy_OpenMenuAriaLabel = string;
 
-export type ThemeNavbarCanopyIndexCanopyToggleColorModeAriaLabel = string;
+export type Theme_Navbar_Canopy_Index_Canopy_ToggleColorModeAriaLabel = string;
 
-export type ThemeNavbarCanopyIndexCanopyNavbarItemSpread = Record<string, unknown>;
+export type Theme_Navbar_Canopy_Index_Canopy_NavbarItemSpread = Record<string, unknown>;
 
-export type ThemeNavbarCanopyIndexCanopyNavbarItemKey = string;
+export type Theme_Navbar_Canopy_Index_Canopy_NavbarItemKey = string;

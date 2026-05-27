@@ -4,7 +4,7 @@ import {
   libItemSideEffectsEsnextRoles,
   libItemTypesModuleRoles,
 } from '../../../lib/item.js';
-import { LibNovaConfig } from '../../../lib/nova-config.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
   isProjectRoot,
   loadWorkspaceManifests,
@@ -13,31 +13,31 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliRecipePackageJsonNormalizeBundlerHandleAllowsSideEffectsEsnext,
-  CliRecipePackageJsonNormalizeBundlerHandleAllowsTypesModule,
-  CliRecipePackageJsonNormalizeBundlerHandleFileContents,
-  CliRecipePackageJsonNormalizeBundlerHandleManifest,
-  CliRecipePackageJsonNormalizeBundlerHandlePackageEsnext,
-  CliRecipePackageJsonNormalizeBundlerHandlePackageModule,
-  CliRecipePackageJsonNormalizeBundlerHandlePackageSideEffects,
-  CliRecipePackageJsonNormalizeBundlerHandlePackageTypes,
-  CliRecipePackageJsonNormalizeBundlerHandlePackageTypings,
-  CliRecipePackageJsonNormalizeBundlerHandleReturns,
-  CliRecipePackageJsonNormalizeBundlerHandleWorkspace,
-  CliRecipePackageJsonNormalizeBundlerRunCurrentDirectory,
-  CliRecipePackageJsonNormalizeBundlerRunEligibleWorkspaces,
-  CliRecipePackageJsonNormalizeBundlerRunIsAtProjectRoot,
-  CliRecipePackageJsonNormalizeBundlerRunIsDryRun,
-  CliRecipePackageJsonNormalizeBundlerRunIsReplaceFile,
-  CliRecipePackageJsonNormalizeBundlerRunOptions,
-  CliRecipePackageJsonNormalizeBundlerRunRecipeTupleFilter,
-  CliRecipePackageJsonNormalizeBundlerRunReplaceFileNotice,
-  CliRecipePackageJsonNormalizeBundlerRunReturns,
-  CliRecipePackageJsonNormalizeBundlerRunWorkingFile,
-  CliRecipePackageJsonNormalizeBundlerRunWorkingFileWorkspaces,
-  CliRecipePackageJsonNormalizeBundlerRunWorkspaceConfigFilter,
-  CliRecipePackageJsonNormalizeBundlerRunWorkspaceRecipesFilter,
-  CliRecipePackageJsonNormalizeBundlerRunWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_AllowsSideEffectsEsnext,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_AllowsTypesModule,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_FileContents,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageEsnext,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageModule,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageSideEffects,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageTypes,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageTypings,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_CurrentDirectory,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_EligibleWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsAtProjectRoot,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsDryRun,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsReplaceFile,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Options,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_ReplaceFileNotice,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Returns,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkingFile,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkingFileWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkspaceRecipesFilter,
+  Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/normalize-bundler.d.ts';
 
 /**
@@ -49,22 +49,22 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliRecipePackageJsonNormalizeBundler {
+export class Runner {
   /**
    * CLI - Recipe - package.json - Normalize Bundler - Run.
    *
    * Loads nova.config.json, filters eligible workspaces, then normalizes bundler-specific
    * fields in each manifest. Supports dry-run mode.
    *
-   * @param {CliRecipePackageJsonNormalizeBundlerRunOptions} options - Options.
+   * @param {Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Options} options - Options.
    *
-   * @returns {CliRecipePackageJsonNormalizeBundlerRunReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static async run(options: CliRecipePackageJsonNormalizeBundlerRunOptions): CliRecipePackageJsonNormalizeBundlerRunReturns {
-    const currentDirectory: CliRecipePackageJsonNormalizeBundlerRunCurrentDirectory = process.cwd();
-    const isAtProjectRoot: CliRecipePackageJsonNormalizeBundlerRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Options): Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Returns {
+    const currentDirectory: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_CurrentDirectory = process.cwd();
+    const isAtProjectRoot: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -72,31 +72,31 @@ export class CliRecipePackageJsonNormalizeBundler {
       return;
     }
 
-    const isDryRun: CliRecipePackageJsonNormalizeBundlerRunIsDryRun = options['dryRun'] === true;
-    const isReplaceFile: CliRecipePackageJsonNormalizeBundlerRunIsReplaceFile = options['replaceFile'] === true;
+    const isDryRun: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isReplaceFile: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice: CliRecipePackageJsonNormalizeBundlerRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_ReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const workingFile: CliRecipePackageJsonNormalizeBundlerRunWorkingFile = await new LibNovaConfig().load();
-    const workingFileWorkspaces: CliRecipePackageJsonNormalizeBundlerRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
+    const workingFile: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-bundler. No workspaces detected in the "nova.config.json" file.');
 
@@ -104,15 +104,15 @@ export class CliRecipePackageJsonNormalizeBundler {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces: CliRecipePackageJsonNormalizeBundlerRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: CliRecipePackageJsonNormalizeBundlerRunWorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: CliRecipePackageJsonNormalizeBundlerRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
+    const eligibleWorkspaces: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: CliRecipePackageJsonNormalizeBundlerRunRecipeTupleFilter = workspaceRecipes['normalize-bundler'];
+      const recipeTuple: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_RecipeTupleFilter = workspaceRecipes['normalize-bundler'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -123,21 +123,21 @@ export class CliRecipePackageJsonNormalizeBundler {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-bundler. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces: CliRecipePackageJsonNormalizeBundlerRunWorkspaces = await loadWorkspaceManifests({
+    const workspaces: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Workspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-bundler. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -145,18 +145,18 @@ export class CliRecipePackageJsonNormalizeBundler {
     }
 
     Logger.customize({
-      name: 'CliRecipePackageJsonNormalizeBundler.run',
+      name: 'Runner.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for normalize-bundler.`);
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.run',
+        name: 'Runner.run',
         purpose: 'iteration',
       }).info(`Running normalize-bundler for the "${workspace['manifest']['name']}" workspace ...`);
 
-      CliRecipePackageJsonNormalizeBundler.handle(workspace);
+      Runner.handle(workspace);
 
       if (isDryRun === true) {
         continue;
@@ -174,34 +174,34 @@ export class CliRecipePackageJsonNormalizeBundler {
    * Processes types, typings, module, sideEffects, and esnext for one workspace. Allowed
    * fields depend on role lists from libItem constants.
    *
-   * @param {CliRecipePackageJsonNormalizeBundlerHandleWorkspace} workspace - Workspace.
+   * @param {Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Workspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonNormalizeBundlerHandleReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Returns}
    *
    * @since 0.14.0
    */
-  private static handle(workspace: CliRecipePackageJsonNormalizeBundlerHandleWorkspace): CliRecipePackageJsonNormalizeBundlerHandleReturns {
-    const fileContents: CliRecipePackageJsonNormalizeBundlerHandleFileContents = workspace['fileContents'];
-    const manifest: CliRecipePackageJsonNormalizeBundlerHandleManifest = workspace['manifest'];
+  private static handle(workspace: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Workspace): Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Returns {
+    const fileContents: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_FileContents = workspace['fileContents'];
+    const manifest: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Manifest = workspace['manifest'];
 
-    const packageTypes: CliRecipePackageJsonNormalizeBundlerHandlePackageTypes = fileContents['types'];
-    const packageTypings: CliRecipePackageJsonNormalizeBundlerHandlePackageTypings = fileContents['typings'];
-    const packageModule: CliRecipePackageJsonNormalizeBundlerHandlePackageModule = fileContents['module'];
-    const packageSideEffects: CliRecipePackageJsonNormalizeBundlerHandlePackageSideEffects = fileContents['sideEffects'];
-    const packageEsnext: CliRecipePackageJsonNormalizeBundlerHandlePackageEsnext = fileContents['esnext'];
+    const packageTypes: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageTypes = fileContents['types'];
+    const packageTypings: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageTypings = fileContents['typings'];
+    const packageModule: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageModule = fileContents['module'];
+    const packageSideEffects: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageSideEffects = fileContents['sideEffects'];
+    const packageEsnext: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageEsnext = fileContents['esnext'];
 
     // Merge "typings" -> "types" (same pattern as bundledDependencies -> bundleDependencies).
     if (packageTypings !== undefined) {
       if (packageTypes !== undefined) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeBundler.handle',
+          name: 'Runner.handle',
           purpose: 'typings',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Merging "typings" into "types". Keeping existing "types" value.`);
       } else {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeBundler.handle',
+          name: 'Runner.handle',
           purpose: 'typings',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Renaming "typings" to "types" ...`);
 
@@ -212,10 +212,10 @@ export class CliRecipePackageJsonNormalizeBundler {
     }
 
     // Roles that allow "types" and "module".
-    const allowsTypesModule: CliRecipePackageJsonNormalizeBundlerHandleAllowsTypesModule = libItemTypesModuleRoles.includes(manifest['role']);
+    const allowsTypesModule: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_AllowsTypesModule = libItemTypesModuleRoles.includes(manifest['role']);
 
     // Roles that allow "sideEffects" and "esnext".
-    const allowsSideEffectsEsnext: CliRecipePackageJsonNormalizeBundlerHandleAllowsSideEffectsEsnext = libItemSideEffectsEsnextRoles.includes(manifest['role']);
+    const allowsSideEffectsEsnext: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_AllowsSideEffectsEsnext = libItemSideEffectsEsnextRoles.includes(manifest['role']);
 
     // Sync the "types" field.
     if (
@@ -223,7 +223,7 @@ export class CliRecipePackageJsonNormalizeBundler {
       && allowsTypesModule === false // Workspace role does not allow it.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.handle',
+        name: 'Runner.handle',
         purpose: 'types',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "types". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -236,7 +236,7 @@ export class CliRecipePackageJsonNormalizeBundler {
       && allowsTypesModule === false // Workspace role does not allow it.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.handle',
+        name: 'Runner.handle',
         purpose: 'module',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "module". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -249,7 +249,7 @@ export class CliRecipePackageJsonNormalizeBundler {
       && allowsSideEffectsEsnext === false // Workspace role does not allow it.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.handle',
+        name: 'Runner.handle',
         purpose: 'sideEffects',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "sideEffects". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -262,7 +262,7 @@ export class CliRecipePackageJsonNormalizeBundler {
       && allowsSideEffectsEsnext === false // Workspace role does not allow it.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeBundler.handle',
+        name: 'Runner.handle',
         purpose: 'esnext',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "esnext". Workspace role "${manifest['role']}" does not allow it.`);
 

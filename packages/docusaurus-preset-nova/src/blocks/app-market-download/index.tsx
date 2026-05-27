@@ -3,13 +3,13 @@ import { Icon } from '@iconify/react/offline';
 import GooglePlayIcon from '@nova-assets/blocks/app-market-download/google-play.svg';
 
 import type {
-  BlocksAppMarketDownloadAppStoreAriaLabel,
-  BlocksAppMarketDownloadAppStoreSubtitle,
-  BlocksAppMarketDownloadAppStoreTitle,
-  BlocksAppMarketDownloadBlocksAppMarketDownloadProps,
-  BlocksAppMarketDownloadGooglePlayAriaLabel,
-  BlocksAppMarketDownloadGooglePlaySubtitle,
-  BlocksAppMarketDownloadGooglePlayTitle,
+  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreAriaLabel,
+  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreSubtitle,
+  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreTitle,
+  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props,
+  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlayAriaLabel,
+  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlaySubtitle,
+  Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlayTitle,
 } from '../../types/blocks/app-market-download/index.d.ts';
 
 /**
@@ -19,43 +19,43 @@ import type {
  * Apple App Store and Google Play Store with Iconify brand icons,
  * two-line text labels, and responsive layout.
  *
- * @param {BlocksAppMarketDownloadBlocksAppMarketDownloadProps} props - Props.
+ * @param {Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlocksAppMarketDownload(props: BlocksAppMarketDownloadBlocksAppMarketDownloadProps) {
+function BlocksAppMarketDownload(props: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props) {
   if (props['appStoreUrl'] === undefined && props['googlePlayUrl'] === undefined) {
     return undefined;
   }
 
-  const appStoreAriaLabel: BlocksAppMarketDownloadAppStoreAriaLabel = translate({
+  const appStoreAriaLabel: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreAriaLabel = translate({
     id: 'theme.AppMarketDownload.appStoreAriaLabel',
     message: 'Download on the App Store',
     description: 'The ARIA label for the App Store download button',
   });
-  const appStoreSubtitle: BlocksAppMarketDownloadAppStoreSubtitle = translate({
+  const appStoreSubtitle: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreSubtitle = translate({
     id: 'theme.AppMarketDownload.appStoreSubtitle',
     message: 'Download on the',
     description: 'The subtitle text above the App Store name',
   });
-  const appStoreTitle: BlocksAppMarketDownloadAppStoreTitle = translate({
+  const appStoreTitle: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreTitle = translate({
     id: 'theme.AppMarketDownload.appStoreTitle',
     message: 'App Store',
     description: 'The App Store name shown on the download button',
   });
-  const googlePlayAriaLabel: BlocksAppMarketDownloadGooglePlayAriaLabel = translate({
+  const googlePlayAriaLabel: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlayAriaLabel = translate({
     id: 'theme.AppMarketDownload.googlePlayAriaLabel',
     message: 'Get it on Google Play',
     description: 'The ARIA label for the Google Play download button',
   });
-  const googlePlaySubtitle: BlocksAppMarketDownloadGooglePlaySubtitle = translate({
+  const googlePlaySubtitle: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlaySubtitle = translate({
     id: 'theme.AppMarketDownload.googlePlaySubtitle',
     message: 'GET IT ON',
     description: 'The subtitle text above the Google Play name',
   });
-  const googlePlayTitle: BlocksAppMarketDownloadGooglePlayTitle = translate({
+  const googlePlayTitle: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlayTitle = translate({
     id: 'theme.AppMarketDownload.googlePlayTitle',
     message: 'Google Play',
     description: 'The Google Play name shown on the download button',

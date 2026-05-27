@@ -1,6 +1,6 @@
 import type {
-  SharedPreset,
-  SharedPresetName,
+  Shared_Preset,
+  Shared_PresetName,
 } from '../shared.d.ts';
 
 /**
@@ -8,11 +8,11 @@ import type {
  *
  * @since 0.15.0
  */
-export type PresetsIndexNames = SharedPresetName[];
+export type Presets_Index_Names = Shared_PresetName[];
 
 /**
  * Presets - Index Presets.
  *
  * @since 0.15.0
  */
-export type PresetsIndexPresets = Record<SharedPresetName, SharedPreset>;
+export type Presets_Index_Presets = Record<Shared_PresetName, Shared_Preset>;

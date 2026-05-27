@@ -7,46 +7,46 @@ import type {
  *
  * @since 0.15.0
  */
-export type ThemeDetailsPropsSummary = ReactNode | undefined;
+export type Theme_Details_Index_Details_Props_Summary = ReactNode | undefined;
 
-export type ThemeDetailsPropsChildren = ReactNode;
+export type Theme_Details_Index_Details_Props_Children = ReactNode;
 
-export type ThemeDetailsPropsOpen = boolean | undefined;
+export type Theme_Details_Index_Details_Props_Open = boolean | undefined;
 
-export type ThemeDetailsPropsOnToggle = ((isOpen: boolean) => void) | undefined;
+export type Theme_Details_Index_Details_Props_OnToggle = ((isOpen: boolean) => void) | undefined;
 
-export type ThemeDetailsPropsClassName = string | undefined;
+export type Theme_Details_Index_Details_Props_ClassName = string | undefined;
 
-export type ThemeDetailsPropsStyle = CSSProperties | undefined;
+export type Theme_Details_Index_Details_Props_Style = CSSProperties | undefined;
 
-export type ThemeDetailsProps = {
-  summary?: ThemeDetailsPropsSummary;
-  children: ThemeDetailsPropsChildren;
-  open?: ThemeDetailsPropsOpen;
-  onToggle?: ThemeDetailsPropsOnToggle;
-  className?: ThemeDetailsPropsClassName;
-  style?: ThemeDetailsPropsStyle;
+export type Theme_Details_Index_Details_Props = {
+  summary?: Theme_Details_Index_Details_Props_Summary;
+  children: Theme_Details_Index_Details_Props_Children;
+  open?: Theme_Details_Index_Details_Props_Open;
+  onToggle?: Theme_Details_Index_Details_Props_OnToggle;
+  className?: Theme_Details_Index_Details_Props_ClassName;
+  style?: Theme_Details_Index_Details_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDetailsReturns = React.JSX.Element;
+export type Theme_Details_Index_Details_Returns = React.JSX.Element;
 
-export type ThemeDetailsSummary = ReactNode | undefined;
+export type Theme_Details_Index_Details_Summary = ReactNode | undefined;
 
-export type ThemeDetailsChildren = ReactNode;
+export type Theme_Details_Index_Details_Children = ReactNode;
 
-export type ThemeDetailsOpen = boolean | undefined;
+export type Theme_Details_Index_Details_Open = boolean | undefined;
 
-export type ThemeDetailsOnToggle = ((isOpen: boolean) => void) | undefined;
+export type Theme_Details_Index_Details_OnToggle = ((isOpen: boolean) => void) | undefined;
 
-export type ThemeDetailsState = [ThemeDetailsIsOpen, ThemeDetailsSetIsOpen];
+export type Theme_Details_Index_Details_State = [Theme_Details_Index_Details_IsOpen, Theme_Details_Index_Details_SetIsOpen];
 
-export type ThemeDetailsIsOpen = boolean;
+export type Theme_Details_Index_Details_IsOpen = boolean;
 
-export type ThemeDetailsSetIsOpen = Dispatch<SetStateAction<ThemeDetailsIsOpen>>;
+export type Theme_Details_Index_Details_SetIsOpen = Dispatch<SetStateAction<Theme_Details_Index_Details_IsOpen>>;
 
-export type ThemeDetailsExtractedSummary = ReactElement | undefined;
+export type Theme_Details_Index_Details_ExtractedSummary = ReactElement | undefined;
 
-export type ThemeDetailsFilteredChildren = ReactNode;
+export type Theme_Details_Index_Details_FilteredChildren = ReactNode;
 
-export type ThemeDetailsChildrenArray = ReturnType<typeof Children.toArray>;
+export type Theme_Details_Index_Details_ChildrenArray = ReturnType<typeof Children.toArray>;

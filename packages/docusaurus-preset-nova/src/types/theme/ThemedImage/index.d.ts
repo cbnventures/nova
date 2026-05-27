@@ -3,49 +3,49 @@
  *
  * @since 0.15.0
  */
-export type ThemeThemedImageThemedImageSourcesLight = string;
+export type Theme_ThemedImage_Index_ThemedImage_Sources_Light = string;
 
-export type ThemeThemedImageThemedImageSourcesDark = string;
+export type Theme_ThemedImage_Index_ThemedImage_Sources_Dark = string;
 
-export type ThemeThemedImageThemedImageSources = {
-  light: ThemeThemedImageThemedImageSourcesLight;
-  dark: ThemeThemedImageThemedImageSourcesDark;
+export type Theme_ThemedImage_Index_ThemedImage_Sources = {
+  light: Theme_ThemedImage_Index_ThemedImage_Sources_Light;
+  dark: Theme_ThemedImage_Index_ThemedImage_Sources_Dark;
 };
 
-export type ThemeThemedImageThemedImagePropsAlt = string | undefined;
+export type Theme_ThemedImage_Index_ThemedImage_Props_Alt = string | undefined;
 
-export type ThemeThemedImageThemedImagePropsSources = ThemeThemedImageThemedImageSources;
+export type Theme_ThemedImage_Index_ThemedImage_Props_Sources = Theme_ThemedImage_Index_ThemedImage_Sources;
 
-export type ThemeThemedImageThemedImagePropsWidth = string | number | undefined;
+export type Theme_ThemedImage_Index_ThemedImage_Props_Width = string | number | undefined;
 
-export type ThemeThemedImageThemedImagePropsHeight = string | number | undefined;
+export type Theme_ThemedImage_Index_ThemedImage_Props_Height = string | number | undefined;
 
-export type ThemeThemedImageThemedImagePropsStyle = React.CSSProperties | undefined;
+export type Theme_ThemedImage_Index_ThemedImage_Props_Style = React.CSSProperties | undefined;
 
-export type ThemeThemedImageThemedImagePropsClassName = string | undefined;
+export type Theme_ThemedImage_Index_ThemedImage_Props_ClassName = string | undefined;
 
-export type ThemeThemedImageThemedImageProps = {
-  alt?: ThemeThemedImageThemedImagePropsAlt;
-  sources: ThemeThemedImageThemedImagePropsSources;
-  width?: ThemeThemedImageThemedImagePropsWidth;
-  height?: ThemeThemedImageThemedImagePropsHeight;
-  style?: ThemeThemedImageThemedImagePropsStyle;
-  className?: ThemeThemedImageThemedImagePropsClassName;
+export type Theme_ThemedImage_Index_ThemedImage_Props = {
+  alt?: Theme_ThemedImage_Index_ThemedImage_Props_Alt;
+  sources: Theme_ThemedImage_Index_ThemedImage_Props_Sources;
+  width?: Theme_ThemedImage_Index_ThemedImage_Props_Width;
+  height?: Theme_ThemedImage_Index_ThemedImage_Props_Height;
+  style?: Theme_ThemedImage_Index_ThemedImage_Props_Style;
+  className?: Theme_ThemedImage_Index_ThemedImage_Props_ClassName;
   [key: string]: unknown;
 };
 
-export type ThemeThemedImageThemedImageReturns = React.JSX.Element;
+export type Theme_ThemedImage_Index_ThemedImage_Returns = React.JSX.Element;
 
-export type ThemeThemedImageThemedImageColorModeState = [ThemeThemedImageThemedImageColorMode, ThemeThemedImageThemedImageSetColorMode];
+export type Theme_ThemedImage_Index_ThemedImage_ColorModeState = [Theme_ThemedImage_Index_ThemedImage_ColorMode, Theme_ThemedImage_Index_ThemedImage_SetColorMode];
 
-export type ThemeThemedImageThemedImageColorMode = string;
+export type Theme_ThemedImage_Index_ThemedImage_ColorMode = string;
 
-export type ThemeThemedImageThemedImageSetColorMode = React.Dispatch<React.SetStateAction<ThemeThemedImageThemedImageColorMode>>;
+export type Theme_ThemedImage_Index_ThemedImage_SetColorMode = React.Dispatch<React.SetStateAction<Theme_ThemedImage_Index_ThemedImage_ColorMode>>;
 
-export type ThemeThemedImageThemedImageCurrentTheme = string | null;
+export type Theme_ThemedImage_Index_ThemedImage_CurrentTheme = string | null;
 
-export type ThemeThemedImageThemedImageObserver = MutationObserver;
+export type Theme_ThemedImage_Index_ThemedImage_Observer = MutationObserver;
 
-export type ThemeThemedImageThemedImageTheme = string | null;
+export type Theme_ThemedImage_Index_ThemedImage_Theme = string | null;
 
-export type ThemeThemedImageThemedImageSrc = string;
+export type Theme_ThemedImage_Index_ThemedImage_Src = string;

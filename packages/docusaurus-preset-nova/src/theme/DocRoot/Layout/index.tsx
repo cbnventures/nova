@@ -3,8 +3,8 @@ import DocRootLayoutMain from '@theme/DocRoot/Layout/Main';
 import DocRootLayoutSidebar from '@theme/DocRoot/Layout/Sidebar';
 
 import type {
-  ThemeDocRootLayoutDocRootLayoutProps,
-  ThemeDocRootLayoutDocRootLayoutSidebar,
+  Theme_DocRoot_Layout_Index_DocRootLayout_Props,
+  Theme_DocRoot_Layout_Index_DocRootLayout_Sidebar,
 } from '../../../types/theme/DocRoot/Layout/index.d.ts';
 
 /**
@@ -14,14 +14,14 @@ import type {
  * that renders a sidebar and main content area without flexbox,
  * module CSS, or collapsible sidebar state.
  *
- * @param {ThemeDocRootLayoutDocRootLayoutProps} props - Props.
+ * @param {Theme_DocRoot_Layout_Index_DocRootLayout_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocRootLayout(props: ThemeDocRootLayoutDocRootLayoutProps) {
-  const sidebar: ThemeDocRootLayoutDocRootLayoutSidebar = useDocsSidebar();
+function DocRootLayout(props: Theme_DocRoot_Layout_Index_DocRootLayout_Props) {
+  const sidebar: Theme_DocRoot_Layout_Index_DocRootLayout_Sidebar = useDocsSidebar();
 
   if (sidebar !== null && sidebar !== undefined) {
     return (

@@ -1,11 +1,11 @@
 import type {
-  LibRehypeShikiRehypeShikiOptions,
-  LibRehypeShikiRehypeShikiReturns,
+  Lib_RehypeShiki_RehypeShiki_Options,
+  Lib_RehypeShiki_RehypeShiki_Returns,
 } from './lib/rehype-shiki.d.ts';
-import type { LibShikiThemesGetShikiThemesReturns } from './lib/shiki-themes.d.ts';
+import type { Lib_ShikiThemes_GetShikiThemes_Returns } from './lib/shiki-themes.d.ts';
 import type {
-  OptionsPluginOptionsPreset,
-  OptionsPluginOptionsSearch,
+  Options_PluginOptions_Preset,
+  Options_PluginOptions_Search,
 } from './options.d.ts';
 
 /**
@@ -20,7 +20,7 @@ export type PresetPresetContext = {
   [key: string]: unknown;
 };
 
-export type PresetPresetOptionsPreset = OptionsPluginOptionsPreset;
+export type PresetPresetOptionsPreset = Options_PluginOptions_Preset;
 
 export type PresetPresetOptionsOverrides = Record<string, unknown> | undefined;
 
@@ -78,9 +78,9 @@ export type PresetPresetThemes = PresetPresetTheme[];
 
 export type PresetPresetThemePath = string;
 
-export type PresetPresetShikiThemes = LibShikiThemesGetShikiThemesReturns;
+export type PresetPresetShikiThemes = Lib_ShikiThemes_GetShikiThemes_Returns;
 
-export type PresetPresetRehypePluginFunction = (options: LibRehypeShikiRehypeShikiOptions) => LibRehypeShikiRehypeShikiReturns;
+export type PresetPresetRehypePluginFunction = (options: Lib_RehypeShiki_RehypeShiki_Options) => Lib_RehypeShiki_RehypeShiki_Returns;
 
 export type PresetPresetRehypePlugin = [PresetPresetRehypePluginFunction, PresetPresetShikiThemes];
 
@@ -116,13 +116,13 @@ export type PresetPresetMermaidTooltipPlugin = string;
 
 export type PresetPresetGtmPlugin = PresetPresetPlugin;
 
-export type PresetPresetThemeOptionsPreset = OptionsPluginOptionsPreset;
+export type PresetPresetThemeOptionsPreset = Options_PluginOptions_Preset;
 
 export type PresetPresetThemeOptionsOverrides = PresetPresetOptionsOverrides;
 
 export type PresetPresetThemeOptionsProgressBar = PresetPresetOptionsProgressBar;
 
-export type PresetPresetThemeOptionsSearch = OptionsPluginOptionsSearch | undefined;
+export type PresetPresetThemeOptionsSearch = Options_PluginOptions_Search | undefined;
 
 export type PresetPresetThemeOptions = {
   preset: PresetPresetThemeOptionsPreset;

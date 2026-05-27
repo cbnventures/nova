@@ -1,11 +1,11 @@
 import type {
-  SharedSearchWorkerDocument,
-  SharedSearchWorkerDocuments,
-  SharedSearchWorkerInitMessage,
-  SharedSearchWorkerLunrResult,
-  SharedSearchWorkerMessage,
-  SharedSearchWorkerSearchHit,
-  SharedSearchWorkerSearchMessage,
+  Shared_SearchWorkerDocument,
+  Shared_SearchWorkerDocuments,
+  Shared_SearchWorkerInitMessage,
+  Shared_SearchWorkerLunrResult,
+  Shared_SearchWorkerMessage,
+  Shared_SearchWorkerSearchHit,
+  Shared_SearchWorkerSearchMessage,
 } from '../../shared.d.ts';
 
 /**
@@ -13,58 +13,58 @@ import type {
  *
  * @since 0.15.0
  */
-export type LibSearchWorkerHandleInitMessage = SharedSearchWorkerInitMessage;
+export type Lib_Search_Worker_HandleInit_Message = Shared_SearchWorkerInitMessage;
 
-export type LibSearchWorkerHandleInitReturns = Promise<void>;
+export type Lib_Search_Worker_HandleInit_Returns = Promise<void>;
 
-export type LibSearchWorkerHandleInitResponse = Response;
+export type Lib_Search_Worker_HandleInit_Response = Response;
 
-export type LibSearchWorkerHandleInitParsed = LibSearchWorkerHandleInitParsedShape;
+export type Lib_Search_Worker_HandleInit_Parsed = Lib_Search_Worker_HandleInit_ParsedShape;
 
-export type LibSearchWorkerHandleInitParsedShapeIndex = unknown;
+export type Lib_Search_Worker_HandleInit_ParsedShape_Index = unknown;
 
-export type LibSearchWorkerHandleInitParsedShapeDocuments = SharedSearchWorkerDocument[];
+export type Lib_Search_Worker_HandleInit_ParsedShape_Documents = Shared_SearchWorkerDocument[];
 
-export type LibSearchWorkerHandleInitParsedShape = {
-  index: LibSearchWorkerHandleInitParsedShapeIndex;
-  documents: LibSearchWorkerHandleInitParsedShapeDocuments;
+export type Lib_Search_Worker_HandleInit_ParsedShape = {
+  index: Lib_Search_Worker_HandleInit_ParsedShape_Index;
+  documents: Lib_Search_Worker_HandleInit_ParsedShape_Documents;
 };
 
-export type LibSearchWorkerHandleInitLoadedIndex = unknown;
+export type Lib_Search_Worker_HandleInit_LoadedIndex = unknown;
 
-export type LibSearchWorkerHandleInitErrorMessage = string;
+export type Lib_Search_Worker_HandleInit_ErrorMessage = string;
 
 /**
  * Lib - Search - Worker - Handle Search.
  *
  * @since 0.15.0
  */
-export type LibSearchWorkerHandleSearchMessage = SharedSearchWorkerSearchMessage;
+export type Lib_Search_Worker_HandleSearch_Message = Shared_SearchWorkerSearchMessage;
 
-export type LibSearchWorkerHandleSearchReturns = void;
+export type Lib_Search_Worker_HandleSearch_Returns = void;
 
 /**
  * Lib - Search - Worker - Listener.
  *
  * @since 0.15.0
  */
-export type LibSearchWorkerListenerEvent = MessageEvent<SharedSearchWorkerMessage>;
+export type Lib_Search_Worker_ListenerEvent = MessageEvent<Shared_SearchWorkerMessage>;
 
-export type LibSearchWorkerListenerMessageData = SharedSearchWorkerMessage;
+export type Lib_Search_Worker_ListenerMessageData = Shared_SearchWorkerMessage;
 
 /**
  * Lib - Search - Worker - Lunr Global.
  *
  * @since 0.15.0
  */
-export type LibSearchWorkerLunrGlobalIndexLoad = (serializedIndex: unknown) => unknown;
+export type Lib_Search_Worker_LunrGlobal_Index_Load = (serializedIndex: unknown) => unknown;
 
-export type LibSearchWorkerLunrGlobalIndex = {
-  load: LibSearchWorkerLunrGlobalIndexLoad;
+export type Lib_Search_Worker_LunrGlobal_Index = {
+  load: Lib_Search_Worker_LunrGlobal_Index_Load;
 };
 
-export type LibSearchWorkerLunrGlobal = {
-  Index: LibSearchWorkerLunrGlobalIndex;
+export type Lib_Search_Worker_LunrGlobal = {
+  Index: Lib_Search_Worker_LunrGlobal_Index;
 };
 
 /**
@@ -72,108 +72,108 @@ export type LibSearchWorkerLunrGlobal = {
  *
  * @since 0.15.0
  */
-export type LibSearchWorkerPerformSearchReturns = SharedSearchWorkerSearchHit[];
+export type Lib_Search_Worker_PerformSearch_Returns = Shared_SearchWorkerSearchHit[];
 
-export type LibSearchWorkerPerformSearchIndex = unknown;
+export type Lib_Search_Worker_PerformSearch_Index = unknown;
 
-export type LibSearchWorkerPerformSearchDocuments = SharedSearchWorkerDocuments;
+export type Lib_Search_Worker_PerformSearch_Documents = Shared_SearchWorkerDocuments;
 
-export type LibSearchWorkerPerformSearchQuery = string;
+export type Lib_Search_Worker_PerformSearch_Query = string;
 
-export type LibSearchWorkerPerformSearchLimit = number;
+export type Lib_Search_Worker_PerformSearch_Limit = number;
 
-export type LibSearchWorkerPerformSearchTrimmedQuery = string;
+export type Lib_Search_Worker_PerformSearch_TrimmedQuery = string;
 
-export type LibSearchWorkerPerformSearchTypedIndexSearch = (query: string) => SharedSearchWorkerLunrResult[];
+export type Lib_Search_Worker_PerformSearch_TypedIndex_Search = (query: string) => Shared_SearchWorkerLunrResult[];
 
-export type LibSearchWorkerPerformSearchTypedIndex = {
-  search: LibSearchWorkerPerformSearchTypedIndexSearch;
+export type Lib_Search_Worker_PerformSearch_TypedIndex = {
+  search: Lib_Search_Worker_PerformSearch_TypedIndex_Search;
 };
 
-export type LibSearchWorkerPerformSearchExactResults = SharedSearchWorkerLunrResult[];
+export type Lib_Search_Worker_PerformSearch_ExactResults = Shared_SearchWorkerLunrResult[];
 
-export type LibSearchWorkerPerformSearchWildcardQuery = string;
+export type Lib_Search_Worker_PerformSearch_WildcardQuery = string;
 
-export type LibSearchWorkerPerformSearchWildcardResults = SharedSearchWorkerLunrResult[];
+export type Lib_Search_Worker_PerformSearch_WildcardResults = Shared_SearchWorkerLunrResult[];
 
-export type LibSearchWorkerPerformSearchFuzzyQuery = string;
+export type Lib_Search_Worker_PerformSearch_FuzzyQuery = string;
 
-export type LibSearchWorkerPerformSearchFuzzyResults = SharedSearchWorkerLunrResult[];
+export type Lib_Search_Worker_PerformSearch_FuzzyResults = Shared_SearchWorkerLunrResult[];
 
-export type LibSearchWorkerPerformSearchAllResults = SharedSearchWorkerLunrResult[];
+export type Lib_Search_Worker_PerformSearch_AllResults = Shared_SearchWorkerLunrResult[];
 
-export type LibSearchWorkerPerformSearchScoreMap = Map<string, number>;
+export type Lib_Search_Worker_PerformSearch_ScoreMap = Map<string, number>;
 
-export type LibSearchWorkerPerformSearchResult = SharedSearchWorkerLunrResult | undefined;
+export type Lib_Search_Worker_PerformSearch_Result = Shared_SearchWorkerLunrResult | undefined;
 
-export type LibSearchWorkerPerformSearchExistingScore = number | undefined;
+export type Lib_Search_Worker_PerformSearch_ExistingScore = number | undefined;
 
-export type LibSearchWorkerPerformSearchScoreEntries = IterableIterator<[string, number]>;
+export type Lib_Search_Worker_PerformSearch_ScoreEntries = IterableIterator<[string, number]>;
 
-export type LibSearchWorkerPerformSearchSortedRefs = string[];
+export type Lib_Search_Worker_PerformSearch_SortedRefs = string[];
 
-export type LibSearchWorkerPerformSearchEntry = [string, number] | undefined;
+export type Lib_Search_Worker_PerformSearch_Entry = [string, number] | undefined;
 
-export type LibSearchWorkerPerformSearchSlicedRefs = string[];
+export type Lib_Search_Worker_PerformSearch_SlicedRefs = string[];
 
-export type LibSearchWorkerPerformSearchHits = SharedSearchWorkerSearchHit[];
+export type Lib_Search_Worker_PerformSearch_Hits = Shared_SearchWorkerSearchHit[];
 
-export type LibSearchWorkerPerformSearchRef = string | undefined;
+export type Lib_Search_Worker_PerformSearch_Ref = string | undefined;
 
-export type LibSearchWorkerPerformSearchMatchedDocument = SharedSearchWorkerDocument | undefined;
+export type Lib_Search_Worker_PerformSearch_MatchedDocument = Shared_SearchWorkerDocument | undefined;
 
-export type LibSearchWorkerPerformSearchDocument = SharedSearchWorkerDocument;
+export type Lib_Search_Worker_PerformSearch_Document = Shared_SearchWorkerDocument;
 
-export type LibSearchWorkerPerformSearchSnippetSegments = SharedSearchWorkerSearchHit['snippetSegments'];
+export type Lib_Search_Worker_PerformSearch_SnippetSegments = Shared_SearchWorkerSearchHit['snippetSegments'];
 
-export type LibSearchWorkerPerformSearchTermsMap = Map<string, Set<string>>;
+export type Lib_Search_Worker_PerformSearch_TermsMap = Map<string, Set<string>>;
 
-export type LibSearchWorkerPerformSearchTermsSet = Set<string>;
+export type Lib_Search_Worker_PerformSearch_TermsSet = Set<string>;
 
-export type LibSearchWorkerPerformSearchMaybeTermsSet = LibSearchWorkerPerformSearchTermsSet | undefined;
+export type Lib_Search_Worker_PerformSearch_MaybeTermsSet = Lib_Search_Worker_PerformSearch_TermsSet | undefined;
 
-export type LibSearchWorkerPerformSearchMatchedTerm = string;
+export type Lib_Search_Worker_PerformSearch_MatchedTerm = string;
 
-export type LibSearchWorkerPerformSearchTermPatterns = string[];
+export type Lib_Search_Worker_PerformSearch_TermPatterns = string[];
 
-export type LibSearchWorkerPerformSearchEscapeMatch = string;
+export type Lib_Search_Worker_PerformSearch_EscapeMatch = string;
 
-export type LibSearchWorkerPerformSearchEscapedQuery = string;
+export type Lib_Search_Worker_PerformSearch_EscapedQuery = string;
 
-export type LibSearchWorkerPerformSearchHighlightPattern = string;
+export type Lib_Search_Worker_PerformSearch_HighlightPattern = string;
 
-export type LibSearchWorkerPerformSearchContextPattern = RegExp;
+export type Lib_Search_Worker_PerformSearch_ContextPattern = RegExp;
 
-export type LibSearchWorkerPerformSearchContextMatch = RegExpExecArray | null;
+export type Lib_Search_Worker_PerformSearch_ContextMatch = RegExpExecArray | null;
 
-export type LibSearchWorkerPerformSearchContextStart = number;
+export type Lib_Search_Worker_PerformSearch_ContextStart = number;
 
-export type LibSearchWorkerPerformSearchContextEnd = number;
+export type Lib_Search_Worker_PerformSearch_ContextEnd = number;
 
-export type LibSearchWorkerPerformSearchContextSnippet = string;
+export type Lib_Search_Worker_PerformSearch_ContextSnippet = string;
 
-export type LibSearchWorkerPerformSearchContextRadius = number;
+export type Lib_Search_Worker_PerformSearch_ContextRadius = number;
 
-export type LibSearchWorkerPerformSearchSegmentPattern = RegExp;
+export type Lib_Search_Worker_PerformSearch_SegmentPattern = RegExp;
 
-export type LibSearchWorkerPerformSearchSegmentParts = string[];
+export type Lib_Search_Worker_PerformSearch_SegmentParts = string[];
 
-export type LibSearchWorkerPerformSearchSegmentPart = string;
+export type Lib_Search_Worker_PerformSearch_SegmentPart = string;
 
-export type LibSearchWorkerPerformSearchSegmentPartIndex = number;
+export type Lib_Search_Worker_PerformSearch_SegmentPartIndex = number;
 
-export type LibSearchWorkerPerformSearchSegmentIsHighlight = boolean;
+export type Lib_Search_Worker_PerformSearch_SegmentIsHighlight = boolean;
 
 /**
  * Lib - Search - Worker - Search Documents.
  *
  * @since 0.15.0
  */
-export type LibSearchWorkerSearchDocuments = SharedSearchWorkerDocuments;
+export type Lib_Search_Worker_SearchDocuments = Shared_SearchWorkerDocuments;
 
 /**
  * Lib - Search - Worker - Search Index.
  *
  * @since 0.15.0
  */
-export type LibSearchWorkerSearchIndex = unknown;
+export type Lib_Search_Worker_SearchIndex = unknown;

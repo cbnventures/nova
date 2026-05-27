@@ -1,12 +1,12 @@
 import { translate } from '@docusaurus/Translate';
 
 import type {
-  ThemeLoadingErrorMessage,
-  ThemeLoadingLoadingErrorPrefix,
-  ThemeLoadingLoadingLoading,
-  ThemeLoadingLoadingRetry,
-  ThemeLoadingLoadingTimeout,
-  ThemeLoadingProps,
+  Theme_Loading_Index_Loading_ErrorMessage,
+  Theme_Loading_Index_Loading_ErrorPrefix,
+  Theme_Loading_Index_Loading_Loading,
+  Theme_Loading_Index_Loading_Props,
+  Theme_Loading_Index_Loading_Retry,
+  Theme_Loading_Index_Loading_Timeout,
 } from '../../types/theme/Loading/index.d.ts';
 
 /**
@@ -16,36 +16,36 @@ import type {
  * error, timeout, and delay, providing a fallback view
  * while route components are lazy-loaded.
  *
- * @param {ThemeLoadingProps} props - Props.
+ * @param {Theme_Loading_Index_Loading_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Loading(props: ThemeLoadingProps) {
-  const errorPrefix: ThemeLoadingLoadingErrorPrefix = translate({
+function Loading(props: Theme_Loading_Index_Loading_Props) {
+  const errorPrefix: Theme_Loading_Index_Loading_ErrorPrefix = translate({
     id: 'theme.Loading.errorPrefix',
     message: 'Error: ',
     description: 'The prefix shown before an error message during loading',
   });
-  const retryLabel: ThemeLoadingLoadingRetry = translate({
+  const retryLabel: Theme_Loading_Index_Loading_Retry = translate({
     id: 'theme.Loading.retry',
     message: 'Retry',
     description: 'The label for the retry button shown during a loading error or timeout',
   });
-  const timeoutMessage: ThemeLoadingLoadingTimeout = translate({
+  const timeoutMessage: Theme_Loading_Index_Loading_Timeout = translate({
     id: 'theme.Loading.timeout',
     message: 'Taking a long time...',
     description: 'The message shown when loading takes too long',
   });
-  const loadingMessage: ThemeLoadingLoadingLoading = translate({
+  const loadingMessage: Theme_Loading_Index_Loading_Loading = translate({
     id: 'theme.Loading.loading',
     message: 'Loading...',
     description: 'The message shown while content is being loaded',
   });
 
   if (props['error'] !== null && props['error'] !== undefined) {
-    const errorMessage: ThemeLoadingErrorMessage = props['error']['message'];
+    const errorMessage: Theme_Loading_Index_Loading_ErrorMessage = props['error']['message'];
 
     return (
       <div

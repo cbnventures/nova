@@ -12,33 +12,33 @@ import {
 } from '../lib/regex.js';
 
 import type {
-  TestsFolderAxisFolderAxisBlockDirs,
-  TestsFolderAxisFolderAxisBlockDirSet,
-  TestsFolderAxisFolderAxisCasingMessage,
-  TestsFolderAxisFolderAxisCasingViolations,
-  TestsFolderAxisFolderAxisExportedFolders,
-  TestsFolderAxisFolderAxisMissingExports,
-  TestsFolderAxisFolderAxisMissingExportsMessage,
-  TestsFolderAxisFolderAxisStaleExports,
-  TestsFolderAxisFolderAxisStaleExportsMessage,
-  TestsFolderAxisFolderAxisThemeDirs,
-  TestsFolderAxisGetPackageRootCurrentFileDirectory,
-  TestsFolderAxisGetPackageRootCurrentFilePath,
-  TestsFolderAxisGetPackageRootReturns,
-  TestsFolderAxisListBlockDirectoriesBlocksRoot,
-  TestsFolderAxisListBlockDirectoriesEntries,
-  TestsFolderAxisListBlockDirectoriesReturns,
-  TestsFolderAxisListThemeDirectoriesEntries,
-  TestsFolderAxisListThemeDirectoriesReturns,
-  TestsFolderAxisListThemeDirectoriesThemeRoot,
-  TestsFolderAxisReadBlocksIndexExportsCapturedFolder,
-  TestsFolderAxisReadBlocksIndexExportsContent,
-  TestsFolderAxisReadBlocksIndexExportsFolders,
-  TestsFolderAxisReadBlocksIndexExportsIndexPath,
-  TestsFolderAxisReadBlocksIndexExportsLine,
-  TestsFolderAxisReadBlocksIndexExportsLines,
-  TestsFolderAxisReadBlocksIndexExportsMatch,
-  TestsFolderAxisReadBlocksIndexExportsReturns,
+  Tests_FolderAxis_FolderAxis_BlockDirs,
+  Tests_FolderAxis_FolderAxis_BlockDirSet,
+  Tests_FolderAxis_FolderAxis_CasingMessage,
+  Tests_FolderAxis_FolderAxis_CasingViolations,
+  Tests_FolderAxis_FolderAxis_ExportedFolders,
+  Tests_FolderAxis_FolderAxis_MissingExports,
+  Tests_FolderAxis_FolderAxis_MissingExportsMessage,
+  Tests_FolderAxis_FolderAxis_StaleExports,
+  Tests_FolderAxis_FolderAxis_StaleExportsMessage,
+  Tests_FolderAxis_FolderAxis_ThemeDirs,
+  Tests_FolderAxis_GetPackageRoot_CurrentFileDirectory,
+  Tests_FolderAxis_GetPackageRoot_CurrentFilePath,
+  Tests_FolderAxis_GetPackageRoot_Returns,
+  Tests_FolderAxis_ListBlockDirectories_BlocksRoot,
+  Tests_FolderAxis_ListBlockDirectories_Entries,
+  Tests_FolderAxis_ListBlockDirectories_Returns,
+  Tests_FolderAxis_ListThemeDirectories_Entries,
+  Tests_FolderAxis_ListThemeDirectories_Returns,
+  Tests_FolderAxis_ListThemeDirectories_ThemeRoot,
+  Tests_FolderAxis_ReadBlocksIndexExports_CapturedFolder,
+  Tests_FolderAxis_ReadBlocksIndexExports_Content,
+  Tests_FolderAxis_ReadBlocksIndexExports_Folders,
+  Tests_FolderAxis_ReadBlocksIndexExports_IndexPath,
+  Tests_FolderAxis_ReadBlocksIndexExports_Line,
+  Tests_FolderAxis_ReadBlocksIndexExports_Lines,
+  Tests_FolderAxis_ReadBlocksIndexExports_Match,
+  Tests_FolderAxis_ReadBlocksIndexExports_Returns,
 } from '../types/tests/folder-axis.test.d.ts';
 
 /**
@@ -49,9 +49,9 @@ import type {
  *
  * @since 0.18.0
  */
-function getPackageRoot(): TestsFolderAxisGetPackageRootReturns {
-  const currentFilePath: TestsFolderAxisGetPackageRootCurrentFilePath = fileURLToPath(import.meta.url);
-  const currentFileDirectory: TestsFolderAxisGetPackageRootCurrentFileDirectory = dirname(currentFilePath);
+function getPackageRoot(): Tests_FolderAxis_GetPackageRoot_Returns {
+  const currentFilePath: Tests_FolderAxis_GetPackageRoot_CurrentFilePath = fileURLToPath(import.meta.url);
+  const currentFileDirectory: Tests_FolderAxis_GetPackageRoot_CurrentFileDirectory = dirname(currentFilePath);
 
   return resolve(currentFileDirectory, '..', '..');
 }
@@ -64,9 +64,9 @@ function getPackageRoot(): TestsFolderAxisGetPackageRootReturns {
  *
  * @since 0.18.0
  */
-function listBlockDirectories(): TestsFolderAxisListBlockDirectoriesReturns {
-  const blocksRoot: TestsFolderAxisListBlockDirectoriesBlocksRoot = resolve(getPackageRoot(), 'src', 'blocks');
-  const entries: TestsFolderAxisListBlockDirectoriesEntries = readdirSync(blocksRoot, { withFileTypes: true });
+function listBlockDirectories(): Tests_FolderAxis_ListBlockDirectories_Returns {
+  const blocksRoot: Tests_FolderAxis_ListBlockDirectories_BlocksRoot = resolve(getPackageRoot(), 'src', 'blocks');
+  const entries: Tests_FolderAxis_ListBlockDirectories_Entries = readdirSync(blocksRoot, { withFileTypes: true });
 
   return entries.filter((entry) => entry.isDirectory()).map((entry) => entry['name']).sort();
 }
@@ -79,9 +79,9 @@ function listBlockDirectories(): TestsFolderAxisListBlockDirectoriesReturns {
  *
  * @since 0.18.0
  */
-function listThemeDirectories(): TestsFolderAxisListThemeDirectoriesReturns {
-  const themeRoot: TestsFolderAxisListThemeDirectoriesThemeRoot = resolve(getPackageRoot(), 'src', 'theme');
-  const entries: TestsFolderAxisListThemeDirectoriesEntries = readdirSync(themeRoot, { withFileTypes: true });
+function listThemeDirectories(): Tests_FolderAxis_ListThemeDirectories_Returns {
+  const themeRoot: Tests_FolderAxis_ListThemeDirectories_ThemeRoot = resolve(getPackageRoot(), 'src', 'theme');
+  const entries: Tests_FolderAxis_ListThemeDirectories_Entries = readdirSync(themeRoot, { withFileTypes: true });
 
   return entries.filter((entry) => entry.isDirectory()).map((entry) => entry['name']).sort();
 }
@@ -95,18 +95,18 @@ function listThemeDirectories(): TestsFolderAxisListThemeDirectoriesReturns {
  *
  * @since 0.18.0
  */
-function readBlocksIndexExports(): TestsFolderAxisReadBlocksIndexExportsReturns {
-  const indexPath: TestsFolderAxisReadBlocksIndexExportsIndexPath = resolve(getPackageRoot(), 'src', 'blocks', 'index.ts');
-  const content: TestsFolderAxisReadBlocksIndexExportsContent = readFileSync(indexPath, 'utf-8');
-  const lines: TestsFolderAxisReadBlocksIndexExportsLines = content.split('\n');
-  const folders: TestsFolderAxisReadBlocksIndexExportsFolders = new Set<string>();
+function readBlocksIndexExports(): Tests_FolderAxis_ReadBlocksIndexExports_Returns {
+  const indexPath: Tests_FolderAxis_ReadBlocksIndexExports_IndexPath = resolve(getPackageRoot(), 'src', 'blocks', 'index.ts');
+  const content: Tests_FolderAxis_ReadBlocksIndexExports_Content = readFileSync(indexPath, 'utf-8');
+  const lines: Tests_FolderAxis_ReadBlocksIndexExports_Lines = content.split('\n');
+  const folders: Tests_FolderAxis_ReadBlocksIndexExports_Folders = new Set<string>();
 
   for (const rawLine of lines) {
-    const line: TestsFolderAxisReadBlocksIndexExportsLine = rawLine;
-    const match: TestsFolderAxisReadBlocksIndexExportsMatch = line.match(LIB_REGEX_BLOCKS_INDEX_EXPORT);
+    const line: Tests_FolderAxis_ReadBlocksIndexExports_Line = rawLine;
+    const match: Tests_FolderAxis_ReadBlocksIndexExports_Match = line.match(LIB_REGEX_BLOCKS_INDEX_EXPORT);
 
     if (match !== null) {
-      const capturedFolder: TestsFolderAxisReadBlocksIndexExportsCapturedFolder = match[2] as TestsFolderAxisReadBlocksIndexExportsCapturedFolder;
+      const capturedFolder: Tests_FolderAxis_ReadBlocksIndexExports_CapturedFolder = match[2] as Tests_FolderAxis_ReadBlocksIndexExports_CapturedFolder;
 
       folders.add(capturedFolder);
     }
@@ -145,9 +145,9 @@ function readBlocksIndexExports(): TestsFolderAxisReadBlocksIndexExportsReturns 
  */
 describe('folder axis', () => {
   it('every theme/ directory uses PascalCase', () => {
-    const themeDirs: TestsFolderAxisFolderAxisThemeDirs = listThemeDirectories();
-    const violations: TestsFolderAxisFolderAxisCasingViolations = themeDirs.filter((name) => LIB_REGEX_PASCAL_CASE.test(name) === false);
-    const message: TestsFolderAxisFolderAxisCasingMessage = [
+    const themeDirs: Tests_FolderAxis_FolderAxis_ThemeDirs = listThemeDirectories();
+    const violations: Tests_FolderAxis_FolderAxis_CasingViolations = themeDirs.filter((name) => LIB_REGEX_PASCAL_CASE.test(name) === false);
+    const message: Tests_FolderAxis_FolderAxis_CasingMessage = [
       `theme/ has ${violations.length} non-PascalCase subfolders (theme components must use PascalCase to match @theme/X):`,
       ...violations.map((entry) => `  - ${entry}`),
     ].join('\n');
@@ -158,9 +158,9 @@ describe('folder axis', () => {
   });
 
   it('every blocks/ directory uses kebab-case', () => {
-    const blockDirs: TestsFolderAxisFolderAxisBlockDirs = listBlockDirectories();
-    const violations: TestsFolderAxisFolderAxisCasingViolations = blockDirs.filter((name) => LIB_REGEX_KEBAB_CASE.test(name) === false);
-    const message: TestsFolderAxisFolderAxisCasingMessage = [
+    const blockDirs: Tests_FolderAxis_FolderAxis_BlockDirs = listBlockDirectories();
+    const violations: Tests_FolderAxis_FolderAxis_CasingViolations = blockDirs.filter((name) => LIB_REGEX_KEBAB_CASE.test(name) === false);
+    const message: Tests_FolderAxis_FolderAxis_CasingMessage = [
       `blocks/ has ${violations.length} non-kebab-case subfolders (Nova blocks must use kebab-case to signal direct-import surfaces):`,
       ...violations.map((entry) => `  - ${entry}`),
     ].join('\n');
@@ -171,10 +171,10 @@ describe('folder axis', () => {
   });
 
   it('every blocks/ directory is re-exported from index.ts', () => {
-    const blockDirs: TestsFolderAxisFolderAxisBlockDirs = listBlockDirectories();
-    const exported: TestsFolderAxisFolderAxisExportedFolders = readBlocksIndexExports();
-    const missing: TestsFolderAxisFolderAxisMissingExports = blockDirs.filter((name) => exported.has(name) === false);
-    const message: TestsFolderAxisFolderAxisMissingExportsMessage = [
+    const blockDirs: Tests_FolderAxis_FolderAxis_BlockDirs = listBlockDirectories();
+    const exported: Tests_FolderAxis_FolderAxis_ExportedFolders = readBlocksIndexExports();
+    const missing: Tests_FolderAxis_FolderAxis_MissingExports = blockDirs.filter((name) => exported.has(name) === false);
+    const message: Tests_FolderAxis_FolderAxis_MissingExportsMessage = [
       `blocks/ has ${missing.length} directories not re-exported from index.ts (consumers cannot reach them via the ./blocks subpath):`,
       ...missing.map((entry) => `  - ${entry}`),
     ].join('\n');
@@ -185,11 +185,11 @@ describe('folder axis', () => {
   });
 
   it('every blocks/index.ts export points to an existing directory', () => {
-    const blockDirs: TestsFolderAxisFolderAxisBlockDirs = listBlockDirectories();
-    const exported: TestsFolderAxisFolderAxisExportedFolders = readBlocksIndexExports();
-    const blockDirSet: TestsFolderAxisFolderAxisBlockDirSet = new Set(blockDirs);
-    const stale: TestsFolderAxisFolderAxisStaleExports = Array.from(exported).filter((name) => blockDirSet.has(name) === false);
-    const message: TestsFolderAxisFolderAxisStaleExportsMessage = [
+    const blockDirs: Tests_FolderAxis_FolderAxis_BlockDirs = listBlockDirectories();
+    const exported: Tests_FolderAxis_FolderAxis_ExportedFolders = readBlocksIndexExports();
+    const blockDirSet: Tests_FolderAxis_FolderAxis_BlockDirSet = new Set(blockDirs);
+    const stale: Tests_FolderAxis_FolderAxis_StaleExports = Array.from(exported).filter((name) => blockDirSet.has(name) === false);
+    const message: Tests_FolderAxis_FolderAxis_StaleExportsMessage = [
       `blocks/index.ts has ${stale.length} exports without matching directories (barrel is stale):`,
       ...stale.map((entry) => `  - ${entry}`),
     ].join('\n');

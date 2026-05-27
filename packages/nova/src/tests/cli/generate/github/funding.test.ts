@@ -6,17 +6,17 @@ import {
   vi,
 } from 'vitest';
 
-import { CliGenerateGithubFunding } from '../../../../cli/generate/github/funding.js';
-import { LibNovaConfig } from '../../../../lib/nova-config.js';
+import { Runner as CliGenerateGithubFunding } from '../../../../cli/generate/github/funding.js';
+import { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  TestsCliGenerateGithubFundingRunHeaderArg,
-  TestsCliGenerateGithubFundingRunIsProjectRootSpy,
-  TestsCliGenerateGithubFundingRunLoadSpy,
-  TestsCliGenerateGithubFundingRunSaveCalls,
-  TestsCliGenerateGithubFundingRunSaveSpy,
-  TestsCliGenerateGithubFundingRunTargetCall,
+  Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_HeaderArg,
+  Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_IsProjectRootSpy,
+  Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_LoadSpy,
+  Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_SaveCalls,
+  Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_SaveSpy,
+  Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_TargetCall,
 } from '../../../../types/tests/cli/generate/github/funding.test.d.ts';
 
 /**
@@ -28,7 +28,7 @@ describe('CliGenerateGithubFunding.run', () => {
   it('sets exit code when not at project root', async () => {
     process.exitCode = 0;
 
-    const isProjectRootSpy: TestsCliGenerateGithubFundingRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
+    const isProjectRootSpy: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
 
     await CliGenerateGithubFunding.run({});
 
@@ -42,9 +42,9 @@ describe('CliGenerateGithubFunding.run', () => {
   });
 
   it('does not call saveGeneratedFile during dry-run', async () => {
-    const isProjectRootSpy: TestsCliGenerateGithubFundingRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const loadSpy: TestsCliGenerateGithubFundingRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ urls: { fundSources: ['https://github.com/sponsors/test'] } });
-    const saveSpy: TestsCliGenerateGithubFundingRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+    const isProjectRootSpy: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ urls: { fundSources: ['https://github.com/sponsors/test'] } });
+    const saveSpy: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubFunding.run({ dryRun: true });
 
@@ -60,19 +60,19 @@ describe('CliGenerateGithubFunding.run', () => {
   });
 
   it('passes the correct header metadata to saveGeneratedFile', async () => {
-    const isProjectRootSpy: TestsCliGenerateGithubFundingRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const loadSpy: TestsCliGenerateGithubFundingRunLoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ urls: { fundSources: ['https://github.com/sponsors/test'] } });
-    const saveSpy: TestsCliGenerateGithubFundingRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+    const isProjectRootSpy: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const loadSpy: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_LoadSpy = vi.spyOn(LibNovaConfig.prototype, 'load').mockResolvedValue({ urls: { fundSources: ['https://github.com/sponsors/test'] } });
+    const saveSpy: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateGithubFunding.run({ replaceFile: true });
 
-    const calls: TestsCliGenerateGithubFundingRunSaveCalls = saveSpy['mock']['calls'];
+    const calls: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_SaveCalls = saveSpy['mock']['calls'];
 
-    const targetCall: TestsCliGenerateGithubFundingRunTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.github/FUNDING.yml'));
+    const targetCall: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.github/FUNDING.yml'));
 
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for FUNDING.yml');
 
-    const headerArg: TestsCliGenerateGithubFundingRunHeaderArg = targetCall[3];
+    const headerArg: Tests_Cli_Generate_Github_Funding_CliGenerateGithubFundingRun_HeaderArg = targetCall[3];
 
     ok(headerArg !== undefined, 'Expected header argument to be defined');
 

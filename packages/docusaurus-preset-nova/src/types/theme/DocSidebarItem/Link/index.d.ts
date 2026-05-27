@@ -5,33 +5,33 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsItemHref = string;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Item_Href = string;
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsItemLabel = string;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Item_Label = string;
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsItem = {
-  href: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsItemHref;
-  label: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsItemLabel;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Item = {
+  href: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Item_Href;
+  label: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Item_Label;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsActivePath = string;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_ActivePath = string;
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsLevel = number;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Level = number;
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsClassName = string | undefined;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_ClassName = string | undefined;
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkPropsStyle = CSSProperties | undefined;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkProps = {
-  item: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsItem;
-  activePath: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsActivePath;
-  level: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsLevel;
-  className?: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsClassName;
-  style?: ThemeDocSidebarItemLinkDocSidebarItemLinkPropsStyle;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props = {
+  item: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Item;
+  activePath: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_ActivePath;
+  level: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Level;
+  className?: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_ClassName;
+  style?: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkIsActive = boolean;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_IsActive = boolean;
 
-export type ThemeDocSidebarItemLinkDocSidebarItemLinkAriaCurrent = 'page' | undefined;
+export type Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_AriaCurrent = 'page' | undefined;

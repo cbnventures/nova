@@ -3,13 +3,13 @@ import Socials from '@theme/Blog/Components/Author/Socials';
 import Heading from '@theme/Heading';
 
 import type {
-  ThemeBlogComponentsAuthorAuthor,
-  ThemeBlogComponentsAuthorAuthorImageUrl,
-  ThemeBlogComponentsAuthorAuthorName,
-  ThemeBlogComponentsAuthorAuthorTitle,
-  ThemeBlogComponentsAuthorCount,
-  ThemeBlogComponentsAuthorLink,
-  ThemeBlogComponentsAuthorProps,
+  Theme_Blog_Components_Author_Index_Author_Props_Author,
+  Theme_Blog_Components_Author_Index_Author_ImageUrl,
+  Theme_Blog_Components_Author_Index_Author_Name,
+  Theme_Blog_Components_Author_Index_Author_Title,
+  Theme_Blog_Components_Author_Index_Author_Props_Count,
+  Theme_Blog_Components_Author_Index_Author_Link,
+  Theme_Blog_Components_Author_Index_Author_Props,
 } from '../../../../types/theme/Blog/Components/Author/index.d.ts';
 
 /**
@@ -19,20 +19,20 @@ import type {
  * social links. The avatar wraps in a `<Link>` when the author has a page
  * permalink, profile URL, or email fallback.
  *
- * @param {ThemeBlogComponentsAuthorProps} props - Props.
+ * @param {Theme_Blog_Components_Author_Index_Author_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function Author(props: ThemeBlogComponentsAuthorProps) {
-  const author: ThemeBlogComponentsAuthorAuthor = props['author'];
-  const count: ThemeBlogComponentsAuthorCount = props['count'];
-  const name: ThemeBlogComponentsAuthorAuthorName = author['name'];
-  const title: ThemeBlogComponentsAuthorAuthorTitle = author['title'];
-  const imageURL: ThemeBlogComponentsAuthorAuthorImageUrl = author['imageURL'];
+function Author(props: Theme_Blog_Components_Author_Index_Author_Props) {
+  const author: Theme_Blog_Components_Author_Index_Author_Props_Author = props['author'];
+  const count: Theme_Blog_Components_Author_Index_Author_Props_Count = props['count'];
+  const name: Theme_Blog_Components_Author_Index_Author_Name = author['name'];
+  const title: Theme_Blog_Components_Author_Index_Author_Title = author['title'];
+  const imageURL: Theme_Blog_Components_Author_Index_Author_ImageUrl = author['imageURL'];
 
-  let link: ThemeBlogComponentsAuthorLink = undefined;
+  let link: Theme_Blog_Components_Author_Index_Author_Link = undefined;
 
   if (
     author['page'] !== null

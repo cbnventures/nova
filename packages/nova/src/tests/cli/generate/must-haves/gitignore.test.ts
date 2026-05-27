@@ -16,15 +16,15 @@ vi.mock('prompts', () => (
   }
 ));
 
-import { CliGenerateMustHavesGitignore } from '../../../../cli/generate/must-haves/gitignore.js';
+import { Runner as CliGenerateMustHavesGitignore } from '../../../../cli/generate/must-haves/gitignore.js';
 import * as utility from '../../../../lib/utility.js';
 
 import type {
-  TestsCliGenerateMustHavesGitignoreRunHeaderArg,
-  TestsCliGenerateMustHavesGitignoreRunIsProjectRootSpy,
-  TestsCliGenerateMustHavesGitignoreRunSaveCalls,
-  TestsCliGenerateMustHavesGitignoreRunSaveSpy,
-  TestsCliGenerateMustHavesGitignoreRunTargetCall,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_HeaderArg,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_IsProjectRootSpy,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_SaveCalls,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_SaveSpy,
+  Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_TargetCall,
 } from '../../../../types/tests/cli/generate/must-haves/gitignore.test.d.ts';
 
 /**
@@ -36,7 +36,7 @@ describe('CliGenerateMustHavesGitignore.run', () => {
   it('sets exit code when not at project root', async () => {
     process.exitCode = 0;
 
-    const isProjectRootSpy: TestsCliGenerateMustHavesGitignoreRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(false);
 
     await CliGenerateMustHavesGitignore.run({});
 
@@ -50,18 +50,18 @@ describe('CliGenerateMustHavesGitignore.run', () => {
   });
 
   it('passes the correct header metadata to saveGeneratedFile', async () => {
-    const isProjectRootSpy: TestsCliGenerateMustHavesGitignoreRunIsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
-    const saveSpy: TestsCliGenerateMustHavesGitignoreRunSaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
+    const isProjectRootSpy: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_IsProjectRootSpy = vi.spyOn(utility, 'isProjectRoot').mockResolvedValue(true);
+    const saveSpy: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_SaveSpy = vi.spyOn(utility, 'saveGeneratedFile').mockResolvedValue(undefined);
 
     await CliGenerateMustHavesGitignore.run({ replaceFile: true });
 
-    const calls: TestsCliGenerateMustHavesGitignoreRunSaveCalls = saveSpy['mock']['calls'];
+    const calls: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_SaveCalls = saveSpy['mock']['calls'];
 
-    const targetCall: TestsCliGenerateMustHavesGitignoreRunTargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.gitignore'));
+    const targetCall: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_TargetCall = calls.find((call) => typeof call[0] === 'string' && call[0].endsWith('/.gitignore'));
 
     ok(targetCall !== undefined, 'Expected saveGeneratedFile to be called for .gitignore');
 
-    const headerArg: TestsCliGenerateMustHavesGitignoreRunHeaderArg = targetCall[3];
+    const headerArg: Tests_Cli_Generate_MustHaves_Gitignore_CliGenerateMustHavesGitignoreRun_HeaderArg = targetCall[3];
 
     ok(headerArg !== undefined, 'Expected header argument to be defined');
 

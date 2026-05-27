@@ -3,31 +3,31 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintFormattingNoMultilineStringsCheckLiteralAllowEscapeSequences,
-  RulesEslintFormattingNoMultilineStringsCheckLiteralContext,
-  RulesEslintFormattingNoMultilineStringsCheckLiteralNode,
-  RulesEslintFormattingNoMultilineStringsCheckLiteralRaw,
-  RulesEslintFormattingNoMultilineStringsCheckLiteralRawInner,
-  RulesEslintFormattingNoMultilineStringsCheckLiteralReturns,
-  RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralAllowEscapeSequences,
-  RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralContext,
-  RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralNode,
-  RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiRawParts,
-  RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiValue,
-  RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralRaw,
-  RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralReturns,
-  RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesFirst,
-  RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesLast,
-  RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesLastIndex,
-  RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesParts,
-  RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesReturns,
-  RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesStrippedFirst,
-  RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesStrippedLast,
-  RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesWorkingParts,
-  RulesEslintFormattingNoMultilineStringsRuleAllowEscapeSequences,
-  RulesEslintFormattingNoMultilineStringsRuleDefaultOptionsAllowEscapeSequences,
-  RulesEslintFormattingNoMultilineStringsRuleDefaultOptionsIgnoreFiles,
-  RulesEslintFormattingNoMultilineStringsRuleOptions,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_AllowEscapeSequences,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Context,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Node,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Raw,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_RawInner,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Returns,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_AllowEscapeSequences,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Context,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Node,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiRawParts,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiValue,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Raw,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Returns,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_First,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Last,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_LastIndex,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Parts,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Returns,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedFirst,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedLast,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_WorkingParts,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleAllowEscapeSequences,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsAllowEscapeSequences,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/no-multiline-strings.d.ts';
 
 /**
@@ -38,7 +38,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintFormattingNoMultilineStrings {
+export class Runner {
   /**
    * Rules - ESLint - Formatting - No Multiline Strings - Newline Character.
    *
@@ -78,7 +78,7 @@ export class RulesEslintFormattingNoMultilineStrings {
    */
   static readonly #backslashContinuation = [
     '\\',
-    RulesEslintFormattingNoMultilineStrings.#newlineChar,
+    Runner.#newlineChar,
   ].join('');
 
   /**
@@ -96,26 +96,26 @@ export class RulesEslintFormattingNoMultilineStrings {
       docs: {
         description: [
           'Disallow multiline string content including backslash continuation, visual newlines in template literals, and internal ',
-          RulesEslintFormattingNoMultilineStrings.#escapedNewline,
+          Runner.#escapedNewline,
           ' escape sequences.',
         ].join(''),
       },
       messages: {
         noBackslashContinuation: [
           'Unexpected backslash line continuation. Use [].join("',
-          RulesEslintFormattingNoMultilineStrings.#escapedNewline,
+          Runner.#escapedNewline,
           '") to construct multiline strings.',
         ].join(''),
         noVisualNewline: [
           'Unexpected visual newline in template literal. Use ',
-          RulesEslintFormattingNoMultilineStrings.#escapedNewline,
+          Runner.#escapedNewline,
           ' for inline newlines or [].join("',
-          RulesEslintFormattingNoMultilineStrings.#escapedNewline,
+          Runner.#escapedNewline,
           '") for multiline content.',
         ].join(''),
         noEscapeNewline: [
           'String contains multiline content. Split into an array and use [].join("',
-          RulesEslintFormattingNoMultilineStrings.#escapedNewline,
+          Runner.#escapedNewline,
           '") instead.',
         ].join(''),
       },
@@ -136,12 +136,12 @@ export class RulesEslintFormattingNoMultilineStrings {
       }],
     },
     defaultOptions: [{
-      allowEscapeSequences: false as RulesEslintFormattingNoMultilineStringsRuleDefaultOptionsAllowEscapeSequences,
-      ignoreFiles: [] as RulesEslintFormattingNoMultilineStringsRuleDefaultOptionsIgnoreFiles,
+      allowEscapeSequences: false as Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsAllowEscapeSequences,
+      ignoreFiles: [] as Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintFormattingNoMultilineStringsRuleOptions = defaultOptions[0];
-      const allowEscapeSequences: RulesEslintFormattingNoMultilineStringsRuleAllowEscapeSequences = options['allowEscapeSequences'];
+      const options: Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions = defaultOptions[0];
+      const allowEscapeSequences: Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleAllowEscapeSequences = options['allowEscapeSequences'];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -150,12 +150,12 @@ export class RulesEslintFormattingNoMultilineStrings {
 
       return {
         Literal(node) {
-          RulesEslintFormattingNoMultilineStrings.checkLiteral(context, node, allowEscapeSequences);
+          Runner.checkLiteral(context, node, allowEscapeSequences);
 
           return;
         },
         TemplateLiteral(node) {
-          RulesEslintFormattingNoMultilineStrings.checkTemplateLiteral(context, node, allowEscapeSequences);
+          Runner.checkTemplateLiteral(context, node, allowEscapeSequences);
 
           return;
         },
@@ -171,28 +171,28 @@ export class RulesEslintFormattingNoMultilineStrings {
    *
    * @private
    *
-   * @param {RulesEslintFormattingNoMultilineStringsCheckLiteralContext}              context              - Context.
-   * @param {RulesEslintFormattingNoMultilineStringsCheckLiteralNode}                 node                 - Node.
-   * @param {RulesEslintFormattingNoMultilineStringsCheckLiteralAllowEscapeSequences} allowEscapeSequences - Allow escape sequences.
+   * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Context}              context              - Context.
+   * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Node}                 node                 - Node.
+   * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_AllowEscapeSequences} allowEscapeSequences - Allow escape sequences.
    *
-   * @returns {RulesEslintFormattingNoMultilineStringsCheckLiteralReturns}
+   * @returns {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Returns}
    *
    * @since 0.15.0
    */
-  private static checkLiteral(context: RulesEslintFormattingNoMultilineStringsCheckLiteralContext, node: RulesEslintFormattingNoMultilineStringsCheckLiteralNode, allowEscapeSequences: RulesEslintFormattingNoMultilineStringsCheckLiteralAllowEscapeSequences): RulesEslintFormattingNoMultilineStringsCheckLiteralReturns {
+  private static checkLiteral(context: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Context, node: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Node, allowEscapeSequences: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_AllowEscapeSequences): Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Returns {
     if (typeof node.value !== 'string') {
       return;
     }
 
     // Skip standalone newline strings (e.g. '\n' used as a join delimiter).
-    if (node.value === RulesEslintFormattingNoMultilineStrings.#newlineChar) {
+    if (node.value === Runner.#newlineChar) {
       return;
     }
 
-    const raw: RulesEslintFormattingNoMultilineStringsCheckLiteralRaw = node.raw;
+    const raw: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Raw = node.raw;
 
     // Check backslash continuation.
-    if (raw.includes(RulesEslintFormattingNoMultilineStrings.#backslashContinuation) === true) {
+    if (raw.includes(Runner.#backslashContinuation) === true) {
       context.report({
         node,
         messageId: 'noBackslashContinuation',
@@ -203,9 +203,9 @@ export class RulesEslintFormattingNoMultilineStrings {
 
     // Check internal \n escape sequences in regular strings.
     if (allowEscapeSequences === false) {
-      const rawInner: RulesEslintFormattingNoMultilineStringsCheckLiteralRawInner = raw.slice(1, raw.length - 1);
+      const rawInner: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_RawInner = raw.slice(1, raw.length - 1);
 
-      if (RulesEslintFormattingNoMultilineStrings.hasInternalEscapedNewlines([rawInner]) === true) {
+      if (Runner.hasInternalEscapedNewlines([rawInner]) === true) {
         context.report({
           node,
           messageId: 'noEscapeNewline',
@@ -224,15 +224,15 @@ export class RulesEslintFormattingNoMultilineStrings {
    *
    * @private
    *
-   * @param {RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralContext}              context              - Context.
-   * @param {RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralNode}                 node                 - Node.
-   * @param {RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralAllowEscapeSequences} allowEscapeSequences - Allow escape sequences.
+   * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Context}              context              - Context.
+   * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Node}                 node                 - Node.
+   * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_AllowEscapeSequences} allowEscapeSequences - Allow escape sequences.
    *
-   * @returns {RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralReturns}
+   * @returns {Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Returns}
    *
    * @since 0.15.0
    */
-  private static checkTemplateLiteral(context: RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralContext, node: RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralNode, allowEscapeSequences: RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralAllowEscapeSequences): RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralReturns {
+  private static checkTemplateLiteral(context: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Context, node: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Node, allowEscapeSequences: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_AllowEscapeSequences): Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Returns {
     // Skip tagged template literals.
     if (node.parent.type === 'TaggedTemplateExpression') {
       return;
@@ -240,9 +240,9 @@ export class RulesEslintFormattingNoMultilineStrings {
 
     // Check visual newlines in each quasi.
     for (const quasi of node.quasis) {
-      const raw: RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralRaw = quasi.value.raw;
+      const raw: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Raw = quasi.value.raw;
 
-      if (raw.includes(RulesEslintFormattingNoMultilineStrings.#newlineChar) === true) {
+      if (raw.includes(Runner.#newlineChar) === true) {
         context.report({
           node,
           messageId: 'noVisualNewline',
@@ -254,13 +254,13 @@ export class RulesEslintFormattingNoMultilineStrings {
 
     // Check internal \n escape sequences across all quasis.
     if (allowEscapeSequences === false) {
-      const quasiRawParts: RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiRawParts = node.quasis.map((quasi) => {
-        const quasiValue: RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiValue = quasi.value;
+      const quasiRawParts: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiRawParts = node.quasis.map((quasi) => {
+        const quasiValue: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiValue = quasi.value;
 
         return quasiValue['raw'];
       });
 
-      if (RulesEslintFormattingNoMultilineStrings.hasInternalEscapedNewlines(quasiRawParts) === true) {
+      if (Runner.hasInternalEscapedNewlines(quasiRawParts) === true) {
         context.report({
           node,
           messageId: 'noEscapeNewline',
@@ -279,37 +279,37 @@ export class RulesEslintFormattingNoMultilineStrings {
    *
    * @private
    *
-   * @param {RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesParts} parts - Parts.
+   * @param {Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Parts} parts - Parts.
    *
-   * @returns {RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesReturns}
+   * @returns {Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Returns}
    *
    * @since 0.15.0
    */
-  private static hasInternalEscapedNewlines(parts: RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesParts): RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesReturns {
-    const workingParts: RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesWorkingParts = [...parts];
+  private static hasInternalEscapedNewlines(parts: Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Parts): Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Returns {
+    const workingParts: Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_WorkingParts = [...parts];
 
     // Strip leading escaped newlines from the first part.
-    const first: RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesFirst = workingParts[0];
+    const first: Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_First = workingParts[0];
 
     if (first !== undefined) {
-      let strippedFirst: RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesStrippedFirst = first;
+      let strippedFirst: Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedFirst = first;
 
-      while (strippedFirst.startsWith(RulesEslintFormattingNoMultilineStrings.#escapedNewline) === true) {
-        strippedFirst = strippedFirst.slice(RulesEslintFormattingNoMultilineStrings.#escapedNewline.length);
+      while (strippedFirst.startsWith(Runner.#escapedNewline) === true) {
+        strippedFirst = strippedFirst.slice(Runner.#escapedNewline.length);
       }
 
       Reflect.set(workingParts, 0, strippedFirst);
     }
 
     // Strip trailing escaped newlines from the last part.
-    const lastIndex: RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesLastIndex = workingParts.length - 1;
-    const last: RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesLast = workingParts[lastIndex];
+    const lastIndex: Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_LastIndex = workingParts.length - 1;
+    const last: Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Last = workingParts[lastIndex];
 
     if (last !== undefined) {
-      let strippedLast: RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesStrippedLast = last;
+      let strippedLast: Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedLast = last;
 
-      while (strippedLast.endsWith(RulesEslintFormattingNoMultilineStrings.#escapedNewline) === true) {
-        strippedLast = strippedLast.slice(0, strippedLast.length - RulesEslintFormattingNoMultilineStrings.#escapedNewline.length);
+      while (strippedLast.endsWith(Runner.#escapedNewline) === true) {
+        strippedLast = strippedLast.slice(0, strippedLast.length - Runner.#escapedNewline.length);
       }
 
       Reflect.set(workingParts, lastIndex, strippedLast);
@@ -317,7 +317,7 @@ export class RulesEslintFormattingNoMultilineStrings {
 
     // Check remaining parts for internal escaped newlines.
     for (const workingPart of workingParts) {
-      if (workingPart.includes(RulesEslintFormattingNoMultilineStrings.#escapedNewline) === true) {
+      if (workingPart.includes(Runner.#escapedNewline) === true) {
         return true;
       }
     }

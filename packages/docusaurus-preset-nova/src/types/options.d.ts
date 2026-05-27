@@ -1,157 +1,157 @@
 import type {
-  SharedHexColor,
-  SharedPreset,
-  SharedPresetFontsBody,
-  SharedPresetFontsCode,
-  SharedPresetFontsDisplay,
-  SharedPresetFooter,
-  SharedPresetLogo,
-  SharedPresetName,
-  SharedPresetNavbar,
+  Shared_HexColor,
+  Shared_Preset,
+  Shared_Preset_Fonts_Body,
+  Shared_Preset_Fonts_Code,
+  Shared_Preset_Fonts_Display,
+  Shared_Preset_Footer,
+  Shared_Preset_Logo,
+  Shared_PresetName,
+  Shared_Preset_Navbar,
 } from './shared.d.ts';
 
-export type OptionsPluginOptionsPreset = SharedPresetName;
+export type Options_PluginOptions_Preset = Shared_PresetName;
 
-export type OptionsPluginOptionsOverridesColorsPrimaryLight = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Primary_Light = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsPrimaryDark = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Primary_Dark = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsPrimary = {
-  light: OptionsPluginOptionsOverridesColorsPrimaryLight;
-  dark: OptionsPluginOptionsOverridesColorsPrimaryDark;
+export type Options_PluginOptions_Overrides_Colors_Primary = {
+  light: Options_PluginOptions_Overrides_Colors_Primary_Light;
+  dark: Options_PluginOptions_Overrides_Colors_Primary_Dark;
 } | undefined;
 
-export type OptionsPluginOptionsOverridesColorsSecondaryLight = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Secondary_Light = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsSecondaryDark = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Secondary_Dark = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsSecondary = {
-  light: OptionsPluginOptionsOverridesColorsSecondaryLight;
-  dark: OptionsPluginOptionsOverridesColorsSecondaryDark;
+export type Options_PluginOptions_Overrides_Colors_Secondary = {
+  light: Options_PluginOptions_Overrides_Colors_Secondary_Light;
+  dark: Options_PluginOptions_Overrides_Colors_Secondary_Dark;
 } | undefined;
 
-export type OptionsPluginOptionsOverridesColorsTextLight = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Text_Light = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsTextDark = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Text_Dark = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsText = {
-  light: OptionsPluginOptionsOverridesColorsTextLight;
-  dark: OptionsPluginOptionsOverridesColorsTextDark;
+export type Options_PluginOptions_Overrides_Colors_Text = {
+  light: Options_PluginOptions_Overrides_Colors_Text_Light;
+  dark: Options_PluginOptions_Overrides_Colors_Text_Dark;
 } | undefined;
 
-export type OptionsPluginOptionsOverridesColorsBorderLight = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Border_Light = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsBorderDark = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Border_Dark = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsBorder = {
-  light: OptionsPluginOptionsOverridesColorsBorderLight;
-  dark: OptionsPluginOptionsOverridesColorsBorderDark;
+export type Options_PluginOptions_Overrides_Colors_Border = {
+  light: Options_PluginOptions_Overrides_Colors_Border_Light;
+  dark: Options_PluginOptions_Overrides_Colors_Border_Dark;
 } | undefined;
 
-export type OptionsPluginOptionsOverridesColorsWarningLight = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Warning_Light = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsWarningDark = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Warning_Dark = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsWarning = {
-  light: OptionsPluginOptionsOverridesColorsWarningLight;
-  dark: OptionsPluginOptionsOverridesColorsWarningDark;
+export type Options_PluginOptions_Overrides_Colors_Warning = {
+  light: Options_PluginOptions_Overrides_Colors_Warning_Light;
+  dark: Options_PluginOptions_Overrides_Colors_Warning_Dark;
 } | undefined;
 
-export type OptionsPluginOptionsOverridesColorsDangerLight = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Danger_Light = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsDangerDark = SharedHexColor | undefined;
+export type Options_PluginOptions_Overrides_Colors_Danger_Dark = Shared_HexColor | undefined;
 
-export type OptionsPluginOptionsOverridesColorsDanger = {
-  light: OptionsPluginOptionsOverridesColorsDangerLight;
-  dark: OptionsPluginOptionsOverridesColorsDangerDark;
+export type Options_PluginOptions_Overrides_Colors_Danger = {
+  light: Options_PluginOptions_Overrides_Colors_Danger_Light;
+  dark: Options_PluginOptions_Overrides_Colors_Danger_Dark;
 } | undefined;
 
-export type OptionsPluginOptionsOverridesColors = {
-  primary: OptionsPluginOptionsOverridesColorsPrimary;
-  secondary: OptionsPluginOptionsOverridesColorsSecondary;
-  text: OptionsPluginOptionsOverridesColorsText;
-  border: OptionsPluginOptionsOverridesColorsBorder;
-  warning: OptionsPluginOptionsOverridesColorsWarning;
-  danger: OptionsPluginOptionsOverridesColorsDanger;
+export type Options_PluginOptions_Overrides_Colors = {
+  primary: Options_PluginOptions_Overrides_Colors_Primary;
+  secondary: Options_PluginOptions_Overrides_Colors_Secondary;
+  text: Options_PluginOptions_Overrides_Colors_Text;
+  border: Options_PluginOptions_Overrides_Colors_Border;
+  warning: Options_PluginOptions_Overrides_Colors_Warning;
+  danger: Options_PluginOptions_Overrides_Colors_Danger;
 };
 
-export type OptionsPluginOptionsOverridesFontsDisplay = SharedPresetFontsDisplay | undefined;
+export type Options_PluginOptions_Overrides_Fonts_Display = Shared_Preset_Fonts_Display | undefined;
 
-export type OptionsPluginOptionsOverridesFontsBody = SharedPresetFontsBody | undefined;
+export type Options_PluginOptions_Overrides_Fonts_Body = Shared_Preset_Fonts_Body | undefined;
 
-export type OptionsPluginOptionsOverridesFontsCode = SharedPresetFontsCode | undefined;
+export type Options_PluginOptions_Overrides_Fonts_Code = Shared_Preset_Fonts_Code | undefined;
 
-export type OptionsPluginOptionsOverridesFonts = {
-  display: OptionsPluginOptionsOverridesFontsDisplay;
-  body: OptionsPluginOptionsOverridesFontsBody;
-  code: OptionsPluginOptionsOverridesFontsCode;
+export type Options_PluginOptions_Overrides_Fonts = {
+  display: Options_PluginOptions_Overrides_Fonts_Display;
+  body: Options_PluginOptions_Overrides_Fonts_Body;
+  code: Options_PluginOptions_Overrides_Fonts_Code;
 };
 
-export type OptionsPluginOptionsOverridesNavbar = SharedPresetNavbar | undefined;
+export type Options_PluginOptions_Overrides_Navbar = Shared_Preset_Navbar | undefined;
 
-export type OptionsPluginOptionsOverridesFooter = SharedPresetFooter | undefined;
+export type Options_PluginOptions_Overrides_Footer = Shared_Preset_Footer | undefined;
 
-export type OptionsPluginOptionsOverrides = {
-  colors: OptionsPluginOptionsOverridesColors;
-  fonts: OptionsPluginOptionsOverridesFonts;
-  navbar: OptionsPluginOptionsOverridesNavbar;
-  footer: OptionsPluginOptionsOverridesFooter;
+export type Options_PluginOptions_Overrides = {
+  colors: Options_PluginOptions_Overrides_Colors;
+  fonts: Options_PluginOptions_Overrides_Fonts;
+  navbar: Options_PluginOptions_Overrides_Navbar;
+  footer: Options_PluginOptions_Overrides_Footer;
 };
 
-export type OptionsPluginOptionsProgressBar = boolean | Record<string, unknown>;
+export type Options_PluginOptions_ProgressBar = boolean | Record<string, unknown>;
 
-export type OptionsPluginOptionsSearchLanguage = string[];
+export type Options_PluginOptionsSearchConfig_Language = string[];
 
-export type OptionsPluginOptionsSearchIndexDocs = boolean;
+export type Options_PluginOptionsSearchConfig_IndexDocs = boolean;
 
-export type OptionsPluginOptionsSearchIndexBlog = boolean;
+export type Options_PluginOptionsSearchConfig_IndexBlog = boolean;
 
-export type OptionsPluginOptionsSearchIndexPages = boolean;
+export type Options_PluginOptionsSearchConfig_IndexPages = boolean;
 
-export type OptionsPluginOptionsSearchHashed = boolean;
+export type Options_PluginOptionsSearchConfig_Hashed = boolean;
 
-export type OptionsPluginOptionsSearchResultLimits = number;
+export type Options_PluginOptionsSearchConfig_SearchResultLimits = number;
 
-export type OptionsPluginOptionsSearchHighlightSearchTermsOnTargetPage = boolean;
+export type Options_PluginOptionsSearchConfig_HighlightSearchTermsOnTargetPage = boolean;
 
-export type OptionsPluginOptionsSearchBarShortcutKeymap = string;
+export type Options_PluginOptionsSearchConfig_SearchBarShortcutKeymap = string;
 
-export type OptionsPluginOptionsSearchFuzzyMatchingDistance = number;
+export type Options_PluginOptionsSearchConfig_FuzzyMatchingDistance = number;
 
-export type OptionsPluginOptionsSearchIgnorePatterns = string[];
+export type Options_PluginOptionsSearchConfig_IgnorePatterns = string[];
 
-export type OptionsPluginOptionsSearchDocsRouteBasePath = string;
+export type Options_PluginOptionsSearchConfig_DocsRouteBasePath = string;
 
-export type OptionsPluginOptionsSearchConfig = {
-  language?: OptionsPluginOptionsSearchLanguage;
-  indexDocs?: OptionsPluginOptionsSearchIndexDocs;
-  indexBlog?: OptionsPluginOptionsSearchIndexBlog;
-  indexPages?: OptionsPluginOptionsSearchIndexPages;
-  hashed?: OptionsPluginOptionsSearchHashed;
-  searchResultLimits?: OptionsPluginOptionsSearchResultLimits;
-  highlightSearchTermsOnTargetPage?: OptionsPluginOptionsSearchHighlightSearchTermsOnTargetPage;
-  searchBarShortcutKeymap?: OptionsPluginOptionsSearchBarShortcutKeymap;
-  fuzzyMatchingDistance?: OptionsPluginOptionsSearchFuzzyMatchingDistance;
-  ignorePatterns?: OptionsPluginOptionsSearchIgnorePatterns;
-  docsRouteBasePath?: OptionsPluginOptionsSearchDocsRouteBasePath;
+export type Options_PluginOptionsSearchConfig = {
+  language?: Options_PluginOptionsSearchConfig_Language;
+  indexDocs?: Options_PluginOptionsSearchConfig_IndexDocs;
+  indexBlog?: Options_PluginOptionsSearchConfig_IndexBlog;
+  indexPages?: Options_PluginOptionsSearchConfig_IndexPages;
+  hashed?: Options_PluginOptionsSearchConfig_Hashed;
+  searchResultLimits?: Options_PluginOptionsSearchConfig_SearchResultLimits;
+  highlightSearchTermsOnTargetPage?: Options_PluginOptionsSearchConfig_HighlightSearchTermsOnTargetPage;
+  searchBarShortcutKeymap?: Options_PluginOptionsSearchConfig_SearchBarShortcutKeymap;
+  fuzzyMatchingDistance?: Options_PluginOptionsSearchConfig_FuzzyMatchingDistance;
+  ignorePatterns?: Options_PluginOptionsSearchConfig_IgnorePatterns;
+  docsRouteBasePath?: Options_PluginOptionsSearchConfig_DocsRouteBasePath;
   [key: string]: unknown;
 };
 
-export type OptionsPluginOptionsSearch = OptionsPluginOptionsSearchConfig | false;
+export type Options_PluginOptions_Search = Options_PluginOptionsSearchConfig | false;
 
 /**
  * Options - Plugin Options Analytics.
  *
  * @since 0.15.0
  */
-export type OptionsPluginOptionsAnalyticsGtmContainerId = string;
+export type Options_PluginOptions_Analytics_Gtm_ContainerId = string;
 
-export type OptionsPluginOptionsAnalyticsGtm = {
-  containerId: OptionsPluginOptionsAnalyticsGtmContainerId;
+export type Options_PluginOptions_Analytics_Gtm = {
+  containerId: Options_PluginOptions_Analytics_Gtm_ContainerId;
 } | undefined;
 
-export type OptionsPluginOptionsAnalytics = {
-  gtm: OptionsPluginOptionsAnalyticsGtm;
+export type Options_PluginOptions_Analytics = {
+  gtm: Options_PluginOptions_Analytics_Gtm;
 };
 
 /**
@@ -159,28 +159,28 @@ export type OptionsPluginOptionsAnalytics = {
  *
  * @since 0.15.0
  */
-export type OptionsPluginOptionsPluginsDocs = Record<string, unknown> | undefined;
+export type Options_PluginOptions_Plugins_Docs = Record<string, unknown> | undefined;
 
-export type OptionsPluginOptionsPluginsBlog = Record<string, unknown> | false | undefined;
+export type Options_PluginOptions_Plugins_Blog = Record<string, unknown> | false | undefined;
 
-export type OptionsPluginOptionsPluginsPages = Record<string, unknown> | false | undefined;
+export type Options_PluginOptions_Plugins_Pages = Record<string, unknown> | false | undefined;
 
-export type OptionsPluginOptionsPluginsSitemap = Record<string, unknown> | false | undefined;
+export type Options_PluginOptions_Plugins_Sitemap = Record<string, unknown> | false | undefined;
 
-export type OptionsPluginOptionsPlugins = {
-  docs: OptionsPluginOptionsPluginsDocs;
-  blog: OptionsPluginOptionsPluginsBlog;
-  pages: OptionsPluginOptionsPluginsPages;
-  sitemap: OptionsPluginOptionsPluginsSitemap;
+export type Options_PluginOptions_Plugins = {
+  docs: Options_PluginOptions_Plugins_Docs;
+  blog: Options_PluginOptions_Plugins_Blog;
+  pages: Options_PluginOptions_Plugins_Pages;
+  sitemap: Options_PluginOptions_Plugins_Sitemap;
 };
 
-export type OptionsPluginOptions = {
-  preset: OptionsPluginOptionsPreset;
-  overrides: OptionsPluginOptionsOverrides;
-  plugins: OptionsPluginOptionsPlugins;
-  analytics: OptionsPluginOptionsAnalytics;
-  progressBar: OptionsPluginOptionsProgressBar;
-  search: OptionsPluginOptionsSearch;
+export type Options_PluginOptions = {
+  preset: Options_PluginOptions_Preset;
+  overrides: Options_PluginOptions_Overrides;
+  plugins: Options_PluginOptions_Plugins;
+  analytics: Options_PluginOptions_Analytics;
+  progressBar: Options_PluginOptions_ProgressBar;
+  search: Options_PluginOptions_Search;
 };
 
 /**
@@ -194,77 +194,77 @@ export type OptionsPluginOptions = {
  *
  * @since 0.15.0
  */
-export type OptionsResolvePresetOptions = OptionsPluginOptions;
+export type Options_ResolvePreset_Options = Options_PluginOptions;
 
-export type OptionsResolvePresetReturns = SharedPreset;
+export type Options_ResolvePreset_Returns = Shared_Preset;
 
-export type OptionsResolvePresetBasePreset = SharedPreset;
+export type Options_ResolvePreset_BasePreset = Shared_Preset;
 
-export type OptionsResolvePresetResolvedLogo = SharedPresetLogo;
+export type Options_ResolvePreset_ResolvedLogo = Shared_Preset_Logo;
 
-export type OptionsResolvePresetResolvedColorsPrimaryLight = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsPrimary_Light = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsPrimaryDark = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsPrimary_Dark = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsPrimary = {
-  light: OptionsResolvePresetResolvedColorsPrimaryLight;
-  dark: OptionsResolvePresetResolvedColorsPrimaryDark;
+export type Options_ResolvePreset_ResolvedColorsPrimary = {
+  light: Options_ResolvePreset_ResolvedColorsPrimary_Light;
+  dark: Options_ResolvePreset_ResolvedColorsPrimary_Dark;
 };
 
-export type OptionsResolvePresetResolvedColorsAccentLight = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsAccent_Light = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsAccentDark = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsAccent_Dark = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsAccent = {
-  light: OptionsResolvePresetResolvedColorsAccentLight;
-  dark: OptionsResolvePresetResolvedColorsAccentDark;
+export type Options_ResolvePreset_ResolvedColorsAccent = {
+  light: Options_ResolvePreset_ResolvedColorsAccent_Light;
+  dark: Options_ResolvePreset_ResolvedColorsAccent_Dark;
 };
 
-export type OptionsResolvePresetResolvedColorsTextLight = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsText_Light = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsTextDark = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsText_Dark = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsText = {
-  light: OptionsResolvePresetResolvedColorsTextLight;
-  dark: OptionsResolvePresetResolvedColorsTextDark;
+export type Options_ResolvePreset_ResolvedColorsText = {
+  light: Options_ResolvePreset_ResolvedColorsText_Light;
+  dark: Options_ResolvePreset_ResolvedColorsText_Dark;
 };
 
-export type OptionsResolvePresetResolvedColorsBorderLight = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsBorder_Light = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsBorderDark = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsBorder_Dark = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsBorder = {
-  light: OptionsResolvePresetResolvedColorsBorderLight;
-  dark: OptionsResolvePresetResolvedColorsBorderDark;
+export type Options_ResolvePreset_ResolvedColorsBorder = {
+  light: Options_ResolvePreset_ResolvedColorsBorder_Light;
+  dark: Options_ResolvePreset_ResolvedColorsBorder_Dark;
 };
 
-export type OptionsResolvePresetResolvedColorsWarningLight = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsWarning_Light = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsWarningDark = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsWarning_Dark = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsWarning = {
-  light: OptionsResolvePresetResolvedColorsWarningLight;
-  dark: OptionsResolvePresetResolvedColorsWarningDark;
+export type Options_ResolvePreset_ResolvedColorsWarning = {
+  light: Options_ResolvePreset_ResolvedColorsWarning_Light;
+  dark: Options_ResolvePreset_ResolvedColorsWarning_Dark;
 };
 
-export type OptionsResolvePresetResolvedColorsDangerLight = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsDanger_Light = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsDangerDark = SharedHexColor;
+export type Options_ResolvePreset_ResolvedColorsDanger_Dark = Shared_HexColor;
 
-export type OptionsResolvePresetResolvedColorsDanger = {
-  light: OptionsResolvePresetResolvedColorsDangerLight;
-  dark: OptionsResolvePresetResolvedColorsDangerDark;
+export type Options_ResolvePreset_ResolvedColorsDanger = {
+  light: Options_ResolvePreset_ResolvedColorsDanger_Light;
+  dark: Options_ResolvePreset_ResolvedColorsDanger_Dark;
 };
 
-export type OptionsResolvePresetResolvedFontsDisplay = SharedPresetFontsDisplay;
+export type Options_ResolvePreset_ResolvedFontsDisplay = Shared_Preset_Fonts_Display;
 
-export type OptionsResolvePresetResolvedFontsBody = SharedPresetFontsBody;
+export type Options_ResolvePreset_ResolvedFontsBody = Shared_Preset_Fonts_Body;
 
-export type OptionsResolvePresetResolvedFontsCode = SharedPresetFontsCode;
+export type Options_ResolvePreset_ResolvedFontsCode = Shared_Preset_Fonts_Code;
 
-export type OptionsResolvePresetResolvedNavbar = SharedPresetNavbar;
+export type Options_ResolvePreset_ResolvedNavbar = Shared_Preset_Navbar;
 
-export type OptionsResolvePresetResolvedFooter = SharedPresetFooter;
+export type Options_ResolvePreset_ResolvedFooter = Shared_Preset_Footer;
 
 /**
  * Options - Theme Config Schema.
@@ -277,37 +277,37 @@ export type OptionsResolvePresetResolvedFooter = SharedPresetFooter;
  *
  * @since 0.15.0
  */
-export type OptionsValidateOptionsDataValidate = (schema: unknown, options: unknown) => OptionsPluginOptions;
+export type Options_ValidateOptions_Data_Validate = (schema: unknown, options: unknown) => Options_PluginOptions;
 
-export type OptionsValidateOptionsDataOptions = Record<string, unknown>;
+export type Options_ValidateOptions_Data_Options = Record<string, unknown>;
 
-export type OptionsValidateOptionsData = {
-  validate: OptionsValidateOptionsDataValidate;
-  options: OptionsValidateOptionsDataOptions;
+export type Options_ValidateOptions_Data = {
+  validate: Options_ValidateOptions_Data_Validate;
+  options: Options_ValidateOptions_Data_Options;
 };
 
-export type OptionsValidateOptionsValidate = (schema: unknown, options: unknown) => OptionsPluginOptions;
+export type Options_ValidateOptions_Validate = (schema: unknown, options: unknown) => Options_PluginOptions;
 
-export type OptionsValidateOptionsInput = Record<string, unknown>;
+export type Options_ValidateOptions_Input = Record<string, unknown>;
 
-export type OptionsValidateOptionsReturns = OptionsPluginOptions;
+export type Options_ValidateOptions_Returns = Options_PluginOptions;
 
 /**
  * Options - Validate Theme Config.
  *
  * @since 0.15.0
  */
-export type OptionsValidateThemeConfigDataValidate = (schema: unknown, themeConfig: unknown) => Record<string, unknown>;
+export type Options_ValidateThemeConfig_Data_Validate = (schema: unknown, themeConfig: unknown) => Record<string, unknown>;
 
-export type OptionsValidateThemeConfigDataThemeConfig = Record<string, unknown>;
+export type Options_ValidateThemeConfig_Data_ThemeConfig = Record<string, unknown>;
 
-export type OptionsValidateThemeConfigData = {
-  validate: OptionsValidateThemeConfigDataValidate;
-  themeConfig: OptionsValidateThemeConfigDataThemeConfig;
+export type Options_ValidateThemeConfig_Data = {
+  validate: Options_ValidateThemeConfig_Data_Validate;
+  themeConfig: Options_ValidateThemeConfig_Data_ThemeConfig;
 };
 
-export type OptionsValidateThemeConfigValidate = (schema: unknown, themeConfig: unknown) => Record<string, unknown>;
+export type Options_ValidateThemeConfig_Validate = (schema: unknown, themeConfig: unknown) => Record<string, unknown>;
 
-export type OptionsValidateThemeConfigInput = Record<string, unknown>;
+export type Options_ValidateThemeConfig_Input = Record<string, unknown>;
 
-export type OptionsValidateThemeConfigReturns = Record<string, unknown>;
+export type Options_ValidateThemeConfig_Returns = Record<string, unknown>;

@@ -3,104 +3,104 @@
  *
  * @since 0.20.0
  */
-export type LibWorkflowTemplatesPermissionRead = 'read';
+export type Lib_WorkflowTemplates_PermissionRead = 'read';
 
-export type LibWorkflowTemplatesPermissionWrite = 'write';
+export type Lib_WorkflowTemplates_PermissionWrite = 'write';
 
-export type LibWorkflowTemplatesPermission = LibWorkflowTemplatesPermissionRead | LibWorkflowTemplatesPermissionWrite;
+export type Lib_WorkflowTemplates_Permission = Lib_WorkflowTemplates_PermissionRead | Lib_WorkflowTemplates_PermissionWrite;
 
-export type LibWorkflowTemplatesPermissionKey = string;
+export type Lib_WorkflowTemplates_PermissionKey = string;
 
-export type LibWorkflowTemplatesPermissions = {
-  [key: LibWorkflowTemplatesPermissionKey]: LibWorkflowTemplatesPermission;
+export type Lib_WorkflowTemplates_Permissions = {
+  [key: Lib_WorkflowTemplates_PermissionKey]: Lib_WorkflowTemplates_Permission;
 };
 
-export type LibWorkflowTemplatesVariableFormatSecret = 'secret';
+export type Lib_WorkflowTemplates_VariableFormatSecret = 'secret';
 
-export type LibWorkflowTemplatesVariableFormatVar = 'var';
+export type Lib_WorkflowTemplates_VariableFormatVar = 'var';
 
-export type LibWorkflowTemplatesVariableFormatLiteral = 'literal';
+export type Lib_WorkflowTemplates_VariableFormatLiteral = 'literal';
 
-export type LibWorkflowTemplatesVariableFormat = LibWorkflowTemplatesVariableFormatSecret | LibWorkflowTemplatesVariableFormatVar | LibWorkflowTemplatesVariableFormatLiteral;
+export type Lib_WorkflowTemplates_Variable_Format = Lib_WorkflowTemplates_VariableFormatSecret | Lib_WorkflowTemplates_VariableFormatVar | Lib_WorkflowTemplates_VariableFormatLiteral;
 
-export type LibWorkflowTemplatesVariableDefault = string;
+export type Lib_WorkflowTemplates_Variable_Default = string;
 
-export type LibWorkflowTemplatesVariableAuto = true;
+export type Lib_WorkflowTemplates_Variable_Auto = true;
 
-export type LibWorkflowTemplatesVariableDescription = string;
+export type Lib_WorkflowTemplates_Variable_Description = string;
 
-export type LibWorkflowTemplatesVariableExample = string;
+export type Lib_WorkflowTemplates_Variable_Example = string;
 
-export type LibWorkflowTemplatesVariable = {
-  format: LibWorkflowTemplatesVariableFormat;
-  default?: LibWorkflowTemplatesVariableDefault;
-  auto?: LibWorkflowTemplatesVariableAuto;
-  description?: LibWorkflowTemplatesVariableDescription;
-  example?: LibWorkflowTemplatesVariableExample;
+export type Lib_WorkflowTemplates_Variable = {
+  format: Lib_WorkflowTemplates_Variable_Format;
+  default?: Lib_WorkflowTemplates_Variable_Default;
+  auto?: Lib_WorkflowTemplates_Variable_Auto;
+  description?: Lib_WorkflowTemplates_Variable_Description;
+  example?: Lib_WorkflowTemplates_Variable_Example;
 };
 
-export type LibWorkflowTemplatesVariableName = string;
+export type Lib_WorkflowTemplates_VariableName = string;
 
-export type LibWorkflowTemplatesVariables = {
-  [key: LibWorkflowTemplatesVariableName]: LibWorkflowTemplatesVariable;
+export type Lib_WorkflowTemplates_Variables = {
+  [key: Lib_WorkflowTemplates_VariableName]: Lib_WorkflowTemplates_Variable;
 };
 
-export type LibWorkflowTemplatesTargetDescription = string;
+export type Lib_WorkflowTemplates_Target_Description = string;
 
-export type LibWorkflowTemplatesTargetArtifactPath = string;
+export type Lib_WorkflowTemplates_TargetArtifactPath = string;
 
-export type LibWorkflowTemplatesTargetArtifactPaths = LibWorkflowTemplatesTargetArtifactPath[];
+export type Lib_WorkflowTemplates_Target_ArtifactPaths = Lib_WorkflowTemplates_TargetArtifactPath[];
 
-export type LibWorkflowTemplatesTargetVariables = LibWorkflowTemplatesVariables;
+export type Lib_WorkflowTemplates_Target_Variables = Lib_WorkflowTemplates_Variables;
 
-export type LibWorkflowTemplatesTargetPermissions = LibWorkflowTemplatesPermissions;
+export type Lib_WorkflowTemplates_Target_Permissions = Lib_WorkflowTemplates_Permissions;
 
-export type LibWorkflowTemplatesTargetUniquenessKeyEntry = LibWorkflowTemplatesVariableName;
+export type Lib_WorkflowTemplates_TargetUniquenessKeyEntry = Lib_WorkflowTemplates_VariableName;
 
-export type LibWorkflowTemplatesTargetUniquenessKey = LibWorkflowTemplatesTargetUniquenessKeyEntry[];
+export type Lib_WorkflowTemplates_Target_UniquenessKey = Lib_WorkflowTemplates_TargetUniquenessKeyEntry[];
 
-export type LibWorkflowTemplatesTarget = {
-  description: LibWorkflowTemplatesTargetDescription;
-  artifactPaths: LibWorkflowTemplatesTargetArtifactPaths;
-  variables: LibWorkflowTemplatesTargetVariables;
-  permissions: LibWorkflowTemplatesTargetPermissions;
-  uniquenessKey?: LibWorkflowTemplatesTargetUniquenessKey;
+export type Lib_WorkflowTemplates_Target = {
+  description: Lib_WorkflowTemplates_Target_Description;
+  artifactPaths: Lib_WorkflowTemplates_Target_ArtifactPaths;
+  variables: Lib_WorkflowTemplates_Target_Variables;
+  permissions: Lib_WorkflowTemplates_Target_Permissions;
+  uniquenessKey?: Lib_WorkflowTemplates_Target_UniquenessKey;
 };
 
-export type LibWorkflowTemplatesTargetType = string;
+export type Lib_WorkflowTemplates_TargetType = string;
 
-export type LibWorkflowTemplatesTargets = {
-  [key: LibWorkflowTemplatesTargetType]: LibWorkflowTemplatesTarget;
+export type Lib_WorkflowTemplates_Targets = {
+  [key: Lib_WorkflowTemplates_TargetType]: Lib_WorkflowTemplates_Target;
 };
 
-export type LibWorkflowTemplatesEntryName = string;
+export type Lib_WorkflowTemplates_Entry_Name = string;
 
-export type LibWorkflowTemplatesEntryDescription = string;
+export type Lib_WorkflowTemplates_Entry_Description = string;
 
-export type LibWorkflowTemplatesEntrySupportsScopes = boolean;
+export type Lib_WorkflowTemplates_Entry_SupportsScopes = boolean;
 
-export type LibWorkflowTemplatesEntrySupportsTargets = boolean;
+export type Lib_WorkflowTemplates_Entry_SupportsTargets = boolean;
 
-export type LibWorkflowTemplatesEntryNeedsManuallyFallback = boolean;
+export type Lib_WorkflowTemplates_Entry_NeedsManuallyFallback = boolean;
 
-export type LibWorkflowTemplatesEntryPermissions = LibWorkflowTemplatesPermissions;
+export type Lib_WorkflowTemplates_Entry_Permissions = Lib_WorkflowTemplates_Permissions;
 
-export type LibWorkflowTemplatesEntryJobPermissions = LibWorkflowTemplatesPermissions;
+export type Lib_WorkflowTemplates_Entry_JobPermissions = Lib_WorkflowTemplates_Permissions;
 
-export type LibWorkflowTemplatesEntryVariables = LibWorkflowTemplatesVariables;
+export type Lib_WorkflowTemplates_Entry_Variables = Lib_WorkflowTemplates_Variables;
 
-export type LibWorkflowTemplatesEntryTargets = LibWorkflowTemplatesTargets;
+export type Lib_WorkflowTemplates_Entry_Targets = Lib_WorkflowTemplates_Targets;
 
-export type LibWorkflowTemplatesEntry = {
-  name: LibWorkflowTemplatesEntryName;
-  description: LibWorkflowTemplatesEntryDescription;
-  supportsScopes: LibWorkflowTemplatesEntrySupportsScopes;
-  supportsTargets: LibWorkflowTemplatesEntrySupportsTargets;
-  needsManuallyFallback?: LibWorkflowTemplatesEntryNeedsManuallyFallback;
-  permissions: LibWorkflowTemplatesEntryPermissions;
-  jobPermissions?: LibWorkflowTemplatesEntryJobPermissions;
-  variables: LibWorkflowTemplatesEntryVariables;
-  targets?: LibWorkflowTemplatesEntryTargets;
+export type Lib_WorkflowTemplates_Entry = {
+  name: Lib_WorkflowTemplates_Entry_Name;
+  description: Lib_WorkflowTemplates_Entry_Description;
+  supportsScopes: Lib_WorkflowTemplates_Entry_SupportsScopes;
+  supportsTargets: Lib_WorkflowTemplates_Entry_SupportsTargets;
+  needsManuallyFallback?: Lib_WorkflowTemplates_Entry_NeedsManuallyFallback;
+  permissions: Lib_WorkflowTemplates_Entry_Permissions;
+  jobPermissions?: Lib_WorkflowTemplates_Entry_JobPermissions;
+  variables: Lib_WorkflowTemplates_Entry_Variables;
+  targets?: Lib_WorkflowTemplates_Entry_Targets;
 };
 
-export type LibWorkflowTemplatesMetadata = LibWorkflowTemplatesEntry[];
+export type Lib_WorkflowTemplates_Metadata = Lib_WorkflowTemplates_Entry[];

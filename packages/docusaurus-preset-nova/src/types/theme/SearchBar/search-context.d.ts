@@ -1,57 +1,57 @@
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { SharedSearchWorkerSearchHit } from '../../shared.d.ts';
+import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
 
 /**
  * Theme - Search Bar - Search Context - Search Context.
  *
  * @since 0.15.0
  */
-export type ThemeSearchBarSearchContextValueQuery = string;
+export type Theme_SearchBar_SearchContext_Value_Query = string;
 
-export type ThemeSearchBarSearchContextValueSearchedQuery = string;
+export type Theme_SearchBar_SearchContext_Value_SearchedQuery = string;
 
-export type ThemeSearchBarSearchContextValueResults = SharedSearchWorkerSearchHit[];
+export type Theme_SearchBar_SearchContext_Value_Results = Shared_SearchWorkerSearchHit[];
 
-export type ThemeSearchBarSearchContextValueError = string | undefined;
+export type Theme_SearchBar_SearchContext_Value_Error = string | undefined;
 
-export type ThemeSearchBarSearchContextValueIsReady = boolean;
+export type Theme_SearchBar_SearchContext_Value_IsReady = boolean;
 
-export type ThemeSearchBarSearchContextValueIsOpen = boolean;
+export type Theme_SearchBar_SearchContext_Value_IsOpen = boolean;
 
-export type ThemeSearchBarSearchContextValueSetIsOpen = Dispatch<SetStateAction<ThemeSearchBarSearchContextValueIsOpen>>;
+export type Theme_SearchBar_SearchContext_Value_SetIsOpen = Dispatch<SetStateAction<Theme_SearchBar_SearchContext_Value_IsOpen>>;
 
-export type ThemeSearchBarSearchContextValueActiveIndex = number;
+export type Theme_SearchBar_SearchContext_Value_ActiveIndex = number;
 
-export type ThemeSearchBarSearchContextValueSetActiveIndex = Dispatch<SetStateAction<ThemeSearchBarSearchContextValueActiveIndex>>;
+export type Theme_SearchBar_SearchContext_Value_SetActiveIndex = Dispatch<SetStateAction<Theme_SearchBar_SearchContext_Value_ActiveIndex>>;
 
-export type ThemeSearchBarSearchContextValueHandleQueryChange = (value: ThemeSearchBarSearchContextHandleQueryChangeValue) => void;
+export type Theme_SearchBar_SearchContext_Value_HandleQueryChange = (value: Theme_SearchBar_SearchContext_HandleQueryChangeValue) => void;
 
-export type ThemeSearchBarSearchContextHandleQueryChangeValue = string;
+export type Theme_SearchBar_SearchContext_HandleQueryChangeValue = string;
 
-export type ThemeSearchBarSearchContextValueInputRef = React.RefObject<HTMLInputElement | null>;
+export type Theme_SearchBar_SearchContext_Value_InputRef = React.RefObject<HTMLInputElement | null>;
 
-export type ThemeSearchBarSearchContextValue = {
-  query: ThemeSearchBarSearchContextValueQuery;
-  searchedQuery: ThemeSearchBarSearchContextValueSearchedQuery;
-  results: ThemeSearchBarSearchContextValueResults;
-  error: ThemeSearchBarSearchContextValueError;
-  isReady: ThemeSearchBarSearchContextValueIsReady;
-  isOpen: ThemeSearchBarSearchContextValueIsOpen;
-  setIsOpen: ThemeSearchBarSearchContextValueSetIsOpen;
-  activeIndex: ThemeSearchBarSearchContextValueActiveIndex;
-  setActiveIndex: ThemeSearchBarSearchContextValueSetActiveIndex;
-  handleQueryChange: ThemeSearchBarSearchContextValueHandleQueryChange;
-  inputRef: ThemeSearchBarSearchContextValueInputRef;
+export type Theme_SearchBar_SearchContext_Value = {
+  query: Theme_SearchBar_SearchContext_Value_Query;
+  searchedQuery: Theme_SearchBar_SearchContext_Value_SearchedQuery;
+  results: Theme_SearchBar_SearchContext_Value_Results;
+  error: Theme_SearchBar_SearchContext_Value_Error;
+  isReady: Theme_SearchBar_SearchContext_Value_IsReady;
+  isOpen: Theme_SearchBar_SearchContext_Value_IsOpen;
+  setIsOpen: Theme_SearchBar_SearchContext_Value_SetIsOpen;
+  activeIndex: Theme_SearchBar_SearchContext_Value_ActiveIndex;
+  setActiveIndex: Theme_SearchBar_SearchContext_Value_SetActiveIndex;
+  handleQueryChange: Theme_SearchBar_SearchContext_Value_HandleQueryChange;
+  inputRef: Theme_SearchBar_SearchContext_Value_InputRef;
 };
 
-export type ThemeSearchBarSearchContextMaybeValue = ThemeSearchBarSearchContextValue | undefined;
+export type Theme_SearchBar_SearchContext_MaybeValue = Theme_SearchBar_SearchContext_Value | undefined;
 
-export type ThemeSearchBarSearchContextContext = React.Context<ThemeSearchBarSearchContextMaybeValue>;
+export type Theme_SearchBar_SearchContext_Context = React.Context<Theme_SearchBar_SearchContext_MaybeValue>;
 
 /**
  * Theme - Search Bar - Search Context - Use Search Context.
  *
  * @since 0.15.0
  */
-export type ThemeSearchBarSearchContextReturns = ThemeSearchBarSearchContextValue;
+export type Theme_SearchBar_SearchContext_Returns = Theme_SearchBar_SearchContext_Value;

@@ -1,41 +1,41 @@
 import type { CSSProperties } from 'react';
 
-import type { SharedSurface } from '../../shared.d.ts';
+import type { Shared_Surface } from '../../shared.d.ts';
 
 /**
  * Blocks - App Market Download - Blocks App Market Download.
  *
  * @since 0.15.0
  */
-export type BlocksAppMarketDownloadBlocksAppMarketDownloadPropsAppStoreUrl = string | undefined;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_AppStoreUrl = string | undefined;
 
-export type BlocksAppMarketDownloadBlocksAppMarketDownloadPropsGooglePlayUrl = string | undefined;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_GooglePlayUrl = string | undefined;
 
-export type BlocksAppMarketDownloadBlocksAppMarketDownloadPropsLabel = string | undefined;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_Label = string | undefined;
 
-export type BlocksAppMarketDownloadBlocksAppMarketDownloadPropsSurface = SharedSurface | undefined;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_Surface = Shared_Surface | undefined;
 
-export type BlocksAppMarketDownloadBlocksAppMarketDownloadPropsClassName = string | undefined;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_ClassName = string | undefined;
 
-export type BlocksAppMarketDownloadBlocksAppMarketDownloadPropsStyle = CSSProperties | undefined;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_Style = CSSProperties | undefined;
 
-export type BlocksAppMarketDownloadBlocksAppMarketDownloadProps = {
-  appStoreUrl?: BlocksAppMarketDownloadBlocksAppMarketDownloadPropsAppStoreUrl;
-  googlePlayUrl?: BlocksAppMarketDownloadBlocksAppMarketDownloadPropsGooglePlayUrl;
-  label?: BlocksAppMarketDownloadBlocksAppMarketDownloadPropsLabel;
-  surface?: BlocksAppMarketDownloadBlocksAppMarketDownloadPropsSurface;
-  className?: BlocksAppMarketDownloadBlocksAppMarketDownloadPropsClassName;
-  style?: BlocksAppMarketDownloadBlocksAppMarketDownloadPropsStyle;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props = {
+  appStoreUrl?: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_AppStoreUrl;
+  googlePlayUrl?: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_GooglePlayUrl;
+  label?: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_Label;
+  surface?: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_Surface;
+  className?: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_ClassName;
+  style?: Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_Props_Style;
 };
 
-export type BlocksAppMarketDownloadAppStoreAriaLabel = string;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreAriaLabel = string;
 
-export type BlocksAppMarketDownloadAppStoreSubtitle = string;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreSubtitle = string;
 
-export type BlocksAppMarketDownloadAppStoreTitle = string;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_AppStoreTitle = string;
 
-export type BlocksAppMarketDownloadGooglePlayAriaLabel = string;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlayAriaLabel = string;
 
-export type BlocksAppMarketDownloadGooglePlaySubtitle = string;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlaySubtitle = string;
 
-export type BlocksAppMarketDownloadGooglePlayTitle = string;
+export type Blocks_AppMarketDownload_Index_BlocksAppMarketDownload_GooglePlayTitle = string;

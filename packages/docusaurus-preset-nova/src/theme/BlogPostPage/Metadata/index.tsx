@@ -2,17 +2,17 @@ import { useBlogPost } from '@docusaurus/plugin-content-blog/client';
 import { PageMetadata } from '@docusaurus/theme-common';
 
 import type {
-  ThemeBlogPostPageMetadataBlogPostPageMetadataAuthorUrl,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataAuthorUrls,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataBlogPost,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataDate,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataDescription,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataFrontMatter,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataImage,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataMetadata,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataSpread,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataTagLabels,
-  ThemeBlogPostPageMetadataBlogPostPageMetadataTitle,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_AuthorUrl,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_AuthorUrls,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_BlogPost,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Date,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Description,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_FrontMatter,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Image,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Metadata,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_TagLabels,
+  Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Title,
 } from '../../../types/theme/BlogPostPage/Metadata/index.d.ts';
 
 /**
@@ -26,14 +26,14 @@ import type {
  * @since 0.18.0
  */
 function BlogPostPageMetadata() {
-  const blogPost: ThemeBlogPostPageMetadataBlogPostPageMetadataBlogPost = useBlogPost();
-  const metadata: ThemeBlogPostPageMetadataBlogPostPageMetadataMetadata = blogPost['metadata'];
-  const frontMatter: ThemeBlogPostPageMetadataBlogPostPageMetadataFrontMatter = metadata['frontMatter'];
-  const description: ThemeBlogPostPageMetadataBlogPostPageMetadataDescription = metadata['description'];
-  const resolvedTitle: ThemeBlogPostPageMetadataBlogPostPageMetadataTitle = (frontMatter['title_meta']) ?? metadata['title'];
-  const publishedDate: ThemeBlogPostPageMetadataBlogPostPageMetadataDate = metadata['date'];
+  const blogPost: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_BlogPost = useBlogPost();
+  const metadata: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Metadata = blogPost['metadata'];
+  const frontMatter: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_FrontMatter = metadata['frontMatter'];
+  const description: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Description = metadata['description'];
+  const resolvedTitle: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Title = (frontMatter['title_meta']) ?? metadata['title'];
+  const publishedDate: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Date = metadata['date'];
 
-  const metadataSpread: ThemeBlogPostPageMetadataBlogPostPageMetadataSpread = {};
+  const metadataSpread: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread = {};
 
   if (
     description !== undefined
@@ -46,16 +46,16 @@ function BlogPostPageMetadata() {
     Reflect.set(metadataSpread, 'keywords', frontMatter['keywords']);
   }
 
-  const image: ThemeBlogPostPageMetadataBlogPostPageMetadataImage = blogPost['assets']['image'] ?? frontMatter['image'];
+  const image: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Image = blogPost['assets']['image'] ?? frontMatter['image'];
 
   if (image !== undefined) {
     Reflect.set(metadataSpread, 'image', image);
   }
 
-  const authorUrls: ThemeBlogPostPageMetadataBlogPostPageMetadataAuthorUrls = [];
+  const authorUrls: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_AuthorUrls = [];
 
   metadata['authors'].forEach((author) => {
-    const url: ThemeBlogPostPageMetadataBlogPostPageMetadataAuthorUrl = author['url'];
+    const url: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_AuthorUrl = author['url'];
 
     if (
       url !== undefined
@@ -67,7 +67,7 @@ function BlogPostPageMetadata() {
     return;
   });
 
-  const tagLabels: ThemeBlogPostPageMetadataBlogPostPageMetadataTagLabels = metadata['tags'].map((tag) => tag['label']);
+  const tagLabels: Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_TagLabels = metadata['tags'].map((tag) => tag['label']);
 
   return (
     <PageMetadata title={resolvedTitle} {...metadataSpread}>

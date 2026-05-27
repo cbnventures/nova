@@ -7,16 +7,16 @@ import { Icon } from '@iconify/react/offline';
 import DocBreadcrumbsStructuredData from '@theme/DocBreadcrumbs/StructuredData';
 
 import type {
-  ThemeDocBreadcrumbsDocBreadcrumbsBreadcrumbHref,
-  ThemeDocBreadcrumbsDocBreadcrumbsBreadcrumbItem,
-  ThemeDocBreadcrumbsDocBreadcrumbsBreadcrumbs,
-  ThemeDocBreadcrumbsDocBreadcrumbsHomeAriaLabel,
-  ThemeDocBreadcrumbsDocBreadcrumbsHomeHref,
-  ThemeDocBreadcrumbsDocBreadcrumbsHomePageRoute,
-  ThemeDocBreadcrumbsDocBreadcrumbsIndex,
-  ThemeDocBreadcrumbsDocBreadcrumbsIsLast,
-  ThemeDocBreadcrumbsDocBreadcrumbsNavAriaLabel,
-  ThemeDocBreadcrumbsDocBreadcrumbsProps,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_BreadcrumbHref,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_BreadcrumbItem,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_Breadcrumbs,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_HomeAriaLabel,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_HomeHref,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_HomePageRoute,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_Index,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_IsLast,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_NavAriaLabel,
+  Theme_DocBreadcrumbs_Index_DocBreadcrumbs_Props,
 } from '../../types/theme/DocBreadcrumbs/index.d.ts';
 
 /**
@@ -30,21 +30,21 @@ import type {
  *
  * @since 0.15.0
  */
-function DocBreadcrumbs(props: ThemeDocBreadcrumbsDocBreadcrumbsProps) {
-  const breadcrumbs: ThemeDocBreadcrumbsDocBreadcrumbsBreadcrumbs = useSidebarBreadcrumbs();
-  const homePageRoute: ThemeDocBreadcrumbsDocBreadcrumbsHomePageRoute = useHomePageRoute();
-  const homeHref: ThemeDocBreadcrumbsDocBreadcrumbsHomeHref = useBaseUrl('/');
+function DocBreadcrumbs(props: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_Props) {
+  const breadcrumbs: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_Breadcrumbs = useSidebarBreadcrumbs();
+  const homePageRoute: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_HomePageRoute = useHomePageRoute();
+  const homeHref: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_HomeHref = useBaseUrl('/');
 
   if (breadcrumbs === null || breadcrumbs === undefined) {
     return undefined;
   }
 
-  const navAriaLabel: ThemeDocBreadcrumbsDocBreadcrumbsNavAriaLabel = translate({
+  const navAriaLabel: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_NavAriaLabel = translate({
     id: 'theme.docs.breadcrumbs.navAriaLabel',
     message: 'Breadcrumbs',
     description: 'The ARIA label for the breadcrumbs navigation',
   });
-  const homeAriaLabel: ThemeDocBreadcrumbsDocBreadcrumbsHomeAriaLabel = translate({
+  const homeAriaLabel: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_HomeAriaLabel = translate({
     id: 'theme.docs.breadcrumbs.home',
     message: 'Home',
     description: 'The ARIA label for the home link in breadcrumbs',
@@ -67,9 +67,9 @@ function DocBreadcrumbs(props: ThemeDocBreadcrumbsDocBreadcrumbsProps) {
             </li>
           )}
           {
-            breadcrumbs.map((item: ThemeDocBreadcrumbsDocBreadcrumbsBreadcrumbItem, index: ThemeDocBreadcrumbsDocBreadcrumbsIndex) => {
-              const isLast: ThemeDocBreadcrumbsDocBreadcrumbsIsLast = index === breadcrumbs['length'] - 1;
-              const breadcrumbHref: ThemeDocBreadcrumbsDocBreadcrumbsBreadcrumbHref = (item['type'] === 'category' && item['linkUnlisted'] === true) ? undefined : item['href'];
+            breadcrumbs.map((item: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_BreadcrumbItem, index: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_Index) => {
+              const isLast: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_IsLast = index === breadcrumbs['length'] - 1;
+              const breadcrumbHref: Theme_DocBreadcrumbs_Index_DocBreadcrumbs_BreadcrumbHref = (item['type'] === 'category' && item['linkUnlisted'] === true) ? undefined : item['href'];
 
               if (isLast === true) {
                 return (

@@ -1,6 +1,6 @@
 import './icons.js';
 
-import type { ThemeRootProps } from '../../types/theme/Root/index.d.ts';
+import type { Theme_Root_Index_Root_Props } from '../../types/theme/Root/index.d.ts';
 
 /**
  * Theme - Root.
@@ -9,13 +9,13 @@ import type { ThemeRootProps } from '../../types/theme/Root/index.d.ts';
  * component, rendering its children without any additional
  * markup or framework-specific styling.
  *
- * @param {ThemeRootProps} props - Props.
+ * @param {Theme_Root_Index_Root_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Root(props: ThemeRootProps) {
+function Root(props: Theme_Root_Index_Root_Props) {
   return (
     <>{props['children']}</>
   );

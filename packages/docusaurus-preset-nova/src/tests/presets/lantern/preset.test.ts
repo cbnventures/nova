@@ -5,9 +5,9 @@ import { describe, it } from 'vitest';
 import { presetsLanternPresetLantern } from '../../../presets/lantern/preset.js';
 
 import type {
-  TestsPresetsLanternPresetFooter,
-  TestsPresetsLanternPresetLantern,
-  TestsPresetsLanternPresetNavbar,
+  Tests_Presets_Lantern_Preset_Footer,
+  Tests_Presets_Lantern_Preset_Lantern,
+  Tests_Presets_Lantern_Preset_Navbar,
 } from '../../../types/tests/presets/lantern/preset.test.d.ts';
 
 /**
@@ -17,7 +17,7 @@ import type {
  */
 describe('presetsLanternPresetLantern', async () => {
   it('has correct color values', () => {
-    const lantern: TestsPresetsLanternPresetLantern = presetsLanternPresetLantern;
+    const lantern: Tests_Presets_Lantern_Preset_Lantern = presetsLanternPresetLantern;
 
     deepStrictEqual(lantern['colors']['primary'], {
       light: '#f59e0b', dark: '#f59e0b',
@@ -36,7 +36,7 @@ describe('presetsLanternPresetLantern', async () => {
   });
 
   it('has correct font names', () => {
-    const lantern: TestsPresetsLanternPresetLantern = presetsLanternPresetLantern;
+    const lantern: Tests_Presets_Lantern_Preset_Lantern = presetsLanternPresetLantern;
 
     strictEqual(lantern['fonts']['display'], 'Fraunces');
     strictEqual(lantern['fonts']['body'], 'Manrope');
@@ -46,7 +46,7 @@ describe('presetsLanternPresetLantern', async () => {
   });
 
   it('has correct shape values', () => {
-    const lantern: TestsPresetsLanternPresetLantern = presetsLanternPresetLantern;
+    const lantern: Tests_Presets_Lantern_Preset_Lantern = presetsLanternPresetLantern;
 
     strictEqual(lantern['shape']['radius'], 'rounded');
     strictEqual(lantern['shape']['density'], 'comfortable');
@@ -55,7 +55,7 @@ describe('presetsLanternPresetLantern', async () => {
   });
 
   it('has correct depth values', () => {
-    const lantern: TestsPresetsLanternPresetLantern = presetsLanternPresetLantern;
+    const lantern: Tests_Presets_Lantern_Preset_Lantern = presetsLanternPresetLantern;
 
     strictEqual(lantern['depth']['cards'], 'elevated');
     strictEqual(lantern['depth']['codeBlocks'], 'bordered');
@@ -64,7 +64,7 @@ describe('presetsLanternPresetLantern', async () => {
   });
 
   it('has correct motion values', () => {
-    const lantern: TestsPresetsLanternPresetLantern = presetsLanternPresetLantern;
+    const lantern: Tests_Presets_Lantern_Preset_Lantern = presetsLanternPresetLantern;
 
     strictEqual(lantern['motion']['speed'], 'normal');
     strictEqual(lantern['motion']['staggeredReveals'], true);
@@ -77,7 +77,7 @@ describe('presetsLanternPresetLantern', async () => {
 });
 
 /**
- * Tests - Presets - Lantern - Preset - PresetsLanternPresetLantern Navbar And Footer.
+ * Tests - Presets - Lantern - Preset - Presets_Lantern_Preset_Lantern Navbar And Footer.
  *
  * Verifies that the lantern preset includes the correct navbar
  * and footer variant identifiers for theme rendering.
@@ -86,7 +86,7 @@ describe('presetsLanternPresetLantern', async () => {
  */
 describe('presetsLanternPresetLantern navbar and footer', async () => {
   it('has correct navbar value', () => {
-    const navbar: TestsPresetsLanternPresetNavbar = presetsLanternPresetLantern['navbar'];
+    const navbar: Tests_Presets_Lantern_Preset_Navbar = presetsLanternPresetLantern['navbar'];
 
     strictEqual(navbar, 'compass');
 
@@ -94,7 +94,7 @@ describe('presetsLanternPresetLantern navbar and footer', async () => {
   });
 
   it('has correct footer value', () => {
-    const footer: TestsPresetsLanternPresetFooter = presetsLanternPresetLantern['footer'];
+    const footer: Tests_Presets_Lantern_Preset_Footer = presetsLanternPresetLantern['footer'];
 
     strictEqual(footer, 'commons');
 

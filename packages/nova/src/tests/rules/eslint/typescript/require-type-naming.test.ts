@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireTypeNaming } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintTypescriptRequireTypeNamingRuleTester } from '../../../../types/tests/rules/eslint/typescript/require-type-naming.test.d.ts';
+import type { Tests_Rules_Eslint_Typescript_RequireTypeNaming_RuleTester } from '../../../../types/tests/rules/eslint/typescript/require-type-naming.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - TypeScript - Require Type Naming.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintTypescriptRequireTypeNamingRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Typescript_RequireTypeNaming_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',
@@ -24,11 +24,11 @@ const ruleTester: TestsRulesEslintTypescriptRequireTypeNamingRuleTester = new Ru
 ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
   valid: [
     {
-      code: 'export type CliUtilityChangelogContext = string;',
+      code: 'export type Cli_Utility_Changelog_Context = string;',
       filename: '/project/src/types/cli/utility/changelog.d.ts',
     },
     {
-      code: 'export type CliUtilityChangelogReturns = void;',
+      code: 'export type Cli_Utility_Changelog_Returns = void;',
       filename: '/project/src/types/cli/utility/changelog.d.ts',
     },
     {
@@ -43,43 +43,43 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
 
     // PascalCase filename - MDXComponents normalized to ThemeMdxComponents.
     {
-      code: 'export type ThemeMdxComponentsOverrides = string;',
+      code: 'export type Theme_MdxComponents_Overrides = string;',
       filename: '/project/src/types/theme/MDXComponents.d.ts',
     },
 
     // PascalCase filename - single word stays PascalCase.
     {
-      code: 'export type ThemeLayoutConfig = string;',
+      code: 'export type Theme_Layout_Config = string;',
       filename: '/project/src/types/theme/Layout.d.ts',
     },
 
     // Next.js catch-all route segment — unwrapped to "not-found".
     {
-      code: 'export type AppNotFoundLayoutProps = string;',
+      code: 'export type App_NotFound_Layout_Props = string;',
       filename: '/project/src/types/app/[...not-found]/layout.d.ts',
     },
 
     // Next.js dynamic segment.
     {
-      code: 'export type AppIdProfileReturns = void;',
+      code: 'export type App_Id_Profile_Returns = void;',
       filename: '/project/src/types/app/[id]/profile.d.ts',
     },
 
     // Next.js optional catch-all.
     {
-      code: 'export type AppSlugPageProps = string;',
+      code: 'export type App_Slug_Page_Props = string;',
       filename: '/project/src/types/app/[[...slug]]/page.d.ts',
     },
 
     // Next.js route group — contributes to hierarchy.
     {
-      code: 'export type AppMarketingLandingProps = string;',
+      code: 'export type App_Marketing_Landing_Props = string;',
       filename: '/project/src/types/app/(marketing)/landing.d.ts',
     },
 
     // Next.js parallel route — contributes to hierarchy.
     {
-      code: 'export type AppModalSettingsProps = string;',
+      code: 'export type App_Modal_Settings_Props = string;',
       filename: '/project/src/types/app/@modal/settings.d.ts',
     },
   ],
@@ -117,7 +117,7 @@ ruleTester.run('requireTypeNaming', RequireTypeNaming['rule'], {
         messageId: 'invalidIdentifierPrefix',
         data: {
           segment: '2fa',
-          prefix: '2faAuth',
+          prefix: '2fa_Auth',
         },
       }],
     },

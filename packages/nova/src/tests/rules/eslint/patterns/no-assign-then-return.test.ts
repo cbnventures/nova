@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoAssignThenReturn } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintPatternsNoAssignThenReturnRuleTester } from '../../../../types/tests/rules/eslint/patterns/no-assign-then-return.test.d.ts';
+import type { Tests_Rules_Eslint_Patterns_NoAssignThenReturn_RuleTester } from '../../../../types/tests/rules/eslint/patterns/no-assign-then-return.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Patterns - No Assign Then Return.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintPatternsNoAssignThenReturnRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Patterns_NoAssignThenReturn_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

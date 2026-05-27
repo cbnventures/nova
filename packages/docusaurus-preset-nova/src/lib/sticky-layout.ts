@@ -8,18 +8,18 @@
  */
 
 import type {
-  LibStickyLayoutObserver,
-  LibStickyLayoutOnRouteDidUpdateComputedStyle,
-  LibStickyLayoutOnRouteDidUpdateHeight,
-  LibStickyLayoutOnRouteDidUpdateIsSticky,
-  LibStickyLayoutOnRouteDidUpdateNavbar,
-  LibStickyLayoutOnRouteDidUpdateReturns,
-  LibStickyLayoutScheduleUpdateReturns,
-  LibStickyLayoutUpdateComputedStyle,
-  LibStickyLayoutUpdateHeight,
-  LibStickyLayoutUpdateIsSticky,
-  LibStickyLayoutUpdateNavbar,
-  LibStickyLayoutUpdateReturns,
+  Lib_StickyLayout_Observer,
+  Lib_StickyLayout_OnRouteDidUpdate_ComputedStyle,
+  Lib_StickyLayout_OnRouteDidUpdate_Height,
+  Lib_StickyLayout_OnRouteDidUpdate_IsSticky,
+  Lib_StickyLayout_OnRouteDidUpdate_Navbar,
+  Lib_StickyLayout_OnRouteDidUpdate_Returns,
+  Lib_StickyLayout_ScheduleUpdate_Returns,
+  Lib_StickyLayout_Update_ComputedStyle,
+  Lib_StickyLayout_Update_Height,
+  Lib_StickyLayout_Update_IsSticky,
+  Lib_StickyLayout_Update_Navbar,
+  Lib_StickyLayout_Update_Returns,
 } from '../types/lib/sticky-layout.d.ts';
 
 if (typeof window !== 'undefined') {
@@ -31,8 +31,8 @@ if (typeof window !== 'undefined') {
    *
    * @since 0.15.0
    */
-  function update(): LibStickyLayoutUpdateReturns {
-    const navbar: LibStickyLayoutUpdateNavbar = document.querySelector('.navbar');
+  function update(): Lib_StickyLayout_Update_Returns {
+    const navbar: Lib_StickyLayout_Update_Navbar = document.querySelector('.navbar');
 
     if (navbar === null) {
       document.documentElement.style.setProperty('--nova-layout-sticky-top', '0px');
@@ -40,11 +40,11 @@ if (typeof window !== 'undefined') {
       return undefined;
     }
 
-    const computedStyle: LibStickyLayoutUpdateComputedStyle = getComputedStyle(navbar);
-    const isSticky: LibStickyLayoutUpdateIsSticky = computedStyle.position === 'sticky' || computedStyle.position === 'fixed';
+    const computedStyle: Lib_StickyLayout_Update_ComputedStyle = getComputedStyle(navbar);
+    const isSticky: Lib_StickyLayout_Update_IsSticky = computedStyle.position === 'sticky' || computedStyle.position === 'fixed';
 
     if (isSticky === true) {
-      const height: LibStickyLayoutUpdateHeight = navbar.getBoundingClientRect().height;
+      const height: Lib_StickyLayout_Update_Height = navbar.getBoundingClientRect().height;
 
       document.documentElement.style.setProperty('--nova-layout-sticky-top', `${String(height)}px`);
     } else {
@@ -62,7 +62,7 @@ if (typeof window !== 'undefined') {
    *
    * @since 0.15.0
    */
-  function scheduleUpdate(): LibStickyLayoutScheduleUpdateReturns {
+  function scheduleUpdate(): Lib_StickyLayout_ScheduleUpdate_Returns {
     requestAnimationFrame(() => {
       update();
 
@@ -75,7 +75,7 @@ if (typeof window !== 'undefined') {
   window.addEventListener('resize', update, { passive: true });
   window.addEventListener('load', scheduleUpdate);
 
-  const observer: LibStickyLayoutObserver = new MutationObserver(scheduleUpdate);
+  const observer: Lib_StickyLayout_Observer = new MutationObserver(scheduleUpdate);
 
   observer.observe(document.documentElement, {
     attributes: true,
@@ -93,10 +93,10 @@ if (typeof window !== 'undefined') {
  *
  * @since 0.15.0
  */
-export function onRouteDidUpdate(): LibStickyLayoutOnRouteDidUpdateReturns {
+export function onRouteDidUpdate(): Lib_StickyLayout_OnRouteDidUpdate_Returns {
   if (typeof window !== 'undefined' && typeof requestAnimationFrame !== 'undefined') {
     requestAnimationFrame(() => {
-      const navbar: LibStickyLayoutOnRouteDidUpdateNavbar = document.querySelector('.navbar');
+      const navbar: Lib_StickyLayout_OnRouteDidUpdate_Navbar = document.querySelector('.navbar');
 
       if (navbar === null) {
         document.documentElement.style.setProperty('--nova-layout-sticky-top', '0px');
@@ -104,11 +104,11 @@ export function onRouteDidUpdate(): LibStickyLayoutOnRouteDidUpdateReturns {
         return undefined;
       }
 
-      const computedStyle: LibStickyLayoutOnRouteDidUpdateComputedStyle = getComputedStyle(navbar);
-      const isSticky: LibStickyLayoutOnRouteDidUpdateIsSticky = computedStyle.position === 'sticky' || computedStyle.position === 'fixed';
+      const computedStyle: Lib_StickyLayout_OnRouteDidUpdate_ComputedStyle = getComputedStyle(navbar);
+      const isSticky: Lib_StickyLayout_OnRouteDidUpdate_IsSticky = computedStyle.position === 'sticky' || computedStyle.position === 'fixed';
 
       if (isSticky === true) {
-        const height: LibStickyLayoutOnRouteDidUpdateHeight = navbar.getBoundingClientRect().height;
+        const height: Lib_StickyLayout_OnRouteDidUpdate_Height = navbar.getBoundingClientRect().height;
 
         document.documentElement.style.setProperty('--nova-layout-sticky-top', `${String(height)}px`);
       } else {

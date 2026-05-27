@@ -1,34 +1,34 @@
 import type { ReactNode } from 'react';
 
-import type { SharedPresetFooter } from '../../shared.d.ts';
+import type { Shared_Preset_Footer } from '../../shared.d.ts';
 
-import type { ThemeFooterCtaObject } from './index.d.ts';
+import type { Theme_Footer_Cta_Object } from './index.d.ts';
 
 /**
  * Theme - Footer - Cta.
  *
  * @since 0.18.0
  */
-export type ThemeFooterCtaPropsVariant = SharedPresetFooter;
+export type Theme_Footer_Cta_Props_Variant = Shared_Preset_Footer;
 
-export type ThemeFooterCtaPropsCta = string | ThemeFooterCtaObject | undefined;
+export type Theme_Footer_Cta_Props_Cta = string | Theme_Footer_Cta_Object | undefined;
 
-export type ThemeFooterCtaPropsContained = boolean;
+export type Theme_Footer_Cta_Props_Contained = boolean;
 
-export type ThemeFooterCtaProps = {
-  variant: ThemeFooterCtaPropsVariant;
-  cta?: ThemeFooterCtaPropsCta;
-  contained: ThemeFooterCtaPropsContained;
+export type Theme_Footer_Cta_Props = {
+  variant: Theme_Footer_Cta_Props_Variant;
+  cta?: Theme_Footer_Cta_Props_Cta;
+  contained: Theme_Footer_Cta_Props_Contained;
 };
 
-export type ThemeFooterCtaReturns = ReactNode;
+export type Theme_Footer_Cta_Returns = ReactNode;
 
-export type ThemeFooterCtaVariant = ThemeFooterCtaPropsVariant;
+export type Theme_Footer_Cta_Variant = Theme_Footer_Cta_Props_Variant;
 
-export type ThemeFooterCtaCta = ThemeFooterCtaPropsCta;
+export type Theme_Footer_Cta_Cta = Theme_Footer_Cta_Props_Cta;
 
-export type ThemeFooterCtaContained = ThemeFooterCtaPropsContained;
+export type Theme_Footer_Cta_Contained = Theme_Footer_Cta_Props_Contained;
 
-export type ThemeFooterCtaCtaClassName = string;
+export type Theme_Footer_Cta_CtaClassName = string;
 
-export type ThemeFooterCtaWrapperClassName = string;
+export type Theme_Footer_Cta_WrapperClassName = string;

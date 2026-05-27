@@ -5,4 +5,4 @@ import type { useBlogPostStructuredData } from '@docusaurus/plugin-content-blog/
  *
  * @since 0.18.0
  */
-export type ThemeBlogPostPageStructuredDataBlogPostPageStructuredData = ReturnType<typeof useBlogPostStructuredData>;
+export type Theme_BlogPostPage_StructuredData_Index_BlogPostPageStructuredData = ReturnType<typeof useBlogPostStructuredData>;

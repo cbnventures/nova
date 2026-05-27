@@ -3,19 +3,19 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintPatternsNoAssignThenReturnCheckReturnArgument,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnBody,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnContext,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnDeclarations,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnDeclarator,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnInitText,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnNode,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnNodeIndex,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnParent,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnPrevStatement,
-  RulesEslintPatternsNoAssignThenReturnCheckReturnReturns,
-  RulesEslintPatternsNoAssignThenReturnRuleDefaultOptionsIgnoreFiles,
-  RulesEslintPatternsNoAssignThenReturnRuleOptions,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Argument,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Body,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Context,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Declarations,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Declarator,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_InitText,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Node,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_NodeIndex,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Parent,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_PrevStatement,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Returns,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-assign-then-return.d.ts';
 
 /**
@@ -26,7 +26,7 @@ import type {
  *
  * @since 0.14.0
  */
-export class RulesEslintPatternsNoAssignThenReturn {
+export class Runner {
   /**
    * Rules - ESLint - Patterns - No Assign Then Return - Rule.
    *
@@ -60,10 +60,10 @@ export class RulesEslintPatternsNoAssignThenReturn {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintPatternsNoAssignThenReturnRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintPatternsNoAssignThenReturnRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -72,7 +72,7 @@ export class RulesEslintPatternsNoAssignThenReturn {
 
       return {
         ReturnStatement(node) {
-          RulesEslintPatternsNoAssignThenReturn.checkReturn(context, node);
+          Runner.checkReturn(context, node);
 
           return;
         },
@@ -88,15 +88,15 @@ export class RulesEslintPatternsNoAssignThenReturn {
    *
    * @private
    *
-   * @param {RulesEslintPatternsNoAssignThenReturnCheckReturnContext} context - Context.
-   * @param {RulesEslintPatternsNoAssignThenReturnCheckReturnNode}    node    - Node.
+   * @param {Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Context} context - Context.
+   * @param {Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Node}    node    - Node.
    *
-   * @returns {RulesEslintPatternsNoAssignThenReturnCheckReturnReturns}
+   * @returns {Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Returns}
    *
    * @since 0.14.0
    */
-  private static checkReturn(context: RulesEslintPatternsNoAssignThenReturnCheckReturnContext, node: RulesEslintPatternsNoAssignThenReturnCheckReturnNode): RulesEslintPatternsNoAssignThenReturnCheckReturnReturns {
-    const argument: RulesEslintPatternsNoAssignThenReturnCheckReturnArgument = node.argument;
+  private static checkReturn(context: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Context, node: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Node): Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Returns {
+    const argument: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Argument = node.argument;
 
     // Only check returns that return an identifier.
     if (
@@ -107,7 +107,7 @@ export class RulesEslintPatternsNoAssignThenReturn {
       return;
     }
 
-    const parent: RulesEslintPatternsNoAssignThenReturnCheckReturnParent = node.parent;
+    const parent: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Parent = node.parent;
 
     if (
       parent === undefined
@@ -120,14 +120,14 @@ export class RulesEslintPatternsNoAssignThenReturn {
       return;
     }
 
-    const body: RulesEslintPatternsNoAssignThenReturnCheckReturnBody = parent.body;
-    const nodeIndex: RulesEslintPatternsNoAssignThenReturnCheckReturnNodeIndex = body.indexOf(node);
+    const body: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Body = parent.body;
+    const nodeIndex: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_NodeIndex = body.indexOf(node);
 
     if (nodeIndex < 1) {
       return;
     }
 
-    const prevStatement: RulesEslintPatternsNoAssignThenReturnCheckReturnPrevStatement = body[nodeIndex - 1];
+    const prevStatement: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_PrevStatement = body[nodeIndex - 1];
 
     if (
       prevStatement === undefined
@@ -137,13 +137,13 @@ export class RulesEslintPatternsNoAssignThenReturn {
       return;
     }
 
-    const declarations: RulesEslintPatternsNoAssignThenReturnCheckReturnDeclarations = prevStatement.declarations;
+    const declarations: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Declarations = prevStatement.declarations;
 
     if (declarations.length !== 1) {
       return;
     }
 
-    const declarator: RulesEslintPatternsNoAssignThenReturnCheckReturnDeclarator = declarations[0];
+    const declarator: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_Declarator = declarations[0];
 
     if (declarator === undefined) {
       return;
@@ -155,7 +155,7 @@ export class RulesEslintPatternsNoAssignThenReturn {
       && declarator.init !== null
       && declarator.init !== undefined
     ) {
-      const initText: RulesEslintPatternsNoAssignThenReturnCheckReturnInitText = context.sourceCode.getText(declarator.init);
+      const initText: Rules_Eslint_Patterns_NoAssignThenReturn_Runner_CheckReturn_InitText = context.sourceCode.getText(declarator.init);
 
       context.report({
         node,

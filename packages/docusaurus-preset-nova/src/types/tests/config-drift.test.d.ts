@@ -1,218 +1,218 @@
-import type { OptionsPluginOptions } from '../options.d.ts';
+import type { Options_PluginOptions } from '../options.d.ts';
 
 /**
  * Tests - Config Drift - ConfigDrift ValidateOptions.
  *
  * @since 0.15.0
  */
-export type TestsConfigDriftValidatedResult = OptionsPluginOptions;
+export type Tests_ConfigDrift_ValidatedResult = Options_PluginOptions;
 
-export type TestsConfigDriftJoiSchemaValidate = (value: unknown) => TestsConfigDriftJoiSchemaValidateResult;
+export type Tests_ConfigDrift_JoiSchema_Validate = (value: unknown) => Tests_ConfigDrift_JoiSchemaValidateResult;
 
-export type TestsConfigDriftJoiSchema = {
-  validate: TestsConfigDriftJoiSchemaValidate;
+export type Tests_ConfigDrift_JoiSchema = {
+  validate: Tests_ConfigDrift_JoiSchema_Validate;
 };
 
-export type TestsConfigDriftJoiSchemaValidateResultValue = unknown;
+export type Tests_ConfigDrift_JoiSchemaValidateResult_Value = unknown;
 
-export type TestsConfigDriftJoiSchemaValidateResult = {
-  value: TestsConfigDriftJoiSchemaValidateResultValue;
+export type Tests_ConfigDrift_JoiSchemaValidateResult = {
+  value: Tests_ConfigDrift_JoiSchemaValidateResult_Value;
   error?: Error;
 };
 
-export type TestsConfigDriftPresetValue = string;
+export type Tests_ConfigDrift_PresetValue = string;
 
-export type TestsConfigDriftOverrides = OptionsPluginOptions['overrides'];
+export type Tests_ConfigDrift_Overrides = Options_PluginOptions['overrides'];
 
-export type TestsConfigDriftOverridesColorsPrimary = OptionsPluginOptions['overrides']['colors']['primary'];
+export type Tests_ConfigDrift_OverridesColorsPrimary = Options_PluginOptions['overrides']['colors']['primary'];
 
-export type TestsConfigDriftOverridesColorsSecondary = OptionsPluginOptions['overrides']['colors']['secondary'];
+export type Tests_ConfigDrift_OverridesColorsSecondary = Options_PluginOptions['overrides']['colors']['secondary'];
 
-export type TestsConfigDriftOverridesFontsDisplay = string | undefined;
+export type Tests_ConfigDrift_OverridesFontsDisplay = string | undefined;
 
-export type TestsConfigDriftOverridesFontsBody = string | undefined;
+export type Tests_ConfigDrift_OverridesFontsBody = string | undefined;
 
-export type TestsConfigDriftOverridesFontsCode = string | undefined;
+export type Tests_ConfigDrift_OverridesFontsCode = string | undefined;
 
-export type TestsConfigDriftOverridesNavbar = string | undefined;
+export type Tests_ConfigDrift_OverridesNavbar = string | undefined;
 
-export type TestsConfigDriftOverridesFooter = string | undefined;
+export type Tests_ConfigDrift_OverridesFooter = string | undefined;
 
-export type TestsConfigDriftPlugins = OptionsPluginOptions['plugins'];
+export type Tests_ConfigDrift_Plugins = Options_PluginOptions['plugins'];
 
-export type TestsConfigDriftPluginsDocs = Record<string, unknown> | undefined;
+export type Tests_ConfigDrift_PluginsDocs = Record<string, unknown> | undefined;
 
-export type TestsConfigDriftPluginsBlog = Record<string, unknown> | false | undefined;
+export type Tests_ConfigDrift_PluginsBlog = Record<string, unknown> | false | undefined;
 
-export type TestsConfigDriftPluginsPages = Record<string, unknown> | false | undefined;
+export type Tests_ConfigDrift_PluginsPages = Record<string, unknown> | false | undefined;
 
-export type TestsConfigDriftPluginsSitemap = Record<string, unknown> | false | undefined;
+export type Tests_ConfigDrift_PluginsSitemap = Record<string, unknown> | false | undefined;
 
-export type TestsConfigDriftAnalytics = OptionsPluginOptions['analytics'];
+export type Tests_ConfigDrift_Analytics = Options_PluginOptions['analytics'];
 
-export type TestsConfigDriftAnalyticsGtmContainerId = string;
+export type Tests_ConfigDrift_AnalyticsGtmContainerId = string;
 
-export type TestsConfigDriftProgressBar = boolean | Record<string, unknown>;
+export type Tests_ConfigDrift_ProgressBar = boolean | Record<string, unknown>;
 
-export type TestsConfigDriftSearch = OptionsPluginOptions['search'];
+export type Tests_ConfigDrift_Search = Options_PluginOptions['search'];
 
-export type TestsConfigDriftSearchLanguage = string[];
+export type Tests_ConfigDrift_SearchLanguage = string[];
 
-export type TestsConfigDriftSearchIndexDocs = boolean;
+export type Tests_ConfigDrift_SearchIndexDocs = boolean;
 
-export type TestsConfigDriftSearchIndexBlog = boolean;
+export type Tests_ConfigDrift_SearchIndexBlog = boolean;
 
-export type TestsConfigDriftSearchIndexPages = boolean;
+export type Tests_ConfigDrift_SearchIndexPages = boolean;
 
-export type TestsConfigDriftSearchHashed = boolean;
+export type Tests_ConfigDrift_SearchHashed = boolean;
 
-export type TestsConfigDriftSearchResultLimits = number;
+export type Tests_ConfigDrift_SearchResultLimits = number;
 
-export type TestsConfigDriftSearchHighlightSearchTermsOnTargetPage = boolean;
+export type Tests_ConfigDrift_SearchHighlightSearchTermsOnTargetPage = boolean;
 
-export type TestsConfigDriftSearchBarShortcutKeymap = string;
+export type Tests_ConfigDrift_SearchBarShortcutKeymap = string;
 
-export type TestsConfigDriftSearchFuzzyMatchingDistance = number;
+export type Tests_ConfigDrift_SearchFuzzyMatchingDistance = number;
 
-export type TestsConfigDriftSearchIgnorePatterns = string[];
+export type Tests_ConfigDrift_SearchIgnorePatterns = string[];
 
-export type TestsConfigDriftSearchDocsRouteBasePath = string;
+export type Tests_ConfigDrift_SearchDocsRouteBasePath = string;
 
 /**
  * Tests - Config Drift - ConfigDrift ValidateThemeConfig.
  *
  * @since 0.15.0
  */
-export type TestsConfigDriftThemeConfigValidatedResult = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigValidatedResult = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigJoiSchemaValidate = (value: unknown) => TestsConfigDriftThemeConfigJoiSchemaValidateResult;
+export type Tests_ConfigDrift_ThemeConfigJoiSchema_Validate = (value: unknown) => Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult;
 
-export type TestsConfigDriftThemeConfigJoiSchema = {
-  validate: TestsConfigDriftThemeConfigJoiSchemaValidate;
+export type Tests_ConfigDrift_ThemeConfigJoiSchema = {
+  validate: Tests_ConfigDrift_ThemeConfigJoiSchema_Validate;
 };
 
-export type TestsConfigDriftThemeConfigJoiSchemaValidateResultValue = unknown;
+export type Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult_Value = unknown;
 
-export type TestsConfigDriftThemeConfigJoiSchemaValidateResult = {
-  value: TestsConfigDriftThemeConfigJoiSchemaValidateResultValue;
+export type Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult = {
+  value: Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult_Value;
   error?: Error;
 };
 
-export type TestsConfigDriftThemeConfigSite = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigSite = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigSiteTitle = string;
+export type Tests_ConfigDrift_ThemeConfigSiteTitle = string;
 
-export type TestsConfigDriftThemeConfigSiteLogo = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigSiteLogo = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigSiteLogoAlt = string;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoAlt = string;
 
-export type TestsConfigDriftThemeConfigSiteLogoSrc = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoSrc = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigSiteLogoSrcLight = string | undefined;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoSrcLight = string | undefined;
 
-export type TestsConfigDriftThemeConfigSiteLogoSrcDark = string | undefined;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoSrcDark = string | undefined;
 
-export type TestsConfigDriftThemeConfigSiteLogoHref = string | undefined;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoHref = string | undefined;
 
-export type TestsConfigDriftThemeConfigSiteLogoWordmark = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoWordmark = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigSiteLogoWordmarkLight = string | undefined;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkLight = string | undefined;
 
-export type TestsConfigDriftThemeConfigSiteLogoWordmarkDark = string | undefined;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkDark = string | undefined;
 
-export type TestsConfigDriftThemeConfigSiteLogoTitle = string | undefined;
+export type Tests_ConfigDrift_ThemeConfigSiteLogoTitle = string | undefined;
 
-export type TestsConfigDriftThemeConfigSiteImage = string;
+export type Tests_ConfigDrift_ThemeConfigSiteImage = string;
 
-export type TestsConfigDriftThemeConfigSiteMetadata = unknown[];
+export type Tests_ConfigDrift_ThemeConfigSiteMetadata = unknown[];
 
-export type TestsConfigDriftThemeConfigColorMode = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigColorMode = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigColorModeDefaultMode = string;
+export type Tests_ConfigDrift_ThemeConfigColorModeDefaultMode = string;
 
-export type TestsConfigDriftThemeConfigColorModeDisableSwitch = boolean;
+export type Tests_ConfigDrift_ThemeConfigColorModeDisableSwitch = boolean;
 
-export type TestsConfigDriftThemeConfigNavbar = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigNavbar = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigNavbarHideOnScroll = boolean;
+export type Tests_ConfigDrift_ThemeConfigNavbarHideOnScroll = boolean;
 
-export type TestsConfigDriftThemeConfigNavbarItems = unknown[];
+export type Tests_ConfigDrift_ThemeConfigNavbarItems = unknown[];
 
-export type TestsConfigDriftThemeConfigDocs = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigDocs = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigDocsVersionPersistence = string;
+export type Tests_ConfigDrift_ThemeConfigDocsVersionPersistence = string;
 
-export type TestsConfigDriftThemeConfigDocsSidebar = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigDocsSidebar = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigDocsSidebarHideable = boolean;
+export type Tests_ConfigDrift_ThemeConfigDocsSidebarHideable = boolean;
 
-export type TestsConfigDriftThemeConfigDocsSidebarAutoCollapseCategories = boolean;
+export type Tests_ConfigDrift_ThemeConfigDocsSidebarAutoCollapseCategories = boolean;
 
-export type TestsConfigDriftThemeConfigBlog = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigBlog = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigBlogSidebar = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigBlogSidebar = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigBlogSidebarGroupByYear = boolean;
+export type Tests_ConfigDrift_ThemeConfigBlogSidebarGroupByYear = boolean;
 
-export type TestsConfigDriftThemeConfigBlogLayout = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigBlogLayout = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigBlogLayoutHeading = string;
+export type Tests_ConfigDrift_ThemeConfigBlogLayoutHeading = string;
 
-export type TestsConfigDriftThemeConfigBlogLayoutDescription = string;
+export type Tests_ConfigDrift_ThemeConfigBlogLayoutDescription = string;
 
-export type TestsConfigDriftThemeConfigBlogShare = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigBlogShare = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigBlogSharePlatforms = string[];
+export type Tests_ConfigDrift_ThemeConfigBlogSharePlatforms = string[];
 
-export type TestsConfigDriftThemeConfigTableOfContents = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigTableOfContents = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigTableOfContentsMinHeadingLevel = number;
+export type Tests_ConfigDrift_ThemeConfigTableOfContentsMinHeadingLevel = number;
 
-export type TestsConfigDriftThemeConfigTableOfContentsMaxHeadingLevel = number;
+export type Tests_ConfigDrift_ThemeConfigTableOfContentsMaxHeadingLevel = number;
 
-export type TestsConfigDriftThemeConfigAnnouncementBar = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigAnnouncementBar = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigAnnouncementBarId = string;
+export type Tests_ConfigDrift_ThemeConfigAnnouncementBarId = string;
 
-export type TestsConfigDriftThemeConfigAnnouncementBarContent = string;
+export type Tests_ConfigDrift_ThemeConfigAnnouncementBarContent = string;
 
-export type TestsConfigDriftThemeConfigAnnouncementBarBackgroundColor = string | undefined;
+export type Tests_ConfigDrift_ThemeConfigAnnouncementBarBackgroundColor = string | undefined;
 
-export type TestsConfigDriftThemeConfigAnnouncementBarTextColor = string | undefined;
+export type Tests_ConfigDrift_ThemeConfigAnnouncementBarTextColor = string | undefined;
 
-export type TestsConfigDriftThemeConfigAnnouncementBarIsCloseable = boolean;
+export type Tests_ConfigDrift_ThemeConfigAnnouncementBarIsCloseable = boolean;
 
-export type TestsConfigDriftThemeConfigErrorPages = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigErrorPages = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigErrorPagesNotFound = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFound = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigErrorPagesNotFoundTitle = string;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundTitle = string;
 
-export type TestsConfigDriftThemeConfigErrorPagesNotFoundDescription = string;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundDescription = string;
 
-export type TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeLabel = string;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeLabel = string;
 
-export type TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeHref = string;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeHref = string;
 
-export type TestsConfigDriftThemeConfigErrorPagesErrorPageContent = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContent = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigErrorPagesErrorPageContentTitle = string;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentTitle = string;
 
-export type TestsConfigDriftThemeConfigErrorPagesErrorPageContentRetryLabel = string;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentRetryLabel = string;
 
-export type TestsConfigDriftThemeConfigErrorPagesError = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesError = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigErrorPagesErrorRetryLabel = string;
+export type Tests_ConfigDrift_ThemeConfigErrorPagesErrorRetryLabel = string;
 
-export type TestsConfigDriftThemeConfigFooter = Record<string, unknown>;
+export type Tests_ConfigDrift_ThemeConfigFooter = Record<string, unknown>;
 
-export type TestsConfigDriftThemeConfigFooterCta = string | TestsConfigDriftThemeConfigFooterCtaObject | undefined;
+export type Tests_ConfigDrift_ThemeConfigFooterCta = string | Tests_ConfigDrift_ThemeConfigFooterCtaObject | undefined;
 
-export type TestsConfigDriftThemeConfigFooterCtaObjectLabel = string;
+export type Tests_ConfigDrift_ThemeConfigFooterCtaObject_Label = string;
 
-export type TestsConfigDriftThemeConfigFooterCtaObjectHref = string;
+export type Tests_ConfigDrift_ThemeConfigFooterCtaObject_Href = string;
 
-export type TestsConfigDriftThemeConfigFooterCtaObject = {
-  label: TestsConfigDriftThemeConfigFooterCtaObjectLabel;
-  href: TestsConfigDriftThemeConfigFooterCtaObjectHref;
+export type Tests_ConfigDrift_ThemeConfigFooterCtaObject = {
+  label: Tests_ConfigDrift_ThemeConfigFooterCtaObject_Label;
+  href: Tests_ConfigDrift_ThemeConfigFooterCtaObject_Href;
 };

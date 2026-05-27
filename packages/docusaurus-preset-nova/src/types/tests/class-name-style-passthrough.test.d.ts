@@ -3,59 +3,59 @@
  *
  * @since 0.18.0
  */
-export type TestsClassNameStylePassthroughClassNameStylePassthroughExemptSet = Set<string>;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ExemptSet = Set<string>;
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughInScopeComponents = readonly string[];
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_InScopeComponents = readonly string[];
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughViolations = string[];
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Violations = string[];
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughMessage = string;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_Message = string;
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughComponentKey = string;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_ComponentKey = string;
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughDtsPath = string;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_DtsPath = string;
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughDtsContent = string;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_DtsContent = string;
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughTsxPath = string;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_TsxPath = string;
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughTsxContent = string;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_TsxContent = string;
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughHasConditional = boolean;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_HasConditional = boolean;
 
-export type TestsClassNameStylePassthroughClassNameStylePassthroughHasInterpolation = boolean;
+export type Tests_ClassNameStylePassthrough_ClassNameStylePassthrough_HasInterpolation = boolean;
 
 /**
  * Tests - Class Name Style Passthrough - Discover Components.
  *
  * @since 0.18.0
  */
-export type TestsClassNameStylePassthroughDiscoverComponentsReturns = Promise<readonly string[]>;
+export type Tests_ClassNameStylePassthrough_DiscoverComponents_Returns = Promise<readonly string[]>;
 
-export type TestsClassNameStylePassthroughDiscoverComponentsThemeRoot = string;
+export type Tests_ClassNameStylePassthrough_DiscoverComponents_ThemeRoot = string;
 
-export type TestsClassNameStylePassthroughDiscoverComponentsBlocksRoot = string;
+export type Tests_ClassNameStylePassthrough_DiscoverComponents_BlocksRoot = string;
 
-export type TestsClassNameStylePassthroughDiscoverComponentsThemeFiles = readonly string[];
+export type Tests_ClassNameStylePassthrough_DiscoverComponents_ThemeFiles = readonly string[];
 
-export type TestsClassNameStylePassthroughDiscoverComponentsBlocksFiles = readonly string[];
+export type Tests_ClassNameStylePassthrough_DiscoverComponents_BlocksFiles = readonly string[];
 
-export type TestsClassNameStylePassthroughDiscoverComponentsKeyed = string[];
+export type Tests_ClassNameStylePassthrough_DiscoverComponents_Keyed = string[];
 
 /**
  * Tests - Class Name Style Passthrough - Exempt Components.
  *
  * @since 0.18.0
  */
-export type TestsClassNameStylePassthroughExemptComponents = readonly string[];
+export type Tests_ClassNameStylePassthrough_ExemptComponents = readonly string[];
 
 /**
  * Tests - Class Name Style Passthrough - Get Package Root.
  *
  * @since 0.18.0
  */
-export type TestsClassNameStylePassthroughGetPackageRootReturns = string;
+export type Tests_ClassNameStylePassthrough_GetPackageRoot_Returns = string;
 
-export type TestsClassNameStylePassthroughGetPackageRootCurrentFilePath = string;
+export type Tests_ClassNameStylePassthrough_GetPackageRoot_CurrentFilePath = string;
 
-export type TestsClassNameStylePassthroughGetPackageRootCurrentFileDirectory = string;
+export type Tests_ClassNameStylePassthrough_GetPackageRoot_CurrentFileDirectory = string;

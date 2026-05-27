@@ -6,40 +6,40 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramReturns = void;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Returns = void;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramAllComments = TSESTree.Comment[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_AllComments = TSESTree.Comment[];
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramLines = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Lines = string[];
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramFixedValue = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FixedValue = string;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramMismatchParamName = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatch_ParamName = string;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramMismatchExpected = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatch_Expected = string;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramMismatch = {
-  paramName: RulesEslintJsdocRequireJsdocParamNameCheckProgramMismatchParamName;
-  expected: RulesEslintJsdocRequireJsdocParamNameCheckProgramMismatchExpected;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatch = {
+  paramName: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatch_ParamName;
+  expected: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatch_Expected;
 };
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramMismatches = RulesEslintJsdocRequireJsdocParamNameCheckProgramMismatch[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatches = Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Mismatch[];
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramMatch = RegExpExecArray | null;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Match = RegExpExecArray | null;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramParamName = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_ParamName = string | undefined;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramRawDescription = string | undefined;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_RawDescription = string | undefined;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramDescription = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Description = string;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramWords = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Words = string;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramExpected = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_Expected = string;
 
-export type RulesEslintJsdocRequireJsdocParamNameCheckProgramFinalFixedValue = string;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_CheckProgram_FinalFixedValue = string;
 
 /**
  * Rules - ESLint - JSDoc - Require JSDoc Param Name - Param Pattern.
@@ -52,10 +52,10 @@ export type RulesEslintJsdocRequireJsdocParamNameCheckProgramFinalFixedValue = s
  *
  * @since 0.15.0
  */
-export type RulesEslintJsdocRequireJsdocParamNameRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintJsdocRequireJsdocParamNameRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintJsdocRequireJsdocParamNameRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintJsdocRequireJsdocParamNameRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Jsdoc_RequireJsdocParamName_Runner_RuleOptions_IgnoreFiles;
 }>;

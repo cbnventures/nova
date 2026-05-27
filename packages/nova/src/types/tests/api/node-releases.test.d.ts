@@ -3,12 +3,12 @@
  *
  * @since 0.13.0
  */
-export type TestsApiNodeReleasesFetchLtsVersionsToday = string;
+export type Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Today = string;
 
-export type TestsApiNodeReleasesFetchLtsVersionsResult = string | undefined;
+export type Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Result = string | undefined;
 
-export type TestsApiNodeReleasesFetchLtsVersionsCallCount = number;
+export type Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_CallCount = number;
 
-export type TestsApiNodeReleasesFetchLtsVersionsFirst = string | undefined;
+export type Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_First = string | undefined;
 
-export type TestsApiNodeReleasesFetchLtsVersionsSecond = string | undefined;
+export type Tests_Api_NodeReleases_ApiNodeReleasesFetchLtsVersions_Second = string | undefined;

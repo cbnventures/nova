@@ -2,14 +2,14 @@ import { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import type {
-  ThemeErrorDocusaurusContext,
-  ThemeErrorErrorPages,
-  ThemeErrorErrorTryAgain,
-  ThemeErrorMessage,
-  ThemeErrorOverrides,
-  ThemeErrorProps,
-  ThemeErrorRetryLabelOverride,
-  ThemeErrorThemeConfig,
+  Theme_Error_Index_Error_DocusaurusContext,
+  Theme_Error_Index_Error_Message,
+  Theme_Error_Index_Error_Overrides,
+  Theme_Error_Index_Error_Pages,
+  Theme_Error_Index_Error_Props,
+  Theme_Error_Index_Error_RetryLabelOverride,
+  Theme_Error_Index_Error_ThemeConfig,
+  Theme_Error_Index_Error_TryAgain,
 } from '../../types/theme/Error/index.d.ts';
 
 /**
@@ -19,21 +19,21 @@ import type {
  * providing a minimal view for the top-level error boundary without any
  * layout wrapper.
  *
- * @param {ThemeErrorProps} props - Props.
+ * @param {Theme_Error_Index_Error_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Error(props: ThemeErrorProps) {
-  const docusaurusContext: ThemeErrorDocusaurusContext = useDocusaurusContext();
-  const themeConfig: ThemeErrorThemeConfig = docusaurusContext['siteConfig']['themeConfig'] as ThemeErrorThemeConfig;
-  const errorPages: ThemeErrorErrorPages = themeConfig['errorPages'] as ThemeErrorErrorPages;
-  const overrides: ThemeErrorOverrides = (errorPages !== undefined && errorPages !== null) ? errorPages['error'] as ThemeErrorOverrides : undefined;
-  const retryLabelOverride: ThemeErrorRetryLabelOverride = (overrides !== undefined && overrides !== null) ? overrides['retryLabel'] as ThemeErrorRetryLabelOverride : undefined;
+function Error(props: Theme_Error_Index_Error_Props) {
+  const docusaurusContext: Theme_Error_Index_Error_DocusaurusContext = useDocusaurusContext();
+  const themeConfig: Theme_Error_Index_Error_ThemeConfig = docusaurusContext['siteConfig']['themeConfig'] as Theme_Error_Index_Error_ThemeConfig;
+  const errorPages: Theme_Error_Index_Error_Pages = themeConfig['errorPages'] as Theme_Error_Index_Error_Pages;
+  const overrides: Theme_Error_Index_Error_Overrides = (errorPages !== undefined && errorPages !== null) ? errorPages['error'] as Theme_Error_Index_Error_Overrides : undefined;
+  const retryLabelOverride: Theme_Error_Index_Error_RetryLabelOverride = (overrides !== undefined && overrides !== null) ? overrides['retryLabel'] as Theme_Error_Index_Error_RetryLabelOverride : undefined;
 
-  const message: ThemeErrorMessage = props['error']['message'];
-  const tryAgainLabel: ThemeErrorErrorTryAgain = (retryLabelOverride !== undefined && retryLabelOverride !== '') ? retryLabelOverride : translate({
+  const message: Theme_Error_Index_Error_Message = props['error']['message'];
+  const tryAgainLabel: Theme_Error_Index_Error_TryAgain = (retryLabelOverride !== undefined && retryLabelOverride !== '') ? retryLabelOverride : translate({
     id: 'theme.Error.tryAgain',
     message: 'Try again',
     description: 'The label for the button that retries after an error',

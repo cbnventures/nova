@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { SwitchCaseBlocks } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintConventionsSwitchCaseBlocksRuleTester } from '../../../../types/tests/rules/eslint/conventions/switch-case-blocks.test.d.ts';
+import type { Tests_Rules_Eslint_Conventions_SwitchCaseBlocks_RuleTester } from '../../../../types/tests/rules/eslint/conventions/switch-case-blocks.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Conventions - Switch Case Blocks.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintConventionsSwitchCaseBlocksRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Conventions_SwitchCaseBlocks_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

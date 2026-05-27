@@ -3,34 +3,34 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintFormattingRequireImportOrderCheckProgramContext,
-  RulesEslintFormattingRequireImportOrderCheckProgramCurrent,
-  RulesEslintFormattingRequireImportOrderCheckProgramCurrentGroup,
-  RulesEslintFormattingRequireImportOrderCheckProgramCurrentSource,
-  RulesEslintFormattingRequireImportOrderCheckProgramCurrentStart,
-  RulesEslintFormattingRequireImportOrderCheckProgramImports,
-  RulesEslintFormattingRequireImportOrderCheckProgramLastGroup,
-  RulesEslintFormattingRequireImportOrderCheckProgramPrev,
-  RulesEslintFormattingRequireImportOrderCheckProgramPrevEnd,
-  RulesEslintFormattingRequireImportOrderCheckProgramPrevGroup,
-  RulesEslintFormattingRequireImportOrderCheckProgramPrevSource,
-  RulesEslintFormattingRequireImportOrderCheckProgramReturns,
-  RulesEslintFormattingRequireImportOrderCheckSpecifiersContext,
-  RulesEslintFormattingRequireImportOrderCheckSpecifiersCurrent,
-  RulesEslintFormattingRequireImportOrderCheckSpecifiersCurrentName,
-  RulesEslintFormattingRequireImportOrderCheckSpecifiersImports,
-  RulesEslintFormattingRequireImportOrderCheckSpecifiersPrev,
-  RulesEslintFormattingRequireImportOrderCheckSpecifiersPrevName,
-  RulesEslintFormattingRequireImportOrderCheckSpecifiersReturns,
-  RulesEslintFormattingRequireImportOrderCheckSpecifiersSpecifiers,
-  RulesEslintFormattingRequireImportOrderGetGroupImportNode,
-  RulesEslintFormattingRequireImportOrderGetGroupIsTypeImport,
-  RulesEslintFormattingRequireImportOrderGetGroupReturns,
-  RulesEslintFormattingRequireImportOrderGetGroupSource,
-  RulesEslintFormattingRequireImportOrderGetGroupSourceBase,
-  RulesEslintFormattingRequireImportOrderNodeBuiltins,
-  RulesEslintFormattingRequireImportOrderRuleDefaultOptionsIgnoreFiles,
-  RulesEslintFormattingRequireImportOrderRuleOptions,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Context,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Current,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_CurrentGroup,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_CurrentSource,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_CurrentStart,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Imports,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_LastGroup,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Prev,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_PrevEnd,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_PrevGroup,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_PrevSource,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Returns,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Context,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Current,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_CurrentName,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Imports,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Prev,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_PrevName,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Returns,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Specifiers,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_ImportNode,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_IsTypeImport,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_Returns,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_Source,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_SourceBase,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_NodeBuiltins,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/require-import-order.d.ts';
 
 /**
@@ -41,7 +41,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintFormattingRequireImportOrder {
+export class Runner {
   /**
    * Rules - ESLint - Formatting - Require Import Order - Rule.
    *
@@ -75,10 +75,10 @@ export class RulesEslintFormattingRequireImportOrder {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintFormattingRequireImportOrderRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintFormattingRequireImportOrderRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Formatting_RequireImportOrder_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -87,7 +87,7 @@ export class RulesEslintFormattingRequireImportOrder {
 
       return {
         Program() {
-          RulesEslintFormattingRequireImportOrder.checkProgram(context);
+          Runner.checkProgram(context);
 
           return;
         },
@@ -105,7 +105,7 @@ export class RulesEslintFormattingRequireImportOrder {
    *
    * @since 0.15.0
    */
-  static readonly #nodeBuiltins: RulesEslintFormattingRequireImportOrderNodeBuiltins = new Set([
+  static readonly #nodeBuiltins: Rules_Eslint_Formatting_RequireImportOrder_Runner_NodeBuiltins = new Set([
     'assert',
     'async_hooks',
     'buffer',
@@ -157,21 +157,21 @@ export class RulesEslintFormattingRequireImportOrder {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequireImportOrderGetGroupImportNode} importNode - Import node.
+   * @param {Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_ImportNode} importNode - Import node.
    *
-   * @returns {RulesEslintFormattingRequireImportOrderGetGroupReturns}
+   * @returns {Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_Returns}
    *
    * @since 0.15.0
    */
-  private static getGroup(importNode: RulesEslintFormattingRequireImportOrderGetGroupImportNode): RulesEslintFormattingRequireImportOrderGetGroupReturns {
-    const source: RulesEslintFormattingRequireImportOrderGetGroupSource = importNode.source.value;
-    const sourceBase: RulesEslintFormattingRequireImportOrderGetGroupSourceBase = source.split('/')[0] ?? '';
-    const isTypeImport: RulesEslintFormattingRequireImportOrderGetGroupIsTypeImport = importNode.importKind === 'type';
+  private static getGroup(importNode: Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_ImportNode): Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_Returns {
+    const source: Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_Source = importNode.source.value;
+    const sourceBase: Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_SourceBase = source.split('/')[0] ?? '';
+    const isTypeImport: Rules_Eslint_Formatting_RequireImportOrder_Runner_GetGroup_IsTypeImport = importNode.importKind === 'type';
 
     // Node built-ins (group 1 regular, group 4 type).
     if (
       source.startsWith('node:') === true
-      || RulesEslintFormattingRequireImportOrder.#nodeBuiltins.has(sourceBase) === true
+      || Runner.#nodeBuiltins.has(sourceBase) === true
     ) {
       return (isTypeImport === true) ? 4 : 1;
     }
@@ -198,34 +198,34 @@ export class RulesEslintFormattingRequireImportOrder {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequireImportOrderCheckProgramContext} context - Context.
+   * @param {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Context} context - Context.
    *
-   * @returns {RulesEslintFormattingRequireImportOrderCheckProgramReturns}
+   * @returns {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Returns}
    *
    * @since 0.15.0
    */
-  private static checkProgram(context: RulesEslintFormattingRequireImportOrderCheckProgramContext): RulesEslintFormattingRequireImportOrderCheckProgramReturns {
-    const imports: RulesEslintFormattingRequireImportOrderCheckProgramImports = context.sourceCode.ast.body.filter(
+  private static checkProgram(context: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Context): Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Returns {
+    const imports: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Imports = context.sourceCode.ast.body.filter(
       (node) => node.type === 'ImportDeclaration',
     );
 
     // Check specifier ordering within each import.
-    RulesEslintFormattingRequireImportOrder.checkSpecifiers(context, imports);
+    Runner.checkSpecifiers(context, imports);
 
     if (imports.length < 2) {
       return;
     }
 
-    let lastGroup: RulesEslintFormattingRequireImportOrderCheckProgramLastGroup = 0;
+    let lastGroup: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_LastGroup = 0;
 
     for (let i = 0; i < imports.length; i += 1) {
-      const current: RulesEslintFormattingRequireImportOrderCheckProgramCurrent = imports[i];
+      const current: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Current = imports[i];
 
       if (current === undefined || current.type !== 'ImportDeclaration') {
         continue;
       }
 
-      const currentGroup: RulesEslintFormattingRequireImportOrderCheckProgramCurrentGroup = RulesEslintFormattingRequireImportOrder.getGroup(current);
+      const currentGroup: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_CurrentGroup = Runner.getGroup(current);
 
       // Check group ordering.
       if (currentGroup < lastGroup) {
@@ -239,17 +239,17 @@ export class RulesEslintFormattingRequireImportOrder {
 
       // Check blank line between groups.
       if (i > 0) {
-        const prev: RulesEslintFormattingRequireImportOrderCheckProgramPrev = imports[i - 1];
+        const prev: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_Prev = imports[i - 1];
 
         if (prev === undefined || prev.type !== 'ImportDeclaration') {
           continue;
         }
 
-        const prevGroup: RulesEslintFormattingRequireImportOrderCheckProgramPrevGroup = RulesEslintFormattingRequireImportOrder.getGroup(prev);
+        const prevGroup: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_PrevGroup = Runner.getGroup(prev);
 
         if (currentGroup !== prevGroup) {
-          const prevEnd: RulesEslintFormattingRequireImportOrderCheckProgramPrevEnd = prev.loc.end.line;
-          const currentStart: RulesEslintFormattingRequireImportOrderCheckProgramCurrentStart = current.loc.start.line;
+          const prevEnd: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_PrevEnd = prev.loc.end.line;
+          const currentStart: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_CurrentStart = current.loc.start.line;
 
           if (currentStart - prevEnd < 2) {
             context.report({
@@ -263,8 +263,8 @@ export class RulesEslintFormattingRequireImportOrder {
 
         // Check alphabetical within group.
         if (currentGroup === prevGroup) {
-          const prevSource: RulesEslintFormattingRequireImportOrderCheckProgramPrevSource = prev.source.value;
-          const currentSource: RulesEslintFormattingRequireImportOrderCheckProgramCurrentSource = current.source.value;
+          const prevSource: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_PrevSource = prev.source.value;
+          const currentSource: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckProgram_CurrentSource = current.source.value;
 
           if (currentSource.localeCompare(prevSource) < 0) {
             context.report({
@@ -291,24 +291,24 @@ export class RulesEslintFormattingRequireImportOrder {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequireImportOrderCheckSpecifiersContext} context - Context.
-   * @param {RulesEslintFormattingRequireImportOrderCheckSpecifiersImports} imports - Imports.
+   * @param {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Context} context - Context.
+   * @param {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Imports} imports - Imports.
    *
-   * @returns {RulesEslintFormattingRequireImportOrderCheckSpecifiersReturns}
+   * @returns {Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Returns}
    *
    * @since 0.15.0
    */
-  private static checkSpecifiers(context: RulesEslintFormattingRequireImportOrderCheckSpecifiersContext, imports: RulesEslintFormattingRequireImportOrderCheckSpecifiersImports): RulesEslintFormattingRequireImportOrderCheckSpecifiersReturns {
+  private static checkSpecifiers(context: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Context, imports: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Imports): Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Returns {
     for (const importDeclaration of imports) {
       if (importDeclaration === undefined || importDeclaration.type !== 'ImportDeclaration') {
         continue;
       }
 
-      const specifiers: RulesEslintFormattingRequireImportOrderCheckSpecifiersSpecifiers = importDeclaration.specifiers;
+      const specifiers: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Specifiers = importDeclaration.specifiers;
 
       for (let i = 1; i < specifiers.length; i += 1) {
-        const prev: RulesEslintFormattingRequireImportOrderCheckSpecifiersPrev = specifiers[i - 1];
-        const current: RulesEslintFormattingRequireImportOrderCheckSpecifiersCurrent = specifiers[i];
+        const prev: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Prev = specifiers[i - 1];
+        const current: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_Current = specifiers[i];
 
         if (
           prev === undefined
@@ -321,8 +321,8 @@ export class RulesEslintFormattingRequireImportOrder {
           continue;
         }
 
-        const prevName: RulesEslintFormattingRequireImportOrderCheckSpecifiersPrevName = prev.imported.name;
-        const currentName: RulesEslintFormattingRequireImportOrderCheckSpecifiersCurrentName = current.imported.name;
+        const prevName: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_PrevName = prev.imported.name;
+        const currentName: Rules_Eslint_Formatting_RequireImportOrder_Runner_CheckSpecifiers_CurrentName = current.imported.name;
 
         if (currentName.localeCompare(prevName) < 0) {
           context.report({

@@ -6,8 +6,8 @@ import {
 
 import chalk from 'chalk';
 
-import { ApiSpdxLicenses } from '../../../api/spdx-licenses.js';
-import { LibNovaConfig } from '../../../lib/nova-config.js';
+import { Runner as ApiSpdxLicenses } from '../../../api/spdx-licenses.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import { LIB_REGEX_PATTERN_SEMVER_STRICT } from '../../../lib/regex.js';
 import {
   isProjectRoot,
@@ -18,45 +18,45 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliRecipePackageJsonSyncIdentityHandleFallbackLicense,
-  CliRecipePackageJsonSyncIdentityHandleFileContents,
-  CliRecipePackageJsonSyncIdentityHandleFilePath,
-  CliRecipePackageJsonSyncIdentityHandleLicenseCandidates,
-  CliRecipePackageJsonSyncIdentityHandleManifest,
-  CliRecipePackageJsonSyncIdentityHandleNormalizedLicenseReference,
-  CliRecipePackageJsonSyncIdentityHandlePackageDescription,
-  CliRecipePackageJsonSyncIdentityHandlePackageDirectory,
-  CliRecipePackageJsonSyncIdentityHandlePackageKeywords,
-  CliRecipePackageJsonSyncIdentityHandlePackageLicense,
-  CliRecipePackageJsonSyncIdentityHandlePackageName,
-  CliRecipePackageJsonSyncIdentityHandlePackageVersion,
-  CliRecipePackageJsonSyncIdentityHandleProjectRoot,
-  CliRecipePackageJsonSyncIdentityHandleRecipes,
-  CliRecipePackageJsonSyncIdentityHandleRecipeSettings,
-  CliRecipePackageJsonSyncIdentityHandleRecipeTuple,
-  CliRecipePackageJsonSyncIdentityHandleRelativeLicensePath,
-  CliRecipePackageJsonSyncIdentityHandleResolvedLicensePath,
-  CliRecipePackageJsonSyncIdentityHandleReturns,
-  CliRecipePackageJsonSyncIdentityHandleSpdxLicenses,
-  CliRecipePackageJsonSyncIdentityHandleValidDescription,
-  CliRecipePackageJsonSyncIdentityHandleValidKeywords,
-  CliRecipePackageJsonSyncIdentityHandleValidVersion,
-  CliRecipePackageJsonSyncIdentityHandleWorkingFile,
-  CliRecipePackageJsonSyncIdentityHandleWorkspace,
-  CliRecipePackageJsonSyncIdentityRunCurrentDirectory,
-  CliRecipePackageJsonSyncIdentityRunEligibleWorkspaces,
-  CliRecipePackageJsonSyncIdentityRunIsAtProjectRoot,
-  CliRecipePackageJsonSyncIdentityRunIsDryRun,
-  CliRecipePackageJsonSyncIdentityRunIsReplaceFile,
-  CliRecipePackageJsonSyncIdentityRunOptions,
-  CliRecipePackageJsonSyncIdentityRunRecipeTupleFilter,
-  CliRecipePackageJsonSyncIdentityRunReplaceFileNotice,
-  CliRecipePackageJsonSyncIdentityRunReturns,
-  CliRecipePackageJsonSyncIdentityRunWorkingFile,
-  CliRecipePackageJsonSyncIdentityRunWorkingFileWorkspaces,
-  CliRecipePackageJsonSyncIdentityRunWorkspaceConfigFilter,
-  CliRecipePackageJsonSyncIdentityRunWorkspaceRecipesFilter,
-  CliRecipePackageJsonSyncIdentityRunWorkspaces,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FallbackLicense,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FileContents,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FilePath,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_LicenseCandidates,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_NormalizedLicenseReference,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDescription,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDirectory,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageKeywords,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageLicense,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageName,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageVersion,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ProjectRoot,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Recipes,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeSettings,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeTuple,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RelativeLicensePath,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ResolvedLicensePath,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_SpdxLicenses,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDescription,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidKeywords,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_CurrentDirectory,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_EligibleWorkspaces,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsAtProjectRoot,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsDryRun,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsReplaceFile,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReplaceFileNotice,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Returns,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFile,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFileWorkspaces,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipesFilter,
+  Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/sync-identity.d.ts';
 
 /**
@@ -68,22 +68,22 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliRecipePackageJsonSyncIdentity {
+export class Runner {
   /**
    * CLI - Recipe - package.json - Sync Identity - Run.
    *
    * Loads nova.config.json, filters eligible workspaces, then syncs identity fields in each
    * manifest from the project config.
    *
-   * @param {CliRecipePackageJsonSyncIdentityRunOptions} options - Options.
+   * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options} options - Options.
    *
-   * @returns {CliRecipePackageJsonSyncIdentityRunReturns}
+   * @returns {Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static async run(options: CliRecipePackageJsonSyncIdentityRunOptions): CliRecipePackageJsonSyncIdentityRunReturns {
-    const currentDirectory: CliRecipePackageJsonSyncIdentityRunCurrentDirectory = process.cwd();
-    const isAtProjectRoot: CliRecipePackageJsonSyncIdentityRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options): Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Returns {
+    const currentDirectory: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_CurrentDirectory = process.cwd();
+    const isAtProjectRoot: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -91,31 +91,31 @@ export class CliRecipePackageJsonSyncIdentity {
       return;
     }
 
-    const isDryRun: CliRecipePackageJsonSyncIdentityRunIsDryRun = options['dryRun'] === true;
-    const isReplaceFile: CliRecipePackageJsonSyncIdentityRunIsReplaceFile = options['replaceFile'] === true;
+    const isDryRun: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isReplaceFile: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice: CliRecipePackageJsonSyncIdentityRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const workingFile: CliRecipePackageJsonSyncIdentityRunWorkingFile = await new LibNovaConfig().load();
-    const workingFileWorkspaces: CliRecipePackageJsonSyncIdentityRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
+    const workingFile: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-identity. No workspaces detected in the "nova.config.json" file.');
 
@@ -123,15 +123,15 @@ export class CliRecipePackageJsonSyncIdentity {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces: CliRecipePackageJsonSyncIdentityRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: CliRecipePackageJsonSyncIdentityRunWorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: CliRecipePackageJsonSyncIdentityRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
+    const eligibleWorkspaces: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: CliRecipePackageJsonSyncIdentityRunRecipeTupleFilter = workspaceRecipes['sync-identity'];
+      const recipeTuple: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeTupleFilter = workspaceRecipes['sync-identity'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -142,21 +142,21 @@ export class CliRecipePackageJsonSyncIdentity {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-identity. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces: CliRecipePackageJsonSyncIdentityRunWorkspaces = await loadWorkspaceManifests({
+    const workspaces: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Workspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-identity. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -164,18 +164,18 @@ export class CliRecipePackageJsonSyncIdentity {
     }
 
     Logger.customize({
-      name: 'CliRecipePackageJsonSyncIdentity.run',
+      name: 'Runner.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for sync-identity.`);
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.run',
+        name: 'Runner.run',
         purpose: 'iteration',
       }).info(`Running sync-identity for the "${workspace['manifest']['name']}" workspace ...`);
 
-      await CliRecipePackageJsonSyncIdentity.handle(workspace, workingFile);
+      await Runner.handle(workspace, workingFile);
 
       if (isDryRun === true) {
         continue;
@@ -193,30 +193,30 @@ export class CliRecipePackageJsonSyncIdentity {
    * Processes one workspace manifest to sync name, version, description, keywords, and
    * license. Resolves license paths and validates SPDX.
    *
-   * @param {CliRecipePackageJsonSyncIdentityHandleWorkspace}   workspace   - Workspace.
-   * @param {CliRecipePackageJsonSyncIdentityHandleWorkingFile} workingFile - Working file.
+   * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace}   workspace   - Workspace.
+   * @param {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile} workingFile - Working file.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonSyncIdentityHandleReturns}
+   * @returns {Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns}
    *
    * @since 0.14.0
    */
-  private static async handle(workspace: CliRecipePackageJsonSyncIdentityHandleWorkspace, workingFile: CliRecipePackageJsonSyncIdentityHandleWorkingFile): CliRecipePackageJsonSyncIdentityHandleReturns {
-    const fileContents: CliRecipePackageJsonSyncIdentityHandleFileContents = workspace['fileContents'];
-    const filePath: CliRecipePackageJsonSyncIdentityHandleFilePath = workspace['filePath'];
-    const manifest: CliRecipePackageJsonSyncIdentityHandleManifest = workspace['manifest'];
+  private static async handle(workspace: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace, workingFile: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile): Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns {
+    const fileContents: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FileContents = workspace['fileContents'];
+    const filePath: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FilePath = workspace['filePath'];
+    const manifest: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Manifest = workspace['manifest'];
 
-    const packageName: CliRecipePackageJsonSyncIdentityHandlePackageName = fileContents['name'];
-    const packageVersion: CliRecipePackageJsonSyncIdentityHandlePackageVersion = fileContents['version'];
-    const packageDescription: CliRecipePackageJsonSyncIdentityHandlePackageDescription = fileContents['description'];
-    const packageKeywords: CliRecipePackageJsonSyncIdentityHandlePackageKeywords = fileContents['keywords'];
-    const packageLicense: CliRecipePackageJsonSyncIdentityHandlePackageLicense = fileContents['license'];
+    const packageName: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageName = fileContents['name'];
+    const packageVersion: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageVersion = fileContents['version'];
+    const packageDescription: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDescription = fileContents['description'];
+    const packageKeywords: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageKeywords = fileContents['keywords'];
+    const packageLicense: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageLicense = fileContents['license'];
 
     // Get recipe settings for this workspace.
-    const recipes: CliRecipePackageJsonSyncIdentityHandleRecipes = manifest['recipes'];
-    const recipeTuple: CliRecipePackageJsonSyncIdentityHandleRecipeTuple = (recipes !== undefined) ? recipes['sync-identity'] : undefined;
-    const recipeSettings: CliRecipePackageJsonSyncIdentityHandleRecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
+    const recipes: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Recipes = manifest['recipes'];
+    const recipeTuple: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeTuple = (recipes !== undefined) ? recipes['sync-identity'] : undefined;
+    const recipeSettings: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
 
     // Sync the "name" field.
     if (
@@ -224,7 +224,7 @@ export class CliRecipePackageJsonSyncIdentity {
       || packageName !== manifest['name'] // Package "name" must match the workspace manifest name.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.handle',
+        name: 'Runner.handle',
         purpose: 'name',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "name" from workspace manifest ...`);
 
@@ -246,10 +246,10 @@ export class CliRecipePackageJsonSyncIdentity {
         && packageVersion === '0.0.0' // "trackable" or "distributable" workspaces cannot stay on "0.0.0".
       )
     ) {
-      const validVersion: CliRecipePackageJsonSyncIdentityHandleValidVersion = (manifest['policy'] === 'freezable') ? '0.0.0' : '0.0.1';
+      const validVersion: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion = (manifest['policy'] === 'freezable') ? '0.0.0' : '0.0.1';
 
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.handle',
+        name: 'Runner.handle',
         purpose: 'version',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Invalid version detected. Setting it to "${validVersion}" ...`);
 
@@ -262,13 +262,13 @@ export class CliRecipePackageJsonSyncIdentity {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.handle',
+        name: 'Runner.handle',
         purpose: 'description',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "description". Workspace policy "${manifest['policy']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'description');
     } else {
-      const validDescription: CliRecipePackageJsonSyncIdentityHandleValidDescription = (workingFile['project'] !== undefined && workingFile['project']['description'] !== undefined) ? workingFile['project']['description']['short'] : undefined;
+      const validDescription: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDescription = (workingFile['project'] !== undefined && workingFile['project']['description'] !== undefined) ? workingFile['project']['description']['short'] : undefined;
 
       if (
         (
@@ -283,7 +283,7 @@ export class CliRecipePackageJsonSyncIdentity {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncIdentity.handle',
+          name: 'Runner.handle',
           purpose: 'description',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "description" from workspace manifest ...`);
 
@@ -297,7 +297,7 @@ export class CliRecipePackageJsonSyncIdentity {
         && validDescription === undefined // Nova config "project.description.short" setting is not set.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncIdentity.handle',
+          name: 'Runner.handle',
           purpose: 'description',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "description". No description is defined.`);
 
@@ -311,13 +311,13 @@ export class CliRecipePackageJsonSyncIdentity {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.handle',
+        name: 'Runner.handle',
         purpose: 'keywords',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "keywords". Workspace policy "${manifest['policy']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'keywords');
     } else {
-      const validKeywords: CliRecipePackageJsonSyncIdentityHandleValidKeywords = (workingFile['project'] !== undefined) ? workingFile['project']['keywords'] : undefined;
+      const validKeywords: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidKeywords = (workingFile['project'] !== undefined) ? workingFile['project']['keywords'] : undefined;
 
       if (
         (
@@ -331,7 +331,7 @@ export class CliRecipePackageJsonSyncIdentity {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncIdentity.handle',
+          name: 'Runner.handle',
           purpose: 'keywords',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "keywords" from workspace manifest ...`);
 
@@ -345,7 +345,7 @@ export class CliRecipePackageJsonSyncIdentity {
         && validKeywords === undefined // Nova config "project.keywords" setting is not set.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncIdentity.handle',
+          name: 'Runner.handle',
           purpose: 'keywords',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "keywords". No keywords are defined.`);
 
@@ -354,7 +354,7 @@ export class CliRecipePackageJsonSyncIdentity {
     }
 
     // Sync the "license" field.
-    const spdxLicenses: CliRecipePackageJsonSyncIdentityHandleSpdxLicenses = await ApiSpdxLicenses.fetchLicenses();
+    const spdxLicenses: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_SpdxLicenses = await ApiSpdxLicenses.fetchLicenses();
 
     if (
       typeof packageLicense !== 'string' // Package "license" is not a string.
@@ -363,16 +363,16 @@ export class CliRecipePackageJsonSyncIdentity {
         && spdxLicenses.has(packageLicense) === false // Package "license" is not within SPDX specification.
       )
     ) {
-      const packageDirectory: CliRecipePackageJsonSyncIdentityHandlePackageDirectory = dirname(filePath);
-      const projectRoot: CliRecipePackageJsonSyncIdentityHandleProjectRoot = process.cwd();
-      const licenseCandidates: CliRecipePackageJsonSyncIdentityHandleLicenseCandidates = [
+      const packageDirectory: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDirectory = dirname(filePath);
+      const projectRoot: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ProjectRoot = process.cwd();
+      const licenseCandidates: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_LicenseCandidates = [
         join(packageDirectory, 'LICENSE'),
         join(packageDirectory, 'LICENSE.md'),
         join(projectRoot, 'LICENSE'),
         join(projectRoot, 'LICENSE.md'),
       ];
 
-      let resolvedLicensePath: CliRecipePackageJsonSyncIdentityHandleResolvedLicensePath = undefined;
+      let resolvedLicensePath: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ResolvedLicensePath = undefined;
 
       for (const candidate of licenseCandidates) {
         if (await pathExists(candidate) === true) {
@@ -382,21 +382,21 @@ export class CliRecipePackageJsonSyncIdentity {
         }
       }
 
-      const relativeLicensePath: CliRecipePackageJsonSyncIdentityHandleRelativeLicensePath = (resolvedLicensePath !== undefined) ? relative(packageDirectory, resolvedLicensePath) : undefined;
-      let normalizedLicenseReference: CliRecipePackageJsonSyncIdentityHandleNormalizedLicenseReference = undefined;
+      const relativeLicensePath: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RelativeLicensePath = (resolvedLicensePath !== undefined) ? relative(packageDirectory, resolvedLicensePath) : undefined;
+      let normalizedLicenseReference: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_NormalizedLicenseReference = undefined;
 
       if (relativeLicensePath !== undefined) {
         normalizedLicenseReference = (relativeLicensePath.startsWith('.') === true) ? relativeLicensePath : `./${relativeLicensePath}`;
       }
 
-      const fallbackLicense: CliRecipePackageJsonSyncIdentityHandleFallbackLicense = (normalizedLicenseReference !== undefined) ? `SEE LICENSE IN ${normalizedLicenseReference}` : 'UNLICENSED';
+      const fallbackLicense: Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FallbackLicense = (normalizedLicenseReference !== undefined) ? `SEE LICENSE IN ${normalizedLicenseReference}` : 'UNLICENSED';
 
       if (packageLicense === fallbackLicense) {
         return;
       }
 
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncIdentity.handle',
+        name: 'Runner.handle',
         purpose: 'license',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "license" to "${fallbackLicense}" ...`);
 

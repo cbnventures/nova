@@ -6,115 +6,115 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeFooterCommonsIndexSection = ThemeFooterCommonsIndexSectionLink[];
+export type Theme_Footer_Commons_Index_Section = Theme_Footer_Commons_Index_SectionLink[];
 
-export type ThemeFooterCommonsIndexSections = Record<string, ThemeFooterCommonsIndexSection>;
+export type Theme_Footer_Commons_Index_Sections = Record<string, Theme_Footer_Commons_Index_Section>;
 
-export type ThemeFooterCommonsIndexLayoutSlotTitle = string | undefined;
+export type Theme_Footer_Commons_Index_LayoutSlot_Title = string | undefined;
 
-export type ThemeFooterCommonsIndexLayoutSlotSection = string;
+export type Theme_Footer_Commons_Index_LayoutSlot_Section = string;
 
-export type ThemeFooterCommonsIndexLayoutSlot = {
-  title?: ThemeFooterCommonsIndexLayoutSlotTitle;
-  section: ThemeFooterCommonsIndexLayoutSlotSection;
+export type Theme_Footer_Commons_Index_LayoutSlot = {
+  title?: Theme_Footer_Commons_Index_LayoutSlot_Title;
+  section: Theme_Footer_Commons_Index_LayoutSlot_Section;
 };
 
-export type ThemeFooterCommonsIndexLayout = Record<string, ThemeFooterCommonsIndexLayoutSlot>;
+export type Theme_Footer_Commons_Index_Layout = Record<string, Theme_Footer_Commons_Index_LayoutSlot>;
 
-export type ThemeFooterCommonsIndexSocialLinks = ThemeFooterCommonsIndexSocialLink[];
+export type Theme_Footer_Commons_Index_SocialLinks = Theme_Footer_Commons_Index_SocialLink[];
 
-export type ThemeFooterCommonsIndexCopyright = string;
+export type Theme_Footer_Commons_Index_Copyright = string;
 
-export type ThemeFooterCommonsIndexCredit = boolean;
+export type Theme_Footer_Commons_Index_Credit = boolean;
 
-export type ThemeFooterCommonsIndexCtaObjectLabel = string;
+export type Theme_Footer_Commons_Index_CtaObject_Label = string;
 
-export type ThemeFooterCommonsIndexCtaObjectHref = string;
+export type Theme_Footer_Commons_Index_CtaObject_Href = string;
 
-export type ThemeFooterCommonsIndexCtaObject = {
-  label: ThemeFooterCommonsIndexCtaObjectLabel;
-  href: ThemeFooterCommonsIndexCtaObjectHref;
+export type Theme_Footer_Commons_Index_CtaObject = {
+  label: Theme_Footer_Commons_Index_CtaObject_Label;
+  href: Theme_Footer_Commons_Index_CtaObject_Href;
 };
 
-export type ThemeFooterCommonsIndexCta = string | ThemeFooterCommonsIndexCtaObject | undefined;
+export type Theme_Footer_Commons_Index_Cta = string | Theme_Footer_Commons_Index_CtaObject | undefined;
 
-export type ThemeFooterCommonsIndexCommonsPropsSections = ThemeFooterCommonsIndexSections;
+export type Theme_Footer_Commons_Index_Commons_Props_Sections = Theme_Footer_Commons_Index_Sections;
 
-export type ThemeFooterCommonsIndexCommonsPropsLayout = ThemeFooterCommonsIndexLayout;
+export type Theme_Footer_Commons_Index_Commons_Props_Layout = Theme_Footer_Commons_Index_Layout;
 
-export type ThemeFooterCommonsIndexCommonsPropsSocialLinks = ThemeFooterCommonsIndexSocialLinks;
+export type Theme_Footer_Commons_Index_Commons_Props_SocialLinks = Theme_Footer_Commons_Index_SocialLinks;
 
-export type ThemeFooterCommonsIndexCommonsPropsCopyright = ThemeFooterCommonsIndexCopyright;
+export type Theme_Footer_Commons_Index_Commons_Props_Copyright = Theme_Footer_Commons_Index_Copyright;
 
-export type ThemeFooterCommonsIndexCommonsPropsCredit = ThemeFooterCommonsIndexCredit;
+export type Theme_Footer_Commons_Index_Commons_Props_Credit = Theme_Footer_Commons_Index_Credit;
 
-export type ThemeFooterCommonsIndexCommonsPropsCta = ThemeFooterCommonsIndexCta;
+export type Theme_Footer_Commons_Index_Commons_Props_Cta = Theme_Footer_Commons_Index_Cta;
 
-export type ThemeFooterCommonsIndexCommonsPropsCtaContained = boolean;
+export type Theme_Footer_Commons_Index_Commons_Props_CtaContained = boolean;
 
-export type ThemeFooterCommonsIndexCommonsPropsClassName = string | undefined;
+export type Theme_Footer_Commons_Index_Commons_Props_ClassName = string | undefined;
 
-export type ThemeFooterCommonsIndexCommonsPropsStyle = CSSProperties | undefined;
+export type Theme_Footer_Commons_Index_Commons_Props_Style = CSSProperties | undefined;
 
-export type ThemeFooterCommonsIndexCommonsProps = {
-  sections: ThemeFooterCommonsIndexCommonsPropsSections;
-  layout: ThemeFooterCommonsIndexCommonsPropsLayout;
-  socialLinks: ThemeFooterCommonsIndexCommonsPropsSocialLinks;
-  copyright: ThemeFooterCommonsIndexCommonsPropsCopyright;
-  credit: ThemeFooterCommonsIndexCommonsPropsCredit;
-  cta?: ThemeFooterCommonsIndexCommonsPropsCta;
-  ctaContained: ThemeFooterCommonsIndexCommonsPropsCtaContained;
-  className?: ThemeFooterCommonsIndexCommonsPropsClassName;
-  style?: ThemeFooterCommonsIndexCommonsPropsStyle;
+export type Theme_Footer_Commons_Index_Commons_Props = {
+  sections: Theme_Footer_Commons_Index_Commons_Props_Sections;
+  layout: Theme_Footer_Commons_Index_Commons_Props_Layout;
+  socialLinks: Theme_Footer_Commons_Index_Commons_Props_SocialLinks;
+  copyright: Theme_Footer_Commons_Index_Commons_Props_Copyright;
+  credit: Theme_Footer_Commons_Index_Commons_Props_Credit;
+  cta?: Theme_Footer_Commons_Index_Commons_Props_Cta;
+  ctaContained: Theme_Footer_Commons_Index_Commons_Props_CtaContained;
+  className?: Theme_Footer_Commons_Index_Commons_Props_ClassName;
+  style?: Theme_Footer_Commons_Index_Commons_Props_Style;
 };
 
-export type ThemeFooterCommonsIndexCommonsReturns = React.JSX.Element;
+export type Theme_Footer_Commons_Index_Commons_Returns = React.JSX.Element;
 
-export type ThemeFooterCommonsIndexCommonsSections = ThemeFooterCommonsIndexSections;
+export type Theme_Footer_Commons_Index_Commons_Sections = Theme_Footer_Commons_Index_Sections;
 
-export type ThemeFooterCommonsIndexCommonsLayout = ThemeFooterCommonsIndexLayout;
+export type Theme_Footer_Commons_Index_Commons_Layout = Theme_Footer_Commons_Index_Layout;
 
-export type ThemeFooterCommonsIndexCommonsSocialLinks = ThemeFooterCommonsIndexSocialLinks;
+export type Theme_Footer_Commons_Index_Commons_SocialLinks = Theme_Footer_Commons_Index_SocialLinks;
 
-export type ThemeFooterCommonsIndexCommonsCopyright = ThemeFooterCommonsIndexCopyright;
+export type Theme_Footer_Commons_Index_Commons_Copyright = Theme_Footer_Commons_Index_Copyright;
 
-export type ThemeFooterCommonsIndexCommonsCredit = ThemeFooterCommonsIndexCredit;
+export type Theme_Footer_Commons_Index_Commons_Credit = Theme_Footer_Commons_Index_Credit;
 
-export type ThemeFooterCommonsIndexCommonsCta = ThemeFooterCommonsIndexCta;
+export type Theme_Footer_Commons_Index_Commons_Cta = Theme_Footer_Commons_Index_Cta;
 
-export type ThemeFooterCommonsIndexCommonsCtaContained = boolean;
+export type Theme_Footer_Commons_Index_Commons_CtaContained = boolean;
 
-export type ThemeFooterCommonsIndexCommonsFooterClassName = string;
+export type Theme_Footer_Commons_Index_Commons_FooterClassName = string;
 
-export type ThemeFooterCommonsIndexCommonsLayoutEntries = [string, ThemeFooterCommonsIndexLayoutSlot][];
+export type Theme_Footer_Commons_Index_Commons_LayoutEntries = [string, Theme_Footer_Commons_Index_LayoutSlot][];
 
-export type ThemeFooterCommonsIndexCommonsSocialLinksAriaLabel = string;
+export type Theme_Footer_Commons_Index_Commons_SocialLinksAriaLabel = string;
 
-export type ThemeFooterCommonsIndexCommonsExternalLinkAriaLabel = string;
+export type Theme_Footer_Commons_Index_Commons_ExternalLinkAriaLabel = string;
 
-export type ThemeFooterCommonsIndexCommonsLayoutEntry = [string, ThemeFooterCommonsIndexLayoutSlot];
+export type Theme_Footer_Commons_Index_Commons_LayoutEntry = [string, Theme_Footer_Commons_Index_LayoutSlot];
 
-export type ThemeFooterCommonsIndexCommonsSectionLinks = ThemeFooterCommonsIndexSectionLink[];
+export type Theme_Footer_Commons_Index_Commons_SectionLinks = Theme_Footer_Commons_Index_SectionLink[];
 
-export type ThemeFooterCommonsIndexSectionLinkLabel = string;
+export type Theme_Footer_Commons_Index_SectionLink_Label = string;
 
-export type ThemeFooterCommonsIndexSectionLinkHref = string;
+export type Theme_Footer_Commons_Index_SectionLink_Href = string;
 
-export type ThemeFooterCommonsIndexSectionLink = {
-  label: ThemeFooterCommonsIndexSectionLinkLabel;
-  href: ThemeFooterCommonsIndexSectionLinkHref;
+export type Theme_Footer_Commons_Index_SectionLink = {
+  label: Theme_Footer_Commons_Index_SectionLink_Label;
+  href: Theme_Footer_Commons_Index_SectionLink_Href;
 };
 
-export type ThemeFooterCommonsIndexSocialLinkIcon = string | IconifyIcon;
+export type Theme_Footer_Commons_Index_SocialLink_Icon = string | IconifyIcon;
 
-export type ThemeFooterCommonsIndexSocialLinkHref = string;
+export type Theme_Footer_Commons_Index_SocialLink_Href = string;
 
-export type ThemeFooterCommonsIndexSocialLinkLabel = string;
+export type Theme_Footer_Commons_Index_SocialLink_Label = string;
 
-export type ThemeFooterCommonsIndexSocialLink = {
-  icon: ThemeFooterCommonsIndexSocialLinkIcon;
-  href: ThemeFooterCommonsIndexSocialLinkHref;
-  label: ThemeFooterCommonsIndexSocialLinkLabel;
+export type Theme_Footer_Commons_Index_SocialLink = {
+  icon: Theme_Footer_Commons_Index_SocialLink_Icon;
+  href: Theme_Footer_Commons_Index_SocialLink_Href;
+  label: Theme_Footer_Commons_Index_SocialLink_Label;
 };
 
-export type ThemeFooterCommonsIndexCommonsSocialLinkLabel = string;
+export type Theme_Footer_Commons_Index_Commons_SocialLinkLabel = string;

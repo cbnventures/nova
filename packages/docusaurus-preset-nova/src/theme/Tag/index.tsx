@@ -1,6 +1,6 @@
 import Link from '@docusaurus/Link';
 
-import type { ThemeTagProps } from '../../types/theme/Tag/index.d.ts';
+import type { Theme_Tag_Index_Tag_Props } from '../../types/theme/Tag/index.d.ts';
 
 /**
  * Theme - Tag.
@@ -9,13 +9,13 @@ import type { ThemeTagProps } from '../../types/theme/Tag/index.d.ts';
  * count badge, using the tag description as the link title
  * attribute for accessible hover context.
  *
- * @param {ThemeTagProps} props - Props.
+ * @param {Theme_Tag_Index_Tag_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Tag(props: ThemeTagProps) {
+function Tag(props: Theme_Tag_Index_Tag_Props) {
   return (
     <Link
       className={(props['className'] !== undefined) ? `nova-tag ${props['className']}` : 'nova-tag'}

@@ -10,9 +10,9 @@ import DocSidebarMobile from '@theme/DocSidebarMobile';
 import DocVersionBanner from '@theme/DocVersionBanner';
 
 import type {
-  ThemeDocItemLayoutDocItemLayoutCanRenderToc,
-  ThemeDocItemLayoutDocItemLayoutDoc,
-  ThemeDocItemLayoutDocItemLayoutProps,
+  Theme_DocItem_Layout_Index_DocItemLayout_CanRenderToc,
+  Theme_DocItem_Layout_Index_DocItemLayout_Doc,
+  Theme_DocItem_Layout_Index_DocItemLayout_Props,
 } from '../../../types/theme/DocItem/Layout/index.d.ts';
 
 /**
@@ -22,15 +22,15 @@ import type {
  * indicators, table of contents, content, footer, and pagination,
  * without any module CSS or framework class names.
  *
- * @param {ThemeDocItemLayoutDocItemLayoutProps} props - Props.
+ * @param {Theme_DocItem_Layout_Index_DocItemLayout_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocItemLayout(props: ThemeDocItemLayoutDocItemLayoutProps) {
-  const doc: ThemeDocItemLayoutDocItemLayoutDoc = useDoc();
-  const canRenderToc: ThemeDocItemLayoutDocItemLayoutCanRenderToc = (
+function DocItemLayout(props: Theme_DocItem_Layout_Index_DocItemLayout_Props) {
+  const doc: Theme_DocItem_Layout_Index_DocItemLayout_Doc = useDoc();
+  const canRenderToc: Theme_DocItem_Layout_Index_DocItemLayout_CanRenderToc = (
     doc['frontMatter']['hide_table_of_contents'] !== true
     && doc['toc']['length'] > 0
   );

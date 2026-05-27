@@ -16,83 +16,83 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { LibNovaConfig } from '../../lib/nova-config.js';
+import { Runner as LibNovaConfig } from '../../lib/nova-config.js';
 
 import type {
-  TestsLibNovaConfigSharednovaconfigConstructorConfig,
-  TestsLibNovaConfigSharednovaconfigLoadConfig,
-  TestsLibNovaConfigSharednovaconfigLoadConfigContents,
-  TestsLibNovaConfigSharednovaconfigLoadConfigData,
-  TestsLibNovaConfigSharednovaconfigLoadConfigPath,
-  TestsLibNovaConfigSharednovaconfigLoadCoreWorkspace,
-  TestsLibNovaConfigSharednovaconfigLoadFirstEntity,
-  TestsLibNovaConfigSharednovaconfigLoadLicenses,
-  TestsLibNovaConfigSharednovaconfigLoadLoaded,
-  TestsLibNovaConfigSharednovaconfigLoadLoadedEntities,
-  TestsLibNovaConfigSharednovaconfigLoadLoadedProject,
-  TestsLibNovaConfigSharednovaconfigLoadLoadedProjectName,
-  TestsLibNovaConfigSharednovaconfigLoadLoadedUrls,
-  TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces,
-  TestsLibNovaConfigSharednovaconfigLoadOriginalCwd,
-  TestsLibNovaConfigSharednovaconfigLoadProjectDirectory,
-  TestsLibNovaConfigSharednovaconfigLoadRecipeKeys,
-  TestsLibNovaConfigSharednovaconfigLoadRootRecipes,
-  TestsLibNovaConfigSharednovaconfigLoadRootWorkspace,
-  TestsLibNovaConfigSharednovaconfigLoadSandboxPrefix,
-  TestsLibNovaConfigSharednovaconfigLoadSandboxRoot,
-  TestsLibNovaConfigSharednovaconfigLoadTemporaryDirectory,
-  TestsLibNovaConfigSharednovaconfigParseGithubConfig,
-  TestsLibNovaConfigSharednovaconfigParseGithubConfigContents,
-  TestsLibNovaConfigSharednovaconfigParseGithubConfigPath,
-  TestsLibNovaConfigSharednovaconfigParseGithubLoaded,
-  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub,
-  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubFeatures,
-  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPolicies,
-  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods,
-  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubRecipes,
-  TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubTopics,
-  TestsLibNovaConfigSharednovaconfigParseGithubOriginalCwd,
-  TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory,
-  TestsLibNovaConfigSharednovaconfigParseGithubSandboxPrefix,
-  TestsLibNovaConfigSharednovaconfigParseGithubSandboxRoot,
-  TestsLibNovaConfigSharednovaconfigParseGithubTemporaryDirectory,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsFirstWorkflow,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsOriginalCwd,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsSandboxPrefix,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsSandboxRoot,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsSecondWorkflow,
-  TestsLibNovaConfigSharednovaconfigParseWorkflowsTemporaryDirectory,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveConfig,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveFileContents,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveFilePath,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveOriginalCwd,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsed,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsedEntities,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsedEntity,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProject,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProjectDescription,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProjectName,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsedUrls,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspace,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspaces,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveProjectDirectory,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveSandboxPrefix,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveSandboxRoot,
-  TestsLibNovaConfigSharednovaconfigSetAndSaveTemporaryDirectory,
+  Tests_Lib_NovaConfig_SharednovaconfigConstructorConfig,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadConfig,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadConfigData,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadCoreWorkspace,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadFirstEntity,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadLicenses,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedEntities,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProjectName,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedUrls,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedWorkspaces,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadOriginalCwd,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadRecipeKeys,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadRootRecipes,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadRootWorkspace,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadSandboxPrefix,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadSandboxRoot,
+  Tests_Lib_NovaConfig_SharednovaconfigLoadTemporaryDirectory,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubFeatures,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubPolicies,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubRecipes,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubTopics,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubOriginalCwd,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubSandboxPrefix,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubSandboxRoot,
+  Tests_Lib_NovaConfig_SharednovaconfigParseGithubTemporaryDirectory,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsFirstWorkflow,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsOriginalCwd,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSandboxPrefix,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSandboxRoot,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSecondWorkflow,
+  Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsTemporaryDirectory,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveConfig,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFileContents,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFilePath,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveOriginalCwd,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsed,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedEntities,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedEntity,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProject,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProjectDescription,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProjectName,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedUrls,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspace,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspaces,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveProjectDirectory,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveSandboxPrefix,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveSandboxRoot,
+  Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveTemporaryDirectory,
 } from '../../types/tests/lib/nova-config.test.d.ts';
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfig Constructor.
+ * Tests - Lib - Nova Config - Shared_NovaConfig Constructor.
  *
  * @since 0.13.0
  */
-describe('SharedNovaConfig constructor', async () => {
+describe('Shared_NovaConfig constructor', async () => {
   it('creates instance without errors', () => {
     doesNotThrow(() => {
       void new LibNovaConfig();
@@ -104,7 +104,7 @@ describe('SharedNovaConfig constructor', async () => {
   });
 
   it('instance has expected public methods', () => {
-    const config: TestsLibNovaConfigSharednovaconfigConstructorConfig = new LibNovaConfig();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigConstructorConfig = new LibNovaConfig();
 
     strictEqual(typeof config.load, 'function');
     strictEqual(typeof config.set, 'function');
@@ -117,15 +117,15 @@ describe('SharedNovaConfig constructor', async () => {
 });
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfig Set And Save.
+ * Tests - Lib - Nova Config - Shared_NovaConfig Set And Save.
  *
  * @since 0.13.0
  */
-describe('SharedNovaConfig set and save', async () => {
-  const originalCwd: TestsLibNovaConfigSharednovaconfigSetAndSaveOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsLibNovaConfigSharednovaconfigSetAndSaveTemporaryDirectory = tmpdir();
-  const sandboxPrefix: TestsLibNovaConfigSharednovaconfigSetAndSaveSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsLibNovaConfigSharednovaconfigSetAndSaveSandboxRoot = await mkdtemp(sandboxPrefix);
+describe('Shared_NovaConfig set and save', async () => {
+  const originalCwd: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveOriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveTemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveSandboxRoot = await mkdtemp(sandboxPrefix);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -139,13 +139,13 @@ describe('SharedNovaConfig set and save', async () => {
   });
 
   it('set accepts valid config and save writes file', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigSetAndSaveProjectDirectory = join(sandboxRoot, 'set-save');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveProjectDirectory = join(sandboxRoot, 'set-save');
 
     await mkdir(projectDirectory, { recursive: true });
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigSetAndSaveConfig = new LibNovaConfig();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveConfig = new LibNovaConfig();
 
     config.set({
       project: {
@@ -161,12 +161,12 @@ describe('SharedNovaConfig set and save', async () => {
 
     await config.save(true);
 
-    const filePath: TestsLibNovaConfigSharednovaconfigSetAndSaveFilePath = join(projectDirectory, 'nova.config.json');
-    const fileContents: TestsLibNovaConfigSharednovaconfigSetAndSaveFileContents = await readFile(filePath, 'utf-8');
-    const parsed: TestsLibNovaConfigSharednovaconfigSetAndSaveParsed = JSON.parse(fileContents);
-    const parsedProject: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProject = parsed['project'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProject;
-    const parsedProjectName: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProjectName = parsedProject['name'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProjectName;
-    const parsedProjectDescription: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProjectDescription = parsedProject['description'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedProjectDescription;
+    const filePath: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFilePath = join(projectDirectory, 'nova.config.json');
+    const fileContents: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFileContents = await readFile(filePath, 'utf-8');
+    const parsed: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsed = JSON.parse(fileContents);
+    const parsedProject: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProject = parsed['project'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProject;
+    const parsedProjectName: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProjectName = parsedProject['name'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProjectName;
+    const parsedProjectDescription: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProjectDescription = parsedProject['description'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedProjectDescription;
 
     strictEqual(parsedProjectName['slug'], 'test-project');
     strictEqual(parsedProjectName['title'], 'Test Project');
@@ -176,13 +176,13 @@ describe('SharedNovaConfig set and save', async () => {
   });
 
   it('set accepts valid workspace config', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigSetAndSaveProjectDirectory = join(sandboxRoot, 'set-workspaces');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveProjectDirectory = join(sandboxRoot, 'set-workspaces');
 
     await mkdir(projectDirectory, { recursive: true });
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigSetAndSaveConfig = new LibNovaConfig();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveConfig = new LibNovaConfig();
 
     config.set({
       project: {
@@ -211,13 +211,13 @@ describe('SharedNovaConfig set and save', async () => {
 
     await config.save(true);
 
-    const filePath: TestsLibNovaConfigSharednovaconfigSetAndSaveFilePath = join(projectDirectory, 'nova.config.json');
-    const fileContents: TestsLibNovaConfigSharednovaconfigSetAndSaveFileContents = await readFile(filePath, 'utf-8');
-    const parsed: TestsLibNovaConfigSharednovaconfigSetAndSaveParsed = JSON.parse(fileContents);
-    const parsedWorkspaces: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspaces = parsed['workspaces'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspaces;
-    const parsedRootWorkspace: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspace = parsedWorkspaces['.'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspace;
-    const parsedDocsWorkspace: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspace = parsedWorkspaces['apps/docs'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspace;
-    const parsedNovaWorkspace: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspace = parsedWorkspaces['packages/nova'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedWorkspace;
+    const filePath: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFilePath = join(projectDirectory, 'nova.config.json');
+    const fileContents: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFileContents = await readFile(filePath, 'utf-8');
+    const parsed: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsed = JSON.parse(fileContents);
+    const parsedWorkspaces: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspaces = parsed['workspaces'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspaces;
+    const parsedRootWorkspace: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspace = parsedWorkspaces['.'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspace;
+    const parsedDocsWorkspace: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspace = parsedWorkspaces['apps/docs'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspace;
+    const parsedNovaWorkspace: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspace = parsedWorkspaces['packages/nova'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedWorkspace;
 
     strictEqual(parsedRootWorkspace['name'], 'nova-project');
     strictEqual(parsedRootWorkspace['role'], 'project');
@@ -230,13 +230,13 @@ describe('SharedNovaConfig set and save', async () => {
   });
 
   it('set accepts valid entities config', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigSetAndSaveProjectDirectory = join(sandboxRoot, 'set-entities');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveProjectDirectory = join(sandboxRoot, 'set-entities');
 
     await mkdir(projectDirectory, { recursive: true });
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigSetAndSaveConfig = new LibNovaConfig();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveConfig = new LibNovaConfig();
 
     config.set({
       entities: [{
@@ -249,11 +249,11 @@ describe('SharedNovaConfig set and save', async () => {
 
     await config.save(true);
 
-    const filePath: TestsLibNovaConfigSharednovaconfigSetAndSaveFilePath = join(projectDirectory, 'nova.config.json');
-    const fileContents: TestsLibNovaConfigSharednovaconfigSetAndSaveFileContents = await readFile(filePath, 'utf-8');
-    const parsed: TestsLibNovaConfigSharednovaconfigSetAndSaveParsed = JSON.parse(fileContents);
-    const parsedEntities: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedEntities = parsed['entities'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedEntities;
-    const parsedFirstEntity: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedEntity = parsedEntities[0] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedEntity;
+    const filePath: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFilePath = join(projectDirectory, 'nova.config.json');
+    const fileContents: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFileContents = await readFile(filePath, 'utf-8');
+    const parsed: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsed = JSON.parse(fileContents);
+    const parsedEntities: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedEntities = parsed['entities'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedEntities;
+    const parsedFirstEntity: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedEntity = parsedEntities[0] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedEntity;
 
     strictEqual(parsedEntities.length, 1);
     strictEqual(parsedFirstEntity['name'], 'John Doe');
@@ -265,13 +265,13 @@ describe('SharedNovaConfig set and save', async () => {
   });
 
   it('set accepts valid urls config', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigSetAndSaveProjectDirectory = join(sandboxRoot, 'set-urls');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveProjectDirectory = join(sandboxRoot, 'set-urls');
 
     await mkdir(projectDirectory, { recursive: true });
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigSetAndSaveConfig = new LibNovaConfig();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveConfig = new LibNovaConfig();
 
     config.set({
       urls: {
@@ -287,10 +287,10 @@ describe('SharedNovaConfig set and save', async () => {
 
     await config.save(true);
 
-    const filePath: TestsLibNovaConfigSharednovaconfigSetAndSaveFilePath = join(projectDirectory, 'nova.config.json');
-    const fileContents: TestsLibNovaConfigSharednovaconfigSetAndSaveFileContents = await readFile(filePath, 'utf-8');
-    const parsed: TestsLibNovaConfigSharednovaconfigSetAndSaveParsed = JSON.parse(fileContents);
-    const parsedUrls: TestsLibNovaConfigSharednovaconfigSetAndSaveParsedUrls = parsed['urls'] as TestsLibNovaConfigSharednovaconfigSetAndSaveParsedUrls;
+    const filePath: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFilePath = join(projectDirectory, 'nova.config.json');
+    const fileContents: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveFileContents = await readFile(filePath, 'utf-8');
+    const parsed: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsed = JSON.parse(fileContents);
+    const parsedUrls: Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedUrls = parsed['urls'] as Tests_Lib_NovaConfig_SharednovaconfigSetAndSaveParsedUrls;
 
     strictEqual(parsedUrls['homepage'], 'https://example.com');
     strictEqual(parsedUrls['repository'], 'git+https://github.com/user/repo.git');
@@ -307,15 +307,15 @@ describe('SharedNovaConfig set and save', async () => {
 });
 
 /**
- * Tests - Lib - Nova Config - SharedNovaConfig Load.
+ * Tests - Lib - Nova Config - Shared_NovaConfig Load.
  *
  * @since 0.13.0
  */
-describe('SharedNovaConfig load', async () => {
-  const originalCwd: TestsLibNovaConfigSharednovaconfigLoadOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsLibNovaConfigSharednovaconfigLoadTemporaryDirectory = tmpdir();
-  const sandboxPrefix: TestsLibNovaConfigSharednovaconfigLoadSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsLibNovaConfigSharednovaconfigLoadSandboxRoot = await mkdtemp(sandboxPrefix);
+describe('Shared_NovaConfig load', async () => {
+  const originalCwd: Tests_Lib_NovaConfig_SharednovaconfigLoadOriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadTemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharednovaconfigLoadSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharednovaconfigLoadSandboxRoot = await mkdtemp(sandboxPrefix);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -329,11 +329,11 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load reads config from filesystem', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'load');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'load');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configData: TestsLibNovaConfigSharednovaconfigLoadConfigData = {
+    const configData: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigData = {
       project: {
         name: {
           slug: 'loaded-project',
@@ -342,23 +342,23 @@ describe('SharedNovaConfig load', async () => {
       },
     };
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify(configData, null, 2);
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify(configData, null, 2);
 
     await writeFile(configPath, configContents, 'utf-8');
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
     }
 
-    const loadedProjectName: TestsLibNovaConfigSharednovaconfigLoadLoadedProjectName = loadedProject['name'];
+    const loadedProjectName: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProjectName = loadedProject['name'];
 
     if (loadedProjectName === undefined) {
       fail('Expected project name to be defined');
@@ -371,14 +371,14 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load returns empty object when config file is missing', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'missing');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'missing');
 
     await mkdir(projectDirectory, { recursive: true });
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
     deepStrictEqual(loaded, {});
 
@@ -386,12 +386,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips unknown fields from config file', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'strip-unknown');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'strip-unknown');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -405,16 +405,16 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
     }
 
-    const loadedProjectName: TestsLibNovaConfigSharednovaconfigLoadLoadedProjectName = loadedProject['name'];
+    const loadedProjectName: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProjectName = loadedProject['name'];
 
     if (loadedProjectName === undefined) {
       fail('Expected project name to be defined');
@@ -427,18 +427,18 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load handles non-object config gracefully', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'non-object');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'non-object');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
 
     await writeFile(configPath, '"just a string"', 'utf-8');
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
     deepStrictEqual(loaded, {});
 
@@ -446,12 +446,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips empty strings from config', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'empty-strings');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'empty-strings');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: '',
@@ -464,16 +464,16 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
     }
 
-    const loadedProjectName: TestsLibNovaConfigSharednovaconfigLoadLoadedProjectName = loadedProject['name'];
+    const loadedProjectName: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProjectName = loadedProject['name'];
 
     if (loadedProjectName === undefined) {
       fail('Expected project name to be defined');
@@ -486,12 +486,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load rejects workspace with invalid role', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-role');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-role');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       workspaces: {
         '.': {
           name: 'test',
@@ -505,8 +505,8 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
     strictEqual(loaded['workspaces'], undefined);
 
@@ -514,12 +514,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load rejects workspace with invalid policy for role', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-policy');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-policy');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       workspaces: {
         '.': {
           name: 'test-project',
@@ -533,8 +533,8 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
     strictEqual(loaded['workspaces'], undefined);
 
@@ -542,12 +542,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load parses recipes from workspace config', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       workspaces: {
         '.': {
           name: 'project',
@@ -575,28 +575,28 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedWorkspaces: TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
+    const loadedWorkspaces: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
 
     if (loadedWorkspaces === undefined) {
       fail('Expected workspaces to be defined');
     }
 
-    const rootWorkspace: TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
+    const rootWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
 
     if (rootWorkspace === undefined) {
       fail('Expected root workspace to be defined');
     }
 
-    const coreWorkspace: TestsLibNovaConfigSharednovaconfigLoadCoreWorkspace = loadedWorkspaces['packages/core'];
+    const coreWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadCoreWorkspace = loadedWorkspaces['packages/core'];
 
     if (coreWorkspace === undefined) {
       fail('Expected packages/core workspace to be defined');
     }
 
-    const rootRecipes: TestsLibNovaConfigSharednovaconfigLoadRootRecipes = rootWorkspace['recipes'];
+    const rootRecipes: Tests_Lib_NovaConfig_SharednovaconfigLoadRootRecipes = rootWorkspace['recipes'];
 
     if (rootRecipes === undefined) {
       fail('Expected root workspace recipes to be defined');
@@ -615,12 +615,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load parses displayName from workspace config', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'display-name');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'display-name');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       workspaces: {
         '.': {
           name: 'project',
@@ -640,22 +640,22 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedWorkspaces: TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
+    const loadedWorkspaces: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
 
     if (loadedWorkspaces === undefined) {
       fail('Expected workspaces to be defined');
     }
 
-    const rootWorkspace: TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
+    const rootWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
 
     if (rootWorkspace === undefined) {
       fail('Expected root workspace to be defined');
     }
 
-    const coreWorkspace: TestsLibNovaConfigSharednovaconfigLoadCoreWorkspace = loadedWorkspaces['packages/core'];
+    const coreWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadCoreWorkspace = loadedWorkspaces['packages/core'];
 
     if (coreWorkspace === undefined) {
       fail('Expected packages/core workspace to be defined');
@@ -668,12 +668,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load drops invalid displayName from workspace config', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'display-name-invalid');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'display-name-invalid');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       workspaces: {
         '.': {
           name: 'project',
@@ -694,22 +694,22 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedWorkspaces: TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
+    const loadedWorkspaces: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
 
     if (loadedWorkspaces === undefined) {
       fail('Expected workspaces to be defined');
     }
 
-    const rootWorkspace: TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
+    const rootWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
 
     if (rootWorkspace === undefined) {
       fail('Expected root workspace to be defined');
     }
 
-    const coreWorkspace: TestsLibNovaConfigSharednovaconfigLoadCoreWorkspace = loadedWorkspaces['packages/core'];
+    const coreWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadCoreWorkspace = loadedWorkspaces['packages/core'];
 
     if (coreWorkspace === undefined) {
       fail('Expected packages/core workspace to be defined');
@@ -722,12 +722,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load ignores invalid recipe tuples', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes-invalid');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes-invalid');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       workspaces: {
         '.': {
           name: 'project',
@@ -746,22 +746,22 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedWorkspaces: TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
+    const loadedWorkspaces: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
 
     if (loadedWorkspaces === undefined) {
       fail('Expected workspaces to be defined');
     }
 
-    const rootWorkspace: TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
+    const rootWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
 
     if (rootWorkspace === undefined) {
       fail('Expected root workspace to be defined');
     }
 
-    const rootRecipes: TestsLibNovaConfigSharednovaconfigLoadRootRecipes = rootWorkspace['recipes'];
+    const rootRecipes: Tests_Lib_NovaConfig_SharednovaconfigLoadRootRecipes = rootWorkspace['recipes'];
 
     if (rootRecipes === undefined) {
       fail('Expected root workspace recipes to be defined');
@@ -775,12 +775,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load ignores unknown recipe names', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes-unknown');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes-unknown');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       workspaces: {
         '.': {
           name: 'project',
@@ -798,28 +798,28 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedWorkspaces: TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
+    const loadedWorkspaces: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
 
     if (loadedWorkspaces === undefined) {
       fail('Expected workspaces to be defined');
     }
 
-    const rootWorkspace: TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
+    const rootWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
 
     if (rootWorkspace === undefined) {
       fail('Expected root workspace to be defined');
     }
 
-    const rootRecipes: TestsLibNovaConfigSharednovaconfigLoadRootRecipes = rootWorkspace['recipes'];
+    const rootRecipes: Tests_Lib_NovaConfig_SharednovaconfigLoadRootRecipes = rootWorkspace['recipes'];
 
     if (rootRecipes === undefined) {
       fail('Expected root workspace recipes to be defined');
     }
 
-    const recipeKeys: TestsLibNovaConfigSharednovaconfigLoadRecipeKeys = Object.keys(rootRecipes);
+    const recipeKeys: Tests_Lib_NovaConfig_SharednovaconfigLoadRecipeKeys = Object.keys(rootRecipes);
 
     strictEqual(recipeKeys.length, 1);
     deepStrictEqual(rootRecipes['sync-identity'], [true]);
@@ -828,12 +828,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load filters non-boolean recipe settings', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes-settings-invalid');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'recipes-settings-invalid');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       workspaces: {
         '.': {
           name: 'project',
@@ -856,22 +856,22 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedWorkspaces: TestsLibNovaConfigSharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
+    const loadedWorkspaces: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedWorkspaces = loaded['workspaces'];
 
     if (loadedWorkspaces === undefined) {
       fail('Expected workspaces to be defined');
     }
 
-    const rootWorkspace: TestsLibNovaConfigSharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
+    const rootWorkspace: Tests_Lib_NovaConfig_SharednovaconfigLoadRootWorkspace = loadedWorkspaces['.'];
 
     if (rootWorkspace === undefined) {
       fail('Expected root workspace to be defined');
     }
 
-    const rootRecipes: TestsLibNovaConfigSharednovaconfigLoadRootRecipes = rootWorkspace['recipes'];
+    const rootRecipes: Tests_Lib_NovaConfig_SharednovaconfigLoadRootRecipes = rootWorkspace['recipes'];
 
     if (rootRecipes === undefined) {
       fail('Expected root workspace recipes to be defined');
@@ -888,12 +888,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load filters invalid entity roles', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-entity-roles');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-entity-roles');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       entities: [{
         name: 'Test',
         roles: ['invalid-role'],
@@ -904,16 +904,16 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedEntities: TestsLibNovaConfigSharednovaconfigLoadLoadedEntities = loaded['entities'];
+    const loadedEntities: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedEntities = loaded['entities'];
 
     if (loadedEntities === undefined) {
       fail('Expected entities to be defined');
     }
 
-    const firstEntity: TestsLibNovaConfigSharednovaconfigLoadFirstEntity = loadedEntities[0];
+    const firstEntity: Tests_Lib_NovaConfig_SharednovaconfigLoadFirstEntity = loadedEntities[0];
 
     if (firstEntity === undefined) {
       fail('Expected first entity to be defined');
@@ -925,12 +925,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load filters invalid email format', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-email');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-email');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       entities: [{
         name: 'Test',
         email: 'not-an-email',
@@ -941,16 +941,16 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedEntities: TestsLibNovaConfigSharednovaconfigLoadLoadedEntities = loaded['entities'];
+    const loadedEntities: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedEntities = loaded['entities'];
 
     if (loadedEntities === undefined) {
       fail('Expected entities to be defined');
     }
 
-    const firstEntity: TestsLibNovaConfigSharednovaconfigLoadFirstEntity = loadedEntities[0];
+    const firstEntity: Tests_Lib_NovaConfig_SharednovaconfigLoadFirstEntity = loadedEntities[0];
 
     if (firstEntity === undefined) {
       fail('Expected first entity to be defined');
@@ -962,12 +962,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load rejects invalid url protocol', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-url');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-url');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       urls: {
         homepage: 'ftp://example.com',
       },
@@ -977,8 +977,8 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
     strictEqual(loaded['urls'], undefined);
 
@@ -986,12 +986,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts valid legalName value', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'valid-legal-name');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'valid-legal-name');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         legalName: 'Example Author LLC',
       },
@@ -1001,10 +1001,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1016,12 +1016,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips empty legalName value', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'empty-legal-name');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'empty-legal-name');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -1034,10 +1034,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1049,12 +1049,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts valid pronouns value', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'valid-pronouns');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'valid-pronouns');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         pronouns: 'personal',
       },
@@ -1064,10 +1064,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1079,12 +1079,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts business pronouns value', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'business-pronouns');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'business-pronouns');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         pronouns: 'business',
       },
@@ -1094,10 +1094,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1109,12 +1109,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips invalid pronouns value', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-pronouns');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-pronouns');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -1127,10 +1127,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1142,12 +1142,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts valid platforms array', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'valid-platforms');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'valid-platforms');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         platforms: [
           'nodejs',
@@ -1161,10 +1161,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1180,12 +1180,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load filters invalid platform entries', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-platforms');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-platforms');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         platforms: [
           'nodejs',
@@ -1199,10 +1199,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1217,12 +1217,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips platforms when all entries are invalid', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'all-bad-platforms');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'all-bad-platforms');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -1238,10 +1238,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1253,12 +1253,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts valid startingYear', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'valid-year');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'valid-year');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         startingYear: 2024,
       },
@@ -1268,10 +1268,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1283,12 +1283,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts startingYear at minimum boundary', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'min-year');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'min-year');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         startingYear: 1970,
       },
@@ -1298,10 +1298,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1313,12 +1313,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips startingYear below 1970', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'year-below-min');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'year-below-min');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -1331,10 +1331,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1346,12 +1346,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips non-integer startingYear', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'year-float');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'year-float');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -1364,10 +1364,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1379,12 +1379,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips non-number startingYear', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'year-string');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'year-string');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -1397,10 +1397,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1412,12 +1412,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts valid license', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'license-valid');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'license-valid');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -1430,10 +1430,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1445,12 +1445,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load strips invalid license', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'license-invalid');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'license-invalid');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -1463,10 +1463,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+    const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
     if (loadedProject === undefined) {
       fail('Expected project to be defined');
@@ -1478,7 +1478,7 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts all supported licenses', async () => {
-    const licenses: TestsLibNovaConfigSharednovaconfigLoadLicenses = [
+    const licenses: Tests_Lib_NovaConfig_SharednovaconfigLoadLicenses = [
       'AGPL-3.0',
       'Apache-2.0',
       'BSD-2-Clause',
@@ -1495,12 +1495,12 @@ describe('SharedNovaConfig load', async () => {
     ];
 
     for (const license of licenses) {
-      const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, `license-${license}`);
+      const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, `license-${license}`);
 
       await mkdir(projectDirectory, { recursive: true });
 
-      const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-      const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+      const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+      const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
         project: {
           name: {
             slug: 'test',
@@ -1513,10 +1513,10 @@ describe('SharedNovaConfig load', async () => {
 
       process.chdir(projectDirectory);
 
-      const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-      const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+      const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+      const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-      const loadedProject: TestsLibNovaConfigSharednovaconfigLoadLoadedProject = loaded['project'];
+      const loadedProject: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedProject = loaded['project'];
 
       if (loadedProject === undefined) {
         fail('Expected project to be defined');
@@ -1529,12 +1529,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts privacyPolicy url', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'privacy-policy');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'privacy-policy');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       urls: {
         privacyPolicy: 'https://example.com/privacy',
       },
@@ -1544,10 +1544,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedUrls: TestsLibNovaConfigSharednovaconfigLoadLoadedUrls = loaded['urls'];
+    const loadedUrls: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedUrls = loaded['urls'];
 
     if (loadedUrls === undefined) {
       fail('Expected urls to be defined');
@@ -1559,12 +1559,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts termsOfUse url', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'terms-of-use');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'terms-of-use');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       urls: {
         termsOfUse: 'https://example.com/terms',
       },
@@ -1574,10 +1574,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedUrls: TestsLibNovaConfigSharednovaconfigLoadLoadedUrls = loaded['urls'];
+    const loadedUrls: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedUrls = loaded['urls'];
 
     if (loadedUrls === undefined) {
       fail('Expected urls to be defined');
@@ -1589,12 +1589,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load rejects invalid privacyPolicy url protocol', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-privacy-url');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'bad-privacy-url');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       urls: {
         privacyPolicy: 'ftp://example.com/privacy',
       },
@@ -1604,8 +1604,8 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
     strictEqual(loaded['urls'], undefined);
 
@@ -1613,12 +1613,12 @@ describe('SharedNovaConfig load', async () => {
   });
 
   it('load accepts git protocol for repository field', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'git-protocol');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigLoadProjectDirectory = join(sandboxRoot, 'git-protocol');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigLoadConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigLoadConfigContents = JSON.stringify({
       urls: {
         repository: 'git://github.com/user/repo.git',
       },
@@ -1628,10 +1628,10 @@ describe('SharedNovaConfig load', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigLoadConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigLoadLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigLoadConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigLoadLoaded = await config.load();
 
-    const loadedUrls: TestsLibNovaConfigSharednovaconfigLoadLoadedUrls = loaded['urls'];
+    const loadedUrls: Tests_Lib_NovaConfig_SharednovaconfigLoadLoadedUrls = loaded['urls'];
 
     if (loadedUrls === undefined) {
       fail('Expected urls to be defined');
@@ -1651,10 +1651,10 @@ describe('SharedNovaConfig load', async () => {
  * @since 0.20.0
  */
 describe('parseWorkflows (via load)', async () => {
-  const originalCwd: TestsLibNovaConfigSharednovaconfigParseWorkflowsOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsTemporaryDirectory = tmpdir();
-  const sandboxPrefix: TestsLibNovaConfigSharednovaconfigParseWorkflowsSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsLibNovaConfigSharednovaconfigParseWorkflowsSandboxRoot = await mkdtemp(sandboxPrefix);
+  const originalCwd: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsOriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsTemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSandboxRoot = await mkdtemp(sandboxPrefix);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -1668,12 +1668,12 @@ describe('parseWorkflows (via load)', async () => {
   });
 
   it('load parses workflow with template, suffix, triggers, and depends-on', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-full');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-full');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
       workflows: [
         {
           template: 'deploy',
@@ -1697,10 +1697,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = await config.load();
 
-    const loadedWorkflows: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -1708,7 +1708,7 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 2);
 
-    const firstWorkflow: TestsLibNovaConfigSharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
+    const firstWorkflow: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
 
     if (firstWorkflow === undefined) {
       fail('Expected first workflow to be defined');
@@ -1722,7 +1722,7 @@ describe('parseWorkflows (via load)', async () => {
       stage: 'prod',
     });
 
-    const secondWorkflow: TestsLibNovaConfigSharednovaconfigParseWorkflowsSecondWorkflow = loadedWorkflows[1];
+    const secondWorkflow: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSecondWorkflow = loadedWorkflows[1];
 
     if (secondWorkflow === undefined) {
       fail('Expected second workflow to be defined');
@@ -1738,12 +1738,12 @@ describe('parseWorkflows (via load)', async () => {
   });
 
   it('load skips workflow entry without suffix', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-no-suffix');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-no-suffix');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
       workflows: [
         {
           template: 'deploy',
@@ -1761,10 +1761,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = await config.load();
 
-    const loadedWorkflows: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -1772,7 +1772,7 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 1);
 
-    const firstWorkflow: TestsLibNovaConfigSharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
+    const firstWorkflow: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
 
     if (firstWorkflow === undefined) {
       fail('Expected first workflow to be defined');
@@ -1785,12 +1785,12 @@ describe('parseWorkflows (via load)', async () => {
   });
 
   it('load skips workflow entry missing triggers', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-no-triggers');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-no-triggers');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
       workflows: [
         {
           template: 'deploy',
@@ -1808,10 +1808,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = await config.load();
 
-    const loadedWorkflows: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -1819,7 +1819,7 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 1);
 
-    const firstWorkflow: TestsLibNovaConfigSharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
+    const firstWorkflow: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
 
     if (firstWorkflow === undefined) {
       fail('Expected first workflow to be defined');
@@ -1831,12 +1831,12 @@ describe('parseWorkflows (via load)', async () => {
   });
 
   it('load parses depends-on field as array', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-depends-on');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-depends-on');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
       workflows: [
         {
           template: 'publish-to-npm',
@@ -1856,10 +1856,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = await config.load();
 
-    const loadedWorkflows: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -1867,7 +1867,7 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 2);
 
-    const secondWorkflow: TestsLibNovaConfigSharednovaconfigParseWorkflowsSecondWorkflow = loadedWorkflows[1];
+    const secondWorkflow: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsSecondWorkflow = loadedWorkflows[1];
 
     if (secondWorkflow === undefined) {
       fail('Expected second workflow to be defined');
@@ -1879,12 +1879,12 @@ describe('parseWorkflows (via load)', async () => {
   });
 
   it('load allows empty triggers array', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-empty-triggers');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-empty-triggers');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
       workflows: [{
         template: 'check-sponsor-gated-issues',
         suffix: 'empty-triggers',
@@ -1896,10 +1896,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = await config.load();
 
-    const loadedWorkflows: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -1907,7 +1907,7 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 1);
 
-    const firstWorkflow: TestsLibNovaConfigSharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
+    const firstWorkflow: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
 
     if (firstWorkflow === undefined) {
       fail('Expected first workflow to be defined');
@@ -1919,12 +1919,12 @@ describe('parseWorkflows (via load)', async () => {
   });
 
   it('drops invalid workflow entries silently', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-invalid');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-invalid');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
       workflows: [
         'not-an-object',
         {
@@ -1947,10 +1947,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = await config.load();
 
-    const loadedWorkflows: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -1958,7 +1958,7 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 1);
 
-    const firstWorkflow: TestsLibNovaConfigSharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
+    const firstWorkflow: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
 
     if (firstWorkflow === undefined) {
       fail('Expected first workflow to be defined');
@@ -1970,12 +1970,12 @@ describe('parseWorkflows (via load)', async () => {
   });
 
   it('returns undefined for non-array workflows', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-non-array');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-non-array');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
       workflows: { template: 'deploy' },
     }, null, 2);
 
@@ -1983,8 +1983,8 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = await config.load();
 
     strictEqual(loaded['workflows'], undefined);
 
@@ -1992,12 +1992,12 @@ describe('parseWorkflows (via load)', async () => {
   });
 
   it('drops non-string settings values', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-bad-settings');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsProjectDirectory = join(sandboxRoot, 'workflows-bad-settings');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfigContents = JSON.stringify({
       workflows: [{
         id: 'settings-test',
         template: 'deploy',
@@ -2016,10 +2016,10 @@ describe('parseWorkflows (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoaded = await config.load();
 
-    const loadedWorkflows: TestsLibNovaConfigSharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
+    const loadedWorkflows: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsLoadedWorkflows = loaded['workflows'];
 
     if (loadedWorkflows === undefined) {
       fail('Expected workflows to be defined');
@@ -2027,7 +2027,7 @@ describe('parseWorkflows (via load)', async () => {
 
     strictEqual(loadedWorkflows.length, 1);
 
-    const firstWorkflow: TestsLibNovaConfigSharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
+    const firstWorkflow: Tests_Lib_NovaConfig_SharednovaconfigParseWorkflowsFirstWorkflow = loadedWorkflows[0];
 
     if (firstWorkflow === undefined) {
       fail('Expected first workflow to be defined');
@@ -2049,10 +2049,10 @@ describe('parseWorkflows (via load)', async () => {
  * @since 0.22.0
  */
 describe('parseGithub (via load)', async () => {
-  const originalCwd: TestsLibNovaConfigSharednovaconfigParseGithubOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsLibNovaConfigSharednovaconfigParseGithubTemporaryDirectory = tmpdir();
-  const sandboxPrefix: TestsLibNovaConfigSharednovaconfigParseGithubSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsLibNovaConfigSharednovaconfigParseGithubSandboxRoot = await mkdtemp(sandboxPrefix);
+  const originalCwd: Tests_Lib_NovaConfig_SharednovaconfigParseGithubOriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubTemporaryDirectory = tmpdir();
+  const sandboxPrefix: Tests_Lib_NovaConfig_SharednovaconfigParseGithubSandboxPrefix = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Lib_NovaConfig_SharednovaconfigParseGithubSandboxRoot = await mkdtemp(sandboxPrefix);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -2066,12 +2066,12 @@ describe('parseGithub (via load)', async () => {
   });
 
   it('returns undefined for missing github block', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-missing');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-missing');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = JSON.stringify({
       project: {
         name: {
           slug: 'test',
@@ -2083,8 +2083,8 @@ describe('parseGithub (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = await config.load();
 
     strictEqual(loaded['github'], undefined);
 
@@ -2092,12 +2092,12 @@ describe('parseGithub (via load)', async () => {
   });
 
   it('parses full github block with all fields', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-full');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-full');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = JSON.stringify({
       github: {
         owner: 'acme-org',
         repo: 'my-repo',
@@ -2134,10 +2134,10 @@ describe('parseGithub (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = await config.load();
 
-    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+    const loadedGithub: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub = loaded['github'];
 
     if (loadedGithub === undefined) {
       fail('Expected github to be defined');
@@ -2146,7 +2146,7 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedGithub['owner'], 'acme-org');
     strictEqual(loadedGithub['repo'], 'my-repo');
 
-    const loadedRecipes: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubRecipes = loadedGithub['recipes'];
+    const loadedRecipes: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubRecipes = loadedGithub['recipes'];
 
     if (loadedRecipes === undefined) {
       fail('Expected github.recipes to be defined');
@@ -2156,7 +2156,7 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedRecipes['sync-features'], false);
     strictEqual(loadedRecipes['sync-policies'], true);
 
-    const loadedTopics: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubTopics = loadedGithub['topics'];
+    const loadedTopics: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubTopics = loadedGithub['topics'];
 
     if (loadedTopics === undefined) {
       fail('Expected github.topics to be defined');
@@ -2168,7 +2168,7 @@ describe('parseGithub (via load)', async () => {
       'nova',
     ]);
 
-    const loadedFeatures: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubFeatures = loadedGithub['features'];
+    const loadedFeatures: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubFeatures = loadedGithub['features'];
 
     if (loadedFeatures === undefined) {
       fail('Expected github.features to be defined');
@@ -2179,7 +2179,7 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedFeatures['projects'], true);
     strictEqual(loadedFeatures['discussions'], false);
 
-    const loadedPolicies: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPolicies = loadedGithub['policies'];
+    const loadedPolicies: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubPolicies = loadedGithub['policies'];
 
     if (loadedPolicies === undefined) {
       fail('Expected github.policies to be defined');
@@ -2189,7 +2189,7 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedPolicies['defaultBranch'], 'main');
     strictEqual(loadedPolicies['autoDeleteHeadBranch'], true);
 
-    const loadedMergeMethods: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods = loadedPolicies['mergeMethods'];
+    const loadedMergeMethods: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubPoliciesMergeMethods = loadedPolicies['mergeMethods'];
 
     if (loadedMergeMethods === undefined) {
       fail('Expected github.policies.mergeMethods to be defined');
@@ -2203,12 +2203,12 @@ describe('parseGithub (via load)', async () => {
   });
 
   it('parses partial github block with missing owner and repo', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-partial');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-partial');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = JSON.stringify({
       github: {
         topics: ['typescript'],
       },
@@ -2218,10 +2218,10 @@ describe('parseGithub (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = await config.load();
 
-    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+    const loadedGithub: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub = loaded['github'];
 
     if (loadedGithub === undefined) {
       fail('Expected github to be defined');
@@ -2230,7 +2230,7 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedGithub['owner'], undefined);
     strictEqual(loadedGithub['repo'], undefined);
 
-    const loadedTopics: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubTopics = loadedGithub['topics'];
+    const loadedTopics: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubTopics = loadedGithub['topics'];
 
     if (loadedTopics === undefined) {
       fail('Expected github.topics to be defined');
@@ -2242,12 +2242,12 @@ describe('parseGithub (via load)', async () => {
   });
 
   it('drops malformed field values and keeps valid ones', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = JSON.stringify({
       github: {
         owner: 42,
         repo: 'valid-repo',
@@ -2262,10 +2262,10 @@ describe('parseGithub (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = await config.load();
 
-    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+    const loadedGithub: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub = loaded['github'];
 
     if (loadedGithub === undefined) {
       fail('Expected github to be defined');
@@ -2274,7 +2274,7 @@ describe('parseGithub (via load)', async () => {
     strictEqual(loadedGithub['owner'], undefined);
     strictEqual(loadedGithub['repo'], 'valid-repo');
 
-    const loadedFeatures: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithubFeatures = loadedGithub['features'];
+    const loadedFeatures: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithubFeatures = loadedGithub['features'];
 
     if (loadedFeatures === undefined) {
       fail('Expected github.features to be defined');
@@ -2287,12 +2287,12 @@ describe('parseGithub (via load)', async () => {
   });
 
   it('ignores stale urls.github field silently', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-stale-url');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-stale-url');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = JSON.stringify({
       urls: {
         homepage: 'https://example.com',
         github: 'https://github.com/acme-org/my-repo',
@@ -2303,10 +2303,10 @@ describe('parseGithub (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = await config.load();
 
-    const loadedUrls: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['urls'] as TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub;
+    const loadedUrls: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub = loaded['urls'] as Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub;
 
     if (loadedUrls === undefined) {
       fail('Expected urls to be defined');
@@ -2319,12 +2319,12 @@ describe('parseGithub (via load)', async () => {
   });
 
   it('rejects malformed owner with shell metacharacters', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed-owner');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed-owner');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = JSON.stringify({
       github: {
         owner: 'evil; rm -rf ~',
         repo: 'valid-repo',
@@ -2335,10 +2335,10 @@ describe('parseGithub (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = await config.load();
 
-    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+    const loadedGithub: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub = loaded['github'];
 
     if (loadedGithub === undefined) {
       fail('Expected github to be defined');
@@ -2351,12 +2351,12 @@ describe('parseGithub (via load)', async () => {
   });
 
   it('rejects malformed repo with path traversal', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed-repo');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-malformed-repo');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = JSON.stringify({
       github: {
         owner: 'valid-owner',
         repo: '../etc',
@@ -2367,10 +2367,10 @@ describe('parseGithub (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = await config.load();
 
-    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+    const loadedGithub: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub = loaded['github'];
 
     if (loadedGithub === undefined) {
       fail('Expected github to be defined');
@@ -2383,12 +2383,12 @@ describe('parseGithub (via load)', async () => {
   });
 
   it('accepts valid owner and repo with hyphens, dots, and underscores', async () => {
-    const projectDirectory: TestsLibNovaConfigSharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-valid-chars');
+    const projectDirectory: Tests_Lib_NovaConfig_SharednovaconfigParseGithubProjectDirectory = join(sandboxRoot, 'github-valid-chars');
 
     await mkdir(projectDirectory, { recursive: true });
 
-    const configPath: TestsLibNovaConfigSharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
-    const configContents: TestsLibNovaConfigSharednovaconfigParseGithubConfigContents = JSON.stringify({
+    const configPath: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigPath = join(projectDirectory, 'nova.config.json');
+    const configContents: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfigContents = JSON.stringify({
       github: {
         owner: 'cbn-ventures',
         repo: 'nova.docs_v2',
@@ -2399,10 +2399,10 @@ describe('parseGithub (via load)', async () => {
 
     process.chdir(projectDirectory);
 
-    const config: TestsLibNovaConfigSharednovaconfigParseGithubConfig = new LibNovaConfig();
-    const loaded: TestsLibNovaConfigSharednovaconfigParseGithubLoaded = await config.load();
+    const config: Tests_Lib_NovaConfig_SharednovaconfigParseGithubConfig = new LibNovaConfig();
+    const loaded: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoaded = await config.load();
 
-    const loadedGithub: TestsLibNovaConfigSharednovaconfigParseGithubLoadedGithub = loaded['github'];
+    const loadedGithub: Tests_Lib_NovaConfig_SharednovaconfigParseGithubLoadedGithub = loaded['github'];
 
     if (loadedGithub === undefined) {
       fail('Expected github to be defined');

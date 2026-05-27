@@ -9,91 +9,91 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogPostItemBlogPostItemPropsChildren = ReactNode;
+export type Theme_BlogPostItem_Index_BlogPostItem_Props_Children = ReactNode;
 
-export type ThemeBlogPostItemBlogPostItemPropsClassName = string | undefined;
+export type Theme_BlogPostItem_Index_BlogPostItem_Props_ClassName = string | undefined;
 
-export type ThemeBlogPostItemBlogPostItemPropsStyle = CSSProperties | undefined;
+export type Theme_BlogPostItem_Index_BlogPostItem_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogPostItemBlogPostItemProps = {
-  children: ThemeBlogPostItemBlogPostItemPropsChildren;
-  className?: ThemeBlogPostItemBlogPostItemPropsClassName;
-  style?: ThemeBlogPostItemBlogPostItemPropsStyle;
+export type Theme_BlogPostItem_Index_BlogPostItem_Props = {
+  children: Theme_BlogPostItem_Index_BlogPostItem_Props_Children;
+  className?: Theme_BlogPostItem_Index_BlogPostItem_Props_ClassName;
+  style?: Theme_BlogPostItem_Index_BlogPostItem_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostItemBlogPostItemContext = DocusaurusContext;
+export type Theme_BlogPostItem_Index_BlogPostItem_Context = DocusaurusContext;
 
-export type ThemeBlogPostItemBlogPostItemCurrentLocale = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_CurrentLocale = string;
 
-export type ThemeBlogPostItemBlogPostItemBlogPost = BlogPostContextValue;
+export type Theme_BlogPostItem_Index_BlogPostItem_BlogPost = BlogPostContextValue;
 
-export type ThemeBlogPostItemBlogPostItemIsBlogPostPage = boolean;
+export type Theme_BlogPostItem_Index_BlogPostItem_IsBlogPostPage = boolean;
 
-export type ThemeBlogPostItemBlogPostItemTitle = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_Title = string;
 
-export type ThemeBlogPostItemBlogPostItemPermalink = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_Permalink = string;
 
-export type ThemeBlogPostItemBlogPostItemDate = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_Date = string;
 
-export type ThemeBlogPostItemBlogPostItemDateObject = Date;
+export type Theme_BlogPostItem_Index_BlogPostItem_DateObject = Date;
 
-export type ThemeBlogPostItemBlogPostItemFormattedDate = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_FormattedDate = string;
 
-export type ThemeBlogPostItemBlogPostItemReadingTime = number | undefined;
+export type Theme_BlogPostItem_Index_BlogPostItem_ReadingTime = number | undefined;
 
-export type ThemeBlogPostItemBlogPostItemReadingTimeLabel = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_ReadingTimeLabel = string;
 
-export type ThemeBlogPostItemBlogPostItemFormattedReadingTime = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_FormattedReadingTime = string;
 
-export type ThemeBlogPostItemBlogPostItemHasTruncateMarker = boolean;
+export type Theme_BlogPostItem_Index_BlogPostItem_HasTruncateMarker = boolean;
 
-export type ThemeBlogPostItemBlogPostItemAuthors = readonly Author[];
+export type Theme_BlogPostItem_Index_BlogPostItem_Authors = readonly Author[];
 
-export type ThemeBlogPostItemBlogPostItemAssetsAuthorImageUrls = readonly (string | undefined)[];
+export type Theme_BlogPostItem_Index_BlogPostItem_AssetsAuthorImageUrls = readonly (string | undefined)[];
 
-export type ThemeBlogPostItemBlogPostItemTags = readonly TagMetadata[];
+export type Theme_BlogPostItem_Index_BlogPostItem_Tags = readonly TagMetadata[];
 
-export type ThemeBlogPostItemBlogPostItemArticleClassName = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_ArticleClassName = string;
 
-export type ThemeBlogPostItemBlogPostItemThemeConfig = {
-  blog?: ThemeBlogPostItemBlogPostItemBlogShareConfig;
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig = {
+  blog?: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostItemBlogPostItemThemeConfigCast = unknown;
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfigCast = unknown;
 
-export type ThemeBlogPostItemBlogPostItemBlogShareConfig = {
-  share?: ThemeBlogPostItemBlogPostItemShareConfig;
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog = {
+  share?: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostItemBlogPostItemShareConfig = {
-  platforms?: ThemeBlogPostItemBlogPostItemSharePlatforms;
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share = {
+  platforms?: Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share_Platforms;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostItemBlogPostItemSharePlatforms = string[];
+export type Theme_BlogPostItem_Index_BlogPostItem_ThemeConfig_Blog_Share_Platforms = string[];
 
-export type ThemeBlogPostItemBlogPostItemHasShareButtons = boolean;
+export type Theme_BlogPostItem_Index_BlogPostItem_HasShareButtons = boolean;
 
-export type ThemeBlogPostItemBlogPostItemShareUrl = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_ShareUrl = string;
 
-export type ThemeBlogPostItemBlogPostItemReadMore = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_ReadMore = string;
 
-export type ThemeBlogPostItemBlogPostItemReadMoreAriaLabel = string;
+export type Theme_BlogPostItem_Index_BlogPostItem_ReadMoreAriaLabel = string;
 
-export type ThemeBlogPostItemBlogPostItemAuthor = Author;
+export type Theme_BlogPostItem_Index_BlogPostItem_Author = Author;
 
-export type ThemeBlogPostItemBlogPostItemAuthorIndex = number;
+export type Theme_BlogPostItem_Index_BlogPostItem_AuthorIndex = number;
 
-export type ThemeBlogPostItemBlogPostItemAuthorImageUrl = string | undefined;
+export type Theme_BlogPostItem_Index_BlogPostItem_AuthorImageUrl = string | undefined;
 
-export type ThemeBlogPostItemBlogPostItemAuthorPage = {
+export type Theme_BlogPostItem_Index_BlogPostItem_AuthorPage = {
   permalink: string;
   [key: string]: unknown;
 } | null | undefined;
 
-export type ThemeBlogPostItemBlogPostItemAuthorPermalink = string | undefined;
+export type Theme_BlogPostItem_Index_BlogPostItem_AuthorPermalink = string | undefined;
 
-export type ThemeBlogPostItemBlogPostItemTag = TagMetadata;
+export type Theme_BlogPostItem_Index_BlogPostItem_Tag = TagMetadata;

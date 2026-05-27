@@ -1,4 +1,4 @@
-import type { PresetsLanternPresetLantern } from '../../types/presets/lantern/preset.d.ts';
+import type { Presets_Lantern_Preset_Lantern } from '../../types/presets/lantern/preset.d.ts';
 
 /**
  * Presets - Lantern - Preset - Lantern.
@@ -9,7 +9,7 @@ import type { PresetsLanternPresetLantern } from '../../types/presets/lantern/pr
  *
  * @since 0.18.0
  */
-export const presetsLanternPresetLantern: PresetsLanternPresetLantern = {
+export const presetsLanternPresetLantern: Presets_Lantern_Preset_Lantern = {
   logo: {
     title: 'Lantern',
     alt: 'Lantern',

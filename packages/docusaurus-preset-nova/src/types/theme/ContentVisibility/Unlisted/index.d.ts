@@ -5,17 +5,17 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeContentVisibilityUnlistedPropsClassName = string | undefined;
+export type Theme_ContentVisibility_Unlisted_Index_Unlisted_Props_ClassName = string | undefined;
 
-export type ThemeContentVisibilityUnlistedPropsStyle = CSSProperties | undefined;
+export type Theme_ContentVisibility_Unlisted_Index_Unlisted_Props_Style = CSSProperties | undefined;
 
-export type ThemeContentVisibilityUnlistedProps = {
-  className?: ThemeContentVisibilityUnlistedPropsClassName;
-  style?: ThemeContentVisibilityUnlistedPropsStyle;
+export type Theme_ContentVisibility_Unlisted_Index_Unlisted_Props = {
+  className?: Theme_ContentVisibility_Unlisted_Index_Unlisted_Props_ClassName;
+  style?: Theme_ContentVisibility_Unlisted_Index_Unlisted_Props_Style;
 };
 
-export type ThemeContentVisibilityUnlistedReturns = React.JSX.Element;
+export type Theme_ContentVisibility_Unlisted_Index_Unlisted_Returns = React.JSX.Element;
 
-export type ThemeContentVisibilityUnlistedTitle = string;
+export type Theme_ContentVisibility_Unlisted_Index_Unlisted_Title = string;
 
-export type ThemeContentVisibilityUnlistedMessage = string;
+export type Theme_ContentVisibility_Unlisted_Index_Unlisted_Message = string;

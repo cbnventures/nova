@@ -1,103 +1,103 @@
 import type {
-  SharedHastNode,
-  SharedHastNodeResult,
+  Shared_HastNode,
+  Shared_HastNodeResult,
 } from '../shared.d.ts';
-import type { LibShikiThemesThemePair } from './shiki-themes.d.ts';
+import type { Lib_ShikiThemes_ThemePair } from './shiki-themes.d.ts';
 
 /**
  * Lib - Rehype Shiki - Collect Nodes.
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiCollectNodesTree = SharedHastNode;
+export type Lib_RehypeShiki_CollectNodes_Tree = Shared_HastNode;
 
-export type LibRehypeShikiCollectNodesTagName = string;
+export type Lib_RehypeShiki_CollectNodes_TagName = string;
 
-export type LibRehypeShikiCollectNodesReturns = SharedHastNodeResult[];
+export type Lib_RehypeShiki_CollectNodes_Returns = Shared_HastNodeResult[];
 
-export type LibRehypeShikiCollectNodesMatches = SharedHastNodeResult[];
+export type Lib_RehypeShiki_CollectNodes_Matches = Shared_HastNodeResult[];
 
-export type LibRehypeShikiCollectNodesWalkNode = SharedHastNode;
+export type Lib_RehypeShiki_CollectNodes_Walk_Node = Shared_HastNode;
 
-export type LibRehypeShikiCollectNodesChildren = SharedHastNode[];
+export type Lib_RehypeShiki_CollectNodes_Children = Shared_HastNode[];
 
-export type LibRehypeShikiCollectNodesChild = SharedHastNode | undefined;
+export type Lib_RehypeShiki_CollectNodes_Child = Shared_HastNode | undefined;
 
 /**
  * Lib - Rehype Shiki - Extract Text.
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiExtractTextNode = SharedHastNode;
+export type Lib_RehypeShiki_ExtractText_Node = Shared_HastNode;
 
-export type LibRehypeShikiExtractTextReturns = string;
+export type Lib_RehypeShiki_ExtractText_Returns = string;
 
-export type LibRehypeShikiExtractTextParts = string[];
+export type Lib_RehypeShiki_ExtractText_Parts = string[];
 
-export type LibRehypeShikiExtractTextChildren = SharedHastNode[];
+export type Lib_RehypeShiki_ExtractText_Children = Shared_HastNode[];
 
-export type LibRehypeShikiExtractTextChildText = string;
+export type Lib_RehypeShiki_ExtractText_ChildText = string;
 
 /**
  * Lib - Rehype Shiki - Module Highlighter.
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiModuleHighlighterHighlighter = unknown;
+export type Lib_RehypeShiki_ModuleHighlighterHighlighter = unknown;
 
-export type LibRehypeShikiModuleHighlighterHighlighterPromise = Promise<unknown> | undefined;
+export type Lib_RehypeShiki_ModuleHighlighterHighlighterPromise = Promise<unknown> | undefined;
 
 /**
  * Lib - Rehype Shiki - Parse Line Range.
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiParseLineRangeMetastring = string;
+export type Lib_RehypeShiki_ParseLineRange_Metastring = string;
 
-export type LibRehypeShikiParseLineRangeReturns = number[];
+export type Lib_RehypeShiki_ParseLineRange_Returns = number[];
 
-export type LibRehypeShikiParseLineRangeResult = number[];
+export type Lib_RehypeShiki_ParseLineRange_Result = number[];
 
-export type LibRehypeShikiParseLineRangeMatch = RegExpMatchArray | null;
+export type Lib_RehypeShiki_ParseLineRange_Match = RegExpMatchArray | null;
 
-export type LibRehypeShikiParseLineRangeRangeContent = string | undefined;
+export type Lib_RehypeShiki_ParseLineRange_RangeContent = string | undefined;
 
-export type LibRehypeShikiParseLineRangeParts = string[];
+export type Lib_RehypeShiki_ParseLineRange_Parts = string[];
 
-export type LibRehypeShikiParseLineRangeDashIndex = number;
+export type Lib_RehypeShiki_ParseLineRange_DashIndex = number;
 
-export type LibRehypeShikiParseLineRangeTrimmedPart = string;
+export type Lib_RehypeShiki_ParseLineRange_TrimmedPart = string;
 
-export type LibRehypeShikiParseLineRangeLineNumber = number;
+export type Lib_RehypeShiki_ParseLineRange_LineNumber = number;
 
-export type LibRehypeShikiParseLineRangeStart = number;
+export type Lib_RehypeShiki_ParseLineRange_Start = number;
 
-export type LibRehypeShikiParseLineRangeEnd = number;
+export type Lib_RehypeShiki_ParseLineRange_End = number;
 
 /**
  * Lib - Rehype Shiki - Process Diff Lines.
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiProcessDiffLinesCode = string;
+export type Lib_RehypeShiki_ProcessDiffLines_Code = string;
 
-export type LibRehypeShikiProcessDiffLinesReturns = LibRehypeShikiProcessDiffLinesResult;
+export type Lib_RehypeShiki_ProcessDiffLines_Returns = Lib_RehypeShiki_ProcessDiffLines_Result;
 
-export type LibRehypeShikiProcessDiffLinesLines = string[];
+export type Lib_RehypeShiki_ProcessDiffLines_Lines = string[];
 
-export type LibRehypeShikiProcessDiffLinesAddLines = number[];
+export type Lib_RehypeShiki_ProcessDiffLines_AddLines = number[];
 
-export type LibRehypeShikiProcessDiffLinesRemoveLines = number[];
+export type Lib_RehypeShiki_ProcessDiffLines_RemoveLines = number[];
 
-export type LibRehypeShikiProcessDiffLinesFirstChar = string;
+export type Lib_RehypeShiki_ProcessDiffLines_FirstChar = string;
 
-export type LibRehypeShikiProcessDiffLinesResultAddLines = number[];
+export type Lib_RehypeShiki_ProcessDiffLines_Result_AddLines = number[];
 
-export type LibRehypeShikiProcessDiffLinesResultRemoveLines = number[];
+export type Lib_RehypeShiki_ProcessDiffLines_Result_RemoveLines = number[];
 
-export type LibRehypeShikiProcessDiffLinesResult = {
-  addLines: LibRehypeShikiProcessDiffLinesResultAddLines;
-  removeLines: LibRehypeShikiProcessDiffLinesResultRemoveLines;
+export type Lib_RehypeShiki_ProcessDiffLines_Result = {
+  addLines: Lib_RehypeShiki_ProcessDiffLines_Result_AddLines;
+  removeLines: Lib_RehypeShiki_ProcessDiffLines_Result_RemoveLines;
 };
 
 /**
@@ -105,166 +105,166 @@ export type LibRehypeShikiProcessDiffLinesResult = {
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiProcessMagicCommentsCode = string;
+export type Lib_RehypeShiki_ProcessMagicComments_Code = string;
 
-export type LibRehypeShikiProcessMagicCommentsReturns = LibRehypeShikiProcessMagicCommentsResult;
+export type Lib_RehypeShiki_ProcessMagicComments_Returns = Lib_RehypeShiki_ProcessMagicComments_Result;
 
-export type LibRehypeShikiProcessMagicCommentsResultCode = string;
+export type Lib_RehypeShiki_ProcessMagicComments_Result_Code = string;
 
-export type LibRehypeShikiProcessMagicCommentsResultHighlightedLines = number[];
+export type Lib_RehypeShiki_ProcessMagicComments_Result_HighlightedLines = number[];
 
-export type LibRehypeShikiProcessMagicCommentsResultAddedLines = number[];
+export type Lib_RehypeShiki_ProcessMagicComments_Result_AddedLines = number[];
 
-export type LibRehypeShikiProcessMagicCommentsResultRemovedLines = number[];
+export type Lib_RehypeShiki_ProcessMagicComments_Result_RemovedLines = number[];
 
-export type LibRehypeShikiProcessMagicCommentsResult = {
-  code: LibRehypeShikiProcessMagicCommentsResultCode;
-  highlightedLines: LibRehypeShikiProcessMagicCommentsResultHighlightedLines;
-  addedLines: LibRehypeShikiProcessMagicCommentsResultAddedLines;
-  removedLines: LibRehypeShikiProcessMagicCommentsResultRemovedLines;
+export type Lib_RehypeShiki_ProcessMagicComments_Result = {
+  code: Lib_RehypeShiki_ProcessMagicComments_Result_Code;
+  highlightedLines: Lib_RehypeShiki_ProcessMagicComments_Result_HighlightedLines;
+  addedLines: Lib_RehypeShiki_ProcessMagicComments_Result_AddedLines;
+  removedLines: Lib_RehypeShiki_ProcessMagicComments_Result_RemovedLines;
 };
 
-export type LibRehypeShikiProcessMagicCommentsLines = string[];
+export type Lib_RehypeShiki_ProcessMagicComments_Lines = string[];
 
-export type LibRehypeShikiProcessMagicCommentsOutputLines = string[];
+export type Lib_RehypeShiki_ProcessMagicComments_OutputLines = string[];
 
-export type LibRehypeShikiProcessMagicCommentsHighlightedLines = number[];
+export type Lib_RehypeShiki_ProcessMagicComments_HighlightedLines = number[];
 
-export type LibRehypeShikiProcessMagicCommentsAddedLines = number[];
+export type Lib_RehypeShiki_ProcessMagicComments_AddedLines = number[];
 
-export type LibRehypeShikiProcessMagicCommentsRemovedLines = number[];
+export type Lib_RehypeShiki_ProcessMagicComments_RemovedLines = number[];
 
-export type LibRehypeShikiProcessMagicCommentsOutputLineNumber = number;
+export type Lib_RehypeShiki_ProcessMagicComments_OutputLineNumber = number;
 
-export type LibRehypeShikiProcessMagicCommentsIsHighlightNext = boolean;
+export type Lib_RehypeShiki_ProcessMagicComments_IsHighlightNext = boolean;
 
-export type LibRehypeShikiProcessMagicCommentsInsideHighlightBlock = boolean;
+export type Lib_RehypeShiki_ProcessMagicComments_InsideHighlightBlock = boolean;
 
-export type LibRehypeShikiProcessMagicCommentsInsideAddBlock = boolean;
+export type Lib_RehypeShiki_ProcessMagicComments_InsideAddBlock = boolean;
 
-export type LibRehypeShikiProcessMagicCommentsInsideRemoveBlock = boolean;
+export type Lib_RehypeShiki_ProcessMagicComments_InsideRemoveBlock = boolean;
 
-export type LibRehypeShikiProcessMagicCommentsTrimmedLine = string;
+export type Lib_RehypeShiki_ProcessMagicComments_TrimmedLine = string;
 
 /**
  * Lib - Rehype Shiki - Process Node.
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiProcessNodeNode = SharedHastNode;
+export type Lib_RehypeShiki_ProcessNode_Node = Shared_HastNode;
 
-export type LibRehypeShikiProcessNodeIndex = number;
+export type Lib_RehypeShiki_ProcessNode_Index = number;
 
-export type LibRehypeShikiProcessNodeParent = SharedHastNode;
+export type Lib_RehypeShiki_ProcessNode_Parent = Shared_HastNode;
 
-export type LibRehypeShikiProcessNodeHighlighter = unknown;
+export type Lib_RehypeShiki_ProcessNode_Highlighter = unknown;
 
-export type LibRehypeShikiProcessNodeOptions = LibShikiThemesThemePair;
+export type Lib_RehypeShiki_ProcessNode_Options = Lib_ShikiThemes_ThemePair;
 
-export type LibRehypeShikiProcessNodeCodeNode = SharedHastNode | undefined;
+export type Lib_RehypeShiki_ProcessNode_CodeNode = Shared_HastNode | undefined;
 
-export type LibRehypeShikiProcessNodeClassNameRaw = unknown;
+export type Lib_RehypeShiki_ProcessNode_ClassNameRaw = unknown;
 
-export type LibRehypeShikiProcessNodeClassNames = string[];
+export type Lib_RehypeShiki_ProcessNode_ClassNames = string[];
 
-export type LibRehypeShikiProcessNodeLangClass = string | undefined;
+export type Lib_RehypeShiki_ProcessNode_LangClass = string | undefined;
 
-export type LibRehypeShikiProcessNodeLang = string;
+export type Lib_RehypeShiki_ProcessNode_Lang = string;
 
-export type LibRehypeShikiProcessNodeRawText = string;
+export type Lib_RehypeShiki_ProcessNode_RawText = string;
 
-export type LibRehypeShikiProcessNodeMetaValue = unknown;
+export type Lib_RehypeShiki_ProcessNode_MetaValue = unknown;
 
-export type LibRehypeShikiProcessNodeMetastringValue = unknown;
+export type Lib_RehypeShiki_ProcessNode_MetastringValue = unknown;
 
-export type LibRehypeShikiProcessNodeMetastring = string;
+export type Lib_RehypeShiki_ProcessNode_Metastring = string;
 
-export type LibRehypeShikiProcessNodeProcessedCode = string;
+export type Lib_RehypeShiki_ProcessNode_ProcessedCode = string;
 
-export type LibRehypeShikiProcessNodeHighlightedLineNumbers = number[];
+export type Lib_RehypeShiki_ProcessNode_HighlightedLineNumbers = number[];
 
-export type LibRehypeShikiProcessNodeDiffAddLineNumbers = number[];
+export type Lib_RehypeShiki_ProcessNode_DiffAddLineNumbers = number[];
 
-export type LibRehypeShikiProcessNodeDiffRemoveLineNumbers = number[];
+export type Lib_RehypeShiki_ProcessNode_DiffRemoveLineNumbers = number[];
 
-export type LibRehypeShikiProcessNodeTypedHighlighterCodeToHtml = Function;
+export type Lib_RehypeShiki_ProcessNode_TypedHighlighter_CodeToHtml = Function;
 
-export type LibRehypeShikiProcessNodeTypedHighlighterCodeToHast = Function;
+export type Lib_RehypeShiki_ProcessNode_TypedHighlighter_CodeToHast = Function;
 
-export type LibRehypeShikiProcessNodeTypedHighlighterGetLoadedLanguages = () => string[];
+export type Lib_RehypeShiki_ProcessNode_TypedHighlighter_GetLoadedLanguages = () => string[];
 
-export type LibRehypeShikiProcessNodeTypedHighlighterLoadLanguage = (language: unknown) => Promise<void>;
+export type Lib_RehypeShiki_ProcessNode_TypedHighlighter_LoadLanguage = (language: unknown) => Promise<void>;
 
-export type LibRehypeShikiProcessNodeTypedHighlighter = {
-  codeToHtml: LibRehypeShikiProcessNodeTypedHighlighterCodeToHtml;
-  codeToHast: LibRehypeShikiProcessNodeTypedHighlighterCodeToHast;
-  getLoadedLanguages: LibRehypeShikiProcessNodeTypedHighlighterGetLoadedLanguages;
-  loadLanguage: LibRehypeShikiProcessNodeTypedHighlighterLoadLanguage;
+export type Lib_RehypeShiki_ProcessNode_TypedHighlighter = {
+  codeToHtml: Lib_RehypeShiki_ProcessNode_TypedHighlighter_CodeToHtml;
+  codeToHast: Lib_RehypeShiki_ProcessNode_TypedHighlighter_CodeToHast;
+  getLoadedLanguages: Lib_RehypeShiki_ProcessNode_TypedHighlighter_GetLoadedLanguages;
+  loadLanguage: Lib_RehypeShiki_ProcessNode_TypedHighlighter_LoadLanguage;
 };
 
-export type LibRehypeShikiProcessNodeHighlightedHtml = unknown;
+export type Lib_RehypeShiki_ProcessNode_HighlightedHtml = unknown;
 
-export type LibRehypeShikiProcessNodeLineNode = SharedHastNode;
+export type Lib_RehypeShiki_ProcessNode_Line_Node = Shared_HastNode;
 
-export type LibRehypeShikiProcessNodeLineNumber = number;
+export type Lib_RehypeShiki_ProcessNode_Line_Number = number;
 
-export type LibRehypeShikiProcessNodeLineProperties = Record<string, unknown>;
+export type Lib_RehypeShiki_ProcessNode_Line_Properties = Record<string, unknown>;
 
-export type LibRehypeShikiProcessNodeMarkedHtml = unknown;
+export type Lib_RehypeShiki_ProcessNode_MarkedHtml = unknown;
 
-export type LibRehypeShikiProcessNodeHastRootRecord = Record<string, unknown>;
+export type Lib_RehypeShiki_ProcessNode_HastRootRecord = Record<string, unknown>;
 
-export type LibRehypeShikiProcessNodeHastChildren = unknown[];
+export type Lib_RehypeShiki_ProcessNode_HastChildren = unknown[];
 
-export type LibRehypeShikiProcessNodeHastPreElement = Record<string, unknown>;
+export type Lib_RehypeShiki_ProcessNode_HastPreElement = Record<string, unknown>;
 
-export type LibRehypeShikiProcessNodeHastPreChildren = unknown[];
+export type Lib_RehypeShiki_ProcessNode_HastPreChildren = unknown[];
 
-export type LibRehypeShikiProcessNodeHastCodeElement = Record<string, unknown>;
+export type Lib_RehypeShiki_ProcessNode_HastCodeElement = Record<string, unknown>;
 
-export type LibRehypeShikiProcessNodeTitleMatch = RegExpMatchArray | null;
+export type Lib_RehypeShiki_ProcessNode_TitleMatch = RegExpMatchArray | null;
 
-export type LibRehypeShikiProcessNodeTitle = string | undefined;
+export type Lib_RehypeShiki_ProcessNode_Title = string | undefined;
 
-export type LibRehypeShikiProcessNodeShowLineNumbers = boolean;
+export type Lib_RehypeShiki_ProcessNode_ShowLineNumbers = boolean;
 
-export type LibRehypeShikiProcessNodeLive = boolean;
+export type Lib_RehypeShiki_ProcessNode_Live = boolean;
 
-export type LibRehypeShikiProcessNodeParentChildren = SharedHastNode[];
+export type Lib_RehypeShiki_ProcessNode_ParentChildren = Shared_HastNode[];
 
 /**
  * Lib - Rehype Shiki - Rehype Shiki.
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiRehypeShikiOptions = LibShikiThemesThemePair;
+export type Lib_RehypeShiki_RehypeShiki_Options = Lib_ShikiThemes_ThemePair;
 
-export type LibRehypeShikiRehypeShikiReturns = LibRehypeShikiRehypeShikiTransformer;
+export type Lib_RehypeShiki_RehypeShiki_Returns = Lib_RehypeShiki_RehypeShiki_Transformer;
 
-export type LibRehypeShikiRehypeShikiTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Lib_RehypeShiki_RehypeShiki_Transformer = (tree: Shared_HastNode) => Promise<void>;
 
 /**
  * Lib - Rehype Shiki - Rehype Shiki - Transformer.
  *
  * @since 0.15.0
  */
-export type LibRehypeShikiRehypeShikiTransformerTree = SharedHastNode;
+export type Lib_RehypeShiki_RehypeShiki_Transformer_Tree = Shared_HastNode;
 
-export type LibRehypeShikiRehypeShikiTransformerReturns = Promise<void>;
+export type Lib_RehypeShiki_RehypeShiki_Transformer_Returns = Promise<void>;
 
-export type LibRehypeShikiRehypeShikiTransformerShikiModuleCreateHighlighter = Function;
+export type Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule_CreateHighlighter = Function;
 
-export type LibRehypeShikiRehypeShikiTransformerShikiModuleBundledLanguages = Record<string, unknown>;
+export type Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule_BundledLanguages = Record<string, unknown>;
 
-export type LibRehypeShikiRehypeShikiTransformerShikiModule = {
-  createHighlighter: LibRehypeShikiRehypeShikiTransformerShikiModuleCreateHighlighter;
-  bundledLanguages: LibRehypeShikiRehypeShikiTransformerShikiModuleBundledLanguages;
+export type Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule = {
+  createHighlighter: Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule_CreateHighlighter;
+  bundledLanguages: Lib_RehypeShiki_RehypeShiki_Transformer_ShikiModule_BundledLanguages;
 };
 
-export type LibRehypeShikiRehypeShikiTransformerNodes = SharedHastNodeResult[];
+export type Lib_RehypeShiki_RehypeShiki_Transformer_Nodes = Shared_HastNodeResult[];
 
-export type LibRehypeShikiRehypeShikiTransformerLoadedLanguages = string[];
+export type Lib_RehypeShiki_RehypeShiki_Transformer_LoadedLanguages = string[];
 
-export type LibRehypeShikiRehypeShikiTransformerIsLanguageLoaded = boolean;
+export type Lib_RehypeShiki_RehypeShiki_Transformer_IsLanguageLoaded = boolean;
 
-export type LibRehypeShikiRehypeShikiTransformerBundledLanguageLoader = unknown;
+export type Lib_RehypeShiki_RehypeShiki_Transformer_BundledLanguageLoader = unknown;

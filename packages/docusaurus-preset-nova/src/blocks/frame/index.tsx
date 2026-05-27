@@ -1,6 +1,6 @@
 import type {
-  BlocksFrameProps,
-  BlocksFrameReturns,
+  Blocks_Frame_Index_BlocksFrame_Props,
+  Blocks_Frame_Index_BlocksFrame_Returns,
 } from '../../types/blocks/frame/index.d.ts';
 
 /**
@@ -10,13 +10,13 @@ import type {
  * such as a themed image, image, or video, applying preset framing
  * identity through the nova-frame class hierarchy.
  *
- * @param {BlocksFrameProps} props - Props.
+ * @param {Blocks_Frame_Index_BlocksFrame_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function BlocksFrame(props: BlocksFrameProps): BlocksFrameReturns {
+function BlocksFrame(props: Blocks_Frame_Index_BlocksFrame_Props): Blocks_Frame_Index_BlocksFrame_Returns {
   return (
     <figure
       className={(props['className'] !== undefined) ? `nova-frame ${props['className']}` : 'nova-frame'}

@@ -12,119 +12,119 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliGenerateMustHavesGitignoreAddPatternContent,
-  CliGenerateMustHavesGitignoreAddPatternEndsWithNewline,
-  CliGenerateMustHavesGitignoreAddPatternPattern,
-  CliGenerateMustHavesGitignoreAddPatternReturns,
-  CliGenerateMustHavesGitignoreDeletePatternContent,
-  CliGenerateMustHavesGitignoreDeletePatternLine,
-  CliGenerateMustHavesGitignoreDeletePatternLines,
-  CliGenerateMustHavesGitignoreDeletePatternMarkerIndex,
-  CliGenerateMustHavesGitignoreDeletePatternPattern,
-  CliGenerateMustHavesGitignoreDeletePatternReturns,
-  CliGenerateMustHavesGitignoreDeletePatternSectionStart,
-  CliGenerateMustHavesGitignoreEditPatternContent,
-  CliGenerateMustHavesGitignoreEditPatternLines,
-  CliGenerateMustHavesGitignoreEditPatternNewPattern,
-  CliGenerateMustHavesGitignoreEditPatternOldPattern,
-  CliGenerateMustHavesGitignoreEditPatternReplaced,
-  CliGenerateMustHavesGitignoreEditPatternReturns,
-  CliGenerateMustHavesGitignoreParseAllPatternsContent,
-  CliGenerateMustHavesGitignoreParseAllPatternsReturns,
-  CliGenerateMustHavesGitignoreParseAllPatternsTrimmed,
-  CliGenerateMustHavesGitignoreParseProjectExcludesContent,
-  CliGenerateMustHavesGitignoreParseProjectExcludesLine,
-  CliGenerateMustHavesGitignoreParseProjectExcludesLines,
-  CliGenerateMustHavesGitignoreParseProjectExcludesMarkerIndex,
-  CliGenerateMustHavesGitignoreParseProjectExcludesReturns,
-  CliGenerateMustHavesGitignoreParseProjectExcludesStartIndex,
-  CliGenerateMustHavesGitignoreParseProjectExcludesTrimmed,
-  CliGenerateMustHavesGitignorePromptManageMenuAction,
-  CliGenerateMustHavesGitignorePromptManageMenuActionOutputKey,
-  CliGenerateMustHavesGitignorePromptManageMenuActionOutputValue,
-  CliGenerateMustHavesGitignorePromptManageMenuAddPatternOutputKey,
-  CliGenerateMustHavesGitignorePromptManageMenuAddPatternOutputValue,
-  CliGenerateMustHavesGitignorePromptManageMenuAddPatternValidateValue,
-  CliGenerateMustHavesGitignorePromptManageMenuAllPatterns,
-  CliGenerateMustHavesGitignorePromptManageMenuChoices,
-  CliGenerateMustHavesGitignorePromptManageMenuContent,
-  CliGenerateMustHavesGitignorePromptManageMenuCurrentContent,
-  CliGenerateMustHavesGitignorePromptManageMenuCurrentPatterns,
-  CliGenerateMustHavesGitignorePromptManageMenuDeleteChoices,
-  CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectedPattern,
-  CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutput,
-  CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutputKey,
-  CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutputValue,
-  CliGenerateMustHavesGitignorePromptManageMenuEditChoices,
-  CliGenerateMustHavesGitignorePromptManageMenuEditNewPatternOutputKey,
-  CliGenerateMustHavesGitignorePromptManageMenuEditNewPatternOutputValue,
-  CliGenerateMustHavesGitignorePromptManageMenuEditPatternValidateValue,
-  CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputKey,
-  CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputValue,
-  CliGenerateMustHavesGitignorePromptManageMenuExistingPatterns,
-  CliGenerateMustHavesGitignorePromptManageMenuHasPendingChanges,
-  CliGenerateMustHavesGitignorePromptManageMenuIsDryRun,
-  CliGenerateMustHavesGitignorePromptManageMenuIsReplaceFile,
-  CliGenerateMustHavesGitignorePromptManageMenuMenuOutput,
-  CliGenerateMustHavesGitignorePromptManageMenuNewPattern,
-  CliGenerateMustHavesGitignorePromptManageMenuNewPatternOutput,
-  CliGenerateMustHavesGitignorePromptManageMenuOptions,
-  CliGenerateMustHavesGitignorePromptManageMenuPatternName,
-  CliGenerateMustHavesGitignorePromptManageMenuPatternOutput,
-  CliGenerateMustHavesGitignorePromptManageMenuProjectExcludes,
-  CliGenerateMustHavesGitignorePromptManageMenuReconstructed,
-  CliGenerateMustHavesGitignorePromptManageMenuReservedPatterns,
-  CliGenerateMustHavesGitignorePromptManageMenuReturns,
-  CliGenerateMustHavesGitignorePromptManageMenuSelectedPattern,
-  CliGenerateMustHavesGitignorePromptManageMenuSelectOutput,
-  CliGenerateMustHavesGitignorePromptManageMenuTargetPath,
-  CliGenerateMustHavesGitignorePromptManageMenuTemplateContent,
-  CliGenerateMustHavesGitignorePromptManageMenuTemplateDirectory,
-  CliGenerateMustHavesGitignorePromptManageMenuTemplateFilePath,
-  CliGenerateMustHavesGitignorePromptManageMenuTrimmedNewPattern,
-  CliGenerateMustHavesGitignorePromptManageMenuTrimmedPatternName,
-  CliGenerateMustHavesGitignorePromptManageMenuTrimmedValue,
-  CliGenerateMustHavesGitignorePromptManageMenuUpdatedContent,
-  CliGenerateMustHavesGitignorePromptManageMenuUserPatterns,
-  CliGenerateMustHavesGitignorePromptRegenerateAddMore,
-  CliGenerateMustHavesGitignorePromptRegenerateCancelled,
-  CliGenerateMustHavesGitignorePromptRegenerateContent,
-  CliGenerateMustHavesGitignorePromptRegenerateCurrentDirectory,
-  CliGenerateMustHavesGitignorePromptRegenerateCustomEntries,
-  CliGenerateMustHavesGitignorePromptRegenerateEntryOutput,
-  CliGenerateMustHavesGitignorePromptRegenerateEntryOutputKey,
-  CliGenerateMustHavesGitignorePromptRegenerateEntryOutputResult,
-  CliGenerateMustHavesGitignorePromptRegenerateEntryOutputValue,
-  CliGenerateMustHavesGitignorePromptRegenerateFinalContent,
-  CliGenerateMustHavesGitignorePromptRegenerateIsDryRun,
-  CliGenerateMustHavesGitignorePromptRegenerateIsReplaceFile,
-  CliGenerateMustHavesGitignorePromptRegenerateOptions,
-  CliGenerateMustHavesGitignorePromptRegenerateReturns,
-  CliGenerateMustHavesGitignorePromptRegenerateTargetPath,
-  CliGenerateMustHavesGitignorePromptRegenerateTemplateDirectory,
-  CliGenerateMustHavesGitignorePromptRegenerateTemplatePath,
-  CliGenerateMustHavesGitignorePromptRegenerateTrimmedEntry,
-  CliGenerateMustHavesGitignorePromptWithCancelCancelled,
-  CliGenerateMustHavesGitignorePromptWithCancelQuestions,
-  CliGenerateMustHavesGitignorePromptWithCancelResult,
-  CliGenerateMustHavesGitignorePromptWithCancelReturns,
-  CliGenerateMustHavesGitignoreRunCurrentDirectory,
-  CliGenerateMustHavesGitignoreRunFileExists,
-  CliGenerateMustHavesGitignoreRunIsAtProjectRoot,
-  CliGenerateMustHavesGitignoreRunIsDryRun,
-  CliGenerateMustHavesGitignoreRunIsReplaceFile,
-  CliGenerateMustHavesGitignoreRunManageResult,
-  CliGenerateMustHavesGitignoreRunModeChoices,
-  CliGenerateMustHavesGitignoreRunModeOutput,
-  CliGenerateMustHavesGitignoreRunModeOutputKey,
-  CliGenerateMustHavesGitignoreRunModeOutputResult,
-  CliGenerateMustHavesGitignoreRunModeOutputValue,
-  CliGenerateMustHavesGitignoreRunOptions,
-  CliGenerateMustHavesGitignoreRunReplaceFileNotice,
-  CliGenerateMustHavesGitignoreRunResult,
-  CliGenerateMustHavesGitignoreRunReturns,
-  CliGenerateMustHavesGitignoreRunTargetPath,
-  CliGenerateMustHavesGitignoreRunTemplateDirectory,
+  Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_EndsWithNewline,
+  Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Pattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Line,
+  Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Lines,
+  Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_MarkerIndex,
+  Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Pattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_SectionStart,
+  Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Lines,
+  Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_NewPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_OldPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Replaced,
+  Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Trimmed,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Line,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Lines,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_MarkerIndex,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_StartIndex,
+  Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Trimmed,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Action,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputKey,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputKey,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternValidateValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AllPatterns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choices,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_CurrentContent,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_CurrentPatterns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoices,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectedPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutput,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputKey,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoices,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputKey,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditPatternValidateValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ExistingPatterns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_HasPendingChanges,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_IsDryRun,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_IsReplaceFile,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_MenuOutput,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPatternOutput,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternName,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternOutput,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ProjectExcludes,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Reconstructed,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ReservedPatterns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectedPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectOutput,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TargetPath,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateContent,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateDirectory,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateFilePath,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedNewPattern,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedPatternName,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UserPatterns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_AddMore,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Cancelled,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Content,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_CurrentDirectory,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_CustomEntries,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutput,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputKey,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputResult,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_FinalContent,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_IsDryRun,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_IsReplaceFile,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TargetPath,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TemplateDirectory,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TemplatePath,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TrimmedEntry,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Cancelled,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Questions,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Result,
+  Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_CurrentDirectory,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_FileExists,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_IsAtProjectRoot,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_IsDryRun,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_IsReplaceFile,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_ManageResult,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoices,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutput,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputKey,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputResult,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_Options,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_ReplaceFileNotice,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_Result,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_Returns,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_TargetPath,
+  Cli_Generate_MustHaves_Gitignore_Runner_Run_TemplateDirectory,
 } from '../../../types/cli/generate/must-haves/gitignore.d.ts';
 
 /**
@@ -136,22 +136,22 @@ import type {
  *
  * @since 0.15.0
  */
-export class CliGenerateMustHavesGitignore {
+export class Runner {
   /**
    * CLI - Generate - Must Haves - Gitignore - Run.
    *
    * Called by the CLI index via executeCommand. Checks for an existing .gitignore and
    * routes to manage or regenerate mode based on user selection.
    *
-   * @param {CliGenerateMustHavesGitignoreRunOptions} options - Options.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_Run_Options} options - Options.
    *
-   * @returns {CliGenerateMustHavesGitignoreRunReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_Run_Returns}
    *
    * @since 0.15.0
    */
-  public static async run(options: CliGenerateMustHavesGitignoreRunOptions): CliGenerateMustHavesGitignoreRunReturns {
-    const currentDirectory: CliGenerateMustHavesGitignoreRunCurrentDirectory = process.cwd();
-    const isAtProjectRoot: CliGenerateMustHavesGitignoreRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: Cli_Generate_MustHaves_Gitignore_Runner_Run_Options): Cli_Generate_MustHaves_Gitignore_Runner_Run_Returns {
+    const currentDirectory: Cli_Generate_MustHaves_Gitignore_Runner_Run_CurrentDirectory = process.cwd();
+    const isAtProjectRoot: Cli_Generate_MustHaves_Gitignore_Runner_Run_IsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -159,30 +159,30 @@ export class CliGenerateMustHavesGitignore {
       return 'cancelled';
     }
 
-    const isDryRun: CliGenerateMustHavesGitignoreRunIsDryRun = options['dryRun'] === true;
-    const isReplaceFile: CliGenerateMustHavesGitignoreRunIsReplaceFile = options['replaceFile'] === true;
+    const isDryRun: Cli_Generate_MustHaves_Gitignore_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isReplaceFile: Cli_Generate_MustHaves_Gitignore_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliGenerateMustHavesGitignore.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice: CliGenerateMustHavesGitignoreRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: Cli_Generate_MustHaves_Gitignore_Runner_Run_ReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CliGenerateMustHavesGitignore.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const templateDirectory: CliGenerateMustHavesGitignoreRunTemplateDirectory = resolveTemplatePath(import.meta.url, 'generators/must-haves/gitignore');
-    const targetPath: CliGenerateMustHavesGitignoreRunTargetPath = join(currentDirectory, '.gitignore');
+    const templateDirectory: Cli_Generate_MustHaves_Gitignore_Runner_Run_TemplateDirectory = resolveTemplatePath(import.meta.url, 'generators/must-haves/gitignore');
+    const targetPath: Cli_Generate_MustHaves_Gitignore_Runner_Run_TargetPath = join(currentDirectory, '.gitignore');
 
     // Check if file already exists.
-    let fileExists: CliGenerateMustHavesGitignoreRunFileExists = false;
+    let fileExists: Cli_Generate_MustHaves_Gitignore_Runner_Run_FileExists = false;
 
     try {
       await fs.access(targetPath);
@@ -195,7 +195,7 @@ export class CliGenerateMustHavesGitignore {
     // Prompt for mode if file exists.
     if (fileExists === true) {
       while (true) {
-        const modeChoices: CliGenerateMustHavesGitignoreRunModeChoices = [
+        const modeChoices: Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoices = [
           {
             title: 'Manage existing patterns',
             value: 'manage',
@@ -206,7 +206,7 @@ export class CliGenerateMustHavesGitignore {
           },
         ];
 
-        const modeOutput: CliGenerateMustHavesGitignoreRunModeOutput = await CliGenerateMustHavesGitignore.promptWithCancel<CliGenerateMustHavesGitignoreRunModeOutputKey, CliGenerateMustHavesGitignoreRunModeOutputValue>({
+        const modeOutput: Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue>({
           type: 'select',
           name: 'mode',
           message: '.gitignore already exists. What would you like to do?',
@@ -218,15 +218,15 @@ export class CliGenerateMustHavesGitignore {
           return 'cancelled';
         }
 
-        const modeOutputResult: CliGenerateMustHavesGitignoreRunModeOutputResult = modeOutput['result'];
-        const selectedMode: CliGenerateMustHavesGitignoreRunModeOutputValue = modeOutputResult.mode;
+        const modeOutputResult: Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputResult = modeOutput['result'];
+        const selectedMode: Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue = modeOutputResult.mode;
 
         if (selectedMode === undefined) {
           return 'cancelled';
         }
 
         if (selectedMode === 'manage') {
-          const manageResult: CliGenerateMustHavesGitignoreRunManageResult = await CliGenerateMustHavesGitignore.promptManageMenu({
+          const manageResult: Cli_Generate_MustHaves_Gitignore_Runner_Run_ManageResult = await Runner.promptManageMenu({
             templateDirectory,
             targetPath,
             isDryRun,
@@ -242,7 +242,7 @@ export class CliGenerateMustHavesGitignore {
         }
 
         // "Regenerate" selected - run regenerate flow.
-        const result: CliGenerateMustHavesGitignoreRunResult = await CliGenerateMustHavesGitignore.promptRegenerate({
+        const result: Cli_Generate_MustHaves_Gitignore_Runner_Run_Result = await Runner.promptRegenerate({
           templateDirectory,
           currentDirectory,
           isDryRun,
@@ -258,7 +258,7 @@ export class CliGenerateMustHavesGitignore {
     }
 
     // No file exists - go straight to regenerate.
-    const result: CliGenerateMustHavesGitignoreRunResult = await CliGenerateMustHavesGitignore.promptRegenerate({
+    const result: Cli_Generate_MustHaves_Gitignore_Runner_Run_Result = await Runner.promptRegenerate({
       templateDirectory,
       currentDirectory,
       isDryRun,
@@ -274,26 +274,26 @@ export class CliGenerateMustHavesGitignore {
    * Rebuilds the .gitignore from the bundled template and prompts the user to add custom
    * ignore patterns appended under the Project Excludes section.
    *
-   * @param {CliGenerateMustHavesGitignorePromptRegenerateOptions} options - Options.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options} options - Options.
    *
    * @private
    *
-   * @returns {CliGenerateMustHavesGitignorePromptRegenerateReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Returns}
    *
    * @since 0.15.0
    */
-  private static async promptRegenerate(options: CliGenerateMustHavesGitignorePromptRegenerateOptions): CliGenerateMustHavesGitignorePromptRegenerateReturns {
-    const templateDirectory: CliGenerateMustHavesGitignorePromptRegenerateTemplateDirectory = options['templateDirectory'];
-    const currentDirectory: CliGenerateMustHavesGitignorePromptRegenerateCurrentDirectory = options['currentDirectory'];
-    const isDryRun: CliGenerateMustHavesGitignorePromptRegenerateIsDryRun = options['isDryRun'];
-    const isReplaceFile: CliGenerateMustHavesGitignorePromptRegenerateIsReplaceFile = options['isReplaceFile'];
+  private static async promptRegenerate(options: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options): Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Returns {
+    const templateDirectory: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TemplateDirectory = options['templateDirectory'];
+    const currentDirectory: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_CurrentDirectory = options['currentDirectory'];
+    const isDryRun: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_IsDryRun = options['isDryRun'];
+    const isReplaceFile: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_IsReplaceFile = options['isReplaceFile'];
 
-    const customEntries: CliGenerateMustHavesGitignorePromptRegenerateCustomEntries = [];
-    let addMore: CliGenerateMustHavesGitignorePromptRegenerateAddMore = true;
-    let cancelled: CliGenerateMustHavesGitignorePromptRegenerateCancelled = false;
+    const customEntries: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_CustomEntries = [];
+    let addMore: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_AddMore = true;
+    let cancelled: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Cancelled = false;
 
     while (addMore === true) {
-      const entryOutput: CliGenerateMustHavesGitignorePromptRegenerateEntryOutput = await CliGenerateMustHavesGitignore.promptWithCancel<CliGenerateMustHavesGitignorePromptRegenerateEntryOutputKey, CliGenerateMustHavesGitignorePromptRegenerateEntryOutputValue>({
+      const entryOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputValue>({
         type: 'text',
         name: 'entry',
         message: 'Pattern to ignore (leave empty to finish):',
@@ -305,7 +305,7 @@ export class CliGenerateMustHavesGitignore {
         break;
       }
 
-      const entryOutputResult: CliGenerateMustHavesGitignorePromptRegenerateEntryOutputResult = entryOutput['result'];
+      const entryOutputResult: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputResult = entryOutput['result'];
 
       if (entryOutputResult.entry === undefined || entryOutputResult.entry.trim() === '') {
         addMore = false;
@@ -313,7 +313,7 @@ export class CliGenerateMustHavesGitignore {
         continue;
       }
 
-      const trimmedEntry: CliGenerateMustHavesGitignorePromptRegenerateTrimmedEntry = entryOutputResult.entry.trim();
+      const trimmedEntry: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TrimmedEntry = entryOutputResult.entry.trim();
 
       customEntries.push(trimmedEntry);
     }
@@ -322,16 +322,16 @@ export class CliGenerateMustHavesGitignore {
       return 'cancelled';
     }
 
-    const templatePath: CliGenerateMustHavesGitignorePromptRegenerateTemplatePath = join(templateDirectory, 'gitignore');
-    const targetPath: CliGenerateMustHavesGitignorePromptRegenerateTargetPath = join(currentDirectory, '.gitignore');
+    const templatePath: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TemplatePath = join(templateDirectory, 'gitignore');
+    const targetPath: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TargetPath = join(currentDirectory, '.gitignore');
 
-    let content: CliGenerateMustHavesGitignorePromptRegenerateContent = undefined;
+    let content: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Content = undefined;
 
     try {
       content = await fs.readFile(templatePath, 'utf-8');
     } catch {
       Logger.customize({
-        name: 'CliGenerateMustHavesGitignore.promptRegenerate',
+        name: 'Runner.promptRegenerate',
         purpose: 'read',
       }).error(`Failed to read template "${templatePath}".`);
 
@@ -339,7 +339,7 @@ export class CliGenerateMustHavesGitignore {
     }
 
     // Append custom patterns under the project excludes section.
-    let finalContent: CliGenerateMustHavesGitignorePromptRegenerateFinalContent = content;
+    let finalContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_FinalContent = content;
 
     if (customEntries.length > 0) {
       finalContent = `${content}${customEntries.join('\n')}\n`;
@@ -365,19 +365,19 @@ export class CliGenerateMustHavesGitignore {
    * .gitignore file. Used by promptManageMenu to build
    * the reserved patterns set and detect duplicates.
    *
-   * @param {CliGenerateMustHavesGitignoreParseAllPatternsContent} content - Content.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Content} content - Content.
    *
    * @private
    *
-   * @returns {CliGenerateMustHavesGitignoreParseAllPatternsReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns}
    *
    * @since 0.15.0
    */
-  private static parseAllPatterns(content: CliGenerateMustHavesGitignoreParseAllPatternsContent): CliGenerateMustHavesGitignoreParseAllPatternsReturns {
-    const patterns: CliGenerateMustHavesGitignoreParseAllPatternsReturns = [];
+  private static parseAllPatterns(content: Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Content): Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns {
+    const patterns: Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns = [];
 
     for (const line of content.split('\n')) {
-      const trimmed: CliGenerateMustHavesGitignoreParseAllPatternsTrimmed = line.trim();
+      const trimmed: Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Trimmed = line.trim();
 
       if (trimmed !== '' && trimmed.startsWith('#') === false) {
         patterns.push(trimmed);
@@ -393,20 +393,20 @@ export class CliGenerateMustHavesGitignore {
    * Returns only the user-added patterns that appear after the "Project Excludes" marker.
    * Separates editable entries from the template-managed section.
    *
-   * @param {CliGenerateMustHavesGitignoreParseProjectExcludesContent} content - Content.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Content} content - Content.
    *
    * @private
    *
-   * @returns {CliGenerateMustHavesGitignoreParseProjectExcludesReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Returns}
    *
    * @since 0.15.0
    */
-  private static parseProjectExcludes(content: CliGenerateMustHavesGitignoreParseProjectExcludesContent): CliGenerateMustHavesGitignoreParseProjectExcludesReturns {
-    const lines: CliGenerateMustHavesGitignoreParseProjectExcludesLines = content.split('\n');
-    let markerIndex: CliGenerateMustHavesGitignoreParseProjectExcludesMarkerIndex = -1;
+  private static parseProjectExcludes(content: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Content): Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Returns {
+    const lines: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Lines = content.split('\n');
+    let markerIndex: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_MarkerIndex = -1;
 
     for (let i = 0; i < lines.length; i += 1) {
-      const line: CliGenerateMustHavesGitignoreParseProjectExcludesLine = lines[i];
+      const line: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Line = lines[i];
 
       if (line !== undefined && line.includes('#### Project Excludes ####') === true) {
         markerIndex = i;
@@ -420,17 +420,17 @@ export class CliGenerateMustHavesGitignore {
     }
 
     // Skip the marker line and the closing border line.
-    const startIndex: CliGenerateMustHavesGitignoreParseProjectExcludesStartIndex = markerIndex + 2;
-    const patterns: CliGenerateMustHavesGitignoreParseProjectExcludesReturns = [];
+    const startIndex: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_StartIndex = markerIndex + 2;
+    const patterns: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Returns = [];
 
     for (let i = startIndex; i < lines.length; i += 1) {
-      const line: CliGenerateMustHavesGitignoreParseProjectExcludesLine = lines[i];
+      const line: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Line = lines[i];
 
       if (line === undefined) {
         continue;
       }
 
-      const trimmed: CliGenerateMustHavesGitignoreParseProjectExcludesTrimmed = line.trim();
+      const trimmed: Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Trimmed = line.trim();
 
       if (
         trimmed !== ''
@@ -450,17 +450,17 @@ export class CliGenerateMustHavesGitignore {
    * Appends a new ignore pattern to the end of the file content. Ensures a trailing newline
    * exists before inserting the new entry.
    *
-   * @param {CliGenerateMustHavesGitignoreAddPatternContent} content - Content.
-   * @param {CliGenerateMustHavesGitignoreAddPatternPattern} pattern - Pattern.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Content} content - Content.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Pattern} pattern - Pattern.
    *
    * @private
    *
-   * @returns {CliGenerateMustHavesGitignoreAddPatternReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Returns}
    *
    * @since 0.15.0
    */
-  private static addPattern(content: CliGenerateMustHavesGitignoreAddPatternContent, pattern: CliGenerateMustHavesGitignoreAddPatternPattern): CliGenerateMustHavesGitignoreAddPatternReturns {
-    const endsWithNewline: CliGenerateMustHavesGitignoreAddPatternEndsWithNewline = content.endsWith('\n');
+  private static addPattern(content: Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Content, pattern: Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Pattern): Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Returns {
+    const endsWithNewline: Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_EndsWithNewline = content.endsWith('\n');
 
     return (endsWithNewline === true) ? `${content}${pattern}\n` : [
       `${content}\n`,
@@ -474,19 +474,19 @@ export class CliGenerateMustHavesGitignore {
    * Replaces the first occurrence of a trimmed line matching the old pattern. Only the first
    * match is replaced to avoid unintended edits.
    *
-   * @param {CliGenerateMustHavesGitignoreEditPatternContent}    content    - Content.
-   * @param {CliGenerateMustHavesGitignoreEditPatternOldPattern} oldPattern - Old pattern.
-   * @param {CliGenerateMustHavesGitignoreEditPatternNewPattern} newPattern - New pattern.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Content}    content    - Content.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_OldPattern} oldPattern - Old pattern.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_NewPattern} newPattern - New pattern.
    *
    * @private
    *
-   * @returns {CliGenerateMustHavesGitignoreEditPatternReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Returns}
    *
    * @since 0.15.0
    */
-  private static editPattern(content: CliGenerateMustHavesGitignoreEditPatternContent, oldPattern: CliGenerateMustHavesGitignoreEditPatternOldPattern, newPattern: CliGenerateMustHavesGitignoreEditPatternNewPattern): CliGenerateMustHavesGitignoreEditPatternReturns {
-    const lines: CliGenerateMustHavesGitignoreEditPatternLines = content.split('\n');
-    let replaced: CliGenerateMustHavesGitignoreEditPatternReplaced = false;
+  private static editPattern(content: Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Content, oldPattern: Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_OldPattern, newPattern: Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_NewPattern): Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Returns {
+    const lines: Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Lines = content.split('\n');
+    let replaced: Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Replaced = false;
 
     return lines.map((line) => {
       if (replaced !== true && line.trim() === oldPattern) {
@@ -505,21 +505,21 @@ export class CliGenerateMustHavesGitignore {
    * Removes lines matching the given pattern, but only from the Project Excludes section.
    * Template-managed lines above the marker are never removed.
    *
-   * @param {CliGenerateMustHavesGitignoreDeletePatternContent} content - Content.
-   * @param {CliGenerateMustHavesGitignoreDeletePatternPattern} pattern - Pattern.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Content} content - Content.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Pattern} pattern - Pattern.
    *
    * @private
    *
-   * @returns {CliGenerateMustHavesGitignoreDeletePatternReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Returns}
    *
    * @since 0.15.0
    */
-  private static deletePattern(content: CliGenerateMustHavesGitignoreDeletePatternContent, pattern: CliGenerateMustHavesGitignoreDeletePatternPattern): CliGenerateMustHavesGitignoreDeletePatternReturns {
-    const lines: CliGenerateMustHavesGitignoreDeletePatternLines = content.split('\n');
-    let markerIndex: CliGenerateMustHavesGitignoreDeletePatternMarkerIndex = -1;
+  private static deletePattern(content: Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Content, pattern: Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Pattern): Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Returns {
+    const lines: Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Lines = content.split('\n');
+    let markerIndex: Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_MarkerIndex = -1;
 
     for (let i = 0; i < lines.length; i += 1) {
-      const line: CliGenerateMustHavesGitignoreDeletePatternLine = lines[i];
+      const line: Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Line = lines[i];
 
       if (line !== undefined && line.includes('#### Project Excludes ####') === true) {
         markerIndex = i;
@@ -533,7 +533,7 @@ export class CliGenerateMustHavesGitignore {
     }
 
     // Only remove from the Project Excludes section.
-    const sectionStart: CliGenerateMustHavesGitignoreDeletePatternSectionStart = markerIndex + 2;
+    const sectionStart: Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_SectionStart = markerIndex + 2;
 
     return lines.filter((line, i) => {
       if (i < sectionStart) {
@@ -551,26 +551,26 @@ export class CliGenerateMustHavesGitignore {
    * or deleting patterns in the Project Excludes section.
    * Reconstructs the file from the template on entry.
    *
-   * @param {CliGenerateMustHavesGitignorePromptManageMenuOptions} options - Options.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options} options - Options.
    *
    * @private
    *
-   * @returns {CliGenerateMustHavesGitignorePromptManageMenuReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Returns}
    *
    * @since 0.15.0
    */
-  private static async promptManageMenu(options: CliGenerateMustHavesGitignorePromptManageMenuOptions): CliGenerateMustHavesGitignorePromptManageMenuReturns {
-    const templateDirectory: CliGenerateMustHavesGitignorePromptManageMenuTemplateDirectory = options['templateDirectory'];
-    const targetPath: CliGenerateMustHavesGitignorePromptManageMenuTargetPath = options['targetPath'];
-    const isDryRun: CliGenerateMustHavesGitignorePromptManageMenuIsDryRun = options['isDryRun'];
-    const isReplaceFile: CliGenerateMustHavesGitignorePromptManageMenuIsReplaceFile = options['isReplaceFile'];
+  private static async promptManageMenu(options: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options): Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Returns {
+    const templateDirectory: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateDirectory = options['templateDirectory'];
+    const targetPath: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TargetPath = options['targetPath'];
+    const isDryRun: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_IsDryRun = options['isDryRun'];
+    const isReplaceFile: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_IsReplaceFile = options['isReplaceFile'];
 
-    const templateFilePath: CliGenerateMustHavesGitignorePromptManageMenuTemplateFilePath = join(templateDirectory, 'gitignore');
-    const templateContent: CliGenerateMustHavesGitignorePromptManageMenuTemplateContent = await fs.readFile(templateFilePath, 'utf-8');
-    const reservedPatterns: CliGenerateMustHavesGitignorePromptManageMenuReservedPatterns = new Set(CliGenerateMustHavesGitignore.parseAllPatterns(templateContent));
+    const templateFilePath: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateFilePath = join(templateDirectory, 'gitignore');
+    const templateContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateContent = await fs.readFile(templateFilePath, 'utf-8');
+    const reservedPatterns: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ReservedPatterns = new Set(Runner.parseAllPatterns(templateContent));
 
     // Reconstruct file in memory: template + user's custom patterns under Project Excludes.
-    let currentContent: CliGenerateMustHavesGitignorePromptManageMenuCurrentContent = '';
+    let currentContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_CurrentContent = '';
 
     try {
       currentContent = await fs.readFile(targetPath, 'utf-8');
@@ -578,28 +578,28 @@ export class CliGenerateMustHavesGitignore {
       // File may not exist.
     }
 
-    const currentPatterns: CliGenerateMustHavesGitignorePromptManageMenuCurrentPatterns = CliGenerateMustHavesGitignore.parseAllPatterns(currentContent);
-    const userPatterns: CliGenerateMustHavesGitignorePromptManageMenuUserPatterns = currentPatterns.filter(
+    const currentPatterns: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_CurrentPatterns = Runner.parseAllPatterns(currentContent);
+    const userPatterns: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UserPatterns = currentPatterns.filter(
       (pattern) => reservedPatterns.has(pattern) !== true,
     );
 
-    let reconstructed: CliGenerateMustHavesGitignorePromptManageMenuReconstructed = templateContent;
+    let reconstructed: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Reconstructed = templateContent;
 
     if (userPatterns.length > 0) {
       reconstructed += `${userPatterns.join('\n')}\n`;
     }
 
-    let hasPendingChanges: CliGenerateMustHavesGitignorePromptManageMenuHasPendingChanges = false;
+    let hasPendingChanges: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_HasPendingChanges = false;
 
     while (true) {
       // Use in-memory buffer instead of reading from disk.
-      const content: CliGenerateMustHavesGitignorePromptManageMenuContent = reconstructed;
+      const content: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Content = reconstructed;
 
-      const allPatterns: CliGenerateMustHavesGitignorePromptManageMenuAllPatterns = CliGenerateMustHavesGitignore.parseAllPatterns(content);
-      const projectExcludes: CliGenerateMustHavesGitignorePromptManageMenuProjectExcludes = CliGenerateMustHavesGitignore.parseProjectExcludes(content);
+      const allPatterns: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AllPatterns = Runner.parseAllPatterns(content);
+      const projectExcludes: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ProjectExcludes = Runner.parseProjectExcludes(content);
 
       // Build menu choices.
-      const choices: CliGenerateMustHavesGitignorePromptManageMenuChoices = [{
+      const choices: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choices = [{
         title: 'Add a pattern',
         description: 'Add a new ignore pattern to Project Excludes',
         value: 'add',
@@ -633,7 +633,7 @@ export class CliGenerateMustHavesGitignore {
         value: 'back',
       });
 
-      const menuOutput: CliGenerateMustHavesGitignorePromptManageMenuMenuOutput = await CliGenerateMustHavesGitignore.promptWithCancel<CliGenerateMustHavesGitignorePromptManageMenuActionOutputKey, CliGenerateMustHavesGitignorePromptManageMenuActionOutputValue>({
+      const menuOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_MenuOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputValue>({
         type: 'select',
         name: 'action',
         message: 'Select an action.',
@@ -644,7 +644,7 @@ export class CliGenerateMustHavesGitignore {
         return 'back';
       }
 
-      const action: CliGenerateMustHavesGitignorePromptManageMenuAction = menuOutput['result'].action;
+      const action: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Action = menuOutput['result'].action;
 
       if (action === undefined || action === 'back') {
         return 'back';
@@ -664,18 +664,18 @@ export class CliGenerateMustHavesGitignore {
 
       // Add a pattern.
       if (action === 'add') {
-        const existingPatterns: CliGenerateMustHavesGitignorePromptManageMenuExistingPatterns = new Set(allPatterns);
+        const existingPatterns: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ExistingPatterns = new Set(allPatterns);
 
-        const patternOutput: CliGenerateMustHavesGitignorePromptManageMenuPatternOutput = await CliGenerateMustHavesGitignore.promptWithCancel<CliGenerateMustHavesGitignorePromptManageMenuAddPatternOutputKey, CliGenerateMustHavesGitignorePromptManageMenuAddPatternOutputValue>({
+        const patternOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputValue>({
           type: 'text',
           name: 'pattern',
           message: 'Pattern to ignore (e.g. logs/):',
-          validate: (value: CliGenerateMustHavesGitignorePromptManageMenuAddPatternValidateValue) => {
+          validate: (value: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternValidateValue) => {
             if (typeof value !== 'string' || value.trim() === '') {
               return 'Enter a pattern.';
             }
 
-            const trimmedValue: CliGenerateMustHavesGitignorePromptManageMenuTrimmedValue = value.trim();
+            const trimmedValue: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedValue = value.trim();
 
             if (trimmedValue.startsWith('#') === true) {
               return 'Comments are not allowed.';
@@ -697,20 +697,20 @@ export class CliGenerateMustHavesGitignore {
           continue;
         }
 
-        const patternName: CliGenerateMustHavesGitignorePromptManageMenuPatternName = patternOutput['result'].pattern;
+        const patternName: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternName = patternOutput['result'].pattern;
 
         if (patternName === undefined) {
           continue;
         }
 
-        const trimmedPatternName: CliGenerateMustHavesGitignorePromptManageMenuTrimmedPatternName = patternName.trim();
-        const updatedContent: CliGenerateMustHavesGitignorePromptManageMenuUpdatedContent = CliGenerateMustHavesGitignore.addPattern(content, trimmedPatternName);
+        const trimmedPatternName: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedPatternName = patternName.trim();
+        const updatedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent = Runner.addPattern(content, trimmedPatternName);
 
         reconstructed = updatedContent;
         hasPendingChanges = true;
 
         Logger.customize({
-          name: 'CliGenerateMustHavesGitignore.promptManageMenu',
+          name: 'Runner.promptManageMenu',
           purpose: 'add',
         }).info(`Added "${patternName.trim()}" to .gitignore.`);
 
@@ -719,12 +719,12 @@ export class CliGenerateMustHavesGitignore {
 
       // Edit a pattern.
       if (action === 'edit') {
-        const editChoices: CliGenerateMustHavesGitignorePromptManageMenuEditChoices = projectExcludes.map((pattern) => ({
+        const editChoices: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoices = projectExcludes.map((pattern) => ({
           title: pattern,
           value: pattern,
         }));
 
-        const selectOutput: CliGenerateMustHavesGitignorePromptManageMenuSelectOutput = await CliGenerateMustHavesGitignore.promptWithCancel<CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputKey, CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputValue>({
+        const selectOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue>({
           type: 'select',
           name: 'pattern',
           message: 'Select a pattern to edit.',
@@ -735,18 +735,18 @@ export class CliGenerateMustHavesGitignore {
           continue;
         }
 
-        const selectedPattern: CliGenerateMustHavesGitignorePromptManageMenuSelectedPattern = selectOutput['result'].pattern;
+        const selectedPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectedPattern = selectOutput['result'].pattern;
 
         if (selectedPattern === undefined) {
           continue;
         }
 
-        const newPatternOutput: CliGenerateMustHavesGitignorePromptManageMenuNewPatternOutput = await CliGenerateMustHavesGitignore.promptWithCancel<CliGenerateMustHavesGitignorePromptManageMenuEditNewPatternOutputKey, CliGenerateMustHavesGitignorePromptManageMenuEditNewPatternOutputValue>({
+        const newPatternOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPatternOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputValue>({
           type: 'text',
           name: 'newPattern',
           message: `New pattern (current: "${selectedPattern}"):`,
           initial: selectedPattern,
-          validate: (value: CliGenerateMustHavesGitignorePromptManageMenuEditPatternValidateValue) => {
+          validate: (value: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditPatternValidateValue) => {
             if (typeof value !== 'string' || value.trim() === '') {
               return 'Enter a pattern.';
             }
@@ -763,20 +763,20 @@ export class CliGenerateMustHavesGitignore {
           continue;
         }
 
-        const newPattern: CliGenerateMustHavesGitignorePromptManageMenuNewPattern = newPatternOutput['result'].newPattern;
+        const newPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPattern = newPatternOutput['result'].newPattern;
 
         if (newPattern === undefined) {
           continue;
         }
 
-        const trimmedNewPattern: CliGenerateMustHavesGitignorePromptManageMenuTrimmedNewPattern = newPattern.trim();
-        const updatedContent: CliGenerateMustHavesGitignorePromptManageMenuUpdatedContent = CliGenerateMustHavesGitignore.editPattern(content, selectedPattern, trimmedNewPattern);
+        const trimmedNewPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedNewPattern = newPattern.trim();
+        const updatedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent = Runner.editPattern(content, selectedPattern, trimmedNewPattern);
 
         reconstructed = updatedContent;
         hasPendingChanges = true;
 
         Logger.customize({
-          name: 'CliGenerateMustHavesGitignore.promptManageMenu',
+          name: 'Runner.promptManageMenu',
           purpose: 'edit',
         }).info(`Updated "${selectedPattern}" to "${newPattern.trim()}" in .gitignore.`);
 
@@ -785,12 +785,12 @@ export class CliGenerateMustHavesGitignore {
 
       // Delete a pattern.
       if (action === 'delete') {
-        const deleteChoices: CliGenerateMustHavesGitignorePromptManageMenuDeleteChoices = projectExcludes.map((pattern) => ({
+        const deleteChoices: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoices = projectExcludes.map((pattern) => ({
           title: pattern,
           value: pattern,
         }));
 
-        const selectOutput: CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutput = await CliGenerateMustHavesGitignore.promptWithCancel<CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutputKey, CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutputValue>({
+        const selectOutput: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutput = await Runner.promptWithCancel<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputValue>({
           type: 'select',
           name: 'pattern',
           message: 'Select a pattern to delete.',
@@ -801,19 +801,19 @@ export class CliGenerateMustHavesGitignore {
           continue;
         }
 
-        const selectedPattern: CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectedPattern = selectOutput['result'].pattern;
+        const selectedPattern: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectedPattern = selectOutput['result'].pattern;
 
         if (selectedPattern === undefined) {
           continue;
         }
 
-        const updatedContent: CliGenerateMustHavesGitignorePromptManageMenuUpdatedContent = CliGenerateMustHavesGitignore.deletePattern(content, selectedPattern);
+        const updatedContent: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent = Runner.deletePattern(content, selectedPattern);
 
         reconstructed = updatedContent;
         hasPendingChanges = true;
 
         Logger.customize({
-          name: 'CliGenerateMustHavesGitignore.promptManageMenu',
+          name: 'Runner.promptManageMenu',
           purpose: 'delete',
         }).info(`Deleted "${selectedPattern}" from .gitignore.`);
 
@@ -828,18 +828,18 @@ export class CliGenerateMustHavesGitignore {
    * Wraps the prompts library to detect Ctrl-C cancel events. Returns a discriminated union so
    * callers can distinguish cancelled from answered.
    *
-   * @param {CliGenerateMustHavesGitignorePromptWithCancelQuestions} questions - Questions.
+   * @param {Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Questions} questions - Questions.
    *
    * @private
    *
-   * @returns {CliGenerateMustHavesGitignorePromptWithCancelReturns}
+   * @returns {Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Returns}
    *
    * @since 0.15.0
    */
-  private static async promptWithCancel<Keys extends string, Result>(questions: CliGenerateMustHavesGitignorePromptWithCancelQuestions<Keys>): CliGenerateMustHavesGitignorePromptWithCancelReturns<Keys, Result> {
-    let cancelled: CliGenerateMustHavesGitignorePromptWithCancelCancelled = false;
+  private static async promptWithCancel<Keys extends string, Result>(questions: Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Questions<Keys>): Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Returns<Keys, Result> {
+    let cancelled: Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Cancelled = false;
 
-    const result: CliGenerateMustHavesGitignorePromptWithCancelResult<Keys, Result> = await prompts<Keys>(questions, {
+    const result: Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Result<Keys, Result> = await prompts<Keys>(questions, {
       onCancel: () => false,
     });
 

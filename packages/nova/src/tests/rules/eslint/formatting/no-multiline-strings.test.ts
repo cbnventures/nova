@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoMultilineStrings } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintFormattingNoMultilineStringsRuleTester } from '../../../../types/tests/rules/eslint/formatting/no-multiline-strings.test.d.ts';
+import type { Tests_Rules_Eslint_Formatting_NoMultilineStrings_RuleTester } from '../../../../types/tests/rules/eslint/formatting/no-multiline-strings.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Formatting - No Multiline Strings.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintFormattingNoMultilineStringsRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Formatting_NoMultilineStrings_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

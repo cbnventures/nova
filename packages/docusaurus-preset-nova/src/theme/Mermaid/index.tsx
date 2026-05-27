@@ -8,19 +8,19 @@ import {
 } from '../../lib/mermaid.js';
 
 import type {
-  ThemeMermaidContentClassName,
-  ThemeMermaidContentContainerRef,
-  ThemeMermaidContentProps,
-  ThemeMermaidContentRenderResult,
-  ThemeMermaidContentReturns,
-  ThemeMermaidMermaidColorMode,
-  ThemeMermaidMermaidColorModeState,
-  ThemeMermaidMermaidCurrentTheme,
-  ThemeMermaidMermaidObserver,
-  ThemeMermaidMermaidProps,
-  ThemeMermaidMermaidReturns,
-  ThemeMermaidMermaidSetColorMode,
-  ThemeMermaidMermaidTheme,
+  Theme_Mermaid_Index_Mermaid_ColorMode,
+  Theme_Mermaid_Index_Mermaid_ColorModeState,
+  Theme_Mermaid_Index_Mermaid_ContentClassName,
+  Theme_Mermaid_Index_Mermaid_ContentContainerRef,
+  Theme_Mermaid_Index_Mermaid_ContentProps,
+  Theme_Mermaid_Index_Mermaid_ContentRenderResult,
+  Theme_Mermaid_Index_Mermaid_ContentReturns,
+  Theme_Mermaid_Index_Mermaid_CurrentTheme,
+  Theme_Mermaid_Index_Mermaid_Observer,
+  Theme_Mermaid_Index_Mermaid_Props,
+  Theme_Mermaid_Index_Mermaid_Returns,
+  Theme_Mermaid_Index_Mermaid_SetColorMode,
+  Theme_Mermaid_Index_Mermaid_Theme,
 } from '../../types/theme/Mermaid/index.d.ts';
 
 /**
@@ -29,15 +29,15 @@ import type {
  * Renders a Mermaid diagram from the given text by injecting
  * the resulting SVG into a container div.
  *
- * @param {ThemeMermaidContentProps} props - Props.
+ * @param {Theme_Mermaid_Index_Mermaid_ContentProps} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function MermaidContent(props: ThemeMermaidContentProps): ThemeMermaidContentReturns {
-  const renderResult: ThemeMermaidContentRenderResult = useMermaidRenderResult({ text: props['value'] });
-  const containerRef: ThemeMermaidContentContainerRef = useRef<HTMLDivElement | null>(null);
+function MermaidContent(props: Theme_Mermaid_Index_Mermaid_ContentProps): Theme_Mermaid_Index_Mermaid_ContentReturns {
+  const renderResult: Theme_Mermaid_Index_Mermaid_ContentRenderResult = useMermaidRenderResult({ text: props['value'] });
+  const containerRef: Theme_Mermaid_Index_Mermaid_ContentContainerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (
@@ -55,7 +55,7 @@ function MermaidContent(props: ThemeMermaidContentProps): ThemeMermaidContentRet
     return null;
   }
 
-  const className: ThemeMermaidContentClassName = (props['className'] !== undefined) ? `${MERMAID_CONTAINER_CLASS_NAME} ${props['className']}` : MERMAID_CONTAINER_CLASS_NAME;
+  const className: Theme_Mermaid_Index_Mermaid_ContentClassName = (props['className'] !== undefined) ? `${MERMAID_CONTAINER_CLASS_NAME} ${props['className']}` : MERMAID_CONTAINER_CLASS_NAME;
 
   return (
     <div
@@ -73,26 +73,26 @@ function MermaidContent(props: ThemeMermaidContentProps): ThemeMermaidContentRet
  * Wraps the Mermaid diagram renderer in an error boundary so
  * that malformed syntax does not crash the page.
  *
- * @param {ThemeMermaidMermaidProps} props - Props.
+ * @param {Theme_Mermaid_Index_Mermaid_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Mermaid(props: ThemeMermaidMermaidProps): ThemeMermaidMermaidReturns {
-  const colorModeState: ThemeMermaidMermaidColorModeState = useState<ThemeMermaidMermaidColorMode>('light');
-  const colorMode: ThemeMermaidMermaidColorMode = colorModeState[0];
-  const setColorMode: ThemeMermaidMermaidSetColorMode = colorModeState[1];
+function Mermaid(props: Theme_Mermaid_Index_Mermaid_Props): Theme_Mermaid_Index_Mermaid_Returns {
+  const colorModeState: Theme_Mermaid_Index_Mermaid_ColorModeState = useState<Theme_Mermaid_Index_Mermaid_ColorMode>('light');
+  const colorMode: Theme_Mermaid_Index_Mermaid_ColorMode = colorModeState[0];
+  const setColorMode: Theme_Mermaid_Index_Mermaid_SetColorMode = colorModeState[1];
 
   useEffect(() => {
-    const currentTheme: ThemeMermaidMermaidCurrentTheme = document.documentElement.getAttribute('data-theme');
+    const currentTheme: Theme_Mermaid_Index_Mermaid_CurrentTheme = document.documentElement.getAttribute('data-theme');
 
     if (currentTheme !== null) {
       setColorMode(currentTheme);
     }
 
-    const observer: ThemeMermaidMermaidObserver = new MutationObserver(() => {
-      const theme: ThemeMermaidMermaidTheme = document.documentElement.getAttribute('data-theme');
+    const observer: Theme_Mermaid_Index_Mermaid_Observer = new MutationObserver(() => {
+      const theme: Theme_Mermaid_Index_Mermaid_Theme = document.documentElement.getAttribute('data-theme');
 
       if (theme !== null) {
         setColorMode(theme);

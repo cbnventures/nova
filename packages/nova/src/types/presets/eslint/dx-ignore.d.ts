@@ -5,4 +5,4 @@ import type { Linter } from 'eslint';
  *
  * @since 0.11.0
  */
-export type PresetsEslintDxIgnoreConfigConfig = Linter.Config[];
+export type Presets_Eslint_DxIgnore_ConfigConfig = Linter.Config[];

@@ -1,35 +1,35 @@
-import type { SharedGeneratorRunResult } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult as SharedGeneratorRunResult } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Editorconfig - Run.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesEditorconfigRunOptionsDryRun = true;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_Options_DryRun = true;
 
-export type CliGenerateMustHavesEditorconfigRunOptionsReplaceFile = true;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_Options_ReplaceFile = true;
 
-export type CliGenerateMustHavesEditorconfigRunOptions = {
-  dryRun?: CliGenerateMustHavesEditorconfigRunOptionsDryRun;
-  replaceFile?: CliGenerateMustHavesEditorconfigRunOptionsReplaceFile;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_Options = {
+  dryRun?: Cli_Generate_MustHaves_Editorconfig_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Generate_MustHaves_Editorconfig_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliGenerateMustHavesEditorconfigRunReturns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
 
-export type CliGenerateMustHavesEditorconfigRunCurrentDirectory = string;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_CurrentDirectory = string;
 
-export type CliGenerateMustHavesEditorconfigRunIsAtProjectRoot = boolean;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliGenerateMustHavesEditorconfigRunIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_IsDryRun = boolean;
 
-export type CliGenerateMustHavesEditorconfigRunIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesEditorconfigRunReplaceFileNotice = string;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_ReplaceFileNotice = string;
 
-export type CliGenerateMustHavesEditorconfigRunTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_TemplateDirectory = string;
 
-export type CliGenerateMustHavesEditorconfigRunTemplatePath = string;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_TemplatePath = string;
 
-export type CliGenerateMustHavesEditorconfigRunContent = string;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_Content = string;
 
-export type CliGenerateMustHavesEditorconfigRunTargetPath = string;
+export type Cli_Generate_MustHaves_Editorconfig_Runner_Run_TargetPath = string;

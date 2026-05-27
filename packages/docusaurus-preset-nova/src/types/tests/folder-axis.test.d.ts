@@ -3,76 +3,76 @@
  *
  * @since 0.18.0
  */
-export type TestsFolderAxisFolderAxisThemeDirs = readonly string[];
+export type Tests_FolderAxis_FolderAxis_ThemeDirs = readonly string[];
 
-export type TestsFolderAxisFolderAxisCasingViolations = string[];
+export type Tests_FolderAxis_FolderAxis_CasingViolations = string[];
 
-export type TestsFolderAxisFolderAxisCasingMessage = string;
+export type Tests_FolderAxis_FolderAxis_CasingMessage = string;
 
-export type TestsFolderAxisFolderAxisBlockDirs = readonly string[];
+export type Tests_FolderAxis_FolderAxis_BlockDirs = readonly string[];
 
-export type TestsFolderAxisFolderAxisExportedFolders = ReadonlySet<string>;
+export type Tests_FolderAxis_FolderAxis_ExportedFolders = ReadonlySet<string>;
 
-export type TestsFolderAxisFolderAxisMissingExports = string[];
+export type Tests_FolderAxis_FolderAxis_MissingExports = string[];
 
-export type TestsFolderAxisFolderAxisMissingExportsMessage = string;
+export type Tests_FolderAxis_FolderAxis_MissingExportsMessage = string;
 
-export type TestsFolderAxisFolderAxisBlockDirSet = ReadonlySet<string>;
+export type Tests_FolderAxis_FolderAxis_BlockDirSet = ReadonlySet<string>;
 
-export type TestsFolderAxisFolderAxisStaleExports = string[];
+export type Tests_FolderAxis_FolderAxis_StaleExports = string[];
 
-export type TestsFolderAxisFolderAxisStaleExportsMessage = string;
+export type Tests_FolderAxis_FolderAxis_StaleExportsMessage = string;
 
 /**
  * Tests - Folder Axis - Get Package Root.
  *
  * @since 0.18.0
  */
-export type TestsFolderAxisGetPackageRootReturns = string;
+export type Tests_FolderAxis_GetPackageRoot_Returns = string;
 
-export type TestsFolderAxisGetPackageRootCurrentFilePath = string;
+export type Tests_FolderAxis_GetPackageRoot_CurrentFilePath = string;
 
-export type TestsFolderAxisGetPackageRootCurrentFileDirectory = string;
+export type Tests_FolderAxis_GetPackageRoot_CurrentFileDirectory = string;
 
 /**
  * Tests - Folder Axis - List Block Directories.
  *
  * @since 0.18.0
  */
-export type TestsFolderAxisListBlockDirectoriesReturns = readonly string[];
+export type Tests_FolderAxis_ListBlockDirectories_Returns = readonly string[];
 
-export type TestsFolderAxisListBlockDirectoriesBlocksRoot = string;
+export type Tests_FolderAxis_ListBlockDirectories_BlocksRoot = string;
 
-export type TestsFolderAxisListBlockDirectoriesEntries = readonly import('node:fs').Dirent[];
+export type Tests_FolderAxis_ListBlockDirectories_Entries = readonly import('node:fs').Dirent[];
 
 /**
  * Tests - Folder Axis - List Theme Directories.
  *
  * @since 0.18.0
  */
-export type TestsFolderAxisListThemeDirectoriesReturns = readonly string[];
+export type Tests_FolderAxis_ListThemeDirectories_Returns = readonly string[];
 
-export type TestsFolderAxisListThemeDirectoriesThemeRoot = string;
+export type Tests_FolderAxis_ListThemeDirectories_ThemeRoot = string;
 
-export type TestsFolderAxisListThemeDirectoriesEntries = readonly import('node:fs').Dirent[];
+export type Tests_FolderAxis_ListThemeDirectories_Entries = readonly import('node:fs').Dirent[];
 
 /**
  * Tests - Folder Axis - Read Blocks Index Exports.
  *
  * @since 0.18.0
  */
-export type TestsFolderAxisReadBlocksIndexExportsReturns = ReadonlySet<string>;
+export type Tests_FolderAxis_ReadBlocksIndexExports_Returns = ReadonlySet<string>;
 
-export type TestsFolderAxisReadBlocksIndexExportsIndexPath = string;
+export type Tests_FolderAxis_ReadBlocksIndexExports_IndexPath = string;
 
-export type TestsFolderAxisReadBlocksIndexExportsContent = string;
+export type Tests_FolderAxis_ReadBlocksIndexExports_Content = string;
 
-export type TestsFolderAxisReadBlocksIndexExportsLines = readonly string[];
+export type Tests_FolderAxis_ReadBlocksIndexExports_Lines = readonly string[];
 
-export type TestsFolderAxisReadBlocksIndexExportsFolders = Set<string>;
+export type Tests_FolderAxis_ReadBlocksIndexExports_Folders = Set<string>;
 
-export type TestsFolderAxisReadBlocksIndexExportsLine = string;
+export type Tests_FolderAxis_ReadBlocksIndexExports_Line = string;
 
-export type TestsFolderAxisReadBlocksIndexExportsMatch = RegExpMatchArray | null;
+export type Tests_FolderAxis_ReadBlocksIndexExports_Match = RegExpMatchArray | null;
 
-export type TestsFolderAxisReadBlocksIndexExportsCapturedFolder = string;
+export type Tests_FolderAxis_ReadBlocksIndexExports_CapturedFolder = string;

@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoRestParams } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintSyntaxNoRestParamsRuleTester } from '../../../../types/tests/rules/eslint/syntax/no-rest-params.test.d.ts';
+import type { Tests_Rules_Eslint_Syntax_NoRestParams_RuleTester } from '../../../../types/tests/rules/eslint/syntax/no-rest-params.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Syntax - No Rest Params.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintSyntaxNoRestParamsRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Syntax_NoRestParams_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

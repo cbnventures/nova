@@ -1,4 +1,4 @@
-import type { ScriptsDataAttributeQueryLinesLines } from '../types/scripts/data-attribute-query.d.ts';
+import type { Scripts_DataAttributeQuery_LinesLines } from '../types/scripts/data-attribute-query.d.ts';
 
 /**
  * Scripts - Data Attribute Query - Lines.
@@ -9,7 +9,7 @@ import type { ScriptsDataAttributeQueryLinesLines } from '../types/scripts/data-
  *
  * @since 0.15.0
  */
-const lines: ScriptsDataAttributeQueryLinesLines = [
+const lines: Scripts_DataAttributeQuery_LinesLines = [
   '(function() {',
   '  try {',
   '    var entries = new URLSearchParams(window.location.search).entries();',

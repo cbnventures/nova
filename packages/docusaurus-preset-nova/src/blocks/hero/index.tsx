@@ -1,7 +1,7 @@
 import Link from '@docusaurus/Link';
 import Heading from '@theme/Heading';
 
-import type { BlocksHeroProps } from '../../types/blocks/hero/index.d.ts';
+import type { Blocks_Hero_Index_BlocksHero_Props } from '../../types/blocks/hero/index.d.ts';
 
 /**
  * Blocks - Hero.
@@ -9,13 +9,13 @@ import type { BlocksHeroProps } from '../../types/blocks/hero/index.d.ts';
  * Full-width hero section with a large display heading, tagline text, and primary/secondary
  * call-to-action buttons over a configurable background variant.
  *
- * @param {BlocksHeroProps} props - Props.
+ * @param {Blocks_Hero_Index_BlocksHero_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlocksHero(props: BlocksHeroProps) {
+function BlocksHero(props: Blocks_Hero_Index_BlocksHero_Props) {
   return (
     <header
       className={(props['className'] !== undefined) ? `nova-hero ${props['className']}` : 'nova-hero'}

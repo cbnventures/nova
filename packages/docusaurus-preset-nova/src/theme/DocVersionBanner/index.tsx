@@ -2,12 +2,12 @@ import { useDocsVersion } from '@docusaurus/plugin-content-docs/client';
 import { translate } from '@docusaurus/Translate';
 
 import type {
-  ThemeDocVersionBannerDocVersionBannerBannerMessage,
-  ThemeDocVersionBannerDocVersionBannerMessage,
-  ThemeDocVersionBannerDocVersionBannerProps,
-  ThemeDocVersionBannerDocVersionBannerVersion,
-  ThemeDocVersionBannerDocVersionBannerVersionIsLast,
-  ThemeDocVersionBannerDocVersionBannerVersionLabel,
+  Theme_DocVersionBanner_Index_DocVersionBanner_BannerMessage,
+  Theme_DocVersionBanner_Index_DocVersionBanner_Message,
+  Theme_DocVersionBanner_Index_DocVersionBanner_Props,
+  Theme_DocVersionBanner_Index_DocVersionBanner_Version,
+  Theme_DocVersionBanner_Index_DocVersionBanner_Version_IsLast,
+  Theme_DocVersionBanner_Index_DocVersionBanner_Version_Label,
 } from '../../types/theme/DocVersionBanner/index.d.ts';
 
 /**
@@ -21,16 +21,16 @@ import type {
  *
  * @since 0.15.0
  */
-function DocVersionBanner(props: ThemeDocVersionBannerDocVersionBannerProps) {
-  const version: ThemeDocVersionBannerDocVersionBannerVersion = useDocsVersion() as ThemeDocVersionBannerDocVersionBannerVersion;
-  const isLastVersion: ThemeDocVersionBannerDocVersionBannerVersionIsLast = version['isLast'];
+function DocVersionBanner(props: Theme_DocVersionBanner_Index_DocVersionBanner_Props) {
+  const version: Theme_DocVersionBanner_Index_DocVersionBanner_Version = useDocsVersion() as Theme_DocVersionBanner_Index_DocVersionBanner_Version;
+  const isLastVersion: Theme_DocVersionBanner_Index_DocVersionBanner_Version_IsLast = version['isLast'];
 
   if (isLastVersion === true) {
     return undefined;
   }
 
-  const versionLabel: ThemeDocVersionBannerDocVersionBannerVersionLabel = version['label'];
-  const translatedMessage: ThemeDocVersionBannerDocVersionBannerMessage = translate(
+  const versionLabel: Theme_DocVersionBanner_Index_DocVersionBanner_Version_Label = version['label'];
+  const translatedMessage: Theme_DocVersionBanner_Index_DocVersionBanner_Message = translate(
     {
       id: 'theme.docs.versionBanner.message',
       message: 'This is documentation for version {versionLabel}.',
@@ -38,7 +38,7 @@ function DocVersionBanner(props: ThemeDocVersionBannerDocVersionBannerProps) {
     },
     { versionLabel },
   );
-  const bannerMessage: ThemeDocVersionBannerDocVersionBannerBannerMessage = translatedMessage;
+  const bannerMessage: Theme_DocVersionBanner_Index_DocVersionBanner_BannerMessage = translatedMessage;
 
   return (
     <div

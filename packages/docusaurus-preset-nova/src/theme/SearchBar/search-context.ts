@@ -1,9 +1,9 @@
 import { createContext, useContext } from 'react';
 
 import type {
-  ThemeSearchBarSearchContextContext,
-  ThemeSearchBarSearchContextMaybeValue,
-  ThemeSearchBarSearchContextReturns,
+  Theme_SearchBar_SearchContext_Context,
+  Theme_SearchBar_SearchContext_MaybeValue,
+  Theme_SearchBar_SearchContext_Returns,
 } from '../../types/theme/SearchBar/search-context.d.ts';
 
 /**
@@ -15,7 +15,7 @@ import type {
  *
  * @since 0.15.0
  */
-const searchContext: ThemeSearchBarSearchContextContext = createContext<ThemeSearchBarSearchContextMaybeValue>(undefined);
+const searchContext: Theme_SearchBar_SearchContext_Context = createContext<Theme_SearchBar_SearchContext_MaybeValue>(undefined);
 
 /**
  * Theme - Search Bar - Search Context - Use Search Context.
@@ -24,12 +24,12 @@ const searchContext: ThemeSearchBarSearchContextContext = createContext<ThemeSea
  * ancestor, throwing an error if called outside the provider boundary
  * to surface integration mistakes during development.
  *
- * @returns {ThemeSearchBarSearchContextReturns}
+ * @returns {Theme_SearchBar_SearchContext_Returns}
  *
  * @since 0.15.0
  */
-export function useSearchContext(): ThemeSearchBarSearchContextReturns {
-  const context: ThemeSearchBarSearchContextMaybeValue = useContext(searchContext);
+export function useSearchContext(): Theme_SearchBar_SearchContext_Returns {
+  const context: Theme_SearchBar_SearchContext_MaybeValue = useContext(searchContext);
 
   if (context === undefined) {
     throw new Error('useSearchContext must be used within a SearchProvider');

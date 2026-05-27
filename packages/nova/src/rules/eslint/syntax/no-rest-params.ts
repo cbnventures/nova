@@ -3,28 +3,28 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintSyntaxNoRestParamsCheckFunctionAllowPatterns,
-  RulesEslintSyntaxNoRestParamsCheckFunctionContext,
-  RulesEslintSyntaxNoRestParamsCheckFunctionFunctionName,
-  RulesEslintSyntaxNoRestParamsCheckFunctionNode,
-  RulesEslintSyntaxNoRestParamsCheckFunctionReturns,
-  RulesEslintSyntaxNoRestParamsGetFunctionNameClassNode,
-  RulesEslintSyntaxNoRestParamsGetFunctionNameNode,
-  RulesEslintSyntaxNoRestParamsGetFunctionNameObjectNode,
-  RulesEslintSyntaxNoRestParamsGetFunctionNameParent,
-  RulesEslintSyntaxNoRestParamsGetFunctionNameParentName,
-  RulesEslintSyntaxNoRestParamsGetFunctionNameReturns,
-  RulesEslintSyntaxNoRestParamsGetParentNameClassNode,
-  RulesEslintSyntaxNoRestParamsGetParentNameNode,
-  RulesEslintSyntaxNoRestParamsGetParentNameReturns,
-  RulesEslintSyntaxNoRestParamsIsAllowedName,
-  RulesEslintSyntaxNoRestParamsIsAllowedPatterns,
-  RulesEslintSyntaxNoRestParamsIsAllowedPrefix,
-  RulesEslintSyntaxNoRestParamsIsAllowedReturns,
-  RulesEslintSyntaxNoRestParamsRuleAllowPatterns,
-  RulesEslintSyntaxNoRestParamsRuleDefaultOptionsAllow,
-  RulesEslintSyntaxNoRestParamsRuleDefaultOptionsIgnoreFiles,
-  RulesEslintSyntaxNoRestParamsRuleOptions,
+  Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_AllowPatterns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Context,
+  Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_FunctionName,
+  Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Node,
+  Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Returns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ClassNode,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Node,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ObjectNode,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Parent,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ParentName,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Returns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_ClassNode,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Node,
+  Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Returns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Name,
+  Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Patterns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Prefix,
+  Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Returns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_RuleAllowPatterns,
+  Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsAllow,
+  Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions,
 } from '../../../types/rules/eslint/syntax/no-rest-params.d.ts';
 
 /**
@@ -35,7 +35,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintSyntaxNoRestParams {
+export class Runner {
   /**
    * Rules - ESLint - Syntax - No Rest Params - Rule.
    *
@@ -75,32 +75,32 @@ export class RulesEslintSyntaxNoRestParams {
       }],
     },
     defaultOptions: [{
-      allow: [] as RulesEslintSyntaxNoRestParamsRuleDefaultOptionsAllow,
-      ignoreFiles: [] as RulesEslintSyntaxNoRestParamsRuleDefaultOptionsIgnoreFiles,
+      allow: [] as Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsAllow,
+      ignoreFiles: [] as Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintSyntaxNoRestParamsRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
         return {};
       }
 
-      const allowPatterns: RulesEslintSyntaxNoRestParamsRuleAllowPatterns = options['allow'];
+      const allowPatterns: Rules_Eslint_Syntax_NoRestParams_Runner_RuleAllowPatterns = options['allow'];
 
       return {
         FunctionDeclaration(node) {
-          RulesEslintSyntaxNoRestParams.checkFunction(context, node, allowPatterns);
+          Runner.checkFunction(context, node, allowPatterns);
 
           return;
         },
         FunctionExpression(node) {
-          RulesEslintSyntaxNoRestParams.checkFunction(context, node, allowPatterns);
+          Runner.checkFunction(context, node, allowPatterns);
 
           return;
         },
         ArrowFunctionExpression(node) {
-          RulesEslintSyntaxNoRestParams.checkFunction(context, node, allowPatterns);
+          Runner.checkFunction(context, node, allowPatterns);
 
           return;
         },
@@ -117,18 +117,18 @@ export class RulesEslintSyntaxNoRestParams {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoRestParamsGetParentNameNode} node - Node.
+   * @param {Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Node} node - Node.
    *
-   * @returns {RulesEslintSyntaxNoRestParamsGetParentNameReturns}
+   * @returns {Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Returns}
    *
    * @since 0.15.0
    */
-  private static getParentName(node: RulesEslintSyntaxNoRestParamsGetParentNameNode): RulesEslintSyntaxNoRestParamsGetParentNameReturns {
+  private static getParentName(node: Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Node): Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Returns {
     if (
       node.type === 'MethodDefinition'
       && node.key.type === 'Identifier'
     ) {
-      const classNode: RulesEslintSyntaxNoRestParamsGetParentNameClassNode = node.parent;
+      const classNode: Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_ClassNode = node.parent;
 
       if (
         classNode !== undefined
@@ -145,7 +145,7 @@ export class RulesEslintSyntaxNoRestParams {
     }
 
     if (node.parent !== undefined && node.parent.type !== 'Program') {
-      return RulesEslintSyntaxNoRestParams.getParentName(node.parent);
+      return Runner.getParentName(node.parent);
     }
 
     return undefined;
@@ -159,18 +159,18 @@ export class RulesEslintSyntaxNoRestParams {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoRestParamsIsAllowedName}     name     - Name.
-   * @param {RulesEslintSyntaxNoRestParamsIsAllowedPatterns} patterns - Patterns.
+   * @param {Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Name}     name     - Name.
+   * @param {Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Patterns} patterns - Patterns.
    *
-   * @returns {RulesEslintSyntaxNoRestParamsIsAllowedReturns}
+   * @returns {Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Returns}
    *
    * @since 0.15.0
    */
-  private static isAllowed(name: RulesEslintSyntaxNoRestParamsIsAllowedName, patterns: RulesEslintSyntaxNoRestParamsIsAllowedPatterns): RulesEslintSyntaxNoRestParamsIsAllowedReturns {
+  private static isAllowed(name: Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Name, patterns: Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Patterns): Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Returns {
     for (const pattern of patterns) {
       // Wildcard match: "Logger.*" matches "Logger.info", "Logger.warn", etc.
       if (pattern.endsWith('.*') === true) {
-        const prefix: RulesEslintSyntaxNoRestParamsIsAllowedPrefix = pattern.slice(0, -2);
+        const prefix: Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Prefix = pattern.slice(0, -2);
 
         if (name.startsWith(`${prefix}.`) === true) {
           return true;
@@ -195,14 +195,14 @@ export class RulesEslintSyntaxNoRestParams {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoRestParamsGetFunctionNameNode} node - Node.
+   * @param {Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Node} node - Node.
    *
-   * @returns {RulesEslintSyntaxNoRestParamsGetFunctionNameReturns}
+   * @returns {Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Returns}
    *
    * @since 0.15.0
    */
-  private static getFunctionName(node: RulesEslintSyntaxNoRestParamsGetFunctionNameNode): RulesEslintSyntaxNoRestParamsGetFunctionNameReturns {
-    const parent: RulesEslintSyntaxNoRestParamsGetFunctionNameParent = node.parent;
+  private static getFunctionName(node: Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Node): Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Returns {
+    const parent: Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Parent = node.parent;
 
     // Class method: class Logger { static info(...messages) {} }
     if (
@@ -210,7 +210,7 @@ export class RulesEslintSyntaxNoRestParams {
       && parent.type === 'MethodDefinition'
       && parent.key.type === 'Identifier'
     ) {
-      const classNode: RulesEslintSyntaxNoRestParamsGetFunctionNameClassNode = parent.parent;
+      const classNode: Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ClassNode = parent.parent;
 
       if (
         classNode !== undefined
@@ -232,7 +232,7 @@ export class RulesEslintSyntaxNoRestParams {
       && parent.type === 'Property'
       && parent.key.type === 'Identifier'
     ) {
-      const objectNode: RulesEslintSyntaxNoRestParamsGetFunctionNameObjectNode = parent.parent;
+      const objectNode: Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ObjectNode = parent.parent;
 
       if (
         objectNode !== undefined
@@ -251,7 +251,7 @@ export class RulesEslintSyntaxNoRestParams {
         && objectNode.parent !== undefined
         && objectNode.parent.type === 'ReturnStatement'
       ) {
-        const parentName: RulesEslintSyntaxNoRestParamsGetFunctionNameParentName = RulesEslintSyntaxNoRestParams.getParentName(objectNode.parent);
+        const parentName: Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ParentName = Runner.getParentName(objectNode.parent);
 
         if (parentName !== undefined) {
           return `${parentName}.${parent.key.name}`;
@@ -291,20 +291,20 @@ export class RulesEslintSyntaxNoRestParams {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoRestParamsCheckFunctionContext}       context       - Context.
-   * @param {RulesEslintSyntaxNoRestParamsCheckFunctionNode}          node          - Node.
-   * @param {RulesEslintSyntaxNoRestParamsCheckFunctionAllowPatterns} allowPatterns - Allow patterns.
+   * @param {Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Context}       context       - Context.
+   * @param {Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Node}          node          - Node.
+   * @param {Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_AllowPatterns} allowPatterns - Allow patterns.
    *
-   * @returns {RulesEslintSyntaxNoRestParamsCheckFunctionReturns}
+   * @returns {Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Returns}
    *
    * @since 0.15.0
    */
-  private static checkFunction(context: RulesEslintSyntaxNoRestParamsCheckFunctionContext, node: RulesEslintSyntaxNoRestParamsCheckFunctionNode, allowPatterns: RulesEslintSyntaxNoRestParamsCheckFunctionAllowPatterns): RulesEslintSyntaxNoRestParamsCheckFunctionReturns {
-    const functionName: RulesEslintSyntaxNoRestParamsCheckFunctionFunctionName = RulesEslintSyntaxNoRestParams.getFunctionName(node);
+  private static checkFunction(context: Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Context, node: Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Node, allowPatterns: Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_AllowPatterns): Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Returns {
+    const functionName: Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_FunctionName = Runner.getFunctionName(node);
 
     for (const param of node.params) {
       if (param.type === 'RestElement') {
-        if (functionName !== undefined && RulesEslintSyntaxNoRestParams.isAllowed(functionName, allowPatterns) === true) {
+        if (functionName !== undefined && Runner.isAllowed(functionName, allowPatterns) === true) {
           continue;
         }
 

@@ -3,44 +3,44 @@
  *
  * @since 0.13.0
  */
-export type TestsToolkitCliHeaderCliheaderRenderOutput = string;
+export type Tests_Toolkit_CliHeader_CliheaderRenderOutput = string;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesHello = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesHello = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesTopLeft = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesTopLeft = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesTopRight = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesTopRight = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesBottomLeft = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesBottomLeft = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesBottomRight = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesBottomRight = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesLine1 = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesLine1 = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesLine2 = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesLine2 = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderWithPadding = string;
+export type Tests_Toolkit_CliHeader_CliheaderRenderWithPadding = string;
 
-export type TestsToolkitCliHeaderCliheaderRenderWithoutPadding = string;
+export type Tests_Toolkit_CliHeader_CliheaderRenderWithoutPadding = string;
 
-export type TestsToolkitCliHeaderCliheaderRenderWithPaddingLines = number;
+export type Tests_Toolkit_CliHeader_CliheaderRenderWithPaddingLines = number;
 
-export type TestsToolkitCliHeaderCliheaderRenderWithoutPaddingLines = number;
+export type Tests_Toolkit_CliHeader_CliheaderRenderWithoutPaddingLines = number;
 
-export type TestsToolkitCliHeaderCliheaderRenderStartsWithNewline = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderStartsWithNewline = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderEndsWithNewline = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderEndsWithNewline = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesEllipsis = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesEllipsis = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderLines = string[];
+export type Tests_Toolkit_CliHeader_CliheaderRenderLines = string[];
 
-export type TestsToolkitCliHeaderCliheaderRenderContentLine = string;
+export type Tests_Toolkit_CliHeader_CliheaderRenderContentLine = string;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesLeftAligned = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesLeftAligned = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesRightAligned = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesRightAligned = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesRoundTopLeft = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesRoundTopLeft = boolean;
 
-export type TestsToolkitCliHeaderCliheaderRenderIncludesRoundBottomRight = boolean;
+export type Tests_Toolkit_CliHeader_CliheaderRenderIncludesRoundBottomRight = boolean;

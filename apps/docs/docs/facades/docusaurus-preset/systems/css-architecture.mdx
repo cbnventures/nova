@@ -130,7 +130,7 @@ The theme generates CSS custom properties from the preset configuration at build
 
 ### Colors
 
-Each color (primary, accent, neutral) generates 11 shades:
+The two brand colors (`primary` and `secondary`) each generate 11 shades. The other four categories (`text`, `border`, `warning`, `danger`) emit a single base token per category plus a small set of derived `color-mix` tokens.
 
 | Property                   | Example Value | Description    |
 |----------------------------|---------------|----------------|
@@ -146,7 +146,9 @@ Each color (primary, accent, neutral) generates 11 shades:
 | `--nova-color-primary-900` | `#7c2d12`     |                |
 | `--nova-color-primary-950` | `#431407`     | Darkest shade  |
 
-The same pattern applies to `--nova-color-accent-*` and `--nova-color-neutral-*`.
+The same shade pattern applies to `--nova-color-accent-*` (the secondary brand color is emitted under the `accent` namespace for backward compatibility with existing preset CSS).
+
+Non-brand category tokens include `--nova-color-text` (plus `-muted`, `-soft`, `-inverse`), `--nova-color-border` (plus `-subtle`), `--nova-color-surface-raised`, `--nova-color-warning-500` (plus `-400` and `-bg`), and `--nova-color-danger-500` (plus `-400` and `-bg`). The full list and how each is derived is documented in **[Color Pipeline](/docs/facades/docusaurus-preset/systems/color-pipeline)**.
 
 ### Fonts
 
@@ -176,7 +178,7 @@ The same pattern applies to `--nova-color-accent-*` and `--nova-color-neutral-*`
 | Property                     | `flat`                                    | `elevated`                 | `glass`                            |
 |------------------------------|-------------------------------------------|----------------------------|------------------------------------|
 | `--nova-depth-card-shadow`   | `none`                                    | `0 4px 6px …, 0 2px 4px …` | `0 4px 30px …`                     |
-| `--nova-depth-card-border`   | `1px solid var(--nova-color-neutral-200)` | `none`                     | `1px solid rgba(255,255,255,0.18)` |
+| `--nova-depth-card-border`   | `1px solid var(--nova-color-border)`      | `none`                     | `1px solid rgba(255,255,255,0.18)` |
 | `--nova-depth-card-backdrop` | `none`                                    | `none`                     | `blur(5px)`                        |
 
 Code block depth follows the same pattern with `--nova-depth-code-shadow` and `--nova-depth-code-border` (`flat`, `bordered`, `elevated`).

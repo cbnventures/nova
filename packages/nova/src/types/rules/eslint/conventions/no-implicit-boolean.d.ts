@@ -6,67 +6,67 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.14.0
  */
-export type RulesEslintConventionsNoImplicitBooleanCheckConditionContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsNoImplicitBooleanCheckConditionNode = TSESTree.IfStatement | TSESTree.WhileStatement | TSESTree.DoWhileStatement | TSESTree.ForStatement | TSESTree.ConditionalExpression;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Node = TSESTree.IfStatement | TSESTree.WhileStatement | TSESTree.DoWhileStatement | TSESTree.ForStatement | TSESTree.ConditionalExpression;
 
-export type RulesEslintConventionsNoImplicitBooleanCheckConditionReturns = void;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Returns = void;
 
-export type RulesEslintConventionsNoImplicitBooleanCheckConditionTest = TSESTree.Expression | null | undefined;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckCondition_Test = TSESTree.Expression | null | undefined;
 
 /**
  * Rules - ESLint - Conventions - No Implicit Boolean - Check Negation.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsNoImplicitBooleanCheckNegationContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsNoImplicitBooleanCheckNegationNode = TSESTree.UnaryExpression;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Node = TSESTree.UnaryExpression;
 
-export type RulesEslintConventionsNoImplicitBooleanCheckNegationReturns = void;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_CheckNegation_Returns = void;
 
 /**
  * Rules - ESLint - Conventions - No Implicit Boolean - Is Implicit Boolean.
  *
  * @since 0.14.0
  */
-export type RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanNode = TSESTree.Node;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Node = TSESTree.Node;
 
-export type RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanReturns = boolean;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Returns = boolean;
 
-export type RulesEslintConventionsNoImplicitBooleanIsImplicitBooleanArgument = TSESTree.Expression;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsImplicitBoolean_Argument = TSESTree.Expression;
 
 /**
  * Rules - ESLint - Conventions - No Implicit Boolean - Is Inside Condition Test.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestNode = TSESTree.Node;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Node = TSESTree.Node;
 
-export type RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestReturns = boolean;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Returns = boolean;
 
-export type RulesEslintConventionsNoImplicitBooleanIsInsideConditionTestCurrent = TSESTree.Node | null | undefined;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_IsInsideConditionTest_Current = TSESTree.Node | null | undefined;
 
 /**
  * Rules - ESLint - Conventions - No Implicit Boolean - Report Implicit Nodes.
  *
  * @since 0.14.0
  */
-export type RulesEslintConventionsNoImplicitBooleanReportImplicitNodesContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsNoImplicitBooleanReportImplicitNodesTest = TSESTree.Node;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Test = TSESTree.Node;
 
-export type RulesEslintConventionsNoImplicitBooleanReportImplicitNodesReturns = void;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_ReportImplicitNodes_Returns = void;
 
 /**
  * Rules - ESLint - Conventions - No Implicit Boolean - Rule.
  *
  * @since 0.14.0
  */
-export type RulesEslintConventionsNoImplicitBooleanRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintConventionsNoImplicitBooleanRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintConventionsNoImplicitBooleanRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintConventionsNoImplicitBooleanRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Conventions_NoImplicitBoolean_Runner_RuleOptions_IgnoreFiles;
 }>;

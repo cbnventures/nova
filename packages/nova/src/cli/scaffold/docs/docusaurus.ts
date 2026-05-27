@@ -1,8 +1,8 @@
 import { runScaffold } from '../../../lib/scaffold.js';
 
 import type {
-  CliScaffoldDocsDocusaurusRunOptions,
-  CliScaffoldDocsDocusaurusRunReturns,
+  Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options,
+  Cli_Scaffold_Docs_Docusaurus_Runner_Run_Returns,
 } from '../../../types/cli/scaffold/docs/docusaurus.d.ts';
 
 /**
@@ -14,20 +14,20 @@ import type {
  *
  * @since 0.15.0
  */
-export class CliScaffoldDocsDocusaurus {
+export class Runner {
   /**
    * CLI - Scaffold - Docs - Docusaurus - Run.
    *
    * Entry point invoked by the CLI nova scaffold docs docusaurus command. Delegates to
    * runScaffold with the Docusaurus template subpath.
    *
-   * @param {CliScaffoldDocsDocusaurusRunOptions} options - Options.
+   * @param {Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options} options - Options.
    *
-   * @returns {CliScaffoldDocsDocusaurusRunReturns}
+   * @returns {Cli_Scaffold_Docs_Docusaurus_Runner_Run_Returns}
    *
    * @since 0.15.0
    */
-  public static async run(options: CliScaffoldDocsDocusaurusRunOptions): CliScaffoldDocsDocusaurusRunReturns {
+  public static async run(options: Cli_Scaffold_Docs_Docusaurus_Runner_Run_Options): Cli_Scaffold_Docs_Docusaurus_Runner_Run_Returns {
     await runScaffold(options, 'docs', 'docusaurus', 'scaffold/docs/docusaurus', import.meta.url);
 
     return;

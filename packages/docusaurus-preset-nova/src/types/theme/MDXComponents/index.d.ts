@@ -5,23 +5,23 @@ import type { ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeMdxComponentsMdxCodeProps = Record<string, unknown>;
+export type Theme_MdxComponents_Index_MdxCode_Props = Record<string, unknown>;
 
-export type ThemeMdxComponentsMdxCodeChildren = ReactNode;
+export type Theme_MdxComponents_Index_MdxCode_Children = ReactNode;
 
-export type ThemeMdxComponentsMdxCodeIsInline = boolean;
+export type Theme_MdxComponents_Index_MdxCode_IsInline = boolean;
 
-export type ThemeMdxComponentsMdxCodeLanguage = string | undefined;
+export type Theme_MdxComponents_Index_MdxCode_Language = string | undefined;
 
-export type ThemeMdxComponentsMdxCodeTitle = string | undefined;
+export type Theme_MdxComponents_Index_MdxCode_Title = string | undefined;
 
-export type ThemeMdxComponentsMdxCodeMetastring = string | undefined;
+export type Theme_MdxComponents_Index_MdxCode_Metastring = string | undefined;
 
-export type ThemeMdxComponentsMdxCodeShowLineNumbers = boolean;
+export type Theme_MdxComponents_Index_MdxCode_ShowLineNumbers = boolean;
 
-export type ThemeMdxComponentsMdxCodeLive = boolean;
+export type Theme_MdxComponents_Index_MdxCode_Live = boolean;
 
-export type ThemeMdxComponentsMdxCodeBlockSpread = {
+export type Theme_MdxComponents_Index_MdxCode_BlockSpread = {
   showLineNumbers: boolean;
   live: boolean;
   language?: string;
@@ -34,44 +34,44 @@ export type ThemeMdxComponentsMdxCodeBlockSpread = {
  *
  * @since 0.15.0
  */
-export type ThemeMdxComponentsMdxComponentsProps = Record<string, unknown>;
+export type Theme_MdxComponents_Index_MdxComponentsProps = Record<string, unknown>;
 
 /**
  * Theme - MDX Components - MDX Details.
  *
  * @since 0.15.0
  */
-export type ThemeMdxComponentsMdxDetailsProps = Record<string, unknown>;
+export type Theme_MdxComponents_Index_MdxDetails_Props = Record<string, unknown>;
 
-export type ThemeMdxComponentsMdxDetailsItem = Exclude<ReactNode, boolean | null | undefined>;
+export type Theme_MdxComponents_Index_MdxDetails_Item = Exclude<ReactNode, boolean | null | undefined>;
 
-export type ThemeMdxComponentsMdxDetailsItems = ThemeMdxComponentsMdxDetailsItem[];
+export type Theme_MdxComponents_Index_MdxDetails_Items = Theme_MdxComponents_Index_MdxDetails_Item[];
 
-export type ThemeMdxComponentsMdxDetailsSummary = ThemeMdxComponentsMdxDetailsItem | undefined;
+export type Theme_MdxComponents_Index_MdxDetails_Summary = Theme_MdxComponents_Index_MdxDetails_Item | undefined;
 
-export type ThemeMdxComponentsMdxDetailsChildren = ReactNode;
+export type Theme_MdxComponents_Index_MdxDetails_Children = ReactNode;
 
 /**
  * Theme - MDX Components - MDX Heading.
  *
  * @since 0.15.0
  */
-export type ThemeMdxComponentsMdxHeadingProps = Record<string, unknown>;
+export type Theme_MdxComponents_Index_MdxHeading_Props = Record<string, unknown>;
 
-export type ThemeMdxComponentsMdxHeadingAs = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+export type Theme_MdxComponents_Index_MdxHeading_As = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
 
-export type ThemeMdxComponentsMdxHeadingId = string | undefined;
+export type Theme_MdxComponents_Index_MdxHeading_Id = string | undefined;
 
 /**
  * Theme - MDX Components - MDX Pre.
  *
  * @since 0.15.0
  */
-export type ThemeMdxComponentsMdxPreProps = Record<string, unknown>;
+export type Theme_MdxComponents_Index_MdxPre_Props = Record<string, unknown>;
 
 /**
  * Theme - MDX Components - MDX Table.
  *
  * @since 0.15.0
  */
-export type ThemeMdxComponentsMdxTableProps = Record<string, unknown>;
+export type Theme_MdxComponents_Index_MdxTable_Props = Record<string, unknown>;

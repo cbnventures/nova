@@ -1,11 +1,11 @@
 import type { CSSProperties } from 'react';
 
 import type {
-  SharedTocHeading,
-  SharedTocHeadingChildren,
-  SharedTocHeadingId,
-  SharedTocHeadingLevel,
-  SharedTocHeadingValue,
+  Shared_TocHeading,
+  Shared_TocHeading_Children,
+  Shared_TocHeading_Id,
+  Shared_TocHeading_Level,
+  Shared_TocHeading_Value,
 } from '../../shared.d.ts';
 
 /**
@@ -13,48 +13,48 @@ import type {
  *
  * @since 0.15.0
  */
-export type ThemeTocPropsToc = SharedTocHeading[];
+export type Theme_Toc_Index_Props_Toc = Shared_TocHeading[];
 
-export type ThemeTocPropsClassName = string | undefined;
+export type Theme_Toc_Index_Props_ClassName = string | undefined;
 
-export type ThemeTocPropsStyle = CSSProperties | undefined;
+export type Theme_Toc_Index_Props_Style = CSSProperties | undefined;
 
-export type ThemeTocPropsMinHeadingLevel = number;
+export type Theme_Toc_Index_Props_MinHeadingLevel = number;
 
-export type ThemeTocPropsMaxHeadingLevel = number;
+export type Theme_Toc_Index_Props_MaxHeadingLevel = number;
 
-export type ThemeTocProps = {
-  toc: ThemeTocPropsToc;
-  className?: ThemeTocPropsClassName;
-  style?: ThemeTocPropsStyle;
-  minHeadingLevel?: ThemeTocPropsMinHeadingLevel;
-  maxHeadingLevel?: ThemeTocPropsMaxHeadingLevel;
+export type Theme_Toc_Index_Props = {
+  toc: Theme_Toc_Index_Props_Toc;
+  className?: Theme_Toc_Index_Props_ClassName;
+  style?: Theme_Toc_Index_Props_Style;
+  minHeadingLevel?: Theme_Toc_Index_Props_MinHeadingLevel;
+  maxHeadingLevel?: Theme_Toc_Index_Props_MaxHeadingLevel;
   [key: string]: unknown;
 };
 
-export type ThemeTocItems = SharedTocHeading[];
+export type Theme_Toc_Index_Items = Shared_TocHeading[];
 
-export type ThemeTocMinHeadingLevel = number;
+export type Theme_Toc_Index_MinHeadingLevel = number;
 
-export type ThemeTocMaxHeadingLevel = number;
+export type Theme_Toc_Index_MaxHeadingLevel = number;
 
-export type ThemeTocTocAriaLabel = string;
+export type Theme_Toc_Index_TocAriaLabel = string;
 
-export type ThemeTocTreeItems = SharedTocHeading[];
+export type Theme_Toc_Index_TreeItems = Shared_TocHeading[];
 
 /**
  * Theme - Toc - List.
  *
  * @since 0.15.0
  */
-export type ThemeTocListItems = SharedTocHeading[];
+export type Theme_Toc_Index_ListItems = Shared_TocHeading[];
 
-export type ThemeTocListItemValue = SharedTocHeadingValue;
+export type Theme_Toc_Index_ListItemValue = Shared_TocHeading_Value;
 
-export type ThemeTocListItemId = SharedTocHeadingId;
+export type Theme_Toc_Index_ListItemId = Shared_TocHeading_Id;
 
-export type ThemeTocListItemLevel = SharedTocHeadingLevel;
+export type Theme_Toc_Index_ListItemLevel = Shared_TocHeading_Level;
 
-export type ThemeTocListItemChildren = SharedTocHeadingChildren;
+export type Theme_Toc_Index_ListItemChildren = Shared_TocHeading_Children;
 
-export type ThemeTocListItem = SharedTocHeading;
+export type Theme_Toc_Index_ListItem = Shared_TocHeading;

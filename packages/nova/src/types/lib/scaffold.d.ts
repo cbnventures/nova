@@ -1,344 +1,344 @@
 import type { PromptObject } from 'prompts';
 
-import type { SharedGeneratorRunResult, SharedMonorepoContext, SharedScaffoldConfig } from '../shared.d.ts';
+import type { Shared_GeneratorRunResult, Shared_MonorepoContext, Shared_ScaffoldConfig } from '../shared.d.ts';
 
 /**
  * Lib - Scaffold - Collect Files.
  *
  * @since 0.15.0
  */
-export type LibScaffoldCollectFilesDirectory = string;
+export type Lib_Scaffold_CollectFiles_Directory = string;
 
-export type LibScaffoldCollectFilesPrefix = string;
+export type Lib_Scaffold_CollectFiles_Prefix = string;
 
-export type LibScaffoldCollectFilesReturns = Promise<string[]>;
+export type Lib_Scaffold_CollectFiles_Returns = Promise<string[]>;
 
-export type LibScaffoldCollectFilesEntries = import('fs').Dirent[];
+export type Lib_Scaffold_CollectFiles_Entries = import('fs').Dirent[];
 
-export type LibScaffoldCollectFilesFiles = string[];
+export type Lib_Scaffold_CollectFiles_Files = string[];
 
-export type LibScaffoldCollectFilesEntryPath = string;
+export type Lib_Scaffold_CollectFiles_EntryPath = string;
 
-export type LibScaffoldCollectFilesNestedDirectory = string;
+export type Lib_Scaffold_CollectFiles_NestedDirectory = string;
 
-export type LibScaffoldCollectFilesNested = string[];
+export type Lib_Scaffold_CollectFiles_Nested = string[];
 
 /**
  * Lib - Scaffold - Create Monorepo Root.
  *
  * @since 0.15.0
  */
-export type LibScaffoldCreateMonorepoRootOutputDirectory = string;
+export type Lib_Scaffold_CreateMonorepoRoot_OutputDirectory = string;
 
-export type LibScaffoldCreateMonorepoRootProjectSlug = string;
+export type Lib_Scaffold_CreateMonorepoRoot_ProjectSlug = string;
 
-export type LibScaffoldCreateMonorepoRootReturns = Promise<void>;
+export type Lib_Scaffold_CreateMonorepoRoot_Returns = Promise<void>;
 
-export type LibScaffoldCreateMonorepoRootCurrentDirectory = string;
+export type Lib_Scaffold_CreateMonorepoRoot_CurrentDirectory = string;
 
-export type LibScaffoldCreateMonorepoRootAppsDirectory = string;
+export type Lib_Scaffold_CreateMonorepoRoot_AppsDirectory = string;
 
-export type LibScaffoldCreateMonorepoRootPackagesDirectory = string;
+export type Lib_Scaffold_CreateMonorepoRoot_PackagesDirectory = string;
 
-export type LibScaffoldCreateMonorepoRootPackageJsonContent = Record<string, unknown>;
+export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonContent = Record<string, unknown>;
 
-export type LibScaffoldCreateMonorepoRootPackageJson = string;
+export type Lib_Scaffold_CreateMonorepoRoot_PackageJson = string;
 
-export type LibScaffoldCreateMonorepoRootPackageJsonContents = string;
+export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonContents = string;
 
-export type LibScaffoldCreateMonorepoRootPackageJsonPath = string;
+export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonPath = string;
 
-export type LibScaffoldCreateMonorepoRootPackageJsonRelativePath = string;
+export type Lib_Scaffold_CreateMonorepoRoot_PackageJsonRelativePath = string;
 
-export type LibScaffoldCreateMonorepoRootProjectTitle = string;
+export type Lib_Scaffold_CreateMonorepoRoot_ProjectTitle = string;
 
-export type LibScaffoldCreateMonorepoRootNovaConfigContent = Record<string, unknown>;
+export type Lib_Scaffold_CreateMonorepoRoot_NovaConfigContent = Record<string, unknown>;
 
-export type LibScaffoldCreateMonorepoRootNovaConfig = string;
+export type Lib_Scaffold_CreateMonorepoRoot_NovaConfig = string;
 
-export type LibScaffoldCreateMonorepoRootNovaConfigContents = string;
+export type Lib_Scaffold_CreateMonorepoRoot_NovaConfigContents = string;
 
-export type LibScaffoldCreateMonorepoRootNovaConfigPath = string;
+export type Lib_Scaffold_CreateMonorepoRoot_NovaConfigPath = string;
 
-export type LibScaffoldCreateMonorepoRootNovaConfigRelativePath = string;
+export type Lib_Scaffold_CreateMonorepoRoot_NovaConfigRelativePath = string;
 
 /**
  * Lib - Scaffold - Create Workspace Directory.
  *
  * @since 0.15.0
  */
-export type LibScaffoldCreateWorkspaceDirectoryBasePath = string;
+export type Lib_Scaffold_CreateWorkspaceDirectory_BasePath = string;
 
-export type LibScaffoldCreateWorkspaceDirectoryWorkspaceName = string;
+export type Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceName = string;
 
-export type LibScaffoldCreateWorkspaceDirectoryReturns = Promise<string>;
+export type Lib_Scaffold_CreateWorkspaceDirectory_Returns = Promise<string>;
 
-export type LibScaffoldCreateWorkspaceDirectoryWorkspaceDirectory = string;
+export type Lib_Scaffold_CreateWorkspaceDirectory_WorkspaceDirectory = string;
 
 /**
  * Lib - Scaffold - Detect Monorepo Context.
  *
  * @since 0.15.0
  */
-export type LibScaffoldDetectMonorepoContextCurrentWorkingDirectory = string;
+export type Lib_Scaffold_DetectMonorepoContext_CurrentWorkingDirectory = string;
 
-export type LibScaffoldDetectMonorepoContextReturns = Promise<SharedMonorepoContext>;
+export type Lib_Scaffold_DetectMonorepoContext_Returns = Promise<Shared_MonorepoContext>;
 
-export type LibScaffoldDetectMonorepoContextLocations = string[];
+export type Lib_Scaffold_DetectMonorepoContext_Locations = string[];
 
-export type LibScaffoldDetectMonorepoContextPackageJsonPath = string;
+export type Lib_Scaffold_DetectMonorepoContext_PackageJsonPath = string;
 
-export type LibScaffoldDetectMonorepoContextPackageJsonRaw = string;
+export type Lib_Scaffold_DetectMonorepoContext_PackageJsonRaw = string;
 
-export type LibScaffoldDetectMonorepoContextParsedPackageJson = Record<string, unknown>;
+export type Lib_Scaffold_DetectMonorepoContext_ParsedPackageJson = Record<string, unknown>;
 
 /**
  * Lib - Scaffold - Load Generator.
  *
  * @since 0.15.0
  */
-export type LibScaffoldLoadGeneratorName = string;
+export type Lib_Scaffold_LoadGenerator_Name = string;
 
-export type LibScaffoldLoadGeneratorReturns = Promise<((options: {
+export type Lib_Scaffold_LoadGenerator_Returns = Promise<((options: {
   replaceFile: true;
-}) => Promise<SharedGeneratorRunResult>) | undefined>;
+}) => Promise<Shared_GeneratorRunResult>) | undefined>;
 
-export type LibScaffoldLoadGeneratorEditorconfigModule = typeof import('../../cli/generate/must-haves/editorconfig.js');
+export type Lib_Scaffold_LoadGenerator_EditorconfigModule = typeof import('../../cli/generate/must-haves/editorconfig.js');
 
-export type LibScaffoldLoadGeneratorGitignoreModule = typeof import('../../cli/generate/must-haves/gitignore.js');
+export type Lib_Scaffold_LoadGenerator_GitignoreModule = typeof import('../../cli/generate/must-haves/gitignore.js');
 
-export type LibScaffoldLoadGeneratorDotenvModule = typeof import('../../cli/generate/must-haves/dotenv.js');
+export type Lib_Scaffold_LoadGenerator_DotenvModule = typeof import('../../cli/generate/must-haves/dotenv.js');
 
-export type LibScaffoldLoadGeneratorLicenseModule = typeof import('../../cli/generate/must-haves/license.js');
+export type Lib_Scaffold_LoadGenerator_LicenseModule = typeof import('../../cli/generate/must-haves/license.js');
 
-export type LibScaffoldLoadGeneratorReadMeModule = typeof import('../../cli/generate/must-haves/read-me.js');
+export type Lib_Scaffold_LoadGenerator_ReadMeModule = typeof import('../../cli/generate/must-haves/read-me.js');
 
-export type LibScaffoldLoadGeneratorAgentConventionsModule = typeof import('../../cli/generate/must-haves/agent-conventions.js');
+export type Lib_Scaffold_LoadGenerator_AgentConventionsModule = typeof import('../../cli/generate/must-haves/agent-conventions.js');
 
-export type LibScaffoldLoadGeneratorFundingModule = typeof import('../../cli/generate/github/funding.js');
+export type Lib_Scaffold_LoadGenerator_FundingModule = typeof import('../../cli/generate/github/funding.js');
 
-export type LibScaffoldLoadGeneratorIssueTemplateModule = typeof import('../../cli/generate/github/issue-template.js');
+export type Lib_Scaffold_LoadGenerator_IssueTemplateModule = typeof import('../../cli/generate/github/issue-template.js');
 
-export type LibScaffoldLoadGeneratorWorkflowsModule = typeof import('../../cli/generate/github/workflows.js');
+export type Lib_Scaffold_LoadGenerator_WorkflowsModule = typeof import('../../cli/generate/github/workflows.js');
 
 /**
  * Lib - Scaffold - Prompt Post Scaffold Generators.
  *
  * @since 0.15.0
  */
-export type LibScaffoldPromptPostScaffoldGeneratorsOutputDirectory = string;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_OutputDirectory = string;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsReturns = Promise<void>;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_Returns = Promise<void>;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsCancelled = boolean;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_Cancelled = boolean;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoiceTitle = string;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Title = string;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoiceDescription = string;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Description = string;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoiceValue = string;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Value = string;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoice = {
-  title: LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoiceTitle;
-  description: LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoiceDescription;
-  value: LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoiceValue;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice = {
+  title: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Title;
+  description: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Description;
+  value: Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice_Value;
 };
 
-export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoices = LibScaffoldPromptPostScaffoldGeneratorsGeneratorChoice[];
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoices = Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorChoice[];
 
-export type LibScaffoldPromptPostScaffoldGeneratorsAnswers = Record<string, unknown>;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_Answers = Record<string, unknown>;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsSelected = string[];
+export type Lib_Scaffold_PromptPostScaffoldGenerators_Selected = string[];
 
-export type LibScaffoldPromptPostScaffoldGeneratorsOriginalCwd = string;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_OriginalCwd = string;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorModule = ((options: {
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorModule = ((options: {
   replaceFile: true;
-}) => Promise<SharedGeneratorRunResult>) | undefined;
+}) => Promise<Shared_GeneratorRunResult>) | undefined;
 
-export type LibScaffoldPromptPostScaffoldGeneratorsGeneratorResult = SharedGeneratorRunResult;
+export type Lib_Scaffold_PromptPostScaffoldGenerators_GeneratorResult = Shared_GeneratorRunResult;
 
 /**
  * Lib - Scaffold - Prompt Scaffold Options.
  *
  * @since 0.15.0
  */
-export type LibScaffoldPromptScaffoldOptionsContext = SharedMonorepoContext;
+export type Lib_Scaffold_PromptScaffoldOptions_Context = Shared_MonorepoContext;
 
-export type LibScaffoldPromptScaffoldOptionsDefaultsName = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_Defaults_Name = string | undefined;
 
-export type LibScaffoldPromptScaffoldOptionsDefaultsOutput = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_Defaults_Output = string | undefined;
 
-export type LibScaffoldPromptScaffoldOptionsDefaultsTypeName = string;
+export type Lib_Scaffold_PromptScaffoldOptions_Defaults_TypeName = string;
 
-export type LibScaffoldPromptScaffoldOptionsDefaultsWorkspaceName = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_Defaults_WorkspaceName = string | undefined;
 
-export type LibScaffoldPromptScaffoldOptionsDefaults = {
-  name: LibScaffoldPromptScaffoldOptionsDefaultsName;
-  output: LibScaffoldPromptScaffoldOptionsDefaultsOutput;
-  typeName: LibScaffoldPromptScaffoldOptionsDefaultsTypeName;
-  workspaceName: LibScaffoldPromptScaffoldOptionsDefaultsWorkspaceName;
+export type Lib_Scaffold_PromptScaffoldOptions_Defaults = {
+  name: Lib_Scaffold_PromptScaffoldOptions_Defaults_Name;
+  output: Lib_Scaffold_PromptScaffoldOptions_Defaults_Output;
+  typeName: Lib_Scaffold_PromptScaffoldOptions_Defaults_TypeName;
+  workspaceName: Lib_Scaffold_PromptScaffoldOptions_Defaults_WorkspaceName;
 };
 
-export type LibScaffoldPromptScaffoldOptionsReturns = Promise<SharedScaffoldConfig | undefined>;
+export type Lib_Scaffold_PromptScaffoldOptions_Returns = Promise<Shared_ScaffoldConfig | undefined>;
 
-export type LibScaffoldPromptScaffoldOptionsCurrentDirectory = string;
+export type Lib_Scaffold_PromptScaffoldOptions_CurrentDirectory = string;
 
-export type LibScaffoldPromptScaffoldOptionsCancelled = boolean;
+export type Lib_Scaffold_PromptScaffoldOptions_Cancelled = boolean;
 
-export type LibScaffoldPromptScaffoldOptionsNameValue = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_NameValue = string | undefined;
 
-export type LibScaffoldPromptScaffoldOptionsOutputValue = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_OutputValue = string | undefined;
 
-export type LibScaffoldPromptScaffoldOptionsWorkspaceNameValue = string | undefined;
+export type Lib_Scaffold_PromptScaffoldOptions_WorkspaceNameValue = string | undefined;
 
-export type LibScaffoldPromptScaffoldOptionsQuestions = PromptObject<string>[];
+export type Lib_Scaffold_PromptScaffoldOptions_Questions = PromptObject<string>[];
 
-export type LibScaffoldPromptScaffoldOptionsPromptsAnswers = Record<string, unknown>;
+export type Lib_Scaffold_PromptScaffoldOptions_PromptsAnswers = Record<string, unknown>;
 
-export type LibScaffoldPromptScaffoldOptionsResolvedName = string;
+export type Lib_Scaffold_PromptScaffoldOptions_ResolvedName = string;
 
-export type LibScaffoldPromptScaffoldOptionsResolvedWorkspaceName = string;
+export type Lib_Scaffold_PromptScaffoldOptions_ResolvedWorkspaceName = string;
 
-export type LibScaffoldPromptScaffoldOptionsResolvedOutputDirectory = string;
+export type Lib_Scaffold_PromptScaffoldOptions_ResolvedOutputDirectory = string;
 
-export type LibScaffoldPromptScaffoldOptionsDirectoryChoicesTitle = string;
+export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices_Title = string;
 
-export type LibScaffoldPromptScaffoldOptionsDirectoryChoicesValue = string;
+export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices_Value = string;
 
-export type LibScaffoldPromptScaffoldOptionsDirectoryChoices = {
-  title: LibScaffoldPromptScaffoldOptionsDirectoryChoicesTitle;
-  value: LibScaffoldPromptScaffoldOptionsDirectoryChoicesValue;
+export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices = {
+  title: Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices_Title;
+  value: Lib_Scaffold_PromptScaffoldOptions_DirectoryChoices_Value;
 }[];
 
-export type LibScaffoldPromptScaffoldOptionsDirectoryAnswers = Record<string, unknown>;
+export type Lib_Scaffold_PromptScaffoldOptions_DirectoryAnswers = Record<string, unknown>;
 
-export type LibScaffoldPromptScaffoldOptionsDirectoryChoice = string;
+export type Lib_Scaffold_PromptScaffoldOptions_DirectoryChoice = string;
 
-export type LibScaffoldPromptScaffoldOptionsOutputAnswers = Record<string, unknown>;
+export type Lib_Scaffold_PromptScaffoldOptions_OutputAnswers = Record<string, unknown>;
 
-export type LibScaffoldPromptScaffoldOptionsResolvedOutput = string;
+export type Lib_Scaffold_PromptScaffoldOptions_ResolvedOutput = string;
 
-export type LibScaffoldPromptScaffoldOptionsInitialPrev = string;
+export type Lib_Scaffold_PromptScaffoldOptions_InitialPrev = string;
 
-export type LibScaffoldPromptScaffoldOptionsInitialAnswers = Record<string, string>;
+export type Lib_Scaffold_PromptScaffoldOptions_InitialAnswers = Record<string, string>;
 
-export type LibScaffoldPromptScaffoldOptionsResolvedInitialWorkspaceName = string;
+export type Lib_Scaffold_PromptScaffoldOptions_ResolvedInitialWorkspaceName = string;
 
 /**
  * Lib - Scaffold - Register Workspace In Config.
  *
  * @since 0.15.0
  */
-export type LibScaffoldRegisterWorkspaceInConfigConfigFilePath = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigFilePath = string;
 
-export type LibScaffoldRegisterWorkspaceInConfigWorkspaceRelPath = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceRelPath = string;
 
-export type LibScaffoldRegisterWorkspaceInConfigWorkspaceName = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_WorkspaceName = string;
 
-export type LibScaffoldRegisterWorkspaceInConfigCategory = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Category = string;
 
-export type LibScaffoldRegisterWorkspaceInConfigReturns = Promise<void>;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Returns = Promise<void>;
 
-export type LibScaffoldRegisterWorkspaceInConfigParsedConfig = Record<string, unknown> | undefined;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedConfig = Record<string, unknown> | undefined;
 
-export type LibScaffoldRegisterWorkspaceInConfigRaw = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Raw = string;
 
-export type LibScaffoldRegisterWorkspaceInConfigProject = Record<string, unknown> | undefined;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Project = Record<string, unknown> | undefined;
 
-export type LibScaffoldRegisterWorkspaceInConfigProjectName = Record<string, unknown> | undefined;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ProjectName = Record<string, unknown> | undefined;
 
-export type LibScaffoldRegisterWorkspaceInConfigProjectSlug = string | undefined;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ProjectSlug = string | undefined;
 
-export type LibScaffoldRegisterWorkspaceInConfigRole = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Role = string;
 
-export type LibScaffoldRegisterWorkspaceInConfigConfigName = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ConfigName = string;
 
-export type LibScaffoldRegisterWorkspaceInConfigWorkspaces = Record<string, unknown>;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces = Record<string, unknown>;
 
-export type LibScaffoldRegisterWorkspaceInConfigParsedWorkspaces = LibScaffoldRegisterWorkspaceInConfigWorkspaces | undefined;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_ParsedWorkspaces = Lib_Scaffold_RegisterWorkspaceInConfig_Workspaces | undefined;
 
-export type LibScaffoldRegisterWorkspaceInConfigJson = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_Json = string;
 
-export type LibScaffoldRegisterWorkspaceInConfigJsonContents = string;
+export type Lib_Scaffold_RegisterWorkspaceInConfig_JsonContents = string;
 
 /**
  * Lib - Scaffold - Run Scaffold.
  *
  * @since 0.15.0
  */
-export type LibScaffoldRunScaffoldOptionsDryRun = true;
+export type Lib_Scaffold_RunScaffold_Options_DryRun = true;
 
-export type LibScaffoldRunScaffoldOptionsName = string;
+export type Lib_Scaffold_RunScaffold_Options_Name = string;
 
-export type LibScaffoldRunScaffoldOptionsOutput = string;
+export type Lib_Scaffold_RunScaffold_Options_Output = string;
 
-export type LibScaffoldRunScaffoldOptionsWorkspaceName = string;
+export type Lib_Scaffold_RunScaffold_Options_WorkspaceName = string;
 
-export type LibScaffoldRunScaffoldOptions = {
-  dryRun?: LibScaffoldRunScaffoldOptionsDryRun;
-  name?: LibScaffoldRunScaffoldOptionsName;
-  output?: LibScaffoldRunScaffoldOptionsOutput;
-  workspaceName?: LibScaffoldRunScaffoldOptionsWorkspaceName;
+export type Lib_Scaffold_RunScaffold_Options = {
+  dryRun?: Lib_Scaffold_RunScaffold_Options_DryRun;
+  name?: Lib_Scaffold_RunScaffold_Options_Name;
+  output?: Lib_Scaffold_RunScaffold_Options_Output;
+  workspaceName?: Lib_Scaffold_RunScaffold_Options_WorkspaceName;
 };
 
-export type LibScaffoldRunScaffoldCategory = string;
+export type Lib_Scaffold_RunScaffold_Category = string;
 
-export type LibScaffoldRunScaffoldTypeName = string;
+export type Lib_Scaffold_RunScaffold_TypeName = string;
 
-export type LibScaffoldRunScaffoldTemplateSubpath = string;
+export type Lib_Scaffold_RunScaffold_TemplateSubpath = string;
 
-export type LibScaffoldRunScaffoldImportMetaUrl = string;
+export type Lib_Scaffold_RunScaffold_ImportMetaUrl = string;
 
-export type LibScaffoldRunScaffoldReturns = Promise<void>;
+export type Lib_Scaffold_RunScaffold_Returns = Promise<void>;
 
-export type LibScaffoldRunScaffoldCurrentDirectory = string;
+export type Lib_Scaffold_RunScaffold_CurrentDirectory = string;
 
-export type LibScaffoldRunScaffoldIsDryRun = boolean;
+export type Lib_Scaffold_RunScaffold_IsDryRun = boolean;
 
-export type LibScaffoldRunScaffoldContext = SharedMonorepoContext;
+export type Lib_Scaffold_RunScaffold_Context = Shared_MonorepoContext;
 
-export type LibScaffoldRunScaffoldConfig = SharedScaffoldConfig | undefined;
+export type Lib_Scaffold_RunScaffold_Config = Shared_ScaffoldConfig | undefined;
 
-export type LibScaffoldRunScaffoldModePrefix = string;
+export type Lib_Scaffold_RunScaffold_ModePrefix = string;
 
-export type LibScaffoldRunScaffoldWorkspaceDirectory = string;
+export type Lib_Scaffold_RunScaffold_WorkspaceDirectory = string;
 
-export type LibScaffoldRunScaffoldTemplateDirectory = string;
+export type Lib_Scaffold_RunScaffold_TemplateDirectory = string;
 
-export type LibScaffoldRunScaffoldReplacements = Map<RegExp, string>;
+export type Lib_Scaffold_RunScaffold_Replacements = Map<RegExp, string>;
 
-export type LibScaffoldRunScaffoldConfigRoot = string;
+export type Lib_Scaffold_RunScaffold_ConfigRoot = string;
 
-export type LibScaffoldRunScaffoldConfigFilePath = string;
+export type Lib_Scaffold_RunScaffold_ConfigFilePath = string;
 
-export type LibScaffoldRunScaffoldWorkspaceRelPath = string;
+export type Lib_Scaffold_RunScaffold_WorkspaceRelPath = string;
 
 /**
  * Lib - Scaffold - Write Template Files.
  *
  * @since 0.15.0
  */
-export type LibScaffoldWriteTemplateFilesTemplateDirectory = string;
+export type Lib_Scaffold_WriteTemplateFiles_TemplateDirectory = string;
 
-export type LibScaffoldWriteTemplateFilesTargetDirectory = string;
+export type Lib_Scaffold_WriteTemplateFiles_TargetDirectory = string;
 
-export type LibScaffoldWriteTemplateFilesReplacements = Map<RegExp, string>;
+export type Lib_Scaffold_WriteTemplateFiles_Replacements = Map<RegExp, string>;
 
-export type LibScaffoldWriteTemplateFilesReturns = Promise<void>;
+export type Lib_Scaffold_WriteTemplateFiles_Returns = Promise<void>;
 
-export type LibScaffoldWriteTemplateFilesCurrentDirectory = string;
+export type Lib_Scaffold_WriteTemplateFiles_CurrentDirectory = string;
 
-export type LibScaffoldWriteTemplateFilesEntries = string[];
+export type Lib_Scaffold_WriteTemplateFiles_Entries = string[];
 
-export type LibScaffoldWriteTemplateFilesSourcePath = string;
+export type Lib_Scaffold_WriteTemplateFiles_SourcePath = string;
 
-export type LibScaffoldWriteTemplateFilesTargetPath = string;
+export type Lib_Scaffold_WriteTemplateFiles_TargetPath = string;
 
-export type LibScaffoldWriteTemplateFilesContent = string;
+export type Lib_Scaffold_WriteTemplateFiles_Content = string;
 
-export type LibScaffoldWriteTemplateFilesPattern = RegExp;
+export type Lib_Scaffold_WriteTemplateFiles_Pattern = RegExp;
 
-export type LibScaffoldWriteTemplateFilesValue = string;
+export type Lib_Scaffold_WriteTemplateFiles_Value = string;
 
-export type LibScaffoldWriteTemplateFilesRelativePath = string;
+export type Lib_Scaffold_WriteTemplateFiles_RelativePath = string;

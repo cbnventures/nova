@@ -3,12 +3,12 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintConventionsRequireHashPrivateCheckMemberContext,
-  RulesEslintConventionsRequireHashPrivateCheckMemberNode,
-  RulesEslintConventionsRequireHashPrivateCheckMemberReturns,
-  RulesEslintConventionsRequireHashPrivateRuleDefaultOptionsIgnoreFiles,
-  RulesEslintConventionsRequireHashPrivateRuleDefaultOptionsSkipMethods,
-  RulesEslintConventionsRequireHashPrivateRuleOptions,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Context,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Node,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Returns,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleDefaultOptionsSkipMethods,
+  Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-hash-private.d.ts';
 
 /**
@@ -19,7 +19,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintConventionsRequireHashPrivate {
+export class Runner {
   /**
    * Rules - ESLint - Conventions - Require Hash Private - Rule.
    *
@@ -55,11 +55,11 @@ export class RulesEslintConventionsRequireHashPrivate {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintConventionsRequireHashPrivateRuleDefaultOptionsIgnoreFiles,
-      skipMethods: true as RulesEslintConventionsRequireHashPrivateRuleDefaultOptionsSkipMethods,
+      ignoreFiles: [] as Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleDefaultOptionsIgnoreFiles,
+      skipMethods: true as Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleDefaultOptionsSkipMethods,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintConventionsRequireHashPrivateRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireHashPrivate_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -68,13 +68,13 @@ export class RulesEslintConventionsRequireHashPrivate {
 
       return {
         PropertyDefinition(node) {
-          RulesEslintConventionsRequireHashPrivate.checkMember(context, node);
+          Runner.checkMember(context, node);
 
           return;
         },
         ...(options['skipMethods'] === true ? {} : {
-          MethodDefinition(node: RulesEslintConventionsRequireHashPrivateCheckMemberNode) {
-            RulesEslintConventionsRequireHashPrivate.checkMember(context, node);
+          MethodDefinition(node: Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Node) {
+            Runner.checkMember(context, node);
 
             return;
           },
@@ -91,14 +91,14 @@ export class RulesEslintConventionsRequireHashPrivate {
    *
    * @private
    *
-   * @param {RulesEslintConventionsRequireHashPrivateCheckMemberContext} context - Context.
-   * @param {RulesEslintConventionsRequireHashPrivateCheckMemberNode}    node    - Node.
+   * @param {Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Node}    node    - Node.
    *
-   * @returns {RulesEslintConventionsRequireHashPrivateCheckMemberReturns}
+   * @returns {Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Returns}
    *
    * @since 0.15.0
    */
-  private static checkMember(context: RulesEslintConventionsRequireHashPrivateCheckMemberContext, node: RulesEslintConventionsRequireHashPrivateCheckMemberNode): RulesEslintConventionsRequireHashPrivateCheckMemberReturns {
+  private static checkMember(context: Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Context, node: Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Node): Rules_Eslint_Conventions_RequireHashPrivate_Runner_CheckMember_Returns {
     if (node.accessibility !== 'private') {
       return;
     }

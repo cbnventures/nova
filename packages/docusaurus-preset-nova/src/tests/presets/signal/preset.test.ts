@@ -5,9 +5,9 @@ import { describe, it } from 'vitest';
 import { presetsSignalPresetSignal } from '../../../presets/signal/preset.js';
 
 import type {
-  TestsPresetsSignalPresetFooter,
-  TestsPresetsSignalPresetNavbar,
-  TestsPresetsSignalPresetSignal,
+  Tests_Presets_Signal_Preset_Footer,
+  Tests_Presets_Signal_Preset_Navbar,
+  Tests_Presets_Signal_Preset_Signal,
 } from '../../../types/tests/presets/signal/preset.test.d.ts';
 
 /**
@@ -17,7 +17,7 @@ import type {
  */
 describe('presetsSignalPresetSignal', async () => {
   it('has correct color values', () => {
-    const signal: TestsPresetsSignalPresetSignal = presetsSignalPresetSignal;
+    const signal: Tests_Presets_Signal_Preset_Signal = presetsSignalPresetSignal;
 
     deepStrictEqual(signal['colors']['primary'], {
       light: '#dc2626', dark: '#dc2626',
@@ -36,7 +36,7 @@ describe('presetsSignalPresetSignal', async () => {
   });
 
   it('has correct font names', () => {
-    const signal: TestsPresetsSignalPresetSignal = presetsSignalPresetSignal;
+    const signal: Tests_Presets_Signal_Preset_Signal = presetsSignalPresetSignal;
 
     strictEqual(signal['fonts']['display'], 'Space Grotesk');
     strictEqual(signal['fonts']['body'], 'Inter');
@@ -46,7 +46,7 @@ describe('presetsSignalPresetSignal', async () => {
   });
 
   it('has correct shape values', () => {
-    const signal: TestsPresetsSignalPresetSignal = presetsSignalPresetSignal;
+    const signal: Tests_Presets_Signal_Preset_Signal = presetsSignalPresetSignal;
 
     strictEqual(signal['shape']['radius'], 'sharp');
     strictEqual(signal['shape']['density'], 'compact');
@@ -55,7 +55,7 @@ describe('presetsSignalPresetSignal', async () => {
   });
 
   it('has correct depth values', () => {
-    const signal: TestsPresetsSignalPresetSignal = presetsSignalPresetSignal;
+    const signal: Tests_Presets_Signal_Preset_Signal = presetsSignalPresetSignal;
 
     strictEqual(signal['depth']['cards'], 'flat');
     strictEqual(signal['depth']['codeBlocks'], 'bordered');
@@ -64,7 +64,7 @@ describe('presetsSignalPresetSignal', async () => {
   });
 
   it('has correct motion values', () => {
-    const signal: TestsPresetsSignalPresetSignal = presetsSignalPresetSignal;
+    const signal: Tests_Presets_Signal_Preset_Signal = presetsSignalPresetSignal;
 
     strictEqual(signal['motion']['speed'], 'subtle');
     strictEqual(signal['motion']['staggeredReveals'], false);
@@ -77,7 +77,7 @@ describe('presetsSignalPresetSignal', async () => {
 });
 
 /**
- * Tests - Presets - Signal - Preset - PresetsSignalPresetSignal Navbar And Footer.
+ * Tests - Presets - Signal - Preset - Presets_Signal_Preset_Signal Navbar And Footer.
  *
  * Verifies that the signal preset includes the correct navbar
  * and footer variant identifiers for theme rendering.
@@ -86,7 +86,7 @@ describe('presetsSignalPresetSignal', async () => {
  */
 describe('presetsSignalPresetSignal navbar and footer', async () => {
   it('has correct navbar value', () => {
-    const navbar: TestsPresetsSignalPresetNavbar = presetsSignalPresetSignal['navbar'];
+    const navbar: Tests_Presets_Signal_Preset_Navbar = presetsSignalPresetSignal['navbar'];
 
     strictEqual(navbar, 'monolith');
 
@@ -94,7 +94,7 @@ describe('presetsSignalPresetSignal navbar and footer', async () => {
   });
 
   it('has correct footer value', () => {
-    const footer: TestsPresetsSignalPresetFooter = presetsSignalPresetSignal['footer'];
+    const footer: Tests_Presets_Signal_Preset_Footer = presetsSignalPresetSignal['footer'];
 
     strictEqual(footer, 'ledger');
 

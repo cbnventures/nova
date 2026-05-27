@@ -7,22 +7,22 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogTagsListPageBlogTagsListPagePropsSidebar = BlogSidebar;
+export type Theme_BlogTagsListPage_Index_BlogTagsListPage_Props_Sidebar = BlogSidebar;
 
-export type ThemeBlogTagsListPageBlogTagsListPagePropsTags = TagsListItem[];
+export type Theme_BlogTagsListPage_Index_BlogTagsListPage_Props_Tags = TagsListItem[];
 
-export type ThemeBlogTagsListPageBlogTagsListPagePropsClassName = string | undefined;
+export type Theme_BlogTagsListPage_Index_BlogTagsListPage_Props_ClassName = string | undefined;
 
-export type ThemeBlogTagsListPageBlogTagsListPagePropsStyle = CSSProperties | undefined;
+export type Theme_BlogTagsListPage_Index_BlogTagsListPage_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogTagsListPageBlogTagsListPageProps = {
-  sidebar: ThemeBlogTagsListPageBlogTagsListPagePropsSidebar;
-  tags: ThemeBlogTagsListPageBlogTagsListPagePropsTags;
-  className?: ThemeBlogTagsListPageBlogTagsListPagePropsClassName;
-  style?: ThemeBlogTagsListPageBlogTagsListPagePropsStyle;
+export type Theme_BlogTagsListPage_Index_BlogTagsListPage_Props = {
+  sidebar: Theme_BlogTagsListPage_Index_BlogTagsListPage_Props_Sidebar;
+  tags: Theme_BlogTagsListPage_Index_BlogTagsListPage_Props_Tags;
+  className?: Theme_BlogTagsListPage_Index_BlogTagsListPage_Props_ClassName;
+  style?: Theme_BlogTagsListPage_Index_BlogTagsListPage_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogTagsListPageBlogTagsListPageHeading = string;
+export type Theme_BlogTagsListPage_Index_BlogTagsListPage_Heading = string;
 
-export type ThemeBlogTagsListPageBlogTagsListPagePropsTag = TagsListItem;
+export type Theme_BlogTagsListPage_Index_BlogTagsListPage_PropsTag = TagsListItem;

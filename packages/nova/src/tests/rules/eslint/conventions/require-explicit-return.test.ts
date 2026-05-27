@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireExplicitReturn } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintConventionsRequireExplicitReturnRuleTester } from '../../../../types/tests/rules/eslint/conventions/require-explicit-return.test.d.ts';
+import type { Tests_Rules_Eslint_Conventions_RequireExplicitReturn_RuleTester } from '../../../../types/tests/rules/eslint/conventions/require-explicit-return.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Conventions - Require Explicit Return.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintConventionsRequireExplicitReturnRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Conventions_RequireExplicitReturn_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

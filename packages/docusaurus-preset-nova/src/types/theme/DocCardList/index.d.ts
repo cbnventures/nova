@@ -7,28 +7,28 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocCardListDocCardListPropsItems = PropSidebarItem[] | undefined;
+export type Theme_DocCardList_Index_DocCardList_Props_Items = PropSidebarItem[] | undefined;
 
-export type ThemeDocCardListDocCardListPropsClassName = string | undefined;
+export type Theme_DocCardList_Index_DocCardList_Props_ClassName = string | undefined;
 
-export type ThemeDocCardListDocCardListPropsStyle = CSSProperties | undefined;
+export type Theme_DocCardList_Index_DocCardList_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocCardListDocCardListProps = {
-  items?: ThemeDocCardListDocCardListPropsItems;
-  className?: ThemeDocCardListDocCardListPropsClassName;
-  style?: ThemeDocCardListDocCardListPropsStyle;
+export type Theme_DocCardList_Index_DocCardList_Props = {
+  items?: Theme_DocCardList_Index_DocCardList_Props_Items;
+  className?: Theme_DocCardList_Index_DocCardList_Props_ClassName;
+  style?: Theme_DocCardList_Index_DocCardList_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocCardListDocCardListFilteredItems = PropSidebarItem[];
+export type Theme_DocCardList_Index_DocCardList_FilteredItems = PropSidebarItem[];
 
-export type ThemeDocCardListDocCardListItem = PropSidebarItem;
+export type Theme_DocCardList_Index_DocCardList_Item = PropSidebarItem;
 
-export type ThemeDocCardListDocCardListIndex = number;
+export type Theme_DocCardList_Index_DocCardList_Index = number;
 
 /**
  * Theme - Doc Card List - Doc Card List For Current Sidebar.
  *
  * @since 0.15.0
  */
-export type ThemeDocCardListDocCardListForCurrentSidebarSidebarItems = PropSidebarItem[];
+export type Theme_DocCardList_Index_DocCardListForCurrentSidebar_SidebarItems = PropSidebarItem[];

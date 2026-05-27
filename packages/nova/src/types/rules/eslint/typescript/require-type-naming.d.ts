@@ -6,79 +6,79 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintTypescriptRequireTypeNamingCheckTypeAliasContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintTypescriptRequireTypeNamingCheckTypeAliasNode = TSESTree.TSTypeAliasDeclaration;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Node = TSESTree.TSTypeAliasDeclaration;
 
-export type RulesEslintTypescriptRequireTypeNamingCheckTypeAliasReturns = void;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Returns = void;
 
-export type RulesEslintTypescriptRequireTypeNamingCheckTypeAliasExpectedPrefix = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_ExpectedPrefix = string;
 
-export type RulesEslintTypescriptRequireTypeNamingCheckTypeAliasTypeName = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_TypeName = string;
 
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Derive Invalid Prefix Diagnostic.
  *
  * @since 0.17.1
  */
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObjectSegment = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject_Segment = string;
 
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObjectPrefix = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject_Prefix = string;
 
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObject = {
-  segment: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObjectSegment;
-  prefix: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObjectPrefix;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject = {
+  segment: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject_Segment;
+  prefix: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject_Prefix;
 };
 
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns = RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturnsObject | null;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns = Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_ReturnsObject | null;
 
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticFilename = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Filename = string;
 
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticSegments = ReadonlyArray<string>;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Segments = ReadonlyArray<string>;
 
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticOffendingSegment = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_OffendingSegment = string;
 
-export type RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticPrefix = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Prefix = string;
 
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Derive Prefix.
  *
  * @since 0.15.0
  */
-export type RulesEslintTypescriptRequireTypeNamingDerivePrefixFilename = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Filename = string;
 
-export type RulesEslintTypescriptRequireTypeNamingDerivePrefixReturns = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Returns = string;
 
-export type RulesEslintTypescriptRequireTypeNamingDerivePrefixSegments = ReadonlyArray<string>;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Segments = ReadonlyArray<string>;
 
-export type RulesEslintTypescriptRequireTypeNamingDerivePrefixWords = string[] | null;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Words = string[] | null;
 
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Normalized Path Segments.
  *
  * @since 0.17.1
  */
-export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsFilename = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Filename = string;
 
-export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsReturns = ReadonlyArray<string>;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Returns = ReadonlyArray<string>;
 
-export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsNormalizedFilename = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_NormalizedFilename = string;
 
-export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsTypesIndex = number;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_TypesIndex = number;
 
-export type RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsRelativePath = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_RelativePath = string;
 
 /**
  * Rules - ESLint - TypeScript - Require Type Naming - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintTypescriptRequireTypeNamingRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintTypescriptRequireTypeNamingRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintTypescriptRequireTypeNamingRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintTypescriptRequireTypeNamingRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleOptions_IgnoreFiles;
 }>;
 
-export type RulesEslintTypescriptRequireTypeNamingRuleNormalizedFilename = string;
+export type Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleNormalizedFilename = string;

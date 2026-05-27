@@ -9,11 +9,11 @@ import DocVersionBanner from '@theme/DocVersionBanner';
 import Heading from '@theme/Heading';
 
 import type {
-  ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategory,
-  ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageImageUrl,
-  ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageMetadataSpread,
-  ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePaginatorSpread,
-  ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageProps,
+  Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Category,
+  Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_ImageUrl,
+  Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_MetadataSpread,
+  Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_PaginatorSpread,
+  Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Props,
 } from '../../types/theme/DocCategoryGeneratedIndexPage/index.d.ts';
 
 /**
@@ -23,16 +23,16 @@ import type {
  * with optional description, a grid of child doc cards,
  * and previous/next pagination.
  *
- * @param {ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageProps} props - Props.
+ * @param {Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocCategoryGeneratedIndexPage(props: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageProps) {
-  const category: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageCategory = useCurrentSidebarCategory();
-  const imageUrl: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageImageUrl = useBaseUrl(props['categoryGeneratedIndex']['image']);
-  const metadataSpread: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPageMetadataSpread = {};
+function DocCategoryGeneratedIndexPage(props: Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Props) {
+  const category: Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_Category = useCurrentSidebarCategory();
+  const imageUrl: Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_ImageUrl = useBaseUrl(props['categoryGeneratedIndex']['image']);
+  const metadataSpread: Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_MetadataSpread = {};
 
   if (props['categoryGeneratedIndex']['description'] !== undefined) {
     Reflect.set(metadataSpread, 'description', props['categoryGeneratedIndex']['description']);
@@ -46,7 +46,7 @@ function DocCategoryGeneratedIndexPage(props: ThemeDocCategoryGeneratedIndexPage
     Reflect.set(metadataSpread, 'image', imageUrl);
   }
 
-  const paginatorSpread: ThemeDocCategoryGeneratedIndexPageDocCategoryGeneratedIndexPagePaginatorSpread = {};
+  const paginatorSpread: Theme_DocCategoryGeneratedIndexPage_Index_DocCategoryGeneratedIndexPage_PaginatorSpread = {};
 
   if (props['categoryGeneratedIndex']['navigation']['previous'] !== undefined) {
     Reflect.set(paginatorSpread, 'previous', props['categoryGeneratedIndex']['navigation']['previous']);

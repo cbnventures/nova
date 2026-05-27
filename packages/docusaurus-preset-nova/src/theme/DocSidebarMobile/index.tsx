@@ -12,33 +12,33 @@ import {
 import { createPortal } from 'react-dom';
 
 import type {
-  ThemeDocSidebarMobileDocSidebarMobileAnimationEvent,
-  ThemeDocSidebarMobileDocSidebarMobileBreadcrumbIndex,
-  ThemeDocSidebarMobileDocSidebarMobileBreadcrumbItem,
-  ThemeDocSidebarMobileDocSidebarMobileBreadcrumbs,
-  ThemeDocSidebarMobileDocSidebarMobileCloseAriaLabel,
-  ThemeDocSidebarMobileDocSidebarMobileFocusTarget,
-  ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideFunction,
-  ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideMouseEvent,
-  ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideMouseTarget,
-  ThemeDocSidebarMobileDocSidebarMobileHandleEscapeFunction,
-  ThemeDocSidebarMobileDocSidebarMobileHandleEscapeKeyboardEvent,
-  ThemeDocSidebarMobileDocSidebarMobileHeaderTitle,
-  ThemeDocSidebarMobileDocSidebarMobileIsClosing,
-  ThemeDocSidebarMobileDocSidebarMobileIsClosingState,
-  ThemeDocSidebarMobileDocSidebarMobileIsOpen,
-  ThemeDocSidebarMobileDocSidebarMobileIsOpenState,
-  ThemeDocSidebarMobileDocSidebarMobileOpenAriaLabel,
-  ThemeDocSidebarMobileDocSidebarMobileOverlayClassName,
-  ThemeDocSidebarMobileDocSidebarMobilePanelAriaLabel,
-  ThemeDocSidebarMobileDocSidebarMobilePanelRef,
-  ThemeDocSidebarMobileDocSidebarMobilePathname,
-  ThemeDocSidebarMobileDocSidebarMobileProps,
-  ThemeDocSidebarMobileDocSidebarMobileSeparator,
-  ThemeDocSidebarMobileDocSidebarMobileSetIsClosing,
-  ThemeDocSidebarMobileDocSidebarMobileSetIsOpen,
-  ThemeDocSidebarMobileDocSidebarMobileSidebar,
-  ThemeDocSidebarMobileDocSidebarMobileSidebarItems,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_AnimationEvent,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbIndex,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbItem,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_Breadcrumbs,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_CloseAriaLabel,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_FocusTarget,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideFunction,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseEvent,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseTarget,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeFunction,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_HeaderTitle,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosing,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosingState,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpen,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpenState,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_OpenAriaLabel,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_OverlayClassName,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelAriaLabel,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelRef,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_Pathname,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_Props,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_Separator,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsClosing,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsOpen,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_Sidebar,
+  Theme_DocSidebarMobile_Index_DocSidebarMobile_SidebarItems,
 } from '../../types/theme/DocSidebarMobile/index.d.ts';
 
 /**
@@ -48,26 +48,26 @@ import type {
  * hierarchy path, and a floating overlay panel containing the full
  * doc sidebar when tapped.
  *
- * @param {ThemeDocSidebarMobileDocSidebarMobileProps} props - Props.
+ * @param {Theme_DocSidebarMobile_Index_DocSidebarMobile_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
-  const breadcrumbs: ThemeDocSidebarMobileDocSidebarMobileBreadcrumbs = useSidebarBreadcrumbs();
-  const sidebar: ThemeDocSidebarMobileDocSidebarMobileSidebar = useDocsSidebar() as ThemeDocSidebarMobileDocSidebarMobileSidebar;
-  const pathname: ThemeDocSidebarMobileDocSidebarMobilePathname = useLocation()['pathname'];
+function DocSidebarMobile(props: Theme_DocSidebarMobile_Index_DocSidebarMobile_Props) {
+  const breadcrumbs: Theme_DocSidebarMobile_Index_DocSidebarMobile_Breadcrumbs = useSidebarBreadcrumbs();
+  const sidebar: Theme_DocSidebarMobile_Index_DocSidebarMobile_Sidebar = useDocsSidebar() as Theme_DocSidebarMobile_Index_DocSidebarMobile_Sidebar;
+  const pathname: Theme_DocSidebarMobile_Index_DocSidebarMobile_Pathname = useLocation()['pathname'];
 
-  const isOpenState: ThemeDocSidebarMobileDocSidebarMobileIsOpenState = useState<ThemeDocSidebarMobileDocSidebarMobileIsOpen>(false);
-  const isOpen: ThemeDocSidebarMobileDocSidebarMobileIsOpen = isOpenState[0];
-  const setIsOpen: ThemeDocSidebarMobileDocSidebarMobileSetIsOpen = isOpenState[1];
+  const isOpenState: Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpenState = useState<Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpen>(false);
+  const isOpen: Theme_DocSidebarMobile_Index_DocSidebarMobile_IsOpen = isOpenState[0];
+  const setIsOpen: Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsOpen = isOpenState[1];
 
-  const isClosingState: ThemeDocSidebarMobileDocSidebarMobileIsClosingState = useState<ThemeDocSidebarMobileDocSidebarMobileIsClosing>(false);
-  const isClosing: ThemeDocSidebarMobileDocSidebarMobileIsClosing = isClosingState[0];
-  const setIsClosing: ThemeDocSidebarMobileDocSidebarMobileSetIsClosing = isClosingState[1];
+  const isClosingState: Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosingState = useState<Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosing>(false);
+  const isClosing: Theme_DocSidebarMobile_Index_DocSidebarMobile_IsClosing = isClosingState[0];
+  const setIsClosing: Theme_DocSidebarMobile_Index_DocSidebarMobile_SetIsClosing = isClosingState[1];
 
-  const panelRef: ThemeDocSidebarMobileDocSidebarMobilePanelRef = useRef<HTMLDivElement>(null);
+  const panelRef: Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelRef = useRef<HTMLDivElement>(null);
 
   /**
    * Theme - Doc Sidebar Mobile - Doc Sidebar Mobile - Handle Escape.
@@ -77,7 +77,7 @@ function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
    *
    * @since 0.15.0
    */
-  const handleEscape: ThemeDocSidebarMobileDocSidebarMobileHandleEscapeFunction = useCallback((event: ThemeDocSidebarMobileDocSidebarMobileHandleEscapeKeyboardEvent) => {
+  const handleEscape: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeFunction = useCallback((event: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleEscapeKeyboardEvent) => {
     if (event.key === 'Escape') {
       setIsClosing(true);
     }
@@ -93,8 +93,8 @@ function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
    *
    * @since 0.15.0
    */
-  const handleClickOutside: ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideFunction = useCallback((event: ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideMouseEvent) => {
-    const mouseTarget: ThemeDocSidebarMobileDocSidebarMobileHandleClickOutsideMouseTarget = event.target;
+  const handleClickOutside: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideFunction = useCallback((event: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseEvent) => {
+    const mouseTarget: Theme_DocSidebarMobile_Index_DocSidebarMobile_HandleClickOutsideMouseTarget = event.target;
 
     if (mouseTarget === event.currentTarget) {
       setIsClosing(true);
@@ -130,7 +130,7 @@ function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
   // Focus close button when dialog opens.
   useEffect(() => {
     if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: ThemeDocSidebarMobileDocSidebarMobileFocusTarget = panelRef['current'].querySelector('.nova-sidebar-mobile-close') as ThemeDocSidebarMobileDocSidebarMobileFocusTarget;
+      const focusTarget: Theme_DocSidebarMobile_Index_DocSidebarMobile_FocusTarget = panelRef['current'].querySelector('.nova-sidebar-mobile-close') as Theme_DocSidebarMobile_Index_DocSidebarMobile_FocusTarget;
 
       if (focusTarget !== null) {
         focusTarget.focus();
@@ -148,29 +148,29 @@ function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
     return null;
   }
 
-  const openAriaLabel: ThemeDocSidebarMobileDocSidebarMobileOpenAriaLabel = translate({
+  const openAriaLabel: Theme_DocSidebarMobile_Index_DocSidebarMobile_OpenAriaLabel = translate({
     id: 'theme.docs.sidebarMobile.openAriaLabel',
     message: 'Open docs navigation',
     description: 'The ARIA label for the button that opens the mobile docs sidebar',
   });
-  const panelAriaLabel: ThemeDocSidebarMobileDocSidebarMobilePanelAriaLabel = translate({
+  const panelAriaLabel: Theme_DocSidebarMobile_Index_DocSidebarMobile_PanelAriaLabel = translate({
     id: 'theme.docs.sidebarMobile.panelAriaLabel',
     message: 'Docs navigation',
     description: 'The ARIA label for the mobile docs sidebar panel',
   });
-  const headerTitle: ThemeDocSidebarMobileDocSidebarMobileHeaderTitle = translate({
+  const headerTitle: Theme_DocSidebarMobile_Index_DocSidebarMobile_HeaderTitle = translate({
     id: 'theme.docs.sidebarMobile.headerTitle',
     message: 'Navigation',
     description: 'The title shown in the mobile docs sidebar header',
   });
-  const closeAriaLabel: ThemeDocSidebarMobileDocSidebarMobileCloseAriaLabel = translate({
+  const closeAriaLabel: Theme_DocSidebarMobile_Index_DocSidebarMobile_CloseAriaLabel = translate({
     id: 'theme.docs.sidebarMobile.closeAriaLabel',
     message: 'Close navigation',
     description: 'The ARIA label for the button that closes the mobile docs sidebar',
   });
 
-  const sidebarItems: ThemeDocSidebarMobileDocSidebarMobileSidebarItems = sidebar['items'] as ThemeDocSidebarMobileDocSidebarMobileSidebarItems;
-  const separator: ThemeDocSidebarMobileDocSidebarMobileSeparator = <Icon icon="lucide:chevron-right" width="12" height="12" aria-hidden="true" />;
+  const sidebarItems: Theme_DocSidebarMobile_Index_DocSidebarMobile_SidebarItems = sidebar['items'] as Theme_DocSidebarMobile_Index_DocSidebarMobile_SidebarItems;
+  const separator: Theme_DocSidebarMobile_Index_DocSidebarMobile_Separator = <Icon icon="lucide:chevron-right" width="12" height="12" aria-hidden="true" />;
 
   return (
     <>
@@ -187,7 +187,7 @@ function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
       >
         <Icon icon="lucide:list-tree" width="14" height="14" aria-hidden="true" />
         <span className="nova-sidebar-mobile-trigger-path">
-          {breadcrumbs.map((item: ThemeDocSidebarMobileDocSidebarMobileBreadcrumbItem, index: ThemeDocSidebarMobileDocSidebarMobileBreadcrumbIndex) => (
+          {breadcrumbs.map((item: Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbItem, index: Theme_DocSidebarMobile_Index_DocSidebarMobile_BreadcrumbIndex) => (
             <span className="nova-sidebar-mobile-trigger-segment" key={index}>
               {(index > 0) && separator}
               {item['label']}
@@ -198,7 +198,7 @@ function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
       </button>
 
       {(isOpen === true) && (() => {
-        let overlayClassName: ThemeDocSidebarMobileDocSidebarMobileOverlayClassName = 'nova-sidebar-mobile-overlay nova-sidebar-mobile-open';
+        let overlayClassName: Theme_DocSidebarMobile_Index_DocSidebarMobile_OverlayClassName = 'nova-sidebar-mobile-overlay nova-sidebar-mobile-open';
 
         if (isClosing === true) {
           overlayClassName = 'nova-sidebar-mobile-overlay nova-sidebar-mobile-closing';
@@ -209,7 +209,7 @@ function DocSidebarMobile(props: ThemeDocSidebarMobileDocSidebarMobileProps) {
             className={overlayClassName}
             onClick={handleClickOutside}
             role="presentation"
-            onAnimationEnd={(_event: ThemeDocSidebarMobileDocSidebarMobileAnimationEvent) => {
+            onAnimationEnd={(_event: Theme_DocSidebarMobile_Index_DocSidebarMobile_AnimationEvent) => {
               if (isClosing === true) {
                 setIsOpen(false);
                 setIsClosing(false);

@@ -11,15 +11,15 @@ import { handleGhFailure } from '../../../../cli/recipe/github/handle-gh-failure
 import * as toolkit from '../../../../toolkit/index.js';
 
 import type {
-  TestsCliRecipeGithubHandleGhFailureCustomizedErrorCalls,
-  TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMock,
-  TestsCliRecipeGithubHandleGhFailureHasGenericError,
-  TestsCliRecipeGithubHandleGhFailureHasRateLimitError,
-  TestsCliRecipeGithubHandleGhFailureHasResetsAt,
-  TestsCliRecipeGithubHandleGhFailureHasTextError,
-  TestsCliRecipeGithubHandleGhFailureHasUnknownResetTime,
-  TestsCliRecipeGithubHandleGhFailureLoggerCustomizeReturn,
-  TestsCliRecipeGithubHandleGhFailureLoggerCustomizeSpy,
+  Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedErrorCalls,
+  Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock,
+  Tests_Cli_Recipe_Github_HandleGhFailure_HasGenericError,
+  Tests_Cli_Recipe_Github_HandleGhFailure_HasRateLimitError,
+  Tests_Cli_Recipe_Github_HandleGhFailure_HasResetsAt,
+  Tests_Cli_Recipe_Github_HandleGhFailure_HasTextError,
+  Tests_Cli_Recipe_Github_HandleGhFailure_HasUnknownResetTime,
+  Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeReturn,
+  Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeSpy,
 } from '../../../../types/tests/cli/recipe/github/handle-gh-failure.test.d.ts';
 
 /**
@@ -37,7 +37,7 @@ describe('handleGhFailure', () => {
   });
 
   it('logs rate-limit-specific error when stderr contains "API rate limit exceeded" and reset header', () => {
-    const customizedLoggerMock: TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMock = {
+    const customizedLoggerMock: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock = {
       debug: vi.fn(),
       dev: vi.fn(),
       info: vi.fn(),
@@ -45,7 +45,7 @@ describe('handleGhFailure', () => {
       error: vi.fn(),
     };
 
-    const loggerCustomizeSpy: TestsCliRecipeGithubHandleGhFailureLoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as TestsCliRecipeGithubHandleGhFailureLoggerCustomizeReturn);
+    const loggerCustomizeSpy: Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeReturn);
 
     handleGhFailure(
       {
@@ -56,14 +56,14 @@ describe('handleGhFailure', () => {
       'sync-identity',
     );
 
-    const customizedErrorCalls: TestsCliRecipeGithubHandleGhFailureCustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
+    const customizedErrorCalls: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
 
-    const hasRateLimitError: TestsCliRecipeGithubHandleGhFailureHasRateLimitError = customizedErrorCalls.some((call) => (
+    const hasRateLimitError: Tests_Cli_Recipe_Github_HandleGhFailure_HasRateLimitError = customizedErrorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('GitHub API rate limit exceeded') === true
     ));
 
-    const hasResetsAt: TestsCliRecipeGithubHandleGhFailureHasResetsAt = customizedErrorCalls.some((call) => (
+    const hasResetsAt: Tests_Cli_Recipe_Github_HandleGhFailure_HasResetsAt = customizedErrorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('Resets at') === true
     ));
@@ -80,7 +80,7 @@ describe('handleGhFailure', () => {
   });
 
   it('uses "unknown" reset time when X-RateLimit-Reset header is missing', () => {
-    const customizedLoggerMock: TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMock = {
+    const customizedLoggerMock: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock = {
       debug: vi.fn(),
       dev: vi.fn(),
       info: vi.fn(),
@@ -88,7 +88,7 @@ describe('handleGhFailure', () => {
       error: vi.fn(),
     };
 
-    const loggerCustomizeSpy: TestsCliRecipeGithubHandleGhFailureLoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as TestsCliRecipeGithubHandleGhFailureLoggerCustomizeReturn);
+    const loggerCustomizeSpy: Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeReturn);
 
     handleGhFailure(
       {
@@ -99,9 +99,9 @@ describe('handleGhFailure', () => {
       'sync-features',
     );
 
-    const customizedErrorCalls: TestsCliRecipeGithubHandleGhFailureCustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
+    const customizedErrorCalls: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
 
-    const hasUnknownResetTime: TestsCliRecipeGithubHandleGhFailureHasUnknownResetTime = customizedErrorCalls.some((call) => (
+    const hasUnknownResetTime: Tests_Cli_Recipe_Github_HandleGhFailure_HasUnknownResetTime = customizedErrorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('Resets at unknown') === true
     ));
@@ -116,7 +116,7 @@ describe('handleGhFailure', () => {
   });
 
   it('logs generic failure for non-rate-limit errors', () => {
-    const customizedLoggerMock: TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMock = {
+    const customizedLoggerMock: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock = {
       debug: vi.fn(),
       dev: vi.fn(),
       info: vi.fn(),
@@ -124,7 +124,7 @@ describe('handleGhFailure', () => {
       error: vi.fn(),
     };
 
-    const loggerCustomizeSpy: TestsCliRecipeGithubHandleGhFailureLoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as TestsCliRecipeGithubHandleGhFailureLoggerCustomizeReturn);
+    const loggerCustomizeSpy: Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeSpy = vi.spyOn(toolkit['Logger'], 'customize').mockReturnValue(customizedLoggerMock as Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeReturn);
 
     handleGhFailure(
       {
@@ -135,14 +135,14 @@ describe('handleGhFailure', () => {
       'sync-policies',
     );
 
-    const customizedErrorCalls: TestsCliRecipeGithubHandleGhFailureCustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
+    const customizedErrorCalls: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedErrorCalls = customizedLoggerMock['error']['mock']['calls'];
 
-    const hasGenericError: TestsCliRecipeGithubHandleGhFailureHasGenericError = customizedErrorCalls.some((call) => (
+    const hasGenericError: Tests_Cli_Recipe_Github_HandleGhFailure_HasGenericError = customizedErrorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('sync-policies failed') === true
     ));
 
-    const hasTextError: TestsCliRecipeGithubHandleGhFailureHasTextError = customizedErrorCalls.some((call) => (
+    const hasTextError: Tests_Cli_Recipe_Github_HandleGhFailure_HasTextError = customizedErrorCalls.some((call) => (
       typeof call[0] === 'string'
       && call[0].includes('permission denied') === true
     ));

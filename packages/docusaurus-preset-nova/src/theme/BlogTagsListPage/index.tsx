@@ -5,9 +5,9 @@ import Heading from '@theme/Heading';
 import Tag from '@theme/Tag';
 
 import type {
-  ThemeBlogTagsListPageBlogTagsListPageHeading,
-  ThemeBlogTagsListPageBlogTagsListPageProps,
-  ThemeBlogTagsListPageBlogTagsListPagePropsTag,
+  Theme_BlogTagsListPage_Index_BlogTagsListPage_Heading,
+  Theme_BlogTagsListPage_Index_BlogTagsListPage_Props,
+  Theme_BlogTagsListPage_Index_BlogTagsListPage_PropsTag,
 } from '../../types/theme/BlogTagsListPage/index.d.ts';
 
 /**
@@ -17,14 +17,14 @@ import type {
  * counts, wrapped inside the standard blog layout with sidebar
  * support and a heading title.
  *
- * @param {ThemeBlogTagsListPageBlogTagsListPageProps} props - Props.
+ * @param {Theme_BlogTagsListPage_Index_BlogTagsListPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogTagsListPage(props: ThemeBlogTagsListPageBlogTagsListPageProps) {
-  const heading: ThemeBlogTagsListPageBlogTagsListPageHeading = translate({
+function BlogTagsListPage(props: Theme_BlogTagsListPage_Index_BlogTagsListPage_Props) {
+  const heading: Theme_BlogTagsListPage_Index_BlogTagsListPage_Heading = translate({
     id: 'theme.blog.tagsListPage.heading',
     message: 'Tags',
     description: 'The heading of the blog tags list page',
@@ -42,7 +42,7 @@ function BlogTagsListPage(props: ThemeBlogTagsListPageBlogTagsListPageProps) {
         style={props['style']}
       >
         {
-          props['tags'].map((tag: ThemeBlogTagsListPageBlogTagsListPagePropsTag) => (
+          props['tags'].map((tag: Theme_BlogTagsListPage_Index_BlogTagsListPage_PropsTag) => (
             <li className="nova-blog-tags-list-item" key={tag['permalink']}>
               <Tag
                 permalink={tag['permalink']}

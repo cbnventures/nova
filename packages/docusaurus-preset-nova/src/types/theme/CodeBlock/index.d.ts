@@ -11,68 +11,68 @@ import type {
  *
  * @since 0.15.0
  */
-export type ThemeCodeBlockCodeBlockPropsChildren = ReactNode;
+export type Theme_CodeBlock_Index_CodeBlock_Props_Children = ReactNode;
 
-export type ThemeCodeBlockCodeBlockPropsLanguage = string | undefined;
+export type Theme_CodeBlock_Index_CodeBlock_Props_Language = string | undefined;
 
-export type ThemeCodeBlockCodeBlockPropsTitle = string | undefined;
+export type Theme_CodeBlock_Index_CodeBlock_Props_Title = string | undefined;
 
-export type ThemeCodeBlockCodeBlockPropsShowLineNumbers = boolean | undefined;
+export type Theme_CodeBlock_Index_CodeBlock_Props_ShowLineNumbers = boolean | undefined;
 
-export type ThemeCodeBlockCodeBlockPropsLive = boolean | undefined;
+export type Theme_CodeBlock_Index_CodeBlock_Props_Live = boolean | undefined;
 
-export type ThemeCodeBlockCodeBlockPropsMetastring = string | undefined;
+export type Theme_CodeBlock_Index_CodeBlock_Props_Metastring = string | undefined;
 
-export type ThemeCodeBlockCodeBlockPropsClassName = string | undefined;
+export type Theme_CodeBlock_Index_CodeBlock_Props_ClassName = string | undefined;
 
-export type ThemeCodeBlockCodeBlockPropsStyle = CSSProperties | undefined;
+export type Theme_CodeBlock_Index_CodeBlock_Props_Style = CSSProperties | undefined;
 
-export type ThemeCodeBlockCodeBlockProps = {
-  children: ThemeCodeBlockCodeBlockPropsChildren;
-  language?: ThemeCodeBlockCodeBlockPropsLanguage;
-  title?: ThemeCodeBlockCodeBlockPropsTitle;
-  showLineNumbers?: ThemeCodeBlockCodeBlockPropsShowLineNumbers;
-  live?: ThemeCodeBlockCodeBlockPropsLive;
-  metastring?: ThemeCodeBlockCodeBlockPropsMetastring;
-  className?: ThemeCodeBlockCodeBlockPropsClassName;
-  style?: ThemeCodeBlockCodeBlockPropsStyle;
+export type Theme_CodeBlock_Index_CodeBlock_Props = {
+  children: Theme_CodeBlock_Index_CodeBlock_Props_Children;
+  language?: Theme_CodeBlock_Index_CodeBlock_Props_Language;
+  title?: Theme_CodeBlock_Index_CodeBlock_Props_Title;
+  showLineNumbers?: Theme_CodeBlock_Index_CodeBlock_Props_ShowLineNumbers;
+  live?: Theme_CodeBlock_Index_CodeBlock_Props_Live;
+  metastring?: Theme_CodeBlock_Index_CodeBlock_Props_Metastring;
+  className?: Theme_CodeBlock_Index_CodeBlock_Props_ClassName;
+  style?: Theme_CodeBlock_Index_CodeBlock_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeCodeBlockCodeBlockIsPreHighlighted = boolean;
+export type Theme_CodeBlock_Index_CodeBlock_IsPreHighlighted = boolean;
 
-export type ThemeCodeBlockCodeBlockPlainText = string;
+export type Theme_CodeBlock_Index_CodeBlock_PlainText = string;
 
-export type ThemeCodeBlockCodeBlockCopied = boolean;
+export type Theme_CodeBlock_Index_CodeBlock_Copied = boolean;
 
-export type ThemeCodeBlockCodeBlockCopiedState = [ThemeCodeBlockCodeBlockCopied, ThemeCodeBlockCodeBlockSetCopied];
+export type Theme_CodeBlock_Index_CodeBlock_CopiedState = [Theme_CodeBlock_Index_CodeBlock_Copied, Theme_CodeBlock_Index_CodeBlock_SetCopied];
 
-export type ThemeCodeBlockCodeBlockSetCopied = Dispatch<SetStateAction<ThemeCodeBlockCodeBlockCopied>>;
+export type Theme_CodeBlock_Index_CodeBlock_SetCopied = Dispatch<SetStateAction<Theme_CodeBlock_Index_CodeBlock_Copied>>;
 
-export type ThemeCodeBlockCodeBlockCollapsed = boolean;
+export type Theme_CodeBlock_Index_CodeBlock_Collapsed = boolean;
 
-export type ThemeCodeBlockCodeBlockCollapsedState = [ThemeCodeBlockCodeBlockCollapsed, ThemeCodeBlockCodeBlockSetCollapsed];
+export type Theme_CodeBlock_Index_CodeBlock_CollapsedState = [Theme_CodeBlock_Index_CodeBlock_Collapsed, Theme_CodeBlock_Index_CodeBlock_SetCollapsed];
 
-export type ThemeCodeBlockCodeBlockSetCollapsed = Dispatch<SetStateAction<ThemeCodeBlockCodeBlockCollapsed>>;
+export type Theme_CodeBlock_Index_CodeBlock_SetCollapsed = Dispatch<SetStateAction<Theme_CodeBlock_Index_CodeBlock_Collapsed>>;
 
-export type ThemeCodeBlockCodeBlockWordWrap = boolean;
+export type Theme_CodeBlock_Index_CodeBlock_WordWrap = boolean;
 
-export type ThemeCodeBlockCodeBlockWordWrapState = [ThemeCodeBlockCodeBlockWordWrap, ThemeCodeBlockCodeBlockSetWordWrap];
+export type Theme_CodeBlock_Index_CodeBlock_WordWrapState = [Theme_CodeBlock_Index_CodeBlock_WordWrap, Theme_CodeBlock_Index_CodeBlock_SetWordWrap];
 
-export type ThemeCodeBlockCodeBlockSetWordWrap = Dispatch<SetStateAction<ThemeCodeBlockCodeBlockWordWrap>>;
+export type Theme_CodeBlock_Index_CodeBlock_SetWordWrap = Dispatch<SetStateAction<Theme_CodeBlock_Index_CodeBlock_WordWrap>>;
 
-export type ThemeCodeBlockCodeBlockCodeRef = RefObject<HTMLElement | null>;
+export type Theme_CodeBlock_Index_CodeBlock_CodeRef = RefObject<HTMLElement | null>;
 
-export type ThemeCodeBlockCodeBlockLineCount = number;
+export type Theme_CodeBlock_Index_CodeBlock_LineCount = number;
 
-export type ThemeCodeBlockCodeBlockShouldCollapse = boolean;
+export type Theme_CodeBlock_Index_CodeBlock_ShouldCollapse = boolean;
 
 /**
  * Theme - Code Block - Code Block - Handle Copy.
  *
  * @since 0.15.0
  */
-export type ThemeCodeBlockCodeBlockHandleCopyTextarea = HTMLTextAreaElement;
+export type Theme_CodeBlock_Index_CodeBlock_HandleCopy_Textarea = HTMLTextAreaElement;
 
 /**
  * Theme - Code Block - Code Block - Toggle Collapse.
@@ -86,32 +86,32 @@ export type ThemeCodeBlockCodeBlockHandleCopyTextarea = HTMLTextAreaElement;
  * @since 0.15.0
  */
 
-export type ThemeCodeBlockCodeBlockWordWrapToggle = string;
+export type Theme_CodeBlock_Index_CodeBlock_WordWrapToggle = string;
 
-export type ThemeCodeBlockCodeBlockWrapLabel = string;
+export type Theme_CodeBlock_Index_CodeBlock_WrapLabel = string;
 
-export type ThemeCodeBlockCodeBlockCopyAriaLabel = string;
+export type Theme_CodeBlock_Index_CodeBlock_CopyAriaLabel = string;
 
-export type ThemeCodeBlockCodeBlockCopiedLabel = string;
+export type Theme_CodeBlock_Index_CodeBlock_CopiedLabel = string;
 
-export type ThemeCodeBlockCodeBlockCopyLabel = string;
+export type Theme_CodeBlock_Index_CodeBlock_CopyLabel = string;
 
-export type ThemeCodeBlockCodeBlockShowMore = string;
+export type Theme_CodeBlock_Index_CodeBlock_ShowMore = string;
 
-export type ThemeCodeBlockCodeBlockShowLess = string;
+export type Theme_CodeBlock_Index_CodeBlock_ShowLess = string;
 
 /**
  * Theme - Code Block - Extract Plain Text.
  *
  * @since 0.15.0
  */
-export type ThemeCodeBlockExtractPlainTextNode = ReactNode;
+export type Theme_CodeBlock_Index_ExtractPlainText_Node = ReactNode;
 
-export type ThemeCodeBlockExtractPlainTextReturns = string;
+export type Theme_CodeBlock_Index_ExtractPlainText_Returns = string;
 
-export type ThemeCodeBlockExtractPlainTextElementPropsChildren = ReactNode;
+export type Theme_CodeBlock_Index_ExtractPlainText_ElementProps_Children = ReactNode;
 
-export type ThemeCodeBlockExtractPlainTextElementProps = {
-  children: ThemeCodeBlockExtractPlainTextElementPropsChildren;
+export type Theme_CodeBlock_Index_ExtractPlainText_ElementProps = {
+  children: Theme_CodeBlock_Index_ExtractPlainText_ElementProps_Children;
   [key: string]: unknown;
 };

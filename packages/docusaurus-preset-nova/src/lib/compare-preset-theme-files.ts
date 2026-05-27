@@ -1,7 +1,7 @@
 import type {
-  LibComparePresetThemeFilesComparePresetThemeFilesA,
-  LibComparePresetThemeFilesComparePresetThemeFilesB,
-  LibComparePresetThemeFilesComparePresetThemeFilesReturns,
+  Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_A,
+  Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_B,
+  Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Returns,
 } from '../types/lib/compare-preset-theme-files.d.ts';
 
 /**
@@ -11,14 +11,14 @@ import type {
  * variant rules ship later in the CSS bundle and win the cascade
  * for same-specificity selectors. All other paths sort alphabetically.
  *
- * @param {LibComparePresetThemeFilesComparePresetThemeFilesA} a - A.
- * @param {LibComparePresetThemeFilesComparePresetThemeFilesB} b - B.
+ * @param {Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_A} a - A.
+ * @param {Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_B} b - B.
  *
- * @returns {LibComparePresetThemeFilesComparePresetThemeFilesReturns}
+ * @returns {Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Returns}
  *
  * @since 0.15.0
  */
-export function comparePresetThemeFiles(a: LibComparePresetThemeFilesComparePresetThemeFilesA, b: LibComparePresetThemeFilesComparePresetThemeFilesB): LibComparePresetThemeFilesComparePresetThemeFilesReturns {
+export function comparePresetThemeFiles(a: Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_A, b: Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_B): Lib_ComparePresetThemeFiles_ComparePresetThemeFiles_Returns {
   if (
     a === 'Navbar/style.css'
     && b.startsWith('Navbar/') === true

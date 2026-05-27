@@ -61,19 +61,21 @@ The full default configuration for the Lantern preset:
 {
   preset: 'lantern',
   // Default values (no overrides needed):
-  // colors.primary:          '#f59e0b'
-  // colors.accent:           '#4338ca'
-  // colors.neutral:          '#57534e'
+  // colors.primary.light:    '#f59e0b'
+  // colors.primary.dark:     '#f59e0b'
+  // colors.secondary.light:  '#4338ca'
+  // colors.secondary.dark:   '#4338ca'
+  // colors.text.light:       '#3d2f1a'
+  // colors.text.dark:        '#f0e2c0'
+  // colors.border.light:     '#e8dcb8'
+  // colors.border.dark:      '#4a3d24'
+  // colors.warning.light:    '#f59e0b'
+  // colors.warning.dark:     '#f59e0b'
+  // colors.danger.light:     '#b91c1c'
+  // colors.danger.dark:      '#b91c1c'
   // fonts.display:           'Fraunces'
   // fonts.body:              'Manrope'
   // fonts.code:              'IBM Plex Mono'
-  // shape.radius:            'rounded'
-  // shape.density:           'comfortable'
-  // depth.cards:             'elevated'
-  // depth.codeBlocks:        'bordered'
-  // motion.speed:            'normal'
-  // motion.staggeredReveals: true
-  // motion.hoverEffects:     true
   // navbar:                  'bridge'
   // footer:                  'commons'
 }
@@ -91,15 +93,18 @@ Override any category to customize the Lantern identity. Unspecified values keep
   preset: 'lantern',
   overrides: {
     colors: {
-      primary: '#f59e0b',
-      accent: '#4338ca',
-      neutral: '#57534e',
+      primary:   { light: '#f59e0b', dark: '#f59e0b' },
+      secondary: { light: '#4338ca', dark: '#4338ca' },
+      text:      { light: '#3d2f1a', dark: '#f0e2c0' },
+      border:    { light: '#e8dcb8', dark: '#4a3d24' },
+      warning:   { light: '#f59e0b', dark: '#f59e0b' },
+      danger:    { light: '#b91c1c', dark: '#b91c1c' },
     },
   },
 }
 ```
 
-Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+Each color category accepts a `{ light, dark }` pair. The `primary` and `secondary` colors expand to 11-level shade scales (50 through 950) as CSS custom properties.
 
   </TabItem>
   <TabItem value="fonts" label="Fonts">
@@ -118,25 +123,6 @@ Each color generates an 11-level shade scale (50–950) as CSS custom properties
 ```
 
 Font families are set as CSS custom properties. Google Fonts are loaded automatically.
-
-  </TabItem>
-  <TabItem value="shape" label="Shape & Depth">
-
-```ts title="docusaurus.config.ts"
-{
-  preset: 'lantern',
-  overrides: {
-    shape: {
-      radius: 'rounded',
-      density: 'comfortable',
-    },
-    depth: {
-      cards: 'elevated',
-      codeBlocks: 'bordered',
-    },
-  },
-}
-```
 
   </TabItem>
 </Tabs>

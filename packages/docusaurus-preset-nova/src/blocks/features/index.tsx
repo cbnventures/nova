@@ -1,7 +1,7 @@
 import { Icon } from '@iconify/react/offline';
 import Heading from '@theme/Heading';
 
-import type { BlocksFeaturesProps } from '../../types/blocks/features/index.d.ts';
+import type { Blocks_Features_Index_BlocksFeatures_Props } from '../../types/blocks/features/index.d.ts';
 
 /**
  * Blocks - Features.
@@ -10,13 +10,13 @@ import type { BlocksFeaturesProps } from '../../types/blocks/features/index.d.ts
  * one-to-three column layout with stagger reveal animation and
  * shadow depth from Nova CSS variables.
  *
- * @param {BlocksFeaturesProps} props - Props.
+ * @param {Blocks_Features_Index_BlocksFeatures_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlocksFeatures(props: BlocksFeaturesProps) {
+function BlocksFeatures(props: Blocks_Features_Index_BlocksFeatures_Props) {
   return (
     <section
       className={(props['className'] !== undefined) ? `nova-features ${props['className']}` : 'nova-features'}

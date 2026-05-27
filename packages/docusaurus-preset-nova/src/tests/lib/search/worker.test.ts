@@ -6,40 +6,40 @@ import { describe, it } from 'vitest';
 import { performSearch } from '../../../lib/search/perform-search.js';
 
 import type {
-  TestsLibSearchWorkerBuildTestIndexDocumentEntry,
-  TestsLibSearchWorkerBuildTestIndexDocuments,
-  TestsLibSearchWorkerBuildTestIndexIndex,
-  TestsLibSearchWorkerBuildTestIndexResult,
-  TestsLibSearchWorkerBuildTestIndexReturns,
-  TestsLibSearchWorkerDeduplicationDocuments,
-  TestsLibSearchWorkerDeduplicationHit,
-  TestsLibSearchWorkerDeduplicationIndex,
-  TestsLibSearchWorkerDeduplicationPaths,
-  TestsLibSearchWorkerDeduplicationResults,
-  TestsLibSearchWorkerDeduplicationUniquePaths,
-  TestsLibSearchWorkerEmptyQueryDocuments,
-  TestsLibSearchWorkerEmptyQueryIndex,
-  TestsLibSearchWorkerEmptyQueryResults,
-  TestsLibSearchWorkerExactDocuments,
-  TestsLibSearchWorkerExactFirstHit,
-  TestsLibSearchWorkerExactIndex,
-  TestsLibSearchWorkerExactResults,
-  TestsLibSearchWorkerFuzzyDocuments,
-  TestsLibSearchWorkerFuzzyIndex,
-  TestsLibSearchWorkerFuzzyResults,
-  TestsLibSearchWorkerLimitDocuments,
-  TestsLibSearchWorkerLimitIndex,
-  TestsLibSearchWorkerLimitResults,
-  TestsLibSearchWorkerScoreSortingDocuments,
-  TestsLibSearchWorkerScoreSortingFirstScore,
-  TestsLibSearchWorkerScoreSortingIndex,
-  TestsLibSearchWorkerScoreSortingLastResultIndex,
-  TestsLibSearchWorkerScoreSortingLastResultItem,
-  TestsLibSearchWorkerScoreSortingLastScore,
-  TestsLibSearchWorkerScoreSortingResults,
-  TestsLibSearchWorkerWildcardDocuments,
-  TestsLibSearchWorkerWildcardIndex,
-  TestsLibSearchWorkerWildcardResults,
+  Tests_Lib_Search_Worker_BuildTestIndex_DocumentEntry,
+  Tests_Lib_Search_Worker_BuildTestIndex_Documents,
+  Tests_Lib_Search_Worker_BuildTestIndex_Index,
+  Tests_Lib_Search_Worker_BuildTestIndex_Result,
+  Tests_Lib_Search_Worker_BuildTestIndex_Returns,
+  Tests_Lib_Search_Worker_DeduplicationDocuments,
+  Tests_Lib_Search_Worker_DeduplicationHit,
+  Tests_Lib_Search_Worker_DeduplicationIndex,
+  Tests_Lib_Search_Worker_DeduplicationPaths,
+  Tests_Lib_Search_Worker_DeduplicationResults,
+  Tests_Lib_Search_Worker_DeduplicationUniquePaths,
+  Tests_Lib_Search_Worker_EmptyQueryDocuments,
+  Tests_Lib_Search_Worker_EmptyQueryIndex,
+  Tests_Lib_Search_Worker_EmptyQueryResults,
+  Tests_Lib_Search_Worker_ExactDocuments,
+  Tests_Lib_Search_Worker_ExactFirstHit,
+  Tests_Lib_Search_Worker_ExactIndex,
+  Tests_Lib_Search_Worker_ExactResults,
+  Tests_Lib_Search_Worker_FuzzyDocuments,
+  Tests_Lib_Search_Worker_FuzzyIndex,
+  Tests_Lib_Search_Worker_FuzzyResults,
+  Tests_Lib_Search_Worker_LimitDocuments,
+  Tests_Lib_Search_Worker_LimitIndex,
+  Tests_Lib_Search_Worker_LimitResults,
+  Tests_Lib_Search_Worker_ScoreSortingDocuments,
+  Tests_Lib_Search_Worker_ScoreSortingFirstScore,
+  Tests_Lib_Search_Worker_ScoreSortingIndex,
+  Tests_Lib_Search_Worker_ScoreSortingLastResultIndex,
+  Tests_Lib_Search_Worker_ScoreSortingLastResultItem,
+  Tests_Lib_Search_Worker_ScoreSortingLastScore,
+  Tests_Lib_Search_Worker_ScoreSortingResults,
+  Tests_Lib_Search_Worker_WildcardDocuments,
+  Tests_Lib_Search_Worker_WildcardIndex,
+  Tests_Lib_Search_Worker_WildcardResults,
 } from '../../../types/tests/lib/search/worker.test.d.ts';
 
 /**
@@ -48,8 +48,8 @@ import type {
  * @returns Build test index.
  * @since 0.15.0
  */
-function buildTestIndex(): TestsLibSearchWorkerBuildTestIndexReturns {
-  const documents: TestsLibSearchWorkerBuildTestIndexDocuments = [
+function buildTestIndex(): Tests_Lib_Search_Worker_BuildTestIndex_Returns {
+  const documents: Tests_Lib_Search_Worker_BuildTestIndex_Documents = [
     {
       path: '/docs/intro',
       title: 'Introduction',
@@ -82,7 +82,7 @@ function buildTestIndex(): TestsLibSearchWorkerBuildTestIndexReturns {
     },
   ];
 
-  const index: TestsLibSearchWorkerBuildTestIndexIndex = lunr(function buildIndex() {
+  const index: Tests_Lib_Search_Worker_BuildTestIndex_Index = lunr(function buildIndex() {
     this.ref('path');
 
     this.field('title');
@@ -90,7 +90,7 @@ function buildTestIndex(): TestsLibSearchWorkerBuildTestIndexReturns {
     this.field('body');
 
     for (let i = 0; i < documents.length; i += 1) {
-      const document: TestsLibSearchWorkerBuildTestIndexDocumentEntry = documents[i];
+      const document: Tests_Lib_Search_Worker_BuildTestIndex_DocumentEntry = documents[i];
 
       if (document !== undefined) {
         this.add(document);
@@ -113,14 +113,14 @@ function buildTestIndex(): TestsLibSearchWorkerBuildTestIndexReturns {
  */
 describe('performSearch exact', async () => {
   it('returns matching documents for an exact query', () => {
-    const testData: TestsLibSearchWorkerBuildTestIndexResult = buildTestIndex();
-    const index: TestsLibSearchWorkerExactIndex = testData['index'];
-    const documents: TestsLibSearchWorkerExactDocuments = testData['documents'];
-    const results: TestsLibSearchWorkerExactResults = performSearch(index, documents, 'introduction', 10);
+    const testData: Tests_Lib_Search_Worker_BuildTestIndex_Result = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_ExactIndex = testData['index'];
+    const documents: Tests_Lib_Search_Worker_ExactDocuments = testData['documents'];
+    const results: Tests_Lib_Search_Worker_ExactResults = performSearch(index, documents, 'introduction', 10);
 
     ok(results.length > 0);
 
-    const firstHit: TestsLibSearchWorkerExactFirstHit = results[0];
+    const firstHit: Tests_Lib_Search_Worker_ExactFirstHit = results[0];
 
     if (firstHit !== undefined) {
       strictEqual(firstHit['path'], '/docs/intro');
@@ -142,10 +142,10 @@ describe('performSearch exact', async () => {
  */
 describe('performSearch wildcard', async () => {
   it('matches prefix queries via wildcard strategy', () => {
-    const testData: TestsLibSearchWorkerBuildTestIndexResult = buildTestIndex();
-    const index: TestsLibSearchWorkerWildcardIndex = testData['index'];
-    const documents: TestsLibSearchWorkerWildcardDocuments = testData['documents'];
-    const results: TestsLibSearchWorkerWildcardResults = performSearch(index, documents, 'config', 10);
+    const testData: Tests_Lib_Search_Worker_BuildTestIndex_Result = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_WildcardIndex = testData['index'];
+    const documents: Tests_Lib_Search_Worker_WildcardDocuments = testData['documents'];
+    const results: Tests_Lib_Search_Worker_WildcardResults = performSearch(index, documents, 'config', 10);
 
     ok(results.length > 0);
 
@@ -162,10 +162,10 @@ describe('performSearch wildcard', async () => {
  */
 describe('performSearch fuzzy', async () => {
   it('matches near-miss queries via fuzzy strategy', () => {
-    const testData: TestsLibSearchWorkerBuildTestIndexResult = buildTestIndex();
-    const index: TestsLibSearchWorkerFuzzyIndex = testData['index'];
-    const documents: TestsLibSearchWorkerFuzzyDocuments = testData['documents'];
-    const results: TestsLibSearchWorkerFuzzyResults = performSearch(index, documents, 'tutoril', 10);
+    const testData: Tests_Lib_Search_Worker_BuildTestIndex_Result = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_FuzzyIndex = testData['index'];
+    const documents: Tests_Lib_Search_Worker_FuzzyDocuments = testData['documents'];
+    const results: Tests_Lib_Search_Worker_FuzzyResults = performSearch(index, documents, 'tutoril', 10);
 
     ok(results.length > 0);
 
@@ -182,12 +182,12 @@ describe('performSearch fuzzy', async () => {
  */
 describe('performSearch deduplication', async () => {
   it('returns unique paths with no duplicates', () => {
-    const testData: TestsLibSearchWorkerBuildTestIndexResult = buildTestIndex();
-    const index: TestsLibSearchWorkerDeduplicationIndex = testData['index'];
-    const documents: TestsLibSearchWorkerDeduplicationDocuments = testData['documents'];
-    const results: TestsLibSearchWorkerDeduplicationResults = performSearch(index, documents, 'configuration', 10);
-    const paths: TestsLibSearchWorkerDeduplicationPaths = results.map((hit: TestsLibSearchWorkerDeduplicationHit) => hit['path']);
-    const uniquePaths: TestsLibSearchWorkerDeduplicationUniquePaths = new Set(paths);
+    const testData: Tests_Lib_Search_Worker_BuildTestIndex_Result = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_DeduplicationIndex = testData['index'];
+    const documents: Tests_Lib_Search_Worker_DeduplicationDocuments = testData['documents'];
+    const results: Tests_Lib_Search_Worker_DeduplicationResults = performSearch(index, documents, 'configuration', 10);
+    const paths: Tests_Lib_Search_Worker_DeduplicationPaths = results.map((hit: Tests_Lib_Search_Worker_DeduplicationHit) => hit['path']);
+    const uniquePaths: Tests_Lib_Search_Worker_DeduplicationUniquePaths = new Set(paths);
 
     strictEqual(paths.length, uniquePaths.size);
 
@@ -204,21 +204,21 @@ describe('performSearch deduplication', async () => {
  */
 describe('performSearch score sorting', async () => {
   it('returns results sorted by score descending', () => {
-    const testData: TestsLibSearchWorkerBuildTestIndexResult = buildTestIndex();
-    const index: TestsLibSearchWorkerScoreSortingIndex = testData['index'];
-    const documents: TestsLibSearchWorkerScoreSortingDocuments = testData['documents'];
-    const results: TestsLibSearchWorkerScoreSortingResults = performSearch(index, documents, 'guide', 10);
+    const testData: Tests_Lib_Search_Worker_BuildTestIndex_Result = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_ScoreSortingIndex = testData['index'];
+    const documents: Tests_Lib_Search_Worker_ScoreSortingDocuments = testData['documents'];
+    const results: Tests_Lib_Search_Worker_ScoreSortingResults = performSearch(index, documents, 'guide', 10);
 
     if (results.length >= 2
       && results[0] !== undefined
     ) {
-      const lastResultIndex: TestsLibSearchWorkerScoreSortingLastResultIndex = results.length - 1;
-      const lastResultItem: TestsLibSearchWorkerScoreSortingLastResultItem = results[lastResultIndex];
+      const lastResultIndex: Tests_Lib_Search_Worker_ScoreSortingLastResultIndex = results.length - 1;
+      const lastResultItem: Tests_Lib_Search_Worker_ScoreSortingLastResultItem = results[lastResultIndex];
 
       ok(lastResultItem !== undefined);
 
-      const firstScore: TestsLibSearchWorkerScoreSortingFirstScore = results[0]['score'];
-      const lastScore: TestsLibSearchWorkerScoreSortingLastScore = lastResultItem['score'];
+      const firstScore: Tests_Lib_Search_Worker_ScoreSortingFirstScore = results[0]['score'];
+      const lastScore: Tests_Lib_Search_Worker_ScoreSortingLastScore = lastResultItem['score'];
 
       ok(firstScore >= lastScore);
     }
@@ -236,10 +236,10 @@ describe('performSearch score sorting', async () => {
  */
 describe('performSearch limit', async () => {
   it('caps results at the specified limit', () => {
-    const testData: TestsLibSearchWorkerBuildTestIndexResult = buildTestIndex();
-    const index: TestsLibSearchWorkerLimitIndex = testData['index'];
-    const documents: TestsLibSearchWorkerLimitDocuments = testData['documents'];
-    const results: TestsLibSearchWorkerLimitResults = performSearch(index, documents, 'guide', 1);
+    const testData: Tests_Lib_Search_Worker_BuildTestIndex_Result = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_LimitIndex = testData['index'];
+    const documents: Tests_Lib_Search_Worker_LimitDocuments = testData['documents'];
+    const results: Tests_Lib_Search_Worker_LimitResults = performSearch(index, documents, 'guide', 1);
 
     ok(results.length <= 1);
 
@@ -256,10 +256,10 @@ describe('performSearch limit', async () => {
  */
 describe('performSearch empty query', async () => {
   it('returns an empty array for an empty query', () => {
-    const testData: TestsLibSearchWorkerBuildTestIndexResult = buildTestIndex();
-    const index: TestsLibSearchWorkerEmptyQueryIndex = testData['index'];
-    const documents: TestsLibSearchWorkerEmptyQueryDocuments = testData['documents'];
-    const results: TestsLibSearchWorkerEmptyQueryResults = performSearch(index, documents, '', 10);
+    const testData: Tests_Lib_Search_Worker_BuildTestIndex_Result = buildTestIndex();
+    const index: Tests_Lib_Search_Worker_EmptyQueryIndex = testData['index'];
+    const documents: Tests_Lib_Search_Worker_EmptyQueryDocuments = testData['documents'];
+    const results: Tests_Lib_Search_Worker_EmptyQueryResults = performSearch(index, documents, '', 10);
 
     deepStrictEqual(results, []);
 

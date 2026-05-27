@@ -7,50 +7,50 @@ import {
 import { useSearchContext } from './search-context.js';
 
 import type {
-  ThemeSearchBarSearchResultsActiveClassName,
-  ThemeSearchBarSearchResultsActiveIndex,
-  ThemeSearchBarSearchResultsAnimationEvent,
-  ThemeSearchBarSearchResultsAnimationFrameId,
-  ThemeSearchBarSearchResultsDropdownClassName,
-  ThemeSearchBarSearchResultsDropdownElement,
-  ThemeSearchBarSearchResultsDropdownRef,
-  ThemeSearchBarSearchResultsError,
-  ThemeSearchBarSearchResultsHandleClickOutsideFunction,
-  ThemeSearchBarSearchResultsInputRef,
-  ThemeSearchBarSearchResultsIsClosing,
-  ThemeSearchBarSearchResultsIsClosingState,
-  ThemeSearchBarSearchResultsIsInMobileMenu,
-  ThemeSearchBarSearchResultsIsInsideMobileMenu,
-  ThemeSearchBarSearchResultsIsMounted,
-  ThemeSearchBarSearchResultsIsMountedState,
-  ThemeSearchBarSearchResultsIsOpen,
-  ThemeSearchBarSearchResultsIsOutsideDropdown,
-  ThemeSearchBarSearchResultsIsOutsideInput,
-  ThemeSearchBarSearchResultsIsReady,
-  ThemeSearchBarSearchResultsIsTransitionToClose,
-  ThemeSearchBarSearchResultsLoading,
-  ThemeSearchBarSearchResultsMouseEvent,
-  ThemeSearchBarSearchResultsMouseTarget,
-  ThemeSearchBarSearchResultsNoResults,
-  ThemeSearchBarSearchResultsProps,
-  ThemeSearchBarSearchResultsQuery,
-  ThemeSearchBarSearchResultsResultCount,
-  ThemeSearchBarSearchResultsResultIndex,
-  ThemeSearchBarSearchResultsResultItem,
-  ThemeSearchBarSearchResultsResults,
-  ThemeSearchBarSearchResultsResultsFound,
-  ThemeSearchBarSearchResultsResultUrl,
-  ThemeSearchBarSearchResultsSearchContext,
-  ThemeSearchBarSearchResultsSearchedQuery,
-  ThemeSearchBarSearchResultsSearching,
-  ThemeSearchBarSearchResultsSetIsClosing,
-  ThemeSearchBarSearchResultsSetIsMounted,
-  ThemeSearchBarSearchResultsSetIsOpen,
-  ThemeSearchBarSearchResultsSnippetSegment,
-  ThemeSearchBarSearchResultsSnippetSegmentIndex,
-  ThemeSearchBarSearchResultsTimer,
-  ThemeSearchBarSearchResultsTransitionEvent,
-  ThemeSearchBarSearchResultsWasOpenRef,
+  Theme_SearchBar_SearchResults_ActiveClassName,
+  Theme_SearchBar_SearchResults_ActiveIndex,
+  Theme_SearchBar_SearchResults_AnimationEvent,
+  Theme_SearchBar_SearchResults_AnimationFrameId,
+  Theme_SearchBar_SearchResults_DropdownClassName,
+  Theme_SearchBar_SearchResults_DropdownElement,
+  Theme_SearchBar_SearchResults_DropdownRef,
+  Theme_SearchBar_SearchResults_Error,
+  Theme_SearchBar_SearchResults_HandleClickOutsideFunction,
+  Theme_SearchBar_SearchResults_InputRef,
+  Theme_SearchBar_SearchResults_IsClosing,
+  Theme_SearchBar_SearchResults_IsClosingState,
+  Theme_SearchBar_SearchResults_IsInMobileMenu,
+  Theme_SearchBar_SearchResults_IsInsideMobileMenu,
+  Theme_SearchBar_SearchResults_IsMounted,
+  Theme_SearchBar_SearchResults_IsMountedState,
+  Theme_SearchBar_SearchResults_IsOpen,
+  Theme_SearchBar_SearchResults_IsOutsideDropdown,
+  Theme_SearchBar_SearchResults_IsOutsideInput,
+  Theme_SearchBar_SearchResults_IsReady,
+  Theme_SearchBar_SearchResults_IsTransitionToClose,
+  Theme_SearchBar_SearchResults_Loading,
+  Theme_SearchBar_SearchResults_MouseEvent,
+  Theme_SearchBar_SearchResults_MouseTarget,
+  Theme_SearchBar_SearchResults_NoResults,
+  Theme_SearchBar_SearchResults_Props,
+  Theme_SearchBar_SearchResults_Query,
+  Theme_SearchBar_SearchResults_ResultCount,
+  Theme_SearchBar_SearchResults_ResultIndex,
+  Theme_SearchBar_SearchResults_ResultItem,
+  Theme_SearchBar_SearchResults_Results,
+  Theme_SearchBar_SearchResults_ResultsFound,
+  Theme_SearchBar_SearchResults_ResultUrl,
+  Theme_SearchBar_SearchResults_SearchContext,
+  Theme_SearchBar_SearchResults_SearchedQuery,
+  Theme_SearchBar_SearchResults_Searching,
+  Theme_SearchBar_SearchResults_SetIsClosing,
+  Theme_SearchBar_SearchResults_SetIsMounted,
+  Theme_SearchBar_SearchResults_SetIsOpen,
+  Theme_SearchBar_SearchResults_SnippetSegment,
+  Theme_SearchBar_SearchResults_SnippetSegmentIndex,
+  Theme_SearchBar_SearchResults_Timer,
+  Theme_SearchBar_SearchResults_TransitionEvent,
+  Theme_SearchBar_SearchResults_WasOpenRef,
 } from '../../types/theme/SearchBar/search-results.d.ts';
 
 /**
@@ -60,34 +60,34 @@ import type {
  * empty state, and error state, closing automatically when
  * the user clicks outside the panel or the input field.
  *
- * @param {ThemeSearchBarSearchResultsProps} _props - _props.
+ * @param {Theme_SearchBar_SearchResults_Props} _props - _props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
-  const searchContext: ThemeSearchBarSearchResultsSearchContext = useSearchContext();
-  const isOpen: ThemeSearchBarSearchResultsIsOpen = searchContext['isOpen'];
-  const results: ThemeSearchBarSearchResultsResults = searchContext['results'];
-  const error: ThemeSearchBarSearchResultsError = searchContext['error'];
-  const isReady: ThemeSearchBarSearchResultsIsReady = searchContext['isReady'];
-  const query: ThemeSearchBarSearchResultsQuery = searchContext['query'];
-  const searchedQuery: ThemeSearchBarSearchResultsSearchedQuery = searchContext['searchedQuery'];
-  const activeIndex: ThemeSearchBarSearchResultsActiveIndex = searchContext['activeIndex'];
-  const setIsOpen: ThemeSearchBarSearchResultsSetIsOpen = searchContext['setIsOpen'];
-  const inputRef: ThemeSearchBarSearchResultsInputRef = searchContext['inputRef'];
+function SearchResults(_props: Theme_SearchBar_SearchResults_Props) {
+  const searchContext: Theme_SearchBar_SearchResults_SearchContext = useSearchContext();
+  const isOpen: Theme_SearchBar_SearchResults_IsOpen = searchContext['isOpen'];
+  const results: Theme_SearchBar_SearchResults_Results = searchContext['results'];
+  const error: Theme_SearchBar_SearchResults_Error = searchContext['error'];
+  const isReady: Theme_SearchBar_SearchResults_IsReady = searchContext['isReady'];
+  const query: Theme_SearchBar_SearchResults_Query = searchContext['query'];
+  const searchedQuery: Theme_SearchBar_SearchResults_SearchedQuery = searchContext['searchedQuery'];
+  const activeIndex: Theme_SearchBar_SearchResults_ActiveIndex = searchContext['activeIndex'];
+  const setIsOpen: Theme_SearchBar_SearchResults_SetIsOpen = searchContext['setIsOpen'];
+  const inputRef: Theme_SearchBar_SearchResults_InputRef = searchContext['inputRef'];
 
-  const dropdownRef: ThemeSearchBarSearchResultsDropdownRef = useRef<HTMLDivElement | null>(null);
-  const wasOpenRef: ThemeSearchBarSearchResultsWasOpenRef = useRef<boolean>(false);
+  const dropdownRef: Theme_SearchBar_SearchResults_DropdownRef = useRef<HTMLDivElement | null>(null);
+  const wasOpenRef: Theme_SearchBar_SearchResults_WasOpenRef = useRef<boolean>(false);
 
-  const isClosingState: ThemeSearchBarSearchResultsIsClosingState = useState<ThemeSearchBarSearchResultsIsClosing>(false);
-  const isClosing: ThemeSearchBarSearchResultsIsClosing = isClosingState[0];
-  const setIsClosing: ThemeSearchBarSearchResultsSetIsClosing = isClosingState[1];
+  const isClosingState: Theme_SearchBar_SearchResults_IsClosingState = useState<Theme_SearchBar_SearchResults_IsClosing>(false);
+  const isClosing: Theme_SearchBar_SearchResults_IsClosing = isClosingState[0];
+  const setIsClosing: Theme_SearchBar_SearchResults_SetIsClosing = isClosingState[1];
 
-  const isMountedState: ThemeSearchBarSearchResultsIsMountedState = useState<ThemeSearchBarSearchResultsIsMounted>(false);
-  const isMounted: ThemeSearchBarSearchResultsIsMounted = isMountedState[0];
-  const setIsMounted: ThemeSearchBarSearchResultsSetIsMounted = isMountedState[1];
+  const isMountedState: Theme_SearchBar_SearchResults_IsMountedState = useState<Theme_SearchBar_SearchResults_IsMounted>(false);
+  const isMounted: Theme_SearchBar_SearchResults_IsMounted = isMountedState[0];
+  const setIsMounted: Theme_SearchBar_SearchResults_SetIsMounted = isMountedState[1];
 
   // Detect open -> close transition. Done during render (not in a useEffect)
   // so the same render that flips isOpen to false also keeps the dropdown
@@ -95,7 +95,7 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
   // (unmount), then the useEffect re-mounts with the closing class, which
   // produces a visible flash. The setIsClosing call below schedules a
   // re-render that picks up the real isClosing=true state.
-  const isTransitionToClose: ThemeSearchBarSearchResultsIsTransitionToClose = (
+  const isTransitionToClose: Theme_SearchBar_SearchResults_IsTransitionToClose = (
     wasOpenRef.current === true
     && isOpen === false
     && isClosing === false
@@ -133,13 +133,13 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
   wasOpenRef.current = isOpen;
 
   // Click outside to close dropdown.
-  const handleClickOutside: ThemeSearchBarSearchResultsHandleClickOutsideFunction = useCallback((event: ThemeSearchBarSearchResultsMouseEvent) => {
-    const mouseTarget: ThemeSearchBarSearchResultsMouseTarget = event.target as ThemeSearchBarSearchResultsMouseTarget;
-    const isOutsideDropdown: ThemeSearchBarSearchResultsIsOutsideDropdown = (dropdownRef.current !== null) ? (dropdownRef.current.contains(mouseTarget) === false) : true;
-    const isOutsideInput: ThemeSearchBarSearchResultsIsOutsideInput = (inputRef.current !== null) ? (inputRef.current.contains(mouseTarget) === false) : true;
+  const handleClickOutside: Theme_SearchBar_SearchResults_HandleClickOutsideFunction = useCallback((event: Theme_SearchBar_SearchResults_MouseEvent) => {
+    const mouseTarget: Theme_SearchBar_SearchResults_MouseTarget = event.target as Theme_SearchBar_SearchResults_MouseTarget;
+    const isOutsideDropdown: Theme_SearchBar_SearchResults_IsOutsideDropdown = (dropdownRef.current !== null) ? (dropdownRef.current.contains(mouseTarget) === false) : true;
+    const isOutsideInput: Theme_SearchBar_SearchResults_IsOutsideInput = (inputRef.current !== null) ? (inputRef.current.contains(mouseTarget) === false) : true;
 
     // Skip click-outside on mobile - results should stay until query is cleared or menu is closed.
-    const isInsideMobileMenu: ThemeSearchBarSearchResultsIsInsideMobileMenu = (dropdownRef.current !== null) ? dropdownRef.current.closest('.nova-mobile-menu-panel') !== null : false;
+    const isInsideMobileMenu: Theme_SearchBar_SearchResults_IsInsideMobileMenu = (dropdownRef.current !== null) ? dropdownRef.current.closest('.nova-mobile-menu-panel') !== null : false;
 
     if (isInsideMobileMenu === true) {
       return;
@@ -178,7 +178,7 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
       return;
     }
 
-    const id: ThemeSearchBarSearchResultsAnimationFrameId = requestAnimationFrame(() => {
+    const id: Theme_SearchBar_SearchResults_AnimationFrameId = requestAnimationFrame(() => {
       setIsMounted(true);
 
       return;
@@ -209,13 +209,13 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
       return;
     }
 
-    const isInMobileMenu: ThemeSearchBarSearchResultsIsInMobileMenu = dropdownRef.current.closest('.nova-mobile-menu-panel') !== null;
+    const isInMobileMenu: Theme_SearchBar_SearchResults_IsInMobileMenu = dropdownRef.current.closest('.nova-mobile-menu-panel') !== null;
 
     if (isInMobileMenu === false) {
       return;
     }
 
-    const timer: ThemeSearchBarSearchResultsTimer = setTimeout(() => {
+    const timer: Theme_SearchBar_SearchResults_Timer = setTimeout(() => {
       setIsClosing(false);
 
       return;
@@ -228,24 +228,24 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
     };
   }, [isClosing]);
 
-  const loading: ThemeSearchBarSearchResultsLoading = translate({
+  const loading: Theme_SearchBar_SearchResults_Loading = translate({
     id: 'theme.SearchBar.loading',
     message: 'Loading search index\u2026',
     description: 'The message displayed while the search index is being loaded',
   });
-  const noResults: ThemeSearchBarSearchResultsNoResults = translate({
+  const noResults: Theme_SearchBar_SearchResults_NoResults = translate({
     id: 'theme.SearchBar.noResults',
     message: 'No results found.',
     description: 'The message displayed when a search query returns no results',
   });
-  const searching: ThemeSearchBarSearchResultsSearching = translate({
+  const searching: Theme_SearchBar_SearchResults_Searching = translate({
     id: 'theme.SearchBar.searching',
     message: 'Searching…',
     description: 'The message displayed while the query is being processed and fresh results have not yet returned',
   });
 
-  const resultCount: ThemeSearchBarSearchResultsResultCount = results.length;
-  const resultsFound: ThemeSearchBarSearchResultsResultsFound = translate(
+  const resultCount: Theme_SearchBar_SearchResults_ResultCount = results.length;
+  const resultsFound: Theme_SearchBar_SearchResults_ResultsFound = translate(
     {
       id: 'theme.SearchBar.resultsFound',
       message: '{count} results found',
@@ -263,8 +263,8 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
     return null;
   }
 
-  const baseDropdownClassName: ThemeSearchBarSearchResultsDropdownClassName = (isClosing === true || isTransitionToClose === true) ? 'nova-search-dropdown nova-search-dropdown-closing' : 'nova-search-dropdown';
-  const dropdownClassName: ThemeSearchBarSearchResultsDropdownClassName = (isMounted === false) ? `${baseDropdownClassName} nova-search-dropdown-mounting` : baseDropdownClassName;
+  const baseDropdownClassName: Theme_SearchBar_SearchResults_DropdownClassName = (isClosing === true || isTransitionToClose === true) ? 'nova-search-dropdown nova-search-dropdown-closing' : 'nova-search-dropdown';
+  const dropdownClassName: Theme_SearchBar_SearchResults_DropdownClassName = (isMounted === false) ? `${baseDropdownClassName} nova-search-dropdown-mounting` : baseDropdownClassName;
 
   return (
     <div
@@ -272,7 +272,7 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
       className={dropdownClassName}
       id="nova-search-results"
       role="listbox"
-      onAnimationEnd={(event: ThemeSearchBarSearchResultsAnimationEvent) => {
+      onAnimationEnd={(event: Theme_SearchBar_SearchResults_AnimationEvent) => {
         if (isClosing === false) {
           return;
         }
@@ -282,8 +282,8 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
         // the close signal. Mobile uses CSS transitions (handled in
         // onTransitionEnd below) and would otherwise unmount mid-swap on
         // that same 1ms keyframe, so we return early on mobile here.
-        const dropdownElement: ThemeSearchBarSearchResultsDropdownElement = event.target as ThemeSearchBarSearchResultsDropdownElement;
-        const isInMobileMenu: ThemeSearchBarSearchResultsIsInMobileMenu = dropdownElement.closest('.nova-mobile-menu-panel') !== null;
+        const dropdownElement: Theme_SearchBar_SearchResults_DropdownElement = event.target as Theme_SearchBar_SearchResults_DropdownElement;
+        const isInMobileMenu: Theme_SearchBar_SearchResults_IsInMobileMenu = dropdownElement.closest('.nova-mobile-menu-panel') !== null;
 
         if (isInMobileMenu === true) {
           return;
@@ -293,7 +293,7 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
 
         return;
       }}
-      onTransitionEnd={(event: ThemeSearchBarSearchResultsTransitionEvent) => {
+      onTransitionEnd={(event: Theme_SearchBar_SearchResults_TransitionEvent) => {
         if (isClosing === false) {
           return;
         }
@@ -313,8 +313,8 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
           return;
         }
 
-        const dropdownElement: ThemeSearchBarSearchResultsDropdownElement = event.target as ThemeSearchBarSearchResultsDropdownElement;
-        const isInMobileMenu: ThemeSearchBarSearchResultsIsInMobileMenu = dropdownElement.closest('.nova-mobile-menu-panel') !== null;
+        const dropdownElement: Theme_SearchBar_SearchResults_DropdownElement = event.target as Theme_SearchBar_SearchResults_DropdownElement;
+        const isInMobileMenu: Theme_SearchBar_SearchResults_IsInMobileMenu = dropdownElement.closest('.nova-mobile-menu-panel') !== null;
 
         if (isInMobileMenu === false) {
           return;
@@ -335,9 +335,9 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
         </div>
       )}
       {(results.length > 0) && (
-        results.map((resultItem: ThemeSearchBarSearchResultsResultItem, resultIndex: ThemeSearchBarSearchResultsResultIndex) => {
-          const resultUrl: ThemeSearchBarSearchResultsResultUrl = `${resultItem['path']}?_highlight=${encodeURIComponent(query)}`;
-          const activeClassName: ThemeSearchBarSearchResultsActiveClassName = (resultIndex === activeIndex) ? ' nova-search-result--active' : '';
+        results.map((resultItem: Theme_SearchBar_SearchResults_ResultItem, resultIndex: Theme_SearchBar_SearchResults_ResultIndex) => {
+          const resultUrl: Theme_SearchBar_SearchResults_ResultUrl = `${resultItem['path']}?_highlight=${encodeURIComponent(query)}`;
+          const activeClassName: Theme_SearchBar_SearchResults_ActiveClassName = (resultIndex === activeIndex) ? ' nova-search-result--active' : '';
 
           return (
             <a
@@ -350,7 +350,7 @@ function SearchResults(_props: ThemeSearchBarSearchResultsProps) {
             >
               <span className="nova-search-result-title">{resultItem['title']}</span>
               <span className="nova-search-result-snippet">
-                {resultItem['snippetSegments'].map((segment: ThemeSearchBarSearchResultsSnippetSegment, segmentIndex: ThemeSearchBarSearchResultsSnippetSegmentIndex) => {
+                {resultItem['snippetSegments'].map((segment: Theme_SearchBar_SearchResults_SnippetSegment, segmentIndex: Theme_SearchBar_SearchResults_SnippetSegmentIndex) => {
                   if (segment['highlight'] === true) {
                     return (
                       <span

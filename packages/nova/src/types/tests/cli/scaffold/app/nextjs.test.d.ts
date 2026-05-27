@@ -3,40 +3,40 @@
  *
  * @since 0.15.0
  */
-export type TestsCliScaffoldAppNextjsRunOriginalCwd = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_OriginalCwd = string;
 
-export type TestsCliScaffoldAppNextjsRunTemporaryDirectory = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_TemporaryDirectory = string;
 
-export type TestsCliScaffoldAppNextjsRunTemporaryBase = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_TemporaryBase = string;
 
-export type TestsCliScaffoldAppNextjsRunSandboxRoot = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_SandboxRoot = string;
 
-export type TestsCliScaffoldAppNextjsRunRootDirectory = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootDirectory = string;
 
-export type TestsCliScaffoldAppNextjsRunChildDirectory = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildDirectory = string;
 
-export type TestsCliScaffoldAppNextjsRunRootPackageJson = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootPackageJson = string;
 
-export type TestsCliScaffoldAppNextjsRunRootPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_RootPackageJsonPath = string;
 
-export type TestsCliScaffoldAppNextjsRunChildPackageJson = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildPackageJson = string;
 
-export type TestsCliScaffoldAppNextjsRunChildPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ChildPackageJsonPath = string;
 
-export type TestsCliScaffoldAppNextjsRunProjectDirectory = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_ProjectDirectory = string;
 
-export type TestsCliScaffoldAppNextjsRunPackageJson = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PackageJson = string;
 
-export type TestsCliScaffoldAppNextjsRunPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PackageJsonPath = string;
 
-export type TestsCliScaffoldAppNextjsRunExists = boolean;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_Exists = boolean;
 
-export type TestsCliScaffoldAppNextjsRunDryRunOutputPath = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_DryRunOutputPath = string;
 
-export type TestsCliScaffoldAppNextjsRunNovaConfigPath = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_NovaConfigPath = string;
 
-export type TestsCliScaffoldAppNextjsRunWorkspacePackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_WorkspacePackageJsonPath = string;
 
-export type TestsCliScaffoldAppNextjsRunNextConfigPath = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_NextConfigPath = string;
 
-export type TestsCliScaffoldAppNextjsRunPageTsxPath = string;
+export type Tests_Cli_Scaffold_App_Nextjs_CliScaffoldAppNextjsRun_PageTsxPath = string;

@@ -5,24 +5,24 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeTagPropsPermalink = string;
+export type Theme_Tag_Index_Tag_Props_Permalink = string;
 
-export type ThemeTagPropsLabel = string;
+export type Theme_Tag_Index_Tag_Props_Label = string;
 
-export type ThemeTagPropsCount = number | undefined;
+export type Theme_Tag_Index_Tag_Props_Count = number | undefined;
 
-export type ThemeTagPropsDescription = string | undefined;
+export type Theme_Tag_Index_Tag_Props_Description = string | undefined;
 
-export type ThemeTagPropsClassName = string | undefined;
+export type Theme_Tag_Index_Tag_Props_ClassName = string | undefined;
 
-export type ThemeTagPropsStyle = CSSProperties | undefined;
+export type Theme_Tag_Index_Tag_Props_Style = CSSProperties | undefined;
 
-export type ThemeTagProps = {
-  permalink: ThemeTagPropsPermalink;
-  label: ThemeTagPropsLabel;
-  count?: ThemeTagPropsCount;
-  description?: ThemeTagPropsDescription;
-  className?: ThemeTagPropsClassName;
-  style?: ThemeTagPropsStyle;
+export type Theme_Tag_Index_Tag_Props = {
+  permalink: Theme_Tag_Index_Tag_Props_Permalink;
+  label: Theme_Tag_Index_Tag_Props_Label;
+  count?: Theme_Tag_Index_Tag_Props_Count;
+  description?: Theme_Tag_Index_Tag_Props_Description;
+  className?: Theme_Tag_Index_Tag_Props_ClassName;
+  style?: Theme_Tag_Index_Tag_Props_Style;
   [key: string]: unknown;
 };

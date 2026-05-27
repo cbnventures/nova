@@ -6,24 +6,24 @@ import FooterCredit from '../credit.js';
 import FooterCta from '../cta.js';
 
 import type {
-  ThemeFooterCommonsIndexCommonsCopyright,
-  ThemeFooterCommonsIndexCommonsCredit,
-  ThemeFooterCommonsIndexCommonsCta,
-  ThemeFooterCommonsIndexCommonsCtaContained,
-  ThemeFooterCommonsIndexCommonsExternalLinkAriaLabel,
-  ThemeFooterCommonsIndexCommonsFooterClassName,
-  ThemeFooterCommonsIndexCommonsLayout,
-  ThemeFooterCommonsIndexCommonsLayoutEntries,
-  ThemeFooterCommonsIndexCommonsLayoutEntry,
-  ThemeFooterCommonsIndexCommonsProps,
-  ThemeFooterCommonsIndexCommonsReturns,
-  ThemeFooterCommonsIndexCommonsSectionLinks,
-  ThemeFooterCommonsIndexCommonsSections,
-  ThemeFooterCommonsIndexCommonsSocialLinkLabel,
-  ThemeFooterCommonsIndexCommonsSocialLinks,
-  ThemeFooterCommonsIndexCommonsSocialLinksAriaLabel,
-  ThemeFooterCommonsIndexSectionLink,
-  ThemeFooterCommonsIndexSocialLink,
+  Theme_Footer_Commons_Index_Commons_Copyright,
+  Theme_Footer_Commons_Index_Commons_Credit,
+  Theme_Footer_Commons_Index_Commons_Cta,
+  Theme_Footer_Commons_Index_Commons_CtaContained,
+  Theme_Footer_Commons_Index_Commons_ExternalLinkAriaLabel,
+  Theme_Footer_Commons_Index_Commons_FooterClassName,
+  Theme_Footer_Commons_Index_Commons_Layout,
+  Theme_Footer_Commons_Index_Commons_LayoutEntries,
+  Theme_Footer_Commons_Index_Commons_LayoutEntry,
+  Theme_Footer_Commons_Index_Commons_Props,
+  Theme_Footer_Commons_Index_Commons_Returns,
+  Theme_Footer_Commons_Index_Commons_SectionLinks,
+  Theme_Footer_Commons_Index_Commons_Sections,
+  Theme_Footer_Commons_Index_Commons_SocialLinkLabel,
+  Theme_Footer_Commons_Index_Commons_SocialLinks,
+  Theme_Footer_Commons_Index_Commons_SocialLinksAriaLabel,
+  Theme_Footer_Commons_Index_SectionLink,
+  Theme_Footer_Commons_Index_SocialLink,
 } from '../../../types/theme/Footer/Commons/index.d.ts';
 
 /**
@@ -33,28 +33,28 @@ import type {
  * by layout entries, social media icons, copyright notice,
  * and optional Nova credit attribution.
  *
- * @param {ThemeFooterCommonsIndexCommonsProps} props - Props.
+ * @param {Theme_Footer_Commons_Index_Commons_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Commons(props: ThemeFooterCommonsIndexCommonsProps): ThemeFooterCommonsIndexCommonsReturns {
-  const sections: ThemeFooterCommonsIndexCommonsSections = props['sections'];
-  const layout: ThemeFooterCommonsIndexCommonsLayout = props['layout'];
-  const socialLinks: ThemeFooterCommonsIndexCommonsSocialLinks = props['socialLinks'];
-  const copyright: ThemeFooterCommonsIndexCommonsCopyright = props['copyright'];
-  const credit: ThemeFooterCommonsIndexCommonsCredit = props['credit'];
-  const cta: ThemeFooterCommonsIndexCommonsCta = props['cta'];
-  const ctaContained: ThemeFooterCommonsIndexCommonsCtaContained = props['ctaContained'];
-  const footerClassName: ThemeFooterCommonsIndexCommonsFooterClassName = 'nova-footer-commons';
-  const layoutEntries: ThemeFooterCommonsIndexCommonsLayoutEntries = Object.entries(layout) as ThemeFooterCommonsIndexCommonsLayoutEntries;
-  const socialLinksAriaLabel: ThemeFooterCommonsIndexCommonsSocialLinksAriaLabel = translate({
+function Commons(props: Theme_Footer_Commons_Index_Commons_Props): Theme_Footer_Commons_Index_Commons_Returns {
+  const sections: Theme_Footer_Commons_Index_Commons_Sections = props['sections'];
+  const layout: Theme_Footer_Commons_Index_Commons_Layout = props['layout'];
+  const socialLinks: Theme_Footer_Commons_Index_Commons_SocialLinks = props['socialLinks'];
+  const copyright: Theme_Footer_Commons_Index_Commons_Copyright = props['copyright'];
+  const credit: Theme_Footer_Commons_Index_Commons_Credit = props['credit'];
+  const cta: Theme_Footer_Commons_Index_Commons_Cta = props['cta'];
+  const ctaContained: Theme_Footer_Commons_Index_Commons_CtaContained = props['ctaContained'];
+  const footerClassName: Theme_Footer_Commons_Index_Commons_FooterClassName = 'nova-footer-commons';
+  const layoutEntries: Theme_Footer_Commons_Index_Commons_LayoutEntries = Object.entries(layout) as Theme_Footer_Commons_Index_Commons_LayoutEntries;
+  const socialLinksAriaLabel: Theme_Footer_Commons_Index_Commons_SocialLinksAriaLabel = translate({
     id: 'theme.footer.socialLinksAriaLabel',
     message: 'Social media links',
     description: 'The ARIA label for the footer social media links section',
   });
-  const externalLinkAriaLabel: ThemeFooterCommonsIndexCommonsExternalLinkAriaLabel = translate({
+  const externalLinkAriaLabel: Theme_Footer_Commons_Index_Commons_ExternalLinkAriaLabel = translate({
     id: 'theme.IconExternalLink.ariaLabel',
     message: '(opens in new tab)',
     description: 'The screen-reader label appended to external links that open in a new tab',
@@ -69,8 +69,8 @@ function Commons(props: ThemeFooterCommonsIndexCommonsProps): ThemeFooterCommons
           style={props['style']}
         >
           {
-            layoutEntries.map((layoutEntry: ThemeFooterCommonsIndexCommonsLayoutEntry) => {
-              const sectionLinks: ThemeFooterCommonsIndexCommonsSectionLinks = (sections[layoutEntry[1]['section']] ?? []) as ThemeFooterCommonsIndexCommonsSectionLinks;
+            layoutEntries.map((layoutEntry: Theme_Footer_Commons_Index_Commons_LayoutEntry) => {
+              const sectionLinks: Theme_Footer_Commons_Index_Commons_SectionLinks = (sections[layoutEntry[1]['section']] ?? []) as Theme_Footer_Commons_Index_Commons_SectionLinks;
 
               return (
                 <nav key={layoutEntry[0]} aria-label={layoutEntry[1]['title'] ?? layoutEntry[0]}>
@@ -81,7 +81,7 @@ function Commons(props: ThemeFooterCommonsIndexCommonsProps): ThemeFooterCommons
                   )}
                   <ul>
                     {
-                      sectionLinks.map((sectionLink: ThemeFooterCommonsIndexSectionLink) => (
+                      sectionLinks.map((sectionLink: Theme_Footer_Commons_Index_SectionLink) => (
                         <li key={sectionLink['label']}>
                           <Link to={sectionLink['href']}>
                             {sectionLink['label']}
@@ -101,8 +101,8 @@ function Commons(props: ThemeFooterCommonsIndexCommonsProps): ThemeFooterCommons
           aria-label={socialLinksAriaLabel}
         >
           {
-            socialLinks.map((socialLink: ThemeFooterCommonsIndexSocialLink) => {
-              const socialLinkLabel: ThemeFooterCommonsIndexCommonsSocialLinkLabel = `${socialLink['label']} ${externalLinkAriaLabel}`;
+            socialLinks.map((socialLink: Theme_Footer_Commons_Index_SocialLink) => {
+              const socialLinkLabel: Theme_Footer_Commons_Index_Commons_SocialLinkLabel = `${socialLink['label']} ${externalLinkAriaLabel}`;
 
               return (
                 <a

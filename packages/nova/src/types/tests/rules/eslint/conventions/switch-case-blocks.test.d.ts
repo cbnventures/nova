@@ -5,4 +5,4 @@ import type { RuleTester } from '@typescript-eslint/rule-tester';
  *
  * @since 0.13.0
  */
-export type TestsRulesEslintConventionsSwitchCaseBlocksRuleTester = RuleTester;
+export type Tests_Rules_Eslint_Conventions_SwitchCaseBlocks_RuleTester = RuleTester;

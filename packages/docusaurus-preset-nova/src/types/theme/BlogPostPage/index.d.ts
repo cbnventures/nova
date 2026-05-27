@@ -7,84 +7,84 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogPostPageBlogPostPagePropsSidebar = BlogSidebar;
+export type Theme_BlogPostPage_Index_BlogPostPage_Props_Sidebar = BlogSidebar;
 
-export type ThemeBlogPostPageBlogPostPagePropsContent = PropBlogPostContent;
+export type Theme_BlogPostPage_Index_BlogPostPage_Props_Content = PropBlogPostContent;
 
-export type ThemeBlogPostPageBlogPostPagePropsBlogMetadata = BlogMetadata;
+export type Theme_BlogPostPage_Index_BlogPostPage_Props_BlogMetadata = BlogMetadata;
 
-export type ThemeBlogPostPageBlogPostPagePropsClassName = string | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPage_Props_ClassName = string | undefined;
 
-export type ThemeBlogPostPageBlogPostPagePropsStyle = CSSProperties | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPage_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogPostPageBlogPostPageProps = {
-  sidebar: ThemeBlogPostPageBlogPostPagePropsSidebar;
-  content: ThemeBlogPostPageBlogPostPagePropsContent;
-  blogMetadata: ThemeBlogPostPageBlogPostPagePropsBlogMetadata;
-  className?: ThemeBlogPostPageBlogPostPagePropsClassName;
-  style?: ThemeBlogPostPageBlogPostPagePropsStyle;
+export type Theme_BlogPostPage_Index_BlogPostPage_Props = {
+  sidebar: Theme_BlogPostPage_Index_BlogPostPage_Props_Sidebar;
+  content: Theme_BlogPostPage_Index_BlogPostPage_Props_Content;
+  blogMetadata: Theme_BlogPostPage_Index_BlogPostPage_Props_BlogMetadata;
+  className?: Theme_BlogPostPage_Index_BlogPostPage_Props_ClassName;
+  style?: Theme_BlogPostPage_Index_BlogPostPage_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPageBlogPostPageBlogPostContent = PropBlogPostContent;
+export type Theme_BlogPostPage_Index_BlogPostPage_BlogPostContent = PropBlogPostContent;
 
 /**
  * Theme - Blog Post Page - Blog Post Page Content.
  *
  * @since 0.15.0
  */
-export type ThemeBlogPostPageBlogPostPageContentPropsChildren = ReactNode;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_Props_Children = ReactNode;
 
-export type ThemeBlogPostPageBlogPostPageContentPropsSidebar = BlogSidebar;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_Props_Sidebar = BlogSidebar;
 
-export type ThemeBlogPostPageBlogPostPageContentPropsClassName = string | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_Props_ClassName = string | undefined;
 
-export type ThemeBlogPostPageBlogPostPageContentPropsStyle = CSSProperties | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogPostPageBlogPostPageContentProps = {
-  sidebar: ThemeBlogPostPageBlogPostPageContentPropsSidebar;
-  children: ThemeBlogPostPageBlogPostPageContentPropsChildren;
-  className?: ThemeBlogPostPageBlogPostPageContentPropsClassName;
-  style?: ThemeBlogPostPageBlogPostPageContentPropsStyle;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_Props = {
+  sidebar: Theme_BlogPostPage_Index_BlogPostPageContent_Props_Sidebar;
+  children: Theme_BlogPostPage_Index_BlogPostPageContent_Props_Children;
+  className?: Theme_BlogPostPage_Index_BlogPostPageContent_Props_ClassName;
+  style?: Theme_BlogPostPage_Index_BlogPostPageContent_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPageBlogPostPageContentBlogPost = BlogPostContextValue;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_BlogPost = BlogPostContextValue;
 
-export type ThemeBlogPostPageBlogPostPageContentMetadataNextItemTitle = string;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_MetadataNextItem_Title = string;
 
-export type ThemeBlogPostPageBlogPostPageContentMetadataNextItemPermalink = string;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_MetadataNextItem_Permalink = string;
 
-export type ThemeBlogPostPageBlogPostPageContentMetadataNextItem = {
-  title: ThemeBlogPostPageBlogPostPageContentMetadataNextItemTitle;
-  permalink: ThemeBlogPostPageBlogPostPageContentMetadataNextItemPermalink;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_MetadataNextItem = {
+  title: Theme_BlogPostPage_Index_BlogPostPageContent_MetadataNextItem_Title;
+  permalink: Theme_BlogPostPage_Index_BlogPostPageContent_MetadataNextItem_Permalink;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPageBlogPostPageContentNextItem = ThemeBlogPostPageBlogPostPageContentMetadataNextItem | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_NextItem = Theme_BlogPostPage_Index_BlogPostPageContent_MetadataNextItem | undefined;
 
-export type ThemeBlogPostPageBlogPostPageContentMetadataPrevItemTitle = string;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_MetadataPrevItem_Title = string;
 
-export type ThemeBlogPostPageBlogPostPageContentMetadataPrevItemPermalink = string;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_MetadataPrevItem_Permalink = string;
 
-export type ThemeBlogPostPageBlogPostPageContentMetadataPrevItem = {
-  title: ThemeBlogPostPageBlogPostPageContentMetadataPrevItemTitle;
-  permalink: ThemeBlogPostPageBlogPostPageContentMetadataPrevItemPermalink;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_MetadataPrevItem = {
+  title: Theme_BlogPostPage_Index_BlogPostPageContent_MetadataPrevItem_Title;
+  permalink: Theme_BlogPostPage_Index_BlogPostPageContent_MetadataPrevItem_Permalink;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPageBlogPostPageContentPrevItem = ThemeBlogPostPageBlogPostPageContentMetadataPrevItem | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_PrevItem = Theme_BlogPostPage_Index_BlogPostPageContent_MetadataPrevItem | undefined;
 
-export type ThemeBlogPostPageBlogPostPageContentHideTableOfContents = boolean | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_HideTableOfContents = boolean | undefined;
 
-export type ThemeBlogPostPageBlogPostPageContentTocMinHeadingLevel = number | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_TocMinHeadingLevel = number | undefined;
 
-export type ThemeBlogPostPageBlogPostPageContentTocMaxHeadingLevel = number | undefined;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_TocMaxHeadingLevel = number | undefined;
 
-export type ThemeBlogPostPageBlogPostPageContentTocSpread = Record<string, unknown>;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_TocSpread = Record<string, unknown>;
 
-export type ThemeBlogPostPageBlogPostPageContentCanRenderToc = boolean;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_CanRenderToc = boolean;
 
-export type ThemeBlogPostPageBlogPostPageContentToc = ReactNode;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_Toc = ReactNode;
 
-export type ThemeBlogPostPageBlogPostPageContentPaginatorSpread = Record<string, unknown>;
+export type Theme_BlogPostPage_Index_BlogPostPageContent_PaginatorSpread = Record<string, unknown>;

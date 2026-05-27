@@ -1,149 +1,149 @@
 import type { CSSProperties, ReactNode } from 'react';
 
-import type { ThemeNavbarItem } from '../index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../index.d.ts';
 
 /**
  * Theme - Navbar - Compass.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoAlt = string;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Alt = string;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoSrc = {
-  light: ThemeNavbarCompassIndexCompassPropsSiteLogoSrcLight;
-  dark: ThemeNavbarCompassIndexCompassPropsSiteLogoSrcDark;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src = {
+  light: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoWordmark = {
-  light: ThemeNavbarCompassIndexCompassPropsSiteLogoWordmarkLight;
-  dark: ThemeNavbarCompassIndexCompassPropsSiteLogoWordmarkDark;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoHref = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoRel = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsSiteLogo = {
-  alt: ThemeNavbarCompassIndexCompassPropsSiteLogoAlt;
-  src: ThemeNavbarCompassIndexCompassPropsSiteLogoSrc;
-  wordmark: ThemeNavbarCompassIndexCompassPropsSiteLogoWordmark;
-  title: ThemeNavbarCompassIndexCompassPropsSiteLogoTitle;
-  href: ThemeNavbarCompassIndexCompassPropsSiteLogoHref;
-  target: ThemeNavbarCompassIndexCompassPropsSiteLogoTarget;
-  rel: ThemeNavbarCompassIndexCompassPropsSiteLogoRel;
-  ariaLabel: ThemeNavbarCompassIndexCompassPropsSiteLogoAriaLabel;
+export type Theme_Navbar_Compass_Index_Compass_Props_SiteLogo = {
+  alt: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Alt;
+  src: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Src;
+  wordmark: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Wordmark;
+  title: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Title;
+  href: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Href;
+  target: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Target;
+  rel: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarCompassIndexCompassPropsItems = ThemeNavbarItem[];
+export type Theme_Navbar_Compass_Index_Compass_Props_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCompassIndexCompassPropsActionItems = ThemeNavbarItem[];
+export type Theme_Navbar_Compass_Index_Compass_Props_ActionItems = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCompassIndexCompassPropsColorModeLabel = ReactNode;
+export type Theme_Navbar_Compass_Index_Compass_Props_ColorModeLabel = ReactNode;
 
-export type ThemeNavbarCompassIndexCompassPropsOnColorModeToggle = () => void;
+export type Theme_Navbar_Compass_Index_Compass_Props_OnColorModeToggle = () => void;
 
-export type ThemeNavbarCompassIndexCompassPropsHamburgerLabel = ReactNode;
+export type Theme_Navbar_Compass_Index_Compass_Props_HamburgerLabel = ReactNode;
 
-export type ThemeNavbarCompassIndexCompassPropsOnMenuToggle = () => void;
+export type Theme_Navbar_Compass_Index_Compass_Props_OnMenuToggle = () => void;
 
-export type ThemeNavbarCompassIndexCompassPropsActiveItemLabel = string | null;
+export type Theme_Navbar_Compass_Index_Compass_Props_ActiveItemLabel = string | null;
 
-export type ThemeNavbarCompassIndexCompassPropsClassName = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_ClassName = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassPropsStyle = CSSProperties | undefined;
+export type Theme_Navbar_Compass_Index_Compass_Props_Style = CSSProperties | undefined;
 
-export type ThemeNavbarCompassIndexCompassProps = {
-  siteLogo: ThemeNavbarCompassIndexCompassPropsSiteLogo;
-  items: ThemeNavbarCompassIndexCompassPropsItems;
-  actionItems: ThemeNavbarCompassIndexCompassPropsActionItems;
-  colorModeLabel: ThemeNavbarCompassIndexCompassPropsColorModeLabel;
-  onColorModeToggle: ThemeNavbarCompassIndexCompassPropsOnColorModeToggle;
-  hamburgerLabel: ThemeNavbarCompassIndexCompassPropsHamburgerLabel;
-  onMenuToggle: ThemeNavbarCompassIndexCompassPropsOnMenuToggle;
-  activeItemLabel: ThemeNavbarCompassIndexCompassPropsActiveItemLabel;
-  className?: ThemeNavbarCompassIndexCompassPropsClassName;
-  style?: ThemeNavbarCompassIndexCompassPropsStyle;
+export type Theme_Navbar_Compass_Index_Compass_Props = {
+  siteLogo: Theme_Navbar_Compass_Index_Compass_Props_SiteLogo;
+  items: Theme_Navbar_Compass_Index_Compass_Props_Items;
+  actionItems: Theme_Navbar_Compass_Index_Compass_Props_ActionItems;
+  colorModeLabel: Theme_Navbar_Compass_Index_Compass_Props_ColorModeLabel;
+  onColorModeToggle: Theme_Navbar_Compass_Index_Compass_Props_OnColorModeToggle;
+  hamburgerLabel: Theme_Navbar_Compass_Index_Compass_Props_HamburgerLabel;
+  onMenuToggle: Theme_Navbar_Compass_Index_Compass_Props_OnMenuToggle;
+  activeItemLabel: Theme_Navbar_Compass_Index_Compass_Props_ActiveItemLabel;
+  className?: Theme_Navbar_Compass_Index_Compass_Props_ClassName;
+  style?: Theme_Navbar_Compass_Index_Compass_Props_Style;
 };
 
-export type ThemeNavbarCompassIndexCompassReturns = React.JSX.Element;
+export type Theme_Navbar_Compass_Index_Compass_Returns = React.JSX.Element;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoAlt = string;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Alt = string;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoSrc = {
-  light: ThemeNavbarCompassIndexCompassSiteLogoSrcLight;
-  dark: ThemeNavbarCompassIndexCompassSiteLogoSrcDark;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Src = {
+  light: Theme_Navbar_Compass_Index_Compass_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Compass_Index_Compass_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoWordmark = {
-  light: ThemeNavbarCompassIndexCompassSiteLogoWordmarkLight;
-  dark: ThemeNavbarCompassIndexCompassSiteLogoWordmarkDark;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoHref = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoRel = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarCompassIndexCompassSiteLogo = {
-  alt: ThemeNavbarCompassIndexCompassSiteLogoAlt;
-  src: ThemeNavbarCompassIndexCompassSiteLogoSrc;
-  wordmark: ThemeNavbarCompassIndexCompassSiteLogoWordmark;
-  title: ThemeNavbarCompassIndexCompassSiteLogoTitle;
-  href: ThemeNavbarCompassIndexCompassSiteLogoHref;
-  target: ThemeNavbarCompassIndexCompassSiteLogoTarget;
-  rel: ThemeNavbarCompassIndexCompassSiteLogoRel;
-  ariaLabel: ThemeNavbarCompassIndexCompassSiteLogoAriaLabel;
+export type Theme_Navbar_Compass_Index_Compass_SiteLogo = {
+  alt: Theme_Navbar_Compass_Index_Compass_SiteLogo_Alt;
+  src: Theme_Navbar_Compass_Index_Compass_SiteLogo_Src;
+  wordmark: Theme_Navbar_Compass_Index_Compass_SiteLogo_Wordmark;
+  title: Theme_Navbar_Compass_Index_Compass_SiteLogo_Title;
+  href: Theme_Navbar_Compass_Index_Compass_SiteLogo_Href;
+  target: Theme_Navbar_Compass_Index_Compass_SiteLogo_Target;
+  rel: Theme_Navbar_Compass_Index_Compass_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Compass_Index_Compass_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarCompassIndexCompassItems = ThemeNavbarItem[];
+export type Theme_Navbar_Compass_Index_Compass_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCompassIndexCompassActionItems = ThemeNavbarItem[];
+export type Theme_Navbar_Compass_Index_Compass_ActionItems = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCompassIndexCompassColorModeLabel = ReactNode;
+export type Theme_Navbar_Compass_Index_Compass_ColorModeLabel = ReactNode;
 
-export type ThemeNavbarCompassIndexCompassOnColorModeToggle = () => void;
+export type Theme_Navbar_Compass_Index_Compass_OnColorModeToggle = () => void;
 
-export type ThemeNavbarCompassIndexCompassHamburgerLabel = ReactNode;
+export type Theme_Navbar_Compass_Index_Compass_HamburgerLabel = ReactNode;
 
-export type ThemeNavbarCompassIndexCompassOnMenuToggle = () => void;
+export type Theme_Navbar_Compass_Index_Compass_OnMenuToggle = () => void;
 
-export type ThemeNavbarCompassIndexCompassActiveItemLabel = string | null;
+export type Theme_Navbar_Compass_Index_Compass_ActiveItemLabel = string | null;
 
-export type ThemeNavbarCompassIndexCompassNavbarClassName = string;
+export type Theme_Navbar_Compass_Index_Compass_NavbarClassName = string;
 
-export type ThemeNavbarCompassIndexCompassNavAriaLabel = string;
+export type Theme_Navbar_Compass_Index_Compass_NavAriaLabel = string;
 
-export type ThemeNavbarCompassIndexCompassOpenMenuAriaLabel = string;
+export type Theme_Navbar_Compass_Index_Compass_OpenMenuAriaLabel = string;
 
-export type ThemeNavbarCompassIndexCompassToggleColorModeAriaLabel = string;
+export type Theme_Navbar_Compass_Index_Compass_ToggleColorModeAriaLabel = string;
 
-export type ThemeNavbarCompassIndexCompassNavbarItemSpread = Record<string, unknown>;
+export type Theme_Navbar_Compass_Index_Compass_NavbarItemSpread = Record<string, unknown>;
 
-export type ThemeNavbarCompassIndexCompassNavbarItemKey = string;
+export type Theme_Navbar_Compass_Index_Compass_NavbarItemKey = string;

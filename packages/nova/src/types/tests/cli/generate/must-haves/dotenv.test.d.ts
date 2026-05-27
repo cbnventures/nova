@@ -3,16 +3,16 @@
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateMustHavesDotenvRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesDotenvRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateMustHavesDotenvRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined][];
 
-export type TestsCliGenerateMustHavesDotenvRunEnvTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_EnvTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
-export type TestsCliGenerateMustHavesDotenvRunEnvHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_EnvHeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;
 
-export type TestsCliGenerateMustHavesDotenvRunSampleTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SampleTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
-export type TestsCliGenerateMustHavesDotenvRunSampleHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
+export type Tests_Cli_Generate_MustHaves_Dotenv_CliGenerateMustHavesDotenvRun_SampleHeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;

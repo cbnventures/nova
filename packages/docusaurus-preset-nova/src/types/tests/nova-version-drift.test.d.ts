@@ -3,13 +3,13 @@
  *
  * @since 0.17.1
  */
-export type TestsNovaVersionDriftNovaVersionDriftManifestPath = string;
+export type Tests_NovaVersionDrift_NovaVersionDrift_ManifestPath = string;
 
-export type TestsNovaVersionDriftNovaVersionDriftManifestRaw = string;
+export type Tests_NovaVersionDrift_NovaVersionDrift_ManifestRaw = string;
 
-export type TestsNovaVersionDriftNovaVersionDriftManifest = {
+export type Tests_NovaVersionDrift_NovaVersionDrift_Manifest = {
   version?: string;
   dependencies?: Record<string, string>;
 };
 
-export type TestsNovaVersionDriftNovaVersionDriftVersion = string;
+export type Tests_NovaVersionDrift_NovaVersionDrift_Version = string;

@@ -1,4 +1,4 @@
-import type { PresetsEslintToolViteConfigConfig } from '../../types/presets/eslint/tool-vite.d.ts';
+import type { Presets_Eslint_ToolVite_ConfigConfig } from '../../types/presets/eslint/tool-vite.d.ts';
 
 /**
  * Presets - ESLint - Tool Vite - Config.
@@ -8,7 +8,7 @@ import type { PresetsEslintToolViteConfigConfig } from '../../types/presets/esli
  *
  * @since 0.11.0
  */
-const config: PresetsEslintToolViteConfigConfig = [{
+const config: Presets_Eslint_ToolVite_ConfigConfig = [{
   name: 'nova/tool-vite/ignored-files',
   ignores: [],
 }];

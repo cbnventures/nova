@@ -5,8 +5,8 @@ import BlogListPaginator from '@theme/BlogListPaginator';
 import BlogPostItems from '@theme/BlogPostItems';
 
 import type {
-  ThemeBlogListPageBlogListPageProps,
-  ThemeBlogListPageBlogListPageTitle,
+  Theme_BlogListPage_Index_BlogListPage_Props,
+  Theme_BlogListPage_Index_BlogListPage_Title,
 } from '../../types/theme/BlogListPage/index.d.ts';
 
 /**
@@ -16,14 +16,14 @@ import type {
  * and a pagination navigator, wrapped inside the standard
  * blog layout with sidebar support.
  *
- * @param {ThemeBlogListPageBlogListPageProps} props - Props.
+ * @param {Theme_BlogListPage_Index_BlogListPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogListPage(props: ThemeBlogListPageBlogListPageProps) {
-  const title: ThemeBlogListPageBlogListPageTitle = props['metadata']['blogTitle'];
+function BlogListPage(props: Theme_BlogListPage_Index_BlogListPage_Props) {
+  const title: Theme_BlogListPage_Index_BlogListPage_Title = props['metadata']['blogTitle'];
 
   return (
     <BlogLayout

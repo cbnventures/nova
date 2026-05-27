@@ -1,11 +1,11 @@
 import type { Answers, PromptObject } from 'prompts';
 
 import type {
-  SharedEnvEntries,
-  SharedEnvEntry,
-  SharedGeneratorRunResult,
-  SharedPromptWithCancelReject,
-  SharedPromptWithCancelResolved,
+  Shared_EnvEntries as SharedEnvEntries,
+  Shared_EnvEntry as SharedEnvEntry,
+  Shared_GeneratorRunResult as SharedGeneratorRunResult,
+  Shared_PromptWithCancelReject as SharedPromptWithCancelReject,
+  Shared_PromptWithCancelResolved as SharedPromptWithCancelResolved,
 } from '../../../shared.d.ts';
 
 /**
@@ -13,411 +13,411 @@ import type {
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesDotenvAddEnvLineContent = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_AddEnvLine_Content = string;
 
-export type CliGenerateMustHavesDotenvAddEnvLineKey = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_AddEnvLine_Key = string;
 
-export type CliGenerateMustHavesDotenvAddEnvLineValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_AddEnvLine_Value = string;
 
-export type CliGenerateMustHavesDotenvAddEnvLineReturns = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_AddEnvLine_Returns = string;
 
-export type CliGenerateMustHavesDotenvAddEnvLineEndsWithNewline = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_AddEnvLine_EndsWithNewline = boolean;
 
-export type CliGenerateMustHavesDotenvAddEnvLineNewLine = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_AddEnvLine_NewLine = string;
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Delete Env Line.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesDotenvDeleteEnvLineContent = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_DeleteEnvLine_Content = string;
 
-export type CliGenerateMustHavesDotenvDeleteEnvLineKey = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_DeleteEnvLine_Key = string;
 
-export type CliGenerateMustHavesDotenvDeleteEnvLineReturns = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_DeleteEnvLine_Returns = string;
 
-export type CliGenerateMustHavesDotenvDeleteEnvLineLines = string[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_DeleteEnvLine_Lines = string[];
 
-export type CliGenerateMustHavesDotenvDeleteEnvLineMatch = RegExpMatchArray | null;
+export type Cli_Generate_MustHaves_Dotenv_Runner_DeleteEnvLine_Match = RegExpMatchArray | null;
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Parse Env File.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesDotenvParseEnvFileContent = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Content = string;
 
-export type CliGenerateMustHavesDotenvParseEnvFileReturns = SharedEnvEntries;
+export type Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Returns = SharedEnvEntries;
 
-export type CliGenerateMustHavesDotenvParseEnvFileMatch = RegExpMatchArray | null;
+export type Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Match = RegExpMatchArray | null;
 
-export type CliGenerateMustHavesDotenvParseEnvFileKey = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Key = string;
 
-export type CliGenerateMustHavesDotenvParseEnvFileRawValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_RawValue = string;
 
-export type CliGenerateMustHavesDotenvParseEnvFileValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_ParseEnvFile_Value = string;
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Prompt Manage Menu.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesDotenvPromptManageMenuOptionsTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_TemplateDirectory = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuOptionsEnvPath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_EnvPath = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuOptionsEnvSamplePath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_EnvSamplePath = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuOptionsIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_IsDryRun = boolean;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuOptionsIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuOptions = {
-  templateDirectory: CliGenerateMustHavesDotenvPromptManageMenuOptionsTemplateDirectory;
-  envPath: CliGenerateMustHavesDotenvPromptManageMenuOptionsEnvPath;
-  envSamplePath: CliGenerateMustHavesDotenvPromptManageMenuOptionsEnvSamplePath;
-  isDryRun: CliGenerateMustHavesDotenvPromptManageMenuOptionsIsDryRun;
-  isReplaceFile: CliGenerateMustHavesDotenvPromptManageMenuOptionsIsReplaceFile;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options = {
+  templateDirectory: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_TemplateDirectory;
+  envPath: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_EnvPath;
+  envSamplePath: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_EnvSamplePath;
+  isDryRun: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_IsDryRun;
+  isReplaceFile: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Options_IsReplaceFile;
 };
 
-export type CliGenerateMustHavesDotenvPromptManageMenuReturns = Promise<'back' | 'exit'>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Returns = Promise<'back' | 'exit'>;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_TemplateDirectory = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEnvPath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EnvPath = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEnvSamplePath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EnvSamplePath = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_IsDryRun = boolean;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuTemplateFilePath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_TemplateFilePath = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuTemplateContent = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_TemplateContent = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuReservedKeys = Set<string>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_ReservedKeys = Set<string>;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuBufferEnv = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_BufferEnv = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuBufferEnvSample = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_BufferEnvSample = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuHasPendingChanges = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_HasPendingChanges = boolean;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEnvContent = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EnvContent = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEnvSampleContent = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EnvSampleContent = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEnvEntries = SharedEnvEntries;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EnvEntries = SharedEnvEntries;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEnvSampleEntries = SharedEnvEntries;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EnvSampleEntries = SharedEnvEntries;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeletableEntries = SharedEnvEntries;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeletableEntries = SharedEnvEntries;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuChoiceTitle = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choice_Title = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuChoiceDescription = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choice_Description = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuChoiceValue = 'add' | 'edit' | 'delete' | 'exit' | 'back';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choice_Value = 'add' | 'edit' | 'delete' | 'exit' | 'back';
 
-export type CliGenerateMustHavesDotenvPromptManageMenuChoice = {
-  title: CliGenerateMustHavesDotenvPromptManageMenuChoiceTitle;
-  description: CliGenerateMustHavesDotenvPromptManageMenuChoiceDescription;
-  value: CliGenerateMustHavesDotenvPromptManageMenuChoiceValue;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choice = {
+  title: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choice_Title;
+  description: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choice_Description;
+  value: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choice_Value;
 };
 
-export type CliGenerateMustHavesDotenvPromptManageMenuChoices = CliGenerateMustHavesDotenvPromptManageMenuChoice[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choices = Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Choice[];
 
-export type CliGenerateMustHavesDotenvPromptManageMenuActionOutputKey = 'action';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_ActionOutputKey = 'action';
 
-export type CliGenerateMustHavesDotenvPromptManageMenuActionOutputValue = 'add' | 'edit' | 'delete' | 'exit' | 'back' | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_ActionOutputValue = 'add' | 'edit' | 'delete' | 'exit' | 'back' | undefined;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuMenuOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptManageMenuActionOutputKey, CliGenerateMustHavesDotenvPromptManageMenuActionOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_MenuOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_ActionOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_ActionOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAction = CliGenerateMustHavesDotenvPromptManageMenuActionOutputValue;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_Action = Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_ActionOutputValue;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddExistingKeys = Set<string>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddExistingKeys = Set<string>;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddKeyOutputKey = 'key';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutputKey = 'key';
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddKeyOutputValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutputValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddKeyOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptManageMenuAddKeyOutputKey, CliGenerateMustHavesDotenvPromptManageMenuAddKeyOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddValidateValue = unknown;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddValidateValue = unknown;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddTrimmedValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddKeyName = string | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddKeyName = string | undefined;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddDefaultValueOutputKey = 'defaultValue';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutputKey = 'defaultValue';
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddDefaultValueOutputValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutputValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddDefaultValueOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptManageMenuAddDefaultValueOutputKey, CliGenerateMustHavesDotenvPromptManageMenuAddDefaultValueOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValueOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddDefaultValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddDefaultValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddTrimmedKeyName = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedKeyName = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddTrimmedDefaultValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddTrimmedDefaultValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddUpdatedEnv = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddUpdatedEnv = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuAddUpdatedSample = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_AddUpdatedSample = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditChoiceTitle = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoice_Title = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditChoiceDescription = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoice_Description = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditChoiceValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoice_Value = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditChoice = {
-  title: CliGenerateMustHavesDotenvPromptManageMenuEditChoiceTitle;
-  description: CliGenerateMustHavesDotenvPromptManageMenuEditChoiceDescription;
-  value: CliGenerateMustHavesDotenvPromptManageMenuEditChoiceValue;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoice = {
+  title: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoice_Title;
+  description: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoice_Description;
+  value: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoice_Value;
 };
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditChoices = CliGenerateMustHavesDotenvPromptManageMenuEditChoice[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoices = Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditChoice[];
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditSelectOutputKey = 'variable';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutputKey = 'variable';
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditSelectOutputValue = string | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutputValue = string | undefined;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditSelectOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptManageMenuEditSelectOutputKey, CliGenerateMustHavesDotenvPromptManageMenuEditSelectOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditSelectedKey = string | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSelectedKey = string | undefined;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditCurrentEnvEntry = SharedEnvEntry | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditCurrentEnvEntry = SharedEnvEntry | undefined;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditCurrentSampleEntry = SharedEnvEntry | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditCurrentSampleEntry = SharedEnvEntry | undefined;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditEnvValueOutputKey = 'value';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutputKey = 'value';
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditEnvValueOutputValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutputValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditEnvValueOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptManageMenuEditEnvValueOutputKey, CliGenerateMustHavesDotenvPromptManageMenuEditEnvValueOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditEnvValueOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditNewEnvValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditNewEnvValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditSampleValueOutputKey = 'defaultValue';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutputKey = 'defaultValue';
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditSampleValueOutputValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutputValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditSampleValueOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptManageMenuEditSampleValueOutputKey, CliGenerateMustHavesDotenvPromptManageMenuEditSampleValueOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditSampleValueOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditNewSampleValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditNewSampleValue = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditUpdatedEnv = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditUpdatedEnv = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuEditUpdatedSample = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_EditUpdatedSample = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteChoiceTitle = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoice_Title = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteChoiceDescription = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoice_Description = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteChoiceValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoice_Value = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteChoice = {
-  title: CliGenerateMustHavesDotenvPromptManageMenuDeleteChoiceTitle;
-  description: CliGenerateMustHavesDotenvPromptManageMenuDeleteChoiceDescription;
-  value: CliGenerateMustHavesDotenvPromptManageMenuDeleteChoiceValue;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoice = {
+  title: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoice_Title;
+  description: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoice_Description;
+  value: Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoice_Value;
 };
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteChoices = CliGenerateMustHavesDotenvPromptManageMenuDeleteChoice[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoices = Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteChoice[];
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteSelectOutputKey = 'variable';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutputKey = 'variable';
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteSelectOutputValue = string | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutputValue = string | undefined;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteSelectOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptManageMenuDeleteSelectOutputKey, CliGenerateMustHavesDotenvPromptManageMenuDeleteSelectOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteSelectedKey = string | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteSelectedKey = string | undefined;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteUpdatedEnv = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteUpdatedEnv = string;
 
-export type CliGenerateMustHavesDotenvPromptManageMenuDeleteUpdatedSample = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptManageMenu_DeleteUpdatedSample = string;
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Prompt Regenerate.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesDotenvPromptRegenerateOptionsTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options_TemplateDirectory = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateOptionsCurrentDirectory = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options_CurrentDirectory = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateOptionsIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options_IsDryRun = boolean;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateOptionsIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateOptions = {
-  templateDirectory: CliGenerateMustHavesDotenvPromptRegenerateOptionsTemplateDirectory;
-  currentDirectory: CliGenerateMustHavesDotenvPromptRegenerateOptionsCurrentDirectory;
-  isDryRun: CliGenerateMustHavesDotenvPromptRegenerateOptionsIsDryRun;
-  isReplaceFile: CliGenerateMustHavesDotenvPromptRegenerateOptionsIsReplaceFile;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options = {
+  templateDirectory: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options_TemplateDirectory;
+  currentDirectory: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options_CurrentDirectory;
+  isDryRun: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options_IsDryRun;
+  isReplaceFile: Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Options_IsReplaceFile;
 };
 
-export type CliGenerateMustHavesDotenvPromptRegenerateReturns = Promise<'completed' | 'cancelled'>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Returns = Promise<'completed' | 'cancelled'>;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_TemplateDirectory = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateCurrentDirectory = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_CurrentDirectory = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_IsDryRun = boolean;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateFiles = string[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Files = string[];
 
-export type CliGenerateMustHavesDotenvPromptRegenerateAddMore = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_AddMore = boolean;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateCancelled = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Cancelled = boolean;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateKeyOutputKey = 'key';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_KeyOutputKey = 'key';
 
-export type CliGenerateMustHavesDotenvPromptRegenerateKeyOutputValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_KeyOutputValue = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateKeyOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptRegenerateKeyOutputKey, CliGenerateMustHavesDotenvPromptRegenerateKeyOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_KeyOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_KeyOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_KeyOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateValidateValue = unknown;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_ValidateValue = unknown;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateTrimmedValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_TrimmedValue = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateKeyOutputResult = Record<CliGenerateMustHavesDotenvPromptRegenerateKeyOutputKey, CliGenerateMustHavesDotenvPromptRegenerateKeyOutputValue>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_KeyOutputResult = Record<Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_KeyOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_KeyOutputValue>;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateDefaultValueOutputKey = 'defaultValue';
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputKey = 'defaultValue';
 
-export type CliGenerateMustHavesDotenvPromptRegenerateDefaultValueOutputValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputValue = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateDefaultValueOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvPromptRegenerateDefaultValueOutputKey, CliGenerateMustHavesDotenvPromptRegenerateDefaultValueOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateDefaultValueOutputResult = Record<CliGenerateMustHavesDotenvPromptRegenerateDefaultValueOutputKey, CliGenerateMustHavesDotenvPromptRegenerateDefaultValueOutputValue>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputResult = Record<Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_DefaultValueOutputValue>;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateEnvLines = string[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_EnvLines = string[];
 
-export type CliGenerateMustHavesDotenvPromptRegenerateSampleLines = string[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_SampleLines = string[];
 
-export type CliGenerateMustHavesDotenvPromptRegenerateTemplateFileName = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_TemplateFileName = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateTemplatePath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_TemplatePath = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateTargetPath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_TargetPath = string;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateContent = string | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_Content = string | undefined;
 
-export type CliGenerateMustHavesDotenvPromptRegenerateAppendSection = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptRegenerate_AppendSection = string;
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Prompt With Cancel.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesDotenvPromptWithCancelQuestions<Keys extends string> = PromptObject<Keys> | PromptObject<Keys>[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptWithCancel_Questions<Keys extends string> = PromptObject<Keys> | PromptObject<Keys>[];
 
-export type CliGenerateMustHavesDotenvPromptWithCancelReturns<Keys extends string, Result> = Promise<SharedPromptWithCancelResolved<Keys, Result> | SharedPromptWithCancelReject>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptWithCancel_Returns<Keys extends string, Result> = Promise<SharedPromptWithCancelResolved<Keys, Result> | SharedPromptWithCancelReject>;
 
-export type CliGenerateMustHavesDotenvPromptWithCancelCancelled = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptWithCancel_Cancelled = boolean;
 
-export type CliGenerateMustHavesDotenvPromptWithCancelResult<Keys extends string> = Answers<Keys>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_PromptWithCancel_Result<Keys extends string> = Answers<Keys>;
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Run.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesDotenvRunOptionsDryRun = true;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_DryRun = true;
 
-export type CliGenerateMustHavesDotenvRunOptionsReplaceFile = true;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_ReplaceFile = true;
 
-export type CliGenerateMustHavesDotenvRunOptions = {
-  dryRun?: CliGenerateMustHavesDotenvRunOptionsDryRun;
-  replaceFile?: CliGenerateMustHavesDotenvRunOptionsReplaceFile;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Options = {
+  dryRun?: Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Generate_MustHaves_Dotenv_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliGenerateMustHavesDotenvRunReturns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
 
-export type CliGenerateMustHavesDotenvRunCurrentDirectory = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_CurrentDirectory = string;
 
-export type CliGenerateMustHavesDotenvRunIsAtProjectRoot = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliGenerateMustHavesDotenvRunIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_IsDryRun = boolean;
 
-export type CliGenerateMustHavesDotenvRunIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesDotenvRunReplaceFileNotice = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ReplaceFileNotice = string;
 
-export type CliGenerateMustHavesDotenvRunTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_TemplateDirectory = string;
 
-export type CliGenerateMustHavesDotenvRunFiles = string[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Files = string[];
 
-export type CliGenerateMustHavesDotenvRunEnvPath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvPath = string;
 
-export type CliGenerateMustHavesDotenvRunEnvSamplePath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvSamplePath = string;
 
-export type CliGenerateMustHavesDotenvRunEnvPathExists = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvPathExists = boolean;
 
-export type CliGenerateMustHavesDotenvRunEnvSamplePathExists = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvSamplePathExists = boolean;
 
-export type CliGenerateMustHavesDotenvRunModeChoiceTitle = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeChoice_Title = string;
 
-export type CliGenerateMustHavesDotenvRunModeChoiceValue = 'manage' | 'regenerate';
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeChoice_Value = 'manage' | 'regenerate';
 
-export type CliGenerateMustHavesDotenvRunModeChoice = {
-  title: CliGenerateMustHavesDotenvRunModeChoiceTitle;
-  value: CliGenerateMustHavesDotenvRunModeChoiceValue;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeChoice = {
+  title: Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeChoice_Title;
+  value: Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeChoice_Value;
 };
 
-export type CliGenerateMustHavesDotenvRunModeChoices = CliGenerateMustHavesDotenvRunModeChoice[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeChoices = Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeChoice[];
 
-export type CliGenerateMustHavesDotenvRunModeOutputKey = 'mode';
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutputKey = 'mode';
 
-export type CliGenerateMustHavesDotenvRunModeOutputValue = 'manage' | 'regenerate' | undefined;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutputValue = 'manage' | 'regenerate' | undefined;
 
-export type CliGenerateMustHavesDotenvRunModeOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesDotenvRunModeOutputKey, CliGenerateMustHavesDotenvRunModeOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesDotenvRunModeOutputResult = Record<CliGenerateMustHavesDotenvRunModeOutputKey, CliGenerateMustHavesDotenvRunModeOutputValue>;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutputResult = Record<Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutputKey, Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutputValue>;
 
-export type CliGenerateMustHavesDotenvRunSelectedMode = CliGenerateMustHavesDotenvRunModeOutputValue;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_SelectedMode = Cli_Generate_MustHaves_Dotenv_Runner_Run_ModeOutputValue;
 
-export type CliGenerateMustHavesDotenvRunTargetPath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_TargetPath = string;
 
-export type CliGenerateMustHavesDotenvRunFileExists = boolean;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_FileExists = boolean;
 
-export type CliGenerateMustHavesDotenvRunTemplateFilePath = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_TemplateFilePath = string;
 
-export type CliGenerateMustHavesDotenvRunTemplateContent = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_TemplateContent = string;
 
-export type CliGenerateMustHavesDotenvRunManageResult = 'back' | 'exit';
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_ManageResult = 'back' | 'exit';
 
-export type CliGenerateMustHavesDotenvRunResult = 'completed' | 'cancelled';
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_Result = 'completed' | 'cancelled';
 
-export type CliGenerateMustHavesDotenvRunEnvVarKey = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVar_Key = string;
 
-export type CliGenerateMustHavesDotenvRunEnvVarDefaultValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVar_DefaultValue = string;
 
-export type CliGenerateMustHavesDotenvRunEnvVar = {
-  key: CliGenerateMustHavesDotenvRunEnvVarKey;
-  defaultValue: CliGenerateMustHavesDotenvRunEnvVarDefaultValue;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVar = {
+  key: Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVar_Key;
+  defaultValue: Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVar_DefaultValue;
 };
 
-export type CliGenerateMustHavesDotenvRunEnvVars = CliGenerateMustHavesDotenvRunEnvVar[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVars = Cli_Generate_MustHaves_Dotenv_Runner_Run_EnvVar[];
 
-export type CliGenerateMustHavesDotenvRunCustomSection = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_Run_CustomSection = string;
 
 /**
  * CLI - Generate - Must Haves - Dotenv - Update Env Line.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesDotenvUpdateEnvLineContent = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_UpdateEnvLine_Content = string;
 
-export type CliGenerateMustHavesDotenvUpdateEnvLineKey = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_UpdateEnvLine_Key = string;
 
-export type CliGenerateMustHavesDotenvUpdateEnvLineNewValue = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_UpdateEnvLine_NewValue = string;
 
-export type CliGenerateMustHavesDotenvUpdateEnvLineReturns = string;
+export type Cli_Generate_MustHaves_Dotenv_Runner_UpdateEnvLine_Returns = string;
 
-export type CliGenerateMustHavesDotenvUpdateEnvLineLines = string[];
+export type Cli_Generate_MustHaves_Dotenv_Runner_UpdateEnvLine_Lines = string[];
 
-export type CliGenerateMustHavesDotenvUpdateEnvLineMatch = RegExpMatchArray | null;
+export type Cli_Generate_MustHaves_Dotenv_Runner_UpdateEnvLine_Match = RegExpMatchArray | null;

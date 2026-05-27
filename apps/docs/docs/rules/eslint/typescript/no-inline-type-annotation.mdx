@@ -45,18 +45,18 @@ The rule skips `.d.ts` files where inline types are expected.
 
     ```ts
     // Named type from a .d.ts file.
-    const entries: RunnerParseEntries = [];
+    const entries: Cli_Runner_Parse_Entries = [];
 
-    const config: RunnerRunConfig = JSON.parse(raw);
+    const config: Cli_Runner_Run_Config = JSON.parse(raw);
 
-    let selectedPackage: RunnerRunSelectedPackage;
+    let selectedPackage: Cli_Runner_Run_SelectedPackage;
 
     // Named type in as-assertion.
-    const exports: ImportDocsExports = novaPackage['exports'] as ImportDocsExports;
+    const exports: Cli_Import_Docs_Exports = novaPackage['exports'] as Cli_Import_Docs_Exports;
 
     // Dynamic type parameter dependency — allowed inline.
     function fetch<T>(value: unknown) {
-      const result: FetchResult = value as ResponseType<T>;
+      const result: Cli_Runner_Fetch_Result = value as ResponseType<T>;
     }
     ```
 

@@ -1,6 +1,6 @@
 import type {
-  ThemeDocSidebarItemHtmlDocSidebarItemHtmlProps,
-  ThemeDocSidebarItemHtmlDocSidebarItemHtmlValue,
+  Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props,
+  Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Value,
 } from '../../../types/theme/DocSidebarItem/Html/index.d.ts';
 
 /**
@@ -10,14 +10,14 @@ import type {
  * replicating the theme-classic behavior with plain semantic
  * markup and no framework-specific styling.
  *
- * @param {ThemeDocSidebarItemHtmlDocSidebarItemHtmlProps} props - Props.
+ * @param {Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocSidebarItemHtml(props: ThemeDocSidebarItemHtmlDocSidebarItemHtmlProps) {
-  const value: ThemeDocSidebarItemHtmlDocSidebarItemHtmlValue = props['item']['value'];
+function DocSidebarItemHtml(props: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Props) {
+  const value: Theme_DocSidebarItem_Html_Index_DocSidebarItemHtml_Value = props['item']['value'];
 
   return (
     <li

@@ -73,7 +73,7 @@ function Home() {
     {
       icon: 'lucide:layers',
       title: 'Presets That Stack',
-      description: 'ESLint and TSConfig layers in a defined order — language, environment, framework, platform. 50+ custom rules enforce the rest.',
+      description: 'ESLint and TSConfig layers in a defined order — language, environment, framework, platform. Custom rules enforce the rest.',
     },
     {
       icon: 'lucide:file-plus',

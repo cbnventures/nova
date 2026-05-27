@@ -8,18 +8,18 @@ import { describe, it } from 'vitest';
 import { presetsIndexNames } from '../presets/index.js';
 
 import type {
-  TestsOverlayCompletenessGetPackageRootCurrentFileDirectory,
-  TestsOverlayCompletenessGetPackageRootCurrentFilePath,
-  TestsOverlayCompletenessGetPackageRootReturns,
-  TestsOverlayCompletenessListSharedThemeFilesReturns,
-  TestsOverlayCompletenessListSharedThemeFilesThemeDirectory,
-  TestsOverlayCompletenessOverlayCompletenessMessage,
-  TestsOverlayCompletenessOverlayCompletenessMissing,
-  TestsOverlayCompletenessOverlayCompletenessPresetFiles,
-  TestsOverlayCompletenessOverlayCompletenessPresetFilesSet,
-  TestsOverlayCompletenessOverlayCompletenessPresetName,
-  TestsOverlayCompletenessOverlayCompletenessPresetThemeDir,
-  TestsOverlayCompletenessOverlayCompletenessSharedFiles,
+  Tests_OverlayCompleteness_GetPackageRoot_CurrentFileDirectory,
+  Tests_OverlayCompleteness_GetPackageRoot_CurrentFilePath,
+  Tests_OverlayCompleteness_GetPackageRoot_Returns,
+  Tests_OverlayCompleteness_ListSharedThemeFiles_Returns,
+  Tests_OverlayCompleteness_ListSharedThemeFiles_ThemeDirectory,
+  Tests_OverlayCompleteness_OverlayCompleteness_Message,
+  Tests_OverlayCompleteness_OverlayCompleteness_Missing,
+  Tests_OverlayCompleteness_OverlayCompleteness_PresetFiles,
+  Tests_OverlayCompleteness_OverlayCompleteness_PresetFilesSet,
+  Tests_OverlayCompleteness_OverlayCompleteness_PresetName,
+  Tests_OverlayCompleteness_OverlayCompleteness_PresetThemeDir,
+  Tests_OverlayCompleteness_OverlayCompleteness_SharedFiles,
 } from '../types/tests/overlay-completeness.test.d.ts';
 
 /**
@@ -30,9 +30,9 @@ import type {
  *
  * @since 0.18.0
  */
-function getPackageRoot(): TestsOverlayCompletenessGetPackageRootReturns {
-  const currentFilePath: TestsOverlayCompletenessGetPackageRootCurrentFilePath = fileURLToPath(import.meta.url);
-  const currentFileDirectory: TestsOverlayCompletenessGetPackageRootCurrentFileDirectory = dirname(currentFilePath);
+function getPackageRoot(): Tests_OverlayCompleteness_GetPackageRoot_Returns {
+  const currentFilePath: Tests_OverlayCompleteness_GetPackageRoot_CurrentFilePath = fileURLToPath(import.meta.url);
+  const currentFileDirectory: Tests_OverlayCompleteness_GetPackageRoot_CurrentFileDirectory = dirname(currentFilePath);
 
   return resolve(currentFileDirectory, '..', '..');
 }
@@ -47,8 +47,8 @@ function getPackageRoot(): TestsOverlayCompletenessGetPackageRootReturns {
  *
  * @since 0.18.0
  */
-async function listSharedThemeFiles(): TestsOverlayCompletenessListSharedThemeFilesReturns {
-  const themeDirectory: TestsOverlayCompletenessListSharedThemeFilesThemeDirectory = resolve(getPackageRoot(), 'src', 'styles', 'theme');
+async function listSharedThemeFiles(): Tests_OverlayCompleteness_ListSharedThemeFiles_Returns {
+  const themeDirectory: Tests_OverlayCompleteness_ListSharedThemeFiles_ThemeDirectory = resolve(getPackageRoot(), 'src', 'styles', 'theme');
 
   return glob('**/style.css', { cwd: themeDirectory });
 }
@@ -73,15 +73,15 @@ async function listSharedThemeFiles(): TestsOverlayCompletenessListSharedThemeFi
  */
 describe('overlay completeness', () => {
   for (const presetName of presetsIndexNames) {
-    const presetNameContext: TestsOverlayCompletenessOverlayCompletenessPresetName = presetName;
+    const presetNameContext: Tests_OverlayCompleteness_OverlayCompleteness_PresetName = presetName;
 
     it(`'${presetNameContext}' preset has an overlay for every shared theme component`, async () => {
-      const sharedFiles: TestsOverlayCompletenessOverlayCompletenessSharedFiles = await listSharedThemeFiles();
-      const presetThemeDir: TestsOverlayCompletenessOverlayCompletenessPresetThemeDir = resolve(getPackageRoot(), 'src', 'styles', 'presets', presetNameContext, 'theme');
-      const presetFiles: TestsOverlayCompletenessOverlayCompletenessPresetFiles = await glob('**/style.css', { cwd: presetThemeDir });
-      const presetFilesSet: TestsOverlayCompletenessOverlayCompletenessPresetFilesSet = new Set(presetFiles);
-      const missing: TestsOverlayCompletenessOverlayCompletenessMissing = sharedFiles.filter((file) => presetFilesSet.has(file) === false);
-      const message: TestsOverlayCompletenessOverlayCompletenessMessage = [
+      const sharedFiles: Tests_OverlayCompleteness_OverlayCompleteness_SharedFiles = await listSharedThemeFiles();
+      const presetThemeDir: Tests_OverlayCompleteness_OverlayCompleteness_PresetThemeDir = resolve(getPackageRoot(), 'src', 'styles', 'presets', presetNameContext, 'theme');
+      const presetFiles: Tests_OverlayCompleteness_OverlayCompleteness_PresetFiles = await glob('**/style.css', { cwd: presetThemeDir });
+      const presetFilesSet: Tests_OverlayCompleteness_OverlayCompleteness_PresetFilesSet = new Set(presetFiles);
+      const missing: Tests_OverlayCompleteness_OverlayCompleteness_Missing = sharedFiles.filter((file) => presetFilesSet.has(file) === false);
+      const message: Tests_OverlayCompleteness_OverlayCompleteness_Message = [
         `'${presetNameContext}' preset is missing overlays for ${missing.length} shared theme components:`,
         ...missing.map((file) => `  - presets/${presetNameContext}/theme/${file}`),
       ].join('\n');

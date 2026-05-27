@@ -3,42 +3,42 @@
  *
  * @since 0.15.0
  */
-export type ScriptsColorModeInitColorModeInitOptionsSiteStorageType = string;
+export type Scripts_ColorModeInit_ColorModeInit_Options_SiteStorage_Type = string;
 
-export type ScriptsColorModeInitColorModeInitOptionsSiteStorageNamespace = string;
+export type Scripts_ColorModeInit_ColorModeInit_Options_SiteStorage_Namespace = string;
 
-export type ScriptsColorModeInitColorModeInitOptionsSiteStorage = {
-  type: ScriptsColorModeInitColorModeInitOptionsSiteStorageType;
-  namespace: ScriptsColorModeInitColorModeInitOptionsSiteStorageNamespace;
+export type Scripts_ColorModeInit_ColorModeInit_Options_SiteStorage = {
+  type: Scripts_ColorModeInit_ColorModeInit_Options_SiteStorage_Type;
+  namespace: Scripts_ColorModeInit_ColorModeInit_Options_SiteStorage_Namespace;
 };
 
-export type ScriptsColorModeInitColorModeInitOptionsThemeConfig = Record<string, unknown>;
+export type Scripts_ColorModeInit_ColorModeInit_Options_ThemeConfig = Record<string, unknown>;
 
-export type ScriptsColorModeInitColorModeInitOptions = {
-  siteStorage: ScriptsColorModeInitColorModeInitOptionsSiteStorage;
-  themeConfig: ScriptsColorModeInitColorModeInitOptionsThemeConfig;
+export type Scripts_ColorModeInit_ColorModeInit_Options = {
+  siteStorage: Scripts_ColorModeInit_ColorModeInit_Options_SiteStorage;
+  themeConfig: Scripts_ColorModeInit_ColorModeInit_Options_ThemeConfig;
 };
 
-export type ScriptsColorModeInitColorModeInitReturns = string;
+export type Scripts_ColorModeInit_ColorModeInit_Returns = string;
 
-export type ScriptsColorModeInitColorModeInitColorMode = Record<string, unknown> | undefined;
+export type Scripts_ColorModeInit_ColorModeInit_ColorMode = Record<string, unknown> | undefined;
 
-export type ScriptsColorModeInitColorModeInitDisableSwitch = boolean;
+export type Scripts_ColorModeInit_ColorModeInit_DisableSwitch = boolean;
 
-export type ScriptsColorModeInitColorModeInitDefaultMode = string;
+export type Scripts_ColorModeInit_ColorModeInit_DefaultMode = string;
 
-export type ScriptsColorModeInitColorModeInitThemeStorageKey = string;
+export type Scripts_ColorModeInit_ColorModeInit_ThemeStorageKey = string;
 
-export type ScriptsColorModeInitColorModeInitIsThemeUserConfigurable = boolean;
+export type Scripts_ColorModeInit_ColorModeInit_IsThemeUserConfigurable = boolean;
 
-export type ScriptsColorModeInitColorModeInitStorageType = string;
+export type Scripts_ColorModeInit_ColorModeInit_StorageType = string;
 
-export type ScriptsColorModeInitColorModeInitQueryStringBlock = string;
+export type Scripts_ColorModeInit_ColorModeInit_QueryStringBlock = string;
 
-export type ScriptsColorModeInitColorModeInitInitialThemeValue = string;
+export type Scripts_ColorModeInit_ColorModeInit_InitialThemeValue = string;
 
-export type ScriptsColorModeInitColorModeInitThemeChoiceValue = string;
+export type Scripts_ColorModeInit_ColorModeInit_ThemeChoiceValue = string;
 
-export type ScriptsColorModeInitColorModeInitLines = string[];
+export type Scripts_ColorModeInit_ColorModeInit_Lines = string[];
 
-export type ScriptsColorModeInitColorModeInitResult = string;
+export type Scripts_ColorModeInit_ColorModeInit_Result = string;

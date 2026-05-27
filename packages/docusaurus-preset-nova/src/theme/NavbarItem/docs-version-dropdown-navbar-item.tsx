@@ -8,17 +8,17 @@ import { useRef } from 'react';
 import { useDetailsDismiss } from '../../lib/use-details-dismiss.js';
 
 import type {
-  ThemeNavbarItemDocsVersionDropdownNavbarItemActiveDocContext,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemActiveVersion,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemDetailsRef,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemFirstItem,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemItemClassName,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemItems,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemLabel,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemPath,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemProps,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemTargetDoc,
-  ThemeNavbarItemDocsVersionDropdownNavbarItemVersions,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_ActiveDocContext,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_ActiveVersion,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_DetailsRef,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_FirstItem,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_ItemClassName,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_Items,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_Label,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_Path,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_TargetDoc,
+  Theme_NavbarItem_DocsVersionDropdownNavbarItem_Versions,
 } from '../../types/theme/NavbarItem/index.d.ts';
 
 /**
@@ -28,17 +28,17 @@ import type {
  * single link when only one exists. Active version reflects the current docs
  * page context (or first configured version) and gets a `--active` modifier.
  *
- * @param {ThemeNavbarItemDocsVersionDropdownNavbarItemProps} props - Props.
+ * @param {Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocsVersionDropdownNavbarItem(props: ThemeNavbarItemDocsVersionDropdownNavbarItemProps) {
-  const versions: ThemeNavbarItemDocsVersionDropdownNavbarItemVersions = useVersions(props['docsPluginId']);
-  const activeDocContext: ThemeNavbarItemDocsVersionDropdownNavbarItemActiveDocContext = useActiveDocContext(props['docsPluginId']);
+function DocsVersionDropdownNavbarItem(props: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props) {
+  const versions: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Versions = useVersions(props['docsPluginId']);
+  const activeDocContext: Theme_NavbarItem_DocsVersionDropdownNavbarItem_ActiveDocContext = useActiveDocContext(props['docsPluginId']);
 
-  const detailsRef: ThemeNavbarItemDocsVersionDropdownNavbarItemDetailsRef = useRef<HTMLDetailsElement | null>(null);
+  const detailsRef: Theme_NavbarItem_DocsVersionDropdownNavbarItem_DetailsRef = useRef<HTMLDetailsElement | null>(null);
 
   useDetailsDismiss(detailsRef);
 
@@ -46,13 +46,13 @@ function DocsVersionDropdownNavbarItem(props: ThemeNavbarItemDocsVersionDropdown
     return undefined;
   }
 
-  const activeVersion: ThemeNavbarItemDocsVersionDropdownNavbarItemActiveVersion = activeDocContext['activeVersion'] ?? versions[0];
-  const label: ThemeNavbarItemDocsVersionDropdownNavbarItemLabel = (activeVersion !== undefined) ? activeVersion['label'] : versions[0]!['label'];
-  const items: ThemeNavbarItemDocsVersionDropdownNavbarItemItems = versions.map((version) => {
-    const targetDoc: ThemeNavbarItemDocsVersionDropdownNavbarItemTargetDoc = activeDocContext['alternateDocVersions'][version['name']]
+  const activeVersion: Theme_NavbarItem_DocsVersionDropdownNavbarItem_ActiveVersion = activeDocContext['activeVersion'] ?? versions[0];
+  const label: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Label = (activeVersion !== undefined) ? activeVersion['label'] : versions[0]!['label'];
+  const items: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Items = versions.map((version) => {
+    const targetDoc: Theme_NavbarItem_DocsVersionDropdownNavbarItem_TargetDoc = activeDocContext['alternateDocVersions'][version['name']]
       ?? version['docs'].find((doc) => doc['id'] === version['mainDocId'])
       ?? version['docs'][0];
-    const itemPath: ThemeNavbarItemDocsVersionDropdownNavbarItemPath = (targetDoc !== undefined) ? targetDoc['path'] : version['path'];
+    const itemPath: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Path = (targetDoc !== undefined) ? targetDoc['path'] : version['path'];
 
     return {
       label: version['label'],
@@ -63,8 +63,8 @@ function DocsVersionDropdownNavbarItem(props: ThemeNavbarItemDocsVersionDropdown
 
   // Render a single link when there is only one version.
   if (versions.length === 1) {
-    const firstItem: ThemeNavbarItemDocsVersionDropdownNavbarItemFirstItem = items[0];
-    const path: ThemeNavbarItemDocsVersionDropdownNavbarItemPath = (firstItem !== undefined) ? firstItem['to'] : versions[0]!['path'];
+    const firstItem: Theme_NavbarItem_DocsVersionDropdownNavbarItem_FirstItem = items[0];
+    const path: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Path = (firstItem !== undefined) ? firstItem['to'] : versions[0]!['path'];
 
     return (
       <Link to={path}>
@@ -81,7 +81,7 @@ function DocsVersionDropdownNavbarItem(props: ThemeNavbarItemDocsVersionDropdown
       <ul className="nova-version-dropdown-menu">
         {
           items.map((item) => {
-            const itemClassName: ThemeNavbarItemDocsVersionDropdownNavbarItemItemClassName = (activeVersion !== undefined && item['versionName'] === activeVersion['name']) ? 'nova-version-dropdown-item nova-version-dropdown-item--active' : 'nova-version-dropdown-item';
+            const itemClassName: Theme_NavbarItem_DocsVersionDropdownNavbarItem_ItemClassName = (activeVersion !== undefined && item['versionName'] === activeVersion['name']) ? 'nova-version-dropdown-item nova-version-dropdown-item--active' : 'nova-version-dropdown-item';
 
             return (
               <li key={item['label']} className={itemClassName}>

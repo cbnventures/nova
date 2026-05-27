@@ -10,65 +10,65 @@ import type {
  *
  * @since 0.15.0
  */
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsSidebar = PropSidebarItem[];
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props_Sidebar = PropSidebarItem[];
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsClassName = string | undefined;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props_ClassName = string | undefined;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsStyle = CSSProperties | undefined;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarProps = {
-  sidebar: ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsSidebar;
-  className?: ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsClassName;
-  style?: ThemeDocRootLayoutSidebarDocRootLayoutSidebarPropsStyle;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props = {
+  sidebar: Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props_Sidebar;
+  className?: Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props_ClassName;
+  style?: Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarThemeConfigCast = unknown;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_ThemeConfigCast = unknown;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarThemeConfig = Record<string, unknown>;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_ThemeConfig = Record<string, unknown>;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarDocsConfigSidebar = ThemeDocRootLayoutSidebarDocRootLayoutSidebarSidebarConfig;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_DocsConfig_Sidebar = Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_SidebarConfig;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarDocsConfig = {
-  sidebar: ThemeDocRootLayoutSidebarDocRootLayoutSidebarDocsConfigSidebar;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_DocsConfig = {
+  sidebar: Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_DocsConfig_Sidebar;
   [key: string]: unknown;
 };
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarSidebarConfigHideable = boolean;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_SidebarConfig_Hideable = boolean;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarSidebarConfig = {
-  hideable: ThemeDocRootLayoutSidebarDocRootLayoutSidebarSidebarConfigHideable;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_SidebarConfig = {
+  hideable: Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_SidebarConfig_Hideable;
   [key: string]: unknown;
 };
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarHideable = boolean;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Hideable = boolean;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarLocationPathname = string;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_LocationPathname = string;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarLocation = Record<string, unknown> & {
-  pathname: ThemeDocRootLayoutSidebarDocRootLayoutSidebarLocationPathname;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Location = Record<string, unknown> & {
+  pathname: Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_LocationPathname;
 };
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarPathname = string;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Pathname = string;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarInitialCollapsed = boolean;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_InitialCollapsed = boolean;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarStoredValue = string | null;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_StoredValue = string | null;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarCollapsedState = [ThemeDocRootLayoutSidebarDocRootLayoutSidebarCollapsed, ThemeDocRootLayoutSidebarDocRootLayoutSidebarSetCollapsed];
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_CollapsedState = [Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Collapsed, Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_SetCollapsed];
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarCollapsed = boolean;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Collapsed = boolean;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarSetCollapsed = Dispatch<SetStateAction<ThemeDocRootLayoutSidebarDocRootLayoutSidebarCollapsed>>;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_SetCollapsed = Dispatch<SetStateAction<Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_Collapsed>>;
 
-export type ThemeDocRootLayoutSidebarSidebarExpandAriaLabel = string;
+export type Theme_DocRoot_Layout_Sidebar_Index_SidebarExpandAriaLabel = string;
 
-export type ThemeDocRootLayoutSidebarSidebarCollapseAriaLabel = string;
+export type Theme_DocRoot_Layout_Sidebar_Index_SidebarCollapseAriaLabel = string;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarAsideClassName = string;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_AsideClassName = string;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarToggleLabel = string;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_ToggleLabel = string;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarToggleIndicator = string;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_ToggleIndicator = string;
 
-export type ThemeDocRootLayoutSidebarDocRootLayoutSidebarNextCollapsedString = string;
+export type Theme_DocRoot_Layout_Sidebar_Index_DocRootLayoutSidebar_NextCollapsedString = string;

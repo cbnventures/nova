@@ -1,11 +1,11 @@
 import type {
-  SharedColorScale,
-  SharedPreset,
-  SharedPresetDepth,
-  SharedPresetFonts,
-  SharedPresetMotion,
-  SharedPresetShape,
-  SharedShadeLevel,
+  Shared_ColorScale,
+  Shared_Preset,
+  Shared_Preset_Depth,
+  Shared_Preset_Fonts,
+  Shared_Preset_Motion,
+  Shared_Preset_Shape,
+  Shared_ShadeLevel,
 } from '../shared.d.ts';
 
 /**
@@ -13,166 +13,166 @@ import type {
  *
  * @since 0.15.0
  */
-export type LibCssGeneratorGenerateOptionsPreset = SharedPreset;
+export type Lib_CssGenerator_Runner_Generate_Options_Preset = Shared_Preset;
 
-export type LibCssGeneratorGenerateOptions = {
-  preset: LibCssGeneratorGenerateOptionsPreset;
+export type Lib_CssGenerator_Runner_Generate_Options = {
+  preset: Lib_CssGenerator_Runner_Generate_Options_Preset;
 };
 
-export type LibCssGeneratorGenerateReturns = string;
+export type Lib_CssGenerator_Runner_Generate_Returns = string;
 
-export type LibCssGeneratorGeneratePrimaryLightColor = InstanceType<typeof import('../../lib/color.js').Color>;
+export type Lib_CssGenerator_Runner_Generate_PrimaryLightColor = InstanceType<typeof import('../../lib/color.js').Runner>;
 
-export type LibCssGeneratorGeneratePrimaryDarkColor = InstanceType<typeof import('../../lib/color.js').Color>;
+export type Lib_CssGenerator_Runner_Generate_PrimaryDarkColor = InstanceType<typeof import('../../lib/color.js').Runner>;
 
-export type LibCssGeneratorGenerateAccentLightColor = InstanceType<typeof import('../../lib/color.js').Color>;
+export type Lib_CssGenerator_Runner_Generate_AccentLightColor = InstanceType<typeof import('../../lib/color.js').Runner>;
 
-export type LibCssGeneratorGenerateAccentDarkColor = InstanceType<typeof import('../../lib/color.js').Color>;
+export type Lib_CssGenerator_Runner_Generate_AccentDarkColor = InstanceType<typeof import('../../lib/color.js').Runner>;
 
-export type LibCssGeneratorGeneratePrimaryLightScale = SharedColorScale;
+export type Lib_CssGenerator_Runner_Generate_PrimaryLightScale = Shared_ColorScale;
 
-export type LibCssGeneratorGeneratePrimaryDarkScale = SharedColorScale;
+export type Lib_CssGenerator_Runner_Generate_PrimaryDarkScale = Shared_ColorScale;
 
-export type LibCssGeneratorGenerateAccentLightScale = SharedColorScale;
+export type Lib_CssGenerator_Runner_Generate_AccentLightScale = Shared_ColorScale;
 
-export type LibCssGeneratorGenerateAccentDarkScale = SharedColorScale;
+export type Lib_CssGenerator_Runner_Generate_AccentDarkScale = Shared_ColorScale;
 
-export type LibCssGeneratorGeneratePrimaryLightLines = string[];
+export type Lib_CssGenerator_Runner_Generate_PrimaryLightLines = string[];
 
-export type LibCssGeneratorGeneratePrimaryDarkLines = string[];
+export type Lib_CssGenerator_Runner_Generate_PrimaryDarkLines = string[];
 
-export type LibCssGeneratorGenerateAccentLightLines = string[];
+export type Lib_CssGenerator_Runner_Generate_AccentLightLines = string[];
 
-export type LibCssGeneratorGenerateAccentDarkLines = string[];
+export type Lib_CssGenerator_Runner_Generate_AccentDarkLines = string[];
 
-export type LibCssGeneratorGenerateTextLight = string;
+export type Lib_CssGenerator_Runner_Generate_TextLight = string;
 
-export type LibCssGeneratorGenerateTextDark = string;
+export type Lib_CssGenerator_Runner_Generate_TextDark = string;
 
-export type LibCssGeneratorGenerateBorderLight = string;
+export type Lib_CssGenerator_Runner_Generate_BorderLight = string;
 
-export type LibCssGeneratorGenerateBorderDark = string;
+export type Lib_CssGenerator_Runner_Generate_BorderDark = string;
 
-export type LibCssGeneratorGenerateWarningLight = string;
+export type Lib_CssGenerator_Runner_Generate_WarningLight = string;
 
-export type LibCssGeneratorGenerateWarningDark = string;
+export type Lib_CssGenerator_Runner_Generate_WarningDark = string;
 
-export type LibCssGeneratorGenerateDangerLight = string;
+export type Lib_CssGenerator_Runner_Generate_DangerLight = string;
 
-export type LibCssGeneratorGenerateDangerDark = string;
+export type Lib_CssGenerator_Runner_Generate_DangerDark = string;
 
-export type LibCssGeneratorGenerateFontLines = string[];
+export type Lib_CssGenerator_Runner_Generate_FontLines = string[];
 
-export type LibCssGeneratorGenerateShapeLines = string[];
+export type Lib_CssGenerator_Runner_Generate_ShapeLines = string[];
 
-export type LibCssGeneratorGenerateDepthLines = string[];
+export type Lib_CssGenerator_Runner_Generate_DepthLines = string[];
 
-export type LibCssGeneratorGenerateMotionLines = string[];
+export type Lib_CssGenerator_Runner_Generate_MotionLines = string[];
 
-export type LibCssGeneratorGenerateGridLinesBaseLines = string[];
+export type Lib_CssGenerator_Runner_Generate_GridLines_BaseLines = string[];
 
-export type LibCssGeneratorGenerateGridLinesMediaBlocks = string[];
+export type Lib_CssGenerator_Runner_Generate_GridLines_MediaBlocks = string[];
 
-export type LibCssGeneratorGenerateGridLines = {
-  baseLines: LibCssGeneratorGenerateGridLinesBaseLines;
-  mediaBlocks: LibCssGeneratorGenerateGridLinesMediaBlocks;
+export type Lib_CssGenerator_Runner_Generate_GridLines = {
+  baseLines: Lib_CssGenerator_Runner_Generate_GridLines_BaseLines;
+  mediaBlocks: Lib_CssGenerator_Runner_Generate_GridLines_MediaBlocks;
 };
 
-export type LibCssGeneratorGenerateLines = string[];
+export type Lib_CssGenerator_Runner_Generate_Lines = string[];
 
-export type LibCssGeneratorGenerateGridMediaBlocks = string;
+export type Lib_CssGenerator_Runner_Generate_GridMediaBlocks = string;
 
 /**
  * Lib - CSS Generator - Generate Color Variables.
  *
  * @since 0.15.0
  */
-export type LibCssGeneratorGenerateColorVariablesScaleName = string;
+export type Lib_CssGenerator_Runner_GenerateColorVariables_ScaleName = string;
 
-export type LibCssGeneratorGenerateColorVariablesScale = SharedColorScale;
+export type Lib_CssGenerator_Runner_GenerateColorVariables_Scale = Shared_ColorScale;
 
-export type LibCssGeneratorGenerateColorVariablesReturns = string[];
+export type Lib_CssGenerator_Runner_GenerateColorVariables_Returns = string[];
 
-export type LibCssGeneratorGenerateColorVariablesLines = string[];
+export type Lib_CssGenerator_Runner_GenerateColorVariables_Lines = string[];
 
-export type LibCssGeneratorGenerateColorVariablesShadeLevels = SharedShadeLevel[];
+export type Lib_CssGenerator_Runner_GenerateColorVariables_ShadeLevels = Shared_ShadeLevel[];
 
 /**
  * Lib - CSS Generator - Generate Depth Variables.
  *
  * @since 0.15.0
  */
-export type LibCssGeneratorGenerateDepthVariablesDepth = SharedPresetDepth;
+export type Lib_CssGenerator_Runner_GenerateDepthVariables_Depth = Shared_Preset_Depth;
 
-export type LibCssGeneratorGenerateDepthVariablesReturns = string[];
+export type Lib_CssGenerator_Runner_GenerateDepthVariables_Returns = string[];
 
-export type LibCssGeneratorGenerateDepthVariablesLines = string[];
+export type Lib_CssGenerator_Runner_GenerateDepthVariables_Lines = string[];
 
 /**
  * Lib - CSS Generator - Generate Font Variables.
  *
  * @since 0.15.0
  */
-export type LibCssGeneratorGenerateFontVariablesFonts = SharedPresetFonts;
+export type Lib_CssGenerator_Runner_GenerateFontVariables_Fonts = Shared_Preset_Fonts;
 
-export type LibCssGeneratorGenerateFontVariablesLines = string[];
+export type Lib_CssGenerator_Runner_GenerateFontVariables_Lines = string[];
 
-export type LibCssGeneratorGenerateFontVariablesReturns = string[];
+export type Lib_CssGenerator_Runner_GenerateFontVariables_Returns = string[];
 
 /**
  * Lib - CSS Generator - Generate Grid Variables.
  *
  * @since 0.15.0
  */
-export type LibCssGeneratorGenerateGridVariablesShape = SharedPresetShape;
+export type Lib_CssGenerator_Runner_GenerateGridVariables_Shape = Shared_Preset_Shape;
 
-export type LibCssGeneratorGenerateGridVariablesReturnsBaseLines = string[];
+export type Lib_CssGenerator_Runner_GenerateGridVariables_Returns_BaseLines = string[];
 
-export type LibCssGeneratorGenerateGridVariablesReturnsMediaBlocks = string[];
+export type Lib_CssGenerator_Runner_GenerateGridVariables_Returns_MediaBlocks = string[];
 
-export type LibCssGeneratorGenerateGridVariablesReturns = {
-  baseLines: LibCssGeneratorGenerateGridVariablesReturnsBaseLines;
-  mediaBlocks: LibCssGeneratorGenerateGridVariablesReturnsMediaBlocks;
+export type Lib_CssGenerator_Runner_GenerateGridVariables_Returns = {
+  baseLines: Lib_CssGenerator_Runner_GenerateGridVariables_Returns_BaseLines;
+  mediaBlocks: Lib_CssGenerator_Runner_GenerateGridVariables_Returns_MediaBlocks;
 };
 
-export type LibCssGeneratorGenerateGridVariablesDensityGutter = string;
+export type Lib_CssGenerator_Runner_GenerateGridVariables_DensityGutter = string;
 
-export type LibCssGeneratorGenerateGridVariablesDensityPadding = string;
+export type Lib_CssGenerator_Runner_GenerateGridVariables_DensityPadding = string;
 
-export type LibCssGeneratorGenerateGridVariablesBaseLines = string[];
+export type Lib_CssGenerator_Runner_GenerateGridVariables_BaseLines = string[];
 
-export type LibCssGeneratorGenerateGridVariablesMediaBlocks = string[];
+export type Lib_CssGenerator_Runner_GenerateGridVariables_MediaBlocks = string[];
 
 /**
  * Lib - CSS Generator - Generate Motion Variables.
  *
  * @since 0.15.0
  */
-export type LibCssGeneratorGenerateMotionVariablesMotion = SharedPresetMotion;
+export type Lib_CssGenerator_Runner_GenerateMotionVariables_Motion = Shared_Preset_Motion;
 
-export type LibCssGeneratorGenerateMotionVariablesReturns = string[];
+export type Lib_CssGenerator_Runner_GenerateMotionVariables_Returns = string[];
 
-export type LibCssGeneratorGenerateMotionVariablesDuration = string;
+export type Lib_CssGenerator_Runner_GenerateMotionVariables_Duration = string;
 
-export type LibCssGeneratorGenerateMotionVariablesStaggered = number;
+export type Lib_CssGenerator_Runner_GenerateMotionVariables_Staggered = number;
 
-export type LibCssGeneratorGenerateMotionVariablesHover = number;
+export type Lib_CssGenerator_Runner_GenerateMotionVariables_Hover = number;
 
-export type LibCssGeneratorGenerateMotionVariablesLines = string[];
+export type Lib_CssGenerator_Runner_GenerateMotionVariables_Lines = string[];
 
 /**
  * Lib - CSS Generator - Generate Shape Variables.
  *
  * @since 0.15.0
  */
-export type LibCssGeneratorGenerateShapeVariablesShape = SharedPresetShape;
+export type Lib_CssGenerator_Runner_GenerateShapeVariables_Shape = Shared_Preset_Shape;
 
-export type LibCssGeneratorGenerateShapeVariablesReturns = string[];
+export type Lib_CssGenerator_Runner_GenerateShapeVariables_Returns = string[];
 
-export type LibCssGeneratorGenerateShapeVariablesRadiusValue = string;
+export type Lib_CssGenerator_Runner_GenerateShapeVariables_RadiusValue = string;
 
-export type LibCssGeneratorGenerateShapeVariablesDensityPaddingScale = string;
+export type Lib_CssGenerator_Runner_GenerateShapeVariables_DensityPaddingScale = string;
 
-export type LibCssGeneratorGenerateShapeVariablesDensityGapScale = string;
+export type Lib_CssGenerator_Runner_GenerateShapeVariables_DensityGapScale = string;
 
-export type LibCssGeneratorGenerateShapeVariablesLines = string[];
+export type Lib_CssGenerator_Runner_GenerateShapeVariables_Lines = string[];

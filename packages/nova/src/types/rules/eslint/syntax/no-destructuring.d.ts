@@ -12,120 +12,120 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.14.0
  */
-export type RulesEslintSyntaxNoDestructuringCheckAssignmentContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintSyntaxNoDestructuringCheckAssignmentNode = TSESTree.AssignmentExpression;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Node = TSESTree.AssignmentExpression;
 
-export type RulesEslintSyntaxNoDestructuringCheckAssignmentReturns = void;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Returns = void;
 
 /**
  * Rules - ESLint - Syntax - No Destructuring - Check Callback.
  *
  * @since 0.14.0
  */
-export type RulesEslintSyntaxNoDestructuringCheckCallbackInsideCallbackValue = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback_Value = boolean;
 
-export type RulesEslintSyntaxNoDestructuringCheckCallbackInsideCallback = {
-  value: RulesEslintSyntaxNoDestructuringCheckCallbackInsideCallbackValue;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback = {
+  value: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback_Value;
 };
 
-export type RulesEslintSyntaxNoDestructuringCheckCallbackContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintSyntaxNoDestructuringCheckCallbackNode = TSESTree.ArrowFunctionExpression | TSESTree.FunctionExpression;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Node = TSESTree.ArrowFunctionExpression | TSESTree.FunctionExpression;
 
-export type RulesEslintSyntaxNoDestructuringCheckCallbackReturns = void;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Returns = void;
 
-export type RulesEslintSyntaxNoDestructuringCheckCallbackParent = TSESTree.Node | undefined;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Parent = TSESTree.Node | undefined;
 
-export type RulesEslintSyntaxNoDestructuringCheckCallbackCallee = TSESTree.LeftHandSideExpression | TSESTree.Expression;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Callee = TSESTree.LeftHandSideExpression | TSESTree.Expression;
 
 /**
  * Rules - ESLint - Syntax - No Destructuring - Check Declarator.
  *
  * @since 0.14.0
  */
-export type RulesEslintSyntaxNoDestructuringCheckDeclaratorContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintSyntaxNoDestructuringCheckDeclaratorNode = TSESTree.VariableDeclarator;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Node = TSESTree.VariableDeclarator;
 
-export type RulesEslintSyntaxNoDestructuringCheckDeclaratorReturns = void;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Returns = void;
 
-export type RulesEslintSyntaxNoDestructuringCheckDeclaratorParent = TSESTree.Node | undefined;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Parent = TSESTree.Node | undefined;
 
 /**
  * Rules - ESLint - Syntax - No Destructuring - Check For Of.
  *
  * @since 0.14.0
  */
-export type RulesEslintSyntaxNoDestructuringCheckForOfContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintSyntaxNoDestructuringCheckForOfNode = TSESTree.ForOfStatement;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Node = TSESTree.ForOfStatement;
 
-export type RulesEslintSyntaxNoDestructuringCheckForOfReturns = void;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Returns = void;
 
-export type RulesEslintSyntaxNoDestructuringCheckForOfLeft = TSESTree.ForOfStatement['left'];
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Left = TSESTree.ForOfStatement['left'];
 
-export type RulesEslintSyntaxNoDestructuringCheckForOfDeclarator = TSESTree.VariableDeclarator | undefined;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Declarator = TSESTree.VariableDeclarator | undefined;
 
-export type RulesEslintSyntaxNoDestructuringCheckForOfRight = TSESTree.Expression;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Right = TSESTree.Expression;
 
 /**
  * Rules - ESLint - Syntax - No Destructuring - Check Function.
  *
  * @since 0.14.0
  */
-export type RulesEslintSyntaxNoDestructuringCheckFunctionContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintSyntaxNoDestructuringCheckFunctionNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Node = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
 
-export type RulesEslintSyntaxNoDestructuringCheckFunctionReturns = void;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Returns = void;
 
-export type RulesEslintSyntaxNoDestructuringCheckFunctionParent = TSESTree.Node | undefined;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Parent = TSESTree.Node | undefined;
 
 /**
  * Rules - ESLint - Syntax - No Destructuring - Rule.
  *
  * @since 0.14.0
  */
-export type RulesEslintSyntaxNoDestructuringRuleDefaultOptionsAssignmentExpressions = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsAssignmentExpressions = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleDefaultOptionsCallbackParams = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsCallbackParams = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleDefaultOptionsForOfLoops = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsForOfLoops = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleDefaultOptionsFunctionParams = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsFunctionParams = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintSyntaxNoDestructuringRuleDefaultOptionsVariableDeclarations = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsVariableDeclarations = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleOptionsAssignmentExpressions = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_AssignmentExpressions = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleOptionsCallbackParams = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_CallbackParams = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleOptionsForOfLoops = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_ForOfLoops = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleOptionsFunctionParams = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_FunctionParams = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintSyntaxNoDestructuringRuleOptionsVariableDeclarations = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_VariableDeclarations = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleOptions = Readonly<{
-  assignmentExpressions: RulesEslintSyntaxNoDestructuringRuleOptionsAssignmentExpressions;
-  callbackParams: RulesEslintSyntaxNoDestructuringRuleOptionsCallbackParams;
-  forOfLoops: RulesEslintSyntaxNoDestructuringRuleOptionsForOfLoops;
-  functionParams: RulesEslintSyntaxNoDestructuringRuleOptionsFunctionParams;
-  ignoreFiles: RulesEslintSyntaxNoDestructuringRuleOptionsIgnoreFiles;
-  variableDeclarations: RulesEslintSyntaxNoDestructuringRuleOptionsVariableDeclarations;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions = Readonly<{
+  assignmentExpressions: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_AssignmentExpressions;
+  callbackParams: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_CallbackParams;
+  forOfLoops: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_ForOfLoops;
+  functionParams: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_FunctionParams;
+  ignoreFiles: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_IgnoreFiles;
+  variableDeclarations: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions_VariableDeclarations;
 }>;
 
-export type RulesEslintSyntaxNoDestructuringRuleCheckCallbackParams = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckCallbackParams = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleCheckFunctionParams = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckFunctionParams = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleCheckForOfLoops = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckForOfLoops = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleCheckVariableDeclarations = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckVariableDeclarations = boolean;
 
-export type RulesEslintSyntaxNoDestructuringRuleCheckAssignmentExpressions = boolean;
+export type Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckAssignmentExpressions = boolean;

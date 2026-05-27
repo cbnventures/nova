@@ -5,9 +5,9 @@ import { describe, it } from 'vitest';
 import { presetsFoundryPresetFoundry } from '../../../presets/foundry/preset.js';
 
 import type {
-  TestsPresetsFoundryPresetFooter,
-  TestsPresetsFoundryPresetFoundry,
-  TestsPresetsFoundryPresetNavbar,
+  Tests_Presets_Foundry_Preset_Footer,
+  Tests_Presets_Foundry_Preset_Foundry,
+  Tests_Presets_Foundry_Preset_Navbar,
 } from '../../../types/tests/presets/foundry/preset.test.d.ts';
 
 /**
@@ -17,7 +17,7 @@ import type {
  */
 describe('presetsFoundryPresetFoundry', async () => {
   it('has correct color values', () => {
-    const foundry: TestsPresetsFoundryPresetFoundry = presetsFoundryPresetFoundry;
+    const foundry: Tests_Presets_Foundry_Preset_Foundry = presetsFoundryPresetFoundry;
 
     deepStrictEqual(foundry['colors']['primary'], {
       light: '#ea580c', dark: '#ea580c',
@@ -36,7 +36,7 @@ describe('presetsFoundryPresetFoundry', async () => {
   });
 
   it('has correct font names', () => {
-    const foundry: TestsPresetsFoundryPresetFoundry = presetsFoundryPresetFoundry;
+    const foundry: Tests_Presets_Foundry_Preset_Foundry = presetsFoundryPresetFoundry;
 
     strictEqual(foundry['fonts']['display'], 'Plus Jakarta Sans');
     strictEqual(foundry['fonts']['body'], 'Inter');
@@ -46,7 +46,7 @@ describe('presetsFoundryPresetFoundry', async () => {
   });
 
   it('has correct shape values', () => {
-    const foundry: TestsPresetsFoundryPresetFoundry = presetsFoundryPresetFoundry;
+    const foundry: Tests_Presets_Foundry_Preset_Foundry = presetsFoundryPresetFoundry;
 
     strictEqual(foundry['shape']['radius'], 'rounded');
     strictEqual(foundry['shape']['density'], 'comfortable');
@@ -55,7 +55,7 @@ describe('presetsFoundryPresetFoundry', async () => {
   });
 
   it('has correct depth values', () => {
-    const foundry: TestsPresetsFoundryPresetFoundry = presetsFoundryPresetFoundry;
+    const foundry: Tests_Presets_Foundry_Preset_Foundry = presetsFoundryPresetFoundry;
 
     strictEqual(foundry['depth']['cards'], 'elevated');
     strictEqual(foundry['depth']['codeBlocks'], 'bordered');
@@ -64,7 +64,7 @@ describe('presetsFoundryPresetFoundry', async () => {
   });
 
   it('has correct motion values', () => {
-    const foundry: TestsPresetsFoundryPresetFoundry = presetsFoundryPresetFoundry;
+    const foundry: Tests_Presets_Foundry_Preset_Foundry = presetsFoundryPresetFoundry;
 
     strictEqual(foundry['motion']['speed'], 'normal');
     strictEqual(foundry['motion']['staggeredReveals'], true);
@@ -77,7 +77,7 @@ describe('presetsFoundryPresetFoundry', async () => {
 });
 
 /**
- * Tests - Presets - Foundry - Preset - PresetsFoundryPresetFoundry Navbar And Footer.
+ * Tests - Presets - Foundry - Preset - Presets_Foundry_Preset_Foundry Navbar And Footer.
  *
  * Verifies that the foundry preset includes the correct navbar
  * and footer variant identifiers for theme rendering.
@@ -86,7 +86,7 @@ describe('presetsFoundryPresetFoundry', async () => {
  */
 describe('presetsFoundryPresetFoundry navbar and footer', async () => {
   it('has correct navbar value', () => {
-    const navbar: TestsPresetsFoundryPresetNavbar = presetsFoundryPresetFoundry['navbar'];
+    const navbar: Tests_Presets_Foundry_Preset_Navbar = presetsFoundryPresetFoundry['navbar'];
 
     strictEqual(navbar, 'bridge');
 
@@ -94,7 +94,7 @@ describe('presetsFoundryPresetFoundry navbar and footer', async () => {
   });
 
   it('has correct footer value', () => {
-    const footer: TestsPresetsFoundryPresetFooter = presetsFoundryPresetFoundry['footer'];
+    const footer: Tests_Presets_Foundry_Preset_Footer = presetsFoundryPresetFoundry['footer'];
 
     strictEqual(footer, 'commons');
 

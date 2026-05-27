@@ -1,12 +1,12 @@
-import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
-  SharedNovaConfigConfig,
-  SharedNovaConfigWorkspace,
-  SharedNovaConfigWorkspaceRecipes,
-  SharedNovaConfigWorkspaceRecipeSettings,
-  SharedNovaConfigWorkspaceRecipeTuple,
-  SharedWorkspaceManifest,
+  Shared_NovaConfigConfig as SharedNovaConfigConfig,
+  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
+  Shared_NovaConfigWorkspace_Recipes as SharedNovaConfigWorkspaceRecipes,
+  Shared_NovaConfigWorkspaceRecipeSettings as SharedNovaConfigWorkspaceRecipeSettings,
+  Shared_NovaConfigWorkspaceRecipeTuple as SharedNovaConfigWorkspaceRecipeTuple,
+  Shared_WorkspaceManifest as SharedWorkspaceManifest,
 } from '../../../shared.d.ts';
 
 /**
@@ -14,137 +14,137 @@ import type {
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeDependenciesHandleWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandleReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_Returns = Promise<void>;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandleFileContents = Record<string, unknown>;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_FileContents = Record<string, unknown>;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandleManifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_Manifest = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandlePackageDependencies = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackageDependencies = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandlePackageDevDependencies = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackageDevDependencies = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandlePackagePeerDependencies = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackagePeerDependencies = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandlePackagePeerDependenciesMeta = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackagePeerDependenciesMeta = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandlePackageBundleDependencies = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackageBundleDependencies = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandlePackageBundledDependencies = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackageBundledDependencies = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandlePackageOptionalDependencies = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackageOptionalDependencies = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandlePackageOverrides = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_PackageOverrides = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesHandleBundleDependencies = unknown[];
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_BundleDependencies = unknown[];
 
-export type CliRecipePackageJsonNormalizeDependenciesHandleBundledDependencies = unknown[];
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_BundledDependencies = unknown[];
 
-export type CliRecipePackageJsonNormalizeDependenciesHandleMergedBundleDependencies = unknown[];
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Handle_MergedBundleDependencies = unknown[];
 
 /**
  * CLI - Recipe - package.json - Normalize Dependencies - Is Empty.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeDependenciesIsEmptyValue = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Value = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesIsEmptyReturns = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_IsEmpty_Returns = boolean;
 
 /**
  * CLI - Recipe - package.json - Normalize Dependencies - Pin Dependencies.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDependencyVersions = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_PinDependencyVersions = boolean;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinDevDependencyVersions = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_PinDevDependencyVersions = boolean;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesReturns = number;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_Returns = number;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepGroups = string[];
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_DepGroups = string[];
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesPinned = number;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_Pinned = number;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesUnpinnable = number;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_Unpinnable = number;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDeps = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_Deps = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepEntries = [string, unknown][];
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_DepEntries = [string, unknown][];
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepName = string;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_DepName = string;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesDepVersion = unknown;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_DepVersion = unknown;
 
-export type CliRecipePackageJsonNormalizeDependenciesPinDependenciesStripped = string | undefined;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_PinDependencies_Stripped = string | undefined;
 
 /**
  * CLI - Recipe - package.json - Normalize Dependencies - Run.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeDependenciesRunOptionsDryRun = true;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Options_DryRun = true;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunOptionsReplaceFile = true;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Options_ReplaceFile = true;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunOptions = {
-  dryRun?: CliRecipePackageJsonNormalizeDependenciesRunOptionsDryRun;
-  replaceFile?: CliRecipePackageJsonNormalizeDependenciesRunOptionsReplaceFile;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Options = {
+  dryRun?: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliRecipePackageJsonNormalizeDependenciesRunReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Returns = Promise<void>;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunCurrentDirectory = string;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_CurrentDirectory = string;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunIsAtProjectRoot = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunIsDryRun = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_IsDryRun = boolean;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunIsReplaceFile = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_IsReplaceFile = boolean;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunReplaceFileNotice = string;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_ReplaceFileNotice = string;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunNovaConfig = LibNovaConfig;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunWorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkingFile = SharedNovaConfigConfig;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunWorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonNormalizeDependenciesRunEligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonNormalizeDependenciesRunWorkspaceConfigFilter = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceConfigFilter = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunWorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_WorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunRecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunWorkspaces = SharedWorkspaceManifest[];
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Workspaces = SharedWorkspaceManifest[];
 
-export type CliRecipePackageJsonNormalizeDependenciesRunHasUnpinnable = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_HasUnpinnable = boolean;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Recipes = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunRecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunRecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_RecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunPinDependencyVersions = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PinDependencyVersions = boolean;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunPinDevDependencyVersions = boolean;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_PinDevDependencyVersions = boolean;
 
-export type CliRecipePackageJsonNormalizeDependenciesRunCount = number;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_Run_Count = number;
 
 /**
  * CLI - Recipe - package.json - Normalize Dependencies - Strip Prefix.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeDependenciesStripPrefixVersion = string;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_StripPrefix_Version = string;
 
-export type CliRecipePackageJsonNormalizeDependenciesStripPrefixReturns = string | undefined;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_StripPrefix_Returns = string | undefined;
 
-export type CliRecipePackageJsonNormalizeDependenciesStripPrefixMatch = RegExpMatchArray | null;
+export type Cli_Recipe_PackageJson_NormalizeDependencies_Runner_StripPrefix_Match = RegExpMatchArray | null;

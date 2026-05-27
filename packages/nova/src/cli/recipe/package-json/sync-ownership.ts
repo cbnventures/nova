@@ -6,7 +6,7 @@ import {
 
 import chalk from 'chalk';
 
-import { LibNovaConfig } from '../../../lib/nova-config.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
   isProjectRoot,
   loadWorkspaceManifests,
@@ -15,44 +15,44 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliRecipePackageJsonSyncOwnershipHandleAuthorEntity,
-  CliRecipePackageJsonSyncOwnershipHandleEntities,
-  CliRecipePackageJsonSyncOwnershipHandleFileContents,
-  CliRecipePackageJsonSyncOwnershipHandleManifest,
-  CliRecipePackageJsonSyncOwnershipHandlePackageAuthor,
-  CliRecipePackageJsonSyncOwnershipHandlePackageBugs,
-  CliRecipePackageJsonSyncOwnershipHandlePackageContributors,
-  CliRecipePackageJsonSyncOwnershipHandlePackageFundingSources,
-  CliRecipePackageJsonSyncOwnershipHandlePackageHomepage,
-  CliRecipePackageJsonSyncOwnershipHandlePackageRepository,
-  CliRecipePackageJsonSyncOwnershipHandleRecipes,
-  CliRecipePackageJsonSyncOwnershipHandleRecipeSettings,
-  CliRecipePackageJsonSyncOwnershipHandleRecipeTuple,
-  CliRecipePackageJsonSyncOwnershipHandleRepositoryDirectory,
-  CliRecipePackageJsonSyncOwnershipHandleRepositoryUrl,
-  CliRecipePackageJsonSyncOwnershipHandleReturns,
-  CliRecipePackageJsonSyncOwnershipHandleValidAuthor,
-  CliRecipePackageJsonSyncOwnershipHandleValidBugs,
-  CliRecipePackageJsonSyncOwnershipHandleValidContributors,
-  CliRecipePackageJsonSyncOwnershipHandleValidFundingSources,
-  CliRecipePackageJsonSyncOwnershipHandleValidHomepage,
-  CliRecipePackageJsonSyncOwnershipHandleValidRepository,
-  CliRecipePackageJsonSyncOwnershipHandleWorkingFile,
-  CliRecipePackageJsonSyncOwnershipHandleWorkspace,
-  CliRecipePackageJsonSyncOwnershipRunCurrentDirectory,
-  CliRecipePackageJsonSyncOwnershipRunEligibleWorkspaces,
-  CliRecipePackageJsonSyncOwnershipRunIsAtProjectRoot,
-  CliRecipePackageJsonSyncOwnershipRunIsDryRun,
-  CliRecipePackageJsonSyncOwnershipRunIsReplaceFile,
-  CliRecipePackageJsonSyncOwnershipRunOptions,
-  CliRecipePackageJsonSyncOwnershipRunRecipeTupleFilter,
-  CliRecipePackageJsonSyncOwnershipRunReplaceFileNotice,
-  CliRecipePackageJsonSyncOwnershipRunReturns,
-  CliRecipePackageJsonSyncOwnershipRunWorkingFile,
-  CliRecipePackageJsonSyncOwnershipRunWorkingFileWorkspaces,
-  CliRecipePackageJsonSyncOwnershipRunWorkspaceConfigFilter,
-  CliRecipePackageJsonSyncOwnershipRunWorkspaceRecipesFilter,
-  CliRecipePackageJsonSyncOwnershipRunWorkspaces,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_AuthorEntity,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Entities,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_FileContents,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageAuthor,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageBugs,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageContributors,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageFundingSources,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageHomepage,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageRepository,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Recipes,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeSettings,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeTuple,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RepositoryDirectory,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RepositoryUrl,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidAuthor,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidBugs,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidContributors,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidFundingSources,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidHomepage,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidRepository,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_WorkingFile,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_CurrentDirectory,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_EligibleWorkspaces,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsAtProjectRoot,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsDryRun,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsReplaceFile,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Options,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_ReplaceFileNotice,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Returns,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFile,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFileWorkspaces,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipesFilter,
+  Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/sync-ownership.d.ts';
 
 /**
@@ -63,22 +63,22 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliRecipePackageJsonSyncOwnership {
+export class Runner {
   /**
    * CLI - Recipe - package.json - Sync Ownership - Run.
    *
    * Loads nova.config.json, filters eligible workspaces, then syncs ownership fields in each
    * manifest from the project config.
    *
-   * @param {CliRecipePackageJsonSyncOwnershipRunOptions} options - Options.
+   * @param {Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Options} options - Options.
    *
-   * @returns {CliRecipePackageJsonSyncOwnershipRunReturns}
+   * @returns {Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static async run(options: CliRecipePackageJsonSyncOwnershipRunOptions): CliRecipePackageJsonSyncOwnershipRunReturns {
-    const currentDirectory: CliRecipePackageJsonSyncOwnershipRunCurrentDirectory = process.cwd();
-    const isAtProjectRoot: CliRecipePackageJsonSyncOwnershipRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Options): Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Returns {
+    const currentDirectory: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_CurrentDirectory = process.cwd();
+    const isAtProjectRoot: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -86,31 +86,31 @@ export class CliRecipePackageJsonSyncOwnership {
       return;
     }
 
-    const isDryRun: CliRecipePackageJsonSyncOwnershipRunIsDryRun = options['dryRun'] === true;
-    const isReplaceFile: CliRecipePackageJsonSyncOwnershipRunIsReplaceFile = options['replaceFile'] === true;
+    const isDryRun: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isReplaceFile: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice: CliRecipePackageJsonSyncOwnershipRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_ReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const workingFile: CliRecipePackageJsonSyncOwnershipRunWorkingFile = await new LibNovaConfig().load();
-    const workingFileWorkspaces: CliRecipePackageJsonSyncOwnershipRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
+    const workingFile: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-ownership. No workspaces detected in the "nova.config.json" file.');
 
@@ -118,15 +118,15 @@ export class CliRecipePackageJsonSyncOwnership {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces: CliRecipePackageJsonSyncOwnershipRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: CliRecipePackageJsonSyncOwnershipRunWorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: CliRecipePackageJsonSyncOwnershipRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
+    const eligibleWorkspaces: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: CliRecipePackageJsonSyncOwnershipRunRecipeTupleFilter = workspaceRecipes['sync-ownership'];
+      const recipeTuple: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_RecipeTupleFilter = workspaceRecipes['sync-ownership'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -137,21 +137,21 @@ export class CliRecipePackageJsonSyncOwnership {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-ownership. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces: CliRecipePackageJsonSyncOwnershipRunWorkspaces = await loadWorkspaceManifests({
+    const workspaces: Cli_Recipe_PackageJson_SyncOwnership_Runner_Run_Workspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping sync-ownership. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -159,18 +159,18 @@ export class CliRecipePackageJsonSyncOwnership {
     }
 
     Logger.customize({
-      name: 'CliRecipePackageJsonSyncOwnership.run',
+      name: 'Runner.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for sync-ownership.`);
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.run',
+        name: 'Runner.run',
         purpose: 'iteration',
       }).info(`Running sync-ownership for the "${workspace['manifest']['name']}" workspace ...`);
 
-      CliRecipePackageJsonSyncOwnership.handle(workspace, workingFile);
+      Runner.handle(workspace, workingFile);
 
       if (isDryRun === true) {
         continue;
@@ -188,30 +188,30 @@ export class CliRecipePackageJsonSyncOwnership {
    * Processes one workspace manifest to sync homepage, bugs, author, contributors, funding,
    * and repository based on policy and recipe settings.
    *
-   * @param {CliRecipePackageJsonSyncOwnershipHandleWorkspace}   workspace   - Workspace.
-   * @param {CliRecipePackageJsonSyncOwnershipHandleWorkingFile} workingFile - Working file.
+   * @param {Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Workspace}   workspace   - Workspace.
+   * @param {Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_WorkingFile} workingFile - Working file.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonSyncOwnershipHandleReturns}
+   * @returns {Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Returns}
    *
    * @since 0.14.0
    */
-  private static handle(workspace: CliRecipePackageJsonSyncOwnershipHandleWorkspace, workingFile: CliRecipePackageJsonSyncOwnershipHandleWorkingFile): CliRecipePackageJsonSyncOwnershipHandleReturns {
-    const fileContents: CliRecipePackageJsonSyncOwnershipHandleFileContents = workspace['fileContents'];
-    const manifest: CliRecipePackageJsonSyncOwnershipHandleManifest = workspace['manifest'];
+  private static handle(workspace: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Workspace, workingFile: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_WorkingFile): Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Returns {
+    const fileContents: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_FileContents = workspace['fileContents'];
+    const manifest: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Manifest = workspace['manifest'];
 
-    const packageHomepage: CliRecipePackageJsonSyncOwnershipHandlePackageHomepage = fileContents['homepage'];
-    const packageBugs: CliRecipePackageJsonSyncOwnershipHandlePackageBugs = fileContents['bugs'];
-    const packageAuthor: CliRecipePackageJsonSyncOwnershipHandlePackageAuthor = fileContents['author'];
-    const packageContributors: CliRecipePackageJsonSyncOwnershipHandlePackageContributors = fileContents['contributors'];
-    const packageFundingSources: CliRecipePackageJsonSyncOwnershipHandlePackageFundingSources = fileContents['funding'];
-    const packageRepository: CliRecipePackageJsonSyncOwnershipHandlePackageRepository = fileContents['repository'];
+    const packageHomepage: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageHomepage = fileContents['homepage'];
+    const packageBugs: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageBugs = fileContents['bugs'];
+    const packageAuthor: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageAuthor = fileContents['author'];
+    const packageContributors: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageContributors = fileContents['contributors'];
+    const packageFundingSources: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageFundingSources = fileContents['funding'];
+    const packageRepository: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_PackageRepository = fileContents['repository'];
 
     // Get recipe settings for this workspace.
-    const recipes: CliRecipePackageJsonSyncOwnershipHandleRecipes = manifest['recipes'];
-    const recipeTuple: CliRecipePackageJsonSyncOwnershipHandleRecipeTuple = (recipes !== undefined) ? recipes['sync-ownership'] : undefined;
-    const recipeSettings: CliRecipePackageJsonSyncOwnershipHandleRecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
+    const recipes: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Recipes = manifest['recipes'];
+    const recipeTuple: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeTuple = (recipes !== undefined) ? recipes['sync-ownership'] : undefined;
+    const recipeSettings: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RecipeSettings = (recipeTuple !== undefined && recipeTuple.length > 1) ? recipeTuple[1] : undefined;
 
     // Sync the "homepage" field.
     if (
@@ -219,13 +219,13 @@ export class CliRecipePackageJsonSyncOwnership {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.handle',
+        name: 'Runner.handle',
         purpose: 'homepage',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "homepage". Workspace policy "${manifest['policy']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'homepage');
     } else {
-      const validHomepage: CliRecipePackageJsonSyncOwnershipHandleValidHomepage = (workingFile['urls'] !== undefined) ? workingFile['urls']['homepage'] : undefined;
+      const validHomepage: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidHomepage = (workingFile['urls'] !== undefined) ? workingFile['urls']['homepage'] : undefined;
 
       if (
         (
@@ -240,7 +240,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'homepage',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "homepage" from workspace manifest ...`);
 
@@ -254,7 +254,7 @@ export class CliRecipePackageJsonSyncOwnership {
         && validHomepage === undefined // Nova config "urls.homepage" setting is not set.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'homepage',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "homepage". No homepage is defined.`);
 
@@ -268,13 +268,13 @@ export class CliRecipePackageJsonSyncOwnership {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.handle',
+        name: 'Runner.handle',
         purpose: 'bugs',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "bugs". Workspace policy "${manifest['policy']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'bugs');
     } else {
-      const validBugs: CliRecipePackageJsonSyncOwnershipHandleValidBugs = {
+      const validBugs: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidBugs = {
         email: (workingFile['emails'] !== undefined) ? workingFile['emails']['bugs'] : undefined,
         url: (workingFile['urls'] !== undefined) ? workingFile['urls']['bugs'] : undefined,
       };
@@ -294,7 +294,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'bugs',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "bugs" from workspace manifest ...`);
 
@@ -311,7 +311,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'bugs',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "bugs". No bug contacts are defined.`);
 
@@ -325,14 +325,14 @@ export class CliRecipePackageJsonSyncOwnership {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.handle',
+        name: 'Runner.handle',
         purpose: 'author',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "author". Workspace policy "${manifest['policy']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'author');
     } else {
-      const validAuthor: CliRecipePackageJsonSyncOwnershipHandleValidAuthor = (() => {
-        const authorEntity: CliRecipePackageJsonSyncOwnershipHandleAuthorEntity = (workingFile['entities'] !== undefined) ? workingFile['entities'].find((entity) => {
+      const validAuthor: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidAuthor = (() => {
+        const authorEntity: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_AuthorEntity = (workingFile['entities'] !== undefined) ? workingFile['entities'].find((entity) => {
           return Array.isArray(entity['roles']) && entity['roles'].includes('author');
         }) : undefined;
 
@@ -367,7 +367,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'author',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "author" from workspace manifest ...`);
 
@@ -385,7 +385,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'author',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "author". No author is defined.`);
 
@@ -399,14 +399,14 @@ export class CliRecipePackageJsonSyncOwnership {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.handle',
+        name: 'Runner.handle',
         purpose: 'contributors',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "contributors". Workspace policy "${manifest['policy']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'contributors');
     } else {
-      const validContributors: CliRecipePackageJsonSyncOwnershipHandleValidContributors = (() => {
-        const entities: CliRecipePackageJsonSyncOwnershipHandleEntities = workingFile['entities'] ?? [];
+      const validContributors: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidContributors = (() => {
+        const entities: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_Entities = workingFile['entities'] ?? [];
 
         return entities
           .filter((entity) => {
@@ -442,7 +442,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'contributors',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "contributors" from workspace manifest ...`);
 
@@ -458,7 +458,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'contributors',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "contributors". No contributors are defined.`);
 
@@ -472,13 +472,13 @@ export class CliRecipePackageJsonSyncOwnership {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.handle',
+        name: 'Runner.handle',
         purpose: 'funding',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "funding". Workspace policy "${manifest['policy']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'funding');
     } else {
-      const validFundingSources: CliRecipePackageJsonSyncOwnershipHandleValidFundingSources = (workingFile['urls'] !== undefined) ? workingFile['urls']['fundSources'] : undefined;
+      const validFundingSources: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidFundingSources = (workingFile['urls'] !== undefined) ? workingFile['urls']['fundSources'] : undefined;
 
       if (
         (
@@ -492,7 +492,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'funding',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "funding" from workspace manifest ...`);
 
@@ -506,7 +506,7 @@ export class CliRecipePackageJsonSyncOwnership {
         && validFundingSources === undefined // Nova config "urls.fundSources" setting is not set.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'funding',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "funding". No funding sources are defined.`);
 
@@ -520,20 +520,20 @@ export class CliRecipePackageJsonSyncOwnership {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonSyncOwnership.handle',
+        name: 'Runner.handle',
         purpose: 'repository',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "repository". Workspace policy "${manifest['policy']}" does not allow it.`);
 
       Reflect.deleteProperty(fileContents, 'repository');
     } else {
-      const validRepository: CliRecipePackageJsonSyncOwnershipHandleValidRepository = (() => {
-        const repositoryUrl: CliRecipePackageJsonSyncOwnershipHandleRepositoryUrl = (workingFile['urls'] !== undefined) ? workingFile['urls']['repository'] : undefined;
+      const validRepository: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_ValidRepository = (() => {
+        const repositoryUrl: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RepositoryUrl = (workingFile['urls'] !== undefined) ? workingFile['urls']['repository'] : undefined;
 
         if (repositoryUrl === undefined) {
           return undefined;
         }
 
-        const repositoryDirectory: CliRecipePackageJsonSyncOwnershipHandleRepositoryDirectory = relative(process.cwd(), dirname(workspace['filePath'])).replaceAll(sep, '/');
+        const repositoryDirectory: Cli_Recipe_PackageJson_SyncOwnership_Runner_Handle_RepositoryDirectory = relative(process.cwd(), dirname(workspace['filePath'])).replaceAll(sep, '/');
 
         return {
           type: 'git',
@@ -556,7 +556,7 @@ export class CliRecipePackageJsonSyncOwnership {
         )
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'repository',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "repository" from workspace manifest ...`);
 
@@ -570,7 +570,7 @@ export class CliRecipePackageJsonSyncOwnership {
         && validRepository === undefined // Nova config "urls.repository" setting is not set.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonSyncOwnership.handle',
+          name: 'Runner.handle',
           purpose: 'repository',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "repository". No repository url is defined.`);
 

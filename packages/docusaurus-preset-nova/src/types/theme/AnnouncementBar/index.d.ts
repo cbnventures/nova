@@ -5,48 +5,48 @@ import type { CSSProperties, Dispatch, SetStateAction } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeAnnouncementBarPropsClassName = string | undefined;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_Props_ClassName = string | undefined;
 
-export type ThemeAnnouncementBarPropsStyle = CSSProperties | undefined;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_Props_Style = CSSProperties | undefined;
 
-export type ThemeAnnouncementBarProps = {
-  className?: ThemeAnnouncementBarPropsClassName;
-  style?: ThemeAnnouncementBarPropsStyle;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_Props = {
+  className?: Theme_AnnouncementBar_Index_AnnouncementBar_Props_ClassName;
+  style?: Theme_AnnouncementBar_Index_AnnouncementBar_Props_Style;
 };
 
-export type ThemeAnnouncementBarReturns = React.JSX.Element | null;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_Returns = React.JSX.Element | null;
 
-export type ThemeAnnouncementBarThemeConfig = {
-  announcementBar?: ThemeAnnouncementBarConfig;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig = {
+  announcementBar?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar;
   [key: string]: unknown;
 };
 
-export type ThemeAnnouncementBarConfig = {
-  id: ThemeAnnouncementBarId;
-  content: ThemeAnnouncementBarContent;
-  backgroundColor?: ThemeAnnouncementBarBackgroundColor;
-  textColor?: ThemeAnnouncementBarTextColor;
-  isCloseable?: ThemeAnnouncementBarIsCloseable;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar = {
+  id: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id;
+  content: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content;
+  backgroundColor?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor;
+  textColor?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor;
+  isCloseable?: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable;
 } | undefined;
 
-export type ThemeAnnouncementBarId = string;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id = string;
 
-export type ThemeAnnouncementBarContent = string;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content = string;
 
-export type ThemeAnnouncementBarBackgroundColor = string | undefined;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor = string | undefined;
 
-export type ThemeAnnouncementBarTextColor = string | undefined;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor = string | undefined;
 
-export type ThemeAnnouncementBarIsCloseable = boolean | undefined;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable = boolean | undefined;
 
-export type ThemeAnnouncementBarDismissStorageKey = string;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_DismissStorageKey = string;
 
-export type ThemeAnnouncementBarIsDismissedState = [ThemeAnnouncementBarIsDismissed, ThemeAnnouncementBarSetIsDismissed];
+export type Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissedState = [Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed, Theme_AnnouncementBar_Index_AnnouncementBar_SetIsDismissed];
 
-export type ThemeAnnouncementBarIsDismissed = boolean;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed = boolean;
 
-export type ThemeAnnouncementBarSetIsDismissed = Dispatch<SetStateAction<ThemeAnnouncementBarIsDismissed>>;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_SetIsDismissed = Dispatch<SetStateAction<Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed>>;
 
-export type ThemeAnnouncementBarCloseAriaLabel = string;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_CloseAriaLabel = string;
 
-export type ThemeAnnouncementBarInlineStyle = React.CSSProperties;
+export type Theme_AnnouncementBar_Index_AnnouncementBar_InlineStyle = React.CSSProperties;

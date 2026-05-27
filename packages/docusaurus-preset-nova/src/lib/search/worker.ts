@@ -1,6 +1,6 @@
 /// <reference path="../../types/worker-globals.d.ts" />
 
-declare const lunr: WorkerGlobalsLunrGlobal;
+declare const lunr: WorkerGlobals_LunrGlobal;
 
 importScripts('lunr.min.js');
 
@@ -12,7 +12,7 @@ importScripts('lunr.min.js');
  *
  * @since 0.15.0
  */
-let searchIndex: WorkerGlobalsSearchIndex = undefined;
+let searchIndex: WorkerGlobals_SearchIndex = undefined;
 
 /**
  * Lib - Search - Worker - Search Documents.
@@ -22,7 +22,7 @@ let searchIndex: WorkerGlobalsSearchIndex = undefined;
  *
  * @since 0.15.0
  */
-let searchDocuments: WorkerGlobalsSearchDocuments = [];
+let searchDocuments: WorkerGlobals_SearchDocuments = [];
 
 /**
  * Lib - Search - Worker - Handle Init.
@@ -35,10 +35,10 @@ let searchDocuments: WorkerGlobalsSearchDocuments = [];
  * @returns       Handle init.
  * @since 0.15.0
  */
-async function handleInit(message: WorkerGlobalsHandleInitMessage): WorkerGlobalsHandleInitReturns {
+async function handleInit(message: WorkerGlobals_HandleInitMessage): WorkerGlobals_HandleInitReturns {
   try {
-    const response: WorkerGlobalsHandleInitResponse = await fetch(message['indexUrl']);
-    const parsed: WorkerGlobalsHandleInitParsed = await response.json() as WorkerGlobalsHandleInitParsed;
+    const response: WorkerGlobals_HandleInitResponse = await fetch(message['indexUrl']);
+    const parsed: WorkerGlobals_HandleInitParsed = await response.json() as WorkerGlobals_HandleInitParsed;
 
     if (
       parsed === null
@@ -49,14 +49,14 @@ async function handleInit(message: WorkerGlobalsHandleInitMessage): WorkerGlobal
       throw new Error('SEARCH_INVALID_INDEX_DATA');
     }
 
-    const loadedIndex: WorkerGlobalsHandleInitLoadedIndex = lunr['Index'].load(parsed['index']);
+    const loadedIndex: WorkerGlobals_HandleInitLoadedIndex = lunr['Index'].load(parsed['index']);
 
     searchIndex = loadedIndex;
     searchDocuments = parsed['documents'];
 
     self.postMessage({ type: 'ready' });
   } catch (error) {
-    const errorMessage: WorkerGlobalsHandleInitErrorMessage = (error instanceof Error) ? error['message'] : 'SEARCH_UNKNOWN_INIT_ERROR';
+    const errorMessage: WorkerGlobals_HandleInitErrorMessage = (error instanceof Error) ? error['message'] : 'SEARCH_UNKNOWN_INIT_ERROR';
 
     self.postMessage({
       type: 'error', reason: errorMessage,
@@ -76,7 +76,7 @@ async function handleInit(message: WorkerGlobalsHandleInitMessage): WorkerGlobal
  * @param message - Message.
  * @since 0.15.0
  */
-function handleSearch(message: WorkerGlobalsHandleSearchMessage): WorkerGlobalsHandleSearchReturns {
+function handleSearch(message: WorkerGlobals_HandleSearchMessage): WorkerGlobals_HandleSearchReturns {
   if (searchIndex === undefined) {
     self.postMessage({
       type: 'error', reason: 'SEARCH_INDEX_NOT_INITIALIZED',
@@ -85,7 +85,7 @@ function handleSearch(message: WorkerGlobalsHandleSearchMessage): WorkerGlobalsH
     return;
   }
 
-  const hits: WorkerGlobalsPerformSearchReturns = performSearch(searchIndex, searchDocuments, message['query'], message['limit']);
+  const hits: WorkerGlobals_PerformSearchReturns = performSearch(searchIndex, searchDocuments, message['query'], message['limit']);
 
   self.postMessage({
     type: 'results', hits,
@@ -108,45 +108,45 @@ function handleSearch(message: WorkerGlobalsHandleSearchMessage): WorkerGlobalsH
  * @returns         Perform search.
  * @since 0.15.0
  */
-function performSearch(index: WorkerGlobalsPerformSearchIndex, documents: WorkerGlobalsPerformSearchDocuments, query: WorkerGlobalsPerformSearchQuery, limit: WorkerGlobalsPerformSearchLimit): WorkerGlobalsPerformSearchReturns {
-  const trimmedQuery: WorkerGlobalsPerformSearchTrimmedQuery = query.trim();
+function performSearch(index: WorkerGlobals_PerformSearchIndex, documents: WorkerGlobals_PerformSearchDocuments, query: WorkerGlobals_PerformSearchQuery, limit: WorkerGlobals_PerformSearchLimit): WorkerGlobals_PerformSearchReturns {
+  const trimmedQuery: WorkerGlobals_PerformSearchTrimmedQuery = query.trim();
 
   if (trimmedQuery === '') {
     return [];
   }
 
-  const typedIndex: WorkerGlobalsPerformSearchTypedIndex = index as WorkerGlobalsPerformSearchTypedIndex;
+  const typedIndex: WorkerGlobals_PerformSearchTypedIndex = index as WorkerGlobals_PerformSearchTypedIndex;
 
-  const exactResults: WorkerGlobalsPerformSearchExactResults = typedIndex.search(trimmedQuery);
-  const wildcardQuery: WorkerGlobalsPerformSearchWildcardQuery = `${trimmedQuery}*`;
-  const wildcardResults: WorkerGlobalsPerformSearchWildcardResults = typedIndex.search(wildcardQuery);
-  const fuzzyQuery: WorkerGlobalsPerformSearchFuzzyQuery = `${trimmedQuery}~1`;
-  const fuzzyResults: WorkerGlobalsPerformSearchFuzzyResults = typedIndex.search(fuzzyQuery);
+  const exactResults: WorkerGlobals_PerformSearchExactResults = typedIndex.search(trimmedQuery);
+  const wildcardQuery: WorkerGlobals_PerformSearchWildcardQuery = `${trimmedQuery}*`;
+  const wildcardResults: WorkerGlobals_PerformSearchWildcardResults = typedIndex.search(wildcardQuery);
+  const fuzzyQuery: WorkerGlobals_PerformSearchFuzzyQuery = `${trimmedQuery}~1`;
+  const fuzzyResults: WorkerGlobals_PerformSearchFuzzyResults = typedIndex.search(fuzzyQuery);
 
-  const allResults: WorkerGlobalsPerformSearchAllResults = [
+  const allResults: WorkerGlobals_PerformSearchAllResults = [
     ...exactResults,
     ...wildcardResults,
     ...fuzzyResults,
   ];
 
-  const scoreMap: WorkerGlobalsPerformSearchScoreMap = new Map();
-  const termsMap: WorkerGlobalsPerformSearchTermsMap = new Map();
+  const scoreMap: WorkerGlobals_PerformSearchScoreMap = new Map();
+  const termsMap: WorkerGlobals_PerformSearchTermsMap = new Map();
 
   for (let i = 0; i < allResults.length; i += 1) {
-    const result: WorkerGlobalsPerformSearchResult = allResults[i];
+    const result: WorkerGlobals_PerformSearchResult = allResults[i];
 
     if (result === undefined) {
       continue;
     }
 
-    const existingScore: WorkerGlobalsPerformSearchExistingScore = scoreMap.get(result['ref']);
+    const existingScore: WorkerGlobals_PerformSearchExistingScore = scoreMap.get(result['ref']);
 
     if (existingScore === undefined || result['score'] > existingScore) {
       scoreMap.set(result['ref'], result['score']);
     }
 
     // Collect matched terms from lunr matchData.
-    let termsSet: WorkerGlobalsPerformSearchMaybeTermsSet = termsMap.get(result['ref']);
+    let termsSet: WorkerGlobals_PerformSearchMaybeTermsSet = termsMap.get(result['ref']);
 
     if (termsSet === undefined) {
       termsSet = new Set();
@@ -154,16 +154,16 @@ function performSearch(index: WorkerGlobalsPerformSearchIndex, documents: Worker
     }
 
     for (const matchedTerm of Object.keys(result['matchData']['metadata'])) {
-      const term: WorkerGlobalsPerformSearchMatchedTerm = matchedTerm;
+      const term: WorkerGlobals_PerformSearchMatchedTerm = matchedTerm;
 
       termsSet.add(term);
     }
   }
 
-  const sortedRefs: WorkerGlobalsPerformSearchSortedRefs = Array.from(scoreMap.entries())
+  const sortedRefs: WorkerGlobals_PerformSearchSortedRefs = Array.from(scoreMap.entries())
     .sort((entryA, entryB) => {
-      const a: WorkerGlobalsPerformSearchEntry = entryA;
-      const b: WorkerGlobalsPerformSearchEntry = entryB;
+      const a: WorkerGlobals_PerformSearchEntry = entryA;
+      const b: WorkerGlobals_PerformSearchEntry = entryB;
 
       if (a === undefined || b === undefined) {
         return 0;
@@ -172,7 +172,7 @@ function performSearch(index: WorkerGlobalsPerformSearchIndex, documents: Worker
       return b[1] - a[1];
     })
     .map((entry) => {
-      const mappedEntry: WorkerGlobalsPerformSearchEntry = entry;
+      const mappedEntry: WorkerGlobals_PerformSearchEntry = entry;
 
       if (mappedEntry === undefined) {
         return '';
@@ -181,68 +181,68 @@ function performSearch(index: WorkerGlobalsPerformSearchIndex, documents: Worker
       return mappedEntry[0];
     });
 
-  const slicedRefs: WorkerGlobalsPerformSearchSlicedRefs = sortedRefs.slice(0, limit);
-  const hits: WorkerGlobalsPerformSearchHits = [];
+  const slicedRefs: WorkerGlobals_PerformSearchSlicedRefs = sortedRefs.slice(0, limit);
+  const hits: WorkerGlobals_PerformSearchHits = [];
 
   for (let i = 0; i < slicedRefs.length; i += 1) {
-    const ref: WorkerGlobalsPerformSearchRef = slicedRefs[i];
+    const ref: WorkerGlobals_PerformSearchRef = slicedRefs[i];
 
     if (ref === undefined) {
       continue;
     }
 
-    const matchedDocument: WorkerGlobalsPerformSearchMatchedDocument = documents.find((document: WorkerGlobalsSharedDocument) => document['path'] === ref);
+    const matchedDocument: WorkerGlobals_PerformSearchMatchedDocument = documents.find((document: WorkerGlobals_SharedDocument) => document['path'] === ref);
 
     if (matchedDocument === undefined) {
       continue;
     }
 
-    const score: WorkerGlobalsPerformSearchExistingScore = scoreMap.get(ref);
+    const score: WorkerGlobals_PerformSearchExistingScore = scoreMap.get(ref);
 
-    const termPatterns: WorkerGlobalsPerformSearchTermPatterns = [];
-    const refTerms: WorkerGlobalsPerformSearchMaybeTermsSet = termsMap.get(ref);
+    const termPatterns: WorkerGlobals_PerformSearchTermPatterns = [];
+    const refTerms: WorkerGlobals_PerformSearchMaybeTermsSet = termsMap.get(ref);
 
     if (refTerms !== undefined) {
       for (const matchedTerm of refTerms) {
-        const term: WorkerGlobalsPerformSearchMatchedTerm = matchedTerm;
-        const escapedTerm: WorkerGlobalsPerformSearchEscapedQuery = term.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match: WorkerGlobalsPerformSearchEscapeMatch) => `\\${match}`);
+        const term: WorkerGlobals_PerformSearchMatchedTerm = matchedTerm;
+        const escapedTerm: WorkerGlobals_PerformSearchEscapedQuery = term.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match: WorkerGlobals_PerformSearchEscapeMatch) => `\\${match}`);
 
         termPatterns.push(`${escapedTerm}\\w*`);
       }
     }
 
-    const escapedQuery: WorkerGlobalsPerformSearchEscapedQuery = trimmedQuery.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match: WorkerGlobalsPerformSearchEscapeMatch) => `\\${match}`);
+    const escapedQuery: WorkerGlobals_PerformSearchEscapedQuery = trimmedQuery.replace(new RegExp('[.*+?^${}()|[\\]\\\\]', 'g'), (match: WorkerGlobals_PerformSearchEscapeMatch) => `\\${match}`);
 
     termPatterns.push(escapedQuery);
 
-    const highlightPattern: WorkerGlobalsPerformSearchHighlightPattern = termPatterns.join('|');
-    const segmentPattern: WorkerGlobalsPerformSearchSegmentPattern = new RegExp(`(${highlightPattern})`, 'gi');
+    const highlightPattern: WorkerGlobals_PerformSearchHighlightPattern = termPatterns.join('|');
+    const segmentPattern: WorkerGlobals_PerformSearchSegmentPattern = new RegExp(`(${highlightPattern})`, 'gi');
 
     // Generate a context-aware snippet from the body around the first match.
-    const contextRadius: WorkerGlobalsPerformSearchContextRadius = 80;
-    const contextPattern: WorkerGlobalsPerformSearchContextPattern = new RegExp(highlightPattern, 'gi');
-    const contextMatch: WorkerGlobalsPerformSearchContextMatch = contextPattern.exec(matchedDocument['body']);
-    let contextSnippet: WorkerGlobalsPerformSearchContextSnippet = matchedDocument['snippet'];
+    const contextRadius: WorkerGlobals_PerformSearchContextRadius = 80;
+    const contextPattern: WorkerGlobals_PerformSearchContextPattern = new RegExp(highlightPattern, 'gi');
+    const contextMatch: WorkerGlobals_PerformSearchContextMatch = contextPattern.exec(matchedDocument['body']);
+    let contextSnippet: WorkerGlobals_PerformSearchContextSnippet = matchedDocument['snippet'];
 
     if (contextMatch !== null) {
-      const contextStart: WorkerGlobalsPerformSearchContextStart = Math.max(0, contextMatch.index - contextRadius);
-      const contextEnd: WorkerGlobalsPerformSearchContextEnd = Math.min(matchedDocument['body'].length, contextMatch.index + contextMatch[0].length + contextRadius);
+      const contextStart: WorkerGlobals_PerformSearchContextStart = Math.max(0, contextMatch.index - contextRadius);
+      const contextEnd: WorkerGlobals_PerformSearchContextEnd = Math.min(matchedDocument['body'].length, contextMatch.index + contextMatch[0].length + contextRadius);
 
       contextSnippet = ((contextStart > 0) ? '\u2026' : '') + matchedDocument['body'].slice(contextStart, contextEnd).trim() + ((contextEnd < matchedDocument['body'].length) ? '\u2026' : '');
     }
 
-    const segmentParts: WorkerGlobalsPerformSearchSegmentParts = contextSnippet.split(segmentPattern);
-    const snippetSegments: WorkerGlobalsPerformSearchSnippetSegments = [];
+    const segmentParts: WorkerGlobals_PerformSearchSegmentParts = contextSnippet.split(segmentPattern);
+    const snippetSegments: WorkerGlobals_PerformSearchSnippetSegments = [];
 
     for (let j = 0; j < segmentParts.length; j += 1) {
-      const segmentPart: WorkerGlobalsPerformSearchSegmentPart = segmentParts[j] as WorkerGlobalsPerformSearchSegmentPart;
+      const segmentPart: WorkerGlobals_PerformSearchSegmentPart = segmentParts[j] as WorkerGlobals_PerformSearchSegmentPart;
 
       if (segmentPart === '') {
         continue;
       }
 
-      const segmentPartIndex: WorkerGlobalsPerformSearchSegmentPartIndex = j;
-      const isHighlight: WorkerGlobalsPerformSearchSegmentIsHighlight = segmentPartIndex % 2 === 1;
+      const segmentPartIndex: WorkerGlobals_PerformSearchSegmentPartIndex = j;
+      const isHighlight: WorkerGlobals_PerformSearchSegmentIsHighlight = segmentPartIndex % 2 === 1;
 
       snippetSegments.push({
         text: segmentPart,
@@ -272,8 +272,8 @@ function performSearch(index: WorkerGlobalsPerformSearchIndex, documents: Worker
  * @since 0.15.0
  */
 if (typeof self !== 'undefined') {
-  self.addEventListener('message', (event: WorkerGlobalsListenerEvent) => {
-    const messageData: WorkerGlobalsListenerMessageData = event['data'];
+  self.addEventListener('message', (event: WorkerGlobals_ListenerEvent) => {
+    const messageData: WorkerGlobals_ListenerMessageData = event['data'];
 
     if (messageData['type'] === 'init') {
       void handleInit(messageData);

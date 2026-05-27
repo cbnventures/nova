@@ -6,21 +6,21 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.13.0
  */
-export type RulesEslintRegexNoRegexLiteralFlagsCheckLiteralContext = Readonly<RuleContext<string, readonly unknown[]>>;
+export type Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Context = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type RulesEslintRegexNoRegexLiteralFlagsCheckLiteralNode = TSESTree.Literal;
+export type Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Node = TSESTree.Literal;
 
-export type RulesEslintRegexNoRegexLiteralFlagsCheckLiteralReturns = void;
+export type Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Returns = void;
 
 /**
  * Rules - ESLint - Regex - No Regex Literal Flags - Rule.
  *
  * @since 0.13.0
  */
-export type RulesEslintRegexNoRegexLiteralFlagsRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintRegexNoRegexLiteralFlagsRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintRegexNoRegexLiteralFlagsRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintRegexNoRegexLiteralFlagsRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_RuleOptions_IgnoreFiles;
 }>;

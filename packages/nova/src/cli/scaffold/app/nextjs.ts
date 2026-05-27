@@ -1,8 +1,8 @@
 import { runScaffold } from '../../../lib/scaffold.js';
 
 import type {
-  CliScaffoldAppNextjsRunOptions,
-  CliScaffoldAppNextjsRunReturns,
+  Cli_Scaffold_App_Nextjs_Runner_Run_Options,
+  Cli_Scaffold_App_Nextjs_Runner_Run_Returns,
 } from '../../../types/cli/scaffold/app/nextjs.d.ts';
 
 /**
@@ -14,20 +14,20 @@ import type {
  *
  * @since 0.15.0
  */
-export class CliScaffoldAppNextjs {
+export class Runner {
   /**
    * CLI - Scaffold - App - Next.js - Run.
    *
    * Entry point invoked by the CLI nova scaffold app nextjs command. Delegates to runScaffold
    * with the Next.js template subpath.
    *
-   * @param {CliScaffoldAppNextjsRunOptions} options - Options.
+   * @param {Cli_Scaffold_App_Nextjs_Runner_Run_Options} options - Options.
    *
-   * @returns {CliScaffoldAppNextjsRunReturns}
+   * @returns {Cli_Scaffold_App_Nextjs_Runner_Run_Returns}
    *
    * @since 0.15.0
    */
-  public static async run(options: CliScaffoldAppNextjsRunOptions): CliScaffoldAppNextjsRunReturns {
+  public static async run(options: Cli_Scaffold_App_Nextjs_Runner_Run_Options): Cli_Scaffold_App_Nextjs_Runner_Run_Returns {
     await runScaffold(options, 'app', 'nextjs', 'scaffold/app/nextjs', import.meta.url);
 
     return;

@@ -1,4 +1,4 @@
-import type { LibWorkflowTemplatesMetadata } from '../types/lib/workflow-templates.d.ts';
+import type { Lib_WorkflowTemplates_Metadata } from '../types/lib/workflow-templates.d.ts';
 
 /**
  * Lib - Workflow Templates - Lib Workflow Templates Metadata.
@@ -9,7 +9,7 @@ import type { LibWorkflowTemplatesMetadata } from '../types/lib/workflow-templat
  *
  * @since 0.20.0
  */
-export const libWorkflowTemplatesMetadata: LibWorkflowTemplatesMetadata = [
+export const libWorkflowTemplatesMetadata: Lib_WorkflowTemplates_Metadata = [
   {
     name: 'check-sponsor-gated-issues',
     description: 'Gate issues by GitHub sponsor status',

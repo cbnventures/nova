@@ -1,170 +1,170 @@
-import type { ThemeNavbarItem } from '../index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../index.d.ts';
 
 /**
  * Theme - Navbar - Compass - Mobile Menu.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsIsOpen = boolean;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_IsOpen = boolean;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsOnClose = () => void;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_OnClose = () => void;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsItems = ThemeNavbarItem[];
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoAlt = string;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Alt = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrc = {
-  light: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcLight;
-  dark: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrcDark;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Src = {
+  light: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmark = {
-  light: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkLight;
-  dark: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmarkDark;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoHref = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoRel = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogo = {
-  alt: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoAlt;
-  src: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoSrc;
-  wordmark: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoWordmark;
-  title: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoTitle;
-  href: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoHref;
-  target: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoTarget;
-  rel: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoRel;
-  ariaLabel: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogoAriaLabel;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo = {
+  alt: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Alt;
+  src: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Src;
+  wordmark: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Wordmark;
+  title: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Title;
+  href: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Href;
+  target: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Target;
+  rel: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPropsActiveItemLabel = string | null;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_ActiveItemLabel = string | null;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuProps = {
-  isOpen: ThemeNavbarCompassMobileMenuMobileMenuPropsIsOpen;
-  onClose: ThemeNavbarCompassMobileMenuMobileMenuPropsOnClose;
-  items: ThemeNavbarCompassMobileMenuMobileMenuPropsItems;
-  siteLogo: ThemeNavbarCompassMobileMenuMobileMenuPropsSiteLogo;
-  activeItemLabel: ThemeNavbarCompassMobileMenuMobileMenuPropsActiveItemLabel;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Props = {
+  isOpen: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_IsOpen;
+  onClose: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_OnClose;
+  items: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_Items;
+  siteLogo: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_SiteLogo;
+  activeItemLabel: Theme_Navbar_Compass_MobileMenu_MobileMenu_Props_ActiveItemLabel;
 };
 
-export type ThemeNavbarCompassMobileMenuMobileMenuReturns = React.JSX.Element | null;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Returns = React.JSX.Element | null;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuIsOpen = boolean;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_IsOpen = boolean;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuOnClose = () => void;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_OnClose = () => void;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuItems = ThemeNavbarItem[];
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoAlt = string;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Alt = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrc = {
-  light: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcLight;
-  dark: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrcDark;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Src = {
+  light: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmark = {
-  light: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkLight;
-  dark: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmarkDark;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoHref = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoRel = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSiteLogo = {
-  alt: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoAlt;
-  src: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoSrc;
-  wordmark: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoWordmark;
-  title: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoTitle;
-  href: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoHref;
-  target: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoTarget;
-  rel: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoRel;
-  ariaLabel: ThemeNavbarCompassMobileMenuMobileMenuSiteLogoAriaLabel;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo = {
+  alt: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Alt;
+  src: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Src;
+  wordmark: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Wordmark;
+  title: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Title;
+  href: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Href;
+  target: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Target;
+  rel: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Compass_MobileMenu_MobileMenu_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarCompassMobileMenuMobileMenuActiveItemLabel = string | null;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_ActiveItemLabel = string | null;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuPanelRef = React.RefObject<HTMLDivElement | null>;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_PanelRef = React.RefObject<HTMLDivElement | null>;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuIsClosing = boolean;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_IsClosing = boolean;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuIsClosingState = [ThemeNavbarCompassMobileMenuMobileMenuIsClosing, ThemeNavbarCompassMobileMenuMobileMenuSetIsClosing];
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_IsClosingState = [Theme_Navbar_Compass_MobileMenu_MobileMenu_IsClosing, Theme_Navbar_Compass_MobileMenu_MobileMenu_SetIsClosing];
 
-export type ThemeNavbarCompassMobileMenuMobileMenuSetIsClosing = React.Dispatch<React.SetStateAction<ThemeNavbarCompassMobileMenuMobileMenuIsClosing>>;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_SetIsClosing = React.Dispatch<React.SetStateAction<Theme_Navbar_Compass_MobileMenu_MobileMenu_IsClosing>>;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuAriaLabel = string;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_AriaLabel = string;
 
-export type ThemeNavbarCompassMobileMenuCloseMenuAriaLabel = string;
+export type Theme_Navbar_Compass_MobileMenu_CloseMenuAriaLabel = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuOverlayClassName = string;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_OverlayClassName = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuAnimationEvent = React.AnimationEvent<HTMLDivElement>;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_AnimationEvent = React.AnimationEvent<HTMLDivElement>;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuItemIndex = number;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIndex = number;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuItemIcon = string | undefined;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIcon = string | undefined;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuDefaultIcon = string;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_DefaultIcon = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuItemStyle = React.CSSProperties;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemStyle = React.CSSProperties;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuItemTo = string;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemTo = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuItemHref = string;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemHref = string;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuLinkProps = Record<string, string>;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_LinkProps = Record<string, string>;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuItemIsActive = boolean;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_ItemIsActive = boolean;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuLinkSpread = Record<string, string>;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_LinkSpread = Record<string, string>;
 
 /**
  * Theme - Navbar - Compass - Mobile Menu - Mobile Menu - Handle Click Outside.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarCompassMobileMenuMobileMenuHandleClickOutsideFunction = (event: ThemeNavbarCompassMobileMenuMobileMenuHandleClickOutsideMouseEvent) => void;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_HandleClickOutsideFunction = (event: Theme_Navbar_Compass_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent) => void;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuHandleClickOutsideMouseEvent = React.MouseEvent<HTMLDivElement>;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent = React.MouseEvent<HTMLDivElement>;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuHandleClickOutsideMouseTarget = EventTarget | null;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget = EventTarget | null;
 
 /**
  * Theme - Navbar - Compass - Mobile Menu - Mobile Menu - Handle Escape.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarCompassMobileMenuMobileMenuHandleEscapeFunction = (event: ThemeNavbarCompassMobileMenuMobileMenuHandleEscapeKeyboardEvent) => void;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_HandleEscapeFunction = (event: Theme_Navbar_Compass_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent) => void;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuHandleEscapeKeyboardEvent = KeyboardEvent;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent = KeyboardEvent;
 
-export type ThemeNavbarCompassMobileMenuMobileMenuFocusTarget = HTMLButtonElement | null;
+export type Theme_Navbar_Compass_MobileMenu_MobileMenu_FocusTarget = HTMLButtonElement | null;

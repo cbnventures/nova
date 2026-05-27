@@ -12,42 +12,42 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingNoMultilineStringsCheckLiteralContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintFormattingNoMultilineStringsCheckLiteralNode = TSESTree.Literal;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Node = TSESTree.Literal;
 
-export type RulesEslintFormattingNoMultilineStringsCheckLiteralAllowEscapeSequences = boolean;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_AllowEscapeSequences = boolean;
 
-export type RulesEslintFormattingNoMultilineStringsCheckLiteralReturns = void;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Returns = void;
 
-export type RulesEslintFormattingNoMultilineStringsCheckLiteralRaw = string;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_Raw = string;
 
-export type RulesEslintFormattingNoMultilineStringsCheckLiteralRawInner = string;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckLiteral_RawInner = string;
 
 /**
  * Rules - ESLint - Formatting - No Multiline Strings - Check Template Literal.
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralNode = TSESTree.TemplateLiteral;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Node = TSESTree.TemplateLiteral;
 
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralAllowEscapeSequences = boolean;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_AllowEscapeSequences = boolean;
 
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralReturns = void;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Returns = void;
 
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralRaw = string;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_Raw = string;
 
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiRawParts = string[];
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiRawParts = string[];
 
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiValueRaw = string;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiValue_Raw = string;
 
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiValueCooked = string | null;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiValue_Cooked = string | null;
 
-export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiValue = {
-  raw: RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiValueRaw;
-  cooked: RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiValueCooked;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiValue = {
+  raw: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiValue_Raw;
+  cooked: Rules_Eslint_Formatting_NoMultilineStrings_Runner_CheckTemplateLiteral_QuasiValue_Cooked;
 };
 
 /**
@@ -61,21 +61,21 @@ export type RulesEslintFormattingNoMultilineStringsCheckTemplateLiteralQuasiValu
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesParts = string[];
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Parts = string[];
 
-export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesReturns = boolean;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Returns = boolean;
 
-export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesWorkingParts = string[];
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_WorkingParts = string[];
 
-export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesFirst = string | undefined;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_First = string | undefined;
 
-export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesStrippedFirst = string;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedFirst = string;
 
-export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesLastIndex = number;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_LastIndex = number;
 
-export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesLast = string | undefined;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_Last = string | undefined;
 
-export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesStrippedLast = string;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_HasInternalEscapedNewlines_StrippedLast = string;
 
 /**
  * Rules - ESLint - Formatting - No Multiline Strings - Newline Character.
@@ -88,17 +88,17 @@ export type RulesEslintFormattingNoMultilineStringsHasInternalEscapedNewlinesStr
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingNoMultilineStringsRuleDefaultOptionsAllowEscapeSequences = boolean;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsAllowEscapeSequences = boolean;
 
-export type RulesEslintFormattingNoMultilineStringsRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintFormattingNoMultilineStringsRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintFormattingNoMultilineStringsRuleOptionsAllowEscapeSequences = boolean;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions_AllowEscapeSequences = boolean;
 
-export type RulesEslintFormattingNoMultilineStringsRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintFormattingNoMultilineStringsRuleOptionsIgnoreFiles;
-  allowEscapeSequences: RulesEslintFormattingNoMultilineStringsRuleOptionsAllowEscapeSequences;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions_IgnoreFiles;
+  allowEscapeSequences: Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleOptions_AllowEscapeSequences;
 }>;
 
-export type RulesEslintFormattingNoMultilineStringsRuleAllowEscapeSequences = boolean;
+export type Rules_Eslint_Formatting_NoMultilineStrings_Runner_RuleAllowEscapeSequences = boolean;

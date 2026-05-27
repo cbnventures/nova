@@ -5,28 +5,28 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeTabItemTabItemPropsChildren = ReactNode;
+export type Theme_TabItem_Index_TabItem_Props_Children = ReactNode;
 
-export type ThemeTabItemTabItemPropsValue = string;
+export type Theme_TabItem_Index_TabItem_Props_Value = string;
 
-export type ThemeTabItemTabItemPropsClassName = string | undefined;
+export type Theme_TabItem_Index_TabItem_Props_ClassName = string | undefined;
 
-export type ThemeTabItemTabItemPropsStyle = CSSProperties | undefined;
+export type Theme_TabItem_Index_TabItem_Props_Style = CSSProperties | undefined;
 
-export type ThemeTabItemTabItemProps = {
-  children: ThemeTabItemTabItemPropsChildren;
-  value: ThemeTabItemTabItemPropsValue;
-  className?: ThemeTabItemTabItemPropsClassName;
-  style?: ThemeTabItemTabItemPropsStyle;
+export type Theme_TabItem_Index_TabItem_Props = {
+  children: Theme_TabItem_Index_TabItem_Props_Children;
+  value: Theme_TabItem_Index_TabItem_Props_Value;
+  className?: Theme_TabItem_Index_TabItem_Props_ClassName;
+  style?: Theme_TabItem_Index_TabItem_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeTabItemTabItemTabs = {
+export type Theme_TabItem_Index_TabItem_Tabs = {
   selectedValue: string;
 };
 
-export type ThemeTabItemTabItemPanelId = string;
+export type Theme_TabItem_Index_TabItem_PanelId = string;
 
-export type ThemeTabItemTabItemAriaLabelledBy = string;
+export type Theme_TabItem_Index_TabItem_AriaLabelledBy = string;
 
-export type ThemeTabItemTabItemHidden = boolean;
+export type Theme_TabItem_Index_TabItem_Hidden = boolean;

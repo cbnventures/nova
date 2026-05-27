@@ -4,8 +4,8 @@ import { useBlogListPageStructuredData } from '@docusaurus/plugin-content-blog/c
 import { serializeJsonLd } from '../../../lib/safe-json-ld.js';
 
 import type {
-  ThemeBlogListPageStructuredDataBlogListPageStructuredData,
-  ThemeBlogListPageStructuredDataBlogListPageStructuredDataProps,
+  Theme_BlogListPage_StructuredData_Index_BlogListPageStructuredData,
+  Theme_BlogListPage_StructuredData_Index_BlogListPageStructuredData_Props,
 } from '../../../types/theme/BlogListPage/StructuredData/index.d.ts';
 
 /**
@@ -15,14 +15,14 @@ import type {
  * (paginated index of all posts). Improves search-result rich snippets and
  * helps engines understand the blog's collection structure.
  *
- * @param {ThemeBlogListPageStructuredDataBlogListPageStructuredDataProps} props - Props.
+ * @param {Theme_BlogListPage_StructuredData_Index_BlogListPageStructuredData_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function BlogListPageStructuredData(props: ThemeBlogListPageStructuredDataBlogListPageStructuredDataProps) {
-  const structuredData: ThemeBlogListPageStructuredDataBlogListPageStructuredData = useBlogListPageStructuredData(props);
+function BlogListPageStructuredData(props: Theme_BlogListPage_StructuredData_Index_BlogListPageStructuredData_Props) {
+  const structuredData: Theme_BlogListPage_StructuredData_Index_BlogListPageStructuredData = useBlogListPageStructuredData(props);
 
   return (
     <Head>

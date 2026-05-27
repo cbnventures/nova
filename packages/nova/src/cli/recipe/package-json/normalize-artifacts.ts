@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import { LibNovaConfig } from '../../../lib/nova-config.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
   isProjectRoot,
   loadWorkspaceManifests,
@@ -9,39 +9,39 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliRecipePackageJsonNormalizeArtifactsHandleBinName,
-  CliRecipePackageJsonNormalizeArtifactsHandleFileContents,
-  CliRecipePackageJsonNormalizeArtifactsHandleManifest,
-  CliRecipePackageJsonNormalizeArtifactsHandlePackageBin,
-  CliRecipePackageJsonNormalizeArtifactsHandlePackageDirectories,
-  CliRecipePackageJsonNormalizeArtifactsHandlePackageFiles,
-  CliRecipePackageJsonNormalizeArtifactsHandlePackageMan,
-  CliRecipePackageJsonNormalizeArtifactsHandlePackageName,
-  CliRecipePackageJsonNormalizeArtifactsHandlePublishFileContents,
-  CliRecipePackageJsonNormalizeArtifactsHandlePublishManifest,
-  CliRecipePackageJsonNormalizeArtifactsHandlePublishPackagePrivate,
-  CliRecipePackageJsonNormalizeArtifactsHandlePublishPackagePublishConfig,
-  CliRecipePackageJsonNormalizeArtifactsHandlePublishPrivateValue,
-  CliRecipePackageJsonNormalizeArtifactsHandlePublishReturns,
-  CliRecipePackageJsonNormalizeArtifactsHandlePublishWorkspace,
-  CliRecipePackageJsonNormalizeArtifactsHandleReturns,
-  CliRecipePackageJsonNormalizeArtifactsHandleWorkspace,
-  CliRecipePackageJsonNormalizeArtifactsIsEmptyReturns,
-  CliRecipePackageJsonNormalizeArtifactsIsEmptyValue,
-  CliRecipePackageJsonNormalizeArtifactsRunCurrentDirectory,
-  CliRecipePackageJsonNormalizeArtifactsRunEligibleWorkspaces,
-  CliRecipePackageJsonNormalizeArtifactsRunIsAtProjectRoot,
-  CliRecipePackageJsonNormalizeArtifactsRunIsDryRun,
-  CliRecipePackageJsonNormalizeArtifactsRunIsReplaceFile,
-  CliRecipePackageJsonNormalizeArtifactsRunOptions,
-  CliRecipePackageJsonNormalizeArtifactsRunRecipeTupleFilter,
-  CliRecipePackageJsonNormalizeArtifactsRunReplaceFileNotice,
-  CliRecipePackageJsonNormalizeArtifactsRunReturns,
-  CliRecipePackageJsonNormalizeArtifactsRunWorkingFile,
-  CliRecipePackageJsonNormalizeArtifactsRunWorkingFileWorkspaces,
-  CliRecipePackageJsonNormalizeArtifactsRunWorkspaceConfigFilter,
-  CliRecipePackageJsonNormalizeArtifactsRunWorkspaceRecipesFilter,
-  CliRecipePackageJsonNormalizeArtifactsRunWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_BinName,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_FileContents,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageBin,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageDirectories,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageFiles,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageMan,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageName,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_FileContents,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Manifest,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PackagePrivate,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PackagePublishConfig,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PrivateValue,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Returns,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Workspace,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_CurrentDirectory,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsAtProjectRoot,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsDryRun,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsReplaceFile,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ReplaceFileNotice,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Returns,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkingFile,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkingFileWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceRecipesFilter,
+  Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/normalize-artifacts.d.ts';
 
 /**
@@ -52,22 +52,22 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliRecipePackageJsonNormalizeArtifacts {
+export class Runner {
   /**
    * CLI - Recipe - package.json - Normalize Artifacts - Run.
    *
    * Loads nova.config.json, filters eligible workspaces, then normalizes artifact and publish
    * fields for each manifest. Supports dry-run.
    *
-   * @param {CliRecipePackageJsonNormalizeArtifactsRunOptions} options - Options.
+   * @param {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options} options - Options.
    *
-   * @returns {CliRecipePackageJsonNormalizeArtifactsRunReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static async run(options: CliRecipePackageJsonNormalizeArtifactsRunOptions): CliRecipePackageJsonNormalizeArtifactsRunReturns {
-    const currentDirectory: CliRecipePackageJsonNormalizeArtifactsRunCurrentDirectory = process.cwd();
-    const isAtProjectRoot: CliRecipePackageJsonNormalizeArtifactsRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options): Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Returns {
+    const currentDirectory: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_CurrentDirectory = process.cwd();
+    const isAtProjectRoot: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -75,31 +75,31 @@ export class CliRecipePackageJsonNormalizeArtifacts {
       return;
     }
 
-    const isDryRun: CliRecipePackageJsonNormalizeArtifactsRunIsDryRun = options['dryRun'] === true;
-    const isReplaceFile: CliRecipePackageJsonNormalizeArtifactsRunIsReplaceFile = options['replaceFile'] === true;
+    const isDryRun: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isReplaceFile: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice: CliRecipePackageJsonNormalizeArtifactsRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const workingFile: CliRecipePackageJsonNormalizeArtifactsRunWorkingFile = await new LibNovaConfig().load();
-    const workingFileWorkspaces: CliRecipePackageJsonNormalizeArtifactsRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
+    const workingFile: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-artifacts. No workspaces detected in the "nova.config.json" file.');
 
@@ -107,15 +107,15 @@ export class CliRecipePackageJsonNormalizeArtifacts {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces: CliRecipePackageJsonNormalizeArtifactsRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: CliRecipePackageJsonNormalizeArtifactsRunWorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: CliRecipePackageJsonNormalizeArtifactsRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
+    const eligibleWorkspaces: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: CliRecipePackageJsonNormalizeArtifactsRunRecipeTupleFilter = workspaceRecipes['normalize-artifacts'];
+      const recipeTuple: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_RecipeTupleFilter = workspaceRecipes['normalize-artifacts'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -126,21 +126,21 @@ export class CliRecipePackageJsonNormalizeArtifacts {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-artifacts. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces: CliRecipePackageJsonNormalizeArtifactsRunWorkspaces = await loadWorkspaceManifests({
+    const workspaces: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Workspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-artifacts. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -148,20 +148,20 @@ export class CliRecipePackageJsonNormalizeArtifacts {
     }
 
     Logger.customize({
-      name: 'CliRecipePackageJsonNormalizeArtifacts.run',
+      name: 'Runner.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for normalize-artifacts.`);
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.run',
+        name: 'Runner.run',
         purpose: 'iteration',
       }).info(`Running normalize-artifacts for the "${workspace['manifest']['name']}" workspace ...`);
 
-      await CliRecipePackageJsonNormalizeArtifacts.handle(workspace);
+      await Runner.handle(workspace);
 
-      await CliRecipePackageJsonNormalizeArtifacts.handlePublish(workspace);
+      await Runner.handlePublish(workspace);
 
       if (isDryRun === true) {
         continue;
@@ -179,22 +179,22 @@ export class CliRecipePackageJsonNormalizeArtifacts {
    * Processes files, bin, man, and directories for one workspace. Normalizes bin strings to
    * objects and man strings to arrays for consistency.
    *
-   * @param {CliRecipePackageJsonNormalizeArtifactsHandleWorkspace} workspace - Workspace.
+   * @param {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Workspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonNormalizeArtifactsHandleReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Returns}
    *
    * @since 0.14.0
    */
-  private static async handle(workspace: CliRecipePackageJsonNormalizeArtifactsHandleWorkspace): CliRecipePackageJsonNormalizeArtifactsHandleReturns {
-    const fileContents: CliRecipePackageJsonNormalizeArtifactsHandleFileContents = workspace['fileContents'];
-    const manifest: CliRecipePackageJsonNormalizeArtifactsHandleManifest = workspace['manifest'];
+  private static async handle(workspace: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Workspace): Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Returns {
+    const fileContents: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_FileContents = workspace['fileContents'];
+    const manifest: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Manifest = workspace['manifest'];
 
-    const packageFiles: CliRecipePackageJsonNormalizeArtifactsHandlePackageFiles = fileContents['files'];
-    const packageBin: CliRecipePackageJsonNormalizeArtifactsHandlePackageBin = fileContents['bin'];
-    const packageMan: CliRecipePackageJsonNormalizeArtifactsHandlePackageMan = fileContents['man'];
-    const packageDirectories: CliRecipePackageJsonNormalizeArtifactsHandlePackageDirectories = fileContents['directories'];
+    const packageFiles: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageFiles = fileContents['files'];
+    const packageBin: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageBin = fileContents['bin'];
+    const packageMan: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageMan = fileContents['man'];
+    const packageDirectories: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageDirectories = fileContents['directories'];
 
     // Sync the "files" field.
     if (
@@ -205,7 +205,7 @@ export class CliRecipePackageJsonNormalizeArtifacts {
       ].includes(manifest['role']) === false // Workspace role is not "package" or "tool".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+        name: 'Runner.handle',
         purpose: 'files',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "files". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -216,10 +216,10 @@ export class CliRecipePackageJsonNormalizeArtifacts {
         || manifest['role'] === 'tool' // Workspace role is "tool".
       )
       && packageFiles !== undefined // Package "files" is defined.
-      && CliRecipePackageJsonNormalizeArtifacts.isEmpty(packageFiles) === true // Package "files" is empty.
+      && Runner.isEmpty(packageFiles) === true // Package "files" is empty.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+        name: 'Runner.handle',
         purpose: 'files',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "files" ...`);
 
@@ -235,7 +235,7 @@ export class CliRecipePackageJsonNormalizeArtifacts {
       ].includes(manifest['role']) === false // Workspace role is not "package" or "tool".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+        name: 'Runner.handle',
         purpose: 'bin',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "bin". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -250,20 +250,20 @@ export class CliRecipePackageJsonNormalizeArtifacts {
       if (
         typeof packageBin === 'string' // Package "bin" is a string.
       ) {
-        const packageName: CliRecipePackageJsonNormalizeArtifactsHandlePackageName = manifest['name'];
-        const binName: CliRecipePackageJsonNormalizeArtifactsHandleBinName = (packageName.includes('/') === true) ? packageName.split('/').pop() : packageName;
+        const packageName: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageName = manifest['name'];
+        const binName: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_BinName = (packageName.includes('/') === true) ? packageName.split('/').pop() : packageName;
 
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+          name: 'Runner.handle',
           purpose: 'bin',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "bin" from string to object ...`);
 
         Reflect.set(fileContents, 'bin', {
           [binName ?? packageName]: packageBin,
         });
-      } else if (CliRecipePackageJsonNormalizeArtifacts.isEmpty(packageBin) === true) {
+      } else if (Runner.isEmpty(packageBin) === true) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+          name: 'Runner.handle',
           purpose: 'bin',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "bin" ...`);
 
@@ -280,7 +280,7 @@ export class CliRecipePackageJsonNormalizeArtifacts {
       ].includes(manifest['role']) === false // Workspace role is not "package" or "tool".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+        name: 'Runner.handle',
         purpose: 'man',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "man". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -296,14 +296,14 @@ export class CliRecipePackageJsonNormalizeArtifacts {
         typeof packageMan === 'string' // Package "man" is a string.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+          name: 'Runner.handle',
           purpose: 'man',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "man" from string to array ...`);
 
         Reflect.set(fileContents, 'man', [packageMan]);
-      } else if (CliRecipePackageJsonNormalizeArtifacts.isEmpty(packageMan) === true) {
+      } else if (Runner.isEmpty(packageMan) === true) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+          name: 'Runner.handle',
           purpose: 'man',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "man" ...`);
 
@@ -320,7 +320,7 @@ export class CliRecipePackageJsonNormalizeArtifacts {
       ].includes(manifest['role']) === false // Workspace role is not "package" or "tool".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+        name: 'Runner.handle',
         purpose: 'directories',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "directories". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -331,10 +331,10 @@ export class CliRecipePackageJsonNormalizeArtifacts {
         || manifest['role'] === 'tool' // Workspace role is "tool".
       )
       && packageDirectories !== undefined // Package "directories" is defined.
-      && CliRecipePackageJsonNormalizeArtifacts.isEmpty(packageDirectories) === true // Package "directories" is empty.
+      && Runner.isEmpty(packageDirectories) === true // Package "directories" is empty.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handle',
+        name: 'Runner.handle',
         purpose: 'directories',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "directories" ...`);
 
@@ -350,20 +350,20 @@ export class CliRecipePackageJsonNormalizeArtifacts {
    * Syncs the private flag based on workspace policy and removes publishConfig for
    * non-distributable roles. Distributable ones set private to false.
    *
-   * @param {CliRecipePackageJsonNormalizeArtifactsHandlePublishWorkspace} workspace - Workspace.
+   * @param {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Workspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonNormalizeArtifactsHandlePublishReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Returns}
    *
    * @since 0.14.0
    */
-  private static async handlePublish(workspace: CliRecipePackageJsonNormalizeArtifactsHandlePublishWorkspace): CliRecipePackageJsonNormalizeArtifactsHandlePublishReturns {
-    const fileContents: CliRecipePackageJsonNormalizeArtifactsHandlePublishFileContents = workspace['fileContents'];
-    const manifest: CliRecipePackageJsonNormalizeArtifactsHandlePublishManifest = workspace['manifest'];
+  private static async handlePublish(workspace: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Workspace): Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Returns {
+    const fileContents: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_FileContents = workspace['fileContents'];
+    const manifest: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Manifest = workspace['manifest'];
 
-    const packagePrivate: CliRecipePackageJsonNormalizeArtifactsHandlePublishPackagePrivate = fileContents['private'];
-    const packagePublishConfig: CliRecipePackageJsonNormalizeArtifactsHandlePublishPackagePublishConfig = fileContents['publishConfig'];
+    const packagePrivate: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PackagePrivate = fileContents['private'];
+    const packagePublishConfig: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PackagePublishConfig = fileContents['publishConfig'];
 
     // Sync the "private" field.
     if (
@@ -377,10 +377,10 @@ export class CliRecipePackageJsonNormalizeArtifacts {
         && packagePrivate !== true // Package "private" is not "true".
       )
     ) {
-      const privateValue: CliRecipePackageJsonNormalizeArtifactsHandlePublishPrivateValue = (manifest['policy'] !== 'distributable');
+      const privateValue: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PrivateValue = (manifest['policy'] !== 'distributable');
 
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handlePublish',
+        name: 'Runner.handlePublish',
         purpose: 'private',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "private" to "${privateValue}" ...`);
 
@@ -393,7 +393,7 @@ export class CliRecipePackageJsonNormalizeArtifacts {
       && manifest['policy'] !== 'distributable' // Workspace policy is not "distributable".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handlePublish',
+        name: 'Runner.handlePublish',
         purpose: 'publishConfig',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "publishConfig". Workspace policy "${manifest['policy']}" does not allow it.`);
 
@@ -401,10 +401,10 @@ export class CliRecipePackageJsonNormalizeArtifacts {
     } else if (
       manifest['policy'] === 'distributable' // Workspace policy is "distributable".
       && packagePublishConfig !== undefined // Package "publishConfig" is defined.
-      && CliRecipePackageJsonNormalizeArtifacts.isEmpty(packagePublishConfig) === true // Package "publishConfig" is empty.
+      && Runner.isEmpty(packagePublishConfig) === true // Package "publishConfig" is empty.
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeArtifacts.handlePublish',
+        name: 'Runner.handlePublish',
         purpose: 'publishConfig',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing empty "publishConfig" ...`);
 
@@ -421,15 +421,15 @@ export class CliRecipePackageJsonNormalizeArtifacts {
    * string, an empty array, or an object with no keys.
    * Used by handle and handlePublish to prune fields.
    *
-   * @param {CliRecipePackageJsonNormalizeArtifactsIsEmptyValue} value - Value.
+   * @param {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value} value - Value.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonNormalizeArtifactsIsEmptyReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns}
    *
    * @since 0.14.0
    */
-  private static isEmpty(value: CliRecipePackageJsonNormalizeArtifactsIsEmptyValue): CliRecipePackageJsonNormalizeArtifactsIsEmptyReturns {
+  private static isEmpty(value: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value): Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns {
     if (value === null || value === undefined) {
       return true;
     }

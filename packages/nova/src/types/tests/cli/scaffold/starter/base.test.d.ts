@@ -3,38 +3,38 @@
  *
  * @since 0.15.0
  */
-export type TestsCliScaffoldStarterBaseRunOriginalCwd = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_OriginalCwd = string;
 
-export type TestsCliScaffoldStarterBaseRunTemporaryDirectory = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_TemporaryDirectory = string;
 
-export type TestsCliScaffoldStarterBaseRunTemporaryBase = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_TemporaryBase = string;
 
-export type TestsCliScaffoldStarterBaseRunSandboxRoot = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_SandboxRoot = string;
 
-export type TestsCliScaffoldStarterBaseRunRootDirectory = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_RootDirectory = string;
 
-export type TestsCliScaffoldStarterBaseRunChildDirectory = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_ChildDirectory = string;
 
-export type TestsCliScaffoldStarterBaseRunRootPackageJson = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_RootPackageJson = string;
 
-export type TestsCliScaffoldStarterBaseRunRootPackageJsonPath = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_RootPackageJsonPath = string;
 
-export type TestsCliScaffoldStarterBaseRunChildPackageJson = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_ChildPackageJson = string;
 
-export type TestsCliScaffoldStarterBaseRunChildPackageJsonPath = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_ChildPackageJsonPath = string;
 
-export type TestsCliScaffoldStarterBaseRunProjectDirectory = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_ProjectDirectory = string;
 
-export type TestsCliScaffoldStarterBaseRunPackageJson = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_PackageJson = string;
 
-export type TestsCliScaffoldStarterBaseRunPackageJsonPath = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_PackageJsonPath = string;
 
-export type TestsCliScaffoldStarterBaseRunExists = boolean;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_Exists = boolean;
 
-export type TestsCliScaffoldStarterBaseRunDryRunOutputPath = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_DryRunOutputPath = string;
 
-export type TestsCliScaffoldStarterBaseRunNovaConfigPath = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_NovaConfigPath = string;
 
-export type TestsCliScaffoldStarterBaseRunAppsDirectory = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_AppsDirectory = string;
 
-export type TestsCliScaffoldStarterBaseRunPackagesDirectory = string;
+export type Tests_Cli_Scaffold_Starter_Base_CliScaffoldStarterBaseRun_PackagesDirectory = string;

@@ -1,78 +1,78 @@
 import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 
-import type { SharedSearchWorkerSearchHit } from '../../shared.d.ts';
+import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
 
 /**
  * Theme - Search Page - Search Page.
  *
  * @since 0.15.0
  */
-export type ThemeSearchPageSearchPagePropsClassName = string | undefined;
+export type Theme_SearchPage_Index_SearchPage_Props_ClassName = string | undefined;
 
-export type ThemeSearchPageSearchPagePropsStyle = CSSProperties | undefined;
+export type Theme_SearchPage_Index_SearchPage_Props_Style = CSSProperties | undefined;
 
-export type ThemeSearchPageSearchPageProps = {
-  className?: ThemeSearchPageSearchPagePropsClassName;
-  style?: ThemeSearchPageSearchPagePropsStyle;
+export type Theme_SearchPage_Index_SearchPage_Props = {
+  className?: Theme_SearchPage_Index_SearchPage_Props_ClassName;
+  style?: Theme_SearchPage_Index_SearchPage_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeSearchPageSearchPageDocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
+export type Theme_SearchPage_Index_SearchPage_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
 
-export type ThemeSearchPageSearchPageBaseUrl = string;
+export type Theme_SearchPage_Index_SearchPage_BaseUrl = string;
 
-export type ThemeSearchPageSearchPageWorkerUrl = string;
+export type Theme_SearchPage_Index_SearchPage_WorkerUrl = string;
 
-export type ThemeSearchPageSearchPageManifestUrl = string;
+export type Theme_SearchPage_Index_SearchPage_ManifestUrl = string;
 
-export type ThemeSearchPageSearchPageSearchWorker = import('../../lib/search/use-search-worker.d.ts').LibSearchUseSearchWorkerReturns;
+export type Theme_SearchPage_Index_SearchPage_SearchWorker = import('../../lib/search/use-search-worker.d.ts').Lib_Search_UseSearchWorker_Returns;
 
-export type ThemeSearchPageSearchPageSearchParams = URLSearchParams;
+export type Theme_SearchPage_Index_SearchPage_SearchParams = URLSearchParams;
 
-export type ThemeSearchPageSearchPageInitialQuery = string;
+export type Theme_SearchPage_Index_SearchPage_InitialQuery = string;
 
-export type ThemeSearchPageSearchPageQueryState = [ThemeSearchPageSearchPageQuery, ThemeSearchPageSearchPageSetQuery];
+export type Theme_SearchPage_Index_SearchPage_QueryState = [Theme_SearchPage_Index_SearchPage_Query, Theme_SearchPage_Index_SearchPage_SetQuery];
 
-export type ThemeSearchPageSearchPageQuery = string;
+export type Theme_SearchPage_Index_SearchPage_Query = string;
 
-export type ThemeSearchPageSearchPageSetQuery = Dispatch<SetStateAction<ThemeSearchPageSearchPageQuery>>;
+export type Theme_SearchPage_Index_SearchPage_SetQuery = Dispatch<SetStateAction<Theme_SearchPage_Index_SearchPage_Query>>;
 
-export type ThemeSearchPageSearchPageSearchedQueryState = [ThemeSearchPageSearchPageSearchedQuery, ThemeSearchPageSearchPageSetSearchedQuery];
+export type Theme_SearchPage_Index_SearchPage_SearchedQueryState = [Theme_SearchPage_Index_SearchPage_SearchedQuery, Theme_SearchPage_Index_SearchPage_SetSearchedQuery];
 
-export type ThemeSearchPageSearchPageSearchedQuery = string;
+export type Theme_SearchPage_Index_SearchPage_SearchedQuery = string;
 
-export type ThemeSearchPageSearchPageSetSearchedQuery = Dispatch<SetStateAction<ThemeSearchPageSearchPageSearchedQuery>>;
+export type Theme_SearchPage_Index_SearchPage_SetSearchedQuery = Dispatch<SetStateAction<Theme_SearchPage_Index_SearchPage_SearchedQuery>>;
 
-export type ThemeSearchPageSearchPageDebounceTimerRef = React.RefObject<ReturnType<typeof setTimeout> | undefined>;
+export type Theme_SearchPage_Index_SearchPage_DebounceTimerRef = React.RefObject<ReturnType<typeof setTimeout> | undefined>;
 
-export type ThemeSearchPageSearchPageDispatchedQueryRef = React.RefObject<string>;
+export type Theme_SearchPage_Index_SearchPage_DispatchedQueryRef = React.RefObject<string>;
 
-export type ThemeSearchPageSearchPageHandleInputChangeFunction = (event: ThemeSearchPageSearchPageInputChangeEvent) => void;
+export type Theme_SearchPage_Index_SearchPage_HandleInputChangeFunction = (event: Theme_SearchPage_Index_SearchPage_InputChangeEvent) => void;
 
-export type ThemeSearchPageSearchPageInputChangeEvent = React.ChangeEvent<HTMLInputElement>;
+export type Theme_SearchPage_Index_SearchPage_InputChangeEvent = React.ChangeEvent<HTMLInputElement>;
 
-export type ThemeSearchPageSearchPageInputValue = string;
+export type Theme_SearchPage_Index_SearchPage_InputValue = string;
 
-export type ThemeSearchPageSearchPageNewUrl = string;
+export type Theme_SearchPage_Index_SearchPage_NewUrl = string;
 
-export type ThemeSearchPageSearchPageTitle = string;
+export type Theme_SearchPage_Index_SearchPage_Title = string;
 
-export type ThemeSearchPageSearchPageLoading = string;
+export type Theme_SearchPage_Index_SearchPage_Loading = string;
 
-export type ThemeSearchPageSearchPageNoResults = string;
+export type Theme_SearchPage_Index_SearchPage_NoResults = string;
 
-export type ThemeSearchPageSearchPageSearching = string;
+export type Theme_SearchPage_Index_SearchPage_Searching = string;
 
-export type ThemeSearchPageSearchPageResultCount = number;
+export type Theme_SearchPage_Index_SearchPage_ResultCount = number;
 
-export type ThemeSearchPageSearchPageResultsFound = string;
+export type Theme_SearchPage_Index_SearchPage_ResultsFound = string;
 
-export type ThemeSearchPageSearchPageResultItem = SharedSearchWorkerSearchHit;
+export type Theme_SearchPage_Index_SearchPage_ResultItem = Shared_SearchWorkerSearchHit;
 
-export type ThemeSearchPageSearchPageResultUrl = string;
+export type Theme_SearchPage_Index_SearchPage_ResultUrl = string;
 
-export type ThemeSearchPageSearchPageResultIndex = number;
+export type Theme_SearchPage_Index_SearchPage_ResultIndex = number;
 
-export type ThemeSearchPageSearchPageSnippetSegment = SharedSearchWorkerSearchHit['snippetSegments'][number];
+export type Theme_SearchPage_Index_SearchPage_SnippetSegment = Shared_SearchWorkerSearchHit['snippetSegments'][number];
 
-export type ThemeSearchPageSearchPageSnippetSegmentIndex = number;
+export type Theme_SearchPage_Index_SearchPage_SnippetSegmentIndex = number;

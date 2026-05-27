@@ -3,9 +3,9 @@ import BlogPostItem from '@theme/BlogPostItem';
 import { createElement } from 'react';
 
 import type {
-  ThemeBlogPostItemsBlogPostItemsProps,
-  ThemeBlogPostItemsBlogPostItemsPropsItem,
-  ThemeBlogPostItemsBlogPostItemsPropsItemContent,
+  Theme_BlogPostItems_Index_BlogPostItems_Props,
+  Theme_BlogPostItems_Index_BlogPostItems_PropsItem,
+  Theme_BlogPostItems_Index_BlogPostItems_PropsItem_Content,
 } from '../../types/theme/BlogPostItems/index.d.ts';
 
 /**
@@ -15,21 +15,21 @@ import type {
  * wrapped BlogPostItem components, providing each post with a
  * BlogPostProvider context for metadata access.
  *
- * @param {ThemeBlogPostItemsBlogPostItemsProps} props - Props.
+ * @param {Theme_BlogPostItems_Index_BlogPostItems_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogPostItems(props: ThemeBlogPostItemsBlogPostItemsProps) {
+function BlogPostItems(props: Theme_BlogPostItems_Index_BlogPostItems_Props) {
   return (
     <div
       className={(props['className'] !== undefined) ? `nova-blog-post-items ${props['className']}` : 'nova-blog-post-items'}
       style={props['style']}
     >
       {
-        props['items'].map((item: ThemeBlogPostItemsBlogPostItemsPropsItem) => {
-          const blogPostContent: ThemeBlogPostItemsBlogPostItemsPropsItemContent = item['content'];
+        props['items'].map((item: Theme_BlogPostItems_Index_BlogPostItems_PropsItem) => {
+          const blogPostContent: Theme_BlogPostItems_Index_BlogPostItems_PropsItem_Content = item['content'];
 
           return (
             <BlogPostProvider

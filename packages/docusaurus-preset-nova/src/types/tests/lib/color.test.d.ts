@@ -1,9 +1,9 @@
-import type { Color } from '../../../lib/color.js';
+import type { Runner as Color } from '../../../lib/color.js';
 
 import type {
-  SharedColorScale,
-  SharedHexColor,
-  SharedShadeLevel,
+  Shared_ColorScale,
+  Shared_HexColor,
+  Shared_ShadeLevel,
 } from '../../shared.d.ts';
 
 /**
@@ -11,103 +11,103 @@ import type {
  *
  * @since 0.15.0
  */
-export type TestsLibColorInstance = Color;
+export type Tests_Lib_Color_Instance = Color;
 
 /**
  * Tests - Lib - Color - Color Edge Cases.
  *
  * @since 0.15.0
  */
-export type TestsLibColorEdgeCaseInstance = Color;
+export type Tests_Lib_Color_EdgeCaseInstance = Color;
 
-export type TestsLibColorEdgeCaseScale = SharedColorScale;
+export type Tests_Lib_Color_EdgeCaseScale = Shared_ColorScale;
 
-export type TestsLibColorEdgeCaseShadeKeys = string[];
+export type Tests_Lib_Color_EdgeCaseShadeKeys = string[];
 
 /**
  * Tests - Lib - Color - Color GenerateScale.
  *
  * @since 0.15.0
  */
-export type TestsLibColorGenerateScaleInstance = Color;
+export type Tests_Lib_Color_GenerateScaleInstance = Color;
 
-export type TestsLibColorGenerateScaleResult = SharedColorScale;
+export type Tests_Lib_Color_GenerateScaleResult = Shared_ColorScale;
 
-export type TestsLibColorGenerateScaleShadeKeys = string[];
+export type Tests_Lib_Color_GenerateScaleShadeKeys = string[];
 
-export type TestsLibColorGenerateScaleExpectedLevel = SharedShadeLevel;
+export type Tests_Lib_Color_GenerateScaleExpectedLevel = Shared_ShadeLevel;
 
-export type TestsLibColorGenerateScaleShade600 = SharedHexColor;
+export type Tests_Lib_Color_GenerateScaleShade600 = Shared_HexColor;
 
-export type TestsLibColorGenerateScaleShade600RedSlice = string;
+export type Tests_Lib_Color_GenerateScaleShade600RedSlice = string;
 
-export type TestsLibColorGenerateScaleShade600Red = number;
+export type Tests_Lib_Color_GenerateScaleShade600Red = number;
 
-export type TestsLibColorGenerateScaleShade600GreenSlice = string;
+export type Tests_Lib_Color_GenerateScaleShade600GreenSlice = string;
 
-export type TestsLibColorGenerateScaleShade600Green = number;
+export type Tests_Lib_Color_GenerateScaleShade600Green = number;
 
-export type TestsLibColorGenerateScaleShade600BlueSlice = string;
+export type Tests_Lib_Color_GenerateScaleShade600BlueSlice = string;
 
-export type TestsLibColorGenerateScaleShade600Blue = number;
+export type Tests_Lib_Color_GenerateScaleShade600Blue = number;
 
-export type TestsLibColorGenerateScaleInputRedString = string;
+export type Tests_Lib_Color_GenerateScaleInputRedString = string;
 
-export type TestsLibColorGenerateScaleInputRed = number;
+export type Tests_Lib_Color_GenerateScaleInputRed = number;
 
-export type TestsLibColorGenerateScaleInputGreenString = string;
+export type Tests_Lib_Color_GenerateScaleInputGreenString = string;
 
-export type TestsLibColorGenerateScaleInputGreen = number;
+export type Tests_Lib_Color_GenerateScaleInputGreen = number;
 
-export type TestsLibColorGenerateScaleInputBlueString = string;
+export type Tests_Lib_Color_GenerateScaleInputBlueString = string;
 
-export type TestsLibColorGenerateScaleInputBlue = number;
+export type Tests_Lib_Color_GenerateScaleInputBlue = number;
 
-export type TestsLibColorGenerateScaleRedDiff = number;
+export type Tests_Lib_Color_GenerateScaleRedDiff = number;
 
-export type TestsLibColorGenerateScaleGreenDiff = number;
+export type Tests_Lib_Color_GenerateScaleGreenDiff = number;
 
-export type TestsLibColorGenerateScaleBlueDiff = number;
+export type Tests_Lib_Color_GenerateScaleBlueDiff = number;
 
-export type TestsLibColorGenerateScaleAnchorHex = SharedHexColor;
+export type Tests_Lib_Color_GenerateScaleAnchorHex = Shared_HexColor;
 
-export type TestsLibColorGenerateScaleAnchorLightness = number;
+export type Tests_Lib_Color_GenerateScaleAnchorLightness = number;
 
-export type TestsLibColorGenerateScaleLighterHex = SharedHexColor;
+export type Tests_Lib_Color_GenerateScaleLighterHex = Shared_HexColor;
 
-export type TestsLibColorGenerateScaleLighterLightness = number;
+export type Tests_Lib_Color_GenerateScaleLighterLightness = number;
 
-export type TestsLibColorGenerateScaleDarkerHex = SharedHexColor;
+export type Tests_Lib_Color_GenerateScaleDarkerHex = Shared_HexColor;
 
-export type TestsLibColorGenerateScaleDarkerLightness = number;
+export type Tests_Lib_Color_GenerateScaleDarkerLightness = number;
 
 /**
  * Tests - Lib - Color - Hex To Lightness.
  *
  * @since 0.15.0
  */
-export type TestsLibColorHexToLightnessHex = string;
+export type Tests_Lib_Color_HexToLightness_Hex = string;
 
-export type TestsLibColorHexToLightnessReturns = number;
+export type Tests_Lib_Color_HexToLightness_Returns = number;
 
-export type TestsLibColorHexToLightnessRedSlice = string;
+export type Tests_Lib_Color_HexToLightness_RedSlice = string;
 
-export type TestsLibColorHexToLightnessRed = number;
+export type Tests_Lib_Color_HexToLightness_Red = number;
 
-export type TestsLibColorHexToLightnessGreenSlice = string;
+export type Tests_Lib_Color_HexToLightness_GreenSlice = string;
 
-export type TestsLibColorHexToLightnessGreen = number;
+export type Tests_Lib_Color_HexToLightness_Green = number;
 
-export type TestsLibColorHexToLightnessBlueSlice = string;
+export type Tests_Lib_Color_HexToLightness_BlueSlice = string;
 
-export type TestsLibColorHexToLightnessBlue = number;
+export type Tests_Lib_Color_HexToLightness_Blue = number;
 
-export type TestsLibColorHexToLightnessNormalizedRed = number;
+export type Tests_Lib_Color_HexToLightness_NormalizedRed = number;
 
-export type TestsLibColorHexToLightnessNormalizedGreen = number;
+export type Tests_Lib_Color_HexToLightness_NormalizedGreen = number;
 
-export type TestsLibColorHexToLightnessNormalizedBlue = number;
+export type Tests_Lib_Color_HexToLightness_NormalizedBlue = number;
 
-export type TestsLibColorHexToLightnessChannelMax = number;
+export type Tests_Lib_Color_HexToLightness_ChannelMax = number;
 
-export type TestsLibColorHexToLightnessChannelMin = number;
+export type Tests_Lib_Color_HexToLightness_ChannelMin = number;

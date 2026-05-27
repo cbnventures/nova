@@ -1,11 +1,11 @@
 import type {
-  SharedColorScale,
-  SharedHexColor,
-  SharedHslColor,
-  SharedHslColorHue,
-  SharedHslColorLightness,
-  SharedHslColorSaturation,
-  SharedShadeLevel,
+  Shared_ColorScale,
+  Shared_HexColor,
+  Shared_HslColor,
+  Shared_HslColor_Hue,
+  Shared_HslColor_Lightness,
+  Shared_HslColor_Saturation,
+  Shared_ShadeLevel,
 } from '../shared.d.ts';
 
 /**
@@ -13,166 +13,166 @@ import type {
  *
  * @since 0.15.0
  */
-export type LibColorComputeShadeHue = number;
+export type Lib_Color_Runner_ComputeShade_Hue = number;
 
-export type LibColorComputeShadeSaturation = number;
+export type Lib_Color_Runner_ComputeShade_Saturation = number;
 
-export type LibColorComputeShadeLightness = number;
+export type Lib_Color_Runner_ComputeShade_Lightness = number;
 
-export type LibColorComputeShadePosition = number;
+export type Lib_Color_Runner_ComputeShade_Position = number;
 
-export type LibColorComputeShadeSaturationFactor = number;
+export type Lib_Color_Runner_ComputeShade_SaturationFactor = number;
 
-export type LibColorComputeShadeReturns = SharedHexColor;
+export type Lib_Color_Runner_ComputeShade_Returns = Shared_HexColor;
 
-export type LibColorComputeShadeTargetLightness = number;
+export type Lib_Color_Runner_ComputeShade_TargetLightness = number;
 
-export type LibColorComputeShadeAdjustedSaturation = number;
+export type Lib_Color_Runner_ComputeShade_AdjustedSaturation = number;
 
 /**
  * Lib - Color - Constructor.
  *
  * @since 0.15.0
  */
-export type LibColorConstructorHex = string;
+export type Lib_Color_Runner_Constructor_Hex = string;
 
-export type LibColorConstructorIsValid = boolean;
+export type Lib_Color_Runner_Constructor_IsValid = boolean;
 
-export type LibColorConstructorRedSlice = string;
+export type Lib_Color_Runner_Constructor_RedSlice = string;
 
-export type LibColorConstructorRed = number;
+export type Lib_Color_Runner_Constructor_Red = number;
 
-export type LibColorConstructorGreenSlice = string;
+export type Lib_Color_Runner_Constructor_GreenSlice = string;
 
-export type LibColorConstructorGreen = number;
+export type Lib_Color_Runner_Constructor_Green = number;
 
-export type LibColorConstructorBlueSlice = string;
+export type Lib_Color_Runner_Constructor_BlueSlice = string;
 
-export type LibColorConstructorBlue = number;
+export type Lib_Color_Runner_Constructor_Blue = number;
 
-export type LibColorConstructorHsl = SharedHslColor;
+export type Lib_Color_Runner_Constructor_Hsl = Shared_HslColor;
 
 /**
  * Lib - Color - Generate Scale.
  *
  * @since 0.15.0
  */
-export type LibColorGenerateScaleReturns = SharedColorScale;
+export type Lib_Color_Runner_GenerateScale_Returns = Shared_ColorScale;
 
-export type LibColorGenerateScaleResult = SharedColorScale;
+export type Lib_Color_Runner_GenerateScale_Result = Shared_ColorScale;
 
-export type LibColorGenerateScaleShadeConfigEntry = [SharedShadeLevel, number, number] | undefined;
+export type Lib_Color_Runner_GenerateScale_ShadeConfigEntry = [Shared_ShadeLevel, number, number] | undefined;
 
-export type LibColorGenerateScaleShadeConfigLevel = SharedShadeLevel;
+export type Lib_Color_Runner_GenerateScale_ShadeConfigLevel = Shared_ShadeLevel;
 
-export type LibColorGenerateScaleShadeConfigPosition = number;
+export type Lib_Color_Runner_GenerateScale_ShadeConfigPosition = number;
 
-export type LibColorGenerateScaleShadeConfigSaturationFactor = number;
+export type Lib_Color_Runner_GenerateScale_ShadeConfigSaturationFactor = number;
 
-export type LibColorGenerateScaleShadeHex = SharedHexColor;
+export type Lib_Color_Runner_GenerateScale_ShadeHex = Shared_HexColor;
 
 /**
  * Lib - Color - Hsl To Hex.
  *
  * @since 0.15.0
  */
-export type LibColorHslToHexHue = number;
+export type Lib_Color_Runner_HslToHex_Hue = number;
 
-export type LibColorHslToHexSaturation = number;
+export type Lib_Color_Runner_HslToHex_Saturation = number;
 
-export type LibColorHslToHexLightness = number;
+export type Lib_Color_Runner_HslToHex_Lightness = number;
 
-export type LibColorHslToHexReturns = SharedHexColor;
+export type Lib_Color_Runner_HslToHex_Returns = Shared_HexColor;
 
-export type LibColorHslToHexNormalizedSaturation = number;
+export type Lib_Color_Runner_HslToHex_NormalizedSaturation = number;
 
-export type LibColorHslToHexNormalizedLightness = number;
+export type Lib_Color_Runner_HslToHex_NormalizedLightness = number;
 
-export type LibColorHslToHexChroma = number;
+export type Lib_Color_Runner_HslToHex_Chroma = number;
 
-export type LibColorHslToHexHueSection = number;
+export type Lib_Color_Runner_HslToHex_HueSection = number;
 
-export type LibColorHslToHexSecondaryChroma = number;
+export type Lib_Color_Runner_HslToHex_SecondaryChroma = number;
 
-export type LibColorHslToHexLightnessMatch = number;
+export type Lib_Color_Runner_HslToHex_LightnessMatch = number;
 
-export type LibColorHslToHexChannelRed = number;
+export type Lib_Color_Runner_HslToHex_ChannelRed = number;
 
-export type LibColorHslToHexChannelGreen = number;
+export type Lib_Color_Runner_HslToHex_ChannelGreen = number;
 
-export type LibColorHslToHexChannelBlue = number;
+export type Lib_Color_Runner_HslToHex_ChannelBlue = number;
 
-export type LibColorHslToHexRedByte = number;
+export type Lib_Color_Runner_HslToHex_RedByte = number;
 
-export type LibColorHslToHexGreenByte = number;
+export type Lib_Color_Runner_HslToHex_GreenByte = number;
 
-export type LibColorHslToHexBlueByte = number;
+export type Lib_Color_Runner_HslToHex_BlueByte = number;
 
-export type LibColorHslToHexRedHex = string;
+export type Lib_Color_Runner_HslToHex_RedHex = string;
 
-export type LibColorHslToHexGreenHex = string;
+export type Lib_Color_Runner_HslToHex_GreenHex = string;
 
-export type LibColorHslToHexBlueHex = string;
+export type Lib_Color_Runner_HslToHex_BlueHex = string;
 
 /**
  * Lib - Color - Hue.
  *
  * @since 0.15.0
  */
-export type LibColorHue = SharedHslColorHue;
+export type Lib_Color_Hue = Shared_HslColor_Hue;
 
 /**
  * Lib - Color - Lightness.
  *
  * @since 0.15.0
  */
-export type LibColorLightness = SharedHslColorLightness;
+export type Lib_Color_Lightness = Shared_HslColor_Lightness;
 
 /**
  * Lib - Color - Rgb To Hsl.
  *
  * @since 0.15.0
  */
-export type LibColorRgbToHslRed = number;
+export type Lib_Color_Runner_RgbToHsl_Red = number;
 
-export type LibColorRgbToHslGreen = number;
+export type Lib_Color_Runner_RgbToHsl_Green = number;
 
-export type LibColorRgbToHslBlue = number;
+export type Lib_Color_Runner_RgbToHsl_Blue = number;
 
-export type LibColorRgbToHslReturns = SharedHslColor;
+export type Lib_Color_Runner_RgbToHsl_Returns = Shared_HslColor;
 
-export type LibColorRgbToHslNormalizedRed = number;
+export type Lib_Color_Runner_RgbToHsl_NormalizedRed = number;
 
-export type LibColorRgbToHslNormalizedGreen = number;
+export type Lib_Color_Runner_RgbToHsl_NormalizedGreen = number;
 
-export type LibColorRgbToHslNormalizedBlue = number;
+export type Lib_Color_Runner_RgbToHsl_NormalizedBlue = number;
 
-export type LibColorRgbToHslChannelMax = number;
+export type Lib_Color_Runner_RgbToHsl_ChannelMax = number;
 
-export type LibColorRgbToHslChannelMin = number;
+export type Lib_Color_Runner_RgbToHsl_ChannelMin = number;
 
-export type LibColorRgbToHslDelta = number;
+export type Lib_Color_Runner_RgbToHsl_Delta = number;
 
-export type LibColorRgbToHslLightnessNormalized = number;
+export type Lib_Color_Runner_RgbToHsl_LightnessNormalized = number;
 
-export type LibColorRgbToHslLightness = number;
+export type Lib_Color_Runner_RgbToHsl_Lightness = number;
 
-export type LibColorRgbToHslSaturation = number;
+export type Lib_Color_Runner_RgbToHsl_Saturation = number;
 
-export type LibColorRgbToHslSaturationDenominator = number;
+export type Lib_Color_Runner_RgbToHsl_SaturationDenominator = number;
 
-export type LibColorRgbToHslHue = number;
+export type Lib_Color_Runner_RgbToHsl_Hue = number;
 
 /**
  * Lib - Color - Saturation.
  *
  * @since 0.15.0
  */
-export type LibColorSaturation = SharedHslColorSaturation;
+export type Lib_Color_Saturation = Shared_HslColor_Saturation;
 
 /**
  * Lib - Color - Shade Config.
  *
  * @since 0.15.0
  */
-export type LibColorShadeConfig = [SharedShadeLevel, number, number][];
+export type Lib_Color_ShadeConfig = [Shared_ShadeLevel, number, number][];

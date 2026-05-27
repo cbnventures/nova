@@ -3,74 +3,74 @@
  *
  * @since 0.15.0
  */
-export type TestsCliGenerateGithubWorkflowsRunOriginalCwd = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_OriginalCwd = string;
 
-export type TestsCliGenerateGithubWorkflowsRunTemporaryDirectory = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_TemporaryDirectory = string;
 
-export type TestsCliGenerateGithubWorkflowsRunTemporaryPrefix = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_TemporaryPrefix = string;
 
-export type TestsCliGenerateGithubWorkflowsRunSandboxRoot = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SandboxRoot = string;
 
-export type TestsCliGenerateGithubWorkflowsRunProjectDirectory = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ProjectDirectory = string;
 
-export type TestsCliGenerateGithubWorkflowsRunPackageJson = Record<string, unknown>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PackageJson = Record<string, unknown>;
 
-export type TestsCliGenerateGithubWorkflowsRunPackageJsonPath = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PackageJsonPath = string;
 
-export type TestsCliGenerateGithubWorkflowsRunGitignorePath = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_GitignorePath = string;
 
-export type TestsCliGenerateGithubWorkflowsRunNovaConfig = Record<string, unknown>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_NovaConfig = Record<string, unknown>;
 
-export type TestsCliGenerateGithubWorkflowsRunNovaConfigPath = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_NovaConfigPath = string;
 
-export type TestsCliGenerateGithubWorkflowsRunExists = boolean;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_Exists = boolean;
 
-export type TestsCliGenerateGithubWorkflowsRunWorkflowsDirectory = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_WorkflowsDirectory = string;
 
-export type TestsCliGenerateGithubWorkflowsRunWorkflowPath = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_WorkflowPath = string;
 
-export type TestsCliGenerateGithubWorkflowsRunContent = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_Content = string;
 
-export type TestsCliGenerateGithubWorkflowsRunEntries = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_Entries = string[];
 
-export type TestsCliGenerateGithubWorkflowsRunOrphanFiles = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_OrphanFiles = string[];
 
-export type TestsCliGenerateGithubWorkflowsRunBackupFiles = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_BackupFiles = string[];
 
-export type TestsCliGenerateGithubWorkflowsRunContentLines = string[];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_ContentLines = string[];
 
-export type TestsCliGenerateGithubWorkflowsRunCoreJobIndex = number;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CoreJobIndex = number;
 
-export type TestsCliGenerateGithubWorkflowsRunCoreNeedsLine = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_CoreNeedsLine = string;
 
-export type TestsCliGenerateGithubWorkflowsRunPresetJobIndex = number;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PresetJobIndex = number;
 
-export type TestsCliGenerateGithubWorkflowsRunPresetNeedsLine = string;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PresetNeedsLine = string;
 
-export type TestsCliGenerateGithubWorkflowsRunPathOccurrences = number;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PathOccurrences = number;
 
-export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesEntry = import('../../../../cli/generate/github/workflows.d.ts').CliGenerateGithubWorkflowsRunWorkflowEntry;
+export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesEntry = import('../../../../cli/generate/github/workflows.d.ts').Cli_Generate_Github_Workflows_Runner_Run_WorkflowEntry;
 
-export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesPublishMetadata = import('../../../../cli/generate/github/workflows.d.ts').CliGenerateGithubWorkflowsRunMetadataEntry;
+export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesPublishMetadata = import('../../../../cli/generate/github/workflows.d.ts').Cli_Generate_Github_Workflows_Runner_Run_MetadataEntry;
 
-export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesSetupLines = string[];
+export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesSetupLines = string[];
 
-export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesStripAnsiPattern = RegExp;
+export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesStripAnsiPattern = RegExp;
 
-export type TestsCliGenerateGithubWorkflowsBuildEntrySetupLinesJoined = string;
+export type Tests_Cli_Generate_Github_Workflows_BuildEntrySetupLinesJoined = string;
 
-export type TestsCliGenerateGithubWorkflowsRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubWorkflowsRunLoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubWorkflowsRunSaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SaveSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliGenerateGithubWorkflowsRunSaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined][];
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_SaveCalls = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined][];
 
-export type TestsCliGenerateGithubWorkflowsRunTargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined] | undefined;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_TargetCall = [string, string, boolean, import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined] | undefined;
 
-export type TestsCliGenerateGithubWorkflowsRunHeaderArg = import('../../../../lib/utility.d.ts').LibUtilitySaveGeneratedFileHeader | undefined;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_HeaderArg = import('../../../../lib/utility.d.ts').Lib_Utility_SaveGeneratedFile_Header | undefined;
 
-export type TestsCliGenerateGithubWorkflowsRunPlaceholderPattern = RegExp;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_PlaceholderPattern = RegExp;
 
-export type TestsCliGenerateGithubWorkflowsRunOnMatches = RegExpMatchArray | null;
+export type Tests_Cli_Generate_Github_Workflows_CliGenerateGithubWorkflowsRun_OnMatches = RegExpMatchArray | null;

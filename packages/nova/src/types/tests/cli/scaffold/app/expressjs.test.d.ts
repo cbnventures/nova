@@ -3,38 +3,38 @@
  *
  * @since 0.15.0
  */
-export type TestsCliScaffoldAppExpressjsRunOriginalCwd = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_OriginalCwd = string;
 
-export type TestsCliScaffoldAppExpressjsRunTemporaryDirectory = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_TemporaryDirectory = string;
 
-export type TestsCliScaffoldAppExpressjsRunTemporaryBase = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_TemporaryBase = string;
 
-export type TestsCliScaffoldAppExpressjsRunSandboxRoot = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_SandboxRoot = string;
 
-export type TestsCliScaffoldAppExpressjsRunRootDirectory = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootDirectory = string;
 
-export type TestsCliScaffoldAppExpressjsRunChildDirectory = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildDirectory = string;
 
-export type TestsCliScaffoldAppExpressjsRunRootPackageJson = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootPackageJson = string;
 
-export type TestsCliScaffoldAppExpressjsRunRootPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_RootPackageJsonPath = string;
 
-export type TestsCliScaffoldAppExpressjsRunChildPackageJson = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildPackageJson = string;
 
-export type TestsCliScaffoldAppExpressjsRunChildPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ChildPackageJsonPath = string;
 
-export type TestsCliScaffoldAppExpressjsRunProjectDirectory = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_ProjectDirectory = string;
 
-export type TestsCliScaffoldAppExpressjsRunExists = boolean;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_Exists = boolean;
 
-export type TestsCliScaffoldAppExpressjsRunDryRunOutputPath = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_DryRunOutputPath = string;
 
-export type TestsCliScaffoldAppExpressjsRunWorkspacePackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_WorkspacePackageJsonPath = string;
 
-export type TestsCliScaffoldAppExpressjsRunTsconfigPath = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_TsconfigPath = string;
 
-export type TestsCliScaffoldAppExpressjsRunIndexTsPath = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_IndexTsPath = string;
 
-export type TestsCliScaffoldAppExpressjsRunPackageJson = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_PackageJson = string;
 
-export type TestsCliScaffoldAppExpressjsRunPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Expressjs_CliScaffoldAppExpressjsRun_PackageJsonPath = string;

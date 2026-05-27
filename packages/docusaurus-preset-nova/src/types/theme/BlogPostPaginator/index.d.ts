@@ -5,116 +5,116 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogPostPaginatorBlogPostPaginatorItemTitle = string;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Item_Title = string;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorItemPermalink = string;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Item_Permalink = string;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorItem = {
-  title: ThemeBlogPostPaginatorBlogPostPaginatorItemTitle;
-  permalink: ThemeBlogPostPaginatorBlogPostPaginatorItemPermalink;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Item = {
+  title: Theme_BlogPostPaginator_Index_BlogPostPaginator_Item_Title;
+  permalink: Theme_BlogPostPaginator_Index_BlogPostPaginator_Item_Permalink;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorPropsNextItem = ThemeBlogPostPaginatorBlogPostPaginatorItem | undefined;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Props_NextItem = Theme_BlogPostPaginator_Index_BlogPostPaginator_Item | undefined;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorPropsPrevItem = ThemeBlogPostPaginatorBlogPostPaginatorItem | undefined;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Props_PrevItem = Theme_BlogPostPaginator_Index_BlogPostPaginator_Item | undefined;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorPropsClassName = string | undefined;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Props_ClassName = string | undefined;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorPropsStyle = CSSProperties | undefined;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorProps = {
-  nextItem?: ThemeBlogPostPaginatorBlogPostPaginatorPropsNextItem;
-  prevItem?: ThemeBlogPostPaginatorBlogPostPaginatorPropsPrevItem;
-  className?: ThemeBlogPostPaginatorBlogPostPaginatorPropsClassName;
-  style?: ThemeBlogPostPaginatorBlogPostPaginatorPropsStyle;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Props = {
+  nextItem?: Theme_BlogPostPaginator_Index_BlogPostPaginator_Props_NextItem;
+  prevItem?: Theme_BlogPostPaginator_Index_BlogPostPaginator_Props_PrevItem;
+  className?: Theme_BlogPostPaginator_Index_BlogPostPaginator_Props_ClassName;
+  style?: Theme_BlogPostPaginator_Index_BlogPostPaginator_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorBlogPostTitle = string;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Title = string;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorBlogPostDescription = string;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Description = string;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorBlogPostPermalink = string;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Permalink = string;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorBlogPostDate = string;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Date = string;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorBlogPost = {
-  title: ThemeBlogPostPaginatorBlogPostPaginatorBlogPostTitle;
-  description: ThemeBlogPostPaginatorBlogPostPaginatorBlogPostDescription;
-  permalink: ThemeBlogPostPaginatorBlogPostPaginatorBlogPostPermalink;
-  date: ThemeBlogPostPaginatorBlogPostPaginatorBlogPostDate;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost = {
+  title: Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Title;
+  description: Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Description;
+  permalink: Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Permalink;
+  date: Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost_Date;
 };
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorGlobalData = {
-  blogPosts?: ThemeBlogPostPaginatorBlogPostPaginatorBlogPosts;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData = {
+  blogPosts?: Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorBlogPosts = ThemeBlogPostPaginatorBlogPostPaginatorBlogPost[];
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts = Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost[];
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorNavAriaLabel = string;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_NavAriaLabel = string;
 
-export type ThemeBlogPostPaginatorBlogPostPaginatorHeading = string;
+export type Theme_BlogPostPaginator_Index_BlogPostPaginator_Heading = string;
 
 /**
  * Theme - Blog Post Paginator - Next Link.
  *
  * @since 0.18.0
  */
-export type ThemeBlogPostPaginatorNextLinkPropsNextItem = ThemeBlogPostPaginatorBlogPostPaginatorItem;
+export type Theme_BlogPostPaginator_Index_NextLink_Props_NextItem = Theme_BlogPostPaginator_Index_BlogPostPaginator_Item;
 
-export type ThemeBlogPostPaginatorNextLinkPropsBlogPosts = ThemeBlogPostPaginatorBlogPostPaginatorBlogPosts;
+export type Theme_BlogPostPaginator_Index_NextLink_Props_BlogPosts = Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts;
 
-export type ThemeBlogPostPaginatorNextLinkPropsClassName = string | undefined;
+export type Theme_BlogPostPaginator_Index_NextLink_Props_ClassName = string | undefined;
 
-export type ThemeBlogPostPaginatorNextLinkPropsStyle = CSSProperties | undefined;
+export type Theme_BlogPostPaginator_Index_NextLink_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogPostPaginatorNextLinkProps = {
-  nextItem: ThemeBlogPostPaginatorNextLinkPropsNextItem;
-  blogPosts: ThemeBlogPostPaginatorNextLinkPropsBlogPosts;
-  className?: ThemeBlogPostPaginatorNextLinkPropsClassName;
-  style?: ThemeBlogPostPaginatorNextLinkPropsStyle;
+export type Theme_BlogPostPaginator_Index_NextLink_Props = {
+  nextItem: Theme_BlogPostPaginator_Index_NextLink_Props_NextItem;
+  blogPosts: Theme_BlogPostPaginator_Index_NextLink_Props_BlogPosts;
+  className?: Theme_BlogPostPaginator_Index_NextLink_Props_ClassName;
+  style?: Theme_BlogPostPaginator_Index_NextLink_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPaginatorNextLinkLabel = string;
+export type Theme_BlogPostPaginator_Index_NextLink_Label = string;
 
-export type ThemeBlogPostPaginatorNextLinkAriaLabel = string;
+export type Theme_BlogPostPaginator_Index_NextLink_AriaLabel = string;
 
-export type ThemeBlogPostPaginatorNextLinkPermalink = string;
+export type Theme_BlogPostPaginator_Index_NextLink_Permalink = string;
 
-export type ThemeBlogPostPaginatorNextLinkPost = ThemeBlogPostPaginatorBlogPostPaginatorBlogPost | undefined;
+export type Theme_BlogPostPaginator_Index_NextLink_Post = Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost | undefined;
 
-export type ThemeBlogPostPaginatorNextLinkDescription = string | undefined;
+export type Theme_BlogPostPaginator_Index_NextLink_Description = string | undefined;
 
 /**
  * Theme - Blog Post Paginator - Prev Link.
  *
  * @since 0.18.0
  */
-export type ThemeBlogPostPaginatorPrevLinkPropsPrevItem = ThemeBlogPostPaginatorBlogPostPaginatorItem;
+export type Theme_BlogPostPaginator_Index_PrevLink_Props_PrevItem = Theme_BlogPostPaginator_Index_BlogPostPaginator_Item;
 
-export type ThemeBlogPostPaginatorPrevLinkPropsBlogPosts = ThemeBlogPostPaginatorBlogPostPaginatorBlogPosts;
+export type Theme_BlogPostPaginator_Index_PrevLink_Props_BlogPosts = Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts;
 
-export type ThemeBlogPostPaginatorPrevLinkPropsClassName = string | undefined;
+export type Theme_BlogPostPaginator_Index_PrevLink_Props_ClassName = string | undefined;
 
-export type ThemeBlogPostPaginatorPrevLinkPropsStyle = CSSProperties | undefined;
+export type Theme_BlogPostPaginator_Index_PrevLink_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogPostPaginatorPrevLinkProps = {
-  prevItem: ThemeBlogPostPaginatorPrevLinkPropsPrevItem;
-  blogPosts: ThemeBlogPostPaginatorPrevLinkPropsBlogPosts;
-  className?: ThemeBlogPostPaginatorPrevLinkPropsClassName;
-  style?: ThemeBlogPostPaginatorPrevLinkPropsStyle;
+export type Theme_BlogPostPaginator_Index_PrevLink_Props = {
+  prevItem: Theme_BlogPostPaginator_Index_PrevLink_Props_PrevItem;
+  blogPosts: Theme_BlogPostPaginator_Index_PrevLink_Props_BlogPosts;
+  className?: Theme_BlogPostPaginator_Index_PrevLink_Props_ClassName;
+  style?: Theme_BlogPostPaginator_Index_PrevLink_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostPaginatorPrevLinkLabel = string;
+export type Theme_BlogPostPaginator_Index_PrevLink_Label = string;
 
-export type ThemeBlogPostPaginatorPrevLinkAriaLabel = string;
+export type Theme_BlogPostPaginator_Index_PrevLink_AriaLabel = string;
 
-export type ThemeBlogPostPaginatorPrevLinkPermalink = string;
+export type Theme_BlogPostPaginator_Index_PrevLink_Permalink = string;
 
-export type ThemeBlogPostPaginatorPrevLinkPost = ThemeBlogPostPaginatorBlogPostPaginatorBlogPost | undefined;
+export type Theme_BlogPostPaginator_Index_PrevLink_Post = Theme_BlogPostPaginator_Index_BlogPostPaginator_BlogPost | undefined;
 
-export type ThemeBlogPostPaginatorPrevLinkDescription = string | undefined;
+export type Theme_BlogPostPaginator_Index_PrevLink_Description = string | undefined;

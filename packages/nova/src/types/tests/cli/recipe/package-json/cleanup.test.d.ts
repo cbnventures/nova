@@ -3,40 +3,40 @@
  *
  * @since 0.14.0
  */
-export type TestsCliRecipePackageJsonCleanupRunOriginalCwd = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_OriginalCwd = string;
 
-export type TestsCliRecipePackageJsonCleanupRunTemporaryDirectory = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_TemporaryDirectory = string;
 
-export type TestsCliRecipePackageJsonCleanupRunSandboxPath = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_SandboxPath = string;
 
-export type TestsCliRecipePackageJsonCleanupRunSandboxRoot = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_SandboxRoot = string;
 
-export type TestsCliRecipePackageJsonCleanupRunProjectDirectory = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_ProjectDirectory = string;
 
-export type TestsCliRecipePackageJsonCleanupRunWorkspaceDirectory = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_WorkspaceDirectory = string;
 
-export type TestsCliRecipePackageJsonCleanupRunPackageJsonPath = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_PackageJsonPath = string;
 
-export type TestsCliRecipePackageJsonCleanupRunPackageJsonContents = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_PackageJsonContents = string;
 
-export type TestsCliRecipePackageJsonCleanupRunNovaConfigPath = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_NovaConfigPath = string;
 
-export type TestsCliRecipePackageJsonCleanupRunNovaConfigContents = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_NovaConfigContents = string;
 
-export type TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonPath = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_WorkspacePackageJsonPath = string;
 
-export type TestsCliRecipePackageJsonCleanupRunWorkspacePackageJsonContents = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_WorkspacePackageJsonContents = string;
 
-export type TestsCliRecipePackageJsonCleanupRunOutput = string;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_Output = string;
 
-export type TestsCliRecipePackageJsonCleanupRunParsed = Record<string, unknown>;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_Parsed = Record<string, unknown>;
 
-export type TestsCliRecipePackageJsonCleanupRunKeys = Array<string>;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_Keys = Array<string>;
 
-export type TestsCliRecipePackageJsonCleanupRunNameIndex = number;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_NameIndex = number;
 
-export type TestsCliRecipePackageJsonCleanupRunVersionIndex = number;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_VersionIndex = number;
 
-export type TestsCliRecipePackageJsonCleanupRunDescriptionIndex = number;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_DescriptionIndex = number;
 
-export type TestsCliRecipePackageJsonCleanupRunLicenseIndex = number;
+export type Tests_Cli_Recipe_PackageJson_Cleanup_CliRecipePackageJsonCleanupRun_LicenseIndex = number;

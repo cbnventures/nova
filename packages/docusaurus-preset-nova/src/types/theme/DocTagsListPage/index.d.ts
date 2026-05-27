@@ -6,17 +6,17 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocTagsListPageDocTagsListPagePropsTags = readonly TagsListItem[];
+export type Theme_DocTagsListPage_Index_DocTagsListPage_Props_Tags = readonly TagsListItem[];
 
-export type ThemeDocTagsListPageDocTagsListPagePropsClassName = string | undefined;
+export type Theme_DocTagsListPage_Index_DocTagsListPage_Props_ClassName = string | undefined;
 
-export type ThemeDocTagsListPageDocTagsListPagePropsStyle = CSSProperties | undefined;
+export type Theme_DocTagsListPage_Index_DocTagsListPage_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocTagsListPageDocTagsListPageProps = {
-  tags: ThemeDocTagsListPageDocTagsListPagePropsTags;
-  className?: ThemeDocTagsListPageDocTagsListPagePropsClassName;
-  style?: ThemeDocTagsListPageDocTagsListPagePropsStyle;
+export type Theme_DocTagsListPage_Index_DocTagsListPage_Props = {
+  tags: Theme_DocTagsListPage_Index_DocTagsListPage_Props_Tags;
+  className?: Theme_DocTagsListPage_Index_DocTagsListPage_Props_ClassName;
+  style?: Theme_DocTagsListPage_Index_DocTagsListPage_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocTagsListPageDocTagsListPageTitle = string;
+export type Theme_DocTagsListPage_Index_DocTagsListPage_Title = string;

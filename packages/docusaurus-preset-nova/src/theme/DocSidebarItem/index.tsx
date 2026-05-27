@@ -2,7 +2,7 @@ import DocSidebarItemCategory from '@theme/DocSidebarItem/Category';
 import DocSidebarItemHtml from '@theme/DocSidebarItem/Html';
 import DocSidebarItemLink from '@theme/DocSidebarItem/Link';
 
-import type { ThemeDocSidebarItemDocSidebarItemProps } from '../../types/theme/DocSidebarItem/index.d.ts';
+import type { Theme_DocSidebarItem_Index_DocSidebarItem_Props } from '../../types/theme/DocSidebarItem/index.d.ts';
 
 /**
  * Theme - Doc Sidebar Item - Doc Sidebar Item.
@@ -11,13 +11,13 @@ import type { ThemeDocSidebarItemDocSidebarItemProps } from '../../types/theme/D
  * delegating to category, html, or link renderers with forwarded
  * active path and nesting level.
  *
- * @param {ThemeDocSidebarItemDocSidebarItemProps} props - Props.
+ * @param {Theme_DocSidebarItem_Index_DocSidebarItem_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocSidebarItem(props: ThemeDocSidebarItemDocSidebarItemProps) {
+function DocSidebarItem(props: Theme_DocSidebarItem_Index_DocSidebarItem_Props) {
   switch (props['item']['type']) {
     case 'category': {
       return (

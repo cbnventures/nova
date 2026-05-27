@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoLoggerDev } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintNovaNoLoggerDevRuleTester } from '../../../../types/tests/rules/eslint/nova/no-logger-dev.test.d.ts';
+import type { Tests_Rules_Eslint_Nova_NoLoggerDev_RuleTester } from '../../../../types/tests/rules/eslint/nova/no-logger-dev.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Nova - No Logger Dev.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintNovaNoLoggerDevRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Nova_NoLoggerDev_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

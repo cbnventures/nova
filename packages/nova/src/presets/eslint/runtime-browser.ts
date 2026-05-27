@@ -1,4 +1,4 @@
-import type { PresetsEslintRuntimeBrowserConfigConfig } from '../../types/presets/eslint/runtime-browser.d.ts';
+import type { Presets_Eslint_RuntimeBrowser_ConfigConfig } from '../../types/presets/eslint/runtime-browser.d.ts';
 
 /**
  * Presets - ESLint - Runtime Browser - Config.
@@ -8,6 +8,6 @@ import type { PresetsEslintRuntimeBrowserConfigConfig } from '../../types/preset
  *
  * @since 0.11.0
  */
-const config: PresetsEslintRuntimeBrowserConfigConfig = [{}];
+const config: Presets_Eslint_RuntimeBrowser_ConfigConfig = [{}];
 
 export default config;

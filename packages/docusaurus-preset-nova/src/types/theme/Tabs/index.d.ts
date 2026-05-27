@@ -6,20 +6,20 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeTabsPropsClassName = string | undefined;
+export type Theme_Tabs_Index_Tabs_PropsClassName = string | undefined;
 
-export type ThemeTabsPropsStyle = CSSProperties | undefined;
+export type Theme_Tabs_Index_Tabs_PropsStyle = CSSProperties | undefined;
 
-export type ThemeTabsProps = TabsProps & {
-  className?: ThemeTabsPropsClassName;
-  style?: ThemeTabsPropsStyle;
+export type Theme_Tabs_Index_Tabs_Props = TabsProps & {
+  className?: Theme_Tabs_Index_Tabs_PropsClassName;
+  style?: Theme_Tabs_Index_Tabs_PropsStyle;
 };
 
-export type ThemeTabsIsBrowser = boolean;
+export type Theme_Tabs_Index_Tabs_IsBrowser = boolean;
 
-export type ThemeTabsContainerRef = React.RefObject<HTMLDivElement | null>;
+export type Theme_Tabs_Index_Tabs_ContainerRef = React.RefObject<HTMLDivElement | null>;
 
-export type ThemeTabsTabsResult = {
+export type Theme_Tabs_Index_Tabs_Result = {
   selectedValue: string;
   selectValue: (value: string) => void;
   tabValues: readonly TabValue[];
@@ -27,59 +27,59 @@ export type ThemeTabsTabsResult = {
   block: boolean;
 };
 
-export type ThemeTabsSanitizedChildren = ReactNode;
+export type Theme_Tabs_Index_Tabs_SanitizedChildren = ReactNode;
 
-export type ThemeTabsEffectCleanupReturns = undefined;
+export type Theme_Tabs_Index_Tabs_EffectCleanupReturns = undefined;
 
 /**
  * Theme - Tabs - Tab List.
  *
  * @since 0.15.0
  */
-export type ThemeTabsTabListTabsResult = {
+export type Theme_Tabs_Index_TabList_TabsResult = {
   selectedValue: string;
   selectValue: (value: string) => void;
   tabValues: readonly TabValue[];
 };
 
-export type ThemeTabsTabListTabValue = TabValue;
+export type Theme_Tabs_Index_TabList_TabValue = TabValue;
 
-export type ThemeTabsTabListTabId = string;
+export type Theme_Tabs_Index_TabList_TabId = string;
 
-export type ThemeTabsTabListAriaControls = string;
+export type Theme_Tabs_Index_TabList_AriaControls = string;
 
-export type ThemeTabsTabListIsSelected = boolean;
+export type Theme_Tabs_Index_TabList_IsSelected = boolean;
 
 /**
  * Theme - Tabs - Tab List - Handle Key Down.
  *
  * @since 0.15.0
  */
-export type ThemeTabsTabListHandleKeyDownEvent = React.KeyboardEvent<HTMLLIElement>;
+export type Theme_Tabs_Index_TabList_HandleKeyDown_Event = React.KeyboardEvent<HTMLLIElement>;
 
-export type ThemeTabsTabListHandleKeyDownReturns = undefined;
+export type Theme_Tabs_Index_TabList_HandleKeyDown_Returns = undefined;
 
-export type ThemeTabsTabListHandleKeyDownCurrentIndex = number;
+export type Theme_Tabs_Index_TabList_HandleKeyDown_CurrentIndex = number;
 
-export type ThemeTabsTabListHandleKeyDownNextIndex = number;
+export type Theme_Tabs_Index_TabList_HandleKeyDown_NextIndex = number;
 
-export type ThemeTabsTabListHandleKeyDownNextTabValue = TabValue | undefined;
+export type Theme_Tabs_Index_TabList_HandleKeyDown_NextTabValue = TabValue | undefined;
 
-export type ThemeTabsTabListHandleKeyDownParentElement = HTMLElement | null;
+export type Theme_Tabs_Index_TabList_HandleKeyDown_ParentElement = HTMLElement | null;
 
-export type ThemeTabsTabListHandleKeyDownTarget = HTMLLIElement | undefined;
+export type Theme_Tabs_Index_TabList_HandleKeyDown_Target = HTMLLIElement | undefined;
 
 /**
  * Theme - Tabs - Tabs - Handle Hash Change.
  *
  * @since 0.15.0
  */
-export type ThemeTabsHandleHashChangeReturns = undefined;
+export type Theme_Tabs_Index_Tabs_HandleHashChange_Returns = undefined;
 
-export type ThemeTabsHashTarget = Element | null;
+export type Theme_Tabs_Index_Tabs_HashTarget = Element | null;
 
-export type ThemeTabsHashDecodedId = string;
+export type Theme_Tabs_Index_Tabs_HashDecodedId = string;
 
-export type ThemeTabsHashPanel = Element | null;
+export type Theme_Tabs_Index_Tabs_HashPanel = Element | null;
 
-export type ThemeTabsHashTabValue = string | undefined;
+export type Theme_Tabs_Index_Tabs_HashTabValue = string | undefined;

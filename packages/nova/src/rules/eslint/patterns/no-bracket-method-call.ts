@@ -3,16 +3,16 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintPatternsNoBracketMethodCallCheckCallExpressionCallee,
-  RulesEslintPatternsNoBracketMethodCallCheckCallExpressionContext,
-  RulesEslintPatternsNoBracketMethodCallCheckCallExpressionMethodName,
-  RulesEslintPatternsNoBracketMethodCallCheckCallExpressionNode,
-  RulesEslintPatternsNoBracketMethodCallCheckCallExpressionOptions,
-  RulesEslintPatternsNoBracketMethodCallCheckCallExpressionProperty,
-  RulesEslintPatternsNoBracketMethodCallCheckCallExpressionReturns,
-  RulesEslintPatternsNoBracketMethodCallRuleDefaultOptionsAllowedMethods,
-  RulesEslintPatternsNoBracketMethodCallRuleDefaultOptionsIgnoreFiles,
-  RulesEslintPatternsNoBracketMethodCallRuleOptions,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Callee,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Context,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_MethodName,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Node,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Property,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Returns,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsAllowedMethods,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-bracket-method-call.d.ts';
 
 /**
@@ -23,7 +23,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintPatternsNoBracketMethodCall {
+export class Runner {
   /**
    * Rules - ESLint - Patterns - No Bracket Method Call - Rule.
    *
@@ -63,11 +63,11 @@ export class RulesEslintPatternsNoBracketMethodCall {
       }],
     },
     defaultOptions: [{
-      allowedMethods: [] as RulesEslintPatternsNoBracketMethodCallRuleDefaultOptionsAllowedMethods,
-      ignoreFiles: [] as RulesEslintPatternsNoBracketMethodCallRuleDefaultOptionsIgnoreFiles,
+      allowedMethods: [] as Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsAllowedMethods,
+      ignoreFiles: [] as Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintPatternsNoBracketMethodCallRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -76,7 +76,7 @@ export class RulesEslintPatternsNoBracketMethodCall {
 
       return {
         CallExpression(node) {
-          RulesEslintPatternsNoBracketMethodCall.checkCallExpression(context, node, options);
+          Runner.checkCallExpression(context, node, options);
 
           return;
         },
@@ -93,16 +93,16 @@ export class RulesEslintPatternsNoBracketMethodCall {
    *
    * @private
    *
-   * @param {RulesEslintPatternsNoBracketMethodCallCheckCallExpressionContext} context - Context.
-   * @param {RulesEslintPatternsNoBracketMethodCallCheckCallExpressionNode}    node    - Node.
-   * @param {RulesEslintPatternsNoBracketMethodCallCheckCallExpressionOptions} options - Options.
+   * @param {Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Context} context - Context.
+   * @param {Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Node}    node    - Node.
+   * @param {Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options} options - Options.
    *
-   * @returns {RulesEslintPatternsNoBracketMethodCallCheckCallExpressionReturns}
+   * @returns {Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Returns}
    *
    * @since 0.15.0
    */
-  private static checkCallExpression(context: RulesEslintPatternsNoBracketMethodCallCheckCallExpressionContext, node: RulesEslintPatternsNoBracketMethodCallCheckCallExpressionNode, options: RulesEslintPatternsNoBracketMethodCallCheckCallExpressionOptions): RulesEslintPatternsNoBracketMethodCallCheckCallExpressionReturns {
-    const callee: RulesEslintPatternsNoBracketMethodCallCheckCallExpressionCallee = node.callee;
+  private static checkCallExpression(context: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Context, node: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Node, options: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options): Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Returns {
+    const callee: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Callee = node.callee;
 
     if (callee.type !== 'MemberExpression') {
       return;
@@ -112,7 +112,7 @@ export class RulesEslintPatternsNoBracketMethodCall {
       return;
     }
 
-    const property: RulesEslintPatternsNoBracketMethodCallCheckCallExpressionProperty = callee.property;
+    const property: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Property = callee.property;
 
     if (property.type !== 'Literal') {
       return;
@@ -122,7 +122,7 @@ export class RulesEslintPatternsNoBracketMethodCall {
       return;
     }
 
-    const methodName: RulesEslintPatternsNoBracketMethodCallCheckCallExpressionMethodName = property.value;
+    const methodName: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_MethodName = property.value;
 
     if (options['allowedMethods'].includes(methodName) === true) {
       return;

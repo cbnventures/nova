@@ -5,48 +5,48 @@ import type { MarkdownTable } from '@cbnventures/nova/toolkit';
  *
  * @since 0.14.0
  */
-export type TestsMarkdownTableMarkdowntableValidationCwd = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_Cwd = string;
 
-export type TestsMarkdownTableMarkdowntableValidationContentDirs = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_ContentDirs = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationMdFiles = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_MdFiles = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationContentPath = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_ContentPath = string;
 
-export type TestsMarkdownTableMarkdowntableValidationEntries = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_Entries = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationExt = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_Ext = string;
 
-export type TestsMarkdownTableMarkdowntableValidationParseCells = (row: string) => string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_ParseCells = (row: string) => string[];
 
-export type TestsMarkdownTableMarkdowntableValidationFailures = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_Failures = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationFilePath = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_FilePath = string;
 
-export type TestsMarkdownTableMarkdowntableValidationContent = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_Content = string;
 
-export type TestsMarkdownTableMarkdowntableValidationLines = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_Lines = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationTables = string[][];
+export type Tests_MarkdownTable_MarkdownTableValidation_Tables = string[][];
 
-export type TestsMarkdownTableMarkdowntableValidationCurrentTable = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_CurrentTable = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationInCodeBlock = boolean;
+export type Tests_MarkdownTable_MarkdownTableValidation_InCodeBlock = boolean;
 
-export type TestsMarkdownTableMarkdowntableValidationTableLines = string[] | undefined;
+export type Tests_MarkdownTable_MarkdownTableValidation_TableLines = string[] | undefined;
 
-export type TestsMarkdownTableMarkdowntableValidationHeaderLine = string | undefined;
+export type Tests_MarkdownTable_MarkdownTableValidation_HeaderLine = string | undefined;
 
-export type TestsMarkdownTableMarkdowntableValidationDelimiterLine = string | undefined;
+export type Tests_MarkdownTable_MarkdownTableValidation_DelimiterLine = string | undefined;
 
-export type TestsMarkdownTableMarkdowntableValidationHeaders = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_Headers = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationDataRows = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_DataRows = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationTable = MarkdownTable;
+export type Tests_MarkdownTable_MarkdownTableValidation_Table = MarkdownTable;
 
-export type TestsMarkdownTableMarkdowntableValidationParsedCells = string[];
+export type Tests_MarkdownTable_MarkdownTableValidation_ParsedCells = string[];
 
-export type TestsMarkdownTableMarkdowntableValidationRendered = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_Rendered = string;
 
-export type TestsMarkdownTableMarkdowntableValidationOriginal = string;
+export type Tests_MarkdownTable_MarkdownTableValidation_Original = string;

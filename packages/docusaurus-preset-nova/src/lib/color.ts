@@ -1,64 +1,64 @@
 import { LIB_REGEX_HEX_COLOR } from './regex.js';
 
 import type {
-  LibColorComputeShadeAdjustedSaturation,
-  LibColorComputeShadeHue,
-  LibColorComputeShadeLightness,
-  LibColorComputeShadePosition,
-  LibColorComputeShadeReturns,
-  LibColorComputeShadeSaturation,
-  LibColorComputeShadeSaturationFactor,
-  LibColorComputeShadeTargetLightness,
-  LibColorConstructorBlue,
-  LibColorConstructorGreen,
-  LibColorConstructorHex,
-  LibColorConstructorHsl,
-  LibColorConstructorIsValid,
-  LibColorConstructorRed,
-  LibColorGenerateScaleResult,
-  LibColorGenerateScaleReturns,
-  LibColorGenerateScaleShadeConfigEntry,
-  LibColorGenerateScaleShadeConfigLevel,
-  LibColorGenerateScaleShadeConfigPosition,
-  LibColorGenerateScaleShadeConfigSaturationFactor,
-  LibColorHslToHexBlueByte,
-  LibColorHslToHexBlueHex,
-  LibColorHslToHexChannelBlue,
-  LibColorHslToHexChannelGreen,
-  LibColorHslToHexChannelRed,
-  LibColorHslToHexChroma,
-  LibColorHslToHexGreenByte,
-  LibColorHslToHexGreenHex,
-  LibColorHslToHexHue,
-  LibColorHslToHexHueSection,
-  LibColorHslToHexLightness,
-  LibColorHslToHexLightnessMatch,
-  LibColorHslToHexNormalizedLightness,
-  LibColorHslToHexNormalizedSaturation,
-  LibColorHslToHexRedByte,
-  LibColorHslToHexRedHex,
-  LibColorHslToHexReturns,
-  LibColorHslToHexSaturation,
-  LibColorHslToHexSecondaryChroma,
-  LibColorHue,
-  LibColorLightness,
-  LibColorRgbToHslBlue,
-  LibColorRgbToHslChannelMax,
-  LibColorRgbToHslChannelMin,
-  LibColorRgbToHslDelta,
-  LibColorRgbToHslGreen,
-  LibColorRgbToHslHue,
-  LibColorRgbToHslLightness,
-  LibColorRgbToHslLightnessNormalized,
-  LibColorRgbToHslNormalizedBlue,
-  LibColorRgbToHslNormalizedGreen,
-  LibColorRgbToHslNormalizedRed,
-  LibColorRgbToHslRed,
-  LibColorRgbToHslReturns,
-  LibColorRgbToHslSaturation,
-  LibColorRgbToHslSaturationDenominator,
-  LibColorSaturation,
-  LibColorShadeConfig,
+  Lib_Color_Runner_ComputeShade_AdjustedSaturation,
+  Lib_Color_Runner_ComputeShade_Hue,
+  Lib_Color_Runner_ComputeShade_Lightness,
+  Lib_Color_Runner_ComputeShade_Position,
+  Lib_Color_Runner_ComputeShade_Returns,
+  Lib_Color_Runner_ComputeShade_Saturation,
+  Lib_Color_Runner_ComputeShade_SaturationFactor,
+  Lib_Color_Runner_ComputeShade_TargetLightness,
+  Lib_Color_Runner_Constructor_Blue,
+  Lib_Color_Runner_Constructor_Green,
+  Lib_Color_Runner_Constructor_Hex,
+  Lib_Color_Runner_Constructor_Hsl,
+  Lib_Color_Runner_Constructor_IsValid,
+  Lib_Color_Runner_Constructor_Red,
+  Lib_Color_Runner_GenerateScale_Result,
+  Lib_Color_Runner_GenerateScale_Returns,
+  Lib_Color_Runner_GenerateScale_ShadeConfigEntry,
+  Lib_Color_Runner_GenerateScale_ShadeConfigLevel,
+  Lib_Color_Runner_GenerateScale_ShadeConfigPosition,
+  Lib_Color_Runner_GenerateScale_ShadeConfigSaturationFactor,
+  Lib_Color_Runner_HslToHex_BlueByte,
+  Lib_Color_Runner_HslToHex_BlueHex,
+  Lib_Color_Runner_HslToHex_ChannelBlue,
+  Lib_Color_Runner_HslToHex_ChannelGreen,
+  Lib_Color_Runner_HslToHex_ChannelRed,
+  Lib_Color_Runner_HslToHex_Chroma,
+  Lib_Color_Runner_HslToHex_GreenByte,
+  Lib_Color_Runner_HslToHex_GreenHex,
+  Lib_Color_Runner_HslToHex_Hue,
+  Lib_Color_Runner_HslToHex_HueSection,
+  Lib_Color_Runner_HslToHex_Lightness,
+  Lib_Color_Runner_HslToHex_LightnessMatch,
+  Lib_Color_Runner_HslToHex_NormalizedLightness,
+  Lib_Color_Runner_HslToHex_NormalizedSaturation,
+  Lib_Color_Runner_HslToHex_RedByte,
+  Lib_Color_Runner_HslToHex_RedHex,
+  Lib_Color_Runner_HslToHex_Returns,
+  Lib_Color_Runner_HslToHex_Saturation,
+  Lib_Color_Runner_HslToHex_SecondaryChroma,
+  Lib_Color_Hue,
+  Lib_Color_Lightness,
+  Lib_Color_Runner_RgbToHsl_Blue,
+  Lib_Color_Runner_RgbToHsl_ChannelMax,
+  Lib_Color_Runner_RgbToHsl_ChannelMin,
+  Lib_Color_Runner_RgbToHsl_Delta,
+  Lib_Color_Runner_RgbToHsl_Green,
+  Lib_Color_Runner_RgbToHsl_Hue,
+  Lib_Color_Runner_RgbToHsl_Lightness,
+  Lib_Color_Runner_RgbToHsl_LightnessNormalized,
+  Lib_Color_Runner_RgbToHsl_NormalizedBlue,
+  Lib_Color_Runner_RgbToHsl_NormalizedGreen,
+  Lib_Color_Runner_RgbToHsl_NormalizedRed,
+  Lib_Color_Runner_RgbToHsl_Red,
+  Lib_Color_Runner_RgbToHsl_Returns,
+  Lib_Color_Runner_RgbToHsl_Saturation,
+  Lib_Color_Runner_RgbToHsl_SaturationDenominator,
+  Lib_Color_Saturation,
+  Lib_Color_ShadeConfig,
 } from '../types/lib/color.d.ts';
 
 /**
@@ -69,7 +69,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class Color {
+export class Runner {
   /**
    * Lib - Color - Hue.
    *
@@ -80,7 +80,7 @@ export class Color {
    *
    * @since 0.15.0
    */
-  readonly #hue: LibColorHue;
+  readonly #hue: Lib_Color_Hue;
 
   /**
    * Lib - Color - Lightness.
@@ -92,7 +92,7 @@ export class Color {
    *
    * @since 0.15.0
    */
-  readonly #lightness: LibColorLightness;
+  readonly #lightness: Lib_Color_Lightness;
 
   /**
    * Lib - Color - Saturation.
@@ -104,7 +104,7 @@ export class Color {
    *
    * @since 0.15.0
    */
-  readonly #saturation: LibColorSaturation;
+  readonly #saturation: Lib_Color_Saturation;
 
   /**
    * Lib - Color - Shade Config.
@@ -116,7 +116,7 @@ export class Color {
    *
    * @since 0.15.0
    */
-  static readonly #shadeConfig: LibColorShadeConfig = [
+  static readonly #shadeConfig: Lib_Color_ShadeConfig = [
     [
       50,
       0.93,
@@ -183,17 +183,17 @@ export class Color {
    * @param hex - Hex.
    * @since 0.15.0
    */
-  public constructor(hex: LibColorConstructorHex) {
-    const isValid: LibColorConstructorIsValid = LIB_REGEX_HEX_COLOR.test(hex);
+  public constructor(hex: Lib_Color_Runner_Constructor_Hex) {
+    const isValid: Lib_Color_Runner_Constructor_IsValid = LIB_REGEX_HEX_COLOR.test(hex);
 
     if (isValid === false) {
       throw new Error(`Invalid hex color: ${hex}`);
     }
 
-    const red: LibColorConstructorRed = parseInt(hex.slice(1, 3), 16);
-    const green: LibColorConstructorGreen = parseInt(hex.slice(3, 5), 16);
-    const blue: LibColorConstructorBlue = parseInt(hex.slice(5, 7), 16);
-    const hsl: LibColorConstructorHsl = Color.rgbToHsl(red, green, blue);
+    const red: Lib_Color_Runner_Constructor_Red = parseInt(hex.slice(1, 3), 16);
+    const green: Lib_Color_Runner_Constructor_Green = parseInt(hex.slice(3, 5), 16);
+    const blue: Lib_Color_Runner_Constructor_Blue = parseInt(hex.slice(5, 7), 16);
+    const hsl: Lib_Color_Runner_Constructor_Hsl = Runner.rgbToHsl(red, green, blue);
 
     this.#hue = hsl['hue'];
     this.#saturation = hsl['saturation'];
@@ -219,8 +219,8 @@ export class Color {
    *
    * @since 0.15.0
    */
-  private static computeShade(hue: LibColorComputeShadeHue, saturation: LibColorComputeShadeSaturation, lightness: LibColorComputeShadeLightness, position: LibColorComputeShadePosition, saturationFactor: LibColorComputeShadeSaturationFactor): LibColorComputeShadeReturns {
-    let targetLightness: LibColorComputeShadeTargetLightness = 0;
+  private static computeShade(hue: Lib_Color_Runner_ComputeShade_Hue, saturation: Lib_Color_Runner_ComputeShade_Saturation, lightness: Lib_Color_Runner_ComputeShade_Lightness, position: Lib_Color_Runner_ComputeShade_Position, saturationFactor: Lib_Color_Runner_ComputeShade_SaturationFactor): Lib_Color_Runner_ComputeShade_Returns {
+    let targetLightness: Lib_Color_Runner_ComputeShade_TargetLightness = 0;
 
     if (position >= 0) {
       targetLightness = lightness + (position * (100 - lightness));
@@ -228,9 +228,9 @@ export class Color {
       targetLightness = lightness * (1 + position);
     }
 
-    const adjustedSaturation: LibColorComputeShadeAdjustedSaturation = saturation * saturationFactor;
+    const adjustedSaturation: Lib_Color_Runner_ComputeShade_AdjustedSaturation = saturation * saturationFactor;
 
-    return Color.hslToHex(hue, adjustedSaturation, targetLightness);
+    return Runner.hslToHex(hue, adjustedSaturation, targetLightness);
   }
 
   /**
@@ -242,21 +242,21 @@ export class Color {
    * @returns Generate scale.
    * @since 0.15.0
    */
-  public generateScale(): LibColorGenerateScaleReturns {
-    const result: LibColorGenerateScaleResult = {} as LibColorGenerateScaleResult;
+  public generateScale(): Lib_Color_Runner_GenerateScale_Returns {
+    const result: Lib_Color_Runner_GenerateScale_Result = {} as Lib_Color_Runner_GenerateScale_Result;
 
-    for (let i = 0; i < Color.#shadeConfig.length; i += 1) {
-      const shadeConfigEntry: LibColorGenerateScaleShadeConfigEntry = Color.#shadeConfig[i];
+    for (let i = 0; i < Runner.#shadeConfig.length; i += 1) {
+      const shadeConfigEntry: Lib_Color_Runner_GenerateScale_ShadeConfigEntry = Runner.#shadeConfig[i];
 
       if (shadeConfigEntry === undefined) {
         continue;
       }
 
-      const shadeConfigLevel: LibColorGenerateScaleShadeConfigLevel = shadeConfigEntry[0];
-      const shadeConfigPosition: LibColorGenerateScaleShadeConfigPosition = shadeConfigEntry[1];
-      const shadeConfigSaturationFactor: LibColorGenerateScaleShadeConfigSaturationFactor = shadeConfigEntry[2];
+      const shadeConfigLevel: Lib_Color_Runner_GenerateScale_ShadeConfigLevel = shadeConfigEntry[0];
+      const shadeConfigPosition: Lib_Color_Runner_GenerateScale_ShadeConfigPosition = shadeConfigEntry[1];
+      const shadeConfigSaturationFactor: Lib_Color_Runner_GenerateScale_ShadeConfigSaturationFactor = shadeConfigEntry[2];
 
-      Reflect.set(result, shadeConfigLevel, Color.computeShade(this.#hue, this.#saturation, this.#lightness, shadeConfigPosition, shadeConfigSaturationFactor));
+      Reflect.set(result, shadeConfigLevel, Runner.computeShade(this.#hue, this.#saturation, this.#lightness, shadeConfigPosition, shadeConfigSaturationFactor));
     }
 
     return result;
@@ -277,17 +277,17 @@ export class Color {
    *
    * @since 0.15.0
    */
-  private static hslToHex(hue: LibColorHslToHexHue, saturation: LibColorHslToHexSaturation, lightness: LibColorHslToHexLightness): LibColorHslToHexReturns {
-    const normalizedSaturation: LibColorHslToHexNormalizedSaturation = saturation / 100;
-    const normalizedLightness: LibColorHslToHexNormalizedLightness = lightness / 100;
-    const chroma: LibColorHslToHexChroma = (1 - Math.abs((2 * normalizedLightness) - 1)) * normalizedSaturation;
-    const hueSection: LibColorHslToHexHueSection = hue / 60;
-    const secondaryChroma: LibColorHslToHexSecondaryChroma = chroma * (1 - Math.abs((hueSection % 2) - 1));
-    const lightnessMatch: LibColorHslToHexLightnessMatch = normalizedLightness - (chroma / 2);
+  private static hslToHex(hue: Lib_Color_Runner_HslToHex_Hue, saturation: Lib_Color_Runner_HslToHex_Saturation, lightness: Lib_Color_Runner_HslToHex_Lightness): Lib_Color_Runner_HslToHex_Returns {
+    const normalizedSaturation: Lib_Color_Runner_HslToHex_NormalizedSaturation = saturation / 100;
+    const normalizedLightness: Lib_Color_Runner_HslToHex_NormalizedLightness = lightness / 100;
+    const chroma: Lib_Color_Runner_HslToHex_Chroma = (1 - Math.abs((2 * normalizedLightness) - 1)) * normalizedSaturation;
+    const hueSection: Lib_Color_Runner_HslToHex_HueSection = hue / 60;
+    const secondaryChroma: Lib_Color_Runner_HslToHex_SecondaryChroma = chroma * (1 - Math.abs((hueSection % 2) - 1));
+    const lightnessMatch: Lib_Color_Runner_HslToHex_LightnessMatch = normalizedLightness - (chroma / 2);
 
-    let channelRed: LibColorHslToHexChannelRed = 0;
-    let channelGreen: LibColorHslToHexChannelGreen = 0;
-    let channelBlue: LibColorHslToHexChannelBlue = 0;
+    let channelRed: Lib_Color_Runner_HslToHex_ChannelRed = 0;
+    let channelGreen: Lib_Color_Runner_HslToHex_ChannelGreen = 0;
+    let channelBlue: Lib_Color_Runner_HslToHex_ChannelBlue = 0;
 
     if (hueSection >= 0 && hueSection < 1) {
       channelRed = chroma;
@@ -315,12 +315,12 @@ export class Color {
       channelBlue = secondaryChroma;
     }
 
-    const redByte: LibColorHslToHexRedByte = Math.round((channelRed + lightnessMatch) * 255);
-    const greenByte: LibColorHslToHexGreenByte = Math.round((channelGreen + lightnessMatch) * 255);
-    const blueByte: LibColorHslToHexBlueByte = Math.round((channelBlue + lightnessMatch) * 255);
-    const redHex: LibColorHslToHexRedHex = redByte.toString(16).padStart(2, '0');
-    const greenHex: LibColorHslToHexGreenHex = greenByte.toString(16).padStart(2, '0');
-    const blueHex: LibColorHslToHexBlueHex = blueByte.toString(16).padStart(2, '0');
+    const redByte: Lib_Color_Runner_HslToHex_RedByte = Math.round((channelRed + lightnessMatch) * 255);
+    const greenByte: Lib_Color_Runner_HslToHex_GreenByte = Math.round((channelGreen + lightnessMatch) * 255);
+    const blueByte: Lib_Color_Runner_HslToHex_BlueByte = Math.round((channelBlue + lightnessMatch) * 255);
+    const redHex: Lib_Color_Runner_HslToHex_RedHex = redByte.toString(16).padStart(2, '0');
+    const greenHex: Lib_Color_Runner_HslToHex_GreenHex = greenByte.toString(16).padStart(2, '0');
+    const blueHex: Lib_Color_Runner_HslToHex_BlueHex = blueByte.toString(16).padStart(2, '0');
 
     return `#${redHex}${greenHex}${blueHex}`;
   }
@@ -340,25 +340,25 @@ export class Color {
    *
    * @since 0.15.0
    */
-  private static rgbToHsl(red: LibColorRgbToHslRed, green: LibColorRgbToHslGreen, blue: LibColorRgbToHslBlue): LibColorRgbToHslReturns {
-    const normalizedRed: LibColorRgbToHslNormalizedRed = red / 255;
-    const normalizedGreen: LibColorRgbToHslNormalizedGreen = green / 255;
-    const normalizedBlue: LibColorRgbToHslNormalizedBlue = blue / 255;
-    const channelMax: LibColorRgbToHslChannelMax = Math.max(normalizedRed, normalizedGreen, normalizedBlue);
-    const channelMin: LibColorRgbToHslChannelMin = Math.min(normalizedRed, normalizedGreen, normalizedBlue);
-    const delta: LibColorRgbToHslDelta = channelMax - channelMin;
-    const lightnessNormalized: LibColorRgbToHslLightnessNormalized = (channelMax + channelMin) / 2;
-    const lightness: LibColorRgbToHslLightness = lightnessNormalized * 100;
+  private static rgbToHsl(red: Lib_Color_Runner_RgbToHsl_Red, green: Lib_Color_Runner_RgbToHsl_Green, blue: Lib_Color_Runner_RgbToHsl_Blue): Lib_Color_Runner_RgbToHsl_Returns {
+    const normalizedRed: Lib_Color_Runner_RgbToHsl_NormalizedRed = red / 255;
+    const normalizedGreen: Lib_Color_Runner_RgbToHsl_NormalizedGreen = green / 255;
+    const normalizedBlue: Lib_Color_Runner_RgbToHsl_NormalizedBlue = blue / 255;
+    const channelMax: Lib_Color_Runner_RgbToHsl_ChannelMax = Math.max(normalizedRed, normalizedGreen, normalizedBlue);
+    const channelMin: Lib_Color_Runner_RgbToHsl_ChannelMin = Math.min(normalizedRed, normalizedGreen, normalizedBlue);
+    const delta: Lib_Color_Runner_RgbToHsl_Delta = channelMax - channelMin;
+    const lightnessNormalized: Lib_Color_Runner_RgbToHsl_LightnessNormalized = (channelMax + channelMin) / 2;
+    const lightness: Lib_Color_Runner_RgbToHsl_Lightness = lightnessNormalized * 100;
 
-    let saturation: LibColorRgbToHslSaturation = 0;
+    let saturation: Lib_Color_Runner_RgbToHsl_Saturation = 0;
 
     if (delta !== 0) {
-      const saturationDenominator: LibColorRgbToHslSaturationDenominator = 1 - Math.abs((2 * lightnessNormalized) - 1);
+      const saturationDenominator: Lib_Color_Runner_RgbToHsl_SaturationDenominator = 1 - Math.abs((2 * lightnessNormalized) - 1);
 
       saturation = (delta / saturationDenominator) * 100;
     }
 
-    let hue: LibColorRgbToHslHue = 0;
+    let hue: Lib_Color_Runner_RgbToHsl_Hue = 0;
 
     if (delta !== 0) {
       if (channelMax === normalizedRed) {

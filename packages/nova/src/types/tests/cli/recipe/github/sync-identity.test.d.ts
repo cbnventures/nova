@@ -3,82 +3,82 @@
  *
  * @since 0.22.0
  */
-export type TestsCliRecipeGithubSyncIdentityRunIsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_IsProjectRootSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunLoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_LoadSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_ExecuteShellSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunLoggerWarnSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_LoggerWarnSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunWarnCalls = unknown[][];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_WarnCalls = unknown[][];
 
-export type TestsCliRecipeGithubSyncIdentityRunHasGithubBlockWarn = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasGithubBlockWarn = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunHasOwnerRepoWarn = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasOwnerRepoWarn = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunIsCommandExistsSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_IsCommandExistsSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunLoggerErrorSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_LoggerErrorSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunErrorCalls = unknown[][];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_ErrorCalls = unknown[][];
 
-export type TestsCliRecipeGithubSyncIdentityRunHasGhNotInstalled = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasGhNotInstalled = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunHasVersionError = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasVersionError = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunHasAuthError = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasAuthError = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunHasWriteError = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasWriteError = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunEditCalls = unknown[][];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_EditCalls = unknown[][];
 
-export type TestsCliRecipeGithubSyncIdentityRunEditCall = unknown[] | undefined;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_EditCall = unknown[] | undefined;
 
-export type TestsCliRecipeGithubSyncIdentityRunTopicsCall = unknown[] | undefined;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicsCall = unknown[] | undefined;
 
-export type TestsCliRecipeGithubSyncIdentityRunHasNoValuesWarn = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasNoValuesWarn = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunAuthCall = unknown[] | undefined;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_AuthCall = unknown[] | undefined;
 
-export type TestsCliRecipeGithubSyncIdentityRunViewCall = unknown[] | undefined;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_ViewCall = unknown[] | undefined;
 
-export type TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockDebug = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockDev = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockInfo = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockWarn = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockError = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMock = {
-  debug: TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockDebug;
-  dev: TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockDev;
-  info: TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockInfo;
-  warn: TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockWarn;
-  error: TestsCliRecipeGithubSyncIdentityRunCustomizedLoggerMockError;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock = {
+  debug: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Debug;
+  dev: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Dev;
+  info: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Info;
+  warn: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Warn;
+  error: Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedLoggerMock_Error;
 };
 
-export type TestsCliRecipeGithubSyncIdentityRunLoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliRecipeGithubSyncIdentityRunLoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').ToolkitLoggerCustomizeReturns;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_LoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').Toolkit_Logger_Customize_Returns;
 
-export type TestsCliRecipeGithubSyncIdentityRunCustomizedErrorCalls = unknown[][];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_CustomizedErrorCalls = unknown[][];
 
-export type TestsCliRecipeGithubSyncIdentityRunHasRateLimitError = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasRateLimitError = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunHasTooLongWarn = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasTooLongWarn = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunTypescriptCount = number;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TypescriptCount = number;
 
-export type TestsCliRecipeGithubSyncIdentityRunKeywords = string[];
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_Keywords = string[];
 
-export type TestsCliRecipeGithubSyncIdentityRunHasTrimWarn = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasTrimWarn = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunTopicMatches = RegExpMatchArray | null;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_TopicMatches = RegExpMatchArray | null;
 
-export type TestsCliRecipeGithubSyncIdentityRunHasMalformedJsonError = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasMalformedJsonError = boolean;
 
-export type TestsCliRecipeGithubSyncIdentityRunHasUndefinedPermissionError = boolean;
+export type Tests_Cli_Recipe_Github_SyncIdentity_CliRecipeGithubSyncIdentityRun_HasUndefinedPermissionError = boolean;

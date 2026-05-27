@@ -5,37 +5,37 @@ import type { CSSProperties, Dispatch, SetStateAction } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBackToTopButtonPropsClassName = string | undefined;
+export type Theme_BackToTopButton_Index_BackToTopButton_Props_ClassName = string | undefined;
 
-export type ThemeBackToTopButtonPropsStyle = CSSProperties | undefined;
+export type Theme_BackToTopButton_Index_BackToTopButton_Props_Style = CSSProperties | undefined;
 
-export type ThemeBackToTopButtonProps = {
-  className?: ThemeBackToTopButtonPropsClassName;
-  style?: ThemeBackToTopButtonPropsStyle;
+export type Theme_BackToTopButton_Index_BackToTopButton_Props = {
+  className?: Theme_BackToTopButton_Index_BackToTopButton_Props_ClassName;
+  style?: Theme_BackToTopButton_Index_BackToTopButton_Props_Style;
 };
 
-export type ThemeBackToTopButtonReturns = React.JSX.Element | null;
+export type Theme_BackToTopButton_Index_BackToTopButton_Returns = React.JSX.Element | null;
 
-export type ThemeBackToTopButtonThemeConfig = {
-  backToTopButton?: ThemeBackToTopButtonEnabled;
+export type Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig = {
+  backToTopButton?: Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton;
   [key: string]: unknown;
 };
 
-export type ThemeBackToTopButtonEnabled = boolean;
+export type Theme_BackToTopButton_Index_BackToTopButton_ThemeConfig_BackToTopButton = boolean;
 
-export type ThemeBackToTopButtonScrollThreshold = number;
+export type Theme_BackToTopButton_Index_BackToTopButton_ScrollThreshold = number;
 
-export type ThemeBackToTopButtonIsVisibleState = [ThemeBackToTopButtonIsVisible, ThemeBackToTopButtonSetIsVisible];
+export type Theme_BackToTopButton_Index_BackToTopButton_IsVisibleState = [Theme_BackToTopButton_Index_BackToTopButton_IsVisible, Theme_BackToTopButton_Index_BackToTopButton_SetIsVisible];
 
-export type ThemeBackToTopButtonIsVisible = boolean;
+export type Theme_BackToTopButton_Index_BackToTopButton_IsVisible = boolean;
 
-export type ThemeBackToTopButtonSetIsVisible = Dispatch<SetStateAction<ThemeBackToTopButtonIsVisible>>;
+export type Theme_BackToTopButton_Index_BackToTopButton_SetIsVisible = Dispatch<SetStateAction<Theme_BackToTopButton_Index_BackToTopButton_IsVisible>>;
 
 /**
  * Theme - Back To Top Button - Back To Top Button - Handle Scroll.
  *
  * @since 0.15.0
  */
-export type ThemeBackToTopButtonCurrentScrollPosition = number;
+export type Theme_BackToTopButton_Index_BackToTopButton_CurrentScrollPosition = number;
 
-export type ThemeBackToTopButtonButtonAriaLabel = string;
+export type Theme_BackToTopButton_Index_BackToTopButton_ButtonAriaLabel = string;

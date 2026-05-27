@@ -3,17 +3,17 @@ import { useThemeConfig } from '@docusaurus/theme-common';
 import ContentFooter from '@theme/ContentFooter';
 
 import type {
-  ThemeDocItemFooterDocItemFooterBlogShareConfig,
-  ThemeDocItemFooterDocItemFooterCanDisplayEditMetaRow,
-  ThemeDocItemFooterDocItemFooterCanDisplayFooter,
-  ThemeDocItemFooterDocItemFooterCanDisplayTagsRow,
-  ThemeDocItemFooterDocItemFooterContentFooterSpread,
-  ThemeDocItemFooterDocItemFooterDoc,
-  ThemeDocItemFooterDocItemFooterProps,
-  ThemeDocItemFooterDocItemFooterSharePlatforms,
-  ThemeDocItemFooterDocItemFooterShareUrl,
-  ThemeDocItemFooterDocItemFooterThemeConfig,
-  ThemeDocItemFooterDocItemFooterThemeConfigCast,
+  Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayEditMetaRow,
+  Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayFooter,
+  Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayTagsRow,
+  Theme_DocItem_Footer_Index_DocItemFooter_ContentFooterSpread,
+  Theme_DocItem_Footer_Index_DocItemFooter_Doc,
+  Theme_DocItem_Footer_Index_DocItemFooter_Props,
+  Theme_DocItem_Footer_Index_DocItemFooter_ShareUrl,
+  Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig,
+  Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog,
+  Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share_Platforms,
+  Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfigCast,
 } from '../../../types/theme/DocItem/Footer/index.d.ts';
 
 /**
@@ -27,17 +27,17 @@ import type {
  *
  * @since 0.15.0
  */
-function DocItemFooter(props: ThemeDocItemFooterDocItemFooterProps) {
-  const doc: ThemeDocItemFooterDocItemFooterDoc = useDoc();
-  const canDisplayTagsRow: ThemeDocItemFooterDocItemFooterCanDisplayTagsRow = doc['metadata']['tags']['length'] > 0;
-  const canDisplayEditMetaRow: ThemeDocItemFooterDocItemFooterCanDisplayEditMetaRow = (
+function DocItemFooter(props: Theme_DocItem_Footer_Index_DocItemFooter_Props) {
+  const doc: Theme_DocItem_Footer_Index_DocItemFooter_Doc = useDoc();
+  const canDisplayTagsRow: Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayTagsRow = doc['metadata']['tags']['length'] > 0;
+  const canDisplayEditMetaRow: Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayEditMetaRow = (
     doc['metadata']['editUrl'] !== undefined
     || doc['metadata']['lastUpdatedAt'] !== undefined
     || doc['metadata']['lastUpdatedBy'] !== undefined
   );
-  const themeConfig: ThemeDocItemFooterDocItemFooterThemeConfig = useThemeConfig() as ThemeDocItemFooterDocItemFooterThemeConfigCast as ThemeDocItemFooterDocItemFooterThemeConfig;
-  const blogShareConfig: ThemeDocItemFooterDocItemFooterBlogShareConfig = themeConfig['blog'] as ThemeDocItemFooterDocItemFooterBlogShareConfig;
-  let sharePlatforms: ThemeDocItemFooterDocItemFooterSharePlatforms = [];
+  const themeConfig: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig = useThemeConfig() as Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfigCast as Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig;
+  const blogShareConfig: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog = themeConfig['blog'] as Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog;
+  let sharePlatforms: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share_Platforms = [];
 
   if (
     blogShareConfig !== undefined
@@ -46,8 +46,8 @@ function DocItemFooter(props: ThemeDocItemFooterDocItemFooterProps) {
   ) {
     sharePlatforms = blogShareConfig['share']['platforms'];
   }
-  const shareUrl: ThemeDocItemFooterDocItemFooterShareUrl = (typeof window !== 'undefined') ? window['location']['href'] : '';
-  const canDisplayFooter: ThemeDocItemFooterDocItemFooterCanDisplayFooter = (
+  const shareUrl: Theme_DocItem_Footer_Index_DocItemFooter_ShareUrl = (typeof window !== 'undefined') ? window['location']['href'] : '';
+  const canDisplayFooter: Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayFooter = (
     canDisplayTagsRow === true
     || canDisplayEditMetaRow === true
     || sharePlatforms['length'] > 0
@@ -57,7 +57,7 @@ function DocItemFooter(props: ThemeDocItemFooterDocItemFooterProps) {
     return undefined;
   }
 
-  const contentFooterSpread: ThemeDocItemFooterDocItemFooterContentFooterSpread = {};
+  const contentFooterSpread: Theme_DocItem_Footer_Index_DocItemFooter_ContentFooterSpread = {};
 
   if (doc['metadata']['editUrl'] !== undefined && doc['metadata']['editUrl'] !== null) {
     Reflect.set(contentFooterSpread, 'editUrl', doc['metadata']['editUrl']);

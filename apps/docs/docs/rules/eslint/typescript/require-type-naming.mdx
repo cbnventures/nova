@@ -24,9 +24,11 @@ Require type alias names in `.d.ts` files to start with the class name prefix de
 
 ## Summary
 
-The `require-type-naming` rule reports any type alias in a `.d.ts` file whose name does not start with the expected prefix. The prefix is derived from the file path after the `types/` directory, with each segment converted to PascalCase.
+The `require-type-naming` rule reports any type alias in a `.d.ts` file whose name does not start with the expected prefix. The prefix is derived from the file path after the `types/` directory by PascalCasing each path segment and joining them with underscores.
 
-For example, a file at `types/cli/utility/changelog.d.ts` produces the prefix `CliUtilityChangelog`. The rule only applies to `.d.ts` files.
+For example, a file at `types/cli/utility/changelog.d.ts` produces the prefix `Cli_Utility_Changelog`. The rule only applies to `.d.ts` files.
+
+A separate `invalidIdentifierPrefix` diagnostic fires when the first path segment starts with a digit (for example, `types/2-utils/foo.d.ts`), because the resulting prefix would not be a valid TypeScript identifier. Rename the directory to start with a letter so the prefix can be derived.
 
 ## Why Use This Rule?
 
@@ -42,9 +44,9 @@ For example, a file at `types/cli/utility/changelog.d.ts` produces the prefix `C
     ```ts
     // File: types/cli/utility/changelog.d.ts
 
-    export type CliUtilityChangelogGenerateContext = RuleContext;
+    export type Cli_Utility_Changelog_Generate_Context = RuleContext;
 
-    export type CliUtilityChangelogGenerateReturns = void;
+    export type Cli_Utility_Changelog_Generate_Returns = void;
     ```
 
   </TabItem>
@@ -53,9 +55,11 @@ For example, a file at `types/cli/utility/changelog.d.ts` produces the prefix `C
     ```ts
     // File: types/cli/utility/changelog.d.ts
 
+    // Missing the prefix entirely.
     export type GenerateContext = RuleContext;
 
-    export type ChangelogReturns = void;
+    // Glued PascalCase — segments must be joined with underscores.
+    export type CliUtilityChangelogGenerateReturns = void;
     ```
 
   </TabItem>
@@ -135,6 +139,11 @@ Autofix is not available for this rule. Flagged code must be updated manually.
 
 ## Troubleshooting
 
-- **Warning fires but the prefix looks correct** — Check that the file path segments after `types/` match exactly. The rule splits on `/` and converts each segment from kebab-case to PascalCase.
+- **Warning fires but the prefix looks correct** — Check that the file path segments after `types/` match exactly. The rule splits on `/`, PascalCases each segment (kebab-case parts collapse together, e.g., `my-utility` becomes `MyUtility`), and joins the segments with underscores.
 - **Rule does not fire on `.ts` files** — This is expected. The rule only applies to files ending in `.d.ts`. Code files are not checked.
 - **Test type files use a different prefix** — Files ending in `.test.d.ts` have the `.test` portion stripped before deriving the prefix, so they use the same prefix as their non-test counterpart.
+- **`invalidIdentifierPrefix` reported on the file itself** — The first path segment after `types/` begins with a digit, so the derived prefix would not be a legal TypeScript identifier. Rename the directory to start with a letter and the rule will resume normal prefix enforcement.
+
+:::caution Migration in 0.18.0
+Prefix derivation changed from glued PascalCase (`CliUtilityChangelog`) to underscore-joined PascalCase (`Cli_Utility_Changelog`) in 0.18.0 so type names visibly mirror their file path. Existing type aliases must be renamed to the new form; the previous format is no longer accepted.
+:::

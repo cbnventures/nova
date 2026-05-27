@@ -1,6 +1,6 @@
 import { SkipToContentLink } from '@docusaurus/theme-common';
 
-import type { ThemeSkipToContentSkipToContentProps } from '../../types/theme/SkipToContent/index.d.ts';
+import type { Theme_SkipToContent_Index_SkipToContent_Props } from '../../types/theme/SkipToContent/index.d.ts';
 
 /**
  * Theme - Skip To Content - Skip To Content.
@@ -9,13 +9,13 @@ import type { ThemeSkipToContentSkipToContentProps } from '../../types/theme/Ski
  * a Nova-prefixed class on the anchor so the styles can target
  * a stable class instead of a locale-translated aria-label.
  *
- * @param {ThemeSkipToContentSkipToContentProps} props - Props.
+ * @param {Theme_SkipToContent_Index_SkipToContent_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function SkipToContent(props: ThemeSkipToContentSkipToContentProps) {
+function SkipToContent(props: Theme_SkipToContent_Index_SkipToContent_Props) {
   return (
     <SkipToContentLink
       className={(props['className'] !== undefined) ? `nova-skip-to-content ${props['className']}` : 'nova-skip-to-content'}

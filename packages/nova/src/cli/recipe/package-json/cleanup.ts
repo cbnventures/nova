@@ -9,7 +9,7 @@ import {
   libItemNpmKeys,
   libItemSortOrderKeys,
 } from '../../../lib/item.js';
-import { LibNovaConfig } from '../../../lib/nova-config.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
   isProjectRoot,
   loadWorkspaceManifests,
@@ -18,48 +18,48 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliRecipePackageJsonCleanupHandleRemoveUnknownKeys,
-  CliRecipePackageJsonCleanupHandleReorderCurrentKeys,
-  CliRecipePackageJsonCleanupHandleReorderFileContents,
-  CliRecipePackageJsonCleanupHandleReorderKeys,
-  CliRecipePackageJsonCleanupHandleReorderManifest,
-  CliRecipePackageJsonCleanupHandleReorderReordered,
-  CliRecipePackageJsonCleanupHandleReorderReorderedKeys,
-  CliRecipePackageJsonCleanupHandleReorderReturns,
-  CliRecipePackageJsonCleanupHandleReorderSortedKeys,
-  CliRecipePackageJsonCleanupHandleReorderValue,
-  CliRecipePackageJsonCleanupHandleReorderWorkspace,
-  CliRecipePackageJsonCleanupHandleReturns,
-  CliRecipePackageJsonCleanupHandleUnknownAllowedKeys,
-  CliRecipePackageJsonCleanupHandleUnknownFormattedUnknownKeys,
-  CliRecipePackageJsonCleanupHandleUnknownManifestContents,
-  CliRecipePackageJsonCleanupHandleUnknownManifestKeys,
-  CliRecipePackageJsonCleanupHandleUnknownReturns,
-  CliRecipePackageJsonCleanupHandleUnknownUnknownKeys,
-  CliRecipePackageJsonCleanupHandleUnknownUnsupportedMessage,
-  CliRecipePackageJsonCleanupHandleUnknownWorkspace,
-  CliRecipePackageJsonCleanupHandleWorkspace,
-  CliRecipePackageJsonCleanupRunCleanupRecipe,
-  CliRecipePackageJsonCleanupRunCleanupRecipeSettings,
-  CliRecipePackageJsonCleanupRunCurrentDirectory,
-  CliRecipePackageJsonCleanupRunEligibleWorkspaces,
-  CliRecipePackageJsonCleanupRunIsAtProjectRoot,
-  CliRecipePackageJsonCleanupRunIsDryRun,
-  CliRecipePackageJsonCleanupRunIsReplaceFile,
-  CliRecipePackageJsonCleanupRunOptions,
-  CliRecipePackageJsonCleanupRunRecipeTupleFilter,
-  CliRecipePackageJsonCleanupRunRemoveUnknownKeys,
-  CliRecipePackageJsonCleanupRunReorderKeys,
-  CliRecipePackageJsonCleanupRunReplaceFileNotice,
-  CliRecipePackageJsonCleanupRunReturns,
-  CliRecipePackageJsonCleanupRunWorkingFile,
-  CliRecipePackageJsonCleanupRunWorkingFileWorkspaces,
-  CliRecipePackageJsonCleanupRunWorkspaceConfig,
-  CliRecipePackageJsonCleanupRunWorkspaceConfigEntry,
-  CliRecipePackageJsonCleanupRunWorkspaceConfigEntryRecipes,
-  CliRecipePackageJsonCleanupRunWorkspaceConfigFilter,
-  CliRecipePackageJsonCleanupRunWorkspaceRecipesFilter,
-  CliRecipePackageJsonCleanupRunWorkspaces,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Handle_RemoveUnknownKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_CurrentKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_FileContents,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Keys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Manifest,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Reordered,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_ReorderedKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Returns,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_SortedKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Value,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Workspace,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_AllowedKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_FormattedUnknownKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_ManifestContents,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_ManifestKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Returns,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_UnknownKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_UnsupportedMessage,
+  Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Workspace,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipe,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipeSettings,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_CurrentDirectory,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaces,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_IsAtProjectRoot,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_IsDryRun,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_IsReplaceFile,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_Options,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_RemoveUnknownKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_ReorderKeys,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_ReplaceFileNotice,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_Returns,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFile,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFileWorkspaces,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfig,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntry,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntryRecipes,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceRecipesFilter,
+  Cli_Recipe_PackageJson_Cleanup_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/cleanup.d.ts';
 
 /**
@@ -71,22 +71,22 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliRecipePackageJsonCleanup {
+export class Runner {
   /**
    * CLI - Recipe - package.json - Cleanup - Run.
    *
    * Loads nova.config.json, filters eligible workspaces, then applies key removal and
    * reordering per recipe settings. Supports dry-run mode.
    *
-   * @param {CliRecipePackageJsonCleanupRunOptions} options - Options.
+   * @param {Cli_Recipe_PackageJson_Cleanup_Runner_Run_Options} options - Options.
    *
-   * @returns {CliRecipePackageJsonCleanupRunReturns}
+   * @returns {Cli_Recipe_PackageJson_Cleanup_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static async run(options: CliRecipePackageJsonCleanupRunOptions): CliRecipePackageJsonCleanupRunReturns {
-    const currentDirectory: CliRecipePackageJsonCleanupRunCurrentDirectory = process.cwd();
-    const isAtProjectRoot: CliRecipePackageJsonCleanupRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: Cli_Recipe_PackageJson_Cleanup_Runner_Run_Options): Cli_Recipe_PackageJson_Cleanup_Runner_Run_Returns {
+    const currentDirectory: Cli_Recipe_PackageJson_Cleanup_Runner_Run_CurrentDirectory = process.cwd();
+    const isAtProjectRoot: Cli_Recipe_PackageJson_Cleanup_Runner_Run_IsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -94,31 +94,31 @@ export class CliRecipePackageJsonCleanup {
       return;
     }
 
-    const isDryRun: CliRecipePackageJsonCleanupRunIsDryRun = options['dryRun'] === true;
-    const isReplaceFile: CliRecipePackageJsonCleanupRunIsReplaceFile = options['replaceFile'] === true;
+    const isDryRun: Cli_Recipe_PackageJson_Cleanup_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isReplaceFile: Cli_Recipe_PackageJson_Cleanup_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliRecipePackageJsonCleanup.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice: CliRecipePackageJsonCleanupRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: Cli_Recipe_PackageJson_Cleanup_Runner_Run_ReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CliRecipePackageJsonCleanup.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const workingFile: CliRecipePackageJsonCleanupRunWorkingFile = await new LibNovaConfig().load();
-    const workingFileWorkspaces: CliRecipePackageJsonCleanupRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
+    const workingFile: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonCleanup.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping cleanup. No workspaces detected in the "nova.config.json" file.');
 
@@ -126,15 +126,15 @@ export class CliRecipePackageJsonCleanup {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces: CliRecipePackageJsonCleanupRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: CliRecipePackageJsonCleanupRunWorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: CliRecipePackageJsonCleanupRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
+    const eligibleWorkspaces: Cli_Recipe_PackageJson_Cleanup_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: CliRecipePackageJsonCleanupRunRecipeTupleFilter = workspaceRecipes['cleanup'];
+      const recipeTuple: Cli_Recipe_PackageJson_Cleanup_Runner_Run_RecipeTupleFilter = workspaceRecipes['cleanup'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -145,21 +145,21 @@ export class CliRecipePackageJsonCleanup {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonCleanup.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping cleanup. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces: CliRecipePackageJsonCleanupRunWorkspaces = await loadWorkspaceManifests({
+    const workspaces: Cli_Recipe_PackageJson_Cleanup_Runner_Run_Workspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonCleanup.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping cleanup. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -167,29 +167,29 @@ export class CliRecipePackageJsonCleanup {
     }
 
     Logger.customize({
-      name: 'CliRecipePackageJsonCleanup.run',
+      name: 'Runner.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for cleanup.`);
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
-      const workspaceConfig: CliRecipePackageJsonCleanupRunWorkspaceConfig = eligibleWorkspaces.find((eligible) => eligible[1]['name'] === workspace['manifest']['name']);
+      const workspaceConfig: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfig = eligibleWorkspaces.find((eligible) => eligible[1]['name'] === workspace['manifest']['name']);
 
       if (workspaceConfig === undefined) {
         continue;
       }
 
-      const workspaceConfigEntry: CliRecipePackageJsonCleanupRunWorkspaceConfigEntry = workspaceConfig[1];
-      const workspaceConfigEntryRecipes: CliRecipePackageJsonCleanupRunWorkspaceConfigEntryRecipes = workspaceConfigEntry['recipes'];
+      const workspaceConfigEntry: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntry = workspaceConfig[1];
+      const workspaceConfigEntryRecipes: Cli_Recipe_PackageJson_Cleanup_Runner_Run_WorkspaceConfigEntryRecipes = workspaceConfigEntry['recipes'];
 
-      let removeUnknownKeys: CliRecipePackageJsonCleanupRunRemoveUnknownKeys = true;
-      let reorderKeys: CliRecipePackageJsonCleanupRunReorderKeys = true;
+      let removeUnknownKeys: Cli_Recipe_PackageJson_Cleanup_Runner_Run_RemoveUnknownKeys = true;
+      let reorderKeys: Cli_Recipe_PackageJson_Cleanup_Runner_Run_ReorderKeys = true;
 
       if (workspaceConfigEntryRecipes !== undefined) {
-        const cleanupRecipe: CliRecipePackageJsonCleanupRunCleanupRecipe = workspaceConfigEntryRecipes['cleanup'];
+        const cleanupRecipe: Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipe = workspaceConfigEntryRecipes['cleanup'];
 
         if (cleanupRecipe !== undefined) {
-          const cleanupRecipeSettings: CliRecipePackageJsonCleanupRunCleanupRecipeSettings = cleanupRecipe[1];
+          const cleanupRecipeSettings: Cli_Recipe_PackageJson_Cleanup_Runner_Run_CleanupRecipeSettings = cleanupRecipe[1];
 
           if (cleanupRecipeSettings !== undefined) {
             removeUnknownKeys = cleanupRecipeSettings['removeUnknownKeys'] !== false;
@@ -199,11 +199,11 @@ export class CliRecipePackageJsonCleanup {
       }
 
       Logger.customize({
-        name: 'CliRecipePackageJsonCleanup.run',
+        name: 'Runner.run',
         purpose: 'iteration',
       }).info(`Running cleanup for the "${workspace['manifest']['name']}" workspace ...`);
 
-      CliRecipePackageJsonCleanup.handle(workspace, removeUnknownKeys, reorderKeys);
+      Runner.handle(workspace, removeUnknownKeys, reorderKeys);
 
       if (isDryRun === true) {
         continue;
@@ -222,23 +222,23 @@ export class CliRecipePackageJsonCleanup {
    * workspace: unknown key removal and key reordering.
    * Either phase can be disabled via recipe settings.
    *
-   * @param {CliRecipePackageJsonCleanupHandleWorkspace}         workspace         - Workspace.
-   * @param {CliRecipePackageJsonCleanupHandleRemoveUnknownKeys} removeUnknownKeys - Remove unknown keys.
-   * @param {CliRecipePackageJsonCleanupHandleReorderKeys}       reorderKeys       - Reorder keys.
+   * @param {Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Workspace}         workspace         - Workspace.
+   * @param {Cli_Recipe_PackageJson_Cleanup_Runner_Handle_RemoveUnknownKeys} removeUnknownKeys - Remove unknown keys.
+   * @param {Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Keys}       reorderKeys       - Reorder keys.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonCleanupHandleReturns}
+   * @returns {Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Returns}
    *
    * @since 0.14.0
    */
-  private static handle(workspace: CliRecipePackageJsonCleanupHandleWorkspace, removeUnknownKeys: CliRecipePackageJsonCleanupHandleRemoveUnknownKeys, reorderKeys: CliRecipePackageJsonCleanupHandleReorderKeys): CliRecipePackageJsonCleanupHandleReturns {
+  private static handle(workspace: Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Workspace, removeUnknownKeys: Cli_Recipe_PackageJson_Cleanup_Runner_Handle_RemoveUnknownKeys, reorderKeys: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Keys): Cli_Recipe_PackageJson_Cleanup_Runner_Handle_Returns {
     if (removeUnknownKeys === true) {
-      CliRecipePackageJsonCleanup.handleUnknown(workspace);
+      Runner.handleUnknown(workspace);
     }
 
     if (reorderKeys === true) {
-      CliRecipePackageJsonCleanup.handleReorder(workspace);
+      Runner.handleReorder(workspace);
     }
 
     return;
@@ -250,26 +250,26 @@ export class CliRecipePackageJsonCleanup {
    * Reorders package.json keys to match the canonical sort order defined in
    * libItemSortOrderKeys. Unknown keys are appended after all known keys.
    *
-   * @param {CliRecipePackageJsonCleanupHandleReorderWorkspace} workspace - Workspace.
+   * @param {Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Workspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonCleanupHandleReorderReturns}
+   * @returns {Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Returns}
    *
    * @since 0.14.0
    */
-  private static handleReorder(workspace: CliRecipePackageJsonCleanupHandleReorderWorkspace): CliRecipePackageJsonCleanupHandleReorderReturns {
-    const fileContents: CliRecipePackageJsonCleanupHandleReorderFileContents = workspace['fileContents'];
-    const manifest: CliRecipePackageJsonCleanupHandleReorderManifest = workspace['manifest'];
+  private static handleReorder(workspace: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Workspace): Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Returns {
+    const fileContents: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_FileContents = workspace['fileContents'];
+    const manifest: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Manifest = workspace['manifest'];
 
-    const sortedKeys: CliRecipePackageJsonCleanupHandleReorderSortedKeys = new Set(libItemSortOrderKeys);
-    const currentKeys: CliRecipePackageJsonCleanupHandleReorderCurrentKeys = Object.keys(fileContents);
-    const reordered: CliRecipePackageJsonCleanupHandleReorderReordered = {};
+    const sortedKeys: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_SortedKeys = new Set(libItemSortOrderKeys);
+    const currentKeys: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_CurrentKeys = Object.keys(fileContents);
+    const reordered: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Reordered = {};
 
     // Add known keys in sorted order.
     for (const libItemSortOrderKey of libItemSortOrderKeys) {
       if (libItemSortOrderKey in fileContents) {
-        const value: CliRecipePackageJsonCleanupHandleReorderValue = Reflect.get(fileContents, libItemSortOrderKey);
+        const value: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Value = Reflect.get(fileContents, libItemSortOrderKey);
 
         Reflect.set(reordered, libItemSortOrderKey, value);
       }
@@ -278,13 +278,13 @@ export class CliRecipePackageJsonCleanup {
     // Append unknown keys (preserving their original order).
     for (const key of currentKeys) {
       if (sortedKeys.has(key) === false) {
-        const value: CliRecipePackageJsonCleanupHandleReorderValue = Reflect.get(fileContents, key);
+        const value: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_Value = Reflect.get(fileContents, key);
 
         Reflect.set(reordered, key, value);
       }
     }
 
-    const reorderedKeys: CliRecipePackageJsonCleanupHandleReorderReorderedKeys = Object.keys(reordered);
+    const reorderedKeys: Cli_Recipe_PackageJson_Cleanup_Runner_HandleReorder_ReorderedKeys = Object.keys(reordered);
 
     // Skip if the key order is already correct.
     if (currentKeys.every((currentKey, index) => currentKey === reorderedKeys[index]) === true) {
@@ -292,7 +292,7 @@ export class CliRecipePackageJsonCleanup {
     }
 
     Logger.customize({
-      name: 'CliRecipePackageJsonCleanup.handleReorder',
+      name: 'Runner.handleReorder',
       purpose: 'reorder',
     }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Reordering "package.json" keys ...`);
 
@@ -314,35 +314,35 @@ export class CliRecipePackageJsonCleanup {
    * Detects and removes keys not present in the allowed set built from bundler, corepack,
    * ecosystem, Node.js, and npm key lists from the lib/item module.
    *
-   * @param {CliRecipePackageJsonCleanupHandleUnknownWorkspace} workspace - Workspace.
+   * @param {Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Workspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonCleanupHandleUnknownReturns}
+   * @returns {Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Returns}
    *
    * @since 0.14.0
    */
-  private static handleUnknown(workspace: CliRecipePackageJsonCleanupHandleUnknownWorkspace): CliRecipePackageJsonCleanupHandleUnknownReturns {
-    const allowedKeys: CliRecipePackageJsonCleanupHandleUnknownAllowedKeys = new Set([
+  private static handleUnknown(workspace: Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Workspace): Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_Returns {
+    const allowedKeys: Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_AllowedKeys = new Set([
       ...libItemBundlerKeys,
       ...libItemCorepackKeys,
       ...libItemEcosystemKeys,
       ...libItemNodeJsKeys,
       ...libItemNpmKeys,
     ]);
-    const manifestContents: CliRecipePackageJsonCleanupHandleUnknownManifestContents = workspace['fileContents'] ?? {};
-    const manifestKeys: CliRecipePackageJsonCleanupHandleUnknownManifestKeys = Object.keys(manifestContents);
-    const unknownKeys: CliRecipePackageJsonCleanupHandleUnknownUnknownKeys = manifestKeys.filter((manifestKey) => allowedKeys.has(manifestKey) === false);
+    const manifestContents: Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_ManifestContents = workspace['fileContents'] ?? {};
+    const manifestKeys: Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_ManifestKeys = Object.keys(manifestContents);
+    const unknownKeys: Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_UnknownKeys = manifestKeys.filter((manifestKey) => allowedKeys.has(manifestKey) === false);
 
     if (unknownKeys.length === 0) {
       return;
     }
 
-    const formattedUnknownKeys: CliRecipePackageJsonCleanupHandleUnknownFormattedUnknownKeys = unknownKeys.map((unknownKey) => {
+    const formattedUnknownKeys: Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_FormattedUnknownKeys = unknownKeys.map((unknownKey) => {
       return `- "${unknownKey}"`;
     }).join('\n');
 
-    const unsupportedMessage: CliRecipePackageJsonCleanupHandleUnknownUnsupportedMessage = [
+    const unsupportedMessage: Cli_Recipe_PackageJson_Cleanup_Runner_HandleUnknown_UnsupportedMessage = [
       `Workspace "${workspace['manifest']['name']}" contains unsupported "package.json" key(s).`,
       'The unsupported keys are:',
       formattedUnknownKeys,
@@ -351,13 +351,13 @@ export class CliRecipePackageJsonCleanup {
     ].join('\n');
 
     Logger.customize({
-      name: 'CliRecipePackageJsonCleanup.handleUnknown',
+      name: 'Runner.handleUnknown',
       purpose: 'unsupported',
     }).warn(unsupportedMessage);
 
     for (const unknownKey of unknownKeys) {
       Logger.customize({
-        name: 'CliRecipePackageJsonCleanup.handleUnknown',
+        name: 'Runner.handleUnknown',
         purpose: 'removal',
       }).info(`Removing unsupported key "${unknownKey}" from workspace "${workspace['manifest']['name']}".`);
 

@@ -3,82 +3,82 @@
  *
  * @since 0.15.0
  */
-export type TestsThemeDriftDiscoverThemeComponentsReturns = Promise<string[]>;
+export type Tests_ThemeDrift_DiscoverThemeComponents_Returns = Promise<string[]>;
 
-export type TestsThemeDriftDiscoverThemeComponentsThemeDirectory = string;
+export type Tests_ThemeDrift_DiscoverThemeComponents_ThemeDirectory = string;
 
-export type TestsThemeDriftDiscoverThemeComponentsFiles = string[];
+export type Tests_ThemeDrift_DiscoverThemeComponents_Files = string[];
 
-export type TestsThemeDriftDiscoverThemeComponentsModules = string[];
+export type Tests_ThemeDrift_DiscoverThemeComponents_Modules = string[];
 
-export type TestsThemeDriftDiscoverThemeComponentsRelativePath = string;
+export type Tests_ThemeDrift_DiscoverThemeComponents_RelativePath = string;
 
-export type TestsThemeDriftDiscoverThemeComponentsModuleName = string;
+export type Tests_ThemeDrift_DiscoverThemeComponents_ModuleName = string;
 
-export type TestsThemeDriftDiscoverThemeComponentsIsVariant = boolean;
+export type Tests_ThemeDrift_DiscoverThemeComponents_IsVariant = boolean;
 
 /**
  * Tests - Theme Drift - Extract Declared Modules.
  *
  * @since 0.15.0
  */
-export type TestsThemeDriftExtractDeclaredModulesReturns = Promise<string[]>;
+export type Tests_ThemeDrift_ExtractDeclaredModules_Returns = Promise<string[]>;
 
-export type TestsThemeDriftExtractDeclaredModulesThemeDtsPath = string;
+export type Tests_ThemeDrift_ExtractDeclaredModules_ThemeDtsPath = string;
 
-export type TestsThemeDriftExtractDeclaredModulesContent = string;
+export type Tests_ThemeDrift_ExtractDeclaredModules_Content = string;
 
-export type TestsThemeDriftExtractDeclaredModulesModules = string[];
+export type Tests_ThemeDrift_ExtractDeclaredModules_Modules = string[];
 
-export type TestsThemeDriftExtractDeclaredModulesPattern = RegExp;
+export type Tests_ThemeDrift_ExtractDeclaredModules_Pattern = RegExp;
 
-export type TestsThemeDriftExtractDeclaredModulesMatch = RegExpExecArray | null;
+export type Tests_ThemeDrift_ExtractDeclaredModules_Match = RegExpExecArray | null;
 
-export type TestsThemeDriftExtractDeclaredModulesCapture = string | undefined;
+export type Tests_ThemeDrift_ExtractDeclaredModules_Capture = string | undefined;
 
 /**
  * Tests - Theme Drift - Get Package Root.
  *
  * @since 0.15.0
  */
-export type TestsThemeDriftGetPackageRootReturns = string;
+export type Tests_ThemeDrift_GetPackageRoot_Returns = string;
 
-export type TestsThemeDriftGetPackageRootCurrentFilePath = string;
+export type Tests_ThemeDrift_GetPackageRoot_CurrentFilePath = string;
 
-export type TestsThemeDriftGetPackageRootCurrentFileDirectory = string;
+export type Tests_ThemeDrift_GetPackageRoot_CurrentFileDirectory = string;
 
 /**
  * Tests - Theme Drift - Theme Drift.
  *
  * @since 0.15.0
  */
-export type TestsThemeDriftDeclaredModulesHaveComponentsDeclaredModules = string[];
+export type Tests_ThemeDrift_DeclaredModulesHaveComponentsDeclaredModules = string[];
 
-export type TestsThemeDriftDeclaredModulesHaveComponentsComponentModules = string[];
+export type Tests_ThemeDrift_DeclaredModulesHaveComponentsComponentModules = string[];
 
-export type TestsThemeDriftDeclaredModulesHaveComponentsComponentSet = Set<string>;
+export type Tests_ThemeDrift_DeclaredModulesHaveComponentsComponentSet = Set<string>;
 
-export type TestsThemeDriftDeclaredModulesHaveComponentsMissing = string[];
+export type Tests_ThemeDrift_DeclaredModulesHaveComponentsMissing = string[];
 
-export type TestsThemeDriftDeclaredModulesHaveComponentsModule = string;
+export type Tests_ThemeDrift_DeclaredModulesHaveComponentsModule = string;
 
-export type TestsThemeDriftDeclaredModulesHaveComponentsMessage = string;
+export type Tests_ThemeDrift_DeclaredModulesHaveComponentsMessage = string;
 
-export type TestsThemeDriftComponentsHaveDeclaredModulesDeclaredModules = string[];
+export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesDeclaredModules = string[];
 
-export type TestsThemeDriftComponentsHaveDeclaredModulesComponentModules = string[];
+export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesComponentModules = string[];
 
-export type TestsThemeDriftComponentsHaveDeclaredModulesDeclaredSet = Set<string>;
+export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesDeclaredSet = Set<string>;
 
-export type TestsThemeDriftComponentsHaveDeclaredModulesMissing = string[];
+export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesMissing = string[];
 
-export type TestsThemeDriftComponentsHaveDeclaredModulesModule = string;
+export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesModule = string;
 
-export type TestsThemeDriftComponentsHaveDeclaredModulesMessage = string;
+export type Tests_ThemeDrift_ComponentsHaveDeclaredModulesMessage = string;
 
 /**
  * Tests - Theme Drift - Variant Directories.
  *
  * @since 0.15.0
  */
-export type TestsThemeDriftVariantDirectories = string[];
+export type Tests_ThemeDrift_VariantDirectories = string[];

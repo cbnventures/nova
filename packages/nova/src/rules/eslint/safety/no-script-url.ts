@@ -3,15 +3,15 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintSafetyNoScriptUrlCheckLiteralAllowedPatterns,
-  RulesEslintSafetyNoScriptUrlCheckLiteralContext,
-  RulesEslintSafetyNoScriptUrlCheckLiteralLowered,
-  RulesEslintSafetyNoScriptUrlCheckLiteralNode,
-  RulesEslintSafetyNoScriptUrlCheckLiteralReturns,
-  RulesEslintSafetyNoScriptUrlCheckLiteralValue,
-  RulesEslintSafetyNoScriptUrlRuleDefaultOptionsAllowedPatterns,
-  RulesEslintSafetyNoScriptUrlRuleDefaultOptionsIgnoreFiles,
-  RulesEslintSafetyNoScriptUrlRuleOptions,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_AllowedPatterns,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Context,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Lowered,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Node,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Returns,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Value,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsAllowedPatterns,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions,
 } from '../../../types/rules/eslint/safety/no-script-url.d.ts';
 
 /**
@@ -22,7 +22,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintSafetyNoScriptUrl {
+export class Runner {
   /**
    * Rules - ESLint - Safety - No Script URL - Rule.
    *
@@ -62,11 +62,11 @@ export class RulesEslintSafetyNoScriptUrl {
       }],
     },
     defaultOptions: [{
-      allowedPatterns: [] as RulesEslintSafetyNoScriptUrlRuleDefaultOptionsAllowedPatterns,
-      ignoreFiles: [] as RulesEslintSafetyNoScriptUrlRuleDefaultOptionsIgnoreFiles,
+      allowedPatterns: [] as Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsAllowedPatterns,
+      ignoreFiles: [] as Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintSafetyNoScriptUrlRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -75,7 +75,7 @@ export class RulesEslintSafetyNoScriptUrl {
 
       return {
         Literal(node) {
-          RulesEslintSafetyNoScriptUrl.checkLiteral(context, node, options['allowedPatterns']);
+          Runner.checkLiteral(context, node, options['allowedPatterns']);
 
           return;
         },
@@ -91,22 +91,22 @@ export class RulesEslintSafetyNoScriptUrl {
    *
    * @private
    *
-   * @param {RulesEslintSafetyNoScriptUrlCheckLiteralContext}         context         - Context.
-   * @param {RulesEslintSafetyNoScriptUrlCheckLiteralNode}            node            - Node.
-   * @param {RulesEslintSafetyNoScriptUrlCheckLiteralAllowedPatterns} allowedPatterns - Allowed patterns.
+   * @param {Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Context}         context         - Context.
+   * @param {Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Node}            node            - Node.
+   * @param {Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_AllowedPatterns} allowedPatterns - Allowed patterns.
    *
-   * @returns {RulesEslintSafetyNoScriptUrlCheckLiteralReturns}
+   * @returns {Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Returns}
    *
    * @since 0.15.0
    */
-  private static checkLiteral(context: RulesEslintSafetyNoScriptUrlCheckLiteralContext, node: RulesEslintSafetyNoScriptUrlCheckLiteralNode, allowedPatterns: RulesEslintSafetyNoScriptUrlCheckLiteralAllowedPatterns): RulesEslintSafetyNoScriptUrlCheckLiteralReturns {
-    const value: RulesEslintSafetyNoScriptUrlCheckLiteralValue = node.value;
+  private static checkLiteral(context: Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Context, node: Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Node, allowedPatterns: Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_AllowedPatterns): Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Returns {
+    const value: Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Value = node.value;
 
     if (typeof value !== 'string') {
       return;
     }
 
-    const lowered: RulesEslintSafetyNoScriptUrlCheckLiteralLowered = value.toLowerCase();
+    const lowered: Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Lowered = value.toLowerCase();
 
     if (lowered.startsWith('javascript:') === false) {
       return;

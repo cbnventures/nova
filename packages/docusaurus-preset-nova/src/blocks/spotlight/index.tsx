@@ -1,6 +1,6 @@
 import Heading from '@theme/Heading';
 
-import type { BlocksSpotlightProps } from '../../types/blocks/spotlight/index.d.ts';
+import type { Blocks_Spotlight_Index_BlocksSpotlight_Props } from '../../types/blocks/spotlight/index.d.ts';
 
 /**
  * Blocks - Spotlight.
@@ -9,13 +9,13 @@ import type { BlocksSpotlightProps } from '../../types/blocks/spotlight/index.d.
  * readable width with a heading for focused content blocks like code
  * snippets, diagrams, or prose passages between wider sections.
  *
- * @param {BlocksSpotlightProps} props - Props.
+ * @param {Blocks_Spotlight_Index_BlocksSpotlight_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlocksSpotlight(props: BlocksSpotlightProps) {
+function BlocksSpotlight(props: Blocks_Spotlight_Index_BlocksSpotlight_Props) {
   return (
     <section
       className={(props['className'] !== undefined) ? `nova-spotlight ${props['className']}` : 'nova-spotlight'}

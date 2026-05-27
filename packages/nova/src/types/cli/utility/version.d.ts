@@ -1,10 +1,10 @@
 import type MarkdownTable from '../../../toolkit/markdown-table.js';
 
 import type {
-  SharedLinuxOsReleaseEntries,
-  SharedShellOutput,
-  SharedWindowsRegistryKey,
-  SharedWindowsRegistryKeys,
+  Shared_LinuxOsReleaseEntries as SharedLinuxOsReleaseEntries,
+  Shared_ShellOutput as SharedShellOutput,
+  Shared_WindowsRegistryKey as SharedWindowsRegistryKey,
+  Shared_WindowsRegistryKeys as SharedWindowsRegistryKeys,
 } from '../../shared.d.ts';
 
 /**
@@ -12,275 +12,275 @@ import type {
  *
  * @since 0.11.0
  */
-export type CliUtilityVersionGetBrowserVersionReturns = Promise<CliUtilityVersionGetBrowserVersionBrowsers>;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_Returns = Promise<Cli_Utility_Version_Runner_GetBrowserVersion_Browsers>;
 
-export type CliUtilityVersionGetBrowserVersionCurrentPlatform = NodeJS.Platform;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_CurrentPlatform = NodeJS.Platform;
 
-export type CliUtilityVersionGetBrowserVersionBrowsers = Record<string, string>;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_Browsers = Record<string, string>;
 
-export type CliUtilityVersionGetBrowserVersionDarwinSupportedBrowsers = Record<string, string>;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinSupportedBrowsers = Record<string, string>;
 
-export type CliUtilityVersionGetBrowserVersionDarwinPairs = PromiseSettledResult<readonly [string, string] | null>[];
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinPairs = PromiseSettledResult<readonly [string, string] | null>[];
 
-export type CliUtilityVersionGetBrowserVersionDarwinKey = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinKey = string;
 
-export type CliUtilityVersionGetBrowserVersionDarwinAppName = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinAppName = string;
 
-export type CliUtilityVersionGetBrowserVersionDarwinSystem = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinSystem = string;
 
-export type CliUtilityVersionGetBrowserVersionDarwinUser = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinUser = string;
 
-export type CliUtilityVersionGetBrowserVersionDarwinPathResults = [boolean, boolean];
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinPathResults = [boolean, boolean];
 
-export type CliUtilityVersionGetBrowserVersionDarwinHasSystem = boolean;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinHasSystem = boolean;
 
-export type CliUtilityVersionGetBrowserVersionDarwinHasUser = boolean;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinHasUser = boolean;
 
-export type CliUtilityVersionGetBrowserVersionAppPath = string | null;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_AppPath = string | null;
 
-export type CliUtilityVersionGetBrowserVersionDarwinVersionResponse = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinVersionResponse = SharedShellOutput;
 
-export type CliUtilityVersionGetBrowserVersionDarwinMacosAppVersion = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinMacosAppVersion = string;
 
-export type CliUtilityVersionGetBrowserVersionDarwinEntries = (readonly [string, string])[];
+export type Cli_Utility_Version_Runner_GetBrowserVersion_DarwinEntries = (readonly [string, string])[];
 
-export type CliUtilityVersionGetBrowserVersionWindowsSupportedBrowsers = Record<string, string>;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsSupportedBrowsers = Record<string, string>;
 
-export type CliUtilityVersionGetBrowserVersionWindowsPairs = PromiseSettledResult<readonly [string, string] | null>[];
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsPairs = PromiseSettledResult<readonly [string, string] | null>[];
 
-export type CliUtilityVersionGetBrowserVersionWindowsKey = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsKey = string;
 
-export type CliUtilityVersionGetBrowserVersionWindowsExeName = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsExeName = string;
 
-export type CliUtilityVersionGetBrowserVersionWindowsQuery = SharedWindowsRegistryKeys;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsQuery = SharedWindowsRegistryKeys;
 
-export type CliUtilityVersionGetBrowserVersionWindowsExePath = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsExePath = string;
 
-export type CliUtilityVersionGetBrowserVersionWindowsWindowsAppVersion = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsWindowsAppVersion = string;
 
-export type CliUtilityVersionGetBrowserVersionWindowsEntries = (readonly [string, string])[];
+export type Cli_Utility_Version_Runner_GetBrowserVersion_WindowsEntries = (readonly [string, string])[];
 
-export type CliUtilityVersionGetBrowserVersionLinuxSupportedBrowsers = Record<string, string>;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_LinuxSupportedBrowsers = Record<string, string>;
 
-export type CliUtilityVersionGetBrowserVersionLinuxPairs = PromiseSettledResult<readonly [string, string] | null>[];
+export type Cli_Utility_Version_Runner_GetBrowserVersion_LinuxPairs = PromiseSettledResult<readonly [string, string] | null>[];
 
-export type CliUtilityVersionGetBrowserVersionLinuxKey = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_LinuxKey = string;
 
-export type CliUtilityVersionGetBrowserVersionLinuxCommandName = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCommandName = string;
 
-export type CliUtilityVersionGetBrowserVersionLinuxCommandResponse = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCommandResponse = SharedShellOutput;
 
-export type CliUtilityVersionGetBrowserVersionLinuxVersionResponse = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_LinuxVersionResponse = SharedShellOutput;
 
-export type CliUtilityVersionGetBrowserVersionLinuxCliToolVersion = string;
+export type Cli_Utility_Version_Runner_GetBrowserVersion_LinuxCliToolVersion = string;
 
-export type CliUtilityVersionGetBrowserVersionLinuxEntries = (readonly [string, string])[];
+export type Cli_Utility_Version_Runner_GetBrowserVersion_LinuxEntries = (readonly [string, string])[];
 
 /**
  * CLI - Utility - Version - Get Environment Manager Version.
  *
  * @since 0.11.0
  */
-export type CliUtilityVersionGetEnvironmentManagerVersionReturns = Promise<CliUtilityVersionGetEnvironmentManagerVersionManagers>;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_Returns = Promise<Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_Managers>;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionEnvResults = [SharedShellOutput, SharedShellOutput];
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_EnvResults = [SharedShellOutput, SharedShellOutput];
 
-export type CliUtilityVersionGetEnvironmentManagerVersionNvmVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionVoltaVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionManagers = Record<string, string>;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_Managers = Record<string, string>;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionNvmPosixMatchResult = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmPosixMatchResult = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionNvmPosixMatch = string | undefined;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmPosixMatch = string | undefined;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionNvmWindowsMatchResult = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmWindowsMatchResult = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionNvmWindowsMatch = string | undefined;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_NvmWindowsMatch = string | undefined;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionVoltaMatchResult = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaMatchResult = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetEnvironmentManagerVersionVoltaMatch = string | undefined;
+export type Cli_Utility_Version_Runner_GetEnvironmentManagerVersion_VoltaMatch = string | undefined;
 
 /**
  * CLI - Utility - Version - Get Interpreter Version.
  *
  * @since 0.11.0
  */
-export type CliUtilityVersionGetInterpreterVersionReturns = Promise<CliUtilityVersionGetInterpreterVersionInterpreters>;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_Returns = Promise<Cli_Utility_Version_Runner_GetInterpreterVersion_Interpreters>;
 
-export type CliUtilityVersionGetInterpreterVersionInterpreterResults = [SharedShellOutput, SharedShellOutput];
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_InterpreterResults = [SharedShellOutput, SharedShellOutput];
 
-export type CliUtilityVersionGetInterpreterVersionJavaVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_JavaVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetInterpreterVersionRustVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_RustVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetInterpreterVersionInterpreters = Record<string, string>;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_Interpreters = Record<string, string>;
 
-export type CliUtilityVersionGetInterpreterVersionJavaMatch = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatch = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetInterpreterVersionJavaMatchVersion = string;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchVersion = string;
 
-export type CliUtilityVersionGetInterpreterVersionJavaMatchDistribution = string;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchDistribution = string;
 
-export type CliUtilityVersionGetInterpreterVersionJavaMatchBuild = string;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_JavaMatchBuild = string;
 
-export type CliUtilityVersionGetInterpreterVersionRustMatch = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatch = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetInterpreterVersionRustMatchVersion = string;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchVersion = string;
 
-export type CliUtilityVersionGetInterpreterVersionRustMatchBuildHash = string;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchBuildHash = string;
 
-export type CliUtilityVersionGetInterpreterVersionRustMatchBuildDate = string;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchBuildDate = string;
 
-export type CliUtilityVersionGetInterpreterVersionRustMatchSource = string;
+export type Cli_Utility_Version_Runner_GetInterpreterVersion_RustMatchSource = string;
 
 /**
  * CLI - Utility - Version - Get Node Version.
  *
  * @since 0.11.0
  */
-export type CliUtilityVersionGetNodeVersionReturns = Promise<CliUtilityVersionGetNodeVersionTools>;
+export type Cli_Utility_Version_Runner_GetNodeVersion_Returns = Promise<Cli_Utility_Version_Runner_GetNodeVersion_Tools>;
 
-export type CliUtilityVersionGetNodeVersionNodeResults = [SharedShellOutput, SharedShellOutput, SharedShellOutput, SharedShellOutput, SharedShellOutput];
+export type Cli_Utility_Version_Runner_GetNodeVersion_NodeResults = [SharedShellOutput, SharedShellOutput, SharedShellOutput, SharedShellOutput, SharedShellOutput];
 
-export type CliUtilityVersionGetNodeVersionNodeJsVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetNodeVersion_NodeJsVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetNodeVersionNpmVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetNodeVersion_NpmVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetNodeVersionYarnVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetNodeVersion_YarnVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetNodeVersionPnpmVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetNodeVersion_PnpmVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetNodeVersionBunVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetNodeVersion_BunVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetNodeVersionTools = Record<string, string>;
+export type Cli_Utility_Version_Runner_GetNodeVersion_Tools = Record<string, string>;
 
-export type CliUtilityVersionGetNodeVersionNodeJsMatchResult = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetNodeVersion_NodeJsMatchResult = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetNodeVersionNodeJsMatch = string | undefined;
+export type Cli_Utility_Version_Runner_GetNodeVersion_NodeJsMatch = string | undefined;
 
-export type CliUtilityVersionGetNodeVersionNpmMatchResult = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetNodeVersion_NpmMatchResult = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetNodeVersionNpmMatch = string | undefined;
+export type Cli_Utility_Version_Runner_GetNodeVersion_NpmMatch = string | undefined;
 
-export type CliUtilityVersionGetNodeVersionYarnMatchResult = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetNodeVersion_YarnMatchResult = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetNodeVersionYarnMatch = string | undefined;
+export type Cli_Utility_Version_Runner_GetNodeVersion_YarnMatch = string | undefined;
 
-export type CliUtilityVersionGetNodeVersionPnpmMatchResult = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetNodeVersion_PnpmMatchResult = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetNodeVersionPnpmMatch = string | undefined;
+export type Cli_Utility_Version_Runner_GetNodeVersion_PnpmMatch = string | undefined;
 
-export type CliUtilityVersionGetNodeVersionBunMatchResult = RegExpMatchArray | null;
+export type Cli_Utility_Version_Runner_GetNodeVersion_BunMatchResult = RegExpMatchArray | null;
 
-export type CliUtilityVersionGetNodeVersionBunMatch = string | undefined;
+export type Cli_Utility_Version_Runner_GetNodeVersion_BunMatch = string | undefined;
 
 /**
  * CLI - Utility - Version - Get OS Version.
  *
  * @since 0.11.0
  */
-export type CliUtilityVersionGetOsVersionReturns = Promise<{
-  name: CliUtilityVersionGetOsVersionName;
-  version: CliUtilityVersionGetOsVersionCurrentVersion;
-  architecture: CliUtilityVersionGetOsVersionArchitecture;
-  build: CliUtilityVersionGetOsVersionBuild;
-  kernel: CliUtilityVersionGetOsVersionKernel;
+export type Cli_Utility_Version_Runner_GetOsVersion_Returns = Promise<{
+  name: Cli_Utility_Version_Runner_GetOsVersion_Name;
+  version: Cli_Utility_Version_Runner_GetOsVersion_CurrentVersion;
+  architecture: Cli_Utility_Version_Runner_GetOsVersion_Architecture;
+  build: Cli_Utility_Version_Runner_GetOsVersion_Build;
+  kernel: Cli_Utility_Version_Runner_GetOsVersion_Kernel;
 }>;
 
-export type CliUtilityVersionGetOsVersionCurrentPlatform = NodeJS.Platform;
+export type Cli_Utility_Version_Runner_GetOsVersion_CurrentPlatform = NodeJS.Platform;
 
-export type CliUtilityVersionGetOsVersionArchitecture = NodeJS.Architecture;
+export type Cli_Utility_Version_Runner_GetOsVersion_Architecture = NodeJS.Architecture;
 
-export type CliUtilityVersionGetOsVersionKernel = string;
+export type Cli_Utility_Version_Runner_GetOsVersion_Kernel = string;
 
-export type CliUtilityVersionGetOsVersionName = NodeJS.Platform | string;
+export type Cli_Utility_Version_Runner_GetOsVersion_Name = NodeJS.Platform | string;
 
-export type CliUtilityVersionGetOsVersionCurrentVersion = string;
+export type Cli_Utility_Version_Runner_GetOsVersion_CurrentVersion = string;
 
-export type CliUtilityVersionGetOsVersionBuild = string;
+export type Cli_Utility_Version_Runner_GetOsVersion_Build = string;
 
-export type CliUtilityVersionGetOsVersionDarwinResults = [SharedShellOutput, SharedShellOutput, SharedShellOutput];
+export type Cli_Utility_Version_Runner_GetOsVersion_DarwinResults = [SharedShellOutput, SharedShellOutput, SharedShellOutput];
 
-export type CliUtilityVersionGetOsVersionProductName = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetOsVersion_ProductName = SharedShellOutput;
 
-export type CliUtilityVersionGetOsVersionProductVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetOsVersion_ProductVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetOsVersionBuildVersion = SharedShellOutput;
+export type Cli_Utility_Version_Runner_GetOsVersion_BuildVersion = SharedShellOutput;
 
-export type CliUtilityVersionGetOsVersionRegistryQuery = SharedWindowsRegistryKeys;
+export type Cli_Utility_Version_Runner_GetOsVersion_RegistryQuery = SharedWindowsRegistryKeys;
 
-export type CliUtilityVersionGetOsVersionCurrentBuildEntry = SharedWindowsRegistryKey | undefined;
+export type Cli_Utility_Version_Runner_GetOsVersion_CurrentBuildEntry = SharedWindowsRegistryKey | undefined;
 
-export type CliUtilityVersionGetOsVersionCurrentBuildNumberEntry = SharedWindowsRegistryKey | undefined;
+export type Cli_Utility_Version_Runner_GetOsVersion_CurrentBuildNumberEntry = SharedWindowsRegistryKey | undefined;
 
-export type CliUtilityVersionGetOsVersionUpdateBuildRevisionEntry = SharedWindowsRegistryKey | undefined;
+export type Cli_Utility_Version_Runner_GetOsVersion_UpdateBuildRevisionEntry = SharedWindowsRegistryKey | undefined;
 
-export type CliUtilityVersionGetOsVersionProductNameEntry = SharedWindowsRegistryKey | undefined;
+export type Cli_Utility_Version_Runner_GetOsVersion_ProductNameEntry = SharedWindowsRegistryKey | undefined;
 
-export type CliUtilityVersionGetOsVersionDisplayVersionEntry = SharedWindowsRegistryKey | undefined;
+export type Cli_Utility_Version_Runner_GetOsVersion_DisplayVersionEntry = SharedWindowsRegistryKey | undefined;
 
-export type CliUtilityVersionGetOsVersionReleaseIdEntry = SharedWindowsRegistryKey | undefined;
+export type Cli_Utility_Version_Runner_GetOsVersion_ReleaseIdEntry = SharedWindowsRegistryKey | undefined;
 
-export type CliUtilityVersionGetOsVersionCurrentBuild = string | undefined;
+export type Cli_Utility_Version_Runner_GetOsVersion_CurrentBuild = string | undefined;
 
-export type CliUtilityVersionGetOsVersionUpdateBuildRevision = string | undefined;
+export type Cli_Utility_Version_Runner_GetOsVersion_UpdateBuildRevision = string | undefined;
 
-export type CliUtilityVersionGetOsVersionOsRelease = SharedLinuxOsReleaseEntries;
+export type Cli_Utility_Version_Runner_GetOsVersion_OsRelease = SharedLinuxOsReleaseEntries;
 
 /**
  * CLI - Utility - Version - Print.
  *
  * @since 0.11.0
  */
-export type CliUtilityVersionPrintList = Record<string, Record<string, string>>;
+export type Cli_Utility_Version_Runner_Print_List = Record<string, Record<string, string>>;
 
-export type CliUtilityVersionPrintReturns = void;
+export type Cli_Utility_Version_Runner_Print_Returns = void;
 
-export type CliUtilityVersionPrintCategory = string;
+export type Cli_Utility_Version_Runner_Print_Category = string;
 
-export type CliUtilityVersionPrintRowsByKey = Record<string, string>;
+export type Cli_Utility_Version_Runner_Print_RowsByKey = Record<string, string>;
 
-export type CliUtilityVersionPrintTable = MarkdownTable;
+export type Cli_Utility_Version_Runner_Print_Table = MarkdownTable;
 
-export type CliUtilityVersionPrintRowKey = string;
+export type Cli_Utility_Version_Runner_Print_RowKey = string;
 
-export type CliUtilityVersionPrintRowValue = string;
+export type Cli_Utility_Version_Runner_Print_RowValue = string;
 
-export type CliUtilityVersionPrintCategoryLabel = string;
+export type Cli_Utility_Version_Runner_Print_CategoryLabel = string;
 
 /**
  * CLI - Utility - Version - Run.
  *
  * @since 0.11.0
  */
-export type CliUtilityVersionRunOptionsAll = true;
+export type Cli_Utility_Version_Runner_Run_Options_All = true;
 
-export type CliUtilityVersionRunOptionsBrowser = true;
+export type Cli_Utility_Version_Runner_Run_Options_Browser = true;
 
-export type CliUtilityVersionRunOptionsEnv = true;
+export type Cli_Utility_Version_Runner_Run_Options_Env = true;
 
-export type CliUtilityVersionRunOptionsInterpreter = true;
+export type Cli_Utility_Version_Runner_Run_Options_Interpreter = true;
 
-export type CliUtilityVersionRunOptionsNode = true;
+export type Cli_Utility_Version_Runner_Run_Options_Node = true;
 
-export type CliUtilityVersionRunOptionsOs = true;
+export type Cli_Utility_Version_Runner_Run_Options_Os = true;
 
-export type CliUtilityVersionRunOptions = {
-  all?: CliUtilityVersionRunOptionsAll;
-  browser?: CliUtilityVersionRunOptionsBrowser;
-  env?: CliUtilityVersionRunOptionsEnv;
-  interpreter?: CliUtilityVersionRunOptionsInterpreter;
-  node?: CliUtilityVersionRunOptionsNode;
-  os?: CliUtilityVersionRunOptionsOs;
+export type Cli_Utility_Version_Runner_Run_Options = {
+  all?: Cli_Utility_Version_Runner_Run_Options_All;
+  browser?: Cli_Utility_Version_Runner_Run_Options_Browser;
+  env?: Cli_Utility_Version_Runner_Run_Options_Env;
+  interpreter?: Cli_Utility_Version_Runner_Run_Options_Interpreter;
+  node?: Cli_Utility_Version_Runner_Run_Options_Node;
+  os?: Cli_Utility_Version_Runner_Run_Options_Os;
 };
 
-export type CliUtilityVersionRunReturns = Promise<void>;
+export type Cli_Utility_Version_Runner_Run_Returns = Promise<void>;
 
-export type CliUtilityVersionRunTasks = Promise<[keyof CliUtilityVersionRunList, Record<string, string>]>[];
+export type Cli_Utility_Version_Runner_Run_Tasks = Promise<[keyof Cli_Utility_Version_Runner_Run_List, Record<string, string>]>[];
 
-export type CliUtilityVersionRunResults = [keyof CliUtilityVersionRunList, Record<string, string>][];
+export type Cli_Utility_Version_Runner_Run_Results = [keyof Cli_Utility_Version_Runner_Run_List, Record<string, string>][];
 
-export type CliUtilityVersionRunList = Record<string, Record<string, string>>;
+export type Cli_Utility_Version_Runner_Run_List = Record<string, Record<string, string>>;

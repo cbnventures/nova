@@ -1,160 +1,160 @@
-import type { SharedLoggerCustomizeReturns, SharedLogLevel, SharedLogOptions } from '../shared.d.ts';
+import type { Shared_LoggerCustomizeReturns, Shared_LogLevel, Shared_LogOptions } from '../shared.d.ts';
 
 /**
  * Toolkit - Logger - Customize.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerCustomizeOptions = SharedLogOptions;
+export type Toolkit_Logger_Customize_Options = Shared_LogOptions;
 
-export type ToolkitLoggerCustomizeReturns = SharedLoggerCustomizeReturns;
+export type Toolkit_Logger_Customize_Returns = Shared_LoggerCustomizeReturns;
 
 /**
  * Toolkit - Logger - Debug.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerDebugMessage = unknown[];
+export type Toolkit_Logger_Debug_Message = unknown[];
 
-export type ToolkitLoggerDebugReturns = void;
+export type Toolkit_Logger_Debug_Returns = void;
 
 /**
  * Toolkit - Logger - Dev.
  *
  * @since 0.12.0
  */
-export type ToolkitLoggerDevMessage = unknown[];
+export type Toolkit_Logger_Dev_Message = unknown[];
 
-export type ToolkitLoggerDevReturns = void;
+export type Toolkit_Logger_Dev_Returns = void;
 
 /**
  * Toolkit - Logger - Emit.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerEmitLevel = SharedLogLevel;
+export type Toolkit_Logger_Emit_Level = Shared_LogLevel;
 
-export type ToolkitLoggerEmitOptions = SharedLogOptions;
+export type Toolkit_Logger_Emit_Options = Shared_LogOptions;
 
-export type ToolkitLoggerEmitMessage = unknown[];
+export type Toolkit_Logger_Emit_Message = unknown[];
 
-export type ToolkitLoggerEmitReturns = void;
+export type Toolkit_Logger_Emit_Returns = void;
 
-export type ToolkitLoggerEmitPadTopCount = number;
+export type Toolkit_Logger_Emit_PadTopCount = number;
 
-export type ToolkitLoggerEmitPadBottomCount = number;
+export type Toolkit_Logger_Emit_PadBottomCount = number;
 
-export type ToolkitLoggerEmitPadTop = string;
+export type Toolkit_Logger_Emit_PadTop = string;
 
-export type ToolkitLoggerEmitPadBottom = string;
+export type Toolkit_Logger_Emit_PadBottom = string;
 
-export type ToolkitLoggerEmitStream = NodeJS.WriteStream;
+export type Toolkit_Logger_Emit_Stream = NodeJS.WriteStream;
 
-export type ToolkitLoggerEmitFormattedMessage = string;
+export type Toolkit_Logger_Emit_FormattedMessage = string;
 
-export type ToolkitLoggerEmitPrefix = string;
+export type Toolkit_Logger_Emit_Prefix = string;
 
-export type ToolkitLoggerEmitPrefixVisibleLength = number;
+export type Toolkit_Logger_Emit_PrefixVisibleLength = number;
 
-export type ToolkitLoggerEmitIndent = string;
+export type Toolkit_Logger_Emit_Indent = string;
 
-export type ToolkitLoggerEmitLinebreakPattern = RegExp;
+export type Toolkit_Logger_Emit_LinebreakPattern = RegExp;
 
-export type ToolkitLoggerEmitAlignedMessage = string;
+export type Toolkit_Logger_Emit_AlignedMessage = string;
 
-export type ToolkitLoggerEmitPayload = string;
+export type Toolkit_Logger_Emit_Payload = string;
 
 /**
  * Toolkit - Logger - Error.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerErrorMessage = unknown[];
+export type Toolkit_Logger_Error_Message = unknown[];
 
-export type ToolkitLoggerErrorReturns = void;
+export type Toolkit_Logger_Error_Returns = void;
 
 /**
  * Toolkit - Logger - Info.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerInfoMessage = unknown[];
+export type Toolkit_Logger_Info_Message = unknown[];
 
-export type ToolkitLoggerInfoReturns = void;
+export type Toolkit_Logger_Info_Returns = void;
 
 /**
  * Toolkit - Logger - Prefix.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerPrefixLevel = SharedLogLevel;
+export type Toolkit_Logger_Prefix_Level = Shared_LogLevel;
 
-export type ToolkitLoggerPrefixOptions = SharedLogOptions;
+export type Toolkit_Logger_Prefix_Options = Shared_LogOptions;
 
-export type ToolkitLoggerPrefixReturns = string;
+export type Toolkit_Logger_Prefix_Returns = string;
 
-export type ToolkitLoggerPrefixLevelLabelUpper = string;
+export type Toolkit_Logger_Prefix_LevelLabelUpper = string;
 
-export type ToolkitLoggerPrefixScopeLabel = string | null;
+export type Toolkit_Logger_Prefix_ScopeLabel = string | null;
 
-export type ToolkitLoggerPrefixShowScope = boolean;
+export type Toolkit_Logger_Prefix_ShowScope = boolean;
 
-export type ToolkitLoggerPrefixScopeTag = string;
+export type Toolkit_Logger_Prefix_ScopeTag = string;
 
-export type ToolkitLoggerPrefixColoredLevelLabel = string | undefined;
+export type Toolkit_Logger_Prefix_ColoredLevelLabel = string | undefined;
 
-export type ToolkitLoggerPrefixTimestamp = string;
+export type Toolkit_Logger_Prefix_Timestamp = string;
 
 /**
  * Toolkit - Logger - Scope Label.
  *
  * @since 0.12.0
  */
-export type ToolkitLoggerScopeLabelOptions = SharedLogOptions;
+export type Toolkit_Logger_ScopeLabel_Options = Shared_LogOptions;
 
-export type ToolkitLoggerScopeLabelReturns = string | null;
+export type Toolkit_Logger_ScopeLabel_Returns = string | null;
 
-export type ToolkitLoggerScopeLabelSegments = string[];
+export type Toolkit_Logger_ScopeLabel_Segments = string[];
 
 /**
  * Toolkit - Logger - Should Log.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerShouldLogLevel = SharedLogLevel;
+export type Toolkit_Logger_ShouldLog_Level = Shared_LogLevel;
 
-export type ToolkitLoggerShouldLogReturns = boolean;
+export type Toolkit_Logger_ShouldLog_Returns = boolean;
 
-export type ToolkitLoggerShouldLogWeights = Record<SharedLogLevel, number>;
+export type Toolkit_Logger_ShouldLog_Weights = Record<Shared_LogLevel, number>;
 
-export type ToolkitLoggerShouldLogIsBrowser = boolean;
+export type Toolkit_Logger_ShouldLog_IsBrowser = boolean;
 
-export type ToolkitLoggerShouldLogNodeEnv = string;
+export type Toolkit_Logger_ShouldLog_NodeEnv = string;
 
-export type ToolkitLoggerShouldLogCurrentLogLevel = string;
+export type Toolkit_Logger_ShouldLog_CurrentLogLevel = string;
 
-export type ToolkitLoggerShouldLogDefaultLogLevel = SharedLogLevel | undefined;
+export type Toolkit_Logger_ShouldLog_DefaultLogLevel = Shared_LogLevel | undefined;
 
-export type ToolkitLoggerShouldLogPreferredLogLevelCurrentLogLevel = SharedLogLevel;
+export type Toolkit_Logger_ShouldLog_PreferredLogLevelCurrentLogLevel = Shared_LogLevel;
 
-export type ToolkitLoggerShouldLogPreferredLogLevel = SharedLogLevel;
+export type Toolkit_Logger_ShouldLog_PreferredLogLevel = Shared_LogLevel;
 
 /**
  * Toolkit - Logger - Strip ANSI Colors.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerStripAnsiColorsValue = string;
+export type Toolkit_Logger_StripAnsiColors_Value = string;
 
-export type ToolkitLoggerStripAnsiColorsReturns = string;
+export type Toolkit_Logger_StripAnsiColors_Returns = string;
 
-export type ToolkitLoggerStripAnsiColorsPattern = RegExp;
+export type Toolkit_Logger_StripAnsiColors_Pattern = RegExp;
 
 /**
  * Toolkit - Logger - Warn.
  *
  * @since 0.11.0
  */
-export type ToolkitLoggerWarnMessage = unknown[];
+export type Toolkit_Logger_Warn_Message = unknown[];
 
-export type ToolkitLoggerWarnReturns = void;
+export type Toolkit_Logger_Warn_Returns = void;

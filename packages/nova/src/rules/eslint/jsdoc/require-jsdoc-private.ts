@@ -3,18 +3,18 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberComments,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberContext,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberInsertPosition,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberIsPrivateIdentifier,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberIsPrivateKeyword,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberJsdocComment,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberNode,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberPrivateTag,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberReturns,
-  RulesEslintJsdocRequireJsdocPrivateCheckMemberSinceIndex,
-  RulesEslintJsdocRequireJsdocPrivateRuleDefaultOptionsIgnoreFiles,
-  RulesEslintJsdocRequireJsdocPrivateRuleOptions,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Comments,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Context,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_InsertPosition,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateIdentifier,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateKeyword,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_JsdocComment,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_PrivateTag,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_SinceIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-private.d.ts';
 
 /**
@@ -25,7 +25,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintJsdocRequireJsdocPrivate {
+export class Runner {
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Private - Rule.
    *
@@ -59,10 +59,10 @@ export class RulesEslintJsdocRequireJsdocPrivate {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintJsdocRequireJsdocPrivateRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintJsdocRequireJsdocPrivateRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -71,12 +71,12 @@ export class RulesEslintJsdocRequireJsdocPrivate {
 
       return {
         MethodDefinition(node) {
-          RulesEslintJsdocRequireJsdocPrivate.checkMember(context, node);
+          Runner.checkMember(context, node);
 
           return;
         },
         PropertyDefinition(node) {
-          RulesEslintJsdocRequireJsdocPrivate.checkMember(context, node);
+          Runner.checkMember(context, node);
 
           return;
         },
@@ -93,23 +93,23 @@ export class RulesEslintJsdocRequireJsdocPrivate {
    *
    * @private
    *
-   * @param {RulesEslintJsdocRequireJsdocPrivateCheckMemberContext} context - Context.
-   * @param {RulesEslintJsdocRequireJsdocPrivateCheckMemberNode}    node    - Node.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Context} context - Context.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Node}    node    - Node.
    *
-   * @returns {RulesEslintJsdocRequireJsdocPrivateCheckMemberReturns}
+   * @returns {Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Returns}
    *
    * @since 0.15.0
    */
-  private static checkMember(context: RulesEslintJsdocRequireJsdocPrivateCheckMemberContext, node: RulesEslintJsdocRequireJsdocPrivateCheckMemberNode): RulesEslintJsdocRequireJsdocPrivateCheckMemberReturns {
-    const isPrivateKeyword: RulesEslintJsdocRequireJsdocPrivateCheckMemberIsPrivateKeyword = node.accessibility === 'private';
-    const isPrivateIdentifier: RulesEslintJsdocRequireJsdocPrivateCheckMemberIsPrivateIdentifier = node.key.type === 'PrivateIdentifier';
+  private static checkMember(context: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Context, node: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Node): Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Returns {
+    const isPrivateKeyword: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateKeyword = node.accessibility === 'private';
+    const isPrivateIdentifier: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_IsPrivateIdentifier = node.key.type === 'PrivateIdentifier';
 
     if (isPrivateKeyword === false && isPrivateIdentifier === false) {
       return;
     }
 
-    const comments: RulesEslintJsdocRequireJsdocPrivateCheckMemberComments = context.sourceCode.getCommentsBefore(node);
-    let jsdocComment: RulesEslintJsdocRequireJsdocPrivateCheckMemberJsdocComment = undefined;
+    const comments: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_Comments = context.sourceCode.getCommentsBefore(node);
+    let jsdocComment: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_JsdocComment = undefined;
 
     for (const comment of comments) {
       if (comment.type === 'Block' && comment.value.startsWith('*') === true) {
@@ -129,14 +129,14 @@ export class RulesEslintJsdocRequireJsdocPrivate {
       node: jsdocComment,
       messageId: 'requirePrivateTag',
       fix(fixer) {
-        const sinceIndex: RulesEslintJsdocRequireJsdocPrivateCheckMemberSinceIndex = jsdocComment.value.indexOf('@since');
+        const sinceIndex: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_SinceIndex = jsdocComment.value.indexOf('@since');
 
         if (sinceIndex === -1) {
           return null;
         }
 
-        const insertPosition: RulesEslintJsdocRequireJsdocPrivateCheckMemberInsertPosition = jsdocComment.range[0] + 2 + sinceIndex;
-        const privateTag: RulesEslintJsdocRequireJsdocPrivateCheckMemberPrivateTag = [
+        const insertPosition: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_InsertPosition = jsdocComment.range[0] + 2 + sinceIndex;
+        const privateTag: Rules_Eslint_Jsdoc_RequireJsdocPrivate_Runner_CheckMember_PrivateTag = [
           '@private',
           '   *',
           '   * ',

@@ -5,4 +5,4 @@ import type { RuleTester } from '@typescript-eslint/rule-tester';
  *
  * @since 0.15.0
  */
-export type TestsRulesEslintFormattingNoTernaryInTemplateLiteralRuleTester = RuleTester;
+export type Tests_Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_RuleTester = RuleTester;

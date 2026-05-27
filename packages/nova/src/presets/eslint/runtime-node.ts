@@ -1,6 +1,6 @@
 import nPlugin from 'eslint-plugin-n';
 
-import type { PresetsEslintRuntimeNodeConfigConfig } from '../../types/presets/eslint/runtime-node.d.ts';
+import type { Presets_Eslint_RuntimeNode_ConfigConfig } from '../../types/presets/eslint/runtime-node.d.ts';
 
 /**
  * Presets - ESLint - Runtime Node - Config.
@@ -10,7 +10,7 @@ import type { PresetsEslintRuntimeNodeConfigConfig } from '../../types/presets/e
  *
  * @since 0.11.0
  */
-const config: PresetsEslintRuntimeNodeConfigConfig = [
+const config: Presets_Eslint_RuntimeNode_ConfigConfig = [
   {
     name: 'nova/runtime-node',
     files: [

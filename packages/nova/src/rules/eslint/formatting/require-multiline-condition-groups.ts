@@ -3,25 +3,25 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionCloseParen,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionContext,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionCurr,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionGroupStyle,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionNode,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionOpenParen,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionOperands,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionOperatorIndex,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionOperatorToken,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionParent,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionPrev,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionReturns,
-  RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionTokensBetween,
-  RulesEslintFormattingRequireMultilineConditionGroupsCollectGroupOperandsNode,
-  RulesEslintFormattingRequireMultilineConditionGroupsCollectGroupOperandsReturns,
-  RulesEslintFormattingRequireMultilineConditionGroupsRuleDefaultOptionsGroupStyle,
-  RulesEslintFormattingRequireMultilineConditionGroupsRuleDefaultOptionsIgnoreFiles,
-  RulesEslintFormattingRequireMultilineConditionGroupsRuleGroupStyle,
-  RulesEslintFormattingRequireMultilineConditionGroupsRuleOptions,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_CloseParen,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Context,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Curr,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_GroupStyle,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Node,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_OpenParen,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Operands,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_OperatorIndex,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_OperatorToken,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Parent,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Prev,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Returns,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_TokensBetween,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Node,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsGroupStyle,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleGroupStyle,
+  Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/require-multiline-condition-groups.d.ts';
 
 /**
@@ -32,7 +32,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintFormattingRequireMultilineConditionGroups {
+export class Runner {
   /**
    * Rules - ESLint - Formatting - Require Multiline Condition Groups - Rule.
    *
@@ -74,12 +74,12 @@ export class RulesEslintFormattingRequireMultilineConditionGroups {
       }],
     },
     defaultOptions: [{
-      groupStyle: 'operator-before-open' as RulesEslintFormattingRequireMultilineConditionGroupsRuleDefaultOptionsGroupStyle,
-      ignoreFiles: [] as RulesEslintFormattingRequireMultilineConditionGroupsRuleDefaultOptionsIgnoreFiles,
+      groupStyle: 'operator-before-open' as Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsGroupStyle,
+      ignoreFiles: [] as Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintFormattingRequireMultilineConditionGroupsRuleOptions = defaultOptions[0];
-      const groupStyle: RulesEslintFormattingRequireMultilineConditionGroupsRuleGroupStyle = options['groupStyle'];
+      const options: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleOptions = defaultOptions[0];
+      const groupStyle: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_RuleGroupStyle = options['groupStyle'];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -88,7 +88,7 @@ export class RulesEslintFormattingRequireMultilineConditionGroups {
 
       return {
         LogicalExpression(node) {
-          RulesEslintFormattingRequireMultilineConditionGroups.checkLogicalExpression(context, node, groupStyle);
+          Runner.checkLogicalExpression(context, node, groupStyle);
 
           return;
         },
@@ -104,16 +104,16 @@ export class RulesEslintFormattingRequireMultilineConditionGroups {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionContext}    context    - Context.
-   * @param {RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionNode}       node       - Node.
-   * @param {RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionGroupStyle} groupStyle - Group style.
+   * @param {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Context}    context    - Context.
+   * @param {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Node}       node       - Node.
+   * @param {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_GroupStyle} groupStyle - Group style.
    *
-   * @returns {RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionReturns}
+   * @returns {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Returns}
    *
    * @since 0.15.0
    */
-  private static checkLogicalExpression(context: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionContext, node: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionNode, groupStyle: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionGroupStyle): RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionReturns {
-    const parent: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionParent = node.parent;
+  private static checkLogicalExpression(context: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Context, node: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Node, groupStyle: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_GroupStyle): Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Returns {
+    const parent: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Parent = node.parent;
 
     // Only process when parent is a LogicalExpression with a different operator.
     if (parent.type !== 'LogicalExpression') {
@@ -124,12 +124,12 @@ export class RulesEslintFormattingRequireMultilineConditionGroups {
       return;
     }
 
-    const operands: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionOperands = RulesEslintFormattingRequireMultilineConditionGroups.collectGroupOperands(node);
+    const operands: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Operands = Runner.collectGroupOperands(node);
 
     // Check if any two consecutive operands share the same start line.
     for (let i = 1; i < operands.length; i += 1) {
-      const prev: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionPrev = operands[i - 1];
-      const curr: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionCurr = operands[i];
+      const prev: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Prev = operands[i - 1];
+      const curr: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_Curr = operands[i];
 
       if (prev === undefined || curr === undefined) {
         continue;
@@ -150,13 +150,13 @@ export class RulesEslintFormattingRequireMultilineConditionGroups {
 
     // Check group style (only when this node is the right child).
     if (groupStyle !== 'operator-inline' && node === parent.right) {
-      const tokensBetween: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionTokensBetween = context.sourceCode.getTokensBetween(parent.left, parent.right);
-      const operatorIndex: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionOperatorIndex = tokensBetween.findIndex((tokenBetween) => tokenBetween.value === parent.operator);
+      const tokensBetween: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_TokensBetween = context.sourceCode.getTokensBetween(parent.left, parent.right);
+      const operatorIndex: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_OperatorIndex = tokensBetween.findIndex((tokenBetween) => tokenBetween.value === parent.operator);
 
       if (operatorIndex !== -1) {
-        const operatorToken: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionOperatorToken = tokensBetween[operatorIndex];
-        const closeParen: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionCloseParen = (operatorIndex > 0) ? tokensBetween[operatorIndex - 1] : undefined;
-        const openParen: RulesEslintFormattingRequireMultilineConditionGroupsCheckLogicalExpressionOpenParen = (operatorIndex < tokensBetween.length - 1) ? tokensBetween[operatorIndex + 1] : undefined;
+        const operatorToken: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_OperatorToken = tokensBetween[operatorIndex];
+        const closeParen: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_CloseParen = (operatorIndex > 0) ? tokensBetween[operatorIndex - 1] : undefined;
+        const openParen: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CheckLogicalExpression_OpenParen = (operatorIndex < tokensBetween.length - 1) ? tokensBetween[operatorIndex + 1] : undefined;
 
         if (
           operatorToken !== undefined
@@ -209,23 +209,23 @@ export class RulesEslintFormattingRequireMultilineConditionGroups {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequireMultilineConditionGroupsCollectGroupOperandsNode} node - Node.
+   * @param {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingRequireMultilineConditionGroupsCollectGroupOperandsReturns}
+   * @returns {Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns}
    *
    * @since 0.15.0
    */
-  private static collectGroupOperands(node: RulesEslintFormattingRequireMultilineConditionGroupsCollectGroupOperandsNode): RulesEslintFormattingRequireMultilineConditionGroupsCollectGroupOperandsReturns {
-    const operands: RulesEslintFormattingRequireMultilineConditionGroupsCollectGroupOperandsReturns = [];
+  private static collectGroupOperands(node: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Node): Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns {
+    const operands: Rules_Eslint_Formatting_RequireMultilineConditionGroups_Runner_CollectGroupOperands_Returns = [];
 
     if (node.left.type === 'LogicalExpression' && node.left.operator === node.operator) {
-      operands.push(...RulesEslintFormattingRequireMultilineConditionGroups.collectGroupOperands(node.left));
+      operands.push(...Runner.collectGroupOperands(node.left));
     } else {
       operands.push(node.left);
     }
 
     if (node.right.type === 'LogicalExpression' && node.right.operator === node.operator) {
-      operands.push(...RulesEslintFormattingRequireMultilineConditionGroups.collectGroupOperands(node.right));
+      operands.push(...Runner.collectGroupOperands(node.right));
     } else {
       operands.push(node.right);
     }

@@ -5,9 +5,9 @@ import { describe, it } from 'vitest';
 import preset from '../preset.js';
 
 import type {
-  TestsPresetPresetPluginCount,
-  TestsPresetPresetResult,
-  TestsPresetPresetThemeCount,
+  Tests_Preset_Preset_PluginCount,
+  Tests_Preset_Preset_Result,
+  Tests_Preset_Preset_ThemeCount,
 } from '../types/tests/preset.test.d.ts';
 
 /**
@@ -17,7 +17,7 @@ import type {
  */
 describe('preset', async () => {
   it('returns docs, blog, pages, sitemap, svgr plugins and nova theme by default', () => {
-    const result: TestsPresetPresetResult = preset(
+    const result: Tests_Preset_Preset_Result = preset(
       { siteDir: '/mock' },
       {
         preset: 'foundry',
@@ -36,8 +36,8 @@ describe('preset', async () => {
       },
     );
 
-    const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
-    const themeCount: TestsPresetPresetThemeCount = result['themes'].length;
+    const pluginCount: Tests_Preset_Preset_PluginCount = result['plugins'].length;
+    const themeCount: Tests_Preset_Preset_ThemeCount = result['themes'].length;
 
     // Docs, blog, pages, sitemap, svgr, mermaid-tooltip.
     strictEqual(pluginCount, 6);
@@ -49,7 +49,7 @@ describe('preset', async () => {
   });
 
   it('excludes blog plugin when blog is false', () => {
-    const result: TestsPresetPresetResult = preset(
+    const result: Tests_Preset_Preset_Result = preset(
       { siteDir: '/mock' },
       {
         preset: 'foundry',
@@ -68,7 +68,7 @@ describe('preset', async () => {
       },
     );
 
-    const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
+    const pluginCount: Tests_Preset_Preset_PluginCount = result['plugins'].length;
 
     // Docs, pages, sitemap, svgr, mermaid-tooltip (no blog).
     strictEqual(pluginCount, 5);
@@ -77,7 +77,7 @@ describe('preset', async () => {
   });
 
   it('excludes pages plugin when pages is false', () => {
-    const result: TestsPresetPresetResult = preset(
+    const result: Tests_Preset_Preset_Result = preset(
       { siteDir: '/mock' },
       {
         preset: 'foundry',
@@ -96,7 +96,7 @@ describe('preset', async () => {
       },
     );
 
-    const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
+    const pluginCount: Tests_Preset_Preset_PluginCount = result['plugins'].length;
 
     // Docs, blog, sitemap, svgr, mermaid-tooltip (no pages).
     strictEqual(pluginCount, 5);
@@ -105,7 +105,7 @@ describe('preset', async () => {
   });
 
   it('excludes sitemap plugin when sitemap is false', () => {
-    const result: TestsPresetPresetResult = preset(
+    const result: Tests_Preset_Preset_Result = preset(
       { siteDir: '/mock' },
       {
         preset: 'foundry',
@@ -124,7 +124,7 @@ describe('preset', async () => {
       },
     );
 
-    const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
+    const pluginCount: Tests_Preset_Preset_PluginCount = result['plugins'].length;
 
     // Docs, blog, pages, svgr, mermaid-tooltip (no sitemap).
     strictEqual(pluginCount, 5);
@@ -133,7 +133,7 @@ describe('preset', async () => {
   });
 
   it('includes gtm plugin when gtm is provided', () => {
-    const result: TestsPresetPresetResult = preset(
+    const result: Tests_Preset_Preset_Result = preset(
       { siteDir: '/mock' },
       {
         preset: 'foundry',
@@ -152,7 +152,7 @@ describe('preset', async () => {
       },
     );
 
-    const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
+    const pluginCount: Tests_Preset_Preset_PluginCount = result['plugins'].length;
 
     // Docs, blog, pages, sitemap, svgr, mermaid-tooltip, gtm.
     strictEqual(pluginCount, 7);
@@ -161,7 +161,7 @@ describe('preset', async () => {
   });
 
   it('excludes gtm plugin when gtm is undefined', () => {
-    const result: TestsPresetPresetResult = preset(
+    const result: Tests_Preset_Preset_Result = preset(
       { siteDir: '/mock' },
       {
         preset: 'foundry',
@@ -180,7 +180,7 @@ describe('preset', async () => {
       },
     );
 
-    const pluginCount: TestsPresetPresetPluginCount = result['plugins'].length;
+    const pluginCount: Tests_Preset_Preset_PluginCount = result['plugins'].length;
 
     // Docs, blog, pages, sitemap, svgr, mermaid-tooltip (no gtm).
     strictEqual(pluginCount, 6);
@@ -189,7 +189,7 @@ describe('preset', async () => {
   });
 
   it('passes search config to nova theme when search is provided', () => {
-    const result: TestsPresetPresetResult = preset(
+    const result: Tests_Preset_Preset_Result = preset(
       { siteDir: '/mock' },
       {
         preset: 'foundry',
@@ -208,7 +208,7 @@ describe('preset', async () => {
       },
     );
 
-    const themeCount: TestsPresetPresetThemeCount = result['themes'].length;
+    const themeCount: Tests_Preset_Preset_ThemeCount = result['themes'].length;
 
     // Nova theme (Mermaid is now integrated natively).
     strictEqual(themeCount, 1);
@@ -217,7 +217,7 @@ describe('preset', async () => {
   });
 
   it('excludes search theme when search is false', () => {
-    const result: TestsPresetPresetResult = preset(
+    const result: Tests_Preset_Preset_Result = preset(
       { siteDir: '/mock' },
       {
         preset: 'foundry',
@@ -236,7 +236,7 @@ describe('preset', async () => {
       },
     );
 
-    const themeCount: TestsPresetPresetThemeCount = result['themes'].length;
+    const themeCount: Tests_Preset_Preset_ThemeCount = result['themes'].length;
 
     // Nova theme (Mermaid is now integrated natively).
     strictEqual(themeCount, 1);

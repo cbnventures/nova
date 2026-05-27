@@ -3,19 +3,19 @@
  *
  * @since 0.15.0
  */
-export type CliScaffoldAppWorkersRunOptionsDryRun = true;
+export type Cli_Scaffold_App_Workers_Runner_Run_Options_DryRun = true;
 
-export type CliScaffoldAppWorkersRunOptionsName = string;
+export type Cli_Scaffold_App_Workers_Runner_Run_Options_Name = string;
 
-export type CliScaffoldAppWorkersRunOptionsOutput = string;
+export type Cli_Scaffold_App_Workers_Runner_Run_Options_Output = string;
 
-export type CliScaffoldAppWorkersRunOptionsWorkspaceName = string;
+export type Cli_Scaffold_App_Workers_Runner_Run_Options_WorkspaceName = string;
 
-export type CliScaffoldAppWorkersRunOptions = {
-  dryRun?: CliScaffoldAppWorkersRunOptionsDryRun;
-  name?: CliScaffoldAppWorkersRunOptionsName;
-  output?: CliScaffoldAppWorkersRunOptionsOutput;
-  workspaceName?: CliScaffoldAppWorkersRunOptionsWorkspaceName;
+export type Cli_Scaffold_App_Workers_Runner_Run_Options = {
+  dryRun?: Cli_Scaffold_App_Workers_Runner_Run_Options_DryRun;
+  name?: Cli_Scaffold_App_Workers_Runner_Run_Options_Name;
+  output?: Cli_Scaffold_App_Workers_Runner_Run_Options_Output;
+  workspaceName?: Cli_Scaffold_App_Workers_Runner_Run_Options_WorkspaceName;
 };
 
-export type CliScaffoldAppWorkersRunReturns = Promise<void>;
+export type Cli_Scaffold_App_Workers_Runner_Run_Returns = Promise<void>;

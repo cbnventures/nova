@@ -3,21 +3,21 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintConventionsRequireExplicitReturnCheckFunctionBody,
-  RulesEslintConventionsRequireExplicitReturnCheckFunctionContext,
-  RulesEslintConventionsRequireExplicitReturnCheckFunctionLastStatement,
-  RulesEslintConventionsRequireExplicitReturnCheckFunctionNode,
-  RulesEslintConventionsRequireExplicitReturnCheckFunctionOptions,
-  RulesEslintConventionsRequireExplicitReturnCheckFunctionParent,
-  RulesEslintConventionsRequireExplicitReturnCheckFunctionReturns,
-  RulesEslintConventionsRequireExplicitReturnCheckFunctionStatements,
-  RulesEslintConventionsRequireExplicitReturnHasReturnValueNode,
-  RulesEslintConventionsRequireExplicitReturnHasReturnValueReturns,
-  RulesEslintConventionsRequireExplicitReturnRuleDefaultOptionsExcludeArrowFunctions,
-  RulesEslintConventionsRequireExplicitReturnRuleDefaultOptionsExcludeConstructors,
-  RulesEslintConventionsRequireExplicitReturnRuleDefaultOptionsExcludeSetters,
-  RulesEslintConventionsRequireExplicitReturnRuleDefaultOptionsIgnoreFiles,
-  RulesEslintConventionsRequireExplicitReturnRuleOptions,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Body,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Context,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_LastStatement,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Node,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Options,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Parent,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Returns,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Statements,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Node,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Returns,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeArrowFunctions,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeConstructors,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeSetters,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-explicit-return.d.ts';
 
 /**
@@ -28,7 +28,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintConventionsRequireExplicitReturn {
+export class Runner {
   /**
    * Rules - ESLint - Conventions - Require Explicit Return - Rule.
    *
@@ -70,13 +70,13 @@ export class RulesEslintConventionsRequireExplicitReturn {
       }],
     },
     defaultOptions: [{
-      excludeArrowFunctions: false as RulesEslintConventionsRequireExplicitReturnRuleDefaultOptionsExcludeArrowFunctions,
-      excludeConstructors: false as RulesEslintConventionsRequireExplicitReturnRuleDefaultOptionsExcludeConstructors,
-      excludeSetters: false as RulesEslintConventionsRequireExplicitReturnRuleDefaultOptionsExcludeSetters,
-      ignoreFiles: [] as RulesEslintConventionsRequireExplicitReturnRuleDefaultOptionsIgnoreFiles,
+      excludeArrowFunctions: false as Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeArrowFunctions,
+      excludeConstructors: false as Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeConstructors,
+      excludeSetters: false as Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsExcludeSetters,
+      ignoreFiles: [] as Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintConventionsRequireExplicitReturnRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -85,17 +85,17 @@ export class RulesEslintConventionsRequireExplicitReturn {
 
       return {
         'FunctionDeclaration:exit'(node) {
-          RulesEslintConventionsRequireExplicitReturn.checkFunction(context, node, options);
+          Runner.checkFunction(context, node, options);
 
           return;
         },
         'FunctionExpression:exit'(node) {
-          RulesEslintConventionsRequireExplicitReturn.checkFunction(context, node, options);
+          Runner.checkFunction(context, node, options);
 
           return;
         },
         'ArrowFunctionExpression:exit'(node) {
-          RulesEslintConventionsRequireExplicitReturn.checkFunction(context, node, options);
+          Runner.checkFunction(context, node, options);
 
           return;
         },
@@ -111,15 +111,15 @@ export class RulesEslintConventionsRequireExplicitReturn {
    *
    * @private
    *
-   * @param {RulesEslintConventionsRequireExplicitReturnCheckFunctionContext} context - Context.
-   * @param {RulesEslintConventionsRequireExplicitReturnCheckFunctionNode}    node    - Node.
-   * @param {RulesEslintConventionsRequireExplicitReturnCheckFunctionOptions} options - Options.
+   * @param {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Node}    node    - Node.
+   * @param {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Options} options - Options.
    *
-   * @returns {RulesEslintConventionsRequireExplicitReturnCheckFunctionReturns}
+   * @returns {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Returns}
    *
    * @since 0.15.0
    */
-  private static checkFunction(context: RulesEslintConventionsRequireExplicitReturnCheckFunctionContext, node: RulesEslintConventionsRequireExplicitReturnCheckFunctionNode, options: RulesEslintConventionsRequireExplicitReturnCheckFunctionOptions): RulesEslintConventionsRequireExplicitReturnCheckFunctionReturns {
+  private static checkFunction(context: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Context, node: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Node, options: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Options): Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Returns {
     // Skip concise arrow functions (no block body).
     if (node.type === 'ArrowFunctionExpression' && node.body.type !== 'BlockStatement') {
       return;
@@ -131,7 +131,7 @@ export class RulesEslintConventionsRequireExplicitReturn {
     }
 
     // Check if this is a constructor.
-    const parent: RulesEslintConventionsRequireExplicitReturnCheckFunctionParent = node.parent;
+    const parent: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Parent = node.parent;
 
     if (
       parent !== undefined
@@ -152,13 +152,13 @@ export class RulesEslintConventionsRequireExplicitReturn {
       return;
     }
 
-    const body: RulesEslintConventionsRequireExplicitReturnCheckFunctionBody = node.body;
+    const body: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Body = node.body;
 
     if (body.type !== 'BlockStatement') {
       return;
     }
 
-    const statements: RulesEslintConventionsRequireExplicitReturnCheckFunctionStatements = body.body;
+    const statements: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_Statements = body.body;
 
     // Skip empty function bodies.
     if (statements.length === 0) {
@@ -166,12 +166,12 @@ export class RulesEslintConventionsRequireExplicitReturn {
     }
 
     // If the function has any return with a value, it is not void - skip.
-    if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(body) === true) {
+    if (Runner.hasReturnValue(body) === true) {
       return;
     }
 
     // Check if the last statement is already a bare return.
-    const lastStatement: RulesEslintConventionsRequireExplicitReturnCheckFunctionLastStatement = statements[statements.length - 1];
+    const lastStatement: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_CheckFunction_LastStatement = statements[statements.length - 1];
 
     if (lastStatement === undefined) {
       return;
@@ -197,13 +197,13 @@ export class RulesEslintConventionsRequireExplicitReturn {
    *
    * @private
    *
-   * @param {RulesEslintConventionsRequireExplicitReturnHasReturnValueNode} node - Node.
+   * @param {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Node} node - Node.
    *
-   * @returns {RulesEslintConventionsRequireExplicitReturnHasReturnValueReturns}
+   * @returns {Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Returns}
    *
    * @since 0.15.0
    */
-  private static hasReturnValue(node: RulesEslintConventionsRequireExplicitReturnHasReturnValueNode): RulesEslintConventionsRequireExplicitReturnHasReturnValueReturns {
+  private static hasReturnValue(node: Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Node): Rules_Eslint_Conventions_RequireExplicitReturn_Runner_HasReturnValue_Returns {
     if (node.type === 'ReturnStatement' && node.argument !== null) {
       return true;
     }
@@ -219,7 +219,7 @@ export class RulesEslintConventionsRequireExplicitReturn {
 
     if ('body' in node && Array.isArray(node.body) === true) {
       for (const child of node.body) {
-        if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(child) === true) {
+        if (Runner.hasReturnValue(child) === true) {
           return true;
         }
       }
@@ -233,7 +233,7 @@ export class RulesEslintConventionsRequireExplicitReturn {
       && node.body !== undefined
       && typeof node.body === 'object'
     ) {
-      if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(node.body) === true) {
+      if (Runner.hasReturnValue(node.body) === true) {
         return true;
       }
     }
@@ -246,11 +246,11 @@ export class RulesEslintConventionsRequireExplicitReturn {
     ) {
       if (Array.isArray(node.consequent) === true) {
         for (const child of node.consequent) {
-          if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(child) === true) {
+          if (Runner.hasReturnValue(child) === true) {
             return true;
           }
         }
-      } else if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(node.consequent) === true) {
+      } else if (Runner.hasReturnValue(node.consequent) === true) {
         return true;
       }
     }
@@ -260,7 +260,7 @@ export class RulesEslintConventionsRequireExplicitReturn {
       && node.alternate !== null
       && node.alternate !== undefined
     ) {
-      if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(node.alternate) === true) {
+      if (Runner.hasReturnValue(node.alternate) === true) {
         return true;
       }
     }
@@ -270,7 +270,7 @@ export class RulesEslintConventionsRequireExplicitReturn {
       && node.block !== null
       && node.block !== undefined
     ) {
-      if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(node.block) === true) {
+      if (Runner.hasReturnValue(node.block) === true) {
         return true;
       }
     }
@@ -280,7 +280,7 @@ export class RulesEslintConventionsRequireExplicitReturn {
       && node.handler !== null
       && node.handler !== undefined
     ) {
-      if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(node.handler) === true) {
+      if (Runner.hasReturnValue(node.handler) === true) {
         return true;
       }
     }
@@ -290,14 +290,14 @@ export class RulesEslintConventionsRequireExplicitReturn {
       && node.finalizer !== null
       && node.finalizer !== undefined
     ) {
-      if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(node.finalizer) === true) {
+      if (Runner.hasReturnValue(node.finalizer) === true) {
         return true;
       }
     }
 
     if ('cases' in node && Array.isArray(node.cases) === true) {
       for (const child of node.cases) {
-        if (RulesEslintConventionsRequireExplicitReturn.hasReturnValue(child) === true) {
+        if (Runner.hasReturnValue(child) === true) {
           return true;
         }
       }

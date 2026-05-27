@@ -2,12 +2,12 @@ import { LIB_REGEX_PATTERN_RATE_LIMIT_RESET } from '../../../lib/regex.js';
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliRecipeGithubHandleGhFailureIsRateLimit,
-  CliRecipeGithubHandleGhFailureRecipeName,
-  CliRecipeGithubHandleGhFailureResetMatch,
-  CliRecipeGithubHandleGhFailureResetTime,
-  CliRecipeGithubHandleGhFailureResult,
-  CliRecipeGithubHandleGhFailureReturns,
+  Cli_Recipe_Github_HandleGhFailure_IsRateLimit,
+  Cli_Recipe_Github_HandleGhFailure_RecipeName,
+  Cli_Recipe_Github_HandleGhFailure_ResetMatch,
+  Cli_Recipe_Github_HandleGhFailure_ResetTime,
+  Cli_Recipe_Github_HandleGhFailure_Result,
+  Cli_Recipe_Github_HandleGhFailure_Returns,
 } from '../../../types/cli/recipe/github/handle-gh-failure.d.ts';
 
 /**
@@ -16,19 +16,19 @@ import type {
  * Logs the appropriate error for a failed `gh` command result, branching on
  * whether the failure looks like a rate-limit hit. Sets process.exitCode = 1.
  *
- * @param {CliRecipeGithubHandleGhFailureResult}     result     - Result.
- * @param {CliRecipeGithubHandleGhFailureRecipeName} recipeName - Recipe name.
+ * @param {Cli_Recipe_Github_HandleGhFailure_Result}     result     - Result.
+ * @param {Cli_Recipe_Github_HandleGhFailure_RecipeName} recipeName - Recipe name.
  *
- * @returns {CliRecipeGithubHandleGhFailureReturns}
+ * @returns {Cli_Recipe_Github_HandleGhFailure_Returns}
  *
  * @since 0.18.0
  */
-export function handleGhFailure(result: CliRecipeGithubHandleGhFailureResult, recipeName: CliRecipeGithubHandleGhFailureRecipeName): CliRecipeGithubHandleGhFailureReturns {
-  const isRateLimit: CliRecipeGithubHandleGhFailureIsRateLimit = result['textError'].includes('API rate limit exceeded');
+export function handleGhFailure(result: Cli_Recipe_Github_HandleGhFailure_Result, recipeName: Cli_Recipe_Github_HandleGhFailure_RecipeName): Cli_Recipe_Github_HandleGhFailure_Returns {
+  const isRateLimit: Cli_Recipe_Github_HandleGhFailure_IsRateLimit = result['textError'].includes('API rate limit exceeded');
 
   if (isRateLimit === true) {
-    const resetMatch: CliRecipeGithubHandleGhFailureResetMatch = result['textError'].match(LIB_REGEX_PATTERN_RATE_LIMIT_RESET);
-    const resetTime: CliRecipeGithubHandleGhFailureResetTime = (resetMatch !== null && resetMatch[1] !== undefined) ? new Date(parseInt(resetMatch[1], 10) * 1000).toISOString() : 'unknown';
+    const resetMatch: Cli_Recipe_Github_HandleGhFailure_ResetMatch = result['textError'].match(LIB_REGEX_PATTERN_RATE_LIMIT_RESET);
+    const resetTime: Cli_Recipe_Github_HandleGhFailure_ResetTime = (resetMatch !== null && resetMatch[1] !== undefined) ? new Date(parseInt(resetMatch[1], 10) * 1000).toISOString() : 'unknown';
 
     Logger.customize({
       name: 'handleGhFailure',

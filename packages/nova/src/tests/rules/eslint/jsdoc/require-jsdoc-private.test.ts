@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireJsdocPrivate } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintJsdocRequireJsdocPrivateRuleTester } from '../../../../types/tests/rules/eslint/jsdoc/require-jsdoc-private.test.d.ts';
+import type { Tests_Rules_Eslint_Jsdoc_RequireJsdocPrivate_RuleTester } from '../../../../types/tests/rules/eslint/jsdoc/require-jsdoc-private.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - JSDoc - Require JSDoc Private.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintJsdocRequireJsdocPrivateRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Jsdoc_RequireJsdocPrivate_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

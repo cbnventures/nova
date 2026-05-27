@@ -3,17 +3,17 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintSyntaxNoNumericLiteralsCheckLiteralContext,
-  RulesEslintSyntaxNoNumericLiteralsCheckLiteralLowered,
-  RulesEslintSyntaxNoNumericLiteralsCheckLiteralNode,
-  RulesEslintSyntaxNoNumericLiteralsCheckLiteralOptions,
-  RulesEslintSyntaxNoNumericLiteralsCheckLiteralRaw,
-  RulesEslintSyntaxNoNumericLiteralsCheckLiteralReturns,
-  RulesEslintSyntaxNoNumericLiteralsRuleDefaultOptionsAllowBinary,
-  RulesEslintSyntaxNoNumericLiteralsRuleDefaultOptionsAllowHex,
-  RulesEslintSyntaxNoNumericLiteralsRuleDefaultOptionsAllowOctal,
-  RulesEslintSyntaxNoNumericLiteralsRuleDefaultOptionsIgnoreFiles,
-  RulesEslintSyntaxNoNumericLiteralsRuleOptions,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Context,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Lowered,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Node,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Options,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Raw,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Returns,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleDefaultOptionsAllowBinary,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleDefaultOptionsAllowHex,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleDefaultOptionsAllowOctal,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleOptions,
 } from '../../../types/rules/eslint/syntax/no-numeric-literals.d.ts';
 
 /**
@@ -24,7 +24,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintSyntaxNoNumericLiterals {
+export class Runner {
   /**
    * Rules - ESLint - Syntax - No Numeric Literals - Rule.
    *
@@ -66,13 +66,13 @@ export class RulesEslintSyntaxNoNumericLiterals {
       }],
     },
     defaultOptions: [{
-      allowBinary: false as RulesEslintSyntaxNoNumericLiteralsRuleDefaultOptionsAllowBinary,
-      allowHex: false as RulesEslintSyntaxNoNumericLiteralsRuleDefaultOptionsAllowHex,
-      allowOctal: false as RulesEslintSyntaxNoNumericLiteralsRuleDefaultOptionsAllowOctal,
-      ignoreFiles: [] as RulesEslintSyntaxNoNumericLiteralsRuleDefaultOptionsIgnoreFiles,
+      allowBinary: false as Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleDefaultOptionsAllowBinary,
+      allowHex: false as Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleDefaultOptionsAllowHex,
+      allowOctal: false as Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleDefaultOptionsAllowOctal,
+      ignoreFiles: [] as Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintSyntaxNoNumericLiteralsRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Syntax_NoNumericLiterals_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -81,7 +81,7 @@ export class RulesEslintSyntaxNoNumericLiterals {
 
       return {
         Literal(node) {
-          RulesEslintSyntaxNoNumericLiterals.checkLiteral(context, node, options);
+          Runner.checkLiteral(context, node, options);
 
           return;
         },
@@ -98,26 +98,26 @@ export class RulesEslintSyntaxNoNumericLiterals {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoNumericLiteralsCheckLiteralContext} context - Context.
-   * @param {RulesEslintSyntaxNoNumericLiteralsCheckLiteralNode}    node    - Node.
-   * @param {RulesEslintSyntaxNoNumericLiteralsCheckLiteralOptions} options - Options.
+   * @param {Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Context} context - Context.
+   * @param {Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Node}    node    - Node.
+   * @param {Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Options} options - Options.
    *
-   * @returns {RulesEslintSyntaxNoNumericLiteralsCheckLiteralReturns}
+   * @returns {Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Returns}
    *
    * @since 0.15.0
    */
-  private static checkLiteral(context: RulesEslintSyntaxNoNumericLiteralsCheckLiteralContext, node: RulesEslintSyntaxNoNumericLiteralsCheckLiteralNode, options: RulesEslintSyntaxNoNumericLiteralsCheckLiteralOptions): RulesEslintSyntaxNoNumericLiteralsCheckLiteralReturns {
+  private static checkLiteral(context: Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Context, node: Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Node, options: Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Options): Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Returns {
     if (typeof node.value !== 'number') {
       return;
     }
 
-    const raw: RulesEslintSyntaxNoNumericLiteralsCheckLiteralRaw = node.raw;
+    const raw: Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Raw = node.raw;
 
     if (raw === undefined) {
       return;
     }
 
-    const lowered: RulesEslintSyntaxNoNumericLiteralsCheckLiteralLowered = raw.toLowerCase();
+    const lowered: Rules_Eslint_Syntax_NoNumericLiterals_Runner_CheckLiteral_Lowered = raw.toLowerCase();
 
     if (lowered.startsWith('0b') === true) {
       if (options['allowBinary'] === true) {

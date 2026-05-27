@@ -6,32 +6,32 @@ import type { ComponentType, CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogPostItemsBlogPostItemsPropsComponentChildren = ReactNode;
+export type Theme_BlogPostItems_Index_BlogPostItems_PropsComponentProps_Children = ReactNode;
 
-export type ThemeBlogPostItemsBlogPostItemsPropsComponentProps = {
-  children: ThemeBlogPostItemsBlogPostItemsPropsComponentChildren;
+export type Theme_BlogPostItems_Index_BlogPostItems_PropsComponentProps = {
+  children: Theme_BlogPostItems_Index_BlogPostItems_PropsComponentProps_Children;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostItemsBlogPostItemsPropsComponent = ComponentType<ThemeBlogPostItemsBlogPostItemsPropsComponentProps> | undefined;
+export type Theme_BlogPostItems_Index_BlogPostItems_Props_Component = ComponentType<Theme_BlogPostItems_Index_BlogPostItems_PropsComponentProps> | undefined;
 
-export type ThemeBlogPostItemsBlogPostItemsPropsItems = readonly ThemeBlogPostItemsBlogPostItemsPropsItem[];
+export type Theme_BlogPostItems_Index_BlogPostItems_Props_Items = readonly Theme_BlogPostItems_Index_BlogPostItems_PropsItem[];
 
-export type ThemeBlogPostItemsBlogPostItemsPropsClassName = string | undefined;
+export type Theme_BlogPostItems_Index_BlogPostItems_Props_ClassName = string | undefined;
 
-export type ThemeBlogPostItemsBlogPostItemsPropsStyle = CSSProperties | undefined;
+export type Theme_BlogPostItems_Index_BlogPostItems_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogPostItemsBlogPostItemsProps = {
-  items: ThemeBlogPostItemsBlogPostItemsPropsItems;
-  component?: ThemeBlogPostItemsBlogPostItemsPropsComponent;
-  className?: ThemeBlogPostItemsBlogPostItemsPropsClassName;
-  style?: ThemeBlogPostItemsBlogPostItemsPropsStyle;
+export type Theme_BlogPostItems_Index_BlogPostItems_Props = {
+  items: Theme_BlogPostItems_Index_BlogPostItems_Props_Items;
+  component?: Theme_BlogPostItems_Index_BlogPostItems_Props_Component;
+  className?: Theme_BlogPostItems_Index_BlogPostItems_Props_ClassName;
+  style?: Theme_BlogPostItems_Index_BlogPostItems_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostItemsBlogPostItemsPropsItem = {
-  content: ThemeBlogPostItemsBlogPostItemsPropsItemContent;
+export type Theme_BlogPostItems_Index_BlogPostItems_PropsItem = {
+  content: Theme_BlogPostItems_Index_BlogPostItems_PropsItem_Content;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPostItemsBlogPostItemsPropsItemContent = PropBlogPostContent;
+export type Theme_BlogPostItems_Index_BlogPostItems_PropsItem_Content = PropBlogPostContent;

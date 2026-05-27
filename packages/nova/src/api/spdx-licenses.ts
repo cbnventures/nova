@@ -2,15 +2,15 @@ import { libSchemaSpdxLicensesResponse } from '../lib/schema.js';
 import { Logger } from '../toolkit/index.js';
 
 import type {
-  ApiSpdxLicensesFetchLicensesErrorMessage,
-  ApiSpdxLicensesFetchLicensesHttpResponse,
-  ApiSpdxLicensesFetchLicensesLicenseIds,
-  ApiSpdxLicensesFetchLicensesResponse,
-  ApiSpdxLicensesFetchLicensesResponseData,
-  ApiSpdxLicensesFetchLicensesReturns,
-  ApiSpdxLicensesLicenses,
-  ApiSpdxLicensesPopulated,
-  ApiSpdxLicensesResetForTestingReturns,
+  Api_SpdxLicenses_Runner_FetchLicenses_ErrorMessage,
+  Api_SpdxLicenses_Runner_FetchLicenses_HttpResponse,
+  Api_SpdxLicenses_Runner_FetchLicenses_LicenseIds,
+  Api_SpdxLicenses_Runner_FetchLicenses_Response,
+  Api_SpdxLicenses_Runner_FetchLicenses_ResponseData,
+  Api_SpdxLicenses_Runner_FetchLicenses_Returns,
+  Api_SpdxLicenses_Runner_Licenses,
+  Api_SpdxLicenses_Runner_Populated,
+  Api_SpdxLicenses_Runner_ResetForTesting_Returns,
 } from '../types/api/spdx-licenses.d.ts';
 
 /**
@@ -22,7 +22,7 @@ import type {
  *
  * @since 0.13.0
  */
-export class ApiSpdxLicenses {
+export class Runner {
   /**
    * API - SPDX Licenses - Licenses.
    *
@@ -33,7 +33,7 @@ export class ApiSpdxLicenses {
    *
    * @since 0.13.0
    */
-  static #licenses: ApiSpdxLicensesLicenses;
+  static #licenses: Api_SpdxLicenses_Runner_Licenses;
 
   /**
    * API - SPDX Licenses - Populated.
@@ -45,7 +45,7 @@ export class ApiSpdxLicenses {
    *
    * @since 0.13.0
    */
-  static #populated: ApiSpdxLicensesPopulated;
+  static #populated: Api_SpdxLicenses_Runner_Populated;
 
   /**
    * API - SPDX Licenses - Fetch Licenses.
@@ -53,51 +53,51 @@ export class ApiSpdxLicenses {
    * Downloads the SPDX license list from spdx.org and parses the response with Zod. Returns
    * the cached set on repeat calls without another network request.
    *
-   * @returns {ApiSpdxLicensesFetchLicensesReturns}
+   * @returns {Api_SpdxLicenses_Runner_FetchLicenses_Returns}
    *
    * @since 0.13.0
    */
-  public static async fetchLicenses(): ApiSpdxLicensesFetchLicensesReturns {
-    if (ApiSpdxLicenses.#populated === true) {
-      return ApiSpdxLicenses.#licenses;
+  public static async fetchLicenses(): Api_SpdxLicenses_Runner_FetchLicenses_Returns {
+    if (Runner.#populated === true) {
+      return Runner.#licenses;
     }
 
     try {
-      const response: ApiSpdxLicensesFetchLicensesHttpResponse = await fetch('https://spdx.org/licenses/licenses.json');
+      const response: Api_SpdxLicenses_Runner_FetchLicenses_HttpResponse = await fetch('https://spdx.org/licenses/licenses.json');
 
       if (response.ok === false) {
         Logger.customize({
-          name: 'ApiSpdxLicenses',
+          name: 'Runner',
           purpose: 'fetch',
         }).warn(`Failed to fetch SPDX licenses. HTTP status: ${response.status}`);
 
-        ApiSpdxLicenses.#populated = true;
+        Runner.#populated = true;
 
         return undefined;
       }
 
-      const responseData: ApiSpdxLicensesFetchLicensesResponseData = await response.json<ApiSpdxLicensesFetchLicensesResponseData>();
+      const responseData: Api_SpdxLicenses_Runner_FetchLicenses_ResponseData = await response.json<Api_SpdxLicenses_Runner_FetchLicenses_ResponseData>();
 
-      const data: ApiSpdxLicensesFetchLicensesResponse = libSchemaSpdxLicensesResponse.parse(responseData);
+      const data: Api_SpdxLicenses_Runner_FetchLicenses_Response = libSchemaSpdxLicensesResponse.parse(responseData);
 
-      const licenseIds: ApiSpdxLicensesFetchLicensesLicenseIds = data['licenses'].map((license) => license['licenseId']);
+      const licenseIds: Api_SpdxLicenses_Runner_FetchLicenses_LicenseIds = data['licenses'].map((license) => license['licenseId']);
 
-      ApiSpdxLicenses.#licenses = new Set(licenseIds);
-      ApiSpdxLicenses.#populated = true;
+      Runner.#licenses = new Set(licenseIds);
+      Runner.#populated = true;
 
-      return ApiSpdxLicenses.#licenses;
+      return Runner.#licenses;
     } catch (error) {
-      const message: ApiSpdxLicensesFetchLicensesErrorMessage = [
+      const message: Api_SpdxLicenses_Runner_FetchLicenses_ErrorMessage = [
         'Failed to fetch SPDX licenses.',
         error,
       ].join('\n');
 
       Logger.customize({
-        name: 'ApiSpdxLicenses',
+        name: 'Runner',
         purpose: 'fetch',
       }).warn(message);
 
-      ApiSpdxLicenses.#populated = true;
+      Runner.#populated = true;
 
       return undefined;
     }
@@ -109,13 +109,13 @@ export class ApiSpdxLicenses {
    * Clears the cached license set and populated flag so
    * tests can exercise the fetch path from a clean state.
    *
-   * @returns {ApiSpdxLicensesResetForTestingReturns}
+   * @returns {Api_SpdxLicenses_Runner_ResetForTesting_Returns}
    *
    * @since 0.13.0
    */
-  public static resetForTesting(): ApiSpdxLicensesResetForTestingReturns {
-    ApiSpdxLicenses.#licenses = undefined;
-    ApiSpdxLicenses.#populated = undefined;
+  public static resetForTesting(): Api_SpdxLicenses_Runner_ResetForTesting_Returns {
+    Runner.#licenses = undefined;
+    Runner.#populated = undefined;
 
     return;
   }

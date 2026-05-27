@@ -1,8 +1,8 @@
 import type {
-  SharedNovaConfigGithub,
-  SharedNovaConfigGithubFeatures,
-  SharedNovaConfigGithubRecipes,
-  SharedShellOutput,
+  Shared_NovaConfig_Github as SharedNovaConfigGithub,
+  Shared_NovaConfig_Github_Features as SharedNovaConfigGithubFeatures,
+  Shared_NovaConfig_Github_Recipes as SharedNovaConfigGithubRecipes,
+  Shared_ShellOutput as SharedShellOutput,
 } from '../../../shared.d.ts';
 
 /**
@@ -10,58 +10,58 @@ import type {
  *
  * @since 0.22.0
  */
-export type CliRecipeGithubSyncFeaturesRunOptionsDryRun = true;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Options_DryRun = true;
 
-export type CliRecipeGithubSyncFeaturesRunOptions = {
-  dryRun?: CliRecipeGithubSyncFeaturesRunOptionsDryRun;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Options = {
+  dryRun?: Cli_Recipe_Github_SyncFeatures_Runner_Run_Options_DryRun;
 };
 
-export type CliRecipeGithubSyncFeaturesRunReturns = Promise<void>;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Returns = Promise<void>;
 
-export type CliRecipeGithubSyncFeaturesRunCurrentDirectory = string;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_CurrentDirectory = string;
 
-export type CliRecipeGithubSyncFeaturesRunIsAtProjectRoot = boolean;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliRecipeGithubSyncFeaturesRunIsDryRun = boolean;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_IsDryRun = boolean;
 
-export type CliRecipeGithubSyncFeaturesRunWorkingFile = import('../../../shared.d.ts').SharedNovaConfigConfig;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_WorkingFile = import('../../../shared.d.ts').Shared_NovaConfigConfig;
 
-export type CliRecipeGithubSyncFeaturesRunGithub = SharedNovaConfigGithub | undefined;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Github = SharedNovaConfigGithub | undefined;
 
-export type CliRecipeGithubSyncFeaturesRunRecipes = SharedNovaConfigGithubRecipes | undefined;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Recipes = SharedNovaConfigGithubRecipes | undefined;
 
-export type CliRecipeGithubSyncFeaturesRunOwner = string | undefined;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Owner = string | undefined;
 
-export type CliRecipeGithubSyncFeaturesRunRepo = string | undefined;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Repo = string | undefined;
 
-export type CliRecipeGithubSyncFeaturesRunIsCommandOnPath = boolean;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_IsCommandOnPath = boolean;
 
-export type CliRecipeGithubSyncFeaturesRunGhVersionOutput = SharedShellOutput;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GhVersionOutput = SharedShellOutput;
 
-export type CliRecipeGithubSyncFeaturesRunGhVersionPattern = RegExp;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GhVersionPattern = RegExp;
 
-export type CliRecipeGithubSyncFeaturesRunGhVersionMatch = RegExpMatchArray | null;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GhVersionMatch = RegExpMatchArray | null;
 
-export type CliRecipeGithubSyncFeaturesRunGhVersion = string;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_GhVersion = string;
 
-export type CliRecipeGithubSyncFeaturesRunAuthStatus = SharedShellOutput;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_AuthStatus = SharedShellOutput;
 
-export type CliRecipeGithubSyncFeaturesRunViewResult = SharedShellOutput;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewResult = SharedShellOutput;
 
-export type CliRecipeGithubSyncFeaturesRunViewerPermission = string | undefined;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermission = string | undefined;
 
-export type CliRecipeGithubSyncFeaturesRunViewerPermissionParsedViewerPermission = string | undefined;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermissionParsed_ViewerPermission = string | undefined;
 
-export type CliRecipeGithubSyncFeaturesRunViewerPermissionParsed = {
-  viewerPermission?: CliRecipeGithubSyncFeaturesRunViewerPermissionParsedViewerPermission;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermissionParsed = {
+  viewerPermission?: Cli_Recipe_Github_SyncFeatures_Runner_Run_ViewerPermissionParsed_ViewerPermission;
 };
 
-export type CliRecipeGithubSyncFeaturesRunPermission = string[];
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Permission = string[];
 
-export type CliRecipeGithubSyncFeaturesRunFeatures = SharedNovaConfigGithubFeatures | undefined;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Features = SharedNovaConfigGithubFeatures | undefined;
 
-export type CliRecipeGithubSyncFeaturesRunFlags = string[];
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Flags = string[];
 
-export type CliRecipeGithubSyncFeaturesRunCommand = string;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Command = string;
 
-export type CliRecipeGithubSyncFeaturesRunResult = SharedShellOutput;
+export type Cli_Recipe_Github_SyncFeatures_Runner_Run_Result = SharedShellOutput;

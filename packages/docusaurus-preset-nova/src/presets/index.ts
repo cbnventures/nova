@@ -6,8 +6,8 @@ import { presetsSentinelPresetSentinel } from './sentinel/preset.js';
 import { presetsSignalPresetSignal } from './signal/preset.js';
 
 import type {
-  PresetsIndexNames,
-  PresetsIndexPresets,
+  Presets_Index_Names,
+  Presets_Index_Presets,
 } from '../types/presets/index.d.ts';
 
 /**
@@ -18,7 +18,7 @@ import type {
  *
  * @since 0.15.0
  */
-export const presetsIndexNames: PresetsIndexNames = [
+export const presetsIndexNames: Presets_Index_Names = [
   'envoy',
   'foundry',
   'lantern',
@@ -35,7 +35,7 @@ export const presetsIndexNames: PresetsIndexNames = [
  *
  * @since 0.15.0
  */
-export const presetsIndexPresets: PresetsIndexPresets = {
+export const presetsIndexPresets: Presets_Index_Presets = {
   envoy: presetsEnvoyPresetEnvoy,
   foundry: presetsFoundryPresetFoundry,
   lantern: presetsLanternPresetLantern,

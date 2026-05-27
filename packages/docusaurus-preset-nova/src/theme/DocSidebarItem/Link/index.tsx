@@ -3,9 +3,9 @@ import Link from '@docusaurus/Link';
 import { LIB_REGEX_TRAILING_SLASH } from '../../../lib/regex.js';
 
 import type {
-  ThemeDocSidebarItemLinkDocSidebarItemLinkAriaCurrent,
-  ThemeDocSidebarItemLinkDocSidebarItemLinkIsActive,
-  ThemeDocSidebarItemLinkDocSidebarItemLinkProps,
+  Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_AriaCurrent,
+  Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_IsActive,
+  Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props,
 } from '../../../types/theme/DocSidebarItem/Link/index.d.ts';
 
 /**
@@ -15,15 +15,15 @@ import type {
  * a Docusaurus Link component, setting aria-current when the link
  * matches the active page path.
  *
- * @param {ThemeDocSidebarItemLinkDocSidebarItemLinkProps} props - Props.
+ * @param {Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocSidebarItemLink(props: ThemeDocSidebarItemLinkDocSidebarItemLinkProps) {
-  const isActive: ThemeDocSidebarItemLinkDocSidebarItemLinkIsActive = props['activePath'].replace(LIB_REGEX_TRAILING_SLASH, '') === props['item']['href'].replace(LIB_REGEX_TRAILING_SLASH, '');
-  const ariaCurrent: ThemeDocSidebarItemLinkDocSidebarItemLinkAriaCurrent = (isActive === true) ? 'page' : undefined;
+function DocSidebarItemLink(props: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_Props) {
+  const isActive: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_IsActive = props['activePath'].replace(LIB_REGEX_TRAILING_SLASH, '') === props['item']['href'].replace(LIB_REGEX_TRAILING_SLASH, '');
+  const ariaCurrent: Theme_DocSidebarItem_Link_Index_DocSidebarItemLink_AriaCurrent = (isActive === true) ? 'page' : undefined;
 
   return (
     <li

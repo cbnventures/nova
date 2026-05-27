@@ -5,14 +5,14 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeNotFoundPropsClassName = string | undefined;
+export type Theme_NotFound_Index_NotFound_Props_ClassName = string | undefined;
 
-export type ThemeNotFoundPropsStyle = CSSProperties | undefined;
+export type Theme_NotFound_Index_NotFound_Props_Style = CSSProperties | undefined;
 
-export type ThemeNotFoundProps = {
-  className?: ThemeNotFoundPropsClassName;
-  style?: ThemeNotFoundPropsStyle;
+export type Theme_NotFound_Index_NotFound_Props = {
+  className?: Theme_NotFound_Index_NotFound_Props_ClassName;
+  style?: Theme_NotFound_Index_NotFound_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeNotFoundNotFoundTitle = string;
+export type Theme_NotFound_Index_NotFound_Title = string;

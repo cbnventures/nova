@@ -6,16 +6,16 @@ import type { RouteConfig } from 'react-router-config';
  *
  * @since 0.15.0
  */
-export type ThemeDocsRootDocsRootPropsRouteRoutes = RouteConfig[];
+export type Theme_DocsRoot_Index_DocsRoot_Props_Route_Routes = RouteConfig[];
 
-export type ThemeDocsRootDocsRootPropsRoute = {
-  routes: ThemeDocsRootDocsRootPropsRouteRoutes;
+export type Theme_DocsRoot_Index_DocsRoot_Props_Route = {
+  routes: Theme_DocsRoot_Index_DocsRoot_Props_Route_Routes;
   [key: string]: unknown;
 };
 
-export type ThemeDocsRootDocsRootProps = {
-  route: ThemeDocsRootDocsRootPropsRoute;
+export type Theme_DocsRoot_Index_DocsRoot_Props = {
+  route: Theme_DocsRoot_Index_DocsRoot_Props_Route;
   [key: string]: unknown;
 };
 
-export type ThemeDocsRootDocsRootRendered = ReactNode;
+export type Theme_DocsRoot_Index_DocsRoot_Rendered = ReactNode;

@@ -1,20 +1,20 @@
 import { useEffect, useRef } from 'react';
 
 import type {
-  LibSearchUseSearchHighlightCurrentMark,
-  LibSearchUseSearchHighlightHighlightTerm,
-  LibSearchUseSearchHighlightInstance,
-  LibSearchUseSearchHighlightIsCancelled,
-  LibSearchUseSearchHighlightMarkConstructor,
-  LibSearchUseSearchHighlightMarkConstructorCast,
-  LibSearchUseSearchHighlightMarkDefault,
-  LibSearchUseSearchHighlightMarkModule,
-  LibSearchUseSearchHighlightMarkModuleRecord,
-  LibSearchUseSearchHighlightMarkRef,
-  LibSearchUseSearchHighlightOptions,
-  LibSearchUseSearchHighlightReturns,
-  LibSearchUseSearchHighlightSearchParams,
-  LibSearchUseSearchHighlightTargetElement,
+  Lib_Search_UseSearchHighlight_CurrentMark,
+  Lib_Search_UseSearchHighlight_HighlightTerm,
+  Lib_Search_UseSearchHighlight_Instance,
+  Lib_Search_UseSearchHighlight_IsCancelled,
+  Lib_Search_UseSearchHighlight_MarkConstructor,
+  Lib_Search_UseSearchHighlight_MarkConstructorCast,
+  Lib_Search_UseSearchHighlight_MarkDefault,
+  Lib_Search_UseSearchHighlight_MarkModule,
+  Lib_Search_UseSearchHighlight_MarkModuleRecord,
+  Lib_Search_UseSearchHighlight_MarkRef,
+  Lib_Search_UseSearchHighlight_Options,
+  Lib_Search_UseSearchHighlight_Returns,
+  Lib_Search_UseSearchHighlight_SearchParams,
+  Lib_Search_UseSearchHighlight_TargetElement,
 } from '../../types/lib/search/use-search-highlight.d.ts';
 
 /**
@@ -24,47 +24,47 @@ import type {
  * lazily loads mark.js, and highlights matching terms within the article or
  * main content area, cleaning up highlights on unmount or when the URL changes.
  *
- * @param {LibSearchUseSearchHighlightOptions} options - Options.
+ * @param {Lib_Search_UseSearchHighlight_Options} options - Options.
  *
  * @since 0.15.0
  */
-export function useSearchHighlight(options: LibSearchUseSearchHighlightOptions): LibSearchUseSearchHighlightReturns {
-  const markRef: LibSearchUseSearchHighlightMarkRef = useRef<unknown>(undefined);
+export function useSearchHighlight(options: Lib_Search_UseSearchHighlight_Options): Lib_Search_UseSearchHighlight_Returns {
+  const markRef: Lib_Search_UseSearchHighlight_MarkRef = useRef<unknown>(undefined);
 
   useEffect(() => {
     if (options['enabled'] === false) {
       return;
     }
 
-    const searchParams: LibSearchUseSearchHighlightSearchParams = new URLSearchParams(window.location.search);
-    const highlightTerm: LibSearchUseSearchHighlightHighlightTerm = searchParams.get('_highlight');
+    const searchParams: Lib_Search_UseSearchHighlight_SearchParams = new URLSearchParams(window.location.search);
+    const highlightTerm: Lib_Search_UseSearchHighlight_HighlightTerm = searchParams.get('_highlight');
 
     if (highlightTerm === null || highlightTerm === '') {
       return;
     }
 
-    let isCancelled: LibSearchUseSearchHighlightIsCancelled = false as LibSearchUseSearchHighlightIsCancelled;
+    let isCancelled: Lib_Search_UseSearchHighlight_IsCancelled = false as Lib_Search_UseSearchHighlight_IsCancelled;
 
     void (async () => {
       try {
-        const markModule: LibSearchUseSearchHighlightMarkModule = await import('mark.js');
-        const markModuleRecord: LibSearchUseSearchHighlightMarkModuleRecord = markModule as LibSearchUseSearchHighlightMarkModuleRecord;
-        const markDefault: LibSearchUseSearchHighlightMarkDefault = markModuleRecord['default'];
-        const markConstructorCast: LibSearchUseSearchHighlightMarkConstructorCast = markModule;
+        const markModule: Lib_Search_UseSearchHighlight_MarkModule = await import('mark.js');
+        const markModuleRecord: Lib_Search_UseSearchHighlight_MarkModuleRecord = markModule as Lib_Search_UseSearchHighlight_MarkModuleRecord;
+        const markDefault: Lib_Search_UseSearchHighlight_MarkDefault = markModuleRecord['default'];
+        const markConstructorCast: Lib_Search_UseSearchHighlight_MarkConstructorCast = markModule;
 
-        const MarkConstructor: LibSearchUseSearchHighlightMarkConstructor = (markDefault !== undefined) ? markDefault as LibSearchUseSearchHighlightMarkConstructor : markConstructorCast as LibSearchUseSearchHighlightMarkConstructor;
+        const MarkConstructor: Lib_Search_UseSearchHighlight_MarkConstructor = (markDefault !== undefined) ? markDefault as Lib_Search_UseSearchHighlight_MarkConstructor : markConstructorCast as Lib_Search_UseSearchHighlight_MarkConstructor;
 
         if (isCancelled === true) {
           return;
         }
 
-        const targetElement: LibSearchUseSearchHighlightTargetElement = document.querySelector('article') ?? document.querySelector('main');
+        const targetElement: Lib_Search_UseSearchHighlight_TargetElement = document.querySelector('article') ?? document.querySelector('main');
 
         if (targetElement === null) {
           return;
         }
 
-        const instance: LibSearchUseSearchHighlightInstance = new MarkConstructor(targetElement);
+        const instance: Lib_Search_UseSearchHighlight_Instance = new MarkConstructor(targetElement);
 
         markRef.current = instance;
         instance.mark(highlightTerm);
@@ -78,10 +78,10 @@ export function useSearchHighlight(options: LibSearchUseSearchHighlightOptions):
     return () => {
       isCancelled = true;
 
-      const currentMark: LibSearchUseSearchHighlightCurrentMark = markRef.current;
+      const currentMark: Lib_Search_UseSearchHighlight_CurrentMark = markRef.current;
 
       if (currentMark !== undefined) {
-        const typedMark: LibSearchUseSearchHighlightInstance = currentMark as LibSearchUseSearchHighlightInstance;
+        const typedMark: Lib_Search_UseSearchHighlight_Instance = currentMark as Lib_Search_UseSearchHighlight_Instance;
 
         typedMark.unmark();
         markRef.current = undefined;

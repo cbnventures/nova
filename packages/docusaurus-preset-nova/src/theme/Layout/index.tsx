@@ -14,8 +14,8 @@ import SkipToContent from '@theme/SkipToContent';
 import { useSearchHighlight } from '../../lib/search/use-search-highlight.js';
 
 import type {
-  ThemeLayoutMetadataSpread,
-  ThemeLayoutProps,
+  Theme_Layout_Index_Layout_MetadataSpread,
+  Theme_Layout_Index_Layout_Props,
 } from '../../types/theme/Layout/index.d.ts';
 
 /**
@@ -25,16 +25,16 @@ import type {
  * skip-to-content accessibility, navigation, and footer sections,
  * without any module CSS or framework-specific class names.
  *
- * @param {ThemeLayoutProps} props - Props.
+ * @param {Theme_Layout_Index_Layout_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Layout(props: ThemeLayoutProps) {
+function Layout(props: Theme_Layout_Index_Layout_Props) {
   useSearchHighlight({ enabled: true });
 
-  const metadataSpread: ThemeLayoutMetadataSpread = {};
+  const metadataSpread: Theme_Layout_Index_Layout_MetadataSpread = {};
 
   if (props['title'] !== undefined) {
     Reflect.set(metadataSpread, 'title', props['title']);

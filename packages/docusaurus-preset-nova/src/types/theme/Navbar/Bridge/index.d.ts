@@ -1,149 +1,149 @@
 import type { CSSProperties, ReactNode } from 'react';
 
-import type { ThemeNavbarItem } from '../index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../index.d.ts';
 
 /**
  * Theme - Navbar - Bridge.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoAlt = string;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Alt = string;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoSrc = {
-  light: ThemeNavbarBridgeIndexBridgePropsSiteLogoSrcLight;
-  dark: ThemeNavbarBridgeIndexBridgePropsSiteLogoSrcDark;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src = {
+  light: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoWordmark = {
-  light: ThemeNavbarBridgeIndexBridgePropsSiteLogoWordmarkLight;
-  dark: ThemeNavbarBridgeIndexBridgePropsSiteLogoWordmarkDark;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoHref = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoRel = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsSiteLogo = {
-  alt: ThemeNavbarBridgeIndexBridgePropsSiteLogoAlt;
-  src: ThemeNavbarBridgeIndexBridgePropsSiteLogoSrc;
-  wordmark: ThemeNavbarBridgeIndexBridgePropsSiteLogoWordmark;
-  title: ThemeNavbarBridgeIndexBridgePropsSiteLogoTitle;
-  href: ThemeNavbarBridgeIndexBridgePropsSiteLogoHref;
-  target: ThemeNavbarBridgeIndexBridgePropsSiteLogoTarget;
-  rel: ThemeNavbarBridgeIndexBridgePropsSiteLogoRel;
-  ariaLabel: ThemeNavbarBridgeIndexBridgePropsSiteLogoAriaLabel;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo = {
+  alt: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Alt;
+  src: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Src;
+  wordmark: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Wordmark;
+  title: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Title;
+  href: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Href;
+  target: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Target;
+  rel: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarBridgeIndexBridgePropsItems = ThemeNavbarItem[];
+export type Theme_Navbar_Bridge_Index_Bridge_Props_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarBridgeIndexBridgePropsActionItems = ThemeNavbarItem[];
+export type Theme_Navbar_Bridge_Index_Bridge_Props_ActionItems = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarBridgeIndexBridgePropsColorModeLabel = ReactNode;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_ColorModeLabel = ReactNode;
 
-export type ThemeNavbarBridgeIndexBridgePropsOnColorModeToggle = () => void;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_OnColorModeToggle = () => void;
 
-export type ThemeNavbarBridgeIndexBridgePropsHamburgerLabel = ReactNode;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_HamburgerLabel = ReactNode;
 
-export type ThemeNavbarBridgeIndexBridgePropsOnMenuToggle = () => void;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_OnMenuToggle = () => void;
 
-export type ThemeNavbarBridgeIndexBridgePropsActiveItemLabel = string | null;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_ActiveItemLabel = string | null;
 
-export type ThemeNavbarBridgeIndexBridgePropsClassName = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_ClassName = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgePropsStyle = CSSProperties | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_Props_Style = CSSProperties | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeProps = {
-  siteLogo: ThemeNavbarBridgeIndexBridgePropsSiteLogo;
-  items: ThemeNavbarBridgeIndexBridgePropsItems;
-  actionItems: ThemeNavbarBridgeIndexBridgePropsActionItems;
-  colorModeLabel: ThemeNavbarBridgeIndexBridgePropsColorModeLabel;
-  onColorModeToggle: ThemeNavbarBridgeIndexBridgePropsOnColorModeToggle;
-  hamburgerLabel: ThemeNavbarBridgeIndexBridgePropsHamburgerLabel;
-  onMenuToggle: ThemeNavbarBridgeIndexBridgePropsOnMenuToggle;
-  activeItemLabel: ThemeNavbarBridgeIndexBridgePropsActiveItemLabel;
-  className?: ThemeNavbarBridgeIndexBridgePropsClassName;
-  style?: ThemeNavbarBridgeIndexBridgePropsStyle;
+export type Theme_Navbar_Bridge_Index_Bridge_Props = {
+  siteLogo: Theme_Navbar_Bridge_Index_Bridge_Props_SiteLogo;
+  items: Theme_Navbar_Bridge_Index_Bridge_Props_Items;
+  actionItems: Theme_Navbar_Bridge_Index_Bridge_Props_ActionItems;
+  colorModeLabel: Theme_Navbar_Bridge_Index_Bridge_Props_ColorModeLabel;
+  onColorModeToggle: Theme_Navbar_Bridge_Index_Bridge_Props_OnColorModeToggle;
+  hamburgerLabel: Theme_Navbar_Bridge_Index_Bridge_Props_HamburgerLabel;
+  onMenuToggle: Theme_Navbar_Bridge_Index_Bridge_Props_OnMenuToggle;
+  activeItemLabel: Theme_Navbar_Bridge_Index_Bridge_Props_ActiveItemLabel;
+  className?: Theme_Navbar_Bridge_Index_Bridge_Props_ClassName;
+  style?: Theme_Navbar_Bridge_Index_Bridge_Props_Style;
 };
 
-export type ThemeNavbarBridgeIndexBridgeReturns = React.JSX.Element;
+export type Theme_Navbar_Bridge_Index_Bridge_Returns = React.JSX.Element;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoAlt = string;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Alt = string;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoSrcLight = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Light = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoSrcDark = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Dark = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoSrc = {
-  light: ThemeNavbarBridgeIndexBridgeSiteLogoSrcLight;
-  dark: ThemeNavbarBridgeIndexBridgeSiteLogoSrcDark;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src = {
+  light: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Light;
+  dark: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src_Dark;
 } | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoWordmarkLight = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Light = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoWordmarkDark = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Dark = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoWordmark = {
-  light: ThemeNavbarBridgeIndexBridgeSiteLogoWordmarkLight;
-  dark: ThemeNavbarBridgeIndexBridgeSiteLogoWordmarkDark;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark = {
+  light: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Light;
+  dark: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark_Dark;
 } | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoTitle = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Title = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoHref = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Href = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoTarget = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Target = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoRel = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Rel = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogoAriaLabel = string | undefined;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo_AriaLabel = string | undefined;
 
-export type ThemeNavbarBridgeIndexBridgeSiteLogo = {
-  alt: ThemeNavbarBridgeIndexBridgeSiteLogoAlt;
-  src: ThemeNavbarBridgeIndexBridgeSiteLogoSrc;
-  wordmark: ThemeNavbarBridgeIndexBridgeSiteLogoWordmark;
-  title: ThemeNavbarBridgeIndexBridgeSiteLogoTitle;
-  href: ThemeNavbarBridgeIndexBridgeSiteLogoHref;
-  target: ThemeNavbarBridgeIndexBridgeSiteLogoTarget;
-  rel: ThemeNavbarBridgeIndexBridgeSiteLogoRel;
-  ariaLabel: ThemeNavbarBridgeIndexBridgeSiteLogoAriaLabel;
+export type Theme_Navbar_Bridge_Index_Bridge_SiteLogo = {
+  alt: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Alt;
+  src: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Src;
+  wordmark: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Wordmark;
+  title: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Title;
+  href: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Href;
+  target: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Target;
+  rel: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_Rel;
+  ariaLabel: Theme_Navbar_Bridge_Index_Bridge_SiteLogo_AriaLabel;
 };
 
-export type ThemeNavbarBridgeIndexBridgeItems = ThemeNavbarItem[];
+export type Theme_Navbar_Bridge_Index_Bridge_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarBridgeIndexBridgeActionItems = ThemeNavbarItem[];
+export type Theme_Navbar_Bridge_Index_Bridge_ActionItems = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarBridgeIndexBridgeColorModeLabel = ReactNode;
+export type Theme_Navbar_Bridge_Index_Bridge_ColorModeLabel = ReactNode;
 
-export type ThemeNavbarBridgeIndexBridgeOnColorModeToggle = () => void;
+export type Theme_Navbar_Bridge_Index_Bridge_OnColorModeToggle = () => void;
 
-export type ThemeNavbarBridgeIndexBridgeHamburgerLabel = ReactNode;
+export type Theme_Navbar_Bridge_Index_Bridge_HamburgerLabel = ReactNode;
 
-export type ThemeNavbarBridgeIndexBridgeOnMenuToggle = () => void;
+export type Theme_Navbar_Bridge_Index_Bridge_OnMenuToggle = () => void;
 
-export type ThemeNavbarBridgeIndexBridgeActiveItemLabel = string | null;
+export type Theme_Navbar_Bridge_Index_Bridge_ActiveItemLabel = string | null;
 
-export type ThemeNavbarBridgeIndexBridgeNavbarClassName = string;
+export type Theme_Navbar_Bridge_Index_Bridge_NavbarClassName = string;
 
-export type ThemeNavbarBridgeIndexBridgeNavAriaLabel = string;
+export type Theme_Navbar_Bridge_Index_Bridge_NavAriaLabel = string;
 
-export type ThemeNavbarBridgeIndexBridgeOpenMenuAriaLabel = string;
+export type Theme_Navbar_Bridge_Index_Bridge_OpenMenuAriaLabel = string;
 
-export type ThemeNavbarBridgeIndexBridgeToggleColorModeAriaLabel = string;
+export type Theme_Navbar_Bridge_Index_Bridge_ToggleColorModeAriaLabel = string;
 
-export type ThemeNavbarBridgeIndexBridgeNavbarItemSpread = Record<string, unknown>;
+export type Theme_Navbar_Bridge_Index_Bridge_NavbarItemSpread = Record<string, unknown>;
 
-export type ThemeNavbarBridgeIndexBridgeNavbarItemKey = string;
+export type Theme_Navbar_Bridge_Index_Bridge_NavbarItemKey = string;

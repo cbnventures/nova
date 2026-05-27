@@ -1,88 +1,88 @@
-import type { SharedChangelogEntryBump } from '../../shared.d.ts';
+import type { Shared_ChangelogEntry_Bump } from '../../shared.d.ts';
 
 /**
  * Tests - Lib - Item - Allowed Recipes.
  *
  * @since 0.13.0
  */
-export type TestsLibItemIncludesSyncIdentity = boolean;
+export type Tests_Lib_Item_IncludesSyncIdentity = boolean;
 
-export type TestsLibItemIncludesNormalizeDependencies = boolean;
+export type Tests_Lib_Item_IncludesNormalizeDependencies = boolean;
 
-export type TestsLibItemIncludesSyncEnvironment = boolean;
+export type Tests_Lib_Item_IncludesSyncEnvironment = boolean;
 
 /**
  * Tests - Lib - Item - Allowed Roles And Policies.
  *
  * @since 0.13.0
  */
-export type TestsLibItemIncludesProject = boolean;
+export type Tests_Lib_Item_IncludesProject = boolean;
 
-export type TestsLibItemIncludesDocs = boolean;
+export type Tests_Lib_Item_IncludesDocs = boolean;
 
-export type TestsLibItemIncludesConfig = boolean;
+export type Tests_Lib_Item_IncludesConfig = boolean;
 
-export type TestsLibItemIncludesApp = boolean;
+export type Tests_Lib_Item_IncludesApp = boolean;
 
-export type TestsLibItemIncludesPackage = boolean;
+export type Tests_Lib_Item_IncludesPackage = boolean;
 
-export type TestsLibItemIncludesTool = boolean;
+export type Tests_Lib_Item_IncludesTool = boolean;
 
-export type TestsLibItemIncludesTemplate = boolean;
+export type Tests_Lib_Item_IncludesTemplate = boolean;
 
-export type TestsLibItemUnique = Set<string>;
+export type Tests_Lib_Item_Unique = Set<string>;
 
-export type TestsLibItemPolicyRoles = string[];
+export type Tests_Lib_Item_PolicyRoles = string[];
 
-export type TestsLibItemFound = string | undefined;
+export type Tests_Lib_Item_Found = string | undefined;
 
 /**
  * Tests - Lib - Item - Changelog Constants.
  *
  * @since 0.13.0
  */
-export type TestsLibItemIncludesMajor = boolean;
+export type Tests_Lib_Item_IncludesMajor = boolean;
 
-export type TestsLibItemIncludesMinor = boolean;
+export type Tests_Lib_Item_IncludesMinor = boolean;
 
-export type TestsLibItemIncludesPatch = boolean;
+export type Tests_Lib_Item_IncludesPatch = boolean;
 
-export type TestsLibItemIncludesAdded = boolean;
+export type Tests_Lib_Item_IncludesAdded = boolean;
 
-export type TestsLibItemIncludesUpdated = boolean;
+export type Tests_Lib_Item_IncludesUpdated = boolean;
 
-export type TestsLibItemIncludesFixed = boolean;
+export type Tests_Lib_Item_IncludesFixed = boolean;
 
-export type TestsLibItemIncludesRemoved = boolean;
+export type Tests_Lib_Item_IncludesRemoved = boolean;
 
-export type TestsLibItemCategory = string;
+export type Tests_Lib_Item_Category = string;
 
-export type TestsLibItemBump = SharedChangelogEntryBump;
+export type Tests_Lib_Item_Bump = Shared_ChangelogEntry_Bump;
 
-export type TestsLibItemIsValidBump = boolean;
+export type Tests_Lib_Item_IsValidBump = boolean;
 
 /**
  * Tests - Lib - Item - package.json Key Arrays.
  *
  * @since 0.13.0
  */
-export type TestsLibItemIncludesName = boolean;
+export type Tests_Lib_Item_IncludesName = boolean;
 
-export type TestsLibItemIncludesVersion = boolean;
+export type Tests_Lib_Item_IncludesVersion = boolean;
 
-export type TestsLibItemIncludesDescription = boolean;
+export type Tests_Lib_Item_IncludesDescription = boolean;
 
-export type TestsLibItemIncludesLicense = boolean;
+export type Tests_Lib_Item_IncludesLicense = boolean;
 
-export type TestsLibItemIncludesDependencies = boolean;
+export type Tests_Lib_Item_IncludesDependencies = boolean;
 
-export type TestsLibItemIncludesDevDependencies = boolean;
+export type Tests_Lib_Item_IncludesDevDependencies = boolean;
 
 /**
  * Tests - Lib - Item - Pretty Name Maps.
  *
  * @since 0.13.0
  */
-export type TestsLibItemKey = string;
+export type Tests_Lib_Item_Key = string;
 
-export type TestsLibItemValue = string;
+export type Tests_Lib_Item_Value = string;

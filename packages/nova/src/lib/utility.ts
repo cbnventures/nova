@@ -31,211 +31,211 @@ import {
 } from './regex.js';
 
 import type {
-  LibUtilityBuildGeneratedFileHeaderBaseName,
-  LibUtilityBuildGeneratedFileHeaderDocsUrl,
-  LibUtilityBuildGeneratedFileHeaderExtension,
-  LibUtilityBuildGeneratedFileHeaderIsHashStyle,
-  LibUtilityBuildGeneratedFileHeaderIsMarkdownStyle,
-  LibUtilityBuildGeneratedFileHeaderLines,
-  LibUtilityBuildGeneratedFileHeaderOptions,
-  LibUtilityBuildGeneratedFileHeaderReturns,
-  LibUtilityBuildGeneratedFileHeaderRuleLine,
-  LibUtilityCollectConsumerWorkspacePathsCurrentDirectory,
-  LibUtilityCollectConsumerWorkspacePathsFilename,
-  LibUtilityCollectConsumerWorkspacePathsPath,
-  LibUtilityCollectConsumerWorkspacePathsPaths,
-  LibUtilityCollectConsumerWorkspacePathsReturns,
-  LibUtilityCollectConsumerWorkspacePathsSafeWorkspaces,
-  LibUtilityCollectConsumerWorkspacePathsWorkspace,
-  LibUtilityCollectConsumerWorkspacePathsWorkspacePath,
-  LibUtilityCollectConsumerWorkspacePathsWorkspaces,
-  LibUtilityCompareSemverA,
-  LibUtilityCompareSemverB,
-  LibUtilityCompareSemverLength,
-  LibUtilityCompareSemverPartsA,
-  LibUtilityCompareSemverPartsB,
-  LibUtilityCompareSemverReturns,
-  LibUtilityCompareSemverValA,
-  LibUtilityCompareSemverValB,
-  LibUtilityCurrentTimestampDay,
-  LibUtilityCurrentTimestampHour,
-  LibUtilityCurrentTimestampMillisecond,
-  LibUtilityCurrentTimestampMinute,
-  LibUtilityCurrentTimestampMonth,
-  LibUtilityCurrentTimestampNow,
-  LibUtilityCurrentTimestampPadLeft,
-  LibUtilityCurrentTimestampPadLeftCurrentWidth,
-  LibUtilityCurrentTimestampPadLeftNumber,
-  LibUtilityCurrentTimestampPadLeftReturns,
-  LibUtilityCurrentTimestampPadLeftWidth,
-  LibUtilityCurrentTimestampRawDate,
-  LibUtilityCurrentTimestampRawHours,
-  LibUtilityCurrentTimestampRawMinutes,
-  LibUtilityCurrentTimestampRawMonth,
-  LibUtilityCurrentTimestampRawSeconds,
-  LibUtilityCurrentTimestampReturns,
-  LibUtilityCurrentTimestampSecond,
-  LibUtilityCurrentTimestampTimezoneAbs,
-  LibUtilityCurrentTimestampTimezoneHours,
-  LibUtilityCurrentTimestampTimezoneHoursTruncated,
-  LibUtilityCurrentTimestampTimezoneMinutes,
-  LibUtilityCurrentTimestampTimezoneOffsetMinutes,
-  LibUtilityCurrentTimestampTimezoneSign,
-  LibUtilityCurrentTimestampYear,
-  LibUtilityDetectShellCurrentPlatform,
-  LibUtilityDetectShellReturns,
-  LibUtilityDiscoverPathsWithFileBackwardCurrentDirectory,
-  LibUtilityDiscoverPathsWithFileDirection,
-  LibUtilityDiscoverPathsWithFileEntries,
-  LibUtilityDiscoverPathsWithFileFileName,
-  LibUtilityDiscoverPathsWithFileForwardCurrentDirectory,
-  LibUtilityDiscoverPathsWithFileHasTargetFile,
-  LibUtilityDiscoverPathsWithFileQueue,
-  LibUtilityDiscoverPathsWithFileRealDirectory,
-  LibUtilityDiscoverPathsWithFileResults,
-  LibUtilityDiscoverPathsWithFileReturns,
-  LibUtilityDiscoverPathsWithFileRootDirectory,
-  LibUtilityDiscoverPathsWithFileSkipDirectories,
-  LibUtilityDiscoverPathsWithFileStartDirectory,
-  LibUtilityDiscoverPathsWithFileTargetPath,
-  LibUtilityDiscoverPathsWithFileVisited,
-  LibUtilityExecuteShellCommand,
-  LibUtilityExecuteShellCommandName,
-  LibUtilityExecuteShellCommandOnPath,
-  LibUtilityExecuteShellErrorOutput,
-  LibUtilityExecuteShellExecAsync,
-  LibUtilityExecuteShellExecResult,
-  LibUtilityExecuteShellFullCommand,
-  LibUtilityExecuteShellQuotePosix,
-  LibUtilityExecuteShellQuotePosixPattern,
-  LibUtilityExecuteShellQuotePosixReturns,
-  LibUtilityExecuteShellQuotePosixString,
-  LibUtilityExecuteShellQuoteWindows,
-  LibUtilityExecuteShellQuoteWindowsPattern,
-  LibUtilityExecuteShellQuoteWindowsReturns,
-  LibUtilityExecuteShellQuoteWindowsString,
-  LibUtilityExecuteShellReturns,
-  LibUtilityExecuteShellShell,
-  LibUtilityExecuteShellStderr,
-  LibUtilityExecuteShellStdout,
-  LibUtilityExecuteShellSuccessOutput,
-  LibUtilityIsCommandExistsBin,
-  LibUtilityIsCommandExistsChildProcess,
-  LibUtilityIsCommandExistsCommand,
-  LibUtilityIsCommandExistsCommandArguments,
-  LibUtilityIsCommandExistsIsWin,
-  LibUtilityIsCommandExistsReturns,
-  LibUtilityIsExecuteShellErrorError,
-  LibUtilityIsExecuteShellErrorHasCode,
-  LibUtilityIsExecuteShellErrorHasCommand,
-  LibUtilityIsExecuteShellErrorHasKilled,
-  LibUtilityIsExecuteShellErrorHasSignal,
-  LibUtilityIsExecuteShellErrorHasStderr,
-  LibUtilityIsExecuteShellErrorHasStdout,
-  LibUtilityIsExecuteShellErrorObject,
-  LibUtilityIsExecuteShellErrorTypeGuard,
-  LibUtilityIsFileIdenticalComparisonResult,
-  LibUtilityIsFileIdenticalExistingFilePath,
-  LibUtilityIsFileIdenticalIsIdentical,
-  LibUtilityIsFileIdenticalNewFileContents,
-  LibUtilityIsFileIdenticalOldFileContents,
-  LibUtilityIsFileIdenticalProposedContents,
-  LibUtilityIsFileIdenticalReturns,
-  LibUtilityIsFileIdenticalSerialized,
-  LibUtilityIsIgnoredFileFilename,
-  LibUtilityIsIgnoredFileIgnoreFiles,
-  LibUtilityIsIgnoredFileNormalizedFilename,
-  LibUtilityIsIgnoredFileNormalizedPattern,
-  LibUtilityIsIgnoredFileReturns,
-  LibUtilityIsIgnoredFileStrippedPattern,
-  LibUtilityIsIgnoredFileSuffix,
-  LibUtilityIsPlainObjectPrototype,
-  LibUtilityIsPlainObjectTypeGuard,
-  LibUtilityIsPlainObjectValue,
-  LibUtilityIsProjectRootCurrentDirectory,
-  LibUtilityIsProjectRootGreaterThanOneMessage,
-  LibUtilityIsProjectRootLessThanOneMessage,
-  LibUtilityIsProjectRootLocations,
-  LibUtilityIsProjectRootNotProjectRootDirectoryMessage,
-  LibUtilityIsProjectRootReturns,
-  LibUtilityLoadWorkspaceManifestsAbsolutePackageJsonPath,
-  LibUtilityLoadWorkspaceManifestsAbsoluteWorkspacePath,
-  LibUtilityLoadWorkspaceManifestsLoadErrorMessage,
-  LibUtilityLoadWorkspaceManifestsOptions,
-  LibUtilityLoadWorkspaceManifestsPackageJsons,
-  LibUtilityLoadWorkspaceManifestsParsedFile,
-  LibUtilityLoadWorkspaceManifestsProjectRoot,
-  LibUtilityLoadWorkspaceManifestsRawFile,
-  LibUtilityLoadWorkspaceManifestsRelativeWorkspacePath,
-  LibUtilityLoadWorkspaceManifestsReturns,
-  LibUtilityLoadWorkspaceManifestsWorkspaceManifest,
-  LibUtilityLoadWorkspaceManifestsWorkspaces,
-  LibUtilityNormalizeRouteSegmentInner,
-  LibUtilityNormalizeRouteSegmentMatch,
-  LibUtilityNormalizeRouteSegmentPatterns,
-  LibUtilityNormalizeRouteSegmentReturns,
-  LibUtilityNormalizeRouteSegmentScrubbed,
-  LibUtilityNormalizeRouteSegmentSegment,
-  LibUtilityParseLinuxOsReleaseFileReturns,
-  LibUtilityParseLinuxOsReleaseTextKey,
-  LibUtilityParseLinuxOsReleaseTextLines,
-  LibUtilityParseLinuxOsReleaseTextOsReleaseEntries,
-  LibUtilityParseLinuxOsReleaseTextParts,
-  LibUtilityParseLinuxOsReleaseTextRest,
-  LibUtilityParseLinuxOsReleaseTextReturns,
-  LibUtilityParseLinuxOsReleaseTextText,
-  LibUtilityParseLinuxOsReleaseTextValue,
-  LibUtilityParseWindowsRegistryQueryPaths,
-  LibUtilityParseWindowsRegistryQueryRegistryKeys,
-  LibUtilityParseWindowsRegistryQueryRegistryPaths,
-  LibUtilityParseWindowsRegistryQueryReturns,
-  LibUtilityParseWindowsRegistryTextLines,
-  LibUtilityParseWindowsRegistryTextMatches,
-  LibUtilityParseWindowsRegistryTextRegistryKey,
-  LibUtilityParseWindowsRegistryTextRegistryKeyData,
-  LibUtilityParseWindowsRegistryTextRegistryKeys,
-  LibUtilityParseWindowsRegistryTextRegistryKeyType,
-  LibUtilityParseWindowsRegistryTextReturns,
-  LibUtilityParseWindowsRegistryTextText,
-  LibUtilityPathExistsPath,
-  LibUtilityPathExistsReturns,
-  LibUtilityRenameFileWithDateCounter,
-  LibUtilityRenameFileWithDateCounterLabel,
-  LibUtilityRenameFileWithDateDirectory,
-  LibUtilityRenameFileWithDateNewFileName,
-  LibUtilityRenameFileWithDateNewPath,
-  LibUtilityRenameFileWithDateNow,
-  LibUtilityRenameFileWithDateOldPath,
-  LibUtilityRenameFileWithDateParsed,
-  LibUtilityRenameFileWithDatePrefix,
-  LibUtilityRenameFileWithDateReturns,
-  LibUtilityRenameFileWithDateSuffix,
-  LibUtilityRenameFileWithDateTimestamp,
-  LibUtilityResolveTemplatePathCurrentDirectory,
-  LibUtilityResolveTemplatePathFilePath,
-  LibUtilityResolveTemplatePathImportMetaUrl,
-  LibUtilityResolveTemplatePathReturns,
-  LibUtilityResolveTemplatePathSubpath,
-  LibUtilitySaveGeneratedFileContents,
-  LibUtilitySaveGeneratedFileCurrentDirectory,
-  LibUtilitySaveGeneratedFileDisplayName,
-  LibUtilitySaveGeneratedFileHeader,
-  LibUtilitySaveGeneratedFileHeaderBanner,
-  LibUtilitySaveGeneratedFileParentDirectory,
-  LibUtilitySaveGeneratedFilePrefixedContents,
-  LibUtilitySaveGeneratedFileReplaceFile,
-  LibUtilitySaveGeneratedFileReturns,
-  LibUtilitySaveGeneratedFileTargetPath,
-  LibUtilitySaveWorkspaceManifestReplaceFile,
-  LibUtilitySaveWorkspaceManifestReturns,
-  LibUtilitySaveWorkspaceManifestWorkspace,
-  LibUtilityShellQuoteBackslashPattern,
-  LibUtilityShellQuoteBacktickPattern,
-  LibUtilityShellQuoteDollarPattern,
-  LibUtilityShellQuoteDoubleQuotePattern,
-  LibUtilityShellQuoteEscaped,
-  LibUtilityShellQuoteReturns,
-  LibUtilityShellQuoteValue,
+  Lib_Utility_BuildGeneratedFileHeader_BaseName,
+  Lib_Utility_BuildGeneratedFileHeader_DocsUrl,
+  Lib_Utility_BuildGeneratedFileHeader_Extension,
+  Lib_Utility_BuildGeneratedFileHeader_IsHashStyle,
+  Lib_Utility_BuildGeneratedFileHeader_IsMarkdownStyle,
+  Lib_Utility_BuildGeneratedFileHeader_Lines,
+  Lib_Utility_BuildGeneratedFileHeader_Options,
+  Lib_Utility_BuildGeneratedFileHeader_Returns,
+  Lib_Utility_BuildGeneratedFileHeader_RuleLine,
+  Lib_Utility_CollectConsumerWorkspacePaths_CurrentDirectory,
+  Lib_Utility_CollectConsumerWorkspacePaths_Filename,
+  Lib_Utility_CollectConsumerWorkspacePaths_Path,
+  Lib_Utility_CollectConsumerWorkspacePaths_Paths,
+  Lib_Utility_CollectConsumerWorkspacePaths_Returns,
+  Lib_Utility_CollectConsumerWorkspacePaths_SafeWorkspaces,
+  Lib_Utility_CollectConsumerWorkspacePaths_Workspace,
+  Lib_Utility_CollectConsumerWorkspacePaths_WorkspacePath,
+  Lib_Utility_CollectConsumerWorkspacePaths_Workspaces,
+  Lib_Utility_CompareSemver_A,
+  Lib_Utility_CompareSemver_B,
+  Lib_Utility_CompareSemver_Length,
+  Lib_Utility_CompareSemver_PartsA,
+  Lib_Utility_CompareSemver_PartsB,
+  Lib_Utility_CompareSemver_Returns,
+  Lib_Utility_CompareSemver_ValA,
+  Lib_Utility_CompareSemver_ValB,
+  Lib_Utility_CurrentTimestamp_Day,
+  Lib_Utility_CurrentTimestamp_Hour,
+  Lib_Utility_CurrentTimestamp_Millisecond,
+  Lib_Utility_CurrentTimestamp_Minute,
+  Lib_Utility_CurrentTimestamp_Month,
+  Lib_Utility_CurrentTimestamp_Now,
+  Lib_Utility_CurrentTimestamp_PadLeft,
+  Lib_Utility_CurrentTimestamp_PadLeft_CurrentWidth,
+  Lib_Utility_CurrentTimestamp_PadLeft_Number,
+  Lib_Utility_CurrentTimestamp_PadLeft_Returns,
+  Lib_Utility_CurrentTimestamp_PadLeft_Width,
+  Lib_Utility_CurrentTimestamp_RawDate,
+  Lib_Utility_CurrentTimestamp_RawHours,
+  Lib_Utility_CurrentTimestamp_RawMinutes,
+  Lib_Utility_CurrentTimestamp_RawMonth,
+  Lib_Utility_CurrentTimestamp_RawSeconds,
+  Lib_Utility_CurrentTimestamp_Returns,
+  Lib_Utility_CurrentTimestamp_Second,
+  Lib_Utility_CurrentTimestamp_TimezoneAbs,
+  Lib_Utility_CurrentTimestamp_TimezoneHours,
+  Lib_Utility_CurrentTimestamp_TimezoneHoursTruncated,
+  Lib_Utility_CurrentTimestamp_TimezoneMinutes,
+  Lib_Utility_CurrentTimestamp_TimezoneOffsetMinutes,
+  Lib_Utility_CurrentTimestamp_TimezoneSign,
+  Lib_Utility_CurrentTimestamp_Year,
+  Lib_Utility_DetectShell_CurrentPlatform,
+  Lib_Utility_DetectShell_Returns,
+  Lib_Utility_DiscoverPathsWithFile_BackwardCurrentDirectory,
+  Lib_Utility_DiscoverPathsWithFile_Direction,
+  Lib_Utility_DiscoverPathsWithFile_Entries,
+  Lib_Utility_DiscoverPathsWithFile_FileName,
+  Lib_Utility_DiscoverPathsWithFile_ForwardCurrentDirectory,
+  Lib_Utility_DiscoverPathsWithFile_HasTargetFile,
+  Lib_Utility_DiscoverPathsWithFile_Queue,
+  Lib_Utility_DiscoverPathsWithFile_RealDirectory,
+  Lib_Utility_DiscoverPathsWithFile_Results,
+  Lib_Utility_DiscoverPathsWithFile_Returns,
+  Lib_Utility_DiscoverPathsWithFile_RootDirectory,
+  Lib_Utility_DiscoverPathsWithFile_SkipDirectories,
+  Lib_Utility_DiscoverPathsWithFile_StartDirectory,
+  Lib_Utility_DiscoverPathsWithFile_TargetPath,
+  Lib_Utility_DiscoverPathsWithFile_Visited,
+  Lib_Utility_ExecuteShell_Command,
+  Lib_Utility_ExecuteShell_CommandName,
+  Lib_Utility_ExecuteShell_CommandOnPath,
+  Lib_Utility_ExecuteShell_ErrorOutput,
+  Lib_Utility_ExecuteShell_ExecAsync,
+  Lib_Utility_ExecuteShell_ExecResult,
+  Lib_Utility_ExecuteShell_FullCommand,
+  Lib_Utility_ExecuteShell_QuotePosix,
+  Lib_Utility_ExecuteShell_QuotePosix_Pattern,
+  Lib_Utility_ExecuteShell_QuotePosix_Returns,
+  Lib_Utility_ExecuteShell_QuotePosix_String,
+  Lib_Utility_ExecuteShell_QuoteWindows,
+  Lib_Utility_ExecuteShell_QuoteWindows_Pattern,
+  Lib_Utility_ExecuteShell_QuoteWindows_Returns,
+  Lib_Utility_ExecuteShell_QuoteWindows_String,
+  Lib_Utility_ExecuteShell_Returns,
+  Lib_Utility_ExecuteShell_Shell,
+  Lib_Utility_ExecuteShell_Stderr,
+  Lib_Utility_ExecuteShell_Stdout,
+  Lib_Utility_ExecuteShell_SuccessOutput,
+  Lib_Utility_IsCommandExists_Bin,
+  Lib_Utility_IsCommandExists_ChildProcess,
+  Lib_Utility_IsCommandExists_Command,
+  Lib_Utility_IsCommandExists_CommandArguments,
+  Lib_Utility_IsCommandExists_IsWin,
+  Lib_Utility_IsCommandExists_Returns,
+  Lib_Utility_IsExecuteShellError_Error,
+  Lib_Utility_IsExecuteShellError_HasCode,
+  Lib_Utility_IsExecuteShellError_HasCommand,
+  Lib_Utility_IsExecuteShellError_HasKilled,
+  Lib_Utility_IsExecuteShellError_HasSignal,
+  Lib_Utility_IsExecuteShellError_HasStderr,
+  Lib_Utility_IsExecuteShellError_HasStdout,
+  Lib_Utility_IsExecuteShellError_Object,
+  Lib_Utility_IsExecuteShellError_TypeGuard,
+  Lib_Utility_IsFileIdentical_ComparisonResult,
+  Lib_Utility_IsFileIdentical_ExistingFilePath,
+  Lib_Utility_IsFileIdentical_IsIdentical,
+  Lib_Utility_IsFileIdentical_NewFileContents,
+  Lib_Utility_IsFileIdentical_OldFileContents,
+  Lib_Utility_IsFileIdentical_ProposedContents,
+  Lib_Utility_IsFileIdentical_Returns,
+  Lib_Utility_IsFileIdentical_Serialized,
+  Lib_Utility_IsIgnoredFile_Filename,
+  Lib_Utility_IsIgnoredFile_IgnoreFiles,
+  Lib_Utility_IsIgnoredFile_NormalizedFilename,
+  Lib_Utility_IsIgnoredFile_NormalizedPattern,
+  Lib_Utility_IsIgnoredFile_Returns,
+  Lib_Utility_IsIgnoredFile_StrippedPattern,
+  Lib_Utility_IsIgnoredFile_Suffix,
+  Lib_Utility_IsPlainObject_Prototype,
+  Lib_Utility_IsPlainObject_TypeGuard,
+  Lib_Utility_IsPlainObject_Value,
+  Lib_Utility_IsProjectRoot_CurrentDirectory,
+  Lib_Utility_IsProjectRoot_GreaterThanOneMessage,
+  Lib_Utility_IsProjectRoot_LessThanOneMessage,
+  Lib_Utility_IsProjectRoot_Locations,
+  Lib_Utility_IsProjectRoot_NotProjectRootDirectoryMessage,
+  Lib_Utility_IsProjectRoot_Returns,
+  Lib_Utility_LoadWorkspaceManifests_AbsolutePackageJsonPath,
+  Lib_Utility_LoadWorkspaceManifests_AbsoluteWorkspacePath,
+  Lib_Utility_LoadWorkspaceManifests_LoadErrorMessage,
+  Lib_Utility_LoadWorkspaceManifests_Options,
+  Lib_Utility_LoadWorkspaceManifests_PackageJsons,
+  Lib_Utility_LoadWorkspaceManifests_ParsedFile,
+  Lib_Utility_LoadWorkspaceManifests_ProjectRoot,
+  Lib_Utility_LoadWorkspaceManifests_RawFile,
+  Lib_Utility_LoadWorkspaceManifests_RelativeWorkspacePath,
+  Lib_Utility_LoadWorkspaceManifests_Returns,
+  Lib_Utility_LoadWorkspaceManifests_WorkspaceManifest,
+  Lib_Utility_LoadWorkspaceManifests_Workspaces,
+  Lib_Utility_NormalizeRouteSegment_Inner,
+  Lib_Utility_NormalizeRouteSegment_Match,
+  Lib_Utility_NormalizeRouteSegment_Patterns,
+  Lib_Utility_NormalizeRouteSegment_Returns,
+  Lib_Utility_NormalizeRouteSegment_Scrubbed,
+  Lib_Utility_NormalizeRouteSegment_Segment,
+  Lib_Utility_ParseLinuxOsReleaseFile_Returns,
+  Lib_Utility_ParseLinuxOsReleaseText_Key,
+  Lib_Utility_ParseLinuxOsReleaseText_Lines,
+  Lib_Utility_ParseLinuxOsReleaseText_OsReleaseEntries,
+  Lib_Utility_ParseLinuxOsReleaseText_Parts,
+  Lib_Utility_ParseLinuxOsReleaseText_Rest,
+  Lib_Utility_ParseLinuxOsReleaseText_Returns,
+  Lib_Utility_ParseLinuxOsReleaseText_Text,
+  Lib_Utility_ParseLinuxOsReleaseText_Value,
+  Lib_Utility_ParseWindowsRegistryQuery_Paths,
+  Lib_Utility_ParseWindowsRegistryQuery_RegistryKeys,
+  Lib_Utility_ParseWindowsRegistryQuery_RegistryPaths,
+  Lib_Utility_ParseWindowsRegistryQuery_Returns,
+  Lib_Utility_ParseWindowsRegistryText_Lines,
+  Lib_Utility_ParseWindowsRegistryText_Matches,
+  Lib_Utility_ParseWindowsRegistryText_RegistryKey,
+  Lib_Utility_ParseWindowsRegistryText_RegistryKeyData,
+  Lib_Utility_ParseWindowsRegistryText_RegistryKeys,
+  Lib_Utility_ParseWindowsRegistryText_RegistryKeyType,
+  Lib_Utility_ParseWindowsRegistryText_Returns,
+  Lib_Utility_ParseWindowsRegistryText_Text,
+  Lib_Utility_PathExists_Path,
+  Lib_Utility_PathExists_Returns,
+  Lib_Utility_RenameFileWithDate_Counter,
+  Lib_Utility_RenameFileWithDate_CounterLabel,
+  Lib_Utility_RenameFileWithDate_Directory,
+  Lib_Utility_RenameFileWithDate_NewFileName,
+  Lib_Utility_RenameFileWithDate_NewPath,
+  Lib_Utility_RenameFileWithDate_Now,
+  Lib_Utility_RenameFileWithDate_OldPath,
+  Lib_Utility_RenameFileWithDate_Parsed,
+  Lib_Utility_RenameFileWithDate_Prefix,
+  Lib_Utility_RenameFileWithDate_Returns,
+  Lib_Utility_RenameFileWithDate_Suffix,
+  Lib_Utility_RenameFileWithDate_Timestamp,
+  Lib_Utility_ResolveTemplatePath_CurrentDirectory,
+  Lib_Utility_ResolveTemplatePath_FilePath,
+  Lib_Utility_ResolveTemplatePath_ImportMetaUrl,
+  Lib_Utility_ResolveTemplatePath_Returns,
+  Lib_Utility_ResolveTemplatePath_Subpath,
+  Lib_Utility_SaveGeneratedFile_Contents,
+  Lib_Utility_SaveGeneratedFile_CurrentDirectory,
+  Lib_Utility_SaveGeneratedFile_DisplayName,
+  Lib_Utility_SaveGeneratedFile_Header,
+  Lib_Utility_SaveGeneratedFile_HeaderBanner,
+  Lib_Utility_SaveGeneratedFile_ParentDirectory,
+  Lib_Utility_SaveGeneratedFile_PrefixedContents,
+  Lib_Utility_SaveGeneratedFile_ReplaceFile,
+  Lib_Utility_SaveGeneratedFile_Returns,
+  Lib_Utility_SaveGeneratedFile_TargetPath,
+  Lib_Utility_SaveWorkspaceManifest_ReplaceFile,
+  Lib_Utility_SaveWorkspaceManifest_Returns,
+  Lib_Utility_SaveWorkspaceManifest_Workspace,
+  Lib_Utility_ShellQuote_BackslashPattern,
+  Lib_Utility_ShellQuote_BacktickPattern,
+  Lib_Utility_ShellQuote_DollarPattern,
+  Lib_Utility_ShellQuote_DoubleQuotePattern,
+  Lib_Utility_ShellQuote_Escaped,
+  Lib_Utility_ShellQuote_Returns,
+  Lib_Utility_ShellQuote_Value,
 } from '../types/lib/utility.d.ts';
 
 /**
@@ -245,21 +245,21 @@ import type {
  * workspace (role in 'app', 'package', 'tool', 'config'). Used by must-have generators
  * to fan out a single template into every workspace that ships to consumers.
  *
- * @param {LibUtilityCollectConsumerWorkspacePathsCurrentDirectory} currentDirectory - Current directory.
- * @param {LibUtilityCollectConsumerWorkspacePathsWorkspaces}       workspaces       - Workspaces.
- * @param {LibUtilityCollectConsumerWorkspacePathsFilename}         filename         - Filename.
+ * @param {Lib_Utility_CollectConsumerWorkspacePaths_CurrentDirectory} currentDirectory - Current directory.
+ * @param {Lib_Utility_CollectConsumerWorkspacePaths_Workspaces}       workspaces       - Workspaces.
+ * @param {Lib_Utility_CollectConsumerWorkspacePaths_Filename}         filename         - Filename.
  *
- * @returns {LibUtilityCollectConsumerWorkspacePathsReturns}
+ * @returns {Lib_Utility_CollectConsumerWorkspacePaths_Returns}
  *
  * @since 0.18.0
  */
-export function collectConsumerWorkspacePaths(currentDirectory: LibUtilityCollectConsumerWorkspacePathsCurrentDirectory, workspaces: LibUtilityCollectConsumerWorkspacePathsWorkspaces, filename: LibUtilityCollectConsumerWorkspacePathsFilename): LibUtilityCollectConsumerWorkspacePathsReturns {
-  const paths: LibUtilityCollectConsumerWorkspacePathsPaths = [];
-  const safeWorkspaces: LibUtilityCollectConsumerWorkspacePathsSafeWorkspaces = workspaces ?? {};
+export function collectConsumerWorkspacePaths(currentDirectory: Lib_Utility_CollectConsumerWorkspacePaths_CurrentDirectory, workspaces: Lib_Utility_CollectConsumerWorkspacePaths_Workspaces, filename: Lib_Utility_CollectConsumerWorkspacePaths_Filename): Lib_Utility_CollectConsumerWorkspacePaths_Returns {
+  const paths: Lib_Utility_CollectConsumerWorkspacePaths_Paths = [];
+  const safeWorkspaces: Lib_Utility_CollectConsumerWorkspacePaths_SafeWorkspaces = workspaces ?? {};
 
   for (const workspacesEntry of Object.entries(safeWorkspaces)) {
-    const workspacePath: LibUtilityCollectConsumerWorkspacePathsWorkspacePath = workspacesEntry[0];
-    const workspace: LibUtilityCollectConsumerWorkspacePathsWorkspace = workspacesEntry[1];
+    const workspacePath: Lib_Utility_CollectConsumerWorkspacePaths_WorkspacePath = workspacesEntry[0];
+    const workspace: Lib_Utility_CollectConsumerWorkspacePaths_Workspace = workspacesEntry[1];
 
     if (
       [
@@ -270,7 +270,7 @@ export function collectConsumerWorkspacePaths(currentDirectory: LibUtilityCollec
       ].includes(workspace['role']) === true
       && workspacePath !== './'
     ) {
-      const path: LibUtilityCollectConsumerWorkspacePathsPath = join(currentDirectory, workspacePath, filename);
+      const path: Lib_Utility_CollectConsumerWorkspacePaths_Path = join(currentDirectory, workspacePath, filename);
 
       paths.push(path);
     }
@@ -285,21 +285,21 @@ export function collectConsumerWorkspacePaths(currentDirectory: LibUtilityCollec
  * Returns negative when a < b, positive when a > b, zero when equal.
  * Compares dot-separated version strings numerically (e.g., "2.40.0" vs "2.5.1").
  *
- * @param {LibUtilityCompareSemverA} a - A.
- * @param {LibUtilityCompareSemverB} b - B.
+ * @param {Lib_Utility_CompareSemver_A} a - A.
+ * @param {Lib_Utility_CompareSemver_B} b - B.
  *
- * @returns {LibUtilityCompareSemverReturns}
+ * @returns {Lib_Utility_CompareSemver_Returns}
  *
  * @since 0.18.0
  */
-export function compareSemver(a: LibUtilityCompareSemverA, b: LibUtilityCompareSemverB): LibUtilityCompareSemverReturns {
-  const partsA: LibUtilityCompareSemverPartsA = a.split('.').map((part) => parseInt(part, 10));
-  const partsB: LibUtilityCompareSemverPartsB = b.split('.').map((part) => parseInt(part, 10));
-  const length: LibUtilityCompareSemverLength = Math.max(partsA.length, partsB.length);
+export function compareSemver(a: Lib_Utility_CompareSemver_A, b: Lib_Utility_CompareSemver_B): Lib_Utility_CompareSemver_Returns {
+  const partsA: Lib_Utility_CompareSemver_PartsA = a.split('.').map((part) => parseInt(part, 10));
+  const partsB: Lib_Utility_CompareSemver_PartsB = b.split('.').map((part) => parseInt(part, 10));
+  const length: Lib_Utility_CompareSemver_Length = Math.max(partsA.length, partsB.length);
 
   for (let i = 0; i < length; i += 1) {
-    const valA: LibUtilityCompareSemverValA = partsA[i] ?? 0;
-    const valB: LibUtilityCompareSemverValB = partsB[i] ?? 0;
+    const valA: Lib_Utility_CompareSemver_ValA = partsA[i] ?? 0;
+    const valB: Lib_Utility_CompareSemver_ValB = partsB[i] ?? 0;
 
     if (valA !== valB) {
       return valA - valB;
@@ -315,12 +315,12 @@ export function compareSemver(a: LibUtilityCompareSemverA, b: LibUtilityCompareS
  * Produces an ISO-8601-style bracket timestamp used by Logger when the
  * LOG_TIME environment variable is enabled, including milliseconds and UTC offset.
  *
- * @returns {LibUtilityCurrentTimestampReturns}
+ * @returns {Lib_Utility_CurrentTimestamp_Returns}
  *
  * @since 0.11.0
  */
-export function currentTimestamp(): LibUtilityCurrentTimestampReturns {
-  const now: LibUtilityCurrentTimestampNow = new Date();
+export function currentTimestamp(): Lib_Utility_CurrentTimestamp_Returns {
+  const now: Lib_Utility_CurrentTimestamp_Now = new Date();
 
   /**
    * Lib - Utility - Current Timestamp - Pad Left.
@@ -328,40 +328,40 @@ export function currentTimestamp(): LibUtilityCurrentTimestampReturns {
    * Zero-pads a numeric component to the requested width, enforcing a minimum of
    * two digits for month, day, hour, minute, and second.
    *
-   * @param {LibUtilityCurrentTimestampPadLeftNumber} number - Number.
-   * @param {LibUtilityCurrentTimestampPadLeftWidth}  width  - Width.
+   * @param {Lib_Utility_CurrentTimestamp_PadLeft_Number} number - Number.
+   * @param {Lib_Utility_CurrentTimestamp_PadLeft_Width}  width  - Width.
    *
    * @private
    *
-   * @returns {LibUtilityCurrentTimestampPadLeftReturns}
+   * @returns {Lib_Utility_CurrentTimestamp_PadLeft_Returns}
    *
    * @since 0.11.0
    */
-  const padLeft: LibUtilityCurrentTimestampPadLeft = (number: LibUtilityCurrentTimestampPadLeftNumber, width: LibUtilityCurrentTimestampPadLeftWidth = 2): LibUtilityCurrentTimestampPadLeftReturns => {
-    const currentWidth: LibUtilityCurrentTimestampPadLeftCurrentWidth = (width < 2) ? 2 : width;
+  const padLeft: Lib_Utility_CurrentTimestamp_PadLeft = (number: Lib_Utility_CurrentTimestamp_PadLeft_Number, width: Lib_Utility_CurrentTimestamp_PadLeft_Width = 2): Lib_Utility_CurrentTimestamp_PadLeft_Returns => {
+    const currentWidth: Lib_Utility_CurrentTimestamp_PadLeft_CurrentWidth = (width < 2) ? 2 : width;
 
     return number.toString().padStart(currentWidth, '0');
   };
 
-  const year: LibUtilityCurrentTimestampYear = now.getFullYear();
-  const rawMonth: LibUtilityCurrentTimestampRawMonth = now.getMonth() + 1;
-  const month: LibUtilityCurrentTimestampMonth = padLeft(rawMonth);
-  const rawDate: LibUtilityCurrentTimestampRawDate = now.getDate();
-  const day: LibUtilityCurrentTimestampDay = padLeft(rawDate);
-  const rawHours: LibUtilityCurrentTimestampRawHours = now.getHours();
-  const hour: LibUtilityCurrentTimestampHour = padLeft(rawHours);
-  const rawMinutes: LibUtilityCurrentTimestampRawMinutes = now.getMinutes();
-  const minute: LibUtilityCurrentTimestampMinute = padLeft(rawMinutes);
-  const rawSeconds: LibUtilityCurrentTimestampRawSeconds = now.getSeconds();
-  const second: LibUtilityCurrentTimestampSecond = padLeft(rawSeconds);
-  const millisecond: LibUtilityCurrentTimestampMillisecond = now.getMilliseconds().toString().padStart(3, '0');
+  const year: Lib_Utility_CurrentTimestamp_Year = now.getFullYear();
+  const rawMonth: Lib_Utility_CurrentTimestamp_RawMonth = now.getMonth() + 1;
+  const month: Lib_Utility_CurrentTimestamp_Month = padLeft(rawMonth);
+  const rawDate: Lib_Utility_CurrentTimestamp_RawDate = now.getDate();
+  const day: Lib_Utility_CurrentTimestamp_Day = padLeft(rawDate);
+  const rawHours: Lib_Utility_CurrentTimestamp_RawHours = now.getHours();
+  const hour: Lib_Utility_CurrentTimestamp_Hour = padLeft(rawHours);
+  const rawMinutes: Lib_Utility_CurrentTimestamp_RawMinutes = now.getMinutes();
+  const minute: Lib_Utility_CurrentTimestamp_Minute = padLeft(rawMinutes);
+  const rawSeconds: Lib_Utility_CurrentTimestamp_RawSeconds = now.getSeconds();
+  const second: Lib_Utility_CurrentTimestamp_Second = padLeft(rawSeconds);
+  const millisecond: Lib_Utility_CurrentTimestamp_Millisecond = now.getMilliseconds().toString().padStart(3, '0');
 
-  const timezoneOffsetMinutes: LibUtilityCurrentTimestampTimezoneOffsetMinutes = -now.getTimezoneOffset();
-  const timezoneSign: LibUtilityCurrentTimestampTimezoneSign = (timezoneOffsetMinutes >= 0) ? '+' : '-';
-  const timezoneAbs: LibUtilityCurrentTimestampTimezoneAbs = Math.abs(timezoneOffsetMinutes);
-  const timezoneHoursTruncated: LibUtilityCurrentTimestampTimezoneHoursTruncated = Math.trunc(timezoneAbs / 60);
-  const timezoneHours: LibUtilityCurrentTimestampTimezoneHours = padLeft(timezoneHoursTruncated);
-  const timezoneMinutes: LibUtilityCurrentTimestampTimezoneMinutes = padLeft(timezoneAbs % 60);
+  const timezoneOffsetMinutes: Lib_Utility_CurrentTimestamp_TimezoneOffsetMinutes = -now.getTimezoneOffset();
+  const timezoneSign: Lib_Utility_CurrentTimestamp_TimezoneSign = (timezoneOffsetMinutes >= 0) ? '+' : '-';
+  const timezoneAbs: Lib_Utility_CurrentTimestamp_TimezoneAbs = Math.abs(timezoneOffsetMinutes);
+  const timezoneHoursTruncated: Lib_Utility_CurrentTimestamp_TimezoneHoursTruncated = Math.trunc(timezoneAbs / 60);
+  const timezoneHours: Lib_Utility_CurrentTimestamp_TimezoneHours = padLeft(timezoneHoursTruncated);
+  const timezoneMinutes: Lib_Utility_CurrentTimestamp_TimezoneMinutes = padLeft(timezoneAbs % 60);
 
   return `[${year}-${month}-${day} ${hour}:${minute}:${second}.${millisecond} ${timezoneSign}${timezoneHours}${timezoneMinutes}]`;
 }
@@ -372,12 +372,12 @@ export function currentTimestamp(): LibUtilityCurrentTimestampReturns {
  * Returns the default shell path for the current operating system
  * so executeShell can wrap commands with the correct invocation syntax.
  *
- * @returns {LibUtilityDetectShellReturns}
+ * @returns {Lib_Utility_DetectShell_Returns}
  *
  * @since 0.11.0
  */
-export function detectShell(): LibUtilityDetectShellReturns {
-  const currentPlatform: LibUtilityDetectShellCurrentPlatform = platform();
+export function detectShell(): Lib_Utility_DetectShell_Returns {
+  const currentPlatform: Lib_Utility_DetectShell_CurrentPlatform = platform();
 
   // Windows.
   if (currentPlatform === 'win32') {
@@ -411,24 +411,24 @@ export function detectShell(): LibUtilityDetectShellReturns {
  * Walks the filesystem either upward or downward from the working
  * directory to collect every path containing the named file.
  *
- * @param {LibUtilityDiscoverPathsWithFileFileName}  fileName  - File name.
- * @param {LibUtilityDiscoverPathsWithFileDirection} direction - Direction.
+ * @param {Lib_Utility_DiscoverPathsWithFile_FileName}  fileName  - File name.
+ * @param {Lib_Utility_DiscoverPathsWithFile_Direction} direction - Direction.
  *
- * @returns {LibUtilityDiscoverPathsWithFileReturns}
+ * @returns {Lib_Utility_DiscoverPathsWithFile_Returns}
  *
  * @since 0.11.0
  */
-export async function discoverPathsWithFile(fileName: LibUtilityDiscoverPathsWithFileFileName, direction: LibUtilityDiscoverPathsWithFileDirection): LibUtilityDiscoverPathsWithFileReturns {
-  const startDirectory: LibUtilityDiscoverPathsWithFileStartDirectory = process.cwd();
-  const results: LibUtilityDiscoverPathsWithFileResults = [];
+export async function discoverPathsWithFile(fileName: Lib_Utility_DiscoverPathsWithFile_FileName, direction: Lib_Utility_DiscoverPathsWithFile_Direction): Lib_Utility_DiscoverPathsWithFile_Returns {
+  const startDirectory: Lib_Utility_DiscoverPathsWithFile_StartDirectory = process.cwd();
+  const results: Lib_Utility_DiscoverPathsWithFile_Results = [];
 
   if (direction === 'backward') {
-    const rootDirectory: LibUtilityDiscoverPathsWithFileRootDirectory = parse(startDirectory).root;
+    const rootDirectory: Lib_Utility_DiscoverPathsWithFile_RootDirectory = parse(startDirectory).root;
 
-    let currentDirectory: LibUtilityDiscoverPathsWithFileBackwardCurrentDirectory = startDirectory;
+    let currentDirectory: Lib_Utility_DiscoverPathsWithFile_BackwardCurrentDirectory = startDirectory;
 
     while (true) {
-      const targetPath: LibUtilityDiscoverPathsWithFileTargetPath = join(currentDirectory, fileName);
+      const targetPath: Lib_Utility_DiscoverPathsWithFile_TargetPath = join(currentDirectory, fileName);
 
       try {
         Logger.customize({
@@ -456,12 +456,12 @@ export async function discoverPathsWithFile(fileName: LibUtilityDiscoverPathsWit
   }
 
   if (direction === 'forward') {
-    const queue: LibUtilityDiscoverPathsWithFileQueue = [startDirectory];
-    const visited: LibUtilityDiscoverPathsWithFileVisited = new Set();
-    const skipDirectories: LibUtilityDiscoverPathsWithFileSkipDirectories = new Set(libItemSkipDirectories);
+    const queue: Lib_Utility_DiscoverPathsWithFile_Queue = [startDirectory];
+    const visited: Lib_Utility_DiscoverPathsWithFile_Visited = new Set();
+    const skipDirectories: Lib_Utility_DiscoverPathsWithFile_SkipDirectories = new Set(libItemSkipDirectories);
 
     while (queue.length > 0) {
-      const currentDirectory: LibUtilityDiscoverPathsWithFileForwardCurrentDirectory = queue.shift();
+      const currentDirectory: Lib_Utility_DiscoverPathsWithFile_ForwardCurrentDirectory = queue.shift();
 
       if (currentDirectory === undefined) {
         continue;
@@ -472,7 +472,7 @@ export async function discoverPathsWithFile(fileName: LibUtilityDiscoverPathsWit
         purpose: 'forward',
       }).debug(`Current directory: "${currentDirectory}"`);
 
-      let realDirectory: LibUtilityDiscoverPathsWithFileRealDirectory = undefined;
+      let realDirectory: Lib_Utility_DiscoverPathsWithFile_RealDirectory = undefined;
 
       try {
         // Resolve symlinks to avoid visiting the same location multiple times.
@@ -487,7 +487,7 @@ export async function discoverPathsWithFile(fileName: LibUtilityDiscoverPathsWit
 
       visited.add(realDirectory);
 
-      let entries: LibUtilityDiscoverPathsWithFileEntries = undefined;
+      let entries: Lib_Utility_DiscoverPathsWithFile_Entries = undefined;
 
       try {
         // Attempt to read the directory contents.
@@ -501,7 +501,7 @@ export async function discoverPathsWithFile(fileName: LibUtilityDiscoverPathsWit
         continue;
       }
 
-      let hasTargetFile: LibUtilityDiscoverPathsWithFileHasTargetFile = false;
+      let hasTargetFile: Lib_Utility_DiscoverPathsWithFile_HasTargetFile = false;
 
       for (const entry of entries) {
         // If directory contains the target file.
@@ -540,21 +540,21 @@ export async function discoverPathsWithFile(fileName: LibUtilityDiscoverPathsWit
  * Runs a shell command through the platform-detected shell with proper quoting,
  * used by the version utility and registry/OS-release parsers.
  *
- * @param {LibUtilityExecuteShellCommand} command - Command.
+ * @param {Lib_Utility_ExecuteShell_Command} command - Command.
  *
- * @returns {LibUtilityExecuteShellReturns}
+ * @returns {Lib_Utility_ExecuteShell_Returns}
  *
  * @since 0.11.0
  */
-export async function executeShell(command: LibUtilityExecuteShellCommand): LibUtilityExecuteShellReturns {
-  const execAsync: LibUtilityExecuteShellExecAsync = promisify(exec);
-  const shell: LibUtilityExecuteShellShell = detectShell();
+export async function executeShell(command: Lib_Utility_ExecuteShell_Command): Lib_Utility_ExecuteShell_Returns {
+  const execAsync: Lib_Utility_ExecuteShell_ExecAsync = promisify(exec);
+  const shell: Lib_Utility_ExecuteShell_Shell = detectShell();
 
   // Extract the command name (first token) to check PATH availability.
-  const commandName: LibUtilityExecuteShellCommandName = command.split(' ')[0] ?? '';
-  const commandOnPath: LibUtilityExecuteShellCommandOnPath = await isCommandExists(commandName);
+  const commandName: Lib_Utility_ExecuteShell_CommandName = command.split(' ')[0] ?? '';
+  const commandOnPath: Lib_Utility_ExecuteShell_CommandOnPath = await isCommandExists(commandName);
 
-  let fullCommand: LibUtilityExecuteShellFullCommand = command;
+  let fullCommand: Lib_Utility_ExecuteShell_FullCommand = command;
 
   /**
    * Lib - Utility - Execute Shell - Quote Posix.
@@ -562,16 +562,16 @@ export async function executeShell(command: LibUtilityExecuteShellCommand): LibU
    * Escapes single quotes inside a command string so it can be safely wrapped in
    * single-quoted POSIX shell invocations for zsh, bash, and sh.
    *
-   * @param {LibUtilityExecuteShellQuotePosixString} string - String.
+   * @param {Lib_Utility_ExecuteShell_QuotePosix_String} string - String.
    *
    * @private
    *
-   * @returns {LibUtilityExecuteShellQuotePosixReturns}
+   * @returns {Lib_Utility_ExecuteShell_QuotePosix_Returns}
    *
    * @since 0.11.0
    */
-  const quotePosix: LibUtilityExecuteShellQuotePosix = (string: LibUtilityExecuteShellQuotePosixString): LibUtilityExecuteShellQuotePosixReturns => {
-    const pattern: LibUtilityExecuteShellQuotePosixPattern = new RegExp(LIB_REGEX_CHARACTER_SINGLE_QUOTE.source, 'g');
+  const quotePosix: Lib_Utility_ExecuteShell_QuotePosix = (string: Lib_Utility_ExecuteShell_QuotePosix_String): Lib_Utility_ExecuteShell_QuotePosix_Returns => {
+    const pattern: Lib_Utility_ExecuteShell_QuotePosix_Pattern = new RegExp(LIB_REGEX_CHARACTER_SINGLE_QUOTE.source, 'g');
 
     return string.replace(pattern, '\'\\\'\'');
   };
@@ -582,16 +582,16 @@ export async function executeShell(command: LibUtilityExecuteShellCommand): LibU
    * Escapes double quotes inside a command string so it can be
    * safely embedded in a cmd.exe /c invocation on Windows.
    *
-   * @param {LibUtilityExecuteShellQuoteWindowsString} string - String.
+   * @param {Lib_Utility_ExecuteShell_QuoteWindows_String} string - String.
    *
    * @private
    *
-   * @returns {LibUtilityExecuteShellQuoteWindowsReturns}
+   * @returns {Lib_Utility_ExecuteShell_QuoteWindows_Returns}
    *
    * @since 0.11.0
    */
-  const quoteWindows: LibUtilityExecuteShellQuoteWindows = (string: LibUtilityExecuteShellQuoteWindowsString): LibUtilityExecuteShellQuoteWindowsReturns => {
-    const pattern: LibUtilityExecuteShellQuoteWindowsPattern = new RegExp(LIB_REGEX_CHARACTER_DOUBLE_QUOTE.source, 'g');
+  const quoteWindows: Lib_Utility_ExecuteShell_QuoteWindows = (string: Lib_Utility_ExecuteShell_QuoteWindows_String): Lib_Utility_ExecuteShell_QuoteWindows_Returns => {
+    const pattern: Lib_Utility_ExecuteShell_QuoteWindows_Pattern = new RegExp(LIB_REGEX_CHARACTER_DOUBLE_QUOTE.source, 'g');
 
     return string.replace(pattern, '"');
   };
@@ -625,7 +625,7 @@ export async function executeShell(command: LibUtilityExecuteShellCommand): LibU
   }
 
   try {
-    const execResult: LibUtilityExecuteShellExecResult = await execAsync(fullCommand, {
+    const execResult: Lib_Utility_ExecuteShell_ExecResult = await execAsync(fullCommand, {
       encoding: 'utf-8',
       windowsHide: true,
       timeout: 15000,
@@ -652,10 +652,10 @@ export async function executeShell(command: LibUtilityExecuteShellCommand): LibU
       // 8 MB.
     });
 
-    const stdout: LibUtilityExecuteShellStdout = execResult['stdout'];
-    const stderr: LibUtilityExecuteShellStderr = execResult['stderr'];
+    const stdout: Lib_Utility_ExecuteShell_Stdout = execResult['stdout'];
+    const stderr: Lib_Utility_ExecuteShell_Stderr = execResult['stderr'];
 
-    const output: LibUtilityExecuteShellSuccessOutput = {
+    const output: Lib_Utility_ExecuteShell_SuccessOutput = {
       textOut: stdout.trim(),
       textError: stderr.trim(),
       code: 0,
@@ -673,7 +673,7 @@ export async function executeShell(command: LibUtilityExecuteShellCommand): LibU
 
     return output;
   } catch (error) {
-    const output: LibUtilityExecuteShellErrorOutput = {
+    const output: Lib_Utility_ExecuteShell_ErrorOutput = {
       textOut: '',
       textError: '',
       code: 1,
@@ -713,16 +713,16 @@ export async function executeShell(command: LibUtilityExecuteShellCommand): LibU
  * Spawns a lightweight child process to probe whether a CLI binary
  * is available on PATH, used by executeShell to conditionally set corepack env.
  *
- * @param {LibUtilityIsCommandExistsCommand} command - Command.
+ * @param {Lib_Utility_IsCommandExists_Command} command - Command.
  *
- * @returns {LibUtilityIsCommandExistsReturns}
+ * @returns {Lib_Utility_IsCommandExists_Returns}
  *
  * @since 0.11.0
  */
-export async function isCommandExists(command: LibUtilityIsCommandExistsCommand): LibUtilityIsCommandExistsReturns {
-  const isWin: LibUtilityIsCommandExistsIsWin = platform() === 'win32';
-  const bin: LibUtilityIsCommandExistsBin = (isWin === true) ? 'where' : 'sh';
-  const commandArguments: LibUtilityIsCommandExistsCommandArguments = (isWin === true) ? [
+export async function isCommandExists(command: Lib_Utility_IsCommandExists_Command): Lib_Utility_IsCommandExists_Returns {
+  const isWin: Lib_Utility_IsCommandExists_IsWin = platform() === 'win32';
+  const bin: Lib_Utility_IsCommandExists_Bin = (isWin === true) ? 'where' : 'sh';
+  const commandArguments: Lib_Utility_IsCommandExists_CommandArguments = (isWin === true) ? [
     '/Q',
     command,
   ] : [
@@ -731,7 +731,7 @@ export async function isCommandExists(command: LibUtilityIsCommandExistsCommand)
   ];
 
   return new Promise((promiseResolve) => {
-    const childProcess: LibUtilityIsCommandExistsChildProcess = spawn(bin, commandArguments, {
+    const childProcess: Lib_Utility_IsCommandExists_ChildProcess = spawn(bin, commandArguments, {
       stdio: 'ignore',
     });
 
@@ -755,24 +755,24 @@ export async function isCommandExists(command: LibUtilityIsCommandExistsCommand)
  * Type guard that narrows an unknown catch value to the shape
  * emitted by Node execAsync failures, so executeShell can safely extract stdout/stderr.
  *
- * @param {LibUtilityIsExecuteShellErrorError} error - Error.
+ * @param {Lib_Utility_IsExecuteShellError_Error} error - Error.
  *
  * @returns {boolean}
  *
  * @since 0.11.0
  */
-export function isExecuteShellError(error: LibUtilityIsExecuteShellErrorError): error is LibUtilityIsExecuteShellErrorTypeGuard {
+export function isExecuteShellError(error: Lib_Utility_IsExecuteShellError_Error): error is Lib_Utility_IsExecuteShellError_TypeGuard {
   if (error === null || typeof error !== 'object') {
     return false;
   }
 
-  const object: LibUtilityIsExecuteShellErrorObject = error as LibUtilityIsExecuteShellErrorObject;
-  const hasCommand: LibUtilityIsExecuteShellErrorHasCommand = 'cmd' in object && typeof object['cmd'] === 'string';
-  const hasKilled: LibUtilityIsExecuteShellErrorHasKilled = 'killed' in object && typeof object['killed'] === 'boolean';
-  const hasCode: LibUtilityIsExecuteShellErrorHasCode = 'code' in object && typeof object['code'] === 'number';
-  const hasSignal: LibUtilityIsExecuteShellErrorHasSignal = 'signal' in object && typeof object['signal'] === 'string';
-  const hasStdout: LibUtilityIsExecuteShellErrorHasStdout = 'stdout' in object && typeof object['stdout'] === 'string';
-  const hasStderr: LibUtilityIsExecuteShellErrorHasStderr = 'stderr' in object && typeof object['stderr'] === 'string';
+  const object: Lib_Utility_IsExecuteShellError_Object = error as Lib_Utility_IsExecuteShellError_Object;
+  const hasCommand: Lib_Utility_IsExecuteShellError_HasCommand = 'cmd' in object && typeof object['cmd'] === 'string';
+  const hasKilled: Lib_Utility_IsExecuteShellError_HasKilled = 'killed' in object && typeof object['killed'] === 'boolean';
+  const hasCode: Lib_Utility_IsExecuteShellError_HasCode = 'code' in object && typeof object['code'] === 'number';
+  const hasSignal: Lib_Utility_IsExecuteShellError_HasSignal = 'signal' in object && typeof object['signal'] === 'string';
+  const hasStdout: Lib_Utility_IsExecuteShellError_HasStdout = 'stdout' in object && typeof object['stdout'] === 'string';
+  const hasStderr: Lib_Utility_IsExecuteShellError_HasStderr = 'stderr' in object && typeof object['stderr'] === 'string';
 
   // Treat presence of any canonical "execAsync" fields as sufficient.
   return (
@@ -791,21 +791,21 @@ export function isExecuteShellError(error: LibUtilityIsExecuteShellErrorError): 
  * Compares proposed content against an existing file on disk, used by saveGeneratedFile,
  * nova-config save, and agent-conventions to skip redundant writes.
  *
- * @param {LibUtilityIsFileIdenticalExistingFilePath} existingFilePath - Existing file path.
- * @param {LibUtilityIsFileIdenticalProposedContents} proposedContents - Proposed contents.
+ * @param {Lib_Utility_IsFileIdentical_ExistingFilePath} existingFilePath - Existing file path.
+ * @param {Lib_Utility_IsFileIdentical_ProposedContents} proposedContents - Proposed contents.
  *
- * @returns {LibUtilityIsFileIdenticalReturns}
+ * @returns {Lib_Utility_IsFileIdentical_Returns}
  *
  * @since 0.13.0
  */
-export async function isFileIdentical(existingFilePath: LibUtilityIsFileIdenticalExistingFilePath, proposedContents: LibUtilityIsFileIdenticalProposedContents): LibUtilityIsFileIdenticalReturns {
-  let oldFileContents: LibUtilityIsFileIdenticalOldFileContents = undefined;
-  let newFileContents: LibUtilityIsFileIdenticalNewFileContents = undefined;
+export async function isFileIdentical(existingFilePath: Lib_Utility_IsFileIdentical_ExistingFilePath, proposedContents: Lib_Utility_IsFileIdentical_ProposedContents): Lib_Utility_IsFileIdentical_Returns {
+  let oldFileContents: Lib_Utility_IsFileIdentical_OldFileContents = undefined;
+  let newFileContents: Lib_Utility_IsFileIdentical_NewFileContents = undefined;
 
   if (typeof proposedContents === 'string') {
     newFileContents = proposedContents;
   } else {
-    let serialized: LibUtilityIsFileIdenticalSerialized = undefined;
+    let serialized: Lib_Utility_IsFileIdentical_Serialized = undefined;
 
     try {
       serialized = JSON.stringify(proposedContents, null, 2);
@@ -841,9 +841,9 @@ export async function isFileIdentical(existingFilePath: LibUtilityIsFileIdentica
     return false;
   }
 
-  const isIdentical: LibUtilityIsFileIdenticalIsIdentical = oldFileContents === newFileContents;
+  const isIdentical: Lib_Utility_IsFileIdentical_IsIdentical = oldFileContents === newFileContents;
 
-  const comparisonResult: LibUtilityIsFileIdenticalComparisonResult = (isIdentical === true) ? 'matches' : 'differs from';
+  const comparisonResult: Lib_Utility_IsFileIdentical_ComparisonResult = (isIdentical === true) ? 'matches' : 'differs from';
 
   Logger.customize({
     name: 'isFileIdentical',
@@ -859,23 +859,23 @@ export async function isFileIdentical(existingFilePath: LibUtilityIsFileIdentica
  * Checks whether a filename matches any pattern in the ignoreFiles
  * list, called by every custom ESLint rule to skip files excluded from linting.
  *
- * @param {LibUtilityIsIgnoredFileFilename}    filename    - Filename.
- * @param {LibUtilityIsIgnoredFileIgnoreFiles} ignoreFiles - Ignore files.
+ * @param {Lib_Utility_IsIgnoredFile_Filename}    filename    - Filename.
+ * @param {Lib_Utility_IsIgnoredFile_IgnoreFiles} ignoreFiles - Ignore files.
  *
- * @returns {LibUtilityIsIgnoredFileReturns}
+ * @returns {Lib_Utility_IsIgnoredFile_Returns}
  *
  * @since 0.11.0
  */
-export function isIgnoredFile(filename: LibUtilityIsIgnoredFileFilename, ignoreFiles: LibUtilityIsIgnoredFileIgnoreFiles): LibUtilityIsIgnoredFileReturns {
-  const normalizedFilename: LibUtilityIsIgnoredFileNormalizedFilename = filename.replaceAll('\\', '/');
+export function isIgnoredFile(filename: Lib_Utility_IsIgnoredFile_Filename, ignoreFiles: Lib_Utility_IsIgnoredFile_IgnoreFiles): Lib_Utility_IsIgnoredFile_Returns {
+  const normalizedFilename: Lib_Utility_IsIgnoredFile_NormalizedFilename = filename.replaceAll('\\', '/');
 
   for (const pattern of ignoreFiles) {
-    const strippedPattern: LibUtilityIsIgnoredFileStrippedPattern = (pattern.startsWith('./') === true) ? pattern.slice(2) : pattern;
-    const normalizedPattern: LibUtilityIsIgnoredFileNormalizedPattern = strippedPattern.replaceAll('\\', '/');
+    const strippedPattern: Lib_Utility_IsIgnoredFile_StrippedPattern = (pattern.startsWith('./') === true) ? pattern.slice(2) : pattern;
+    const normalizedPattern: Lib_Utility_IsIgnoredFile_NormalizedPattern = strippedPattern.replaceAll('\\', '/');
 
     // Wildcard prefix pattern (e.g., "*.test.ts").
     if (normalizedPattern.startsWith('*') === true) {
-      const suffix: LibUtilityIsIgnoredFileSuffix = normalizedPattern.slice(1);
+      const suffix: Lib_Utility_IsIgnoredFile_Suffix = normalizedPattern.slice(1);
 
       if (normalizedFilename.endsWith(suffix) === true) {
         return true;
@@ -901,13 +901,13 @@ export function isIgnoredFile(filename: LibUtilityIsIgnoredFileFilename, ignoreF
  * Type guard that accepts only literal objects and Object.create(null)
  * dictionaries, used by LibNovaConfig to validate parsed config values.
  *
- * @param {LibUtilityIsPlainObjectValue} value - Value.
+ * @param {Lib_Utility_IsPlainObject_Value} value - Value.
  *
  * @returns {boolean}
  *
  * @since 0.13.0
  */
-export function isPlainObject(value: LibUtilityIsPlainObjectValue): value is LibUtilityIsPlainObjectTypeGuard {
+export function isPlainObject(value: Lib_Utility_IsPlainObject_Value): value is Lib_Utility_IsPlainObject_TypeGuard {
   if (typeof value !== 'object' || value === null) {
     return false;
   }
@@ -916,7 +916,7 @@ export function isPlainObject(value: LibUtilityIsPlainObjectValue): value is Lib
     return false;
   }
 
-  const prototype: LibUtilityIsPlainObjectPrototype = Object.getPrototypeOf(value);
+  const prototype: Lib_Utility_IsPlainObject_Prototype = Object.getPrototypeOf(value);
 
   // Treat both ordinary object literals and prototype-less dictionaries (Object.create(null)) as "plain".
   return prototype === Object.prototype || prototype === null;
@@ -928,14 +928,14 @@ export function isPlainObject(value: LibUtilityIsPlainObjectValue): value is Lib
  * Validates that the working directory is the monorepo root by
  * scanning backward for exactly one package.json in the directory tree.
  *
- * @param {LibUtilityIsProjectRootCurrentDirectory} currentDirectory - Current directory.
+ * @param {Lib_Utility_IsProjectRoot_CurrentDirectory} currentDirectory - Current directory.
  *
- * @returns {LibUtilityIsProjectRootReturns}
+ * @returns {Lib_Utility_IsProjectRoot_Returns}
  *
  * @since 0.13.0
  */
-export async function isProjectRoot(currentDirectory: LibUtilityIsProjectRootCurrentDirectory): LibUtilityIsProjectRootReturns {
-  const locations: LibUtilityIsProjectRootLocations = await discoverPathsWithFile('package.json', 'backward');
+export async function isProjectRoot(currentDirectory: Lib_Utility_IsProjectRoot_CurrentDirectory): Lib_Utility_IsProjectRoot_Returns {
+  const locations: Lib_Utility_IsProjectRoot_Locations = await discoverPathsWithFile('package.json', 'backward');
 
   Logger.customize({
     name: 'isProjectRoot',
@@ -944,7 +944,7 @@ export async function isProjectRoot(currentDirectory: LibUtilityIsProjectRootCur
 
   // If command was ran outside of project root directory.
   if (locations.length < 1) {
-    const lessThanOneMessage: LibUtilityIsProjectRootLessThanOneMessage = [
+    const lessThanOneMessage: Lib_Utility_IsProjectRoot_LessThanOneMessage = [
       'No "package.json" files were found. Re-run this command inside the project root directory.',
       `Current directory is "${currentDirectory}"`,
     ].join('\n');
@@ -959,7 +959,7 @@ export async function isProjectRoot(currentDirectory: LibUtilityIsProjectRootCur
 
   // If command was ran inside a monorepo package.
   if (locations.length > 1) {
-    const greaterThanOneMessage: LibUtilityIsProjectRootGreaterThanOneMessage = [
+    const greaterThanOneMessage: Lib_Utility_IsProjectRoot_GreaterThanOneMessage = [
       'Multiple "package.json" files were found. Re-run this command inside the project root directory.',
       `Current directory is "${currentDirectory}"`,
     ].join('\n');
@@ -974,7 +974,7 @@ export async function isProjectRoot(currentDirectory: LibUtilityIsProjectRootCur
 
   // If command was ran outside the project root directory.
   if (locations.length === 1 && locations[0] !== currentDirectory) {
-    const notProjectRootDirectoryMessage: LibUtilityIsProjectRootNotProjectRootDirectoryMessage = [
+    const notProjectRootDirectoryMessage: Lib_Utility_IsProjectRoot_NotProjectRootDirectoryMessage = [
       'Must be run inside the project root directory.',
       `Current directory is "${currentDirectory}"`,
     ].join('\n');
@@ -996,28 +996,28 @@ export async function isProjectRoot(currentDirectory: LibUtilityIsProjectRootCur
  * Reads and parses the package.json for each workspace path
  * defined in nova.config.json, called by package-json recipes before applying transforms.
  *
- * @param {LibUtilityLoadWorkspaceManifestsOptions} options - Options.
+ * @param {Lib_Utility_LoadWorkspaceManifests_Options} options - Options.
  *
- * @returns {LibUtilityLoadWorkspaceManifestsReturns}
+ * @returns {Lib_Utility_LoadWorkspaceManifests_Returns}
  *
  * @since 0.13.0
  */
-export async function loadWorkspaceManifests(options: LibUtilityLoadWorkspaceManifestsOptions): LibUtilityLoadWorkspaceManifestsReturns {
-  const projectRoot: LibUtilityLoadWorkspaceManifestsProjectRoot = options['projectRoot'];
-  const workspaces: LibUtilityLoadWorkspaceManifestsWorkspaces = options['workspaces'];
+export async function loadWorkspaceManifests(options: Lib_Utility_LoadWorkspaceManifests_Options): Lib_Utility_LoadWorkspaceManifests_Returns {
+  const projectRoot: Lib_Utility_LoadWorkspaceManifests_ProjectRoot = options['projectRoot'];
+  const workspaces: Lib_Utility_LoadWorkspaceManifests_Workspaces = options['workspaces'];
 
-  const packageJsons: LibUtilityLoadWorkspaceManifestsPackageJsons = [];
+  const packageJsons: Lib_Utility_LoadWorkspaceManifests_PackageJsons = [];
 
   for (const workspace of workspaces) {
-    const relativeWorkspacePath: LibUtilityLoadWorkspaceManifestsRelativeWorkspacePath = workspace[0];
-    const workspaceManifest: LibUtilityLoadWorkspaceManifestsWorkspaceManifest = workspace[1];
+    const relativeWorkspacePath: Lib_Utility_LoadWorkspaceManifests_RelativeWorkspacePath = workspace[0];
+    const workspaceManifest: Lib_Utility_LoadWorkspaceManifests_WorkspaceManifest = workspace[1];
 
-    const absoluteWorkspacePath: LibUtilityLoadWorkspaceManifestsAbsoluteWorkspacePath = resolve(projectRoot, relativeWorkspacePath);
-    const absolutePackageJsonPath: LibUtilityLoadWorkspaceManifestsAbsolutePackageJsonPath = join(absoluteWorkspacePath, 'package.json');
+    const absoluteWorkspacePath: Lib_Utility_LoadWorkspaceManifests_AbsoluteWorkspacePath = resolve(projectRoot, relativeWorkspacePath);
+    const absolutePackageJsonPath: Lib_Utility_LoadWorkspaceManifests_AbsolutePackageJsonPath = join(absoluteWorkspacePath, 'package.json');
 
     try {
-      const rawFile: LibUtilityLoadWorkspaceManifestsRawFile = await fs.readFile(absolutePackageJsonPath, 'utf-8');
-      const parsedFile: LibUtilityLoadWorkspaceManifestsParsedFile = JSON.parse(rawFile);
+      const rawFile: Lib_Utility_LoadWorkspaceManifests_RawFile = await fs.readFile(absolutePackageJsonPath, 'utf-8');
+      const parsedFile: Lib_Utility_LoadWorkspaceManifests_ParsedFile = JSON.parse(rawFile);
 
       packageJsons.push({
         manifest: workspaceManifest,
@@ -1030,7 +1030,7 @@ export async function loadWorkspaceManifests(options: LibUtilityLoadWorkspaceMan
         purpose: 'load',
       }).debug(`Loaded package manifest for workspace "${relativeWorkspacePath}".`);
     } catch (error) {
-      const loadErrorMessage: LibUtilityLoadWorkspaceManifestsLoadErrorMessage = [
+      const loadErrorMessage: Lib_Utility_LoadWorkspaceManifests_LoadErrorMessage = [
         `Skipping workspace "${relativeWorkspacePath}" because the "package.json" file is inaccessible or invalid.`,
         error,
       ].join('\n');
@@ -1052,14 +1052,14 @@ export async function loadWorkspaceManifests(options: LibUtilityLoadWorkspaceMan
  * Unwraps Next.js-style routing patterns (dynamic, catch-all, route groups,
  * parallel routes) and dash-replaces residual non-identifier characters.
  *
- * @param {LibUtilityNormalizeRouteSegmentSegment} segment - Segment.
+ * @param {Lib_Utility_NormalizeRouteSegment_Segment} segment - Segment.
  *
- * @returns {LibUtilityNormalizeRouteSegmentReturns}
+ * @returns {Lib_Utility_NormalizeRouteSegment_Returns}
  *
  * @since 0.17.1
  */
-export function normalizeRouteSegment(segment: LibUtilityNormalizeRouteSegmentSegment): LibUtilityNormalizeRouteSegmentReturns {
-  const patterns: LibUtilityNormalizeRouteSegmentPatterns = [
+export function normalizeRouteSegment(segment: Lib_Utility_NormalizeRouteSegment_Segment): Lib_Utility_NormalizeRouteSegment_Returns {
+  const patterns: Lib_Utility_NormalizeRouteSegment_Patterns = [
     new RegExp('^\\[\\[\\.\\.\\.(.+)\\]\\]$'),
     new RegExp('^\\[\\.\\.\\.(.+)\\]$'),
     new RegExp('^\\[(.+)\\]$'),
@@ -1067,10 +1067,10 @@ export function normalizeRouteSegment(segment: LibUtilityNormalizeRouteSegmentSe
     new RegExp('^@(.+)$'),
   ];
 
-  let inner: LibUtilityNormalizeRouteSegmentInner = segment;
+  let inner: Lib_Utility_NormalizeRouteSegment_Inner = segment;
 
   for (const pattern of patterns) {
-    const match: LibUtilityNormalizeRouteSegmentMatch = inner.match(pattern);
+    const match: Lib_Utility_NormalizeRouteSegment_Match = inner.match(pattern);
 
     if (match !== null && match[1] !== undefined) {
       inner = match[1];
@@ -1079,7 +1079,7 @@ export function normalizeRouteSegment(segment: LibUtilityNormalizeRouteSegmentSe
     }
   }
 
-  const scrubbed: LibUtilityNormalizeRouteSegmentScrubbed = inner.replace(new RegExp('[^A-Za-z0-9_-]', 'g'), '-');
+  const scrubbed: Lib_Utility_NormalizeRouteSegment_Scrubbed = inner.replace(new RegExp('[^A-Za-z0-9_-]', 'g'), '-');
 
   if (new RegExp('[A-Za-z0-9_]').test(scrubbed) === false) {
     return '';
@@ -1094,11 +1094,11 @@ export function normalizeRouteSegment(segment: LibUtilityNormalizeRouteSegmentSe
  * Reads /etc/os-release via executeShell and parses it into
  * key-value pairs, called by the version utility to display the Linux distro name.
  *
- * @returns {LibUtilityParseLinuxOsReleaseFileReturns}
+ * @returns {Lib_Utility_ParseLinuxOsReleaseFile_Returns}
  *
  * @since 0.13.0
  */
-export async function parseLinuxOsReleaseFile(): LibUtilityParseLinuxOsReleaseFileReturns {
+export async function parseLinuxOsReleaseFile(): Lib_Utility_ParseLinuxOsReleaseFile_Returns {
   return parseLinuxOsReleaseText((await executeShell('cat /etc/os-release'))['textOut']);
 }
 
@@ -1108,15 +1108,15 @@ export async function parseLinuxOsReleaseFile(): LibUtilityParseLinuxOsReleaseFi
  * Splits raw os-release file content into a record of key-value
  * pairs, stripping comments and surrounding quotes from each value.
  *
- * @param {LibUtilityParseLinuxOsReleaseTextText} text - Text.
+ * @param {Lib_Utility_ParseLinuxOsReleaseText_Text} text - Text.
  *
- * @returns {LibUtilityParseLinuxOsReleaseTextReturns}
+ * @returns {Lib_Utility_ParseLinuxOsReleaseText_Returns}
  *
  * @since 0.13.0
  */
-export function parseLinuxOsReleaseText(text: LibUtilityParseLinuxOsReleaseTextText): LibUtilityParseLinuxOsReleaseTextReturns {
-  const lines: LibUtilityParseLinuxOsReleaseTextLines = text.split(LIB_REGEX_LINEBREAK_CRLF_OR_LF);
-  const osReleaseEntries: LibUtilityParseLinuxOsReleaseTextOsReleaseEntries = {};
+export function parseLinuxOsReleaseText(text: Lib_Utility_ParseLinuxOsReleaseText_Text): Lib_Utility_ParseLinuxOsReleaseText_Returns {
+  const lines: Lib_Utility_ParseLinuxOsReleaseText_Lines = text.split(LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+  const osReleaseEntries: Lib_Utility_ParseLinuxOsReleaseText_OsReleaseEntries = {};
 
   for (const line of lines) {
     // Skip empty or commented lines.
@@ -1124,16 +1124,16 @@ export function parseLinuxOsReleaseText(text: LibUtilityParseLinuxOsReleaseTextT
       continue;
     }
 
-    const parts: LibUtilityParseLinuxOsReleaseTextParts = line.split('=');
-    const key: LibUtilityParseLinuxOsReleaseTextKey = parts[0];
-    const rest: LibUtilityParseLinuxOsReleaseTextRest = parts.slice(1);
+    const parts: Lib_Utility_ParseLinuxOsReleaseText_Parts = line.split('=');
+    const key: Lib_Utility_ParseLinuxOsReleaseText_Key = parts[0];
+    const rest: Lib_Utility_ParseLinuxOsReleaseText_Rest = parts.slice(1);
 
     if (key === undefined) {
       continue;
     }
 
     // Rejoin in case value itself contains "=".
-    let value: LibUtilityParseLinuxOsReleaseTextValue = rest.join('=');
+    let value: Lib_Utility_ParseLinuxOsReleaseText_Value = rest.join('=');
 
     // Strip wrapping quotes.
     value = value.replace(LIB_REGEX_PATTERN_DOUBLE_QUOTED_STRING_CAPTURE, '$1');
@@ -1150,17 +1150,17 @@ export function parseLinuxOsReleaseText(text: LibUtilityParseLinuxOsReleaseTextT
  * Runs reg query against one or more registry paths and returns
  * the first set of parsed keys, used by the version utility for OS detection.
  *
- * @param {LibUtilityParseWindowsRegistryQueryRegistryPaths} registryPaths - Registry paths.
+ * @param {Lib_Utility_ParseWindowsRegistryQuery_RegistryPaths} registryPaths - Registry paths.
  *
- * @returns {LibUtilityParseWindowsRegistryQueryReturns}
+ * @returns {Lib_Utility_ParseWindowsRegistryQuery_Returns}
  *
  * @since 0.13.0
  */
-export async function parseWindowsRegistryQuery(registryPaths: LibUtilityParseWindowsRegistryQueryRegistryPaths): LibUtilityParseWindowsRegistryQueryReturns {
-  const paths: LibUtilityParseWindowsRegistryQueryPaths = (Array.isArray(registryPaths) === true) ? registryPaths : [registryPaths];
+export async function parseWindowsRegistryQuery(registryPaths: Lib_Utility_ParseWindowsRegistryQuery_RegistryPaths): Lib_Utility_ParseWindowsRegistryQuery_Returns {
+  const paths: Lib_Utility_ParseWindowsRegistryQuery_Paths = (Array.isArray(registryPaths) === true) ? registryPaths : [registryPaths];
 
   for (const path of paths) {
-    const registryKeys: LibUtilityParseWindowsRegistryQueryRegistryKeys = parseWindowsRegistryText((await executeShell(`reg query "${path}"`))['textOut']);
+    const registryKeys: Lib_Utility_ParseWindowsRegistryQuery_RegistryKeys = parseWindowsRegistryText((await executeShell(`reg query "${path}"`))['textOut']);
 
     // If we parsed any keys for this path, return immediately (fallback behavior).
     if (Object.keys(registryKeys).length > 0) {
@@ -1178,23 +1178,23 @@ export async function parseWindowsRegistryQuery(registryPaths: LibUtilityParseWi
  * Extracts registry key names, types, and data from raw reg query
  * output by matching each line against the registry query line regex pattern.
  *
- * @param {LibUtilityParseWindowsRegistryTextText} text - Text.
+ * @param {Lib_Utility_ParseWindowsRegistryText_Text} text - Text.
  *
- * @returns {LibUtilityParseWindowsRegistryTextReturns}
+ * @returns {Lib_Utility_ParseWindowsRegistryText_Returns}
  *
  * @since 0.13.0
  */
-export function parseWindowsRegistryText(text: LibUtilityParseWindowsRegistryTextText): LibUtilityParseWindowsRegistryTextReturns {
-  const lines: LibUtilityParseWindowsRegistryTextLines = text.split(LIB_REGEX_LINEBREAK_CRLF_OR_LF);
-  const registryKeys: LibUtilityParseWindowsRegistryTextRegistryKeys = {};
+export function parseWindowsRegistryText(text: Lib_Utility_ParseWindowsRegistryText_Text): Lib_Utility_ParseWindowsRegistryText_Returns {
+  const lines: Lib_Utility_ParseWindowsRegistryText_Lines = text.split(LIB_REGEX_LINEBREAK_CRLF_OR_LF);
+  const registryKeys: Lib_Utility_ParseWindowsRegistryText_RegistryKeys = {};
 
   for (const line of lines) {
-    const matches: LibUtilityParseWindowsRegistryTextMatches = line.match(LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
+    const matches: Lib_Utility_ParseWindowsRegistryText_Matches = line.match(LIB_REGEX_PATTERN_REGISTRY_QUERY_LINE);
 
     if (matches !== null) {
-      const registryKey: LibUtilityParseWindowsRegistryTextRegistryKey = matches[1];
-      const registryKeyType: LibUtilityParseWindowsRegistryTextRegistryKeyType = matches[2];
-      const registryKeyData: LibUtilityParseWindowsRegistryTextRegistryKeyData = matches[3];
+      const registryKey: Lib_Utility_ParseWindowsRegistryText_RegistryKey = matches[1];
+      const registryKeyType: Lib_Utility_ParseWindowsRegistryText_RegistryKeyType = matches[2];
+      const registryKeyData: Lib_Utility_ParseWindowsRegistryText_RegistryKeyData = matches[3];
 
       if (
         registryKey !== undefined
@@ -1202,7 +1202,7 @@ export function parseWindowsRegistryText(text: LibUtilityParseWindowsRegistryTex
         && registryKeyData !== undefined
       ) {
         Reflect.set(registryKeys, registryKey, {
-          type: registryKeyType as LibUtilityParseWindowsRegistryTextRegistryKeyType,
+          type: registryKeyType as Lib_Utility_ParseWindowsRegistryText_RegistryKeyType,
           data: registryKeyData.trim(),
         });
       }
@@ -1218,13 +1218,13 @@ export function parseWindowsRegistryText(text: LibUtilityParseWindowsRegistryTex
  * Wraps fs.access in a boolean try-catch, used by saveGeneratedFile
  * and agent-conventions to check whether a target file already exists on disk.
  *
- * @param {LibUtilityPathExistsPath} path - Path.
+ * @param {Lib_Utility_PathExists_Path} path - Path.
  *
- * @returns {LibUtilityPathExistsReturns}
+ * @returns {Lib_Utility_PathExists_Returns}
  *
  * @since 0.11.0
  */
-export async function pathExists(path: LibUtilityPathExistsPath): LibUtilityPathExistsReturns {
+export async function pathExists(path: Lib_Utility_PathExists_Path): Lib_Utility_PathExists_Returns {
   try {
     await fs.access(path);
 
@@ -1240,31 +1240,31 @@ export async function pathExists(path: LibUtilityPathExistsPath): LibUtilityPath
  * Renames an existing file to a timestamped backup name with an
  * auto-incrementing counter, called by saveGeneratedFile and nova-config.
  *
- * @param {LibUtilityRenameFileWithDateOldPath} oldPath - Old path.
+ * @param {Lib_Utility_RenameFileWithDate_OldPath} oldPath - Old path.
  *
- * @returns {LibUtilityRenameFileWithDateReturns}
+ * @returns {Lib_Utility_RenameFileWithDate_Returns}
  *
  * @since 0.13.0
  */
-export async function renameFileWithDate(oldPath: LibUtilityRenameFileWithDateOldPath): LibUtilityRenameFileWithDateReturns {
-  const directory: LibUtilityRenameFileWithDateDirectory = dirname(oldPath);
-  const parsed: LibUtilityRenameFileWithDateParsed = parse(oldPath);
-  const prefix: LibUtilityRenameFileWithDatePrefix = (parsed.base.startsWith('.') === true) ? parsed.base : parsed.name;
-  const suffix: LibUtilityRenameFileWithDateSuffix = (parsed.base.startsWith('.') === true) ? '' : parsed.ext.replace(LIB_REGEX_PATTERN_LEADING_DOT, '');
+export async function renameFileWithDate(oldPath: Lib_Utility_RenameFileWithDate_OldPath): Lib_Utility_RenameFileWithDate_Returns {
+  const directory: Lib_Utility_RenameFileWithDate_Directory = dirname(oldPath);
+  const parsed: Lib_Utility_RenameFileWithDate_Parsed = parse(oldPath);
+  const prefix: Lib_Utility_RenameFileWithDate_Prefix = (parsed.base.startsWith('.') === true) ? parsed.base : parsed.name;
+  const suffix: Lib_Utility_RenameFileWithDate_Suffix = (parsed.base.startsWith('.') === true) ? '' : parsed.ext.replace(LIB_REGEX_PATTERN_LEADING_DOT, '');
 
-  const now: LibUtilityRenameFileWithDateNow = new Date();
-  const timestamp: LibUtilityRenameFileWithDateTimestamp = [
+  const now: Lib_Utility_RenameFileWithDate_Now = new Date();
+  const timestamp: Lib_Utility_RenameFileWithDate_Timestamp = [
     now.getUTCFullYear(),
     (now.getUTCMonth() + 1).toString().padStart(2, '0'),
     now.getUTCDate().toString().padStart(2, '0'),
   ].join('-');
 
-  let counter: LibUtilityRenameFileWithDateCounter = 1;
+  let counter: Lib_Utility_RenameFileWithDate_Counter = 1;
 
   while (true) {
-    const counterLabel: LibUtilityRenameFileWithDateCounterLabel = counter.toString().padStart(4, '0');
-    const newFileName: LibUtilityRenameFileWithDateNewFileName = (suffix !== '') ? `${prefix}.${timestamp}_${counterLabel}.nova-backup.${suffix}` : `${prefix}.${timestamp}_${counterLabel}.nova-backup`;
-    const newPath: LibUtilityRenameFileWithDateNewPath = join(directory, newFileName);
+    const counterLabel: Lib_Utility_RenameFileWithDate_CounterLabel = counter.toString().padStart(4, '0');
+    const newFileName: Lib_Utility_RenameFileWithDate_NewFileName = (suffix !== '') ? `${prefix}.${timestamp}_${counterLabel}.nova-backup.${suffix}` : `${prefix}.${timestamp}_${counterLabel}.nova-backup`;
+    const newPath: Lib_Utility_RenameFileWithDate_NewPath = join(directory, newFileName);
 
     // Keep trying until file does not exist.
     try {
@@ -1305,16 +1305,16 @@ export async function renameFileWithDate(oldPath: LibUtilityRenameFileWithDateOl
  * Converts an import.meta.url into an absolute path under the
  * templates directory, called by every generator and scaffold command to locate assets.
  *
- * @param {LibUtilityResolveTemplatePathImportMetaUrl} importMetaUrl - Import meta url.
- * @param {LibUtilityResolveTemplatePathSubpath}       subpath       - Subpath.
+ * @param {Lib_Utility_ResolveTemplatePath_ImportMetaUrl} importMetaUrl - Import meta url.
+ * @param {Lib_Utility_ResolveTemplatePath_Subpath}       subpath       - Subpath.
  *
- * @returns {LibUtilityResolveTemplatePathReturns}
+ * @returns {Lib_Utility_ResolveTemplatePath_Returns}
  *
  * @since 0.11.0
  */
-export function resolveTemplatePath(importMetaUrl: LibUtilityResolveTemplatePathImportMetaUrl, subpath: LibUtilityResolveTemplatePathSubpath): LibUtilityResolveTemplatePathReturns {
-  const filePath: LibUtilityResolveTemplatePathFilePath = fileURLToPath(importMetaUrl);
-  const currentDirectory: LibUtilityResolveTemplatePathCurrentDirectory = dirname(filePath);
+export function resolveTemplatePath(importMetaUrl: Lib_Utility_ResolveTemplatePath_ImportMetaUrl, subpath: Lib_Utility_ResolveTemplatePath_Subpath): Lib_Utility_ResolveTemplatePath_Returns {
+  const filePath: Lib_Utility_ResolveTemplatePath_FilePath = fileURLToPath(importMetaUrl);
+  const currentDirectory: Lib_Utility_ResolveTemplatePath_CurrentDirectory = dirname(filePath);
 
   return join(currentDirectory, '..', '..', '..', '..', 'templates', subpath);
 }
@@ -1325,19 +1325,19 @@ export function resolveTemplatePath(importMetaUrl: LibUtilityResolveTemplatePath
  * Builds a banner string for a generated file; comment syntax is inferred
  * from targetPath; returned string ends with a trailing blank line.
  *
- * @param {LibUtilityBuildGeneratedFileHeaderOptions} options - Options.
+ * @param {Lib_Utility_BuildGeneratedFileHeader_Options} options - Options.
  *
- * @returns {LibUtilityBuildGeneratedFileHeaderReturns}
+ * @returns {Lib_Utility_BuildGeneratedFileHeader_Returns}
  *
  * @since 0.16.3
  */
-export function buildGeneratedFileHeader(options: LibUtilityBuildGeneratedFileHeaderOptions): LibUtilityBuildGeneratedFileHeaderReturns {
-  const baseName: LibUtilityBuildGeneratedFileHeaderBaseName = basename(options['targetPath']);
-  const extension: LibUtilityBuildGeneratedFileHeaderExtension = extname(options['targetPath']).toLowerCase();
-  const docsUrl: LibUtilityBuildGeneratedFileHeaderDocsUrl = `${LIB_CONSTANTS_DOCS_BASE_URL}/docs/${options['docsSlug']}`;
-  const ruleLine: LibUtilityBuildGeneratedFileHeaderRuleLine = (options['mode'] === 'fillable') ? 'You may fill in values for existing keys only — do not add, rename, or remove keys.' : 'Do not edit manually.';
+export function buildGeneratedFileHeader(options: Lib_Utility_BuildGeneratedFileHeader_Options): Lib_Utility_BuildGeneratedFileHeader_Returns {
+  const baseName: Lib_Utility_BuildGeneratedFileHeader_BaseName = basename(options['targetPath']);
+  const extension: Lib_Utility_BuildGeneratedFileHeader_Extension = extname(options['targetPath']).toLowerCase();
+  const docsUrl: Lib_Utility_BuildGeneratedFileHeader_DocsUrl = `${LIB_CONSTANTS_DOCS_BASE_URL}/docs/${options['docsSlug']}`;
+  const ruleLine: Lib_Utility_BuildGeneratedFileHeader_RuleLine = (options['mode'] === 'fillable') ? 'You may fill in values for existing keys only — do not add, rename, or remove keys.' : 'Do not edit manually.';
 
-  const isHashStyle: LibUtilityBuildGeneratedFileHeaderIsHashStyle = (
+  const isHashStyle: Lib_Utility_BuildGeneratedFileHeader_IsHashStyle = (
     extension === '.yml'
     || extension === '.yaml'
     || baseName === '.editorconfig'
@@ -1345,10 +1345,10 @@ export function buildGeneratedFileHeader(options: LibUtilityBuildGeneratedFileHe
     || baseName === '.env'
     || baseName.startsWith('.env.')
   );
-  const isMarkdownStyle: LibUtilityBuildGeneratedFileHeaderIsMarkdownStyle = (extension === '.md');
+  const isMarkdownStyle: Lib_Utility_BuildGeneratedFileHeader_IsMarkdownStyle = (extension === '.md');
 
   if (isHashStyle === true) {
-    const lines: LibUtilityBuildGeneratedFileHeaderLines = [
+    const lines: Lib_Utility_BuildGeneratedFileHeader_Lines = [
       '# This file is generated by @cbnventures/nova.',
       `# ${ruleLine}`,
       '#',
@@ -1362,7 +1362,7 @@ export function buildGeneratedFileHeader(options: LibUtilityBuildGeneratedFileHe
   }
 
   if (isMarkdownStyle === true) {
-    const lines: LibUtilityBuildGeneratedFileHeaderLines = [
+    const lines: Lib_Utility_BuildGeneratedFileHeader_Lines = [
       '<!--',
       '  This file is generated by @cbnventures/nova.',
       `  ${ruleLine}`,
@@ -1387,24 +1387,24 @@ export function buildGeneratedFileHeader(options: LibUtilityBuildGeneratedFileHe
  * skipping identical files, and backing up existing files when replaceFile is false.
  * When header is supplied, the banner is prepended before the identity check and write.
  *
- * @param {LibUtilitySaveGeneratedFileTargetPath}  targetPath  - Target path.
- * @param {LibUtilitySaveGeneratedFileContents}    contents    - Contents.
- * @param {LibUtilitySaveGeneratedFileReplaceFile} replaceFile - Replace file.
- * @param {LibUtilitySaveGeneratedFileHeader}      [header]    - Optional header metadata.
+ * @param {Lib_Utility_SaveGeneratedFile_TargetPath}  targetPath  - Target path.
+ * @param {Lib_Utility_SaveGeneratedFile_Contents}    contents    - Contents.
+ * @param {Lib_Utility_SaveGeneratedFile_ReplaceFile} replaceFile - Replace file.
+ * @param {Lib_Utility_SaveGeneratedFile_Header}      [header]    - Optional header metadata.
  *
- * @returns {LibUtilitySaveGeneratedFileReturns}
+ * @returns {Lib_Utility_SaveGeneratedFile_Returns}
  *
  * @since 0.11.0
  */
-export async function saveGeneratedFile(targetPath: LibUtilitySaveGeneratedFileTargetPath, contents: LibUtilitySaveGeneratedFileContents, replaceFile: LibUtilitySaveGeneratedFileReplaceFile, header?: LibUtilitySaveGeneratedFileHeader): LibUtilitySaveGeneratedFileReturns {
-  const parentDirectory: LibUtilitySaveGeneratedFileParentDirectory = dirname(targetPath);
-  const currentDirectory: LibUtilitySaveGeneratedFileCurrentDirectory = process.cwd();
-  const displayName: LibUtilitySaveGeneratedFileDisplayName = relative(currentDirectory, targetPath);
+export async function saveGeneratedFile(targetPath: Lib_Utility_SaveGeneratedFile_TargetPath, contents: Lib_Utility_SaveGeneratedFile_Contents, replaceFile: Lib_Utility_SaveGeneratedFile_ReplaceFile, header?: Lib_Utility_SaveGeneratedFile_Header): Lib_Utility_SaveGeneratedFile_Returns {
+  const parentDirectory: Lib_Utility_SaveGeneratedFile_ParentDirectory = dirname(targetPath);
+  const currentDirectory: Lib_Utility_SaveGeneratedFile_CurrentDirectory = process.cwd();
+  const displayName: Lib_Utility_SaveGeneratedFile_DisplayName = relative(currentDirectory, targetPath);
 
-  let prefixedContents: LibUtilitySaveGeneratedFilePrefixedContents = undefined;
+  let prefixedContents: Lib_Utility_SaveGeneratedFile_PrefixedContents = undefined;
 
   if (header !== undefined) {
-    const headerBanner: LibUtilitySaveGeneratedFileHeaderBanner = buildGeneratedFileHeader({
+    const headerBanner: Lib_Utility_SaveGeneratedFile_HeaderBanner = buildGeneratedFileHeader({
       command: header['command'],
       docsSlug: header['docsSlug'],
       targetPath,
@@ -1452,14 +1452,14 @@ export async function saveGeneratedFile(targetPath: LibUtilitySaveGeneratedFileT
  * Persists a modified package.json for a single workspace, called
  * by each package-json recipe after applying field-level transformations.
  *
- * @param {LibUtilitySaveWorkspaceManifestWorkspace}   workspace   - Workspace.
- * @param {LibUtilitySaveWorkspaceManifestReplaceFile} replaceFile - Replace file.
+ * @param {Lib_Utility_SaveWorkspaceManifest_Workspace}   workspace   - Workspace.
+ * @param {Lib_Utility_SaveWorkspaceManifest_ReplaceFile} replaceFile - Replace file.
  *
- * @returns {LibUtilitySaveWorkspaceManifestReturns}
+ * @returns {Lib_Utility_SaveWorkspaceManifest_Returns}
  *
  * @since 0.13.0
  */
-export async function saveWorkspaceManifest(workspace: LibUtilitySaveWorkspaceManifestWorkspace, replaceFile: LibUtilitySaveWorkspaceManifestReplaceFile): LibUtilitySaveWorkspaceManifestReturns {
+export async function saveWorkspaceManifest(workspace: Lib_Utility_SaveWorkspaceManifest_Workspace, replaceFile: Lib_Utility_SaveWorkspaceManifest_ReplaceFile): Lib_Utility_SaveWorkspaceManifest_Returns {
   // No changes detected, skip touching the filesystem.
   if (await isFileIdentical(workspace['filePath'], workspace['fileContents']) === true) {
     return;
@@ -1485,19 +1485,19 @@ export async function saveWorkspaceManifest(workspace: LibUtilitySaveWorkspaceMa
  * Wraps a value in double quotes and escapes embedded double quotes,
  * making it safe to interpolate into a shell command string.
  *
- * @param {LibUtilityShellQuoteValue} value - Value.
+ * @param {Lib_Utility_ShellQuote_Value} value - Value.
  *
- * @returns {LibUtilityShellQuoteReturns}
+ * @returns {Lib_Utility_ShellQuote_Returns}
  *
  * @since 0.18.0
  */
-export function shellQuote(value: LibUtilityShellQuoteValue): LibUtilityShellQuoteReturns {
-  const backslashPattern: LibUtilityShellQuoteBackslashPattern = new RegExp(LIB_REGEX_CHARACTER_BACKSLASH.source, 'g');
-  const backtickPattern: LibUtilityShellQuoteBacktickPattern = new RegExp(LIB_REGEX_CHARACTER_BACKTICK.source, 'g');
-  const dollarPattern: LibUtilityShellQuoteDollarPattern = new RegExp(LIB_REGEX_CHARACTER_DOLLAR.source, 'g');
-  const doubleQuotePattern: LibUtilityShellQuoteDoubleQuotePattern = new RegExp(LIB_REGEX_CHARACTER_DOUBLE_QUOTE.source, 'g');
+export function shellQuote(value: Lib_Utility_ShellQuote_Value): Lib_Utility_ShellQuote_Returns {
+  const backslashPattern: Lib_Utility_ShellQuote_BackslashPattern = new RegExp(LIB_REGEX_CHARACTER_BACKSLASH.source, 'g');
+  const backtickPattern: Lib_Utility_ShellQuote_BacktickPattern = new RegExp(LIB_REGEX_CHARACTER_BACKTICK.source, 'g');
+  const dollarPattern: Lib_Utility_ShellQuote_DollarPattern = new RegExp(LIB_REGEX_CHARACTER_DOLLAR.source, 'g');
+  const doubleQuotePattern: Lib_Utility_ShellQuote_DoubleQuotePattern = new RegExp(LIB_REGEX_CHARACTER_DOUBLE_QUOTE.source, 'g');
 
-  const escaped: LibUtilityShellQuoteEscaped = value
+  const escaped: Lib_Utility_ShellQuote_Escaped = value
     .replace(backslashPattern, '\\\\')
     .replace(backtickPattern, '\\`')
     .replace(dollarPattern, '\\$')

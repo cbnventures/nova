@@ -5,36 +5,36 @@ import type { Stats } from 'node:fs';
  *
  * @since 0.18.0
  */
-export type TestsDemoLogoOverrideCurrentFilePath = string;
+export type Tests_DemoLogoOverride_CurrentFilePath = string;
 
-export type TestsDemoLogoOverrideCurrentFileDirectory = string;
+export type Tests_DemoLogoOverride_CurrentFileDirectory = string;
 
-export type TestsDemoLogoOverridePackageRoot = string;
+export type Tests_DemoLogoOverride_PackageRoot = string;
 
-export type TestsDemoLogoOverrideRepoRoot = string;
+export type Tests_DemoLogoOverride_RepoRoot = string;
 
-export type TestsDemoLogoOverridePresetLogoPath = string;
+export type Tests_DemoLogoOverride_PresetLogoPath = string;
 
-export type TestsDemoLogoOverrideDemoLogoPath = string;
+export type Tests_DemoLogoOverride_DemoLogoPath = string;
 
-export type TestsDemoLogoOverridePresetStats = Stats;
+export type Tests_DemoLogoOverride_PresetStats = Stats;
 
-export type TestsDemoLogoOverridePresetBytes = Buffer;
+export type Tests_DemoLogoOverride_PresetBytes = Buffer;
 
-export type TestsDemoLogoOverrideDemoBytes = Buffer;
+export type Tests_DemoLogoOverride_DemoBytes = Buffer;
 
-export type TestsDemoLogoOverrideConfigUrl = string;
+export type Tests_DemoLogoOverride_ConfigUrl = string;
 
-export type TestsDemoLogoOverrideConfigModule = Record<string, unknown>;
+export type Tests_DemoLogoOverride_ConfigModule = Record<string, unknown>;
 
-export type TestsDemoLogoOverrideConfig = Record<string, unknown>;
+export type Tests_DemoLogoOverride_Config = Record<string, unknown>;
 
-export type TestsDemoLogoOverrideThemeConfig = Record<string, unknown>;
+export type Tests_DemoLogoOverride_ThemeConfig = Record<string, unknown>;
 
-export type TestsDemoLogoOverrideSite = Record<string, unknown>;
+export type Tests_DemoLogoOverride_Site = Record<string, unknown>;
 
-export type TestsDemoLogoOverrideLogo = Record<string, unknown>;
+export type Tests_DemoLogoOverride_Logo = Record<string, unknown>;
 
-export type TestsDemoLogoOverrideLogoSrc = Record<string, unknown>;
+export type Tests_DemoLogoOverride_LogoSrc = Record<string, unknown>;
 
-export type TestsDemoLogoOverrideLogoSrcLight = unknown;
+export type Tests_DemoLogoOverride_LogoSrcLight = unknown;

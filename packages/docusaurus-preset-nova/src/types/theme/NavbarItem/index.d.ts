@@ -15,239 +15,239 @@ import type { ComponentType, CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemComponentTypesMap = Record<string, ComponentType<any>>;
+export type Theme_NavbarItem_ComponentTypes_Map = Record<string, ComponentType<any>>;
 
 /**
  * Theme - Navbar Item - Default Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemDefaultNavbarItemPropsLabel = string | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_Props_Label = string | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemPropsTo = string | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_Props_To = string | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemPropsHref = string | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_Props_Href = string | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemPropsActiveBaseRegex = string | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_Props_ActiveBaseRegex = string | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemPropsIsActiveItem = boolean | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_Props_IsActiveItem = boolean | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemProps = {
-  label?: ThemeNavbarItemDefaultNavbarItemPropsLabel;
-  to?: ThemeNavbarItemDefaultNavbarItemPropsTo;
-  href?: ThemeNavbarItemDefaultNavbarItemPropsHref;
-  activeBaseRegex?: ThemeNavbarItemDefaultNavbarItemPropsActiveBaseRegex;
-  isActiveItem?: ThemeNavbarItemDefaultNavbarItemPropsIsActiveItem;
+export type Theme_NavbarItem_DefaultNavbarItem_Props = {
+  label?: Theme_NavbarItem_DefaultNavbarItem_Props_Label;
+  to?: Theme_NavbarItem_DefaultNavbarItem_Props_To;
+  href?: Theme_NavbarItem_DefaultNavbarItem_Props_Href;
+  activeBaseRegex?: Theme_NavbarItem_DefaultNavbarItem_Props_ActiveBaseRegex;
+  isActiveItem?: Theme_NavbarItem_DefaultNavbarItem_Props_IsActiveItem;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemDefaultNavbarItemLabel = string | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_Label = string | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemTo = string | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_To = string | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemHref = string | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_Href = string | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemActiveBaseRegex = string | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_ActiveBaseRegex = string | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemPathname = string;
+export type Theme_NavbarItem_DefaultNavbarItem_Pathname = string;
 
-export type ThemeNavbarItemDefaultNavbarItemIsActive = boolean;
+export type Theme_NavbarItem_DefaultNavbarItem_IsActive = boolean;
 
-export type ThemeNavbarItemDefaultNavbarItemAriaCurrent = 'page' | undefined;
+export type Theme_NavbarItem_DefaultNavbarItem_AriaCurrent = 'page' | undefined;
 
-export type ThemeNavbarItemDefaultNavbarItemLinkSpread = Record<string, unknown>;
+export type Theme_NavbarItem_DefaultNavbarItem_LinkSpread = Record<string, unknown>;
 
 /**
  * Theme - Navbar Item - Doc Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemDocNavbarItemPropsDocId = string;
+export type Theme_NavbarItem_DocNavbarItem_Props_DocId = string;
 
-export type ThemeNavbarItemDocNavbarItemPropsLabel = string | undefined;
+export type Theme_NavbarItem_DocNavbarItem_Props_Label = string | undefined;
 
-export type ThemeNavbarItemDocNavbarItemPropsDocsPluginId = string | undefined;
+export type Theme_NavbarItem_DocNavbarItem_Props_DocsPluginId = string | undefined;
 
-export type ThemeNavbarItemDocNavbarItemPropsIsActiveItem = boolean | undefined;
+export type Theme_NavbarItem_DocNavbarItem_Props_IsActiveItem = boolean | undefined;
 
-export type ThemeNavbarItemDocNavbarItemProps = {
-  docId: ThemeNavbarItemDocNavbarItemPropsDocId;
-  label?: ThemeNavbarItemDocNavbarItemPropsLabel;
-  docsPluginId?: ThemeNavbarItemDocNavbarItemPropsDocsPluginId;
-  isActiveItem?: ThemeNavbarItemDocNavbarItemPropsIsActiveItem;
+export type Theme_NavbarItem_DocNavbarItem_Props = {
+  docId: Theme_NavbarItem_DocNavbarItem_Props_DocId;
+  label?: Theme_NavbarItem_DocNavbarItem_Props_Label;
+  docsPluginId?: Theme_NavbarItem_DocNavbarItem_Props_DocsPluginId;
+  isActiveItem?: Theme_NavbarItem_DocNavbarItem_Props_IsActiveItem;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemDocNavbarItemActiveDocContext = ActiveDocContext;
+export type Theme_NavbarItem_DocNavbarItem_ActiveDocContext = ActiveDocContext;
 
-export type ThemeNavbarItemDocNavbarItemLayoutDoc = GlobalDoc | null;
+export type Theme_NavbarItem_DocNavbarItem_LayoutDoc = GlobalDoc | null;
 
-export type ThemeNavbarItemDocNavbarItemPathname = string;
+export type Theme_NavbarItem_DocNavbarItem_Pathname = string;
 
-export type ThemeNavbarItemDocNavbarItemPageActive = boolean;
+export type Theme_NavbarItem_DocNavbarItem_PageActive = boolean;
 
-export type ThemeNavbarItemDocNavbarItemLabel = string;
+export type Theme_NavbarItem_DocNavbarItem_Label = string;
 
-export type ThemeNavbarItemDocNavbarItemPath = string;
+export type Theme_NavbarItem_DocNavbarItem_Path = string;
 
-export type ThemeNavbarItemDocNavbarItemAriaCurrent = 'page' | undefined;
+export type Theme_NavbarItem_DocNavbarItem_AriaCurrent = 'page' | undefined;
 
 /**
  * Theme - Navbar Item - Doc Sidebar Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemDocSidebarNavbarItemPropsSidebarId = string;
+export type Theme_NavbarItem_DocSidebarNavbarItem_Props_SidebarId = string;
 
-export type ThemeNavbarItemDocSidebarNavbarItemPropsLabel = string | undefined;
+export type Theme_NavbarItem_DocSidebarNavbarItem_Props_Label = string | undefined;
 
-export type ThemeNavbarItemDocSidebarNavbarItemPropsDocsPluginId = string | undefined;
+export type Theme_NavbarItem_DocSidebarNavbarItem_Props_DocsPluginId = string | undefined;
 
-export type ThemeNavbarItemDocSidebarNavbarItemPropsIsActiveItem = boolean | undefined;
+export type Theme_NavbarItem_DocSidebarNavbarItem_Props_IsActiveItem = boolean | undefined;
 
-export type ThemeNavbarItemDocSidebarNavbarItemProps = {
-  sidebarId: ThemeNavbarItemDocSidebarNavbarItemPropsSidebarId;
-  label?: ThemeNavbarItemDocSidebarNavbarItemPropsLabel;
-  docsPluginId?: ThemeNavbarItemDocSidebarNavbarItemPropsDocsPluginId;
-  isActiveItem?: ThemeNavbarItemDocSidebarNavbarItemPropsIsActiveItem;
+export type Theme_NavbarItem_DocSidebarNavbarItem_Props = {
+  sidebarId: Theme_NavbarItem_DocSidebarNavbarItem_Props_SidebarId;
+  label?: Theme_NavbarItem_DocSidebarNavbarItem_Props_Label;
+  docsPluginId?: Theme_NavbarItem_DocSidebarNavbarItem_Props_DocsPluginId;
+  isActiveItem?: Theme_NavbarItem_DocSidebarNavbarItem_Props_IsActiveItem;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemDocSidebarNavbarItemActiveDocContext = ActiveDocContext;
+export type Theme_NavbarItem_DocSidebarNavbarItem_ActiveDocContext = ActiveDocContext;
 
-export type ThemeNavbarItemDocSidebarNavbarItemSidebarData = GlobalSidebar;
+export type Theme_NavbarItem_DocSidebarNavbarItem_SidebarData = GlobalSidebar;
 
-export type ThemeNavbarItemDocSidebarNavbarItemSidebarLink = GlobalSidebar['link'];
+export type Theme_NavbarItem_DocSidebarNavbarItem_SidebarLink = GlobalSidebar['link'];
 
-export type ThemeNavbarItemDocSidebarNavbarItemLabel = string;
+export type Theme_NavbarItem_DocSidebarNavbarItem_Label = string;
 
-export type ThemeNavbarItemDocSidebarNavbarItemPath = string;
+export type Theme_NavbarItem_DocSidebarNavbarItem_Path = string;
 
-export type ThemeNavbarItemDocSidebarNavbarItemSidebarActive = boolean;
+export type Theme_NavbarItem_DocSidebarNavbarItem_SidebarActive = boolean;
 
-export type ThemeNavbarItemDocSidebarNavbarItemAriaCurrent = 'page' | undefined;
+export type Theme_NavbarItem_DocSidebarNavbarItem_AriaCurrent = 'page' | undefined;
 
 /**
  * Theme - Navbar Item - Docs Version Dropdown Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemPropsDocsPluginId = string | undefined;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DocsPluginId = string | undefined;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemPropsDropdownItemsBefore = ThemeNavbarItemDropdownNavbarItemChildItem[];
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItemsBefore = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemPropsDropdownItemsAfter = ThemeNavbarItemDropdownNavbarItemChildItem[];
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItemsAfter = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemProps = {
-  docsPluginId?: ThemeNavbarItemDocsVersionDropdownNavbarItemPropsDocsPluginId;
-  dropdownItemsBefore?: ThemeNavbarItemDocsVersionDropdownNavbarItemPropsDropdownItemsBefore;
-  dropdownItemsAfter?: ThemeNavbarItemDocsVersionDropdownNavbarItemPropsDropdownItemsAfter;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props = {
+  docsPluginId?: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DocsPluginId;
+  dropdownItemsBefore?: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItemsBefore;
+  dropdownItemsAfter?: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Props_DropdownItemsAfter;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemVersions = GlobalVersion[];
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Versions = GlobalVersion[];
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemActiveDocContext = ActiveDocContext;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_ActiveDocContext = ActiveDocContext;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemActiveVersion = GlobalVersion | undefined;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_ActiveVersion = GlobalVersion | undefined;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemVersion = GlobalVersion;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Version = GlobalVersion;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemTargetDoc = GlobalDoc | undefined;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_TargetDoc = GlobalDoc | undefined;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemLabel = string;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Label = string;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemPath = string;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Path = string;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemItemLabel = string;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item_Label = string;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemItemTo = string;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item_To = string;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemItemVersionName = string;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item_VersionName = string;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemItem = {
-  label: ThemeNavbarItemDocsVersionDropdownNavbarItemItemLabel;
-  to: ThemeNavbarItemDocsVersionDropdownNavbarItemItemTo;
-  versionName: ThemeNavbarItemDocsVersionDropdownNavbarItemItemVersionName;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item = {
+  label: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item_Label;
+  to: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item_To;
+  versionName: Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item_VersionName;
 };
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemItems = ThemeNavbarItemDocsVersionDropdownNavbarItemItem[];
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_Items = Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item[];
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemFirstItem = ThemeNavbarItemDocsVersionDropdownNavbarItemItem | undefined;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_FirstItem = Theme_NavbarItem_DocsVersionDropdownNavbarItem_Item | undefined;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemItemClassName = string;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_ItemClassName = string;
 
-export type ThemeNavbarItemDocsVersionDropdownNavbarItemDetailsRef = React.RefObject<HTMLDetailsElement | null>;
+export type Theme_NavbarItem_DocsVersionDropdownNavbarItem_DetailsRef = React.RefObject<HTMLDetailsElement | null>;
 
 /**
  * Theme - Navbar Item - Docs Version Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemDocsVersionNavbarItemPropsLabel = string | undefined;
+export type Theme_NavbarItem_DocsVersionNavbarItem_Props_Label = string | undefined;
 
-export type ThemeNavbarItemDocsVersionNavbarItemPropsTo = string | undefined;
+export type Theme_NavbarItem_DocsVersionNavbarItem_Props_To = string | undefined;
 
-export type ThemeNavbarItemDocsVersionNavbarItemPropsDocsPluginId = string | undefined;
+export type Theme_NavbarItem_DocsVersionNavbarItem_Props_DocsPluginId = string | undefined;
 
-export type ThemeNavbarItemDocsVersionNavbarItemProps = {
-  label?: ThemeNavbarItemDocsVersionNavbarItemPropsLabel;
-  to?: ThemeNavbarItemDocsVersionNavbarItemPropsTo;
-  docsPluginId?: ThemeNavbarItemDocsVersionNavbarItemPropsDocsPluginId;
+export type Theme_NavbarItem_DocsVersionNavbarItem_Props = {
+  label?: Theme_NavbarItem_DocsVersionNavbarItem_Props_Label;
+  to?: Theme_NavbarItem_DocsVersionNavbarItem_Props_To;
+  docsPluginId?: Theme_NavbarItem_DocsVersionNavbarItem_Props_DocsPluginId;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemDocsVersionNavbarItemCandidates = [GlobalVersion, ...GlobalVersion[]];
+export type Theme_NavbarItem_DocsVersionNavbarItem_Candidates = [GlobalVersion, ...GlobalVersion[]];
 
-export type ThemeNavbarItemDocsVersionNavbarItemVersion = GlobalVersion;
+export type Theme_NavbarItem_DocsVersionNavbarItem_Version = GlobalVersion;
 
-export type ThemeNavbarItemDocsVersionNavbarItemMainDoc = GlobalDoc | undefined;
+export type Theme_NavbarItem_DocsVersionNavbarItem_MainDoc = GlobalDoc | undefined;
 
-export type ThemeNavbarItemDocsVersionNavbarItemLabel = string;
+export type Theme_NavbarItem_DocsVersionNavbarItem_Label = string;
 
-export type ThemeNavbarItemDocsVersionNavbarItemPath = string;
+export type Theme_NavbarItem_DocsVersionNavbarItem_Path = string;
 
 /**
  * Theme - Navbar Item - Dropdown Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemDropdownNavbarItemPropsLabel = string | undefined;
+export type Theme_NavbarItem_DropdownNavbarItem_Props_Label = string | undefined;
 
-export type ThemeNavbarItemDropdownNavbarItemPropsItems = ThemeNavbarItemDropdownNavbarItemChildItem[];
+export type Theme_NavbarItem_DropdownNavbarItem_Props_Items = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
 
-export type ThemeNavbarItemDropdownNavbarItemProps = {
-  label?: ThemeNavbarItemDropdownNavbarItemPropsLabel;
-  items?: ThemeNavbarItemDropdownNavbarItemPropsItems;
+export type Theme_NavbarItem_DropdownNavbarItem_Props = {
+  label?: Theme_NavbarItem_DropdownNavbarItem_Props_Label;
+  items?: Theme_NavbarItem_DropdownNavbarItem_Props_Items;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemDropdownNavbarItemChildItemLabel = string | undefined;
+export type Theme_NavbarItem_DropdownNavbarItem_ChildItem_Label = string | undefined;
 
-export type ThemeNavbarItemDropdownNavbarItemChildItem = {
-  label?: ThemeNavbarItemDropdownNavbarItemChildItemLabel;
+export type Theme_NavbarItem_DropdownNavbarItem_ChildItem = {
+  label?: Theme_NavbarItem_DropdownNavbarItem_ChildItem_Label;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemDropdownNavbarItemLabel = string | undefined;
+export type Theme_NavbarItem_DropdownNavbarItem_Label = string | undefined;
 
-export type ThemeNavbarItemDropdownNavbarItemItems = ThemeNavbarItemDropdownNavbarItemChildItem[];
+export type Theme_NavbarItem_DropdownNavbarItem_Items = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
 
 /**
  * Theme - Navbar Item - HTML Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemHtmlNavbarItemPropsValue = string;
+export type Theme_NavbarItem_HtmlNavbarItem_Props_Value = string;
 
-export type ThemeNavbarItemHtmlNavbarItemProps = {
-  value: ThemeNavbarItemHtmlNavbarItemPropsValue;
+export type Theme_NavbarItem_HtmlNavbarItem_Props = {
+  value: Theme_NavbarItem_HtmlNavbarItem_Props_Value;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemHtmlNavbarItemValue = string;
+export type Theme_NavbarItem_HtmlNavbarItem_Value = string;
 
-export type ThemeNavbarItemHtmlNavbarItemInnerHtml = {
+export type Theme_NavbarItem_HtmlNavbarItem_InnerHtml = {
   __html: string;
 };
 
@@ -256,99 +256,99 @@ export type ThemeNavbarItemHtmlNavbarItemInnerHtml = {
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemLocaleDropdownNavbarItemPropsDropdownItemsBefore = ThemeNavbarItemDropdownNavbarItemChildItem[];
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Props_DropdownItemsBefore = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemPropsDropdownItemsAfter = ThemeNavbarItemDropdownNavbarItemChildItem[];
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Props_DropdownItemsAfter = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemPropsQueryString = string | undefined;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Props_QueryString = string | undefined;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemProps = {
-  dropdownItemsBefore?: ThemeNavbarItemLocaleDropdownNavbarItemPropsDropdownItemsBefore;
-  dropdownItemsAfter?: ThemeNavbarItemLocaleDropdownNavbarItemPropsDropdownItemsAfter;
-  queryString?: ThemeNavbarItemLocaleDropdownNavbarItemPropsQueryString;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Props = {
+  dropdownItemsBefore?: Theme_NavbarItem_LocaleDropdownNavbarItem_Props_DropdownItemsBefore;
+  dropdownItemsAfter?: Theme_NavbarItem_LocaleDropdownNavbarItem_Props_DropdownItemsAfter;
+  queryString?: Theme_NavbarItem_LocaleDropdownNavbarItem_Props_QueryString;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemContext = DocusaurusContext;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Context = DocusaurusContext;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLocales = string[];
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Locales = string[];
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleConfigs = {
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleConfigs = {
   [locale: string]: I18nLocaleConfig;
 };
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemActiveLocale = string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_ActiveLocale = string;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemAlternatePageUtilsCreateUrlParams = {
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_AlternatePageUtilsCreateUrlParams = {
   locale: string;
   fullyQualified: boolean;
 };
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemAlternatePageUtils = {
-  createUrl: (params: ThemeNavbarItemLocaleDropdownNavbarItemAlternatePageUtilsCreateUrlParams) => string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_AlternatePageUtils = {
+  createUrl: (params: Theme_NavbarItem_LocaleDropdownNavbarItem_AlternatePageUtilsCreateUrlParams) => string;
 };
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleConfig = I18nLocaleConfig | undefined;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleConfig = I18nLocaleConfig | undefined;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleUrl = string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleUrl = string;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleItemLabel = string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleItem_Label = string;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleItemTo = string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleItem_To = string;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleItem = {
-  label: ThemeNavbarItemLocaleDropdownNavbarItemLocaleItemLabel;
-  to: ThemeNavbarItemLocaleDropdownNavbarItemLocaleItemTo;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleItem = {
+  label: Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleItem_Label;
+  to: Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleItem_To;
 };
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLocaleItems = ThemeNavbarItemLocaleDropdownNavbarItemLocaleItem[];
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleItems = Theme_NavbarItem_LocaleDropdownNavbarItem_LocaleItem[];
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemShortLabelMap = Record<string, string>;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_ShortLabelMap = Record<string, string>;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemItems = ThemeNavbarItemDropdownNavbarItemChildItem[];
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Items = Theme_NavbarItem_DropdownNavbarItem_ChildItem[];
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemLabel = string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Label = string;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemShortLabel = string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_ShortLabel = string;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemHref = string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_Href = string;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemItemClassName = string;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_ItemClassName = string;
 
-export type ThemeNavbarItemLocaleDropdownNavbarItemDetailsRef = React.RefObject<HTMLDetailsElement | null>;
+export type Theme_NavbarItem_LocaleDropdownNavbarItem_DetailsRef = React.RefObject<HTMLDetailsElement | null>;
 
 /**
  * Theme - Navbar Item - Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemNavbarItemPropsType = string | undefined;
+export type Theme_NavbarItem_Index_NavbarItem_Props_Type = string | undefined;
 
-export type ThemeNavbarItemNavbarItemPropsClassName = string | undefined;
+export type Theme_NavbarItem_Index_NavbarItem_Props_ClassName = string | undefined;
 
-export type ThemeNavbarItemNavbarItemPropsStyle = CSSProperties | undefined;
+export type Theme_NavbarItem_Index_NavbarItem_Props_Style = CSSProperties | undefined;
 
-export type ThemeNavbarItemNavbarItemPropsIsActiveItem = boolean | undefined;
+export type Theme_NavbarItem_Index_NavbarItem_Props_IsActiveItem = boolean | undefined;
 
-export type ThemeNavbarItemNavbarItemProps = {
-  type?: ThemeNavbarItemNavbarItemPropsType;
-  className?: ThemeNavbarItemNavbarItemPropsClassName;
-  style?: ThemeNavbarItemNavbarItemPropsStyle;
-  isActiveItem?: ThemeNavbarItemNavbarItemPropsIsActiveItem;
+export type Theme_NavbarItem_Index_NavbarItem_Props = {
+  type?: Theme_NavbarItem_Index_NavbarItem_Props_Type;
+  className?: Theme_NavbarItem_Index_NavbarItem_Props_ClassName;
+  style?: Theme_NavbarItem_Index_NavbarItem_Props_Style;
+  isActiveItem?: Theme_NavbarItem_Index_NavbarItem_Props_IsActiveItem;
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemNavbarItemNormalizedType = string;
+export type Theme_NavbarItem_Index_NavbarItem_NormalizedType = string;
 
-export type ThemeNavbarItemNavbarItemComponentToRender = ComponentType<any> | undefined;
+export type Theme_NavbarItem_Index_NavbarItem_ComponentToRender = ComponentType<any> | undefined;
 
 /**
  * Theme - Navbar Item - Search Navbar Item.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarItemSearchNavbarItemProps = {
+export type Theme_NavbarItem_SearchNavbarItem_Props = {
   [key: string]: unknown;
 };
 
-export type ThemeNavbarItemSearchNavbarItemElement = ReactNode;
+export type Theme_NavbarItem_SearchNavbarItem_Element = ReactNode;

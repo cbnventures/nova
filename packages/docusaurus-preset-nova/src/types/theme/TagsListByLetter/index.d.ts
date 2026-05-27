@@ -7,21 +7,21 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeTagsListByLetterTagsListByLetterPropsTags = readonly TagsListItem[];
+export type Theme_TagsListByLetter_Index_TagsListByLetter_Props_Tags = readonly TagsListItem[];
 
-export type ThemeTagsListByLetterTagsListByLetterPropsClassName = string | undefined;
+export type Theme_TagsListByLetter_Index_TagsListByLetter_Props_ClassName = string | undefined;
 
-export type ThemeTagsListByLetterTagsListByLetterPropsStyle = CSSProperties | undefined;
+export type Theme_TagsListByLetter_Index_TagsListByLetter_Props_Style = CSSProperties | undefined;
 
-export type ThemeTagsListByLetterTagsListByLetterProps = {
-  tags: ThemeTagsListByLetterTagsListByLetterPropsTags;
-  className?: ThemeTagsListByLetterTagsListByLetterPropsClassName;
-  style?: ThemeTagsListByLetterTagsListByLetterPropsStyle;
+export type Theme_TagsListByLetter_Index_TagsListByLetter_Props = {
+  tags: Theme_TagsListByLetter_Index_TagsListByLetter_Props_Tags;
+  className?: Theme_TagsListByLetter_Index_TagsListByLetter_Props_ClassName;
+  style?: Theme_TagsListByLetter_Index_TagsListByLetter_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeTagsListByLetterTagsListByLetterLetterList = TagLetterEntry[];
+export type Theme_TagsListByLetter_Index_TagsListByLetter_LetterList = TagLetterEntry[];
 
-export type ThemeTagsListByLetterTagsListByLetterLetterEntry = TagLetterEntry;
+export type Theme_TagsListByLetter_Index_TagsListByLetter_LetterEntry = TagLetterEntry;
 
-export type ThemeTagsListByLetterTagsListByLetterTag = TagsListItem;
+export type Theme_TagsListByLetter_Index_TagsListByLetter_Tag = TagsListItem;

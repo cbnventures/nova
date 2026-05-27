@@ -8,33 +8,33 @@ import { useNavbarOverflow } from '../../../lib/use-navbar-overflow.js';
 import More from '../More/index.js';
 
 import type {
-  LibUseNavbarOverflowHasOverflow,
-  LibUseNavbarOverflowMeasureRef,
-  LibUseNavbarOverflowMeasuring,
-  LibUseNavbarOverflowReturns,
-  LibUseNavbarOverflowVisibleCount,
+  Lib_UseNavbarOverflow_HasOverflow as LibUseNavbarOverflowHasOverflow,
+  Lib_UseNavbarOverflow_MeasureRef as LibUseNavbarOverflowMeasureRef,
+  Lib_UseNavbarOverflow_Measuring as LibUseNavbarOverflowMeasuring,
+  Lib_UseNavbarOverflow_Returns as LibUseNavbarOverflowReturns,
+  Lib_UseNavbarOverflow_VisibleCount as LibUseNavbarOverflowVisibleCount,
 } from '../../../types/lib/use-navbar-overflow.d.ts';
 
 import type {
-  ThemeNavbarBridgeIndexBridgeActionItems,
-  ThemeNavbarBridgeIndexBridgeActiveItemLabel,
-  ThemeNavbarBridgeIndexBridgeColorModeLabel,
-  ThemeNavbarBridgeIndexBridgeHamburgerLabel,
-  ThemeNavbarBridgeIndexBridgeItems,
-  ThemeNavbarBridgeIndexBridgeNavAriaLabel,
-  ThemeNavbarBridgeIndexBridgeNavbarClassName,
-  ThemeNavbarBridgeIndexBridgeNavbarItemKey,
-  ThemeNavbarBridgeIndexBridgeNavbarItemSpread,
-  ThemeNavbarBridgeIndexBridgeOnColorModeToggle,
-  ThemeNavbarBridgeIndexBridgeOnMenuToggle,
-  ThemeNavbarBridgeIndexBridgeOpenMenuAriaLabel,
-  ThemeNavbarBridgeIndexBridgeProps,
-  ThemeNavbarBridgeIndexBridgeReturns,
-  ThemeNavbarBridgeIndexBridgeSiteLogo,
-  ThemeNavbarBridgeIndexBridgeToggleColorModeAriaLabel,
+  Theme_Navbar_Bridge_Index_Bridge_ActionItems,
+  Theme_Navbar_Bridge_Index_Bridge_ActiveItemLabel,
+  Theme_Navbar_Bridge_Index_Bridge_ColorModeLabel,
+  Theme_Navbar_Bridge_Index_Bridge_HamburgerLabel,
+  Theme_Navbar_Bridge_Index_Bridge_Items,
+  Theme_Navbar_Bridge_Index_Bridge_NavAriaLabel,
+  Theme_Navbar_Bridge_Index_Bridge_NavbarClassName,
+  Theme_Navbar_Bridge_Index_Bridge_NavbarItemKey,
+  Theme_Navbar_Bridge_Index_Bridge_NavbarItemSpread,
+  Theme_Navbar_Bridge_Index_Bridge_OnColorModeToggle,
+  Theme_Navbar_Bridge_Index_Bridge_OnMenuToggle,
+  Theme_Navbar_Bridge_Index_Bridge_OpenMenuAriaLabel,
+  Theme_Navbar_Bridge_Index_Bridge_Props,
+  Theme_Navbar_Bridge_Index_Bridge_Returns,
+  Theme_Navbar_Bridge_Index_Bridge_SiteLogo,
+  Theme_Navbar_Bridge_Index_Bridge_ToggleColorModeAriaLabel,
 } from '../../../types/theme/Navbar/Bridge/index.d.ts';
 
-import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
 
 /**
  * Theme - Navbar - Bridge.
@@ -43,34 +43,34 @@ import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
  * navigation items in the center-left region, and action
  * buttons grouped to the right.
  *
- * @param {ThemeNavbarBridgeIndexBridgeProps} props - Props.
+ * @param {Theme_Navbar_Bridge_Index_Bridge_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Bridge(props: ThemeNavbarBridgeIndexBridgeProps): ThemeNavbarBridgeIndexBridgeReturns {
-  const siteLogo: ThemeNavbarBridgeIndexBridgeSiteLogo = props['siteLogo'];
-  const items: ThemeNavbarBridgeIndexBridgeItems = props['items'];
-  const actionItems: ThemeNavbarBridgeIndexBridgeActionItems = props['actionItems'];
-  const colorModeLabel: ThemeNavbarBridgeIndexBridgeColorModeLabel = props['colorModeLabel'];
-  const onColorModeToggle: ThemeNavbarBridgeIndexBridgeOnColorModeToggle = props['onColorModeToggle'];
-  const hamburgerLabel: ThemeNavbarBridgeIndexBridgeHamburgerLabel = props['hamburgerLabel'];
-  const onMenuToggle: ThemeNavbarBridgeIndexBridgeOnMenuToggle = props['onMenuToggle'];
-  const activeItemLabel: ThemeNavbarBridgeIndexBridgeActiveItemLabel = props['activeItemLabel'];
-  const navbarClassName: ThemeNavbarBridgeIndexBridgeNavbarClassName = 'nova-navbar-bridge';
+function Bridge(props: Theme_Navbar_Bridge_Index_Bridge_Props): Theme_Navbar_Bridge_Index_Bridge_Returns {
+  const siteLogo: Theme_Navbar_Bridge_Index_Bridge_SiteLogo = props['siteLogo'];
+  const items: Theme_Navbar_Bridge_Index_Bridge_Items = props['items'];
+  const actionItems: Theme_Navbar_Bridge_Index_Bridge_ActionItems = props['actionItems'];
+  const colorModeLabel: Theme_Navbar_Bridge_Index_Bridge_ColorModeLabel = props['colorModeLabel'];
+  const onColorModeToggle: Theme_Navbar_Bridge_Index_Bridge_OnColorModeToggle = props['onColorModeToggle'];
+  const hamburgerLabel: Theme_Navbar_Bridge_Index_Bridge_HamburgerLabel = props['hamburgerLabel'];
+  const onMenuToggle: Theme_Navbar_Bridge_Index_Bridge_OnMenuToggle = props['onMenuToggle'];
+  const activeItemLabel: Theme_Navbar_Bridge_Index_Bridge_ActiveItemLabel = props['activeItemLabel'];
+  const navbarClassName: Theme_Navbar_Bridge_Index_Bridge_NavbarClassName = 'nova-navbar-bridge';
 
-  const navAriaLabel: ThemeNavbarBridgeIndexBridgeNavAriaLabel = translate({
+  const navAriaLabel: Theme_Navbar_Bridge_Index_Bridge_NavAriaLabel = translate({
     id: 'theme.navbar.navAriaLabel',
     message: 'Main',
     description: 'The ARIA label for the main site navigation landmark',
   });
-  const openMenuAriaLabel: ThemeNavbarBridgeIndexBridgeOpenMenuAriaLabel = translate({
+  const openMenuAriaLabel: Theme_Navbar_Bridge_Index_Bridge_OpenMenuAriaLabel = translate({
     id: 'theme.navbar.openMenuAriaLabel',
     message: 'Open menu',
     description: 'The ARIA label for the button that opens the mobile navigation menu',
   });
-  const toggleColorModeAriaLabel: ThemeNavbarBridgeIndexBridgeToggleColorModeAriaLabel = translate({
+  const toggleColorModeAriaLabel: Theme_Navbar_Bridge_Index_Bridge_ToggleColorModeAriaLabel = translate({
     id: 'theme.colorMode.toggleAriaLabel',
     message: 'Toggle color mode',
     description: 'The ARIA label for the button that cycles through color modes',
@@ -85,8 +85,8 @@ function Bridge(props: ThemeNavbarBridgeIndexBridgeProps): ThemeNavbarBridgeInde
   const visibleCount: LibUseNavbarOverflowVisibleCount = overflow['visibleCount'];
   const hasOverflow: LibUseNavbarOverflowHasOverflow = overflow['hasOverflow'];
   const measuring: LibUseNavbarOverflowMeasuring = overflow['measuring'];
-  const visibleItems: ThemeNavbarBridgeIndexBridgeItems = items.slice(0, visibleCount);
-  const overflowItems: ThemeNavbarBridgeIndexBridgeItems = items.slice(visibleCount);
+  const visibleItems: Theme_Navbar_Bridge_Index_Bridge_Items = items.slice(0, visibleCount);
+  const overflowItems: Theme_Navbar_Bridge_Index_Bridge_Items = items.slice(visibleCount);
 
   return (
     <nav
@@ -107,10 +107,10 @@ function Bridge(props: ThemeNavbarBridgeIndexBridgeProps): ThemeNavbarBridgeInde
         </div>
         <div ref={measureRef} className="nova-navbar-bridge-items nova-navbar-items-measure" aria-hidden="true">
           {
-            items.map((navItem: ThemeNavbarItem) => (
+            items.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
               <NavbarItem
                 key={navItem['label']}
-                {...navItem as ThemeNavbarBridgeIndexBridgeNavbarItemSpread}
+                {...navItem as Theme_Navbar_Bridge_Index_Bridge_NavbarItemSpread}
                 isActiveItem={navItem['label'] === activeItemLabel}
               />
             ))
@@ -118,10 +118,10 @@ function Bridge(props: ThemeNavbarBridgeIndexBridgeProps): ThemeNavbarBridgeInde
         </div>
         <div className={(measuring === true) ? 'nova-navbar-bridge-items nova-navbar-items-measuring' : 'nova-navbar-bridge-items'}>
           {
-            visibleItems.map((navItem: ThemeNavbarItem) => (
+            visibleItems.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
               <NavbarItem
                 key={navItem['label']}
-                {...navItem as ThemeNavbarBridgeIndexBridgeNavbarItemSpread}
+                {...navItem as Theme_Navbar_Bridge_Index_Bridge_NavbarItemSpread}
                 isActiveItem={navItem['label'] === activeItemLabel}
               />
             ))
@@ -146,10 +146,10 @@ function Bridge(props: ThemeNavbarBridgeIndexBridgeProps): ThemeNavbarBridgeInde
             </div>
           </SearchProvider>
           {
-            actionItems.map((navItem: ThemeNavbarItem) => (
+            actionItems.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
               <NavbarItem
-                key={(navItem['type'] as ThemeNavbarBridgeIndexBridgeNavbarItemKey) ?? (navItem['label'])}
-                {...navItem as ThemeNavbarBridgeIndexBridgeNavbarItemSpread}
+                key={(navItem['type'] as Theme_Navbar_Bridge_Index_Bridge_NavbarItemKey) ?? (navItem['label'])}
+                {...navItem as Theme_Navbar_Bridge_Index_Bridge_NavbarItemSpread}
               />
             ))
           }

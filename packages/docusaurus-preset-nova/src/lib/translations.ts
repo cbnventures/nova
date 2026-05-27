@@ -1,122 +1,122 @@
 import type {
-  LibTranslationsApplyAnnouncementBarAnnouncementBar,
-  LibTranslationsApplyAnnouncementBarMessage,
-  LibTranslationsApplyAnnouncementBarReturns,
-  LibTranslationsApplyAnnouncementBarTranslations,
-  LibTranslationsApplyAnnouncementBarTranslationsParam,
-  LibTranslationsApplyAnnouncementBarValue,
-  LibTranslationsApplyBlogBlog,
-  LibTranslationsApplyBlogDescriptionMessage,
-  LibTranslationsApplyBlogHeadingMessage,
-  LibTranslationsApplyBlogLayout,
-  LibTranslationsApplyBlogReturns,
-  LibTranslationsApplyBlogTranslations,
-  LibTranslationsApplyBlogTranslationsParam,
-  LibTranslationsApplyBlogValue,
-  LibTranslationsApplyClonedThemeConfig,
-  LibTranslationsApplyErrorPagesError,
-  LibTranslationsApplyErrorPagesErrorPageContent,
-  LibTranslationsApplyErrorPagesErrorPages,
-  LibTranslationsApplyErrorPagesMessage,
-  LibTranslationsApplyErrorPagesNotFound,
-  LibTranslationsApplyErrorPagesReturns,
-  LibTranslationsApplyErrorPagesTranslations,
-  LibTranslationsApplyErrorPagesTranslationsParam,
-  LibTranslationsApplyErrorPagesValue,
-  LibTranslationsApplyFilesByPath,
-  LibTranslationsApplyFooterCta,
-  LibTranslationsApplyFooterCtaObject,
-  LibTranslationsApplyFooterFooter,
-  LibTranslationsApplyFooterLayout,
-  LibTranslationsApplyFooterLayoutSlot,
-  LibTranslationsApplyFooterMessage,
-  LibTranslationsApplyFooterReturns,
-  LibTranslationsApplyFooterSectionLink,
-  LibTranslationsApplyFooterSectionLinks,
-  LibTranslationsApplyFooterSections,
-  LibTranslationsApplyFooterTranslations,
-  LibTranslationsApplyFooterTranslationsParam,
-  LibTranslationsApplyFooterValue,
-  LibTranslationsApplyNavbarChild,
-  LibTranslationsApplyNavbarChildren,
-  LibTranslationsApplyNavbarItem,
-  LibTranslationsApplyNavbarItems,
-  LibTranslationsApplyNavbarMessage,
-  LibTranslationsApplyNavbarNavbar,
-  LibTranslationsApplyNavbarReturns,
-  LibTranslationsApplyNavbarTranslations,
-  LibTranslationsApplyNavbarTranslationsParam,
-  LibTranslationsApplyNavbarValue,
-  LibTranslationsApplyParams,
-  LibTranslationsApplyReturns,
-  LibTranslationsApplyThemeConfig,
-  LibTranslationsApplyTranslationFiles,
-  LibTranslationsExtractAnnouncementBarAnnouncementBar,
-  LibTranslationsExtractAnnouncementBarConfig,
-  LibTranslationsExtractAnnouncementBarContent,
-  LibTranslationsExtractAnnouncementBarContentValue,
-  LibTranslationsExtractAnnouncementBarReturns,
-  LibTranslationsExtractBlogBlog,
-  LibTranslationsExtractBlogConfig,
-  LibTranslationsExtractBlogContent,
-  LibTranslationsExtractBlogDescriptionValue,
-  LibTranslationsExtractBlogFileContent,
-  LibTranslationsExtractBlogHeadingValue,
-  LibTranslationsExtractBlogLayout,
-  LibTranslationsExtractBlogLayoutConfig,
-  LibTranslationsExtractBlogReturns,
-  LibTranslationsExtractErrorPagesConfig,
-  LibTranslationsExtractErrorPagesContent,
-  LibTranslationsExtractErrorPagesError,
-  LibTranslationsExtractErrorPagesErrorConfig,
-  LibTranslationsExtractErrorPagesErrorPageContent,
-  LibTranslationsExtractErrorPagesErrorPageContentConfig,
-  LibTranslationsExtractErrorPagesErrorPageContentRetryLabel,
-  LibTranslationsExtractErrorPagesErrorPageContentTitle,
-  LibTranslationsExtractErrorPagesErrorPages,
-  LibTranslationsExtractErrorPagesErrorRetryLabel,
-  LibTranslationsExtractErrorPagesFileContent,
-  LibTranslationsExtractErrorPagesNotFound,
-  LibTranslationsExtractErrorPagesNotFoundBackHomeLabel,
-  LibTranslationsExtractErrorPagesNotFoundConfig,
-  LibTranslationsExtractErrorPagesNotFoundDescription,
-  LibTranslationsExtractErrorPagesNotFoundTitle,
-  LibTranslationsExtractErrorPagesReturns,
-  LibTranslationsExtractFooterConfig,
-  LibTranslationsExtractFooterContent,
-  LibTranslationsExtractFooterCopyrightValue,
-  LibTranslationsExtractFooterCta,
-  LibTranslationsExtractFooterCtaLabelValue,
-  LibTranslationsExtractFooterCtaObject,
-  LibTranslationsExtractFooterFileContent,
-  LibTranslationsExtractFooterFooter,
-  LibTranslationsExtractFooterLayout,
-  LibTranslationsExtractFooterLayoutEntries,
-  LibTranslationsExtractFooterLayoutSlot,
-  LibTranslationsExtractFooterLayoutSlotConfig,
-  LibTranslationsExtractFooterLayoutTitleValue,
-  LibTranslationsExtractFooterReturns,
-  LibTranslationsExtractFooterSectionEntries,
-  LibTranslationsExtractFooterSectionLink,
-  LibTranslationsExtractFooterSectionLinkLabelValue,
-  LibTranslationsExtractFooterSectionLinks,
-  LibTranslationsExtractFooterSectionName,
-  LibTranslationsExtractFooterSections,
-  LibTranslationsExtractNavbarChild,
-  LibTranslationsExtractNavbarChildLabelValue,
-  LibTranslationsExtractNavbarChildren,
-  LibTranslationsExtractNavbarConfig,
-  LibTranslationsExtractNavbarContent,
-  LibTranslationsExtractNavbarFileContent,
-  LibTranslationsExtractNavbarItem,
-  LibTranslationsExtractNavbarItems,
-  LibTranslationsExtractNavbarLabelValue,
-  LibTranslationsExtractNavbarNavbar,
-  LibTranslationsExtractNavbarReturns,
-  LibTranslationsExtractParams,
-  LibTranslationsExtractResult,
-  LibTranslationsExtractReturns,
-  LibTranslationsExtractThemeConfig,
+  Lib_Translations_Runner_ApplyAnnouncementBar_AnnouncementBar,
+  Lib_Translations_Runner_ApplyAnnouncementBar_Message,
+  Lib_Translations_Runner_ApplyAnnouncementBar_Returns,
+  Lib_Translations_Runner_ApplyAnnouncementBar_Translations,
+  Lib_Translations_Runner_ApplyAnnouncementBar_TranslationsParam,
+  Lib_Translations_Runner_ApplyAnnouncementBar_Value,
+  Lib_Translations_Runner_ApplyBlog_Blog,
+  Lib_Translations_Runner_ApplyBlog_DescriptionMessage,
+  Lib_Translations_Runner_ApplyBlog_HeadingMessage,
+  Lib_Translations_Runner_ApplyBlog_Layout,
+  Lib_Translations_Runner_ApplyBlog_Returns,
+  Lib_Translations_Runner_ApplyBlog_Translations,
+  Lib_Translations_Runner_ApplyBlog_TranslationsParam,
+  Lib_Translations_Runner_ApplyBlog_Value,
+  Lib_Translations_Runner_Apply_ClonedThemeConfig,
+  Lib_Translations_Runner_ApplyErrorPages_Error,
+  Lib_Translations_Runner_ApplyErrorPages_ErrorPageContent,
+  Lib_Translations_Runner_ApplyErrorPages_ErrorPages,
+  Lib_Translations_Runner_ApplyErrorPages_Message,
+  Lib_Translations_Runner_ApplyErrorPages_NotFound,
+  Lib_Translations_Runner_ApplyErrorPages_Returns,
+  Lib_Translations_Runner_ApplyErrorPages_Translations,
+  Lib_Translations_Runner_ApplyErrorPages_TranslationsParam,
+  Lib_Translations_Runner_ApplyErrorPages_Value,
+  Lib_Translations_Runner_Apply_FilesByPath,
+  Lib_Translations_Runner_ApplyFooter_Cta,
+  Lib_Translations_Runner_ApplyFooter_CtaObject,
+  Lib_Translations_Runner_ApplyFooter_Footer,
+  Lib_Translations_Runner_ApplyFooter_Layout,
+  Lib_Translations_Runner_ApplyFooter_LayoutSlot,
+  Lib_Translations_Runner_ApplyFooter_Message,
+  Lib_Translations_Runner_ApplyFooter_Returns,
+  Lib_Translations_Runner_ApplyFooter_SectionLink,
+  Lib_Translations_Runner_ApplyFooter_SectionLinks,
+  Lib_Translations_Runner_ApplyFooter_Sections,
+  Lib_Translations_Runner_ApplyFooter_Translations,
+  Lib_Translations_Runner_ApplyFooter_TranslationsParam,
+  Lib_Translations_Runner_ApplyFooter_Value,
+  Lib_Translations_Runner_ApplyNavbar_Child,
+  Lib_Translations_Runner_ApplyNavbar_Children,
+  Lib_Translations_Runner_ApplyNavbar_Item,
+  Lib_Translations_Runner_ApplyNavbar_Items,
+  Lib_Translations_Runner_ApplyNavbar_Message,
+  Lib_Translations_Runner_ApplyNavbar_Navbar,
+  Lib_Translations_Runner_ApplyNavbar_Returns,
+  Lib_Translations_Runner_ApplyNavbar_Translations,
+  Lib_Translations_Runner_ApplyNavbar_TranslationsParam,
+  Lib_Translations_Runner_ApplyNavbar_Value,
+  Lib_Translations_Runner_Apply_Params,
+  Lib_Translations_Runner_Apply_Returns,
+  Lib_Translations_Runner_Apply_ThemeConfig,
+  Lib_Translations_Runner_Apply_TranslationFiles,
+  Lib_Translations_Runner_ExtractAnnouncementBar_AnnouncementBar,
+  Lib_Translations_Runner_ExtractAnnouncementBar_Config,
+  Lib_Translations_Runner_ExtractAnnouncementBar_Content,
+  Lib_Translations_Runner_ExtractAnnouncementBar_ContentValue,
+  Lib_Translations_Runner_ExtractAnnouncementBar_Returns,
+  Lib_Translations_Runner_ExtractBlog_Blog,
+  Lib_Translations_Runner_ExtractBlog_Config,
+  Lib_Translations_Runner_ExtractBlog_Content,
+  Lib_Translations_Runner_ExtractBlog_DescriptionValue,
+  Lib_Translations_Runner_ExtractBlog_FileContent,
+  Lib_Translations_Runner_ExtractBlog_HeadingValue,
+  Lib_Translations_Runner_ExtractBlog_Layout,
+  Lib_Translations_Runner_ExtractBlog_LayoutConfig,
+  Lib_Translations_Runner_ExtractBlog_Returns,
+  Lib_Translations_Runner_ExtractErrorPages_Config,
+  Lib_Translations_Runner_ExtractErrorPages_Content,
+  Lib_Translations_Runner_ExtractErrorPages_Error,
+  Lib_Translations_Runner_ExtractErrorPages_ErrorConfig,
+  Lib_Translations_Runner_ExtractErrorPages_ErrorPageContent,
+  Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentConfig,
+  Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentRetryLabel,
+  Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentTitle,
+  Lib_Translations_Runner_ExtractErrorPages_ErrorPages,
+  Lib_Translations_Runner_ExtractErrorPages_ErrorRetryLabel,
+  Lib_Translations_Runner_ExtractErrorPages_FileContent,
+  Lib_Translations_Runner_ExtractErrorPages_NotFound,
+  Lib_Translations_Runner_ExtractErrorPages_NotFoundBackHomeLabel,
+  Lib_Translations_Runner_ExtractErrorPages_NotFoundConfig,
+  Lib_Translations_Runner_ExtractErrorPages_NotFoundDescription,
+  Lib_Translations_Runner_ExtractErrorPages_NotFoundTitle,
+  Lib_Translations_Runner_ExtractErrorPages_Returns,
+  Lib_Translations_Runner_ExtractFooter_Config,
+  Lib_Translations_Runner_ExtractFooter_Content,
+  Lib_Translations_Runner_ExtractFooter_CopyrightValue,
+  Lib_Translations_Runner_ExtractFooter_Cta,
+  Lib_Translations_Runner_ExtractFooter_CtaLabelValue,
+  Lib_Translations_Runner_ExtractFooter_CtaObject,
+  Lib_Translations_Runner_ExtractFooter_FileContent,
+  Lib_Translations_Runner_ExtractFooter_Footer,
+  Lib_Translations_Runner_ExtractFooter_Layout,
+  Lib_Translations_Runner_ExtractFooter_LayoutEntries,
+  Lib_Translations_Runner_ExtractFooter_LayoutSlot,
+  Lib_Translations_Runner_ExtractFooter_LayoutSlotConfig,
+  Lib_Translations_Runner_ExtractFooter_LayoutTitleValue,
+  Lib_Translations_Runner_ExtractFooter_Returns,
+  Lib_Translations_Runner_ExtractFooter_SectionEntries,
+  Lib_Translations_Runner_ExtractFooter_SectionLink,
+  Lib_Translations_Runner_ExtractFooter_SectionLinkLabelValue,
+  Lib_Translations_Runner_ExtractFooter_SectionLinks,
+  Lib_Translations_Runner_ExtractFooter_SectionName,
+  Lib_Translations_Runner_ExtractFooter_Sections,
+  Lib_Translations_Runner_ExtractNavbar_Child,
+  Lib_Translations_Runner_ExtractNavbar_ChildLabelValue,
+  Lib_Translations_Runner_ExtractNavbar_Children,
+  Lib_Translations_Runner_ExtractNavbar_Config,
+  Lib_Translations_Runner_ExtractNavbar_Content,
+  Lib_Translations_Runner_ExtractNavbar_FileContent,
+  Lib_Translations_Runner_ExtractNavbar_Item,
+  Lib_Translations_Runner_ExtractNavbar_Items,
+  Lib_Translations_Runner_ExtractNavbar_LabelValue,
+  Lib_Translations_Runner_ExtractNavbar_Navbar,
+  Lib_Translations_Runner_ExtractNavbar_Returns,
+  Lib_Translations_Runner_Extract_Params,
+  Lib_Translations_Runner_Extract_Result,
+  Lib_Translations_Runner_Extract_Returns,
+  Lib_Translations_Runner_Extract_ThemeConfig,
 } from '../types/lib/translations.d.ts';
 
 /**
@@ -128,7 +128,7 @@ import type {
  *
  * @since 0.18.0
  */
-export class Translations {
+export class Runner {
   /**
    * Lib - Translations - Extract.
    *
@@ -136,17 +136,17 @@ export class Translations {
    * `TranslationFile` per populated area (navbar, blog, announcementBar,
    * errorPages, footer) with stable message IDs and source-language defaults.
    *
-   * @param {LibTranslationsExtractParams} params - Params.
+   * @param {Lib_Translations_Runner_Extract_Params} params - Params.
    *
-   * @returns {LibTranslationsExtractReturns}
+   * @returns {Lib_Translations_Runner_Extract_Returns}
    *
    * @since 0.18.0
    */
-  public static extract(params: LibTranslationsExtractParams): LibTranslationsExtractReturns {
-    const themeConfig: LibTranslationsExtractThemeConfig = params['themeConfig'];
-    const result: LibTranslationsExtractResult = [];
+  public static extract(params: Lib_Translations_Runner_Extract_Params): Lib_Translations_Runner_Extract_Returns {
+    const themeConfig: Lib_Translations_Runner_Extract_ThemeConfig = params['themeConfig'];
+    const result: Lib_Translations_Runner_Extract_Result = [];
 
-    const navbarContent: LibTranslationsExtractNavbarContent = Translations.extractNavbar(themeConfig['navbar']);
+    const navbarContent: Lib_Translations_Runner_ExtractNavbar_Content = Runner.extractNavbar(themeConfig['navbar']);
 
     if (navbarContent !== undefined) {
       result.push({
@@ -154,7 +154,7 @@ export class Translations {
       });
     }
 
-    const blogContent: LibTranslationsExtractBlogContent = Translations.extractBlog(themeConfig['blog']);
+    const blogContent: Lib_Translations_Runner_ExtractBlog_Content = Runner.extractBlog(themeConfig['blog']);
 
     if (blogContent !== undefined) {
       result.push({
@@ -162,7 +162,7 @@ export class Translations {
       });
     }
 
-    const announcementBarContent: LibTranslationsExtractAnnouncementBarContent = Translations.extractAnnouncementBar(themeConfig['announcementBar']);
+    const announcementBarContent: Lib_Translations_Runner_ExtractAnnouncementBar_Content = Runner.extractAnnouncementBar(themeConfig['announcementBar']);
 
     if (announcementBarContent !== undefined) {
       result.push({
@@ -170,7 +170,7 @@ export class Translations {
       });
     }
 
-    const errorPagesContent: LibTranslationsExtractErrorPagesContent = Translations.extractErrorPages(themeConfig['errorPages']);
+    const errorPagesContent: Lib_Translations_Runner_ExtractErrorPages_Content = Runner.extractErrorPages(themeConfig['errorPages']);
 
     if (errorPagesContent !== undefined) {
       result.push({
@@ -178,7 +178,7 @@ export class Translations {
       });
     }
 
-    const footerContent: LibTranslationsExtractFooterContent = Translations.extractFooter(themeConfig['footer']);
+    const footerContent: Lib_Translations_Runner_ExtractFooter_Content = Runner.extractFooter(themeConfig['footer']);
 
     if (footerContent !== undefined) {
       result.push({
@@ -196,71 +196,71 @@ export class Translations {
    * spliced into the navbar, blog, announcement bar, error pages, and
    * footer areas. Falls back to source strings when a key is missing.
    *
-   * @param {LibTranslationsApplyParams} params - Params.
+   * @param {Lib_Translations_Runner_Apply_Params} params - Params.
    *
-   * @returns {LibTranslationsApplyReturns}
+   * @returns {Lib_Translations_Runner_Apply_Returns}
    *
    * @since 0.18.0
    */
-  public static apply(params: LibTranslationsApplyParams): LibTranslationsApplyReturns {
-    const themeConfig: LibTranslationsApplyThemeConfig = params['themeConfig'];
-    const translationFiles: LibTranslationsApplyTranslationFiles = params['translationFiles'];
+  public static apply(params: Lib_Translations_Runner_Apply_Params): Lib_Translations_Runner_Apply_Returns {
+    const themeConfig: Lib_Translations_Runner_Apply_ThemeConfig = params['themeConfig'];
+    const translationFiles: Lib_Translations_Runner_Apply_TranslationFiles = params['translationFiles'];
 
-    const cloned: LibTranslationsApplyClonedThemeConfig = structuredClone(themeConfig);
-    const filesByPath: LibTranslationsApplyFilesByPath = new Map();
+    const cloned: Lib_Translations_Runner_Apply_ClonedThemeConfig = structuredClone(themeConfig);
+    const filesByPath: Lib_Translations_Runner_Apply_FilesByPath = new Map();
 
     for (const file of translationFiles) {
       filesByPath.set(file['path'], file['content']);
     }
 
-    const navbarTranslations: LibTranslationsApplyNavbarTranslations = filesByPath.get('navbar');
-    const navbarValue: LibTranslationsApplyNavbarValue = cloned['navbar'] as LibTranslationsApplyNavbarValue;
+    const navbarTranslations: Lib_Translations_Runner_ApplyNavbar_Translations = filesByPath.get('navbar');
+    const navbarValue: Lib_Translations_Runner_ApplyNavbar_Value = cloned['navbar'] as Lib_Translations_Runner_ApplyNavbar_Value;
 
     if (
       navbarTranslations !== undefined
       && navbarValue !== undefined
     ) {
-      Translations.applyNavbar(navbarValue, navbarTranslations);
+      Runner.applyNavbar(navbarValue, navbarTranslations);
     }
 
-    const blogTranslations: LibTranslationsApplyBlogTranslations = filesByPath.get('blog');
-    const blogValue: LibTranslationsApplyBlogValue = cloned['blog'] as LibTranslationsApplyBlogValue;
+    const blogTranslations: Lib_Translations_Runner_ApplyBlog_Translations = filesByPath.get('blog');
+    const blogValue: Lib_Translations_Runner_ApplyBlog_Value = cloned['blog'] as Lib_Translations_Runner_ApplyBlog_Value;
 
     if (
       blogTranslations !== undefined
       && blogValue !== undefined
     ) {
-      Translations.applyBlog(blogValue, blogTranslations);
+      Runner.applyBlog(blogValue, blogTranslations);
     }
 
-    const announcementBarTranslations: LibTranslationsApplyAnnouncementBarTranslations = filesByPath.get('announcementBar');
-    const announcementBarValue: LibTranslationsApplyAnnouncementBarValue = cloned['announcementBar'] as LibTranslationsApplyAnnouncementBarValue;
+    const announcementBarTranslations: Lib_Translations_Runner_ApplyAnnouncementBar_Translations = filesByPath.get('announcementBar');
+    const announcementBarValue: Lib_Translations_Runner_ApplyAnnouncementBar_Value = cloned['announcementBar'] as Lib_Translations_Runner_ApplyAnnouncementBar_Value;
 
     if (
       announcementBarTranslations !== undefined
       && announcementBarValue !== undefined
     ) {
-      Translations.applyAnnouncementBar(announcementBarValue, announcementBarTranslations);
+      Runner.applyAnnouncementBar(announcementBarValue, announcementBarTranslations);
     }
 
-    const errorPagesTranslations: LibTranslationsApplyErrorPagesTranslations = filesByPath.get('errorPages');
-    const errorPagesValue: LibTranslationsApplyErrorPagesValue = cloned['errorPages'] as LibTranslationsApplyErrorPagesValue;
+    const errorPagesTranslations: Lib_Translations_Runner_ApplyErrorPages_Translations = filesByPath.get('errorPages');
+    const errorPagesValue: Lib_Translations_Runner_ApplyErrorPages_Value = cloned['errorPages'] as Lib_Translations_Runner_ApplyErrorPages_Value;
 
     if (
       errorPagesTranslations !== undefined
       && errorPagesValue !== undefined
     ) {
-      Translations.applyErrorPages(errorPagesValue, errorPagesTranslations);
+      Runner.applyErrorPages(errorPagesValue, errorPagesTranslations);
     }
 
-    const footerTranslations: LibTranslationsApplyFooterTranslations = filesByPath.get('footer');
-    const footerValue: LibTranslationsApplyFooterValue = (cloned['footer'] !== false && cloned['footer'] !== undefined) ? cloned['footer'] as LibTranslationsApplyFooterValue : undefined;
+    const footerTranslations: Lib_Translations_Runner_ApplyFooter_Translations = filesByPath.get('footer');
+    const footerValue: Lib_Translations_Runner_ApplyFooter_Value = (cloned['footer'] !== false && cloned['footer'] !== undefined) ? cloned['footer'] as Lib_Translations_Runner_ApplyFooter_Value : undefined;
 
     if (
       footerTranslations !== undefined
       && footerValue !== undefined
     ) {
-      Translations.applyFooter(footerValue, footerTranslations);
+      Runner.applyFooter(footerValue, footerTranslations);
     }
 
     return cloned;
@@ -273,15 +273,15 @@ export class Translations {
    * dropdown child label, keyed by positional index so translators
    * can map labels back even when items are reordered.
    *
-   * @param {LibTranslationsExtractNavbarNavbar} navbar - Navbar.
+   * @param {Lib_Translations_Runner_ExtractNavbar_Navbar} navbar - Navbar.
    *
    * @private
    *
-   * @returns {LibTranslationsExtractNavbarReturns}
+   * @returns {Lib_Translations_Runner_ExtractNavbar_Returns}
    *
    * @since 0.18.0
    */
-  private static extractNavbar(navbar: LibTranslationsExtractNavbarNavbar): LibTranslationsExtractNavbarReturns {
+  private static extractNavbar(navbar: Lib_Translations_Runner_ExtractNavbar_Navbar): Lib_Translations_Runner_ExtractNavbar_Returns {
     if (
       navbar === undefined
       || navbar === null
@@ -290,22 +290,22 @@ export class Translations {
       return undefined;
     }
 
-    const config: LibTranslationsExtractNavbarConfig = navbar as LibTranslationsExtractNavbarConfig;
-    const items: LibTranslationsExtractNavbarItems = config['items'];
+    const config: Lib_Translations_Runner_ExtractNavbar_Config = navbar as Lib_Translations_Runner_ExtractNavbar_Config;
+    const items: Lib_Translations_Runner_ExtractNavbar_Items = config['items'];
 
     if (Array.isArray(items) === false) {
       return undefined;
     }
 
-    const fileContent: LibTranslationsExtractNavbarFileContent = {};
+    const fileContent: Lib_Translations_Runner_ExtractNavbar_FileContent = {};
 
     items.forEach((rawItem, itemIndex) => {
       if (rawItem === null || typeof rawItem !== 'object') {
         return undefined;
       }
 
-      const item: LibTranslationsExtractNavbarItem = rawItem as LibTranslationsExtractNavbarItem;
-      const labelValue: LibTranslationsExtractNavbarLabelValue = item['label'];
+      const item: Lib_Translations_Runner_ExtractNavbar_Item = rawItem as Lib_Translations_Runner_ExtractNavbar_Item;
+      const labelValue: Lib_Translations_Runner_ExtractNavbar_LabelValue = item['label'];
 
       if (typeof labelValue === 'string') {
         Reflect.set(fileContent, `item.${itemIndex}.label`, {
@@ -314,7 +314,7 @@ export class Translations {
         });
       }
 
-      const children: LibTranslationsExtractNavbarChildren = item['items'];
+      const children: Lib_Translations_Runner_ExtractNavbar_Children = item['items'];
 
       if (Array.isArray(children) === true) {
         children.forEach((rawChild, childIndex) => {
@@ -322,8 +322,8 @@ export class Translations {
             return undefined;
           }
 
-          const child: LibTranslationsExtractNavbarChild = rawChild as LibTranslationsExtractNavbarChild;
-          const childLabelValue: LibTranslationsExtractNavbarChildLabelValue = child['label'];
+          const child: Lib_Translations_Runner_ExtractNavbar_Child = rawChild as Lib_Translations_Runner_ExtractNavbar_Child;
+          const childLabelValue: Lib_Translations_Runner_ExtractNavbar_ChildLabelValue = child['label'];
 
           if (typeof childLabelValue === 'string') {
             Reflect.set(fileContent, `item.${itemIndex}.items.${childIndex}.label`, {
@@ -353,15 +353,15 @@ export class Translations {
    * `themeConfig.blog.layout`, skipping the area entirely when
    * neither field is configured.
    *
-   * @param {LibTranslationsExtractBlogBlog} blog - Blog.
+   * @param {Lib_Translations_Runner_ExtractBlog_Blog} blog - Blog.
    *
    * @private
    *
-   * @returns {LibTranslationsExtractBlogReturns}
+   * @returns {Lib_Translations_Runner_ExtractBlog_Returns}
    *
    * @since 0.18.0
    */
-  private static extractBlog(blog: LibTranslationsExtractBlogBlog): LibTranslationsExtractBlogReturns {
+  private static extractBlog(blog: Lib_Translations_Runner_ExtractBlog_Blog): Lib_Translations_Runner_ExtractBlog_Returns {
     if (
       blog === undefined
       || blog === null
@@ -370,8 +370,8 @@ export class Translations {
       return undefined;
     }
 
-    const config: LibTranslationsExtractBlogConfig = blog as LibTranslationsExtractBlogConfig;
-    const layout: LibTranslationsExtractBlogLayout = config['layout'];
+    const config: Lib_Translations_Runner_ExtractBlog_Config = blog as Lib_Translations_Runner_ExtractBlog_Config;
+    const layout: Lib_Translations_Runner_ExtractBlog_Layout = config['layout'];
 
     if (
       layout === undefined
@@ -381,10 +381,10 @@ export class Translations {
       return undefined;
     }
 
-    const layoutConfig: LibTranslationsExtractBlogLayoutConfig = layout as LibTranslationsExtractBlogLayoutConfig;
-    const fileContent: LibTranslationsExtractBlogFileContent = {};
+    const layoutConfig: Lib_Translations_Runner_ExtractBlog_LayoutConfig = layout as Lib_Translations_Runner_ExtractBlog_LayoutConfig;
+    const fileContent: Lib_Translations_Runner_ExtractBlog_FileContent = {};
 
-    const headingValue: LibTranslationsExtractBlogHeadingValue = layoutConfig['heading'];
+    const headingValue: Lib_Translations_Runner_ExtractBlog_HeadingValue = layoutConfig['heading'];
 
     if (typeof headingValue === 'string') {
       Reflect.set(fileContent, 'layout.heading', {
@@ -393,7 +393,7 @@ export class Translations {
       });
     }
 
-    const descriptionValue: LibTranslationsExtractBlogDescriptionValue = layoutConfig['description'];
+    const descriptionValue: Lib_Translations_Runner_ExtractBlog_DescriptionValue = layoutConfig['description'];
 
     if (typeof descriptionValue === 'string') {
       Reflect.set(fileContent, 'layout.description', {
@@ -416,15 +416,15 @@ export class Translations {
    * announcement bar renders its content via `dangerouslySetInnerHTML`
    * in the theme component.
    *
-   * @param {LibTranslationsExtractAnnouncementBarAnnouncementBar} announcementBar - Announcement bar.
+   * @param {Lib_Translations_Runner_ExtractAnnouncementBar_AnnouncementBar} announcementBar - Announcement bar.
    *
    * @private
    *
-   * @returns {LibTranslationsExtractAnnouncementBarReturns}
+   * @returns {Lib_Translations_Runner_ExtractAnnouncementBar_Returns}
    *
    * @since 0.18.0
    */
-  private static extractAnnouncementBar(announcementBar: LibTranslationsExtractAnnouncementBarAnnouncementBar): LibTranslationsExtractAnnouncementBarReturns {
+  private static extractAnnouncementBar(announcementBar: Lib_Translations_Runner_ExtractAnnouncementBar_AnnouncementBar): Lib_Translations_Runner_ExtractAnnouncementBar_Returns {
     if (
       announcementBar === undefined
       || announcementBar === null
@@ -433,8 +433,8 @@ export class Translations {
       return undefined;
     }
 
-    const config: LibTranslationsExtractAnnouncementBarConfig = announcementBar as LibTranslationsExtractAnnouncementBarConfig;
-    const contentValue: LibTranslationsExtractAnnouncementBarContentValue = config['content'];
+    const config: Lib_Translations_Runner_ExtractAnnouncementBar_Config = announcementBar as Lib_Translations_Runner_ExtractAnnouncementBar_Config;
+    const contentValue: Lib_Translations_Runner_ExtractAnnouncementBar_ContentValue = config['content'];
 
     if (typeof contentValue !== 'string') {
       return undefined;
@@ -454,15 +454,15 @@ export class Translations {
    * Emits consumer-set override strings for the 404, per-page crash, and
    * top-level error surfaces - skipping fields the consumer did not set.
    *
-   * @param {LibTranslationsExtractErrorPagesErrorPages} errorPages - Error pages.
+   * @param {Lib_Translations_Runner_ExtractErrorPages_ErrorPages} errorPages - Error pages.
    *
    * @private
    *
-   * @returns {LibTranslationsExtractErrorPagesReturns}
+   * @returns {Lib_Translations_Runner_ExtractErrorPages_Returns}
    *
    * @since 0.18.0
    */
-  private static extractErrorPages(errorPages: LibTranslationsExtractErrorPagesErrorPages): LibTranslationsExtractErrorPagesReturns {
+  private static extractErrorPages(errorPages: Lib_Translations_Runner_ExtractErrorPages_ErrorPages): Lib_Translations_Runner_ExtractErrorPages_Returns {
     if (
       errorPages === undefined
       || errorPages === null
@@ -471,18 +471,18 @@ export class Translations {
       return undefined;
     }
 
-    const config: LibTranslationsExtractErrorPagesConfig = errorPages as LibTranslationsExtractErrorPagesConfig;
-    const fileContent: LibTranslationsExtractErrorPagesFileContent = {};
+    const config: Lib_Translations_Runner_ExtractErrorPages_Config = errorPages as Lib_Translations_Runner_ExtractErrorPages_Config;
+    const fileContent: Lib_Translations_Runner_ExtractErrorPages_FileContent = {};
 
-    const notFound: LibTranslationsExtractErrorPagesNotFound = config['notFound'];
+    const notFound: Lib_Translations_Runner_ExtractErrorPages_NotFound = config['notFound'];
 
     if (
       notFound !== undefined
       && notFound !== null
       && typeof notFound === 'object'
     ) {
-      const notFoundConfig: LibTranslationsExtractErrorPagesNotFoundConfig = notFound as LibTranslationsExtractErrorPagesNotFoundConfig;
-      const titleValue: LibTranslationsExtractErrorPagesNotFoundTitle = notFoundConfig['title'];
+      const notFoundConfig: Lib_Translations_Runner_ExtractErrorPages_NotFoundConfig = notFound as Lib_Translations_Runner_ExtractErrorPages_NotFoundConfig;
+      const titleValue: Lib_Translations_Runner_ExtractErrorPages_NotFoundTitle = notFoundConfig['title'];
 
       if (typeof titleValue === 'string') {
         Reflect.set(fileContent, 'notFound.title', {
@@ -491,7 +491,7 @@ export class Translations {
         });
       }
 
-      const descriptionValue: LibTranslationsExtractErrorPagesNotFoundDescription = notFoundConfig['description'];
+      const descriptionValue: Lib_Translations_Runner_ExtractErrorPages_NotFoundDescription = notFoundConfig['description'];
 
       if (typeof descriptionValue === 'string') {
         Reflect.set(fileContent, 'notFound.description', {
@@ -500,7 +500,7 @@ export class Translations {
         });
       }
 
-      const backHomeLabelValue: LibTranslationsExtractErrorPagesNotFoundBackHomeLabel = notFoundConfig['backHomeLabel'];
+      const backHomeLabelValue: Lib_Translations_Runner_ExtractErrorPages_NotFoundBackHomeLabel = notFoundConfig['backHomeLabel'];
 
       if (typeof backHomeLabelValue === 'string') {
         Reflect.set(fileContent, 'notFound.backHomeLabel', {
@@ -510,15 +510,15 @@ export class Translations {
       }
     }
 
-    const errorPageContent: LibTranslationsExtractErrorPagesErrorPageContent = config['errorPageContent'];
+    const errorPageContent: Lib_Translations_Runner_ExtractErrorPages_ErrorPageContent = config['errorPageContent'];
 
     if (
       errorPageContent !== undefined
       && errorPageContent !== null
       && typeof errorPageContent === 'object'
     ) {
-      const errorPageContentConfig: LibTranslationsExtractErrorPagesErrorPageContentConfig = errorPageContent as LibTranslationsExtractErrorPagesErrorPageContentConfig;
-      const titleValue: LibTranslationsExtractErrorPagesErrorPageContentTitle = errorPageContentConfig['title'];
+      const errorPageContentConfig: Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentConfig = errorPageContent as Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentConfig;
+      const titleValue: Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentTitle = errorPageContentConfig['title'];
 
       if (typeof titleValue === 'string') {
         Reflect.set(fileContent, 'errorPageContent.title', {
@@ -527,7 +527,7 @@ export class Translations {
         });
       }
 
-      const retryLabelValue: LibTranslationsExtractErrorPagesErrorPageContentRetryLabel = errorPageContentConfig['retryLabel'];
+      const retryLabelValue: Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentRetryLabel = errorPageContentConfig['retryLabel'];
 
       if (typeof retryLabelValue === 'string') {
         Reflect.set(fileContent, 'errorPageContent.retryLabel', {
@@ -537,15 +537,15 @@ export class Translations {
       }
     }
 
-    const error: LibTranslationsExtractErrorPagesError = config['error'];
+    const error: Lib_Translations_Runner_ExtractErrorPages_Error = config['error'];
 
     if (
       error !== undefined
       && error !== null
       && typeof error === 'object'
     ) {
-      const errorConfig: LibTranslationsExtractErrorPagesErrorConfig = error as LibTranslationsExtractErrorPagesErrorConfig;
-      const retryLabelValue: LibTranslationsExtractErrorPagesErrorRetryLabel = errorConfig['retryLabel'];
+      const errorConfig: Lib_Translations_Runner_ExtractErrorPages_ErrorConfig = error as Lib_Translations_Runner_ExtractErrorPages_ErrorConfig;
+      const retryLabelValue: Lib_Translations_Runner_ExtractErrorPages_ErrorRetryLabel = errorConfig['retryLabel'];
 
       if (typeof retryLabelValue === 'string') {
         Reflect.set(fileContent, 'error.retryLabel', {
@@ -569,15 +569,15 @@ export class Translations {
    * and the call-to-action label or text - handling the dual-shape cta
    * which can be either a bare string or a `{ label, href }` object.
    *
-   * @param {LibTranslationsExtractFooterFooter} footer - Footer.
+   * @param {Lib_Translations_Runner_ExtractFooter_Footer} footer - Footer.
    *
    * @private
    *
-   * @returns {LibTranslationsExtractFooterReturns}
+   * @returns {Lib_Translations_Runner_ExtractFooter_Returns}
    *
    * @since 0.18.0
    */
-  private static extractFooter(footer: LibTranslationsExtractFooterFooter): LibTranslationsExtractFooterReturns {
+  private static extractFooter(footer: Lib_Translations_Runner_ExtractFooter_Footer): Lib_Translations_Runner_ExtractFooter_Returns {
     if (
       footer === undefined
       || footer === null
@@ -587,27 +587,27 @@ export class Translations {
       return undefined;
     }
 
-    const config: LibTranslationsExtractFooterConfig = footer as LibTranslationsExtractFooterConfig;
-    const fileContent: LibTranslationsExtractFooterFileContent = {};
+    const config: Lib_Translations_Runner_ExtractFooter_Config = footer as Lib_Translations_Runner_ExtractFooter_Config;
+    const fileContent: Lib_Translations_Runner_ExtractFooter_FileContent = {};
 
-    const layout: LibTranslationsExtractFooterLayout = config['layout'];
+    const layout: Lib_Translations_Runner_ExtractFooter_Layout = config['layout'];
 
     if (
       layout !== undefined
       && layout !== null
       && typeof layout === 'object'
     ) {
-      const layoutEntries: LibTranslationsExtractFooterLayoutEntries = Object.entries(layout) as LibTranslationsExtractFooterLayoutEntries;
+      const layoutEntries: Lib_Translations_Runner_ExtractFooter_LayoutEntries = Object.entries(layout) as Lib_Translations_Runner_ExtractFooter_LayoutEntries;
 
       for (const layoutEntry of layoutEntries) {
-        const slotName: LibTranslationsExtractFooterLayoutSlot = layoutEntry[0];
-        const slotConfig: LibTranslationsExtractFooterLayoutSlotConfig = layoutEntry[1];
+        const slotName: Lib_Translations_Runner_ExtractFooter_LayoutSlot = layoutEntry[0];
+        const slotConfig: Lib_Translations_Runner_ExtractFooter_LayoutSlotConfig = layoutEntry[1];
 
         if (slotConfig === null || typeof slotConfig !== 'object') {
           continue;
         }
 
-        const titleValue: LibTranslationsExtractFooterLayoutTitleValue = slotConfig['title'];
+        const titleValue: Lib_Translations_Runner_ExtractFooter_LayoutTitleValue = slotConfig['title'];
 
         if (typeof titleValue === 'string') {
           Reflect.set(fileContent, `layout.${slotName}.title`, {
@@ -618,18 +618,18 @@ export class Translations {
       }
     }
 
-    const sections: LibTranslationsExtractFooterSections = config['sections'];
+    const sections: Lib_Translations_Runner_ExtractFooter_Sections = config['sections'];
 
     if (
       sections !== undefined
       && sections !== null
       && typeof sections === 'object'
     ) {
-      const sectionEntries: LibTranslationsExtractFooterSectionEntries = Object.entries(sections) as LibTranslationsExtractFooterSectionEntries;
+      const sectionEntries: Lib_Translations_Runner_ExtractFooter_SectionEntries = Object.entries(sections) as Lib_Translations_Runner_ExtractFooter_SectionEntries;
 
       for (const sectionEntry of sectionEntries) {
-        const sectionName: LibTranslationsExtractFooterSectionName = sectionEntry[0];
-        const sectionLinks: LibTranslationsExtractFooterSectionLinks = sectionEntry[1];
+        const sectionName: Lib_Translations_Runner_ExtractFooter_SectionName = sectionEntry[0];
+        const sectionLinks: Lib_Translations_Runner_ExtractFooter_SectionLinks = sectionEntry[1];
 
         if (Array.isArray(sectionLinks) === false) {
           continue;
@@ -640,8 +640,8 @@ export class Translations {
             return undefined;
           }
 
-          const link: LibTranslationsExtractFooterSectionLink = rawLink as LibTranslationsExtractFooterSectionLink;
-          const labelValue: LibTranslationsExtractFooterSectionLinkLabelValue = link['label'];
+          const link: Lib_Translations_Runner_ExtractFooter_SectionLink = rawLink as Lib_Translations_Runner_ExtractFooter_SectionLink;
+          const labelValue: Lib_Translations_Runner_ExtractFooter_SectionLinkLabelValue = link['label'];
 
           if (typeof labelValue === 'string') {
             Reflect.set(fileContent, `sections.${sectionName}.${linkIndex}.label`, {
@@ -655,7 +655,7 @@ export class Translations {
       }
     }
 
-    const cta: LibTranslationsExtractFooterCta = config['cta'];
+    const cta: Lib_Translations_Runner_ExtractFooter_Cta = config['cta'];
 
     if (typeof cta === 'string') {
       Reflect.set(fileContent, 'cta', {
@@ -667,8 +667,8 @@ export class Translations {
       && cta !== null
       && typeof cta === 'object'
     ) {
-      const ctaObject: LibTranslationsExtractFooterCtaObject = cta as LibTranslationsExtractFooterCtaObject;
-      const ctaLabelValue: LibTranslationsExtractFooterCtaLabelValue = ctaObject['label'];
+      const ctaObject: Lib_Translations_Runner_ExtractFooter_CtaObject = cta as Lib_Translations_Runner_ExtractFooter_CtaObject;
+      const ctaLabelValue: Lib_Translations_Runner_ExtractFooter_CtaLabelValue = ctaObject['label'];
 
       if (typeof ctaLabelValue === 'string') {
         Reflect.set(fileContent, 'cta.label', {
@@ -678,7 +678,7 @@ export class Translations {
       }
     }
 
-    const copyrightValue: LibTranslationsExtractFooterCopyrightValue = config['copyright'];
+    const copyrightValue: Lib_Translations_Runner_ExtractFooter_CopyrightValue = config['copyright'];
 
     if (typeof copyrightValue === 'string') {
       Reflect.set(fileContent, 'copyright', {
@@ -701,17 +701,17 @@ export class Translations {
    * in place with the matching translated message, recursing into
    * dropdown children when present.
    *
-   * @param {LibTranslationsApplyNavbarNavbar}            navbar       - Navbar.
-   * @param {LibTranslationsApplyNavbarTranslationsParam} translations - Translations.
+   * @param {Lib_Translations_Runner_ApplyNavbar_Navbar}            navbar       - Navbar.
+   * @param {Lib_Translations_Runner_ApplyNavbar_TranslationsParam} translations - Translations.
    *
    * @private
    *
-   * @returns {LibTranslationsApplyNavbarReturns}
+   * @returns {Lib_Translations_Runner_ApplyNavbar_Returns}
    *
    * @since 0.18.0
    */
-  private static applyNavbar(navbar: LibTranslationsApplyNavbarNavbar, translations: LibTranslationsApplyNavbarTranslationsParam): LibTranslationsApplyNavbarReturns {
-    const items: LibTranslationsApplyNavbarItems = navbar['items'] as LibTranslationsApplyNavbarItems;
+  private static applyNavbar(navbar: Lib_Translations_Runner_ApplyNavbar_Navbar, translations: Lib_Translations_Runner_ApplyNavbar_TranslationsParam): Lib_Translations_Runner_ApplyNavbar_Returns {
+    const items: Lib_Translations_Runner_ApplyNavbar_Items = navbar['items'] as Lib_Translations_Runner_ApplyNavbar_Items;
 
     if (items === undefined || Array.isArray(items) === false) {
       return undefined;
@@ -722,14 +722,14 @@ export class Translations {
         return undefined;
       }
 
-      const item: LibTranslationsApplyNavbarItem = rawItem;
-      const labelMessage: LibTranslationsApplyNavbarMessage = translations[`item.${itemIndex}.label`];
+      const item: Lib_Translations_Runner_ApplyNavbar_Item = rawItem;
+      const labelMessage: Lib_Translations_Runner_ApplyNavbar_Message = translations[`item.${itemIndex}.label`];
 
       if (labelMessage !== undefined) {
         Reflect.set(item, 'label', labelMessage['message']);
       }
 
-      const children: LibTranslationsApplyNavbarChildren = item['items'] as LibTranslationsApplyNavbarChildren;
+      const children: Lib_Translations_Runner_ApplyNavbar_Children = item['items'] as Lib_Translations_Runner_ApplyNavbar_Children;
 
       if (children !== undefined && Array.isArray(children) === true) {
         children.forEach((rawChild, childIndex) => {
@@ -737,8 +737,8 @@ export class Translations {
             return undefined;
           }
 
-          const child: LibTranslationsApplyNavbarChild = rawChild;
-          const childMessage: LibTranslationsApplyNavbarMessage = translations[`item.${itemIndex}.items.${childIndex}.label`];
+          const child: Lib_Translations_Runner_ApplyNavbar_Child = rawChild;
+          const childMessage: Lib_Translations_Runner_ApplyNavbar_Message = translations[`item.${itemIndex}.items.${childIndex}.label`];
 
           if (childMessage !== undefined) {
             Reflect.set(child, 'label', childMessage['message']);
@@ -761,17 +761,17 @@ export class Translations {
    * when matching translations are present, leaving sidebar and
    * other blog config untouched.
    *
-   * @param {LibTranslationsApplyBlogBlog}              blog         - Blog.
-   * @param {LibTranslationsApplyBlogTranslationsParam} translations - Translations.
+   * @param {Lib_Translations_Runner_ApplyBlog_Blog}              blog         - Blog.
+   * @param {Lib_Translations_Runner_ApplyBlog_TranslationsParam} translations - Translations.
    *
    * @private
    *
-   * @returns {LibTranslationsApplyBlogReturns}
+   * @returns {Lib_Translations_Runner_ApplyBlog_Returns}
    *
    * @since 0.18.0
    */
-  private static applyBlog(blog: LibTranslationsApplyBlogBlog, translations: LibTranslationsApplyBlogTranslationsParam): LibTranslationsApplyBlogReturns {
-    const layout: LibTranslationsApplyBlogLayout = blog['layout'] as LibTranslationsApplyBlogLayout;
+  private static applyBlog(blog: Lib_Translations_Runner_ApplyBlog_Blog, translations: Lib_Translations_Runner_ApplyBlog_TranslationsParam): Lib_Translations_Runner_ApplyBlog_Returns {
+    const layout: Lib_Translations_Runner_ApplyBlog_Layout = blog['layout'] as Lib_Translations_Runner_ApplyBlog_Layout;
 
     if (
       layout === undefined
@@ -781,13 +781,13 @@ export class Translations {
       return undefined;
     }
 
-    const headingMessage: LibTranslationsApplyBlogHeadingMessage = translations['layout.heading'];
+    const headingMessage: Lib_Translations_Runner_ApplyBlog_HeadingMessage = translations['layout.heading'];
 
     if (headingMessage !== undefined) {
       Reflect.set(layout, 'heading', headingMessage['message']);
     }
 
-    const descriptionMessage: LibTranslationsApplyBlogDescriptionMessage = translations['layout.description'];
+    const descriptionMessage: Lib_Translations_Runner_ApplyBlog_DescriptionMessage = translations['layout.description'];
 
     if (descriptionMessage !== undefined) {
       Reflect.set(layout, 'description', descriptionMessage['message']);
@@ -802,17 +802,17 @@ export class Translations {
    * Overwrites the announcement bar `content` field in place with
    * the translated message, leaving id and dismiss settings intact.
    *
-   * @param {LibTranslationsApplyAnnouncementBarAnnouncementBar}   announcementBar - Announcement bar.
-   * @param {LibTranslationsApplyAnnouncementBarTranslationsParam} translations    - Translations.
+   * @param {Lib_Translations_Runner_ApplyAnnouncementBar_AnnouncementBar}   announcementBar - Announcement bar.
+   * @param {Lib_Translations_Runner_ApplyAnnouncementBar_TranslationsParam} translations    - Translations.
    *
    * @private
    *
-   * @returns {LibTranslationsApplyAnnouncementBarReturns}
+   * @returns {Lib_Translations_Runner_ApplyAnnouncementBar_Returns}
    *
    * @since 0.18.0
    */
-  private static applyAnnouncementBar(announcementBar: LibTranslationsApplyAnnouncementBarAnnouncementBar, translations: LibTranslationsApplyAnnouncementBarTranslationsParam): LibTranslationsApplyAnnouncementBarReturns {
-    const message: LibTranslationsApplyAnnouncementBarMessage = translations['content'];
+  private static applyAnnouncementBar(announcementBar: Lib_Translations_Runner_ApplyAnnouncementBar_AnnouncementBar, translations: Lib_Translations_Runner_ApplyAnnouncementBar_TranslationsParam): Lib_Translations_Runner_ApplyAnnouncementBar_Returns {
+    const message: Lib_Translations_Runner_ApplyAnnouncementBar_Message = translations['content'];
 
     if (message !== undefined) {
       Reflect.set(announcementBar, 'content', message['message']);
@@ -828,70 +828,70 @@ export class Translations {
    * config with translated values, leaving any non-string field (e.g.
    * notFound.backHomeHref) untouched.
    *
-   * @param {LibTranslationsApplyErrorPagesErrorPages}            errorPages   - Error pages.
-   * @param {LibTranslationsApplyErrorPagesTranslationsParam}     translations - Translations.
+   * @param {Lib_Translations_Runner_ApplyErrorPages_ErrorPages}            errorPages   - Error pages.
+   * @param {Lib_Translations_Runner_ApplyErrorPages_TranslationsParam}     translations - Translations.
    *
    * @private
    *
-   * @returns {LibTranslationsApplyErrorPagesReturns}
+   * @returns {Lib_Translations_Runner_ApplyErrorPages_Returns}
    *
    * @since 0.18.0
    */
-  private static applyErrorPages(errorPages: LibTranslationsApplyErrorPagesErrorPages, translations: LibTranslationsApplyErrorPagesTranslationsParam): LibTranslationsApplyErrorPagesReturns {
-    const notFound: LibTranslationsApplyErrorPagesNotFound = errorPages['notFound'] as LibTranslationsApplyErrorPagesNotFound;
+  private static applyErrorPages(errorPages: Lib_Translations_Runner_ApplyErrorPages_ErrorPages, translations: Lib_Translations_Runner_ApplyErrorPages_TranslationsParam): Lib_Translations_Runner_ApplyErrorPages_Returns {
+    const notFound: Lib_Translations_Runner_ApplyErrorPages_NotFound = errorPages['notFound'] as Lib_Translations_Runner_ApplyErrorPages_NotFound;
 
     if (
       notFound !== undefined
       && notFound !== null
       && typeof notFound === 'object'
     ) {
-      const titleMessage: LibTranslationsApplyErrorPagesMessage = translations['notFound.title'];
+      const titleMessage: Lib_Translations_Runner_ApplyErrorPages_Message = translations['notFound.title'];
 
       if (titleMessage !== undefined) {
         Reflect.set(notFound, 'title', titleMessage['message']);
       }
 
-      const descriptionMessage: LibTranslationsApplyErrorPagesMessage = translations['notFound.description'];
+      const descriptionMessage: Lib_Translations_Runner_ApplyErrorPages_Message = translations['notFound.description'];
 
       if (descriptionMessage !== undefined) {
         Reflect.set(notFound, 'description', descriptionMessage['message']);
       }
 
-      const backHomeLabelMessage: LibTranslationsApplyErrorPagesMessage = translations['notFound.backHomeLabel'];
+      const backHomeLabelMessage: Lib_Translations_Runner_ApplyErrorPages_Message = translations['notFound.backHomeLabel'];
 
       if (backHomeLabelMessage !== undefined) {
         Reflect.set(notFound, 'backHomeLabel', backHomeLabelMessage['message']);
       }
     }
 
-    const errorPageContent: LibTranslationsApplyErrorPagesErrorPageContent = errorPages['errorPageContent'] as LibTranslationsApplyErrorPagesErrorPageContent;
+    const errorPageContent: Lib_Translations_Runner_ApplyErrorPages_ErrorPageContent = errorPages['errorPageContent'] as Lib_Translations_Runner_ApplyErrorPages_ErrorPageContent;
 
     if (
       errorPageContent !== undefined
       && errorPageContent !== null
       && typeof errorPageContent === 'object'
     ) {
-      const titleMessage: LibTranslationsApplyErrorPagesMessage = translations['errorPageContent.title'];
+      const titleMessage: Lib_Translations_Runner_ApplyErrorPages_Message = translations['errorPageContent.title'];
 
       if (titleMessage !== undefined) {
         Reflect.set(errorPageContent, 'title', titleMessage['message']);
       }
 
-      const retryLabelMessage: LibTranslationsApplyErrorPagesMessage = translations['errorPageContent.retryLabel'];
+      const retryLabelMessage: Lib_Translations_Runner_ApplyErrorPages_Message = translations['errorPageContent.retryLabel'];
 
       if (retryLabelMessage !== undefined) {
         Reflect.set(errorPageContent, 'retryLabel', retryLabelMessage['message']);
       }
     }
 
-    const error: LibTranslationsApplyErrorPagesError = errorPages['error'] as LibTranslationsApplyErrorPagesError;
+    const error: Lib_Translations_Runner_ApplyErrorPages_Error = errorPages['error'] as Lib_Translations_Runner_ApplyErrorPages_Error;
 
     if (
       error !== undefined
       && error !== null
       && typeof error === 'object'
     ) {
-      const retryLabelMessage: LibTranslationsApplyErrorPagesMessage = translations['error.retryLabel'];
+      const retryLabelMessage: Lib_Translations_Runner_ApplyErrorPages_Message = translations['error.retryLabel'];
 
       if (retryLabelMessage !== undefined) {
         Reflect.set(error, 'retryLabel', retryLabelMessage['message']);
@@ -908,17 +908,17 @@ export class Translations {
    * and cta text or label in place - picking the right cta path based
    * on whether `cta` is a bare string or a `{ label, href }` object.
    *
-   * @param {LibTranslationsApplyFooterFooter}            footer       - Footer.
-   * @param {LibTranslationsApplyFooterTranslationsParam} translations - Translations.
+   * @param {Lib_Translations_Runner_ApplyFooter_Footer}            footer       - Footer.
+   * @param {Lib_Translations_Runner_ApplyFooter_TranslationsParam} translations - Translations.
    *
    * @private
    *
-   * @returns {LibTranslationsApplyFooterReturns}
+   * @returns {Lib_Translations_Runner_ApplyFooter_Returns}
    *
    * @since 0.18.0
    */
-  private static applyFooter(footer: LibTranslationsApplyFooterFooter, translations: LibTranslationsApplyFooterTranslationsParam): LibTranslationsApplyFooterReturns {
-    const layout: LibTranslationsApplyFooterLayout = footer['layout'] as LibTranslationsApplyFooterLayout;
+  private static applyFooter(footer: Lib_Translations_Runner_ApplyFooter_Footer, translations: Lib_Translations_Runner_ApplyFooter_TranslationsParam): Lib_Translations_Runner_ApplyFooter_Returns {
+    const layout: Lib_Translations_Runner_ApplyFooter_Layout = footer['layout'] as Lib_Translations_Runner_ApplyFooter_Layout;
 
     if (
       layout !== undefined
@@ -926,13 +926,13 @@ export class Translations {
       && typeof layout === 'object'
     ) {
       for (const slotName of Object.keys(layout)) {
-        const slotConfig: LibTranslationsApplyFooterLayoutSlot = layout[slotName] as LibTranslationsApplyFooterLayoutSlot;
+        const slotConfig: Lib_Translations_Runner_ApplyFooter_LayoutSlot = layout[slotName] as Lib_Translations_Runner_ApplyFooter_LayoutSlot;
 
         if (slotConfig === null || typeof slotConfig !== 'object') {
           continue;
         }
 
-        const titleMessage: LibTranslationsApplyFooterMessage = translations[`layout.${slotName}.title`];
+        const titleMessage: Lib_Translations_Runner_ApplyFooter_Message = translations[`layout.${slotName}.title`];
 
         if (titleMessage !== undefined) {
           Reflect.set(slotConfig, 'title', titleMessage['message']);
@@ -940,7 +940,7 @@ export class Translations {
       }
     }
 
-    const sections: LibTranslationsApplyFooterSections = footer['sections'] as LibTranslationsApplyFooterSections;
+    const sections: Lib_Translations_Runner_ApplyFooter_Sections = footer['sections'] as Lib_Translations_Runner_ApplyFooter_Sections;
 
     if (
       sections !== undefined
@@ -948,7 +948,7 @@ export class Translations {
       && typeof sections === 'object'
     ) {
       for (const sectionName of Object.keys(sections)) {
-        const sectionLinks: LibTranslationsApplyFooterSectionLinks = sections[sectionName] as LibTranslationsApplyFooterSectionLinks;
+        const sectionLinks: Lib_Translations_Runner_ApplyFooter_SectionLinks = sections[sectionName] as Lib_Translations_Runner_ApplyFooter_SectionLinks;
 
         if (Array.isArray(sectionLinks) === false) {
           continue;
@@ -959,8 +959,8 @@ export class Translations {
             return undefined;
           }
 
-          const link: LibTranslationsApplyFooterSectionLink = rawLink;
-          const labelMessage: LibTranslationsApplyFooterMessage = translations[`sections.${sectionName}.${linkIndex}.label`];
+          const link: Lib_Translations_Runner_ApplyFooter_SectionLink = rawLink;
+          const labelMessage: Lib_Translations_Runner_ApplyFooter_Message = translations[`sections.${sectionName}.${linkIndex}.label`];
 
           if (labelMessage !== undefined) {
             Reflect.set(link, 'label', labelMessage['message']);
@@ -971,10 +971,10 @@ export class Translations {
       }
     }
 
-    const cta: LibTranslationsApplyFooterCta = footer['cta'];
+    const cta: Lib_Translations_Runner_ApplyFooter_Cta = footer['cta'];
 
     if (typeof cta === 'string') {
-      const ctaMessage: LibTranslationsApplyFooterMessage = translations['cta'];
+      const ctaMessage: Lib_Translations_Runner_ApplyFooter_Message = translations['cta'];
 
       if (ctaMessage !== undefined) {
         Reflect.set(footer, 'cta', ctaMessage['message']);
@@ -984,15 +984,15 @@ export class Translations {
       && cta !== null
       && typeof cta === 'object'
     ) {
-      const ctaObject: LibTranslationsApplyFooterCtaObject = cta as LibTranslationsApplyFooterCtaObject;
-      const ctaLabelMessage: LibTranslationsApplyFooterMessage = translations['cta.label'];
+      const ctaObject: Lib_Translations_Runner_ApplyFooter_CtaObject = cta as Lib_Translations_Runner_ApplyFooter_CtaObject;
+      const ctaLabelMessage: Lib_Translations_Runner_ApplyFooter_Message = translations['cta.label'];
 
       if (ctaLabelMessage !== undefined) {
         Reflect.set(ctaObject, 'label', ctaLabelMessage['message']);
       }
     }
 
-    const copyrightMessage: LibTranslationsApplyFooterMessage = translations['copyright'];
+    const copyrightMessage: Lib_Translations_Runner_ApplyFooter_Message = translations['copyright'];
 
     if (copyrightMessage !== undefined) {
       Reflect.set(footer, 'copyright', copyrightMessage['message']);

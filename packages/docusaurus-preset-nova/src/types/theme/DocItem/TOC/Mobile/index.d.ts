@@ -6,17 +6,17 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocItemTocMobileDocItemTocMobilePropsClassName = string | undefined;
+export type Theme_DocItem_Toc_Mobile_Index_DocItemTocMobileProps_ClassName = string | undefined;
 
-export type ThemeDocItemTocMobileDocItemTocMobilePropsStyle = CSSProperties | undefined;
+export type Theme_DocItem_Toc_Mobile_Index_DocItemTocMobileProps_Style = CSSProperties | undefined;
 
-export type ThemeDocItemTocMobileDocItemTocMobileProps = {
-  className?: ThemeDocItemTocMobileDocItemTocMobilePropsClassName;
-  style?: ThemeDocItemTocMobileDocItemTocMobilePropsStyle;
+export type Theme_DocItem_Toc_Mobile_Index_DocItemTocMobileProps = {
+  className?: Theme_DocItem_Toc_Mobile_Index_DocItemTocMobileProps_ClassName;
+  style?: Theme_DocItem_Toc_Mobile_Index_DocItemTocMobileProps_Style;
 };
 
-export type ThemeDocItemTocMobileDocItemTocMobileDoc = DocContextValue;
+export type Theme_DocItem_Toc_Mobile_Index_DocItemTocMobileDoc = DocContextValue;
 
-export type ThemeDocItemTocMobileDocItemTocMobileTocSpread = Record<string, unknown>;
+export type Theme_DocItem_Toc_Mobile_Index_DocItemTocMobileTocSpread = Record<string, unknown>;
 
-export type ThemeDocItemTocMobileDocItemTocMobileMergedClassName = string;
+export type Theme_DocItem_Toc_Mobile_Index_DocItemTocMobileMergedClassName = string;

@@ -1,12 +1,12 @@
-import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
-  SharedNovaConfigConfig,
-  SharedNovaConfigWorkspace,
-  SharedNovaConfigWorkspaceRecipes,
-  SharedNovaConfigWorkspaceRecipeSettings,
-  SharedNovaConfigWorkspaceRecipeTuple,
-  SharedWorkspaceManifest,
+  Shared_NovaConfigConfig as SharedNovaConfigConfig,
+  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
+  Shared_NovaConfigWorkspace_Recipes as SharedNovaConfigWorkspaceRecipes,
+  Shared_NovaConfigWorkspaceRecipeSettings as SharedNovaConfigWorkspaceRecipeSettings,
+  Shared_NovaConfigWorkspaceRecipeTuple as SharedNovaConfigWorkspaceRecipeTuple,
+  Shared_WorkspaceManifest as SharedWorkspaceManifest,
 } from '../../../shared.d.ts';
 
 /**
@@ -14,94 +14,94 @@ import type {
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonSyncIdentityHandleWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonSyncIdentityHandleWorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_WorkingFile = SharedNovaConfigConfig;
 
-export type CliRecipePackageJsonSyncIdentityHandleReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Returns = Promise<void>;
 
-export type CliRecipePackageJsonSyncIdentityHandleFileContents = Record<string, unknown>;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FileContents = Record<string, unknown>;
 
-export type CliRecipePackageJsonSyncIdentityHandleFilePath = string;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FilePath = string;
 
-export type CliRecipePackageJsonSyncIdentityHandleManifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Manifest = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonSyncIdentityHandlePackageName = unknown;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageName = unknown;
 
-export type CliRecipePackageJsonSyncIdentityHandlePackageVersion = unknown;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageVersion = unknown;
 
-export type CliRecipePackageJsonSyncIdentityHandlePackageDescription = unknown;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDescription = unknown;
 
-export type CliRecipePackageJsonSyncIdentityHandlePackageKeywords = unknown;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageKeywords = unknown;
 
-export type CliRecipePackageJsonSyncIdentityHandlePackageLicense = unknown;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageLicense = unknown;
 
-export type CliRecipePackageJsonSyncIdentityHandleRecipes = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_Recipes = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandleRecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeTuple = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandleRecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RecipeSettings = SharedNovaConfigWorkspaceRecipeSettings | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandleValidVersion = string;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidVersion = string;
 
-export type CliRecipePackageJsonSyncIdentityHandleValidDescription = string | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidDescription = string | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandleValidKeywords = string[] | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ValidKeywords = string[] | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandleSpdxLicenses = Set<string> | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_SpdxLicenses = Set<string> | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandlePackageDirectory = string;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_PackageDirectory = string;
 
-export type CliRecipePackageJsonSyncIdentityHandleProjectRoot = string;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ProjectRoot = string;
 
-export type CliRecipePackageJsonSyncIdentityHandleLicenseCandidates = string[];
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_LicenseCandidates = string[];
 
-export type CliRecipePackageJsonSyncIdentityHandleResolvedLicensePath = string | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_ResolvedLicensePath = string | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandleRelativeLicensePath = string | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_RelativeLicensePath = string | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandleNormalizedLicenseReference = string | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_NormalizedLicenseReference = string | undefined;
 
-export type CliRecipePackageJsonSyncIdentityHandleFallbackLicense = string;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Handle_FallbackLicense = string;
 
 /**
  * CLI - Recipe - package.json - Sync Identity - Run.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonSyncIdentityRunOptionsDryRun = true;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options_DryRun = true;
 
-export type CliRecipePackageJsonSyncIdentityRunOptionsReplaceFile = true;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options_ReplaceFile = true;
 
-export type CliRecipePackageJsonSyncIdentityRunOptions = {
-  dryRun?: CliRecipePackageJsonSyncIdentityRunOptionsDryRun;
-  replaceFile?: CliRecipePackageJsonSyncIdentityRunOptionsReplaceFile;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options = {
+  dryRun?: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliRecipePackageJsonSyncIdentityRunReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Returns = Promise<void>;
 
-export type CliRecipePackageJsonSyncIdentityRunCurrentDirectory = string;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_CurrentDirectory = string;
 
-export type CliRecipePackageJsonSyncIdentityRunIsAtProjectRoot = boolean;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliRecipePackageJsonSyncIdentityRunIsDryRun = boolean;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsDryRun = boolean;
 
-export type CliRecipePackageJsonSyncIdentityRunIsReplaceFile = boolean;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_IsReplaceFile = boolean;
 
-export type CliRecipePackageJsonSyncIdentityRunReplaceFileNotice = string;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_ReplaceFileNotice = string;
 
-export type CliRecipePackageJsonSyncIdentityRunNovaConfig = LibNovaConfig;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type CliRecipePackageJsonSyncIdentityRunWorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFile = SharedNovaConfigConfig;
 
-export type CliRecipePackageJsonSyncIdentityRunWorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonSyncIdentityRunEligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonSyncIdentityRunWorkspaceConfigFilter = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceConfigFilter = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonSyncIdentityRunWorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_WorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type CliRecipePackageJsonSyncIdentityRunRecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_RecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
-export type CliRecipePackageJsonSyncIdentityRunWorkspaces = SharedWorkspaceManifest[];
+export type Cli_Recipe_PackageJson_SyncIdentity_Runner_Run_Workspaces = SharedWorkspaceManifest[];

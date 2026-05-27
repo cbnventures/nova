@@ -1,6 +1,6 @@
 import type {
-  SharedSearchWorkerSearchHit,
-  SharedSearchWorkerTestDocument,
+  Shared_SearchWorkerSearchHit,
+  Shared_SearchWorkerTestDocument,
 } from '../../../shared.d.ts';
 
 /**
@@ -8,21 +8,21 @@ import type {
  *
  * @since 0.15.0
  */
-export type TestsLibSearchWorkerBuildTestIndexReturns = TestsLibSearchWorkerBuildTestIndexResult;
+export type Tests_Lib_Search_Worker_BuildTestIndex_Returns = Tests_Lib_Search_Worker_BuildTestIndex_Result;
 
-export type TestsLibSearchWorkerBuildTestIndexDocuments = SharedSearchWorkerTestDocument[];
+export type Tests_Lib_Search_Worker_BuildTestIndex_Documents = Shared_SearchWorkerTestDocument[];
 
-export type TestsLibSearchWorkerBuildTestIndexIndex = unknown;
+export type Tests_Lib_Search_Worker_BuildTestIndex_Index = unknown;
 
-export type TestsLibSearchWorkerBuildTestIndexDocumentEntry = SharedSearchWorkerTestDocument | undefined;
+export type Tests_Lib_Search_Worker_BuildTestIndex_DocumentEntry = Shared_SearchWorkerTestDocument | undefined;
 
-export type TestsLibSearchWorkerBuildTestIndexResultIndex = unknown;
+export type Tests_Lib_Search_Worker_BuildTestIndex_Result_Index = unknown;
 
-export type TestsLibSearchWorkerBuildTestIndexResultDocuments = TestsLibSearchWorkerBuildTestIndexDocuments;
+export type Tests_Lib_Search_Worker_BuildTestIndex_Result_Documents = Tests_Lib_Search_Worker_BuildTestIndex_Documents;
 
-export type TestsLibSearchWorkerBuildTestIndexResult = {
-  index: TestsLibSearchWorkerBuildTestIndexResultIndex;
-  documents: TestsLibSearchWorkerBuildTestIndexResultDocuments;
+export type Tests_Lib_Search_Worker_BuildTestIndex_Result = {
+  index: Tests_Lib_Search_Worker_BuildTestIndex_Result_Index;
+  documents: Tests_Lib_Search_Worker_BuildTestIndex_Result_Documents;
 };
 
 /**
@@ -30,90 +30,90 @@ export type TestsLibSearchWorkerBuildTestIndexResult = {
  *
  * @since 0.15.0
  */
-export type TestsLibSearchWorkerDeduplicationIndex = unknown;
+export type Tests_Lib_Search_Worker_DeduplicationIndex = unknown;
 
-export type TestsLibSearchWorkerDeduplicationDocuments = SharedSearchWorkerTestDocument[];
+export type Tests_Lib_Search_Worker_DeduplicationDocuments = Shared_SearchWorkerTestDocument[];
 
-export type TestsLibSearchWorkerDeduplicationResults = SharedSearchWorkerSearchHit[];
+export type Tests_Lib_Search_Worker_DeduplicationResults = Shared_SearchWorkerSearchHit[];
 
-export type TestsLibSearchWorkerDeduplicationPaths = string[];
+export type Tests_Lib_Search_Worker_DeduplicationPaths = string[];
 
-export type TestsLibSearchWorkerDeduplicationHit = SharedSearchWorkerSearchHit;
+export type Tests_Lib_Search_Worker_DeduplicationHit = Shared_SearchWorkerSearchHit;
 
-export type TestsLibSearchWorkerDeduplicationUniquePaths = Set<string>;
+export type Tests_Lib_Search_Worker_DeduplicationUniquePaths = Set<string>;
 
 /**
  * Tests - Lib - Search - Worker - PerformSearch Empty Query.
  *
  * @since 0.15.0
  */
-export type TestsLibSearchWorkerEmptyQueryIndex = unknown;
+export type Tests_Lib_Search_Worker_EmptyQueryIndex = unknown;
 
-export type TestsLibSearchWorkerEmptyQueryDocuments = SharedSearchWorkerTestDocument[];
+export type Tests_Lib_Search_Worker_EmptyQueryDocuments = Shared_SearchWorkerTestDocument[];
 
-export type TestsLibSearchWorkerEmptyQueryResults = SharedSearchWorkerSearchHit[];
+export type Tests_Lib_Search_Worker_EmptyQueryResults = Shared_SearchWorkerSearchHit[];
 
 /**
  * Tests - Lib - Search - Worker - PerformSearch Exact.
  *
  * @since 0.15.0
  */
-export type TestsLibSearchWorkerExactIndex = unknown;
+export type Tests_Lib_Search_Worker_ExactIndex = unknown;
 
-export type TestsLibSearchWorkerExactDocuments = SharedSearchWorkerTestDocument[];
+export type Tests_Lib_Search_Worker_ExactDocuments = Shared_SearchWorkerTestDocument[];
 
-export type TestsLibSearchWorkerExactResults = SharedSearchWorkerSearchHit[];
+export type Tests_Lib_Search_Worker_ExactResults = Shared_SearchWorkerSearchHit[];
 
-export type TestsLibSearchWorkerExactFirstHit = SharedSearchWorkerSearchHit | undefined;
+export type Tests_Lib_Search_Worker_ExactFirstHit = Shared_SearchWorkerSearchHit | undefined;
 
 /**
  * Tests - Lib - Search - Worker - PerformSearch Fuzzy.
  *
  * @since 0.15.0
  */
-export type TestsLibSearchWorkerFuzzyIndex = unknown;
+export type Tests_Lib_Search_Worker_FuzzyIndex = unknown;
 
-export type TestsLibSearchWorkerFuzzyDocuments = SharedSearchWorkerTestDocument[];
+export type Tests_Lib_Search_Worker_FuzzyDocuments = Shared_SearchWorkerTestDocument[];
 
-export type TestsLibSearchWorkerFuzzyResults = SharedSearchWorkerSearchHit[];
+export type Tests_Lib_Search_Worker_FuzzyResults = Shared_SearchWorkerSearchHit[];
 
 /**
  * Tests - Lib - Search - Worker - PerformSearch Limit.
  *
  * @since 0.15.0
  */
-export type TestsLibSearchWorkerLimitIndex = unknown;
+export type Tests_Lib_Search_Worker_LimitIndex = unknown;
 
-export type TestsLibSearchWorkerLimitDocuments = SharedSearchWorkerTestDocument[];
+export type Tests_Lib_Search_Worker_LimitDocuments = Shared_SearchWorkerTestDocument[];
 
-export type TestsLibSearchWorkerLimitResults = SharedSearchWorkerSearchHit[];
+export type Tests_Lib_Search_Worker_LimitResults = Shared_SearchWorkerSearchHit[];
 
 /**
  * Tests - Lib - Search - Worker - PerformSearch Score Sorting.
  *
  * @since 0.15.0
  */
-export type TestsLibSearchWorkerScoreSortingIndex = unknown;
+export type Tests_Lib_Search_Worker_ScoreSortingIndex = unknown;
 
-export type TestsLibSearchWorkerScoreSortingDocuments = SharedSearchWorkerTestDocument[];
+export type Tests_Lib_Search_Worker_ScoreSortingDocuments = Shared_SearchWorkerTestDocument[];
 
-export type TestsLibSearchWorkerScoreSortingResults = SharedSearchWorkerSearchHit[];
+export type Tests_Lib_Search_Worker_ScoreSortingResults = Shared_SearchWorkerSearchHit[];
 
-export type TestsLibSearchWorkerScoreSortingLastResultIndex = number;
+export type Tests_Lib_Search_Worker_ScoreSortingLastResultIndex = number;
 
-export type TestsLibSearchWorkerScoreSortingLastResultItem = SharedSearchWorkerSearchHit | undefined;
+export type Tests_Lib_Search_Worker_ScoreSortingLastResultItem = Shared_SearchWorkerSearchHit | undefined;
 
-export type TestsLibSearchWorkerScoreSortingFirstScore = number;
+export type Tests_Lib_Search_Worker_ScoreSortingFirstScore = number;
 
-export type TestsLibSearchWorkerScoreSortingLastScore = number;
+export type Tests_Lib_Search_Worker_ScoreSortingLastScore = number;
 
 /**
  * Tests - Lib - Search - Worker - PerformSearch Wildcard.
  *
  * @since 0.15.0
  */
-export type TestsLibSearchWorkerWildcardIndex = unknown;
+export type Tests_Lib_Search_Worker_WildcardIndex = unknown;
 
-export type TestsLibSearchWorkerWildcardDocuments = SharedSearchWorkerTestDocument[];
+export type Tests_Lib_Search_Worker_WildcardDocuments = Shared_SearchWorkerTestDocument[];
 
-export type TestsLibSearchWorkerWildcardResults = SharedSearchWorkerSearchHit[];
+export type Tests_Lib_Search_Worker_WildcardResults = Shared_SearchWorkerSearchHit[];

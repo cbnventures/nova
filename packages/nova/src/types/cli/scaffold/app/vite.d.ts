@@ -3,19 +3,19 @@
  *
  * @since 0.15.0
  */
-export type CliScaffoldAppViteRunOptionsDryRun = true;
+export type Cli_Scaffold_App_Vite_Runner_Run_Options_DryRun = true;
 
-export type CliScaffoldAppViteRunOptionsName = string;
+export type Cli_Scaffold_App_Vite_Runner_Run_Options_Name = string;
 
-export type CliScaffoldAppViteRunOptionsOutput = string;
+export type Cli_Scaffold_App_Vite_Runner_Run_Options_Output = string;
 
-export type CliScaffoldAppViteRunOptionsWorkspaceName = string;
+export type Cli_Scaffold_App_Vite_Runner_Run_Options_WorkspaceName = string;
 
-export type CliScaffoldAppViteRunOptions = {
-  dryRun?: CliScaffoldAppViteRunOptionsDryRun;
-  name?: CliScaffoldAppViteRunOptionsName;
-  output?: CliScaffoldAppViteRunOptionsOutput;
-  workspaceName?: CliScaffoldAppViteRunOptionsWorkspaceName;
+export type Cli_Scaffold_App_Vite_Runner_Run_Options = {
+  dryRun?: Cli_Scaffold_App_Vite_Runner_Run_Options_DryRun;
+  name?: Cli_Scaffold_App_Vite_Runner_Run_Options_Name;
+  output?: Cli_Scaffold_App_Vite_Runner_Run_Options_Output;
+  workspaceName?: Cli_Scaffold_App_Vite_Runner_Run_Options_WorkspaceName;
 };
 
-export type CliScaffoldAppViteRunReturns = Promise<void>;
+export type Cli_Scaffold_App_Vite_Runner_Run_Returns = Promise<void>;

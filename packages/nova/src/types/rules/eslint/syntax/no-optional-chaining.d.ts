@@ -6,21 +6,21 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintSyntaxNoOptionalChainingCheckChainExpressionContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintSyntaxNoOptionalChainingCheckChainExpressionNode = TSESTree.ChainExpression;
+export type Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Node = TSESTree.ChainExpression;
 
-export type RulesEslintSyntaxNoOptionalChainingCheckChainExpressionReturns = void;
+export type Rules_Eslint_Syntax_NoOptionalChaining_Runner_CheckChainExpression_Returns = void;
 
 /**
  * Rules - ESLint - Syntax - No Optional Chaining - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintSyntaxNoOptionalChainingRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintSyntaxNoOptionalChainingRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintSyntaxNoOptionalChainingRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintSyntaxNoOptionalChainingRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Syntax_NoOptionalChaining_Runner_RuleOptions_IgnoreFiles;
 }>;

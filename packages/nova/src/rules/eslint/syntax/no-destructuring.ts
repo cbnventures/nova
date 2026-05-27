@@ -3,40 +3,40 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintSyntaxNoDestructuringCheckAssignmentContext,
-  RulesEslintSyntaxNoDestructuringCheckAssignmentNode,
-  RulesEslintSyntaxNoDestructuringCheckAssignmentReturns,
-  RulesEslintSyntaxNoDestructuringCheckCallbackCallee,
-  RulesEslintSyntaxNoDestructuringCheckCallbackContext,
-  RulesEslintSyntaxNoDestructuringCheckCallbackInsideCallback,
-  RulesEslintSyntaxNoDestructuringCheckCallbackNode,
-  RulesEslintSyntaxNoDestructuringCheckCallbackParent,
-  RulesEslintSyntaxNoDestructuringCheckCallbackReturns,
-  RulesEslintSyntaxNoDestructuringCheckDeclaratorContext,
-  RulesEslintSyntaxNoDestructuringCheckDeclaratorNode,
-  RulesEslintSyntaxNoDestructuringCheckDeclaratorParent,
-  RulesEslintSyntaxNoDestructuringCheckDeclaratorReturns,
-  RulesEslintSyntaxNoDestructuringCheckForOfContext,
-  RulesEslintSyntaxNoDestructuringCheckForOfDeclarator,
-  RulesEslintSyntaxNoDestructuringCheckForOfLeft,
-  RulesEslintSyntaxNoDestructuringCheckForOfNode,
-  RulesEslintSyntaxNoDestructuringCheckForOfReturns,
-  RulesEslintSyntaxNoDestructuringCheckFunctionContext,
-  RulesEslintSyntaxNoDestructuringCheckFunctionNode,
-  RulesEslintSyntaxNoDestructuringCheckFunctionParent,
-  RulesEslintSyntaxNoDestructuringCheckFunctionReturns,
-  RulesEslintSyntaxNoDestructuringRuleCheckAssignmentExpressions,
-  RulesEslintSyntaxNoDestructuringRuleCheckCallbackParams,
-  RulesEslintSyntaxNoDestructuringRuleCheckForOfLoops,
-  RulesEslintSyntaxNoDestructuringRuleCheckFunctionParams,
-  RulesEslintSyntaxNoDestructuringRuleCheckVariableDeclarations,
-  RulesEslintSyntaxNoDestructuringRuleDefaultOptionsAssignmentExpressions,
-  RulesEslintSyntaxNoDestructuringRuleDefaultOptionsCallbackParams,
-  RulesEslintSyntaxNoDestructuringRuleDefaultOptionsForOfLoops,
-  RulesEslintSyntaxNoDestructuringRuleDefaultOptionsFunctionParams,
-  RulesEslintSyntaxNoDestructuringRuleDefaultOptionsIgnoreFiles,
-  RulesEslintSyntaxNoDestructuringRuleDefaultOptionsVariableDeclarations,
-  RulesEslintSyntaxNoDestructuringRuleOptions,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Context,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Node,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Returns,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Callee,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Context,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Node,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Parent,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Returns,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Context,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Node,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Parent,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Returns,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Context,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Declarator,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Left,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Node,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Returns,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Context,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Node,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Parent,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Returns,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckAssignmentExpressions,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckCallbackParams,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckForOfLoops,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckFunctionParams,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckVariableDeclarations,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsAssignmentExpressions,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsCallbackParams,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsForOfLoops,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsFunctionParams,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsVariableDeclarations,
+  Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions,
 } from '../../../types/rules/eslint/syntax/no-destructuring.d.ts';
 
 /**
@@ -47,7 +47,7 @@ import type {
  *
  * @since 0.14.0
  */
-export class RulesEslintSyntaxNoDestructuring {
+export class Runner {
   /**
    * Rules - ESLint - Syntax - No Destructuring - Callback Methods.
    *
@@ -126,83 +126,83 @@ export class RulesEslintSyntaxNoDestructuring {
       }],
     },
     defaultOptions: [{
-      assignmentExpressions: true as RulesEslintSyntaxNoDestructuringRuleDefaultOptionsAssignmentExpressions,
-      callbackParams: true as RulesEslintSyntaxNoDestructuringRuleDefaultOptionsCallbackParams,
-      forOfLoops: true as RulesEslintSyntaxNoDestructuringRuleDefaultOptionsForOfLoops,
-      functionParams: true as RulesEslintSyntaxNoDestructuringRuleDefaultOptionsFunctionParams,
-      ignoreFiles: [] as RulesEslintSyntaxNoDestructuringRuleDefaultOptionsIgnoreFiles,
-      variableDeclarations: true as RulesEslintSyntaxNoDestructuringRuleDefaultOptionsVariableDeclarations,
+      assignmentExpressions: true as Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsAssignmentExpressions,
+      callbackParams: true as Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsCallbackParams,
+      forOfLoops: true as Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsForOfLoops,
+      functionParams: true as Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsFunctionParams,
+      ignoreFiles: [] as Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsIgnoreFiles,
+      variableDeclarations: true as Rules_Eslint_Syntax_NoDestructuring_Runner_RuleDefaultOptionsVariableDeclarations,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintSyntaxNoDestructuringRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
         return {};
       }
 
-      const checkCallbackParams: RulesEslintSyntaxNoDestructuringRuleCheckCallbackParams = options['callbackParams'];
-      const checkFunctionParams: RulesEslintSyntaxNoDestructuringRuleCheckFunctionParams = options['functionParams'];
-      const checkForOfLoops: RulesEslintSyntaxNoDestructuringRuleCheckForOfLoops = options['forOfLoops'];
-      const checkVariableDeclarations: RulesEslintSyntaxNoDestructuringRuleCheckVariableDeclarations = options['variableDeclarations'];
-      const checkAssignmentExpressions: RulesEslintSyntaxNoDestructuringRuleCheckAssignmentExpressions = options['assignmentExpressions'];
+      const checkCallbackParams: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckCallbackParams = options['callbackParams'];
+      const checkFunctionParams: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckFunctionParams = options['functionParams'];
+      const checkForOfLoops: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckForOfLoops = options['forOfLoops'];
+      const checkVariableDeclarations: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckVariableDeclarations = options['variableDeclarations'];
+      const checkAssignmentExpressions: Rules_Eslint_Syntax_NoDestructuring_Runner_RuleCheckAssignmentExpressions = options['assignmentExpressions'];
 
       // Per-lint tracking state for callback detection.
-      const insideCallback: RulesEslintSyntaxNoDestructuringCheckCallbackInsideCallback = { value: false };
+      const insideCallback: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback = { value: false };
 
       return {
         'ArrowFunctionExpression'(node) {
           if (checkCallbackParams === true) {
-            RulesEslintSyntaxNoDestructuring.checkCallback(context, node, insideCallback);
+            Runner.checkCallback(context, node, insideCallback);
           }
 
           return;
         },
         'FunctionExpression'(node) {
           if (checkCallbackParams === true) {
-            RulesEslintSyntaxNoDestructuring.checkCallback(context, node, insideCallback);
+            Runner.checkCallback(context, node, insideCallback);
           }
 
           return;
         },
         'ForOfStatement'(node) {
           if (checkForOfLoops === true) {
-            RulesEslintSyntaxNoDestructuring.checkForOf(context, node);
+            Runner.checkForOf(context, node);
           }
 
           return;
         },
         'FunctionDeclaration'(node) {
           if (checkFunctionParams === true) {
-            RulesEslintSyntaxNoDestructuring.checkFunction(context, node);
+            Runner.checkFunction(context, node);
           }
 
           return;
         },
         'ArrowFunctionExpression:exit'(node) {
           if (checkFunctionParams === true) {
-            RulesEslintSyntaxNoDestructuring.checkFunction(context, node);
+            Runner.checkFunction(context, node);
           }
 
           return;
         },
         'FunctionExpression:exit'(node) {
           if (checkFunctionParams === true) {
-            RulesEslintSyntaxNoDestructuring.checkFunction(context, node);
+            Runner.checkFunction(context, node);
           }
 
           return;
         },
         'VariableDeclarator'(node) {
           if (checkVariableDeclarations === true) {
-            RulesEslintSyntaxNoDestructuring.checkDeclarator(context, node);
+            Runner.checkDeclarator(context, node);
           }
 
           return;
         },
         'AssignmentExpression'(node) {
           if (checkAssignmentExpressions === true) {
-            RulesEslintSyntaxNoDestructuring.checkAssignment(context, node);
+            Runner.checkAssignment(context, node);
           }
 
           return;
@@ -220,16 +220,16 @@ export class RulesEslintSyntaxNoDestructuring {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoDestructuringCheckCallbackContext}        context        - Context.
-   * @param {RulesEslintSyntaxNoDestructuringCheckCallbackNode}           node           - Node.
-   * @param {RulesEslintSyntaxNoDestructuringCheckCallbackInsideCallback} insideCallback - Inside callback.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Context}        context        - Context.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Node}           node           - Node.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback} insideCallback - Inside callback.
    *
-   * @returns {RulesEslintSyntaxNoDestructuringCheckCallbackReturns}
+   * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Returns}
    *
    * @since 0.14.0
    */
-  private static checkCallback(context: RulesEslintSyntaxNoDestructuringCheckCallbackContext, node: RulesEslintSyntaxNoDestructuringCheckCallbackNode, insideCallback: RulesEslintSyntaxNoDestructuringCheckCallbackInsideCallback): RulesEslintSyntaxNoDestructuringCheckCallbackReturns {
-    const parent: RulesEslintSyntaxNoDestructuringCheckCallbackParent = node.parent;
+  private static checkCallback(context: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Context, node: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Node, insideCallback: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_InsideCallback): Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Returns {
+    const parent: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Parent = node.parent;
 
     // Check if this function is a callback argument to a method call.
     if (
@@ -240,13 +240,13 @@ export class RulesEslintSyntaxNoDestructuring {
       return;
     }
 
-    const callee: RulesEslintSyntaxNoDestructuringCheckCallbackCallee = parent.callee;
+    const callee: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckCallback_Callee = parent.callee;
 
     if (callee.type !== 'MemberExpression' || callee.property.type !== 'Identifier') {
       return;
     }
 
-    if (RulesEslintSyntaxNoDestructuring.#callbackMethods.has(callee.property.name) === false) {
+    if (Runner.#callbackMethods.has(callee.property.name) === false) {
       return;
     }
 
@@ -273,21 +273,21 @@ export class RulesEslintSyntaxNoDestructuring {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoDestructuringCheckForOfContext} context - Context.
-   * @param {RulesEslintSyntaxNoDestructuringCheckForOfNode}    node    - Node.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Context} context - Context.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Node}    node    - Node.
    *
-   * @returns {RulesEslintSyntaxNoDestructuringCheckForOfReturns}
+   * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Returns}
    *
    * @since 0.14.0
    */
-  private static checkForOf(context: RulesEslintSyntaxNoDestructuringCheckForOfContext, node: RulesEslintSyntaxNoDestructuringCheckForOfNode): RulesEslintSyntaxNoDestructuringCheckForOfReturns {
-    const left: RulesEslintSyntaxNoDestructuringCheckForOfLeft = node.left;
+  private static checkForOf(context: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Context, node: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Node): Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Returns {
+    const left: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Left = node.left;
 
     if (left.type !== 'VariableDeclaration') {
       return;
     }
 
-    const declarator: RulesEslintSyntaxNoDestructuringCheckForOfDeclarator = left.declarations[0];
+    const declarator: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckForOf_Declarator = left.declarations[0];
 
     if (declarator === undefined) {
       return;
@@ -314,16 +314,16 @@ export class RulesEslintSyntaxNoDestructuring {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoDestructuringCheckFunctionContext} context - Context.
-   * @param {RulesEslintSyntaxNoDestructuringCheckFunctionNode}    node    - Node.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Context} context - Context.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Node}    node    - Node.
    *
-   * @returns {RulesEslintSyntaxNoDestructuringCheckFunctionReturns}
+   * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Returns}
    *
    * @since 0.14.0
    */
-  private static checkFunction(context: RulesEslintSyntaxNoDestructuringCheckFunctionContext, node: RulesEslintSyntaxNoDestructuringCheckFunctionNode): RulesEslintSyntaxNoDestructuringCheckFunctionReturns {
+  private static checkFunction(context: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Context, node: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Node): Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Returns {
     // Skip callback functions (handled by checkCallback).
-    const parent: RulesEslintSyntaxNoDestructuringCheckFunctionParent = node.parent;
+    const parent: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckFunction_Parent = node.parent;
 
     if (
       parent !== undefined
@@ -354,20 +354,20 @@ export class RulesEslintSyntaxNoDestructuring {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoDestructuringCheckDeclaratorContext} context - Context.
-   * @param {RulesEslintSyntaxNoDestructuringCheckDeclaratorNode}    node    - Node.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Context} context - Context.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Node}    node    - Node.
    *
-   * @returns {RulesEslintSyntaxNoDestructuringCheckDeclaratorReturns}
+   * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Returns}
    *
    * @since 0.14.0
    */
-  private static checkDeclarator(context: RulesEslintSyntaxNoDestructuringCheckDeclaratorContext, node: RulesEslintSyntaxNoDestructuringCheckDeclaratorNode): RulesEslintSyntaxNoDestructuringCheckDeclaratorReturns {
+  private static checkDeclarator(context: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Context, node: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Node): Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Returns {
     if (node.id.type !== 'ObjectPattern' && node.id.type !== 'ArrayPattern') {
       return;
     }
 
     // Skip for-of variable declarations (handled by checkForOf).
-    const parent: RulesEslintSyntaxNoDestructuringCheckDeclaratorParent = node.parent;
+    const parent: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckDeclarator_Parent = node.parent;
 
     if (
       parent !== undefined
@@ -396,14 +396,14 @@ export class RulesEslintSyntaxNoDestructuring {
    *
    * @private
    *
-   * @param {RulesEslintSyntaxNoDestructuringCheckAssignmentContext} context - Context.
-   * @param {RulesEslintSyntaxNoDestructuringCheckAssignmentNode}    node    - Node.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Context} context - Context.
+   * @param {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Node}    node    - Node.
    *
-   * @returns {RulesEslintSyntaxNoDestructuringCheckAssignmentReturns}
+   * @returns {Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Returns}
    *
    * @since 0.14.0
    */
-  private static checkAssignment(context: RulesEslintSyntaxNoDestructuringCheckAssignmentContext, node: RulesEslintSyntaxNoDestructuringCheckAssignmentNode): RulesEslintSyntaxNoDestructuringCheckAssignmentReturns {
+  private static checkAssignment(context: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Context, node: Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Node): Rules_Eslint_Syntax_NoDestructuring_Runner_CheckAssignment_Returns {
     if (node.left.type === 'ObjectPattern' || node.left.type === 'ArrayPattern') {
       context.report({
         node: node.left,

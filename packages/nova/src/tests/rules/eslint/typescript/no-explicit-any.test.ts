@@ -4,7 +4,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoExplicitAny } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintTypescriptNoExplicitAnyRuleTester } from '../../../../types/tests/rules/eslint/typescript/no-explicit-any.test.d.ts';
+import type { Tests_Rules_Eslint_Typescript_NoExplicitAny_RuleTester } from '../../../../types/tests/rules/eslint/typescript/no-explicit-any.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - TypeScript - No Explicit Any.
@@ -15,7 +15,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintTypescriptNoExplicitAnyRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Typescript_NoExplicitAny_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

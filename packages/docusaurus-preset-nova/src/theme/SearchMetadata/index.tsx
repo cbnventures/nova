@@ -1,6 +1,6 @@
 import Head from '@docusaurus/Head';
 
-import type { ThemeSearchMetadataSearchMetadataProps } from '../../types/theme/SearchMetadata/index.d.ts';
+import type { Theme_SearchMetadata_Index_SearchMetadata_Props } from '../../types/theme/SearchMetadata/index.d.ts';
 
 /**
  * Theme - Search Metadata - Search Metadata.
@@ -9,13 +9,13 @@ import type { ThemeSearchMetadataSearchMetadataProps } from '../../types/theme/S
  * so that search plugins can index content by locale,
  * version, and tag attributes.
  *
- * @param {ThemeSearchMetadataSearchMetadataProps} props - Props.
+ * @param {Theme_SearchMetadata_Index_SearchMetadata_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function SearchMetadata(props: ThemeSearchMetadataSearchMetadataProps) {
+function SearchMetadata(props: Theme_SearchMetadata_Index_SearchMetadata_Props) {
   return (
     <Head>
       {(props['locale'] !== undefined) && (

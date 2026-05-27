@@ -33,15 +33,52 @@ import {
 import { describe, it } from 'vitest';
 
 import type {
-  GetAccessorDeclaration,
-  MethodDeclaration,
   Node,
-  SetAccessorDeclaration,
   SourceFile,
   StringLiteral,
 } from 'typescript';
 
 import type {
+  Tests_TypeDeclarations_BuildDtsSections_ClassPrefix,
+  Tests_TypeDeclarations_BuildDtsSections_DtsLines,
+  Tests_TypeDeclarations_BuildDtsSections_Match,
+  Tests_TypeDeclarations_BuildDtsSections_OwningSection,
+  Tests_TypeDeclarations_BuildDtsSections_Returns,
+  Tests_TypeDeclarations_BuildDtsSections_Section,
+  Tests_TypeDeclarations_BuildDtsSections_SectionA,
+  Tests_TypeDeclarations_BuildDtsSections_SectionB,
+  Tests_TypeDeclarations_BuildDtsSections_SectionMap,
+  Tests_TypeDeclarations_BuildDtsSections_SectionOrder,
+  Tests_TypeDeclarations_BuildDtsSections_SortedSections,
+  Tests_TypeDeclarations_BuildDtsSections_SourceSections,
+  Tests_TypeDeclarations_BuildDtsSections_TypeName,
+  Tests_TypeDeclarations_BuildSourceSectionMap_AccessorUnion,
+  Tests_TypeDeclarations_BuildSourceSectionMap_Arg,
+  Tests_TypeDeclarations_BuildSourceSectionMap_CallbackArg,
+  Tests_TypeDeclarations_BuildSourceSectionMap_Chunk,
+  Tests_TypeDeclarations_BuildSourceSectionMap_ClassPrefix,
+  Tests_TypeDeclarations_BuildSourceSectionMap_CleanMethodName,
+  Tests_TypeDeclarations_BuildSourceSectionMap_Content,
+  Tests_TypeDeclarations_BuildSourceSectionMap_CurrentDepth,
+  Tests_TypeDeclarations_BuildSourceSectionMap_FilePath,
+  Tests_TypeDeclarations_BuildSourceSectionMap_HasInitializer,
+  Tests_TypeDeclarations_BuildSourceSectionMap_Interp,
+  Tests_TypeDeclarations_BuildSourceSectionMap_LineNumber,
+  Tests_TypeDeclarations_BuildSourceSectionMap_MaxDepth,
+  Tests_TypeDeclarations_BuildSourceSectionMap_PascalCaseName,
+  Tests_TypeDeclarations_BuildSourceSectionMap_PascalCaseReturns,
+  Tests_TypeDeclarations_BuildSourceSectionMap_RawMethodName,
+  Tests_TypeDeclarations_BuildSourceSectionMap_Returns,
+  Tests_TypeDeclarations_BuildSourceSectionMap_Section,
+  Tests_TypeDeclarations_BuildSourceSectionMap_SectionMap,
+  Tests_TypeDeclarations_BuildSourceSectionMap_TagAllChildrenReturns,
+  Tests_TypeDeclarations_BuildSourceSectionMap_VisitReturns,
+  Tests_TypeDeclarations_CheckTypeNameUniqueness_Declarations,
+  Tests_TypeDeclarations_CheckTypeNameUniqueness_FoundFirstOccurrence,
+  Tests_TypeDeclarations_CheckTypeNameUniqueness_Returns,
+  Tests_TypeDeclarations_CheckTypeNameUniqueness_SeenMap,
+  Tests_TypeDeclarations_CheckTypeNameUniqueness_Violation,
+  Tests_TypeDeclarations_CheckTypeNameUniqueness_Violations,
   Tests_TypeDeclarations_DeriveClassPrefix_CurrentDirectory,
   Tests_TypeDeclarations_DeriveClassPrefix_FilePath,
   Tests_TypeDeclarations_DeriveClassPrefix_RelativeCleaned,
@@ -50,25 +87,97 @@ import type {
   Tests_TypeDeclarations_DeriveClassPrefix_Segments,
   Tests_TypeDeclarations_DeriveSourcePath_DtsPath,
   Tests_TypeDeclarations_DeriveSourcePath_Returns,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callbacks,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Content,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_FilePath,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_IsFunctionTypedConst,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_LineNumber,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithKindShape,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithParentShape,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTextShape,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameShape,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameTextShape,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_ParamNodeShape,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_VisitReturns,
+  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Walker,
+  Tests_TypeDeclarations_DiscoverSourceFiles_Files,
+  Tests_TypeDeclarations_DiscoverSourceFiles_IgnorePatterns,
+  Tests_TypeDeclarations_DiscoverSourceFiles_Matched,
+  Tests_TypeDeclarations_DiscoverSourceFiles_Patterns,
+  Tests_TypeDeclarations_DiscoverSourceFiles_Returns,
   Tests_TypeDeclarations_DiscoverTypeFiles_Matched,
   Tests_TypeDeclarations_DiscoverTypeFiles_Patterns,
   Tests_TypeDeclarations_DiscoverTypeFiles_Returns,
+  Tests_TypeDeclarations_ExtractArrayTypes_ArrayLine,
+  Tests_TypeDeclarations_ExtractArrayTypes_ArrayType,
+  Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ArrayTypeName,
+  Tests_TypeDeclarations_ExtractArrayTypes_ArrayTypes,
+  Tests_TypeDeclarations_ExtractArrayTypes_ElementLine,
+  Tests_TypeDeclarations_ExtractArrayTypes_Exempt,
+  Tests_TypeDeclarations_ExtractArrayTypes_Line,
+  Tests_TypeDeclarations_ExtractArrayTypes_LineIndex,
+  Tests_TypeDeclarations_ExtractArrayTypes_Lines,
+  Tests_TypeDeclarations_ExtractArrayTypes_Match,
+  Tests_TypeDeclarations_ExtractArrayTypes_Returns,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_Declarations,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_FoundDeclaration,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_Keyword,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_Line,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_LineIndex,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_Lines,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_Match,
+  Tests_TypeDeclarations_ExtractBodyDeclarations_Returns,
+  Tests_TypeDeclarations_ExtractFunctionParams_Content,
+  Tests_TypeDeclarations_ExtractFunctionParams_FilePath,
+  Tests_TypeDeclarations_ExtractFunctionParams_FoundParam,
+  Tests_TypeDeclarations_ExtractFunctionParams_LineNumber,
+  Tests_TypeDeclarations_ExtractFunctionParams_NodeWithParametersShape,
+  Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTextShape,
+  Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameShape,
+  Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameTextShape,
+  Tests_TypeDeclarations_ExtractFunctionParams_Param,
+  Tests_TypeDeclarations_ExtractFunctionParams_ParameterList,
+  Tests_TypeDeclarations_ExtractFunctionParams_ParamNodeShape,
+  Tests_TypeDeclarations_ExtractFunctionParams_Params,
+  Tests_TypeDeclarations_ExtractFunctionParams_Returns,
+  Tests_TypeDeclarations_ExtractFunctionParams_VisitReturns,
+  Tests_TypeDeclarations_ExtractFunctionReturns_Content,
+  Tests_TypeDeclarations_ExtractFunctionReturns_FilePath,
+  Tests_TypeDeclarations_ExtractFunctionReturns_FnNodeShape,
+  Tests_TypeDeclarations_ExtractFunctionReturns_FunctionReturns,
+  Tests_TypeDeclarations_ExtractFunctionReturns_IsTypeGuard,
+  Tests_TypeDeclarations_ExtractFunctionReturns_LineNumber,
+  Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameShape,
+  Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape,
+  Tests_TypeDeclarations_ExtractFunctionReturns_PredicateNodeShape,
+  Tests_TypeDeclarations_ExtractFunctionReturns_Return,
+  Tests_TypeDeclarations_ExtractFunctionReturns_Returns,
+  Tests_TypeDeclarations_ExtractFunctionReturns_ReturnType,
+  Tests_TypeDeclarations_ExtractFunctionReturns_TypeNode,
+  Tests_TypeDeclarations_ExtractFunctionReturns_VisitReturns,
   Tests_TypeDeclarations_ExtractImportedNames_ImportedNames,
   Tests_TypeDeclarations_ExtractImportedNames_InImportBlock,
   Tests_TypeDeclarations_ExtractImportedNames_InlineMatchCapture,
   Tests_TypeDeclarations_ExtractImportedNames_Lines,
   Tests_TypeDeclarations_ExtractImportedNames_Match,
   Tests_TypeDeclarations_ExtractImportedNames_Returns,
+  Tests_TypeDeclarations_ExtractImportedNames_SortedSpecifiers,
   Tests_TypeDeclarations_ExtractImportedNames_Specifiers,
   Tests_TypeDeclarations_ExtractImportedNames_Trimmed,
   Tests_TypeDeclarations_ExtractObjectTypes_ClassPrefix,
+  Tests_TypeDeclarations_ExtractObjectTypes_FoundObjectType,
   Tests_TypeDeclarations_ExtractObjectTypes_Line,
   Tests_TypeDeclarations_ExtractObjectTypes_LineIndex,
   Tests_TypeDeclarations_ExtractObjectTypes_Lines,
   Tests_TypeDeclarations_ExtractObjectTypes_Match,
   Tests_TypeDeclarations_ExtractObjectTypes_ObjectTypeProperties,
   Tests_TypeDeclarations_ExtractObjectTypes_ObjectTypes,
+  Tests_TypeDeclarations_ExtractObjectTypes_ParentLine,
   Tests_TypeDeclarations_ExtractObjectTypes_PropertyKey,
+  Tests_TypeDeclarations_ExtractObjectTypes_PropertyTypeLine,
   Tests_TypeDeclarations_ExtractObjectTypes_PropertyValueType,
   Tests_TypeDeclarations_ExtractObjectTypes_Returns,
   Tests_TypeDeclarations_ExtractObjectTypes_Trimmed,
@@ -84,6 +193,12 @@ import type {
   Tests_TypeDeclarations_ExtractReferencedTypes_TypeMatch,
   Tests_TypeDeclarations_ExtractReferencedTypes_TypeName,
   Tests_TypeDeclarations_ExtractReferencedTypes_TypePattern,
+  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Content,
+  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_FilePath,
+  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier,
+  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifiers,
+  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_LineNumber,
+  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns,
   Tests_TypeDeclarations_ExtractTypeNames_Match,
   Tests_TypeDeclarations_ExtractTypeNames_Returns,
   Tests_TypeDeclarations_ExtractTypeNames_TypeLines,
@@ -100,6 +215,37 @@ import type {
   Tests_TypeDeclarations_GetPackageRoot_CurrentFileDirectory,
   Tests_TypeDeclarations_GetPackageRoot_CurrentFilePath,
   Tests_TypeDeclarations_GetPackageRoot_Returns,
+  Tests_TypeDeclarations_IsAliasToForeignType_ClassPrefix,
+  Tests_TypeDeclarations_IsAliasToForeignType_DtsContent,
+  Tests_TypeDeclarations_IsAliasToForeignType_LeftmostType,
+  Tests_TypeDeclarations_IsAliasToForeignType_Match,
+  Tests_TypeDeclarations_IsAliasToForeignType_Pattern,
+  Tests_TypeDeclarations_IsAliasToForeignType_Returns,
+  Tests_TypeDeclarations_IsAliasToForeignType_Rhs,
+  Tests_TypeDeclarations_IsAliasToForeignType_TypeMatch,
+  Tests_TypeDeclarations_IsAliasToForeignType_TypeName,
+  Tests_TypeDeclarations_IsLocallyDefined_DtsContent,
+  Tests_TypeDeclarations_IsLocallyDefined_Pattern,
+  Tests_TypeDeclarations_IsLocallyDefined_Returns,
+  Tests_TypeDeclarations_IsLocallyDefined_TypeName,
+  Tests_TypeDeclarations_IsReservedSuffix_Returns,
+  Tests_TypeDeclarations_IsReservedSuffix_TypeName,
+  Tests_TypeDeclarations_ParseDescribeString_Input,
+  Tests_TypeDeclarations_ParseDescribeString_Pieces,
+  Tests_TypeDeclarations_ParseDescribeString_Returns,
+  Tests_TypeDeclarations_ParseSourceFile_Cached,
+  Tests_TypeDeclarations_ParseSourceFile_Content,
+  Tests_TypeDeclarations_ParseSourceFile_FilePath,
+  Tests_TypeDeclarations_ParseSourceFile_Returns,
+  Tests_TypeDeclarations_ParseSourceFile_SourceFileCache,
+  Tests_TypeDeclarations_RunRulePipeline_ClassPrefix,
+  Tests_TypeDeclarations_RunRulePipeline_DtsContent,
+  Tests_TypeDeclarations_RunRulePipeline_FilePath,
+  Tests_TypeDeclarations_RunRulePipeline_Returns,
+  Tests_TypeDeclarations_RunRulePipeline_SourceContent,
+  Tests_TypeDeclarations_RunRulePipeline_Violations,
+  Tests_TypeDeclarations_StripUnderscorePrefix_Input,
+  Tests_TypeDeclarations_StripUnderscorePrefix_Returns,
   Tests_TypeDeclarations_TestConfig,
   Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_ClassPrefix,
   Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Content,
@@ -122,29 +268,51 @@ import type {
   Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_SourceSectionSet,
   Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Violation,
   Tests_TypeDeclarations_TypeDeclarationCrossSectionReferences_Violations,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_AllFiles,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Cleaned,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_CurrentDirectory,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_DtsFiles,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_RelativePath,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Segments,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_SourceFiles,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Violation,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_ViolationMessage,
+  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Violations,
+  Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayElementTypeNames,
+  Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayTypes,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ClassPrefix,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Content,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_CurrentDirectory,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Files,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_LineIndex,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Lines,
-  Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayElementTypeNames,
-  Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ArrayTypes,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectPropertyTypeNames,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_ObjectTypes,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_RelativePath,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SectionMap,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Sections,
-  Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceSectionSet,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceExists,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceLineIndex,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourcePath,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourcePathAlternative,
+  Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_SourceSectionSet,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypeNames,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePosition,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_TypePositions,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Violation,
   Tests_TypeDeclarations_TypeDeclarationFirstComeFirstServeOrder_Violations,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_ClassPrefix,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Content,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_CurrentDirectory,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_FileName,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Files,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifiers,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_RelativePath,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Segments,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violation,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_ViolationMessage,
+  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violations,
   Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_Content,
   Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_CurrentDirectory,
   Tests_TypeDeclarations_TypeDeclarationImportSpecifierOrder_CurrentSpecifier,
@@ -210,15 +378,47 @@ import type {
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ReverseTypeName,
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SectionMap,
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Sections,
+  Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SingleChunkTopLevelTypes,
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourceExists,
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourcePath,
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourcePathAlternative,
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SourceSectionSet,
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Violation,
   Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Violations,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_BrandCasePattern,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Content,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_CurrentDirectory,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_DtsFiles,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ElementLine,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ExpectedPropertyPrefix,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_FirstChunk,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_IsPathPrefixStyle,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_KnownTopLevels,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LineIndex,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Lines,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LineToScan,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LocalTypeSet,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectName,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PascalCasePattern,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PositionMatch,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PrimitiveSet,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PropertyValueType,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_RelativePath,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_SourceClassPrefix,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_SourceFiles,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_StandaloneFiles,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TopLevelPathPrefixes,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeLines,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeName,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeNames,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypePositions,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violation,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ViolationMessage,
+  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violations,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_BodyDecls,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Callbacks,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ClassPrefix,
+  Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_CleanedDtsPath,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Content,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_CurrentDirectory,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_DtsContent,
@@ -230,6 +430,7 @@ import type {
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_LeafResult,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Lines,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Params,
+  Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_RelativeDtsPath,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_RelativePath,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_ReturnValidationReason,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_SectionMap,
@@ -239,162 +440,10 @@ import type {
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_UniquenessViolations,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation,
   Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violations,
-  Tests_TypeDeclarations_BuildDtsSections_ClassPrefix,
-  Tests_TypeDeclarations_BuildDtsSections_DtsLines,
-  Tests_TypeDeclarations_BuildDtsSections_Match,
-  Tests_TypeDeclarations_BuildDtsSections_OwningSection,
-  Tests_TypeDeclarations_BuildDtsSections_Returns,
-  Tests_TypeDeclarations_BuildDtsSections_Section,
-  Tests_TypeDeclarations_BuildDtsSections_SectionMap,
-  Tests_TypeDeclarations_BuildDtsSections_SectionOrder,
-  Tests_TypeDeclarations_BuildDtsSections_SortedSections,
-  Tests_TypeDeclarations_BuildDtsSections_SourceSections,
-  Tests_TypeDeclarations_BuildDtsSections_TypeName,
-  Tests_TypeDeclarations_BuildSourceSectionMap_ClassPrefix,
-  Tests_TypeDeclarations_BuildSourceSectionMap_Content,
-  Tests_TypeDeclarations_BuildSourceSectionMap_CurrentDepth,
-  Tests_TypeDeclarations_BuildSourceSectionMap_FilePath,
-  Tests_TypeDeclarations_BuildSourceSectionMap_LineNumber,
-  Tests_TypeDeclarations_BuildSourceSectionMap_MaxDepth,
-  Tests_TypeDeclarations_BuildSourceSectionMap_Returns,
-  Tests_TypeDeclarations_BuildSourceSectionMap_Section,
-  Tests_TypeDeclarations_BuildSourceSectionMap_SectionMap,
-  Tests_TypeDeclarations_CheckTypeNameUniqueness_Declaration,
-  Tests_TypeDeclarations_CheckTypeNameUniqueness_Declarations,
-  Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence,
-  Tests_TypeDeclarations_CheckTypeNameUniqueness_Returns,
-  Tests_TypeDeclarations_CheckTypeNameUniqueness_SeenMap,
-  Tests_TypeDeclarations_CheckTypeNameUniqueness_Violation,
-  Tests_TypeDeclarations_CheckTypeNameUniqueness_Violations,
-  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback,
-  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callbacks,
-  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Content,
-  Tests_TypeDeclarations_DetectInlineTypedCallbacks_FilePath,
-  Tests_TypeDeclarations_DetectInlineTypedCallbacks_LineNumber,
-  Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns,
-  Tests_TypeDeclarations_DiscoverSourceFiles_Files,
-  Tests_TypeDeclarations_DiscoverSourceFiles_IgnorePatterns,
-  Tests_TypeDeclarations_DiscoverSourceFiles_Matched,
-  Tests_TypeDeclarations_DiscoverSourceFiles_Patterns,
-  Tests_TypeDeclarations_DiscoverSourceFiles_Returns,
-  Tests_TypeDeclarations_ExtractArrayTypes_ArrayType,
-  Tests_TypeDeclarations_ExtractArrayTypes_ArrayTypes,
-  Tests_TypeDeclarations_ExtractArrayTypes_Line,
-  Tests_TypeDeclarations_ExtractArrayTypes_LineIndex,
-  Tests_TypeDeclarations_ExtractArrayTypes_Lines,
-  Tests_TypeDeclarations_ExtractArrayTypes_Match,
-  Tests_TypeDeclarations_ExtractArrayTypes_Returns,
-  Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration,
-  Tests_TypeDeclarations_ExtractBodyDeclarations_Declarations,
-  Tests_TypeDeclarations_ExtractBodyDeclarations_Keyword,
-  Tests_TypeDeclarations_ExtractBodyDeclarations_Line,
-  Tests_TypeDeclarations_ExtractBodyDeclarations_LineIndex,
-  Tests_TypeDeclarations_ExtractBodyDeclarations_Lines,
-  Tests_TypeDeclarations_ExtractBodyDeclarations_Match,
-  Tests_TypeDeclarations_ExtractBodyDeclarations_Returns,
-  Tests_TypeDeclarations_ExtractFunctionParams_Content,
-  Tests_TypeDeclarations_ExtractFunctionParams_FilePath,
-  Tests_TypeDeclarations_ExtractFunctionParams_LineNumber,
-  Tests_TypeDeclarations_ExtractFunctionParams_Param,
-  Tests_TypeDeclarations_ExtractFunctionParams_Params,
-  Tests_TypeDeclarations_ExtractFunctionParams_Returns,
-  Tests_TypeDeclarations_ExtractFunctionReturns_Content,
-  Tests_TypeDeclarations_ExtractFunctionReturns_FilePath,
-  Tests_TypeDeclarations_ExtractFunctionReturns_FunctionReturns,
-  Tests_TypeDeclarations_ExtractFunctionReturns_IsTypeGuard,
-  Tests_TypeDeclarations_ExtractFunctionReturns_LineNumber,
-  Tests_TypeDeclarations_ExtractFunctionReturns_Return,
-  Tests_TypeDeclarations_ExtractFunctionReturns_ReturnType,
-  Tests_TypeDeclarations_ExtractFunctionReturns_Returns,
-  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Content,
-  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_FilePath,
-  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifier,
-  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Identifiers,
-  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_LineNumber,
-  Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns,
-  Tests_TypeDeclarations_IsAliasToForeignType_ClassPrefix,
-  Tests_TypeDeclarations_IsAliasToForeignType_DtsContent,
-  Tests_TypeDeclarations_IsAliasToForeignType_LeftmostType,
-  Tests_TypeDeclarations_IsAliasToForeignType_Match,
-  Tests_TypeDeclarations_IsAliasToForeignType_Pattern,
-  Tests_TypeDeclarations_IsAliasToForeignType_Returns,
-  Tests_TypeDeclarations_IsAliasToForeignType_Rhs,
-  Tests_TypeDeclarations_IsAliasToForeignType_TypeMatch,
-  Tests_TypeDeclarations_IsAliasToForeignType_TypeName,
-  Tests_TypeDeclarations_IsLocallyDefined_DtsContent,
-  Tests_TypeDeclarations_IsLocallyDefined_Pattern,
-  Tests_TypeDeclarations_IsLocallyDefined_Returns,
-  Tests_TypeDeclarations_IsLocallyDefined_TypeName,
-  Tests_TypeDeclarations_IsReservedSuffix_Returns,
-  Tests_TypeDeclarations_IsReservedSuffix_TypeName,
-  Tests_TypeDeclarations_ParseDescribeString_Input,
-  Tests_TypeDeclarations_ParseDescribeString_Pieces,
-  Tests_TypeDeclarations_ParseDescribeString_Returns,
-  Tests_TypeDeclarations_ParseSourceFile_Cached,
-  Tests_TypeDeclarations_ParseSourceFile_CachedEntry,
-  Tests_TypeDeclarations_ParseSourceFile_Content,
-  Tests_TypeDeclarations_ParseSourceFile_FilePath,
-  Tests_TypeDeclarations_ParseSourceFile_Returns,
-  Tests_TypeDeclarations_RunRulePipeline_ClassPrefix,
-  Tests_TypeDeclarations_RunRulePipeline_DtsContent,
-  Tests_TypeDeclarations_RunRulePipeline_FilePath,
-  Tests_TypeDeclarations_RunRulePipeline_Returns,
-  Tests_TypeDeclarations_RunRulePipeline_SourceContent,
-  Tests_TypeDeclarations_RunRulePipeline_Violations,
-  Tests_TypeDeclarations_StripUnderscorePrefix_Input,
-  Tests_TypeDeclarations_StripUnderscorePrefix_Returns,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_AllFiles,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Cleaned,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_CurrentDirectory,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_DtsFiles,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_RelativePath,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Segments,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_SourceFiles,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Violation,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_ViolationMessage,
-  Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Violations,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_ClassPrefix,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Content,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_CurrentDirectory,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_FileName,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Files,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Identifiers,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_RelativePath,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Segments,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violation,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_ViolationMessage,
-  Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violations,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_BrandCasePattern,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Content,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_CurrentDirectory,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_DtsFiles,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ElementLine,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ExpectedPropertyPrefix,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_FirstChunk,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LineIndex,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LineToScan,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Lines,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LocalTypeSet,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PascalCasePattern,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PositionMatch,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PrimitiveSet,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_RelativePath,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_SourceClassPrefix,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_SourceFiles,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_StandaloneFiles,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TopLevelPathPrefixes,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeLines,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeNames,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypePositions,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violation,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ViolationMessage,
-  Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violations,
   Tests_TypeDeclarations_ValidateLeaf_ActualLeaf,
   Tests_TypeDeclarations_ValidateLeaf_ClassPrefix,
   Tests_TypeDeclarations_ValidateLeaf_ExpectedClass,
   Tests_TypeDeclarations_ValidateLeaf_ExpectedSection,
-  Tests_TypeDeclarations_ValidateLeaf_Reason,
   Tests_TypeDeclarations_ValidateLeaf_Returns,
   Tests_TypeDeclarations_ValidateLeaf_SourceSection,
   Tests_TypeDeclarations_ValidateLeaf_Stripped,
@@ -402,7 +451,6 @@ import type {
   Tests_TypeDeclarations_ValidateLeaf_TypeName,
   Tests_TypeDeclarations_ValidateLeaf_VarName,
   Tests_TypeDeclarations_ValidateReturnType_IsTypeGuard,
-  Tests_TypeDeclarations_ValidateReturnType_Reason,
   Tests_TypeDeclarations_ValidateReturnType_Returns,
   Tests_TypeDeclarations_ValidateReturnType_ReturnType,
 } from '../types/tests/type-declarations.test.d.ts';
@@ -451,6 +499,7 @@ describe('buildSourceSectionMap', () => {
 
     // Line 242: `const padLeft: ... = (...) => {` — stays in OUTER section.
     strictEqual(sectionMap.get(242), 'Lib_Utility_CurrentTimestamp');
+
     // Line 243: `const currentWidth: ... = ...` inside padLeft body — sub-section.
     strictEqual(sectionMap.get(243), 'Lib_Utility_CurrentTimestamp_PadLeft');
 
@@ -506,12 +555,12 @@ describe('extractBodyDeclarations', () => {
     const result: Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = extractBodyDeclarations(lines);
 
     strictEqual(result.length, 2);
-    strictEqual(result[0]?.varName, 'a');
-    strictEqual(result[0]?.typeName, 'Some_Type_A');
-    strictEqual(result[0]?.lineNumber, 2);
-    strictEqual(result[1]?.varName, 'b');
-    strictEqual(result[1]?.typeName, 'Some_Type_B');
-    strictEqual(result[1]?.lineNumber, 3);
+    strictEqual((result[0] !== undefined) ? result[0]['varName'] : undefined, 'a');
+    strictEqual((result[0] !== undefined) ? result[0]['typeName'] : undefined, 'Some_Type_A');
+    strictEqual((result[0] !== undefined) ? result[0]['lineNumber'] : undefined, 2);
+    strictEqual((result[1] !== undefined) ? result[1]['varName'] : undefined, 'b');
+    strictEqual((result[1] !== undefined) ? result[1]['typeName'] : undefined, 'Some_Type_B');
+    strictEqual((result[1] !== undefined) ? result[1]['lineNumber'] : undefined, 3);
 
     return;
   });
@@ -530,10 +579,10 @@ describe('extractFunctionParams', () => {
     const content: Tests_TypeDeclarations_ExtractFunctionParams_Content = await readFile(filePath, 'utf-8');
     const result: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams(filePath, content);
 
-    const addRowParam: Tests_TypeDeclarations_ExtractFunctionParams_Param | undefined = result.find((p) => p.paramName === 'row');
+    const addRowParam: Tests_TypeDeclarations_ExtractFunctionParams_FoundParam = result.find((p) => p['paramName'] === 'row');
 
     ok(addRowParam !== undefined, 'should find row param of addRow method');
-    strictEqual(addRowParam.typeName, 'ToolkitMarkdownTableAddRowRow');
+    strictEqual(addRowParam['typeName'], 'ToolkitMarkdownTableAddRowRow');
 
     return;
   });
@@ -543,7 +592,7 @@ describe('extractFunctionParams', () => {
     const content: Tests_TypeDeclarations_ExtractFunctionParams_Content = await readFile(filePath, 'utf-8');
     const result: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams(filePath, content);
 
-    const isExecuteShellErrorParam: Tests_TypeDeclarations_ExtractFunctionParams_Param | undefined = result.find((p) => p.paramName === 'error' && p.typeName === 'LibUtilityIsExecuteShellErrorError');
+    const isExecuteShellErrorParam: Tests_TypeDeclarations_ExtractFunctionParams_FoundParam = result.find((p) => p['paramName'] === 'error' && p['typeName'] === 'LibUtilityIsExecuteShellErrorError');
 
     ok(isExecuteShellErrorParam !== undefined, 'should find error param of isExecuteShellError function');
 
@@ -600,7 +649,10 @@ describe('extractReferencedTypes', () => {
     const classPrefix: Tests_TypeDeclarations_ExtractReferencedTypes_ClassPrefix = 'Lib_Utility';
     const result: Tests_TypeDeclarations_ExtractReferencedTypes_Returns = extractReferencedTypes(line, classPrefix);
 
-    deepStrictEqual(result, ['Lib_Utility_Bar', 'Lib_Utility_Baz']);
+    deepStrictEqual(result, [
+      'Lib_Utility_Bar',
+      'Lib_Utility_Baz',
+    ]);
 
     return;
   });
@@ -649,7 +701,7 @@ describe('discoverSourceFiles', () => {
 
     ok(files.length > 0, 'should find at least one source file');
     ok(files.every((file) => file.endsWith('.ts')), 'all results should end with .ts');
-    ok(files.every((file) => !file.endsWith('.d.ts')), 'no result should end with .d.ts');
+    ok(files.every((file) => file.endsWith('.d.ts') === false), 'no result should end with .d.ts');
     ok(files.some((file) => file.endsWith('toolkit/markdown-table.ts')), 'should include markdown-table.ts');
 
     return;
@@ -1144,7 +1196,11 @@ describe('type declaration object property types', async () => {
 
         const defMatch: Tests_TypeDeclarations_TypeDeclarationObjectPropertyTypes_Match = line.match(new RegExp('^export type (\\w+)'));
 
-        if (defMatch !== null && defMatch[1] !== undefined && typeDefLines.has(defMatch[1]) === false) {
+        if (
+          defMatch !== null
+          && defMatch[1] !== undefined
+          && typeDefLines.has(defMatch[1]) === false
+        ) {
           typeDefLines.set(defMatch[1], i);
         }
       }
@@ -1266,7 +1322,7 @@ describe('type declaration section coverage', async () => {
       // multi-chunk types `${classPrefix}_X_*` are treated as its E1-style property types (Parent_Property form),
       // not as an implied source section. Covers patterns like `testConfig: { standaloneTypeFiles, typeRoots }`
       // where the parent is an object-typed const (no source section) but the property types are well-formed.
-      const singleChunkTopLevelTypes: Set<string> = new Set<string>();
+      const singleChunkTopLevelTypes: Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SingleChunkTopLevelTypes = new Set();
 
       for (const line of dtsLines) {
         if (line.startsWith('export type ') === false) {
@@ -1401,11 +1457,15 @@ describe('type declaration variable type symmetry', async () => {
         // Rule 7.2 (Mode 2): body var types must be locally defined and not aliases to foreign types.
         if (dtsExists === true) {
           if (isLocallyDefined(decl['typeName'], dtsContent) === false) {
-            const violation: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation = `${symmetryRelativePath}:${decl['lineNumber']}: rule 7.2 violation: body var type "${decl['typeName']}" is not defined in the corresponding .d.ts. Cross-module body-var types are forbidden — define the type concretely in ${dtsPath.replace(symmetryCurrentDirectory, '').replace(/^\//, '')}, or promote the shape to shared.d.ts, or skip the typed body var.`;
+            const relativeDtsPath: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_RelativeDtsPath = dtsPath.replace(symmetryCurrentDirectory, '');
+            const cleanedDtsPath: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_CleanedDtsPath = (relativeDtsPath.startsWith('/') === true) ? relativeDtsPath.slice(1) : relativeDtsPath;
+            const violation: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation = `${symmetryRelativePath}:${decl['lineNumber']}: rule 7.2 violation: body var type "${decl['typeName']}" is not defined in the corresponding .d.ts. Cross-module body-var types are forbidden -- define the type concretely in ${cleanedDtsPath}, or promote the shape to shared.d.ts, or skip the typed body var.`;
 
             violations.push(violation);
           } else if (isAliasToForeignType(decl['typeName'], dtsContent, classPrefix) === true) {
-            const violation: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation = `${symmetryRelativePath}:${decl['lineNumber']}: rule 7.2 violation: body var type "${decl['typeName']}" is locally defined but only as an alias to a foreign type. Cross-module body-var types are forbidden — escape hatches: (a) promote the shape to shared.d.ts, (b) redefine the concrete shape in ${dtsPath.replace(symmetryCurrentDirectory, '').replace(/^\//, '')}, or (c) inline the call to skip the typed body var.`;
+            const relativeDtsPath: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_RelativeDtsPath = dtsPath.replace(symmetryCurrentDirectory, '');
+            const cleanedDtsPath: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_CleanedDtsPath = (relativeDtsPath.startsWith('/') === true) ? relativeDtsPath.slice(1) : relativeDtsPath;
+            const violation: Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violation = `${symmetryRelativePath}:${decl['lineNumber']}: rule 7.2 violation: body var type "${decl['typeName']}" is locally defined but only as an alias to a foreign type. Cross-module body-var types are forbidden -- escape hatches: (a) promote the shape to shared.d.ts, (b) redefine the concrete shape in ${cleanedDtsPath}, or (c) inline the call to skip the typed body var.`;
 
             violations.push(violation);
           }
@@ -1545,7 +1605,10 @@ describe('type declaration identifier vs file name', async () => {
 describe('type declaration filename validation', async () => {
   const sourceFiles: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_SourceFiles = await discoverSourceFiles();
   const dtsFiles: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_DtsFiles = await discoverTypeFiles();
-  const allFiles: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_AllFiles = [...sourceFiles, ...dtsFiles];
+  const allFiles: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_AllFiles = [
+    ...sourceFiles,
+    ...dtsFiles,
+  ];
   const filenameValidationCurrentDirectory: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_CurrentDirectory = getPackageRoot();
 
   for (const file of allFiles) {
@@ -1625,7 +1688,20 @@ describe('type declaration standalone type files', async () => {
       const typeLines: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeLines = lines.filter((line) => line.startsWith('export type '));
       const typeNames: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeNames = extractTypeNames(typeLines);
       const localTypeSet: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_LocalTypeSet = new Set<string>(typeNames);
-      const primitiveSet: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PrimitiveSet = new Set<string>(['string', 'number', 'boolean', 'unknown', 'never', 'void', 'null', 'undefined', 'any', 'object', 'symbol', 'bigint']);
+      const primitiveSet: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PrimitiveSet = new Set<string>([
+        'string',
+        'number',
+        'boolean',
+        'unknown',
+        'never',
+        'void',
+        'null',
+        'undefined',
+        'any',
+        'object',
+        'symbol',
+        'bigint',
+      ]);
       const pascalCasePattern: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PascalCasePattern = new RegExp('^[A-Z][A-Za-z0-9]*(_[A-Z][A-Za-z0-9]*)*$');
       const brandCasePattern: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_BrandCasePattern = new RegExp('[A-Z]{3,}');
       const violations: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_Violations = [];
@@ -1734,585 +1810,1044 @@ describe('type declaration standalone type files', async () => {
 // is inline strings — no filesystem I/O — so each test is hermetic.
 
 /**
- * Tests - Type Declarations - Parse Describe String Comprehensive.
+ * Tests - Type Declarations - ParseDescribeString Comprehensive.
  *
  * @since 0.18.0
  */
 describe('parseDescribeString comprehensive', () => {
   it('returns empty string for purely non-alphanumeric input', () => {
     strictEqual(parseDescribeString('!@#$%^&*()'), '');
+
+    return;
   });
 
   it('handles digits-only input by preserving the digit run', () => {
     strictEqual(parseDescribeString('123abc'), '123abc');
+
+    return;
   });
 
   it('parses path-style /users into Users', () => {
     strictEqual(parseDescribeString('/users'), 'Users');
+
+    return;
   });
 
   it('joins multiple non-alphanumeric separators', () => {
     strictEqual(parseDescribeString('foo.bar-baz/qux'), 'FooBarBazQux');
+
+    return;
   });
 
   it('preserves CamelCase parts within a piece', () => {
     strictEqual(parseDescribeString('CliUtility runner'), 'CliUtilityRunner');
+
+    return;
   });
 
   it('handles single character', () => {
     strictEqual(parseDescribeString('a'), 'A');
+
+    return;
   });
 
   it('handles empty string', () => {
     strictEqual(parseDescribeString(''), '');
+
+    return;
   });
 
   it('handles unicode by treating non-ASCII letters as separators', () => {
     strictEqual(parseDescribeString('fooébar'), 'FooBar');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Strip Underscore Prefix Comprehensive.
+ * Tests - Type Declarations - StripUnderscorePrefix Comprehensive.
  *
  * @since 0.18.0
  */
 describe('stripUnderscorePrefix comprehensive', () => {
   it('strips a single leading underscore', () => {
     strictEqual(stripUnderscorePrefix('_prev'), 'prev');
+
+    return;
   });
 
   it('preserves only-underscore input as empty', () => {
     strictEqual(stripUnderscorePrefix('_'), '');
+
+    return;
   });
 
   it('does not strip non-prefix underscores', () => {
     strictEqual(stripUnderscorePrefix('foo_bar'), 'foo_bar');
+
+    return;
   });
 
   it('does not strip when input has no underscore', () => {
     strictEqual(stripUnderscorePrefix('plain'), 'plain');
+
+    return;
   });
 
   it('strips only the first underscore', () => {
     strictEqual(stripUnderscorePrefix('__double'), '_double');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Is Reserved Suffix Comprehensive.
+ * Tests - Type Declarations - IsReservedSuffix Comprehensive.
  *
  * @since 0.18.0
  */
 describe('isReservedSuffix comprehensive', () => {
   it('detects underscore-separated _Returns', () => {
     strictEqual(isReservedSuffix('Foo_Bar_Returns'), true);
+
+    return;
   });
 
   it('detects glued Returns', () => {
     strictEqual(isReservedSuffix('FooBarReturns'), true);
+
+    return;
   });
 
   it('detects underscore-separated _TypeGuard', () => {
     strictEqual(isReservedSuffix('Foo_Bar_TypeGuard'), true);
+
+    return;
   });
 
   it('detects glued TypeGuard', () => {
     strictEqual(isReservedSuffix('FooBarTypeGuard'), true);
+
+    return;
   });
 
   it('detects underscore-separated _Return (singular)', () => {
     strictEqual(isReservedSuffix('Foo_Bar_Return'), true);
+
+    return;
   });
 
   it('detects glued Return (singular)', () => {
     strictEqual(isReservedSuffix('FooBarReturn'), true);
+
+    return;
   });
 
   it('does not match Result', () => {
     strictEqual(isReservedSuffix('Foo_Bar_Result'), false);
+
+    return;
   });
 
   it('does not match Returnable (false suffix)', () => {
     strictEqual(isReservedSuffix('Foo_Bar_Returnable'), false);
+
+    return;
   });
 
   it('does not match TypeGuardian (false suffix)', () => {
     strictEqual(isReservedSuffix('Foo_TypeGuardian'), false);
+
+    return;
   });
 
-  it('does match Reborn — banned because endsWith Return matches the substring', () => {
+  it('does match Reborn -- banned because endsWith Return matches the substring', () => {
     // Note: current isReservedSuffix uses endsWith with the bare suffixes too,
-    // so any name ending in "Return" (incl. words like "Reborn"? no — endsWith
+    // so any name ending in "Return" (incl. words like "Reborn"? no -- endsWith
     // checks the literal substring at end). Actual: 'Reborn' ends with 'born',
     // not 'Return'. So this should be false. Verify the behavior.
     strictEqual(isReservedSuffix('Reborn'), false);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Validate Leaf Comprehensive.
+ * Tests - Type Declarations - ValidateLeaf Comprehensive.
  *
  * @since 0.18.0
  */
 describe('validateLeaf comprehensive', () => {
   it('returns null when leaf matches sourceSection_titleVar', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('items', 'Cli_Foo_Run_Items', 'Cli_Foo_Run', 'Cli_Foo');
+
     strictEqual(reasonResult, null);
+
+    return;
   });
 
   it('returns null when leaf matches classPrefix_titleVar (passthrough)', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('items', 'Cli_Foo_Items', 'Cli_Foo_Run', 'Cli_Foo');
+
     strictEqual(reasonResult, null);
+
+    return;
   });
 
   it('returns reason when leaf does not match', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('items', 'Cli_Foo_Run_Things', 'Cli_Foo_Run', 'Cli_Foo');
-    deepStrictEqual(reasonResult, { actualLeaf: 'Things', expectedLeaf: 'Items' });
+
+    deepStrictEqual(reasonResult, {
+      actualLeaf: 'Things', expectedLeaf: 'Items',
+    });
+
+    return;
   });
 
   it('strips underscore prefix from var name before comparison', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('_prev', 'Cli_Foo_Run_Prev', 'Cli_Foo_Run', 'Cli_Foo');
+
     strictEqual(reasonResult, null);
+
+    return;
   });
 
   it('handles single-character var name', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('i', 'Cli_Foo_Run_I', 'Cli_Foo_Run', 'Cli_Foo');
+
     strictEqual(reasonResult, null);
+
+    return;
   });
 
   it('returns the actualLeaf when typeName starts with sourceSection but leaf differs', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('items', 'Cli_Foo_Run_Things', 'Cli_Foo_Run', 'Cli_Foo');
-    deepStrictEqual(reasonResult, { actualLeaf: 'Things', expectedLeaf: 'Items' });
+
+    deepStrictEqual(reasonResult, {
+      actualLeaf: 'Things', expectedLeaf: 'Items',
+    });
+
+    return;
   });
 
   it('returns the actualLeaf when typeName starts with classPrefix passthrough but leaf differs', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('items', 'Cli_Foo_Things', 'Cli_Foo_Run', 'Cli_Foo');
-    deepStrictEqual(reasonResult, { actualLeaf: 'Things', expectedLeaf: 'Items' });
+
+    deepStrictEqual(reasonResult, {
+      actualLeaf: 'Things', expectedLeaf: 'Items',
+    });
+
+    return;
   });
 
   it('returns full typeName as actualLeaf when no prefix matches', () => {
     const reasonResult: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('items', 'Foreign_Type', 'Cli_Foo_Run', 'Cli_Foo');
-    deepStrictEqual(reasonResult, { actualLeaf: 'Foreign_Type', expectedLeaf: 'Items' });
+
+    deepStrictEqual(reasonResult, {
+      actualLeaf: 'Foreign_Type', expectedLeaf: 'Items',
+    });
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Validate Return Type Comprehensive.
+ * Tests - Type Declarations - ValidateReturnType Comprehensive.
  *
  * @since 0.18.0
  */
 describe('validateReturnType comprehensive', () => {
   it('passes _Returns at non-type-guard return', () => {
     strictEqual(validateReturnType('Foo_Bar_Returns', false), null);
+
+    return;
   });
 
   it('passes Returns at non-type-guard return', () => {
     strictEqual(validateReturnType('FooBarReturns', false), null);
+
+    return;
   });
 
   it('passes _TypeGuard at type-guard return', () => {
     strictEqual(validateReturnType('Foo_Bar_TypeGuard', true), null);
+
+    return;
   });
 
   it('passes TypeGuard at type-guard return', () => {
     strictEqual(validateReturnType('FooBarTypeGuard', true), null);
+
+    return;
   });
 
   it('rejects singular _Return at any return position (rule 7.6)', () => {
     ok((validateReturnType('Foo_Bar_Return', false) ?? '').includes('singular'));
+
+    return;
   });
 
   it('rejects glued Return at any return position', () => {
     ok((validateReturnType('FooBarReturn', false) ?? '').includes('singular'));
+
+    return;
   });
 
   it('rejects non-Returns at non-type-guard (rule 7.5)', () => {
     ok((validateReturnType('Foo_Bar_Result', false) ?? '').includes('Returns'));
+
+    return;
   });
 
   it('rejects TypeGuard at non-type-guard return position (rule 7.7)', () => {
     ok((validateReturnType('Foo_Bar_TypeGuard', false) ?? '').includes('value is T'));
+
+    return;
   });
 
   it('rejects non-TypeGuard at type-guard position (rule 7.7)', () => {
     ok((validateReturnType('Foo_Bar_Returns', true) ?? '').includes('TypeGuard'));
+
+    return;
   });
 
   it('rejects Result at type-guard position', () => {
     ok((validateReturnType('Foo_Bar_Result', true) ?? '').includes('TypeGuard'));
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Is Locally Defined Comprehensive.
+ * Tests - Type Declarations - IsLocallyDefined Comprehensive.
  *
  * @since 0.18.0
  */
 describe('isLocallyDefined comprehensive', () => {
   it('returns true for export type X = ...;', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = 'export type Cli_Foo_Bar = string;\n';
+
     strictEqual(isLocallyDefined('Cli_Foo_Bar', dtsContent), true);
+
+    return;
   });
 
   it('returns false for missing type', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = 'export type Cli_Foo_Bar = string;\n';
+
     strictEqual(isLocallyDefined('Cli_Foo_NotThere', dtsContent), false);
+
+    return;
   });
 
   it('only matches at line start with export type prefix', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = '// some comment about Cli_Foo_Bar\n';
+
     strictEqual(isLocallyDefined('Cli_Foo_Bar', dtsContent), false);
+
+    return;
   });
 
   it('matches with word boundary (does not partial-match)', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = 'export type Cli_Foo_BarExtended = string;\n';
+
     strictEqual(isLocallyDefined('Cli_Foo_Bar', dtsContent), false);
+
+    return;
   });
 
   it('handles type defined at end of file without trailing newline', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = 'export type Cli_Foo_Bar = string;';
+
     strictEqual(isLocallyDefined('Cli_Foo_Bar', dtsContent), true);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Is Alias To Foreign Type Comprehensive.
+ * Tests - Type Declarations - IsAliasToForeignType Comprehensive.
  *
  * @since 0.18.0
  */
 describe('isAliasToForeignType comprehensive', () => {
   it('detects direct alias to a foreign-prefix type', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = 'export type Cli_Foo_Run_Data = Lib_Utility_FetchData_Returns;\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), true);
+
+    return;
   });
 
   it('does not flag alias to same-prefix type', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = 'export type Cli_Foo_Run_Data = Cli_Foo_Helper_Result;\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   it('does not flag concrete object shape', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = 'export type Cli_Foo_Run_Data = { name: string; version: string };\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   it('does not flag primitive alias', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = 'export type Cli_Foo_Run_Data = string;\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   it('does not flag union types', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = 'export type Cli_Foo_Run_Data = Lib_Utility_X | null;\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   it('handles array form: alias to foreign[]', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = 'export type Cli_Foo_Run_Data = Lib_Utility_X[];\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), true);
+
+    return;
   });
 
   it('strips generics before checking', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = 'export type Cli_Foo_Run_Data = Promise<Lib_Utility_X>;\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   it('does not flag unprefixed PascalCase type', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = 'export type Cli_Foo_Run_Data = SomeType;\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   it('returns false when type not present in dts', () => {
     const dtsContent: Tests_TypeDeclarations_IsAliasToForeignType_DtsContent = '\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Build Source Section Map Comprehensive.
+ * Tests - Type Declarations - BuildSourceSectionMap Comprehensive.
  *
  * @since 0.18.0
  */
 describe('buildSourceSectionMap comprehensive', () => {
   it('class declaration adds class name as a chunk (Mode 2)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  public bar(): void {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  public bar(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(1), 'Cli_Foo_Runner');
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
+
+    return;
   });
 
   it('anonymous class declaration (default export without name) does NOT add chunk', () => {
     const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'export default class {}\n', 'Cli_Foo');
+
     strictEqual(sectionMap.get(1), 'Cli_Foo');
+
+    return;
   });
 
   it('constructor adds Constructor chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  constructor(name: string) {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  constructor(name: string) {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Constructor');
+
+    return;
   });
 
   it('method declaration adds method chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  public addRow(): void {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  public addRow(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_AddRow');
+
+    return;
   });
 
   it('private # method strips # and adds chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  #helper(): void {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  #helper(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Helper');
+
+    return;
   });
 
   it('top-level function declaration adds function chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', 'function getCurrentTimestamp(): number {\n  return Date.now();\n}\n', 'Lib_Utility');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', [
+      'function getCurrentTimestamp(): number {',
+      '  return Date.now();',
+      '}',
+      '',
+    ].join('\n'), 'Lib_Utility');
+
     strictEqual(sectionMap.get(1), 'Lib_Utility_GetCurrentTimestamp');
+
+    return;
   });
 
   it('top-level function-typed const adds const chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', 'const formatRow = (row: string[]) => {\n  return row.join(\'|\');\n};\n', 'Lib_Utility');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', [
+      'const formatRow = (row: string[]) => {',
+      '  return row.join(\'|\');',
+      '};',
+      '',
+    ].join('\n'), 'Lib_Utility');
+
     strictEqual(sectionMap.get(2), 'Lib_Utility_FormatRow');
+
+    return;
   });
 
   it('function expression const adds chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', 'const handler = function (x: number) {\n  return x;\n};\n', 'Lib_Utility');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', [
+      'const handler = function (x: number) {',
+      '  return x;',
+      '};',
+      '',
+    ].join('\n'), 'Lib_Utility');
+
     strictEqual(sectionMap.get(2), 'Lib_Utility_Handler');
+
+    return;
   });
 
   it('nested function declaration adds chunk under outer', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', 'function process() {\n  function visit() {\n    const x: number = 1;\n  }\n}\n', 'Lib_Utility');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', [
+      'function process() {',
+      '  function visit() {',
+      '    const x: number = 1;',
+      '  }',
+      '}',
+      '',
+    ].join('\n'), 'Lib_Utility');
+
     strictEqual(sectionMap.get(3), 'Lib_Utility_Process_Visit');
+
+    return;
   });
 
   it('generic (string, fn) call adds chunk via parseDescribeString', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/server.ts', 'function start() {\n  app.get(\'/users\', (req, res) => {\n    const x: number = 1;\n  });\n}\n', 'Cli_Server');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/server.ts', [
+      'function start() {',
+      '  app.get(\'/users\', (req, res) => {',
+      '    const x: number = 1;',
+      '  });',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Server');
+
     strictEqual(sectionMap.get(3), 'Cli_Server_Start_Users');
+
+    return;
   });
 
   it('describe call adds chunk via generic (string, fn)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe(\'Foo\', () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe(\'Foo\', () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
+
+    return;
   });
 
   it('it call adds chunk via generic (string, fn)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe(\'Foo\', () => {\n  it(\'does something\', () => {\n    const x: number = 1;\n  });\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe(\'Foo\', () => {',
+      '  it(\'does something\', () => {',
+      '    const x: number = 1;',
+      '  });',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(3), 'Tests_Foo_Foo_DoesSomething');
+
+    return;
   });
 
   it('template string in (string, fn) does NOT add chunk (EC23)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe(\'Foo\', () => {\n  it(`test ${1}`, () => {\n    const x: number = 1;\n  });\n});\n', 'Tests_Foo');
+    const interp: Tests_TypeDeclarations_BuildSourceSectionMap_Interp = [
+      '$',
+      '{',
+      '1}',
+    ].join('');
+    const sourceContent: Tests_TypeDeclarations_BuildSourceSectionMap_Content = [
+      'describe(\'Foo\', () => {',
+      `  it(\`test ${interp}\`, () => {`,
+      '    const x: number = 1;',
+      '  });',
+      '});',
+      '',
+    ].join('\n');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', sourceContent, 'Tests_Foo');
+
     strictEqual(sectionMap.get(3), 'Tests_Foo_Foo');
+
+    return;
   });
 
   it('variable in (string, fn) arg[0] does NOT add chunk (EC23)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'const name = \'Foo\';\ndescribe(name, () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'const name = \'Foo\';',
+      'describe(name, () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(3), 'Tests_Foo');
+
+    return;
   });
 
   it('async arrow function callback in (string, fn) works (EC24)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe(\'Foo\', async () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe(\'Foo\', async () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
+
+    return;
   });
 
   it('multiple top-level classes each add their own chunk (EC1)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/multi.ts', 'class Foo {\n  process(): void {}\n}\nclass Bar {\n  process(): void {}\n}\n', 'Cli_Multi');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/multi.ts', [
+      'class Foo {',
+      '  process(): void {}',
+      '}',
+      'class Bar {',
+      '  process(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Multi');
+
     strictEqual(sectionMap.get(2), 'Cli_Multi_Foo_Process');
     strictEqual(sectionMap.get(5), 'Cli_Multi_Bar_Process');
+
+    return;
   });
 
   it('static method adds chunk (EC26)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  public static doThing(): void {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  public static doThing(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_DoThing');
+
+    return;
   });
 
   it('getter adds chunk based on property name (EC25)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  public get bar(): number { return 1; }\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  public get bar(): number { return 1; }',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     // Getter is a kind of method declaration in TS AST.
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
+
+    return;
   });
 
   it('nested class inside method adds chunk under method (EC33)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Outer {\n  run(): void {\n    class Inner {}\n  }\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Outer {',
+      '  run(): void {',
+      '    class Inner {}',
+      '  }',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(3), 'Cli_Foo_Outer_Run_Inner');
+
+    return;
   });
 
   it('default export class adds chunk (EC11)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'export default class Runner {\n  bar(): void {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'export default class Runner {',
+      '  bar(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
+
+    return;
   });
 
   it('vitest bench / suite calls add chunks generically (EC34)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'bench(\'fast\', () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'bench(\'fast\', () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Fast');
+
+    return;
   });
 
   it('describe.skip adds chunk (EC30)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe.skip(\'Foo\', () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe.skip(\'Foo\', () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
+
+    return;
   });
 
   it('class method body section overrides class section for body lines', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  bar(): void {\n    const x: number = 1;\n  }\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  bar(): void {',
+      '    const x: number = 1;',
+      '  }',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(3), 'Cli_Foo_Runner_Bar');
+
+    return;
   });
 
-  it('arrow function const at file root adds chunk (EC2 — file with only top-level const)', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', 'export const helper = () => {\n  const x: number = 1;\n};\n', 'Lib_Foo');
+  it('arrow function const at file root adds chunk (EC2 -- file with only top-level const)', () => {
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', [
+      'export const helper = () => {',
+      '  const x: number = 1;',
+      '};',
+      '',
+    ].join('\n'), 'Lib_Foo');
+
     strictEqual(sectionMap.get(2), 'Lib_Foo_Helper');
+
+    return;
   });
 
   it('non-fn-typed const (string value) does NOT add chunk', () => {
     const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', 'const constant = \'value\';\n', 'Lib_Foo');
+
     strictEqual(sectionMap.get(1), 'Lib_Foo');
+
+    return;
   });
 
   it('only-string-no-fn call expression does NOT add chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', 'function bar() {\n  console.log(\'hello\');\n  const x: number = 1;\n}\n', 'Lib_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', [
+      'function bar() {',
+      '  console.log(\'hello\');',
+      '  const x: number = 1;',
+      '}',
+      '',
+    ].join('\n'), 'Lib_Foo');
+
     strictEqual(sectionMap.get(3), 'Lib_Foo_Bar');
+
+    return;
   });
 
-  it('(string, options-object, fn) call adds chunk — function in arg[2]', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe(\'Foo\', { skip: true }, () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+  it('(string, options-object, fn) call adds chunk -- function in arg[2]', () => {
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe(\'Foo\', { skip: true }, () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
+
+    return;
   });
 
-  it('(string, string, fn) call uses arg[0] for chunk — picks first function in any later arg', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'foo(\'first\', \'second\', () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+  it('(string, string, fn) call uses arg[0] for chunk -- picks first function in any later arg', () => {
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'foo(\'first\', \'second\', () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_First');
+
+    return;
   });
 
-  it('(fn, string) — function in arg[0] (not a string), rule does NOT match — covers setTimeout-style', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', 'function bar() {\n  setTimeout(() => {\n    const x: number = 1;\n  }, 1000);\n}\n', 'Lib_Foo');
-    // arg[0] is the arrow, not a string literal — rule skips, falls through to default tagging.
+  it('(fn, string) -- function in arg[0] (not a string), rule does NOT match -- covers setTimeout-style', () => {
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', [
+      'function bar() {',
+      '  setTimeout(() => {',
+      '    const x: number = 1;',
+      '  }, 1000);',
+      '}',
+      '',
+    ].join('\n'), 'Lib_Foo');
+
+    // arg[0] is the arrow, not a string literal -- rule skips, falls through to default tagging.
     strictEqual(sectionMap.get(3), 'Lib_Foo_Bar');
+
+    return;
   });
 
   it('(string, fn, fn) call uses the first function arg only, ignores the second', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'foo(\'Bar\', () => {\n  const a: number = 1;\n}, () => {\n  const b: number = 2;\n});\n', 'Tests_Foo');
-    // First fn-arg's body gets the new section.
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'foo(\'Bar\', () => {',
+      '  const a: number = 1;',
+      '}, () => {',
+      '  const b: number = 2;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
+    // First fn-arg\'s body gets the new section.
     strictEqual(sectionMap.get(2), 'Tests_Foo_Bar');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Top Level Identifiers Comprehensive.
+ * Tests - Type Declarations - ExtractTopLevelIdentifiers Comprehensive.
  *
  * @since 0.18.0
  */
 describe('extractTopLevelIdentifiers comprehensive', () => {
   it('extracts top-level class', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/foo.ts', 'export class Runner {}\n');
+
     strictEqual(identifiers.length, 1);
-    strictEqual(identifiers[0]?.name, 'Runner');
-    strictEqual(identifiers[0]?.kind, 'class');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['name'] : undefined, 'Runner');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['kind'] : undefined, 'class');
+
+    return;
   });
 
   it('extracts top-level function', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/lib/foo.ts', 'export function getNow() { return Date.now(); }\n');
+
     strictEqual(identifiers.length, 1);
-    strictEqual(identifiers[0]?.name, 'getNow');
-    strictEqual(identifiers[0]?.kind, 'function');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['name'] : undefined, 'getNow');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['kind'] : undefined, 'function');
+
+    return;
   });
 
   it('extracts top-level function-typed const', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/lib/foo.ts', 'const helper = () => 1;\n');
+
     strictEqual(identifiers.length, 1);
-    strictEqual(identifiers[0]?.name, 'helper');
-    strictEqual(identifiers[0]?.kind, 'const');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['name'] : undefined, 'helper');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['kind'] : undefined, 'const');
+
+    return;
   });
 
   it('skips non-function const (primitive)', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/lib/foo.ts', 'const value = 42;\n');
+
     strictEqual(identifiers.length, 0);
+
+    return;
   });
 
   it('skips nested function inside class method', () => {
-    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/foo.ts', 'class Runner {\n  bar() {\n    function nested() {}\n  }\n}\n');
+    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  bar() {',
+      '    function nested() {}',
+      '  }',
+      '}',
+      '',
+    ].join('\n'));
+
     strictEqual(identifiers.length, 1);
-    strictEqual(identifiers[0]?.name, 'Runner');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['name'] : undefined, 'Runner');
+
+    return;
   });
 
   it('handles multiple top-level identifiers (EC1)', () => {
-    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/multi.ts', 'export class Foo {}\nexport class Bar {}\nexport function baz() {}\n');
+    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/multi.ts', [
+      'export class Foo {}',
+      'export class Bar {}',
+      'export function baz() {}',
+      '',
+    ].join('\n'));
+
     strictEqual(identifiers.length, 3);
-    strictEqual(identifiers[0]?.name, 'Foo');
-    strictEqual(identifiers[1]?.name, 'Bar');
-    strictEqual(identifiers[2]?.name, 'baz');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['name'] : undefined, 'Foo');
+    strictEqual((identifiers[1] !== undefined) ? identifiers[1]['name'] : undefined, 'Bar');
+    strictEqual((identifiers[2] !== undefined) ? identifiers[2]['name'] : undefined, 'baz');
+
+    return;
   });
 
   it('returns line numbers (1-indexed)', () => {
-    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/foo.ts', '\n\nexport class Runner {}\n');
-    strictEqual(identifiers[0]?.lineNumber, 3);
+    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/foo.ts', [
+      '',
+      '',
+      'export class Runner {}',
+      '',
+    ].join('\n'));
+
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['lineNumber'] : undefined, 3);
+
+    return;
   });
 
   it('skips anonymous default export class', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/foo.ts', 'export default class {}\n');
+
     strictEqual(identifiers.length, 0);
+
+    return;
   });
 
-  it('extracts class-expression-typed const as kind "const" (EC9 — class Wrapper = class {})', () => {
+  it('extracts class-expression-typed const as kind "const" (EC9 -- class Wrapper = class {})', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/lib/foo.ts', 'const Wrapper = class { run() {} };\n');
+
     strictEqual(identifiers.length, 1);
-    strictEqual(identifiers[0]?.name, 'Wrapper');
-    strictEqual(identifiers[0]?.kind, 'const');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['name'] : undefined, 'Wrapper');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['kind'] : undefined, 'const');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Derive Class Prefix Comprehensive.
+ * Tests - Type Declarations - DeriveClassPrefix Comprehensive.
  *
  * @since 0.18.0
  */
 describe('deriveClassPrefix comprehensive', () => {
   it('derives Cli_Utility_Changelog from src/cli/utility/changelog.ts', () => {
     const prefix: Tests_TypeDeclarations_DeriveClassPrefix_Returns = deriveClassPrefix(resolve(getPackageRoot(), 'src/cli/utility/changelog.ts'));
+
     strictEqual(prefix, 'Cli_Utility_Changelog');
+
+    return;
   });
 
-  it('flattens hyphenated segments (package-json → PackageJson)', () => {
+  it('flattens hyphenated segments (package-json -> PackageJson)', () => {
     const prefix: Tests_TypeDeclarations_DeriveClassPrefix_Returns = deriveClassPrefix(resolve(getPackageRoot(), 'src/cli/recipe/package-json/cleanup.ts'));
+
     strictEqual(prefix, 'Cli_Recipe_PackageJson_Cleanup');
+
+    return;
   });
 
   it('strips .test marker for test files', () => {
     const prefix: Tests_TypeDeclarations_DeriveClassPrefix_Returns = deriveClassPrefix(resolve(getPackageRoot(), 'src/tests/cli/utility/initialize.test.ts'));
+
     strictEqual(prefix, 'Tests_Cli_Utility_Initialize');
+
+    return;
   });
 
   it('handles .d.ts type files', () => {
     const prefix: Tests_TypeDeclarations_DeriveClassPrefix_Returns = deriveClassPrefix(resolve(getPackageRoot(), 'src/types/cli/utility/changelog.d.ts'));
+
     strictEqual(prefix, 'Cli_Utility_Changelog');
+
+    return;
   });
 
   it('handles index files (no segment stripping per Mode 2)', () => {
     const prefix: Tests_TypeDeclarations_DeriveClassPrefix_Returns = deriveClassPrefix(resolve(getPackageRoot(), 'src/cli/index.ts'));
+
     strictEqual(prefix, 'Cli_Index');
+
+    return;
   });
 
   it('handles single-segment path (file at typeRoot)', () => {
     const prefix: Tests_TypeDeclarations_DeriveClassPrefix_Returns = deriveClassPrefix(resolve(getPackageRoot(), 'src/main.ts'));
+
     strictEqual(prefix, 'Main');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Type Names Comprehensive.
+ * Tests - Type Declarations - ExtractTypeNames Comprehensive.
  *
  * @since 0.18.0
  */
@@ -2323,7 +2858,14 @@ describe('extractTypeNames comprehensive', () => {
       'export type Bar_Baz = number;',
       'export type Cli_Foo_Run_Returns = void;',
     ];
-    deepStrictEqual(extractTypeNames(lines), ['Foo', 'Bar_Baz', 'Cli_Foo_Run_Returns']);
+
+    deepStrictEqual(extractTypeNames(lines), [
+      'Foo',
+      'Bar_Baz',
+      'Cli_Foo_Run_Returns',
+    ]);
+
+    return;
   });
 
   it('returns empty for non-export-type lines', () => {
@@ -2332,19 +2874,25 @@ describe('extractTypeNames comprehensive', () => {
       '// comment',
       '',
     ];
+
     deepStrictEqual(extractTypeNames(lines), []);
+
+    return;
   });
 
   it('handles type with object body', () => {
     const lines: Tests_TypeDeclarations_ExtractTypeNames_TypeLines = ['export type Foo_Bar = { x: number };'];
+
     deepStrictEqual(extractTypeNames(lines), ['Foo_Bar']);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Imported Names Comprehensive.
+ * Tests - Type Declarations - ExtractImportedNames Comprehensive.
  *
  * @since 0.18.0
  */
@@ -2352,8 +2900,11 @@ describe('extractImportedNames comprehensive', () => {
   it('extracts inline imports', () => {
     const lines: Tests_TypeDeclarations_ExtractImportedNames_Lines = ['import type { Foo, Bar } from \'./baz.d.ts\';'];
     const names: Tests_TypeDeclarations_ExtractImportedNames_Returns = extractImportedNames(lines);
+
     ok(names.has('Foo'));
     ok(names.has('Bar'));
+
+    return;
   });
 
   it('extracts multi-line imports', () => {
@@ -2364,55 +2915,76 @@ describe('extractImportedNames comprehensive', () => {
       '} from \'./baz.d.ts\';',
     ];
     const names: Tests_TypeDeclarations_ExtractImportedNames_Returns = extractImportedNames(lines);
+
     ok(names.has('Foo'));
     ok(names.has('Bar'));
+
+    return;
   });
 
   it('returns empty set for no imports', () => {
     const lines: Tests_TypeDeclarations_ExtractImportedNames_Lines = ['export type Foo = string;'];
     const names: Tests_TypeDeclarations_ExtractImportedNames_Returns = extractImportedNames(lines);
+
     strictEqual(names.size, 0);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Referenced Types Comprehensive.
+ * Tests - Type Declarations - ExtractReferencedTypes Comprehensive.
  *
  * @since 0.18.0
  */
 describe('extractReferencedTypes comprehensive', () => {
   it('extracts same-prefix referenced type from export type alias', () => {
     const refs: Tests_TypeDeclarations_ExtractReferencedTypes_Returns = extractReferencedTypes('export type Cli_Foo_Run_Data = Cli_Foo_Helper_Result;', 'Cli_Foo');
+
     deepStrictEqual(refs, ['Cli_Foo_Helper_Result']);
+
+    return;
   });
 
   it('returns empty for foreign-prefix references (only same-prefix counted)', () => {
     const refs: Tests_TypeDeclarations_ExtractReferencedTypes_Returns = extractReferencedTypes('export type Cli_Foo_Run_Data = Lib_Utility_X;', 'Cli_Foo');
+
     strictEqual(refs.length, 0);
+
+    return;
   });
 
   it('extracts multiple same-prefix references', () => {
     const refs: Tests_TypeDeclarations_ExtractReferencedTypes_Returns = extractReferencedTypes('export type Cli_Foo_X = Cli_Foo_A | Cli_Foo_B | Cli_Foo_C;', 'Cli_Foo');
+
     strictEqual(refs.length, 3);
+
+    return;
   });
 
   it('excludes the type being defined from references (self-ref)', () => {
     const refs: Tests_TypeDeclarations_ExtractReferencedTypes_Returns = extractReferencedTypes('export type Cli_Foo_Bar = Cli_Foo_Bar;', 'Cli_Foo');
+
     strictEqual(refs.length, 0);
+
+    return;
   });
 
   it('returns empty for primitive RHS', () => {
     const refs: Tests_TypeDeclarations_ExtractReferencedTypes_Returns = extractReferencedTypes('export type Cli_Foo_X = string;', 'Cli_Foo');
+
     strictEqual(refs.length, 0);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Object Types Comprehensive.
+ * Tests - Type Declarations - ExtractObjectTypes Comprehensive.
  *
  * @since 0.18.0
  */
@@ -2425,10 +2997,13 @@ describe('extractObjectTypes comprehensive', () => {
       '};',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, 'Cli_Foo');
+
     strictEqual(objectTypes.length, 1);
-    strictEqual(objectTypes[0]?.name, 'Cli_Foo_Run_Result');
-    strictEqual(objectTypes[0]?.properties.length, 1);
-    strictEqual(objectTypes[0]?.properties[0]?.key, 'status');
+    strictEqual((objectTypes[0] !== undefined) ? objectTypes[0]['name'] : undefined, 'Cli_Foo_Run_Result');
+    strictEqual((objectTypes[0] !== undefined) ? objectTypes[0]['properties'].length : undefined, 1);
+    strictEqual((objectTypes[0] !== undefined && objectTypes[0]['properties'][0] !== undefined) ? objectTypes[0]['properties'][0]['key'] : undefined, 'status');
+
+    return;
   });
 
   it('handles empty classPrefix (matches any prefix)', () => {
@@ -2438,7 +3013,10 @@ describe('extractObjectTypes comprehensive', () => {
       '};',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, '');
+
     strictEqual(objectTypes.length, 1);
+
+    return;
   });
 
   it('handles Readonly<...> wrapper', () => {
@@ -2448,15 +3026,18 @@ describe('extractObjectTypes comprehensive', () => {
       '}>;',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, 'Cli_Foo');
+
     strictEqual(objectTypes.length, 1);
-    strictEqual(objectTypes[0]?.properties[0]?.key, 'bar');
+    strictEqual((objectTypes[0] !== undefined && objectTypes[0]['properties'][0] !== undefined) ? objectTypes[0]['properties'][0]['key'] : undefined, 'bar');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Array Types Comprehensive.
+ * Tests - Type Declarations - ExtractArrayTypes Comprehensive.
  *
  * @since 0.18.0
  */
@@ -2464,195 +3045,295 @@ describe('extractArrayTypes comprehensive', () => {
   it('extracts simple array form X = Y[]', () => {
     const lines: Tests_TypeDeclarations_ExtractArrayTypes_Lines = ['export type Cli_Foo_Items = Cli_Foo_Item[];'];
     const arrays: Tests_TypeDeclarations_ExtractArrayTypes_Returns = extractArrayTypes(lines);
+
     strictEqual(arrays.length, 1);
-    strictEqual(arrays[0]?.arrayTypeName, 'Cli_Foo_Items');
-    strictEqual(arrays[0]?.elementTypeName, 'Cli_Foo_Item');
+    strictEqual((arrays[0] !== undefined) ? arrays[0]['arrayTypeName'] : undefined, 'Cli_Foo_Items');
+    strictEqual((arrays[0] !== undefined) ? arrays[0]['elementTypeName'] : undefined, 'Cli_Foo_Item');
+
+    return;
   });
 
   it('skips multi-dim arrays X = Y[][] (EC7)', () => {
     const lines: Tests_TypeDeclarations_ExtractArrayTypes_Lines = ['export type Cli_Foo_Matrix = Cli_Foo_Cell[][];'];
     const arrays: Tests_TypeDeclarations_ExtractArrayTypes_Returns = extractArrayTypes(lines);
+
     strictEqual(arrays.length, 0);
+
+    return;
   });
 
   it('skips union types X = Y | Z[]', () => {
     const lines: Tests_TypeDeclarations_ExtractArrayTypes_Lines = ['export type Cli_Foo_Mix = Cli_Foo_X | Cli_Foo_Y[];'];
     const arrays: Tests_TypeDeclarations_ExtractArrayTypes_Returns = extractArrayTypes(lines);
+
     strictEqual(arrays.length, 0);
+
+    return;
   });
 
   it('skips generic-wrapped X = Map<...> (EC6)', () => {
     const lines: Tests_TypeDeclarations_ExtractArrayTypes_Lines = ['export type Cli_Foo_Cache = Map<string, Cli_Foo_Item>;'];
     const arrays: Tests_TypeDeclarations_ExtractArrayTypes_Returns = extractArrayTypes(lines);
+
     strictEqual(arrays.length, 0);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Body Declarations Comprehensive.
+ * Tests - Type Declarations - ExtractBodyDeclarations Comprehensive.
  *
  * @since 0.18.0
  */
 describe('extractBodyDeclarations comprehensive', () => {
   it('extracts typed const declarations', () => {
-    const lines: Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = [
-      '  const foo: Cli_X_Foo = 1;',
-    ];
+    const lines: Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = ['  const foo: Cli_X_Foo = 1;'];
     const decls: Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = extractBodyDeclarations(lines);
+
     strictEqual(decls.length, 1);
-    strictEqual(decls[0]?.varName, 'foo');
-    strictEqual(decls[0]?.typeName, 'Cli_X_Foo');
-    strictEqual(decls[0]?.keyword, 'const');
+    strictEqual((decls[0] !== undefined) ? decls[0]['varName'] : undefined, 'foo');
+    strictEqual((decls[0] !== undefined) ? decls[0]['typeName'] : undefined, 'Cli_X_Foo');
+    strictEqual((decls[0] !== undefined) ? decls[0]['keyword'] : undefined, 'const');
+
+    return;
   });
 
   it('extracts typed let declarations', () => {
-    const lines: Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = [
-      '  let counter: Cli_X_Counter = 0;',
-    ];
+    const lines: Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = ['  let counter: Cli_X_Counter = 0;'];
     const decls: Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = extractBodyDeclarations(lines);
-    strictEqual(decls[0]?.keyword, 'let');
+
+    strictEqual((decls[0] !== undefined) ? decls[0]['keyword'] : undefined, 'let');
+
+    return;
   });
 
   it('skips untyped const', () => {
     const lines: Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = ['  const foo = 1;'];
     const decls: Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = extractBodyDeclarations(lines);
+
     strictEqual(decls.length, 0);
+
+    return;
   });
 
   it('skips destructured assignments (EC13)', () => {
     const lines: Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = ['  const { foo, bar } = options;'];
     const decls: Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = extractBodyDeclarations(lines);
+
     strictEqual(decls.length, 0);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Function Params Comprehensive.
+ * Tests - Type Declarations - ExtractFunctionParams Comprehensive.
  *
  * @since 0.18.0
  */
 describe('extractFunctionParams comprehensive', () => {
   it('extracts function declaration params', () => {
     const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/lib/foo.ts', 'function bar(name: Lib_Foo_Bar_Name): void {}\n');
+
     strictEqual(params.length, 1);
-    strictEqual(params[0]?.paramName, 'name');
-    strictEqual(params[0]?.typeName, 'Lib_Foo_Bar_Name');
+    strictEqual((params[0] !== undefined) ? params[0]['paramName'] : undefined, 'name');
+    strictEqual((params[0] !== undefined) ? params[0]['typeName'] : undefined, 'Lib_Foo_Bar_Name');
+
+    return;
   });
 
   it('extracts method params', () => {
-    const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/cli/foo.ts', 'class Runner {\n  bar(x: Cli_Foo_Runner_Bar_X): void {}\n}\n');
-    strictEqual(params[0]?.paramName, 'x');
+    const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  bar(x: Cli_Foo_Runner_Bar_X): void {}',
+      '}',
+      '',
+    ].join('\n'));
+
+    strictEqual((params[0] !== undefined) ? params[0]['paramName'] : undefined, 'x');
+
+    return;
   });
 
   it('extracts constructor params', () => {
-    const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/cli/foo.ts', 'class Runner {\n  constructor(name: Cli_Foo_Runner_Constructor_Name) {}\n}\n');
-    strictEqual(params[0]?.paramName, 'name');
+    const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  constructor(name: Cli_Foo_Runner_Constructor_Name) {}',
+      '}',
+      '',
+    ].join('\n'));
+
+    strictEqual((params[0] !== undefined) ? params[0]['paramName'] : undefined, 'name');
+
+    return;
   });
 
   it('extracts function-typed const params', () => {
     const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/lib/foo.ts', 'const helper = (x: Lib_Foo_Helper_X) => x;\n');
-    strictEqual(params[0]?.paramName, 'x');
+
+    strictEqual((params[0] !== undefined) ? params[0]['paramName'] : undefined, 'x');
+
+    return;
   });
 
   it('handles multiple params', () => {
     const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/lib/foo.ts', 'function bar(a: A, b: B, c: C): void {}\n');
+
     strictEqual(params.length, 3);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Extract Function Returns Comprehensive.
+ * Tests - Type Declarations - ExtractFunctionReturns Comprehensive.
  *
  * @since 0.18.0
  */
 describe('extractFunctionReturns comprehensive', () => {
   it('extracts function declaration return type', () => {
     const returns: Tests_TypeDeclarations_ExtractFunctionReturns_Returns = extractFunctionReturns('/fake/lib/foo.ts', 'function bar(): Lib_Foo_Bar_Returns { return; }\n');
-    strictEqual(returns[0]?.returnType, 'Lib_Foo_Bar_Returns');
-    strictEqual(returns[0]?.isTypeGuard, false);
+
+    strictEqual((returns[0] !== undefined) ? returns[0]['returnType'] : undefined, 'Lib_Foo_Bar_Returns');
+    strictEqual((returns[0] !== undefined) ? returns[0]['isTypeGuard'] : undefined, false);
+
+    return;
   });
 
   it('detects type-guard returns (value is X)', () => {
     const returns: Tests_TypeDeclarations_ExtractFunctionReturns_Returns = extractFunctionReturns('/fake/lib/foo.ts', 'function isFoo(x: unknown): x is Lib_Foo_IsFoo_TypeGuard { return true; }\n');
-    strictEqual(returns[0]?.isTypeGuard, true);
+
+    strictEqual((returns[0] !== undefined) ? returns[0]['isTypeGuard'] : undefined, true);
+
+    return;
   });
 
   it('extracts method return type', () => {
-    const returns: Tests_TypeDeclarations_ExtractFunctionReturns_Returns = extractFunctionReturns('/fake/cli/foo.ts', 'class Runner {\n  bar(): Cli_Foo_Runner_Bar_Returns { return; }\n}\n');
-    strictEqual(returns[0]?.returnType, 'Cli_Foo_Runner_Bar_Returns');
+    const returns: Tests_TypeDeclarations_ExtractFunctionReturns_Returns = extractFunctionReturns('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  bar(): Cli_Foo_Runner_Bar_Returns { return; }',
+      '}',
+      '',
+    ].join('\n'));
+
+    strictEqual((returns[0] !== undefined) ? returns[0]['returnType'] : undefined, 'Cli_Foo_Runner_Bar_Returns');
+
+    return;
   });
 
   // [gap] tests: these `it()` blocks document spec/implementation gaps by asserting the CURRENT
   // (incomplete) behavior, so a future change that closes a gap will fail here and force a deliberate
   // update. Vitest's `it.todo()` was considered but loses the assertion coverage; the `[gap]` prefix
   // is preserved as a greppable marker. Search this file for `[gap]` to find them all.
-  it('[gap] does NOT extract arrow function const returns — extractFunctionReturns only inspects function/method/constructor declarations', () => {
+  it('[gap] does NOT extract arrow function const returns -- extractFunctionReturns only inspects function/method/constructor declarations', () => {
     const returns: Tests_TypeDeclarations_ExtractFunctionReturns_Returns = extractFunctionReturns('/fake/lib/foo.ts', 'const helper = (): Lib_Foo_Helper_Returns => 42;\n');
+
     strictEqual(returns.length, 0);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Detect Inline Typed Callbacks Comprehensive.
+ * Tests - Type Declarations - DetectInlineTypedCallbacks Comprehensive.
  *
  * @since 0.18.0
  */
 describe('detectInlineTypedCallbacks comprehensive', () => {
   it('detects typed arrow callback param', () => {
-    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', 'function run() {\n  items.filter((item: Cli_Foo_Item) => item.active);\n}\n');
+    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', [
+      'function run() {',
+      '  items.filter((item: Cli_Foo_Item) => item.active);',
+      '}',
+      '',
+    ].join('\n'));
+
     strictEqual(callbacks.length, 1);
-    strictEqual(callbacks[0]?.paramName, 'item');
-    strictEqual(callbacks[0]?.typeName, 'Cli_Foo_Item');
+    strictEqual((callbacks[0] !== undefined) ? callbacks[0]['paramName'] : undefined, 'item');
+    strictEqual((callbacks[0] !== undefined) ? callbacks[0]['typeName'] : undefined, 'Cli_Foo_Item');
+
+    return;
   });
 
   it('skips untyped callback param (rule 7.4 H2)', () => {
-    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', 'function run() {\n  items.filter((item) => item.active);\n}\n');
+    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', [
+      'function run() {',
+      '  items.filter((item) => item.active);',
+      '}',
+      '',
+    ].join('\n'));
+
     strictEqual(callbacks.length, 0);
+
+    return;
   });
 
   it('detects typed function expression callback', () => {
-    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', 'function run() {\n  items.filter(function (item: Cli_Foo_Item) { return item.active; });\n}\n');
+    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', [
+      'function run() {',
+      '  items.filter(function (item: Cli_Foo_Item) { return item.active; });',
+      '}',
+      '',
+    ].join('\n'));
+
     strictEqual(callbacks.length, 1);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Check Type Name Uniqueness Comprehensive.
+ * Tests - Type Declarations - CheckTypeNameUniqueness Comprehensive.
  *
  * @since 0.18.0
  */
 describe('checkTypeNameUniqueness comprehensive', () => {
   it('returns no violations for unique names', () => {
     const violations: Tests_TypeDeclarations_CheckTypeNameUniqueness_Returns = checkTypeNameUniqueness([
-      { name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1 },
-      { name: 'bar', typeName: 'Cli_X_Bar', lineNumber: 2 },
+      {
+        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1,
+      },
+      {
+        name: 'bar', typeName: 'Cli_X_Bar', lineNumber: 2,
+      },
     ]);
+
     strictEqual(violations.length, 0);
+
+    return;
   });
 
   it('detects duplicate expected names (rule 7.8)', () => {
     const violations: Tests_TypeDeclarations_CheckTypeNameUniqueness_Returns = checkTypeNameUniqueness([
-      { name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1 },
-      { name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 5 },
+      {
+        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1,
+      },
+      {
+        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 5,
+      },
     ]);
+
     strictEqual(violations.length, 1);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Build Dts Sections Comprehensive.
+ * Tests - Type Declarations - BuildDtsSections Comprehensive.
  *
  * @since 0.18.0
  */
@@ -2662,43 +3343,55 @@ describe('buildDtsSections comprehensive', () => {
       'export type Cli_Foo_Run_X = string;',
       'export type Cli_Foo_Helper_Y = string;',
     ];
-    const sourceSections: Tests_TypeDeclarations_BuildDtsSections_SourceSections = new Set(['Cli_Foo_Run', 'Cli_Foo_Helper']);
+    const sourceSections: Tests_TypeDeclarations_BuildDtsSections_SourceSections = new Set([
+      'Cli_Foo_Run',
+      'Cli_Foo_Helper',
+    ]);
     const sections: Tests_TypeDeclarations_BuildDtsSections_Returns = buildDtsSections(dtsLines, sourceSections, 'Cli_Foo');
+
     strictEqual(sections.length, 2);
+
+    return;
   });
 
   it('uses longest prefix match', () => {
-    const dtsLines: Tests_TypeDeclarations_BuildDtsSections_DtsLines = [
-      'export type Cli_Foo_Run_Helper_X = string;',
-    ];
-    const sourceSections: Tests_TypeDeclarations_BuildDtsSections_SourceSections = new Set(['Cli_Foo_Run', 'Cli_Foo_Run_Helper']);
+    const dtsLines: Tests_TypeDeclarations_BuildDtsSections_DtsLines = ['export type Cli_Foo_Run_Helper_X = string;'];
+    const sourceSections: Tests_TypeDeclarations_BuildDtsSections_SourceSections = new Set([
+      'Cli_Foo_Run',
+      'Cli_Foo_Run_Helper',
+    ]);
     const sections: Tests_TypeDeclarations_BuildDtsSections_Returns = buildDtsSections(dtsLines, sourceSections, 'Cli_Foo');
-    strictEqual(sections[0]?.prefix, 'Cli_Foo_Run_Helper');
+
+    strictEqual((sections[0] !== undefined) ? sections[0]['prefix'] : undefined, 'Cli_Foo_Run_Helper');
+
+    return;
   });
 
   it('falls back to classPrefix for unmatched types', () => {
-    const dtsLines: Tests_TypeDeclarations_BuildDtsSections_DtsLines = [
-      'export type Cli_Foo_OrphanType = string;',
-    ];
+    const dtsLines: Tests_TypeDeclarations_BuildDtsSections_DtsLines = ['export type Cli_Foo_OrphanType = string;'];
     const sourceSections: Tests_TypeDeclarations_BuildDtsSections_SourceSections = new Set();
     const sections: Tests_TypeDeclarations_BuildDtsSections_Returns = buildDtsSections(dtsLines, sourceSections, 'Cli_Foo');
-    strictEqual(sections[0]?.prefix, 'Cli_Foo');
+
+    strictEqual((sections[0] !== undefined) ? sections[0]['prefix'] : undefined, 'Cli_Foo');
+
+    return;
   });
 
   it('skips types not starting with classPrefix or any source section', () => {
-    const dtsLines: Tests_TypeDeclarations_BuildDtsSections_DtsLines = [
-      'export type ForeignType = string;',
-    ];
+    const dtsLines: Tests_TypeDeclarations_BuildDtsSections_DtsLines = ['export type ForeignType = string;'];
     const sourceSections: Tests_TypeDeclarations_BuildDtsSections_SourceSections = new Set(['Cli_Foo_Run']);
     const sections: Tests_TypeDeclarations_BuildDtsSections_Returns = buildDtsSections(dtsLines, sourceSections, 'Cli_Foo');
+
     strictEqual(sections.length, 0);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule C1 C2 C3 Integration.
+ * Tests - Type Declarations - Rule C1/C2/C3 Integration.
  *
  * @since 0.18.0
  */
@@ -2709,23 +3402,34 @@ describe('Rule C1/C2/C3 integration', () => {
     const violations: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violations = identifiers
       .filter((identifier) => identifier['name'] === fileName)
       .map((identifier) => `${identifier['kind']}:${identifier['name']}`);
+
     deepStrictEqual(violations, ['class:Changelog']);
+
+    return;
   });
 
   it('detects function name == file name (C2)', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/lib/utility.ts', 'export function utility() {}\n');
     const fileName: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_FileName = 'utility';
     const violations: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violations = identifiers
-      .filter((identifier) => identifier['name'] === fileName);
+      .filter((identifier) => identifier['name'] === fileName)
+      .map((identifier) => identifier['name']);
+
     strictEqual(violations.length, 1);
+
+    return;
   });
 
   it('detects function-typed const name == file name (C2)', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/lib/utility.ts', 'const utility = () => 1;\n');
     const fileName: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_FileName = 'utility';
     const violations: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Violations = identifiers
-      .filter((identifier) => identifier['name'] === fileName);
+      .filter((identifier) => identifier['name'] === fileName)
+      .map((identifier) => identifier['name']);
+
     strictEqual(violations.length, 1);
+
+    return;
   });
 
   it('detects hyphenated file name flattened (C3)', () => {
@@ -2733,260 +3437,397 @@ describe('Rule C1/C2/C3 integration', () => {
     const classPrefix: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_ClassPrefix = deriveClassPrefix(filePath);
     const segments: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_Segments = classPrefix.split('_');
     const fileName: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_FileName = segments[segments.length - 1] ?? '';
+
     strictEqual(fileName, 'MarkdownTable');
+
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers(filePath, 'export class MarkdownTable {}\n');
+
     strictEqual(identifiers.filter((identifier) => identifier['name'] === fileName).length, 1);
+
+    return;
   });
 
   it('does NOT fire for non-matching name', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/utility/changelog.ts', 'export class Runner {}\n');
     const fileName: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_FileName = 'Changelog';
+
     strictEqual(identifiers.filter((identifier) => identifier['name'] === fileName).length, 0);
+
+    return;
   });
 
   it('does NOT fire for nested class with same name as file', () => {
-    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/utility/changelog.ts', 'export class Runner {\n  doStuff() {\n    class Changelog {}\n  }\n}\n');
+    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/cli/utility/changelog.ts', [
+      'export class Runner {',
+      '  doStuff() {',
+      '    class Changelog {}',
+      '  }',
+      '}',
+      '',
+    ].join('\n'));
     const fileName: Tests_TypeDeclarations_TypeDeclarationIdentifierVsFileName_FileName = 'Changelog';
+
     strictEqual(identifiers.filter((identifier) => identifier['name'] === fileName).length, 0);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule 7.2 Integration With Alias Loophole.
+ * Tests - Type Declarations - Rule 7.2 Integration.
  *
  * @since 0.18.0
  */
 describe('Rule 7.2 integration', () => {
   it('passes when type is locally defined as a concrete shape', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = 'export type Cli_Foo_Run_Data = { name: string };\n';
+
     strictEqual(isLocallyDefined('Cli_Foo_Run_Data', dtsContent), true);
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   it('fires when type is not defined locally', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = '';
+
     strictEqual(isLocallyDefined('Cli_Foo_Run_Data', dtsContent), false);
+
+    return;
   });
 
   it('fires when locally defined as alias to foreign type (Mode 2 tightening)', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = 'export type Cli_Foo_Run_Data = Lib_Utility_X;\n';
+
     strictEqual(isLocallyDefined('Cli_Foo_Run_Data', dtsContent), true);
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), true);
+
+    return;
   });
 
   it('passes when alias is to same-prefix type (not foreign)', () => {
     const dtsContent: Tests_TypeDeclarations_IsLocallyDefined_DtsContent = 'export type Cli_Foo_Run_Data = Cli_Foo_Helper_Result;\n';
+
     strictEqual(isAliasToForeignType('Cli_Foo_Run_Data', dtsContent, 'Cli_Foo'), false);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule 7.3 Reserved Suffix Integration.
+ * Tests - Type Declarations - Rule 7.3 Integration.
  *
  * @since 0.18.0
  */
 describe('Rule 7.3 integration', () => {
   it('rejects body var typed Foo_Returns', () => {
     strictEqual(isReservedSuffix('Foo_Bar_Returns'), true);
+
+    return;
   });
 
   it('rejects body var typed Foo_TypeGuard', () => {
     strictEqual(isReservedSuffix('Foo_Bar_TypeGuard'), true);
+
+    return;
   });
 
   it('rejects body var typed Foo_Return', () => {
     strictEqual(isReservedSuffix('Foo_Bar_Return'), true);
+
+    return;
   });
 
   it('passes body var typed Foo_Result (not reserved)', () => {
     strictEqual(isReservedSuffix('Foo_Bar_Result'), false);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule 7.4 Inline Typed Callbacks Integration.
+ * Tests - Type Declarations - Rule 7.4 Integration.
  *
  * @since 0.18.0
  */
 describe('Rule 7.4 integration', () => {
   it('detects typed inline arrow callback', () => {
-    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', 'function run() {\n  items.filter((item: Cli_Foo_Item) => item.active);\n}\n');
+    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', [
+      'function run() {',
+      '  items.filter((item: Cli_Foo_Item) => item.active);',
+      '}',
+      '',
+    ].join('\n'));
+
     strictEqual(callbacks.length, 1);
+
+    return;
   });
 
-  it('passes named const callback (extracted) — items.filter(isActive) has no inline arrow arg', () => {
-    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', 'function run() {\n  const isActive = (item: Cli_Foo_Item) => item.active;\n  items.filter(isActive);\n}\n');
+  it('passes named const callback (extracted) -- items.filter(isActive) has no inline arrow arg', () => {
+    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', [
+      'function run() {',
+      '  const isActive = (item: Cli_Foo_Item) => item.active;',
+      '  items.filter(isActive);',
+      '}',
+      '',
+    ].join('\n'));
+
     // The arrow function lives inside a VariableDeclaration (not a CallExpression argument).
     // detectInlineTypedCallbacks only flags arrows/function-expressions that ARE arguments to a
     // CallExpression, so the legitimate extracted pattern is correctly ignored.
     strictEqual(callbacks.length, 0);
+
+    return;
   });
 
   it('passes untyped inline callback (rule H2 exemption)', () => {
-    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', 'function run() {\n  items.filter((item) => item.active);\n}\n');
+    const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = detectInlineTypedCallbacks('/fake/cli/foo.ts', [
+      'function run() {',
+      '  items.filter((item) => item.active);',
+      '}',
+      '',
+    ].join('\n'));
+
     strictEqual(callbacks.length, 0);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule 7.5 7.6 7.7 Returns Integration.
+ * Tests - Type Declarations - Rule 7.5/7.6/7.7 Integration.
  *
  * @since 0.18.0
  */
 describe('Rule 7.5/7.6/7.7 integration', () => {
   it('7.5: function returning Foo_Returns passes', () => {
     strictEqual(validateReturnType('Foo_Bar_Returns', false), null);
+
+    return;
   });
 
   it('7.5: function returning Foo_Result fails (must end in Returns)', () => {
     ok(validateReturnType('Foo_Bar_Result', false) !== null);
+
+    return;
   });
 
   it('7.6: function returning Foo_Return (singular) fails', () => {
     ok(validateReturnType('Foo_Bar_Return', false) !== null);
+
+    return;
   });
 
   it('7.7: type-guard returning Foo_TypeGuard passes', () => {
     strictEqual(validateReturnType('Foo_Bar_TypeGuard', true), null);
+
+    return;
   });
 
   it('7.7: function returning Foo_TypeGuard at non-type-guard fails', () => {
     ok(validateReturnType('Foo_Bar_TypeGuard', false) !== null);
+
+    return;
   });
 
   it('7.7: type-guard returning Foo_Returns at type-guard fails', () => {
     ok(validateReturnType('Foo_Bar_Returns', true) !== null);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule 7.8 Uniqueness Integration.
+ * Tests - Type Declarations - Rule 7.8 Integration.
  *
  * @since 0.18.0
  */
 describe('Rule 7.8 integration', () => {
   it('passes when all expected names unique', () => {
     const violations: Tests_TypeDeclarations_CheckTypeNameUniqueness_Returns = checkTypeNameUniqueness([
-      { name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1 },
-      { name: 'bar', typeName: 'Cli_X_Bar', lineNumber: 2 },
+      {
+        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 1,
+      },
+      {
+        name: 'bar', typeName: 'Cli_X_Bar', lineNumber: 2,
+      },
     ]);
+
     strictEqual(violations.length, 0);
+
+    return;
   });
 
   it('fires when two body vars produce the same expected type name (rule 7.8)', () => {
     const violations: Tests_TypeDeclarations_CheckTypeNameUniqueness_Returns = checkTypeNameUniqueness([
-      { name: 'foo', typeName: 'Cli_X_Run_Foo', lineNumber: 5 },
-      { name: 'foo', typeName: 'Cli_X_Run_Foo', lineNumber: 12 },
+      {
+        name: 'foo', typeName: 'Cli_X_Run_Foo', lineNumber: 5,
+      },
+      {
+        name: 'foo', typeName: 'Cli_X_Run_Foo', lineNumber: 12,
+      },
     ]);
+
     strictEqual(violations.length, 1);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule E3 Forward-ref Exemption Integration.
+ * Tests - Type Declarations - Rule E3 Integration (Mode 2 Expansion To Returns | TypeGuard | Return).
  *
  * @since 0.18.0
  */
 describe('Rule E3 integration (Mode 2 expansion to Returns | TypeGuard | Return)', () => {
   it('Returns suffix array IS exempt from element-before-array', () => {
     const arrayName: Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ArrayTypeName = 'Cli_Foo_Run_Returns';
-    const exempt: boolean = arrayName.endsWith('Returns') === true || arrayName.endsWith('_Returns') === true;
+    const exempt: Tests_TypeDeclarations_ExtractArrayTypes_Exempt = arrayName.endsWith('Returns') === true || arrayName.endsWith('_Returns') === true;
+
     strictEqual(exempt, true);
+
+    return;
   });
 
   it('TypeGuard suffix array IS exempt (Mode 2)', () => {
     const arrayName: Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ArrayTypeName = 'Cli_Foo_IsUser_TypeGuard';
-    const exempt: boolean = arrayName.endsWith('TypeGuard') === true || arrayName.endsWith('_TypeGuard') === true;
+    const exempt: Tests_TypeDeclarations_ExtractArrayTypes_Exempt = arrayName.endsWith('TypeGuard') === true || arrayName.endsWith('_TypeGuard') === true;
+
     strictEqual(exempt, true);
+
+    return;
   });
 
   it('Return (singular) suffix array IS exempt (Mode 2 defensive)', () => {
     const arrayName: Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ArrayTypeName = 'Cli_Foo_Run_Return';
-    const exempt: boolean = arrayName.endsWith('Return') === true || arrayName.endsWith('_Return') === true;
+    const exempt: Tests_TypeDeclarations_ExtractArrayTypes_Exempt = arrayName.endsWith('Return') === true || arrayName.endsWith('_Return') === true;
+
     strictEqual(exempt, true);
+
+    return;
   });
 
   it('Items suffix array is NOT exempt (must define element first)', () => {
     const arrayName: Tests_TypeDeclarations_ExtractArrayTypes_ArrayType_ArrayTypeName = 'Cli_Foo_Run_Items';
-    const exempt: boolean = (
-      arrayName.endsWith('Returns') === true || arrayName.endsWith('_Returns') === true
-      || arrayName.endsWith('TypeGuard') === true || arrayName.endsWith('_TypeGuard') === true
-      || arrayName.endsWith('Return') === true || arrayName.endsWith('_Return') === true
+    const exempt: Tests_TypeDeclarations_ExtractArrayTypes_Exempt = (
+      arrayName.endsWith('Returns') === true
+      || arrayName.endsWith('_Returns') === true
+      || arrayName.endsWith('TypeGuard') === true
+      || arrayName.endsWith('_TypeGuard') === true
+      || arrayName.endsWith('Return') === true
+      || arrayName.endsWith('_Return') === true
     );
+
     strictEqual(exempt, false);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule S1 S2 S3 S4 Standalone Integration.
+ * Tests - Type Declarations - Rule S1/S2/S3/S4 Integration.
  *
  * @since 0.18.0
  */
 describe('Rule S1/S2/S3/S4 integration', () => {
   it('S1: PascalCase top-level type passes', () => {
     const pascalCasePattern: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PascalCasePattern = new RegExp('^[A-Z][A-Za-z0-9]*(_[A-Z][A-Za-z0-9]*)*$');
+
     strictEqual(pascalCasePattern.test('EntryCategory'), true);
     strictEqual(pascalCasePattern.test('EntryItem_Category'), true);
+
+    return;
   });
 
   it('S1: snake_case fails', () => {
     const pascalCasePattern: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PascalCasePattern = new RegExp('^[A-Z][A-Za-z0-9]*(_[A-Z][A-Za-z0-9]*)*$');
+
     strictEqual(pascalCasePattern.test('entry_category'), false);
+
+    return;
   });
 
   it('S1: brand casing (3+ caps) fails', () => {
     const brandCasePattern: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_BrandCasePattern = new RegExp('[A-Z]{3,}');
+
     strictEqual(brandCasePattern.test('CLIEntryCategory'), true);
     strictEqual(brandCasePattern.test('URLBuilder'), true);
+
+    return;
   });
 
   it('S1: standalone 2-cap acronyms pass when followed by lowercase', () => {
     const brandCasePattern: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_BrandCasePattern = new RegExp('[A-Z]{3,}');
+
     strictEqual(brandCasePattern.test('UiCore'), false);
     strictEqual(brandCasePattern.test('IoError'), false);
+
     // UICore has UIC = 3 consecutive caps and IS caught (caps-followed-by-cap = brand pattern)
     strictEqual(brandCasePattern.test('UICore'), true);
     strictEqual(brandCasePattern.test('IOError'), true);
+
+    return;
   });
 
   it('S2: path-prefix-style names detected', () => {
-    const knownTopLevels: Set<string> = new Set(['Cli', 'Lib', 'Tests']);
-    const typeName: string = 'Cli_Foo_Bar';
-    const isPathPrefixStyle: boolean = [...knownTopLevels].some((prefix) => typeName.startsWith(`${prefix}_`));
+    const knownTopLevels: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_KnownTopLevels = new Set([
+      'Cli',
+      'Lib',
+      'Tests',
+    ]);
+    const typeName: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeName = 'Cli_Foo_Bar';
+    const isPathPrefixStyle: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_IsPathPrefixStyle = [...knownTopLevels].some((prefix) => typeName.startsWith(`${prefix}_`));
+
     strictEqual(isPathPrefixStyle, true);
+
+    return;
   });
 
   it('S2: domain concept names pass', () => {
-    const knownTopLevels: Set<string> = new Set(['Cli', 'Lib', 'Tests']);
-    const typeName: string = 'EntryCategory';
-    const isPathPrefixStyle: boolean = [...knownTopLevels].some((prefix) => typeName.startsWith(`${prefix}_`));
+    const knownTopLevels: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_KnownTopLevels = new Set([
+      'Cli',
+      'Lib',
+      'Tests',
+    ]);
+    const typeName: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeName = 'EntryCategory';
+    const isPathPrefixStyle: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_IsPathPrefixStyle = [...knownTopLevels].some((prefix) => typeName.startsWith(`${prefix}_`));
+
     strictEqual(isPathPrefixStyle, false);
+
+    return;
   });
 
   it('S3: property type using Parent_Property form passes', () => {
-    const objectName: string = 'EntryItem';
-    const propertyValueType: string = 'EntryItem_Category';
+    const objectName: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectName = 'EntryItem';
+    const propertyValueType: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PropertyValueType = 'EntryItem_Category';
+
     strictEqual(propertyValueType.startsWith(`${objectName}_`), true);
+
+    return;
   });
 
   it('S3: property type without parent prefix fails', () => {
-    const objectName: string = 'EntryItem';
-    const propertyValueType: string = 'EntryCategory';
+    const objectName: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectName = 'EntryItem';
+    const propertyValueType: Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PropertyValueType = 'EntryCategory';
+
     strictEqual(propertyValueType.startsWith(`${objectName}_`), false);
+
+    return;
   });
 
   it('S4: array element types defined before array', () => {
@@ -2995,92 +3836,144 @@ describe('Rule S1/S2/S3/S4 integration', () => {
       'export type EntryItem_Tags = EntryItem_Tag[];',
     ];
     const arrays: Tests_TypeDeclarations_ExtractArrayTypes_Returns = extractArrayTypes(lines);
-    const elementLine: number = lines.findIndex((line) => line.startsWith('export type EntryItem_Tag '));
-    const arrayLine: number = arrays[0]?.lineIndex ?? -1;
+    const elementLine: Tests_TypeDeclarations_ExtractArrayTypes_ElementLine = lines.findIndex((line) => line.startsWith('export type EntryItem_Tag '));
+    const arrayLine: Tests_TypeDeclarations_ExtractArrayTypes_ArrayLine = (arrays[0] !== undefined) ? arrays[0]['lineIndex'] : -1;
+
     ok(elementLine < arrayLine);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule EC19 EC20 EC21 Filename Validation Integration.
+ * Tests - Type Declarations - Rule EC19/EC20/EC21 Integration.
  *
  * @since 0.18.0
  */
 describe('Rule EC19/EC20/EC21 integration', () => {
   it('passes plain filename foo.ts', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('foo'), true);
+
+    return;
   });
 
   it('passes hyphenated foo-bar.ts', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('foo-bar'), true);
+
+    return;
   });
 
   it('passes filename with trailing digits foo123.ts', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('foo123'), true);
+
+    return;
   });
 
   it('fails filename starting with digit (EC20)', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('123foo'), false);
+
+    return;
   });
 
   it('fails filename with underscore (EC21)', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('foo_bar'), false);
+
+    return;
   });
 
   it('fails filename with special character (EC21)', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('foo$bar'), false);
     strictEqual(pattern.test('foo bar'), false);
+
+    return;
   });
 
   it('fails filename with uppercase', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('Foo'), false);
+
+    return;
   });
 
   it('fails dotted segment after stripping recognized suffixes (EC19)', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
-    // foo.spec.ts → after .ts strip → foo.spec → fails (.spec is not in strip-list)
+
+    // foo.spec.ts -> after .ts strip -> foo.spec -> fails (.spec is not in strip-list)
     strictEqual(pattern.test('foo.spec'), false);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Edge Cases EC1 To EC10.
+ * Tests - Type Declarations - Edge Cases EC1-EC10.
  *
  * @since 0.18.0
  */
 describe('Edge cases EC1-EC10', () => {
   it('EC1: multiple top-level classes each contribute their own chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/multi.ts', 'class Foo {\n  process(): void {}\n}\nclass Bar {\n  process(): void {}\n}\n', 'Cli_Multi');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/multi.ts', [
+      'class Foo {',
+      '  process(): void {}',
+      '}',
+      'class Bar {',
+      '  process(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Multi');
+
     strictEqual(sectionMap.get(2), 'Cli_Multi_Foo_Process');
     strictEqual(sectionMap.get(5), 'Cli_Multi_Bar_Process');
+
+    return;
   });
 
   it('EC2: file with only top-level functions, no class', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', 'export function getCurrentTimestamp(): number {\n  return Date.now();\n}\n', 'Lib_Utility');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/utility.ts', [
+      'export function getCurrentTimestamp(): number {',
+      '  return Date.now();',
+      '}',
+      '',
+    ].join('\n'), 'Lib_Utility');
+
     strictEqual(sectionMap.get(1), 'Lib_Utility_GetCurrentTimestamp');
+
+    return;
   });
 
   it('EC3: generic type parameters do not get their own chunks', () => {
     // Generics live inside the type alias; they are not chunks. Tested via lookup of the type name itself.
     const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'function getItems<T>(): T[] { return []; }\n', 'Cli_Foo');
+
     strictEqual(sectionMap.get(1), 'Cli_Foo_GetItems');
+
+    return;
   });
 
   it('EC5: tuple types are not subject to E3 (only X[] form)', () => {
     const lines: Tests_TypeDeclarations_ExtractArrayTypes_Lines = ['export type Cli_Foo_Run_Pair = [string, number];'];
     const arrays: Tests_TypeDeclarations_ExtractArrayTypes_Returns = extractArrayTypes(lines);
+
     strictEqual(arrays.length, 0);
+
+    return;
   });
 
   it('EC6: Map/Set/Promise generic collection types not subject to E3', () => {
@@ -3089,57 +3982,97 @@ describe('Edge cases EC1-EC10', () => {
       'export type Cli_Foo_Run_Promise = Promise<Cli_Foo_Run_Item>;',
     ];
     const arrays: Tests_TypeDeclarations_ExtractArrayTypes_Returns = extractArrayTypes(lines);
+
     strictEqual(arrays.length, 0);
+
+    return;
   });
 
   it('EC7: multi-dimensional arrays X[][] not checked by E3', () => {
     const lines: Tests_TypeDeclarations_ExtractArrayTypes_Lines = ['export type Cli_Foo_Run_Matrix = Cli_Foo_Run_Cell[][];'];
     const arrays: Tests_TypeDeclarations_ExtractArrayTypes_Returns = extractArrayTypes(lines);
+
     strictEqual(arrays.length, 0);
+
+    return;
   });
 
   it('EC8: type-level operations (extends/conditional) inside body do not add chunks', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', 'function bar() {\n  type Conditional = string extends string ? number : never;\n}\n', 'Lib_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', [
+      'function bar() {',
+      '  type Conditional = string extends string ? number : never;',
+      '}',
+      '',
+    ].join('\n'), 'Lib_Foo');
+
     strictEqual(sectionMap.get(1), 'Lib_Foo_Bar');
+
+    return;
   });
 
   it('EC9: anonymous class expression in const uses const name as chunk (Mode 2: closes prior gap)', () => {
-    // The class expression's body is walked under the const-derived sub-section, so the inner
+    // The class expression\'s body is walked under the const-derived sub-section, so the inner
     // method `run()` lands at `Lib_Foo_Wrapper_Run`. Const declaration line itself stays in parent.
     const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', 'const Wrapper = class { run() {} };\n', 'Lib_Foo');
+
     strictEqual(sectionMap.get(1), 'Lib_Foo_Wrapper_Run');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Edge Cases EC11 To EC20.
+ * Tests - Type Declarations - Edge Cases EC11-EC20.
  *
  * @since 0.18.0
  */
 describe('Edge cases EC11-EC20', () => {
   it('EC11: default export class adds chunk like regular class', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'export default class Runner {\n  bar(): void {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'export default class Runner {',
+      '  bar(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
+
+    return;
   });
 
   it('EC12: this parameters do not pollute body var rule (skipped from extractFunctionParams)', () => {
     const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/lib/foo.ts', 'function bar(this: SomeType, x: Lib_Foo_Bar_X): void {}\n');
+
     // Implementation may or may not include `this`. Confirm behavior either way.
     const nonThisParams: Tests_TypeDeclarations_ExtractFunctionParams_Returns = params.filter((param) => param['paramName'] !== 'this');
+
     ok(nonThisParams.length >= 1);
+
+    return;
   });
 
   it('EC13: destructured parameter does not get its own type extracted via extractBodyDeclarations', () => {
     const lines: Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = ['  const { foo } = options;'];
     const decls: Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = extractBodyDeclarations(lines);
+
     strictEqual(decls.length, 0);
+
+    return;
   });
 
   it('EC14: parameter property (TS shorthand) is treated as a normal constructor param', () => {
-    const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/cli/foo.ts', 'class Runner {\n  constructor(public name: Cli_Foo_Runner_Constructor_Name) {}\n}\n');
-    strictEqual(params[0]?.paramName, 'name');
+    const params: Tests_TypeDeclarations_ExtractFunctionParams_Returns = extractFunctionParams('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  constructor(public name: Cli_Foo_Runner_Constructor_Name) {}',
+      '}',
+      '',
+    ].join('\n'));
+
+    strictEqual((params[0] !== undefined) ? params[0]['paramName'] : undefined, 'name');
+
+    return;
   });
 
   it('EC15: index signature is not detected as a regular property', () => {
@@ -3149,11 +4082,14 @@ describe('Edge cases EC11-EC20', () => {
       '};',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, 'Cli_Foo');
+
     // The index signature line does not match the literal `(\\w+):\\s+(.+);$` pattern (has brackets).
-    strictEqual(objectTypes[0]?.properties.length, 0);
+    strictEqual((objectTypes[0] !== undefined) ? objectTypes[0]['properties'].length : undefined, 0);
+
+    return;
   });
 
-  it('[gap] EC16: optional/readonly modifiers — extractObjectTypes property regex requires bare `key: Type;` form, so `readonly id: ...` is silently skipped', () => {
+  it('[gap] EC16: optional/readonly modifiers -- extractObjectTypes property regex requires bare `key: Type;` form, so `readonly id: ...` is silently skipped', () => {
     const lines: Tests_TypeDeclarations_ExtractObjectTypes_Lines = [
       'export type Cli_Foo_Run_Result = {',
       '  readonly id: Cli_Foo_Run_Result_Id;',
@@ -3161,211 +4097,385 @@ describe('Edge cases EC11-EC20', () => {
       '};',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, 'Cli_Foo');
+
     // Only the second property (`status: ...`) matches the regex. The `readonly id: ...` line is dropped.
-    strictEqual(objectTypes[0]?.properties.length, 1);
-    strictEqual(objectTypes[0]?.properties[0]?.key, 'status');
+    strictEqual((objectTypes[0] !== undefined) ? objectTypes[0]['properties'].length : undefined, 1);
+    strictEqual((objectTypes[0] !== undefined && objectTypes[0]['properties'][0] !== undefined) ? objectTypes[0]['properties'][0]['key'] : undefined, 'status');
+
+    return;
   });
 
   it('EC17: underscore-prefixed var name strips underscore for leaf comparison', () => {
     strictEqual(stripUnderscorePrefix('_prev'), 'prev');
     strictEqual(validateLeaf('_prev', 'Cli_Foo_Run_Prev', 'Cli_Foo_Run', 'Cli_Foo'), null);
+
+    return;
   });
 
   it('EC18: single-character var name title-cases the single character', () => {
     strictEqual(validateLeaf('i', 'Cli_Foo_Run_I', 'Cli_Foo_Run', 'Cli_Foo'), null);
+
+    return;
   });
 
   it('EC19: dotted filename like foo.spec fails segment regex', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('foo.spec'), false);
     strictEqual(pattern.test('foo.bar'), false);
+
+    return;
   });
 
   it('EC20: filename starting with digit fails segment regex', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('123foo'), false);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Edge Cases EC21 To EC30.
+ * Tests - Type Declarations - Edge Cases EC21-EC30.
  *
  * @since 0.18.0
  */
 describe('Edge cases EC21-EC30', () => {
   it('EC21: filename with underscore/space/special-char fails segment regex', () => {
     const pattern: Tests_TypeDeclarations_TypeDeclarationFilenameValidation_Pattern = new RegExp('^[a-z][a-z0-9-]*$');
+
     strictEqual(pattern.test('foo_bar'), false);
     strictEqual(pattern.test('foo bar'), false);
     strictEqual(pattern.test('foo$bar'), false);
+
+    return;
   });
 
   it('EC22: file at typeRoot produces single-chunk classPrefix', () => {
     const prefix: Tests_TypeDeclarations_DeriveClassPrefix_Returns = deriveClassPrefix(resolve(getPackageRoot(), 'src/main.ts'));
+
     strictEqual(prefix, 'Main');
+
+    return;
   });
 
   it('EC23: template string in (string, fn) arg[0] does NOT add chunk', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe(`Foo ${1}`, () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const interp: Tests_TypeDeclarations_BuildSourceSectionMap_Interp = [
+      '$',
+      '{',
+      '1}',
+    ].join('');
+    const sourceContent: Tests_TypeDeclarations_BuildSourceSectionMap_Content = [
+      `describe(\`Foo ${interp}\`, () => {`,
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', sourceContent, 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo');
+
+    return;
   });
 
   it('EC24: async arrow function callback in (string, fn) is accepted', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe(\'Foo\', async () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe(\'Foo\', async () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
+
+    return;
   });
 
   it('EC24b: async function expression callback in (string, fn) is accepted', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe(\'Foo\', async function () {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe(\'Foo\', async function () {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
+
+    return;
   });
 
   it('EC25: class getter adds chunk based on property name', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  get bar(): number { return 1; }\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  get bar(): number { return 1; }',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
+
+    return;
   });
 
   it('EC25b: class setter adds chunk based on property name', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  set bar(value: number) {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  set bar(value: number) {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_Bar');
+
+    return;
   });
 
   it('EC26: static method adds chunk like an instance method', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Runner {\n  static doThing(): void {}\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Runner {',
+      '  static doThing(): void {}',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(2), 'Cli_Foo_Runner_DoThing');
+
+    return;
   });
 
   it('EC28: nested function declaration adds chunk under the outer function', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', 'function processItems() {\n  function visit(node: any) {\n    const result: any = node;\n  }\n}\n', 'Lib_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/foo.ts', [
+      'function processItems() {',
+      '  function visit(node: any) {',
+      '    const result: any = node;',
+      '  }',
+      '}',
+      '',
+    ].join('\n'), 'Lib_Foo');
+
     strictEqual(sectionMap.get(3), 'Lib_Foo_ProcessItems_Visit');
+
+    return;
   });
 
   it('EC30: describe.skip(string, fn) adds chunk via generic rule', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe.skip(\'Foo\', () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe.skip(\'Foo\', () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
+
+    return;
   });
 
   it('EC30b: describe.only(string, fn) adds chunk via generic rule', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', 'describe.only(\'Foo\', () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.test.ts', [
+      'describe.only(\'Foo\', () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     strictEqual(sectionMap.get(2), 'Tests_Foo_Foo');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Edge Cases EC31 To EC55.
+ * Tests - Type Declarations - Edge Cases EC31-EC55.
  *
  * @since 0.18.0
  */
 describe('Edge cases EC31-EC55', () => {
   it('EC31: primitive-like return types (void, never, etc.) pass validateLeaf at body var', () => {
-    // Body var typed `unknown` is allowed but doesn't follow the convention's leaf-naming.
+    // Body var typed `unknown` is allowed but doesn\'t follow the convention\'s leaf-naming.
     // This test verifies validateLeaf handles primitive-typed body vars without crashing.
-    strictEqual(validateLeaf('result', 'unknown', 'Cli_Foo_Run', 'Cli_Foo')?.['actualLeaf'], 'unknown');
+    const result: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('result', 'unknown', 'Cli_Foo_Run', 'Cli_Foo');
+
+    strictEqual((result !== null) ? result['actualLeaf'] : undefined, 'unknown');
+
+    return;
   });
 
   it('EC33: nested class inside method adds chunk under method', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', 'class Outer {\n  run(): void {\n    class Inner {}\n  }\n}\n', 'Cli_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', [
+      'class Outer {',
+      '  run(): void {',
+      '    class Inner {}',
+      '  }',
+      '}',
+      '',
+    ].join('\n'), 'Cli_Foo');
+
     strictEqual(sectionMap.get(3), 'Cli_Foo_Outer_Run_Inner');
+
+    return;
   });
 
   it('EC34: vitest bench(string, fn) adds chunk via generic rule', () => {
-    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.bench.ts', 'bench(\'fast op\', () => {\n  const x: number = 1;\n});\n', 'Tests_Foo');
+    const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/tests/foo.bench.ts', [
+      'bench(\'fast op\', () => {',
+      '  const x: number = 1;',
+      '});',
+      '',
+    ].join('\n'), 'Tests_Foo');
+
     // 'fast op' parses to 'FastOp'.
     strictEqual(sectionMap.get(2), 'Tests_Foo_FastOp');
+
+    return;
   });
 
   it('EC35: rule 7.8 catches two body vars producing the same expected type name', () => {
     const violations: Tests_TypeDeclarations_CheckTypeNameUniqueness_Returns = checkTypeNameUniqueness([
-      { name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 10 },
-      { name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 20 },
+      {
+        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 10,
+      },
+      {
+        name: 'foo', typeName: 'Cli_X_Foo', lineNumber: 20,
+      },
     ]);
+
     strictEqual(violations.length, 1);
+
+    return;
   });
 
   it('EC37/EC42: JSX function component name == file name fires C2', () => {
     const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/components/logo.tsx', 'export default function Logo(): null { return null; }\n');
-    strictEqual(identifiers[0]?.name, 'Logo');
-    strictEqual(identifiers[0]?.kind, 'function');
+
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['name'] : undefined, 'Logo');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['kind'] : undefined, 'function');
+
+    return;
   });
 
   it('EC43: JSX class component name == file name fires C1', () => {
-    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/components/logo.tsx', 'export default class Logo {\n  render() { return null; }\n}\n');
-    strictEqual(identifiers[0]?.name, 'Logo');
-    strictEqual(identifiers[0]?.kind, 'class');
+    const identifiers: Tests_TypeDeclarations_ExtractTopLevelIdentifiers_Returns = extractTopLevelIdentifiers('/fake/components/logo.tsx', [
+      'export default class Logo {',
+      '  render() { return null; }',
+      '}',
+      '',
+    ].join('\n'));
+
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['name'] : undefined, 'Logo');
+    strictEqual((identifiers[0] !== undefined) ? identifiers[0]['kind'] : undefined, 'class');
+
+    return;
   });
 
   it('EC44: branded types follow standard naming', () => {
-    // type X = string & { __brand: 'X' } — naming-wise just a type alias.
+    // type X = string & { __brand: 'X' } -- naming-wise just a type alias.
     const lines: Tests_TypeDeclarations_ExtractTypeNames_TypeLines = ['export type Cli_Foo_UserId = string & { __brand: \'UserId\' };'];
+
     deepStrictEqual(extractTypeNames(lines), ['Cli_Foo_UserId']);
+
+    return;
   });
 
   it('EC46: recursive type definition is detected as self-reference (no infinite loop)', () => {
     const refs: Tests_TypeDeclarations_ExtractReferencedTypes_Returns = extractReferencedTypes('export type Cli_Foo_Node = { value: string; next: Cli_Foo_Node | null };', 'Cli_Foo');
+
     // self-ref excluded by extractReferencedTypes
     strictEqual(refs.length, 0);
+
+    return;
   });
 
   it('EC47: enum declaration is not subject to type-naming rules (out of helper scope)', () => {
     // extractTypeNames matches `export type` lines only. enum declarations are skipped.
-    const lines: Tests_TypeDeclarations_ExtractTypeNames_TypeLines = [
-      'export enum Cli_Foo_Run_Status { Pending, Done }',
-    ];
+    const lines: Tests_TypeDeclarations_ExtractTypeNames_TypeLines = ['export enum Cli_Foo_Run_Status { Pending, Done }'];
+
     deepStrictEqual(extractTypeNames(lines), []);
+
+    return;
   });
 
-  it('[gap] EC52: same-line multi-declaration — extractBodyDeclarations regex matches one declarator per line, so only the first is captured', () => {
+  it('[gap] EC52: same-line multi-declaration -- extractBodyDeclarations regex matches one declarator per line, so only the first is captured', () => {
     const lines: Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = ['  const a: A = 1, b: B = 2;'];
     const decls: Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = extractBodyDeclarations(lines);
+
     strictEqual(decls.length, 1);
+
+    return;
   });
 
   it('EC54: empty source file produces empty section map (just classPrefix at top-level lines)', () => {
     const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/lib/empty.ts', 'export {};\n', 'Lib_Empty');
+
     strictEqual(sectionMap.get(1), 'Lib_Empty');
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule 7.1 Leaf Integration.
+ * Tests - Type Declarations - Rule 7.1 Integration.
  *
  * @since 0.18.0
  */
 describe('Rule 7.1 integration', () => {
   it('passes when leaf matches sourceSection_titleVar', () => {
     strictEqual(validateLeaf('items', 'Cli_Foo_Run_Items', 'Cli_Foo_Run', 'Cli_Foo'), null);
+
+    return;
   });
 
   it('passes class-prefix passthrough form (skip method chunk)', () => {
     strictEqual(validateLeaf('items', 'Cli_Foo_Items', 'Cli_Foo_Run', 'Cli_Foo'), null);
+
+    return;
   });
 
   it('fails when leaf differs from var name', () => {
     const result: Tests_TypeDeclarations_ValidateLeaf_Returns = validateLeaf('items', 'Cli_Foo_Run_Things', 'Cli_Foo_Run', 'Cli_Foo');
-    deepStrictEqual(result, { actualLeaf: 'Things', expectedLeaf: 'Items' });
+
+    deepStrictEqual(result, {
+      actualLeaf: 'Things', expectedLeaf: 'Items',
+    });
+
+    return;
   });
 
   it('integrates with extractBodyDeclarations + buildSourceSectionMap', () => {
-    const sourceContent: Tests_TypeDeclarations_BuildSourceSectionMap_Content = 'class Runner {\n  bar() {\n    const items: Cli_Foo_Runner_Bar_Items = [];\n  }\n}\n';
+    const sourceContent: Tests_TypeDeclarations_BuildSourceSectionMap_Content = [
+      'class Runner {',
+      '  bar() {',
+      '    const items: Cli_Foo_Runner_Bar_Items = [];',
+      '  }',
+      '}',
+      '',
+    ].join('\n');
     const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_Returns = buildSourceSectionMap('/fake/cli/foo.ts', sourceContent, 'Cli_Foo');
     const decls: Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = extractBodyDeclarations(sourceContent.split('\n'));
+
     strictEqual(decls.length, 1);
-    const sourceSection: Tests_TypeDeclarations_ValidateLeaf_SourceSection = sectionMap.get(decls[0]?.['lineNumber'] ?? 0) ?? '';
+
+    const firstDecl: Tests_TypeDeclarations_ExtractBodyDeclarations_FoundDeclaration = decls[0];
+    const sourceSection: Tests_TypeDeclarations_ValidateLeaf_SourceSection = sectionMap.get((firstDecl !== undefined) ? firstDecl['lineNumber'] : 0) ?? '';
+
     strictEqual(sourceSection, 'Cli_Foo_Runner_Bar');
-    strictEqual(validateLeaf(decls[0]?.['varName'] ?? '', decls[0]?.['typeName'] ?? '', sourceSection, 'Cli_Foo'), null);
+    strictEqual(validateLeaf((firstDecl !== undefined) ? firstDecl['varName'] : '', (firstDecl !== undefined) ? firstDecl['typeName'] : '', sourceSection, 'Cli_Foo'), null);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - Rule E1 E2 Object Property Integration.
+ * Tests - Type Declarations - Rule E1/E2 Integration.
  *
  * @since 0.18.0
  */
@@ -3378,8 +4488,11 @@ describe('Rule E1/E2 integration', () => {
       '};',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, 'Cli_Foo');
-    const result: Tests_TypeDeclarations_ExtractObjectTypes_ObjectType | undefined = objectTypes.find((objectType) => objectType['name'] === 'Cli_Foo_Run_Result');
-    strictEqual(result?.properties[0]?.valueType.startsWith('Cli_Foo_Run_Result'), true);
+    const result: Tests_TypeDeclarations_ExtractObjectTypes_FoundObjectType = objectTypes.find((objectType) => objectType['name'] === 'Cli_Foo_Run_Result');
+
+    strictEqual((result !== undefined && result['properties'][0] !== undefined) ? result['properties'][0]['valueType'].startsWith('Cli_Foo_Run_Result') : false, true);
+
+    return;
   });
 
   it('E1: property type does not start with parent type name (fails)', () => {
@@ -3390,8 +4503,11 @@ describe('Rule E1/E2 integration', () => {
       '};',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, 'Cli_Foo');
-    const result: Tests_TypeDeclarations_ExtractObjectTypes_ObjectType | undefined = objectTypes.find((objectType) => objectType['name'] === 'Cli_Foo_Run_Result');
-    strictEqual(result?.properties[0]?.valueType.startsWith('Cli_Foo_Run_Result'), false);
+    const result: Tests_TypeDeclarations_ExtractObjectTypes_FoundObjectType = objectTypes.find((objectType) => objectType['name'] === 'Cli_Foo_Run_Result');
+
+    strictEqual((result !== undefined && result['properties'][0] !== undefined) ? result['properties'][0]['valueType'].startsWith('Cli_Foo_Run_Result') : false, false);
+
+    return;
   });
 
   it('E2: property type defined before parent (passes)', () => {
@@ -3402,10 +4518,13 @@ describe('Rule E1/E2 integration', () => {
       '};',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, 'Cli_Foo');
-    const result: Tests_TypeDeclarations_ExtractObjectTypes_ObjectType | undefined = objectTypes.find((objectType) => objectType['name'] === 'Cli_Foo_Run_Result');
-    const propertyTypeLine: number = result?.properties[0]?.typeLineIndex ?? -1;
-    const parentLine: number = result?.lineIndex ?? -1;
+    const result: Tests_TypeDeclarations_ExtractObjectTypes_FoundObjectType = objectTypes.find((objectType) => objectType['name'] === 'Cli_Foo_Run_Result');
+    const propertyTypeLine: Tests_TypeDeclarations_ExtractObjectTypes_PropertyTypeLine = (result !== undefined && result['properties'][0] !== undefined) ? result['properties'][0]['typeLineIndex'] : -1;
+    const parentLine: Tests_TypeDeclarations_ExtractObjectTypes_ParentLine = (result !== undefined) ? result['lineIndex'] : -1;
+
     ok(propertyTypeLine < parentLine);
+
+    return;
   });
 
   it('E2: property type defined after parent (fails)', () => {
@@ -3416,10 +4535,13 @@ describe('Rule E1/E2 integration', () => {
       'export type Cli_Foo_Run_Result_Status = string;',
     ];
     const objectTypes: Tests_TypeDeclarations_ExtractObjectTypes_Returns = extractObjectTypes(lines, 'Cli_Foo');
-    const result: Tests_TypeDeclarations_ExtractObjectTypes_ObjectType | undefined = objectTypes.find((objectType) => objectType['name'] === 'Cli_Foo_Run_Result');
-    const propertyTypeLine: number = result?.properties[0]?.typeLineIndex ?? -1;
-    const parentLine: number = result?.lineIndex ?? -1;
+    const result: Tests_TypeDeclarations_ExtractObjectTypes_FoundObjectType = objectTypes.find((objectType) => objectType['name'] === 'Cli_Foo_Run_Result');
+    const propertyTypeLine: Tests_TypeDeclarations_ExtractObjectTypes_PropertyTypeLine = (result !== undefined && result['properties'][0] !== undefined) ? result['properties'][0]['typeLineIndex'] : -1;
+    const parentLine: Tests_TypeDeclarations_ExtractObjectTypes_ParentLine = (result !== undefined) ? result['lineIndex'] : -1;
+
     ok(propertyTypeLine > parentLine);
+
+    return;
   });
 
   return;
@@ -3434,14 +4556,20 @@ describe('Section F coverage integration', () => {
   it('F1: same-section references are allowed', () => {
     // Cli_Foo_Run_X referencing Cli_Foo_Run_Y is a same-section reference (both start with Cli_Foo_Run).
     const refs: Tests_TypeDeclarations_ExtractReferencedTypes_Returns = extractReferencedTypes('export type Cli_Foo_Run_X = Cli_Foo_Run_Y;', 'Cli_Foo');
+
     deepStrictEqual(refs, ['Cli_Foo_Run_Y']);
+
+    return;
   });
 
   it('F2: sections in alphabetical order check (compare strings directly)', () => {
     // Check the comparison logic: 'Cli_Foo_Bar' < 'Cli_Foo_Foo' alphabetically.
-    const sectionA: string = 'Cli_Foo_Bar';
-    const sectionB: string = 'Cli_Foo_Foo';
+    const sectionA: Tests_TypeDeclarations_BuildDtsSections_SectionA = 'Cli_Foo_Bar';
+    const sectionB: Tests_TypeDeclarations_BuildDtsSections_SectionB = 'Cli_Foo_Foo';
+
     ok(sectionA < sectionB);
+
+    return;
   });
 
   it('F4: within section, first-come-first-serve order via findFirstOccurrence', () => {
@@ -3455,23 +4583,32 @@ describe('Section F coverage integration', () => {
     ];
     const itemsLine: Tests_TypeDeclarations_FindFirstOccurrence_Returns = findFirstOccurrence(sourceLines, 'Cli_Foo_Runner_Bar_Items');
     const resultLine: Tests_TypeDeclarations_FindFirstOccurrence_Returns = findFirstOccurrence(sourceLines, 'Cli_Foo_Runner_Bar_Result');
+
     ok(itemsLine < resultLine);
+
+    return;
   });
 
   it('F6 forward: every source section should have at least one matching .d.ts type', () => {
     const dtsLines: Tests_TypeDeclarations_BuildDtsSections_DtsLines = ['export type Cli_Foo_Run_X = string;'];
     const sourceSections: Tests_TypeDeclarations_BuildDtsSections_SourceSections = new Set(['Cli_Foo_Run']);
     const sections: Tests_TypeDeclarations_BuildDtsSections_Returns = buildDtsSections(dtsLines, sourceSections, 'Cli_Foo');
+
     strictEqual(sections.length, 1);
-    strictEqual(sections[0]?.prefix, 'Cli_Foo_Run');
+    strictEqual((sections[0] !== undefined) ? sections[0]['prefix'] : undefined, 'Cli_Foo_Run');
+
+    return;
   });
 
   it('F6 reverse: orphan multi-chunk type without source section', () => {
     const dtsLines: Tests_TypeDeclarations_BuildDtsSections_DtsLines = ['export type Cli_Foo_NoSource_X = string;'];
     const sourceSections: Tests_TypeDeclarations_BuildDtsSections_SourceSections = new Set();
     const sections: Tests_TypeDeclarations_BuildDtsSections_Returns = buildDtsSections(dtsLines, sourceSections, 'Cli_Foo');
+
     // Falls back to classPrefix; the orphan is in classPrefix section.
-    strictEqual(sections[0]?.prefix, 'Cli_Foo');
+    strictEqual((sections[0] !== undefined) ? sections[0]['prefix'] : undefined, 'Cli_Foo');
+
+    return;
   });
 
   return;
@@ -3486,29 +4623,46 @@ describe('Section G imports integration', () => {
   it('G1: extractImportedNames captures alphabetized inline imports', () => {
     const lines: Tests_TypeDeclarations_ExtractImportedNames_Lines = ['import type { Apple, Banana, Cherry } from \'./fruits.d.ts\';'];
     const names: Tests_TypeDeclarations_ExtractImportedNames_Returns = extractImportedNames(lines);
+
     ok(names.has('Apple'));
     ok(names.has('Banana'));
     ok(names.has('Cherry'));
+
+    return;
   });
 
   it('G1: multi-line import block alphabetical order can be checked', () => {
-    const specifiers: string[] = ['Apple', 'Banana', 'Cherry'];
-    const sortedSpecifiers: string[] = [...specifiers].sort();
+    const specifiers: Tests_TypeDeclarations_ExtractImportedNames_Specifiers = [
+      'Apple',
+      'Banana',
+      'Cherry',
+    ];
+    const sortedSpecifiers: Tests_TypeDeclarations_ExtractImportedNames_SortedSpecifiers = [...specifiers].sort();
+
     deepStrictEqual(specifiers, sortedSpecifiers);
+
+    return;
   });
 
   it('G1: detects out-of-order specifiers', () => {
-    const specifiers: string[] = ['Banana', 'Apple', 'Cherry'];
-    const sortedSpecifiers: string[] = [...specifiers].sort();
-    // specifiers[0] is 'Banana', sorted[0] is 'Apple' — out of order
+    const specifiers: Tests_TypeDeclarations_ExtractImportedNames_Specifiers = [
+      'Banana',
+      'Apple',
+      'Cherry',
+    ];
+    const sortedSpecifiers: Tests_TypeDeclarations_ExtractImportedNames_SortedSpecifiers = [...specifiers].sort();
+
+    // specifiers[0] is 'Banana', sorted[0] is 'Apple' -- out of order
     ok(specifiers[0] !== sortedSpecifiers[0]);
+
+    return;
   });
 
   return;
 });
 
 /**
- * Tests - Type Declarations - End-To-End Fixture Pipeline.
+ * Tests - Type Declarations - End-to-end Fixture Pipeline.
  *
  * Wires all rule helpers together against a single inline source/.d.ts fixture pair. Each section
  * of the fixture intentionally violates one rule; the assertions confirm the pipeline produces the
@@ -3522,19 +4676,19 @@ describe('end-to-end fixture pipeline', () => {
     const sourceContent: Tests_TypeDeclarations_RunRulePipeline_SourceContent = [
       'class Runner {',
       '  bar() {',
-      '    const items: Cli_Foo_Wrong_Leaf = [];',                  // 7.1: leaf "Leaf" != "Items"
-      '    const result: Cli_Foo_Bar_Result_Returns = [];',          // 7.3: reserved suffix at body var
-      '    const data: Cli_Foo_Bar_Data = {};',                      // 7.2-alias: defined as alias to foreign
-      '    items.filter((x: Cli_Foo_Item) => x);',                   // 7.4: inline typed callback
+      '    const items: Cli_Foo_Wrong_Leaf = [];', // 7.1: leaf "Leaf" != "Items"
+      '    const result: Cli_Foo_Bar_Result_Returns = [];', // 7.3: reserved suffix at body var
+      '    const data: Cli_Foo_Bar_Data = {};', // 7.2-alias: defined as alias to foreign
+      '    items.filter((x: Cli_Foo_Item) => x);', // 7.4: inline typed callback
       '  }',
-      '  bad(): Cli_Foo_Runner_Bad_Result { return null; }',        // 7.5: not "Returns"
+      '  bad(): Cli_Foo_Runner_Bad_Result { return null; }', // 7.5: not "Returns"
       '}',
       '',
     ].join('\n');
     const dtsContent: Tests_TypeDeclarations_RunRulePipeline_DtsContent = [
       'export type Cli_Foo_Wrong_Leaf = unknown;',
       'export type Cli_Foo_Bar_Result_Returns = unknown;',
-      'export type Cli_Foo_Bar_Data = Lib_Utility_X;',                // 7.2-alias source
+      'export type Cli_Foo_Bar_Data = Lib_Utility_X;', // 7.2-alias source
       'export type Cli_Foo_Item = unknown;',
       '',
     ].join('\n');
@@ -3546,6 +4700,8 @@ describe('end-to-end fixture pipeline', () => {
     ok(violations.some((violation) => violation.startsWith('7.3:')), `7.3 expected, got: ${violations.join(' | ')}`);
     ok(violations.some((violation) => violation.startsWith('7.4:')), `7.4 expected, got: ${violations.join(' | ')}`);
     ok(violations.some((violation) => violation.startsWith('7.5/6/7:')), `7.5/6/7 expected, got: ${violations.join(' | ')}`);
+
+    return;
   });
 
   it('clean fixture (no violations) produces empty violation list', () => {
@@ -3567,6 +4723,8 @@ describe('end-to-end fixture pipeline', () => {
     const violations: Tests_TypeDeclarations_RunRulePipeline_Returns = runRulePipeline('/fake/cli/foo.ts', sourceContent, dtsContent, 'Cli_Foo');
 
     strictEqual(violations.length, 0, violations.join(' | '));
+
+    return;
   });
 
   return;
@@ -3730,6 +4888,7 @@ export function buildDtsSections(dtsLines: Tests_TypeDeclarations_BuildDtsSectio
         prefix: owningSection,
         typeLines: [],
       });
+
       sectionOrder.push(owningSection);
     }
 
@@ -3951,7 +5110,7 @@ export function extractObjectTypes(lines: Tests_TypeDeclarations_ExtractObjectTy
 }
 
 /**
- * Tests - Type Declarations - Parse Source File (cache).
+ * Tests - Type Declarations - Source File Cache.
  *
  * Caches SourceFile parses keyed by filePath, with content-equality check to invalidate on edits.
  * The variable-type-symmetry meta-test parses each source file 4 times (buildSourceSectionMap,
@@ -3962,7 +5121,7 @@ export function extractObjectTypes(lines: Tests_TypeDeclarations_ExtractObjectTy
  *
  * @since 0.18.0
  */
-const sourceFileCache: Map<string, Tests_TypeDeclarations_ParseSourceFile_CachedEntry> = new Map();
+const sourceFileCache: Tests_TypeDeclarations_ParseSourceFile_SourceFileCache = new Map();
 
 export function parseSourceFile(filePath: Tests_TypeDeclarations_ParseSourceFile_FilePath, content: Tests_TypeDeclarations_ParseSourceFile_Content): Tests_TypeDeclarations_ParseSourceFile_Returns {
   const cached: Tests_TypeDeclarations_ParseSourceFile_Cached = sourceFileCache.get(filePath);
@@ -3973,7 +5132,9 @@ export function parseSourceFile(filePath: Tests_TypeDeclarations_ParseSourceFile
 
   const sourceFile: SourceFile = createSourceFile(filePath, content, ScriptTarget.Latest, true);
 
-  sourceFileCache.set(filePath, { content, sourceFile });
+  sourceFileCache.set(filePath, {
+    content, sourceFile,
+  });
 
   return sourceFile;
 }
@@ -3987,21 +5148,24 @@ export function extractFunctionParams(filePath: Tests_TypeDeclarations_ExtractFu
   const sourceFile: SourceFile = parseSourceFile(filePath, content);
   const params: Tests_TypeDeclarations_ExtractFunctionParams_Params = [];
 
-  function visit(node: Node): void {
-    let parameterList: readonly Node[] | undefined = undefined;
+  function visit(node: Node): Tests_TypeDeclarations_ExtractFunctionParams_VisitReturns {
+    let parameterList: Tests_TypeDeclarations_ExtractFunctionParams_ParameterList = undefined;
 
     if (
       isFunctionDeclaration(node) === true
       || isMethodDeclaration(node) === true
       || isConstructorDeclaration(node) === true
     ) {
-      parameterList = (node as { parameters: readonly Node[] }).parameters;
+      parameterList = (node as Tests_TypeDeclarations_ExtractFunctionParams_NodeWithParametersShape)['parameters'];
     } else if (isVariableStatement(node) === true) {
       // Function-typed const: extract its arrow function's parameters.
       for (const decl of node.declarationList.declarations) {
         if (
           decl.initializer !== undefined
-          && (isArrowFunction(decl.initializer) === true || isFunctionExpression(decl.initializer) === true)
+          && (
+            isArrowFunction(decl.initializer) === true
+            || isFunctionExpression(decl.initializer) === true
+          )
         ) {
           parameterList = decl.initializer.parameters;
         }
@@ -4010,17 +5174,19 @@ export function extractFunctionParams(filePath: Tests_TypeDeclarations_ExtractFu
 
     if (parameterList !== undefined) {
       for (const param of parameterList) {
-        const paramNode: { name?: Node, type?: Node } = param as { name?: Node, type?: Node };
+        const paramNode: Tests_TypeDeclarations_ExtractFunctionParams_ParamNodeShape = param as Tests_TypeDeclarations_ExtractFunctionParams_ParamNodeShape;
 
         if (
-          paramNode.name !== undefined && isIdentifier(paramNode.name) === true
-          && paramNode.type !== undefined && isTypeReferenceNode(paramNode.type) === true
-          && isIdentifier((paramNode.type as { typeName: Node }).typeName) === true
+          paramNode['name'] !== undefined
+          && isIdentifier(paramNode['name']) === true
+          && paramNode['type'] !== undefined
+          && isTypeReferenceNode(paramNode['type']) === true
+          && isIdentifier((paramNode['type'] as Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameShape)['typeName']) === true
         ) {
-          const lineNumber: Tests_TypeDeclarations_ExtractFunctionParams_LineNumber = sourceFile.getLineAndCharacterOfPosition((param as Node).getStart()).line + 1;
+          const lineNumber: Tests_TypeDeclarations_ExtractFunctionParams_LineNumber = sourceFile.getLineAndCharacterOfPosition((param).getStart()).line + 1;
           const paramRecord: Tests_TypeDeclarations_ExtractFunctionParams_Param = {
-            paramName: (paramNode.name as { text: string }).text,
-            typeName: ((paramNode.type as { typeName: { text: string } }).typeName).text,
+            paramName: (paramNode['name'] as Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTextShape)['text'],
+            typeName: (paramNode['type'] as Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameTextShape)['typeName']['text'],
             lineNumber,
           };
 
@@ -4117,7 +5283,8 @@ export function extractTopLevelIdentifiers(filePath: Tests_TypeDeclarations_Extr
     if (isVariableStatement(node) === true) {
       for (const decl of node.declarationList.declarations) {
         if (
-          decl.name !== undefined && isIdentifier(decl.name) === true
+          decl.name !== undefined
+          && isIdentifier(decl.name) === true
           && decl.initializer !== undefined
           && (
             isArrowFunction(decl.initializer) === true
@@ -4135,6 +5302,8 @@ export function extractTopLevelIdentifiers(filePath: Tests_TypeDeclarations_Extr
         }
       }
     }
+
+    return;
   });
 
   return identifiers;
@@ -4148,6 +5317,7 @@ export function extractTopLevelIdentifiers(filePath: Tests_TypeDeclarations_Extr
 export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSourceSectionMap_FilePath, content: Tests_TypeDeclarations_BuildSourceSectionMap_Content, classPrefix: Tests_TypeDeclarations_BuildSourceSectionMap_ClassPrefix): Tests_TypeDeclarations_BuildSourceSectionMap_Returns {
   const sourceFile: SourceFile = parseSourceFile(filePath, content);
   const sectionMap: Tests_TypeDeclarations_BuildSourceSectionMap_SectionMap = new Map<number, string>();
+
   // Recursion depth guard: real source files never approach this; pathologically deep generated code
   // (10k-level callback chains) would otherwise hit Node's default stack limit (~10k frames).
   const maxDepth: Tests_TypeDeclarations_BuildSourceSectionMap_MaxDepth = 5000;
@@ -4156,13 +5326,13 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
     return sourceFile.getLineAndCharacterOfPosition(node.getStart()).line + 1;
   }
 
-  function pascalCase(name: string): string {
+  function pascalCase(name: Tests_TypeDeclarations_BuildSourceSectionMap_PascalCaseName): Tests_TypeDeclarations_BuildSourceSectionMap_PascalCaseReturns {
     return name.charAt(0).toUpperCase() + name.slice(1);
   }
 
   let currentDepth: Tests_TypeDeclarations_BuildSourceSectionMap_CurrentDepth = 0;
 
-  function tagAllChildren(node: Node, section: Tests_TypeDeclarations_BuildSourceSectionMap_Section): void {
+  function tagAllChildren(node: Node, section: Tests_TypeDeclarations_BuildSourceSectionMap_Section): Tests_TypeDeclarations_BuildSourceSectionMap_TagAllChildrenReturns {
     if (currentDepth >= maxDepth) {
       return;
     }
@@ -4174,12 +5344,13 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
     return;
   }
 
-  function visit(node: Node, section: Tests_TypeDeclarations_BuildSourceSectionMap_Section): void {
+  function visit(node: Node, section: Tests_TypeDeclarations_BuildSourceSectionMap_Section): Tests_TypeDeclarations_BuildSourceSectionMap_VisitReturns {
     // Class declaration: adds class name as a chunk. Anonymous (no name) classes fall through to default tagging.
     if (isClassDeclaration(node) === true && node.name !== undefined) {
       const newSection: Tests_TypeDeclarations_BuildSourceSectionMap_Section = `${section}_${pascalCase(node.name.text)}`;
 
       sectionMap.set(getLine(node), newSection);
+
       tagAllChildren(node, newSection);
 
       return;
@@ -4188,18 +5359,26 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
     // Method/getter/setter declaration: section = parent + methodName. Accept both regular `name()`,
     // private `#name()`, and accessor pairs `get bar()` / `set bar()`. The cast captures the shared
     // shape (all three node kinds have `name?: PropertyName`) without per-cast noise.
-    const accessor: MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration = node as MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration;
+    const accessor: Tests_TypeDeclarations_BuildSourceSectionMap_AccessorUnion = node as Tests_TypeDeclarations_BuildSourceSectionMap_AccessorUnion;
 
     if (
-      (isMethodDeclaration(node) === true || isGetAccessorDeclaration(node) === true || isSetAccessorDeclaration(node) === true)
+      (
+        isMethodDeclaration(node) === true
+        || isGetAccessorDeclaration(node) === true
+        || isSetAccessorDeclaration(node) === true
+      )
       && accessor.name !== undefined
-      && (isIdentifier(accessor.name) === true || isPrivateIdentifier(accessor.name) === true)
+      && (
+        isIdentifier(accessor.name) === true
+        || isPrivateIdentifier(accessor.name) === true
+      )
     ) {
-      const rawMethodName: string = accessor.name.text;
-      const cleanMethodName: string = (rawMethodName.startsWith('#') === true) ? rawMethodName.slice(1) : rawMethodName;
+      const rawMethodName: Tests_TypeDeclarations_BuildSourceSectionMap_RawMethodName = accessor.name.text;
+      const cleanMethodName: Tests_TypeDeclarations_BuildSourceSectionMap_CleanMethodName = (rawMethodName.startsWith('#') === true) ? rawMethodName.slice(1) : rawMethodName;
       const newSection: Tests_TypeDeclarations_BuildSourceSectionMap_Section = `${section}_${pascalCase(cleanMethodName)}`;
 
       sectionMap.set(getLine(node), newSection);
+
       tagAllChildren(node, newSection);
 
       return;
@@ -4210,6 +5389,7 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
       const newSection: Tests_TypeDeclarations_BuildSourceSectionMap_Section = `${section}_Constructor`;
 
       sectionMap.set(getLine(node), newSection);
+
       tagAllChildren(node, newSection);
 
       return;
@@ -4220,6 +5400,7 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
       const newSection: Tests_TypeDeclarations_BuildSourceSectionMap_Section = `${section}_${pascalCase(node.name.text)}`;
 
       sectionMap.set(getLine(node), newSection);
+
       tagAllChildren(node, newSection);
 
       return;
@@ -4228,12 +5409,13 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
     // Variable statement: check for function-typed const (arrow, function expression) or class-expression
     // const (covers EC9: anonymous class expressions take their enclosing const name as the chunk).
     if (isVariableStatement(node) === true) {
-      let hasInitializer: boolean = false;
+      let hasInitializer: Tests_TypeDeclarations_BuildSourceSectionMap_HasInitializer = false;
       let subSection: Tests_TypeDeclarations_BuildSourceSectionMap_Section = section;
 
       for (const decl of node.declarationList.declarations) {
         if (
-          decl.name !== undefined && isIdentifier(decl.name) === true
+          decl.name !== undefined
+          && isIdentifier(decl.name) === true
           && decl.initializer !== undefined
           && (
             isArrowFunction(decl.initializer) === true
@@ -4281,20 +5463,26 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
       && node.arguments[0] !== undefined
       && isStringLiteral(node.arguments[0]) === true
     ) {
-      let callbackArg: Node | undefined = undefined;
+      let callbackArg: Tests_TypeDeclarations_BuildSourceSectionMap_CallbackArg = undefined;
 
-      for (let argIndex: number = 1; argIndex < node.arguments.length; argIndex += 1) {
-        const arg: Node | undefined = node.arguments[argIndex];
+      for (let argIndex = 1; argIndex < node.arguments.length; argIndex += 1) {
+        const arg: Tests_TypeDeclarations_BuildSourceSectionMap_Arg = node.arguments[argIndex];
 
-        if (arg !== undefined && (isArrowFunction(arg) === true || isFunctionExpression(arg) === true)) {
+        if (
+          arg !== undefined
+          && (
+            isArrowFunction(arg) === true
+            || isFunctionExpression(arg) === true
+          )
+        ) {
           callbackArg = arg;
           break;
         }
       }
 
       if (callbackArg !== undefined) {
-        const stringArg: StringLiteral = node.arguments[0] as StringLiteral;
-        const chunk: string = parseDescribeString(stringArg.text);
+        const stringArg: StringLiteral = node.arguments[0];
+        const chunk: Tests_TypeDeclarations_BuildSourceSectionMap_Chunk = parseDescribeString(stringArg.text);
 
         // If the string parses to an empty chunk (purely non-alphanumeric input like
         // `describe('!@#', ...)`), fall through to the default branch below so the call's
@@ -4304,6 +5492,7 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
           const newSection: Tests_TypeDeclarations_BuildSourceSectionMap_Section = `${section}_${chunk}`;
 
           sectionMap.set(getLine(node), section);
+
           tagAllChildren(callbackArg, newSection);
 
           return;
@@ -4313,6 +5502,7 @@ export function buildSourceSectionMap(filePath: Tests_TypeDeclarations_BuildSour
 
     // Default: tag this line with current section, walk children with same section.
     sectionMap.set(getLine(node), section);
+
     tagAllChildren(node, section);
 
     return;
@@ -4360,16 +5550,16 @@ export function checkTypeNameUniqueness(declarations: Tests_TypeDeclarations_Che
   const seen: Tests_TypeDeclarations_CheckTypeNameUniqueness_SeenMap = new Map();
 
   for (const declaration of declarations) {
-    const existing: Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence | undefined = seen.get(declaration.typeName);
+    const existing: Tests_TypeDeclarations_CheckTypeNameUniqueness_FoundFirstOccurrence = seen.get(declaration['typeName']);
 
     if (existing !== undefined) {
-      const violation: Tests_TypeDeclarations_CheckTypeNameUniqueness_Violation = `Two declarations would produce the same type name '${declaration.typeName}'. First: line ${existing.lineNumber} ('${existing.name}'); duplicate: line ${declaration.lineNumber} ('${declaration.name}'). Rename one of the declarations so the type names differ.`;
+      const violation: Tests_TypeDeclarations_CheckTypeNameUniqueness_Violation = `Two declarations would produce the same type name '${declaration['typeName']}'. First: line ${existing['lineNumber']} ('${existing['name']}'); duplicate: line ${declaration['lineNumber']} ('${declaration['name']}'). Rename one of the declarations so the type names differ.`;
 
       violations.push(violation);
     } else {
-      seen.set(declaration.typeName, {
-        name: declaration.name,
-        lineNumber: declaration.lineNumber,
+      seen.set(declaration['typeName'], {
+        name: declaration['name'],
+        lineNumber: declaration['lineNumber'],
       });
     }
   }
@@ -4386,19 +5576,17 @@ export function detectInlineTypedCallbacks(filePath: Tests_TypeDeclarations_Dete
   const sourceFile: SourceFile = parseSourceFile(filePath, content);
   const callbacks: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callbacks = [];
 
-  function visit(node: Node): void {
+  function visit(node: Node): Tests_TypeDeclarations_DetectInlineTypedCallbacks_VisitReturns {
     if (
-      (isArrowFunction(node) === true || isFunctionExpression(node) === true)
+      (
+        isArrowFunction(node) === true
+        || isFunctionExpression(node) === true
+      )
       && node.parent !== undefined
     ) {
-      // Check if this is an inline (anonymous) typed callback — i.e., NOT the initializer of a VariableDeclaration.
-      const isTopLevelConst: boolean = (
-        node.parent !== undefined
-        && (node.parent as { kind?: number }).kind !== undefined
-      );
-
-      let isFunctionTypedConst: boolean = false;
-      let walker: Node | undefined = node.parent;
+      // Check if this is an inline (anonymous) typed callback -- i.e., NOT the initializer of a VariableDeclaration.
+      let isFunctionTypedConst: Tests_TypeDeclarations_DetectInlineTypedCallbacks_IsFunctionTypedConst = false;
+      let walker: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Walker = node.parent;
 
       while (walker !== undefined) {
         if (isVariableStatement(walker) === true) {
@@ -4406,28 +5594,34 @@ export function detectInlineTypedCallbacks(filePath: Tests_TypeDeclarations_Dete
           break;
         }
         if (
-          (walker as { kind?: number }).kind !== undefined
-          && (isCallExpression(walker) === true || isArrowFunction(walker) === true || isFunctionExpression(walker) === true)
+          (walker as Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithKindShape)['kind'] !== undefined
+          && (
+            isCallExpression(walker) === true
+            || isArrowFunction(walker) === true
+            || isFunctionExpression(walker) === true
+          )
         ) {
           break;
         }
-        walker = (walker as { parent?: Node }).parent;
+        walker = (walker as Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithParentShape)['parent'];
       }
 
       if (isFunctionTypedConst === false) {
         // Inline callback. Check its typed params.
         for (const param of node.parameters) {
-          const paramNode: { name?: Node, type?: Node } = param as { name?: Node, type?: Node };
+          const paramNode: Tests_TypeDeclarations_DetectInlineTypedCallbacks_ParamNodeShape = param as Tests_TypeDeclarations_DetectInlineTypedCallbacks_ParamNodeShape;
 
           if (
-            paramNode.name !== undefined && isIdentifier(paramNode.name) === true
-            && paramNode.type !== undefined && isTypeReferenceNode(paramNode.type) === true
-            && isIdentifier((paramNode.type as { typeName: Node }).typeName) === true
+            paramNode['name'] !== undefined
+            && isIdentifier(paramNode['name']) === true
+            && paramNode['type'] !== undefined
+            && isTypeReferenceNode(paramNode['type']) === true
+            && isIdentifier((paramNode['type'] as Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameShape)['typeName']) === true
           ) {
             const lineNumber: Tests_TypeDeclarations_DetectInlineTypedCallbacks_LineNumber = sourceFile.getLineAndCharacterOfPosition((param as Node).getStart()).line + 1;
             const callback: Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback = {
-              paramName: (paramNode.name as { text: string }).text,
-              typeName: ((paramNode.type as { typeName: { text: string } }).typeName).text,
+              paramName: (paramNode['name'] as Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTextShape)['text'],
+              typeName: (paramNode['type'] as Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameTextShape)['typeName']['text'],
               lineNumber,
             };
 
@@ -4491,14 +5685,14 @@ export function extractFunctionReturns(filePath: Tests_TypeDeclarations_ExtractF
   const sourceFile: SourceFile = parseSourceFile(filePath, content);
   const returns: Tests_TypeDeclarations_ExtractFunctionReturns_FunctionReturns = [];
 
-  function visit(node: Node): void {
+  function visit(node: Node): Tests_TypeDeclarations_ExtractFunctionReturns_VisitReturns {
     if (
       isFunctionDeclaration(node) === true
       || isMethodDeclaration(node) === true
       || isConstructorDeclaration(node) === true
     ) {
-      const fnNode: { type?: Node } = node as { type?: Node };
-      const typeNode: Node | undefined = fnNode.type;
+      const fnNode: Tests_TypeDeclarations_ExtractFunctionReturns_FnNodeShape = node as Tests_TypeDeclarations_ExtractFunctionReturns_FnNodeShape;
+      const typeNode: Tests_TypeDeclarations_ExtractFunctionReturns_TypeNode = fnNode['type'];
 
       if (typeNode !== undefined) {
         let returnType: Tests_TypeDeclarations_ExtractFunctionReturns_ReturnType = '';
@@ -4507,17 +5701,17 @@ export function extractFunctionReturns(filePath: Tests_TypeDeclarations_ExtractF
         if (isTypePredicateNode(typeNode) === true) {
           isTypeGuard = true;
 
-          const predicateNode: { type?: Node } = typeNode as { type?: Node };
+          const predicateNode: Tests_TypeDeclarations_ExtractFunctionReturns_PredicateNodeShape = typeNode as Tests_TypeDeclarations_ExtractFunctionReturns_PredicateNodeShape;
 
           if (
-            predicateNode.type !== undefined
-            && isTypeReferenceNode(predicateNode.type) === true
-            && isIdentifier((predicateNode.type as { typeName: Node }).typeName) === true
+            predicateNode['type'] !== undefined
+            && isTypeReferenceNode(predicateNode['type']) === true
+            && isIdentifier((predicateNode['type'] as Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameShape)['typeName']) === true
           ) {
-            returnType = ((predicateNode.type as { typeName: { text: string } }).typeName).text;
+            returnType = (predicateNode['type'] as Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape)['typeName']['text'];
           }
-        } else if (isTypeReferenceNode(typeNode) === true && isIdentifier((typeNode as { typeName: Node }).typeName) === true) {
-          returnType = ((typeNode as { typeName: { text: string } }).typeName).text;
+        } else if (isTypeReferenceNode(typeNode) === true && isIdentifier((typeNode as Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameShape)['typeName']) === true) {
+          returnType = (typeNode as Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape)['typeName']['text'];
         }
 
         if (returnType !== '') {
@@ -4667,15 +5861,13 @@ export function validateReturnType(returnType: Tests_TypeDeclarations_ValidateRe
     if (returnType.endsWith('_TypeGuard') === false && returnType.endsWith('TypeGuard') === false) {
       return `Type-guard return type '${returnType}' must end in 'TypeGuard'.`;
     }
-  } else {
+  } else if (returnType.endsWith('_Returns') === false && returnType.endsWith('Returns') === false) {
     // Rule 7.5: regular function return must end in '_Returns' or 'Returns'.
-    if (returnType.endsWith('_Returns') === false && returnType.endsWith('Returns') === false) {
-      // Rule 7.7: 'TypeGuard' at non-type-guard return position is forbidden.
-      if (returnType.endsWith('_TypeGuard') === true || returnType.endsWith('TypeGuard') === true) {
-        return `Return type '${returnType}' ends in 'TypeGuard' but the function does not use 'value is T' form; either rename to '_Returns' or rewrite as a type guard.`;
-      }
-      return `Function return type '${returnType}' must end in 'Returns' (plural).`;
+    // Rule 7.7: 'TypeGuard' at non-type-guard return position is forbidden.
+    if (returnType.endsWith('_TypeGuard') === true || returnType.endsWith('TypeGuard') === true) {
+      return `Return type '${returnType}' ends in 'TypeGuard' but the function does not use 'value is T' form; either rename to '_Returns' or rewrite as a type guard.`;
     }
+    return `Function return type '${returnType}' must end in 'Returns' (plural).`;
   }
 
   return null;

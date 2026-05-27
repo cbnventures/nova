@@ -1,8 +1,8 @@
 import { runScaffold } from '../../../lib/scaffold.js';
 
 import type {
-  CliScaffoldAppWorkersRunOptions,
-  CliScaffoldAppWorkersRunReturns,
+  Cli_Scaffold_App_Workers_Runner_Run_Options,
+  Cli_Scaffold_App_Workers_Runner_Run_Returns,
 } from '../../../types/cli/scaffold/app/workers.d.ts';
 
 /**
@@ -14,20 +14,20 @@ import type {
  *
  * @since 0.15.0
  */
-export class CliScaffoldAppWorkers {
+export class Runner {
   /**
    * CLI - Scaffold - App - Workers - Run.
    *
    * Entry point invoked by the CLI nova scaffold app workers command. Delegates to runScaffold
    * with the Workers template subpath.
    *
-   * @param {CliScaffoldAppWorkersRunOptions} options - Options.
+   * @param {Cli_Scaffold_App_Workers_Runner_Run_Options} options - Options.
    *
-   * @returns {CliScaffoldAppWorkersRunReturns}
+   * @returns {Cli_Scaffold_App_Workers_Runner_Run_Returns}
    *
    * @since 0.15.0
    */
-  public static async run(options: CliScaffoldAppWorkersRunOptions): CliScaffoldAppWorkersRunReturns {
+  public static async run(options: Cli_Scaffold_App_Workers_Runner_Run_Options): Cli_Scaffold_App_Workers_Runner_Run_Returns {
     await runScaffold(options, 'app', 'workers', 'scaffold/app/workers', import.meta.url);
 
     return;

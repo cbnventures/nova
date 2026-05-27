@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 
-import { LibNovaConfig } from '../../../lib/nova-config.js';
+import { Runner as LibNovaConfig } from '../../../lib/nova-config.js';
 import {
   isPlainObject,
   isProjectRoot,
@@ -10,30 +10,30 @@ import {
 import { Logger } from '../../../toolkit/index.js';
 
 import type {
-  CliRecipePackageJsonNormalizeModulesHandleCurrentPackageExports,
-  CliRecipePackageJsonNormalizeModulesHandleFileContents,
-  CliRecipePackageJsonNormalizeModulesHandleManifest,
-  CliRecipePackageJsonNormalizeModulesHandlePackageBrowser,
-  CliRecipePackageJsonNormalizeModulesHandlePackageExports,
-  CliRecipePackageJsonNormalizeModulesHandlePackageImports,
-  CliRecipePackageJsonNormalizeModulesHandlePackageMain,
-  CliRecipePackageJsonNormalizeModulesHandlePackageType,
-  CliRecipePackageJsonNormalizeModulesHandleReturns,
-  CliRecipePackageJsonNormalizeModulesHandleWorkspace,
-  CliRecipePackageJsonNormalizeModulesRunCurrentDirectory,
-  CliRecipePackageJsonNormalizeModulesRunEligibleWorkspaces,
-  CliRecipePackageJsonNormalizeModulesRunIsAtProjectRoot,
-  CliRecipePackageJsonNormalizeModulesRunIsDryRun,
-  CliRecipePackageJsonNormalizeModulesRunIsReplaceFile,
-  CliRecipePackageJsonNormalizeModulesRunOptions,
-  CliRecipePackageJsonNormalizeModulesRunRecipeTupleFilter,
-  CliRecipePackageJsonNormalizeModulesRunReplaceFileNotice,
-  CliRecipePackageJsonNormalizeModulesRunReturns,
-  CliRecipePackageJsonNormalizeModulesRunWorkingFile,
-  CliRecipePackageJsonNormalizeModulesRunWorkingFileWorkspaces,
-  CliRecipePackageJsonNormalizeModulesRunWorkspaceConfigFilter,
-  CliRecipePackageJsonNormalizeModulesRunWorkspaceRecipesFilter,
-  CliRecipePackageJsonNormalizeModulesRunWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentPackageExports,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_FileContents,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Manifest,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageBrowser,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageExports,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageImports,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageMain,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageType,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Returns,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Workspace,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_CurrentDirectory,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_EligibleWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_IsAtProjectRoot,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_IsDryRun,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_IsReplaceFile,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_Options,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_RecipeTupleFilter,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_ReplaceFileNotice,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_Returns,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkingFile,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkingFileWorkspaces,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkspaceConfigFilter,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkspaceRecipesFilter,
+  Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_Workspaces,
 } from '../../../types/cli/recipe/package-json/normalize-modules.d.ts';
 
 /**
@@ -44,22 +44,22 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliRecipePackageJsonNormalizeModules {
+export class Runner {
   /**
    * CLI - Recipe - package.json - Normalize Modules - Run.
    *
    * Loads nova.config.json, filters eligible workspaces, then normalizes module resolution
    * fields in each manifest. Supports dry-run mode.
    *
-   * @param {CliRecipePackageJsonNormalizeModulesRunOptions} options - Options.
+   * @param {Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_Options} options - Options.
    *
-   * @returns {CliRecipePackageJsonNormalizeModulesRunReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static async run(options: CliRecipePackageJsonNormalizeModulesRunOptions): CliRecipePackageJsonNormalizeModulesRunReturns {
-    const currentDirectory: CliRecipePackageJsonNormalizeModulesRunCurrentDirectory = process.cwd();
-    const isAtProjectRoot: CliRecipePackageJsonNormalizeModulesRunIsAtProjectRoot = await isProjectRoot(currentDirectory);
+  public static async run(options: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_Options): Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_Returns {
+    const currentDirectory: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_CurrentDirectory = process.cwd();
+    const isAtProjectRoot: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_IsAtProjectRoot = await isProjectRoot(currentDirectory);
 
     if (isAtProjectRoot !== true) {
       process.exitCode = 1;
@@ -67,31 +67,31 @@ export class CliRecipePackageJsonNormalizeModules {
       return;
     }
 
-    const isDryRun: CliRecipePackageJsonNormalizeModulesRunIsDryRun = options['dryRun'] === true;
-    const isReplaceFile: CliRecipePackageJsonNormalizeModulesRunIsReplaceFile = options['replaceFile'] === true;
+    const isDryRun: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_IsDryRun = options['dryRun'] === true;
+    const isReplaceFile: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_IsReplaceFile = options['replaceFile'] === true;
 
     if (isDryRun === true) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn('Dry run enabled. File changes will not be made in this session.');
     }
 
     if (isReplaceFile === true) {
-      const replaceFileNotice: CliRecipePackageJsonNormalizeModulesRunReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
+      const replaceFileNotice: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_ReplaceFileNotice = (isDryRun === true) ? 'This option has no effect during a dry run session.' : 'Backup file will not be created.';
 
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.run',
+        name: 'Runner.run',
         purpose: 'options',
       }).warn(`Replace file enabled. ${replaceFileNotice}`);
     }
 
-    const workingFile: CliRecipePackageJsonNormalizeModulesRunWorkingFile = await new LibNovaConfig().load();
-    const workingFileWorkspaces: CliRecipePackageJsonNormalizeModulesRunWorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
+    const workingFile: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkingFile = await new LibNovaConfig().load();
+    const workingFileWorkspaces: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkingFileWorkspaces = Object.entries(workingFile['workspaces'] ?? {});
 
     if (workingFileWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-modules. No workspaces detected in the "nova.config.json" file.');
 
@@ -99,15 +99,15 @@ export class CliRecipePackageJsonNormalizeModules {
     }
 
     // Filter workspaces that have the recipe enabled.
-    const eligibleWorkspaces: CliRecipePackageJsonNormalizeModulesRunEligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
-      const workspaceConfig: CliRecipePackageJsonNormalizeModulesRunWorkspaceConfigFilter = workspace[1];
-      const workspaceRecipes: CliRecipePackageJsonNormalizeModulesRunWorkspaceRecipesFilter = workspaceConfig['recipes'];
+    const eligibleWorkspaces: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_EligibleWorkspaces = workingFileWorkspaces.filter((workspace) => {
+      const workspaceConfig: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkspaceConfigFilter = workspace[1];
+      const workspaceRecipes: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_WorkspaceRecipesFilter = workspaceConfig['recipes'];
 
       if (workspaceRecipes === undefined) {
         return false;
       }
 
-      const recipeTuple: CliRecipePackageJsonNormalizeModulesRunRecipeTupleFilter = workspaceRecipes['normalize-modules'];
+      const recipeTuple: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_RecipeTupleFilter = workspaceRecipes['normalize-modules'];
 
       if (recipeTuple === undefined) {
         return false;
@@ -118,21 +118,21 @@ export class CliRecipePackageJsonNormalizeModules {
 
     if (eligibleWorkspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-modules. No workspaces have this recipe enabled.');
 
       return;
     }
 
-    const workspaces: CliRecipePackageJsonNormalizeModulesRunWorkspaces = await loadWorkspaceManifests({
+    const workspaces: Cli_Recipe_PackageJson_NormalizeModules_Runner_Run_Workspaces = await loadWorkspaceManifests({
       projectRoot: currentDirectory,
       workspaces: eligibleWorkspaces,
     });
 
     if (workspaces.length === 0) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.run',
+        name: 'Runner.run',
         purpose: 'workspaces',
       }).warn('Skipping normalize-modules. No accessible "package.json" files were found for the configured workspaces.');
 
@@ -140,18 +140,18 @@ export class CliRecipePackageJsonNormalizeModules {
     }
 
     Logger.customize({
-      name: 'CliRecipePackageJsonNormalizeModules.run',
+      name: 'Runner.run',
       purpose: 'summary',
     }).info(`Prepared ${workspaces.length} workspace "package.json" file(s) for normalize-modules.`);
 
     // Handle all workspace "package.json" files.
     for (const workspace of workspaces) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.run',
+        name: 'Runner.run',
         purpose: 'iteration',
       }).info(`Running normalize-modules for the "${workspace['manifest']['name']}" workspace ...`);
 
-      CliRecipePackageJsonNormalizeModules.handle(workspace);
+      Runner.handle(workspace);
 
       if (isDryRun === true) {
         continue;
@@ -169,23 +169,23 @@ export class CliRecipePackageJsonNormalizeModules {
    * Processes exports, main, type, browser, and imports for one workspace. Keeps main and
    * exports in sync and normalizes strings to objects.
    *
-   * @param {CliRecipePackageJsonNormalizeModulesHandleWorkspace} workspace - Workspace.
+   * @param {Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Workspace} workspace - Workspace.
    *
    * @private
    *
-   * @returns {CliRecipePackageJsonNormalizeModulesHandleReturns}
+   * @returns {Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Returns}
    *
    * @since 0.14.0
    */
-  private static handle(workspace: CliRecipePackageJsonNormalizeModulesHandleWorkspace): CliRecipePackageJsonNormalizeModulesHandleReturns {
-    const fileContents: CliRecipePackageJsonNormalizeModulesHandleFileContents = workspace['fileContents'];
-    const manifest: CliRecipePackageJsonNormalizeModulesHandleManifest = workspace['manifest'];
+  private static handle(workspace: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Workspace): Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Returns {
+    const fileContents: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_FileContents = workspace['fileContents'];
+    const manifest: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_Manifest = workspace['manifest'];
 
-    const packageExports: CliRecipePackageJsonNormalizeModulesHandlePackageExports = fileContents['exports'];
-    const packageMain: CliRecipePackageJsonNormalizeModulesHandlePackageMain = fileContents['main'];
-    const packageType: CliRecipePackageJsonNormalizeModulesHandlePackageType = fileContents['type'];
-    const packageBrowser: CliRecipePackageJsonNormalizeModulesHandlePackageBrowser = fileContents['browser'];
-    const packageImports: CliRecipePackageJsonNormalizeModulesHandlePackageImports = fileContents['imports'];
+    const packageExports: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageExports = fileContents['exports'];
+    const packageMain: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageMain = fileContents['main'];
+    const packageType: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageType = fileContents['type'];
+    const packageBrowser: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageBrowser = fileContents['browser'];
+    const packageImports: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_PackageImports = fileContents['imports'];
 
     // Sync the "exports" field.
     if (
@@ -197,7 +197,7 @@ export class CliRecipePackageJsonNormalizeModules {
       ].includes(manifest['role']) === false // Workspace role is not "config", "package", or "tool".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.handle',
+        name: 'Runner.handle',
         purpose: 'exports',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "exports". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -210,7 +210,7 @@ export class CliRecipePackageJsonNormalizeModules {
       // If "exports" is a string, normalize it into an object.
       if (typeof packageExports === 'string') {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'exports',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "exports" from string to object ...`);
 
@@ -233,7 +233,7 @@ export class CliRecipePackageJsonNormalizeModules {
       ].includes(manifest['role']) === false // Workspace role is not "config", "app", "package", or "tool".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.handle',
+        name: 'Runner.handle',
         purpose: 'main',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "main". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -244,7 +244,7 @@ export class CliRecipePackageJsonNormalizeModules {
       || manifest['role'] === 'package' // Workspace role is "package".
       || manifest['role'] === 'tool' // Workspace role is "tool".
     ) {
-      const currentPackageExports: CliRecipePackageJsonNormalizeModulesHandleCurrentPackageExports = fileContents['exports'];
+      const currentPackageExports: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentPackageExports = fileContents['exports'];
 
       if (
         typeof packageMain === 'string' // Package "main" is a string.
@@ -256,7 +256,7 @@ export class CliRecipePackageJsonNormalizeModules {
         && packageMain !== currentPackageExports['.']['require'] // Package "main" differs from package "exports['.'].require".
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'main',
         }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → "main" differs from "exports['.'].require". No changes applied.`);
       } else if (
@@ -268,7 +268,7 @@ export class CliRecipePackageJsonNormalizeModules {
         && typeof currentPackageExports['.']['require'] !== 'string' // Package "exports['.'].require" is not a string.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'main',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "exports['.'].require" from "main" ...`);
 
@@ -282,7 +282,7 @@ export class CliRecipePackageJsonNormalizeModules {
         && typeof packageMain !== 'string' // Package "main" is not a string.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'main',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "main" from "exports['.'].require" ...`);
 
@@ -293,7 +293,7 @@ export class CliRecipePackageJsonNormalizeModules {
         && typeof currentPackageExports['.'] === 'string' // Package "exports['.']" is a string.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'main',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "exports['.']" from string to object ...`);
 
@@ -315,7 +315,7 @@ export class CliRecipePackageJsonNormalizeModules {
       ].includes(manifest['role']) === false // Workspace role is not "config", "app", "package", or "tool".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.handle',
+        name: 'Runner.handle',
         purpose: 'type',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "type". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -328,7 +328,7 @@ export class CliRecipePackageJsonNormalizeModules {
       && ['package'].includes(manifest['role']) === false // Workspace role is not "package".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.handle',
+        name: 'Runner.handle',
         purpose: 'browser',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "browser". Workspace role "${manifest['role']}" does not allow it.`);
 
@@ -336,7 +336,7 @@ export class CliRecipePackageJsonNormalizeModules {
     } else if (
       manifest['role'] === 'package' // Workspace role is "package".
     ) {
-      const currentPackageExports: CliRecipePackageJsonNormalizeModulesHandleCurrentPackageExports = fileContents['exports'];
+      const currentPackageExports: Cli_Recipe_PackageJson_NormalizeModules_Runner_Handle_CurrentPackageExports = fileContents['exports'];
 
       if (
         typeof packageBrowser === 'string' // Package "browser" is a string.
@@ -348,7 +348,7 @@ export class CliRecipePackageJsonNormalizeModules {
         && packageBrowser !== currentPackageExports['.']['browser'] // Package "browser" differs from "exports['.'].browser".
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'browser',
         }).warn(`${chalk.magenta(`"${manifest['name']}" workspace`)} → "browser" differs from "exports['.'].browser". No changes applied.`);
       } else if (
@@ -360,7 +360,7 @@ export class CliRecipePackageJsonNormalizeModules {
         && typeof currentPackageExports['.']['browser'] !== 'string' // Package "exports['.'].browser" is not a string.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'browser',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "exports['.'].browser" from "browser" ...`);
 
@@ -375,7 +375,7 @@ export class CliRecipePackageJsonNormalizeModules {
         && isPlainObject(packageBrowser) === false // Package "browser" is not a plain object.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'browser',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Syncing "browser" from "exports['.'].browser" ...`);
 
@@ -386,7 +386,7 @@ export class CliRecipePackageJsonNormalizeModules {
         && typeof currentPackageExports['.'] === 'string' // Package "exports['.']" is a string.
       ) {
         Logger.customize({
-          name: 'CliRecipePackageJsonNormalizeModules.handle',
+          name: 'Runner.handle',
           purpose: 'browser',
         }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Normalizing "exports['.']" from string to object ...`);
 
@@ -408,7 +408,7 @@ export class CliRecipePackageJsonNormalizeModules {
       ].includes(manifest['role']) === false // Workspace role is not "config", "app", "package", or "tool".
     ) {
       Logger.customize({
-        name: 'CliRecipePackageJsonNormalizeModules.handle',
+        name: 'Runner.handle',
         purpose: 'imports',
       }).info(`${chalk.magenta(`"${manifest['name']}" workspace`)} → Removing "imports". Workspace role "${manifest['role']}" does not allow it.`);
 

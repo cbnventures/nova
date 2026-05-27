@@ -1,16 +1,16 @@
 import type {
-  ScriptsColorModeInitColorModeInitColorMode,
-  ScriptsColorModeInitColorModeInitDefaultMode,
-  ScriptsColorModeInitColorModeInitDisableSwitch,
-  ScriptsColorModeInitColorModeInitInitialThemeValue,
-  ScriptsColorModeInitColorModeInitIsThemeUserConfigurable,
-  ScriptsColorModeInitColorModeInitLines,
-  ScriptsColorModeInitColorModeInitOptions,
-  ScriptsColorModeInitColorModeInitQueryStringBlock,
-  ScriptsColorModeInitColorModeInitReturns,
-  ScriptsColorModeInitColorModeInitStorageType,
-  ScriptsColorModeInitColorModeInitThemeChoiceValue,
-  ScriptsColorModeInitColorModeInitThemeStorageKey,
+  Scripts_ColorModeInit_ColorModeInit_ColorMode,
+  Scripts_ColorModeInit_ColorModeInit_DefaultMode,
+  Scripts_ColorModeInit_ColorModeInit_DisableSwitch,
+  Scripts_ColorModeInit_ColorModeInit_InitialThemeValue,
+  Scripts_ColorModeInit_ColorModeInit_IsThemeUserConfigurable,
+  Scripts_ColorModeInit_ColorModeInit_Lines,
+  Scripts_ColorModeInit_ColorModeInit_Options,
+  Scripts_ColorModeInit_ColorModeInit_QueryStringBlock,
+  Scripts_ColorModeInit_ColorModeInit_Returns,
+  Scripts_ColorModeInit_ColorModeInit_StorageType,
+  Scripts_ColorModeInit_ColorModeInit_ThemeChoiceValue,
+  Scripts_ColorModeInit_ColorModeInit_ThemeStorageKey,
 } from '../types/scripts/color-mode-init.d.ts';
 
 /**
@@ -20,33 +20,33 @@ import type {
  * mode attribute on page load by reading stored preferences, query string
  * overrides, and system color scheme settings.
  *
- * @param {ScriptsColorModeInitColorModeInitOptions} options - Options.
+ * @param {Scripts_ColorModeInit_ColorModeInit_Options} options - Options.
  *
- * @returns {ScriptsColorModeInitColorModeInitReturns}
+ * @returns {Scripts_ColorModeInit_ColorModeInit_Returns}
  *
  * @since 0.15.0
  */
-export function colorModeInit(options: ScriptsColorModeInitColorModeInitOptions): ScriptsColorModeInitColorModeInitReturns {
-  const colorMode: ScriptsColorModeInitColorModeInitColorMode = options['themeConfig']['colorMode'] as ScriptsColorModeInitColorModeInitColorMode;
+export function colorModeInit(options: Scripts_ColorModeInit_ColorModeInit_Options): Scripts_ColorModeInit_ColorModeInit_Returns {
+  const colorMode: Scripts_ColorModeInit_ColorModeInit_ColorMode = options['themeConfig']['colorMode'] as Scripts_ColorModeInit_ColorModeInit_ColorMode;
 
-  let disableSwitch: ScriptsColorModeInitColorModeInitDisableSwitch = false;
-  let defaultMode: ScriptsColorModeInitColorModeInitDefaultMode = 'system';
+  let disableSwitch: Scripts_ColorModeInit_ColorModeInit_DisableSwitch = false;
+  let defaultMode: Scripts_ColorModeInit_ColorModeInit_DefaultMode = 'system';
 
   if (colorMode !== undefined) {
     if (colorMode['disableSwitch'] !== undefined) {
-      disableSwitch = colorMode['disableSwitch'] as ScriptsColorModeInitColorModeInitDisableSwitch;
+      disableSwitch = colorMode['disableSwitch'] as Scripts_ColorModeInit_ColorModeInit_DisableSwitch;
     }
 
     if (colorMode['defaultMode'] !== undefined) {
-      defaultMode = colorMode['defaultMode'] as ScriptsColorModeInitColorModeInitDefaultMode;
+      defaultMode = colorMode['defaultMode'] as Scripts_ColorModeInit_ColorModeInit_DefaultMode;
     }
   }
 
-  const themeStorageKey: ScriptsColorModeInitColorModeInitThemeStorageKey = `theme${options['siteStorage']['namespace']}`;
-  const isThemeUserConfigurable: ScriptsColorModeInitColorModeInitIsThemeUserConfigurable = disableSwitch !== true;
-  const storageType: ScriptsColorModeInitColorModeInitStorageType = options['siteStorage']['type'];
+  const themeStorageKey: Scripts_ColorModeInit_ColorModeInit_ThemeStorageKey = `theme${options['siteStorage']['namespace']}`;
+  const isThemeUserConfigurable: Scripts_ColorModeInit_ColorModeInit_IsThemeUserConfigurable = disableSwitch !== true;
+  const storageType: Scripts_ColorModeInit_ColorModeInit_StorageType = options['siteStorage']['type'];
 
-  let queryStringBlock: ScriptsColorModeInitColorModeInitQueryStringBlock = '  var initialTheme;';
+  let queryStringBlock: Scripts_ColorModeInit_ColorModeInit_QueryStringBlock = '  var initialTheme;';
 
   if (isThemeUserConfigurable === true) {
     queryStringBlock = [
@@ -64,15 +64,15 @@ export function colorModeInit(options: ScriptsColorModeInitColorModeInitOptions)
     ].join('\n');
   }
 
-  let initialThemeValue: ScriptsColorModeInitColorModeInitInitialThemeValue = `'${defaultMode}'`;
-  let themeChoiceValue: ScriptsColorModeInitColorModeInitThemeChoiceValue = `'${defaultMode}'`;
+  let initialThemeValue: Scripts_ColorModeInit_ColorModeInit_InitialThemeValue = `'${defaultMode}'`;
+  let themeChoiceValue: Scripts_ColorModeInit_ColorModeInit_ThemeChoiceValue = `'${defaultMode}'`;
 
   if (defaultMode === 'system') {
     initialThemeValue = 'getSystemColorMode()';
     themeChoiceValue = '\'system\'';
   }
 
-  const lines: ScriptsColorModeInitColorModeInitLines = [
+  const lines: Scripts_ColorModeInit_ColorModeInit_Lines = [
     '(function() {',
     '  function getSystemColorMode() {',
     '    return window.matchMedia(\'(prefers-color-scheme: dark)\').matches ? \'dark\' : \'light\';',

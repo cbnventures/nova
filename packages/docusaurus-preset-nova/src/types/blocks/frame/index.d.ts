@@ -5,19 +5,19 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.18.0
  */
-export type BlocksFramePropsCaption = ReactNode | undefined;
+export type Blocks_Frame_Index_BlocksFrame_Props_Caption = ReactNode | undefined;
 
-export type BlocksFramePropsChildren = ReactNode;
+export type Blocks_Frame_Index_BlocksFrame_Props_Children = ReactNode;
 
-export type BlocksFramePropsClassName = string | undefined;
+export type Blocks_Frame_Index_BlocksFrame_Props_ClassName = string | undefined;
 
-export type BlocksFramePropsStyle = CSSProperties | undefined;
+export type Blocks_Frame_Index_BlocksFrame_Props_Style = CSSProperties | undefined;
 
-export type BlocksFrameProps = {
-  caption?: BlocksFramePropsCaption;
-  children: BlocksFramePropsChildren;
-  className?: BlocksFramePropsClassName;
-  style?: BlocksFramePropsStyle;
+export type Blocks_Frame_Index_BlocksFrame_Props = {
+  caption?: Blocks_Frame_Index_BlocksFrame_Props_Caption;
+  children: Blocks_Frame_Index_BlocksFrame_Props_Children;
+  className?: Blocks_Frame_Index_BlocksFrame_Props_ClassName;
+  style?: Blocks_Frame_Index_BlocksFrame_Props_Style;
 };
 
-export type BlocksFrameReturns = React.JSX.Element;
+export type Blocks_Frame_Index_BlocksFrame_Returns = React.JSX.Element;

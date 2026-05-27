@@ -5,23 +5,23 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeEditMetaRowEditMetaRowPropsEditUrl = string | undefined;
+export type Theme_EditMetaRow_Index_EditMetaRow_Props_EditUrl = string | undefined;
 
-export type ThemeEditMetaRowEditMetaRowPropsLastUpdatedAt = number | undefined;
+export type Theme_EditMetaRow_Index_EditMetaRow_Props_LastUpdatedAt = number | undefined;
 
-export type ThemeEditMetaRowEditMetaRowPropsLastUpdatedBy = string | undefined;
+export type Theme_EditMetaRow_Index_EditMetaRow_Props_LastUpdatedBy = string | undefined;
 
-export type ThemeEditMetaRowEditMetaRowPropsClassName = string | undefined;
+export type Theme_EditMetaRow_Index_EditMetaRow_Props_ClassName = string | undefined;
 
-export type ThemeEditMetaRowEditMetaRowPropsStyle = CSSProperties | undefined;
+export type Theme_EditMetaRow_Index_EditMetaRow_Props_Style = CSSProperties | undefined;
 
-export type ThemeEditMetaRowEditMetaRowProps = {
-  editUrl?: ThemeEditMetaRowEditMetaRowPropsEditUrl;
-  lastUpdatedAt?: ThemeEditMetaRowEditMetaRowPropsLastUpdatedAt;
-  lastUpdatedBy?: ThemeEditMetaRowEditMetaRowPropsLastUpdatedBy;
-  className?: ThemeEditMetaRowEditMetaRowPropsClassName;
-  style?: ThemeEditMetaRowEditMetaRowPropsStyle;
+export type Theme_EditMetaRow_Index_EditMetaRow_Props = {
+  editUrl?: Theme_EditMetaRow_Index_EditMetaRow_Props_EditUrl;
+  lastUpdatedAt?: Theme_EditMetaRow_Index_EditMetaRow_Props_LastUpdatedAt;
+  lastUpdatedBy?: Theme_EditMetaRow_Index_EditMetaRow_Props_LastUpdatedBy;
+  className?: Theme_EditMetaRow_Index_EditMetaRow_Props_ClassName;
+  style?: Theme_EditMetaRow_Index_EditMetaRow_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeEditMetaRowEditMetaRowLastUpdatedSpread = Record<string, unknown>;
+export type Theme_EditMetaRow_Index_EditMetaRow_LastUpdatedSpread = Record<string, unknown>;

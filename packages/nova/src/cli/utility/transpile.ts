@@ -12,31 +12,31 @@ import {
 import { Logger } from '../../toolkit/index.js';
 
 import type {
-  CliUtilityTranspileEmitFilesProgram,
-  CliUtilityTranspileEmitFilesReturns,
-  CliUtilityTranspileFilterDiagnosticsCurrentDirectory,
-  CliUtilityTranspileFilterDiagnosticsDiagnostics,
-  CliUtilityTranspileFilterDiagnosticsFileName,
-  CliUtilityTranspileFilterDiagnosticsReturns,
-  CliUtilityTranspileGetConfigPathCurrentDirectory,
-  CliUtilityTranspileGetConfigPathProject,
-  CliUtilityTranspileGetConfigPathResolved,
-  CliUtilityTranspileGetConfigPathReturns,
-  CliUtilityTranspilePrintDiagnosticsCharacter,
-  CliUtilityTranspilePrintDiagnosticsFileName,
-  CliUtilityTranspilePrintDiagnosticsFileSet,
-  CliUtilityTranspilePrintDiagnosticsFilteredDiagnostics,
-  CliUtilityTranspilePrintDiagnosticsLine,
-  CliUtilityTranspilePrintDiagnosticsMessage,
-  CliUtilityTranspilePrintDiagnosticsPosition,
-  CliUtilityTranspilePrintDiagnosticsReturns,
-  CliUtilityTranspileRunConfig,
-  CliUtilityTranspileRunConfigPath,
-  CliUtilityTranspileRunFilteredDiagnostics,
-  CliUtilityTranspileRunOptions,
-  CliUtilityTranspileRunParsed,
-  CliUtilityTranspileRunProgram,
-  CliUtilityTranspileRunReturns,
+  Cli_Utility_Transpile_Runner_EmitFiles_Program,
+  Cli_Utility_Transpile_Runner_EmitFiles_Returns,
+  Cli_Utility_Transpile_Runner_FilterDiagnostics_CurrentDirectory,
+  Cli_Utility_Transpile_Runner_FilterDiagnostics_Diagnostics,
+  Cli_Utility_Transpile_Runner_FilterDiagnostics_FileName,
+  Cli_Utility_Transpile_Runner_FilterDiagnostics_Returns,
+  Cli_Utility_Transpile_Runner_GetConfigPath_CurrentDirectory,
+  Cli_Utility_Transpile_Runner_GetConfigPath_Project,
+  Cli_Utility_Transpile_Runner_GetConfigPath_Resolved,
+  Cli_Utility_Transpile_Runner_GetConfigPath_Returns,
+  Cli_Utility_Transpile_Runner_PrintDiagnostics_Character,
+  Cli_Utility_Transpile_Runner_PrintDiagnostics_FileName,
+  Cli_Utility_Transpile_Runner_PrintDiagnostics_FileSet,
+  Cli_Utility_Transpile_Runner_PrintDiagnostics_FilteredDiagnostics,
+  Cli_Utility_Transpile_Runner_PrintDiagnostics_Line,
+  Cli_Utility_Transpile_Runner_PrintDiagnostics_Message,
+  Cli_Utility_Transpile_Runner_PrintDiagnostics_Position,
+  Cli_Utility_Transpile_Runner_PrintDiagnostics_Returns,
+  Cli_Utility_Transpile_Runner_Run_Config,
+  Cli_Utility_Transpile_Runner_Run_ConfigPath,
+  Cli_Utility_Transpile_Runner_Run_FilteredDiagnostics,
+  Cli_Utility_Transpile_Runner_Run_Options,
+  Cli_Utility_Transpile_Runner_Run_Parsed,
+  Cli_Utility_Transpile_Runner_Run_Program,
+  Cli_Utility_Transpile_Runner_Run_Returns,
 } from '../../types/cli/utility/transpile.d.ts';
 
 /**
@@ -47,33 +47,33 @@ import type {
  *
  * @since 0.14.0
  */
-export class CliUtilityTranspile {
+export class Runner {
   /**
    * CLI - Utility - Transpile - Run.
    *
    * Locates tsconfig.json, creates a TypeScript program, emits output
    * files, filters diagnostics to project files, and prints compilation errors.
    *
-   * @param {CliUtilityTranspileRunOptions} options - Options.
+   * @param {Cli_Utility_Transpile_Runner_Run_Options} options - Options.
    *
-   * @returns {CliUtilityTranspileRunReturns}
+   * @returns {Cli_Utility_Transpile_Runner_Run_Returns}
    *
    * @since 0.14.0
    */
-  public static run(options: CliUtilityTranspileRunOptions): CliUtilityTranspileRunReturns {
-    const configPath: CliUtilityTranspileRunConfigPath = CliUtilityTranspile.getConfigPath(options['project']);
+  public static run(options: Cli_Utility_Transpile_Runner_Run_Options): Cli_Utility_Transpile_Runner_Run_Returns {
+    const configPath: Cli_Utility_Transpile_Runner_Run_ConfigPath = Runner.getConfigPath(options['project']);
 
     if (configPath === undefined) {
       Logger.error('No tsconfig.json found. Use --project to specify a path.');
       return;
     }
 
-    const config: CliUtilityTranspileRunConfig = readConfigFile(configPath, sys.readFile)['config'];
-    const parsed: CliUtilityTranspileRunParsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
-    const program: CliUtilityTranspileRunProgram = createProgram(parsed.fileNames, parsed.options);
-    const filteredDiagnostics: CliUtilityTranspileRunFilteredDiagnostics = CliUtilityTranspile.filterDiagnostics(CliUtilityTranspile.emitFiles(program).diagnostics);
+    const config: Cli_Utility_Transpile_Runner_Run_Config = readConfigFile(configPath, sys.readFile)['config'];
+    const parsed: Cli_Utility_Transpile_Runner_Run_Parsed = parseJsonConfigFileContent(config, sys, dirname(configPath));
+    const program: Cli_Utility_Transpile_Runner_Run_Program = createProgram(parsed.fileNames, parsed.options);
+    const filteredDiagnostics: Cli_Utility_Transpile_Runner_Run_FilteredDiagnostics = Runner.filterDiagnostics(Runner.emitFiles(program).diagnostics);
 
-    CliUtilityTranspile.printDiagnostics(filteredDiagnostics);
+    Runner.printDiagnostics(filteredDiagnostics);
 
     if (filteredDiagnostics.length > 0) {
       process.exitCode = 1;
@@ -88,19 +88,19 @@ export class CliUtilityTranspile {
    * Resolves the tsconfig.json path from the --project flag or
    * searches upward from the current directory. Returns undefined when not found.
    *
-   * @param {CliUtilityTranspileGetConfigPathProject} project - Project.
+   * @param {Cli_Utility_Transpile_Runner_GetConfigPath_Project} project - Project.
    *
    * @private
    *
-   * @returns {CliUtilityTranspileGetConfigPathReturns}
+   * @returns {Cli_Utility_Transpile_Runner_GetConfigPath_Returns}
    *
    * @since 0.14.0
    */
-  private static getConfigPath(project: CliUtilityTranspileGetConfigPathProject): CliUtilityTranspileGetConfigPathReturns {
-    const currentDirectory: CliUtilityTranspileGetConfigPathCurrentDirectory = process.cwd();
+  private static getConfigPath(project: Cli_Utility_Transpile_Runner_GetConfigPath_Project): Cli_Utility_Transpile_Runner_GetConfigPath_Returns {
+    const currentDirectory: Cli_Utility_Transpile_Runner_GetConfigPath_CurrentDirectory = process.cwd();
 
     if (project !== undefined) {
-      const resolved: CliUtilityTranspileGetConfigPathResolved = resolve(currentDirectory, project);
+      const resolved: Cli_Utility_Transpile_Runner_GetConfigPath_Resolved = resolve(currentDirectory, project);
       return (sys.fileExists(resolved) === true) ? resolved : undefined;
     }
 
@@ -113,15 +113,15 @@ export class CliUtilityTranspile {
    * Invokes program.emit to write compiled JavaScript and declaration
    * files to disk. Returns the emit result with diagnostics for reporting.
    *
-   * @param {CliUtilityTranspileEmitFilesProgram} program - Program.
+   * @param {Cli_Utility_Transpile_Runner_EmitFiles_Program} program - Program.
    *
    * @private
    *
-   * @returns {CliUtilityTranspileEmitFilesReturns}
+   * @returns {Cli_Utility_Transpile_Runner_EmitFiles_Returns}
    *
    * @since 0.14.0
    */
-  private static emitFiles(program: CliUtilityTranspileEmitFilesProgram): CliUtilityTranspileEmitFilesReturns {
+  private static emitFiles(program: Cli_Utility_Transpile_Runner_EmitFiles_Program): Cli_Utility_Transpile_Runner_EmitFiles_Returns {
     return program.emit();
   }
 
@@ -131,19 +131,19 @@ export class CliUtilityTranspile {
    * Keeps only diagnostics originating from files under the current working directory and
    * excludes anything inside node_modules.
    *
-   * @param {CliUtilityTranspileFilterDiagnosticsDiagnostics} diagnostics - Diagnostics.
+   * @param {Cli_Utility_Transpile_Runner_FilterDiagnostics_Diagnostics} diagnostics - Diagnostics.
    *
    * @private
    *
-   * @returns {CliUtilityTranspileFilterDiagnosticsReturns}
+   * @returns {Cli_Utility_Transpile_Runner_FilterDiagnostics_Returns}
    *
    * @since 0.14.0
    */
-  private static filterDiagnostics(diagnostics: CliUtilityTranspileFilterDiagnosticsDiagnostics): CliUtilityTranspileFilterDiagnosticsReturns {
-    const currentDirectory: CliUtilityTranspileFilterDiagnosticsCurrentDirectory = process.cwd();
+  private static filterDiagnostics(diagnostics: Cli_Utility_Transpile_Runner_FilterDiagnostics_Diagnostics): Cli_Utility_Transpile_Runner_FilterDiagnostics_Returns {
+    const currentDirectory: Cli_Utility_Transpile_Runner_FilterDiagnostics_CurrentDirectory = process.cwd();
 
     return diagnostics.filter((diagnostic) => {
-      const fileName: CliUtilityTranspileFilterDiagnosticsFileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : '';
+      const fileName: Cli_Utility_Transpile_Runner_FilterDiagnostics_FileName = (diagnostic.file !== undefined) ? diagnostic.file.fileName : '';
       return fileName.startsWith(currentDirectory) === true && fileName.includes('node_modules') === false;
     });
   }
@@ -154,27 +154,27 @@ export class CliUtilityTranspile {
    * Outputs each diagnostic with file, line, and column information
    * via Logger.error, then prints a summary of total errors and affected files.
    *
-   * @param {CliUtilityTranspilePrintDiagnosticsFilteredDiagnostics} filteredDiagnostics - Filtered diagnostics.
+   * @param {Cli_Utility_Transpile_Runner_PrintDiagnostics_FilteredDiagnostics} filteredDiagnostics - Filtered diagnostics.
    *
    * @private
    *
-   * @returns {CliUtilityTranspilePrintDiagnosticsReturns}
+   * @returns {Cli_Utility_Transpile_Runner_PrintDiagnostics_Returns}
    *
    * @since 0.14.0
    */
-  private static printDiagnostics(filteredDiagnostics: CliUtilityTranspilePrintDiagnosticsFilteredDiagnostics): CliUtilityTranspilePrintDiagnosticsReturns {
-    const fileSet: CliUtilityTranspilePrintDiagnosticsFileSet = new Set();
+  private static printDiagnostics(filteredDiagnostics: Cli_Utility_Transpile_Runner_PrintDiagnostics_FilteredDiagnostics): Cli_Utility_Transpile_Runner_PrintDiagnostics_Returns {
+    const fileSet: Cli_Utility_Transpile_Runner_PrintDiagnostics_FileSet = new Set();
 
     for (const filteredDiagnostic of filteredDiagnostics) {
-      const fileName: CliUtilityTranspilePrintDiagnosticsFileName = (filteredDiagnostic.file !== undefined) ? filteredDiagnostic.file.fileName : 'unknown';
-      const message: CliUtilityTranspilePrintDiagnosticsMessage = flattenDiagnosticMessageText(filteredDiagnostic.messageText, '\n');
+      const fileName: Cli_Utility_Transpile_Runner_PrintDiagnostics_FileName = (filteredDiagnostic.file !== undefined) ? filteredDiagnostic.file.fileName : 'unknown';
+      const message: Cli_Utility_Transpile_Runner_PrintDiagnostics_Message = flattenDiagnosticMessageText(filteredDiagnostic.messageText, '\n');
 
       fileSet.add(fileName);
 
       if (filteredDiagnostic.file !== undefined && filteredDiagnostic.start !== undefined) {
-        const position: CliUtilityTranspilePrintDiagnosticsPosition = filteredDiagnostic.file.getLineAndCharacterOfPosition(filteredDiagnostic.start);
-        const line: CliUtilityTranspilePrintDiagnosticsLine = position.line;
-        const character: CliUtilityTranspilePrintDiagnosticsCharacter = position.character;
+        const position: Cli_Utility_Transpile_Runner_PrintDiagnostics_Position = filteredDiagnostic.file.getLineAndCharacterOfPosition(filteredDiagnostic.start);
+        const line: Cli_Utility_Transpile_Runner_PrintDiagnostics_Line = position.line;
+        const character: Cli_Utility_Transpile_Runner_PrintDiagnostics_Character = position.character;
 
         Logger.error(`${fileName}:${line + 1}:${character + 1} - ${message}`);
       } else {

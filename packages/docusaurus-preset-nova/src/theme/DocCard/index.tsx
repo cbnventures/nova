@@ -10,19 +10,19 @@ import { Icon } from '@iconify/react/offline';
 import Heading from '@theme/Heading';
 
 import type {
-  ThemeDocCardCardCategoryHref,
-  ThemeDocCardCardCategoryProps,
-  ThemeDocCardCardLayoutProps,
-  ThemeDocCardCardLinkProps,
-  ThemeDocCardDocCardProps,
-  ThemeDocCardDocDescription,
-  ThemeDocCardDocResult,
-  ThemeDocCardLayoutDescription,
-  ThemeDocCardLayoutIcon,
-  ThemeDocCardUseCategoryItemsPluralCount,
-  ThemeDocCardUseCategoryItemsPluralPluralForm,
-  ThemeDocCardUseCategoryItemsPluralSelectMessage,
-  ThemeDocCardUseCategoryItemsPluralTranslated,
+  Theme_DocCard_Index_CardCategory_Href,
+  Theme_DocCard_Index_CardCategory_Props,
+  Theme_DocCard_Index_CardLayout_Props,
+  Theme_DocCard_Index_CardLink_Props,
+  Theme_DocCard_Index_DocCard_DocDescription,
+  Theme_DocCard_Index_DocCard_DocResult,
+  Theme_DocCard_Index_DocCard_LayoutDescription,
+  Theme_DocCard_Index_DocCard_LayoutIcon,
+  Theme_DocCard_Index_DocCard_Props,
+  Theme_DocCard_Index_UseCategoryItemsPlural_Count,
+  Theme_DocCard_Index_UseCategoryItemsPlural_PluralForm,
+  Theme_DocCard_Index_UseCategoryItemsPlural_SelectMessage,
+  Theme_DocCard_Index_UseCategoryItemsPlural_Translated,
 } from '../../types/theme/DocCard/index.d.ts';
 
 /**
@@ -32,15 +32,15 @@ import type {
  * for category cards, used as the fallback description when no
  * custom description is set.
  *
- * @returns {ThemeDocCardUseCategoryItemsPluralSelectMessage}
+ * @returns {Theme_DocCard_Index_UseCategoryItemsPlural_SelectMessage}
  *
  * @since 0.15.0
  */
-function useCategoryItemsPlural(): ThemeDocCardUseCategoryItemsPluralSelectMessage {
-  const pluralForm: ThemeDocCardUseCategoryItemsPluralPluralForm = usePluralForm();
+function useCategoryItemsPlural(): Theme_DocCard_Index_UseCategoryItemsPlural_SelectMessage {
+  const pluralForm: Theme_DocCard_Index_UseCategoryItemsPlural_PluralForm = usePluralForm();
 
-  return (count: ThemeDocCardUseCategoryItemsPluralCount) => {
-    const translated: ThemeDocCardUseCategoryItemsPluralTranslated = translate(
+  return (count: Theme_DocCard_Index_UseCategoryItemsPlural_Count) => {
+    const translated: Theme_DocCard_Index_UseCategoryItemsPlural_Translated = translate(
       {
         message: '1 item|{count} items',
         id: 'theme.docs.DocCard.categoryDescription.plurals',
@@ -60,13 +60,13 @@ function useCategoryItemsPlural(): ThemeDocCardUseCategoryItemsPluralSelectMessa
  * optional description inside a linked card container with hover
  * lift animation.
  *
- * @param {ThemeDocCardCardLayoutProps} props - Props.
+ * @param {Theme_DocCard_Index_CardLayout_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function CardLayout(props: ThemeDocCardCardLayoutProps) {
+function CardLayout(props: Theme_DocCard_Index_CardLayout_Props) {
   return (
     <Link
       className={(props['className'] !== undefined) ? `nova-doc-card ${props['className']}` : 'nova-doc-card'}
@@ -100,21 +100,21 @@ function CardLayout(props: ThemeDocCardCardLayoutProps) {
  * Renders a category doc card with a folder icon, the category label, and either a custom
  * description or a pluralized item count.
  *
- * @param {ThemeDocCardCardCategoryProps} props - Props.
+ * @param {Theme_DocCard_Index_CardCategory_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function CardCategory(props: ThemeDocCardCardCategoryProps) {
-  const href: ThemeDocCardCardCategoryHref = findFirstSidebarItemLink(props['item']);
-  const categoryItemsPlural: ThemeDocCardUseCategoryItemsPluralSelectMessage = useCategoryItemsPlural();
+function CardCategory(props: Theme_DocCard_Index_CardCategory_Props) {
+  const href: Theme_DocCard_Index_CardCategory_Href = findFirstSidebarItemLink(props['item']);
+  const categoryItemsPlural: Theme_DocCard_Index_UseCategoryItemsPlural_SelectMessage = useCategoryItemsPlural();
 
   if (href === undefined) {
     return undefined;
   }
 
-  const description: ThemeDocCardLayoutDescription = props['item']['description'] ?? categoryItemsPlural(props['item']['items']['length']);
+  const description: Theme_DocCard_Index_DocCard_LayoutDescription = props['item']['description'] ?? categoryItemsPlural(props['item']['items']['length']);
 
   return (
     <CardLayout
@@ -134,17 +134,17 @@ function CardCategory(props: ThemeDocCardCardCategoryProps) {
  * the item label, and either a custom description or the
  * auto-generated description from doc metadata.
  *
- * @param {ThemeDocCardCardLinkProps} props - Props.
+ * @param {Theme_DocCard_Index_CardLink_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function CardLink(props: ThemeDocCardCardLinkProps) {
-  const icon: ThemeDocCardLayoutIcon = (isInternalUrl(props['item']['href']) === true) ? 'lucide:file-text' : 'lucide:external-link';
-  const doc: ThemeDocCardDocResult = useDocById(props['item']['docId'] ?? undefined);
-  const docDescription: ThemeDocCardDocDescription = (doc !== undefined) ? doc['description'] : undefined;
-  const description: ThemeDocCardLayoutDescription = props['item']['description'] ?? docDescription;
+function CardLink(props: Theme_DocCard_Index_CardLink_Props) {
+  const icon: Theme_DocCard_Index_DocCard_LayoutIcon = (isInternalUrl(props['item']['href']) === true) ? 'lucide:file-text' : 'lucide:external-link';
+  const doc: Theme_DocCard_Index_DocCard_DocResult = useDocById(props['item']['docId'] ?? undefined);
+  const docDescription: Theme_DocCard_Index_DocCard_DocDescription = (doc !== undefined) ? doc['description'] : undefined;
+  const description: Theme_DocCard_Index_DocCard_LayoutDescription = props['item']['description'] ?? docDescription;
 
   return (
     <CardLayout
@@ -164,13 +164,13 @@ function CardLink(props: ThemeDocCardCardLinkProps) {
  * that uses Iconify icons and custom card styling with hover lift
  * animations and shadow depth.
  *
- * @param {ThemeDocCardDocCardProps} props - Props.
+ * @param {Theme_DocCard_Index_DocCard_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocCard(props: ThemeDocCardDocCardProps) {
+function DocCard(props: Theme_DocCard_Index_DocCard_Props) {
   switch (props['item']['type']) {
     case 'link': {
       return <CardLink item={props['item']} />;

@@ -1,8 +1,8 @@
 import type {
-  LibFilterPresetThemeFileFilterPresetThemeFileActiveFooterPrefix,
-  LibFilterPresetThemeFileFilterPresetThemeFileActiveNavbarPrefix,
-  LibFilterPresetThemeFileFilterPresetThemeFileFileName,
-  LibFilterPresetThemeFileFilterPresetThemeFileReturns,
+  Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveFooterPrefix,
+  Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveNavbarPrefix,
+  Lib_FilterPresetThemeFile_FilterPresetThemeFile_FileName,
+  Lib_FilterPresetThemeFile_FilterPresetThemeFile_Returns,
 } from '../types/lib/filter-preset-theme-file.d.ts';
 
 /**
@@ -12,15 +12,15 @@ import type {
  * keeps variant subfolder files only when their prefix matches the
  * active variant, and drops anything that is not a style.css file.
  *
- * @param {LibFilterPresetThemeFileFilterPresetThemeFileFileName}           fileName            - File name.
- * @param {LibFilterPresetThemeFileFilterPresetThemeFileActiveNavbarPrefix} activeNavbarPrefix  - Active navbar prefix.
- * @param {LibFilterPresetThemeFileFilterPresetThemeFileActiveFooterPrefix} activeFooterPrefix  - Active footer prefix.
+ * @param {Lib_FilterPresetThemeFile_FilterPresetThemeFile_FileName}           fileName            - File name.
+ * @param {Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveNavbarPrefix} activeNavbarPrefix  - Active navbar prefix.
+ * @param {Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveFooterPrefix} activeFooterPrefix  - Active footer prefix.
  *
- * @returns {LibFilterPresetThemeFileFilterPresetThemeFileReturns}
+ * @returns {Lib_FilterPresetThemeFile_FilterPresetThemeFile_Returns}
  *
  * @since 0.15.0
  */
-export function filterPresetThemeFile(fileName: LibFilterPresetThemeFileFilterPresetThemeFileFileName, activeNavbarPrefix: LibFilterPresetThemeFileFilterPresetThemeFileActiveNavbarPrefix, activeFooterPrefix: LibFilterPresetThemeFileFilterPresetThemeFileActiveFooterPrefix): LibFilterPresetThemeFileFilterPresetThemeFileReturns {
+export function filterPresetThemeFile(fileName: Lib_FilterPresetThemeFile_FilterPresetThemeFile_FileName, activeNavbarPrefix: Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveNavbarPrefix, activeFooterPrefix: Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveFooterPrefix): Lib_FilterPresetThemeFile_FilterPresetThemeFile_Returns {
   if (fileName.endsWith('style.css') === false) {
     return false;
   }

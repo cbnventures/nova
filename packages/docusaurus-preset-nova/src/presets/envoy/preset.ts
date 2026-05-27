@@ -1,4 +1,4 @@
-import type { PresetsEnvoyPresetEnvoy } from '../../types/presets/envoy/preset.d.ts';
+import type { Presets_Envoy_Preset_Envoy } from '../../types/presets/envoy/preset.d.ts';
 
 /**
  * Presets - Envoy - Preset - Envoy.
@@ -9,7 +9,7 @@ import type { PresetsEnvoyPresetEnvoy } from '../../types/presets/envoy/preset.d
  *
  * @since 0.15.0
  */
-export const presetsEnvoyPresetEnvoy: PresetsEnvoyPresetEnvoy = {
+export const presetsEnvoyPresetEnvoy: Presets_Envoy_Preset_Envoy = {
   logo: {
     title: 'Envoy',
     alt: 'Envoy',

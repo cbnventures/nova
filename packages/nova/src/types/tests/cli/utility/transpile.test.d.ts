@@ -3,24 +3,24 @@
  *
  * @since 0.14.0
  */
-export type TestsCliUtilityTranspileRunOriginalCwd = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OriginalCwd = string;
 
-export type TestsCliUtilityTranspileRunTemporaryDirectory = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TemporaryDirectory = string;
 
-export type TestsCliUtilityTranspileRunTemporaryPrefix = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TemporaryPrefix = string;
 
-export type TestsCliUtilityTranspileRunSandboxDirectory = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxDirectory = string;
 
-export type TestsCliUtilityTranspileRunSandboxRoot = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_SandboxRoot = string;
 
-export type TestsCliUtilityTranspileRunProjectDirectory = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_ProjectDirectory = string;
 
-export type TestsCliUtilityTranspileRunTsconfigPath = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TsconfigPath = string;
 
-export type TestsCliUtilityTranspileRunTsconfigContents = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_TsconfigContents = string;
 
-export type TestsCliUtilityTranspileRunIndexPath = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_IndexPath = string;
 
-export type TestsCliUtilityTranspileRunOutputJsPath = string;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OutputJsPath = string;
 
-export type TestsCliUtilityTranspileRunOutputExists = boolean;
+export type Tests_Cli_Utility_Transpile_CliUtilityTranspileRun_OutputExists = boolean;

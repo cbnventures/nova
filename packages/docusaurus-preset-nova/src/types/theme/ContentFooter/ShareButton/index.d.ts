@@ -5,19 +5,19 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.18.0
  */
-export type ThemeContentFooterShareButtonPropsPlatform = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_Props_Platform = string;
 
-export type ThemeContentFooterShareButtonPropsShareUrl = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_Props_ShareUrl = string;
 
-export type ThemeContentFooterShareButtonPropsClassName = string | undefined;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_Props_ClassName = string | undefined;
 
-export type ThemeContentFooterShareButtonPropsStyle = CSSProperties | undefined;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_Props_Style = CSSProperties | undefined;
 
-export type ThemeContentFooterShareButtonProps = {
-  platform: ThemeContentFooterShareButtonPropsPlatform;
-  shareUrl: ThemeContentFooterShareButtonPropsShareUrl;
-  className?: ThemeContentFooterShareButtonPropsClassName;
-  style?: ThemeContentFooterShareButtonPropsStyle;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_Props = {
+  platform: Theme_ContentFooter_ShareButton_Index_ShareButton_Props_Platform;
+  shareUrl: Theme_ContentFooter_ShareButton_Index_ShareButton_Props_ShareUrl;
+  className?: Theme_ContentFooter_ShareButton_Index_ShareButton_Props_ClassName;
+  style?: Theme_ContentFooter_ShareButton_Index_ShareButton_Props_Style;
 };
 
 /**
@@ -25,20 +25,20 @@ export type ThemeContentFooterShareButtonProps = {
  *
  * @since 0.18.0
  */
-export type ThemeContentFooterShareButtonCopied = boolean;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_Copied = boolean;
 
-export type ThemeContentFooterShareButtonCopiedState = [ThemeContentFooterShareButtonCopied, ThemeContentFooterShareButtonSetCopied];
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_CopiedState = [Theme_ContentFooter_ShareButton_Index_ShareButton_Copied, Theme_ContentFooter_ShareButton_Index_ShareButton_SetCopied];
 
-export type ThemeContentFooterShareButtonSetCopied = (value: ThemeContentFooterShareButtonCopied) => void;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_SetCopied = (value: Theme_ContentFooter_ShareButton_Index_ShareButton_Copied) => void;
 
-export type ThemeContentFooterShareButtonShareLinkCopied = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareLinkCopied = string;
 
-export type ThemeContentFooterShareButtonShareCopyLink = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareCopyLink = string;
 
-export type ThemeContentFooterShareButtonShareCopiedText = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareCopiedText = string;
 
-export type ThemeContentFooterShareButtonShareHref = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareHref = string;
 
-export type ThemeContentFooterShareButtonPlatformLabel = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_PlatformLabel = string;
 
-export type ThemeContentFooterShareButtonShareOnPlatform = string;
+export type Theme_ContentFooter_ShareButton_Index_ShareButton_ShareOnPlatform = string;

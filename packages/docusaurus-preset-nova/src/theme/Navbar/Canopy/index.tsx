@@ -8,33 +8,33 @@ import { useNavbarOverflow } from '../../../lib/use-navbar-overflow.js';
 import More from '../More/index.js';
 
 import type {
-  LibUseNavbarOverflowHasOverflow,
-  LibUseNavbarOverflowMeasureRef,
-  LibUseNavbarOverflowMeasuring,
-  LibUseNavbarOverflowReturns,
-  LibUseNavbarOverflowVisibleCount,
+  Lib_UseNavbarOverflow_HasOverflow as LibUseNavbarOverflowHasOverflow,
+  Lib_UseNavbarOverflow_MeasureRef as LibUseNavbarOverflowMeasureRef,
+  Lib_UseNavbarOverflow_Measuring as LibUseNavbarOverflowMeasuring,
+  Lib_UseNavbarOverflow_Returns as LibUseNavbarOverflowReturns,
+  Lib_UseNavbarOverflow_VisibleCount as LibUseNavbarOverflowVisibleCount,
 } from '../../../types/lib/use-navbar-overflow.d.ts';
 
 import type {
-  ThemeNavbarCanopyIndexCanopyActionItems,
-  ThemeNavbarCanopyIndexCanopyActiveItemLabel,
-  ThemeNavbarCanopyIndexCanopyColorModeLabel,
-  ThemeNavbarCanopyIndexCanopyHamburgerLabel,
-  ThemeNavbarCanopyIndexCanopyItems,
-  ThemeNavbarCanopyIndexCanopyNavAriaLabel,
-  ThemeNavbarCanopyIndexCanopyNavbarClassName,
-  ThemeNavbarCanopyIndexCanopyNavbarItemKey,
-  ThemeNavbarCanopyIndexCanopyNavbarItemSpread,
-  ThemeNavbarCanopyIndexCanopyOnColorModeToggle,
-  ThemeNavbarCanopyIndexCanopyOnMenuToggle,
-  ThemeNavbarCanopyIndexCanopyOpenMenuAriaLabel,
-  ThemeNavbarCanopyIndexCanopyProps,
-  ThemeNavbarCanopyIndexCanopyReturns,
-  ThemeNavbarCanopyIndexCanopySiteLogo,
-  ThemeNavbarCanopyIndexCanopyToggleColorModeAriaLabel,
+  Theme_Navbar_Canopy_Index_Canopy_ActionItems,
+  Theme_Navbar_Canopy_Index_Canopy_ActiveItemLabel,
+  Theme_Navbar_Canopy_Index_Canopy_ColorModeLabel,
+  Theme_Navbar_Canopy_Index_Canopy_HamburgerLabel,
+  Theme_Navbar_Canopy_Index_Canopy_Items,
+  Theme_Navbar_Canopy_Index_Canopy_NavAriaLabel,
+  Theme_Navbar_Canopy_Index_Canopy_NavbarClassName,
+  Theme_Navbar_Canopy_Index_Canopy_NavbarItemKey,
+  Theme_Navbar_Canopy_Index_Canopy_NavbarItemSpread,
+  Theme_Navbar_Canopy_Index_Canopy_OnColorModeToggle,
+  Theme_Navbar_Canopy_Index_Canopy_OnMenuToggle,
+  Theme_Navbar_Canopy_Index_Canopy_OpenMenuAriaLabel,
+  Theme_Navbar_Canopy_Index_Canopy_Props,
+  Theme_Navbar_Canopy_Index_Canopy_Returns,
+  Theme_Navbar_Canopy_Index_Canopy_SiteLogo,
+  Theme_Navbar_Canopy_Index_Canopy_ToggleColorModeAriaLabel,
 } from '../../../types/theme/Navbar/Canopy/index.d.ts';
 
-import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
 
 /**
  * Theme - Navbar - Canopy.
@@ -43,34 +43,34 @@ import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
  * top center, navigation items expanding into dropdowns below,
  * and action buttons aligned to the right.
  *
- * @param {ThemeNavbarCanopyIndexCanopyProps} props - Props.
+ * @param {Theme_Navbar_Canopy_Index_Canopy_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Canopy(props: ThemeNavbarCanopyIndexCanopyProps): ThemeNavbarCanopyIndexCanopyReturns {
-  const siteLogo: ThemeNavbarCanopyIndexCanopySiteLogo = props['siteLogo'];
-  const items: ThemeNavbarCanopyIndexCanopyItems = props['items'];
-  const actionItems: ThemeNavbarCanopyIndexCanopyActionItems = props['actionItems'];
-  const colorModeLabel: ThemeNavbarCanopyIndexCanopyColorModeLabel = props['colorModeLabel'];
-  const onColorModeToggle: ThemeNavbarCanopyIndexCanopyOnColorModeToggle = props['onColorModeToggle'];
-  const hamburgerLabel: ThemeNavbarCanopyIndexCanopyHamburgerLabel = props['hamburgerLabel'];
-  const onMenuToggle: ThemeNavbarCanopyIndexCanopyOnMenuToggle = props['onMenuToggle'];
-  const activeItemLabel: ThemeNavbarCanopyIndexCanopyActiveItemLabel = props['activeItemLabel'];
-  const navbarClassName: ThemeNavbarCanopyIndexCanopyNavbarClassName = 'nova-navbar-canopy';
+function Canopy(props: Theme_Navbar_Canopy_Index_Canopy_Props): Theme_Navbar_Canopy_Index_Canopy_Returns {
+  const siteLogo: Theme_Navbar_Canopy_Index_Canopy_SiteLogo = props['siteLogo'];
+  const items: Theme_Navbar_Canopy_Index_Canopy_Items = props['items'];
+  const actionItems: Theme_Navbar_Canopy_Index_Canopy_ActionItems = props['actionItems'];
+  const colorModeLabel: Theme_Navbar_Canopy_Index_Canopy_ColorModeLabel = props['colorModeLabel'];
+  const onColorModeToggle: Theme_Navbar_Canopy_Index_Canopy_OnColorModeToggle = props['onColorModeToggle'];
+  const hamburgerLabel: Theme_Navbar_Canopy_Index_Canopy_HamburgerLabel = props['hamburgerLabel'];
+  const onMenuToggle: Theme_Navbar_Canopy_Index_Canopy_OnMenuToggle = props['onMenuToggle'];
+  const activeItemLabel: Theme_Navbar_Canopy_Index_Canopy_ActiveItemLabel = props['activeItemLabel'];
+  const navbarClassName: Theme_Navbar_Canopy_Index_Canopy_NavbarClassName = 'nova-navbar-canopy';
 
-  const navAriaLabel: ThemeNavbarCanopyIndexCanopyNavAriaLabel = translate({
+  const navAriaLabel: Theme_Navbar_Canopy_Index_Canopy_NavAriaLabel = translate({
     id: 'theme.navbar.navAriaLabel',
     message: 'Main',
     description: 'The ARIA label for the main site navigation landmark',
   });
-  const openMenuAriaLabel: ThemeNavbarCanopyIndexCanopyOpenMenuAriaLabel = translate({
+  const openMenuAriaLabel: Theme_Navbar_Canopy_Index_Canopy_OpenMenuAriaLabel = translate({
     id: 'theme.navbar.openMenuAriaLabel',
     message: 'Open menu',
     description: 'The ARIA label for the button that opens the mobile navigation menu',
   });
-  const toggleColorModeAriaLabel: ThemeNavbarCanopyIndexCanopyToggleColorModeAriaLabel = translate({
+  const toggleColorModeAriaLabel: Theme_Navbar_Canopy_Index_Canopy_ToggleColorModeAriaLabel = translate({
     id: 'theme.colorMode.toggleAriaLabel',
     message: 'Toggle color mode',
     description: 'The ARIA label for the button that cycles through color modes',
@@ -85,8 +85,8 @@ function Canopy(props: ThemeNavbarCanopyIndexCanopyProps): ThemeNavbarCanopyInde
   const visibleCount: LibUseNavbarOverflowVisibleCount = overflow['visibleCount'];
   const hasOverflow: LibUseNavbarOverflowHasOverflow = overflow['hasOverflow'];
   const measuring: LibUseNavbarOverflowMeasuring = overflow['measuring'];
-  const visibleItems: ThemeNavbarCanopyIndexCanopyItems = items.slice(0, visibleCount);
-  const overflowItems: ThemeNavbarCanopyIndexCanopyItems = items.slice(visibleCount);
+  const visibleItems: Theme_Navbar_Canopy_Index_Canopy_Items = items.slice(0, visibleCount);
+  const overflowItems: Theme_Navbar_Canopy_Index_Canopy_Items = items.slice(visibleCount);
 
   return (
     <nav
@@ -107,10 +107,10 @@ function Canopy(props: ThemeNavbarCanopyIndexCanopyProps): ThemeNavbarCanopyInde
         </div>
         <div ref={measureRef} className="nova-navbar-canopy-items nova-navbar-items-measure" aria-hidden="true">
           {
-            items.map((navItem: ThemeNavbarItem) => (
+            items.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
               <NavbarItem
                 key={navItem['label']}
-                {...navItem as ThemeNavbarCanopyIndexCanopyNavbarItemSpread}
+                {...navItem as Theme_Navbar_Canopy_Index_Canopy_NavbarItemSpread}
                 isActiveItem={navItem['label'] === activeItemLabel}
               />
             ))
@@ -118,10 +118,10 @@ function Canopy(props: ThemeNavbarCanopyIndexCanopyProps): ThemeNavbarCanopyInde
         </div>
         <div className={(measuring === true) ? 'nova-navbar-canopy-items nova-navbar-items-measuring' : 'nova-navbar-canopy-items'}>
           {
-            visibleItems.map((navItem: ThemeNavbarItem) => (
+            visibleItems.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
               <NavbarItem
                 key={navItem['label']}
-                {...navItem as ThemeNavbarCanopyIndexCanopyNavbarItemSpread}
+                {...navItem as Theme_Navbar_Canopy_Index_Canopy_NavbarItemSpread}
                 isActiveItem={navItem['label'] === activeItemLabel}
               />
             ))
@@ -146,10 +146,10 @@ function Canopy(props: ThemeNavbarCanopyIndexCanopyProps): ThemeNavbarCanopyInde
             </div>
           </SearchProvider>
           {
-            actionItems.map((navItem: ThemeNavbarItem) => (
+            actionItems.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
               <NavbarItem
-                key={(navItem['type'] as ThemeNavbarCanopyIndexCanopyNavbarItemKey) ?? (navItem['label'])}
-                {...navItem as ThemeNavbarCanopyIndexCanopyNavbarItemSpread}
+                key={(navItem['type'] as Theme_Navbar_Canopy_Index_Canopy_NavbarItemKey) ?? (navItem['label'])}
+                {...navItem as Theme_Navbar_Canopy_Index_Canopy_NavbarItemSpread}
               />
             ))
           }

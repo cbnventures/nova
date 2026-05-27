@@ -1,4 +1,4 @@
-import type { PresetsEslintFwNextjsConfigConfig } from '../../types/presets/eslint/fw-nextjs.d.ts';
+import type { Presets_Eslint_FwNextjs_ConfigConfig } from '../../types/presets/eslint/fw-nextjs.d.ts';
 
 /**
  * Presets - ESLint - FW Next.js - Config.
@@ -8,7 +8,7 @@ import type { PresetsEslintFwNextjsConfigConfig } from '../../types/presets/esli
  *
  * @since 0.11.0
  */
-const config: PresetsEslintFwNextjsConfigConfig = [{
+const config: Presets_Eslint_FwNextjs_ConfigConfig = [{
   name: 'nova/fw-nextjs/ignored-files',
   ignores: [],
 }];

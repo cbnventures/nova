@@ -3,14 +3,14 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralContext,
-  RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralIsRegExpArgument,
-  RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralNode,
-  RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralParent,
-  RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralReturns,
-  RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralTemplateCurly,
-  RulesEslintPatternsNoTemplateCurlyInStringRuleDefaultOptionsIgnoreFiles,
-  RulesEslintPatternsNoTemplateCurlyInStringRuleOptions,
+  Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Context,
+  Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_IsRegExpArgument,
+  Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Node,
+  Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Parent,
+  Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Returns,
+  Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_TemplateCurly,
+  Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-template-curly-in-string.d.ts';
 
 /**
@@ -22,7 +22,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintPatternsNoTemplateCurlyInString {
+export class Runner {
   /**
    * Rules - ESLint - Patterns - No Template Curly In String - Rule.
    *
@@ -63,10 +63,10 @@ export class RulesEslintPatternsNoTemplateCurlyInString {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintPatternsNoTemplateCurlyInStringRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintPatternsNoTemplateCurlyInStringRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -75,7 +75,7 @@ export class RulesEslintPatternsNoTemplateCurlyInString {
 
       return {
         Literal(node) {
-          RulesEslintPatternsNoTemplateCurlyInString.checkLiteral(context, node);
+          Runner.checkLiteral(context, node);
 
           return;
         },
@@ -91,21 +91,21 @@ export class RulesEslintPatternsNoTemplateCurlyInString {
    *
    * @private
    *
-   * @param {RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralContext} context - Context.
-   * @param {RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralNode}    node    - Node.
+   * @param {Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Context} context - Context.
+   * @param {Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Node}    node    - Node.
    *
-   * @returns {RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralReturns}
+   * @returns {Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Returns}
    *
    * @since 0.15.0
    */
-  private static checkLiteral(context: RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralContext, node: RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralNode): RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralReturns {
+  private static checkLiteral(context: Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Context, node: Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Node): Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Returns {
     if (typeof node.value !== 'string') {
       return;
     }
 
     // Skip strings passed as the first argument to new RegExp().
-    const parent: RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralParent = node.parent;
-    const isRegExpArgument: RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralIsRegExpArgument = parent !== undefined
+    const parent: Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_Parent = node.parent;
+    const isRegExpArgument: Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_IsRegExpArgument = parent !== undefined
       && parent.type === 'NewExpression'
       && parent.callee.type === 'Identifier'
       && parent.callee.name === 'RegExp'
@@ -115,7 +115,7 @@ export class RulesEslintPatternsNoTemplateCurlyInString {
       return;
     }
 
-    const templateCurly: RulesEslintPatternsNoTemplateCurlyInStringCheckLiteralTemplateCurly = [
+    const templateCurly: Rules_Eslint_Patterns_NoTemplateCurlyInString_Runner_CheckLiteral_TemplateCurly = [
       '$',
       '{',
     ].join('');

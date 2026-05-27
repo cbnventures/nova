@@ -3,18 +3,18 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintConventionsSwitchCaseBlocksCheckCaseConsequent,
-  RulesEslintConventionsSwitchCaseBlocksCheckCaseContext,
-  RulesEslintConventionsSwitchCaseBlocksCheckCaseFirstConsequent,
-  RulesEslintConventionsSwitchCaseBlocksCheckCaseNode,
-  RulesEslintConventionsSwitchCaseBlocksCheckCaseReturns,
-  RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementContext,
-  RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementHasDefault,
-  RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementNode,
-  RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementReturns,
-  RulesEslintConventionsSwitchCaseBlocksRuleDefaultOptionsIgnoreFiles,
-  RulesEslintConventionsSwitchCaseBlocksRuleDefaultOptionsRequireDefault,
-  RulesEslintConventionsSwitchCaseBlocksRuleOptions,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Consequent,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Context,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_FirstConsequent,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Node,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Returns,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Context,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_HasDefault,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Node,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Returns,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsRequireDefault,
+  Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/switch-case-blocks.d.ts';
 
 /**
@@ -25,7 +25,7 @@ import type {
  *
  * @since 0.13.0
  */
-export class RulesEslintConventionsSwitchCaseBlocks {
+export class Runner {
   /**
    * Rules - ESLint - Conventions - Switch Case Blocks - Rule.
    *
@@ -62,11 +62,11 @@ export class RulesEslintConventionsSwitchCaseBlocks {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintConventionsSwitchCaseBlocksRuleDefaultOptionsIgnoreFiles,
-      requireDefault: true as RulesEslintConventionsSwitchCaseBlocksRuleDefaultOptionsRequireDefault,
+      ignoreFiles: [] as Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsIgnoreFiles,
+      requireDefault: true as Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleDefaultOptionsRequireDefault,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintConventionsSwitchCaseBlocksRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -75,13 +75,13 @@ export class RulesEslintConventionsSwitchCaseBlocks {
 
       return {
         SwitchCase(node) {
-          RulesEslintConventionsSwitchCaseBlocks.checkCase(context, node);
+          Runner.checkCase(context, node);
 
           return;
         },
         SwitchStatement(node) {
           if (options['requireDefault'] === true) {
-            RulesEslintConventionsSwitchCaseBlocks.checkSwitchStatement(context, node);
+            Runner.checkSwitchStatement(context, node);
           }
 
           return;
@@ -98,15 +98,15 @@ export class RulesEslintConventionsSwitchCaseBlocks {
    *
    * @private
    *
-   * @param {RulesEslintConventionsSwitchCaseBlocksCheckCaseContext} context - Context.
-   * @param {RulesEslintConventionsSwitchCaseBlocksCheckCaseNode}    node    - Node.
+   * @param {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Node}    node    - Node.
    *
-   * @returns {RulesEslintConventionsSwitchCaseBlocksCheckCaseReturns}
+   * @returns {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Returns}
    *
    * @since 0.13.0
    */
-  private static checkCase(context: RulesEslintConventionsSwitchCaseBlocksCheckCaseContext, node: RulesEslintConventionsSwitchCaseBlocksCheckCaseNode): RulesEslintConventionsSwitchCaseBlocksCheckCaseReturns {
-    const consequent: RulesEslintConventionsSwitchCaseBlocksCheckCaseConsequent = node.consequent;
+  private static checkCase(context: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Context, node: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Node): Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Returns {
+    const consequent: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_Consequent = node.consequent;
 
     // Allow empty cases (fallthrough handled explicitly by author).
     if (consequent.length === 0) {
@@ -114,7 +114,7 @@ export class RulesEslintConventionsSwitchCaseBlocks {
     }
 
     // Valid when the case has exactly one BlockStatement.
-    const firstConsequent: RulesEslintConventionsSwitchCaseBlocksCheckCaseFirstConsequent = consequent[0];
+    const firstConsequent: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckCase_FirstConsequent = consequent[0];
 
     if (
       consequent.length === 1
@@ -140,15 +140,15 @@ export class RulesEslintConventionsSwitchCaseBlocks {
    *
    * @private
    *
-   * @param {RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementContext} context - Context.
-   * @param {RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementNode}    node    - Node.
+   * @param {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Node}    node    - Node.
    *
-   * @returns {RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementReturns}
+   * @returns {Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Returns}
    *
    * @since 0.13.0
    */
-  private static checkSwitchStatement(context: RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementContext, node: RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementNode): RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementReturns {
-    const hasDefault: RulesEslintConventionsSwitchCaseBlocksCheckSwitchStatementHasDefault = node.cases.some((switchCase) => switchCase.test === null);
+  private static checkSwitchStatement(context: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Context, node: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Node): Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_Returns {
+    const hasDefault: Rules_Eslint_Conventions_SwitchCaseBlocks_Runner_CheckSwitchStatement_HasDefault = node.cases.some((switchCase) => switchCase.test === null);
 
     if (hasDefault === false) {
       context.report({

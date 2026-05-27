@@ -3,16 +3,16 @@ import { Icon } from '@iconify/react/offline';
 import { useState } from 'react';
 
 import type {
-  ThemeContentFooterShareButtonCopied,
-  ThemeContentFooterShareButtonCopiedState,
-  ThemeContentFooterShareButtonPlatformLabel,
-  ThemeContentFooterShareButtonProps,
-  ThemeContentFooterShareButtonSetCopied,
-  ThemeContentFooterShareButtonShareCopiedText,
-  ThemeContentFooterShareButtonShareCopyLink,
-  ThemeContentFooterShareButtonShareHref,
-  ThemeContentFooterShareButtonShareLinkCopied,
-  ThemeContentFooterShareButtonShareOnPlatform,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_Copied,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_CopiedState,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_PlatformLabel,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_Props,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_SetCopied,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_ShareCopiedText,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_ShareCopyLink,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_ShareHref,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_ShareLinkCopied,
+  Theme_ContentFooter_ShareButton_Index_ShareButton_ShareOnPlatform,
 } from '../../../types/theme/ContentFooter/ShareButton/index.d.ts';
 
 /**
@@ -22,29 +22,29 @@ import type {
  * popup window for external platforms (X / Facebook / LinkedIn / Reddit), or
  * copies the canonical share URL to the clipboard for the `copy` platform.
  *
- * @param {ThemeContentFooterShareButtonProps} props - Props.
+ * @param {Theme_ContentFooter_ShareButton_Index_ShareButton_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function ShareButton(props: ThemeContentFooterShareButtonProps) {
-  const copiedState: ThemeContentFooterShareButtonCopiedState = useState<ThemeContentFooterShareButtonCopied>(false);
-  const copied: ThemeContentFooterShareButtonCopied = copiedState[0];
-  const setCopied: ThemeContentFooterShareButtonSetCopied = copiedState[1];
+function ShareButton(props: Theme_ContentFooter_ShareButton_Index_ShareButton_Props) {
+  const copiedState: Theme_ContentFooter_ShareButton_Index_ShareButton_CopiedState = useState<Theme_ContentFooter_ShareButton_Index_ShareButton_Copied>(false);
+  const copied: Theme_ContentFooter_ShareButton_Index_ShareButton_Copied = copiedState[0];
+  const setCopied: Theme_ContentFooter_ShareButton_Index_ShareButton_SetCopied = copiedState[1];
 
   if (props['platform'] === 'copy') {
-    const shareLinkCopied: ThemeContentFooterShareButtonShareLinkCopied = translate({
+    const shareLinkCopied: Theme_ContentFooter_ShareButton_Index_ShareButton_ShareLinkCopied = translate({
       id: 'theme.contentFooter.share.linkCopied',
       message: 'Link copied',
       description: 'The tooltip text shown after the share link has been copied',
     });
-    const shareCopyLink: ThemeContentFooterShareButtonShareCopyLink = translate({
+    const shareCopyLink: Theme_ContentFooter_ShareButton_Index_ShareButton_ShareCopyLink = translate({
       id: 'theme.contentFooter.share.copyLink',
       message: 'Copy link',
       description: 'The tooltip and ARIA label for the copy link share button',
     });
-    const shareCopiedText: ThemeContentFooterShareButtonShareCopiedText = translate({
+    const shareCopiedText: Theme_ContentFooter_ShareButton_Index_ShareButton_ShareCopiedText = translate({
       id: 'theme.contentFooter.share.copiedText',
       message: 'Copied!',
       description: 'The button text shown after the share link has been copied',
@@ -79,7 +79,7 @@ function ShareButton(props: ThemeContentFooterShareButtonProps) {
     );
   }
 
-  let shareHref: ThemeContentFooterShareButtonShareHref = '';
+  let shareHref: Theme_ContentFooter_ShareButton_Index_ShareButton_ShareHref = '';
 
   if (props['platform'] === 'x') {
     shareHref = `https://x.com/intent/tweet?url=${encodeURIComponent(props['shareUrl'])}`;
@@ -101,13 +101,13 @@ function ShareButton(props: ThemeContentFooterShareButtonProps) {
     return undefined;
   }
 
-  const platformLabel: ThemeContentFooterShareButtonPlatformLabel = {
+  const platformLabel: Theme_ContentFooter_ShareButton_Index_ShareButton_PlatformLabel = {
     x: 'X',
     facebook: 'Facebook',
     linkedin: 'LinkedIn',
     reddit: 'Reddit',
   }[props['platform']] ?? props['platform'];
-  const shareOnPlatform: ThemeContentFooterShareButtonShareOnPlatform = translate(
+  const shareOnPlatform: Theme_ContentFooter_ShareButton_Index_ShareButton_ShareOnPlatform = translate(
     {
       id: 'theme.contentFooter.share.shareOnPlatform',
       message: 'Share on {platformLabel}',

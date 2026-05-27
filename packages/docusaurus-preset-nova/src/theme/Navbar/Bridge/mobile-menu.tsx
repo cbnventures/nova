@@ -12,37 +12,37 @@ import {
 import { createPortal } from 'react-dom';
 
 import type {
-  ThemeNavbarBridgeMobileMenuCloseMenuAriaLabel,
-  ThemeNavbarBridgeMobileMenuMobileMenuActiveItemLabel,
-  ThemeNavbarBridgeMobileMenuMobileMenuAnimationEvent,
-  ThemeNavbarBridgeMobileMenuMobileMenuAriaLabel,
-  ThemeNavbarBridgeMobileMenuMobileMenuDefaultIcon,
-  ThemeNavbarBridgeMobileMenuMobileMenuFocusTarget,
-  ThemeNavbarBridgeMobileMenuMobileMenuHandleClickOutsideFunction,
-  ThemeNavbarBridgeMobileMenuMobileMenuHandleClickOutsideMouseEvent,
-  ThemeNavbarBridgeMobileMenuMobileMenuHandleClickOutsideMouseTarget,
-  ThemeNavbarBridgeMobileMenuMobileMenuHandleEscapeFunction,
-  ThemeNavbarBridgeMobileMenuMobileMenuHandleEscapeKeyboardEvent,
-  ThemeNavbarBridgeMobileMenuMobileMenuIsClosing,
-  ThemeNavbarBridgeMobileMenuMobileMenuIsClosingState,
-  ThemeNavbarBridgeMobileMenuMobileMenuIsOpen,
-  ThemeNavbarBridgeMobileMenuMobileMenuItemIcon,
-  ThemeNavbarBridgeMobileMenuMobileMenuItemIndex,
-  ThemeNavbarBridgeMobileMenuMobileMenuItemIsActive,
-  ThemeNavbarBridgeMobileMenuMobileMenuItems,
-  ThemeNavbarBridgeMobileMenuMobileMenuItemStyle,
-  ThemeNavbarBridgeMobileMenuMobileMenuLinkProps,
-  ThemeNavbarBridgeMobileMenuMobileMenuLinkSpread,
-  ThemeNavbarBridgeMobileMenuMobileMenuOnClose,
-  ThemeNavbarBridgeMobileMenuMobileMenuOverlayClassName,
-  ThemeNavbarBridgeMobileMenuMobileMenuPanelRef,
-  ThemeNavbarBridgeMobileMenuMobileMenuProps,
-  ThemeNavbarBridgeMobileMenuMobileMenuReturns,
-  ThemeNavbarBridgeMobileMenuMobileMenuSetIsClosing,
-  ThemeNavbarBridgeMobileMenuMobileMenuSiteLogo,
+  Theme_Navbar_Bridge_MobileMenu_CloseMenuAriaLabel,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ActiveItemLabel,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_AnimationEvent,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_AriaLabel,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_DefaultIcon,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_FocusTarget,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideFunction,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleEscapeFunction,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosing,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosingState,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsOpen,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIndex,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIsActive,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_Items,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemStyle,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkProps,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkSpread,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_OnClose,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_OverlayClassName,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_PanelRef,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_Props,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_Returns,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_SetIsClosing,
+  Theme_Navbar_Bridge_MobileMenu_MobileMenu_SiteLogo,
 } from '../../../types/theme/Navbar/Bridge/mobile-menu.d.ts';
 
-import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
 
 /**
  * Theme - Navbar - Bridge - Mobile Menu - Mobile Menu.
@@ -51,22 +51,22 @@ import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
  * a close button, and navigation items. The panel layout and visual
  * styling are controlled entirely by per-preset CSS.
  *
- * @param {ThemeNavbarBridgeMobileMenuMobileMenuProps} props - Props.
+ * @param {Theme_Navbar_Bridge_MobileMenu_MobileMenu_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNavbarBridgeMobileMenuMobileMenuReturns {
-  const isOpen: ThemeNavbarBridgeMobileMenuMobileMenuIsOpen = props['isOpen'];
-  const onClose: ThemeNavbarBridgeMobileMenuMobileMenuOnClose = props['onClose'];
-  const items: ThemeNavbarBridgeMobileMenuMobileMenuItems = props['items'];
-  const siteLogo: ThemeNavbarBridgeMobileMenuMobileMenuSiteLogo = props['siteLogo'];
-  const activeItemLabel: ThemeNavbarBridgeMobileMenuMobileMenuActiveItemLabel = props['activeItemLabel'];
-  const panelRef: ThemeNavbarBridgeMobileMenuMobileMenuPanelRef = useRef<HTMLDivElement>(null);
-  const isClosingState: ThemeNavbarBridgeMobileMenuMobileMenuIsClosingState = useState<ThemeNavbarBridgeMobileMenuMobileMenuIsClosing>(false);
-  const isClosing: ThemeNavbarBridgeMobileMenuMobileMenuIsClosing = isClosingState[0];
-  const setIsClosing: ThemeNavbarBridgeMobileMenuMobileMenuSetIsClosing = isClosingState[1];
+function MobileMenu(props: Theme_Navbar_Bridge_MobileMenu_MobileMenu_Props): Theme_Navbar_Bridge_MobileMenu_MobileMenu_Returns {
+  const isOpen: Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsOpen = props['isOpen'];
+  const onClose: Theme_Navbar_Bridge_MobileMenu_MobileMenu_OnClose = props['onClose'];
+  const items: Theme_Navbar_Bridge_MobileMenu_MobileMenu_Items = props['items'];
+  const siteLogo: Theme_Navbar_Bridge_MobileMenu_MobileMenu_SiteLogo = props['siteLogo'];
+  const activeItemLabel: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ActiveItemLabel = props['activeItemLabel'];
+  const panelRef: Theme_Navbar_Bridge_MobileMenu_MobileMenu_PanelRef = useRef<HTMLDivElement>(null);
+  const isClosingState: Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosingState = useState<Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosing>(false);
+  const isClosing: Theme_Navbar_Bridge_MobileMenu_MobileMenu_IsClosing = isClosingState[0];
+  const setIsClosing: Theme_Navbar_Bridge_MobileMenu_MobileMenu_SetIsClosing = isClosingState[1];
 
   /**
    * Theme - Navbar - Bridge - Mobile Menu - Mobile Menu - Handle Escape.
@@ -76,7 +76,7 @@ function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNav
    *
    * @since 0.15.0
    */
-  const handleEscape: ThemeNavbarBridgeMobileMenuMobileMenuHandleEscapeFunction = useCallback((event: ThemeNavbarBridgeMobileMenuMobileMenuHandleEscapeKeyboardEvent) => {
+  const handleEscape: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleEscapeFunction = useCallback((event: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent) => {
     if (event.key === 'Escape') {
       setIsClosing(true);
     }
@@ -92,8 +92,8 @@ function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNav
    *
    * @since 0.15.0
    */
-  const handleClickOutside: ThemeNavbarBridgeMobileMenuMobileMenuHandleClickOutsideFunction = useCallback((event: ThemeNavbarBridgeMobileMenuMobileMenuHandleClickOutsideMouseEvent) => {
-    const mouseTarget: ThemeNavbarBridgeMobileMenuMobileMenuHandleClickOutsideMouseTarget = event.target;
+  const handleClickOutside: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideFunction = useCallback((event: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent) => {
+    const mouseTarget: Theme_Navbar_Bridge_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget = event.target;
 
     if (mouseTarget === event.currentTarget) {
       setIsClosing(true);
@@ -120,7 +120,7 @@ function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNav
   // Focus close button when menu opens.
   useEffect(() => {
     if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: ThemeNavbarBridgeMobileMenuMobileMenuFocusTarget = panelRef['current'].querySelector('.nova-navbar-bridge-menu-close') as ThemeNavbarBridgeMobileMenuMobileMenuFocusTarget;
+      const focusTarget: Theme_Navbar_Bridge_MobileMenu_MobileMenu_FocusTarget = panelRef['current'].querySelector('.nova-navbar-bridge-menu-close') as Theme_Navbar_Bridge_MobileMenu_MobileMenu_FocusTarget;
 
       if (focusTarget !== null) {
         focusTarget.focus();
@@ -130,12 +130,12 @@ function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNav
     return undefined;
   }, [isOpen]);
 
-  const mobileMenuAriaLabel: ThemeNavbarBridgeMobileMenuMobileMenuAriaLabel = translate({
+  const mobileMenuAriaLabel: Theme_Navbar_Bridge_MobileMenu_MobileMenu_AriaLabel = translate({
     id: 'theme.navbar.mobileMenuAriaLabel',
     message: 'Navigation menu',
     description: 'The ARIA label for the mobile navigation menu dialog',
   });
-  const closeMenuAriaLabel: ThemeNavbarBridgeMobileMenuCloseMenuAriaLabel = translate({
+  const closeMenuAriaLabel: Theme_Navbar_Bridge_MobileMenu_CloseMenuAriaLabel = translate({
     id: 'theme.navbar.closeMenuAriaLabel',
     message: 'Close menu',
     description: 'The ARIA label for the button that closes the mobile navigation menu',
@@ -145,7 +145,7 @@ function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNav
     return null;
   }
 
-  let overlayClassName: ThemeNavbarBridgeMobileMenuMobileMenuOverlayClassName = 'nova-navbar-bridge-menu-overlay nova-navbar-bridge-menu-open';
+  let overlayClassName: Theme_Navbar_Bridge_MobileMenu_MobileMenu_OverlayClassName = 'nova-navbar-bridge-menu-overlay nova-navbar-bridge-menu-open';
 
   if (isClosing === true) {
     overlayClassName = 'nova-navbar-bridge-menu-overlay nova-navbar-bridge-menu-closing';
@@ -156,7 +156,7 @@ function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNav
       className={overlayClassName}
       onClick={handleClickOutside}
       role="presentation"
-      onAnimationEnd={(_event: ThemeNavbarBridgeMobileMenuMobileMenuAnimationEvent) => {
+      onAnimationEnd={(_event: Theme_Navbar_Bridge_MobileMenu_MobileMenu_AnimationEvent) => {
         if (isClosing === true) {
           onClose();
           setIsClosing(false);
@@ -209,12 +209,12 @@ function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNav
             <SearchResults />
             <div className="nova-navbar-bridge-menu-items nova-mobile-menu-items">
               {
-                items.map((navItem: ThemeNavbarItem, itemIndex: ThemeNavbarBridgeMobileMenuMobileMenuItemIndex) => {
-                  const itemIcon: ThemeNavbarBridgeMobileMenuMobileMenuItemIcon = navItem['icon'] as ThemeNavbarBridgeMobileMenuMobileMenuItemIcon;
-                  const defaultIcon: ThemeNavbarBridgeMobileMenuMobileMenuDefaultIcon = 'lucide:link';
-                  const itemStyle: ThemeNavbarBridgeMobileMenuMobileMenuItemStyle = { '--nova-item-index': itemIndex } as ThemeNavbarBridgeMobileMenuMobileMenuItemStyle;
-                  const linkProps: ThemeNavbarBridgeMobileMenuMobileMenuLinkProps = {};
-                  const isActive: ThemeNavbarBridgeMobileMenuMobileMenuItemIsActive = navItem['label'] === activeItemLabel;
+                items.map((navItem: Theme_Navbar_Index_Navbar_Item, itemIndex: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIndex) => {
+                  const itemIcon: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon = navItem['icon'] as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIcon;
+                  const defaultIcon: Theme_Navbar_Bridge_MobileMenu_MobileMenu_DefaultIcon = 'lucide:link';
+                  const itemStyle: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemStyle = { '--nova-item-index': itemIndex } as Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemStyle;
+                  const linkProps: Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkProps = {};
+                  const isActive: Theme_Navbar_Bridge_MobileMenu_MobileMenu_ItemIsActive = navItem['label'] === activeItemLabel;
 
                   if (navItem['to'] !== undefined) {
                     Reflect.set(linkProps, 'to', navItem['to']);
@@ -233,7 +233,7 @@ function MobileMenu(props: ThemeNavbarBridgeMobileMenuMobileMenuProps): ThemeNav
                       className="nova-navbar-bridge-menu-item"
                       key={navItem['label']}
                       style={itemStyle}
-                      {...(linkProps as ThemeNavbarBridgeMobileMenuMobileMenuLinkSpread)}
+                      {...(linkProps as Theme_Navbar_Bridge_MobileMenu_MobileMenu_LinkSpread)}
                       onClick={() => {
                         setIsClosing(true);
 

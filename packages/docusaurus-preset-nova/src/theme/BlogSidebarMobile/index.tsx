@@ -11,28 +11,28 @@ import {
 import { createPortal } from 'react-dom';
 
 import type {
-  ThemeBlogSidebarMobileBlogSidebarMobileAnimationEvent,
-  ThemeBlogSidebarMobileBlogSidebarMobileCloseAriaLabel,
-  ThemeBlogSidebarMobileBlogSidebarMobileFocusTarget,
-  ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideFunction,
-  ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideMouseEvent,
-  ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideMouseTarget,
-  ThemeBlogSidebarMobileBlogSidebarMobileHandleEscapeFunction,
-  ThemeBlogSidebarMobileBlogSidebarMobileHandleEscapeKeyboardEvent,
-  ThemeBlogSidebarMobileBlogSidebarMobileHeaderTitle,
-  ThemeBlogSidebarMobileBlogSidebarMobileIsClosing,
-  ThemeBlogSidebarMobileBlogSidebarMobileIsClosingState,
-  ThemeBlogSidebarMobileBlogSidebarMobileIsOpen,
-  ThemeBlogSidebarMobileBlogSidebarMobileIsOpenState,
-  ThemeBlogSidebarMobileBlogSidebarMobileOpenAriaLabel,
-  ThemeBlogSidebarMobileBlogSidebarMobileOverlayClassName,
-  ThemeBlogSidebarMobileBlogSidebarMobilePanelAriaLabel,
-  ThemeBlogSidebarMobileBlogSidebarMobilePanelRef,
-  ThemeBlogSidebarMobileBlogSidebarMobilePathname,
-  ThemeBlogSidebarMobileBlogSidebarMobileProps,
-  ThemeBlogSidebarMobileBlogSidebarMobileSetIsClosing,
-  ThemeBlogSidebarMobileBlogSidebarMobileSetIsOpen,
-  ThemeBlogSidebarMobileBlogSidebarMobileTriggerLabel,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_AnimationEvent,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_CloseAriaLabel,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseTarget,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeFunction,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HeaderTitle,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosingState,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpen,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpenState,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OpenAriaLabel,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OverlayClassName,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelAriaLabel,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Pathname,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsOpen,
+  Theme_BlogSidebarMobile_Index_BlogSidebarMobile_TriggerLabel,
 } from '../../types/theme/BlogSidebarMobile/index.d.ts';
 
 /**
@@ -42,24 +42,24 @@ import type {
  * title, and a floating overlay panel containing the full blog
  * sidebar when tapped.
  *
- * @param {ThemeBlogSidebarMobileBlogSidebarMobileProps} props - Props.
+ * @param {Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogSidebarMobile(props: ThemeBlogSidebarMobileBlogSidebarMobileProps) {
-  const pathname: ThemeBlogSidebarMobileBlogSidebarMobilePathname = useLocation()['pathname'];
+function BlogSidebarMobile(props: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Props) {
+  const pathname: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_Pathname = useLocation()['pathname'];
 
-  const isOpenState: ThemeBlogSidebarMobileBlogSidebarMobileIsOpenState = useState<ThemeBlogSidebarMobileBlogSidebarMobileIsOpen>(false);
-  const isOpen: ThemeBlogSidebarMobileBlogSidebarMobileIsOpen = isOpenState[0];
-  const setIsOpen: ThemeBlogSidebarMobileBlogSidebarMobileSetIsOpen = isOpenState[1];
+  const isOpenState: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpenState = useState<Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpen>(false);
+  const isOpen: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsOpen = isOpenState[0];
+  const setIsOpen: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsOpen = isOpenState[1];
 
-  const isClosingState: ThemeBlogSidebarMobileBlogSidebarMobileIsClosingState = useState<ThemeBlogSidebarMobileBlogSidebarMobileIsClosing>(false);
-  const isClosing: ThemeBlogSidebarMobileBlogSidebarMobileIsClosing = isClosingState[0];
-  const setIsClosing: ThemeBlogSidebarMobileBlogSidebarMobileSetIsClosing = isClosingState[1];
+  const isClosingState: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosingState = useState<Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing>(false);
+  const isClosing: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_IsClosing = isClosingState[0];
+  const setIsClosing: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_SetIsClosing = isClosingState[1];
 
-  const panelRef: ThemeBlogSidebarMobileBlogSidebarMobilePanelRef = useRef<HTMLDivElement>(null);
+  const panelRef: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelRef = useRef<HTMLDivElement>(null);
 
   /**
    * Theme - Blog Sidebar Mobile - Blog Sidebar Mobile - Handle Escape.
@@ -69,7 +69,7 @@ function BlogSidebarMobile(props: ThemeBlogSidebarMobileBlogSidebarMobileProps) 
    *
    * @since 0.15.0
    */
-  const handleEscape: ThemeBlogSidebarMobileBlogSidebarMobileHandleEscapeFunction = useCallback((event: ThemeBlogSidebarMobileBlogSidebarMobileHandleEscapeKeyboardEvent) => {
+  const handleEscape: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeFunction = useCallback((event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleEscapeKeyboardEvent) => {
     if (event.key === 'Escape') {
       setIsClosing(true);
     }
@@ -85,8 +85,8 @@ function BlogSidebarMobile(props: ThemeBlogSidebarMobileBlogSidebarMobileProps) 
    *
    * @since 0.15.0
    */
-  const handleClickOutside: ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideFunction = useCallback((event: ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideMouseEvent) => {
-    const mouseTarget: ThemeBlogSidebarMobileBlogSidebarMobileHandleClickOutsideMouseTarget = event.target;
+  const handleClickOutside: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideFunction = useCallback((event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseEvent) => {
+    const mouseTarget: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HandleClickOutsideMouseTarget = event.target;
 
     if (mouseTarget === event.currentTarget) {
       setIsClosing(true);
@@ -122,7 +122,7 @@ function BlogSidebarMobile(props: ThemeBlogSidebarMobileBlogSidebarMobileProps) 
   // Focus close button when dialog opens.
   useEffect(() => {
     if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: ThemeBlogSidebarMobileBlogSidebarMobileFocusTarget = panelRef['current'].querySelector('.nova-sidebar-mobile-close') as ThemeBlogSidebarMobileBlogSidebarMobileFocusTarget;
+      const focusTarget: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget = panelRef['current'].querySelector('.nova-sidebar-mobile-close') as Theme_BlogSidebarMobile_Index_BlogSidebarMobile_FocusTarget;
 
       if (focusTarget !== null) {
         focusTarget.focus();
@@ -139,27 +139,27 @@ function BlogSidebarMobile(props: ThemeBlogSidebarMobileBlogSidebarMobileProps) 
     return undefined;
   }
 
-  const triggerLabel: ThemeBlogSidebarMobileBlogSidebarMobileTriggerLabel = translate({
+  const triggerLabel: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_TriggerLabel = translate({
     id: 'theme.blog.sidebar.mobileTriggerLabel',
     message: 'Sidebar',
     description: 'The label shown on the mobile blog sidebar trigger button',
   });
-  const openAriaLabel: ThemeBlogSidebarMobileBlogSidebarMobileOpenAriaLabel = translate({
+  const openAriaLabel: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OpenAriaLabel = translate({
     id: 'theme.blog.sidebar.mobileOpenAriaLabel',
     message: 'Open blog sidebar',
     description: 'The ARIA label for the button that opens the mobile blog sidebar overlay',
   });
-  const headerTitle: ThemeBlogSidebarMobileBlogSidebarMobileHeaderTitle = translate({
+  const headerTitle: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_HeaderTitle = translate({
     id: 'theme.blog.sidebar.mobileHeaderTitle',
     message: 'Sidebar',
     description: 'The title shown in the mobile blog sidebar overlay header',
   });
-  const panelAriaLabel: ThemeBlogSidebarMobileBlogSidebarMobilePanelAriaLabel = translate({
+  const panelAriaLabel: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_PanelAriaLabel = translate({
     id: 'theme.blog.sidebar.mobilePanelAriaLabel',
     message: 'Blog sidebar',
     description: 'The ARIA label for the mobile blog sidebar overlay panel',
   });
-  const closeAriaLabel: ThemeBlogSidebarMobileBlogSidebarMobileCloseAriaLabel = translate({
+  const closeAriaLabel: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_CloseAriaLabel = translate({
     id: 'theme.blog.sidebar.mobileCloseAriaLabel',
     message: 'Close blog sidebar',
     description: 'The ARIA label for the button that closes the mobile blog sidebar overlay',
@@ -186,7 +186,7 @@ function BlogSidebarMobile(props: ThemeBlogSidebarMobileBlogSidebarMobileProps) 
       </button>
 
       {(isOpen === true) && (() => {
-        let overlayClassName: ThemeBlogSidebarMobileBlogSidebarMobileOverlayClassName = 'nova-sidebar-mobile-overlay nova-sidebar-mobile-open';
+        let overlayClassName: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_OverlayClassName = 'nova-sidebar-mobile-overlay nova-sidebar-mobile-open';
 
         if (isClosing === true) {
           overlayClassName = 'nova-sidebar-mobile-overlay nova-sidebar-mobile-closing';
@@ -197,7 +197,7 @@ function BlogSidebarMobile(props: ThemeBlogSidebarMobileBlogSidebarMobileProps) 
             className={overlayClassName}
             onClick={handleClickOutside}
             role="presentation"
-            onAnimationEnd={(_event: ThemeBlogSidebarMobileBlogSidebarMobileAnimationEvent) => {
+            onAnimationEnd={(_event: Theme_BlogSidebarMobile_Index_BlogSidebarMobile_AnimationEvent) => {
               if (isClosing === true) {
                 setIsOpen(false);
                 setIsClosing(false);

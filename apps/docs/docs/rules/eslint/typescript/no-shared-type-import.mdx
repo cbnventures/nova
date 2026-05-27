@@ -42,11 +42,11 @@ This enforces a layered type architecture where shared types flow through domain
     // In a .d.ts file — importing shared types is allowed.
     // types/cli/runner.d.ts
     import type { EntryCategory } from '@/types/shared.d.ts';
-    export type RunnerRecordSelectedCategory = EntryCategory;
+    export type Cli_Runner_Record_SelectedCategory = EntryCategory;
 
     // In a .ts code file — import from the domain .d.ts file.
     // cli/runner.ts
-    import type { RunnerRecordSelectedCategory } from '@/types/cli/runner.d.ts';
+    import type { Cli_Runner_Record_SelectedCategory } from '@/types/cli/runner.d.ts';
     ```
 
   </TabItem>

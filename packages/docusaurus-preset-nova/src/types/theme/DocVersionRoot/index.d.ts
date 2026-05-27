@@ -7,21 +7,21 @@ import type { RouteConfig } from 'react-router-config';
  *
  * @since 0.15.0
  */
-export type ThemeDocVersionRootDocVersionRootPropsRouteRoutes = RouteConfig[];
+export type Theme_DocVersionRoot_Index_DocVersionRoot_Props_Route_Routes = RouteConfig[];
 
-export type ThemeDocVersionRootDocVersionRootPropsRoute = {
-  routes: ThemeDocVersionRootDocVersionRootPropsRouteRoutes;
+export type Theme_DocVersionRoot_Index_DocVersionRoot_Props_Route = {
+  routes: Theme_DocVersionRoot_Index_DocVersionRoot_Props_Route_Routes;
   [key: string]: unknown;
 };
 
-export type ThemeDocVersionRootDocVersionRootPropsVersion = PropVersionMetadata;
+export type Theme_DocVersionRoot_Index_DocVersionRoot_Props_Version = PropVersionMetadata;
 
-export type ThemeDocVersionRootDocVersionRootProps = {
-  route: ThemeDocVersionRootDocVersionRootPropsRoute;
-  version: ThemeDocVersionRootDocVersionRootPropsVersion;
+export type Theme_DocVersionRoot_Index_DocVersionRoot_Props = {
+  route: Theme_DocVersionRoot_Index_DocVersionRoot_Props_Route;
+  version: Theme_DocVersionRoot_Index_DocVersionRoot_Props_Version;
   [key: string]: unknown;
 };
 
-export type ThemeDocVersionRootDocVersionRootRendered = ReactNode;
+export type Theme_DocVersionRoot_Index_DocVersionRoot_Rendered = ReactNode;
 
-export type ThemeDocVersionRootDocVersionRootSearchTag = string;
+export type Theme_DocVersionRoot_Index_DocVersionRoot_SearchTag = string;

@@ -3,75 +3,75 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintFormattingRequirePaddingLinesCheckBodyBareAwait,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyBeforeLoops,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyBetweenOperations,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyContext,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyCurr,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyCurrIsBareAwait,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyCurrIsDeclaration,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyCurrKey,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyCurrStartLine,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyExitCodeBeforeReturn,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyHasBlankLine,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyNode,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyPrev,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyPrevEndLine,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyPrevIsBareAwait,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyPrevIsDeclaration,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyPrevKey,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyReturns,
-  RulesEslintFormattingRequirePaddingLinesCheckBodyStatements,
-  RulesEslintFormattingRequirePaddingLinesCheckLineCommentsAllComments,
-  RulesEslintFormattingRequirePaddingLinesCheckLineCommentsCommentLine,
-  RulesEslintFormattingRequirePaddingLinesCheckLineCommentsContext,
-  RulesEslintFormattingRequirePaddingLinesCheckLineCommentsCurrentLineContent,
-  RulesEslintFormattingRequirePaddingLinesCheckLineCommentsLines,
-  RulesEslintFormattingRequirePaddingLinesCheckLineCommentsPrevLineContent,
-  RulesEslintFormattingRequirePaddingLinesCheckLineCommentsReturns,
-  RulesEslintFormattingRequirePaddingLinesCheckLineCommentsTrimmedPrevLine,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCases,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesContext,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCurr,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCurrStartLine,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesHasBlankLine,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesNode,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesPrev,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesPrevEndLine,
-  RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesReturns,
-  RulesEslintFormattingRequirePaddingLinesGetCalleeKeyExpression,
-  RulesEslintFormattingRequirePaddingLinesGetCalleeKeyNode,
-  RulesEslintFormattingRequirePaddingLinesGetCalleeKeyReturns,
-  RulesEslintFormattingRequirePaddingLinesIsBareAwaitExpressionNode,
-  RulesEslintFormattingRequirePaddingLinesIsBareAwaitExpressionReturns,
-  RulesEslintFormattingRequirePaddingLinesIsExpressionOperationExpression,
-  RulesEslintFormattingRequirePaddingLinesIsExpressionOperationNode,
-  RulesEslintFormattingRequirePaddingLinesIsExpressionOperationReturns,
-  RulesEslintFormattingRequirePaddingLinesIsLoopStatementNode,
-  RulesEslintFormattingRequirePaddingLinesIsLoopStatementReturns,
-  RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentExpression,
-  RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentLeft,
-  RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentNode,
-  RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentObject,
-  RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentProperty,
-  RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentReturns,
-  RulesEslintFormattingRequirePaddingLinesRuleCheckBareAwait,
-  RulesEslintFormattingRequirePaddingLinesRuleCheckBeforeLineComment,
-  RulesEslintFormattingRequirePaddingLinesRuleCheckBeforeLoops,
-  RulesEslintFormattingRequirePaddingLinesRuleCheckBetweenOperations,
-  RulesEslintFormattingRequirePaddingLinesRuleCheckBetweenSwitchCases,
-  RulesEslintFormattingRequirePaddingLinesRuleCheckExitCodeBeforeReturn,
-  RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBareAwait,
-  RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBeforeLineComment,
-  RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBeforeLoops,
-  RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBetweenOperations,
-  RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBetweenSwitchCases,
-  RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsExitCodeBeforeReturn,
-  RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsIgnoreFiles,
-  RulesEslintFormattingRequirePaddingLinesRuleOptions,
-  RulesEslintFormattingRequirePaddingLinesSerializeCalleeNode,
-  RulesEslintFormattingRequirePaddingLinesSerializeCalleeObject,
-  RulesEslintFormattingRequirePaddingLinesSerializeCalleeReturns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BareAwait,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BeforeLoops,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BetweenOperations,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Context,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Curr,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrIsBareAwait,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrIsDeclaration,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrKey,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrStartLine,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_ExitCodeBeforeReturn,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_HasBlankLine,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Node,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Prev,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevEndLine,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevIsBareAwait,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevIsDeclaration,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevKey,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Returns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Statements,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_AllComments,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_CommentLine,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Context,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_CurrentLineContent,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Lines,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_PrevLineContent,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Returns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_TrimmedPrevLine,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Cases,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Context,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Curr,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_CurrStartLine,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_HasBlankLine,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Node,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Prev,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_PrevEndLine,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Returns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Expression,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Node,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Returns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Node,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Returns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Expression,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Node,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Returns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Node,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Returns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Expression,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Left,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Node,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Object,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Property,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Returns,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBareAwait,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBeforeLineComment,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBeforeLoops,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBetweenOperations,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBetweenSwitchCases,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckExitCodeBeforeReturn,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBareAwait,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLineComment,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLoops,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenOperations,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenSwitchCases,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsExitCodeBeforeReturn,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Node,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Object,
+  Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Returns,
 } from '../../../types/rules/eslint/formatting/require-padding-lines.d.ts';
 
 /**
@@ -82,7 +82,7 @@ import type {
  *
  * @since 0.14.0
  */
-export class RulesEslintFormattingRequirePaddingLines {
+export class Runner {
   /**
    * Rules - ESLint - Formatting - Require Padding Lines - Rule.
    *
@@ -139,22 +139,22 @@ export class RulesEslintFormattingRequirePaddingLines {
       }],
     },
     defaultOptions: [{
-      bareAwait: true as RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBareAwait,
-      beforeLineComment: true as RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBeforeLineComment,
-      beforeLoops: true as RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBeforeLoops,
-      betweenOperations: true as RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBetweenOperations,
-      betweenSwitchCases: true as RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBetweenSwitchCases,
-      exitCodeBeforeReturn: true as RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsExitCodeBeforeReturn,
-      ignoreFiles: [] as RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsIgnoreFiles,
+      bareAwait: true as Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBareAwait,
+      beforeLineComment: true as Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLineComment,
+      beforeLoops: true as Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLoops,
+      betweenOperations: true as Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenOperations,
+      betweenSwitchCases: true as Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenSwitchCases,
+      exitCodeBeforeReturn: true as Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsExitCodeBeforeReturn,
+      ignoreFiles: [] as Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintFormattingRequirePaddingLinesRuleOptions = defaultOptions[0];
-      const checkExitCodeBeforeReturn: RulesEslintFormattingRequirePaddingLinesRuleCheckExitCodeBeforeReturn = options['exitCodeBeforeReturn'];
-      const checkBeforeLoops: RulesEslintFormattingRequirePaddingLinesRuleCheckBeforeLoops = options['beforeLoops'];
-      const checkBareAwait: RulesEslintFormattingRequirePaddingLinesRuleCheckBareAwait = options['bareAwait'];
-      const checkBeforeLineComment: RulesEslintFormattingRequirePaddingLinesRuleCheckBeforeLineComment = options['beforeLineComment'];
-      const checkBetweenOperations: RulesEslintFormattingRequirePaddingLinesRuleCheckBetweenOperations = options['betweenOperations'];
-      const checkBetweenSwitchCases: RulesEslintFormattingRequirePaddingLinesRuleCheckBetweenSwitchCases = options['betweenSwitchCases'];
+      const options: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions = defaultOptions[0];
+      const checkExitCodeBeforeReturn: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckExitCodeBeforeReturn = options['exitCodeBeforeReturn'];
+      const checkBeforeLoops: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBeforeLoops = options['beforeLoops'];
+      const checkBareAwait: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBareAwait = options['bareAwait'];
+      const checkBeforeLineComment: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBeforeLineComment = options['beforeLineComment'];
+      const checkBetweenOperations: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBetweenOperations = options['betweenOperations'];
+      const checkBetweenSwitchCases: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBetweenSwitchCases = options['betweenSwitchCases'];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -163,22 +163,22 @@ export class RulesEslintFormattingRequirePaddingLines {
 
       return {
         Program(node) {
-          RulesEslintFormattingRequirePaddingLines.checkBody(context, node, checkExitCodeBeforeReturn, checkBeforeLoops, checkBareAwait, checkBetweenOperations);
+          Runner.checkBody(context, node, checkExitCodeBeforeReturn, checkBeforeLoops, checkBareAwait, checkBetweenOperations);
 
           if (checkBeforeLineComment === true) {
-            RulesEslintFormattingRequirePaddingLines.checkLineComments(context);
+            Runner.checkLineComments(context);
           }
 
           return;
         },
         BlockStatement(node) {
-          RulesEslintFormattingRequirePaddingLines.checkBody(context, node, checkExitCodeBeforeReturn, checkBeforeLoops, checkBareAwait, checkBetweenOperations);
+          Runner.checkBody(context, node, checkExitCodeBeforeReturn, checkBeforeLoops, checkBareAwait, checkBetweenOperations);
 
           return;
         },
         ...(checkBetweenSwitchCases === true ? {
           SwitchStatement(node) {
-            RulesEslintFormattingRequirePaddingLines.checkSwitchCases(context, node);
+            Runner.checkSwitchCases(context, node);
 
             return;
           },
@@ -195,31 +195,31 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckBodyContext}              context              - Context.
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckBodyNode}                 node                 - Node.
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckBodyExitCodeBeforeReturn} exitCodeBeforeReturn - Exit code before return.
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckBodyBeforeLoops}          beforeLoops          - Before loops.
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckBodyBareAwait}            bareAwait            - Bare await.
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckBodyBetweenOperations}    betweenOperations    - Between operations.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Context}              context              - Context.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Node}                 node                 - Node.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_ExitCodeBeforeReturn} exitCodeBeforeReturn - Exit code before return.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BeforeLoops}          beforeLoops          - Before loops.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BareAwait}            bareAwait            - Bare await.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BetweenOperations}    betweenOperations    - Between operations.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesCheckBodyReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Returns}
    *
    * @since 0.14.0
    */
-  private static checkBody(context: RulesEslintFormattingRequirePaddingLinesCheckBodyContext, node: RulesEslintFormattingRequirePaddingLinesCheckBodyNode, exitCodeBeforeReturn: RulesEslintFormattingRequirePaddingLinesCheckBodyExitCodeBeforeReturn, beforeLoops: RulesEslintFormattingRequirePaddingLinesCheckBodyBeforeLoops, bareAwait: RulesEslintFormattingRequirePaddingLinesCheckBodyBareAwait, betweenOperations: RulesEslintFormattingRequirePaddingLinesCheckBodyBetweenOperations): RulesEslintFormattingRequirePaddingLinesCheckBodyReturns {
-    const statements: RulesEslintFormattingRequirePaddingLinesCheckBodyStatements = node.body;
+  private static checkBody(context: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Context, node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Node, exitCodeBeforeReturn: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_ExitCodeBeforeReturn, beforeLoops: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BeforeLoops, bareAwait: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BareAwait, betweenOperations: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BetweenOperations): Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Returns {
+    const statements: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Statements = node.body;
 
     for (let i = 1; i < statements.length; i += 1) {
-      const prev: RulesEslintFormattingRequirePaddingLinesCheckBodyPrev = statements[i - 1];
-      const curr: RulesEslintFormattingRequirePaddingLinesCheckBodyCurr = statements[i];
+      const prev: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Prev = statements[i - 1];
+      const curr: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Curr = statements[i];
 
       if (prev === undefined || curr === undefined) {
         continue;
       }
 
-      const prevEndLine: RulesEslintFormattingRequirePaddingLinesCheckBodyPrevEndLine = prev.loc.end.line;
-      const currStartLine: RulesEslintFormattingRequirePaddingLinesCheckBodyCurrStartLine = curr.loc.start.line;
-      const hasBlankLine: RulesEslintFormattingRequirePaddingLinesCheckBodyHasBlankLine = currStartLine >= prevEndLine + 2;
+      const prevEndLine: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevEndLine = prev.loc.end.line;
+      const currStartLine: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrStartLine = curr.loc.start.line;
+      const hasBlankLine: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_HasBlankLine = currStartLine >= prevEndLine + 2;
 
       if (hasBlankLine === true) {
         continue;
@@ -228,7 +228,7 @@ export class RulesEslintFormattingRequirePaddingLines {
       // Check: process.exitCode = N followed by return.
       if (
         exitCodeBeforeReturn === true
-        && RulesEslintFormattingRequirePaddingLines.isProcessExitCodeAssignment(prev) === true
+        && Runner.isProcessExitCodeAssignment(prev) === true
         && curr.type === 'ReturnStatement'
       ) {
         context.report({
@@ -242,8 +242,8 @@ export class RulesEslintFormattingRequirePaddingLines {
       // Check: blank line before loop statements.
       if (
         beforeLoops === true
-        && RulesEslintFormattingRequirePaddingLines.isLoopStatement(curr) === true
-        && RulesEslintFormattingRequirePaddingLines.isLoopStatement(prev) === false
+        && Runner.isLoopStatement(curr) === true
+        && Runner.isLoopStatement(prev) === false
       ) {
         context.report({
           node: curr,
@@ -255,10 +255,10 @@ export class RulesEslintFormattingRequirePaddingLines {
 
       // Check: bare await separated from declarations.
       if (bareAwait === true) {
-        const currIsBareAwait: RulesEslintFormattingRequirePaddingLinesCheckBodyCurrIsBareAwait = RulesEslintFormattingRequirePaddingLines.isBareAwaitExpression(curr);
-        const prevIsBareAwait: RulesEslintFormattingRequirePaddingLinesCheckBodyPrevIsBareAwait = RulesEslintFormattingRequirePaddingLines.isBareAwaitExpression(prev);
-        const currIsDeclaration: RulesEslintFormattingRequirePaddingLinesCheckBodyCurrIsDeclaration = curr.type === 'VariableDeclaration';
-        const prevIsDeclaration: RulesEslintFormattingRequirePaddingLinesCheckBodyPrevIsDeclaration = prev.type === 'VariableDeclaration';
+        const currIsBareAwait: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrIsBareAwait = Runner.isBareAwaitExpression(curr);
+        const prevIsBareAwait: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevIsBareAwait = Runner.isBareAwaitExpression(prev);
+        const currIsDeclaration: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrIsDeclaration = curr.type === 'VariableDeclaration';
+        const prevIsDeclaration: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevIsDeclaration = prev.type === 'VariableDeclaration';
 
         if (
           (
@@ -283,7 +283,7 @@ export class RulesEslintFormattingRequirePaddingLines {
       if (
         betweenOperations === true
         && prev.type === 'VariableDeclaration'
-        && RulesEslintFormattingRequirePaddingLines.isExpressionOperation(curr) === true
+        && Runner.isExpressionOperation(curr) === true
       ) {
         context.report({
           node: curr,
@@ -296,11 +296,11 @@ export class RulesEslintFormattingRequirePaddingLines {
       // Check: blank line between distinct expression statements.
       if (
         betweenOperations === true
-        && RulesEslintFormattingRequirePaddingLines.isExpressionOperation(prev) === true
-        && RulesEslintFormattingRequirePaddingLines.isExpressionOperation(curr) === true
+        && Runner.isExpressionOperation(prev) === true
+        && Runner.isExpressionOperation(curr) === true
       ) {
-        const prevKey: RulesEslintFormattingRequirePaddingLinesCheckBodyPrevKey = RulesEslintFormattingRequirePaddingLines.getCalleeKey(prev);
-        const currKey: RulesEslintFormattingRequirePaddingLinesCheckBodyCurrKey = RulesEslintFormattingRequirePaddingLines.getCalleeKey(curr);
+        const prevKey: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevKey = Runner.getCalleeKey(prev);
+        const currKey: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrKey = Runner.getCalleeKey(curr);
 
         // Skip when both statements call the same function.
         if (
@@ -339,15 +339,15 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckLineCommentsContext} context - Context.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Context} context - Context.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesCheckLineCommentsReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Returns}
    *
    * @since 0.15.0
    */
-  private static checkLineComments(context: RulesEslintFormattingRequirePaddingLinesCheckLineCommentsContext): RulesEslintFormattingRequirePaddingLinesCheckLineCommentsReturns {
-    const allComments: RulesEslintFormattingRequirePaddingLinesCheckLineCommentsAllComments = context.sourceCode.getAllComments();
-    const lines: RulesEslintFormattingRequirePaddingLinesCheckLineCommentsLines = context.sourceCode.lines;
+  private static checkLineComments(context: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Context): Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Returns {
+    const allComments: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_AllComments = context.sourceCode.getAllComments();
+    const lines: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Lines = context.sourceCode.lines;
 
     for (const comment of allComments) {
       // Only check line comments (//), not block comments (/* */).
@@ -355,10 +355,10 @@ export class RulesEslintFormattingRequirePaddingLines {
         continue;
       }
 
-      const commentLine: RulesEslintFormattingRequirePaddingLinesCheckLineCommentsCommentLine = comment.loc.start.line;
+      const commentLine: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_CommentLine = comment.loc.start.line;
 
       // Skip trailing comments (code exists before the comment on the same line).
-      const currentLineContent: RulesEslintFormattingRequirePaddingLinesCheckLineCommentsCurrentLineContent = lines[commentLine - 1];
+      const currentLineContent: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_CurrentLineContent = lines[commentLine - 1];
 
       if (currentLineContent !== undefined && currentLineContent.trim().startsWith('//') === false) {
         continue;
@@ -369,13 +369,13 @@ export class RulesEslintFormattingRequirePaddingLines {
         continue;
       }
 
-      const prevLineContent: RulesEslintFormattingRequirePaddingLinesCheckLineCommentsPrevLineContent = lines[commentLine - 2];
+      const prevLineContent: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_PrevLineContent = lines[commentLine - 2];
 
       if (prevLineContent === undefined) {
         continue;
       }
 
-      const trimmedPrevLine: RulesEslintFormattingRequirePaddingLinesCheckLineCommentsTrimmedPrevLine = prevLineContent.trim();
+      const trimmedPrevLine: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_TrimmedPrevLine = prevLineContent.trim();
 
       // Skip if previous line is blank.
       if (trimmedPrevLine === '') {
@@ -422,19 +422,19 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesContext} context - Context.
-   * @param {RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesNode}    node    - Node.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Context} context - Context.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Node}    node    - Node.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Returns}
    *
    * @since 0.14.0
    */
-  private static checkSwitchCases(context: RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesContext, node: RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesNode): RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesReturns {
-    const cases: RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCases = node.cases;
+  private static checkSwitchCases(context: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Context, node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Node): Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Returns {
+    const cases: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Cases = node.cases;
 
     for (let i = 1; i < cases.length; i += 1) {
-      const prev: RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesPrev = cases[i - 1];
-      const curr: RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCurr = cases[i];
+      const prev: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Prev = cases[i - 1];
+      const curr: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Curr = cases[i];
 
       if (prev === undefined || curr === undefined) {
         continue;
@@ -445,9 +445,9 @@ export class RulesEslintFormattingRequirePaddingLines {
         continue;
       }
 
-      const prevEndLine: RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesPrevEndLine = prev.loc.end.line;
-      const currStartLine: RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCurrStartLine = curr.loc.start.line;
-      const hasBlankLine: RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesHasBlankLine = currStartLine >= prevEndLine + 2;
+      const prevEndLine: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_PrevEndLine = prev.loc.end.line;
+      const currStartLine: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_CurrStartLine = curr.loc.start.line;
+      const hasBlankLine: Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_HasBlankLine = currStartLine >= prevEndLine + 2;
 
       if (hasBlankLine === true) {
         continue;
@@ -470,18 +470,18 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesGetCalleeKeyNode} node - Node.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesGetCalleeKeyReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Returns}
    *
    * @since 0.14.0
    */
-  private static getCalleeKey(node: RulesEslintFormattingRequirePaddingLinesGetCalleeKeyNode): RulesEslintFormattingRequirePaddingLinesGetCalleeKeyReturns {
+  private static getCalleeKey(node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Node): Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Returns {
     if (node.type !== 'ExpressionStatement') {
       return undefined;
     }
 
-    let expression: RulesEslintFormattingRequirePaddingLinesGetCalleeKeyExpression = node.expression;
+    let expression: Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Expression = node.expression;
 
     // Unwrap await expressions.
     if (expression.type === 'AwaitExpression') {
@@ -492,7 +492,7 @@ export class RulesEslintFormattingRequirePaddingLines {
       return undefined;
     }
 
-    return RulesEslintFormattingRequirePaddingLines.serializeCallee(expression.callee);
+    return Runner.serializeCallee(expression.callee);
   }
 
   /**
@@ -503,13 +503,13 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesIsBareAwaitExpressionNode} node - Node.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesIsBareAwaitExpressionReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Returns}
    *
    * @since 0.14.0
    */
-  private static isBareAwaitExpression(node: RulesEslintFormattingRequirePaddingLinesIsBareAwaitExpressionNode): RulesEslintFormattingRequirePaddingLinesIsBareAwaitExpressionReturns {
+  private static isBareAwaitExpression(node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Node): Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Returns {
     if (node.type !== 'ExpressionStatement') {
       return false;
     }
@@ -525,18 +525,18 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesIsExpressionOperationNode} node - Node.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesIsExpressionOperationReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Returns}
    *
    * @since 0.14.0
    */
-  private static isExpressionOperation(node: RulesEslintFormattingRequirePaddingLinesIsExpressionOperationNode): RulesEslintFormattingRequirePaddingLinesIsExpressionOperationReturns {
+  private static isExpressionOperation(node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Node): Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Returns {
     if (node.type !== 'ExpressionStatement') {
       return false;
     }
 
-    const expression: RulesEslintFormattingRequirePaddingLinesIsExpressionOperationExpression = node.expression;
+    const expression: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Expression = node.expression;
 
     return (
       expression.type === 'CallExpression'
@@ -552,13 +552,13 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesIsLoopStatementNode} node - Node.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesIsLoopStatementReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Returns}
    *
    * @since 0.14.0
    */
-  private static isLoopStatement(node: RulesEslintFormattingRequirePaddingLinesIsLoopStatementNode): RulesEslintFormattingRequirePaddingLinesIsLoopStatementReturns {
+  private static isLoopStatement(node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Node): Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Returns {
     return (
       node.type === 'ForStatement'
       || node.type === 'ForInStatement'
@@ -576,31 +576,31 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentNode} node - Node.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Returns}
    *
    * @since 0.14.0
    */
-  private static isProcessExitCodeAssignment(node: RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentNode): RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentReturns {
+  private static isProcessExitCodeAssignment(node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Node): Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Returns {
     if (node.type !== 'ExpressionStatement') {
       return false;
     }
 
-    const expression: RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentExpression = node.expression;
+    const expression: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Expression = node.expression;
 
     if (expression.type !== 'AssignmentExpression') {
       return false;
     }
 
-    const left: RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentLeft = expression.left;
+    const left: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Left = expression.left;
 
     if (left.type !== 'MemberExpression') {
       return false;
     }
 
-    const object: RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentObject = left.object;
-    const property: RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentProperty = left.property;
+    const object: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Object = left.object;
+    const property: Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Property = left.property;
 
     return (
       object.type === 'Identifier'
@@ -618,13 +618,13 @@ export class RulesEslintFormattingRequirePaddingLines {
    *
    * @private
    *
-   * @param {RulesEslintFormattingRequirePaddingLinesSerializeCalleeNode} node - Node.
+   * @param {Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Node} node - Node.
    *
-   * @returns {RulesEslintFormattingRequirePaddingLinesSerializeCalleeReturns}
+   * @returns {Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Returns}
    *
    * @since 0.14.0
    */
-  private static serializeCallee(node: RulesEslintFormattingRequirePaddingLinesSerializeCalleeNode): RulesEslintFormattingRequirePaddingLinesSerializeCalleeReturns {
+  private static serializeCallee(node: Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Node): Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Returns {
     if (node.type === 'Identifier') {
       return node.name;
     }
@@ -633,7 +633,7 @@ export class RulesEslintFormattingRequirePaddingLines {
       node.type === 'MemberExpression'
       && node.property.type === 'Identifier'
     ) {
-      const object: RulesEslintFormattingRequirePaddingLinesSerializeCalleeObject = RulesEslintFormattingRequirePaddingLines.serializeCallee(node.object);
+      const object: Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Object = Runner.serializeCallee(node.object);
 
       if (object !== undefined) {
         return `${object}.${node.property.name}`;

@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireJsdocParamAlignment } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintJsdocRequireJsdocParamAlignmentRuleTester } from '../../../../types/tests/rules/eslint/jsdoc/require-jsdoc-param-alignment.test.d.ts';
+import type { Tests_Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_RuleTester } from '../../../../types/tests/rules/eslint/jsdoc/require-jsdoc-param-alignment.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - JSDoc - Require JSDoc Param Alignment.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintJsdocRequireJsdocParamAlignmentRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

@@ -3,36 +3,36 @@
  *
  * @since 0.15.0
  */
-export type SharedColorScaleKey = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
+export type Shared_ColorScaleKey = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 
-export type SharedColorScaleValue = string;
+export type Shared_ColorScaleValue = string;
 
-export type SharedColorScale = Record<SharedColorScaleKey, SharedColorScaleValue>;
+export type Shared_ColorScale = Record<Shared_ColorScaleKey, Shared_ColorScaleValue>;
 
 /**
  * Shared - Hast Node.
  *
  * @since 0.15.0
  */
-export type SharedHastNodeType = string;
+export type Shared_HastNode_Type = string;
 
-export type SharedHastNodeTagName = string | undefined;
+export type Shared_HastNode_TagName = string | undefined;
 
-export type SharedHastNodeProperties = Record<string, unknown>;
+export type Shared_HastNode_Properties = Record<string, unknown>;
 
-export type SharedHastNodeChildren = SharedHastNode[];
+export type Shared_HastNode_Children = Shared_HastNode[];
 
-export type SharedHastNodeValue = string | undefined;
+export type Shared_HastNode_Value = string | undefined;
 
-export type SharedHastNodeData = Record<string, unknown> | undefined;
+export type Shared_HastNode_Data = Record<string, unknown> | undefined;
 
-export type SharedHastNode = {
-  type: SharedHastNodeType;
-  tagName?: SharedHastNodeTagName;
-  properties?: SharedHastNodeProperties;
-  children?: SharedHastNodeChildren;
-  value?: SharedHastNodeValue;
-  data?: SharedHastNodeData;
+export type Shared_HastNode = {
+  type: Shared_HastNode_Type;
+  tagName?: Shared_HastNode_TagName;
+  properties?: Shared_HastNode_Properties;
+  children?: Shared_HastNode_Children;
+  value?: Shared_HastNode_Value;
+  data?: Shared_HastNode_Data;
 };
 
 /**
@@ -40,16 +40,16 @@ export type SharedHastNode = {
  *
  * @since 0.15.0
  */
-export type SharedHastNodeResultNode = SharedHastNode;
+export type Shared_HastNodeResult_Node = Shared_HastNode;
 
-export type SharedHastNodeResultIndex = number;
+export type Shared_HastNodeResult_Index = number;
 
-export type SharedHastNodeResultParent = SharedHastNode;
+export type Shared_HastNodeResult_Parent = Shared_HastNode;
 
-export type SharedHastNodeResult = {
-  node: SharedHastNodeResultNode;
-  index: SharedHastNodeResultIndex;
-  parent: SharedHastNodeResultParent;
+export type Shared_HastNodeResult = {
+  node: Shared_HastNodeResult_Node;
+  index: Shared_HastNodeResult_Index;
+  parent: Shared_HastNodeResult_Parent;
 };
 
 /**
@@ -57,23 +57,23 @@ export type SharedHastNodeResult = {
  *
  * @since 0.15.0
  */
-export type SharedHexColor = string;
+export type Shared_HexColor = string;
 
 /**
  * Shared - Hsl Color.
  *
  * @since 0.15.0
  */
-export type SharedHslColorHue = number;
+export type Shared_HslColor_Hue = number;
 
-export type SharedHslColorSaturation = number;
+export type Shared_HslColor_Saturation = number;
 
-export type SharedHslColorLightness = number;
+export type Shared_HslColor_Lightness = number;
 
-export type SharedHslColor = {
-  hue: SharedHslColorHue;
-  saturation: SharedHslColorSaturation;
-  lightness: SharedHslColorLightness;
+export type Shared_HslColor = {
+  hue: Shared_HslColor_Hue;
+  saturation: Shared_HslColor_Saturation;
+  lightness: Shared_HslColor_Lightness;
 };
 
 /**
@@ -81,25 +81,25 @@ export type SharedHslColor = {
  *
  * @since 0.15.0
  */
-export type SharedMermaidRenderOutputSvg = string;
+export type Shared_MermaidRenderOutput_Svg = string;
 
-export type SharedMermaidRenderOutputBindFunctions = ((element: Element) => void) | undefined;
+export type Shared_MermaidRenderOutput_BindFunctions = ((element: Element) => void) | undefined;
 
-export type SharedMermaidRenderOutput = {
-  svg: SharedMermaidRenderOutputSvg;
-  bindFunctions?: SharedMermaidRenderOutputBindFunctions;
+export type Shared_MermaidRenderOutput = {
+  svg: Shared_MermaidRenderOutput_Svg;
+  bindFunctions?: Shared_MermaidRenderOutput_BindFunctions;
 };
 
-export type SharedMermaidConfigStartOnLoad = boolean;
+export type Shared_MermaidConfig_StartOnLoad = boolean;
 
-export type SharedMermaidConfigTheme = string;
+export type Shared_MermaidConfig_Theme = string;
 
-export type SharedMermaidConfigColorMode = string;
+export type Shared_MermaidConfig_ColorMode = string;
 
-export type SharedMermaidConfig = {
-  startOnLoad: SharedMermaidConfigStartOnLoad;
-  theme: SharedMermaidConfigTheme;
-  colorMode: SharedMermaidConfigColorMode;
+export type Shared_MermaidConfig = {
+  startOnLoad: Shared_MermaidConfig_StartOnLoad;
+  theme: Shared_MermaidConfig_Theme;
+  colorMode: Shared_MermaidConfig_ColorMode;
   [key: string]: unknown;
 };
 
@@ -108,145 +108,145 @@ export type SharedMermaidConfig = {
  *
  * @since 0.15.0
  */
-export type SharedPresetName = 'envoy' | 'foundry' | 'lantern' | 'marshal' | 'sentinel' | 'signal';
+export type Shared_PresetName = 'envoy' | 'foundry' | 'lantern' | 'marshal' | 'sentinel' | 'signal';
 
-export type SharedPresetColorsPrimaryLight = SharedHexColor;
+export type Shared_Preset_Colors_Primary_Light = Shared_HexColor;
 
-export type SharedPresetColorsPrimaryDark = SharedHexColor;
+export type Shared_Preset_Colors_Primary_Dark = Shared_HexColor;
 
-export type SharedPresetColorsPrimary = {
-  light: SharedPresetColorsPrimaryLight;
-  dark: SharedPresetColorsPrimaryDark;
+export type Shared_Preset_Colors_Primary = {
+  light: Shared_Preset_Colors_Primary_Light;
+  dark: Shared_Preset_Colors_Primary_Dark;
 };
 
-export type SharedPresetColorsAccentLight = SharedHexColor;
+export type Shared_Preset_Colors_Accent_Light = Shared_HexColor;
 
-export type SharedPresetColorsAccentDark = SharedHexColor;
+export type Shared_Preset_Colors_Accent_Dark = Shared_HexColor;
 
-export type SharedPresetColorsAccent = {
-  light: SharedPresetColorsAccentLight;
-  dark: SharedPresetColorsAccentDark;
+export type Shared_Preset_Colors_Accent = {
+  light: Shared_Preset_Colors_Accent_Light;
+  dark: Shared_Preset_Colors_Accent_Dark;
 };
 
-export type SharedPresetColorsTextLight = SharedHexColor;
+export type Shared_Preset_Colors_Text_Light = Shared_HexColor;
 
-export type SharedPresetColorsTextDark = SharedHexColor;
+export type Shared_Preset_Colors_Text_Dark = Shared_HexColor;
 
-export type SharedPresetColorsText = {
-  light: SharedPresetColorsTextLight;
-  dark: SharedPresetColorsTextDark;
+export type Shared_Preset_Colors_Text = {
+  light: Shared_Preset_Colors_Text_Light;
+  dark: Shared_Preset_Colors_Text_Dark;
 };
 
-export type SharedPresetColorsBorderLight = SharedHexColor;
+export type Shared_Preset_Colors_Border_Light = Shared_HexColor;
 
-export type SharedPresetColorsBorderDark = SharedHexColor;
+export type Shared_Preset_Colors_Border_Dark = Shared_HexColor;
 
-export type SharedPresetColorsBorder = {
-  light: SharedPresetColorsBorderLight;
-  dark: SharedPresetColorsBorderDark;
+export type Shared_Preset_Colors_Border = {
+  light: Shared_Preset_Colors_Border_Light;
+  dark: Shared_Preset_Colors_Border_Dark;
 };
 
-export type SharedPresetColorsWarningLight = SharedHexColor;
+export type Shared_Preset_Colors_Warning_Light = Shared_HexColor;
 
-export type SharedPresetColorsWarningDark = SharedHexColor;
+export type Shared_Preset_Colors_Warning_Dark = Shared_HexColor;
 
-export type SharedPresetColorsWarning = {
-  light: SharedPresetColorsWarningLight;
-  dark: SharedPresetColorsWarningDark;
+export type Shared_Preset_Colors_Warning = {
+  light: Shared_Preset_Colors_Warning_Light;
+  dark: Shared_Preset_Colors_Warning_Dark;
 };
 
-export type SharedPresetColorsDangerLight = SharedHexColor;
+export type Shared_Preset_Colors_Danger_Light = Shared_HexColor;
 
-export type SharedPresetColorsDangerDark = SharedHexColor;
+export type Shared_Preset_Colors_Danger_Dark = Shared_HexColor;
 
-export type SharedPresetColorsDanger = {
-  light: SharedPresetColorsDangerLight;
-  dark: SharedPresetColorsDangerDark;
+export type Shared_Preset_Colors_Danger = {
+  light: Shared_Preset_Colors_Danger_Light;
+  dark: Shared_Preset_Colors_Danger_Dark;
 };
 
-export type SharedPresetColors = {
-  primary: SharedPresetColorsPrimary;
-  accent: SharedPresetColorsAccent;
-  text: SharedPresetColorsText;
-  border: SharedPresetColorsBorder;
-  warning: SharedPresetColorsWarning;
-  danger: SharedPresetColorsDanger;
+export type Shared_Preset_Colors = {
+  primary: Shared_Preset_Colors_Primary;
+  accent: Shared_Preset_Colors_Accent;
+  text: Shared_Preset_Colors_Text;
+  border: Shared_Preset_Colors_Border;
+  warning: Shared_Preset_Colors_Warning;
+  danger: Shared_Preset_Colors_Danger;
 };
 
-export type SharedPresetFontsDisplay = string;
+export type Shared_Preset_Fonts_Display = string;
 
-export type SharedPresetFontsBody = string;
+export type Shared_Preset_Fonts_Body = string;
 
-export type SharedPresetFontsCode = string;
+export type Shared_Preset_Fonts_Code = string;
 
-export type SharedPresetFonts = {
-  display: SharedPresetFontsDisplay;
-  body: SharedPresetFontsBody;
-  code: SharedPresetFontsCode;
+export type Shared_Preset_Fonts = {
+  display: Shared_Preset_Fonts_Display;
+  body: Shared_Preset_Fonts_Body;
+  code: Shared_Preset_Fonts_Code;
 };
 
-export type SharedPresetShapeRadius = 'sharp' | 'rounded' | 'pill';
+export type Shared_Preset_Shape_Radius = 'sharp' | 'rounded' | 'pill';
 
-export type SharedPresetShapeDensity = 'compact' | 'comfortable' | 'spacious';
+export type Shared_Preset_Shape_Density = 'compact' | 'comfortable' | 'spacious';
 
-export type SharedPresetShape = {
-  radius: SharedPresetShapeRadius;
-  density: SharedPresetShapeDensity;
+export type Shared_Preset_Shape = {
+  radius: Shared_Preset_Shape_Radius;
+  density: Shared_Preset_Shape_Density;
 };
 
-export type SharedPresetDepthCards = 'flat' | 'elevated' | 'glass';
+export type Shared_Preset_Depth_Cards = 'flat' | 'elevated' | 'glass';
 
-export type SharedPresetDepthCodeBlocks = 'flat' | 'bordered' | 'elevated';
+export type Shared_Preset_Depth_CodeBlocks = 'flat' | 'bordered' | 'elevated';
 
-export type SharedPresetDepth = {
-  cards: SharedPresetDepthCards;
-  codeBlocks: SharedPresetDepthCodeBlocks;
+export type Shared_Preset_Depth = {
+  cards: Shared_Preset_Depth_Cards;
+  codeBlocks: Shared_Preset_Depth_CodeBlocks;
 };
 
-export type SharedPresetMotionSpeed = 'none' | 'subtle' | 'normal' | 'expressive';
+export type Shared_Preset_Motion_Speed = 'none' | 'subtle' | 'normal' | 'expressive';
 
-export type SharedPresetMotionStaggeredReveals = boolean;
+export type Shared_Preset_Motion_StaggeredReveals = boolean;
 
-export type SharedPresetMotionHoverEffects = boolean;
+export type Shared_Preset_Motion_HoverEffects = boolean;
 
-export type SharedPresetMotion = {
-  speed: SharedPresetMotionSpeed;
-  staggeredReveals: SharedPresetMotionStaggeredReveals;
-  hoverEffects: SharedPresetMotionHoverEffects;
+export type Shared_Preset_Motion = {
+  speed: Shared_Preset_Motion_Speed;
+  staggeredReveals: Shared_Preset_Motion_StaggeredReveals;
+  hoverEffects: Shared_Preset_Motion_HoverEffects;
 };
 
-export type SharedPresetNavbar = 'bridge' | 'canopy' | 'monolith' | 'compass';
+export type Shared_Preset_Navbar = 'bridge' | 'canopy' | 'monolith' | 'compass';
 
-export type SharedPresetFooter = 'commons' | 'embassy' | 'ledger' | 'launchpad';
+export type Shared_Preset_Footer = 'commons' | 'embassy' | 'ledger' | 'launchpad';
 
-export type SharedPresetCtaContained = boolean;
+export type Shared_Preset_Cta_Contained = boolean;
 
-export type SharedPresetCta = {
-  contained: SharedPresetCtaContained;
+export type Shared_Preset_Cta = {
+  contained: Shared_Preset_Cta_Contained;
 };
 
-export type SharedPresetLogoTitle = string;
+export type Shared_Preset_Logo_Title = string;
 
-export type SharedPresetLogoAlt = string;
+export type Shared_Preset_Logo_Alt = string;
 
-export type SharedPresetLogoSrc = string;
+export type Shared_Preset_Logo_Src = string;
 
-export type SharedPresetLogo = {
-  title: SharedPresetLogoTitle;
-  alt: SharedPresetLogoAlt;
-  src: SharedPresetLogoSrc;
+export type Shared_Preset_Logo = {
+  title: Shared_Preset_Logo_Title;
+  alt: Shared_Preset_Logo_Alt;
+  src: Shared_Preset_Logo_Src;
 };
 
-export type SharedPreset = {
-  logo: SharedPresetLogo;
-  colors: SharedPresetColors;
-  fonts: SharedPresetFonts;
-  shape: SharedPresetShape;
-  depth: SharedPresetDepth;
-  motion: SharedPresetMotion;
-  navbar: SharedPresetNavbar;
-  footer: SharedPresetFooter;
-  cta: SharedPresetCta;
+export type Shared_Preset = {
+  logo: Shared_Preset_Logo;
+  colors: Shared_Preset_Colors;
+  fonts: Shared_Preset_Fonts;
+  shape: Shared_Preset_Shape;
+  depth: Shared_Preset_Depth;
+  motion: Shared_Preset_Motion;
+  navbar: Shared_Preset_Navbar;
+  footer: Shared_Preset_Footer;
+  cta: Shared_Preset_Cta;
 };
 
 /**
@@ -254,35 +254,35 @@ export type SharedPreset = {
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerDocumentPath = string;
+export type Shared_SearchWorkerDocument_Path = string;
 
-export type SharedSearchWorkerDocumentTitle = string;
+export type Shared_SearchWorkerDocument_Title = string;
 
-export type SharedSearchWorkerDocumentSnippet = string;
+export type Shared_SearchWorkerDocument_Snippet = string;
 
-export type SharedSearchWorkerDocumentBody = string;
+export type Shared_SearchWorkerDocument_Body = string;
 
-export type SharedSearchWorkerDocument = {
-  path: SharedSearchWorkerDocumentPath;
-  title: SharedSearchWorkerDocumentTitle;
-  snippet: SharedSearchWorkerDocumentSnippet;
-  body: SharedSearchWorkerDocumentBody;
+export type Shared_SearchWorkerDocument = {
+  path: Shared_SearchWorkerDocument_Path;
+  title: Shared_SearchWorkerDocument_Title;
+  snippet: Shared_SearchWorkerDocument_Snippet;
+  body: Shared_SearchWorkerDocument_Body;
 };
 
-export type SharedSearchWorkerDocuments = SharedSearchWorkerDocument[];
+export type Shared_SearchWorkerDocuments = Shared_SearchWorkerDocument[];
 
 /**
  * Shared - Search Worker Error Response.
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerErrorResponseType = 'error';
+export type Shared_SearchWorkerErrorResponse_Type = 'error';
 
-export type SharedSearchWorkerErrorResponseReason = string;
+export type Shared_SearchWorkerErrorResponse_Reason = string;
 
-export type SharedSearchWorkerErrorResponse = {
-  type: SharedSearchWorkerErrorResponseType;
-  reason: SharedSearchWorkerErrorResponseReason;
+export type Shared_SearchWorkerErrorResponse = {
+  type: Shared_SearchWorkerErrorResponse_Type;
+  reason: Shared_SearchWorkerErrorResponse_Reason;
 };
 
 /**
@@ -290,13 +290,13 @@ export type SharedSearchWorkerErrorResponse = {
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerInitMessageType = 'init';
+export type Shared_SearchWorkerInitMessage_Type = 'init';
 
-export type SharedSearchWorkerInitMessageIndexUrl = string;
+export type Shared_SearchWorkerInitMessage_IndexUrl = string;
 
-export type SharedSearchWorkerInitMessage = {
-  type: SharedSearchWorkerInitMessageType;
-  indexUrl: SharedSearchWorkerInitMessageIndexUrl;
+export type Shared_SearchWorkerInitMessage = {
+  type: Shared_SearchWorkerInitMessage_Type;
+  indexUrl: Shared_SearchWorkerInitMessage_IndexUrl;
 };
 
 /**
@@ -304,20 +304,20 @@ export type SharedSearchWorkerInitMessage = {
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerLunrResultRef = string;
+export type Shared_SearchWorkerLunrResult_Ref = string;
 
-export type SharedSearchWorkerLunrResultScore = number;
+export type Shared_SearchWorkerLunrResult_Score = number;
 
-export type SharedSearchWorkerLunrResultMatchDataMetadata = Record<string, unknown>;
+export type Shared_SearchWorkerLunrResult_MatchData_Metadata = Record<string, unknown>;
 
-export type SharedSearchWorkerLunrResultMatchData = {
-  metadata: SharedSearchWorkerLunrResultMatchDataMetadata;
+export type Shared_SearchWorkerLunrResult_MatchData = {
+  metadata: Shared_SearchWorkerLunrResult_MatchData_Metadata;
 };
 
-export type SharedSearchWorkerLunrResult = {
-  ref: SharedSearchWorkerLunrResultRef;
-  score: SharedSearchWorkerLunrResultScore;
-  matchData: SharedSearchWorkerLunrResultMatchData;
+export type Shared_SearchWorkerLunrResult = {
+  ref: Shared_SearchWorkerLunrResult_Ref;
+  score: Shared_SearchWorkerLunrResult_Score;
+  matchData: Shared_SearchWorkerLunrResult_MatchData;
 };
 
 /**
@@ -325,17 +325,17 @@ export type SharedSearchWorkerLunrResult = {
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerMessage = SharedSearchWorkerInitMessage | SharedSearchWorkerSearchMessage;
+export type Shared_SearchWorkerMessage = Shared_SearchWorkerInitMessage | Shared_SearchWorkerSearchMessage;
 
 /**
  * Shared - Search Worker Ready Response.
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerReadyResponseType = 'ready';
+export type Shared_SearchWorkerReadyResponse_Type = 'ready';
 
-export type SharedSearchWorkerReadyResponse = {
-  type: SharedSearchWorkerReadyResponseType;
+export type Shared_SearchWorkerReadyResponse = {
+  type: Shared_SearchWorkerReadyResponse_Type;
 };
 
 /**
@@ -343,20 +343,20 @@ export type SharedSearchWorkerReadyResponse = {
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerResponse = SharedSearchWorkerReadyResponse | SharedSearchWorkerResultsResponse | SharedSearchWorkerErrorResponse;
+export type Shared_SearchWorkerResponse = Shared_SearchWorkerReadyResponse | Shared_SearchWorkerResultsResponse | Shared_SearchWorkerErrorResponse;
 
 /**
  * Shared - Search Worker Results Response.
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerResultsResponseType = 'results';
+export type Shared_SearchWorkerResultsResponse_Type = 'results';
 
-export type SharedSearchWorkerResultsResponseHits = SharedSearchWorkerSearchHit[];
+export type Shared_SearchWorkerResultsResponse_Hits = Shared_SearchWorkerSearchHit[];
 
-export type SharedSearchWorkerResultsResponse = {
-  type: SharedSearchWorkerResultsResponseType;
-  hits: SharedSearchWorkerResultsResponseHits;
+export type Shared_SearchWorkerResultsResponse = {
+  type: Shared_SearchWorkerResultsResponse_Type;
+  hits: Shared_SearchWorkerResultsResponse_Hits;
 };
 
 /**
@@ -364,31 +364,31 @@ export type SharedSearchWorkerResultsResponse = {
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerSearchHitPath = string;
+export type Shared_SearchWorkerSearchHit_Path = string;
 
-export type SharedSearchWorkerSearchHitTitle = string;
+export type Shared_SearchWorkerSearchHit_Title = string;
 
-export type SharedSearchWorkerSearchHitSnippet = string;
+export type Shared_SearchWorkerSearchHit_Snippet = string;
 
-export type SharedSearchWorkerSearchHitScore = number;
+export type Shared_SearchWorkerSearchHit_Score = number;
 
-export type SharedSearchWorkerSearchHitSnippetSegmentText = string;
+export type Shared_SearchWorkerSearchHitSnippetSegment_Text = string;
 
-export type SharedSearchWorkerSearchHitSnippetSegmentHighlight = boolean;
+export type Shared_SearchWorkerSearchHitSnippetSegment_Highlight = boolean;
 
-export type SharedSearchWorkerSearchHitSnippetSegment = {
-  text: SharedSearchWorkerSearchHitSnippetSegmentText;
-  highlight: SharedSearchWorkerSearchHitSnippetSegmentHighlight;
+export type Shared_SearchWorkerSearchHitSnippetSegment = {
+  text: Shared_SearchWorkerSearchHitSnippetSegment_Text;
+  highlight: Shared_SearchWorkerSearchHitSnippetSegment_Highlight;
 };
 
-export type SharedSearchWorkerSearchHitSnippetSegments = SharedSearchWorkerSearchHitSnippetSegment[];
+export type Shared_SearchWorkerSearchHit_SnippetSegments = Shared_SearchWorkerSearchHitSnippetSegment[];
 
-export type SharedSearchWorkerSearchHit = {
-  path: SharedSearchWorkerSearchHitPath;
-  title: SharedSearchWorkerSearchHitTitle;
-  snippet: SharedSearchWorkerSearchHitSnippet;
-  snippetSegments: SharedSearchWorkerSearchHitSnippetSegments;
-  score: SharedSearchWorkerSearchHitScore;
+export type Shared_SearchWorkerSearchHit = {
+  path: Shared_SearchWorkerSearchHit_Path;
+  title: Shared_SearchWorkerSearchHit_Title;
+  snippet: Shared_SearchWorkerSearchHit_Snippet;
+  snippetSegments: Shared_SearchWorkerSearchHit_SnippetSegments;
+  score: Shared_SearchWorkerSearchHit_Score;
 };
 
 /**
@@ -396,16 +396,16 @@ export type SharedSearchWorkerSearchHit = {
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerSearchMessageType = 'search';
+export type Shared_SearchWorkerSearchMessage_Type = 'search';
 
-export type SharedSearchWorkerSearchMessageQuery = string;
+export type Shared_SearchWorkerSearchMessage_Query = string;
 
-export type SharedSearchWorkerSearchMessageLimit = number;
+export type Shared_SearchWorkerSearchMessage_Limit = number;
 
-export type SharedSearchWorkerSearchMessage = {
-  type: SharedSearchWorkerSearchMessageType;
-  query: SharedSearchWorkerSearchMessageQuery;
-  limit: SharedSearchWorkerSearchMessageLimit;
+export type Shared_SearchWorkerSearchMessage = {
+  type: Shared_SearchWorkerSearchMessage_Type;
+  query: Shared_SearchWorkerSearchMessage_Query;
+  limit: Shared_SearchWorkerSearchMessage_Limit;
 };
 
 /**
@@ -413,19 +413,19 @@ export type SharedSearchWorkerSearchMessage = {
  *
  * @since 0.15.0
  */
-export type SharedSearchWorkerTestDocumentPath = string;
+export type Shared_SearchWorkerTestDocument_Path = string;
 
-export type SharedSearchWorkerTestDocumentTitle = string;
+export type Shared_SearchWorkerTestDocument_Title = string;
 
-export type SharedSearchWorkerTestDocumentSnippet = string;
+export type Shared_SearchWorkerTestDocument_Snippet = string;
 
-export type SharedSearchWorkerTestDocumentBody = string;
+export type Shared_SearchWorkerTestDocument_Body = string;
 
-export type SharedSearchWorkerTestDocument = {
-  path: SharedSearchWorkerTestDocumentPath;
-  title: SharedSearchWorkerTestDocumentTitle;
-  snippet: SharedSearchWorkerTestDocumentSnippet;
-  body: SharedSearchWorkerTestDocumentBody;
+export type Shared_SearchWorkerTestDocument = {
+  path: Shared_SearchWorkerTestDocument_Path;
+  title: Shared_SearchWorkerTestDocument_Title;
+  snippet: Shared_SearchWorkerTestDocument_Snippet;
+  body: Shared_SearchWorkerTestDocument_Body;
 };
 
 /**
@@ -433,31 +433,31 @@ export type SharedSearchWorkerTestDocument = {
  *
  * @since 0.15.0
  */
-export type SharedShadeLevel = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
+export type Shared_ShadeLevel = 50 | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 950;
 
 /**
  * Shared - Surface.
  *
  * @since 0.15.0
  */
-export type SharedSurface = 'alt';
+export type Shared_Surface = 'alt';
 
 /**
  * Shared - Toc Heading.
  *
  * @since 0.15.0
  */
-export type SharedTocHeadingValue = string;
+export type Shared_TocHeading_Value = string;
 
-export type SharedTocHeadingId = string;
+export type Shared_TocHeading_Id = string;
 
-export type SharedTocHeadingLevel = number;
+export type Shared_TocHeading_Level = number;
 
-export type SharedTocHeadingChildren = SharedTocHeading[];
+export type Shared_TocHeading_Children = Shared_TocHeading[];
 
-export type SharedTocHeading = {
-  value: SharedTocHeadingValue;
-  id: SharedTocHeadingId;
-  level: SharedTocHeadingLevel;
-  children: SharedTocHeadingChildren;
+export type Shared_TocHeading = {
+  value: Shared_TocHeading_Value;
+  id: Shared_TocHeading_Id;
+  level: Shared_TocHeading_Level;
+  children: Shared_TocHeading_Children;
 };

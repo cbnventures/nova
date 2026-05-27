@@ -59,19 +59,21 @@ The full default configuration for the Sentinel preset:
 {
   preset: 'sentinel',
   // Default values (no overrides needed):
-  // colors.primary:          '#0d9488'
-  // colors.accent:           '#6366f1'
-  // colors.neutral:          '#64748b'
+  // colors.primary.light:    '#0d9488'
+  // colors.primary.dark:     '#0d9488'
+  // colors.secondary.light:  '#6366f1'
+  // colors.secondary.dark:   '#6366f1'
+  // colors.text.light:       '#1e293b'
+  // colors.text.dark:        '#e2e8f0'
+  // colors.border.light:     '#cbd5e1'
+  // colors.border.dark:      '#334155'
+  // colors.warning.light:    '#f59e0b'
+  // colors.warning.dark:     '#f59e0b'
+  // colors.danger.light:     '#ef4444'
+  // colors.danger.dark:      '#ef4444'
   // fonts.display:           'Unbounded'
   // fonts.body:              'DM Sans'
   // fonts.code:              'JetBrains Mono'
-  // shape.radius:            'rounded'
-  // shape.density:           'comfortable'
-  // depth.cards:             'flat'
-  // depth.codeBlocks:        'bordered'
-  // motion.speed:            'subtle'
-  // motion.staggeredReveals: false
-  // motion.hoverEffects:     true
   // navbar:                  'canopy'
   // footer:                  'embassy'
 }
@@ -89,15 +91,18 @@ Override any category to customize the Sentinel identity. Unspecified values kee
   preset: 'sentinel',
   overrides: {
     colors: {
-      primary: '#0d9488',
-      accent: '#6366f1',
-      neutral: '#64748b',
+      primary:   { light: '#0d9488', dark: '#0d9488' },
+      secondary: { light: '#6366f1', dark: '#6366f1' },
+      text:      { light: '#1e293b', dark: '#e2e8f0' },
+      border:    { light: '#cbd5e1', dark: '#334155' },
+      warning:   { light: '#f59e0b', dark: '#f59e0b' },
+      danger:    { light: '#ef4444', dark: '#ef4444' },
     },
   },
 }
 ```
 
-Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+Each color category accepts a `{ light, dark }` pair. The `primary` and `secondary` colors expand to 11-level shade scales (50 through 950) as CSS custom properties.
 
   </TabItem>
   <TabItem value="fonts" label="Fonts">
@@ -116,25 +121,6 @@ Each color generates an 11-level shade scale (50–950) as CSS custom properties
 ```
 
 Font families are set as CSS custom properties. Google Fonts are loaded automatically.
-
-  </TabItem>
-  <TabItem value="shape" label="Shape & Depth">
-
-```ts title="docusaurus.config.ts"
-{
-  preset: 'sentinel',
-  overrides: {
-    shape: {
-      radius: 'rounded',
-      density: 'comfortable',
-    },
-    depth: {
-      cards: 'flat',
-      codeBlocks: 'bordered',
-    },
-  },
-}
-```
 
   </TabItem>
 </Tabs>

@@ -5,45 +5,45 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeErrorPageContentErrorPageContentPropsError = Error;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_Props_Error = Error;
 
-export type ThemeErrorPageContentErrorPageContentPropsTryAgain = () => void;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_Props_TryAgain = () => void;
 
-export type ThemeErrorPageContentErrorPageContentPropsClassName = string | undefined;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_Props_ClassName = string | undefined;
 
-export type ThemeErrorPageContentErrorPageContentPropsStyle = CSSProperties | undefined;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_Props_Style = CSSProperties | undefined;
 
-export type ThemeErrorPageContentErrorPageContentProps = {
-  error: ThemeErrorPageContentErrorPageContentPropsError;
-  tryAgain: ThemeErrorPageContentErrorPageContentPropsTryAgain;
-  className?: ThemeErrorPageContentErrorPageContentPropsClassName;
-  style?: ThemeErrorPageContentErrorPageContentPropsStyle;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_Props = {
+  error: Theme_ErrorPageContent_Index_ErrorPageContent_Props_Error;
+  tryAgain: Theme_ErrorPageContent_Index_ErrorPageContent_Props_TryAgain;
+  className?: Theme_ErrorPageContent_Index_ErrorPageContent_Props_ClassName;
+  style?: Theme_ErrorPageContent_Index_ErrorPageContent_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeErrorPageContentErrorPageContentDocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_DocusaurusContext = ReturnType<typeof import('@docusaurus/useDocusaurusContext').default>;
 
-export type ThemeErrorPageContentErrorPageContentThemeConfig = Record<string, unknown>;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_ThemeConfig = Record<string, unknown>;
 
-export type ThemeErrorPageContentErrorPageContentErrorPages = Record<string, unknown> | undefined;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_ErrorPages = Record<string, unknown> | undefined;
 
-export type ThemeErrorPageContentErrorPageContentOverrides = Record<string, unknown> | undefined;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_Overrides = Record<string, unknown> | undefined;
 
-export type ThemeErrorPageContentErrorPageContentTitleOverride = string | undefined;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_TitleOverride = string | undefined;
 
-export type ThemeErrorPageContentErrorPageContentRetryLabelOverride = string | undefined;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_RetryLabelOverride = string | undefined;
 
-export type ThemeErrorPageContentErrorPageContentMessage = string;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_Message = string;
 
-export type ThemeErrorPageContentErrorPageContentTitlePool = string[];
+export type Theme_ErrorPageContent_Index_ErrorPageContent_TitlePool = string[];
 
-export type ThemeErrorPageContentErrorPageContentGlobalData = {
+export type Theme_ErrorPageContent_Index_ErrorPageContent_GlobalData = {
   errorPageContentTitleIndex?: number;
   [key: string]: unknown;
 };
 
-export type ThemeErrorPageContentErrorPageContentTitleIndex = number;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_TitleIndex = number;
 
-export type ThemeErrorPageContentErrorPageContentTitle = string;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_Title = string;
 
-export type ThemeErrorPageContentErrorPageContentTryAgain = string;
+export type Theme_ErrorPageContent_Index_ErrorPageContent_TryAgain = string;

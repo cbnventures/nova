@@ -3,11 +3,11 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralContext,
-  RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralNode,
-  RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralReturns,
-  RulesEslintFormattingNoTernaryInTemplateLiteralRuleDefaultOptionsIgnoreFiles,
-  RulesEslintFormattingNoTernaryInTemplateLiteralRuleOptions,
+  Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Context,
+  Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Node,
+  Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Returns,
+  Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_RuleOptions,
 } from '../../../types/rules/eslint/formatting/no-ternary-in-template-literal.d.ts';
 
 /**
@@ -18,7 +18,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintFormattingNoTernaryInTemplateLiteral {
+export class Runner {
   /**
    * Rules - ESLint - Formatting - No Ternary In Template Literal - Rule.
    *
@@ -51,10 +51,10 @@ export class RulesEslintFormattingNoTernaryInTemplateLiteral {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintFormattingNoTernaryInTemplateLiteralRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintFormattingNoTernaryInTemplateLiteralRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -63,7 +63,7 @@ export class RulesEslintFormattingNoTernaryInTemplateLiteral {
 
       return {
         TemplateLiteral(node) {
-          RulesEslintFormattingNoTernaryInTemplateLiteral.checkTemplateLiteral(context, node);
+          Runner.checkTemplateLiteral(context, node);
 
           return;
         },
@@ -79,14 +79,14 @@ export class RulesEslintFormattingNoTernaryInTemplateLiteral {
    *
    * @private
    *
-   * @param {RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralContext} context - Context.
-   * @param {RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralNode}    node    - Node.
+   * @param {Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Context} context - Context.
+   * @param {Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Node}    node    - Node.
    *
-   * @returns {RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralReturns}
+   * @returns {Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Returns}
    *
    * @since 0.15.0
    */
-  private static checkTemplateLiteral(context: RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralContext, node: RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralNode): RulesEslintFormattingNoTernaryInTemplateLiteralCheckTemplateLiteralReturns {
+  private static checkTemplateLiteral(context: Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Context, node: Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Node): Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_Runner_CheckTemplateLiteral_Returns {
     for (const expression of node.expressions) {
       if (expression.type === 'ConditionalExpression') {
         context.report({

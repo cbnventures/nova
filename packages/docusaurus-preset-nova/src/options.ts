@@ -4,31 +4,31 @@ import { LIB_REGEX_HEX_COLOR } from './lib/regex.js';
 import { presetsIndexNames, presetsIndexPresets } from './presets/index.js';
 
 import type {
-  OptionsPluginOptionsOverridesColorsBorder,
-  OptionsPluginOptionsOverridesColorsDanger,
-  OptionsPluginOptionsOverridesColorsPrimary,
-  OptionsPluginOptionsOverridesColorsSecondary,
-  OptionsPluginOptionsOverridesColorsText,
-  OptionsPluginOptionsOverridesColorsWarning,
-  OptionsResolvePresetBasePreset,
-  OptionsResolvePresetOptions,
-  OptionsResolvePresetResolvedColorsAccent,
-  OptionsResolvePresetResolvedColorsBorder,
-  OptionsResolvePresetResolvedColorsDanger,
-  OptionsResolvePresetResolvedColorsPrimary,
-  OptionsResolvePresetResolvedColorsText,
-  OptionsResolvePresetResolvedColorsWarning,
-  OptionsResolvePresetResolvedFontsBody,
-  OptionsResolvePresetResolvedFontsCode,
-  OptionsResolvePresetResolvedFontsDisplay,
-  OptionsResolvePresetResolvedFooter,
-  OptionsResolvePresetResolvedLogo,
-  OptionsResolvePresetResolvedNavbar,
-  OptionsResolvePresetReturns,
-  OptionsValidateOptionsData,
-  OptionsValidateOptionsReturns,
-  OptionsValidateThemeConfigData,
-  OptionsValidateThemeConfigReturns,
+  Options_PluginOptions_Overrides_Colors_Border,
+  Options_PluginOptions_Overrides_Colors_Danger,
+  Options_PluginOptions_Overrides_Colors_Primary,
+  Options_PluginOptions_Overrides_Colors_Secondary,
+  Options_PluginOptions_Overrides_Colors_Text,
+  Options_PluginOptions_Overrides_Colors_Warning,
+  Options_ResolvePreset_BasePreset,
+  Options_ResolvePreset_Options,
+  Options_ResolvePreset_ResolvedColorsAccent,
+  Options_ResolvePreset_ResolvedColorsBorder,
+  Options_ResolvePreset_ResolvedColorsDanger,
+  Options_ResolvePreset_ResolvedColorsPrimary,
+  Options_ResolvePreset_ResolvedColorsText,
+  Options_ResolvePreset_ResolvedColorsWarning,
+  Options_ResolvePreset_ResolvedFontsBody,
+  Options_ResolvePreset_ResolvedFontsCode,
+  Options_ResolvePreset_ResolvedFontsDisplay,
+  Options_ResolvePreset_ResolvedFooter,
+  Options_ResolvePreset_ResolvedLogo,
+  Options_ResolvePreset_ResolvedNavbar,
+  Options_ResolvePreset_Returns,
+  Options_ValidateOptions_Data,
+  Options_ValidateOptions_Returns,
+  Options_ValidateThemeConfig_Data,
+  Options_ValidateThemeConfig_Returns,
 } from './types/options.d.ts';
 
 /**
@@ -233,13 +233,13 @@ const themeConfigSchema = Joi.object({
  * returns the normalized result with defaults applied for any
  * omitted fields.
  *
- * @param {OptionsValidateOptionsData} data - Data.
+ * @param {Options_ValidateOptions_Data} data - Data.
  *
- * @returns {OptionsValidateOptionsReturns}
+ * @returns {Options_ValidateOptions_Returns}
  *
  * @since 0.15.0
  */
-export function validateOptions(data: OptionsValidateOptionsData): OptionsValidateOptionsReturns {
+export function validateOptions(data: Options_ValidateOptions_Data): Options_ValidateOptions_Returns {
   return data.validate(pluginOptionsSchema, data['options']);
 }
 
@@ -249,13 +249,13 @@ export function validateOptions(data: OptionsValidateOptionsData): OptionsValida
  * Validates the theme configuration section and merges it with the existing site-wide theme
  * configuration object.
  *
- * @param {OptionsValidateThemeConfigData} data - Data.
+ * @param {Options_ValidateThemeConfig_Data} data - Data.
  *
- * @returns {OptionsValidateThemeConfigReturns}
+ * @returns {Options_ValidateThemeConfig_Returns}
  *
  * @since 0.15.0
  */
-export function validateThemeConfig(data: OptionsValidateThemeConfigData): OptionsValidateThemeConfigReturns {
+export function validateThemeConfig(data: Options_ValidateThemeConfig_Data): Options_ValidateThemeConfig_Returns {
   return data.validate(themeConfigSchema, data['themeConfig']);
 }
 
@@ -265,78 +265,78 @@ export function validateThemeConfig(data: OptionsValidateThemeConfigData): Optio
  * Merges the base preset configuration with any user-provided overrides to produce a fully
  * resolved preset object ready for CSS generation.
  *
- * @param {OptionsResolvePresetOptions} options - Options.
+ * @param {Options_ResolvePreset_Options} options - Options.
  *
- * @returns {OptionsResolvePresetReturns}
+ * @returns {Options_ResolvePreset_Returns}
  *
  * @since 0.15.0
  */
-export function resolvePreset(options: OptionsResolvePresetOptions): OptionsResolvePresetReturns {
-  const basePreset: OptionsResolvePresetBasePreset = presetsIndexPresets[options['preset']];
+export function resolvePreset(options: Options_ResolvePreset_Options): Options_ResolvePreset_Returns {
+  const basePreset: Options_ResolvePreset_BasePreset = presetsIndexPresets[options['preset']];
 
-  const resolvedLogo: OptionsResolvePresetResolvedLogo = basePreset['logo'];
+  const resolvedLogo: Options_ResolvePreset_ResolvedLogo = basePreset['logo'];
 
-  const overridePrimary: OptionsPluginOptionsOverridesColorsPrimary = options['overrides']['colors']['primary'];
-  const resolvedColorsPrimary: OptionsResolvePresetResolvedColorsPrimary = {
+  const overridePrimary: Options_PluginOptions_Overrides_Colors_Primary = options['overrides']['colors']['primary'];
+  const resolvedColorsPrimary: Options_ResolvePreset_ResolvedColorsPrimary = {
     light: (overridePrimary !== undefined && overridePrimary['light'] !== undefined) ? overridePrimary['light'] : basePreset['colors']['primary']['light'],
     dark: (overridePrimary !== undefined && overridePrimary['dark'] !== undefined) ? overridePrimary['dark'] : basePreset['colors']['primary']['dark'],
   };
 
-  const overrideSecondary: OptionsPluginOptionsOverridesColorsSecondary = options['overrides']['colors']['secondary'];
-  const resolvedColorsAccent: OptionsResolvePresetResolvedColorsAccent = {
+  const overrideSecondary: Options_PluginOptions_Overrides_Colors_Secondary = options['overrides']['colors']['secondary'];
+  const resolvedColorsAccent: Options_ResolvePreset_ResolvedColorsAccent = {
     light: (overrideSecondary !== undefined && overrideSecondary['light'] !== undefined) ? overrideSecondary['light'] : basePreset['colors']['accent']['light'],
     dark: (overrideSecondary !== undefined && overrideSecondary['dark'] !== undefined) ? overrideSecondary['dark'] : basePreset['colors']['accent']['dark'],
   };
 
-  const overrideText: OptionsPluginOptionsOverridesColorsText = options['overrides']['colors']['text'];
-  const resolvedColorsText: OptionsResolvePresetResolvedColorsText = {
+  const overrideText: Options_PluginOptions_Overrides_Colors_Text = options['overrides']['colors']['text'];
+  const resolvedColorsText: Options_ResolvePreset_ResolvedColorsText = {
     light: (overrideText !== undefined && overrideText['light'] !== undefined) ? overrideText['light'] : basePreset['colors']['text']['light'],
     dark: (overrideText !== undefined && overrideText['dark'] !== undefined) ? overrideText['dark'] : basePreset['colors']['text']['dark'],
   };
 
-  const overrideBorder: OptionsPluginOptionsOverridesColorsBorder = options['overrides']['colors']['border'];
-  const resolvedColorsBorder: OptionsResolvePresetResolvedColorsBorder = {
+  const overrideBorder: Options_PluginOptions_Overrides_Colors_Border = options['overrides']['colors']['border'];
+  const resolvedColorsBorder: Options_ResolvePreset_ResolvedColorsBorder = {
     light: (overrideBorder !== undefined && overrideBorder['light'] !== undefined) ? overrideBorder['light'] : basePreset['colors']['border']['light'],
     dark: (overrideBorder !== undefined && overrideBorder['dark'] !== undefined) ? overrideBorder['dark'] : basePreset['colors']['border']['dark'],
   };
 
-  const overrideWarning: OptionsPluginOptionsOverridesColorsWarning = options['overrides']['colors']['warning'];
-  const resolvedColorsWarning: OptionsResolvePresetResolvedColorsWarning = {
+  const overrideWarning: Options_PluginOptions_Overrides_Colors_Warning = options['overrides']['colors']['warning'];
+  const resolvedColorsWarning: Options_ResolvePreset_ResolvedColorsWarning = {
     light: (overrideWarning !== undefined && overrideWarning['light'] !== undefined) ? overrideWarning['light'] : basePreset['colors']['warning']['light'],
     dark: (overrideWarning !== undefined && overrideWarning['dark'] !== undefined) ? overrideWarning['dark'] : basePreset['colors']['warning']['dark'],
   };
 
-  const overrideDanger: OptionsPluginOptionsOverridesColorsDanger = options['overrides']['colors']['danger'];
-  const resolvedColorsDanger: OptionsResolvePresetResolvedColorsDanger = {
+  const overrideDanger: Options_PluginOptions_Overrides_Colors_Danger = options['overrides']['colors']['danger'];
+  const resolvedColorsDanger: Options_ResolvePreset_ResolvedColorsDanger = {
     light: (overrideDanger !== undefined && overrideDanger['light'] !== undefined) ? overrideDanger['light'] : basePreset['colors']['danger']['light'],
     dark: (overrideDanger !== undefined && overrideDanger['dark'] !== undefined) ? overrideDanger['dark'] : basePreset['colors']['danger']['dark'],
   };
 
-  let resolvedFontsDisplay: OptionsResolvePresetResolvedFontsDisplay = basePreset['fonts']['display'];
+  let resolvedFontsDisplay: Options_ResolvePreset_ResolvedFontsDisplay = basePreset['fonts']['display'];
 
   if (options['overrides']['fonts']['display'] !== undefined) {
     resolvedFontsDisplay = options['overrides']['fonts']['display'];
   }
 
-  let resolvedFontsBody: OptionsResolvePresetResolvedFontsBody = basePreset['fonts']['body'];
+  let resolvedFontsBody: Options_ResolvePreset_ResolvedFontsBody = basePreset['fonts']['body'];
 
   if (options['overrides']['fonts']['body'] !== undefined) {
     resolvedFontsBody = options['overrides']['fonts']['body'];
   }
 
-  let resolvedFontsCode: OptionsResolvePresetResolvedFontsCode = basePreset['fonts']['code'];
+  let resolvedFontsCode: Options_ResolvePreset_ResolvedFontsCode = basePreset['fonts']['code'];
 
   if (options['overrides']['fonts']['code'] !== undefined) {
     resolvedFontsCode = options['overrides']['fonts']['code'];
   }
 
-  let resolvedNavbar: OptionsResolvePresetResolvedNavbar = basePreset['navbar'];
+  let resolvedNavbar: Options_ResolvePreset_ResolvedNavbar = basePreset['navbar'];
 
   if (options['overrides']['navbar'] !== undefined) {
     resolvedNavbar = options['overrides']['navbar'];
   }
 
-  let resolvedFooter: OptionsResolvePresetResolvedFooter = basePreset['footer'];
+  let resolvedFooter: Options_ResolvePreset_ResolvedFooter = basePreset['footer'];
 
   if (options['overrides']['footer'] !== undefined) {
     resolvedFooter = options['overrides']['footer'];

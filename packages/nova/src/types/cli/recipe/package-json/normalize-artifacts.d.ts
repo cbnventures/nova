@@ -1,11 +1,11 @@
-import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
-  SharedNovaConfigConfig,
-  SharedNovaConfigWorkspace,
-  SharedNovaConfigWorkspaceRecipes,
-  SharedNovaConfigWorkspaceRecipeTuple,
-  SharedWorkspaceManifest,
+  Shared_NovaConfigConfig as SharedNovaConfigConfig,
+  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
+  Shared_NovaConfigWorkspace_Recipes as SharedNovaConfigWorkspaceRecipes,
+  Shared_NovaConfigWorkspaceRecipeTuple as SharedNovaConfigWorkspaceRecipeTuple,
+  Shared_WorkspaceManifest as SharedWorkspaceManifest,
 } from '../../../shared.d.ts';
 
 /**
@@ -13,92 +13,92 @@ import type {
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeArtifactsHandleWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandleReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Returns = Promise<void>;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandleFileContents = Record<string, unknown>;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_FileContents = Record<string, unknown>;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandleManifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_Manifest = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePackageFiles = unknown;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageFiles = unknown;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePackageBin = unknown;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageBin = unknown;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePackageMan = unknown;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageMan = unknown;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePackageDirectories = unknown;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageDirectories = unknown;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePackageName = string;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_PackageName = string;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandleBinName = string | undefined;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Handle_BinName = string | undefined;
 
 /**
  * CLI - Recipe - package.json - Normalize Artifacts - Handle Publish.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeArtifactsHandlePublishWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePublishReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Returns = Promise<void>;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePublishFileContents = Record<string, unknown>;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_FileContents = Record<string, unknown>;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePublishManifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_Manifest = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePublishPackagePrivate = unknown;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PackagePrivate = unknown;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePublishPackagePublishConfig = unknown;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PackagePublishConfig = unknown;
 
-export type CliRecipePackageJsonNormalizeArtifactsHandlePublishPrivateValue = boolean;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_HandlePublish_PrivateValue = boolean;
 
 /**
  * CLI - Recipe - package.json - Normalize Artifacts - Is Empty.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeArtifactsIsEmptyValue = unknown;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Value = unknown;
 
-export type CliRecipePackageJsonNormalizeArtifactsIsEmptyReturns = boolean;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_IsEmpty_Returns = boolean;
 
 /**
  * CLI - Recipe - package.json - Normalize Artifacts - Run.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeArtifactsRunOptionsDryRun = true;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options_DryRun = true;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunOptionsReplaceFile = true;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options_ReplaceFile = true;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunOptions = {
-  dryRun?: CliRecipePackageJsonNormalizeArtifactsRunOptionsDryRun;
-  replaceFile?: CliRecipePackageJsonNormalizeArtifactsRunOptionsReplaceFile;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options = {
+  dryRun?: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliRecipePackageJsonNormalizeArtifactsRunReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Returns = Promise<void>;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunCurrentDirectory = string;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_CurrentDirectory = string;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunIsAtProjectRoot = boolean;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunIsDryRun = boolean;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsDryRun = boolean;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunIsReplaceFile = boolean;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_IsReplaceFile = boolean;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunReplaceFileNotice = string;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_ReplaceFileNotice = string;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunNovaConfig = LibNovaConfig;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunWorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkingFile = SharedNovaConfigConfig;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunWorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonNormalizeArtifactsRunEligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonNormalizeArtifactsRunWorkspaceConfigFilter = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceConfigFilter = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunWorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_WorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunRecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_RecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
-export type CliRecipePackageJsonNormalizeArtifactsRunWorkspaces = SharedWorkspaceManifest[];
+export type Cli_Recipe_PackageJson_NormalizeArtifacts_Runner_Run_Workspaces = SharedWorkspaceManifest[];

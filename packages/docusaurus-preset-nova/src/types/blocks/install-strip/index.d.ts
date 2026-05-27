@@ -1,48 +1,48 @@
 import type { CSSProperties, Dispatch, SetStateAction } from 'react';
 
-import type { SharedSurface } from '../../shared.d.ts';
+import type { Shared_Surface } from '../../shared.d.ts';
 
 /**
  * Blocks - Install Strip.
  *
  * @since 0.15.0
  */
-export type BlocksInstallStripPropsCommand = string;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Command = string;
 
-export type BlocksInstallStripPropsLabel = string | undefined;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Label = string | undefined;
 
-export type BlocksInstallStripPropsSurface = SharedSurface | undefined;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Surface = Shared_Surface | undefined;
 
-export type BlocksInstallStripPropsClassName = string | undefined;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_ClassName = string | undefined;
 
-export type BlocksInstallStripPropsStyle = CSSProperties | undefined;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Style = CSSProperties | undefined;
 
-export type BlocksInstallStripProps = {
-  command: BlocksInstallStripPropsCommand;
-  label?: BlocksInstallStripPropsLabel;
-  copyTarget?: BlocksInstallStripPropsCopyTarget;
-  surface?: BlocksInstallStripPropsSurface;
-  className?: BlocksInstallStripPropsClassName;
-  style?: BlocksInstallStripPropsStyle;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props = {
+  command: Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Command;
+  label?: Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Label;
+  copyTarget?: Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget;
+  surface?: Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Surface;
+  className?: Blocks_InstallStrip_Index_BlocksInstallStrip_Props_ClassName;
+  style?: Blocks_InstallStrip_Index_BlocksInstallStrip_Props_Style;
 };
 
-export type BlocksInstallStripCopied = boolean;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Copied = boolean;
 
-export type BlocksInstallStripState = [BlocksInstallStripCopied, BlocksInstallStripSetCopied];
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_State = [Blocks_InstallStrip_Index_BlocksInstallStrip_Copied, Blocks_InstallStrip_Index_BlocksInstallStrip_SetCopied];
 
-export type BlocksInstallStripSetCopied = Dispatch<SetStateAction<BlocksInstallStripCopied>>;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_SetCopied = Dispatch<SetStateAction<Blocks_InstallStrip_Index_BlocksInstallStrip_Copied>>;
 
-export type BlocksInstallStripPropsCopyTarget = 'block' | 'icon' | 'text';
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Props_CopyTarget = 'block' | 'icon' | 'text';
 
-export type BlocksInstallStripIcon = string;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_Icon = string;
 
-export type BlocksInstallStripCopiedText = string;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_CopiedText = string;
 
-export type BlocksInstallStripCopyButtonText = string;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_CopyButtonText = string;
 
-export type BlocksInstallStripCopyAriaLabel = string;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_CopyAriaLabel = string;
 
-export type BlocksInstallStripCopyText = string;
+export type Blocks_InstallStrip_Index_BlocksInstallStrip_CopyText = string;
 
 /**
  * Blocks - Install Strip - Blocks Install Strip - Handle Copy.

@@ -1,57 +1,57 @@
-import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { SharedGeneratorRunResult, SharedNovaConfig, SharedNovaConfigProjectLicense } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult as SharedGeneratorRunResult, Shared_NovaConfig as SharedNovaConfig, Shared_NovaConfig_Project_License as SharedNovaConfigProjectLicense } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - License - Run.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesLicenseRunOptionsDryRun = true;
+export type Cli_Generate_MustHaves_License_Runner_Run_Options_DryRun = true;
 
-export type CliGenerateMustHavesLicenseRunOptionsReplaceFile = true;
+export type Cli_Generate_MustHaves_License_Runner_Run_Options_ReplaceFile = true;
 
-export type CliGenerateMustHavesLicenseRunOptions = {
-  dryRun?: CliGenerateMustHavesLicenseRunOptionsDryRun;
-  replaceFile?: CliGenerateMustHavesLicenseRunOptionsReplaceFile;
+export type Cli_Generate_MustHaves_License_Runner_Run_Options = {
+  dryRun?: Cli_Generate_MustHaves_License_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Generate_MustHaves_License_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliGenerateMustHavesLicenseRunReturns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_License_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
 
-export type CliGenerateMustHavesLicenseRunCurrentDirectory = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_CurrentDirectory = string;
 
-export type CliGenerateMustHavesLicenseRunIsAtProjectRoot = boolean;
+export type Cli_Generate_MustHaves_License_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliGenerateMustHavesLicenseRunIsDryRun = boolean;
+export type Cli_Generate_MustHaves_License_Runner_Run_IsDryRun = boolean;
 
-export type CliGenerateMustHavesLicenseRunIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_License_Runner_Run_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesLicenseRunReplaceFileNotice = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_ReplaceFileNotice = string;
 
-export type CliGenerateMustHavesLicenseRunNovaConfig = LibNovaConfig;
+export type Cli_Generate_MustHaves_License_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type CliGenerateMustHavesLicenseRunWorkingFile = SharedNovaConfig;
+export type Cli_Generate_MustHaves_License_Runner_Run_WorkingFile = SharedNovaConfig;
 
-export type CliGenerateMustHavesLicenseRunProject = SharedNovaConfig['project'];
+export type Cli_Generate_MustHaves_License_Runner_Run_Project = SharedNovaConfig['project'];
 
-export type CliGenerateMustHavesLicenseRunEntityName = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_EntityName = string;
 
-export type CliGenerateMustHavesLicenseRunCurrentYear = number;
+export type Cli_Generate_MustHaves_License_Runner_Run_CurrentYear = number;
 
-export type CliGenerateMustHavesLicenseRunStartingYear = number;
+export type Cli_Generate_MustHaves_License_Runner_Run_StartingYear = number;
 
-export type CliGenerateMustHavesLicenseRunYearRange = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_YearRange = string;
 
-export type CliGenerateMustHavesLicenseRunLicenseId = SharedNovaConfigProjectLicense | undefined;
+export type Cli_Generate_MustHaves_License_Runner_Run_LicenseId = SharedNovaConfigProjectLicense | undefined;
 
-export type CliGenerateMustHavesLicenseRunTemplateDirectory = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_TemplateDirectory = string;
 
-export type CliGenerateMustHavesLicenseRunTemplatePath = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_TemplatePath = string;
 
-export type CliGenerateMustHavesLicenseRunTemplate = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_Template = string;
 
-export type CliGenerateMustHavesLicenseRunContent = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_Content = string;
 
-export type CliGenerateMustHavesLicenseRunTargetPath = string;
+export type Cli_Generate_MustHaves_License_Runner_Run_TargetPath = string;
 
-export type CliGenerateMustHavesLicenseRunConsumerWorkspacePaths = string[];
+export type Cli_Generate_MustHaves_License_Runner_Run_ConsumerWorkspacePaths = string[];

@@ -6,207 +6,207 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyNode = TSESTree.Program | TSESTree.BlockStatement;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Node = TSESTree.Program | TSESTree.BlockStatement;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyExitCodeBeforeReturn = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_ExitCodeBeforeReturn = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyBeforeLoops = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BeforeLoops = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyBareAwait = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BareAwait = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyBetweenOperations = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_BetweenOperations = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyReturns = void;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Returns = void;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyStatements = TSESTree.Statement[];
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Statements = TSESTree.Statement[];
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyPrev = TSESTree.Statement | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Prev = TSESTree.Statement | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyCurr = TSESTree.Statement | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_Curr = TSESTree.Statement | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyPrevEndLine = number;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevEndLine = number;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyCurrStartLine = number;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrStartLine = number;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyHasBlankLine = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_HasBlankLine = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyCurrIsBareAwait = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrIsBareAwait = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyPrevIsBareAwait = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevIsBareAwait = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyCurrIsDeclaration = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrIsDeclaration = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyPrevIsDeclaration = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevIsDeclaration = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyPrevKey = string | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_PrevKey = string | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckBodyCurrKey = string | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckBody_CurrKey = string | undefined;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Check Line Comments.
  *
  * @since 0.15.0
  */
-export type RulesEslintFormattingRequirePaddingLinesCheckLineCommentsContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckLineCommentsReturns = void;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Returns = void;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckLineCommentsAllComments = TSESTree.Comment[];
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_AllComments = TSESTree.Comment[];
 
-export type RulesEslintFormattingRequirePaddingLinesCheckLineCommentsLines = string[];
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_Lines = string[];
 
-export type RulesEslintFormattingRequirePaddingLinesCheckLineCommentsCommentLine = number;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_CommentLine = number;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckLineCommentsCurrentLineContent = string | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_CurrentLineContent = string | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckLineCommentsPrevLineContent = string | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_PrevLineContent = string | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckLineCommentsTrimmedPrevLine = string;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckLineComments_TrimmedPrevLine = string;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Check Switch Cases.
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesNode = TSESTree.SwitchStatement;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Node = TSESTree.SwitchStatement;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesReturns = void;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Returns = void;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCases = TSESTree.SwitchCase[];
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Cases = TSESTree.SwitchCase[];
 
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesPrev = TSESTree.SwitchCase | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Prev = TSESTree.SwitchCase | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCurr = TSESTree.SwitchCase | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_Curr = TSESTree.SwitchCase | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesPrevEndLine = number;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_PrevEndLine = number;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesCurrStartLine = number;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_CurrStartLine = number;
 
-export type RulesEslintFormattingRequirePaddingLinesCheckSwitchCasesHasBlankLine = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_CheckSwitchCases_HasBlankLine = boolean;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Get Callee Key.
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesGetCalleeKeyNode = TSESTree.Statement;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Node = TSESTree.Statement;
 
-export type RulesEslintFormattingRequirePaddingLinesGetCalleeKeyReturns = string | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Returns = string | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesGetCalleeKeyExpression = TSESTree.Expression;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_GetCalleeKey_Expression = TSESTree.Expression;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Is Bare Await Expression.
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesIsBareAwaitExpressionNode = TSESTree.Statement;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Node = TSESTree.Statement;
 
-export type RulesEslintFormattingRequirePaddingLinesIsBareAwaitExpressionReturns = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsBareAwaitExpression_Returns = boolean;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Is Expression Operation.
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesIsExpressionOperationNode = TSESTree.Statement;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Node = TSESTree.Statement;
 
-export type RulesEslintFormattingRequirePaddingLinesIsExpressionOperationReturns = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Returns = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesIsExpressionOperationExpression = TSESTree.Expression;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsExpressionOperation_Expression = TSESTree.Expression;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Is Loop Statement.
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesIsLoopStatementNode = TSESTree.Statement;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Node = TSESTree.Statement;
 
-export type RulesEslintFormattingRequirePaddingLinesIsLoopStatementReturns = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsLoopStatement_Returns = boolean;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Is Process Exit Code Assignment.
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentNode = TSESTree.Statement;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Node = TSESTree.Statement;
 
-export type RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentReturns = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Returns = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentExpression = TSESTree.Expression;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Expression = TSESTree.Expression;
 
-export type RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentLeft = TSESTree.Expression | TSESTree.PrivateIdentifier;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Left = TSESTree.Expression | TSESTree.PrivateIdentifier;
 
-export type RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentObject = TSESTree.Expression;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Object = TSESTree.Expression;
 
-export type RulesEslintFormattingRequirePaddingLinesIsProcessExitCodeAssignmentProperty = TSESTree.Expression | TSESTree.PrivateIdentifier;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_IsProcessExitCodeAssignment_Property = TSESTree.Expression | TSESTree.PrivateIdentifier;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Rule.
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBareAwait = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBareAwait = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBeforeLineComment = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLineComment = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBeforeLoops = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBeforeLoops = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBetweenOperations = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenOperations = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsBetweenSwitchCases = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsBetweenSwitchCases = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsExitCodeBeforeReturn = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsExitCodeBeforeReturn = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintFormattingRequirePaddingLinesRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintFormattingRequirePaddingLinesRuleOptionsExitCodeBeforeReturn = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_ExitCodeBeforeReturn = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleOptionsBeforeLineComment = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BeforeLineComment = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleOptionsBeforeLoops = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BeforeLoops = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleOptionsBareAwait = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BareAwait = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleOptionsBetweenOperations = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BetweenOperations = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleOptionsBetweenSwitchCases = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BetweenSwitchCases = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintFormattingRequirePaddingLinesRuleOptionsIgnoreFiles;
-  exitCodeBeforeReturn: RulesEslintFormattingRequirePaddingLinesRuleOptionsExitCodeBeforeReturn;
-  beforeLineComment: RulesEslintFormattingRequirePaddingLinesRuleOptionsBeforeLineComment;
-  beforeLoops: RulesEslintFormattingRequirePaddingLinesRuleOptionsBeforeLoops;
-  bareAwait: RulesEslintFormattingRequirePaddingLinesRuleOptionsBareAwait;
-  betweenOperations: RulesEslintFormattingRequirePaddingLinesRuleOptionsBetweenOperations;
-  betweenSwitchCases: RulesEslintFormattingRequirePaddingLinesRuleOptionsBetweenSwitchCases;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_IgnoreFiles;
+  exitCodeBeforeReturn: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_ExitCodeBeforeReturn;
+  beforeLineComment: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BeforeLineComment;
+  beforeLoops: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BeforeLoops;
+  bareAwait: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BareAwait;
+  betweenOperations: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BetweenOperations;
+  betweenSwitchCases: Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleOptions_BetweenSwitchCases;
 }>;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleCheckExitCodeBeforeReturn = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckExitCodeBeforeReturn = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleCheckBeforeLoops = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBeforeLoops = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleCheckBareAwait = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBareAwait = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleCheckBeforeLineComment = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBeforeLineComment = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleCheckBetweenOperations = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBetweenOperations = boolean;
 
-export type RulesEslintFormattingRequirePaddingLinesRuleCheckBetweenSwitchCases = boolean;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_RuleCheckBetweenSwitchCases = boolean;
 
 /**
  * Rules - ESLint - Formatting - Require Padding Lines - Serialize Callee.
  *
  * @since 0.14.0
  */
-export type RulesEslintFormattingRequirePaddingLinesSerializeCalleeNode = TSESTree.Expression;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Node = TSESTree.Expression;
 
-export type RulesEslintFormattingRequirePaddingLinesSerializeCalleeReturns = string | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Returns = string | undefined;
 
-export type RulesEslintFormattingRequirePaddingLinesSerializeCalleeObject = string | undefined;
+export type Rules_Eslint_Formatting_RequirePaddingLines_Runner_SerializeCallee_Object = string | undefined;

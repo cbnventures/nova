@@ -3,22 +3,22 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintPatternsNoAwaitInLoopCheckAwaitContext,
-  RulesEslintPatternsNoAwaitInLoopCheckAwaitDisallowedLoopTypes,
-  RulesEslintPatternsNoAwaitInLoopCheckAwaitEnclosingLoop,
-  RulesEslintPatternsNoAwaitInLoopCheckAwaitNode,
-  RulesEslintPatternsNoAwaitInLoopCheckAwaitOptions,
-  RulesEslintPatternsNoAwaitInLoopCheckAwaitReturns,
-  RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopCurrent,
-  RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopDisallowedLoopTypes,
-  RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopNode,
-  RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopReturns,
-  RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowFor,
-  RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowForIn,
-  RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowForOf,
-  RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowWhile,
-  RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsIgnoreFiles,
-  RulesEslintPatternsNoAwaitInLoopRuleOptions,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Context,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_DisallowedLoopTypes,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_EnclosingLoop,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Node,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Returns,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Current,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_DisallowedLoopTypes,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Node,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Returns,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowFor,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowForIn,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowForOf,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowWhile,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-await-in-loop.d.ts';
 
 /**
@@ -30,7 +30,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintPatternsNoAwaitInLoop {
+export class Runner {
   /**
    * Rules - ESLint - Patterns - No Await In Loop - Boundary Types.
    *
@@ -93,14 +93,14 @@ export class RulesEslintPatternsNoAwaitInLoop {
       }],
     },
     defaultOptions: [{
-      allowFor: false as RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowFor,
-      allowForIn: false as RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowForIn,
-      allowForOf: false as RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowForOf,
-      allowWhile: false as RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsAllowWhile,
-      ignoreFiles: [] as RulesEslintPatternsNoAwaitInLoopRuleDefaultOptionsIgnoreFiles,
+      allowFor: false as Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowFor,
+      allowForIn: false as Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowForIn,
+      allowForOf: false as Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowForOf,
+      allowWhile: false as Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsAllowWhile,
+      ignoreFiles: [] as Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintPatternsNoAwaitInLoopRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -109,7 +109,7 @@ export class RulesEslintPatternsNoAwaitInLoop {
 
       return {
         AwaitExpression(node) {
-          RulesEslintPatternsNoAwaitInLoop.checkAwait(context, node, options);
+          Runner.checkAwait(context, node, options);
 
           return;
         },
@@ -126,16 +126,16 @@ export class RulesEslintPatternsNoAwaitInLoop {
    *
    * @private
    *
-   * @param {RulesEslintPatternsNoAwaitInLoopCheckAwaitContext} context - Context.
-   * @param {RulesEslintPatternsNoAwaitInLoopCheckAwaitNode}    node    - Node.
-   * @param {RulesEslintPatternsNoAwaitInLoopCheckAwaitOptions} options - Options.
+   * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Context} context - Context.
+   * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Node}    node    - Node.
+   * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options} options - Options.
    *
-   * @returns {RulesEslintPatternsNoAwaitInLoopCheckAwaitReturns}
+   * @returns {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Returns}
    *
    * @since 0.15.0
    */
-  private static checkAwait(context: RulesEslintPatternsNoAwaitInLoopCheckAwaitContext, node: RulesEslintPatternsNoAwaitInLoopCheckAwaitNode, options: RulesEslintPatternsNoAwaitInLoopCheckAwaitOptions): RulesEslintPatternsNoAwaitInLoopCheckAwaitReturns {
-    const disallowedLoopTypes: RulesEslintPatternsNoAwaitInLoopCheckAwaitDisallowedLoopTypes = new Set<string>();
+  private static checkAwait(context: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Context, node: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Node, options: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Options): Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_Returns {
+    const disallowedLoopTypes: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_DisallowedLoopTypes = new Set<string>();
 
     if (options['allowFor'] !== true) {
       disallowedLoopTypes.add('ForStatement');
@@ -154,7 +154,7 @@ export class RulesEslintPatternsNoAwaitInLoop {
       disallowedLoopTypes.add('DoWhileStatement');
     }
 
-    const enclosingLoop: RulesEslintPatternsNoAwaitInLoopCheckAwaitEnclosingLoop = RulesEslintPatternsNoAwaitInLoop.getEnclosingLoop(node, disallowedLoopTypes);
+    const enclosingLoop: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_CheckAwait_EnclosingLoop = Runner.getEnclosingLoop(node, disallowedLoopTypes);
 
     if (enclosingLoop === undefined) {
       return;
@@ -177,18 +177,18 @@ export class RulesEslintPatternsNoAwaitInLoop {
    *
    * @private
    *
-   * @param {RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopNode}                node                - Node.
-   * @param {RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopDisallowedLoopTypes} disallowedLoopTypes - Disallowed loop types.
+   * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Node}                node                - Node.
+   * @param {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_DisallowedLoopTypes} disallowedLoopTypes - Disallowed loop types.
    *
-   * @returns {RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopReturns}
+   * @returns {Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Returns}
    *
    * @since 0.15.0
    */
-  private static getEnclosingLoop(node: RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopNode, disallowedLoopTypes: RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopDisallowedLoopTypes): RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopReturns {
-    let current: RulesEslintPatternsNoAwaitInLoopGetEnclosingLoopCurrent = node.parent;
+  private static getEnclosingLoop(node: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Node, disallowedLoopTypes: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_DisallowedLoopTypes): Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Returns {
+    let current: Rules_Eslint_Patterns_NoAwaitInLoop_Runner_GetEnclosingLoop_Current = node.parent;
 
     while (current !== undefined) {
-      if (RulesEslintPatternsNoAwaitInLoop.#boundaryTypes.has(current.type) === true) {
+      if (Runner.#boundaryTypes.has(current.type) === true) {
         return undefined;
       }
 

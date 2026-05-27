@@ -1,124 +1,124 @@
-import type { SharedHastNode } from '../../shared.d.ts';
+import type { Shared_HastNode } from '../../shared.d.ts';
 
 /**
  * Tests - Lib - Rehype Shiki - Rehype Shiki.
  *
  * @since 0.15.0
  */
-export type TestsLibRehypeShikiTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_Tree = Shared_HastNode;
 
-export type TestsLibRehypeShikiTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_Transformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_OutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiOutputJson = string;
+export type Tests_Lib_RehypeShiki_OutputJson = string;
 
-export type TestsLibRehypeShikiIncludesShiki = boolean;
+export type Tests_Lib_RehypeShiki_IncludesShiki = boolean;
 
-export type TestsLibRehypeShikiIncludesMarker = boolean;
+export type Tests_Lib_RehypeShiki_IncludesMarker = boolean;
 
-export type TestsLibRehypeShikiLangTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_LangTree = Shared_HastNode;
 
-export type TestsLibRehypeShikiLangTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_LangTransformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiLangOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_LangOutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiLangOutputJson = string;
+export type Tests_Lib_RehypeShiki_LangOutputJson = string;
 
-export type TestsLibRehypeShikiLangIncludesShiki = boolean;
+export type Tests_Lib_RehypeShiki_LangIncludesShiki = boolean;
 
-export type TestsLibRehypeShikiNoLangTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_NoLangTree = Shared_HastNode;
 
-export type TestsLibRehypeShikiNoLangTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_NoLangTransformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiNoLangOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_NoLangOutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiNoLangOutputJson = string;
+export type Tests_Lib_RehypeShiki_NoLangOutputJson = string;
 
-export type TestsLibRehypeShikiNoLangIncludesShiki = boolean;
+export type Tests_Lib_RehypeShiki_NoLangIncludesShiki = boolean;
 
-export type TestsLibRehypeShikiMagicCode = string;
+export type Tests_Lib_RehypeShiki_MagicCode = string;
 
-export type TestsLibRehypeShikiMagicTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_MagicTree = Shared_HastNode;
 
-export type TestsLibRehypeShikiMagicTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_MagicTransformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiMagicOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_MagicOutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiMagicOutputJson = string;
+export type Tests_Lib_RehypeShiki_MagicOutputJson = string;
 
-export type TestsLibRehypeShikiMagicIncludesHighlighted = boolean;
+export type Tests_Lib_RehypeShiki_MagicIncludesHighlighted = boolean;
 
-export type TestsLibRehypeShikiMagicExcludesComment = boolean;
+export type Tests_Lib_RehypeShiki_MagicExcludesComment = boolean;
 
-export type TestsLibRehypeShikiRangeCode = string;
+export type Tests_Lib_RehypeShiki_RangeCode = string;
 
-export type TestsLibRehypeShikiRangeTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_RangeTree = Shared_HastNode;
 
-export type TestsLibRehypeShikiRangeTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_RangeTransformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiRangeOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_RangeOutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiRangeOutputJson = string;
+export type Tests_Lib_RehypeShiki_RangeOutputJson = string;
 
-export type TestsLibRehypeShikiRangeIncludesHighlighted = boolean;
+export type Tests_Lib_RehypeShiki_RangeIncludesHighlighted = boolean;
 
-export type TestsLibRehypeShikiDiffCode = string;
+export type Tests_Lib_RehypeShiki_DiffCode = string;
 
-export type TestsLibRehypeShikiDiffTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_DiffTree = Shared_HastNode;
 
-export type TestsLibRehypeShikiDiffTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_DiffTransformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiDiffOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_DiffOutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiDiffOutputJson = string;
+export type Tests_Lib_RehypeShiki_DiffOutputJson = string;
 
-export type TestsLibRehypeShikiDiffIncludesAdd = boolean;
+export type Tests_Lib_RehypeShiki_DiffIncludesAdd = boolean;
 
-export type TestsLibRehypeShikiDiffIncludesRemove = boolean;
+export type Tests_Lib_RehypeShiki_DiffIncludesRemove = boolean;
 
-export type TestsLibRehypeShikiMetadataTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_MetadataTree = Shared_HastNode;
 
-export type TestsLibRehypeShikiMetadataTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_MetadataTransformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiMetadataOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_MetadataOutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiMetadataOutputJson = string;
+export type Tests_Lib_RehypeShiki_MetadataOutputJson = string;
 
-export type TestsLibRehypeShikiMetadataIncludesTitle = boolean;
+export type Tests_Lib_RehypeShiki_MetadataIncludesTitle = boolean;
 
-export type TestsLibRehypeShikiMetadataIncludesLanguage = boolean;
+export type Tests_Lib_RehypeShiki_MetadataIncludesLanguage = boolean;
 
-export type TestsLibRehypeShikiMetadataIncludesShowLineNumbers = boolean;
+export type Tests_Lib_RehypeShiki_MetadataIncludesShowLineNumbers = boolean;
 
-export type TestsLibRehypeShikiMetadataIncludesLive = boolean;
+export type Tests_Lib_RehypeShiki_MetadataIncludesLive = boolean;
 
-export type TestsLibRehypeShikiMetadataIncludesMetastring = boolean;
+export type Tests_Lib_RehypeShiki_MetadataIncludesMetastring = boolean;
 
-export type TestsLibRehypeShikiAddRemoveCode = string;
+export type Tests_Lib_RehypeShiki_AddRemoveCode = string;
 
-export type TestsLibRehypeShikiAddRemoveTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_AddRemoveTree = Shared_HastNode;
 
-export type TestsLibRehypeShikiAddRemoveTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_AddRemoveTransformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiAddRemoveOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_AddRemoveOutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiAddRemoveOutputJson = string;
+export type Tests_Lib_RehypeShiki_AddRemoveOutputJson = string;
 
-export type TestsLibRehypeShikiAddRemoveIncludesAdd = boolean;
+export type Tests_Lib_RehypeShiki_AddRemoveIncludesAdd = boolean;
 
-export type TestsLibRehypeShikiAddRemoveIncludesRemove = boolean;
+export type Tests_Lib_RehypeShiki_AddRemoveIncludesRemove = boolean;
 
-export type TestsLibRehypeShikiAddRemoveExcludesAddMarker = boolean;
+export type Tests_Lib_RehypeShiki_AddRemoveExcludesAddMarker = boolean;
 
-export type TestsLibRehypeShikiAddRemoveExcludesRemoveMarker = boolean;
+export type Tests_Lib_RehypeShiki_AddRemoveExcludesRemoveMarker = boolean;
 
-export type TestsLibRehypeShikiMarkerTree = SharedHastNode;
+export type Tests_Lib_RehypeShiki_MarkerTree = Shared_HastNode;
 
-export type TestsLibRehypeShikiMarkerTransformer = (tree: SharedHastNode) => Promise<void>;
+export type Tests_Lib_RehypeShiki_MarkerTransformer = (tree: Shared_HastNode) => Promise<void>;
 
-export type TestsLibRehypeShikiMarkerOutputNode = SharedHastNode | undefined;
+export type Tests_Lib_RehypeShiki_MarkerOutputNode = Shared_HastNode | undefined;
 
-export type TestsLibRehypeShikiMarkerOutputJson = string;
+export type Tests_Lib_RehypeShiki_MarkerOutputJson = string;
 
-export type TestsLibRehypeShikiMarkerIncludesAttribute = boolean;
+export type Tests_Lib_RehypeShiki_MarkerIncludesAttribute = boolean;

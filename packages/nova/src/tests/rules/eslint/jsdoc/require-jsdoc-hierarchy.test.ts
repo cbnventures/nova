@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireJsdocHierarchy } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintJsdocRequireJsdocHierarchyRuleTester } from '../../../../types/tests/rules/eslint/jsdoc/require-jsdoc-hierarchy.test.d.ts';
+import type { Tests_Rules_Eslint_Jsdoc_RequireJsdocHierarchy_RuleTester } from '../../../../types/tests/rules/eslint/jsdoc/require-jsdoc-hierarchy.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - JSDoc - Require JSDoc Hierarchy.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintJsdocRequireJsdocHierarchyRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Jsdoc_RequireJsdocHierarchy_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

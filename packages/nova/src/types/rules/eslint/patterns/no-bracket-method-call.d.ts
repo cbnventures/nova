@@ -6,41 +6,41 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionNode = TSESTree.CallExpression;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Node = TSESTree.CallExpression;
 
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options_IgnoreFiles = string[];
 
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionOptionsAllowedMethods = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options_AllowedMethods = string[];
 
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionOptions = Readonly<{
-  ignoreFiles: RulesEslintPatternsNoBracketMethodCallCheckCallExpressionOptionsIgnoreFiles;
-  allowedMethods: RulesEslintPatternsNoBracketMethodCallCheckCallExpressionOptionsAllowedMethods;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options_IgnoreFiles;
+  allowedMethods: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Options_AllowedMethods;
 }>;
 
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionReturns = void;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Returns = void;
 
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionCallee = TSESTree.Expression;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Callee = TSESTree.Expression;
 
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionProperty = TSESTree.Expression | TSESTree.PrivateIdentifier;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_Property = TSESTree.Expression | TSESTree.PrivateIdentifier;
 
-export type RulesEslintPatternsNoBracketMethodCallCheckCallExpressionMethodName = string;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_CheckCallExpression_MethodName = string;
 
 /**
  * Rules - ESLint - Patterns - No Bracket Method Call - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoBracketMethodCallRuleDefaultOptionsAllowedMethods = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsAllowedMethods = string[];
 
-export type RulesEslintPatternsNoBracketMethodCallRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintPatternsNoBracketMethodCallRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintPatternsNoBracketMethodCallRuleOptionsAllowedMethods = string[];
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions_AllowedMethods = string[];
 
-export type RulesEslintPatternsNoBracketMethodCallRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintPatternsNoBracketMethodCallRuleOptionsIgnoreFiles;
-  allowedMethods: RulesEslintPatternsNoBracketMethodCallRuleOptionsAllowedMethods;
+export type Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions_IgnoreFiles;
+  allowedMethods: Rules_Eslint_Patterns_NoBracketMethodCall_Runner_RuleOptions_AllowedMethods;
 }>;

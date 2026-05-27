@@ -4,20 +4,20 @@ import { LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX } from '../../../lib/regex.js';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintJsdocRequireJsdocBodyCheckProgramAllComments,
-  RulesEslintJsdocRequireJsdocBodyCheckProgramBodyLineCount,
-  RulesEslintJsdocRequireJsdocBodyCheckProgramContext,
-  RulesEslintJsdocRequireJsdocBodyCheckProgramFoundSummary,
-  RulesEslintJsdocRequireJsdocBodyCheckProgramLines,
-  RulesEslintJsdocRequireJsdocBodyCheckProgramPastSummary,
-  RulesEslintJsdocRequireJsdocBodyCheckProgramReturns,
-  RulesEslintJsdocRequireJsdocBodyCheckProgramTrimmed,
-  RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsIgnoreFiles,
-  RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMaxLines,
-  RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMaxWidth,
-  RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMinLines,
-  RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsSkipDirectories,
-  RulesEslintJsdocRequireJsdocBodyRuleOptions,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_AllComments,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLineCount,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FoundSummary,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Lines,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxLines,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxWidth,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMinLines,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsSkipDirectories,
+  Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-body.d.ts';
 
 /**
@@ -28,7 +28,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintJsdocRequireJsdocBody {
+export class Runner {
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Body - Rule.
    *
@@ -82,14 +82,14 @@ export class RulesEslintJsdocRequireJsdocBody {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsIgnoreFiles,
-      maxLines: 3 as RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMaxLines,
-      maxWidth: 80 as RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMaxWidth,
-      minLines: 2 as RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsMinLines,
-      skipDirectories: [] as RulesEslintJsdocRequireJsdocBodyRuleDefaultOptionsSkipDirectories,
+      ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsIgnoreFiles,
+      maxLines: 3 as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxLines,
+      maxWidth: 80 as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMaxWidth,
+      minLines: 2 as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsMinLines,
+      skipDirectories: [] as Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleDefaultOptionsSkipDirectories,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintJsdocRequireJsdocBodyRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -110,7 +110,7 @@ export class RulesEslintJsdocRequireJsdocBody {
 
       return {
         Program() {
-          RulesEslintJsdocRequireJsdocBody.checkProgram(context, options);
+          Runner.checkProgram(context, options);
 
           return;
         },
@@ -126,15 +126,15 @@ export class RulesEslintJsdocRequireJsdocBody {
    *
    * @private
    *
-   * @param {RulesEslintJsdocRequireJsdocBodyCheckProgramContext} context - Context.
-   * @param {RulesEslintJsdocRequireJsdocBodyRuleOptions}         options - Options.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context} context - Context.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions}          options - Options.
    *
-   * @returns {RulesEslintJsdocRequireJsdocBodyCheckProgramReturns}
+   * @returns {Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns}
    *
    * @since 0.15.0
    */
-  private static checkProgram(context: RulesEslintJsdocRequireJsdocBodyCheckProgramContext, options: RulesEslintJsdocRequireJsdocBodyRuleOptions): RulesEslintJsdocRequireJsdocBodyCheckProgramReturns {
-    const allComments: RulesEslintJsdocRequireJsdocBodyCheckProgramAllComments = context.sourceCode.getAllComments();
+  private static checkProgram(context: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Context, options: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_RuleOptions): Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Returns {
+    const allComments: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_AllComments = context.sourceCode.getAllComments();
 
     for (const comment of allComments) {
       if (comment.type !== 'Block') {
@@ -145,13 +145,13 @@ export class RulesEslintJsdocRequireJsdocBody {
         continue;
       }
 
-      const lines: RulesEslintJsdocRequireJsdocBodyCheckProgramLines = comment.value.split('\n');
-      let foundSummary: RulesEslintJsdocRequireJsdocBodyCheckProgramFoundSummary = false;
-      let pastSummary: RulesEslintJsdocRequireJsdocBodyCheckProgramPastSummary = false;
-      let bodyLineCount: RulesEslintJsdocRequireJsdocBodyCheckProgramBodyLineCount = 0;
+      const lines: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Lines = comment.value.split('\n');
+      let foundSummary: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FoundSummary = false;
+      let pastSummary: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary = false;
+      let bodyLineCount: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_BodyLineCount = 0;
 
       for (const line of lines) {
-        const trimmed: RulesEslintJsdocRequireJsdocBodyCheckProgramTrimmed = line.replace(LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX, '').trim();
+        const trimmed: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed = line.replace(LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX, '').trim();
 
         // Skip empty lines.
         if (trimmed === '' || trimmed === '*') {
@@ -222,11 +222,11 @@ export class RulesEslintJsdocRequireJsdocBody {
 
       // Check body line widths.
       if (options['maxWidth'] > 0) {
-        let bodyReached: RulesEslintJsdocRequireJsdocBodyCheckProgramFoundSummary = false;
-        let bodyPast: RulesEslintJsdocRequireJsdocBodyCheckProgramPastSummary = false;
+        let bodyReached: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_FoundSummary = false;
+        let bodyPast: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_PastSummary = false;
 
         for (const line of lines) {
-          const trimmed: RulesEslintJsdocRequireJsdocBodyCheckProgramTrimmed = line.replace(LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX, '').trim();
+          const trimmed: Rules_Eslint_Jsdoc_RequireJsdocBody_Runner_CheckProgram_Trimmed = line.replace(LIB_REGEX_PATTERN_JSDOC_LINE_PREFIX, '').trim();
 
           if (trimmed === '' || trimmed === '*') {
             if (bodyReached === true) {

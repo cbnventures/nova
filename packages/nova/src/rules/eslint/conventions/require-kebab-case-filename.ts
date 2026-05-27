@@ -4,20 +4,20 @@ import { LIB_REGEX_PATTERN_KEBAB_CASE_FILENAME } from '../../../lib/regex.js';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintConventionsRequireKebabCaseFilenameCheckProgramContext,
-  RulesEslintConventionsRequireKebabCaseFilenameCheckProgramKebabCasePattern,
-  RulesEslintConventionsRequireKebabCaseFilenameCheckProgramOptions,
-  RulesEslintConventionsRequireKebabCaseFilenameCheckProgramReturns,
-  RulesEslintConventionsRequireKebabCaseFilenameCheckProgramStem,
-  RulesEslintConventionsRequireKebabCaseFilenameGetStemAllExtensions,
-  RulesEslintConventionsRequireKebabCaseFilenameGetStemBasename,
-  RulesEslintConventionsRequireKebabCaseFilenameGetStemExtraExtensions,
-  RulesEslintConventionsRequireKebabCaseFilenameGetStemFilename,
-  RulesEslintConventionsRequireKebabCaseFilenameGetStemNormalizedFilename,
-  RulesEslintConventionsRequireKebabCaseFilenameGetStemReturns,
-  RulesEslintConventionsRequireKebabCaseFilenameRuleDefaultOptionsExtraExtensions,
-  RulesEslintConventionsRequireKebabCaseFilenameRuleDefaultOptionsIgnoreFiles,
-  RulesEslintConventionsRequireKebabCaseFilenameRuleOptions,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Context,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_KebabCasePattern,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Returns,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Stem,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_AllExtensions,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Basename,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_ExtraExtensions,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Filename,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_NormalizedFilename,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Returns,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsExtraExtensions,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions,
 } from '../../../types/rules/eslint/conventions/require-kebab-case-filename.d.ts';
 
 /**
@@ -28,7 +28,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintConventionsRequireKebabCaseFilename {
+export class Runner {
   /**
    * Rules - ESLint - Conventions - Require Kebab Case Filename - Known Extensions.
    *
@@ -93,11 +93,11 @@ export class RulesEslintConventionsRequireKebabCaseFilename {
       }],
     },
     defaultOptions: [{
-      extraExtensions: [] as RulesEslintConventionsRequireKebabCaseFilenameRuleDefaultOptionsExtraExtensions,
-      ignoreFiles: [] as RulesEslintConventionsRequireKebabCaseFilenameRuleDefaultOptionsIgnoreFiles,
+      extraExtensions: [] as Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsExtraExtensions,
+      ignoreFiles: [] as Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintConventionsRequireKebabCaseFilenameRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -106,7 +106,7 @@ export class RulesEslintConventionsRequireKebabCaseFilename {
 
       return {
         Program() {
-          RulesEslintConventionsRequireKebabCaseFilename.checkProgram(context, options);
+          Runner.checkProgram(context, options);
 
           return;
         },
@@ -122,18 +122,18 @@ export class RulesEslintConventionsRequireKebabCaseFilename {
    *
    * @private
    *
-   * @param {RulesEslintConventionsRequireKebabCaseFilenameGetStemFilename}        filename        - Filename.
-   * @param {RulesEslintConventionsRequireKebabCaseFilenameGetStemExtraExtensions} extraExtensions - Extra extensions.
+   * @param {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Filename}        filename        - Filename.
+   * @param {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_ExtraExtensions} extraExtensions - Extra extensions.
    *
-   * @returns {RulesEslintConventionsRequireKebabCaseFilenameGetStemReturns}
+   * @returns {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Returns}
    *
    * @since 0.15.0
    */
-  private static getStem(filename: RulesEslintConventionsRequireKebabCaseFilenameGetStemFilename, extraExtensions: RulesEslintConventionsRequireKebabCaseFilenameGetStemExtraExtensions): RulesEslintConventionsRequireKebabCaseFilenameGetStemReturns {
-    const normalizedFilename: RulesEslintConventionsRequireKebabCaseFilenameGetStemNormalizedFilename = filename.replaceAll('\\', '/');
-    const basename: RulesEslintConventionsRequireKebabCaseFilenameGetStemBasename = normalizedFilename.split('/').pop() ?? normalizedFilename;
-    const allExtensions: RulesEslintConventionsRequireKebabCaseFilenameGetStemAllExtensions = [
-      ...RulesEslintConventionsRequireKebabCaseFilename.#knownExtensions,
+  private static getStem(filename: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Filename, extraExtensions: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_ExtraExtensions): Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Returns {
+    const normalizedFilename: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_NormalizedFilename = filename.replaceAll('\\', '/');
+    const basename: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Basename = normalizedFilename.split('/').pop() ?? normalizedFilename;
+    const allExtensions: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_AllExtensions = [
+      ...Runner.#knownExtensions,
       ...extraExtensions,
     ];
 
@@ -154,16 +154,16 @@ export class RulesEslintConventionsRequireKebabCaseFilename {
    *
    * @private
    *
-   * @param {RulesEslintConventionsRequireKebabCaseFilenameCheckProgramContext} context - Context.
-   * @param {RulesEslintConventionsRequireKebabCaseFilenameCheckProgramOptions} options - Options.
+   * @param {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Context} context - Context.
+   * @param {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options} options - Options.
    *
-   * @returns {RulesEslintConventionsRequireKebabCaseFilenameCheckProgramReturns}
+   * @returns {Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Returns}
    *
    * @since 0.15.0
    */
-  private static checkProgram(context: RulesEslintConventionsRequireKebabCaseFilenameCheckProgramContext, options: RulesEslintConventionsRequireKebabCaseFilenameCheckProgramOptions): RulesEslintConventionsRequireKebabCaseFilenameCheckProgramReturns {
-    const stem: RulesEslintConventionsRequireKebabCaseFilenameCheckProgramStem = RulesEslintConventionsRequireKebabCaseFilename.getStem(context.filename, options['extraExtensions']);
-    const kebabCasePattern: RulesEslintConventionsRequireKebabCaseFilenameCheckProgramKebabCasePattern = LIB_REGEX_PATTERN_KEBAB_CASE_FILENAME;
+  private static checkProgram(context: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Context, options: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options): Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Returns {
+    const stem: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Stem = Runner.getStem(context.filename, options['extraExtensions']);
+    const kebabCasePattern: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_KebabCasePattern = LIB_REGEX_PATTERN_KEBAB_CASE_FILENAME;
 
     if (kebabCasePattern.test(stem) === false) {
       context.report({

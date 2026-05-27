@@ -3,11 +3,11 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintRegexNoRegexLiteralFlagsCheckLiteralContext,
-  RulesEslintRegexNoRegexLiteralFlagsCheckLiteralNode,
-  RulesEslintRegexNoRegexLiteralFlagsCheckLiteralReturns,
-  RulesEslintRegexNoRegexLiteralFlagsRuleDefaultOptionsIgnoreFiles,
-  RulesEslintRegexNoRegexLiteralFlagsRuleOptions,
+  Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Context,
+  Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Node,
+  Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Returns,
+  Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_RuleOptions,
 } from '../../../types/rules/eslint/regex/no-regex-literal-flags.d.ts';
 
 /**
@@ -18,7 +18,7 @@ import type {
  *
  * @since 0.13.0
  */
-export class RulesEslintRegexNoRegexLiteralFlags {
+export class Runner {
   /**
    * Rules - ESLint - Regex - No Regex Literal Flags - Rule.
    *
@@ -51,10 +51,10 @@ export class RulesEslintRegexNoRegexLiteralFlags {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintRegexNoRegexLiteralFlagsRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintRegexNoRegexLiteralFlagsRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -63,7 +63,7 @@ export class RulesEslintRegexNoRegexLiteralFlags {
 
       return {
         Literal(node) {
-          RulesEslintRegexNoRegexLiteralFlags.checkLiteral(context, node);
+          Runner.checkLiteral(context, node);
 
           return;
         },
@@ -80,14 +80,14 @@ export class RulesEslintRegexNoRegexLiteralFlags {
    *
    * @private
    *
-   * @param {RulesEslintRegexNoRegexLiteralFlagsCheckLiteralContext} context - Context.
-   * @param {RulesEslintRegexNoRegexLiteralFlagsCheckLiteralNode}    node    - Node.
+   * @param {Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Context} context - Context.
+   * @param {Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Node}    node    - Node.
    *
-   * @returns {RulesEslintRegexNoRegexLiteralFlagsCheckLiteralReturns}
+   * @returns {Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Returns}
    *
    * @since 0.13.0
    */
-  private static checkLiteral(context: RulesEslintRegexNoRegexLiteralFlagsCheckLiteralContext, node: RulesEslintRegexNoRegexLiteralFlagsCheckLiteralNode): RulesEslintRegexNoRegexLiteralFlagsCheckLiteralReturns {
+  private static checkLiteral(context: Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Context, node: Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Node): Rules_Eslint_Regex_NoRegexLiteralFlags_Runner_CheckLiteral_Returns {
     if (
       'regex' in node
       && node.regex !== undefined

@@ -2,19 +2,19 @@
  * any section header so it is exempt from the section ordering and
  * cross-section reference rules enforced by type-declarations.test.ts. */
 
-export type TestsCascadeDefensiveCssRuleTripleSelector = string;
+export type Tests_CascadeDefensive_CssRuleTripleSelector = string;
 
-export type TestsCascadeDefensiveCssRuleTripleProperty = string;
+export type Tests_CascadeDefensive_CssRuleTripleProperty = string;
 
-export type TestsCascadeDefensiveCssRuleTripleValue = string;
+export type Tests_CascadeDefensive_CssRuleTripleValue = string;
 
-export type TestsCascadeDefensiveCssRuleTripleDefensive = boolean;
+export type Tests_CascadeDefensive_CssRuleTripleDefensive = boolean;
 
-export type TestsCascadeDefensiveCssRuleTriple = {
-  readonly selector: TestsCascadeDefensiveCssRuleTripleSelector;
-  readonly property: TestsCascadeDefensiveCssRuleTripleProperty;
-  readonly value: TestsCascadeDefensiveCssRuleTripleValue;
-  readonly defensive: TestsCascadeDefensiveCssRuleTripleDefensive;
+export type Tests_CascadeDefensive_CssRuleTriple = {
+  readonly selector: Tests_CascadeDefensive_CssRuleTripleSelector;
+  readonly property: Tests_CascadeDefensive_CssRuleTripleProperty;
+  readonly value: Tests_CascadeDefensive_CssRuleTripleValue;
+  readonly defensive: Tests_CascadeDefensive_CssRuleTripleDefensive;
 };
 
 /**
@@ -22,269 +22,269 @@ export type TestsCascadeDefensiveCssRuleTriple = {
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveCascadeDefensiveTsxPaths = readonly string[];
+export type Tests_CascadeDefensive_CascadeDefensive_TsxPaths = readonly string[];
 
-export type TestsCascadeDefensiveCascadeDefensiveAnchorClasses = ReadonlySet<string>;
+export type Tests_CascadeDefensive_CascadeDefensive_AnchorClasses = ReadonlySet<string>;
 
-export type TestsCascadeDefensiveCascadeDefensiveTriplesByFile = ReadonlyMap<string, readonly TestsCascadeDefensiveCssRuleTriple[]>;
+export type Tests_CascadeDefensive_CascadeDefensive_TriplesByFile = ReadonlyMap<string, readonly Tests_CascadeDefensive_CssRuleTriple[]>;
 
-export type TestsCascadeDefensiveCascadeDefensiveBareTextDecorationNoneClasses = Map<string, string>;
+export type Tests_CascadeDefensive_CascadeDefensive_BareTextDecorationNoneClasses = Map<string, string>;
 
-export type TestsCascadeDefensiveCascadeDefensiveGuardedHoverClasses = Set<string>;
+export type Tests_CascadeDefensive_CascadeDefensive_GuardedHoverClasses = Set<string>;
 
-export type TestsCascadeDefensiveCascadeDefensiveGuardedFocusClasses = Set<string>;
+export type Tests_CascadeDefensive_CascadeDefensive_GuardedFocusClasses = Set<string>;
 
-export type TestsCascadeDefensiveCascadeDefensiveBareClassPattern = RegExp;
+export type Tests_CascadeDefensive_CascadeDefensive_BareClassPattern = RegExp;
 
-export type TestsCascadeDefensiveCascadeDefensiveHoverClassPattern = RegExp;
+export type Tests_CascadeDefensive_CascadeDefensive_HoverClassPattern = RegExp;
 
-export type TestsCascadeDefensiveCascadeDefensiveFocusClassPattern = RegExp;
+export type Tests_CascadeDefensive_CascadeDefensive_FocusClassPattern = RegExp;
 
-export type TestsCascadeDefensiveCascadeDefensiveHoverPseudoSuffix = ':hover';
+export type Tests_CascadeDefensive_CascadeDefensive_HoverPseudoSuffix = ':hover';
 
-export type TestsCascadeDefensiveCascadeDefensiveFocusPseudoSuffix = ':focus-visible';
+export type Tests_CascadeDefensive_CascadeDefensive_FocusPseudoSuffix = ':focus-visible';
 
-export type TestsCascadeDefensiveCascadeDefensiveFilePath = string;
+export type Tests_CascadeDefensive_CascadeDefensive_FilePath = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveFileTriples = readonly TestsCascadeDefensiveCssRuleTriple[];
+export type Tests_CascadeDefensive_CascadeDefensive_FileTriples = readonly Tests_CascadeDefensive_CssRuleTriple[];
 
-export type TestsCascadeDefensiveCascadeDefensivePart = string;
+export type Tests_CascadeDefensive_CascadeDefensive_Part = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveBareClassMatch = RegExpMatchArray | null;
+export type Tests_CascadeDefensive_CascadeDefensive_BareClassMatch = RegExpMatchArray | null;
 
-export type TestsCascadeDefensiveCascadeDefensiveBareClass = string;
+export type Tests_CascadeDefensive_CascadeDefensive_BareClass = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveHoverClassMatch = RegExpMatchArray | null;
+export type Tests_CascadeDefensive_CascadeDefensive_HoverClassMatch = RegExpMatchArray | null;
 
-export type TestsCascadeDefensiveCascadeDefensiveHoverClass = string;
+export type Tests_CascadeDefensive_CascadeDefensive_HoverClass = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveFocusClassMatch = RegExpMatchArray | null;
+export type Tests_CascadeDefensive_CascadeDefensive_FocusClassMatch = RegExpMatchArray | null;
 
-export type TestsCascadeDefensiveCascadeDefensiveFocusClass = string;
+export type Tests_CascadeDefensive_CascadeDefensive_FocusClass = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveMissingGuards = string[];
+export type Tests_CascadeDefensive_CascadeDefensive_MissingGuards = string[];
 
-export type TestsCascadeDefensiveCascadeDefensiveClassName = string;
+export type Tests_CascadeDefensive_CascadeDefensive_ClassName = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveDeclaringFile = string;
+export type Tests_CascadeDefensive_CascadeDefensive_DeclaringFile = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveMissingGuardsMessage = string;
+export type Tests_CascadeDefensive_CascadeDefensive_MissingGuardsMessage = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveClassPlusPseudoPattern = RegExp;
+export type Tests_CascadeDefensive_CascadeDefensive_ClassPlusPseudoPattern = RegExp;
 
-export type TestsCascadeDefensiveCascadeDefensiveRedundancies = string[];
+export type Tests_CascadeDefensive_CascadeDefensive_Redundancies = string[];
 
-export type TestsCascadeDefensiveCascadeDefensiveBareValueLookup = Map<string, string>;
+export type Tests_CascadeDefensive_CascadeDefensive_BareValueLookup = Map<string, string>;
 
-export type TestsCascadeDefensiveCascadeDefensiveLookupKey = string;
+export type Tests_CascadeDefensive_CascadeDefensive_LookupKey = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveDarkStrippedSelector = string | null;
+export type Tests_CascadeDefensive_CascadeDefensive_DarkStrippedSelector = string | null;
 
-export type TestsCascadeDefensiveCascadeDefensiveDarkLookupKey = string;
+export type Tests_CascadeDefensive_CascadeDefensive_DarkLookupKey = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveBareValue = string | undefined;
+export type Tests_CascadeDefensive_CascadeDefensive_BareValue = string | undefined;
 
-export type TestsCascadeDefensiveCascadeDefensiveDarkClassMatch = RegExpMatchArray | null;
+export type Tests_CascadeDefensive_CascadeDefensive_DarkClassMatch = RegExpMatchArray | null;
 
-export type TestsCascadeDefensiveCascadeDefensiveDarkClass = string;
+export type Tests_CascadeDefensive_CascadeDefensive_DarkClass = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveRedundanciesMessage = string;
+export type Tests_CascadeDefensive_CascadeDefensive_RedundanciesMessage = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveBareColorClasses = Map<string, string>;
+export type Tests_CascadeDefensive_CascadeDefensive_BareColorClasses = Map<string, string>;
 
-export type TestsCascadeDefensiveCascadeDefensiveEndsHoverClassPattern = RegExp;
+export type Tests_CascadeDefensive_CascadeDefensive_EndsHoverClassPattern = RegExp;
 
-export type TestsCascadeDefensiveCascadeDefensiveEndsFocusClassPattern = RegExp;
+export type Tests_CascadeDefensive_CascadeDefensive_EndsFocusClassPattern = RegExp;
 
-export type TestsCascadeDefensiveCascadeDefensiveColorProperty = 'color';
+export type Tests_CascadeDefensive_CascadeDefensive_ColorProperty = 'color';
 
-export type TestsCascadeDefensiveCascadeDefensiveEndsHoverClassMatch = RegExpMatchArray | null;
+export type Tests_CascadeDefensive_CascadeDefensive_EndsHoverClassMatch = RegExpMatchArray | null;
 
-export type TestsCascadeDefensiveCascadeDefensiveEndsHoverClass = string;
+export type Tests_CascadeDefensive_CascadeDefensive_EndsHoverClass = string;
 
-export type TestsCascadeDefensiveCascadeDefensiveEndsFocusClassMatch = RegExpMatchArray | null;
+export type Tests_CascadeDefensive_CascadeDefensive_EndsFocusClassMatch = RegExpMatchArray | null;
 
-export type TestsCascadeDefensiveCascadeDefensiveEndsFocusClass = string;
+export type Tests_CascadeDefensive_CascadeDefensive_EndsFocusClass = string;
 
 /**
  * Tests - Cascade Defensive - Extract Anchor Classes.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveExtractAnchorClassesContent = string;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_Content = string;
 
-export type TestsCascadeDefensiveExtractAnchorClassesReturns = ReadonlySet<string>;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_Returns = ReadonlySet<string>;
 
-export type TestsCascadeDefensiveExtractAnchorClassesClasses = Set<string>;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_Classes = Set<string>;
 
-export type TestsCascadeDefensiveExtractAnchorClassesAnchorOpenPattern = RegExp;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_AnchorOpenPattern = RegExp;
 
-export type TestsCascadeDefensiveExtractAnchorClassesStaticPattern = RegExp;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_StaticPattern = RegExp;
 
-export type TestsCascadeDefensiveExtractAnchorClassesMergePattern = RegExp;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_MergePattern = RegExp;
 
-export type TestsCascadeDefensiveExtractAnchorClassesWhitespacePattern = RegExp;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_WhitespacePattern = RegExp;
 
-export type TestsCascadeDefensiveExtractAnchorClassesTagMatch = RegExpExecArray | null;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_TagMatch = RegExpExecArray | null;
 
-export type TestsCascadeDefensiveExtractAnchorClassesTagName = string;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_TagName = string;
 
-export type TestsCascadeDefensiveExtractAnchorClassesEndIndex = number;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_EndIndex = number;
 
-export type TestsCascadeDefensiveExtractAnchorClassesBraceDepth = number;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_BraceDepth = number;
 
-export type TestsCascadeDefensiveExtractAnchorClassesScanChar = string;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_ScanChar = string;
 
-export type TestsCascadeDefensiveExtractAnchorClassesOpeningTag = string;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_OpeningTag = string;
 
-export type TestsCascadeDefensiveExtractAnchorClassesStaticMatch = RegExpMatchArray | null;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_StaticMatch = RegExpMatchArray | null;
 
-export type TestsCascadeDefensiveExtractAnchorClassesStaticCapture = string;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_StaticCapture = string;
 
-export type TestsCascadeDefensiveExtractAnchorClassesClassToken = string;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_ClassToken = string;
 
-export type TestsCascadeDefensiveExtractAnchorClassesMergeMatch = RegExpMatchArray | null;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_MergeMatch = RegExpMatchArray | null;
 
-export type TestsCascadeDefensiveExtractAnchorClassesMergeCapture = string;
+export type Tests_CascadeDefensive_ExtractAnchorClasses_MergeCapture = string;
 
 /**
  * Tests - Cascade Defensive - Extract Rule Triples.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveExtractRuleTriplesSource = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Source = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesReturns = readonly TestsCascadeDefensiveCssRuleTriple[];
+export type Tests_CascadeDefensive_ExtractRuleTriples_Returns = readonly Tests_CascadeDefensive_CssRuleTriple[];
 
-export type TestsCascadeDefensiveExtractRuleTriplesStripped = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Stripped = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesTriples = TestsCascadeDefensiveCssRuleTriple[];
+export type Tests_CascadeDefensive_ExtractRuleTriples_Triples = Tests_CascadeDefensive_CssRuleTriple[];
 
-export type TestsCascadeDefensiveExtractRuleTriplesDefensivePattern = RegExp;
+export type Tests_CascadeDefensive_ExtractRuleTriples_DefensivePattern = RegExp;
 
-export type TestsCascadeDefensiveExtractRuleTriplesWhitespacePattern = RegExp;
+export type Tests_CascadeDefensive_ExtractRuleTriples_WhitespacePattern = RegExp;
 
-export type TestsCascadeDefensiveExtractRuleTriplesDepth = number;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Depth = number;
 
-export type TestsCascadeDefensiveExtractRuleTriplesBlockStart = number;
+export type Tests_CascadeDefensive_ExtractRuleTriples_BlockStart = number;
 
-export type TestsCascadeDefensiveExtractRuleTriplesPreludeStart = number;
+export type Tests_CascadeDefensive_ExtractRuleTriples_PreludeStart = number;
 
-export type TestsCascadeDefensiveExtractRuleTriplesDefensive = boolean;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Defensive = boolean;
 
-export type TestsCascadeDefensiveExtractRuleTriplesIndex = number;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Index = number;
 
-export type TestsCascadeDefensiveExtractRuleTriplesChar = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Char = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesPrelude = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Prelude = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesNested = number;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Nested = number;
 
-export type TestsCascadeDefensiveExtractRuleTriplesInner = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Inner = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesBody = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Body = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesSelector = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Selector = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesDeclaration = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Declaration = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesColon = number;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Colon = number;
 
-export type TestsCascadeDefensiveExtractRuleTriplesProperty = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Property = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesRawValue = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_RawValue = string;
 
-export type TestsCascadeDefensiveExtractRuleTriplesValue = string;
+export type Tests_CascadeDefensive_ExtractRuleTriples_Value = string;
 
 /**
  * Tests - Cascade Defensive - Get Package Root.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveGetPackageRootReturns = string;
+export type Tests_CascadeDefensive_GetPackageRoot_Returns = string;
 
-export type TestsCascadeDefensiveGetPackageRootCurrentFilePath = string;
+export type Tests_CascadeDefensive_GetPackageRoot_CurrentFilePath = string;
 
-export type TestsCascadeDefensiveGetPackageRootCurrentFileDirectory = string;
+export type Tests_CascadeDefensive_GetPackageRoot_CurrentFileDirectory = string;
 
 /**
  * Tests - Cascade Defensive - List Theme And Block Tsx.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveListThemeAndBlockTsxReturns = Promise<readonly string[]>;
+export type Tests_CascadeDefensive_ListThemeAndBlockTsx_Returns = Promise<readonly string[]>;
 
-export type TestsCascadeDefensiveListThemeAndBlockTsxThemeRoot = string;
+export type Tests_CascadeDefensive_ListThemeAndBlockTsx_ThemeRoot = string;
 
-export type TestsCascadeDefensiveListThemeAndBlockTsxBlocksRoot = string;
+export type Tests_CascadeDefensive_ListThemeAndBlockTsx_BlocksRoot = string;
 
-export type TestsCascadeDefensiveListThemeAndBlockTsxThemeFiles = readonly string[];
+export type Tests_CascadeDefensive_ListThemeAndBlockTsx_ThemeFiles = readonly string[];
 
-export type TestsCascadeDefensiveListThemeAndBlockTsxBlocksFiles = readonly string[];
+export type Tests_CascadeDefensive_ListThemeAndBlockTsx_BlocksFiles = readonly string[];
 
-export type TestsCascadeDefensiveListThemeAndBlockTsxAbsolute = string[];
+export type Tests_CascadeDefensive_ListThemeAndBlockTsx_Absolute = string[];
 
 /**
  * Tests - Cascade Defensive - Read Anchor Classes.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveReadAnchorClassesTsxPaths = readonly string[];
+export type Tests_CascadeDefensive_ReadAnchorClasses_TsxPaths = readonly string[];
 
-export type TestsCascadeDefensiveReadAnchorClassesReturns = Promise<ReadonlySet<string>>;
+export type Tests_CascadeDefensive_ReadAnchorClasses_Returns = Promise<ReadonlySet<string>>;
 
-export type TestsCascadeDefensiveReadAnchorClassesAnchorClasses = Set<string>;
+export type Tests_CascadeDefensive_ReadAnchorClasses_AnchorClasses = Set<string>;
 
-export type TestsCascadeDefensiveReadAnchorClassesContent = string;
+export type Tests_CascadeDefensive_ReadAnchorClasses_Content = string;
 
-export type TestsCascadeDefensiveReadAnchorClassesPerFileClasses = ReadonlySet<string>;
+export type Tests_CascadeDefensive_ReadAnchorClasses_PerFileClasses = ReadonlySet<string>;
 
-export type TestsCascadeDefensiveReadAnchorClassesClassName = string;
+export type Tests_CascadeDefensive_ReadAnchorClasses_ClassName = string;
 
 /**
  * Tests - Cascade Defensive - Read Css Triples By File.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveReadCssTriplesByFileReturns = Promise<ReadonlyMap<string, readonly TestsCascadeDefensiveCssRuleTriple[]>>;
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_Returns = Promise<ReadonlyMap<string, readonly Tests_CascadeDefensive_CssRuleTriple[]>>;
 
-export type TestsCascadeDefensiveReadCssTriplesByFileStylesRoot = string;
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_StylesRoot = string;
 
-export type TestsCascadeDefensiveReadCssTriplesByFileRelativePaths = readonly string[];
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_RelativePaths = readonly string[];
 
-export type TestsCascadeDefensiveReadCssTriplesByFileTriplesByFile = Map<string, readonly TestsCascadeDefensiveCssRuleTriple[]>;
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_TriplesByFile = Map<string, readonly Tests_CascadeDefensive_CssRuleTriple[]>;
 
-export type TestsCascadeDefensiveReadCssTriplesByFileAbsolutePath = string;
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_AbsolutePath = string;
 
-export type TestsCascadeDefensiveReadCssTriplesByFileContent = string;
+export type Tests_CascadeDefensive_ReadCssTriplesByFile_Content = string;
 
 /**
  * Tests - Cascade Defensive - Strip Block Comments.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveStripBlockCommentsSource = string;
+export type Tests_CascadeDefensive_StripBlockComments_Source = string;
 
-export type TestsCascadeDefensiveStripBlockCommentsReturns = string;
+export type Tests_CascadeDefensive_StripBlockComments_Returns = string;
 
-export type TestsCascadeDefensiveStripBlockCommentsPattern = RegExp;
+export type Tests_CascadeDefensive_StripBlockComments_Pattern = RegExp;
 
 /**
  * Tests - Cascade Defensive - Strip Dark Selector Prefix.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveStripDarkSelectorPrefixSelector = string;
+export type Tests_CascadeDefensive_StripDarkSelectorPrefix_Selector = string;
 
-export type TestsCascadeDefensiveStripDarkSelectorPrefixReturns = string | null;
+export type Tests_CascadeDefensive_StripDarkSelectorPrefix_Returns = string | null;
 
-export type TestsCascadeDefensiveStripDarkSelectorPrefixPattern = RegExp;
+export type Tests_CascadeDefensive_StripDarkSelectorPrefix_Pattern = RegExp;
 
 /**
  * Tests - Cascade Defensive - Triple Key.
  *
  * @since 0.18.0
  */
-export type TestsCascadeDefensiveTripleKeyTriple = TestsCascadeDefensiveCssRuleTriple;
+export type Tests_CascadeDefensive_TripleKey_Triple = Tests_CascadeDefensive_CssRuleTriple;
 
-export type TestsCascadeDefensiveTripleKeyReturns = string;
+export type Tests_CascadeDefensive_TripleKey_Returns = string;

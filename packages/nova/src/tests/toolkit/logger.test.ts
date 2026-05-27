@@ -4,7 +4,7 @@ import { describe, it } from 'vitest';
 
 import { Logger } from '../../toolkit/index.js';
 
-import type { TestsToolkitLoggerLoggerCustomizeScoped } from '../../types/tests/toolkit/logger.test.d.ts';
+import type { Tests_Toolkit_Logger_LoggerCustomize_Scoped } from '../../types/tests/toolkit/logger.test.d.ts';
 
 /**
  * Tests - Toolkit - Logger - Logger Static Methods.
@@ -58,7 +58,7 @@ describe('Logger static methods', async () => {
  */
 describe('Logger customize', async () => {
   it('returns object with all log methods', () => {
-    const scoped: TestsToolkitLoggerLoggerCustomizeScoped = Logger.customize({ name: 'test' });
+    const scoped: Tests_Toolkit_Logger_LoggerCustomize_Scoped = Logger.customize({ name: 'test' });
 
     strictEqual(typeof scoped['debug'], 'function');
     strictEqual(typeof scoped['dev'], 'function');
@@ -70,7 +70,7 @@ describe('Logger customize', async () => {
   });
 
   it('returns object with all log methods when given name and purpose', () => {
-    const scoped: TestsToolkitLoggerLoggerCustomizeScoped = Logger.customize({
+    const scoped: Tests_Toolkit_Logger_LoggerCustomize_Scoped = Logger.customize({
       name: 'test',
       purpose: 'unit',
     });
@@ -82,7 +82,7 @@ describe('Logger customize', async () => {
   });
 
   it('returns object with all log methods when given name, type, and purpose', () => {
-    const scoped: TestsToolkitLoggerLoggerCustomizeScoped = Logger.customize({
+    const scoped: Tests_Toolkit_Logger_LoggerCustomize_Scoped = Logger.customize({
       name: 'test',
       type: 'test',
       purpose: 'unit',
@@ -95,7 +95,7 @@ describe('Logger customize', async () => {
   });
 
   it('returns object with all log methods when given empty options', () => {
-    const scoped: TestsToolkitLoggerLoggerCustomizeScoped = Logger.customize({});
+    const scoped: Tests_Toolkit_Logger_LoggerCustomize_Scoped = Logger.customize({});
 
     strictEqual(typeof scoped['debug'], 'function');
     strictEqual(typeof scoped['info'], 'function');
@@ -106,7 +106,7 @@ describe('Logger customize', async () => {
   });
 
   it('scoped methods do not throw', () => {
-    const scoped: TestsToolkitLoggerLoggerCustomizeScoped = Logger.customize({ name: 'test' });
+    const scoped: Tests_Toolkit_Logger_LoggerCustomize_Scoped = Logger.customize({ name: 'test' });
 
     doesNotThrow(() => {
       scoped.info('test message');

@@ -3,30 +3,30 @@
  *
  * @since 0.14.0
  */
-export type TestsCliRecipePackageJsonSyncIdentityRunOriginalCwd = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_OriginalCwd = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunTemporaryDirectory = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_TemporaryDirectory = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunSandboxPath = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SandboxPath = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunSandboxRoot = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_SandboxRoot = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunProjectDirectory = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_ProjectDirectory = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunWorkspaceDirectory = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_WorkspaceDirectory = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunPackageJsonPath = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_PackageJsonPath = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunPackageJsonContents = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_PackageJsonContents = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunNovaConfigPath = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_NovaConfigPath = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunNovaConfigContents = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_NovaConfigContents = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonPath = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_WorkspacePackageJsonPath = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunWorkspacePackageJsonContents = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_WorkspacePackageJsonContents = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunOutput = string;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_Output = string;
 
-export type TestsCliRecipePackageJsonSyncIdentityRunParsed = Record<string, unknown>;
+export type Tests_Cli_Recipe_PackageJson_SyncIdentity_CliRecipePackageJsonSyncIdentityRun_Parsed = Record<string, unknown>;

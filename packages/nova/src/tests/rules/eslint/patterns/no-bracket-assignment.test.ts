@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoBracketAssignment } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintPatternsNoBracketAssignmentRuleTester } from '../../../../types/tests/rules/eslint/patterns/no-bracket-assignment.test.d.ts';
+import type { Tests_Rules_Eslint_Patterns_NoBracketAssignment_RuleTester } from '../../../../types/tests/rules/eslint/patterns/no-bracket-assignment.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Patterns - No Bracket Assignment.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintPatternsNoBracketAssignmentRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Patterns_NoBracketAssignment_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

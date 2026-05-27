@@ -3,13 +3,13 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintJsdocRequireJsdocSinceCheckNodeComments,
-  RulesEslintJsdocRequireJsdocSinceCheckNodeContext,
-  RulesEslintJsdocRequireJsdocSinceCheckNodeJsdocComment,
-  RulesEslintJsdocRequireJsdocSinceCheckNodeNode,
-  RulesEslintJsdocRequireJsdocSinceCheckNodeReturns,
-  RulesEslintJsdocRequireJsdocSinceRuleDefaultOptionsIgnoreFiles,
-  RulesEslintJsdocRequireJsdocSinceRuleOptions,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Comments,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Context,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_JsdocComment,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Node,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-since.d.ts';
 
 /**
@@ -20,7 +20,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintJsdocRequireJsdocSince {
+export class Runner {
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Since - Rule.
    *
@@ -53,10 +53,10 @@ export class RulesEslintJsdocRequireJsdocSince {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintJsdocRequireJsdocSinceRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintJsdocRequireJsdocSinceRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -65,37 +65,37 @@ export class RulesEslintJsdocRequireJsdocSince {
 
       return {
         ClassDeclaration(node) {
-          RulesEslintJsdocRequireJsdocSince.checkNode(context, node);
+          Runner.checkNode(context, node);
 
           return;
         },
         MethodDefinition(node) {
-          RulesEslintJsdocRequireJsdocSince.checkNode(context, node);
+          Runner.checkNode(context, node);
 
           return;
         },
         PropertyDefinition(node) {
-          RulesEslintJsdocRequireJsdocSince.checkNode(context, node);
+          Runner.checkNode(context, node);
 
           return;
         },
         FunctionDeclaration(node) {
-          RulesEslintJsdocRequireJsdocSince.checkNode(context, node);
+          Runner.checkNode(context, node);
 
           return;
         },
         TSTypeAliasDeclaration(node) {
-          RulesEslintJsdocRequireJsdocSince.checkNode(context, node);
+          Runner.checkNode(context, node);
 
           return;
         },
         TSInterfaceDeclaration(node) {
-          RulesEslintJsdocRequireJsdocSince.checkNode(context, node);
+          Runner.checkNode(context, node);
 
           return;
         },
         TSEnumDeclaration(node) {
-          RulesEslintJsdocRequireJsdocSince.checkNode(context, node);
+          Runner.checkNode(context, node);
 
           return;
         },
@@ -111,16 +111,16 @@ export class RulesEslintJsdocRequireJsdocSince {
    *
    * @private
    *
-   * @param {RulesEslintJsdocRequireJsdocSinceCheckNodeContext} context - Context.
-   * @param {RulesEslintJsdocRequireJsdocSinceCheckNodeNode}    node    - Node.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Context} context - Context.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Node}    node    - Node.
    *
-   * @returns {RulesEslintJsdocRequireJsdocSinceCheckNodeReturns}
+   * @returns {Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Returns}
    *
    * @since 0.15.0
    */
-  private static checkNode(context: RulesEslintJsdocRequireJsdocSinceCheckNodeContext, node: RulesEslintJsdocRequireJsdocSinceCheckNodeNode): RulesEslintJsdocRequireJsdocSinceCheckNodeReturns {
-    const comments: RulesEslintJsdocRequireJsdocSinceCheckNodeComments = context.sourceCode.getCommentsBefore(node);
-    let jsdocComment: RulesEslintJsdocRequireJsdocSinceCheckNodeJsdocComment = undefined;
+  private static checkNode(context: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Context, node: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Node): Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Returns {
+    const comments: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_Comments = context.sourceCode.getCommentsBefore(node);
+    let jsdocComment: Rules_Eslint_Jsdoc_RequireJsdocSince_Runner_CheckNode_JsdocComment = undefined;
 
     for (const comment of comments) {
       if (comment.type === 'Block' && comment.value.startsWith('*') === true) {

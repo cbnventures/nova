@@ -9,308 +9,308 @@ import type {
  *
  * @since 0.18.0
  */
-export type LibTranslationsApplyParamsThemeConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_Apply_Params_ThemeConfig = Record<string, unknown>;
 
-export type LibTranslationsApplyParamsTranslationFiles = TranslationFile[];
+export type Lib_Translations_Runner_Apply_Params_TranslationFiles = TranslationFile[];
 
-export type LibTranslationsApplyParams = {
-  themeConfig: LibTranslationsApplyParamsThemeConfig;
-  translationFiles: LibTranslationsApplyParamsTranslationFiles;
+export type Lib_Translations_Runner_Apply_Params = {
+  themeConfig: Lib_Translations_Runner_Apply_Params_ThemeConfig;
+  translationFiles: Lib_Translations_Runner_Apply_Params_TranslationFiles;
 };
 
-export type LibTranslationsApplyReturns = Record<string, unknown>;
+export type Lib_Translations_Runner_Apply_Returns = Record<string, unknown>;
 
-export type LibTranslationsApplyThemeConfig = LibTranslationsApplyParamsThemeConfig;
+export type Lib_Translations_Runner_Apply_ThemeConfig = Lib_Translations_Runner_Apply_Params_ThemeConfig;
 
-export type LibTranslationsApplyTranslationFiles = LibTranslationsApplyParamsTranslationFiles;
+export type Lib_Translations_Runner_Apply_TranslationFiles = Lib_Translations_Runner_Apply_Params_TranslationFiles;
 
-export type LibTranslationsApplyClonedThemeConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_Apply_ClonedThemeConfig = Record<string, unknown>;
 
-export type LibTranslationsApplyFilesByPath = Map<string, TranslationFileContent>;
+export type Lib_Translations_Runner_Apply_FilesByPath = Map<string, TranslationFileContent>;
 
-export type LibTranslationsApplyNavbarTranslations = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ApplyNavbar_Translations = TranslationFileContent | undefined;
 
-export type LibTranslationsApplyNavbarValue = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyNavbar_Value = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyBlogTranslations = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ApplyBlog_Translations = TranslationFileContent | undefined;
 
-export type LibTranslationsApplyBlogValue = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyBlog_Value = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyAnnouncementBarTranslations = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ApplyAnnouncementBar_Translations = TranslationFileContent | undefined;
 
-export type LibTranslationsApplyAnnouncementBarValue = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyAnnouncementBar_Value = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyErrorPagesTranslations = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ApplyErrorPages_Translations = TranslationFileContent | undefined;
 
-export type LibTranslationsApplyErrorPagesValue = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyErrorPages_Value = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyFooterTranslations = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ApplyFooter_Translations = TranslationFileContent | undefined;
 
-export type LibTranslationsApplyFooterValue = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyFooter_Value = Record<string, unknown> | undefined;
 
 /**
  * Lib - Translations - Apply Announcement Bar.
  *
  * @since 0.18.0
  */
-export type LibTranslationsApplyAnnouncementBarAnnouncementBar = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyAnnouncementBar_AnnouncementBar = Record<string, unknown>;
 
-export type LibTranslationsApplyAnnouncementBarTranslationsParam = TranslationFileContent;
+export type Lib_Translations_Runner_ApplyAnnouncementBar_TranslationsParam = TranslationFileContent;
 
-export type LibTranslationsApplyAnnouncementBarReturns = void;
+export type Lib_Translations_Runner_ApplyAnnouncementBar_Returns = void;
 
-export type LibTranslationsApplyAnnouncementBarMessage = TranslationMessage | undefined;
+export type Lib_Translations_Runner_ApplyAnnouncementBar_Message = TranslationMessage | undefined;
 
 /**
  * Lib - Translations - Apply Blog.
  *
  * @since 0.18.0
  */
-export type LibTranslationsApplyBlogBlog = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyBlog_Blog = Record<string, unknown>;
 
-export type LibTranslationsApplyBlogTranslationsParam = TranslationFileContent;
+export type Lib_Translations_Runner_ApplyBlog_TranslationsParam = TranslationFileContent;
 
-export type LibTranslationsApplyBlogReturns = void;
+export type Lib_Translations_Runner_ApplyBlog_Returns = void;
 
-export type LibTranslationsApplyBlogLayout = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyBlog_Layout = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyBlogHeadingMessage = TranslationMessage | undefined;
+export type Lib_Translations_Runner_ApplyBlog_HeadingMessage = TranslationMessage | undefined;
 
-export type LibTranslationsApplyBlogDescriptionMessage = TranslationMessage | undefined;
+export type Lib_Translations_Runner_ApplyBlog_DescriptionMessage = TranslationMessage | undefined;
 
 /**
  * Lib - Translations - Apply Error Pages.
  *
  * @since 0.18.0
  */
-export type LibTranslationsApplyErrorPagesErrorPages = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyErrorPages_ErrorPages = Record<string, unknown>;
 
-export type LibTranslationsApplyErrorPagesTranslationsParam = TranslationFileContent;
+export type Lib_Translations_Runner_ApplyErrorPages_TranslationsParam = TranslationFileContent;
 
-export type LibTranslationsApplyErrorPagesReturns = void;
+export type Lib_Translations_Runner_ApplyErrorPages_Returns = void;
 
-export type LibTranslationsApplyErrorPagesNotFound = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyErrorPages_NotFound = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyErrorPagesMessage = TranslationMessage | undefined;
+export type Lib_Translations_Runner_ApplyErrorPages_Message = TranslationMessage | undefined;
 
-export type LibTranslationsApplyErrorPagesErrorPageContent = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyErrorPages_ErrorPageContent = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyErrorPagesError = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyErrorPages_Error = Record<string, unknown> | undefined;
 
 /**
  * Lib - Translations - Apply Footer.
  *
  * @since 0.18.0
  */
-export type LibTranslationsApplyFooterFooter = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyFooter_Footer = Record<string, unknown>;
 
-export type LibTranslationsApplyFooterTranslationsParam = TranslationFileContent;
+export type Lib_Translations_Runner_ApplyFooter_TranslationsParam = TranslationFileContent;
 
-export type LibTranslationsApplyFooterReturns = void;
+export type Lib_Translations_Runner_ApplyFooter_Returns = void;
 
-export type LibTranslationsApplyFooterLayout = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyFooter_Layout = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyFooterLayoutSlot = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyFooter_LayoutSlot = Record<string, unknown>;
 
-export type LibTranslationsApplyFooterMessage = TranslationMessage | undefined;
+export type Lib_Translations_Runner_ApplyFooter_Message = TranslationMessage | undefined;
 
-export type LibTranslationsApplyFooterSections = Record<string, unknown> | undefined;
+export type Lib_Translations_Runner_ApplyFooter_Sections = Record<string, unknown> | undefined;
 
-export type LibTranslationsApplyFooterSectionLinks = Record<string, unknown>[];
+export type Lib_Translations_Runner_ApplyFooter_SectionLinks = Record<string, unknown>[];
 
-export type LibTranslationsApplyFooterSectionLink = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyFooter_SectionLink = Record<string, unknown>;
 
-export type LibTranslationsApplyFooterCta = unknown;
+export type Lib_Translations_Runner_ApplyFooter_Cta = unknown;
 
-export type LibTranslationsApplyFooterCtaObject = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyFooter_CtaObject = Record<string, unknown>;
 
 /**
  * Lib - Translations - Apply Navbar.
  *
  * @since 0.18.0
  */
-export type LibTranslationsApplyNavbarNavbar = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyNavbar_Navbar = Record<string, unknown>;
 
-export type LibTranslationsApplyNavbarTranslationsParam = TranslationFileContent;
+export type Lib_Translations_Runner_ApplyNavbar_TranslationsParam = TranslationFileContent;
 
-export type LibTranslationsApplyNavbarReturns = void;
+export type Lib_Translations_Runner_ApplyNavbar_Returns = void;
 
-export type LibTranslationsApplyNavbarItems = Record<string, unknown>[] | undefined;
+export type Lib_Translations_Runner_ApplyNavbar_Items = Record<string, unknown>[] | undefined;
 
-export type LibTranslationsApplyNavbarItem = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyNavbar_Item = Record<string, unknown>;
 
-export type LibTranslationsApplyNavbarMessage = TranslationMessage | undefined;
+export type Lib_Translations_Runner_ApplyNavbar_Message = TranslationMessage | undefined;
 
-export type LibTranslationsApplyNavbarChildren = Record<string, unknown>[] | undefined;
+export type Lib_Translations_Runner_ApplyNavbar_Children = Record<string, unknown>[] | undefined;
 
-export type LibTranslationsApplyNavbarChild = Record<string, unknown>;
+export type Lib_Translations_Runner_ApplyNavbar_Child = Record<string, unknown>;
 
 /**
  * Lib - Translations - Extract.
  *
  * @since 0.18.0
  */
-export type LibTranslationsExtractParamsThemeConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_Extract_Params_ThemeConfig = Record<string, unknown>;
 
-export type LibTranslationsExtractParams = {
-  themeConfig: LibTranslationsExtractParamsThemeConfig;
+export type Lib_Translations_Runner_Extract_Params = {
+  themeConfig: Lib_Translations_Runner_Extract_Params_ThemeConfig;
 };
 
-export type LibTranslationsExtractReturns = TranslationFile[];
+export type Lib_Translations_Runner_Extract_Returns = TranslationFile[];
 
-export type LibTranslationsExtractThemeConfig = LibTranslationsExtractParamsThemeConfig;
+export type Lib_Translations_Runner_Extract_ThemeConfig = Lib_Translations_Runner_Extract_Params_ThemeConfig;
 
-export type LibTranslationsExtractResult = TranslationFile[];
+export type Lib_Translations_Runner_Extract_Result = TranslationFile[];
 
-export type LibTranslationsExtractNavbarContent = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractNavbar_Content = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractBlogContent = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractBlog_Content = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractAnnouncementBarContent = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractAnnouncementBar_Content = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractErrorPagesContent = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractErrorPages_Content = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractFooterContent = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractFooter_Content = TranslationFileContent | undefined;
 
 /**
  * Lib - Translations - Extract Announcement Bar.
  *
  * @since 0.18.0
  */
-export type LibTranslationsExtractAnnouncementBarAnnouncementBar = unknown;
+export type Lib_Translations_Runner_ExtractAnnouncementBar_AnnouncementBar = unknown;
 
-export type LibTranslationsExtractAnnouncementBarReturns = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractAnnouncementBar_Returns = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractAnnouncementBarConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractAnnouncementBar_Config = Record<string, unknown>;
 
-export type LibTranslationsExtractAnnouncementBarContentValue = unknown;
+export type Lib_Translations_Runner_ExtractAnnouncementBar_ContentValue = unknown;
 
 /**
  * Lib - Translations - Extract Blog.
  *
  * @since 0.18.0
  */
-export type LibTranslationsExtractBlogBlog = unknown;
+export type Lib_Translations_Runner_ExtractBlog_Blog = unknown;
 
-export type LibTranslationsExtractBlogReturns = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractBlog_Returns = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractBlogConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractBlog_Config = Record<string, unknown>;
 
-export type LibTranslationsExtractBlogLayout = unknown;
+export type Lib_Translations_Runner_ExtractBlog_Layout = unknown;
 
-export type LibTranslationsExtractBlogLayoutConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractBlog_LayoutConfig = Record<string, unknown>;
 
-export type LibTranslationsExtractBlogFileContent = TranslationFileContent;
+export type Lib_Translations_Runner_ExtractBlog_FileContent = TranslationFileContent;
 
-export type LibTranslationsExtractBlogHeadingValue = unknown;
+export type Lib_Translations_Runner_ExtractBlog_HeadingValue = unknown;
 
-export type LibTranslationsExtractBlogDescriptionValue = unknown;
+export type Lib_Translations_Runner_ExtractBlog_DescriptionValue = unknown;
 
 /**
  * Lib - Translations - Extract Error Pages.
  *
  * @since 0.18.0
  */
-export type LibTranslationsExtractErrorPagesErrorPages = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_ErrorPages = unknown;
 
-export type LibTranslationsExtractErrorPagesReturns = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractErrorPages_Returns = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractErrorPagesConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractErrorPages_Config = Record<string, unknown>;
 
-export type LibTranslationsExtractErrorPagesFileContent = TranslationFileContent;
+export type Lib_Translations_Runner_ExtractErrorPages_FileContent = TranslationFileContent;
 
-export type LibTranslationsExtractErrorPagesNotFound = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_NotFound = unknown;
 
-export type LibTranslationsExtractErrorPagesNotFoundConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractErrorPages_NotFoundConfig = Record<string, unknown>;
 
-export type LibTranslationsExtractErrorPagesNotFoundTitle = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_NotFoundTitle = unknown;
 
-export type LibTranslationsExtractErrorPagesNotFoundDescription = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_NotFoundDescription = unknown;
 
-export type LibTranslationsExtractErrorPagesNotFoundBackHomeLabel = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_NotFoundBackHomeLabel = unknown;
 
-export type LibTranslationsExtractErrorPagesErrorPageContent = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_ErrorPageContent = unknown;
 
-export type LibTranslationsExtractErrorPagesErrorPageContentConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentConfig = Record<string, unknown>;
 
-export type LibTranslationsExtractErrorPagesErrorPageContentTitle = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentTitle = unknown;
 
-export type LibTranslationsExtractErrorPagesErrorPageContentRetryLabel = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_ErrorPageContentRetryLabel = unknown;
 
-export type LibTranslationsExtractErrorPagesError = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_Error = unknown;
 
-export type LibTranslationsExtractErrorPagesErrorConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractErrorPages_ErrorConfig = Record<string, unknown>;
 
-export type LibTranslationsExtractErrorPagesErrorRetryLabel = unknown;
+export type Lib_Translations_Runner_ExtractErrorPages_ErrorRetryLabel = unknown;
 
 /**
  * Lib - Translations - Extract Footer.
  *
  * @since 0.18.0
  */
-export type LibTranslationsExtractFooterFooter = unknown;
+export type Lib_Translations_Runner_ExtractFooter_Footer = unknown;
 
-export type LibTranslationsExtractFooterReturns = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractFooter_Returns = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractFooterConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractFooter_Config = Record<string, unknown>;
 
-export type LibTranslationsExtractFooterFileContent = TranslationFileContent;
+export type Lib_Translations_Runner_ExtractFooter_FileContent = TranslationFileContent;
 
-export type LibTranslationsExtractFooterLayout = unknown;
+export type Lib_Translations_Runner_ExtractFooter_Layout = unknown;
 
-export type LibTranslationsExtractFooterLayoutEntries = [string, Record<string, unknown>][];
+export type Lib_Translations_Runner_ExtractFooter_LayoutEntries = [string, Record<string, unknown>][];
 
-export type LibTranslationsExtractFooterLayoutEntry = [string, Record<string, unknown>];
+export type Lib_Translations_Runner_ExtractFooter_LayoutEntry = [string, Record<string, unknown>];
 
-export type LibTranslationsExtractFooterLayoutSlot = string;
+export type Lib_Translations_Runner_ExtractFooter_LayoutSlot = string;
 
-export type LibTranslationsExtractFooterLayoutSlotConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractFooter_LayoutSlotConfig = Record<string, unknown>;
 
-export type LibTranslationsExtractFooterLayoutTitleValue = unknown;
+export type Lib_Translations_Runner_ExtractFooter_LayoutTitleValue = unknown;
 
-export type LibTranslationsExtractFooterSections = unknown;
+export type Lib_Translations_Runner_ExtractFooter_Sections = unknown;
 
-export type LibTranslationsExtractFooterSectionEntries = [string, Record<string, unknown>[]][];
+export type Lib_Translations_Runner_ExtractFooter_SectionEntries = [string, Record<string, unknown>[]][];
 
-export type LibTranslationsExtractFooterSectionEntry = [string, Record<string, unknown>[]];
+export type Lib_Translations_Runner_ExtractFooter_SectionEntry = [string, Record<string, unknown>[]];
 
-export type LibTranslationsExtractFooterSectionName = string;
+export type Lib_Translations_Runner_ExtractFooter_SectionName = string;
 
-export type LibTranslationsExtractFooterSectionLinks = Record<string, unknown>[];
+export type Lib_Translations_Runner_ExtractFooter_SectionLinks = Record<string, unknown>[];
 
-export type LibTranslationsExtractFooterSectionLink = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractFooter_SectionLink = Record<string, unknown>;
 
-export type LibTranslationsExtractFooterSectionLinkLabelValue = unknown;
+export type Lib_Translations_Runner_ExtractFooter_SectionLinkLabelValue = unknown;
 
-export type LibTranslationsExtractFooterCta = unknown;
+export type Lib_Translations_Runner_ExtractFooter_Cta = unknown;
 
-export type LibTranslationsExtractFooterCtaObject = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractFooter_CtaObject = Record<string, unknown>;
 
-export type LibTranslationsExtractFooterCtaLabelValue = unknown;
+export type Lib_Translations_Runner_ExtractFooter_CtaLabelValue = unknown;
 
-export type LibTranslationsExtractFooterCopyrightValue = unknown;
+export type Lib_Translations_Runner_ExtractFooter_CopyrightValue = unknown;
 
 /**
  * Lib - Translations - Extract Navbar.
  *
  * @since 0.18.0
  */
-export type LibTranslationsExtractNavbarNavbar = unknown;
+export type Lib_Translations_Runner_ExtractNavbar_Navbar = unknown;
 
-export type LibTranslationsExtractNavbarReturns = TranslationFileContent | undefined;
+export type Lib_Translations_Runner_ExtractNavbar_Returns = TranslationFileContent | undefined;
 
-export type LibTranslationsExtractNavbarConfig = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractNavbar_Config = Record<string, unknown>;
 
-export type LibTranslationsExtractNavbarItems = unknown;
+export type Lib_Translations_Runner_ExtractNavbar_Items = unknown;
 
-export type LibTranslationsExtractNavbarFileContent = TranslationFileContent;
+export type Lib_Translations_Runner_ExtractNavbar_FileContent = TranslationFileContent;
 
-export type LibTranslationsExtractNavbarItem = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractNavbar_Item = Record<string, unknown>;
 
-export type LibTranslationsExtractNavbarLabelValue = unknown;
+export type Lib_Translations_Runner_ExtractNavbar_LabelValue = unknown;
 
-export type LibTranslationsExtractNavbarChildren = unknown;
+export type Lib_Translations_Runner_ExtractNavbar_Children = unknown;
 
-export type LibTranslationsExtractNavbarChild = Record<string, unknown>;
+export type Lib_Translations_Runner_ExtractNavbar_Child = Record<string, unknown>;
 
-export type LibTranslationsExtractNavbarChildLabelValue = unknown;
+export type Lib_Translations_Runner_ExtractNavbar_ChildLabelValue = unknown;

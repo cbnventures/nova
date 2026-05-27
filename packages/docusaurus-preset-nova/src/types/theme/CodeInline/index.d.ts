@@ -5,15 +5,15 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeCodeInlineCodeInlinePropsChildren = ReactNode;
+export type Theme_CodeInline_Index_CodeInline_Props_Children = ReactNode;
 
-export type ThemeCodeInlineCodeInlinePropsClassName = string | undefined;
+export type Theme_CodeInline_Index_CodeInline_Props_ClassName = string | undefined;
 
-export type ThemeCodeInlineCodeInlinePropsStyle = CSSProperties | undefined;
+export type Theme_CodeInline_Index_CodeInline_Props_Style = CSSProperties | undefined;
 
-export type ThemeCodeInlineCodeInlineProps = {
-  children: ThemeCodeInlineCodeInlinePropsChildren;
-  className?: ThemeCodeInlineCodeInlinePropsClassName;
-  style?: ThemeCodeInlineCodeInlinePropsStyle;
+export type Theme_CodeInline_Index_CodeInline_Props = {
+  children: Theme_CodeInline_Index_CodeInline_Props_Children;
+  className?: Theme_CodeInline_Index_CodeInline_Props_ClassName;
+  style?: Theme_CodeInline_Index_CodeInline_Props_Style;
   [key: string]: unknown;
 };

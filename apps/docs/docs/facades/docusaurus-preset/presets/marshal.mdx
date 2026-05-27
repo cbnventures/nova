@@ -60,19 +60,21 @@ The full default configuration for the Marshal preset:
 {
   preset: 'marshal',
   // Default values (no overrides needed):
-  // colors.primary:          '#2f5a3d'
-  // colors.accent:           '#a33939'
-  // colors.neutral:          '#3f3a33'
+  // colors.primary.light:    '#2f5a3d'
+  // colors.primary.dark:     '#2f5a3d'
+  // colors.secondary.light:  '#a33939'
+  // colors.secondary.dark:   '#a33939'
+  // colors.text.light:       '#2a2620'
+  // colors.text.dark:        '#ede5cf'
+  // colors.border.light:     '#d8cdb0'
+  // colors.border.dark:      '#4a4030'
+  // colors.warning.light:    '#f59e0b'
+  // colors.warning.dark:     '#f59e0b'
+  // colors.danger.light:     '#ef4444'
+  // colors.danger.dark:      '#ef4444'
   // fonts.display:           'IBM Plex Serif'
   // fonts.body:              'IBM Plex Sans'
   // fonts.code:              'IBM Plex Mono'
-  // shape.radius:            'rounded'
-  // shape.density:           'compact'
-  // depth.cards:             'flat'
-  // depth.codeBlocks:        'bordered'
-  // motion.speed:            'subtle'
-  // motion.staggeredReveals: false
-  // motion.hoverEffects:     true
   // navbar:                  'canopy'
   // footer:                  'ledger'
 }
@@ -90,15 +92,18 @@ Override any category to customize the Marshal identity. Unspecified values keep
   preset: 'marshal',
   overrides: {
     colors: {
-      primary: '#2f5a3d',
-      accent: '#a33939',
-      neutral: '#3f3a33',
+      primary:   { light: '#2f5a3d', dark: '#2f5a3d' },
+      secondary: { light: '#a33939', dark: '#a33939' },
+      text:      { light: '#2a2620', dark: '#ede5cf' },
+      border:    { light: '#d8cdb0', dark: '#4a4030' },
+      warning:   { light: '#f59e0b', dark: '#f59e0b' },
+      danger:    { light: '#ef4444', dark: '#ef4444' },
     },
   },
 }
 ```
 
-Each color generates an 11-level shade scale (50–950) as CSS custom properties.
+Each color category accepts a `{ light, dark }` pair. The `primary` and `secondary` colors expand to 11-level shade scales (50 through 950) as CSS custom properties.
 
   </TabItem>
   <TabItem value="fonts" label="Fonts">
@@ -117,25 +122,6 @@ Each color generates an 11-level shade scale (50–950) as CSS custom properties
 ```
 
 Font families are set as CSS custom properties. Google Fonts are loaded automatically.
-
-  </TabItem>
-  <TabItem value="shape" label="Shape & Depth">
-
-```ts title="docusaurus.config.ts"
-{
-  preset: 'marshal',
-  overrides: {
-    shape: {
-      radius: 'rounded',
-      density: 'compact',
-    },
-    depth: {
-      cards: 'flat',
-      codeBlocks: 'bordered',
-    },
-  },
-}
-```
 
   </TabItem>
 </Tabs>

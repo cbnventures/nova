@@ -27,7 +27,7 @@
  *
  * @since 0.13.0
  */
-export type TestsLibRegexPatternDoubleQuotedStringCaptureMatches = RegExpMatchArray | null;
+export type Tests_Lib_Regex_PatternDoubleQuotedStringCaptureMatches = RegExpMatchArray | null;
 
 /**
  * Tests - Lib - Regex - Pattern Email Simple.
@@ -52,7 +52,7 @@ export type TestsLibRegexPatternDoubleQuotedStringCaptureMatches = RegExpMatchAr
  *
  * @since 0.13.0
  */
-export type TestsLibRegexPatternLeadingNonDigitsMatches = RegExpMatchArray | null;
+export type Tests_Lib_Regex_PatternLeadingNonDigitsMatches = RegExpMatchArray | null;
 
 /**
  * Tests - Lib - Regex - Pattern Leading V.
@@ -77,30 +77,30 @@ export type TestsLibRegexPatternLeadingNonDigitsMatches = RegExpMatchArray | nul
  *
  * @since 0.13.0
  */
-export type TestsLibRegexPatternRangeCaptureRemainderMatches = RegExpMatchArray | null;
+export type Tests_Lib_Regex_PatternRangeCaptureRemainderMatches = RegExpMatchArray | null;
 
 /**
  * Tests - Lib - Regex - Pattern Registry Query Line.
  *
  * @since 0.13.0
  */
-export type TestsLibRegexPatternRegistryQueryLineMatches = RegExpMatchArray | null;
+export type Tests_Lib_Regex_PatternRegistryQueryLineMatches = RegExpMatchArray | null;
 
 /**
  * Tests - Lib - Regex - Pattern Rustc Version Line.
  *
  * @since 0.13.0
  */
-export type TestsLibRegexPatternRustcVersionLineMatches = RegExpMatchArray | null;
+export type Tests_Lib_Regex_PatternRustcVersionLineMatches = RegExpMatchArray | null;
 
 /**
  * Tests - Lib - Regex - Pattern Semver.
  *
  * @since 0.13.0
  */
-export type TestsLibRegexPatternSemverMatches = RegExpMatchArray | null;
+export type Tests_Lib_Regex_PatternSemverMatches = RegExpMatchArray | null;
 
-export type TestsLibRegexPatternSemverMatchGroups = Record<string, string> | undefined;
+export type Tests_Lib_Regex_PatternSemverMatchGroups = Record<string, string> | undefined;
 
 /**
  * Tests - Lib - Regex - Pattern Whitespace.
@@ -119,4 +119,4 @@ export type TestsLibRegexPatternSemverMatchGroups = Record<string, string> | und
  *
  * @since 0.13.0
  */
-export type TestsLibRegexVersionRangePatternsMatches = RegExpMatchArray | null;
+export type Tests_Lib_Regex_VersionRangePatterns_Matches = RegExpMatchArray | null;

@@ -3,11 +3,11 @@ import useBrokenLinks from '@docusaurus/useBrokenLinks';
 import { createElement } from 'react';
 
 import type {
-  ThemeHeadingBrokenLinks,
-  ThemeHeadingHashLink,
-  ThemeHeadingHashLinkLabel,
-  ThemeHeadingId,
-  ThemeHeadingProps,
+  Theme_Heading_Index_Heading_BrokenLinks,
+  Theme_Heading_Index_Heading_HashLink,
+  Theme_Heading_Index_Heading_HashLinkLabel,
+  Theme_Heading_Index_Heading_Id,
+  Theme_Heading_Index_Heading_Props,
 } from '../../types/theme/Heading/index.d.ts';
 
 /**
@@ -17,27 +17,27 @@ import type {
  * revealed on hover or keyboard focus, collecting anchor identifiers through
  * Docusaurus broken-link tracking.
  *
- * @param {ThemeHeadingProps} props - Props.
+ * @param {Theme_Heading_Index_Heading_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Heading(props: ThemeHeadingProps) {
-  const id: ThemeHeadingId = props['id'];
-  const brokenLinks: ThemeHeadingBrokenLinks = useBrokenLinks();
+function Heading(props: Theme_Heading_Index_Heading_Props) {
+  const id: Theme_Heading_Index_Heading_Id = props['id'];
+  const brokenLinks: Theme_Heading_Index_Heading_BrokenLinks = useBrokenLinks();
 
   if (props['as'] !== 'h1' && id !== undefined) {
     brokenLinks.collectAnchor(id);
   }
 
-  const hashLinkLabel: ThemeHeadingHashLinkLabel = translate({
+  const hashLinkLabel: Theme_Heading_Index_Heading_HashLinkLabel = translate({
     id: 'theme.common.headingLinkTitle',
     message: 'Direct link to heading',
     description: 'Title and aria-label for the hash-link anchor revealed on heading hover or focus',
   });
 
-  let hashLink: ThemeHeadingHashLink = null;
+  let hashLink: Theme_Heading_Index_Heading_HashLink = null;
 
   if (props['as'] !== 'h1' && id !== undefined) {
     hashLink = (

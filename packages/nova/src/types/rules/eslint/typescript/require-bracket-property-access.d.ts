@@ -6,48 +6,48 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionContext = Readonly<RuleContext<string, readonly unknown[]>>;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Context = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionNode = TSESTree.MemberExpression;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Node = TSESTree.MemberExpression;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionReturns = void;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Returns = void;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionPropertyName = string;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_PropertyName = string;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionParserServices = ReturnType<typeof import('@typescript-eslint/utils').ESLintUtils.getParserServices>;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ParserServices = ReturnType<typeof import('@typescript-eslint/utils').ESLintUtils.getParserServices>;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionChecker = import('typescript').TypeChecker;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Checker = import('typescript').TypeChecker;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionTsNode = import('typescript').Node;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_TsNode = import('typescript').Node;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionObjectType = import('typescript').Type;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectType = import('typescript').Type;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionSymbol = import('typescript').Symbol | undefined;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Symbol = import('typescript').Symbol | undefined;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionDeclarations = import('typescript').Declaration[] | undefined;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_Declarations = import('typescript').Declaration[] | undefined;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionSourceFileName = string;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_SourceFileName = string;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionObjectText = string;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_ObjectText = string;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionNeedsParens = boolean;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_NeedsParens = boolean;
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessCheckMemberExpressionWrappedText = string;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_CheckMemberExpression_WrappedText = string;
 
 /**
  * Rules - ESLint - TypeScript - Require Bracket Property Access - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintTypescriptRequireBracketPropertyAccessRuleDefaultOptionsAllowedProperties = string[];
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsAllowedProperties = string[];
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessRuleOptionsAllowedProperties = string[];
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions_AllowedProperties = string[];
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintTypescriptRequireBracketPropertyAccessRuleOptions = Readonly<{
-  allowedProperties: RulesEslintTypescriptRequireBracketPropertyAccessRuleOptionsAllowedProperties;
-  ignoreFiles: RulesEslintTypescriptRequireBracketPropertyAccessRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions = Readonly<{
+  allowedProperties: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions_AllowedProperties;
+  ignoreFiles: Rules_Eslint_Typescript_RequireBracketPropertyAccess_Runner_RuleOptions_IgnoreFiles;
 }>;

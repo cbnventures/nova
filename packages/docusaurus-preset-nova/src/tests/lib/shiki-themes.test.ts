@@ -5,9 +5,9 @@ import { describe, it } from 'vitest';
 import { getShikiThemes } from '../../lib/shiki-themes.js';
 
 import type {
-  TestsLibShikiThemesDark,
-  TestsLibShikiThemesLight,
-  TestsLibShikiThemesResult,
+  Tests_Lib_ShikiThemes_Dark,
+  Tests_Lib_ShikiThemes_Light,
+  Tests_Lib_ShikiThemes_Result,
 } from '../../types/tests/lib/shiki-themes.test.d.ts';
 
 /**
@@ -17,9 +17,9 @@ import type {
  */
 describe('getShikiThemes', async () => {
   it('returns github themes for foundry preset', () => {
-    const result: TestsLibShikiThemesResult = getShikiThemes('foundry');
-    const light: TestsLibShikiThemesLight = result['light'];
-    const dark: TestsLibShikiThemesDark = result['dark'];
+    const result: Tests_Lib_ShikiThemes_Result = getShikiThemes('foundry');
+    const light: Tests_Lib_ShikiThemes_Light = result['light'];
+    const dark: Tests_Lib_ShikiThemes_Dark = result['dark'];
 
     strictEqual(light, 'github-light');
     strictEqual(dark, 'github-dark');
@@ -28,9 +28,9 @@ describe('getShikiThemes', async () => {
   });
 
   it('returns min-light and dracula themes for lantern preset', () => {
-    const result: TestsLibShikiThemesResult = getShikiThemes('lantern');
-    const light: TestsLibShikiThemesLight = result['light'];
-    const dark: TestsLibShikiThemesDark = result['dark'];
+    const result: Tests_Lib_ShikiThemes_Result = getShikiThemes('lantern');
+    const light: Tests_Lib_ShikiThemes_Light = result['light'];
+    const dark: Tests_Lib_ShikiThemes_Dark = result['dark'];
 
     strictEqual(light, 'min-light');
     strictEqual(dark, 'dracula');
@@ -39,9 +39,9 @@ describe('getShikiThemes', async () => {
   });
 
   it('returns solarized themes for marshal preset', () => {
-    const result: TestsLibShikiThemesResult = getShikiThemes('marshal');
-    const light: TestsLibShikiThemesLight = result['light'];
-    const dark: TestsLibShikiThemesDark = result['dark'];
+    const result: Tests_Lib_ShikiThemes_Result = getShikiThemes('marshal');
+    const light: Tests_Lib_ShikiThemes_Light = result['light'];
+    const dark: Tests_Lib_ShikiThemes_Dark = result['dark'];
 
     strictEqual(light, 'solarized-light');
     strictEqual(dark, 'solarized-dark');
@@ -50,9 +50,9 @@ describe('getShikiThemes', async () => {
   });
 
   it('returns vitesse themes for sentinel preset', () => {
-    const result: TestsLibShikiThemesResult = getShikiThemes('sentinel');
-    const light: TestsLibShikiThemesLight = result['light'];
-    const dark: TestsLibShikiThemesDark = result['dark'];
+    const result: Tests_Lib_ShikiThemes_Result = getShikiThemes('sentinel');
+    const light: Tests_Lib_ShikiThemes_Light = result['light'];
+    const dark: Tests_Lib_ShikiThemes_Dark = result['dark'];
 
     strictEqual(light, 'vitesse-light');
     strictEqual(dark, 'vitesse-dark');

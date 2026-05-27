@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoTernaryInTemplateLiteral } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintFormattingNoTernaryInTemplateLiteralRuleTester } from '../../../../types/tests/rules/eslint/formatting/no-ternary-in-template-literal.test.d.ts';
+import type { Tests_Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_RuleTester } from '../../../../types/tests/rules/eslint/formatting/no-ternary-in-template-literal.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Formatting - No Ternary In Template Literal.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintFormattingNoTernaryInTemplateLiteralRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Formatting_NoTernaryInTemplateLiteral_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

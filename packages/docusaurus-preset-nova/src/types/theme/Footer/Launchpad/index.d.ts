@@ -6,115 +6,115 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeFooterLaunchpadIndexSection = ThemeFooterLaunchpadIndexSectionLink[];
+export type Theme_Footer_Launchpad_Index_Section = Theme_Footer_Launchpad_Index_SectionLink[];
 
-export type ThemeFooterLaunchpadIndexSections = Record<string, ThemeFooterLaunchpadIndexSection>;
+export type Theme_Footer_Launchpad_Index_Sections = Record<string, Theme_Footer_Launchpad_Index_Section>;
 
-export type ThemeFooterLaunchpadIndexLayoutSlotTitle = string | undefined;
+export type Theme_Footer_Launchpad_Index_LayoutSlot_Title = string | undefined;
 
-export type ThemeFooterLaunchpadIndexLayoutSlotSection = string;
+export type Theme_Footer_Launchpad_Index_LayoutSlot_Section = string;
 
-export type ThemeFooterLaunchpadIndexLayoutSlot = {
-  title?: ThemeFooterLaunchpadIndexLayoutSlotTitle;
-  section: ThemeFooterLaunchpadIndexLayoutSlotSection;
+export type Theme_Footer_Launchpad_Index_LayoutSlot = {
+  title?: Theme_Footer_Launchpad_Index_LayoutSlot_Title;
+  section: Theme_Footer_Launchpad_Index_LayoutSlot_Section;
 };
 
-export type ThemeFooterLaunchpadIndexLayout = Record<string, ThemeFooterLaunchpadIndexLayoutSlot>;
+export type Theme_Footer_Launchpad_Index_Layout = Record<string, Theme_Footer_Launchpad_Index_LayoutSlot>;
 
-export type ThemeFooterLaunchpadIndexSocialLinks = ThemeFooterLaunchpadIndexSocialLink[];
+export type Theme_Footer_Launchpad_Index_SocialLinks = Theme_Footer_Launchpad_Index_SocialLink[];
 
-export type ThemeFooterLaunchpadIndexCopyright = string;
+export type Theme_Footer_Launchpad_Index_Copyright = string;
 
-export type ThemeFooterLaunchpadIndexCredit = boolean;
+export type Theme_Footer_Launchpad_Index_Credit = boolean;
 
-export type ThemeFooterLaunchpadIndexCtaObjectLabel = string;
+export type Theme_Footer_Launchpad_Index_CtaObject_Label = string;
 
-export type ThemeFooterLaunchpadIndexCtaObjectHref = string;
+export type Theme_Footer_Launchpad_Index_CtaObject_Href = string;
 
-export type ThemeFooterLaunchpadIndexCtaObject = {
-  label: ThemeFooterLaunchpadIndexCtaObjectLabel;
-  href: ThemeFooterLaunchpadIndexCtaObjectHref;
+export type Theme_Footer_Launchpad_Index_CtaObject = {
+  label: Theme_Footer_Launchpad_Index_CtaObject_Label;
+  href: Theme_Footer_Launchpad_Index_CtaObject_Href;
 };
 
-export type ThemeFooterLaunchpadIndexCta = string | ThemeFooterLaunchpadIndexCtaObject | undefined;
+export type Theme_Footer_Launchpad_Index_Cta = string | Theme_Footer_Launchpad_Index_CtaObject | undefined;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsSections = ThemeFooterLaunchpadIndexSections;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_Sections = Theme_Footer_Launchpad_Index_Sections;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsLayout = ThemeFooterLaunchpadIndexLayout;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_Layout = Theme_Footer_Launchpad_Index_Layout;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsSocialLinks = ThemeFooterLaunchpadIndexSocialLinks;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_SocialLinks = Theme_Footer_Launchpad_Index_SocialLinks;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsCopyright = ThemeFooterLaunchpadIndexCopyright;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_Copyright = Theme_Footer_Launchpad_Index_Copyright;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsCredit = ThemeFooterLaunchpadIndexCredit;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_Credit = Theme_Footer_Launchpad_Index_Credit;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsCta = ThemeFooterLaunchpadIndexCta;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_Cta = Theme_Footer_Launchpad_Index_Cta;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsCtaContained = boolean;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_CtaContained = boolean;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsClassName = string | undefined;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_ClassName = string | undefined;
 
-export type ThemeFooterLaunchpadIndexLaunchpadPropsStyle = CSSProperties | undefined;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props_Style = CSSProperties | undefined;
 
-export type ThemeFooterLaunchpadIndexLaunchpadProps = {
-  sections: ThemeFooterLaunchpadIndexLaunchpadPropsSections;
-  layout: ThemeFooterLaunchpadIndexLaunchpadPropsLayout;
-  socialLinks: ThemeFooterLaunchpadIndexLaunchpadPropsSocialLinks;
-  copyright: ThemeFooterLaunchpadIndexLaunchpadPropsCopyright;
-  credit: ThemeFooterLaunchpadIndexLaunchpadPropsCredit;
-  cta?: ThemeFooterLaunchpadIndexLaunchpadPropsCta;
-  ctaContained: ThemeFooterLaunchpadIndexLaunchpadPropsCtaContained;
-  className?: ThemeFooterLaunchpadIndexLaunchpadPropsClassName;
-  style?: ThemeFooterLaunchpadIndexLaunchpadPropsStyle;
+export type Theme_Footer_Launchpad_Index_Launchpad_Props = {
+  sections: Theme_Footer_Launchpad_Index_Launchpad_Props_Sections;
+  layout: Theme_Footer_Launchpad_Index_Launchpad_Props_Layout;
+  socialLinks: Theme_Footer_Launchpad_Index_Launchpad_Props_SocialLinks;
+  copyright: Theme_Footer_Launchpad_Index_Launchpad_Props_Copyright;
+  credit: Theme_Footer_Launchpad_Index_Launchpad_Props_Credit;
+  cta?: Theme_Footer_Launchpad_Index_Launchpad_Props_Cta;
+  ctaContained: Theme_Footer_Launchpad_Index_Launchpad_Props_CtaContained;
+  className?: Theme_Footer_Launchpad_Index_Launchpad_Props_ClassName;
+  style?: Theme_Footer_Launchpad_Index_Launchpad_Props_Style;
 };
 
-export type ThemeFooterLaunchpadIndexLaunchpadReturns = React.JSX.Element;
+export type Theme_Footer_Launchpad_Index_Launchpad_Returns = React.JSX.Element;
 
-export type ThemeFooterLaunchpadIndexLaunchpadSections = ThemeFooterLaunchpadIndexSections;
+export type Theme_Footer_Launchpad_Index_Launchpad_Sections = Theme_Footer_Launchpad_Index_Sections;
 
-export type ThemeFooterLaunchpadIndexLaunchpadLayout = ThemeFooterLaunchpadIndexLayout;
+export type Theme_Footer_Launchpad_Index_Launchpad_Layout = Theme_Footer_Launchpad_Index_Layout;
 
-export type ThemeFooterLaunchpadIndexLaunchpadSocialLinks = ThemeFooterLaunchpadIndexSocialLinks;
+export type Theme_Footer_Launchpad_Index_Launchpad_SocialLinks = Theme_Footer_Launchpad_Index_SocialLinks;
 
-export type ThemeFooterLaunchpadIndexLaunchpadCopyright = ThemeFooterLaunchpadIndexCopyright;
+export type Theme_Footer_Launchpad_Index_Launchpad_Copyright = Theme_Footer_Launchpad_Index_Copyright;
 
-export type ThemeFooterLaunchpadIndexLaunchpadCredit = ThemeFooterLaunchpadIndexCredit;
+export type Theme_Footer_Launchpad_Index_Launchpad_Credit = Theme_Footer_Launchpad_Index_Credit;
 
-export type ThemeFooterLaunchpadIndexLaunchpadCta = ThemeFooterLaunchpadIndexCta;
+export type Theme_Footer_Launchpad_Index_Launchpad_Cta = Theme_Footer_Launchpad_Index_Cta;
 
-export type ThemeFooterLaunchpadIndexLaunchpadCtaContained = boolean;
+export type Theme_Footer_Launchpad_Index_Launchpad_CtaContained = boolean;
 
-export type ThemeFooterLaunchpadIndexLaunchpadFooterClassName = string;
+export type Theme_Footer_Launchpad_Index_Launchpad_FooterClassName = string;
 
-export type ThemeFooterLaunchpadIndexLaunchpadLayoutEntries = [string, ThemeFooterLaunchpadIndexLayoutSlot][];
+export type Theme_Footer_Launchpad_Index_Launchpad_LayoutEntries = [string, Theme_Footer_Launchpad_Index_LayoutSlot][];
 
-export type ThemeFooterLaunchpadIndexLaunchpadSocialLinksAriaLabel = string;
+export type Theme_Footer_Launchpad_Index_Launchpad_SocialLinksAriaLabel = string;
 
-export type ThemeFooterLaunchpadIndexLaunchpadExternalLinkAriaLabel = string;
+export type Theme_Footer_Launchpad_Index_Launchpad_ExternalLinkAriaLabel = string;
 
-export type ThemeFooterLaunchpadIndexLaunchpadLayoutEntry = [string, ThemeFooterLaunchpadIndexLayoutSlot];
+export type Theme_Footer_Launchpad_Index_Launchpad_LayoutEntry = [string, Theme_Footer_Launchpad_Index_LayoutSlot];
 
-export type ThemeFooterLaunchpadIndexLaunchpadSectionLinks = ThemeFooterLaunchpadIndexSectionLink[];
+export type Theme_Footer_Launchpad_Index_Launchpad_SectionLinks = Theme_Footer_Launchpad_Index_SectionLink[];
 
-export type ThemeFooterLaunchpadIndexSectionLinkLabel = string;
+export type Theme_Footer_Launchpad_Index_SectionLink_Label = string;
 
-export type ThemeFooterLaunchpadIndexSectionLinkHref = string;
+export type Theme_Footer_Launchpad_Index_SectionLink_Href = string;
 
-export type ThemeFooterLaunchpadIndexSectionLink = {
-  label: ThemeFooterLaunchpadIndexSectionLinkLabel;
-  href: ThemeFooterLaunchpadIndexSectionLinkHref;
+export type Theme_Footer_Launchpad_Index_SectionLink = {
+  label: Theme_Footer_Launchpad_Index_SectionLink_Label;
+  href: Theme_Footer_Launchpad_Index_SectionLink_Href;
 };
 
-export type ThemeFooterLaunchpadIndexSocialLinkIcon = string | IconifyIcon;
+export type Theme_Footer_Launchpad_Index_SocialLink_Icon = string | IconifyIcon;
 
-export type ThemeFooterLaunchpadIndexSocialLinkHref = string;
+export type Theme_Footer_Launchpad_Index_SocialLink_Href = string;
 
-export type ThemeFooterLaunchpadIndexSocialLinkLabel = string;
+export type Theme_Footer_Launchpad_Index_SocialLink_Label = string;
 
-export type ThemeFooterLaunchpadIndexSocialLink = {
-  icon: ThemeFooterLaunchpadIndexSocialLinkIcon;
-  href: ThemeFooterLaunchpadIndexSocialLinkHref;
-  label: ThemeFooterLaunchpadIndexSocialLinkLabel;
+export type Theme_Footer_Launchpad_Index_SocialLink = {
+  icon: Theme_Footer_Launchpad_Index_SocialLink_Icon;
+  href: Theme_Footer_Launchpad_Index_SocialLink_Href;
+  label: Theme_Footer_Launchpad_Index_SocialLink_Label;
 };
 
-export type ThemeFooterLaunchpadIndexLaunchpadSocialLinkLabel = string;
+export type Theme_Footer_Launchpad_Index_Launchpad_SocialLinkLabel = string;

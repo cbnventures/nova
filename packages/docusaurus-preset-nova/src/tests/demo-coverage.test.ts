@@ -14,57 +14,57 @@ import {
 import { presetsIndexNames } from '../presets/index.js';
 
 import type {
-  TestsDemoCoverageDemoCoverageConfig,
-  TestsDemoCoverageDemoCoverageDemo,
-  TestsDemoCoverageDemoCoverageDerived,
-  TestsDemoCoverageDemoCoverageDerivedSet,
-  TestsDemoCoverageDemoCoverageLeaf,
-  TestsDemoCoverageDemoCoverageMessage,
-  TestsDemoCoverageDemoCoverageMisses,
-  TestsDemoCoverageDemoCoverageMissingInRegistry,
-  TestsDemoCoverageDemoCoverageRegistryMessage,
-  TestsDemoCoverageDemoCoverageRegistrySet,
-  TestsDemoCoverageDemoCoverageStaleInRegistry,
-  TestsDemoCoverageDemoCoverageValue,
-  TestsDemoCoverageDemoEntry,
-  TestsDemoCoverageDemoRecord,
-  TestsDemoCoverageDemos,
-  TestsDemoCoverageDeriveRequiredLeafPathsBlockBody,
-  TestsDemoCoverageDeriveRequiredLeafPathsBlockMatch,
-  TestsDemoCoverageDeriveRequiredLeafPathsBlockPattern,
-  TestsDemoCoverageDeriveRequiredLeafPathsEntryFields,
-  TestsDemoCoverageDeriveRequiredLeafPathsFieldEntry,
-  TestsDemoCoverageDeriveRequiredLeafPathsFieldExpression,
-  TestsDemoCoverageDeriveRequiredLeafPathsFieldMatch,
-  TestsDemoCoverageDeriveRequiredLeafPathsFieldName,
-  TestsDemoCoverageDeriveRequiredLeafPathsFieldPattern,
-  TestsDemoCoverageDeriveRequiredLeafPathsFields,
-  TestsDemoCoverageDeriveRequiredLeafPathsFieldType,
-  TestsDemoCoverageDeriveRequiredLeafPathsFieldTypeMatch,
-  TestsDemoCoverageDeriveRequiredLeafPathsFileText,
-  TestsDemoCoverageDeriveRequiredLeafPathsLeaves,
-  TestsDemoCoverageDeriveRequiredLeafPathsObjectTypes,
-  TestsDemoCoverageDeriveRequiredLeafPathsReturns,
-  TestsDemoCoverageDeriveRequiredLeafPathsTypeFilePath,
-  TestsDemoCoverageDeriveRequiredLeafPathsTypeName,
-  TestsDemoCoverageDeriveRequiredLeafPathsWalkEntry,
-  TestsDemoCoverageDeriveRequiredLeafPathsWalkStack,
-  TestsDemoCoverageGetPackageRootCurrentFileDirectory,
-  TestsDemoCoverageGetPackageRootCurrentFilePath,
-  TestsDemoCoverageGetPackageRootReturns,
-  TestsDemoCoverageGetRepoRootReturns,
-  TestsDemoCoverageLoadDemoConfigConfigUrl,
-  TestsDemoCoverageLoadDemoConfigDemoPath,
-  TestsDemoCoverageLoadDemoConfigModule,
-  TestsDemoCoverageLoadDemoConfigReturns,
-  TestsDemoCoverageRequiredLeafPaths,
-  TestsDemoCoverageResolveLeafConfig,
-  TestsDemoCoverageResolveLeafCursor,
-  TestsDemoCoverageResolveLeafIndex,
-  TestsDemoCoverageResolveLeafPath,
-  TestsDemoCoverageResolveLeafReturns,
-  TestsDemoCoverageResolveLeafSegment,
-  TestsDemoCoverageResolveLeafSegments,
+  Tests_DemoCoverage_DemoCoverage_Config,
+  Tests_DemoCoverage_DemoCoverage_Demo,
+  Tests_DemoCoverage_DemoCoverage_Derived,
+  Tests_DemoCoverage_DemoCoverage_DerivedSet,
+  Tests_DemoCoverage_DemoCoverage_Leaf,
+  Tests_DemoCoverage_DemoCoverage_Message,
+  Tests_DemoCoverage_DemoCoverage_Misses,
+  Tests_DemoCoverage_DemoCoverage_MissingInRegistry,
+  Tests_DemoCoverage_DemoCoverage_RegistryMessage,
+  Tests_DemoCoverage_DemoCoverage_RegistrySet,
+  Tests_DemoCoverage_DemoCoverage_StaleInRegistry,
+  Tests_DemoCoverage_DemoCoverage_Value,
+  Tests_DemoCoverage_DemoEntry,
+  Tests_DemoCoverage_DemoRecord,
+  Tests_DemoCoverage_Demos,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockBody,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockMatch,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockPattern,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_EntryFields,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldEntry,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldExpression,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldMatch,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldName,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldPattern,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_Fields,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldType,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldTypeMatch,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_FileText,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_Leaves,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_ObjectTypes,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_Returns,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeFilePath,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeName,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry,
+  Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkStack,
+  Tests_DemoCoverage_GetPackageRoot_CurrentFileDirectory,
+  Tests_DemoCoverage_GetPackageRoot_CurrentFilePath,
+  Tests_DemoCoverage_GetPackageRoot_Returns,
+  Tests_DemoCoverage_GetRepoRoot_Returns,
+  Tests_DemoCoverage_LoadDemoConfig_ConfigUrl,
+  Tests_DemoCoverage_LoadDemoConfig_DemoPath,
+  Tests_DemoCoverage_LoadDemoConfig_Module,
+  Tests_DemoCoverage_LoadDemoConfig_Returns,
+  Tests_DemoCoverage_RequiredLeafPaths,
+  Tests_DemoCoverage_ResolveLeaf_Config,
+  Tests_DemoCoverage_ResolveLeaf_Cursor,
+  Tests_DemoCoverage_ResolveLeaf_Index,
+  Tests_DemoCoverage_ResolveLeaf_Path,
+  Tests_DemoCoverage_ResolveLeaf_Returns,
+  Tests_DemoCoverage_ResolveLeaf_Segment,
+  Tests_DemoCoverage_ResolveLeaf_Segments,
 } from '../types/tests/demo-coverage.test.d.ts';
 
 /**
@@ -80,7 +80,7 @@ import type {
  *
  * @since 0.18.0
  */
-const demos: TestsDemoCoverageDemos = presetsIndexNames.map((name) => ({
+const demos: Tests_DemoCoverage_Demos = presetsIndexNames.map((name) => ({
   name,
   path: `apps/demo-${name}/docusaurus.config.ts`,
 }));
@@ -101,7 +101,7 @@ const demos: TestsDemoCoverageDemos = presetsIndexNames.map((name) => ({
  *
  * @since 0.18.0
  */
-const requiredLeafPaths: TestsDemoCoverageRequiredLeafPaths = [
+const requiredLeafPaths: Tests_DemoCoverage_RequiredLeafPaths = [
   'themeConfig.site.title',
   'themeConfig.site.logo.alt',
   'themeConfig.site.logo.src.light',
@@ -164,26 +164,26 @@ const requiredLeafPaths: TestsDemoCoverageRequiredLeafPaths = [
  *
  * @since 0.18.0
  */
-async function deriveRequiredLeafPaths(typeFilePath: TestsDemoCoverageDeriveRequiredLeafPathsTypeFilePath): TestsDemoCoverageDeriveRequiredLeafPathsReturns {
-  const fileText: TestsDemoCoverageDeriveRequiredLeafPathsFileText = await readFile(typeFilePath, 'utf-8');
-  const objectTypes: TestsDemoCoverageDeriveRequiredLeafPathsObjectTypes = new Map();
-  const blockPattern: TestsDemoCoverageDeriveRequiredLeafPathsBlockPattern = new RegExp(LIB_REGEX_NOVA_THEME_CONFIG_OBJECT_TYPE.source, 'g');
+async function deriveRequiredLeafPaths(typeFilePath: Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeFilePath): Tests_DemoCoverage_DeriveRequiredLeafPaths_Returns {
+  const fileText: Tests_DemoCoverage_DeriveRequiredLeafPaths_FileText = await readFile(typeFilePath, 'utf-8');
+  const objectTypes: Tests_DemoCoverage_DeriveRequiredLeafPaths_ObjectTypes = new Map();
+  const blockPattern: Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockPattern = new RegExp(LIB_REGEX_NOVA_THEME_CONFIG_OBJECT_TYPE.source, 'g');
 
-  let blockMatch: TestsDemoCoverageDeriveRequiredLeafPathsBlockMatch = blockPattern.exec(fileText);
+  let blockMatch: Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockMatch = blockPattern.exec(fileText);
 
   while (blockMatch !== null) {
-    const typeName: TestsDemoCoverageDeriveRequiredLeafPathsTypeName = blockMatch[1] ?? '';
-    const blockBody: TestsDemoCoverageDeriveRequiredLeafPathsBlockBody = blockMatch[2] ?? '';
-    const fields: TestsDemoCoverageDeriveRequiredLeafPathsFields = new Map();
-    const fieldPattern: TestsDemoCoverageDeriveRequiredLeafPathsFieldPattern = new RegExp(LIB_REGEX_TYPE_DECLARATION_FIELD.source, 'gm');
+    const typeName: Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeName = blockMatch[1] ?? '';
+    const blockBody: Tests_DemoCoverage_DeriveRequiredLeafPaths_BlockBody = blockMatch[2] ?? '';
+    const fields: Tests_DemoCoverage_DeriveRequiredLeafPaths_Fields = new Map();
+    const fieldPattern: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldPattern = new RegExp(LIB_REGEX_TYPE_DECLARATION_FIELD.source, 'gm');
 
-    let fieldMatch: TestsDemoCoverageDeriveRequiredLeafPathsFieldMatch = fieldPattern.exec(blockBody);
+    let fieldMatch: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldMatch = fieldPattern.exec(blockBody);
 
     while (fieldMatch !== null) {
-      const fieldName: TestsDemoCoverageDeriveRequiredLeafPathsFieldName = fieldMatch[1] ?? '';
-      const fieldExpression: TestsDemoCoverageDeriveRequiredLeafPathsFieldExpression = (fieldMatch[2] ?? '').trim();
-      const fieldTypeMatch: TestsDemoCoverageDeriveRequiredLeafPathsFieldTypeMatch = fieldExpression.match(LIB_REGEX_NOVA_THEME_CONFIG_TYPE_REFERENCE);
-      const fieldType: TestsDemoCoverageDeriveRequiredLeafPathsFieldType = (fieldTypeMatch !== null && fieldTypeMatch[1] !== undefined) ? fieldTypeMatch[1] : fieldExpression;
+      const fieldName: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldName = fieldMatch[1] ?? '';
+      const fieldExpression: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldExpression = (fieldMatch[2] ?? '').trim();
+      const fieldTypeMatch: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldTypeMatch = fieldExpression.match(LIB_REGEX_NOVA_THEME_CONFIG_TYPE_REFERENCE);
+      const fieldType: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldType = (fieldTypeMatch !== null && fieldTypeMatch[1] !== undefined) ? fieldTypeMatch[1] : fieldExpression;
 
       fields.set(fieldName, fieldType);
 
@@ -195,15 +195,15 @@ async function deriveRequiredLeafPaths(typeFilePath: TestsDemoCoverageDeriveRequ
     blockMatch = blockPattern.exec(fileText);
   }
 
-  const leaves: TestsDemoCoverageDeriveRequiredLeafPathsLeaves = [];
-  const walkStack: TestsDemoCoverageDeriveRequiredLeafPathsWalkStack = [{
+  const leaves: Tests_DemoCoverage_DeriveRequiredLeafPaths_Leaves = [];
+  const walkStack: Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkStack = [{
     typeName: 'NovaThemeConfig',
     path: ['themeConfig'],
   }];
 
   while (walkStack.length > 0) {
-    const entry: TestsDemoCoverageDeriveRequiredLeafPathsWalkEntry = walkStack.pop() as TestsDemoCoverageDeriveRequiredLeafPathsWalkEntry;
-    const entryFields: TestsDemoCoverageDeriveRequiredLeafPathsEntryFields = objectTypes.get(entry['typeName']);
+    const entry: Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry = walkStack.pop() as Tests_DemoCoverage_DeriveRequiredLeafPaths_WalkEntry;
+    const entryFields: Tests_DemoCoverage_DeriveRequiredLeafPaths_EntryFields = objectTypes.get(entry['typeName']);
 
     if (entryFields === undefined) {
       leaves.push(entry['path'].join('.'));
@@ -212,9 +212,9 @@ async function deriveRequiredLeafPaths(typeFilePath: TestsDemoCoverageDeriveRequ
     }
 
     for (const fieldEntry of entryFields) {
-      const walkFieldEntry: TestsDemoCoverageDeriveRequiredLeafPathsFieldEntry = fieldEntry;
-      const walkFieldName: TestsDemoCoverageDeriveRequiredLeafPathsFieldName = walkFieldEntry[0];
-      const walkFieldType: TestsDemoCoverageDeriveRequiredLeafPathsFieldType = walkFieldEntry[1];
+      const walkFieldEntry: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldEntry = fieldEntry;
+      const walkFieldName: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldName = walkFieldEntry[0];
+      const walkFieldType: Tests_DemoCoverage_DeriveRequiredLeafPaths_FieldType = walkFieldEntry[1];
 
       walkStack.push({
         typeName: walkFieldType,
@@ -237,9 +237,9 @@ async function deriveRequiredLeafPaths(typeFilePath: TestsDemoCoverageDeriveRequ
  *
  * @since 0.18.0
  */
-function getPackageRoot(): TestsDemoCoverageGetPackageRootReturns {
-  const currentFilePath: TestsDemoCoverageGetPackageRootCurrentFilePath = fileURLToPath(import.meta.url);
-  const currentFileDirectory: TestsDemoCoverageGetPackageRootCurrentFileDirectory = dirname(currentFilePath);
+function getPackageRoot(): Tests_DemoCoverage_GetPackageRoot_Returns {
+  const currentFilePath: Tests_DemoCoverage_GetPackageRoot_CurrentFilePath = fileURLToPath(import.meta.url);
+  const currentFileDirectory: Tests_DemoCoverage_GetPackageRoot_CurrentFileDirectory = dirname(currentFilePath);
 
   return resolve(currentFileDirectory, '..', '..');
 }
@@ -252,7 +252,7 @@ function getPackageRoot(): TestsDemoCoverageGetPackageRootReturns {
  *
  * @since 0.18.0
  */
-function getRepoRoot(): TestsDemoCoverageGetRepoRootReturns {
+function getRepoRoot(): Tests_DemoCoverage_GetRepoRoot_Returns {
   return resolve(getPackageRoot(), '..', '..');
 }
 
@@ -267,9 +267,9 @@ function getRepoRoot(): TestsDemoCoverageGetRepoRootReturns {
  *
  * @since 0.18.0
  */
-async function loadDemoConfig(demoPath: TestsDemoCoverageLoadDemoConfigDemoPath): TestsDemoCoverageLoadDemoConfigReturns {
-  const configUrl: TestsDemoCoverageLoadDemoConfigConfigUrl = pathToFileURL(resolve(getRepoRoot(), demoPath)).href;
-  const moduleNamespace: TestsDemoCoverageLoadDemoConfigModule = await import(configUrl);
+async function loadDemoConfig(demoPath: Tests_DemoCoverage_LoadDemoConfig_DemoPath): Tests_DemoCoverage_LoadDemoConfig_Returns {
+  const configUrl: Tests_DemoCoverage_LoadDemoConfig_ConfigUrl = pathToFileURL(resolve(getRepoRoot(), demoPath)).href;
+  const moduleNamespace: Tests_DemoCoverage_LoadDemoConfig_Module = await import(configUrl);
 
   return moduleNamespace['default'];
 }
@@ -288,13 +288,13 @@ async function loadDemoConfig(demoPath: TestsDemoCoverageLoadDemoConfigDemoPath)
  *
  * @since 0.18.0
  */
-function resolveLeaf(config: TestsDemoCoverageResolveLeafConfig, path: TestsDemoCoverageResolveLeafPath): TestsDemoCoverageResolveLeafReturns {
-  const segments: TestsDemoCoverageResolveLeafSegments = path.split('.');
+function resolveLeaf(config: Tests_DemoCoverage_ResolveLeaf_Config, path: Tests_DemoCoverage_ResolveLeaf_Path): Tests_DemoCoverage_ResolveLeaf_Returns {
+  const segments: Tests_DemoCoverage_ResolveLeaf_Segments = path.split('.');
 
-  let cursor: TestsDemoCoverageResolveLeafCursor = config;
+  let cursor: Tests_DemoCoverage_ResolveLeaf_Cursor = config;
 
-  for (let index: TestsDemoCoverageResolveLeafIndex = 0; index < segments.length; index += 1) {
-    const segmentName: TestsDemoCoverageResolveLeafSegment = segments[index] ?? '';
+  for (let index: Tests_DemoCoverage_ResolveLeaf_Index = 0; index < segments.length; index += 1) {
+    const segmentName: Tests_DemoCoverage_ResolveLeaf_Segment = segments[index] ?? '';
 
     if (
       cursor === null
@@ -304,11 +304,11 @@ function resolveLeaf(config: TestsDemoCoverageResolveLeafConfig, path: TestsDemo
       return segments.slice(0, index + 1).join('.');
     }
 
-    if (Object.hasOwn(cursor as TestsDemoCoverageDemoRecord, segmentName) === false) {
+    if (Object.hasOwn(cursor as Tests_DemoCoverage_DemoRecord, segmentName) === false) {
       return segments.slice(0, index + 1).join('.');
     }
 
-    cursor = (cursor as TestsDemoCoverageDemoRecord)[segmentName];
+    cursor = (cursor as Tests_DemoCoverage_DemoRecord)[segmentName];
   }
 
   return null;
@@ -329,13 +329,13 @@ function resolveLeaf(config: TestsDemoCoverageResolveLeafConfig, path: TestsDemo
  */
 describe('demo coverage', () => {
   it('registry matches every leaf reachable from NovaThemeConfig', async () => {
-    const typeFilePath: TestsDemoCoverageDeriveRequiredLeafPathsTypeFilePath = resolve(getPackageRoot(), 'nova-config.d.ts');
-    const derived: TestsDemoCoverageDemoCoverageDerived = await deriveRequiredLeafPaths(typeFilePath);
-    const derivedSet: TestsDemoCoverageDemoCoverageDerivedSet = new Set(derived);
-    const registrySet: TestsDemoCoverageDemoCoverageRegistrySet = new Set(requiredLeafPaths);
-    const missingInRegistry: TestsDemoCoverageDemoCoverageMissingInRegistry = derived.filter((leaf) => registrySet.has(leaf) === false);
-    const staleInRegistry: TestsDemoCoverageDemoCoverageStaleInRegistry = requiredLeafPaths.filter((leaf) => derivedSet.has(leaf) === false);
-    const registryMessage: TestsDemoCoverageDemoCoverageRegistryMessage = [
+    const typeFilePath: Tests_DemoCoverage_DeriveRequiredLeafPaths_TypeFilePath = resolve(getPackageRoot(), 'nova-config.d.ts');
+    const derived: Tests_DemoCoverage_DemoCoverage_Derived = await deriveRequiredLeafPaths(typeFilePath);
+    const derivedSet: Tests_DemoCoverage_DemoCoverage_DerivedSet = new Set(derived);
+    const registrySet: Tests_DemoCoverage_DemoCoverage_RegistrySet = new Set(requiredLeafPaths);
+    const missingInRegistry: Tests_DemoCoverage_DemoCoverage_MissingInRegistry = derived.filter((leaf) => registrySet.has(leaf) === false);
+    const staleInRegistry: Tests_DemoCoverage_DemoCoverage_StaleInRegistry = requiredLeafPaths.filter((leaf) => derivedSet.has(leaf) === false);
+    const registryMessage: Tests_DemoCoverage_DemoCoverage_RegistryMessage = [
       'Registry / NovaThemeConfig drift:',
       `  Missing in registry (in type but not registered): ${missingInRegistry.length}`,
       ...missingInRegistry.map((leaf) => `    + ${leaf}`),
@@ -349,23 +349,23 @@ describe('demo coverage', () => {
   });
 
   for (const demo of demos) {
-    const demoContext: TestsDemoCoverageDemoEntry = demo;
+    const demoContext: Tests_DemoCoverage_DemoEntry = demo;
 
     it(`'${demoContext['name']}' demo sets every required NovaThemeConfig leaf`, async () => {
-      const demoParam: TestsDemoCoverageDemoCoverageDemo = demoContext;
-      const config: TestsDemoCoverageDemoCoverageConfig = await loadDemoConfig(demoParam['path']);
-      const misses: TestsDemoCoverageDemoCoverageMisses = [];
+      const demoParam: Tests_DemoCoverage_DemoCoverage_Demo = demoContext;
+      const config: Tests_DemoCoverage_DemoCoverage_Config = await loadDemoConfig(demoParam['path']);
+      const misses: Tests_DemoCoverage_DemoCoverage_Misses = [];
 
       for (const leaf of requiredLeafPaths) {
-        const leafPath: TestsDemoCoverageDemoCoverageLeaf = leaf;
-        const missAt: TestsDemoCoverageDemoCoverageValue = resolveLeaf(config, leafPath);
+        const leafPath: Tests_DemoCoverage_DemoCoverage_Leaf = leaf;
+        const missAt: Tests_DemoCoverage_DemoCoverage_Value = resolveLeaf(config, leafPath);
 
         if (missAt !== null) {
           misses.push(`  - ${leafPath} (missing at: ${missAt})`);
         }
       }
 
-      const message: TestsDemoCoverageDemoCoverageMessage = [
+      const message: Tests_DemoCoverage_DemoCoverage_Message = [
         `'${demoParam['name']}' demo has ${misses.length} undefined required leaves:`,
         ...misses,
       ].join('\n');

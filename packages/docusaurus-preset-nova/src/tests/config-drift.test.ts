@@ -5,99 +5,99 @@ import { describe, it } from 'vitest';
 import { validateOptions, validateThemeConfig } from '../options.js';
 
 import type {
-  TestsConfigDriftAnalytics,
-  TestsConfigDriftAnalyticsGtmContainerId,
-  TestsConfigDriftJoiSchema,
-  TestsConfigDriftJoiSchemaValidateResult,
-  TestsConfigDriftOverrides,
-  TestsConfigDriftOverridesColorsPrimary,
-  TestsConfigDriftOverridesColorsSecondary,
-  TestsConfigDriftOverridesFontsBody,
-  TestsConfigDriftOverridesFontsCode,
-  TestsConfigDriftOverridesFontsDisplay,
-  TestsConfigDriftOverridesFooter,
-  TestsConfigDriftOverridesNavbar,
-  TestsConfigDriftPlugins,
-  TestsConfigDriftPluginsBlog,
-  TestsConfigDriftPluginsDocs,
-  TestsConfigDriftPluginsPages,
-  TestsConfigDriftPluginsSitemap,
-  TestsConfigDriftPresetValue,
-  TestsConfigDriftProgressBar,
-  TestsConfigDriftSearch,
-  TestsConfigDriftSearchBarShortcutKeymap,
-  TestsConfigDriftSearchDocsRouteBasePath,
-  TestsConfigDriftSearchFuzzyMatchingDistance,
-  TestsConfigDriftSearchHashed,
-  TestsConfigDriftSearchHighlightSearchTermsOnTargetPage,
-  TestsConfigDriftSearchIgnorePatterns,
-  TestsConfigDriftSearchIndexBlog,
-  TestsConfigDriftSearchIndexDocs,
-  TestsConfigDriftSearchIndexPages,
-  TestsConfigDriftSearchLanguage,
-  TestsConfigDriftSearchResultLimits,
-  TestsConfigDriftThemeConfigAnnouncementBar,
-  TestsConfigDriftThemeConfigAnnouncementBarBackgroundColor,
-  TestsConfigDriftThemeConfigAnnouncementBarContent,
-  TestsConfigDriftThemeConfigAnnouncementBarId,
-  TestsConfigDriftThemeConfigAnnouncementBarIsCloseable,
-  TestsConfigDriftThemeConfigAnnouncementBarTextColor,
-  TestsConfigDriftThemeConfigBlog,
-  TestsConfigDriftThemeConfigBlogLayout,
-  TestsConfigDriftThemeConfigBlogLayoutDescription,
-  TestsConfigDriftThemeConfigBlogLayoutHeading,
-  TestsConfigDriftThemeConfigBlogShare,
-  TestsConfigDriftThemeConfigBlogSharePlatforms,
-  TestsConfigDriftThemeConfigBlogSidebar,
-  TestsConfigDriftThemeConfigBlogSidebarGroupByYear,
-  TestsConfigDriftThemeConfigColorMode,
-  TestsConfigDriftThemeConfigColorModeDefaultMode,
-  TestsConfigDriftThemeConfigColorModeDisableSwitch,
-  TestsConfigDriftThemeConfigDocs,
-  TestsConfigDriftThemeConfigDocsSidebar,
-  TestsConfigDriftThemeConfigDocsSidebarAutoCollapseCategories,
-  TestsConfigDriftThemeConfigDocsSidebarHideable,
-  TestsConfigDriftThemeConfigDocsVersionPersistence,
-  TestsConfigDriftThemeConfigErrorPages,
-  TestsConfigDriftThemeConfigErrorPagesError,
-  TestsConfigDriftThemeConfigErrorPagesErrorPageContent,
-  TestsConfigDriftThemeConfigErrorPagesErrorPageContentRetryLabel,
-  TestsConfigDriftThemeConfigErrorPagesErrorPageContentTitle,
-  TestsConfigDriftThemeConfigErrorPagesErrorRetryLabel,
-  TestsConfigDriftThemeConfigErrorPagesNotFound,
-  TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeHref,
-  TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeLabel,
-  TestsConfigDriftThemeConfigErrorPagesNotFoundDescription,
-  TestsConfigDriftThemeConfigErrorPagesNotFoundTitle,
-  TestsConfigDriftThemeConfigFooter,
-  TestsConfigDriftThemeConfigFooterCta,
-  TestsConfigDriftThemeConfigFooterCtaObject,
-  TestsConfigDriftThemeConfigFooterCtaObjectHref,
-  TestsConfigDriftThemeConfigFooterCtaObjectLabel,
-  TestsConfigDriftThemeConfigJoiSchema,
-  TestsConfigDriftThemeConfigJoiSchemaValidateResult,
-  TestsConfigDriftThemeConfigNavbar,
-  TestsConfigDriftThemeConfigNavbarHideOnScroll,
-  TestsConfigDriftThemeConfigNavbarItems,
-  TestsConfigDriftThemeConfigSite,
-  TestsConfigDriftThemeConfigSiteImage,
-  TestsConfigDriftThemeConfigSiteLogo,
-  TestsConfigDriftThemeConfigSiteLogoAlt,
-  TestsConfigDriftThemeConfigSiteLogoHref,
-  TestsConfigDriftThemeConfigSiteLogoSrc,
-  TestsConfigDriftThemeConfigSiteLogoSrcDark,
-  TestsConfigDriftThemeConfigSiteLogoSrcLight,
-  TestsConfigDriftThemeConfigSiteLogoTitle,
-  TestsConfigDriftThemeConfigSiteLogoWordmark,
-  TestsConfigDriftThemeConfigSiteLogoWordmarkDark,
-  TestsConfigDriftThemeConfigSiteLogoWordmarkLight,
-  TestsConfigDriftThemeConfigSiteMetadata,
-  TestsConfigDriftThemeConfigSiteTitle,
-  TestsConfigDriftThemeConfigTableOfContents,
-  TestsConfigDriftThemeConfigTableOfContentsMaxHeadingLevel,
-  TestsConfigDriftThemeConfigTableOfContentsMinHeadingLevel,
-  TestsConfigDriftThemeConfigValidatedResult,
-  TestsConfigDriftValidatedResult,
+  Tests_ConfigDrift_Analytics,
+  Tests_ConfigDrift_AnalyticsGtmContainerId,
+  Tests_ConfigDrift_JoiSchema,
+  Tests_ConfigDrift_JoiSchemaValidateResult,
+  Tests_ConfigDrift_Overrides,
+  Tests_ConfigDrift_OverridesColorsPrimary,
+  Tests_ConfigDrift_OverridesColorsSecondary,
+  Tests_ConfigDrift_OverridesFontsBody,
+  Tests_ConfigDrift_OverridesFontsCode,
+  Tests_ConfigDrift_OverridesFontsDisplay,
+  Tests_ConfigDrift_OverridesFooter,
+  Tests_ConfigDrift_OverridesNavbar,
+  Tests_ConfigDrift_Plugins,
+  Tests_ConfigDrift_PluginsBlog,
+  Tests_ConfigDrift_PluginsDocs,
+  Tests_ConfigDrift_PluginsPages,
+  Tests_ConfigDrift_PluginsSitemap,
+  Tests_ConfigDrift_PresetValue,
+  Tests_ConfigDrift_ProgressBar,
+  Tests_ConfigDrift_Search,
+  Tests_ConfigDrift_SearchBarShortcutKeymap,
+  Tests_ConfigDrift_SearchDocsRouteBasePath,
+  Tests_ConfigDrift_SearchFuzzyMatchingDistance,
+  Tests_ConfigDrift_SearchHashed,
+  Tests_ConfigDrift_SearchHighlightSearchTermsOnTargetPage,
+  Tests_ConfigDrift_SearchIgnorePatterns,
+  Tests_ConfigDrift_SearchIndexBlog,
+  Tests_ConfigDrift_SearchIndexDocs,
+  Tests_ConfigDrift_SearchIndexPages,
+  Tests_ConfigDrift_SearchLanguage,
+  Tests_ConfigDrift_SearchResultLimits,
+  Tests_ConfigDrift_ThemeConfigAnnouncementBar,
+  Tests_ConfigDrift_ThemeConfigAnnouncementBarBackgroundColor,
+  Tests_ConfigDrift_ThemeConfigAnnouncementBarContent,
+  Tests_ConfigDrift_ThemeConfigAnnouncementBarId,
+  Tests_ConfigDrift_ThemeConfigAnnouncementBarIsCloseable,
+  Tests_ConfigDrift_ThemeConfigAnnouncementBarTextColor,
+  Tests_ConfigDrift_ThemeConfigBlog,
+  Tests_ConfigDrift_ThemeConfigBlogLayout,
+  Tests_ConfigDrift_ThemeConfigBlogLayoutDescription,
+  Tests_ConfigDrift_ThemeConfigBlogLayoutHeading,
+  Tests_ConfigDrift_ThemeConfigBlogShare,
+  Tests_ConfigDrift_ThemeConfigBlogSharePlatforms,
+  Tests_ConfigDrift_ThemeConfigBlogSidebar,
+  Tests_ConfigDrift_ThemeConfigBlogSidebarGroupByYear,
+  Tests_ConfigDrift_ThemeConfigColorMode,
+  Tests_ConfigDrift_ThemeConfigColorModeDefaultMode,
+  Tests_ConfigDrift_ThemeConfigColorModeDisableSwitch,
+  Tests_ConfigDrift_ThemeConfigDocs,
+  Tests_ConfigDrift_ThemeConfigDocsSidebar,
+  Tests_ConfigDrift_ThemeConfigDocsSidebarAutoCollapseCategories,
+  Tests_ConfigDrift_ThemeConfigDocsSidebarHideable,
+  Tests_ConfigDrift_ThemeConfigDocsVersionPersistence,
+  Tests_ConfigDrift_ThemeConfigErrorPages,
+  Tests_ConfigDrift_ThemeConfigErrorPagesError,
+  Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContent,
+  Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentRetryLabel,
+  Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentTitle,
+  Tests_ConfigDrift_ThemeConfigErrorPagesErrorRetryLabel,
+  Tests_ConfigDrift_ThemeConfigErrorPagesNotFound,
+  Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeHref,
+  Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeLabel,
+  Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundDescription,
+  Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundTitle,
+  Tests_ConfigDrift_ThemeConfigFooter,
+  Tests_ConfigDrift_ThemeConfigFooterCta,
+  Tests_ConfigDrift_ThemeConfigFooterCtaObject,
+  Tests_ConfigDrift_ThemeConfigFooterCtaObject_Href,
+  Tests_ConfigDrift_ThemeConfigFooterCtaObject_Label,
+  Tests_ConfigDrift_ThemeConfigJoiSchema,
+  Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult,
+  Tests_ConfigDrift_ThemeConfigNavbar,
+  Tests_ConfigDrift_ThemeConfigNavbarHideOnScroll,
+  Tests_ConfigDrift_ThemeConfigNavbarItems,
+  Tests_ConfigDrift_ThemeConfigSite,
+  Tests_ConfigDrift_ThemeConfigSiteImage,
+  Tests_ConfigDrift_ThemeConfigSiteLogo,
+  Tests_ConfigDrift_ThemeConfigSiteLogoAlt,
+  Tests_ConfigDrift_ThemeConfigSiteLogoHref,
+  Tests_ConfigDrift_ThemeConfigSiteLogoSrc,
+  Tests_ConfigDrift_ThemeConfigSiteLogoSrcDark,
+  Tests_ConfigDrift_ThemeConfigSiteLogoSrcLight,
+  Tests_ConfigDrift_ThemeConfigSiteLogoTitle,
+  Tests_ConfigDrift_ThemeConfigSiteLogoWordmark,
+  Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkDark,
+  Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkLight,
+  Tests_ConfigDrift_ThemeConfigSiteMetadata,
+  Tests_ConfigDrift_ThemeConfigSiteTitle,
+  Tests_ConfigDrift_ThemeConfigTableOfContents,
+  Tests_ConfigDrift_ThemeConfigTableOfContentsMaxHeadingLevel,
+  Tests_ConfigDrift_ThemeConfigTableOfContentsMinHeadingLevel,
+  Tests_ConfigDrift_ThemeConfigValidatedResult,
+  Tests_ConfigDrift_ValidatedResult,
 } from '../types/tests/config-drift.test.d.ts';
 
 /**
@@ -111,16 +111,16 @@ import type {
  */
 describe('configDrift validateOptions', async () => {
   it('validates a fully-populated preset options object', () => {
-    const result: TestsConfigDriftValidatedResult = validateOptions({
+    const result: Tests_ConfigDrift_ValidatedResult = validateOptions({
       validate: (schema, options) => {
-        const joiSchema: TestsConfigDriftJoiSchema = schema as TestsConfigDriftJoiSchema;
-        const validated: TestsConfigDriftJoiSchemaValidateResult = joiSchema.validate(options);
+        const joiSchema: Tests_ConfigDrift_JoiSchema = schema as Tests_ConfigDrift_JoiSchema;
+        const validated: Tests_ConfigDrift_JoiSchemaValidateResult = joiSchema.validate(options);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
         }
 
-        return validated['value'] as TestsConfigDriftValidatedResult;
+        return validated['value'] as Tests_ConfigDrift_ValidatedResult;
       },
       options: {
         preset: 'sentinel',
@@ -186,13 +186,13 @@ describe('configDrift validateOptions', async () => {
       },
     });
 
-    const presetValue: TestsConfigDriftPresetValue = result['preset'];
+    const presetValue: Tests_ConfigDrift_PresetValue = result['preset'];
 
     strictEqual(presetValue, 'sentinel');
 
-    const overrides: TestsConfigDriftOverrides = result['overrides'];
-    const overridesColorsPrimary: TestsConfigDriftOverridesColorsPrimary = overrides['colors']['primary'];
-    const overridesColorsSecondary: TestsConfigDriftOverridesColorsSecondary = overrides['colors']['secondary'];
+    const overrides: Tests_ConfigDrift_Overrides = result['overrides'];
+    const overridesColorsPrimary: Tests_ConfigDrift_OverridesColorsPrimary = overrides['colors']['primary'];
+    const overridesColorsSecondary: Tests_ConfigDrift_OverridesColorsSecondary = overrides['colors']['secondary'];
 
     deepStrictEqual(overridesColorsPrimary, {
       light: '#DC2626', dark: '#DC2626',
@@ -201,56 +201,56 @@ describe('configDrift validateOptions', async () => {
       light: '#FBBF24', dark: '#FBBF24',
     });
 
-    const overridesFontsDisplay: TestsConfigDriftOverridesFontsDisplay = overrides['fonts']['display'];
-    const overridesFontsBody: TestsConfigDriftOverridesFontsBody = overrides['fonts']['body'];
-    const overridesFontsCode: TestsConfigDriftOverridesFontsCode = overrides['fonts']['code'];
+    const overridesFontsDisplay: Tests_ConfigDrift_OverridesFontsDisplay = overrides['fonts']['display'];
+    const overridesFontsBody: Tests_ConfigDrift_OverridesFontsBody = overrides['fonts']['body'];
+    const overridesFontsCode: Tests_ConfigDrift_OverridesFontsCode = overrides['fonts']['code'];
 
     strictEqual(overridesFontsDisplay, 'Plus Jakarta Sans');
     strictEqual(overridesFontsBody, 'Inter');
     strictEqual(overridesFontsCode, 'JetBrains Mono');
 
-    const overridesNavbar: TestsConfigDriftOverridesNavbar = overrides['navbar'];
-    const overridesFooter: TestsConfigDriftOverridesFooter = overrides['footer'];
+    const overridesNavbar: Tests_ConfigDrift_OverridesNavbar = overrides['navbar'];
+    const overridesFooter: Tests_ConfigDrift_OverridesFooter = overrides['footer'];
 
     strictEqual(overridesNavbar, 'canopy');
     strictEqual(overridesFooter, 'embassy');
 
-    const plugins: TestsConfigDriftPlugins = result['plugins'];
-    const pluginsDocs: TestsConfigDriftPluginsDocs = plugins['docs'];
-    const pluginsBlog: TestsConfigDriftPluginsBlog = plugins['blog'];
-    const pluginsPages: TestsConfigDriftPluginsPages = plugins['pages'];
-    const pluginsSitemap: TestsConfigDriftPluginsSitemap = plugins['sitemap'];
+    const plugins: Tests_ConfigDrift_Plugins = result['plugins'];
+    const pluginsDocs: Tests_ConfigDrift_PluginsDocs = plugins['docs'];
+    const pluginsBlog: Tests_ConfigDrift_PluginsBlog = plugins['blog'];
+    const pluginsPages: Tests_ConfigDrift_PluginsPages = plugins['pages'];
+    const pluginsSitemap: Tests_ConfigDrift_PluginsSitemap = plugins['sitemap'];
 
     strictEqual(pluginsDocs !== undefined, true);
     strictEqual(pluginsBlog !== undefined && pluginsBlog !== false, true);
     strictEqual(pluginsPages !== undefined && pluginsPages !== false, true);
     strictEqual(pluginsSitemap !== undefined && pluginsSitemap !== false, true);
 
-    const analytics: TestsConfigDriftAnalytics = result['analytics'];
-    const analyticsGtmContainerId: TestsConfigDriftAnalyticsGtmContainerId = analytics['gtm']!['containerId'];
+    const analytics: Tests_ConfigDrift_Analytics = result['analytics'];
+    const analyticsGtmContainerId: Tests_ConfigDrift_AnalyticsGtmContainerId = analytics['gtm']!['containerId'];
 
     strictEqual(analyticsGtmContainerId, 'GTM-XXXXXX');
 
-    const progressBar: TestsConfigDriftProgressBar = result['progressBar'];
+    const progressBar: Tests_ConfigDrift_ProgressBar = result['progressBar'];
 
     strictEqual(typeof progressBar, 'object');
 
-    const search: TestsConfigDriftSearch = result['search'];
+    const search: Tests_ConfigDrift_Search = result['search'];
 
     strictEqual(search !== false, true);
 
     if (search !== false) {
-      const searchLanguage: TestsConfigDriftSearchLanguage = search['language']!;
-      const searchIndexDocs: TestsConfigDriftSearchIndexDocs = search['indexDocs']!;
-      const searchIndexBlog: TestsConfigDriftSearchIndexBlog = search['indexBlog']!;
-      const searchIndexPages: TestsConfigDriftSearchIndexPages = search['indexPages']!;
-      const searchHashed: TestsConfigDriftSearchHashed = search['hashed']!;
-      const searchResultLimits: TestsConfigDriftSearchResultLimits = search['searchResultLimits']!;
-      const searchHighlight: TestsConfigDriftSearchHighlightSearchTermsOnTargetPage = search['highlightSearchTermsOnTargetPage']!;
-      const searchShortcut: TestsConfigDriftSearchBarShortcutKeymap = search['searchBarShortcutKeymap']!;
-      const searchFuzzy: TestsConfigDriftSearchFuzzyMatchingDistance = search['fuzzyMatchingDistance']!;
-      const searchIgnore: TestsConfigDriftSearchIgnorePatterns = search['ignorePatterns']!;
-      const searchDocsRoute: TestsConfigDriftSearchDocsRouteBasePath = search['docsRouteBasePath']!;
+      const searchLanguage: Tests_ConfigDrift_SearchLanguage = search['language']!;
+      const searchIndexDocs: Tests_ConfigDrift_SearchIndexDocs = search['indexDocs']!;
+      const searchIndexBlog: Tests_ConfigDrift_SearchIndexBlog = search['indexBlog']!;
+      const searchIndexPages: Tests_ConfigDrift_SearchIndexPages = search['indexPages']!;
+      const searchHashed: Tests_ConfigDrift_SearchHashed = search['hashed']!;
+      const searchResultLimits: Tests_ConfigDrift_SearchResultLimits = search['searchResultLimits']!;
+      const searchHighlight: Tests_ConfigDrift_SearchHighlightSearchTermsOnTargetPage = search['highlightSearchTermsOnTargetPage']!;
+      const searchShortcut: Tests_ConfigDrift_SearchBarShortcutKeymap = search['searchBarShortcutKeymap']!;
+      const searchFuzzy: Tests_ConfigDrift_SearchFuzzyMatchingDistance = search['fuzzyMatchingDistance']!;
+      const searchIgnore: Tests_ConfigDrift_SearchIgnorePatterns = search['ignorePatterns']!;
+      const searchDocsRoute: Tests_ConfigDrift_SearchDocsRouteBasePath = search['docsRouteBasePath']!;
 
       strictEqual(searchLanguage.length, 2);
       strictEqual(searchIndexDocs, true);
@@ -282,16 +282,16 @@ describe('configDrift validateOptions', async () => {
  */
 describe('configDrift validateThemeConfig', async () => {
   it('validates a fully-populated theme config object', () => {
-    const result: TestsConfigDriftThemeConfigValidatedResult = validateThemeConfig({
+    const result: Tests_ConfigDrift_ThemeConfigValidatedResult = validateThemeConfig({
       validate: (schema, themeConfig) => {
-        const joiSchema: TestsConfigDriftThemeConfigJoiSchema = schema as TestsConfigDriftThemeConfigJoiSchema;
-        const validated: TestsConfigDriftThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
+        const joiSchema: Tests_ConfigDrift_ThemeConfigJoiSchema = schema as Tests_ConfigDrift_ThemeConfigJoiSchema;
+        const validated: Tests_ConfigDrift_ThemeConfigJoiSchemaValidateResult = joiSchema.validate(themeConfig);
 
         if (validated['error'] !== undefined) {
           throw validated['error'];
         }
 
-        return validated['value'] as TestsConfigDriftThemeConfigValidatedResult;
+        return validated['value'] as Tests_ConfigDrift_ThemeConfigValidatedResult;
       },
       themeConfig: {
         site: {
@@ -383,20 +383,20 @@ describe('configDrift validateThemeConfig', async () => {
       },
     });
 
-    const site: TestsConfigDriftThemeConfigSite = result['site'] as TestsConfigDriftThemeConfigSite;
-    const siteTitle: TestsConfigDriftThemeConfigSiteTitle = site['title'] as TestsConfigDriftThemeConfigSiteTitle;
-    const siteLogo: TestsConfigDriftThemeConfigSiteLogo = site['logo'] as TestsConfigDriftThemeConfigSiteLogo;
-    const siteLogoAlt: TestsConfigDriftThemeConfigSiteLogoAlt = siteLogo['alt'] as TestsConfigDriftThemeConfigSiteLogoAlt;
-    const siteLogoSrc: TestsConfigDriftThemeConfigSiteLogoSrc = siteLogo['src'] as TestsConfigDriftThemeConfigSiteLogoSrc;
-    const siteLogoSrcLight: TestsConfigDriftThemeConfigSiteLogoSrcLight = siteLogoSrc['light'] as TestsConfigDriftThemeConfigSiteLogoSrcLight;
-    const siteLogoSrcDark: TestsConfigDriftThemeConfigSiteLogoSrcDark = siteLogoSrc['dark'] as TestsConfigDriftThemeConfigSiteLogoSrcDark;
-    const siteLogoHref: TestsConfigDriftThemeConfigSiteLogoHref = siteLogo['href'] as TestsConfigDriftThemeConfigSiteLogoHref;
-    const siteLogoWordmark: TestsConfigDriftThemeConfigSiteLogoWordmark = siteLogo['wordmark'] as TestsConfigDriftThemeConfigSiteLogoWordmark;
-    const siteLogoWordmarkLight: TestsConfigDriftThemeConfigSiteLogoWordmarkLight = siteLogoWordmark['light'] as TestsConfigDriftThemeConfigSiteLogoWordmarkLight;
-    const siteLogoWordmarkDark: TestsConfigDriftThemeConfigSiteLogoWordmarkDark = siteLogoWordmark['dark'] as TestsConfigDriftThemeConfigSiteLogoWordmarkDark;
-    const siteLogoTitle: TestsConfigDriftThemeConfigSiteLogoTitle = siteLogo['title'] as TestsConfigDriftThemeConfigSiteLogoTitle;
-    const siteImage: TestsConfigDriftThemeConfigSiteImage = site['image'] as TestsConfigDriftThemeConfigSiteImage;
-    const siteMetadata: TestsConfigDriftThemeConfigSiteMetadata = site['metadata'] as TestsConfigDriftThemeConfigSiteMetadata;
+    const site: Tests_ConfigDrift_ThemeConfigSite = result['site'] as Tests_ConfigDrift_ThemeConfigSite;
+    const siteTitle: Tests_ConfigDrift_ThemeConfigSiteTitle = site['title'] as Tests_ConfigDrift_ThemeConfigSiteTitle;
+    const siteLogo: Tests_ConfigDrift_ThemeConfigSiteLogo = site['logo'] as Tests_ConfigDrift_ThemeConfigSiteLogo;
+    const siteLogoAlt: Tests_ConfigDrift_ThemeConfigSiteLogoAlt = siteLogo['alt'] as Tests_ConfigDrift_ThemeConfigSiteLogoAlt;
+    const siteLogoSrc: Tests_ConfigDrift_ThemeConfigSiteLogoSrc = siteLogo['src'] as Tests_ConfigDrift_ThemeConfigSiteLogoSrc;
+    const siteLogoSrcLight: Tests_ConfigDrift_ThemeConfigSiteLogoSrcLight = siteLogoSrc['light'] as Tests_ConfigDrift_ThemeConfigSiteLogoSrcLight;
+    const siteLogoSrcDark: Tests_ConfigDrift_ThemeConfigSiteLogoSrcDark = siteLogoSrc['dark'] as Tests_ConfigDrift_ThemeConfigSiteLogoSrcDark;
+    const siteLogoHref: Tests_ConfigDrift_ThemeConfigSiteLogoHref = siteLogo['href'] as Tests_ConfigDrift_ThemeConfigSiteLogoHref;
+    const siteLogoWordmark: Tests_ConfigDrift_ThemeConfigSiteLogoWordmark = siteLogo['wordmark'] as Tests_ConfigDrift_ThemeConfigSiteLogoWordmark;
+    const siteLogoWordmarkLight: Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkLight = siteLogoWordmark['light'] as Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkLight;
+    const siteLogoWordmarkDark: Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkDark = siteLogoWordmark['dark'] as Tests_ConfigDrift_ThemeConfigSiteLogoWordmarkDark;
+    const siteLogoTitle: Tests_ConfigDrift_ThemeConfigSiteLogoTitle = siteLogo['title'] as Tests_ConfigDrift_ThemeConfigSiteLogoTitle;
+    const siteImage: Tests_ConfigDrift_ThemeConfigSiteImage = site['image'] as Tests_ConfigDrift_ThemeConfigSiteImage;
+    const siteMetadata: Tests_ConfigDrift_ThemeConfigSiteMetadata = site['metadata'] as Tests_ConfigDrift_ThemeConfigSiteMetadata;
 
     strictEqual(siteTitle, 'Nova Docs');
     strictEqual(siteLogoAlt, 'Nova Logo');
@@ -409,62 +409,62 @@ describe('configDrift validateThemeConfig', async () => {
     strictEqual(siteImage, '/img/social-card.png');
     strictEqual(siteMetadata.length, 1);
 
-    const colorMode: TestsConfigDriftThemeConfigColorMode = result['colorMode'] as TestsConfigDriftThemeConfigColorMode;
-    const colorModeDefaultMode: TestsConfigDriftThemeConfigColorModeDefaultMode = colorMode['defaultMode'] as TestsConfigDriftThemeConfigColorModeDefaultMode;
-    const colorModeDisableSwitch: TestsConfigDriftThemeConfigColorModeDisableSwitch = colorMode['disableSwitch'] as TestsConfigDriftThemeConfigColorModeDisableSwitch;
+    const colorMode: Tests_ConfigDrift_ThemeConfigColorMode = result['colorMode'] as Tests_ConfigDrift_ThemeConfigColorMode;
+    const colorModeDefaultMode: Tests_ConfigDrift_ThemeConfigColorModeDefaultMode = colorMode['defaultMode'] as Tests_ConfigDrift_ThemeConfigColorModeDefaultMode;
+    const colorModeDisableSwitch: Tests_ConfigDrift_ThemeConfigColorModeDisableSwitch = colorMode['disableSwitch'] as Tests_ConfigDrift_ThemeConfigColorModeDisableSwitch;
 
     strictEqual(colorModeDefaultMode, 'dark');
     strictEqual(colorModeDisableSwitch, false);
 
-    const navbar: TestsConfigDriftThemeConfigNavbar = result['navbar'] as TestsConfigDriftThemeConfigNavbar;
-    const navbarHideOnScroll: TestsConfigDriftThemeConfigNavbarHideOnScroll = navbar['hideOnScroll'] as TestsConfigDriftThemeConfigNavbarHideOnScroll;
-    const navbarItems: TestsConfigDriftThemeConfigNavbarItems = navbar['items'] as TestsConfigDriftThemeConfigNavbarItems;
+    const navbar: Tests_ConfigDrift_ThemeConfigNavbar = result['navbar'] as Tests_ConfigDrift_ThemeConfigNavbar;
+    const navbarHideOnScroll: Tests_ConfigDrift_ThemeConfigNavbarHideOnScroll = navbar['hideOnScroll'] as Tests_ConfigDrift_ThemeConfigNavbarHideOnScroll;
+    const navbarItems: Tests_ConfigDrift_ThemeConfigNavbarItems = navbar['items'] as Tests_ConfigDrift_ThemeConfigNavbarItems;
 
     strictEqual(navbarHideOnScroll, true);
     strictEqual(navbarItems.length, 1);
 
-    const docs: TestsConfigDriftThemeConfigDocs = result['docs'] as TestsConfigDriftThemeConfigDocs;
-    const docsVersionPersistence: TestsConfigDriftThemeConfigDocsVersionPersistence = docs['versionPersistence'] as TestsConfigDriftThemeConfigDocsVersionPersistence;
-    const docsSidebar: TestsConfigDriftThemeConfigDocsSidebar = docs['sidebar'] as TestsConfigDriftThemeConfigDocsSidebar;
-    const docsSidebarHideable: TestsConfigDriftThemeConfigDocsSidebarHideable = docsSidebar['hideable'] as TestsConfigDriftThemeConfigDocsSidebarHideable;
-    const docsSidebarAutoCollapse: TestsConfigDriftThemeConfigDocsSidebarAutoCollapseCategories = docsSidebar['autoCollapseCategories'] as TestsConfigDriftThemeConfigDocsSidebarAutoCollapseCategories;
+    const docs: Tests_ConfigDrift_ThemeConfigDocs = result['docs'] as Tests_ConfigDrift_ThemeConfigDocs;
+    const docsVersionPersistence: Tests_ConfigDrift_ThemeConfigDocsVersionPersistence = docs['versionPersistence'] as Tests_ConfigDrift_ThemeConfigDocsVersionPersistence;
+    const docsSidebar: Tests_ConfigDrift_ThemeConfigDocsSidebar = docs['sidebar'] as Tests_ConfigDrift_ThemeConfigDocsSidebar;
+    const docsSidebarHideable: Tests_ConfigDrift_ThemeConfigDocsSidebarHideable = docsSidebar['hideable'] as Tests_ConfigDrift_ThemeConfigDocsSidebarHideable;
+    const docsSidebarAutoCollapse: Tests_ConfigDrift_ThemeConfigDocsSidebarAutoCollapseCategories = docsSidebar['autoCollapseCategories'] as Tests_ConfigDrift_ThemeConfigDocsSidebarAutoCollapseCategories;
 
     strictEqual(docsVersionPersistence, 'localStorage');
     strictEqual(docsSidebarHideable, true);
     strictEqual(docsSidebarAutoCollapse, true);
 
-    const blog: TestsConfigDriftThemeConfigBlog = result['blog'] as TestsConfigDriftThemeConfigBlog;
-    const blogSidebar: TestsConfigDriftThemeConfigBlogSidebar = blog['sidebar'] as TestsConfigDriftThemeConfigBlogSidebar;
-    const blogSidebarGroupByYear: TestsConfigDriftThemeConfigBlogSidebarGroupByYear = blogSidebar['groupByYear'] as TestsConfigDriftThemeConfigBlogSidebarGroupByYear;
-    const blogLayout: TestsConfigDriftThemeConfigBlogLayout = blog['layout'] as TestsConfigDriftThemeConfigBlogLayout;
-    const blogLayoutHeading: TestsConfigDriftThemeConfigBlogLayoutHeading = blogLayout['heading'] as TestsConfigDriftThemeConfigBlogLayoutHeading;
-    const blogLayoutDescription: TestsConfigDriftThemeConfigBlogLayoutDescription = blogLayout['description'] as TestsConfigDriftThemeConfigBlogLayoutDescription;
+    const blog: Tests_ConfigDrift_ThemeConfigBlog = result['blog'] as Tests_ConfigDrift_ThemeConfigBlog;
+    const blogSidebar: Tests_ConfigDrift_ThemeConfigBlogSidebar = blog['sidebar'] as Tests_ConfigDrift_ThemeConfigBlogSidebar;
+    const blogSidebarGroupByYear: Tests_ConfigDrift_ThemeConfigBlogSidebarGroupByYear = blogSidebar['groupByYear'] as Tests_ConfigDrift_ThemeConfigBlogSidebarGroupByYear;
+    const blogLayout: Tests_ConfigDrift_ThemeConfigBlogLayout = blog['layout'] as Tests_ConfigDrift_ThemeConfigBlogLayout;
+    const blogLayoutHeading: Tests_ConfigDrift_ThemeConfigBlogLayoutHeading = blogLayout['heading'] as Tests_ConfigDrift_ThemeConfigBlogLayoutHeading;
+    const blogLayoutDescription: Tests_ConfigDrift_ThemeConfigBlogLayoutDescription = blogLayout['description'] as Tests_ConfigDrift_ThemeConfigBlogLayoutDescription;
 
     strictEqual(blogSidebarGroupByYear, false);
     strictEqual(blogLayoutHeading, 'Updates');
     strictEqual(blogLayoutDescription, 'Latest news and releases.');
 
-    const blogShare: TestsConfigDriftThemeConfigBlogShare = blog['share'] as TestsConfigDriftThemeConfigBlogShare;
-    const blogSharePlatforms: TestsConfigDriftThemeConfigBlogSharePlatforms = blogShare['platforms'] as TestsConfigDriftThemeConfigBlogSharePlatforms;
+    const blogShare: Tests_ConfigDrift_ThemeConfigBlogShare = blog['share'] as Tests_ConfigDrift_ThemeConfigBlogShare;
+    const blogSharePlatforms: Tests_ConfigDrift_ThemeConfigBlogSharePlatforms = blogShare['platforms'] as Tests_ConfigDrift_ThemeConfigBlogSharePlatforms;
 
     strictEqual(blogSharePlatforms['length'], 3);
     strictEqual(blogSharePlatforms[0], 'x');
     strictEqual(blogSharePlatforms[1], 'linkedin');
     strictEqual(blogSharePlatforms[2], 'copy');
 
-    const tableOfContents: TestsConfigDriftThemeConfigTableOfContents = result['tableOfContents'] as TestsConfigDriftThemeConfigTableOfContents;
-    const tableOfContentsMinHeadingLevel: TestsConfigDriftThemeConfigTableOfContentsMinHeadingLevel = tableOfContents['minHeadingLevel'] as TestsConfigDriftThemeConfigTableOfContentsMinHeadingLevel;
-    const tableOfContentsMaxHeadingLevel: TestsConfigDriftThemeConfigTableOfContentsMaxHeadingLevel = tableOfContents['maxHeadingLevel'] as TestsConfigDriftThemeConfigTableOfContentsMaxHeadingLevel;
+    const tableOfContents: Tests_ConfigDrift_ThemeConfigTableOfContents = result['tableOfContents'] as Tests_ConfigDrift_ThemeConfigTableOfContents;
+    const tableOfContentsMinHeadingLevel: Tests_ConfigDrift_ThemeConfigTableOfContentsMinHeadingLevel = tableOfContents['minHeadingLevel'] as Tests_ConfigDrift_ThemeConfigTableOfContentsMinHeadingLevel;
+    const tableOfContentsMaxHeadingLevel: Tests_ConfigDrift_ThemeConfigTableOfContentsMaxHeadingLevel = tableOfContents['maxHeadingLevel'] as Tests_ConfigDrift_ThemeConfigTableOfContentsMaxHeadingLevel;
 
     strictEqual(tableOfContentsMinHeadingLevel, 2);
     strictEqual(tableOfContentsMaxHeadingLevel, 4);
 
-    const announcementBar: TestsConfigDriftThemeConfigAnnouncementBar = result['announcementBar'] as TestsConfigDriftThemeConfigAnnouncementBar;
-    const announcementBarId: TestsConfigDriftThemeConfigAnnouncementBarId = announcementBar['id'] as TestsConfigDriftThemeConfigAnnouncementBarId;
-    const announcementBarContent: TestsConfigDriftThemeConfigAnnouncementBarContent = announcementBar['content'] as TestsConfigDriftThemeConfigAnnouncementBarContent;
-    const announcementBarBackgroundColor: TestsConfigDriftThemeConfigAnnouncementBarBackgroundColor = announcementBar['backgroundColor'] as TestsConfigDriftThemeConfigAnnouncementBarBackgroundColor;
-    const announcementBarTextColor: TestsConfigDriftThemeConfigAnnouncementBarTextColor = announcementBar['textColor'] as TestsConfigDriftThemeConfigAnnouncementBarTextColor;
-    const announcementBarIsCloseable: TestsConfigDriftThemeConfigAnnouncementBarIsCloseable = announcementBar['isCloseable'] as TestsConfigDriftThemeConfigAnnouncementBarIsCloseable;
+    const announcementBar: Tests_ConfigDrift_ThemeConfigAnnouncementBar = result['announcementBar'] as Tests_ConfigDrift_ThemeConfigAnnouncementBar;
+    const announcementBarId: Tests_ConfigDrift_ThemeConfigAnnouncementBarId = announcementBar['id'] as Tests_ConfigDrift_ThemeConfigAnnouncementBarId;
+    const announcementBarContent: Tests_ConfigDrift_ThemeConfigAnnouncementBarContent = announcementBar['content'] as Tests_ConfigDrift_ThemeConfigAnnouncementBarContent;
+    const announcementBarBackgroundColor: Tests_ConfigDrift_ThemeConfigAnnouncementBarBackgroundColor = announcementBar['backgroundColor'] as Tests_ConfigDrift_ThemeConfigAnnouncementBarBackgroundColor;
+    const announcementBarTextColor: Tests_ConfigDrift_ThemeConfigAnnouncementBarTextColor = announcementBar['textColor'] as Tests_ConfigDrift_ThemeConfigAnnouncementBarTextColor;
+    const announcementBarIsCloseable: Tests_ConfigDrift_ThemeConfigAnnouncementBarIsCloseable = announcementBar['isCloseable'] as Tests_ConfigDrift_ThemeConfigAnnouncementBarIsCloseable;
 
     strictEqual(announcementBarId, 'announcement-1');
     strictEqual(announcementBarContent, 'New release available!');
@@ -472,17 +472,17 @@ describe('configDrift validateThemeConfig', async () => {
     strictEqual(announcementBarTextColor, '#f8fafc');
     strictEqual(announcementBarIsCloseable, true);
 
-    const errorPages: TestsConfigDriftThemeConfigErrorPages = result['errorPages'] as TestsConfigDriftThemeConfigErrorPages;
-    const errorPagesNotFound: TestsConfigDriftThemeConfigErrorPagesNotFound = errorPages['notFound'] as TestsConfigDriftThemeConfigErrorPagesNotFound;
-    const errorPagesNotFoundTitle: TestsConfigDriftThemeConfigErrorPagesNotFoundTitle = errorPagesNotFound['title'] as TestsConfigDriftThemeConfigErrorPagesNotFoundTitle;
-    const errorPagesNotFoundDescription: TestsConfigDriftThemeConfigErrorPagesNotFoundDescription = errorPagesNotFound['description'] as TestsConfigDriftThemeConfigErrorPagesNotFoundDescription;
-    const errorPagesNotFoundBackHomeLabel: TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeLabel = errorPagesNotFound['backHomeLabel'] as TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeLabel;
-    const errorPagesNotFoundBackHomeHref: TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeHref = errorPagesNotFound['backHomeHref'] as TestsConfigDriftThemeConfigErrorPagesNotFoundBackHomeHref;
-    const errorPagesErrorPageContent: TestsConfigDriftThemeConfigErrorPagesErrorPageContent = errorPages['errorPageContent'] as TestsConfigDriftThemeConfigErrorPagesErrorPageContent;
-    const errorPagesErrorPageContentTitle: TestsConfigDriftThemeConfigErrorPagesErrorPageContentTitle = errorPagesErrorPageContent['title'] as TestsConfigDriftThemeConfigErrorPagesErrorPageContentTitle;
-    const errorPagesErrorPageContentRetryLabel: TestsConfigDriftThemeConfigErrorPagesErrorPageContentRetryLabel = errorPagesErrorPageContent['retryLabel'] as TestsConfigDriftThemeConfigErrorPagesErrorPageContentRetryLabel;
-    const errorPagesError: TestsConfigDriftThemeConfigErrorPagesError = errorPages['error'] as TestsConfigDriftThemeConfigErrorPagesError;
-    const errorPagesErrorRetryLabel: TestsConfigDriftThemeConfigErrorPagesErrorRetryLabel = errorPagesError['retryLabel'] as TestsConfigDriftThemeConfigErrorPagesErrorRetryLabel;
+    const errorPages: Tests_ConfigDrift_ThemeConfigErrorPages = result['errorPages'] as Tests_ConfigDrift_ThemeConfigErrorPages;
+    const errorPagesNotFound: Tests_ConfigDrift_ThemeConfigErrorPagesNotFound = errorPages['notFound'] as Tests_ConfigDrift_ThemeConfigErrorPagesNotFound;
+    const errorPagesNotFoundTitle: Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundTitle = errorPagesNotFound['title'] as Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundTitle;
+    const errorPagesNotFoundDescription: Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundDescription = errorPagesNotFound['description'] as Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundDescription;
+    const errorPagesNotFoundBackHomeLabel: Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeLabel = errorPagesNotFound['backHomeLabel'] as Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeLabel;
+    const errorPagesNotFoundBackHomeHref: Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeHref = errorPagesNotFound['backHomeHref'] as Tests_ConfigDrift_ThemeConfigErrorPagesNotFoundBackHomeHref;
+    const errorPagesErrorPageContent: Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContent = errorPages['errorPageContent'] as Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContent;
+    const errorPagesErrorPageContentTitle: Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentTitle = errorPagesErrorPageContent['title'] as Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentTitle;
+    const errorPagesErrorPageContentRetryLabel: Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentRetryLabel = errorPagesErrorPageContent['retryLabel'] as Tests_ConfigDrift_ThemeConfigErrorPagesErrorPageContentRetryLabel;
+    const errorPagesError: Tests_ConfigDrift_ThemeConfigErrorPagesError = errorPages['error'] as Tests_ConfigDrift_ThemeConfigErrorPagesError;
+    const errorPagesErrorRetryLabel: Tests_ConfigDrift_ThemeConfigErrorPagesErrorRetryLabel = errorPagesError['retryLabel'] as Tests_ConfigDrift_ThemeConfigErrorPagesErrorRetryLabel;
 
     strictEqual(errorPagesNotFoundTitle, 'Lost in deployment.');
     strictEqual(errorPagesNotFoundDescription, 'This route did not roll out.');
@@ -492,11 +492,11 @@ describe('configDrift validateThemeConfig', async () => {
     strictEqual(errorPagesErrorPageContentRetryLabel, 'Re-run');
     strictEqual(errorPagesErrorRetryLabel, 'Restart');
 
-    const footer: TestsConfigDriftThemeConfigFooter = result['footer'] as TestsConfigDriftThemeConfigFooter;
-    const footerCta: TestsConfigDriftThemeConfigFooterCta = footer['cta'] as TestsConfigDriftThemeConfigFooterCta;
-    const footerCtaObject: TestsConfigDriftThemeConfigFooterCtaObject = footerCta as TestsConfigDriftThemeConfigFooterCtaObject;
-    const footerCtaLabel: TestsConfigDriftThemeConfigFooterCtaObjectLabel = footerCtaObject['label'];
-    const footerCtaHref: TestsConfigDriftThemeConfigFooterCtaObjectHref = footerCtaObject['href'];
+    const footer: Tests_ConfigDrift_ThemeConfigFooter = result['footer'] as Tests_ConfigDrift_ThemeConfigFooter;
+    const footerCta: Tests_ConfigDrift_ThemeConfigFooterCta = footer['cta'] as Tests_ConfigDrift_ThemeConfigFooterCta;
+    const footerCtaObject: Tests_ConfigDrift_ThemeConfigFooterCtaObject = footerCta as Tests_ConfigDrift_ThemeConfigFooterCtaObject;
+    const footerCtaLabel: Tests_ConfigDrift_ThemeConfigFooterCtaObject_Label = footerCtaObject['label'];
+    const footerCtaHref: Tests_ConfigDrift_ThemeConfigFooterCtaObject_Href = footerCtaObject['href'];
 
     strictEqual(footerCtaLabel, 'Get Started');
     strictEqual(footerCtaHref, '/docs/intro');

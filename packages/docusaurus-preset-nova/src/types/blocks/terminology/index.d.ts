@@ -5,27 +5,27 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type BlocksTerminologyPropsChildren = ReactNode;
+export type Blocks_Terminology_Index_BlocksTerminology_Props_Children = ReactNode;
 
-export type BlocksTerminologyPropsColor = boolean | undefined;
+export type Blocks_Terminology_Index_BlocksTerminology_Props_Color = boolean | undefined;
 
-export type BlocksTerminologyPropsTitle = string;
+export type Blocks_Terminology_Index_BlocksTerminology_Props_Title = string;
 
-export type BlocksTerminologyPropsTo = string | undefined;
+export type Blocks_Terminology_Index_BlocksTerminology_Props_To = string | undefined;
 
-export type BlocksTerminologyPropsClassName = string | undefined;
+export type Blocks_Terminology_Index_BlocksTerminology_Props_ClassName = string | undefined;
 
-export type BlocksTerminologyPropsStyle = CSSProperties | undefined;
+export type Blocks_Terminology_Index_BlocksTerminology_Props_Style = CSSProperties | undefined;
 
-export type BlocksTerminologyProps = {
-  children: BlocksTerminologyPropsChildren;
-  color?: BlocksTerminologyPropsColor;
-  title: BlocksTerminologyPropsTitle;
-  to?: BlocksTerminologyPropsTo;
-  className?: BlocksTerminologyPropsClassName;
-  style?: BlocksTerminologyPropsStyle;
+export type Blocks_Terminology_Index_BlocksTerminology_Props = {
+  children: Blocks_Terminology_Index_BlocksTerminology_Props_Children;
+  color?: Blocks_Terminology_Index_BlocksTerminology_Props_Color;
+  title: Blocks_Terminology_Index_BlocksTerminology_Props_Title;
+  to?: Blocks_Terminology_Index_BlocksTerminology_Props_To;
+  className?: Blocks_Terminology_Index_BlocksTerminology_Props_ClassName;
+  style?: Blocks_Terminology_Index_BlocksTerminology_Props_Style;
 };
 
-export type BlocksTerminologyClassName = string;
+export type Blocks_Terminology_Index_BlocksTerminology_ClassName = string;
 
-export type BlocksTerminologyElement = ReactNode;
+export type Blocks_Terminology_Index_BlocksTerminology_Element = ReactNode;

@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoTemplateCurlyInString } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintPatternsNoTemplateCurlyInStringRuleTester } from '../../../../types/tests/rules/eslint/patterns/no-template-curly-in-string.test.d.ts';
+import type { Tests_Rules_Eslint_Patterns_NoTemplateCurlyInString_RuleTester } from '../../../../types/tests/rules/eslint/patterns/no-template-curly-in-string.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Patterns - No Template Curly In String.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintPatternsNoTemplateCurlyInStringRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Patterns_NoTemplateCurlyInString_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

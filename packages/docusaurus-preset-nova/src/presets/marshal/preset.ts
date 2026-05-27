@@ -1,4 +1,4 @@
-import type { PresetsMarshalPresetMarshal } from '../../types/presets/marshal/preset.d.ts';
+import type { Presets_Marshal_Preset_Marshal } from '../../types/presets/marshal/preset.d.ts';
 
 /**
  * Presets - Marshal - Preset - Marshal.
@@ -9,7 +9,7 @@ import type { PresetsMarshalPresetMarshal } from '../../types/presets/marshal/pr
  *
  * @since 0.18.0
  */
-export const presetsMarshalPresetMarshal: PresetsMarshalPresetMarshal = {
+export const presetsMarshalPresetMarshal: Presets_Marshal_Preset_Marshal = {
   logo: {
     title: 'Marshal',
     alt: 'Marshal',

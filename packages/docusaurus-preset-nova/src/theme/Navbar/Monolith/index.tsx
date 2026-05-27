@@ -3,22 +3,22 @@ import { translate } from '@docusaurus/Translate';
 import Logo from '@theme/Logo';
 import NavbarItem from '@theme/NavbarItem';
 
-import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
 import type {
-  ThemeNavbarMonolithIndexMonolithActionItems,
-  ThemeNavbarMonolithIndexMonolithColorModeLabel,
-  ThemeNavbarMonolithIndexMonolithHamburgerLabel,
-  ThemeNavbarMonolithIndexMonolithNavAriaLabel,
-  ThemeNavbarMonolithIndexMonolithNavbarClassName,
-  ThemeNavbarMonolithIndexMonolithNavbarItemKey,
-  ThemeNavbarMonolithIndexMonolithNavbarItemSpread,
-  ThemeNavbarMonolithIndexMonolithOnColorModeToggle,
-  ThemeNavbarMonolithIndexMonolithOnMenuToggle,
-  ThemeNavbarMonolithIndexMonolithOpenMenuAriaLabel,
-  ThemeNavbarMonolithIndexMonolithProps,
-  ThemeNavbarMonolithIndexMonolithReturns,
-  ThemeNavbarMonolithIndexMonolithSiteLogo,
-  ThemeNavbarMonolithIndexMonolithToggleColorModeAriaLabel,
+  Theme_Navbar_Monolith_Index_Monolith_ActionItems,
+  Theme_Navbar_Monolith_Index_Monolith_ColorModeLabel,
+  Theme_Navbar_Monolith_Index_Monolith_HamburgerLabel,
+  Theme_Navbar_Monolith_Index_Monolith_NavAriaLabel,
+  Theme_Navbar_Monolith_Index_Monolith_NavbarClassName,
+  Theme_Navbar_Monolith_Index_Monolith_NavbarItemKey,
+  Theme_Navbar_Monolith_Index_Monolith_NavbarItemSpread,
+  Theme_Navbar_Monolith_Index_Monolith_OnColorModeToggle,
+  Theme_Navbar_Monolith_Index_Monolith_OnMenuToggle,
+  Theme_Navbar_Monolith_Index_Monolith_OpenMenuAriaLabel,
+  Theme_Navbar_Monolith_Index_Monolith_Props,
+  Theme_Navbar_Monolith_Index_Monolith_Returns,
+  Theme_Navbar_Monolith_Index_Monolith_SiteLogo,
+  Theme_Navbar_Monolith_Index_Monolith_ToggleColorModeAriaLabel,
 } from '../../../types/theme/Navbar/Monolith/index.d.ts';
 
 /**
@@ -28,32 +28,32 @@ import type {
  * action icons visible, omitting traditional navigation items
  * for a focused single-purpose interface.
  *
- * @param {ThemeNavbarMonolithIndexMonolithProps} props - Props.
+ * @param {Theme_Navbar_Monolith_Index_Monolith_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function Monolith(props: ThemeNavbarMonolithIndexMonolithProps): ThemeNavbarMonolithIndexMonolithReturns {
-  const siteLogo: ThemeNavbarMonolithIndexMonolithSiteLogo = props['siteLogo'];
-  const actionItems: ThemeNavbarMonolithIndexMonolithActionItems = props['actionItems'];
-  const colorModeLabel: ThemeNavbarMonolithIndexMonolithColorModeLabel = props['colorModeLabel'];
-  const onColorModeToggle: ThemeNavbarMonolithIndexMonolithOnColorModeToggle = props['onColorModeToggle'];
-  const hamburgerLabel: ThemeNavbarMonolithIndexMonolithHamburgerLabel = props['hamburgerLabel'];
-  const onMenuToggle: ThemeNavbarMonolithIndexMonolithOnMenuToggle = props['onMenuToggle'];
-  const navbarClassName: ThemeNavbarMonolithIndexMonolithNavbarClassName = 'nova-navbar-monolith';
+function Monolith(props: Theme_Navbar_Monolith_Index_Monolith_Props): Theme_Navbar_Monolith_Index_Monolith_Returns {
+  const siteLogo: Theme_Navbar_Monolith_Index_Monolith_SiteLogo = props['siteLogo'];
+  const actionItems: Theme_Navbar_Monolith_Index_Monolith_ActionItems = props['actionItems'];
+  const colorModeLabel: Theme_Navbar_Monolith_Index_Monolith_ColorModeLabel = props['colorModeLabel'];
+  const onColorModeToggle: Theme_Navbar_Monolith_Index_Monolith_OnColorModeToggle = props['onColorModeToggle'];
+  const hamburgerLabel: Theme_Navbar_Monolith_Index_Monolith_HamburgerLabel = props['hamburgerLabel'];
+  const onMenuToggle: Theme_Navbar_Monolith_Index_Monolith_OnMenuToggle = props['onMenuToggle'];
+  const navbarClassName: Theme_Navbar_Monolith_Index_Monolith_NavbarClassName = 'nova-navbar-monolith';
 
-  const navAriaLabel: ThemeNavbarMonolithIndexMonolithNavAriaLabel = translate({
+  const navAriaLabel: Theme_Navbar_Monolith_Index_Monolith_NavAriaLabel = translate({
     id: 'theme.navbar.navAriaLabel',
     message: 'Main',
     description: 'The ARIA label for the main site navigation landmark',
   });
-  const openMenuAriaLabel: ThemeNavbarMonolithIndexMonolithOpenMenuAriaLabel = translate({
+  const openMenuAriaLabel: Theme_Navbar_Monolith_Index_Monolith_OpenMenuAriaLabel = translate({
     id: 'theme.navbar.openMenuAriaLabel',
     message: 'Open menu',
     description: 'The ARIA label for the button that opens the mobile navigation menu',
   });
-  const toggleColorModeAriaLabel: ThemeNavbarMonolithIndexMonolithToggleColorModeAriaLabel = translate({
+  const toggleColorModeAriaLabel: Theme_Navbar_Monolith_Index_Monolith_ToggleColorModeAriaLabel = translate({
     id: 'theme.colorMode.toggleAriaLabel',
     message: 'Toggle color mode',
     description: 'The ARIA label for the button that cycles through color modes',
@@ -86,10 +86,10 @@ function Monolith(props: ThemeNavbarMonolithIndexMonolithProps): ThemeNavbarMono
             {hamburgerLabel}
           </button>
           {
-            actionItems.map((navItem: ThemeNavbarItem) => (
+            actionItems.map((navItem: Theme_Navbar_Index_Navbar_Item) => (
               <NavbarItem
-                key={(navItem['type'] as ThemeNavbarMonolithIndexMonolithNavbarItemKey) ?? (navItem['label'])}
-                {...navItem as ThemeNavbarMonolithIndexMonolithNavbarItemSpread}
+                key={(navItem['type'] as Theme_Navbar_Monolith_Index_Monolith_NavbarItemKey) ?? (navItem['label'])}
+                {...navItem as Theme_Navbar_Monolith_Index_Monolith_NavbarItemSpread}
               />
             ))
           }

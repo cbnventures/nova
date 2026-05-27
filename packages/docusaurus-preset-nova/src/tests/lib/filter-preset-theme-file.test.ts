@@ -4,7 +4,7 @@ import { describe, it } from 'vitest';
 
 import { filterPresetThemeFile } from '../../lib/filter-preset-theme-file.js';
 
-import type { TestsLibFilterPresetThemeFileFilterPresetThemeFileResult } from '../../types/tests/lib/filter-preset-theme-file.test.d.ts';
+import type { Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result } from '../../types/tests/lib/filter-preset-theme-file.test.d.ts';
 
 /**
  * Tests - Lib - Filter Preset Theme File - Filter Preset Theme File.
@@ -13,7 +13,7 @@ import type { TestsLibFilterPresetThemeFileFilterPresetThemeFileResult } from '.
  */
 describe('filterPresetThemeFile', async () => {
   it('keeps the Navbar wrapper file regardless of active variant', () => {
-    const result: TestsLibFilterPresetThemeFileFilterPresetThemeFileResult = filterPresetThemeFile('Navbar/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result = filterPresetThemeFile('Navbar/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, true);
 
@@ -21,7 +21,7 @@ describe('filterPresetThemeFile', async () => {
   });
 
   it('keeps the Footer wrapper file regardless of active variant', () => {
-    const result: TestsLibFilterPresetThemeFileFilterPresetThemeFileResult = filterPresetThemeFile('Footer/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result = filterPresetThemeFile('Footer/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, true);
 
@@ -29,7 +29,7 @@ describe('filterPresetThemeFile', async () => {
   });
 
   it('keeps Navbar files in the active variant subfolder', () => {
-    const result: TestsLibFilterPresetThemeFileFilterPresetThemeFileResult = filterPresetThemeFile('Navbar/Bridge/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result = filterPresetThemeFile('Navbar/Bridge/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, true);
 
@@ -37,7 +37,7 @@ describe('filterPresetThemeFile', async () => {
   });
 
   it('drops Navbar files in inactive variant subfolders', () => {
-    const result: TestsLibFilterPresetThemeFileFilterPresetThemeFileResult = filterPresetThemeFile('Navbar/Canopy/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result = filterPresetThemeFile('Navbar/Canopy/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, false);
 
@@ -45,7 +45,7 @@ describe('filterPresetThemeFile', async () => {
   });
 
   it('keeps Footer files in the active variant subfolder', () => {
-    const result: TestsLibFilterPresetThemeFileFilterPresetThemeFileResult = filterPresetThemeFile('Footer/Commons/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result = filterPresetThemeFile('Footer/Commons/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, true);
 
@@ -53,7 +53,7 @@ describe('filterPresetThemeFile', async () => {
   });
 
   it('drops Footer files in inactive variant subfolders', () => {
-    const result: TestsLibFilterPresetThemeFileFilterPresetThemeFileResult = filterPresetThemeFile('Footer/Embassy/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result = filterPresetThemeFile('Footer/Embassy/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, false);
 
@@ -61,7 +61,7 @@ describe('filterPresetThemeFile', async () => {
   });
 
   it('keeps non-Navbar non-Footer style files', () => {
-    const result: TestsLibFilterPresetThemeFileFilterPresetThemeFileResult = filterPresetThemeFile('DocItem/Content/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result = filterPresetThemeFile('DocItem/Content/style.css', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, true);
 
@@ -69,7 +69,7 @@ describe('filterPresetThemeFile', async () => {
   });
 
   it('drops files that are not style.css', () => {
-    const result: TestsLibFilterPresetThemeFileFilterPresetThemeFileResult = filterPresetThemeFile('Navbar/Bridge/style.css.map', 'Navbar/Bridge/', 'Footer/Commons/');
+    const result: Tests_Lib_FilterPresetThemeFile_FilterPresetThemeFile_Result = filterPresetThemeFile('Navbar/Bridge/style.css.map', 'Navbar/Bridge/', 'Footer/Commons/');
 
     strictEqual(result, false);
 

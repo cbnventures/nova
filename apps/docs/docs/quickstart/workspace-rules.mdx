@@ -45,7 +45,7 @@ A role describes what the workspace _is_. It determines which `package.json` fie
 |------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `project`  | The monorepo root. Owns the `workspaces` array and the `packageManager` field.                                                                                    |
 | `docs`     | A documentation site (e.g., Docusaurus). Does not publish to a package registry.                                                                                  |
-| `config`   | A shared configuration package (e.g., ESLint presets, TSConfig presets).                                                                                          |
+| `config`   | A shared configuration package (e.g., ESLint presets, TSConfig presets). Retains the `types` and `module` bundler convention fields.                              |
 | `app`      | An application workspace (e.g., a web app, an API server). Not intended for registry publishing.                                                                  |
 | `package`  | A publishable library. Retains artifact fields (`files`, `bin`, `man`, `directories`) and bundler convention fields (`types`, `module`, `sideEffects`, `esnext`). |
 | `tool`     | An internal CLI tool. Similar to `package` but does not retain `sideEffects` or `esnext`.                                                                         |
@@ -55,17 +55,17 @@ A role describes what the workspace _is_. It determines which `package.json` fie
 
 The following table shows which `package.json` fields are retained or removed based on role. Fields not listed here are handled independently of role.
 
-| Field         | Retained by       | Removed from all others |
-|---------------|-------------------|-------------------------|
-| `workspaces`  | `project`         | Yes                     |
-| `files`       | `package`, `tool` | Yes                     |
-| `bin`         | `package`, `tool` | Yes                     |
-| `man`         | `package`, `tool` | Yes                     |
-| `directories` | `package`, `tool` | Yes                     |
-| `types`       | `package`, `tool` | Yes                     |
-| `module`      | `package`, `tool` | Yes                     |
-| `sideEffects` | `package`         | Yes                     |
-| `esnext`      | `package`         | Yes                     |
+| Field         | Retained by                 | Removed from all others |
+|---------------|-----------------------------|-------------------------|
+| `workspaces`  | `project`                   | Yes                     |
+| `files`       | `package`, `tool`           | Yes                     |
+| `bin`         | `package`, `tool`           | Yes                     |
+| `man`         | `package`, `tool`           | Yes                     |
+| `directories` | `package`, `tool`           | Yes                     |
+| `types`       | `config`, `package`, `tool` | Yes                     |
+| `module`      | `config`, `package`, `tool` | Yes                     |
+| `sideEffects` | `package`                   | Yes                     |
+| `esnext`      | `package`                   | Yes                     |
 
 ## Policies
 
@@ -92,6 +92,27 @@ The following table shows which `package.json` fields are retained or removed ba
 | `funding`       | `distributable` | Yes                     |
 | `repository`    | `distributable` | Yes                     |
 | `publishConfig` | `distributable` | Yes                     |
+
+## Workspace Naming
+
+Each workspace's `name` (the value written to its `package.json`) must follow a role-specific pattern. The parser silently drops workspaces whose names do not match, so a typo here is a quiet foot-gun.
+
+Patterns reference the project slug from `project.name.slug`. When the slug is not set, the prefix falls back to the literal role name.
+
+| Role       | Required pattern                                                                                                                                |
+|------------|-------------------------------------------------------------------------------------------------------------------------------------------------|
+| `project`  | Exactly `"{slug}-project"`, or `"project"` when no slug is set.                                                                                 |
+| `docs`     | Exactly `"{slug}-docs"`, or `"docs"` when no slug is set.                                                                                       |
+| `config`   | `"{slug}-config-{descriptor}"`, or `"config-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern.              |
+| `app`      | `"{slug}-app-{descriptor}"`, or `"app-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern.                    |
+| `tool`     | `"{slug}-tool-{descriptor}"`, or `"tool-{descriptor}"` when no slug is set. The descriptor must match the simple slug pattern.                  |
+| `package`  | Any name matching the simple slug pattern (e.g., `"my-lib"`) or the scoped npm pattern (e.g., `"@scope/my-lib"`).                               |
+| `template` | Same as `package`: simple or scoped slug.                                                                                                       |
+
+The patterns are:
+
+- **Simple slug**: `^[a-z0-9]+(?:[a-z0-9-_]*[a-z0-9])?$`. Lowercase letters, digits, hyphens, and underscores; must start and end with a letter or digit.
+- **Scoped slug**: `^@[scope]/[name]$`, where both `scope` and `name` match the simple slug pattern.
 
 ## Required vs. Conditional
 

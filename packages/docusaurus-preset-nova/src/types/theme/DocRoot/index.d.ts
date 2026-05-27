@@ -10,26 +10,26 @@ import type {
  *
  * @since 0.15.0
  */
-export type ThemeDocRootDocRootPropsClassName = string | undefined;
+export type Theme_DocRoot_Index_DocRoot_PropsClassName = string | undefined;
 
-export type ThemeDocRootDocRootPropsStyle = CSSProperties | undefined;
+export type Theme_DocRoot_Index_DocRoot_PropsStyle = CSSProperties | undefined;
 
-export type ThemeDocRootDocRootProps = DocRootModuleProps & {
-  className?: ThemeDocRootDocRootPropsClassName;
-  style?: ThemeDocRootDocRootPropsStyle;
+export type Theme_DocRoot_Index_DocRoot_Props = DocRootModuleProps & {
+  className?: Theme_DocRoot_Index_DocRoot_PropsClassName;
+  style?: Theme_DocRoot_Index_DocRoot_PropsStyle;
 };
 
-export type ThemeDocRootDocRootRouteMetadataDocElement = ReactNode;
+export type Theme_DocRoot_Index_DocRoot_RouteMetadata_DocElement = ReactNode;
 
-export type ThemeDocRootDocRootRouteMetadataSidebarName = string | undefined;
+export type Theme_DocRoot_Index_DocRoot_RouteMetadata_SidebarName = string | undefined;
 
-export type ThemeDocRootDocRootRouteMetadataSidebarItems = PropSidebarItem[] | undefined;
+export type Theme_DocRoot_Index_DocRoot_RouteMetadata_SidebarItems = PropSidebarItem[] | undefined;
 
-export type ThemeDocRootDocRootRouteMetadata = {
-  docElement: ThemeDocRootDocRootRouteMetadataDocElement;
-  sidebarName: ThemeDocRootDocRootRouteMetadataSidebarName;
-  sidebarItems: ThemeDocRootDocRootRouteMetadataSidebarItems;
+export type Theme_DocRoot_Index_DocRoot_RouteMetadata = {
+  docElement: Theme_DocRoot_Index_DocRoot_RouteMetadata_DocElement;
+  sidebarName: Theme_DocRoot_Index_DocRoot_RouteMetadata_SidebarName;
+  sidebarItems: Theme_DocRoot_Index_DocRoot_RouteMetadata_SidebarItems;
   [key: string]: unknown;
 } | null;
 
-export type ThemeDocRootDocRootMergedClassName = string;
+export type Theme_DocRoot_Index_DocRoot_MergedClassName = string;

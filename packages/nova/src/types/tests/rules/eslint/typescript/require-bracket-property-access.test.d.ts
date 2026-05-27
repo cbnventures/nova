@@ -5,8 +5,8 @@ import type { RuleTester } from '@typescript-eslint/rule-tester';
  *
  * @since 0.15.0
  */
-export type TestsRulesEslintTypescriptRequireBracketPropertyAccessCurrentDirectory = string;
+export type Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_CurrentDirectory = string;
 
-export type TestsRulesEslintTypescriptRequireBracketPropertyAccessTsconfigRootDirectory = string;
+export type Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_TsconfigRootDirectory = string;
 
-export type TestsRulesEslintTypescriptRequireBracketPropertyAccessRuleTester = RuleTester;
+export type Tests_Rules_Eslint_Typescript_RequireBracketPropertyAccess_RuleTester = RuleTester;

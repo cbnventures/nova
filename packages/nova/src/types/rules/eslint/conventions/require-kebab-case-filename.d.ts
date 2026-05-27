@@ -5,39 +5,39 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireKebabCaseFilenameCheckProgramContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintConventionsRequireKebabCaseFilenameCheckProgramOptionsExtraExtensions = string[];
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options_ExtraExtensions = string[];
 
-export type RulesEslintConventionsRequireKebabCaseFilenameCheckProgramOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options_IgnoreFiles = string[];
 
-export type RulesEslintConventionsRequireKebabCaseFilenameCheckProgramOptions = Readonly<{
-  extraExtensions: RulesEslintConventionsRequireKebabCaseFilenameCheckProgramOptionsExtraExtensions;
-  ignoreFiles: RulesEslintConventionsRequireKebabCaseFilenameCheckProgramOptionsIgnoreFiles;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options = Readonly<{
+  extraExtensions: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options_ExtraExtensions;
+  ignoreFiles: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Options_IgnoreFiles;
 }>;
 
-export type RulesEslintConventionsRequireKebabCaseFilenameCheckProgramReturns = void;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Returns = void;
 
-export type RulesEslintConventionsRequireKebabCaseFilenameCheckProgramStem = string;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_Stem = string;
 
-export type RulesEslintConventionsRequireKebabCaseFilenameCheckProgramKebabCasePattern = RegExp;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_CheckProgram_KebabCasePattern = RegExp;
 
 /**
  * Rules - ESLint - Conventions - Require Kebab Case Filename - Get Stem.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireKebabCaseFilenameGetStemFilename = string;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Filename = string;
 
-export type RulesEslintConventionsRequireKebabCaseFilenameGetStemExtraExtensions = string[];
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_ExtraExtensions = string[];
 
-export type RulesEslintConventionsRequireKebabCaseFilenameGetStemReturns = string;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Returns = string;
 
-export type RulesEslintConventionsRequireKebabCaseFilenameGetStemNormalizedFilename = string;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_NormalizedFilename = string;
 
-export type RulesEslintConventionsRequireKebabCaseFilenameGetStemBasename = string;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_Basename = string;
 
-export type RulesEslintConventionsRequireKebabCaseFilenameGetStemAllExtensions = string[];
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_GetStem_AllExtensions = string[];
 
 /**
  * Rules - ESLint - Conventions - Require Kebab Case Filename - Known Extensions.
@@ -50,15 +50,15 @@ export type RulesEslintConventionsRequireKebabCaseFilenameGetStemAllExtensions =
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsRequireKebabCaseFilenameRuleDefaultOptionsExtraExtensions = string[];
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsExtraExtensions = string[];
 
-export type RulesEslintConventionsRequireKebabCaseFilenameRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintConventionsRequireKebabCaseFilenameRuleOptionsExtraExtensions = string[];
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions_ExtraExtensions = string[];
 
-export type RulesEslintConventionsRequireKebabCaseFilenameRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintConventionsRequireKebabCaseFilenameRuleOptions = Readonly<{
-  extraExtensions: RulesEslintConventionsRequireKebabCaseFilenameRuleOptionsExtraExtensions;
-  ignoreFiles: RulesEslintConventionsRequireKebabCaseFilenameRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions = Readonly<{
+  extraExtensions: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions_ExtraExtensions;
+  ignoreFiles: Rules_Eslint_Conventions_RequireKebabCaseFilename_Runner_RuleOptions_IgnoreFiles;
 }>;

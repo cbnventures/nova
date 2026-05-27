@@ -4,28 +4,28 @@ import { LIB_REGEX_PATTERN_CAMEL_CASE_WORDS } from '../../../lib/regex.js';
 import { isIgnoredFile, normalizeRouteSegment } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintTypescriptRequireTypeNamingCheckTypeAliasContext,
-  RulesEslintTypescriptRequireTypeNamingCheckTypeAliasExpectedPrefix,
-  RulesEslintTypescriptRequireTypeNamingCheckTypeAliasNode,
-  RulesEslintTypescriptRequireTypeNamingCheckTypeAliasReturns,
-  RulesEslintTypescriptRequireTypeNamingCheckTypeAliasTypeName,
-  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticFilename,
-  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticOffendingSegment,
-  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticPrefix,
-  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns,
-  RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticSegments,
-  RulesEslintTypescriptRequireTypeNamingDerivePrefixFilename,
-  RulesEslintTypescriptRequireTypeNamingDerivePrefixReturns,
-  RulesEslintTypescriptRequireTypeNamingDerivePrefixSegments,
-  RulesEslintTypescriptRequireTypeNamingDerivePrefixWords,
-  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsFilename,
-  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsNormalizedFilename,
-  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsRelativePath,
-  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsReturns,
-  RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsTypesIndex,
-  RulesEslintTypescriptRequireTypeNamingRuleDefaultOptionsIgnoreFiles,
-  RulesEslintTypescriptRequireTypeNamingRuleNormalizedFilename,
-  RulesEslintTypescriptRequireTypeNamingRuleOptions,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Context,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_ExpectedPrefix,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Node,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Returns,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_TypeName,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Filename,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_OffendingSegment,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Prefix,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Segments,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Filename,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Returns,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Segments,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Words,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Filename,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_NormalizedFilename,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_RelativePath,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Returns,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_TypesIndex,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleNormalizedFilename,
+  Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/require-type-naming.d.ts';
 
 /**
@@ -36,7 +36,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintTypescriptRequireTypeNaming {
+export class Runner {
   /**
    * Rules - ESLint - TypeScript - Require Type Naming - Rule.
    *
@@ -70,11 +70,11 @@ export class RulesEslintTypescriptRequireTypeNaming {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintTypescriptRequireTypeNamingRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintTypescriptRequireTypeNamingRuleOptions = defaultOptions[0];
-      const normalizedFilename: RulesEslintTypescriptRequireTypeNamingRuleNormalizedFilename = context.filename.replaceAll('\\', '/');
+      const options: Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleOptions = defaultOptions[0];
+      const normalizedFilename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_RuleNormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Only apply to .d.ts files.
       if (normalizedFilename.endsWith('.d.ts') === false) {
@@ -86,7 +86,7 @@ export class RulesEslintTypescriptRequireTypeNaming {
         return {};
       }
 
-      const diagnostic: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns = RulesEslintTypescriptRequireTypeNaming.deriveInvalidPrefixDiagnostic(context.filename);
+      const diagnostic: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns = Runner.deriveInvalidPrefixDiagnostic(context.filename);
 
       if (diagnostic !== null) {
         return {
@@ -107,7 +107,7 @@ export class RulesEslintTypescriptRequireTypeNaming {
 
       return {
         TSTypeAliasDeclaration(node) {
-          RulesEslintTypescriptRequireTypeNaming.checkTypeAlias(context, node);
+          Runner.checkTypeAlias(context, node);
 
           return;
         },
@@ -124,21 +124,21 @@ export class RulesEslintTypescriptRequireTypeNaming {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsFilename} filename - Filename.
+   * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Filename} filename - Filename.
    *
-   * @returns {RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsReturns}
+   * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Returns}
    *
    * @since 0.17.1
    */
-  private static normalizedPathSegments(filename: RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsFilename): RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsReturns {
-    const normalizedFilename: RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsNormalizedFilename = filename.replaceAll('\\', '/');
-    const typesIndex: RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsTypesIndex = normalizedFilename.indexOf('/types/');
+  private static normalizedPathSegments(filename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Filename): Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_Returns {
+    const normalizedFilename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_NormalizedFilename = filename.replaceAll('\\', '/');
+    const typesIndex: Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_TypesIndex = normalizedFilename.indexOf('/types/');
 
     if (typesIndex < 0) {
       return [];
     }
 
-    let relativePath: RulesEslintTypescriptRequireTypeNamingNormalizedPathSegmentsRelativePath = normalizedFilename.slice(typesIndex + '/types/'.length);
+    let relativePath: Rules_Eslint_Typescript_RequireTypeNaming_Runner_NormalizedPathSegments_RelativePath = normalizedFilename.slice(typesIndex + '/types/'.length);
 
     if (relativePath.endsWith('.test.d.ts') === true) {
       relativePath = relativePath.slice(0, relativePath.length - '.test.d.ts'.length);
@@ -158,19 +158,20 @@ export class RulesEslintTypescriptRequireTypeNaming {
   /**
    * Rules - ESLint - TypeScript - Require Type Naming - Derive Prefix.
    *
-   * Converts the file path after the /types/ directory into a PascalCase prefix string.
+   * Converts the file path after the /types/ directory into an
+   * underscore-separated PascalCase prefix string (e.g. `Cli_Utility_Changelog`).
    * Called by checkTypeAlias to compare against each type name.
    *
    * @private
    *
-   * @param {RulesEslintTypescriptRequireTypeNamingDerivePrefixFilename} filename - Filename.
+   * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Filename} filename - Filename.
    *
-   * @returns {RulesEslintTypescriptRequireTypeNamingDerivePrefixReturns}
+   * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Returns}
    *
    * @since 0.15.0
    */
-  private static derivePrefix(filename: RulesEslintTypescriptRequireTypeNamingDerivePrefixFilename): RulesEslintTypescriptRequireTypeNamingDerivePrefixReturns {
-    const segments: RulesEslintTypescriptRequireTypeNamingDerivePrefixSegments = RulesEslintTypescriptRequireTypeNaming.normalizedPathSegments(filename);
+  private static derivePrefix(filename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Filename): Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Returns {
+    const segments: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Segments = Runner.normalizedPathSegments(filename);
 
     if (segments.length === 0) {
       return '';
@@ -179,7 +180,7 @@ export class RulesEslintTypescriptRequireTypeNaming {
     return segments.map((segment) => {
       // PascalCase filenames (e.g., MDXComponents) - normalize abbreviations.
       if (segment.includes('-') === false && segment.charAt(0) === segment.charAt(0).toUpperCase()) {
-        const words: RulesEslintTypescriptRequireTypeNamingDerivePrefixWords = segment.match(new RegExp(LIB_REGEX_PATTERN_CAMEL_CASE_WORDS.source, 'g'));
+        const words: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DerivePrefix_Words = segment.match(new RegExp(LIB_REGEX_PATTERN_CAMEL_CASE_WORDS.source, 'g'));
 
         if (words !== null) {
           return words.map((word) => {
@@ -194,7 +195,7 @@ export class RulesEslintTypescriptRequireTypeNaming {
           return part.charAt(0).toUpperCase() + part.slice(1);
         })
         .join('');
-    }).join('');
+    }).join('_');
   }
 
   /**
@@ -206,30 +207,30 @@ export class RulesEslintTypescriptRequireTypeNaming {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticFilename} filename - Filename.
+   * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Filename} filename - Filename.
    *
-   * @returns {RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns}
+   * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns}
    *
    * @since 0.17.1
    */
-  private static deriveInvalidPrefixDiagnostic(filename: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticFilename): RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticReturns {
-    const segments: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticSegments = RulesEslintTypescriptRequireTypeNaming.normalizedPathSegments(filename);
+  private static deriveInvalidPrefixDiagnostic(filename: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Filename): Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Returns {
+    const segments: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Segments = Runner.normalizedPathSegments(filename);
 
     if (segments.length === 0) {
       return null;
     }
 
-    const offendingSegment: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticOffendingSegment = segments[0] ?? '';
+    const offendingSegment: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_OffendingSegment = segments[0] ?? '';
 
     if (new RegExp('^[0-9]').test(offendingSegment) === false) {
       return null;
     }
 
-    const prefix: RulesEslintTypescriptRequireTypeNamingDeriveInvalidPrefixDiagnosticPrefix = segments.map((segment) => {
+    const prefix: Rules_Eslint_Typescript_RequireTypeNaming_Runner_DeriveInvalidPrefixDiagnostic_Prefix = segments.map((segment) => {
       return segment.split('-').map((part) => {
         return part.charAt(0).toUpperCase() + part.slice(1);
       }).join('');
-    }).join('');
+    }).join('_');
 
     return {
       segment: offendingSegment,
@@ -246,21 +247,21 @@ export class RulesEslintTypescriptRequireTypeNaming {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptRequireTypeNamingCheckTypeAliasContext} context - Context.
-   * @param {RulesEslintTypescriptRequireTypeNamingCheckTypeAliasNode}    node    - Node.
+   * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Context} context - Context.
+   * @param {Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Node}    node    - Node.
    *
-   * @returns {RulesEslintTypescriptRequireTypeNamingCheckTypeAliasReturns}
+   * @returns {Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Returns}
    *
    * @since 0.15.0
    */
-  private static checkTypeAlias(context: RulesEslintTypescriptRequireTypeNamingCheckTypeAliasContext, node: RulesEslintTypescriptRequireTypeNamingCheckTypeAliasNode): RulesEslintTypescriptRequireTypeNamingCheckTypeAliasReturns {
-    const expectedPrefix: RulesEslintTypescriptRequireTypeNamingCheckTypeAliasExpectedPrefix = RulesEslintTypescriptRequireTypeNaming.derivePrefix(context.filename);
+  private static checkTypeAlias(context: Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Context, node: Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Node): Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_Returns {
+    const expectedPrefix: Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_ExpectedPrefix = Runner.derivePrefix(context.filename);
 
     if (expectedPrefix === '') {
       return;
     }
 
-    const typeName: RulesEslintTypescriptRequireTypeNamingCheckTypeAliasTypeName = node.id.name;
+    const typeName: Rules_Eslint_Typescript_RequireTypeNaming_Runner_CheckTypeAlias_TypeName = node.id.name;
 
     if (typeName.startsWith(expectedPrefix) === false) {
       context.report({

@@ -15,38 +15,38 @@ import {
 } from '@site/src/lib/regex.js';
 
 import type {
-  TestsFrontmatterFrontmatterValidationAfterKeywords,
-  TestsFrontmatterFrontmatterValidationAfterTags,
-  TestsFrontmatterFrontmatterValidationBody,
-  TestsFrontmatterFrontmatterValidationContent,
-  TestsFrontmatterFrontmatterValidationContentDirs,
-  TestsFrontmatterFrontmatterValidationContentPath,
-  TestsFrontmatterFrontmatterValidationCwd,
-  TestsFrontmatterFrontmatterValidationDescMatch,
-  TestsFrontmatterFrontmatterValidationEndIndex,
-  TestsFrontmatterFrontmatterValidationEntries,
-  TestsFrontmatterFrontmatterValidationExpectedId,
-  TestsFrontmatterFrontmatterValidationExt,
-  TestsFrontmatterFrontmatterValidationFailures,
-  TestsFrontmatterFrontmatterValidationFieldRegex,
-  TestsFrontmatterFrontmatterValidationFieldSource,
-  TestsFrontmatterFrontmatterValidationFileName,
-  TestsFrontmatterFrontmatterValidationFilePath,
-  TestsFrontmatterFrontmatterValidationFrontmatter,
-  TestsFrontmatterFrontmatterValidationId,
-  TestsFrontmatterFrontmatterValidationIdMatch,
-  TestsFrontmatterFrontmatterValidationIsBlogPost,
-  TestsFrontmatterFrontmatterValidationIsPlaceholder,
-  TestsFrontmatterFrontmatterValidationKeywordLines,
-  TestsFrontmatterFrontmatterValidationKeywordsIndex,
-  TestsFrontmatterFrontmatterValidationLine,
-  TestsFrontmatterFrontmatterValidationLines,
-  TestsFrontmatterFrontmatterValidationMdFiles,
-  TestsFrontmatterFrontmatterValidationRequiredFields,
-  TestsFrontmatterFrontmatterValidationTagLines,
-  TestsFrontmatterFrontmatterValidationTagsIndex,
-  TestsFrontmatterFrontmatterValidationTarget,
-  TestsFrontmatterFrontmatterValidationWarnings,
+  Tests_Frontmatter_FrontmatterValidation_AfterKeywords,
+  Tests_Frontmatter_FrontmatterValidation_AfterTags,
+  Tests_Frontmatter_FrontmatterValidation_Body,
+  Tests_Frontmatter_FrontmatterValidation_Content,
+  Tests_Frontmatter_FrontmatterValidation_ContentDirs,
+  Tests_Frontmatter_FrontmatterValidation_ContentPath,
+  Tests_Frontmatter_FrontmatterValidation_Cwd,
+  Tests_Frontmatter_FrontmatterValidation_DescMatch,
+  Tests_Frontmatter_FrontmatterValidation_EndIndex,
+  Tests_Frontmatter_FrontmatterValidation_Entries,
+  Tests_Frontmatter_FrontmatterValidation_ExpectedId,
+  Tests_Frontmatter_FrontmatterValidation_Ext,
+  Tests_Frontmatter_FrontmatterValidation_Failures,
+  Tests_Frontmatter_FrontmatterValidation_FieldRegex,
+  Tests_Frontmatter_FrontmatterValidation_FieldSource,
+  Tests_Frontmatter_FrontmatterValidation_FileName,
+  Tests_Frontmatter_FrontmatterValidation_FilePath,
+  Tests_Frontmatter_FrontmatterValidation_Frontmatter,
+  Tests_Frontmatter_FrontmatterValidation_Id,
+  Tests_Frontmatter_FrontmatterValidation_IdMatch,
+  Tests_Frontmatter_FrontmatterValidation_IsBlogPost,
+  Tests_Frontmatter_FrontmatterValidation_IsPlaceholder,
+  Tests_Frontmatter_FrontmatterValidation_KeywordLines,
+  Tests_Frontmatter_FrontmatterValidation_KeywordsIndex,
+  Tests_Frontmatter_FrontmatterValidation_Line,
+  Tests_Frontmatter_FrontmatterValidation_Lines,
+  Tests_Frontmatter_FrontmatterValidation_MdFiles,
+  Tests_Frontmatter_FrontmatterValidation_RequiredFields,
+  Tests_Frontmatter_FrontmatterValidation_TagLines,
+  Tests_Frontmatter_FrontmatterValidation_TagsIndex,
+  Tests_Frontmatter_FrontmatterValidation_Target,
+  Tests_Frontmatter_FrontmatterValidation_Warnings,
 } from '@site/src/types/tests/frontmatter.test.d.ts';
 
 /**
@@ -56,19 +56,19 @@ import type {
  */
 describe('Frontmatter validation', async () => {
   it('all documentation files have valid frontmatter', async () => {
-    const cwd: TestsFrontmatterFrontmatterValidationCwd = process.cwd();
-    const contentDirs: TestsFrontmatterFrontmatterValidationContentDirs = [
+    const cwd: Tests_Frontmatter_FrontmatterValidation_Cwd = process.cwd();
+    const contentDirs: Tests_Frontmatter_FrontmatterValidation_ContentDirs = [
       'docs',
       'blog',
     ];
-    const mdFiles: TestsFrontmatterFrontmatterValidationMdFiles = [];
+    const mdFiles: Tests_Frontmatter_FrontmatterValidation_MdFiles = [];
 
     for (const contentDir of contentDirs) {
-      const contentPath: TestsFrontmatterFrontmatterValidationContentPath = resolve(cwd, contentDir);
-      const entries: TestsFrontmatterFrontmatterValidationEntries = await readdir(contentPath, { recursive: true });
+      const contentPath: Tests_Frontmatter_FrontmatterValidation_ContentPath = resolve(cwd, contentDir);
+      const entries: Tests_Frontmatter_FrontmatterValidation_Entries = await readdir(contentPath, { recursive: true });
 
       for (const entry of entries) {
-        const ext: TestsFrontmatterFrontmatterValidationExt = extname(entry);
+        const ext: Tests_Frontmatter_FrontmatterValidation_Ext = extname(entry);
 
         if (ext === '.md' || ext === '.mdx') {
           mdFiles.push(join(contentDir, entry));
@@ -76,12 +76,12 @@ describe('Frontmatter validation', async () => {
       }
     }
 
-    const failures: TestsFrontmatterFrontmatterValidationFailures = [];
-    const warnings: TestsFrontmatterFrontmatterValidationWarnings = [];
+    const failures: Tests_Frontmatter_FrontmatterValidation_Failures = [];
+    const warnings: Tests_Frontmatter_FrontmatterValidation_Warnings = [];
 
     for (const mdFile of mdFiles) {
-      const filePath: TestsFrontmatterFrontmatterValidationFilePath = join(cwd, mdFile);
-      const content: TestsFrontmatterFrontmatterValidationContent = await readFile(filePath, 'utf-8');
+      const filePath: Tests_Frontmatter_FrontmatterValidation_FilePath = join(cwd, mdFile);
+      const content: Tests_Frontmatter_FrontmatterValidation_Content = await readFile(filePath, 'utf-8');
 
       if (content.startsWith('---') === false) {
         failures.push(`${mdFile}: missing frontmatter`);
@@ -89,7 +89,7 @@ describe('Frontmatter validation', async () => {
         continue;
       }
 
-      const endIndex: TestsFrontmatterFrontmatterValidationEndIndex = content.indexOf('---', 3);
+      const endIndex: Tests_Frontmatter_FrontmatterValidation_EndIndex = content.indexOf('---', 3);
 
       if (endIndex === -1) {
         failures.push(`${mdFile}: unclosed frontmatter`);
@@ -97,21 +97,21 @@ describe('Frontmatter validation', async () => {
         continue;
       }
 
-      const frontmatter: TestsFrontmatterFrontmatterValidationFrontmatter = content.slice(3, endIndex).trim();
-      const body: TestsFrontmatterFrontmatterValidationBody = content.slice(endIndex + 3).trim();
-      const fileExt: TestsFrontmatterFrontmatterValidationExt = extname(mdFile);
-      const fileName: TestsFrontmatterFrontmatterValidationFileName = basename(mdFile, fileExt);
+      const frontmatter: Tests_Frontmatter_FrontmatterValidation_Frontmatter = content.slice(3, endIndex).trim();
+      const body: Tests_Frontmatter_FrontmatterValidation_Body = content.slice(endIndex + 3).trim();
+      const fileExt: Tests_Frontmatter_FrontmatterValidation_Ext = extname(mdFile);
+      const fileName: Tests_Frontmatter_FrontmatterValidation_FileName = basename(mdFile, fileExt);
       /*
        * TODO Remove placeholder warning bypass (isPlaceholder, warnings, target, and console.log)
        * once all "Coming soon" pages have real frontmatter.
        */
-      const isBlogPost: TestsFrontmatterFrontmatterValidationIsBlogPost = mdFile.startsWith('blog/');
-      const isPlaceholder: TestsFrontmatterFrontmatterValidationIsPlaceholder = body.startsWith('Coming soon');
+      const isBlogPost: Tests_Frontmatter_FrontmatterValidation_IsBlogPost = mdFile.startsWith('blog/');
+      const isPlaceholder: Tests_Frontmatter_FrontmatterValidation_IsPlaceholder = body.startsWith('Coming soon');
 
-      const target: TestsFrontmatterFrontmatterValidationTarget = (isPlaceholder === true) ? warnings : failures;
+      const target: Tests_Frontmatter_FrontmatterValidation_Target = (isPlaceholder === true) ? warnings : failures;
 
       // Check required fields exist.
-      let requiredFields: TestsFrontmatterFrontmatterValidationRequiredFields = ['title'];
+      let requiredFields: Tests_Frontmatter_FrontmatterValidation_RequiredFields = ['title'];
 
       if (isBlogPost === true) {
         requiredFields = [
@@ -122,8 +122,8 @@ describe('Frontmatter validation', async () => {
       }
 
       for (const field of requiredFields) {
-        const fieldSource: TestsFrontmatterFrontmatterValidationFieldSource = `^${field}:`;
-        const fieldRegex: TestsFrontmatterFrontmatterValidationFieldRegex = new RegExp(fieldSource, 'm');
+        const fieldSource: Tests_Frontmatter_FrontmatterValidation_FieldSource = `^${field}:`;
+        const fieldRegex: Tests_Frontmatter_FrontmatterValidation_FieldRegex = new RegExp(fieldSource, 'm');
 
         if (fieldRegex.test(frontmatter) === false) {
           target.push(`${mdFile}: missing "${field}" in frontmatter`);
@@ -131,15 +131,15 @@ describe('Frontmatter validation', async () => {
       }
 
       // Check id matches filename (docs only).
-      const idMatch: TestsFrontmatterFrontmatterValidationIdMatch = new RegExp(PATTERN_ID_LINE, 'm').exec(frontmatter);
+      const idMatch: Tests_Frontmatter_FrontmatterValidation_IdMatch = new RegExp(PATTERN_ID_LINE, 'm').exec(frontmatter);
 
       if (
         isBlogPost === false
         && idMatch !== null
         && idMatch[1] !== undefined
       ) {
-        const id: TestsFrontmatterFrontmatterValidationId = idMatch[1].trim();
-        const expectedId: TestsFrontmatterFrontmatterValidationExpectedId = (fileName === 'index') ? 'overview' : fileName;
+        const id: Tests_Frontmatter_FrontmatterValidation_Id = idMatch[1].trim();
+        const expectedId: Tests_Frontmatter_FrontmatterValidation_ExpectedId = (fileName === 'index') ? 'overview' : fileName;
 
         if (id !== expectedId) {
           target.push(`${mdFile}: id "${id}" does not match expected "${expectedId}"`);
@@ -150,7 +150,7 @@ describe('Frontmatter validation', async () => {
        * TODO Remove placeholder "x" checks once all pages have real description, keywords, and tags.
        * Check description is not placeholder.
        */
-      const descMatch: TestsFrontmatterFrontmatterValidationDescMatch = new RegExp(PATTERN_DESCRIPTION_LINE, 'm').exec(frontmatter);
+      const descMatch: Tests_Frontmatter_FrontmatterValidation_DescMatch = new RegExp(PATTERN_DESCRIPTION_LINE, 'm').exec(frontmatter);
 
       if (
         isBlogPost === false
@@ -162,15 +162,15 @@ describe('Frontmatter validation', async () => {
       }
 
       // Check keywords is not placeholder (docs only).
-      const keywordsIndex: TestsFrontmatterFrontmatterValidationKeywordsIndex = frontmatter.indexOf('keywords:');
+      const keywordsIndex: Tests_Frontmatter_FrontmatterValidation_KeywordsIndex = frontmatter.indexOf('keywords:');
 
       if (isBlogPost === false && keywordsIndex !== -1) {
-        const afterKeywords: TestsFrontmatterFrontmatterValidationAfterKeywords = frontmatter.slice(keywordsIndex + 'keywords:'.length);
-        const keywordLines: TestsFrontmatterFrontmatterValidationKeywordLines = [];
-        const lines: TestsFrontmatterFrontmatterValidationLines = afterKeywords.split('\n');
+        const afterKeywords: Tests_Frontmatter_FrontmatterValidation_AfterKeywords = frontmatter.slice(keywordsIndex + 'keywords:'.length);
+        const keywordLines: Tests_Frontmatter_FrontmatterValidation_KeywordLines = [];
+        const lines: Tests_Frontmatter_FrontmatterValidation_Lines = afterKeywords.split('\n');
 
         for (let i = 1; i < lines.length; i += 1) {
-          const line: TestsFrontmatterFrontmatterValidationLine = lines[i];
+          const line: Tests_Frontmatter_FrontmatterValidation_Line = lines[i];
 
           if (line === undefined) {
             break;
@@ -193,18 +193,18 @@ describe('Frontmatter validation', async () => {
       }
 
       // Check tags is not placeholder.
-      const tagsIndex: TestsFrontmatterFrontmatterValidationTagsIndex = frontmatter.indexOf('tags:');
+      const tagsIndex: Tests_Frontmatter_FrontmatterValidation_TagsIndex = frontmatter.indexOf('tags:');
 
       if (tagsIndex !== -1) {
-        const afterTags: TestsFrontmatterFrontmatterValidationAfterTags = frontmatter.slice(tagsIndex + 'tags:'.length);
+        const afterTags: Tests_Frontmatter_FrontmatterValidation_AfterTags = frontmatter.slice(tagsIndex + 'tags:'.length);
 
         // Skip inline array format (e.g. tags: [a, b, c]).
         if (afterTags.trimStart().startsWith('[') === false) {
-          const tagLines: TestsFrontmatterFrontmatterValidationTagLines = [];
-          const lines: TestsFrontmatterFrontmatterValidationLines = afterTags.split('\n');
+          const tagLines: Tests_Frontmatter_FrontmatterValidation_TagLines = [];
+          const lines: Tests_Frontmatter_FrontmatterValidation_Lines = afterTags.split('\n');
 
           for (let i = 1; i < lines.length; i += 1) {
-            const line: TestsFrontmatterFrontmatterValidationLine = lines[i];
+            const line: Tests_Frontmatter_FrontmatterValidation_Line = lines[i];
 
             if (line === undefined) {
               break;

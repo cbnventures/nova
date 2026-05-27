@@ -3,16 +3,16 @@
  *
  * @since 0.13.0
  */
-export type TestsApiSpdxLicensesFetchLicensesResult = Set<string> | undefined;
+export type Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Result = Set<string> | undefined;
 
-export type TestsApiSpdxLicensesFetchLicensesHasMit = boolean;
+export type Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasMit = boolean;
 
-export type TestsApiSpdxLicensesFetchLicensesHasApache = boolean;
+export type Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasApache = boolean;
 
-export type TestsApiSpdxLicensesFetchLicensesHasIsc = boolean;
+export type Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_HasIsc = boolean;
 
-export type TestsApiSpdxLicensesFetchLicensesCallCount = number;
+export type Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_CallCount = number;
 
-export type TestsApiSpdxLicensesFetchLicensesFirst = Set<string> | undefined;
+export type Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_First = Set<string> | undefined;
 
-export type TestsApiSpdxLicensesFetchLicensesSecond = Set<string> | undefined;
+export type Tests_Api_SpdxLicenses_ApiSpdxLicensesFetchLicenses_Second = Set<string> | undefined;

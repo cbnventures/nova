@@ -10,36 +10,36 @@ import {
 } from 'react';
 import { createPortal } from 'react-dom';
 
-import type { ThemeNavbarItem } from '../../../types/theme/Navbar/index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../../../types/theme/Navbar/index.d.ts';
 
 import type {
-  ThemeNavbarMonolithMobileMenuCloseMenuAriaLabel,
-  ThemeNavbarMonolithMobileMenuMobileMenuActiveItemLabel,
-  ThemeNavbarMonolithMobileMenuMobileMenuAnimationEvent,
-  ThemeNavbarMonolithMobileMenuMobileMenuAriaLabel,
-  ThemeNavbarMonolithMobileMenuMobileMenuDefaultIcon,
-  ThemeNavbarMonolithMobileMenuMobileMenuFocusTarget,
-  ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideFunction,
-  ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideMouseEvent,
-  ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideMouseTarget,
-  ThemeNavbarMonolithMobileMenuMobileMenuHandleEscapeFunction,
-  ThemeNavbarMonolithMobileMenuMobileMenuHandleEscapeKeyboardEvent,
-  ThemeNavbarMonolithMobileMenuMobileMenuIsClosing,
-  ThemeNavbarMonolithMobileMenuMobileMenuIsClosingState,
-  ThemeNavbarMonolithMobileMenuMobileMenuIsOpen,
-  ThemeNavbarMonolithMobileMenuMobileMenuItemIcon,
-  ThemeNavbarMonolithMobileMenuMobileMenuItemIndex,
-  ThemeNavbarMonolithMobileMenuMobileMenuItemIsActive,
-  ThemeNavbarMonolithMobileMenuMobileMenuItems,
-  ThemeNavbarMonolithMobileMenuMobileMenuItemStyle,
-  ThemeNavbarMonolithMobileMenuMobileMenuLinkProps,
-  ThemeNavbarMonolithMobileMenuMobileMenuLinkSpread,
-  ThemeNavbarMonolithMobileMenuMobileMenuOnClose,
-  ThemeNavbarMonolithMobileMenuMobileMenuOverlayClassName,
-  ThemeNavbarMonolithMobileMenuMobileMenuPanelRef,
-  ThemeNavbarMonolithMobileMenuMobileMenuProps,
-  ThemeNavbarMonolithMobileMenuMobileMenuReturns,
-  ThemeNavbarMonolithMobileMenuMobileMenuSetIsClosing,
+  Theme_Navbar_Monolith_MobileMenu_CloseMenuAriaLabel,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_ActiveItemLabel,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_AnimationEvent,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_AriaLabel,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_DefaultIcon,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_FocusTarget,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideFunction,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeFunction,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosing,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosingState,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsOpen,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIcon,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIndex,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIsActive,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_Items,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemStyle,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkProps,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkSpread,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_OnClose,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_OverlayClassName,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_PanelRef,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_Returns,
+  Theme_Navbar_Monolith_MobileMenu_MobileMenu_SetIsClosing,
 } from '../../../types/theme/Navbar/Monolith/mobile-menu.d.ts';
 
 /**
@@ -49,21 +49,21 @@ import type {
  * a close button, and navigation items. The panel layout and visual
  * styling are controlled entirely by per-preset CSS.
  *
- * @param {ThemeNavbarMonolithMobileMenuMobileMenuProps} props - Props.
+ * @param {Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeNavbarMonolithMobileMenuMobileMenuReturns {
-  const isOpen: ThemeNavbarMonolithMobileMenuMobileMenuIsOpen = props['isOpen'];
-  const onClose: ThemeNavbarMonolithMobileMenuMobileMenuOnClose = props['onClose'];
-  const items: ThemeNavbarMonolithMobileMenuMobileMenuItems = props['items'];
-  const activeItemLabel: ThemeNavbarMonolithMobileMenuMobileMenuActiveItemLabel = props['activeItemLabel'];
-  const panelRef: ThemeNavbarMonolithMobileMenuMobileMenuPanelRef = useRef<HTMLDivElement>(null);
-  const isClosingState: ThemeNavbarMonolithMobileMenuMobileMenuIsClosingState = useState<ThemeNavbarMonolithMobileMenuMobileMenuIsClosing>(false);
-  const isClosing: ThemeNavbarMonolithMobileMenuMobileMenuIsClosing = isClosingState[0];
-  const setIsClosing: ThemeNavbarMonolithMobileMenuMobileMenuSetIsClosing = isClosingState[1];
+function MobileMenu(props: Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props): Theme_Navbar_Monolith_MobileMenu_MobileMenu_Returns {
+  const isOpen: Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsOpen = props['isOpen'];
+  const onClose: Theme_Navbar_Monolith_MobileMenu_MobileMenu_OnClose = props['onClose'];
+  const items: Theme_Navbar_Monolith_MobileMenu_MobileMenu_Items = props['items'];
+  const activeItemLabel: Theme_Navbar_Monolith_MobileMenu_MobileMenu_ActiveItemLabel = props['activeItemLabel'];
+  const panelRef: Theme_Navbar_Monolith_MobileMenu_MobileMenu_PanelRef = useRef<HTMLDivElement>(null);
+  const isClosingState: Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosingState = useState<Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosing>(false);
+  const isClosing: Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosing = isClosingState[0];
+  const setIsClosing: Theme_Navbar_Monolith_MobileMenu_MobileMenu_SetIsClosing = isClosingState[1];
 
   /**
    * Theme - Navbar - Monolith - Mobile Menu - Mobile Menu - Handle Escape.
@@ -73,7 +73,7 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
    *
    * @since 0.15.0
    */
-  const handleEscape: ThemeNavbarMonolithMobileMenuMobileMenuHandleEscapeFunction = useCallback((event: ThemeNavbarMonolithMobileMenuMobileMenuHandleEscapeKeyboardEvent) => {
+  const handleEscape: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeFunction = useCallback((event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent) => {
     if (event.key === 'Escape') {
       setIsClosing(true);
     }
@@ -89,8 +89,8 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
    *
    * @since 0.15.0
    */
-  const handleClickOutside: ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideFunction = useCallback((event: ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideMouseEvent) => {
-    const mouseTarget: ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideMouseTarget = event.target;
+  const handleClickOutside: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideFunction = useCallback((event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent) => {
+    const mouseTarget: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget = event.target;
 
     if (mouseTarget === event.currentTarget) {
       setIsClosing(true);
@@ -117,7 +117,7 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
   // Focus close button when menu opens.
   useEffect(() => {
     if (isOpen === true && panelRef['current'] !== null) {
-      const focusTarget: ThemeNavbarMonolithMobileMenuMobileMenuFocusTarget = panelRef['current'].querySelector('.nova-navbar-monolith-menu-close') as ThemeNavbarMonolithMobileMenuMobileMenuFocusTarget;
+      const focusTarget: Theme_Navbar_Monolith_MobileMenu_MobileMenu_FocusTarget = panelRef['current'].querySelector('.nova-navbar-monolith-menu-close') as Theme_Navbar_Monolith_MobileMenu_MobileMenu_FocusTarget;
 
       if (focusTarget !== null) {
         focusTarget.focus();
@@ -127,12 +127,12 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
     return undefined;
   }, [isOpen]);
 
-  const mobileMenuAriaLabel: ThemeNavbarMonolithMobileMenuMobileMenuAriaLabel = translate({
+  const mobileMenuAriaLabel: Theme_Navbar_Monolith_MobileMenu_MobileMenu_AriaLabel = translate({
     id: 'theme.navbar.mobileMenuAriaLabel',
     message: 'Navigation menu',
     description: 'The ARIA label for the mobile navigation menu dialog',
   });
-  const closeMenuAriaLabel: ThemeNavbarMonolithMobileMenuCloseMenuAriaLabel = translate({
+  const closeMenuAriaLabel: Theme_Navbar_Monolith_MobileMenu_CloseMenuAriaLabel = translate({
     id: 'theme.navbar.closeMenuAriaLabel',
     message: 'Close menu',
     description: 'The ARIA label for the button that closes the mobile navigation menu',
@@ -142,7 +142,7 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
     return null;
   }
 
-  let overlayClassName: ThemeNavbarMonolithMobileMenuMobileMenuOverlayClassName = 'nova-navbar-monolith-menu-overlay nova-navbar-monolith-menu-open';
+  let overlayClassName: Theme_Navbar_Monolith_MobileMenu_MobileMenu_OverlayClassName = 'nova-navbar-monolith-menu-overlay nova-navbar-monolith-menu-open';
 
   if (isClosing === true) {
     overlayClassName = 'nova-navbar-monolith-menu-overlay nova-navbar-monolith-menu-closing';
@@ -153,7 +153,7 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
       className={overlayClassName}
       onClick={handleClickOutside}
       role="presentation"
-      onAnimationEnd={(_event: ThemeNavbarMonolithMobileMenuMobileMenuAnimationEvent) => {
+      onAnimationEnd={(_event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_AnimationEvent) => {
         if (isClosing === true) {
           onClose();
           setIsClosing(false);
@@ -191,12 +191,12 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
             <SearchResults />
             <div className="nova-navbar-monolith-menu-items nova-mobile-menu-items">
               {
-                items.map((navItem: ThemeNavbarItem, itemIndex: ThemeNavbarMonolithMobileMenuMobileMenuItemIndex) => {
-                  const itemIcon: ThemeNavbarMonolithMobileMenuMobileMenuItemIcon = navItem['icon'] as ThemeNavbarMonolithMobileMenuMobileMenuItemIcon;
-                  const defaultIcon: ThemeNavbarMonolithMobileMenuMobileMenuDefaultIcon = 'lucide:link';
-                  const itemStyle: ThemeNavbarMonolithMobileMenuMobileMenuItemStyle = { '--nova-item-index': itemIndex } as ThemeNavbarMonolithMobileMenuMobileMenuItemStyle;
-                  const linkProps: ThemeNavbarMonolithMobileMenuMobileMenuLinkProps = {};
-                  const isActive: ThemeNavbarMonolithMobileMenuMobileMenuItemIsActive = navItem['label'] === activeItemLabel;
+                items.map((navItem: Theme_Navbar_Index_Navbar_Item, itemIndex: Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIndex) => {
+                  const itemIcon: Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIcon = navItem['icon'] as Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIcon;
+                  const defaultIcon: Theme_Navbar_Monolith_MobileMenu_MobileMenu_DefaultIcon = 'lucide:link';
+                  const itemStyle: Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemStyle = { '--nova-item-index': itemIndex } as Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemStyle;
+                  const linkProps: Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkProps = {};
+                  const isActive: Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIsActive = navItem['label'] === activeItemLabel;
 
                   if (navItem['to'] !== undefined) {
                     Reflect.set(linkProps, 'to', navItem['to']);
@@ -215,7 +215,7 @@ function MobileMenu(props: ThemeNavbarMonolithMobileMenuMobileMenuProps): ThemeN
                       className="nova-navbar-monolith-menu-item"
                       key={navItem['label']}
                       style={itemStyle}
-                      {...(linkProps as ThemeNavbarMonolithMobileMenuMobileMenuLinkSpread)}
+                      {...(linkProps as Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkSpread)}
                       onClick={() => {
                         setIsClosing(true);
 

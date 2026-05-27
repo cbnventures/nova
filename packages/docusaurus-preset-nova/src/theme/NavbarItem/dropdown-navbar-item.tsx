@@ -1,9 +1,9 @@
 import NavbarItem from '@theme/NavbarItem';
 
 import type {
-  ThemeNavbarItemDropdownNavbarItemItems,
-  ThemeNavbarItemDropdownNavbarItemLabel,
-  ThemeNavbarItemDropdownNavbarItemProps,
+  Theme_NavbarItem_DropdownNavbarItem_Items,
+  Theme_NavbarItem_DropdownNavbarItem_Label,
+  Theme_NavbarItem_DropdownNavbarItem_Props,
 } from '../../types/theme/NavbarItem/index.d.ts';
 
 /**
@@ -13,15 +13,15 @@ import type {
  * element with a summary toggle, recursively rendering each child
  * item through the NavbarItem router.
  *
- * @param {ThemeNavbarItemDropdownNavbarItemProps} props - Props.
+ * @param {Theme_NavbarItem_DropdownNavbarItem_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DropdownNavbarItem(props: ThemeNavbarItemDropdownNavbarItemProps) {
-  const label: ThemeNavbarItemDropdownNavbarItemLabel = props['label'];
-  const items: ThemeNavbarItemDropdownNavbarItemItems = props['items'] ?? [];
+function DropdownNavbarItem(props: Theme_NavbarItem_DropdownNavbarItem_Props) {
+  const label: Theme_NavbarItem_DropdownNavbarItem_Label = props['label'];
+  const items: Theme_NavbarItem_DropdownNavbarItem_Items = props['items'] ?? [];
 
   return (
     <details>

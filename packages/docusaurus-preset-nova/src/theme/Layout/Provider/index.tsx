@@ -9,15 +9,15 @@ import {
 } from '@docusaurus/theme-common/internal';
 
 import type {
-  ThemeLayoutProviderLayoutProviderProvider,
-  ThemeLayoutProviderProps,
+  Theme_Layout_Provider_Index_LayoutProvider_Provider,
+  Theme_Layout_Provider_Index_Props,
 } from '../../../types/theme/Layout/Provider/index.d.ts';
 
 // Composed provider stack, computed once at module scope so its identity is
 // stable across renders. Composing inside the render body yields a new
 // component reference per render, which makes React unmount and remount
 // everything below it - stealing focus from any active input.
-const Provider: ThemeLayoutProviderLayoutProviderProvider = composeProviders([
+const Provider: Theme_Layout_Provider_Index_LayoutProvider_Provider = composeProviders([
   ColorModeProvider,
   AnnouncementBarProvider,
   ScrollControllerProvider,
@@ -33,13 +33,13 @@ const Provider: ThemeLayoutProviderLayoutProviderProvider = composeProviders([
  * theme components depend on for color mode, scroll tracking,
  * navbar state, announcement bar, and version preferences.
  *
- * @param {ThemeLayoutProviderProps} props - Props.
+ * @param {Theme_Layout_Provider_Index_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function LayoutProvider(props: ThemeLayoutProviderProps) {
+function LayoutProvider(props: Theme_Layout_Provider_Index_Props) {
   return <Provider>{props['children']}</Provider>;
 }
 

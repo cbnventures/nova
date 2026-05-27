@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireImportOrder } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintFormattingRequireImportOrderRuleTester } from '../../../../types/tests/rules/eslint/formatting/require-import-order.test.d.ts';
+import type { Tests_Rules_Eslint_Formatting_RequireImportOrder_RuleTester } from '../../../../types/tests/rules/eslint/formatting/require-import-order.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Formatting - Require Import Order.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintFormattingRequireImportOrderRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Formatting_RequireImportOrder_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

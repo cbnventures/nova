@@ -11,23 +11,23 @@ import { join } from 'node:path';
 
 import { afterAll, describe, it } from 'vitest';
 
-import { CliRecipePackageJsonNormalizeBundler } from '../../../../cli/recipe/package-json/normalize-bundler.js';
+import { Runner as CliRecipePackageJsonNormalizeBundler } from '../../../../cli/recipe/package-json/normalize-bundler.js';
 
 import type {
-  TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigContents,
-  TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigPath,
-  TestsCliRecipePackageJsonNormalizeBundlerRunOriginalCwd,
-  TestsCliRecipePackageJsonNormalizeBundlerRunOutput,
-  TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonContents,
-  TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonPath,
-  TestsCliRecipePackageJsonNormalizeBundlerRunParsed,
-  TestsCliRecipePackageJsonNormalizeBundlerRunProjectDirectory,
-  TestsCliRecipePackageJsonNormalizeBundlerRunSandboxPath,
-  TestsCliRecipePackageJsonNormalizeBundlerRunSandboxRoot,
-  TestsCliRecipePackageJsonNormalizeBundlerRunTemporaryDirectory,
-  TestsCliRecipePackageJsonNormalizeBundlerRunWorkspaceDirectory,
-  TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonContents,
-  TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_OriginalCwd,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Output,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Parsed,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_ProjectDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_SandboxPath,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_SandboxRoot,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_TemporaryDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspaceDirectory,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonContents,
+  Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonPath,
 } from '../../../../types/tests/cli/recipe/package-json/normalize-bundler.test.d.ts';
 
 /**
@@ -36,10 +36,10 @@ import type {
  * @since 0.14.0
  */
 describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
-  const originalCwd: TestsCliRecipePackageJsonNormalizeBundlerRunOriginalCwd = process.cwd();
-  const temporaryDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunTemporaryDirectory = tmpdir();
-  const sandboxPath: TestsCliRecipePackageJsonNormalizeBundlerRunSandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
-  const sandboxRoot: TestsCliRecipePackageJsonNormalizeBundlerRunSandboxRoot = await mkdtemp(sandboxPath);
+  const originalCwd: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_OriginalCwd = process.cwd();
+  const temporaryDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_TemporaryDirectory = tmpdir();
+  const sandboxPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_SandboxPath = join(temporaryDirectory, `nova-${'test'}-`);
+  const sandboxRoot: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_SandboxRoot = await mkdtemp(sandboxPath);
 
   afterAll(async () => {
     process.chdir(originalCwd);
@@ -53,7 +53,7 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
   });
 
   it('sets exit code when not at project root', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunProjectDirectory = join(sandboxRoot, 'not-project-root');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_ProjectDirectory = join(sandboxRoot, 'not-project-root');
 
     await mkdir(projectDirectory, { recursive: true });
 
@@ -67,20 +67,20 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
   });
 
   it('skips when no workspaces have the recipe enabled', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunProjectDirectory = join(sandboxRoot, 'no-recipe');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_ProjectDirectory = join(sandboxRoot, 'no-recipe');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonContents = JSON.stringify({
       name: 'test-no-recipe',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -92,8 +92,8 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       typings: './build/index.d.ts',
@@ -110,8 +110,8 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     // The typings should not have been renamed because the recipe is not enabled.
-    const output: TestsCliRecipePackageJsonNormalizeBundlerRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeBundlerRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['typings'], './build/index.d.ts');
 
@@ -119,20 +119,20 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
   });
 
   it('renames typings to types', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunProjectDirectory = join(sandboxRoot, 'rename-typings');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_ProjectDirectory = join(sandboxRoot, 'rename-typings');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonContents = JSON.stringify({
       name: 'test-rename-typings',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -147,8 +147,8 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       typings: './build/index.d.ts',
@@ -164,8 +164,8 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonNormalizeBundlerRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeBundlerRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['typings'], undefined);
     strictEqual(parsed['types'], './build/index.d.ts');
@@ -174,20 +174,20 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
   });
 
   it('removes sideEffects from non-package role', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunProjectDirectory = join(sandboxRoot, 'remove-side-effects');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspaceDirectory = join(projectDirectory, 'apps', 'docs');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_ProjectDirectory = join(sandboxRoot, 'remove-side-effects');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspaceDirectory = join(projectDirectory, 'apps', 'docs');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonContents = JSON.stringify({
       name: 'test-remove-side-effects',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './apps/docs': {
           name: 'docs',
@@ -202,8 +202,8 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonContents = JSON.stringify({
       name: 'docs',
       version: '0.0.0',
       sideEffects: false,
@@ -219,8 +219,8 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
 
     strictEqual(process.exitCode, undefined);
 
-    const output: TestsCliRecipePackageJsonNormalizeBundlerRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeBundlerRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['sideEffects'], undefined);
 
@@ -228,20 +228,20 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
   });
 
   it('does not modify files during dry run', async () => {
-    const projectDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunProjectDirectory = join(sandboxRoot, 'dry-run');
-    const workspaceDirectory: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspaceDirectory = join(projectDirectory, 'packages', 'core');
+    const projectDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_ProjectDirectory = join(sandboxRoot, 'dry-run');
+    const workspaceDirectory: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspaceDirectory = join(projectDirectory, 'packages', 'core');
 
     await mkdir(workspaceDirectory, { recursive: true });
 
-    const packageJsonPath: TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonPath = join(projectDirectory, 'package.json');
-    const packageJsonContents: TestsCliRecipePackageJsonNormalizeBundlerRunPackageJsonContents = JSON.stringify({
+    const packageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonPath = join(projectDirectory, 'package.json');
+    const packageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_PackageJsonContents = JSON.stringify({
       name: 'test-dry-run',
     }, null, 2);
 
     await writeFile(packageJsonPath, packageJsonContents, 'utf-8');
 
-    const novaConfigPath: TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigPath = join(projectDirectory, 'nova.config.json');
-    const novaConfigContents: TestsCliRecipePackageJsonNormalizeBundlerRunNovaConfigContents = JSON.stringify({
+    const novaConfigPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigPath = join(projectDirectory, 'nova.config.json');
+    const novaConfigContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_NovaConfigContents = JSON.stringify({
       workspaces: {
         './packages/core': {
           name: '@test/core',
@@ -256,8 +256,8 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
 
     await writeFile(novaConfigPath, novaConfigContents, 'utf-8');
 
-    const workspacePackageJsonPath: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
-    const workspacePackageJsonContents: TestsCliRecipePackageJsonNormalizeBundlerRunWorkspacePackageJsonContents = JSON.stringify({
+    const workspacePackageJsonPath: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonPath = join(workspaceDirectory, 'package.json');
+    const workspacePackageJsonContents: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_WorkspacePackageJsonContents = JSON.stringify({
       name: '@test/core',
       version: '1.0.0',
       typings: './build/index.d.ts',
@@ -274,8 +274,8 @@ describe('CliRecipePackageJsonNormalizeBundler.run', async () => {
     strictEqual(process.exitCode, undefined);
 
     // The file should not have been modified.
-    const output: TestsCliRecipePackageJsonNormalizeBundlerRunOutput = await readFile(workspacePackageJsonPath, 'utf-8');
-    const parsed: TestsCliRecipePackageJsonNormalizeBundlerRunParsed = JSON.parse(output);
+    const output: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Output = await readFile(workspacePackageJsonPath, 'utf-8');
+    const parsed: Tests_Cli_Recipe_PackageJson_NormalizeBundler_CliRecipePackageJsonNormalizeBundlerRun_Parsed = JSON.parse(output);
 
     strictEqual(parsed['typings'], './build/index.d.ts');
 

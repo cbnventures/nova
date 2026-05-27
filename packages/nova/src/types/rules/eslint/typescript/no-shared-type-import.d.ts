@@ -6,38 +6,38 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.14.0
  */
-export type RulesEslintTypescriptNoSharedTypeImportCheckImportContext = Readonly<RuleContext<string, readonly unknown[]>>;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Context = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type RulesEslintTypescriptNoSharedTypeImportCheckImportNode = TSESTree.ImportDeclaration;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Node = TSESTree.ImportDeclaration;
 
-export type RulesEslintTypescriptNoSharedTypeImportCheckImportSharedFiles = string[];
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_SharedFiles = string[];
 
-export type RulesEslintTypescriptNoSharedTypeImportCheckImportReturns = void;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Returns = void;
 
-export type RulesEslintTypescriptNoSharedTypeImportCheckImportSource = string;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Source = string;
 
-export type RulesEslintTypescriptNoSharedTypeImportCheckImportNormalizedSource = string;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_NormalizedSource = string;
 
-export type RulesEslintTypescriptNoSharedTypeImportCheckImportIsShared = boolean;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_IsShared = boolean;
 
-export type RulesEslintTypescriptNoSharedTypeImportCheckImportNormalizedSharedFile = string;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_NormalizedSharedFile = string;
 
 /**
  * Rules - ESLint - TypeScript - No Shared Type Import - Rule.
  *
  * @since 0.14.0
  */
-export type RulesEslintTypescriptNoSharedTypeImportRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintTypescriptNoSharedTypeImportRuleDefaultOptionsSharedFiles = string[];
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsSharedFiles = string[];
 
-export type RulesEslintTypescriptNoSharedTypeImportRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintTypescriptNoSharedTypeImportRuleOptionsSharedFiles = string[];
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions_SharedFiles = string[];
 
-export type RulesEslintTypescriptNoSharedTypeImportRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintTypescriptNoSharedTypeImportRuleOptionsIgnoreFiles;
-  sharedFiles: RulesEslintTypescriptNoSharedTypeImportRuleOptionsSharedFiles;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions_IgnoreFiles;
+  sharedFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions_SharedFiles;
 }>;
 
-export type RulesEslintTypescriptNoSharedTypeImportRuleNormalizedFilename = string;
+export type Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleNormalizedFilename = string;

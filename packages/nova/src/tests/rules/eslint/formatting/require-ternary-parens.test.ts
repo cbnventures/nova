@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireTernaryParens } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintFormattingRequireTernaryParensRuleTester } from '../../../../types/tests/rules/eslint/formatting/require-ternary-parens.test.d.ts';
+import type { Tests_Rules_Eslint_Formatting_RequireTernaryParens_RuleTester } from '../../../../types/tests/rules/eslint/formatting/require-ternary-parens.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Formatting - Require Ternary Parens.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintFormattingRequireTernaryParensRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Formatting_RequireTernaryParens_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

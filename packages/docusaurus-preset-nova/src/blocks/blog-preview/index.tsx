@@ -5,20 +5,20 @@ import { usePluginData } from '@docusaurus/useGlobalData';
 import Heading from '@theme/Heading';
 
 import type {
-  BlocksBlogPreviewBlocksBlogPreviewContext,
-  BlocksBlogPreviewBlocksBlogPreviewCurrentLocale,
-  BlocksBlogPreviewBlocksBlogPreviewDateObject,
-  BlocksBlogPreviewBlocksBlogPreviewFormattedDate,
-  BlocksBlogPreviewBlocksBlogPreviewGlobalData,
-  BlocksBlogPreviewBlocksBlogPreviewGlobalDataBlogPosts,
-  BlocksBlogPreviewBlocksBlogPreviewLimitedPosts,
-  BlocksBlogPreviewBlocksBlogPreviewNoPosts,
-  BlocksBlogPreviewBlocksBlogPreviewProps,
-  BlocksBlogPreviewBlocksBlogPreviewResolvedPosts,
-  BlocksBlogPreviewBlocksBlogPreviewSectionClassName,
-  BlocksBlogPreviewBlocksBlogPreviewSortDirection,
-  BlocksBlogPreviewBlocksBlogPreviewSortedPosts,
-  BlocksBlogPreviewReadMore,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_Context,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_CurrentLocale,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_DateObject,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_FormattedDate,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData_BlogPosts,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_LimitedPosts,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_NoPosts,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_Props,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_ResolvedPosts,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_SectionClassName,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_SortDirection,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_SortedPosts,
+  Blocks_BlogPreview_Index_BlocksBlogPreview_ReadMore,
 } from '../../types/blocks/blog-preview/index.d.ts';
 
 /**
@@ -28,41 +28,41 @@ import type {
  * a card grid of recent blog posts with date formatting and
  * read-more links.
  *
- * @param {BlocksBlogPreviewBlocksBlogPreviewProps} props - Props.
+ * @param {Blocks_BlogPreview_Index_BlocksBlogPreview_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlocksBlogPreview(props: BlocksBlogPreviewBlocksBlogPreviewProps) {
-  const context: BlocksBlogPreviewBlocksBlogPreviewContext = useDocusaurusContext();
-  const currentLocale: BlocksBlogPreviewBlocksBlogPreviewCurrentLocale = context['i18n']['currentLocale'];
+function BlocksBlogPreview(props: Blocks_BlogPreview_Index_BlocksBlogPreview_Props) {
+  const context: Blocks_BlogPreview_Index_BlocksBlogPreview_Context = useDocusaurusContext();
+  const currentLocale: Blocks_BlogPreview_Index_BlocksBlogPreview_CurrentLocale = context['i18n']['currentLocale'];
 
-  const baseClassName: BlocksBlogPreviewBlocksBlogPreviewSectionClassName = [
+  const baseClassName: Blocks_BlogPreview_Index_BlocksBlogPreview_SectionClassName = [
     'nova-blog-preview',
     (props['description'] !== undefined) ? 'nova-blog-preview-has-description' : 'nova-blog-preview-no-description',
   ].join(' ');
-  const sectionClassName: BlocksBlogPreviewBlocksBlogPreviewSectionClassName = (props['className'] !== undefined) ? `${baseClassName} ${props['className']}` : baseClassName;
+  const sectionClassName: Blocks_BlogPreview_Index_BlocksBlogPreview_SectionClassName = (props['className'] !== undefined) ? `${baseClassName} ${props['className']}` : baseClassName;
 
-  const readMore: BlocksBlogPreviewReadMore = translate({
+  const readMore: Blocks_BlogPreview_Index_BlocksBlogPreview_ReadMore = translate({
     id: 'theme.BlogPreview.readMore',
     message: 'Read more',
     description: 'The label on the blog preview read more link',
   });
 
-  const globalData: BlocksBlogPreviewBlocksBlogPreviewGlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as BlocksBlogPreviewBlocksBlogPreviewGlobalData;
-  const globalBlogPosts: BlocksBlogPreviewBlocksBlogPreviewGlobalDataBlogPosts = (globalData['blogPosts'] ?? []);
+  const globalData: Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData;
+  const globalBlogPosts: Blocks_BlogPreview_Index_BlocksBlogPreview_GlobalData_BlogPosts = (globalData['blogPosts'] ?? []);
 
-  const resolvedPosts: BlocksBlogPreviewBlocksBlogPreviewResolvedPosts = (props['auto'] === true) ? globalBlogPosts : (props['posts'] ?? []);
+  const resolvedPosts: Blocks_BlogPreview_Index_BlocksBlogPreview_ResolvedPosts = (props['auto'] === true) ? globalBlogPosts : (props['posts'] ?? []);
 
-  const sortDirection: BlocksBlogPreviewBlocksBlogPreviewSortDirection = (props['sort'] === 'oldest') ? -1 : 1;
-  const sortedPosts: BlocksBlogPreviewBlocksBlogPreviewSortedPosts = [...resolvedPosts].sort((a, b) => {
+  const sortDirection: Blocks_BlogPreview_Index_BlocksBlogPreview_SortDirection = (props['sort'] === 'oldest') ? -1 : 1;
+  const sortedPosts: Blocks_BlogPreview_Index_BlocksBlogPreview_SortedPosts = [...resolvedPosts].sort((a, b) => {
     return sortDirection * (new Date(b['date']).getTime() - new Date(a['date']).getTime());
   });
 
-  const limitedPosts: BlocksBlogPreviewBlocksBlogPreviewLimitedPosts = (props['limit'] !== undefined) ? sortedPosts.slice(0, props['limit']) : sortedPosts;
+  const limitedPosts: Blocks_BlogPreview_Index_BlocksBlogPreview_LimitedPosts = (props['limit'] !== undefined) ? sortedPosts.slice(0, props['limit']) : sortedPosts;
 
-  const noPosts: BlocksBlogPreviewBlocksBlogPreviewNoPosts = translate({
+  const noPosts: Blocks_BlogPreview_Index_BlocksBlogPreview_NoPosts = translate({
     id: 'theme.BlogPreview.noPosts',
     message: 'No posts yet',
     description: 'The placeholder message shown when no blog posts are available',
@@ -88,9 +88,9 @@ function BlocksBlogPreview(props: BlocksBlogPreviewBlocksBlogPreviewProps) {
               {(limitedPosts['length'] === 0) ? (
                 <p className="nova-blog-preview-no-posts nova-col-12">{noPosts}</p>
               ) : limitedPosts.map((blogPost) => {
-                const dateObject: BlocksBlogPreviewBlocksBlogPreviewDateObject = new Date(blogPost['date']);
+                const dateObject: Blocks_BlogPreview_Index_BlocksBlogPreview_DateObject = new Date(blogPost['date']);
 
-                const formattedDate: BlocksBlogPreviewBlocksBlogPreviewFormattedDate = dateObject.toLocaleDateString(currentLocale, {
+                const formattedDate: Blocks_BlogPreview_Index_BlocksBlogPreview_FormattedDate = dateObject.toLocaleDateString(currentLocale, {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
@@ -132,9 +132,9 @@ function BlocksBlogPreview(props: BlocksBlogPreviewBlocksBlogPreviewProps) {
             {(limitedPosts['length'] === 0) ? (
               <p className="nova-blog-preview-no-posts nova-col-12">{noPosts}</p>
             ) : limitedPosts.map((blogPost) => {
-              const dateObject: BlocksBlogPreviewBlocksBlogPreviewDateObject = new Date(blogPost['date']);
+              const dateObject: Blocks_BlogPreview_Index_BlocksBlogPreview_DateObject = new Date(blogPost['date']);
 
-              const formattedDate: BlocksBlogPreviewBlocksBlogPreviewFormattedDate = dateObject.toLocaleDateString(currentLocale, {
+              const formattedDate: Blocks_BlogPreview_Index_BlocksBlogPreview_FormattedDate = dateObject.toLocaleDateString(currentLocale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',

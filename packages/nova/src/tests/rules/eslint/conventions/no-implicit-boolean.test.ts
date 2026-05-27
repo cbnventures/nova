@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoImplicitBoolean } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintConventionsNoImplicitBooleanRuleTester } from '../../../../types/tests/rules/eslint/conventions/no-implicit-boolean.test.d.ts';
+import type { Tests_Rules_Eslint_Conventions_NoImplicitBoolean_RuleTester } from '../../../../types/tests/rules/eslint/conventions/no-implicit-boolean.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Conventions - No Implicit Boolean.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintConventionsNoImplicitBooleanRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Conventions_NoImplicitBoolean_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

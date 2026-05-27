@@ -5,17 +5,17 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeContentVisibilityDraftPropsClassName = string | undefined;
+export type Theme_ContentVisibility_Draft_Index_Draft_Props_ClassName = string | undefined;
 
-export type ThemeContentVisibilityDraftPropsStyle = CSSProperties | undefined;
+export type Theme_ContentVisibility_Draft_Index_Draft_Props_Style = CSSProperties | undefined;
 
-export type ThemeContentVisibilityDraftProps = {
-  className?: ThemeContentVisibilityDraftPropsClassName;
-  style?: ThemeContentVisibilityDraftPropsStyle;
+export type Theme_ContentVisibility_Draft_Index_Draft_Props = {
+  className?: Theme_ContentVisibility_Draft_Index_Draft_Props_ClassName;
+  style?: Theme_ContentVisibility_Draft_Index_Draft_Props_Style;
 };
 
-export type ThemeContentVisibilityDraftReturns = React.JSX.Element;
+export type Theme_ContentVisibility_Draft_Index_Draft_Returns = React.JSX.Element;
 
-export type ThemeContentVisibilityDraftTitle = string;
+export type Theme_ContentVisibility_Draft_Index_Draft_Title = string;
 
-export type ThemeContentVisibilityDraftMessage = string;
+export type Theme_ContentVisibility_Draft_Index_Draft_Message = string;

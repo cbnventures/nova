@@ -1,37 +1,37 @@
-import type { SharedPreset } from '../../shared.d.ts';
+import type { Shared_Preset } from '../../shared.d.ts';
 
 /**
  * Tests - Presets - Index Names.
  *
  * @since 0.15.0
  */
-export type TestsPresetsIndexNamesIncludesEnvoy = boolean;
+export type Tests_Presets_Index_NamesIncludesEnvoy = boolean;
 
-export type TestsPresetsIndexNamesIncludesFoundry = boolean;
+export type Tests_Presets_Index_NamesIncludesFoundry = boolean;
 
-export type TestsPresetsIndexNamesIncludesLantern = boolean;
+export type Tests_Presets_Index_NamesIncludesLantern = boolean;
 
-export type TestsPresetsIndexNamesIncludesMarshal = boolean;
+export type Tests_Presets_Index_NamesIncludesMarshal = boolean;
 
-export type TestsPresetsIndexNamesIncludesSentinel = boolean;
+export type Tests_Presets_Index_NamesIncludesSentinel = boolean;
 
-export type TestsPresetsIndexNamesIncludesSignal = boolean;
+export type Tests_Presets_Index_NamesIncludesSignal = boolean;
 
-export type TestsPresetsIndexNamesLength = number;
+export type Tests_Presets_Index_NamesLength = number;
 
 /**
  * Tests - Presets - Index Presets.
  *
  * @since 0.15.0
  */
-export type TestsPresetsIndexPresetsEnvoy = SharedPreset;
+export type Tests_Presets_Index_PresetsEnvoy = Shared_Preset;
 
-export type TestsPresetsIndexPresetsFoundry = SharedPreset;
+export type Tests_Presets_Index_PresetsFoundry = Shared_Preset;
 
-export type TestsPresetsIndexPresetsLantern = SharedPreset;
+export type Tests_Presets_Index_PresetsLantern = Shared_Preset;
 
-export type TestsPresetsIndexPresetsMarshal = SharedPreset;
+export type Tests_Presets_Index_PresetsMarshal = Shared_Preset;
 
-export type TestsPresetsIndexPresetsSentinel = SharedPreset;
+export type Tests_Presets_Index_PresetsSentinel = Shared_Preset;
 
-export type TestsPresetsIndexPresetsSignal = SharedPreset;
+export type Tests_Presets_Index_PresetsSignal = Shared_Preset;

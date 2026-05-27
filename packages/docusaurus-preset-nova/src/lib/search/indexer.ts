@@ -9,94 +9,94 @@ import * as cheerio from 'cheerio';
 import { LIB_REGEX_WILDCARD_ASTERISK } from '../regex.js';
 
 import type {
-  LibSearchIndexerBuildSearchIndexDefaultDocsRouteBasePath,
-  LibSearchIndexerBuildSearchIndexDefaultHashed,
-  LibSearchIndexerBuildSearchIndexDefaultIgnorePatterns,
-  LibSearchIndexerBuildSearchIndexDefaultIndexBlog,
-  LibSearchIndexerBuildSearchIndexDefaultIndexDocs,
-  LibSearchIndexerBuildSearchIndexDefaultIndexPages,
-  LibSearchIndexerBuildSearchIndexDefaultLanguage,
-  LibSearchIndexerBuildSearchIndexDocsRouteBasePath,
-  LibSearchIndexerBuildSearchIndexDocument,
-  LibSearchIndexerBuildSearchIndexDocumentEntry,
-  LibSearchIndexerBuildSearchIndexDocumentMetadata,
-  LibSearchIndexerBuildSearchIndexDocuments,
-  LibSearchIndexerBuildSearchIndexFileName,
-  LibSearchIndexerBuildSearchIndexHash,
-  LibSearchIndexerBuildSearchIndexHashed,
-  LibSearchIndexerBuildSearchIndexHeadingEntry,
-  LibSearchIndexerBuildSearchIndexHeadingsText,
-  LibSearchIndexerBuildSearchIndexHeadingsTextParts,
-  LibSearchIndexerBuildSearchIndexIgnorePatterns,
-  LibSearchIndexerBuildSearchIndexIndexBlog,
-  LibSearchIndexerBuildSearchIndexIndexDocs,
-  LibSearchIndexerBuildSearchIndexIndexFilePath,
-  LibSearchIndexerBuildSearchIndexIndexPages,
-  LibSearchIndexerBuildSearchIndexIsBlogRoute,
-  LibSearchIndexerBuildSearchIndexIsDocsRoute,
-  LibSearchIndexerBuildSearchIndexIsIgnored,
-  LibSearchIndexerBuildSearchIndexIsNonContentRoute,
-  LibSearchIndexerBuildSearchIndexIsPageRoute,
-  LibSearchIndexerBuildSearchIndexJsonContent,
-  LibSearchIndexerBuildSearchIndexLanguage,
-  LibSearchIndexerBuildSearchIndexLanguageCode,
-  LibSearchIndexerBuildSearchIndexLunrBuilder,
-  LibSearchIndexerBuildSearchIndexLunrDestinationPath,
-  LibSearchIndexerBuildSearchIndexLunrFunction,
-  LibSearchIndexerBuildSearchIndexLunrIndex,
-  LibSearchIndexerBuildSearchIndexLocaleRelativeRoutePath,
-  LibSearchIndexerBuildSearchIndexIsBaseUrlPrefixedRoute,
-  LibSearchIndexerBuildSearchIndexBaseUrl,
-  LibSearchIndexerBuildSearchIndexLunrLanguageLoader,
-  LibSearchIndexerBuildSearchIndexLunrModule,
-  LibSearchIndexerBuildSearchIndexLunrMultiLoader,
-  LibSearchIndexerBuildSearchIndexLunrSourcePath,
-  LibSearchIndexerBuildSearchIndexLunrStemmerSupportLoader,
-  LibSearchIndexerBuildSearchIndexLunrTinySegLoader,
-  LibSearchIndexerBuildSearchIndexManifest,
-  LibSearchIndexerBuildSearchIndexManifestFilePath,
-  LibSearchIndexerBuildSearchIndexManifestJson,
-  LibSearchIndexerBuildSearchIndexNonEnglishLanguageKey,
-  LibSearchIndexerBuildSearchIndexNonEnglishLanguages,
-  LibSearchIndexerBuildSearchIndexOptions,
-  LibSearchIndexerBuildSearchIndexPayload,
-  LibSearchIndexerBuildSearchIndexReturns,
-  LibSearchIndexerBuildSearchIndexRoutePath,
-  LibSearchIndexerBuildSearchIndexSerializedIndex,
-  LibSearchIndexerBuildSearchIndexTypedBuilder,
-  LibSearchIndexerBuildSearchIndexTypedLunrIndex,
-  LibSearchIndexerBuildSearchIndexWorkerDestinationPath,
-  LibSearchIndexerBuildSearchIndexWorkerSourcePath,
-  LibSearchIndexerExtractDocumentArticleText,
-  LibSearchIndexerExtractDocumentBody,
-  LibSearchIndexerExtractDocumentCheerioApi,
-  LibSearchIndexerExtractDocumentContentSelectors,
-  LibSearchIndexerExtractDocumentContentText,
-  LibSearchIndexerExtractDocumentDescription,
-  LibSearchIndexerExtractDocumentDescriptionAttribute,
-  LibSearchIndexerExtractDocumentFallbackText,
-  LibSearchIndexerExtractDocumentFileExists,
-  LibSearchIndexerExtractDocumentHeadingElement,
-  LibSearchIndexerExtractDocumentHeadingId,
-  LibSearchIndexerExtractDocumentHeadingLevel,
-  LibSearchIndexerExtractDocumentHeadings,
-  LibSearchIndexerExtractDocumentHeadingTagName,
-  LibSearchIndexerExtractDocumentHeadingText,
-  LibSearchIndexerExtractDocumentHtmlContent,
-  LibSearchIndexerExtractDocumentHtmlFilePath,
-  LibSearchIndexerExtractDocumentMainText,
-  LibSearchIndexerExtractDocumentParsedHtml,
-  LibSearchIndexerExtractDocumentReturns,
-  LibSearchIndexerExtractDocumentRoutePath,
-  LibSearchIndexerExtractDocumentTitle,
-  LibSearchIndexerExtractDocumentTitleFromHeading,
-  LibSearchIndexerExtractDocumentTitleFromTag,
-  LibSearchIndexerMatchesIgnorePatternCleanPattern,
-  LibSearchIndexerMatchesIgnorePatternIsMatch,
-  LibSearchIndexerMatchesIgnorePatternPattern,
-  LibSearchIndexerMatchesIgnorePatternPatterns,
-  LibSearchIndexerMatchesIgnorePatternReturns,
-  LibSearchIndexerMatchesIgnorePatternRoutePath,
+  Lib_Search_Indexer_BuildSearchIndex_DefaultDocsRouteBasePath,
+  Lib_Search_Indexer_BuildSearchIndex_DefaultHashed,
+  Lib_Search_Indexer_BuildSearchIndex_DefaultIgnorePatterns,
+  Lib_Search_Indexer_BuildSearchIndex_DefaultIndexBlog,
+  Lib_Search_Indexer_BuildSearchIndex_DefaultIndexDocs,
+  Lib_Search_Indexer_BuildSearchIndex_DefaultIndexPages,
+  Lib_Search_Indexer_BuildSearchIndex_DefaultLanguage,
+  Lib_Search_Indexer_BuildSearchIndex_DocsRouteBasePath,
+  Lib_Search_Indexer_BuildSearchIndex_Document,
+  Lib_Search_Indexer_BuildSearchIndex_DocumentEntry,
+  Lib_Search_Indexer_BuildSearchIndex_DocumentMetadata,
+  Lib_Search_Indexer_BuildSearchIndex_Documents,
+  Lib_Search_Indexer_BuildSearchIndex_FileName,
+  Lib_Search_Indexer_BuildSearchIndex_Hash,
+  Lib_Search_Indexer_BuildSearchIndex_Hashed,
+  Lib_Search_Indexer_BuildSearchIndex_HeadingEntry,
+  Lib_Search_Indexer_BuildSearchIndex_HeadingsText,
+  Lib_Search_Indexer_BuildSearchIndex_HeadingsTextParts,
+  Lib_Search_Indexer_BuildSearchIndex_IgnorePatterns,
+  Lib_Search_Indexer_BuildSearchIndex_IndexBlog,
+  Lib_Search_Indexer_BuildSearchIndex_IndexDocs,
+  Lib_Search_Indexer_BuildSearchIndex_IndexFilePath,
+  Lib_Search_Indexer_BuildSearchIndex_IndexPages,
+  Lib_Search_Indexer_BuildSearchIndex_IsBlogRoute,
+  Lib_Search_Indexer_BuildSearchIndex_IsDocsRoute,
+  Lib_Search_Indexer_BuildSearchIndex_IsIgnored,
+  Lib_Search_Indexer_BuildSearchIndex_IsNonContentRoute,
+  Lib_Search_Indexer_BuildSearchIndex_IsPageRoute,
+  Lib_Search_Indexer_BuildSearchIndex_JsonContent,
+  Lib_Search_Indexer_BuildSearchIndex_Language,
+  Lib_Search_Indexer_BuildSearchIndex_LanguageCode,
+  Lib_Search_Indexer_BuildSearchIndex_LunrBuilder,
+  Lib_Search_Indexer_BuildSearchIndex_LunrDestinationPath,
+  Lib_Search_Indexer_BuildSearchIndex_LunrFunction,
+  Lib_Search_Indexer_BuildSearchIndex_LunrIndex,
+  Lib_Search_Indexer_BuildSearchIndex_LocaleRelativeRoutePath,
+  Lib_Search_Indexer_BuildSearchIndex_IsBaseUrlPrefixedRoute,
+  Lib_Search_Indexer_BuildSearchIndex_BaseUrl,
+  Lib_Search_Indexer_BuildSearchIndex_LunrLanguageLoader,
+  Lib_Search_Indexer_BuildSearchIndex_LunrModule,
+  Lib_Search_Indexer_BuildSearchIndex_LunrMultiLoader,
+  Lib_Search_Indexer_BuildSearchIndex_LunrSourcePath,
+  Lib_Search_Indexer_BuildSearchIndex_LunrStemmerSupportLoader,
+  Lib_Search_Indexer_BuildSearchIndex_LunrTinySegLoader,
+  Lib_Search_Indexer_BuildSearchIndex_Manifest,
+  Lib_Search_Indexer_BuildSearchIndex_ManifestFilePath,
+  Lib_Search_Indexer_BuildSearchIndex_ManifestJson,
+  Lib_Search_Indexer_BuildSearchIndex_NonEnglishLanguageKey,
+  Lib_Search_Indexer_BuildSearchIndex_NonEnglishLanguages,
+  Lib_Search_Indexer_BuildSearchIndex_Options,
+  Lib_Search_Indexer_BuildSearchIndex_Payload,
+  Lib_Search_Indexer_BuildSearchIndex_Returns,
+  Lib_Search_Indexer_BuildSearchIndex_RoutePath,
+  Lib_Search_Indexer_BuildSearchIndex_SerializedIndex,
+  Lib_Search_Indexer_BuildSearchIndex_TypedBuilder,
+  Lib_Search_Indexer_BuildSearchIndex_TypedLunrIndex,
+  Lib_Search_Indexer_BuildSearchIndex_WorkerDestinationPath,
+  Lib_Search_Indexer_BuildSearchIndex_WorkerSourcePath,
+  Lib_Search_Indexer_ExtractDocument_ArticleText,
+  Lib_Search_Indexer_ExtractDocument_Body,
+  Lib_Search_Indexer_ExtractDocument_CheerioApi,
+  Lib_Search_Indexer_ExtractDocument_ContentSelectors,
+  Lib_Search_Indexer_ExtractDocument_ContentText,
+  Lib_Search_Indexer_ExtractDocument_Description,
+  Lib_Search_Indexer_ExtractDocument_DescriptionAttribute,
+  Lib_Search_Indexer_ExtractDocument_FallbackText,
+  Lib_Search_Indexer_ExtractDocument_FileExists,
+  Lib_Search_Indexer_ExtractDocument_HeadingElement,
+  Lib_Search_Indexer_ExtractDocument_HeadingId,
+  Lib_Search_Indexer_ExtractDocument_HeadingLevel,
+  Lib_Search_Indexer_ExtractDocument_Headings,
+  Lib_Search_Indexer_ExtractDocument_HeadingTagName,
+  Lib_Search_Indexer_ExtractDocument_HeadingText,
+  Lib_Search_Indexer_ExtractDocument_HtmlContent,
+  Lib_Search_Indexer_ExtractDocument_HtmlFilePath,
+  Lib_Search_Indexer_ExtractDocument_MainText,
+  Lib_Search_Indexer_ExtractDocument_ParsedHtml,
+  Lib_Search_Indexer_ExtractDocument_Returns,
+  Lib_Search_Indexer_ExtractDocument_RoutePath,
+  Lib_Search_Indexer_ExtractDocument_Title,
+  Lib_Search_Indexer_ExtractDocument_TitleFromHeading,
+  Lib_Search_Indexer_ExtractDocument_TitleFromTag,
+  Lib_Search_Indexer_MatchesIgnorePattern_CleanPattern,
+  Lib_Search_Indexer_MatchesIgnorePattern_IsMatch,
+  Lib_Search_Indexer_MatchesIgnorePattern_Pattern,
+  Lib_Search_Indexer_MatchesIgnorePattern_Patterns,
+  Lib_Search_Indexer_MatchesIgnorePattern_Returns,
+  Lib_Search_Indexer_MatchesIgnorePattern_RoutePath,
 } from '../../types/lib/search/indexer.d.ts';
 
 /**
@@ -112,11 +112,11 @@ import type {
  *
  * @since 0.15.0
  */
-function matchesIgnorePattern(routePath: LibSearchIndexerMatchesIgnorePatternRoutePath, patterns: LibSearchIndexerMatchesIgnorePatternPatterns): LibSearchIndexerMatchesIgnorePatternReturns {
+function matchesIgnorePattern(routePath: Lib_Search_Indexer_MatchesIgnorePattern_RoutePath, patterns: Lib_Search_Indexer_MatchesIgnorePattern_Patterns): Lib_Search_Indexer_MatchesIgnorePattern_Returns {
   for (const pattern of patterns) {
-    const typedPattern: LibSearchIndexerMatchesIgnorePatternPattern = pattern;
-    const cleanPattern: LibSearchIndexerMatchesIgnorePatternCleanPattern = typedPattern.replace(new RegExp(LIB_REGEX_WILDCARD_ASTERISK, 'g'), '');
-    const isMatch: LibSearchIndexerMatchesIgnorePatternIsMatch = routePath.startsWith(cleanPattern);
+    const typedPattern: Lib_Search_Indexer_MatchesIgnorePattern_Pattern = pattern;
+    const cleanPattern: Lib_Search_Indexer_MatchesIgnorePattern_CleanPattern = typedPattern.replace(new RegExp(LIB_REGEX_WILDCARD_ASTERISK, 'g'), '');
+    const isMatch: Lib_Search_Indexer_MatchesIgnorePattern_IsMatch = routePath.startsWith(cleanPattern);
 
     if (isMatch === true) {
       return true;
@@ -139,31 +139,31 @@ function matchesIgnorePattern(routePath: LibSearchIndexerMatchesIgnorePatternRou
  *
  * @since 0.15.0
  */
-function extractDocument(htmlFilePath: LibSearchIndexerExtractDocumentHtmlFilePath, routePath: LibSearchIndexerExtractDocumentRoutePath): LibSearchIndexerExtractDocumentReturns {
-  const fileExists: LibSearchIndexerExtractDocumentFileExists = existsSync(htmlFilePath);
+function extractDocument(htmlFilePath: Lib_Search_Indexer_ExtractDocument_HtmlFilePath, routePath: Lib_Search_Indexer_ExtractDocument_RoutePath): Lib_Search_Indexer_ExtractDocument_Returns {
+  const fileExists: Lib_Search_Indexer_ExtractDocument_FileExists = existsSync(htmlFilePath);
 
   if (fileExists === false) {
     return undefined;
   }
 
-  const htmlContent: LibSearchIndexerExtractDocumentHtmlContent = readFileSync(htmlFilePath, 'utf-8');
-  const parsedHtml: LibSearchIndexerExtractDocumentParsedHtml = cheerio.load(htmlContent);
-  const cheerioApi: LibSearchIndexerExtractDocumentCheerioApi = parsedHtml as LibSearchIndexerExtractDocumentCheerioApi;
-  const titleFromTag: LibSearchIndexerExtractDocumentTitleFromTag = String(cheerioApi('title').text() ?? '');
-  const titleFromHeading: LibSearchIndexerExtractDocumentTitleFromHeading = String(cheerioApi('h1').first().text() ?? '');
-  const title: LibSearchIndexerExtractDocumentTitle = (titleFromTag !== '') ? titleFromTag : titleFromHeading;
+  const htmlContent: Lib_Search_Indexer_ExtractDocument_HtmlContent = readFileSync(htmlFilePath, 'utf-8');
+  const parsedHtml: Lib_Search_Indexer_ExtractDocument_ParsedHtml = cheerio.load(htmlContent);
+  const cheerioApi: Lib_Search_Indexer_ExtractDocument_CheerioApi = parsedHtml as Lib_Search_Indexer_ExtractDocument_CheerioApi;
+  const titleFromTag: Lib_Search_Indexer_ExtractDocument_TitleFromTag = String(cheerioApi('title').text() ?? '');
+  const titleFromHeading: Lib_Search_Indexer_ExtractDocument_TitleFromHeading = String(cheerioApi('h1').first().text() ?? '');
+  const title: Lib_Search_Indexer_ExtractDocument_Title = (titleFromTag !== '') ? titleFromTag : titleFromHeading;
 
-  const descriptionAttribute: LibSearchIndexerExtractDocumentDescriptionAttribute = cheerioApi('meta[name="description"]').attr('content') as LibSearchIndexerExtractDocumentDescriptionAttribute;
-  const description: LibSearchIndexerExtractDocumentDescription = descriptionAttribute ?? '';
+  const descriptionAttribute: Lib_Search_Indexer_ExtractDocument_DescriptionAttribute = cheerioApi('meta[name="description"]').attr('content') as Lib_Search_Indexer_ExtractDocument_DescriptionAttribute;
+  const description: Lib_Search_Indexer_ExtractDocument_Description = descriptionAttribute ?? '';
 
-  const headings: LibSearchIndexerExtractDocumentHeadings = [];
+  const headings: Lib_Search_Indexer_ExtractDocument_Headings = [];
 
-  cheerioApi('h2, h3').each(function headingIterator(this: LibSearchIndexerExtractDocumentHeadingElement) {
-    const headingElement: LibSearchIndexerExtractDocumentHeadingElement = this;
-    const headingId: LibSearchIndexerExtractDocumentHeadingId = String(cheerioApi(headingElement).attr('id') ?? '');
-    const headingText: LibSearchIndexerExtractDocumentHeadingText = String(cheerioApi(headingElement).text() ?? '');
-    const headingTagName: LibSearchIndexerExtractDocumentHeadingTagName = String(cheerioApi(headingElement).prop('tagName') ?? '').toLowerCase();
-    const headingLevel: LibSearchIndexerExtractDocumentHeadingLevel = (headingTagName === 'h2') ? 2 : 3;
+  cheerioApi('h2, h3').each(function headingIterator(this: Lib_Search_Indexer_ExtractDocument_HeadingElement) {
+    const headingElement: Lib_Search_Indexer_ExtractDocument_HeadingElement = this;
+    const headingId: Lib_Search_Indexer_ExtractDocument_HeadingId = String(cheerioApi(headingElement).attr('id') ?? '');
+    const headingText: Lib_Search_Indexer_ExtractDocument_HeadingText = String(cheerioApi(headingElement).text() ?? '');
+    const headingTagName: Lib_Search_Indexer_ExtractDocument_HeadingTagName = String(cheerioApi(headingElement).prop('tagName') ?? '').toLowerCase();
+    const headingLevel: Lib_Search_Indexer_ExtractDocument_HeadingLevel = (headingTagName === 'h2') ? 2 : 3;
 
     headings.push({
       id: headingId,
@@ -175,12 +175,12 @@ function extractDocument(htmlFilePath: LibSearchIndexerExtractDocumentHtmlFilePa
   });
 
   // Extract clean content — prefer targeted content containers, fall back to article/main.
-  const contentSelectors: LibSearchIndexerExtractDocumentContentSelectors = '.nova-doc-content, .nova-blog-post-item-content';
-  const contentText: LibSearchIndexerExtractDocumentContentText = String(cheerioApi(contentSelectors).text() ?? '');
-  const articleText: LibSearchIndexerExtractDocumentArticleText = String(cheerioApi('article').text() ?? '');
-  const mainText: LibSearchIndexerExtractDocumentMainText = String(cheerioApi('main').text() ?? '');
-  const fallbackText: LibSearchIndexerExtractDocumentFallbackText = (articleText !== '') ? articleText : mainText;
-  const body: LibSearchIndexerExtractDocumentBody = (contentText !== '') ? contentText : fallbackText;
+  const contentSelectors: Lib_Search_Indexer_ExtractDocument_ContentSelectors = '.nova-doc-content, .nova-blog-post-item-content';
+  const contentText: Lib_Search_Indexer_ExtractDocument_ContentText = String(cheerioApi(contentSelectors).text() ?? '');
+  const articleText: Lib_Search_Indexer_ExtractDocument_ArticleText = String(cheerioApi('article').text() ?? '');
+  const mainText: Lib_Search_Indexer_ExtractDocument_MainText = String(cheerioApi('main').text() ?? '');
+  const fallbackText: Lib_Search_Indexer_ExtractDocument_FallbackText = (articleText !== '') ? articleText : mainText;
+  const body: Lib_Search_Indexer_ExtractDocument_Body = (contentText !== '') ? contentText : fallbackText;
 
   return {
     path: routePath,
@@ -201,41 +201,41 @@ function extractDocument(htmlFilePath: LibSearchIndexerExtractDocumentHtmlFilePa
  * @param options - Options.
  * @since 0.15.0
  */
-export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOptions): LibSearchIndexerBuildSearchIndexReturns {
-  const documents: LibSearchIndexerBuildSearchIndexDocuments = [];
+export function buildSearchIndex(options: Lib_Search_Indexer_BuildSearchIndex_Options): Lib_Search_Indexer_BuildSearchIndex_Returns {
+  const documents: Lib_Search_Indexer_BuildSearchIndex_Documents = [];
 
-  const defaultLanguage: LibSearchIndexerBuildSearchIndexDefaultLanguage = ['en'];
-  const language: LibSearchIndexerBuildSearchIndexLanguage = (options['searchConfig']['language'] as LibSearchIndexerBuildSearchIndexLanguage) ?? defaultLanguage;
+  const defaultLanguage: Lib_Search_Indexer_BuildSearchIndex_DefaultLanguage = ['en'];
+  const language: Lib_Search_Indexer_BuildSearchIndex_Language = (options['searchConfig']['language'] as Lib_Search_Indexer_BuildSearchIndex_Language) ?? defaultLanguage;
 
-  const defaultIndexDocs: LibSearchIndexerBuildSearchIndexDefaultIndexDocs = true;
-  const indexDocs: LibSearchIndexerBuildSearchIndexIndexDocs = (options['searchConfig']['indexDocs'] as LibSearchIndexerBuildSearchIndexIndexDocs) ?? defaultIndexDocs;
+  const defaultIndexDocs: Lib_Search_Indexer_BuildSearchIndex_DefaultIndexDocs = true;
+  const indexDocs: Lib_Search_Indexer_BuildSearchIndex_IndexDocs = (options['searchConfig']['indexDocs'] as Lib_Search_Indexer_BuildSearchIndex_IndexDocs) ?? defaultIndexDocs;
 
-  const defaultIndexBlog: LibSearchIndexerBuildSearchIndexDefaultIndexBlog = true;
-  const indexBlog: LibSearchIndexerBuildSearchIndexIndexBlog = (options['searchConfig']['indexBlog'] as LibSearchIndexerBuildSearchIndexIndexBlog) ?? defaultIndexBlog;
+  const defaultIndexBlog: Lib_Search_Indexer_BuildSearchIndex_DefaultIndexBlog = true;
+  const indexBlog: Lib_Search_Indexer_BuildSearchIndex_IndexBlog = (options['searchConfig']['indexBlog'] as Lib_Search_Indexer_BuildSearchIndex_IndexBlog) ?? defaultIndexBlog;
 
-  const defaultIndexPages: LibSearchIndexerBuildSearchIndexDefaultIndexPages = true;
-  const indexPages: LibSearchIndexerBuildSearchIndexIndexPages = (options['searchConfig']['indexPages'] as LibSearchIndexerBuildSearchIndexIndexPages) ?? defaultIndexPages;
+  const defaultIndexPages: Lib_Search_Indexer_BuildSearchIndex_DefaultIndexPages = true;
+  const indexPages: Lib_Search_Indexer_BuildSearchIndex_IndexPages = (options['searchConfig']['indexPages'] as Lib_Search_Indexer_BuildSearchIndex_IndexPages) ?? defaultIndexPages;
 
-  const defaultHashed: LibSearchIndexerBuildSearchIndexDefaultHashed = true;
-  const hashed: LibSearchIndexerBuildSearchIndexHashed = (options['searchConfig']['hashed'] as LibSearchIndexerBuildSearchIndexHashed) ?? defaultHashed;
+  const defaultHashed: Lib_Search_Indexer_BuildSearchIndex_DefaultHashed = true;
+  const hashed: Lib_Search_Indexer_BuildSearchIndex_Hashed = (options['searchConfig']['hashed'] as Lib_Search_Indexer_BuildSearchIndex_Hashed) ?? defaultHashed;
 
-  const defaultIgnorePatterns: LibSearchIndexerBuildSearchIndexDefaultIgnorePatterns = [];
-  const ignorePatterns: LibSearchIndexerBuildSearchIndexIgnorePatterns = (options['searchConfig']['ignorePatterns'] as LibSearchIndexerBuildSearchIndexIgnorePatterns) ?? defaultIgnorePatterns;
+  const defaultIgnorePatterns: Lib_Search_Indexer_BuildSearchIndex_DefaultIgnorePatterns = [];
+  const ignorePatterns: Lib_Search_Indexer_BuildSearchIndex_IgnorePatterns = (options['searchConfig']['ignorePatterns'] as Lib_Search_Indexer_BuildSearchIndex_IgnorePatterns) ?? defaultIgnorePatterns;
 
-  const defaultDocsRouteBasePath: LibSearchIndexerBuildSearchIndexDefaultDocsRouteBasePath = 'docs';
-  const docsRouteBasePath: LibSearchIndexerBuildSearchIndexDocsRouteBasePath = (options['searchConfig']['docsRouteBasePath'] as LibSearchIndexerBuildSearchIndexDocsRouteBasePath) ?? defaultDocsRouteBasePath;
+  const defaultDocsRouteBasePath: Lib_Search_Indexer_BuildSearchIndex_DefaultDocsRouteBasePath = 'docs';
+  const docsRouteBasePath: Lib_Search_Indexer_BuildSearchIndex_DocsRouteBasePath = (options['searchConfig']['docsRouteBasePath'] as Lib_Search_Indexer_BuildSearchIndex_DocsRouteBasePath) ?? defaultDocsRouteBasePath;
 
   for (const routePath of options['routesPaths']) {
-    const typedRoutePath: LibSearchIndexerBuildSearchIndexRoutePath = routePath;
-    const isIgnored: LibSearchIndexerBuildSearchIndexIsIgnored = matchesIgnorePattern(typedRoutePath, ignorePatterns);
+    const typedRoutePath: Lib_Search_Indexer_BuildSearchIndex_RoutePath = routePath;
+    const isIgnored: Lib_Search_Indexer_BuildSearchIndex_IsIgnored = matchesIgnorePattern(typedRoutePath, ignorePatterns);
 
     if (isIgnored === true) {
       continue;
     }
 
-    const isBlogRoute: LibSearchIndexerBuildSearchIndexIsBlogRoute = typedRoutePath.startsWith(`${options['baseUrl']}blog`);
-    const isDocsRoute: LibSearchIndexerBuildSearchIndexIsDocsRoute = typedRoutePath.startsWith(`${options['baseUrl']}${docsRouteBasePath}`);
-    const isPageRoute: LibSearchIndexerBuildSearchIndexIsPageRoute = (isBlogRoute === false && isDocsRoute === false);
+    const isBlogRoute: Lib_Search_Indexer_BuildSearchIndex_IsBlogRoute = typedRoutePath.startsWith(`${options['baseUrl']}blog`);
+    const isDocsRoute: Lib_Search_Indexer_BuildSearchIndex_IsDocsRoute = typedRoutePath.startsWith(`${options['baseUrl']}${docsRouteBasePath}`);
+    const isPageRoute: Lib_Search_Indexer_BuildSearchIndex_IsPageRoute = (isBlogRoute === false && isDocsRoute === false);
 
     if (isDocsRoute === true && indexDocs === false) {
       continue;
@@ -250,7 +250,7 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
     }
 
     // Skip non-content routes (archive, tags, authors, search).
-    const isNonContentRoute: LibSearchIndexerBuildSearchIndexIsNonContentRoute = typedRoutePath.endsWith('/archive/')
+    const isNonContentRoute: Lib_Search_Indexer_BuildSearchIndex_IsNonContentRoute = typedRoutePath.endsWith('/archive/')
       || typedRoutePath.includes('/tags/')
       || typedRoutePath.includes('/authors/')
       || typedRoutePath.endsWith('/search/');
@@ -267,13 +267,13 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
     // baseUrl from the route to recover the locale-relative path that
     // outDir expects. For the default locale `baseUrl` is `/` so the
     // slice is a no-op.
-    const baseUrlString: LibSearchIndexerBuildSearchIndexBaseUrl = options['baseUrl'];
-    const baseUrlPrefixedRoute: LibSearchIndexerBuildSearchIndexIsBaseUrlPrefixedRoute = typedRoutePath.startsWith(baseUrlString) && baseUrlString.length > 1;
-    const localeRelativeRoutePath: LibSearchIndexerBuildSearchIndexLocaleRelativeRoutePath = baseUrlPrefixedRoute === true
+    const baseUrlString: Lib_Search_Indexer_BuildSearchIndex_BaseUrl = options['baseUrl'];
+    const baseUrlPrefixedRoute: Lib_Search_Indexer_BuildSearchIndex_IsBaseUrlPrefixedRoute = typedRoutePath.startsWith(baseUrlString) && baseUrlString.length > 1;
+    const localeRelativeRoutePath: Lib_Search_Indexer_BuildSearchIndex_LocaleRelativeRoutePath = baseUrlPrefixedRoute === true
       ? `/${typedRoutePath.slice(baseUrlString.length)}`
       : typedRoutePath;
-    const htmlFilePath: LibSearchIndexerExtractDocumentHtmlFilePath = join(options['outDir'], localeRelativeRoutePath, 'index.html');
-    const document: LibSearchIndexerBuildSearchIndexDocument = extractDocument(htmlFilePath, typedRoutePath);
+    const htmlFilePath: Lib_Search_Indexer_ExtractDocument_HtmlFilePath = join(options['outDir'], localeRelativeRoutePath, 'index.html');
+    const document: Lib_Search_Indexer_BuildSearchIndex_Document = extractDocument(htmlFilePath, typedRoutePath);
 
     if (document === undefined) {
       continue;
@@ -282,13 +282,13 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
     documents.push(document);
   }
 
-  const lunrModule: LibSearchIndexerBuildSearchIndexLunrModule = require('lunr');
-  const lunrFunction: LibSearchIndexerBuildSearchIndexLunrFunction = lunrModule as LibSearchIndexerBuildSearchIndexLunrFunction;
+  const lunrModule: Lib_Search_Indexer_BuildSearchIndex_LunrModule = require('lunr');
+  const lunrFunction: Lib_Search_Indexer_BuildSearchIndex_LunrFunction = lunrModule as Lib_Search_Indexer_BuildSearchIndex_LunrFunction;
 
-  const nonEnglishLanguages: LibSearchIndexerBuildSearchIndexNonEnglishLanguages = [];
+  const nonEnglishLanguages: Lib_Search_Indexer_BuildSearchIndex_NonEnglishLanguages = [];
 
   for (const languageCode of language) {
-    const typedLanguageCode: LibSearchIndexerBuildSearchIndexLanguageCode = languageCode;
+    const typedLanguageCode: Lib_Search_Indexer_BuildSearchIndex_LanguageCode = languageCode;
 
     if (typedLanguageCode !== 'en') {
       nonEnglishLanguages.push(typedLanguageCode);
@@ -296,12 +296,12 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
   }
 
   if (nonEnglishLanguages.length > 0) {
-    const lunrStemmerSupportLoader: LibSearchIndexerBuildSearchIndexLunrStemmerSupportLoader = require('lunr-languages/lunr.stemmer.support');
+    const lunrStemmerSupportLoader: Lib_Search_Indexer_BuildSearchIndex_LunrStemmerSupportLoader = require('lunr-languages/lunr.stemmer.support');
 
     lunrStemmerSupportLoader(lunrFunction);
 
     for (const languageCode of nonEnglishLanguages) {
-      const typedLanguageCode: LibSearchIndexerBuildSearchIndexLanguageCode = languageCode;
+      const typedLanguageCode: Lib_Search_Indexer_BuildSearchIndex_LanguageCode = languageCode;
 
       if (typedLanguageCode === 'zh') {
         try {
@@ -318,26 +318,26 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
       // the Japanese language loader crashes with
       // "TypeError: lunr.TinySegmenter is not a constructor".
       if (typedLanguageCode === 'ja' || typedLanguageCode === 'jp') {
-        const lunrTinySegLoader: LibSearchIndexerBuildSearchIndexLunrTinySegLoader = require('lunr-languages/tinyseg');
+        const lunrTinySegLoader: Lib_Search_Indexer_BuildSearchIndex_LunrTinySegLoader = require('lunr-languages/tinyseg');
 
         lunrTinySegLoader(lunrFunction);
       }
 
-      const lunrLanguageLoader: LibSearchIndexerBuildSearchIndexLunrLanguageLoader = require(`lunr-languages/lunr.${typedLanguageCode}`);
+      const lunrLanguageLoader: Lib_Search_Indexer_BuildSearchIndex_LunrLanguageLoader = require(`lunr-languages/lunr.${typedLanguageCode}`);
 
       lunrLanguageLoader(lunrFunction);
     }
 
     if (nonEnglishLanguages.length >= 2) {
-      const lunrMultiLoader: LibSearchIndexerBuildSearchIndexLunrMultiLoader = require('lunr-languages/lunr.multi');
+      const lunrMultiLoader: Lib_Search_Indexer_BuildSearchIndex_LunrMultiLoader = require('lunr-languages/lunr.multi');
 
       lunrMultiLoader(lunrFunction);
     }
   }
 
-  const lunrIndex: LibSearchIndexerBuildSearchIndexLunrIndex = lunrFunction(function indexBuilder(this: LibSearchIndexerBuildSearchIndexLunrBuilder) {
-    const builder: LibSearchIndexerBuildSearchIndexLunrBuilder = this;
-    const typedBuilder: LibSearchIndexerBuildSearchIndexTypedBuilder = builder as LibSearchIndexerBuildSearchIndexTypedBuilder;
+  const lunrIndex: Lib_Search_Indexer_BuildSearchIndex_LunrIndex = lunrFunction(function indexBuilder(this: Lib_Search_Indexer_BuildSearchIndex_LunrBuilder) {
+    const builder: Lib_Search_Indexer_BuildSearchIndex_LunrBuilder = this;
+    const typedBuilder: Lib_Search_Indexer_BuildSearchIndex_TypedBuilder = builder as Lib_Search_Indexer_BuildSearchIndex_TypedBuilder;
 
     if (
       nonEnglishLanguages.length > 0
@@ -354,13 +354,13 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
       // `lunrMultiLoader(lunrFunction)` ran above when
       // `nonEnglishLanguages.length >= 2`, which is exactly the
       // condition that gates this branch.
-      const lunrMultiLanguageFactory = (lunrFunction as unknown as Record<string, (...codes: LibSearchIndexerBuildSearchIndexLanguageCode[]) => unknown>)['multiLanguage']!;
+      const lunrMultiLanguageFactory = (lunrFunction as unknown as Record<string, (...codes: Lib_Search_Indexer_BuildSearchIndex_LanguageCode[]) => unknown>)['multiLanguage']!;
       typedBuilder.use(lunrMultiLanguageFactory(...language));
     } else if (
       nonEnglishLanguages.length === 1
       && language.length === 1
     ) {
-      const nonEnglishLanguageKey: LibSearchIndexerBuildSearchIndexNonEnglishLanguageKey = nonEnglishLanguages[0] as LibSearchIndexerBuildSearchIndexNonEnglishLanguageKey;
+      const nonEnglishLanguageKey: Lib_Search_Indexer_BuildSearchIndex_NonEnglishLanguageKey = nonEnglishLanguages[0] as Lib_Search_Indexer_BuildSearchIndex_NonEnglishLanguageKey;
 
       // Same fix as the multi-language branch above: per-language
       // plugins live on `lunr` (`lunr.de`, `lunr.fr`, ...) after the
@@ -376,16 +376,16 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
     typedBuilder.field('body');
 
     for (const documentEntry of documents) {
-      const typedDocumentEntry: LibSearchIndexerBuildSearchIndexDocumentEntry = documentEntry;
-      const headingsTextParts: LibSearchIndexerBuildSearchIndexHeadingsTextParts = [];
+      const typedDocumentEntry: Lib_Search_Indexer_BuildSearchIndex_DocumentEntry = documentEntry;
+      const headingsTextParts: Lib_Search_Indexer_BuildSearchIndex_HeadingsTextParts = [];
 
       for (const headingEntry of typedDocumentEntry['headings']) {
-        const typedHeadingEntry: LibSearchIndexerBuildSearchIndexHeadingEntry = headingEntry;
+        const typedHeadingEntry: Lib_Search_Indexer_BuildSearchIndex_HeadingEntry = headingEntry;
 
         headingsTextParts.push(typedHeadingEntry['text']);
       }
 
-      const headingsText: LibSearchIndexerBuildSearchIndexHeadingsText = headingsTextParts.join(' ');
+      const headingsText: Lib_Search_Indexer_BuildSearchIndex_HeadingsText = headingsTextParts.join(' ');
 
       typedBuilder.add({
         path: typedDocumentEntry['path'],
@@ -398,44 +398,44 @@ export function buildSearchIndex(options: LibSearchIndexerBuildSearchIndexOption
     return;
   });
 
-  const typedLunrIndex: LibSearchIndexerBuildSearchIndexTypedLunrIndex = lunrIndex as LibSearchIndexerBuildSearchIndexTypedLunrIndex;
-  const serializedIndex: LibSearchIndexerBuildSearchIndexSerializedIndex = typedLunrIndex.toJSON();
-  const documentMetadata: LibSearchIndexerBuildSearchIndexDocumentMetadata = documents;
-  const payload: LibSearchIndexerBuildSearchIndexPayload = {
+  const typedLunrIndex: Lib_Search_Indexer_BuildSearchIndex_TypedLunrIndex = lunrIndex as Lib_Search_Indexer_BuildSearchIndex_TypedLunrIndex;
+  const serializedIndex: Lib_Search_Indexer_BuildSearchIndex_SerializedIndex = typedLunrIndex.toJSON();
+  const documentMetadata: Lib_Search_Indexer_BuildSearchIndex_DocumentMetadata = documents;
+  const payload: Lib_Search_Indexer_BuildSearchIndex_Payload = {
     index: serializedIndex,
     documents: documentMetadata,
   };
-  const jsonContent: LibSearchIndexerBuildSearchIndexJsonContent = JSON.stringify(payload);
+  const jsonContent: Lib_Search_Indexer_BuildSearchIndex_JsonContent = JSON.stringify(payload);
 
-  let fileName: LibSearchIndexerBuildSearchIndexFileName = 'search-index.json';
+  let fileName: Lib_Search_Indexer_BuildSearchIndex_FileName = 'search-index.json';
 
   if (hashed === true) {
-    const hash: LibSearchIndexerBuildSearchIndexHash = createHash('md5').update(jsonContent).digest('hex');
+    const hash: Lib_Search_Indexer_BuildSearchIndex_Hash = createHash('md5').update(jsonContent).digest('hex');
 
     fileName = `search-index-${hash}.json`;
   }
 
-  const indexFilePath: LibSearchIndexerBuildSearchIndexIndexFilePath = join(options['outDir'], fileName);
+  const indexFilePath: Lib_Search_Indexer_BuildSearchIndex_IndexFilePath = join(options['outDir'], fileName);
 
   writeFileSync(indexFilePath, jsonContent, 'utf-8');
 
-  const manifest: LibSearchIndexerBuildSearchIndexManifest = {
+  const manifest: Lib_Search_Indexer_BuildSearchIndex_Manifest = {
     indexUrl: fileName,
   };
-  const manifestJson: LibSearchIndexerBuildSearchIndexManifestJson = JSON.stringify(manifest);
-  const manifestFilePath: LibSearchIndexerBuildSearchIndexManifestFilePath = join(options['outDir'], 'search-manifest.json');
+  const manifestJson: Lib_Search_Indexer_BuildSearchIndex_ManifestJson = JSON.stringify(manifest);
+  const manifestFilePath: Lib_Search_Indexer_BuildSearchIndex_ManifestFilePath = join(options['outDir'], 'search-manifest.json');
 
   writeFileSync(manifestFilePath, manifestJson, 'utf-8');
 
-  const lunrSourcePath: LibSearchIndexerBuildSearchIndexLunrSourcePath = join(dirname(require.resolve('lunr')), 'lunr.min.js');
-  const lunrDestinationPath: LibSearchIndexerBuildSearchIndexLunrDestinationPath = join(options['outDir'], 'lunr.min.js');
+  const lunrSourcePath: Lib_Search_Indexer_BuildSearchIndex_LunrSourcePath = join(dirname(require.resolve('lunr')), 'lunr.min.js');
+  const lunrDestinationPath: Lib_Search_Indexer_BuildSearchIndex_LunrDestinationPath = join(options['outDir'], 'lunr.min.js');
 
   if (existsSync(lunrSourcePath) === true) {
     copyFileSync(lunrSourcePath, lunrDestinationPath);
   }
 
-  const workerSourcePath: LibSearchIndexerBuildSearchIndexWorkerSourcePath = resolve(__dirname, 'worker.js');
-  const workerDestinationPath: LibSearchIndexerBuildSearchIndexWorkerDestinationPath = join(options['outDir'], 'search-worker.js');
+  const workerSourcePath: Lib_Search_Indexer_BuildSearchIndex_WorkerSourcePath = resolve(__dirname, 'worker.js');
+  const workerDestinationPath: Lib_Search_Indexer_BuildSearchIndex_WorkerDestinationPath = join(options['outDir'], 'search-worker.js');
 
   if (existsSync(workerSourcePath) === true) {
     copyFileSync(workerSourcePath, workerDestinationPath);

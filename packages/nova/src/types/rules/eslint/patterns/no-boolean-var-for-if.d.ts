@@ -6,43 +6,43 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNode = TSESTree.VariableDeclaration;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Node = TSESTree.VariableDeclaration;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationReturns = void;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Returns = void;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationDeclarator = TSESTree.VariableDeclarator | undefined;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Declarator = TSESTree.VariableDeclarator | undefined;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationInit = TSESTree.Expression | null | undefined;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Init = TSESTree.Expression | null | undefined;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationVarName = string;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_VarName = string;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationParent = TSESTree.Node | undefined;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Parent = TSESTree.Node | undefined;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationBody = TSESTree.Statement[];
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Body = TSESTree.Statement[];
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNodeIndex = number;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_NodeIndex = number;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationNextStatement = TSESTree.Statement | undefined;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_NextStatement = TSESTree.Statement | undefined;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationIfTest = TSESTree.Expression;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_IfTest = TSESTree.Expression;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationScope = TSESLint.Scope.Scope;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Scope = TSESLint.Scope.Scope;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationVariable = TSESLint.Scope.Variable | undefined;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_Variable = TSESLint.Scope.Variable | undefined;
 
-export type RulesEslintPatternsNoBooleanVarForIfCheckVariableDeclarationReferences = TSESLint.Scope.Reference[];
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_CheckVariableDeclaration_References = TSESLint.Scope.Reference[];
 
 /**
  * Rules - ESLint - Patterns - No Boolean Var For If - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintPatternsNoBooleanVarForIfRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintPatternsNoBooleanVarForIfRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintPatternsNoBooleanVarForIfRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintPatternsNoBooleanVarForIfRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Patterns_NoBooleanVarForIf_Runner_RuleOptions_IgnoreFiles;
 }>;

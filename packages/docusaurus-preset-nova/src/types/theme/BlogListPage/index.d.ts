@@ -6,30 +6,30 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogListPageBlogListPagePropsSidebar = BlogSidebar;
+export type Theme_BlogListPage_Index_BlogListPage_Props_Sidebar = BlogSidebar;
 
-export type ThemeBlogListPageBlogListPagePropsMetadata = BlogPaginatedMetadata;
+export type Theme_BlogListPage_Index_BlogListPage_Props_Metadata = BlogPaginatedMetadata;
 
-export type ThemeBlogListPageBlogListPagePropsItemContent = PropBlogPostContent;
+export type Theme_BlogListPage_Index_BlogListPage_PropsItem_Content = PropBlogPostContent;
 
-export type ThemeBlogListPageBlogListPagePropsItem = {
-  content: ThemeBlogListPageBlogListPagePropsItemContent;
+export type Theme_BlogListPage_Index_BlogListPage_PropsItem = {
+  content: Theme_BlogListPage_Index_BlogListPage_PropsItem_Content;
   [key: string]: unknown;
 };
 
-export type ThemeBlogListPageBlogListPagePropsItems = readonly ThemeBlogListPageBlogListPagePropsItem[];
+export type Theme_BlogListPage_Index_BlogListPage_Props_Items = readonly Theme_BlogListPage_Index_BlogListPage_PropsItem[];
 
-export type ThemeBlogListPageBlogListPagePropsClassName = string | undefined;
+export type Theme_BlogListPage_Index_BlogListPage_Props_ClassName = string | undefined;
 
-export type ThemeBlogListPageBlogListPagePropsStyle = CSSProperties | undefined;
+export type Theme_BlogListPage_Index_BlogListPage_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogListPageBlogListPageProps = {
-  sidebar: ThemeBlogListPageBlogListPagePropsSidebar;
-  metadata: ThemeBlogListPageBlogListPagePropsMetadata;
-  items: ThemeBlogListPageBlogListPagePropsItems;
-  className?: ThemeBlogListPageBlogListPagePropsClassName;
-  style?: ThemeBlogListPageBlogListPagePropsStyle;
+export type Theme_BlogListPage_Index_BlogListPage_Props = {
+  sidebar: Theme_BlogListPage_Index_BlogListPage_Props_Sidebar;
+  metadata: Theme_BlogListPage_Index_BlogListPage_Props_Metadata;
+  items: Theme_BlogListPage_Index_BlogListPage_Props_Items;
+  className?: Theme_BlogListPage_Index_BlogListPage_Props_ClassName;
+  style?: Theme_BlogListPage_Index_BlogListPage_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogListPageBlogListPageTitle = string;
+export type Theme_BlogListPage_Index_BlogListPage_Title = string;

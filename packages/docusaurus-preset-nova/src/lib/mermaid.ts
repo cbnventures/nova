@@ -1,35 +1,35 @@
 import { useEffect, useState } from 'react';
 
 import type {
-  LibMermaidContainerClassName,
-  LibMermaidGetCssVariableAlpha,
-  LibMermaidGetCssVariableBlue,
-  LibMermaidGetCssVariableCanvas,
-  LibMermaidGetCssVariableContext,
-  LibMermaidGetCssVariableData,
-  LibMermaidGetCssVariableGreen,
-  LibMermaidGetCssVariableName,
-  LibMermaidGetCssVariableProbe,
-  LibMermaidGetCssVariableRed,
-  LibMermaidGetCssVariableResolved,
-  LibMermaidGetCssVariableReturns,
-  LibMermaidLoadMermaidReturns,
-  LibMermaidPromise,
-  LibMermaidUseMermaidConfigColorMode,
-  LibMermaidUseMermaidConfigFontFamily,
-  LibMermaidUseMermaidConfigIsDark,
-  LibMermaidUseMermaidConfigReturns,
-  LibMermaidUseMermaidRenderResultCancelled,
-  LibMermaidUseMermaidRenderResultConfig,
-  LibMermaidUseMermaidRenderResultId,
-  LibMermaidUseMermaidRenderResultInitializeConfig,
-  LibMermaidUseMermaidRenderResultMermaidDefault,
-  LibMermaidUseMermaidRenderResultMermaidModule,
-  LibMermaidUseMermaidRenderResultOptions,
-  LibMermaidUseMermaidRenderResultRenderOutput,
-  LibMermaidUseMermaidRenderResultReturns,
-  LibMermaidUseMermaidRenderResultSetResult,
-  LibMermaidUseMermaidRenderResultState,
+  Lib_Mermaid_ContainerClassName,
+  Lib_Mermaid_GetCssVariableAlpha,
+  Lib_Mermaid_GetCssVariableBlue,
+  Lib_Mermaid_GetCssVariableCanvas,
+  Lib_Mermaid_GetCssVariableContext,
+  Lib_Mermaid_GetCssVariableData,
+  Lib_Mermaid_GetCssVariableGreen,
+  Lib_Mermaid_GetCssVariableName,
+  Lib_Mermaid_GetCssVariableProbe,
+  Lib_Mermaid_GetCssVariableRed,
+  Lib_Mermaid_GetCssVariableResolved,
+  Lib_Mermaid_GetCssVariableReturns,
+  Lib_Mermaid_LoadMermaid_Returns,
+  Lib_Mermaid_Promise,
+  Lib_Mermaid_UseMermaidConfig_ColorMode,
+  Lib_Mermaid_UseMermaidConfig_FontFamily,
+  Lib_Mermaid_UseMermaidConfig_IsDark,
+  Lib_Mermaid_UseMermaidConfig_Returns,
+  Lib_Mermaid_UseMermaidRenderResult_Cancelled,
+  Lib_Mermaid_UseMermaidRenderResult_Config,
+  Lib_Mermaid_UseMermaidRenderResult_Id,
+  Lib_Mermaid_UseMermaidRenderResult_InitializeConfig,
+  Lib_Mermaid_UseMermaidRenderResult_MermaidDefault,
+  Lib_Mermaid_UseMermaidRenderResult_MermaidModule,
+  Lib_Mermaid_UseMermaidRenderResult_Options,
+  Lib_Mermaid_UseMermaidRenderResult_RenderOutput,
+  Lib_Mermaid_UseMermaidRenderResult_Returns,
+  Lib_Mermaid_UseMermaidRenderResult_SetResult,
+  Lib_Mermaid_UseMermaidRenderResult_State,
 } from '../types/lib/mermaid.d.ts';
 
 /**
@@ -40,7 +40,7 @@ import type {
  *
  * @since 0.15.0
  */
-export const MERMAID_CONTAINER_CLASS_NAME: LibMermaidContainerClassName = 'nova-mermaid-container';
+export const MERMAID_CONTAINER_CLASS_NAME: Lib_Mermaid_ContainerClassName = 'nova-mermaid-container';
 
 /**
  * Lib - Mermaid - Get Resolved Color.
@@ -49,24 +49,24 @@ export const MERMAID_CONTAINER_CLASS_NAME: LibMermaidContainerClassName = 'nova-
  * `rgba(...)` if non-opaque) so Mermaid's color parser can consume
  * color-mix expressions the generator emits for token-bearing colors.
  *
- * @param {LibMermaidGetCssVariableName} name - Name.
+ * @param {Lib_Mermaid_GetCssVariableName} name - Name.
  *
- * @returns {LibMermaidGetCssVariableReturns}
+ * @returns {Lib_Mermaid_GetCssVariableReturns}
  *
  * @since 0.18.0
  */
-function getResolvedColor(name: LibMermaidGetCssVariableName): LibMermaidGetCssVariableReturns {
+function getResolvedColor(name: Lib_Mermaid_GetCssVariableName): Lib_Mermaid_GetCssVariableReturns {
   if (typeof document === 'undefined') {
     return '';
   }
 
-  const probe: LibMermaidGetCssVariableProbe = document.createElement('span');
+  const probe: Lib_Mermaid_GetCssVariableProbe = document.createElement('span');
 
   probe.style.color = `var(${name})`;
   probe.style.display = 'none';
   document.body.appendChild(probe);
 
-  const resolved: LibMermaidGetCssVariableResolved = getComputedStyle(probe).color;
+  const resolved: Lib_Mermaid_GetCssVariableResolved = getComputedStyle(probe).color;
 
   document.body.removeChild(probe);
 
@@ -74,12 +74,12 @@ function getResolvedColor(name: LibMermaidGetCssVariableName): LibMermaidGetCssV
     return '';
   }
 
-  const canvas: LibMermaidGetCssVariableCanvas = document.createElement('canvas');
+  const canvas: Lib_Mermaid_GetCssVariableCanvas = document.createElement('canvas');
 
   canvas.width = 1;
   canvas.height = 1;
 
-  const ctx: LibMermaidGetCssVariableContext = canvas.getContext('2d');
+  const ctx: Lib_Mermaid_GetCssVariableContext = canvas.getContext('2d');
 
   if (ctx === null) {
     return resolved;
@@ -88,11 +88,11 @@ function getResolvedColor(name: LibMermaidGetCssVariableName): LibMermaidGetCssV
   ctx.fillStyle = resolved;
   ctx.fillRect(0, 0, 1, 1);
 
-  const data: LibMermaidGetCssVariableData = ctx.getImageData(0, 0, 1, 1).data;
-  const r: LibMermaidGetCssVariableRed = data[0];
-  const g: LibMermaidGetCssVariableGreen = data[1];
-  const b: LibMermaidGetCssVariableBlue = data[2];
-  const a: LibMermaidGetCssVariableAlpha = data[3];
+  const data: Lib_Mermaid_GetCssVariableData = ctx.getImageData(0, 0, 1, 1).data;
+  const r: Lib_Mermaid_GetCssVariableRed = data[0];
+  const g: Lib_Mermaid_GetCssVariableGreen = data[1];
+  const b: Lib_Mermaid_GetCssVariableBlue = data[2];
+  const a: Lib_Mermaid_GetCssVariableAlpha = data[3];
 
   if (a === 255) {
     return `#${[
@@ -113,7 +113,7 @@ function getResolvedColor(name: LibMermaidGetCssVariableName): LibMermaidGetCssV
  *
  * @since 0.15.0
  */
-let mermaidPromise: LibMermaidPromise = undefined;
+let mermaidPromise: Lib_Mermaid_Promise = undefined;
 
 /**
  * Lib - Mermaid - Load Mermaid.
@@ -121,11 +121,11 @@ let mermaidPromise: LibMermaidPromise = undefined;
  * Lazy-loads the mermaid library via dynamic import and memoizes
  * the resulting promise so subsequent calls reuse the same instance.
  *
- * @returns {LibMermaidLoadMermaidReturns}
+ * @returns {Lib_Mermaid_LoadMermaid_Returns}
  *
  * @since 0.15.0
  */
-export function loadMermaid(): LibMermaidLoadMermaidReturns {
+export function loadMermaid(): Lib_Mermaid_LoadMermaid_Returns {
   if (mermaidPromise === undefined) {
     mermaidPromise = import('mermaid');
   }
@@ -140,13 +140,13 @@ export function loadMermaid(): LibMermaidLoadMermaidReturns {
  * and reads preset CSS variables to build a mermaid
  * configuration with matching theme variables.
  *
- * @returns {LibMermaidUseMermaidConfigReturns}
+ * @returns {Lib_Mermaid_UseMermaidConfig_Returns}
  *
  * @since 0.15.0
  */
-export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
-  const colorMode: LibMermaidUseMermaidConfigColorMode = (typeof document !== 'undefined') ? (document.documentElement.getAttribute('data-theme') ?? 'light') : 'light';
-  const isDark: LibMermaidUseMermaidConfigIsDark = colorMode === 'dark';
+export function useMermaidConfig(): Lib_Mermaid_UseMermaidConfig_Returns {
+  const colorMode: Lib_Mermaid_UseMermaidConfig_ColorMode = (typeof document !== 'undefined') ? (document.documentElement.getAttribute('data-theme') ?? 'light') : 'light';
+  const isDark: Lib_Mermaid_UseMermaidConfig_IsDark = colorMode === 'dark';
   /*
    * Mermaid's font is hard-coded - decoupled from `--nova-font-body` - so
    * measurement (themeVariables.fontFamily) and render (themeCSS rule below)
@@ -155,7 +155,7 @@ export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
    * unpredictable layouts with no way to recover, because mermaid sizes
    * rects from measurement at config time and has no post-render reflow.
    */
-  const fontFamily: LibMermaidUseMermaidConfigFontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+  const fontFamily: Lib_Mermaid_UseMermaidConfig_FontFamily = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
 
   /*
    * securityLevel: 'loose' matches @docusaurus/theme-mermaid's default.
@@ -227,26 +227,26 @@ export function useMermaidConfig(): LibMermaidUseMermaidConfigReturns {
  * React hook that renders a mermaid text string to SVG and
  * returns the render result or null while loading.
  *
- * @param {LibMermaidUseMermaidRenderResultOptions} options - Options.
+ * @param {Lib_Mermaid_UseMermaidRenderResult_Options} options - Options.
  *
- * @returns {LibMermaidUseMermaidRenderResultReturns}
+ * @returns {Lib_Mermaid_UseMermaidRenderResult_Returns}
  *
  * @since 0.15.0
  */
-export function useMermaidRenderResult(options: LibMermaidUseMermaidRenderResultOptions): LibMermaidUseMermaidRenderResultReturns {
-  const state: LibMermaidUseMermaidRenderResultState = useState<LibMermaidUseMermaidRenderResultReturns>(null);
-  const result: LibMermaidUseMermaidRenderResultReturns = state[0];
-  const setResult: LibMermaidUseMermaidRenderResultSetResult = state[1];
-  const config: LibMermaidUseMermaidRenderResultConfig = useMermaidConfig();
-  const id: LibMermaidUseMermaidRenderResultId = `mermaid-svg-${String(Math.random()).replace('.', '')}`;
+export function useMermaidRenderResult(options: Lib_Mermaid_UseMermaidRenderResult_Options): Lib_Mermaid_UseMermaidRenderResult_Returns {
+  const state: Lib_Mermaid_UseMermaidRenderResult_State = useState<Lib_Mermaid_UseMermaidRenderResult_Returns>(null);
+  const result: Lib_Mermaid_UseMermaidRenderResult_Returns = state[0];
+  const setResult: Lib_Mermaid_UseMermaidRenderResult_SetResult = state[1];
+  const config: Lib_Mermaid_UseMermaidRenderResult_Config = useMermaidConfig();
+  const id: Lib_Mermaid_UseMermaidRenderResult_Id = `mermaid-svg-${String(Math.random()).replace('.', '')}`;
 
   useEffect(() => {
-    let cancelled: LibMermaidUseMermaidRenderResultCancelled = false;
+    let cancelled: Lib_Mermaid_UseMermaidRenderResult_Cancelled = false;
 
     void (async () => {
       try {
-        const mermaidModule: LibMermaidUseMermaidRenderResultMermaidModule = await loadMermaid();
-        const mermaidDefault: LibMermaidUseMermaidRenderResultMermaidDefault = mermaidModule['default'];
+        const mermaidModule: Lib_Mermaid_UseMermaidRenderResult_MermaidModule = await loadMermaid();
+        const mermaidDefault: Lib_Mermaid_UseMermaidRenderResult_MermaidDefault = mermaidModule['default'];
 
         /*
          * Wait for web fonts to load before measuring label widths. Mermaid
@@ -261,9 +261,9 @@ export function useMermaidRenderResult(options: LibMermaidUseMermaidRenderResult
           await document.fonts.ready;
         }
 
-        mermaidDefault.initialize(config as LibMermaidUseMermaidRenderResultInitializeConfig);
+        mermaidDefault.initialize(config as Lib_Mermaid_UseMermaidRenderResult_InitializeConfig);
 
-        const renderOutput: LibMermaidUseMermaidRenderResultRenderOutput = await mermaidDefault.render(id, options['text']);
+        const renderOutput: Lib_Mermaid_UseMermaidRenderResult_RenderOutput = await mermaidDefault.render(id, options['text']);
 
         if (cancelled === false) {
           setResult(renderOutput);

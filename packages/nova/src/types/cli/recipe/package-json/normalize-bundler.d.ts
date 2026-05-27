@@ -1,11 +1,11 @@
-import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
 import type {
-  SharedNovaConfigConfig,
-  SharedNovaConfigWorkspace,
-  SharedNovaConfigWorkspaceRecipes,
-  SharedNovaConfigWorkspaceRecipeTuple,
-  SharedWorkspaceManifest,
+  Shared_NovaConfigConfig as SharedNovaConfigConfig,
+  Shared_NovaConfigWorkspace as SharedNovaConfigWorkspace,
+  Shared_NovaConfigWorkspace_Recipes as SharedNovaConfigWorkspaceRecipes,
+  Shared_NovaConfigWorkspaceRecipeTuple as SharedNovaConfigWorkspaceRecipeTuple,
+  Shared_WorkspaceManifest as SharedWorkspaceManifest,
 } from '../../../shared.d.ts';
 
 /**
@@ -13,66 +13,66 @@ import type {
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeBundlerHandleWorkspace = SharedWorkspaceManifest;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Workspace = SharedWorkspaceManifest;
 
-export type CliRecipePackageJsonNormalizeBundlerHandleReturns = void;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Returns = void;
 
-export type CliRecipePackageJsonNormalizeBundlerHandleFileContents = Record<string, unknown>;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_FileContents = Record<string, unknown>;
 
-export type CliRecipePackageJsonNormalizeBundlerHandleManifest = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_Manifest = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonNormalizeBundlerHandlePackageTypes = unknown;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageTypes = unknown;
 
-export type CliRecipePackageJsonNormalizeBundlerHandlePackageTypings = unknown;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageTypings = unknown;
 
-export type CliRecipePackageJsonNormalizeBundlerHandlePackageModule = unknown;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageModule = unknown;
 
-export type CliRecipePackageJsonNormalizeBundlerHandlePackageSideEffects = unknown;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageSideEffects = unknown;
 
-export type CliRecipePackageJsonNormalizeBundlerHandlePackageEsnext = unknown;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_PackageEsnext = unknown;
 
-export type CliRecipePackageJsonNormalizeBundlerHandleAllowsTypesModule = boolean;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_AllowsTypesModule = boolean;
 
-export type CliRecipePackageJsonNormalizeBundlerHandleAllowsSideEffectsEsnext = boolean;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Handle_AllowsSideEffectsEsnext = boolean;
 
 /**
  * CLI - Recipe - package.json - Normalize Bundler - Run.
  *
  * @since 0.14.0
  */
-export type CliRecipePackageJsonNormalizeBundlerRunOptionsDryRun = true;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Options_DryRun = true;
 
-export type CliRecipePackageJsonNormalizeBundlerRunOptionsReplaceFile = true;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Options_ReplaceFile = true;
 
-export type CliRecipePackageJsonNormalizeBundlerRunOptions = {
-  dryRun?: CliRecipePackageJsonNormalizeBundlerRunOptionsDryRun;
-  replaceFile?: CliRecipePackageJsonNormalizeBundlerRunOptionsReplaceFile;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Options = {
+  dryRun?: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliRecipePackageJsonNormalizeBundlerRunReturns = Promise<void>;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Returns = Promise<void>;
 
-export type CliRecipePackageJsonNormalizeBundlerRunCurrentDirectory = string;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_CurrentDirectory = string;
 
-export type CliRecipePackageJsonNormalizeBundlerRunIsAtProjectRoot = boolean;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliRecipePackageJsonNormalizeBundlerRunIsDryRun = boolean;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsDryRun = boolean;
 
-export type CliRecipePackageJsonNormalizeBundlerRunIsReplaceFile = boolean;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_IsReplaceFile = boolean;
 
-export type CliRecipePackageJsonNormalizeBundlerRunReplaceFileNotice = string;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_ReplaceFileNotice = string;
 
-export type CliRecipePackageJsonNormalizeBundlerRunNovaConfig = LibNovaConfig;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type CliRecipePackageJsonNormalizeBundlerRunWorkingFile = SharedNovaConfigConfig;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkingFile = SharedNovaConfigConfig;
 
-export type CliRecipePackageJsonNormalizeBundlerRunWorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkingFileWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonNormalizeBundlerRunEligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_EligibleWorkspaces = [string, SharedNovaConfigWorkspace][];
 
-export type CliRecipePackageJsonNormalizeBundlerRunWorkspaceConfigFilter = SharedNovaConfigWorkspace;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkspaceConfigFilter = SharedNovaConfigWorkspace;
 
-export type CliRecipePackageJsonNormalizeBundlerRunWorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_WorkspaceRecipesFilter = SharedNovaConfigWorkspaceRecipes | undefined;
 
-export type CliRecipePackageJsonNormalizeBundlerRunRecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_RecipeTupleFilter = SharedNovaConfigWorkspaceRecipeTuple | undefined;
 
-export type CliRecipePackageJsonNormalizeBundlerRunWorkspaces = SharedWorkspaceManifest[];
+export type Cli_Recipe_PackageJson_NormalizeBundler_Runner_Run_Workspaces = SharedWorkspaceManifest[];

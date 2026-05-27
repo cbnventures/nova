@@ -1,27 +1,27 @@
 import type {
-  PluginsMermaidTooltipClientClickAnchor,
-  PluginsMermaidTooltipClientClickHref,
-  PluginsMermaidTooltipClientClickReturns,
-  PluginsMermaidTooltipClientClickTarget,
-  PluginsMermaidTooltipClientFindClickableMatch,
-  PluginsMermaidTooltipClientFindClickableReturns,
-  PluginsMermaidTooltipClientFindClickableTarget,
-  PluginsMermaidTooltipClientFindClickableUnknown,
-  PluginsMermaidTooltipClientGetOrCreateTooltipEl,
-  PluginsMermaidTooltipClientHideForReturns,
-  PluginsMermaidTooltipClientHideForStash,
-  PluginsMermaidTooltipClientHideForStashed,
-  PluginsMermaidTooltipClientHoveredNode,
-  PluginsMermaidTooltipClientPointermoveReturns,
-  PluginsMermaidTooltipClientPointeroverNode,
-  PluginsMermaidTooltipClientPointeroverReturns,
-  PluginsMermaidTooltipClientShowForEl,
-  PluginsMermaidTooltipClientShowForReturns,
-  PluginsMermaidTooltipClientShowForStash,
-  PluginsMermaidTooltipClientShowForTitle,
-  PluginsMermaidTooltipClientShowForX,
-  PluginsMermaidTooltipClientShowForY,
-  PluginsMermaidTooltipClientTooltipEl,
+  Plugins_MermaidTooltip_Client_Click_Anchor,
+  Plugins_MermaidTooltip_Client_Click_Href,
+  Plugins_MermaidTooltip_Client_Click_Returns,
+  Plugins_MermaidTooltip_Client_Click_Target,
+  Plugins_MermaidTooltip_Client_FindClickable_Match,
+  Plugins_MermaidTooltip_Client_FindClickable_Returns,
+  Plugins_MermaidTooltip_Client_FindClickable_Target,
+  Plugins_MermaidTooltip_Client_FindClickable_Unknown,
+  Plugins_MermaidTooltip_Client_GetOrCreateTooltip_El,
+  Plugins_MermaidTooltip_Client_HideFor_Returns,
+  Plugins_MermaidTooltip_Client_HideFor_Stash,
+  Plugins_MermaidTooltip_Client_HideFor_Stashed,
+  Plugins_MermaidTooltip_Client_HoveredNode,
+  Plugins_MermaidTooltip_Client_Pointermove_Returns,
+  Plugins_MermaidTooltip_Client_Pointerover_Node,
+  Plugins_MermaidTooltip_Client_Pointerover_Returns,
+  Plugins_MermaidTooltip_Client_ShowFor_El,
+  Plugins_MermaidTooltip_Client_ShowFor_Returns,
+  Plugins_MermaidTooltip_Client_ShowFor_Stash,
+  Plugins_MermaidTooltip_Client_ShowFor_Title,
+  Plugins_MermaidTooltip_Client_ShowFor_X,
+  Plugins_MermaidTooltip_Client_ShowFor_Y,
+  Plugins_MermaidTooltip_Client_TooltipEl,
 } from '../../types/plugins/mermaid-tooltip/client.d.ts';
 
 /*
@@ -52,15 +52,15 @@ const CURSOR_OFFSET_X = 12;
 const CURSOR_OFFSET_Y = 12;
 
 if (typeof document !== 'undefined') {
-  let tooltipEl: PluginsMermaidTooltipClientTooltipEl = null;
-  let hoveredNode: PluginsMermaidTooltipClientHoveredNode = null;
+  let tooltipEl: Plugins_MermaidTooltip_Client_TooltipEl = null;
+  let hoveredNode: Plugins_MermaidTooltip_Client_HoveredNode = null;
 
-  const getOrCreateTooltip = (): PluginsMermaidTooltipClientGetOrCreateTooltipEl => {
+  const getOrCreateTooltip = (): Plugins_MermaidTooltip_Client_GetOrCreateTooltip_El => {
     if (tooltipEl !== null && tooltipEl.isConnected === true) {
       return tooltipEl;
     }
 
-    const el: PluginsMermaidTooltipClientGetOrCreateTooltipEl = document.createElement('div');
+    const el: Plugins_MermaidTooltip_Client_GetOrCreateTooltip_El = document.createElement('div');
 
     el.className = TOOLTIP_CLASS;
     el.style.position = 'absolute';
@@ -74,24 +74,24 @@ if (typeof document !== 'undefined') {
     return el;
   };
 
-  const findClickable = (target: PluginsMermaidTooltipClientFindClickableTarget): PluginsMermaidTooltipClientFindClickableReturns => {
+  const findClickable = (target: Plugins_MermaidTooltip_Client_FindClickable_Target): Plugins_MermaidTooltip_Client_FindClickable_Returns => {
     if (target instanceof Element === false) {
       return null;
     }
 
-    const match: PluginsMermaidTooltipClientFindClickableMatch = (target).closest('g.clickable');
+    const match: Plugins_MermaidTooltip_Client_FindClickable_Match = (target).closest('g.clickable');
 
-    return (match === null) ? null : match as PluginsMermaidTooltipClientFindClickableUnknown as SVGGElement;
+    return (match === null) ? null : match as Plugins_MermaidTooltip_Client_FindClickable_Unknown as SVGGElement;
   };
 
-  const showFor = (node: SVGGElement, x: PluginsMermaidTooltipClientShowForX, y: PluginsMermaidTooltipClientShowForY): PluginsMermaidTooltipClientShowForReturns => {
-    const title: PluginsMermaidTooltipClientShowForTitle = node.getAttribute('title');
+  const showFor = (node: SVGGElement, x: Plugins_MermaidTooltip_Client_ShowFor_X, y: Plugins_MermaidTooltip_Client_ShowFor_Y): Plugins_MermaidTooltip_Client_ShowFor_Returns => {
+    const title: Plugins_MermaidTooltip_Client_ShowFor_Title = node.getAttribute('title');
 
     if (title === null || title.length === 0) {
       return undefined;
     }
 
-    const stash: PluginsMermaidTooltipClientShowForStash = node.dataset;
+    const stash: Plugins_MermaidTooltip_Client_ShowFor_Stash = node.dataset;
 
     if (stash[STASH_KEY] === undefined) {
       Reflect.set(stash, STASH_KEY, title);
@@ -99,7 +99,7 @@ if (typeof document !== 'undefined') {
       node.removeAttribute('title');
     }
 
-    const el: PluginsMermaidTooltipClientShowForEl = getOrCreateTooltip();
+    const el: Plugins_MermaidTooltip_Client_ShowFor_El = getOrCreateTooltip();
 
     el.textContent = title;
     el.style.left = `${String(x + CURSOR_OFFSET_X)}px`;
@@ -109,9 +109,9 @@ if (typeof document !== 'undefined') {
     return undefined;
   };
 
-  const hideFor = (node: SVGGElement): PluginsMermaidTooltipClientHideForReturns => {
-    const stash: PluginsMermaidTooltipClientHideForStash = node.dataset;
-    const stashed: PluginsMermaidTooltipClientHideForStashed = stash[STASH_KEY];
+  const hideFor = (node: SVGGElement): Plugins_MermaidTooltip_Client_HideFor_Returns => {
+    const stash: Plugins_MermaidTooltip_Client_HideFor_Stash = node.dataset;
+    const stashed: Plugins_MermaidTooltip_Client_HideFor_Stashed = stash[STASH_KEY];
 
     if (stashed !== undefined) {
       node.setAttribute('title', stashed);
@@ -134,8 +134,8 @@ if (typeof document !== 'undefined') {
     return undefined;
   };
 
-  document.addEventListener('pointerover', (event: PointerEvent): PluginsMermaidTooltipClientPointeroverReturns => {
-    const node: PluginsMermaidTooltipClientPointeroverNode = findClickable(event.target);
+  document.addEventListener('pointerover', (event: PointerEvent): Plugins_MermaidTooltip_Client_Pointerover_Returns => {
+    const node: Plugins_MermaidTooltip_Client_Pointerover_Node = findClickable(event.target);
 
     if (node === hoveredNode) {
       return undefined;
@@ -154,7 +154,7 @@ if (typeof document !== 'undefined') {
     return undefined;
   });
 
-  document.addEventListener('pointermove', (event: PointerEvent): PluginsMermaidTooltipClientPointermoveReturns => {
+  document.addEventListener('pointermove', (event: PointerEvent): Plugins_MermaidTooltip_Client_Pointermove_Returns => {
     if (tooltipEl === null || hoveredNode === null) {
       return undefined;
     }
@@ -172,15 +172,15 @@ if (typeof document !== 'undefined') {
    * a pre-rendered mermaid container whose href resolves to `#`; real URLs
    * (e.g. `xlink:href="https://..."`) are left untouched.
    */
-  document.addEventListener('click', (event: MouseEvent): PluginsMermaidTooltipClientClickReturns => {
+  document.addEventListener('click', (event: MouseEvent): Plugins_MermaidTooltip_Client_Click_Returns => {
     if (event.target instanceof Element === true) {
-      const target: PluginsMermaidTooltipClientClickTarget = event.target;
+      const target: Plugins_MermaidTooltip_Client_Click_Target = event.target;
 
       if (target.closest('.nova-mermaid-container') !== null) {
-        const anchor: PluginsMermaidTooltipClientClickAnchor = target.closest('a');
+        const anchor: Plugins_MermaidTooltip_Client_Click_Anchor = target.closest('a');
 
         if (anchor !== null) {
-          const href: PluginsMermaidTooltipClientClickHref = anchor.getAttribute('xlink:href') ?? anchor.getAttribute('href');
+          const href: Plugins_MermaidTooltip_Client_Click_Href = anchor.getAttribute('xlink:href') ?? anchor.getAttribute('href');
 
           if (
             href === '#'

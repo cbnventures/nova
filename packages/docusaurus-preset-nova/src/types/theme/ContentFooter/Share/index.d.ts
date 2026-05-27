@@ -5,25 +5,25 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.18.0
  */
-export type ThemeContentFooterSharePropsSharePlatform = string;
+export type Theme_ContentFooter_Share_Index_Share_PropsSharePlatform = string;
 
-export type ThemeContentFooterSharePropsSharePlatforms = ThemeContentFooterSharePropsSharePlatform[] | undefined;
+export type Theme_ContentFooter_Share_Index_Share_Props_SharePlatforms = Theme_ContentFooter_Share_Index_Share_PropsSharePlatform[] | undefined;
 
-export type ThemeContentFooterSharePropsShareUrl = string | undefined;
+export type Theme_ContentFooter_Share_Index_Share_Props_ShareUrl = string | undefined;
 
-export type ThemeContentFooterSharePropsClassName = string | undefined;
+export type Theme_ContentFooter_Share_Index_Share_Props_ClassName = string | undefined;
 
-export type ThemeContentFooterSharePropsStyle = CSSProperties | undefined;
+export type Theme_ContentFooter_Share_Index_Share_Props_Style = CSSProperties | undefined;
 
-export type ThemeContentFooterShareProps = {
-  sharePlatforms?: ThemeContentFooterSharePropsSharePlatforms;
-  shareUrl?: ThemeContentFooterSharePropsShareUrl;
-  className?: ThemeContentFooterSharePropsClassName;
-  style?: ThemeContentFooterSharePropsStyle;
+export type Theme_ContentFooter_Share_Index_Share_Props = {
+  sharePlatforms?: Theme_ContentFooter_Share_Index_Share_Props_SharePlatforms;
+  shareUrl?: Theme_ContentFooter_Share_Index_Share_Props_ShareUrl;
+  className?: Theme_ContentFooter_Share_Index_Share_Props_ClassName;
+  style?: Theme_ContentFooter_Share_Index_Share_Props_Style;
 };
 
-export type ThemeContentFooterShareUrl = string;
+export type Theme_ContentFooter_Share_Index_Share_Url = string;
 
-export type ThemeContentFooterShareLabel = string;
+export type Theme_ContentFooter_Share_Index_Share_Label = string;
 
-export type ThemeContentFooterSharePlatform = ThemeContentFooterSharePropsSharePlatform;
+export type Theme_ContentFooter_Share_Index_Share_Platform = Theme_ContentFooter_Share_Index_Share_PropsSharePlatform;

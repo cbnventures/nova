@@ -5,32 +5,32 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeContentVisibilityContentVisibilityPropsMetadataFrontMatterDraft = boolean | undefined;
+export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter_Draft = boolean | undefined;
 
-export type ThemeContentVisibilityContentVisibilityPropsMetadataFrontMatterUnlisted = boolean | undefined;
+export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter_Unlisted = boolean | undefined;
 
-export type ThemeContentVisibilityContentVisibilityPropsMetadataFrontMatter = {
-  draft?: ThemeContentVisibilityContentVisibilityPropsMetadataFrontMatterDraft;
-  unlisted?: ThemeContentVisibilityContentVisibilityPropsMetadataFrontMatterUnlisted;
+export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter = {
+  draft?: Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter_Draft;
+  unlisted?: Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter_Unlisted;
 };
 
-export type ThemeContentVisibilityContentVisibilityPropsMetadataUnlisted = boolean;
+export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_Unlisted = boolean;
 
-export type ThemeContentVisibilityContentVisibilityPropsMetadata = {
-  unlisted: ThemeContentVisibilityContentVisibilityPropsMetadataUnlisted;
-  frontMatter: ThemeContentVisibilityContentVisibilityPropsMetadataFrontMatter;
+export type Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata = {
+  unlisted: Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_Unlisted;
+  frontMatter: Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter;
 };
 
-export type ThemeContentVisibilityContentVisibilityPropsClassName = string | undefined;
+export type Theme_ContentVisibility_Index_ContentVisibility_Props_ClassName = string | undefined;
 
-export type ThemeContentVisibilityContentVisibilityPropsStyle = CSSProperties | undefined;
+export type Theme_ContentVisibility_Index_ContentVisibility_Props_Style = CSSProperties | undefined;
 
-export type ThemeContentVisibilityContentVisibilityProps = {
-  metadata: ThemeContentVisibilityContentVisibilityPropsMetadata;
-  className?: ThemeContentVisibilityContentVisibilityPropsClassName;
-  style?: ThemeContentVisibilityContentVisibilityPropsStyle;
+export type Theme_ContentVisibility_Index_ContentVisibility_Props = {
+  metadata: Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata;
+  className?: Theme_ContentVisibility_Index_ContentVisibility_Props_ClassName;
+  style?: Theme_ContentVisibility_Index_ContentVisibility_Props_Style;
 };
 
-export type ThemeContentVisibilityContentVisibilityUnlisted = boolean;
+export type Theme_ContentVisibility_Index_ContentVisibility_Unlisted = boolean;
 
-export type ThemeContentVisibilityContentVisibilityFrontMatter = ThemeContentVisibilityContentVisibilityPropsMetadataFrontMatter;
+export type Theme_ContentVisibility_Index_ContentVisibility_FrontMatter = Theme_ContentVisibility_Index_ContentVisibility_Props_Metadata_FrontMatter;

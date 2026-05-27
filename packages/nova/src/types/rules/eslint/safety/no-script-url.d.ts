@@ -6,32 +6,32 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintSafetyNoScriptUrlCheckLiteralContext = Readonly<RuleContext<string, readonly unknown[]>>;
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Context = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type RulesEslintSafetyNoScriptUrlCheckLiteralNode = TSESTree.Literal;
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Node = TSESTree.Literal;
 
-export type RulesEslintSafetyNoScriptUrlCheckLiteralAllowedPatterns = string[];
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_AllowedPatterns = string[];
 
-export type RulesEslintSafetyNoScriptUrlCheckLiteralReturns = void;
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Returns = void;
 
-export type RulesEslintSafetyNoScriptUrlCheckLiteralValue = unknown;
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Value = unknown;
 
-export type RulesEslintSafetyNoScriptUrlCheckLiteralLowered = string;
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_CheckLiteral_Lowered = string;
 
 /**
  * Rules - ESLint - Safety - No Script URL - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintSafetyNoScriptUrlRuleDefaultOptionsAllowedPatterns = string[];
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsAllowedPatterns = string[];
 
-export type RulesEslintSafetyNoScriptUrlRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintSafetyNoScriptUrlRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintSafetyNoScriptUrlRuleOptionsAllowedPatterns = string[];
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions_AllowedPatterns = string[];
 
-export type RulesEslintSafetyNoScriptUrlRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintSafetyNoScriptUrlRuleOptionsIgnoreFiles;
-  allowedPatterns: RulesEslintSafetyNoScriptUrlRuleOptionsAllowedPatterns;
+export type Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions_IgnoreFiles;
+  allowedPatterns: Rules_Eslint_Safety_NoScriptUrl_Runner_RuleOptions_AllowedPatterns;
 }>;

@@ -1,4 +1,10 @@
-import type { SourceFile } from 'typescript';
+import type {
+  GetAccessorDeclaration,
+  MethodDeclaration,
+  Node,
+  SetAccessorDeclaration,
+  SourceFile,
+} from 'typescript';
 
 /**
  * Tests - Type Declarations - Test Config.
@@ -48,6 +54,10 @@ export type Tests_TypeDeclarations_BuildDtsSections_TypeName = string;
 
 export type Tests_TypeDeclarations_BuildDtsSections_OwningSection = string;
 
+export type Tests_TypeDeclarations_BuildDtsSections_SectionA = string;
+
+export type Tests_TypeDeclarations_BuildDtsSections_SectionB = string;
+
 /**
  * Tests - Type Declarations - Build Source Section Map.
  *
@@ -70,6 +80,30 @@ export type Tests_TypeDeclarations_BuildSourceSectionMap_MaxDepth = number;
 export type Tests_TypeDeclarations_BuildSourceSectionMap_CurrentDepth = number;
 
 export type Tests_TypeDeclarations_BuildSourceSectionMap_Section = string;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_Interp = string;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_PascalCaseName = string;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_PascalCaseReturns = string;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_TagAllChildrenReturns = void;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_VisitReturns = void;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_AccessorUnion = MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_RawMethodName = string;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_CleanMethodName = string;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_HasInitializer = boolean;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_CallbackArg = Node | undefined;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_Arg = Node | undefined;
+
+export type Tests_TypeDeclarations_BuildSourceSectionMap_Chunk = string;
 
 /**
  * Tests - Type Declarations - Check Type Name Uniqueness.
@@ -106,6 +140,8 @@ export type Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence = {
   name: Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence_Name;
   lineNumber: Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence_LineNumber;
 };
+
+export type Tests_TypeDeclarations_CheckTypeNameUniqueness_FoundFirstOccurrence = Tests_TypeDeclarations_CheckTypeNameUniqueness_FirstOccurrence | undefined;
 
 /**
  * Tests - Type Declarations - Derive Class Prefix.
@@ -159,6 +195,39 @@ export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Returns = Tests_Ty
 export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callbacks = Tests_TypeDeclarations_DetectInlineTypedCallbacks_Callback[];
 
 export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_LineNumber = number;
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_VisitReturns = void;
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_IsFunctionTypedConst = boolean;
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_Walker = Node | undefined;
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithKindShape = {
+  kind?: number;
+};
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithParentShape = {
+  parent?: Node;
+};
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_ParamNodeShape = {
+  name?: Node;
+  type?: Node;
+};
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameShape = {
+  typeName: Node;
+};
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTextShape = {
+  text: string;
+};
+
+export type Tests_TypeDeclarations_DetectInlineTypedCallbacks_NodeWithTypeNameTextShape = {
+  typeName: {
+    text: string;
+  };
+};
 
 /**
  * Tests - Type Declarations - Discover Source Files.
@@ -215,6 +284,12 @@ export type Tests_TypeDeclarations_ExtractArrayTypes_Line = string;
 
 export type Tests_TypeDeclarations_ExtractArrayTypes_Match = RegExpMatchArray | null;
 
+export type Tests_TypeDeclarations_ExtractArrayTypes_Exempt = boolean;
+
+export type Tests_TypeDeclarations_ExtractArrayTypes_ElementLine = number;
+
+export type Tests_TypeDeclarations_ExtractArrayTypes_ArrayLine = number;
+
 /**
  * Tests - Type Declarations - Extract Body Declarations.
  *
@@ -240,6 +315,8 @@ export type Tests_TypeDeclarations_ExtractBodyDeclarations_Lines = string[];
 export type Tests_TypeDeclarations_ExtractBodyDeclarations_Returns = Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration[];
 
 export type Tests_TypeDeclarations_ExtractBodyDeclarations_Declarations = Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration[];
+
+export type Tests_TypeDeclarations_ExtractBodyDeclarations_FoundDeclaration = Tests_TypeDeclarations_ExtractBodyDeclarations_Declaration | undefined;
 
 export type Tests_TypeDeclarations_ExtractBodyDeclarations_LineIndex = number;
 
@@ -276,6 +353,35 @@ export type Tests_TypeDeclarations_ExtractFunctionParams_Params = Tests_TypeDecl
 
 export type Tests_TypeDeclarations_ExtractFunctionParams_LineNumber = number;
 
+export type Tests_TypeDeclarations_ExtractFunctionParams_FoundParam = Tests_TypeDeclarations_ExtractFunctionParams_Param | undefined;
+
+export type Tests_TypeDeclarations_ExtractFunctionParams_VisitReturns = void;
+
+export type Tests_TypeDeclarations_ExtractFunctionParams_ParameterList = readonly Node[] | undefined;
+
+export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithParametersShape = {
+  parameters: readonly Node[];
+};
+
+export type Tests_TypeDeclarations_ExtractFunctionParams_ParamNodeShape = {
+  name?: Node;
+  type?: Node;
+};
+
+export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameShape = {
+  typeName: Node;
+};
+
+export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTextShape = {
+  text: string;
+};
+
+export type Tests_TypeDeclarations_ExtractFunctionParams_NodeWithTypeNameTextShape = {
+  typeName: {
+    text: string;
+  };
+};
+
 /**
  * Tests - Type Declarations - Extract Function Returns.
  *
@@ -307,6 +413,28 @@ export type Tests_TypeDeclarations_ExtractFunctionReturns_IsTypeGuard = boolean;
 
 export type Tests_TypeDeclarations_ExtractFunctionReturns_LineNumber = number;
 
+export type Tests_TypeDeclarations_ExtractFunctionReturns_VisitReturns = void;
+
+export type Tests_TypeDeclarations_ExtractFunctionReturns_FnNodeShape = {
+  type?: Node;
+};
+
+export type Tests_TypeDeclarations_ExtractFunctionReturns_TypeNode = Node | undefined;
+
+export type Tests_TypeDeclarations_ExtractFunctionReturns_PredicateNodeShape = {
+  type?: Node;
+};
+
+export type Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameShape = {
+  typeName: Node;
+};
+
+export type Tests_TypeDeclarations_ExtractFunctionReturns_NodeWithTypeNameTextShape = {
+  typeName: {
+    text: string;
+  };
+};
+
 /**
  * Tests - Type Declarations - Extract Imported Names.
  *
@@ -327,6 +455,8 @@ export type Tests_TypeDeclarations_ExtractImportedNames_InlineMatchCapture = str
 export type Tests_TypeDeclarations_ExtractImportedNames_Specifiers = string[];
 
 export type Tests_TypeDeclarations_ExtractImportedNames_Trimmed = string;
+
+export type Tests_TypeDeclarations_ExtractImportedNames_SortedSpecifiers = string[];
 
 /**
  * Tests - Type Declarations - Extract Object Types.
@@ -365,6 +495,8 @@ export type Tests_TypeDeclarations_ExtractObjectTypes_Returns = Tests_TypeDeclar
 
 export type Tests_TypeDeclarations_ExtractObjectTypes_ObjectTypes = Tests_TypeDeclarations_ExtractObjectTypes_ObjectType[];
 
+export type Tests_TypeDeclarations_ExtractObjectTypes_FoundObjectType = Tests_TypeDeclarations_ExtractObjectTypes_ObjectType | undefined;
+
 export type Tests_TypeDeclarations_ExtractObjectTypes_TypeLineMap = Map<string, number>;
 
 export type Tests_TypeDeclarations_ExtractObjectTypes_LineIndex = number;
@@ -380,6 +512,10 @@ export type Tests_TypeDeclarations_ExtractObjectTypes_PropertyKey = string;
 export type Tests_TypeDeclarations_ExtractObjectTypes_PropertyValueType = string;
 
 export type Tests_TypeDeclarations_ExtractObjectTypes_TypeName = string;
+
+export type Tests_TypeDeclarations_ExtractObjectTypes_PropertyTypeLine = number;
+
+export type Tests_TypeDeclarations_ExtractObjectTypes_ParentLine = number;
 
 /**
  * Tests - Type Declarations - Extract Referenced Types.
@@ -562,6 +698,8 @@ export type Tests_TypeDeclarations_ParseSourceFile_CachedEntry = {
 };
 
 export type Tests_TypeDeclarations_ParseSourceFile_Cached = Tests_TypeDeclarations_ParseSourceFile_CachedEntry | undefined;
+
+export type Tests_TypeDeclarations_ParseSourceFile_SourceFileCache = Map<string, Tests_TypeDeclarations_ParseSourceFile_CachedEntry>;
 
 /**
  * Tests - Type Declarations - Run Rule Pipeline.
@@ -992,6 +1130,8 @@ export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_Violations = s
 
 export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_IsParent = boolean;
 
+export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_SingleChunkTopLevelTypes = Set<string>;
+
 export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ReverseMatch = RegExpMatchArray | null;
 
 export type Tests_TypeDeclarations_TypeDeclarationSectionCoverage_ReverseTypeName = string;
@@ -1059,6 +1199,16 @@ export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PositionMa
 
 export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ElementLine = number;
 
+export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_KnownTopLevels = Set<string>;
+
+export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_TypeName = string;
+
+export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_IsPathPrefixStyle = boolean;
+
+export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_ObjectName = string;
+
+export type Tests_TypeDeclarations_TypeDeclarationStandaloneTypeFiles_PropertyValueType = string;
+
 /**
  * Tests - Type Declarations - Type Declaration Variable Type Symmetry.
  *
@@ -1083,6 +1233,10 @@ export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_DtsPath =
 export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_DtsExists = boolean;
 
 export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_DtsContent = string;
+
+export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_RelativeDtsPath = string;
+
+export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_CleanedDtsPath = string;
 
 export type Tests_TypeDeclarations_TypeDeclarationVariableTypeSymmetry_Violations = string[];
 

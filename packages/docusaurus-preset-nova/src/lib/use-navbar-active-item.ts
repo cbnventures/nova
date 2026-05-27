@@ -11,26 +11,26 @@
 import { useLocation } from '@docusaurus/router';
 
 import type {
-  LibUseNavbarActiveItemBestKey,
-  LibUseNavbarActiveItemBestScore,
-  LibUseNavbarActiveItemClaimLength,
-  LibUseNavbarActiveItemGetClaimLengthBase,
-  LibUseNavbarActiveItemGetClaimLengthClaimBase,
-  LibUseNavbarActiveItemGetClaimLengthMatch,
-  LibUseNavbarActiveItemGetClaimLengthMatchedSubstring,
-  LibUseNavbarActiveItemGetClaimLengthNormalized,
-  LibUseNavbarActiveItemGetClaimLengthPathname,
-  LibUseNavbarActiveItemGetClaimLengthReturns,
-  LibUseNavbarActiveItemGetClaimLengthTo,
-  LibUseNavbarActiveItemItem,
-  LibUseNavbarActiveItemItemLabelOrSkip,
-  LibUseNavbarActiveItemItems,
-  LibUseNavbarActiveItemItemType,
-  LibUseNavbarActiveItemNonLinkTypes,
-  LibUseNavbarActiveItemNormalizeBaseInput,
-  LibUseNavbarActiveItemNormalizeBaseReturns,
-  LibUseNavbarActiveItemPathname,
-  LibUseNavbarActiveItemReturns,
+  Lib_UseNavbarActiveItem_BestKey,
+  Lib_UseNavbarActiveItem_BestScore,
+  Lib_UseNavbarActiveItem_ClaimLength,
+  Lib_UseNavbarActiveItem_GetClaimLength_Base,
+  Lib_UseNavbarActiveItem_GetClaimLength_ClaimBase,
+  Lib_UseNavbarActiveItem_GetClaimLength_Match,
+  Lib_UseNavbarActiveItem_GetClaimLength_MatchedSubstring,
+  Lib_UseNavbarActiveItem_GetClaimLength_Normalized,
+  Lib_UseNavbarActiveItem_GetClaimLength_Pathname,
+  Lib_UseNavbarActiveItem_GetClaimLength_Returns,
+  Lib_UseNavbarActiveItem_GetClaimLength_To,
+  Lib_UseNavbarActiveItem_Item,
+  Lib_UseNavbarActiveItem_ItemLabelOrSkip,
+  Lib_UseNavbarActiveItem_Items,
+  Lib_UseNavbarActiveItem_Item_Type,
+  Lib_UseNavbarActiveItem_NonLinkTypes,
+  Lib_UseNavbarActiveItem_NormalizeBase_Input,
+  Lib_UseNavbarActiveItem_NormalizeBase_Returns,
+  Lib_UseNavbarActiveItem_Pathname,
+  Lib_UseNavbarActiveItem_Returns,
 } from '../types/lib/use-navbar-active-item.d.ts';
 
 /**
@@ -42,7 +42,7 @@ import type {
  *
  * @since 0.18.0
  */
-const nonLinkTypes: LibUseNavbarActiveItemNonLinkTypes = new Set([
+const nonLinkTypes: Lib_UseNavbarActiveItem_NonLinkTypes = new Set([
   'dropdown',
   'docsVersionDropdown',
   'localeDropdown',
@@ -56,13 +56,13 @@ const nonLinkTypes: LibUseNavbarActiveItemNonLinkTypes = new Set([
  * Strips a single trailing slash from a base path so claim comparisons
  * are not split between `/docs/` and `/docs`.
  *
- * @param {LibUseNavbarActiveItemNormalizeBaseInput} base - Base.
+ * @param {Lib_UseNavbarActiveItem_NormalizeBase_Input} base - Base.
  *
- * @returns {LibUseNavbarActiveItemNormalizeBaseReturns}
+ * @returns {Lib_UseNavbarActiveItem_NormalizeBase_Returns}
  *
  * @since 0.18.0
  */
-function normalizeBase(base: LibUseNavbarActiveItemNormalizeBaseInput): LibUseNavbarActiveItemNormalizeBaseReturns {
+function normalizeBase(base: Lib_UseNavbarActiveItem_NormalizeBase_Input): Lib_UseNavbarActiveItem_NormalizeBase_Returns {
   if (base.length > 1 && base.endsWith('/') === true) {
     return base.slice(0, -1);
   }
@@ -77,16 +77,16 @@ function normalizeBase(base: LibUseNavbarActiveItemNormalizeBaseInput): LibUseNa
  * pathname, or null when the item does not claim it. Regex matches use
  * the matched substring length; prefix claims use the normalized base.
  *
- * @param {LibUseNavbarActiveItemItem}                   item     - Item.
- * @param {LibUseNavbarActiveItemGetClaimLengthPathname} pathname - Pathname.
+ * @param {Lib_UseNavbarActiveItem_Item}                   item     - Item.
+ * @param {Lib_UseNavbarActiveItem_GetClaimLength_Pathname} pathname - Pathname.
  *
- * @returns {LibUseNavbarActiveItemGetClaimLengthReturns}
+ * @returns {Lib_UseNavbarActiveItem_GetClaimLength_Returns}
  *
  * @since 0.18.0
  */
-function getClaimLength(item: LibUseNavbarActiveItemItem, pathname: LibUseNavbarActiveItemGetClaimLengthPathname): LibUseNavbarActiveItemGetClaimLengthReturns {
+function getClaimLength(item: Lib_UseNavbarActiveItem_Item, pathname: Lib_UseNavbarActiveItem_GetClaimLength_Pathname): Lib_UseNavbarActiveItem_GetClaimLength_Returns {
   if (item['activeBaseRegex'] !== undefined) {
-    let match: LibUseNavbarActiveItemGetClaimLengthMatch = null;
+    let match: Lib_UseNavbarActiveItem_GetClaimLength_Match = null;
 
     try {
       match = pathname.match(new RegExp(item['activeBaseRegex']));
@@ -96,21 +96,21 @@ function getClaimLength(item: LibUseNavbarActiveItemItem, pathname: LibUseNavbar
     }
 
     if (match !== null) {
-      const matched: LibUseNavbarActiveItemGetClaimLengthMatchedSubstring = match[0];
+      const matched: Lib_UseNavbarActiveItem_GetClaimLength_MatchedSubstring = match[0];
 
       return matched.length;
     }
   }
 
-  const claimBase: LibUseNavbarActiveItemGetClaimLengthClaimBase = item['claimBase'];
-  const to: LibUseNavbarActiveItemGetClaimLengthTo = item['to'];
-  const base: LibUseNavbarActiveItemGetClaimLengthBase = (claimBase !== undefined) ? claimBase : to;
+  const claimBase: Lib_UseNavbarActiveItem_GetClaimLength_ClaimBase = item['claimBase'];
+  const to: Lib_UseNavbarActiveItem_GetClaimLength_To = item['to'];
+  const base: Lib_UseNavbarActiveItem_GetClaimLength_Base = (claimBase !== undefined) ? claimBase : to;
 
   if (base === undefined) {
     return null;
   }
 
-  const normalized: LibUseNavbarActiveItemGetClaimLengthNormalized = normalizeBase(base);
+  const normalized: Lib_UseNavbarActiveItem_GetClaimLength_Normalized = normalizeBase(base);
 
   if (
     pathname === base
@@ -130,33 +130,33 @@ function getClaimLength(item: LibUseNavbarActiveItemItem, pathname: LibUseNavbar
  * claim has the longest prefix/regex match against the current pathname,
  * or null when no item claims the URL.
  *
- * @param {LibUseNavbarActiveItemItems} items - Items.
+ * @param {Lib_UseNavbarActiveItem_Items} items - Items.
  *
- * @returns {LibUseNavbarActiveItemReturns}
+ * @returns {Lib_UseNavbarActiveItem_Returns}
  *
  * @since 0.18.0
  */
-export function useNavbarActiveItem(items: LibUseNavbarActiveItemItems): LibUseNavbarActiveItemReturns {
-  const pathname: LibUseNavbarActiveItemPathname = useLocation()['pathname'];
+export function useNavbarActiveItem(items: Lib_UseNavbarActiveItem_Items): Lib_UseNavbarActiveItem_Returns {
+  const pathname: Lib_UseNavbarActiveItem_Pathname = useLocation()['pathname'];
 
-  let bestKey: LibUseNavbarActiveItemBestKey = null;
-  let bestScore: LibUseNavbarActiveItemBestScore = -1;
+  let bestKey: Lib_UseNavbarActiveItem_BestKey = null;
+  let bestScore: Lib_UseNavbarActiveItem_BestScore = -1;
 
   for (let i = 0; i < items.length; i += 1) {
-    const item: LibUseNavbarActiveItemItem = items[i] as LibUseNavbarActiveItemItem;
-    const itemType: LibUseNavbarActiveItemItemType = item['type'];
+    const item: Lib_UseNavbarActiveItem_Item = items[i] as Lib_UseNavbarActiveItem_Item;
+    const itemType: Lib_UseNavbarActiveItem_Item_Type = item['type'];
 
     if (itemType !== undefined && nonLinkTypes.has(itemType) === true) {
       continue;
     }
 
-    const label: LibUseNavbarActiveItemItemLabelOrSkip = item['label'];
+    const label: Lib_UseNavbarActiveItem_ItemLabelOrSkip = item['label'];
 
     if (label === undefined) {
       continue;
     }
 
-    const claimLength: LibUseNavbarActiveItemClaimLength = getClaimLength(item, pathname);
+    const claimLength: Lib_UseNavbarActiveItem_ClaimLength = getClaimLength(item, pathname);
 
     if (claimLength !== null && claimLength > bestScore) {
       bestKey = label;

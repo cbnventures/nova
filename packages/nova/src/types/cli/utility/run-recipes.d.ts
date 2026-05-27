@@ -1,46 +1,46 @@
-import type { CliRecipeRegistryCategory, CliRecipeRegistryEntry } from '../../cli/recipe/index.d.ts';
+import type { Cli_Recipe_RegistryCategory, Cli_Recipe_RegistryEntry } from '../../cli/recipe/index.d.ts';
 
 /**
  * CLI - Utility - Run Recipes - Run.
  *
  * @since 0.14.0
  */
-export type CliUtilityRunRecipesRunOptionsDryRun = true;
+export type Cli_Utility_RunRecipes_Runner_Run_Options_DryRun = true;
 
-export type CliUtilityRunRecipesRunOptionsReplaceFile = true;
+export type Cli_Utility_RunRecipes_Runner_Run_Options_ReplaceFile = true;
 
-export type CliUtilityRunRecipesRunCategory = CliRecipeRegistryCategory | undefined;
+export type Cli_Utility_RunRecipes_Runner_Run_Options_Category = Cli_Recipe_RegistryCategory | undefined;
 
-export type CliUtilityRunRecipesRunOptions = {
-  category?: CliUtilityRunRecipesRunCategory;
-  dryRun?: CliUtilityRunRecipesRunOptionsDryRun;
-  replaceFile?: CliUtilityRunRecipesRunOptionsReplaceFile;
+export type Cli_Utility_RunRecipes_Runner_Run_Options = {
+  category?: Cli_Utility_RunRecipes_Runner_Run_Options_Category;
+  dryRun?: Cli_Utility_RunRecipes_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Utility_RunRecipes_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliUtilityRunRecipesRunReturns = Promise<void>;
+export type Cli_Utility_RunRecipes_Runner_Run_Returns = Promise<void>;
 
-export type CliUtilityRunRecipesRunCurrentDirectory = string;
+export type Cli_Utility_RunRecipes_Runner_Run_CurrentDirectory = string;
 
-export type CliUtilityRunRecipesRunIsAtProjectRoot = boolean;
+export type Cli_Utility_RunRecipes_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliUtilityRunRecipesRunIsDryRun = boolean;
+export type Cli_Utility_RunRecipes_Runner_Run_IsDryRun = boolean;
 
-export type CliUtilityRunRecipesRunIsReplaceFile = boolean;
+export type Cli_Utility_RunRecipes_Runner_Run_IsReplaceFile = boolean;
 
-export type CliUtilityRunRecipesRunReplaceFileNotice = string;
+export type Cli_Utility_RunRecipes_Runner_Run_ReplaceFileNotice = string;
 
-export type CliUtilityRunRecipesRunRequestedCategory = CliRecipeRegistryCategory | undefined;
+export type Cli_Utility_RunRecipes_Runner_Run_RequestedCategory = Cli_Recipe_RegistryCategory | undefined;
 
-export type CliUtilityRunRecipesRunEntries = ReadonlyArray<[CliRecipeRegistryCategory, CliRecipeRegistryEntry[]]> | undefined;
+export type Cli_Utility_RunRecipes_Runner_Run_Entries = ReadonlyArray<[Cli_Recipe_RegistryCategory, Cli_Recipe_RegistryEntry[]]> | undefined;
 
-export type CliUtilityRunRecipesRunRegistryCategories = CliRecipeRegistryCategory[];
+export type Cli_Utility_RunRecipes_Runner_Run_RegistryCategories = Cli_Recipe_RegistryCategory[];
 
-export type CliUtilityRunRecipesRunRecipes = CliRecipeRegistryEntry[] | undefined;
+export type Cli_Utility_RunRecipes_Runner_Run_Recipes = Cli_Recipe_RegistryEntry[] | undefined;
 
-export type CliUtilityRunRecipesRunTotalRecipes = number;
+export type Cli_Utility_RunRecipes_Runner_Run_TotalRecipes = number;
 
-export type CliUtilityRunRecipesRunCategoryDescription = string;
+export type Cli_Utility_RunRecipes_Runner_Run_CategoryDescription = string;
 
-export type CliUtilityRunRecipesRunEntryCategory = CliRecipeRegistryCategory;
+export type Cli_Utility_RunRecipes_Runner_Run_EntryCategory = Cli_Recipe_RegistryCategory;
 
-export type CliUtilityRunRecipesRunEntryRecipes = CliRecipeRegistryEntry[];
+export type Cli_Utility_RunRecipes_Runner_Run_EntryRecipes = Cli_Recipe_RegistryEntry[];

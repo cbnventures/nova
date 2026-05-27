@@ -1,146 +1,146 @@
-import type { LibNovaConfig } from '../../../../lib/nova-config.js';
+import type { Runner as LibNovaConfig } from '../../../../lib/nova-config.js';
 
-import type { SharedGeneratorRunResult, SharedNovaConfig } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult as SharedGeneratorRunResult, Shared_NovaConfig as SharedNovaConfig } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - GitHub - Issue Template - Run.
  *
  * @since 0.15.0
  */
-export type CliGenerateGithubIssueTemplateRunOptionsDryRun = true;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Options_DryRun = true;
 
-export type CliGenerateGithubIssueTemplateRunOptionsReplaceFile = true;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Options_ReplaceFile = true;
 
-export type CliGenerateGithubIssueTemplateRunOptions = {
-  dryRun?: CliGenerateGithubIssueTemplateRunOptionsDryRun;
-  replaceFile?: CliGenerateGithubIssueTemplateRunOptionsReplaceFile;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Options = {
+  dryRun?: Cli_Generate_Github_IssueTemplate_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Generate_Github_IssueTemplate_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliGenerateGithubIssueTemplateRunReturns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
 
-export type CliGenerateGithubIssueTemplateRunCurrentDirectory = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_CurrentDirectory = string;
 
-export type CliGenerateGithubIssueTemplateRunIsAtProjectRoot = boolean;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliGenerateGithubIssueTemplateRunIsDryRun = boolean;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_IsDryRun = boolean;
 
-export type CliGenerateGithubIssueTemplateRunIsReplaceFile = boolean;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_IsReplaceFile = boolean;
 
-export type CliGenerateGithubIssueTemplateRunReplaceFileNotice = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_ReplaceFileNotice = string;
 
-export type CliGenerateGithubIssueTemplateRunNovaConfig = LibNovaConfig;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_NovaConfig = LibNovaConfig;
 
-export type CliGenerateGithubIssueTemplateRunWorkingFile = SharedNovaConfig;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_WorkingFile = SharedNovaConfig;
 
-export type CliGenerateGithubIssueTemplateRunProject = SharedNovaConfig['project'];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Project = SharedNovaConfig['project'];
 
-export type CliGenerateGithubIssueTemplateRunPronouns = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Pronouns = string;
 
-export type CliGenerateGithubIssueTemplateRunWe = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_We = string;
 
-export type CliGenerateGithubIssueTemplateRunUs = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Us = string;
 
-export type CliGenerateGithubIssueTemplateRunOur = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Our = string;
 
-export type CliGenerateGithubIssueTemplateRunUrls = SharedNovaConfig['urls'];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Urls = SharedNovaConfig['urls'];
 
-export type CliGenerateGithubIssueTemplateRunGithub = SharedNovaConfig['github'];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Github = SharedNovaConfig['github'];
 
-export type CliGenerateGithubIssueTemplateRunGithubOwner = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_GithubOwner = string;
 
-export type CliGenerateGithubIssueTemplateRunGithubRepoName = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_GithubRepoName = string;
 
-export type CliGenerateGithubIssueTemplateRunGithubRepo = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_GithubRepo = string;
 
-export type CliGenerateGithubIssueTemplateRunPrivacyPolicy = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_PrivacyPolicy = string;
 
-export type CliGenerateGithubIssueTemplateRunTermsOfUse = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_TermsOfUse = string;
 
-export type CliGenerateGithubIssueTemplateRunFundSources = string[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_FundSources = string[];
 
-export type CliGenerateGithubIssueTemplateRunGithubSponsor = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_GithubSponsor = string;
 
-export type CliGenerateGithubIssueTemplateRunPlatforms = string[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Platforms = string[];
 
-export type CliGenerateGithubIssueTemplateRunChoiceTitle = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Title = string;
 
-export type CliGenerateGithubIssueTemplateRunChoiceDescription = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Description = string;
 
-export type CliGenerateGithubIssueTemplateRunChoiceValue = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Value = string;
 
-export type CliGenerateGithubIssueTemplateRunChoiceSelected = boolean;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Selected = boolean;
 
-export type CliGenerateGithubIssueTemplateRunChoice = {
-  title: CliGenerateGithubIssueTemplateRunChoiceTitle;
-  description: CliGenerateGithubIssueTemplateRunChoiceDescription;
-  value: CliGenerateGithubIssueTemplateRunChoiceValue;
-  selected: CliGenerateGithubIssueTemplateRunChoiceSelected;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choice = {
+  title: Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Title;
+  description: Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Description;
+  value: Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Value;
+  selected: Cli_Generate_Github_IssueTemplate_Runner_Run_Choice_Selected;
 };
 
-export type CliGenerateGithubIssueTemplateRunPreSelectMappingKey = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingKey = string;
 
-export type CliGenerateGithubIssueTemplateRunPreSelectMappingValue = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingValue = string;
 
-export type CliGenerateGithubIssueTemplateRunPreSelectMapping = Record<CliGenerateGithubIssueTemplateRunPreSelectMappingKey, CliGenerateGithubIssueTemplateRunPreSelectMappingValue>;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMapping = Record<Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingKey, Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectMappingValue>;
 
-export type CliGenerateGithubIssueTemplateRunPreSelectedFiles = Set<string>;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_PreSelectedFiles = Set<string>;
 
-export type CliGenerateGithubIssueTemplateRunFile = string | undefined;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_File = string | undefined;
 
-export type CliGenerateGithubIssueTemplateRunChoices = CliGenerateGithubIssueTemplateRunChoice[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Choices = Cli_Generate_Github_IssueTemplate_Runner_Run_Choice[];
 
-export type CliGenerateGithubIssueTemplateRunCancelled = boolean;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Cancelled = boolean;
 
-export type CliGenerateGithubIssueTemplateRunAnswers = Record<string, unknown>;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Answers = Record<string, unknown>;
 
-export type CliGenerateGithubIssueTemplateRunSelectedFiles = string[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_SelectedFiles = string[];
 
-export type CliGenerateGithubIssueTemplateRunTemplateDirectory = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_TemplateDirectory = string;
 
-export type CliGenerateGithubIssueTemplateRunPlatformFieldsDirectory = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldsDirectory = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalAgreementsDirectory = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalAgreementsDirectory = string;
 
-export type CliGenerateGithubIssueTemplateRunPlatformFieldParts = string[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldParts = string[];
 
-export type CliGenerateGithubIssueTemplateRunFieldPath = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_FieldPath = string;
 
-export type CliGenerateGithubIssueTemplateRunFieldContent = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_FieldContent = string;
 
-export type CliGenerateGithubIssueTemplateRunTrimmedFieldContent = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_TrimmedFieldContent = string;
 
-export type CliGenerateGithubIssueTemplateRunPlatformFieldsContent = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_PlatformFieldsContent = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalFileMappingKey = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMappingKey = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalFileMappingValue = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMappingValue = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalFileMapping = Record<CliGenerateGithubIssueTemplateRunLegalFileMappingKey, CliGenerateGithubIssueTemplateRunLegalFileMappingValue>;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMapping = Record<Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMappingKey, Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFileMappingValue>;
 
-export type CliGenerateGithubIssueTemplateRunFiles = string[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Files = string[];
 
-export type CliGenerateGithubIssueTemplateRunTemplatePath = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_TemplatePath = string;
 
-export type CliGenerateGithubIssueTemplateRunTargetPath = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_TargetPath = string;
 
-export type CliGenerateGithubIssueTemplateRunTemplate = string | undefined;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Template = string | undefined;
 
-export type CliGenerateGithubIssueTemplateRunStripped = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Stripped = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalFile = string | undefined;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalFile = string | undefined;
 
-export type CliGenerateGithubIssueTemplateRunLegalContent = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalContent = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalLinkParts = string[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalLinkParts = string[];
 
-export type CliGenerateGithubIssueTemplateRunLegalLabelParts = string[];
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalLabelParts = string[];
 
-export type CliGenerateGithubIssueTemplateRunLegalPath = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalPath = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalRaw = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalRaw = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalLinksText = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalLinksText = string;
 
-export type CliGenerateGithubIssueTemplateRunLegalLabelText = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_LegalLabelText = string;
 
-export type CliGenerateGithubIssueTemplateRunContent = string;
+export type Cli_Generate_Github_IssueTemplate_Runner_Run_Content = string;

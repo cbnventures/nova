@@ -8,29 +8,29 @@ import { describe, it } from 'vitest';
 import { presetsIndexNames } from '../presets/index.js';
 
 import type {
-  TestsDemoLogoOverrideConfig,
-  TestsDemoLogoOverrideConfigModule,
-  TestsDemoLogoOverrideConfigUrl,
-  TestsDemoLogoOverrideCurrentFileDirectory,
-  TestsDemoLogoOverrideCurrentFilePath,
-  TestsDemoLogoOverrideDemoBytes,
-  TestsDemoLogoOverrideDemoLogoPath,
-  TestsDemoLogoOverrideLogo,
-  TestsDemoLogoOverrideLogoSrc,
-  TestsDemoLogoOverrideLogoSrcLight,
-  TestsDemoLogoOverridePackageRoot,
-  TestsDemoLogoOverridePresetBytes,
-  TestsDemoLogoOverridePresetLogoPath,
-  TestsDemoLogoOverridePresetStats,
-  TestsDemoLogoOverrideRepoRoot,
-  TestsDemoLogoOverrideSite,
-  TestsDemoLogoOverrideThemeConfig,
+  Tests_DemoLogoOverride_Config,
+  Tests_DemoLogoOverride_ConfigModule,
+  Tests_DemoLogoOverride_ConfigUrl,
+  Tests_DemoLogoOverride_CurrentFileDirectory,
+  Tests_DemoLogoOverride_CurrentFilePath,
+  Tests_DemoLogoOverride_DemoBytes,
+  Tests_DemoLogoOverride_DemoLogoPath,
+  Tests_DemoLogoOverride_Logo,
+  Tests_DemoLogoOverride_LogoSrc,
+  Tests_DemoLogoOverride_LogoSrcLight,
+  Tests_DemoLogoOverride_PackageRoot,
+  Tests_DemoLogoOverride_PresetBytes,
+  Tests_DemoLogoOverride_PresetLogoPath,
+  Tests_DemoLogoOverride_PresetStats,
+  Tests_DemoLogoOverride_RepoRoot,
+  Tests_DemoLogoOverride_Site,
+  Tests_DemoLogoOverride_ThemeConfig,
 } from '../types/tests/demo-logo-override.test.d.ts';
 
-const currentFilePath: TestsDemoLogoOverrideCurrentFilePath = fileURLToPath(import.meta.url);
-const currentFileDirectory: TestsDemoLogoOverrideCurrentFileDirectory = dirname(currentFilePath);
-const packageRoot: TestsDemoLogoOverridePackageRoot = resolve(currentFileDirectory, '..', '..');
-const repoRoot: TestsDemoLogoOverrideRepoRoot = resolve(packageRoot, '..', '..');
+const currentFilePath: Tests_DemoLogoOverride_CurrentFilePath = fileURLToPath(import.meta.url);
+const currentFileDirectory: Tests_DemoLogoOverride_CurrentFileDirectory = dirname(currentFilePath);
+const packageRoot: Tests_DemoLogoOverride_PackageRoot = resolve(currentFileDirectory, '..', '..');
+const repoRoot: Tests_DemoLogoOverride_RepoRoot = resolve(packageRoot, '..', '..');
 
 /**
  * Tests - Demo Logo Override - Demo Logo Override.
@@ -55,11 +55,11 @@ const repoRoot: TestsDemoLogoOverrideRepoRoot = resolve(packageRoot, '..', '..')
  */
 describe('demo logo override', () => {
   for (const presetName of presetsIndexNames) {
-    const presetLogoPath: TestsDemoLogoOverridePresetLogoPath = resolve(packageRoot, 'assets', 'presets', presetName, 'logo.svg');
-    const demoLogoPath: TestsDemoLogoOverrideDemoLogoPath = resolve(repoRoot, 'apps', `demo-${presetName}`, 'static', 'images', 'logo.svg');
+    const presetLogoPath: Tests_DemoLogoOverride_PresetLogoPath = resolve(packageRoot, 'assets', 'presets', presetName, 'logo.svg');
+    const demoLogoPath: Tests_DemoLogoOverride_DemoLogoPath = resolve(repoRoot, 'apps', `demo-${presetName}`, 'static', 'images', 'logo.svg');
 
     it(`preset '${presetName}' ships a non-empty canonical logo at assets/presets/${presetName}/logo.svg`, async () => {
-      const presetStats: TestsDemoLogoOverridePresetStats = await stat(presetLogoPath);
+      const presetStats: Tests_DemoLogoOverride_PresetStats = await stat(presetLogoPath);
 
       ok(presetStats.isFile());
       ok(presetStats.size > 0);
@@ -68,8 +68,8 @@ describe('demo logo override', () => {
     });
 
     it(`demo-${presetName} override logo bytes equal preset canonical (preset is source of truth)`, async () => {
-      const presetBytes: TestsDemoLogoOverridePresetBytes = await readFile(presetLogoPath);
-      const demoBytes: TestsDemoLogoOverrideDemoBytes = await readFile(demoLogoPath);
+      const presetBytes: Tests_DemoLogoOverride_PresetBytes = await readFile(presetLogoPath);
+      const demoBytes: Tests_DemoLogoOverride_DemoBytes = await readFile(demoLogoPath);
 
       ok(presetBytes.equals(demoBytes));
 
@@ -77,14 +77,14 @@ describe('demo logo override', () => {
     });
 
     it(`demo-${presetName} wires the override via site.logo.src.light in docusaurus.config.ts`, async () => {
-      const configUrl: TestsDemoLogoOverrideConfigUrl = pathToFileURL(resolve(repoRoot, 'apps', `demo-${presetName}`, 'docusaurus.config.ts')).href;
-      const moduleNamespace: TestsDemoLogoOverrideConfigModule = await import(configUrl);
-      const config: TestsDemoLogoOverrideConfig = moduleNamespace['default'] as TestsDemoLogoOverrideConfig;
-      const themeConfig: TestsDemoLogoOverrideThemeConfig = config['themeConfig'] as TestsDemoLogoOverrideThemeConfig;
-      const site: TestsDemoLogoOverrideSite = themeConfig['site'] as TestsDemoLogoOverrideSite;
-      const logo: TestsDemoLogoOverrideLogo = site['logo'] as TestsDemoLogoOverrideLogo;
-      const logoSrc: TestsDemoLogoOverrideLogoSrc = logo['src'] as TestsDemoLogoOverrideLogoSrc;
-      const logoSrcLight: TestsDemoLogoOverrideLogoSrcLight = logoSrc['light'];
+      const configUrl: Tests_DemoLogoOverride_ConfigUrl = pathToFileURL(resolve(repoRoot, 'apps', `demo-${presetName}`, 'docusaurus.config.ts')).href;
+      const moduleNamespace: Tests_DemoLogoOverride_ConfigModule = await import(configUrl);
+      const config: Tests_DemoLogoOverride_Config = moduleNamespace['default'] as Tests_DemoLogoOverride_Config;
+      const themeConfig: Tests_DemoLogoOverride_ThemeConfig = config['themeConfig'] as Tests_DemoLogoOverride_ThemeConfig;
+      const site: Tests_DemoLogoOverride_Site = themeConfig['site'] as Tests_DemoLogoOverride_Site;
+      const logo: Tests_DemoLogoOverride_Logo = site['logo'] as Tests_DemoLogoOverride_Logo;
+      const logoSrc: Tests_DemoLogoOverride_LogoSrc = logo['src'] as Tests_DemoLogoOverride_LogoSrc;
+      const logoSrcLight: Tests_DemoLogoOverride_LogoSrcLight = logoSrc['light'];
 
       strictEqual(logoSrcLight, '/images/logo.svg');
 

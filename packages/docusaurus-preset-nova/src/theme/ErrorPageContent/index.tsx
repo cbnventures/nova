@@ -4,19 +4,19 @@ import { usePluginData } from '@docusaurus/useGlobalData';
 import Heading from '@theme/Heading';
 
 import type {
-  ThemeErrorPageContentErrorPageContentDocusaurusContext,
-  ThemeErrorPageContentErrorPageContentErrorPages,
-  ThemeErrorPageContentErrorPageContentGlobalData,
-  ThemeErrorPageContentErrorPageContentMessage,
-  ThemeErrorPageContentErrorPageContentOverrides,
-  ThemeErrorPageContentErrorPageContentProps,
-  ThemeErrorPageContentErrorPageContentRetryLabelOverride,
-  ThemeErrorPageContentErrorPageContentThemeConfig,
-  ThemeErrorPageContentErrorPageContentTitle,
-  ThemeErrorPageContentErrorPageContentTitleIndex,
-  ThemeErrorPageContentErrorPageContentTitleOverride,
-  ThemeErrorPageContentErrorPageContentTitlePool,
-  ThemeErrorPageContentErrorPageContentTryAgain,
+  Theme_ErrorPageContent_Index_ErrorPageContent_DocusaurusContext,
+  Theme_ErrorPageContent_Index_ErrorPageContent_ErrorPages,
+  Theme_ErrorPageContent_Index_ErrorPageContent_GlobalData,
+  Theme_ErrorPageContent_Index_ErrorPageContent_Message,
+  Theme_ErrorPageContent_Index_ErrorPageContent_Overrides,
+  Theme_ErrorPageContent_Index_ErrorPageContent_Props,
+  Theme_ErrorPageContent_Index_ErrorPageContent_RetryLabelOverride,
+  Theme_ErrorPageContent_Index_ErrorPageContent_ThemeConfig,
+  Theme_ErrorPageContent_Index_ErrorPageContent_Title,
+  Theme_ErrorPageContent_Index_ErrorPageContent_TitleIndex,
+  Theme_ErrorPageContent_Index_ErrorPageContent_TitleOverride,
+  Theme_ErrorPageContent_Index_ErrorPageContent_TitlePool,
+  Theme_ErrorPageContent_Index_ErrorPageContent_TryAgain,
 } from '../../types/theme/ErrorPageContent/index.d.ts';
 
 /**
@@ -26,24 +26,24 @@ import type {
  * build time and read from plugin global data at render time, plus a retry
  * button and the underlying error message.
  *
- * @param {ThemeErrorPageContentErrorPageContentProps} props - Props.
+ * @param {Theme_ErrorPageContent_Index_ErrorPageContent_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function ErrorPageContent(props: ThemeErrorPageContentErrorPageContentProps) {
-  const docusaurusContext: ThemeErrorPageContentErrorPageContentDocusaurusContext = useDocusaurusContext();
-  const themeConfig: ThemeErrorPageContentErrorPageContentThemeConfig = docusaurusContext['siteConfig']['themeConfig'] as ThemeErrorPageContentErrorPageContentThemeConfig;
-  const errorPages: ThemeErrorPageContentErrorPageContentErrorPages = themeConfig['errorPages'] as ThemeErrorPageContentErrorPageContentErrorPages;
-  const overrides: ThemeErrorPageContentErrorPageContentOverrides = (errorPages !== undefined && errorPages !== null) ? errorPages['errorPageContent'] as ThemeErrorPageContentErrorPageContentOverrides : undefined;
+function ErrorPageContent(props: Theme_ErrorPageContent_Index_ErrorPageContent_Props) {
+  const docusaurusContext: Theme_ErrorPageContent_Index_ErrorPageContent_DocusaurusContext = useDocusaurusContext();
+  const themeConfig: Theme_ErrorPageContent_Index_ErrorPageContent_ThemeConfig = docusaurusContext['siteConfig']['themeConfig'] as Theme_ErrorPageContent_Index_ErrorPageContent_ThemeConfig;
+  const errorPages: Theme_ErrorPageContent_Index_ErrorPageContent_ErrorPages = themeConfig['errorPages'] as Theme_ErrorPageContent_Index_ErrorPageContent_ErrorPages;
+  const overrides: Theme_ErrorPageContent_Index_ErrorPageContent_Overrides = (errorPages !== undefined && errorPages !== null) ? errorPages['errorPageContent'] as Theme_ErrorPageContent_Index_ErrorPageContent_Overrides : undefined;
 
-  const titleOverride: ThemeErrorPageContentErrorPageContentTitleOverride = (overrides !== undefined && overrides !== null) ? overrides['title'] as ThemeErrorPageContentErrorPageContentTitleOverride : undefined;
-  const retryLabelOverride: ThemeErrorPageContentErrorPageContentRetryLabelOverride = (overrides !== undefined && overrides !== null) ? overrides['retryLabel'] as ThemeErrorPageContentErrorPageContentRetryLabelOverride : undefined;
+  const titleOverride: Theme_ErrorPageContent_Index_ErrorPageContent_TitleOverride = (overrides !== undefined && overrides !== null) ? overrides['title'] as Theme_ErrorPageContent_Index_ErrorPageContent_TitleOverride : undefined;
+  const retryLabelOverride: Theme_ErrorPageContent_Index_ErrorPageContent_RetryLabelOverride = (overrides !== undefined && overrides !== null) ? overrides['retryLabel'] as Theme_ErrorPageContent_Index_ErrorPageContent_RetryLabelOverride : undefined;
 
-  const message: ThemeErrorPageContentErrorPageContentMessage = props['error']['message'];
+  const message: Theme_ErrorPageContent_Index_ErrorPageContent_Message = props['error']['message'];
 
-  const titlePool: ThemeErrorPageContentErrorPageContentTitlePool = [
+  const titlePool: Theme_ErrorPageContent_Index_ErrorPageContent_TitlePool = [
     translate({
       id: 'theme.ErrorPageContent.titlePool.0',
       message: 'Something went sideways.',
@@ -71,11 +71,11 @@ function ErrorPageContent(props: ThemeErrorPageContentErrorPageContentProps) {
     }),
   ];
 
-  const globalData: ThemeErrorPageContentErrorPageContentGlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as ThemeErrorPageContentErrorPageContentGlobalData;
-  const titleIndex: ThemeErrorPageContentErrorPageContentTitleIndex = (typeof globalData['errorPageContentTitleIndex'] === 'number') ? globalData['errorPageContentTitleIndex'] : 0;
+  const globalData: Theme_ErrorPageContent_Index_ErrorPageContent_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Theme_ErrorPageContent_Index_ErrorPageContent_GlobalData;
+  const titleIndex: Theme_ErrorPageContent_Index_ErrorPageContent_TitleIndex = (typeof globalData['errorPageContentTitleIndex'] === 'number') ? globalData['errorPageContentTitleIndex'] : 0;
 
-  const title: ThemeErrorPageContentErrorPageContentTitle = (titleOverride !== undefined && titleOverride !== '') ? titleOverride : (titlePool[titleIndex] ?? '');
-  const tryAgainLabel: ThemeErrorPageContentErrorPageContentTryAgain = (retryLabelOverride !== undefined && retryLabelOverride !== '') ? retryLabelOverride : translate({
+  const title: Theme_ErrorPageContent_Index_ErrorPageContent_Title = (titleOverride !== undefined && titleOverride !== '') ? titleOverride : (titlePool[titleIndex] ?? '');
+  const tryAgainLabel: Theme_ErrorPageContent_Index_ErrorPageContent_TryAgain = (retryLabelOverride !== undefined && retryLabelOverride !== '') ? retryLabelOverride : translate({
     id: 'theme.ErrorPageContent.tryAgain',
     message: 'Try again',
     description: 'The label for the button that retries after a page crash',

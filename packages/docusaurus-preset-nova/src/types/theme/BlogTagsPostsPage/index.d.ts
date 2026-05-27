@@ -7,35 +7,35 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsSidebar = BlogSidebar;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_Sidebar = BlogSidebar;
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsTag = TagModule;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_Tag = TagModule;
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsListMetadata = BlogPaginatedMetadata;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_ListMetadata = BlogPaginatedMetadata;
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItemContent = PropBlogPostContent;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_PropsItem_Content = PropBlogPostContent;
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItem = {
-  content: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItemContent;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_PropsItem = {
+  content: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_PropsItem_Content;
   [key: string]: unknown;
 };
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItems = readonly ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItem[];
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_Items = readonly Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_PropsItem[];
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsClassName = string | undefined;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_ClassName = string | undefined;
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPagePropsStyle = CSSProperties | undefined;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPageProps = {
-  sidebar: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsSidebar;
-  tag: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsTag;
-  listMetadata: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsListMetadata;
-  items: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsItems;
-  className?: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsClassName;
-  style?: ThemeBlogTagsPostsPageBlogTagsPostsPagePropsStyle;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props = {
+  sidebar: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_Sidebar;
+  tag: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_Tag;
+  listMetadata: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_ListMetadata;
+  items: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_Items;
+  className?: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_ClassName;
+  style?: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPageTitle = string;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Title = string;
 
-export type ThemeBlogTagsPostsPageBlogTagsPostsPageViewAllTags = string;
+export type Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_ViewAllTags = string;

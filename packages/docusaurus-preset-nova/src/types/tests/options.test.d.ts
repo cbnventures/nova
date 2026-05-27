@@ -1,10 +1,10 @@
-import type { OptionsPluginOptions } from '../options.d.ts';
+import type { Options_PluginOptions } from '../options.d.ts';
 import type {
-  SharedPreset,
-  SharedPresetColorsAccent,
-  SharedPresetColorsPrimary,
-  SharedPresetFooter,
-  SharedPresetNavbar,
+  Shared_Preset,
+  Shared_Preset_Colors_Accent,
+  Shared_Preset_Colors_Primary,
+  Shared_Preset_Footer,
+  Shared_Preset_Navbar,
 } from '../shared.d.ts';
 
 /**
@@ -12,90 +12,90 @@ import type {
  *
  * @since 0.15.0
  */
-export type TestsOptionsResolvePresetResult = SharedPreset;
+export type Tests_Options_ResolvePreset_Result = Shared_Preset;
 
-export type TestsOptionsResolvedFontsDisplay = string;
+export type Tests_Options_ResolvedFontsDisplay = string;
 
-export type TestsOptionsResolvedFontsBody = string;
+export type Tests_Options_ResolvedFontsBody = string;
 
-export type TestsOptionsResolvedColorsPrimary = SharedPresetColorsPrimary;
+export type Tests_Options_ResolvedColorsPrimary = Shared_Preset_Colors_Primary;
 
-export type TestsOptionsResolvedColorsAccent = SharedPresetColorsAccent;
+export type Tests_Options_ResolvedColorsAccent = Shared_Preset_Colors_Accent;
 
-export type TestsOptionsResolvedNavbar = SharedPresetNavbar;
+export type Tests_Options_ResolvedNavbar = Shared_Preset_Navbar;
 
-export type TestsOptionsResolvedFooter = SharedPresetFooter;
+export type Tests_Options_ResolvedFooter = Shared_Preset_Footer;
 
 /**
  * Tests - Options - Validate Options.
  *
  * @since 0.15.0
  */
-export type TestsOptionsJoiSchemaValidate = (value: unknown) => TestsOptionsJoiSchemaValidateResult;
+export type Tests_Options_JoiSchema_Validate = (value: unknown) => Tests_Options_JoiSchemaValidateResult;
 
-export type TestsOptionsJoiSchema = {
-  validate: TestsOptionsJoiSchemaValidate;
+export type Tests_Options_JoiSchema = {
+  validate: Tests_Options_JoiSchema_Validate;
 };
 
-export type TestsOptionsJoiSchemaValidateResultValue = unknown;
+export type Tests_Options_JoiSchemaValidateResult_Value = unknown;
 
-export type TestsOptionsJoiSchemaValidateResult = {
-  value: TestsOptionsJoiSchemaValidateResultValue;
+export type Tests_Options_JoiSchemaValidateResult = {
+  value: Tests_Options_JoiSchemaValidateResult_Value;
   error?: Error;
 };
 
-export type TestsOptionsValidatedResult = OptionsPluginOptions;
+export type Tests_Options_ValidatedResult = Options_PluginOptions;
 
-export type TestsOptionsPresetValue = string;
+export type Tests_Options_PresetValue = string;
 
 /**
  * Tests - Options - Validate Theme Config.
  *
  * @since 0.15.0
  */
-export type TestsOptionsThemeConfigValidatedResult = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedResult = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigJoiSchemaValidate = (value: unknown) => TestsOptionsThemeConfigJoiSchemaValidateResult;
+export type Tests_Options_ThemeConfigJoiSchema_Validate = (value: unknown) => Tests_Options_ThemeConfigJoiSchemaValidateResult;
 
-export type TestsOptionsThemeConfigJoiSchema = {
-  validate: TestsOptionsThemeConfigJoiSchemaValidate;
+export type Tests_Options_ThemeConfigJoiSchema = {
+  validate: Tests_Options_ThemeConfigJoiSchema_Validate;
 };
 
-export type TestsOptionsThemeConfigJoiSchemaValidateResultValue = unknown;
+export type Tests_Options_ThemeConfigJoiSchemaValidateResult_Value = unknown;
 
-export type TestsOptionsThemeConfigJoiSchemaValidateResult = {
-  value: TestsOptionsThemeConfigJoiSchemaValidateResultValue;
+export type Tests_Options_ThemeConfigJoiSchemaValidateResult = {
+  value: Tests_Options_ThemeConfigJoiSchemaValidateResult_Value;
   error?: Error;
 };
 
-export type TestsOptionsThemeConfigValidatedSite = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedSite = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigValidatedSiteTitle = string;
+export type Tests_Options_ThemeConfigValidatedSiteTitle = string;
 
-export type TestsOptionsThemeConfigValidatedSiteMetadata = unknown[];
+export type Tests_Options_ThemeConfigValidatedSiteMetadata = unknown[];
 
-export type TestsOptionsThemeConfigValidatedBlog = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedBlog = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigValidatedBlogLayout = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedBlogLayout = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigValidatedBlogLayoutHeading = string;
+export type Tests_Options_ThemeConfigValidatedBlogLayoutHeading = string;
 
-export type TestsOptionsThemeConfigValidatedBlogLayoutDescription = string;
+export type Tests_Options_ThemeConfigValidatedBlogLayoutDescription = string;
 
-export type TestsOptionsThemeConfigValidatedNavbar = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedNavbar = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigValidatedNavbarHideOnScroll = boolean;
+export type Tests_Options_ThemeConfigValidatedNavbarHideOnScroll = boolean;
 
-export type TestsOptionsThemeConfigValidatedErrorPages = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedErrorPages = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigValidatedErrorPagesNotFound = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedErrorPagesNotFound = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigValidatedErrorPagesNotFoundTitle = string;
+export type Tests_Options_ThemeConfigValidatedErrorPagesNotFoundTitle = string;
 
-export type TestsOptionsThemeConfigValidatedErrorPagesErrorPageContent = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedErrorPagesErrorPageContent = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigValidatedErrorPagesErrorPageContentTitle = string;
+export type Tests_Options_ThemeConfigValidatedErrorPagesErrorPageContentTitle = string;
 
-export type TestsOptionsThemeConfigValidatedErrorPagesError = Record<string, unknown>;
+export type Tests_Options_ThemeConfigValidatedErrorPagesError = Record<string, unknown>;
 
-export type TestsOptionsThemeConfigValidatedErrorPagesErrorRetryLabel = string;
+export type Tests_Options_ThemeConfigValidatedErrorPagesErrorRetryLabel = string;

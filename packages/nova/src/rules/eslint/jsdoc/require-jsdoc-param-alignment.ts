@@ -3,36 +3,36 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllComments,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllDashesSame,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllNameStartsSame,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramContext,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramDashIndex,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramDashPositions,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedLine,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedLines,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedValue,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixMatch,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramLines,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatch,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchDash,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchName,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchType,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMaxNameLength,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMaxTypeLength,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramNameStartIndex,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramNameStartPositions,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramPadAfterName,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramPadAfterType,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParamLines,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntries,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramRebuiltLine,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramReturns,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeEndIndex,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeLength,
-  RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeWithBraces,
-  RulesEslintJsdocRequireJsdocParamAlignmentRuleDefaultOptionsIgnoreFiles,
-  RulesEslintJsdocRequireJsdocParamAlignmentRuleOptions,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllComments,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllDashesSame,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllNameStartsSame,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Context,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashPositions,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Match,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLine,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLines,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedValue,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Lines,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Match,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchDash,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchName,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchType,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MaxNameLength,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MaxTypeLength,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_NameStartIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_NameStartPositions,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_PadAfterName,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_PadAfterType,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParamLines,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntries,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_RebuiltLine,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Returns,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeEndIndex,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeLength,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeWithBraces,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions,
 } from '../../../types/rules/eslint/jsdoc/require-jsdoc-param-alignment.d.ts';
 
 /**
@@ -43,7 +43,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintJsdocRequireJsdocParamAlignment {
+export class Runner {
   /**
    * Rules - ESLint - JSDoc - Require JSDoc Param Alignment - Param Pattern.
    *
@@ -101,10 +101,10 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintJsdocRequireJsdocParamAlignmentRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintJsdocRequireJsdocParamAlignmentRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -113,7 +113,7 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
 
       return {
         Program() {
-          RulesEslintJsdocRequireJsdocParamAlignment.checkProgram(context);
+          Runner.checkProgram(context);
 
           return;
         },
@@ -129,14 +129,14 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
    *
    * @private
    *
-   * @param {RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramContext} context - Context.
+   * @param {Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Context} context - Context.
    *
-   * @returns {RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramReturns}
+   * @returns {Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Returns}
    *
    * @since 0.15.0
    */
-  private static checkProgram(context: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramContext): RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramReturns {
-    const allComments: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllComments = context.sourceCode.getAllComments();
+  private static checkProgram(context: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Context): Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Returns {
+    const allComments: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllComments = context.sourceCode.getAllComments();
 
     for (const comment of allComments) {
       if (comment.type !== 'Block') {
@@ -147,8 +147,8 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
         continue;
       }
 
-      const lines: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramLines = comment.value.split('\n');
-      const paramLines: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParamLines = [];
+      const lines: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Lines = comment.value.split('\n');
+      const paramLines: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParamLines = [];
 
       for (const line of lines) {
         if (line.includes('@param') === true) {
@@ -161,19 +161,19 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
         continue;
       }
 
-      const nameStartPositions: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramNameStartPositions = [];
-      const dashPositions: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramDashPositions = [];
+      const nameStartPositions: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_NameStartPositions = [];
+      const dashPositions: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashPositions = [];
 
       for (const paramLine of paramLines) {
-        const match: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatch = RulesEslintJsdocRequireJsdocParamAlignment.#paramPattern.exec(paramLine);
+        const match: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Match = Runner.#paramPattern.exec(paramLine);
 
         if (match === null) {
           continue;
         }
 
-        const matchType: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchType = match[1];
-        const matchName: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchName = match[2];
-        const matchDash: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMatchDash = match[3];
+        const matchType: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchType = match[1];
+        const matchName: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchName = match[2];
+        const matchDash: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MatchDash = match[3];
 
         if (
           matchType === undefined
@@ -183,9 +183,9 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
           continue;
         }
 
-        const typeEndIndex: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeEndIndex = paramLine.indexOf(matchType) + matchType.length;
-        const nameStartIndex: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramNameStartIndex = paramLine.indexOf(matchName, typeEndIndex);
-        const dashIndex: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramDashIndex = paramLine.indexOf(matchDash, nameStartIndex + matchName.length);
+        const typeEndIndex: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeEndIndex = paramLine.indexOf(matchType) + matchType.length;
+        const nameStartIndex: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_NameStartIndex = paramLine.indexOf(matchName, typeEndIndex);
+        const dashIndex: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_DashIndex = paramLine.indexOf(matchDash, nameStartIndex + matchName.length);
 
         nameStartPositions.push(nameStartIndex);
 
@@ -197,28 +197,28 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
         continue;
       }
 
-      const allNameStartsSame: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllNameStartsSame = nameStartPositions.every((position) => position === nameStartPositions[0]);
-      const allDashesSame: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramAllDashesSame = dashPositions.every((position) => position === dashPositions[0]);
+      const allNameStartsSame: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllNameStartsSame = nameStartPositions.every((position) => position === nameStartPositions[0]);
+      const allDashesSame: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_AllDashesSame = dashPositions.every((position) => position === dashPositions[0]);
 
       if (
         allNameStartsSame === false
         || allDashesSame === false
       ) {
         // Compute the fixed comment value with aligned @param lines.
-        const fixedLines: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedLines = [...lines];
-        let maxTypeLength: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMaxTypeLength = 0;
-        let maxNameLength: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramMaxNameLength = 0;
+        const fixedLines: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLines = [...lines];
+        let maxTypeLength: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MaxTypeLength = 0;
+        let maxNameLength: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_MaxNameLength = 0;
 
-        const parsedEntries: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramParsedEntries = [];
+        const parsedEntries: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_ParsedEntries = [];
 
         for (let i = 0; i < fixedLines.length; i += 1) {
-          const fixedLine: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedLine = fixedLines[i];
+          const fixedLine: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedLine = fixedLines[i];
 
           if (fixedLine === undefined) {
             continue;
           }
 
-          const fixMatch: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixMatch = fixedLine.match(RulesEslintJsdocRequireJsdocParamAlignment.#fixPattern);
+          const fixMatch: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_Fix_Match = fixedLine.match(Runner.#fixPattern);
 
           if (
             fixMatch !== null
@@ -227,7 +227,7 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
             && fixMatch[3] !== undefined
             && fixMatch[4] !== undefined
           ) {
-            const typeLength: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeLength = fixMatch[2].length + 2;
+            const typeLength: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeLength = fixMatch[2].length + 2;
 
             if (typeLength > maxTypeLength) {
               maxTypeLength = typeLength;
@@ -248,16 +248,16 @@ export class RulesEslintJsdocRequireJsdocParamAlignment {
         }
 
         for (const entry of parsedEntries) {
-          const typeWithBraces: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramTypeWithBraces = `{${entry['type']}}`;
-          const padAfterType: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramPadAfterType = maxTypeLength - typeWithBraces.length + 1;
-          const padAfterName: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramPadAfterName = maxNameLength - entry['name'].length + 1;
+          const typeWithBraces: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_TypeWithBraces = `{${entry['type']}}`;
+          const padAfterType: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_PadAfterType = maxTypeLength - typeWithBraces.length + 1;
+          const padAfterName: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_PadAfterName = maxNameLength - entry['name'].length + 1;
 
-          const fixedLine: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramRebuiltLine = `${entry['prefix']}${typeWithBraces}${' '.repeat(padAfterType)}${entry['name']}${' '.repeat(padAfterName)}${entry['description']}`;
+          const fixedLine: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_RebuiltLine = `${entry['prefix']}${typeWithBraces}${' '.repeat(padAfterType)}${entry['name']}${' '.repeat(padAfterName)}${entry['description']}`;
 
           Reflect.set(fixedLines, entry['index'], fixedLine);
         }
 
-        const fixedValue: RulesEslintJsdocRequireJsdocParamAlignmentCheckProgramFixedValue = fixedLines.join('\n');
+        const fixedValue: Rules_Eslint_Jsdoc_RequireJsdocParamAlignment_Runner_CheckProgram_FixedValue = fixedLines.join('\n');
 
         context.report({
           node: comment,

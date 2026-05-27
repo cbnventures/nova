@@ -1,8 +1,8 @@
 import Link from '@docusaurus/Link';
 
 import type {
-  BlocksTerminologyClassName,
-  BlocksTerminologyProps,
+  Blocks_Terminology_Index_BlocksTerminology_ClassName,
+  Blocks_Terminology_Index_BlocksTerminology_Props,
 } from '../../types/blocks/terminology/index.d.ts';
 
 /**
@@ -12,15 +12,15 @@ import type {
  * underline and a hover tooltip expanding the abbreviated term,
  * optionally linking to a glossary page.
  *
- * @param {BlocksTerminologyProps} props - Props.
+ * @param {Blocks_Terminology_Index_BlocksTerminology_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlocksTerminology(props: BlocksTerminologyProps) {
-  const baseClassName: BlocksTerminologyClassName = (props['color'] === true) ? 'nova-terminology nova-terminology-colored' : 'nova-terminology';
-  const className: BlocksTerminologyClassName = (props['className'] !== undefined) ? `${baseClassName} ${props['className']}` : baseClassName;
+function BlocksTerminology(props: Blocks_Terminology_Index_BlocksTerminology_Props) {
+  const baseClassName: Blocks_Terminology_Index_BlocksTerminology_ClassName = (props['color'] === true) ? 'nova-terminology nova-terminology-colored' : 'nova-terminology';
+  const className: Blocks_Terminology_Index_BlocksTerminology_ClassName = (props['className'] !== undefined) ? `${baseClassName} ${props['className']}` : baseClassName;
 
   if (props['to'] !== undefined) {
     return (

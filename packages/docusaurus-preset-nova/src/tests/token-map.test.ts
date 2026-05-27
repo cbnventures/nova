@@ -6,60 +6,60 @@ import { fileURLToPath } from 'node:url';
 import { describe, it } from 'vitest';
 
 import type {
-  TestsTokenMapAdmonitionFacets,
-  TestsTokenMapAdmonitionPreset,
-  TestsTokenMapAdmonitionReturns,
-  TestsTokenMapAdmonitionSuffixes,
-  TestsTokenMapAdmonitionTypes,
-  TestsTokenMapAssertTokensPresentContent,
-  TestsTokenMapAssertTokensPresentFilePath,
-  TestsTokenMapAssertTokensPresentMatches,
-  TestsTokenMapAssertTokensPresentMessage,
-  TestsTokenMapAssertTokensPresentMissing,
-  TestsTokenMapAssertTokensPresentPattern,
-  TestsTokenMapAssertTokensPresentRelativeFile,
-  TestsTokenMapAssertTokensPresentReturns,
-  TestsTokenMapAssertTokensPresentToken,
-  TestsTokenMapAssertTokensPresentTokens,
-  TestsTokenMapBlogDescriptionPreset,
-  TestsTokenMapBlogDescriptionReturns,
-  TestsTokenMapBlogPostTypographyPreset,
-  TestsTokenMapBlogPostTypographyReturns,
-  TestsTokenMapBlogTypographyPreset,
-  TestsTokenMapBlogTypographyReturns,
-  TestsTokenMapColorBgPreset,
-  TestsTokenMapColorBgReturns,
-  TestsTokenMapColorBgSemantics,
-  TestsTokenMapColorScaleLevels,
-  TestsTokenMapColorScalePreset,
-  TestsTokenMapColorScaleReturns,
-  TestsTokenMapColorScaleSemantics,
-  TestsTokenMapColorScaleSuffixes,
-  TestsTokenMapDepthPreset,
-  TestsTokenMapDepthReturns,
-  TestsTokenMapDepthSuffixes,
-  TestsTokenMapExpectations,
-  TestsTokenMapGetPackageRootCurrentFileDirectory,
-  TestsTokenMapGetPackageRootCurrentFilePath,
-  TestsTokenMapGetPackageRootReturns,
-  TestsTokenMapGridPreset,
-  TestsTokenMapGridReturns,
-  TestsTokenMapGridSuffixes,
-  TestsTokenMapLayoutPreset,
-  TestsTokenMapLayoutReturns,
-  TestsTokenMapLayoutSuffixes,
-  TestsTokenMapMermaidFacets,
-  TestsTokenMapMermaidPreset,
-  TestsTokenMapMermaidReturns,
-  TestsTokenMapRenamePreset,
-  TestsTokenMapRenameReturns,
-  TestsTokenMapRenameSuffixes,
-  TestsTokenMapSectionGapPreset,
-  TestsTokenMapSectionGapReturns,
-  TestsTokenMapSkipPreset,
-  TestsTokenMapSkipReturns,
-  TestsTokenMapTokenMapFile,
-  TestsTokenMapTokenMapTokens,
+  Tests_TokenMap_Admonition_Facets,
+  Tests_TokenMap_Admonition_Preset,
+  Tests_TokenMap_Admonition_Returns,
+  Tests_TokenMap_Admonition_Suffixes,
+  Tests_TokenMap_Admonition_Types,
+  Tests_TokenMap_AssertTokensPresent_Content,
+  Tests_TokenMap_AssertTokensPresent_FilePath,
+  Tests_TokenMap_AssertTokensPresent_Matches,
+  Tests_TokenMap_AssertTokensPresent_Message,
+  Tests_TokenMap_AssertTokensPresent_Missing,
+  Tests_TokenMap_AssertTokensPresent_Pattern,
+  Tests_TokenMap_AssertTokensPresent_RelativeFile,
+  Tests_TokenMap_AssertTokensPresent_Returns,
+  Tests_TokenMap_AssertTokensPresent_Token,
+  Tests_TokenMap_AssertTokensPresent_Tokens,
+  Tests_TokenMap_BlogDescription_Preset,
+  Tests_TokenMap_BlogDescription_Returns,
+  Tests_TokenMap_BlogPostTypography_Preset,
+  Tests_TokenMap_BlogPostTypography_Returns,
+  Tests_TokenMap_BlogTypography_Preset,
+  Tests_TokenMap_BlogTypography_Returns,
+  Tests_TokenMap_ColorBg_Preset,
+  Tests_TokenMap_ColorBg_Returns,
+  Tests_TokenMap_ColorBg_Semantics,
+  Tests_TokenMap_ColorScale_Levels,
+  Tests_TokenMap_ColorScale_Preset,
+  Tests_TokenMap_ColorScale_Returns,
+  Tests_TokenMap_ColorScale_Semantics,
+  Tests_TokenMap_ColorScale_Suffixes,
+  Tests_TokenMap_Depth_Preset,
+  Tests_TokenMap_Depth_Returns,
+  Tests_TokenMap_Depth_Suffixes,
+  Tests_TokenMap_Expectations,
+  Tests_TokenMap_GetPackageRoot_CurrentFileDirectory,
+  Tests_TokenMap_GetPackageRoot_CurrentFilePath,
+  Tests_TokenMap_GetPackageRoot_Returns,
+  Tests_TokenMap_Grid_Preset,
+  Tests_TokenMap_Grid_Returns,
+  Tests_TokenMap_Grid_Suffixes,
+  Tests_TokenMap_Layout_Preset,
+  Tests_TokenMap_Layout_Returns,
+  Tests_TokenMap_Layout_Suffixes,
+  Tests_TokenMap_Mermaid_Facets,
+  Tests_TokenMap_Mermaid_Preset,
+  Tests_TokenMap_Mermaid_Returns,
+  Tests_TokenMap_Rename_Preset,
+  Tests_TokenMap_Rename_Returns,
+  Tests_TokenMap_Rename_Suffixes,
+  Tests_TokenMap_SectionGap_Preset,
+  Tests_TokenMap_SectionGap_Returns,
+  Tests_TokenMap_Skip_Preset,
+  Tests_TokenMap_Skip_Returns,
+  Tests_TokenMap_TokenMap_File,
+  Tests_TokenMap_TokenMap_Tokens,
 } from '../types/tests/token-map.test.d.ts';
 
 /**
@@ -71,9 +71,9 @@ import type {
  *
  * @since 0.18.0
  */
-function getPackageRoot(): TestsTokenMapGetPackageRootReturns {
-  const currentFilePath: TestsTokenMapGetPackageRootCurrentFilePath = fileURLToPath(import.meta.url);
-  const currentFileDirectory: TestsTokenMapGetPackageRootCurrentFileDirectory = dirname(currentFilePath);
+function getPackageRoot(): Tests_TokenMap_GetPackageRoot_Returns {
+  const currentFilePath: Tests_TokenMap_GetPackageRoot_CurrentFilePath = fileURLToPath(import.meta.url);
+  const currentFileDirectory: Tests_TokenMap_GetPackageRoot_CurrentFileDirectory = dirname(currentFilePath);
 
   return resolve(currentFileDirectory, '..', '..');
 }
@@ -88,22 +88,22 @@ function getPackageRoot(): TestsTokenMapGetPackageRootReturns {
  *
  * @since 0.18.0
  */
-async function assertTokensPresent(relativeFile: TestsTokenMapAssertTokensPresentRelativeFile, tokens: TestsTokenMapAssertTokensPresentTokens): TestsTokenMapAssertTokensPresentReturns {
-  const filePath: TestsTokenMapAssertTokensPresentFilePath = resolve(getPackageRoot(), relativeFile);
-  const content: TestsTokenMapAssertTokensPresentContent = await readFile(filePath, 'utf-8');
-  const missing: TestsTokenMapAssertTokensPresentMissing = [];
+async function assertTokensPresent(relativeFile: Tests_TokenMap_AssertTokensPresent_RelativeFile, tokens: Tests_TokenMap_AssertTokensPresent_Tokens): Tests_TokenMap_AssertTokensPresent_Returns {
+  const filePath: Tests_TokenMap_AssertTokensPresent_FilePath = resolve(getPackageRoot(), relativeFile);
+  const content: Tests_TokenMap_AssertTokensPresent_Content = await readFile(filePath, 'utf-8');
+  const missing: Tests_TokenMap_AssertTokensPresent_Missing = [];
 
   for (const token of tokens) {
-    const tokenName: TestsTokenMapAssertTokensPresentToken = token;
-    const pattern: TestsTokenMapAssertTokensPresentPattern = new RegExp(`--${tokenName}\\s*:`, 'g');
-    const matches: TestsTokenMapAssertTokensPresentMatches = content.match(pattern);
+    const tokenName: Tests_TokenMap_AssertTokensPresent_Token = token;
+    const pattern: Tests_TokenMap_AssertTokensPresent_Pattern = new RegExp(`--${tokenName}\\s*:`, 'g');
+    const matches: Tests_TokenMap_AssertTokensPresent_Matches = content.match(pattern);
 
     if (matches === null) {
       missing.push(tokenName);
     }
   }
 
-  const message: TestsTokenMapAssertTokensPresentMessage = [
+  const message: Tests_TokenMap_AssertTokensPresent_Message = [
     `Tokens missing from ${relativeFile} (must be declared at least once):`,
     missing.join('\n'),
   ].join('\n');
@@ -125,7 +125,7 @@ async function assertTokensPresent(relativeFile: TestsTokenMapAssertTokensPresen
  *
  * @since 0.18.0
  */
-function rename(preset: TestsTokenMapRenamePreset, suffixes: TestsTokenMapRenameSuffixes): TestsTokenMapRenameReturns {
+function rename(preset: Tests_TokenMap_Rename_Preset, suffixes: Tests_TokenMap_Rename_Suffixes): Tests_TokenMap_Rename_Returns {
   return [
     ...suffixes.map((s) => `nova-${preset}-${s}`),
     ...suffixes.map((s) => `nova-${s}`),
@@ -140,7 +140,7 @@ function rename(preset: TestsTokenMapRenamePreset, suffixes: TestsTokenMapRename
  *
  * @since 0.18.0
  */
-function skip(preset: TestsTokenMapSkipPreset): TestsTokenMapSkipReturns {
+function skip(preset: Tests_TokenMap_Skip_Preset): Tests_TokenMap_Skip_Returns {
   return rename(preset, [
     'skip-bg',
     'skip-color',
@@ -157,7 +157,7 @@ function skip(preset: TestsTokenMapSkipPreset): TestsTokenMapSkipReturns {
  *
  * @since 0.18.0
  */
-function blogDescription(preset: TestsTokenMapBlogDescriptionPreset): TestsTokenMapBlogDescriptionReturns {
+function blogDescription(preset: Tests_TokenMap_BlogDescription_Preset): Tests_TokenMap_BlogDescription_Returns {
   return rename(preset, ['blog-description-color']);
 }
 
@@ -173,7 +173,7 @@ function blogDescription(preset: TestsTokenMapBlogDescriptionPreset): TestsToken
  *
  * @since 0.18.0
  */
-function blogTypography(preset: TestsTokenMapBlogTypographyPreset): TestsTokenMapBlogTypographyReturns {
+function blogTypography(preset: Tests_TokenMap_BlogTypography_Preset): Tests_TokenMap_BlogTypography_Returns {
   return rename(preset, [
     'blog-header-heading-size',
     'blog-header-heading-size-md',
@@ -196,7 +196,7 @@ function blogTypography(preset: TestsTokenMapBlogTypographyPreset): TestsTokenMa
  *
  * @since 0.18.0
  */
-function blogPostTypography(preset: TestsTokenMapBlogPostTypographyPreset): TestsTokenMapBlogPostTypographyReturns {
+function blogPostTypography(preset: Tests_TokenMap_BlogPostTypography_Preset): Tests_TokenMap_BlogPostTypography_Returns {
   return rename(preset, [
     'blog-post-title-size',
     'blog-post-title-size-md',
@@ -219,7 +219,7 @@ function blogPostTypography(preset: TestsTokenMapBlogPostTypographyPreset): Test
  *
  * @since 0.18.0
  */
-function sectionGap(preset: TestsTokenMapSectionGapPreset): TestsTokenMapSectionGapReturns {
+function sectionGap(preset: Tests_TokenMap_SectionGap_Preset): Tests_TokenMap_SectionGap_Returns {
   return rename(preset, ['section-gap']);
 }
 
@@ -234,7 +234,7 @@ function sectionGap(preset: TestsTokenMapSectionGapPreset): TestsTokenMapSection
  *
  * @since 0.18.0
  */
-function mermaid(preset: TestsTokenMapMermaidPreset, facets: TestsTokenMapMermaidFacets): TestsTokenMapMermaidReturns {
+function mermaid(preset: Tests_TokenMap_Mermaid_Preset, facets: Tests_TokenMap_Mermaid_Facets): Tests_TokenMap_Mermaid_Returns {
   return rename(preset, facets.map((f) => `mermaid-${f}`));
 }
 
@@ -249,8 +249,8 @@ function mermaid(preset: TestsTokenMapMermaidPreset, facets: TestsTokenMapMermai
  *
  * @since 0.18.0
  */
-function admonition(preset: TestsTokenMapAdmonitionPreset, types: TestsTokenMapAdmonitionTypes, facets: TestsTokenMapAdmonitionFacets): TestsTokenMapAdmonitionReturns {
-  const suffixes: TestsTokenMapAdmonitionSuffixes = types.flatMap((t) => facets.map((f) => `admonition-${t}-${f}`));
+function admonition(preset: Tests_TokenMap_Admonition_Preset, types: Tests_TokenMap_Admonition_Types, facets: Tests_TokenMap_Admonition_Facets): Tests_TokenMap_Admonition_Returns {
+  const suffixes: Tests_TokenMap_Admonition_Suffixes = types.flatMap((t) => facets.map((f) => `admonition-${t}-${f}`));
 
   return rename(preset, suffixes);
 }
@@ -265,7 +265,7 @@ function admonition(preset: TestsTokenMapAdmonitionPreset, types: TestsTokenMapA
  *
  * @since 0.18.0
  */
-function colorBg(preset: TestsTokenMapColorBgPreset, semantics: TestsTokenMapColorBgSemantics): TestsTokenMapColorBgReturns {
+function colorBg(preset: Tests_TokenMap_ColorBg_Preset, semantics: Tests_TokenMap_ColorBg_Semantics): Tests_TokenMap_ColorBg_Returns {
   return rename(preset, semantics.map((s) => `color-${s}-bg`));
 }
 
@@ -278,8 +278,8 @@ function colorBg(preset: TestsTokenMapColorBgPreset, semantics: TestsTokenMapCol
  *
  * @since 0.18.0
  */
-function colorScale(preset: TestsTokenMapColorScalePreset, semantics: TestsTokenMapColorScaleSemantics, levels: TestsTokenMapColorScaleLevels): TestsTokenMapColorScaleReturns {
-  const suffixes: TestsTokenMapColorScaleSuffixes = semantics.flatMap((s) => levels.map((l) => `color-${s}-${l}`));
+function colorScale(preset: Tests_TokenMap_ColorScale_Preset, semantics: Tests_TokenMap_ColorScale_Semantics, levels: Tests_TokenMap_ColorScale_Levels): Tests_TokenMap_ColorScale_Returns {
+  const suffixes: Tests_TokenMap_ColorScale_Suffixes = semantics.flatMap((s) => levels.map((l) => `color-${s}-${l}`));
 
   return rename(preset, suffixes);
 }
@@ -292,7 +292,7 @@ function colorScale(preset: TestsTokenMapColorScalePreset, semantics: TestsToken
  *
  * @since 0.18.0
  */
-function depth(preset: TestsTokenMapDepthPreset, suffixes: TestsTokenMapDepthSuffixes): TestsTokenMapDepthReturns {
+function depth(preset: Tests_TokenMap_Depth_Preset, suffixes: Tests_TokenMap_Depth_Suffixes): Tests_TokenMap_Depth_Returns {
   return rename(preset, suffixes.map((s) => `depth-${s}`));
 }
 
@@ -304,7 +304,7 @@ function depth(preset: TestsTokenMapDepthPreset, suffixes: TestsTokenMapDepthSuf
  *
  * @since 0.18.0
  */
-function grid(preset: TestsTokenMapGridPreset, suffixes: TestsTokenMapGridSuffixes): TestsTokenMapGridReturns {
+function grid(preset: Tests_TokenMap_Grid_Preset, suffixes: Tests_TokenMap_Grid_Suffixes): Tests_TokenMap_Grid_Returns {
   return rename(preset, suffixes.map((s) => `grid-${s}`));
 }
 
@@ -316,7 +316,7 @@ function grid(preset: TestsTokenMapGridPreset, suffixes: TestsTokenMapGridSuffix
  *
  * @since 0.18.0
  */
-function layout(preset: TestsTokenMapLayoutPreset, suffixes: TestsTokenMapLayoutSuffixes): TestsTokenMapLayoutReturns {
+function layout(preset: Tests_TokenMap_Layout_Preset, suffixes: Tests_TokenMap_Layout_Suffixes): Tests_TokenMap_Layout_Returns {
   return rename(preset, suffixes.map((s) => `layout-${s}`));
 }
 
@@ -334,7 +334,7 @@ function layout(preset: TestsTokenMapLayoutPreset, suffixes: TestsTokenMapLayout
  *
  * @since 0.18.0
  */
-const expectations: TestsTokenMapExpectations = [
+const expectations: Tests_TokenMap_Expectations = [
   {
     file: 'src/styles/presets/sample/preset.css',
     tokens: [
@@ -684,8 +684,8 @@ const expectations: TestsTokenMapExpectations = [
  */
 describe('token map', () => {
   for (const expectation of expectations) {
-    const file: TestsTokenMapTokenMapFile = expectation['file'];
-    const tokens: TestsTokenMapTokenMapTokens = expectation['tokens'];
+    const file: Tests_TokenMap_TokenMap_File = expectation['file'];
+    const tokens: Tests_TokenMap_TokenMap_Tokens = expectation['tokens'];
 
     it(`${file} declares all expected tokens`, async () => {
       await assertTokensPresent(file, tokens);

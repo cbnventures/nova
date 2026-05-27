@@ -1,8 +1,8 @@
 import type {
-  SharedTocHeading,
-  SharedTocHeadingId,
-  SharedTocHeadingLevel,
-  SharedTocHeadingValue,
+  Shared_TocHeading,
+  Shared_TocHeading_Id,
+  Shared_TocHeading_Level,
+  Shared_TocHeading_Value,
 } from '../shared.d.ts';
 
 /**
@@ -10,74 +10,74 @@ import type {
  *
  * @since 0.15.0
  */
-export type LibTocFilterTocItems = SharedTocHeading[];
+export type Lib_Toc_FilterToc_Items = Shared_TocHeading[];
 
-export type LibTocFilterTocMinHeadingLevel = number;
+export type Lib_Toc_FilterToc_MinHeadingLevel = number;
 
-export type LibTocFilterTocMaxHeadingLevel = number;
+export type Lib_Toc_FilterToc_MaxHeadingLevel = number;
 
-export type LibTocFilterTocReturns = SharedTocHeading[];
+export type Lib_Toc_FilterToc_Returns = Shared_TocHeading[];
 
-export type LibTocFilterTocResults = SharedTocHeading[];
+export type Lib_Toc_FilterToc_Results = Shared_TocHeading[];
 
-export type LibTocFilterTocFilteredChildren = SharedTocHeading[];
+export type Lib_Toc_FilterToc_FilteredChildren = Shared_TocHeading[];
 
-export type LibTocFilterTocIsInRange = boolean;
+export type Lib_Toc_FilterToc_IsInRange = boolean;
 
-export type LibTocFilterTocItem = SharedTocHeading;
+export type Lib_Toc_FilterToc_Item = Shared_TocHeading;
 
 /**
  * Lib - Toc - Last Index At Level Seed.
  *
  * @since 0.15.0
  */
-export type LibTocLastIndexAtLevelSeed = number;
+export type Lib_Toc_LastIndexAtLevelSeed = number;
 
 /**
  * Lib - Toc - Last Index At Level Size.
  *
  * @since 0.15.0
  */
-export type LibTocLastIndexAtLevelSize = number;
+export type Lib_Toc_LastIndexAtLevelSize = number;
 
 /**
  * Lib - Toc - Treeify Toc.
  *
  * @since 0.15.0
  */
-export type LibTocTreeifyTocItems = LibTocTreeifyTocItem[];
+export type Lib_Toc_TreeifyToc_Items = Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Children[];
 
-export type LibTocTreeifyTocReturns = SharedTocHeading[];
+export type Lib_Toc_TreeifyToc_Returns = Shared_TocHeading[];
 
-export type LibTocTreeifyTocHeadings = SharedTocHeading[];
+export type Lib_Toc_TreeifyToc_Headings = Shared_TocHeading[];
 
-export type LibTocTreeifyTocItemValue = SharedTocHeadingValue;
+export type Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Value = Shared_TocHeading_Value;
 
-export type LibTocTreeifyTocItemId = SharedTocHeadingId;
+export type Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Id = Shared_TocHeading_Id;
 
-export type LibTocTreeifyTocItemLevel = SharedTocHeadingLevel;
+export type Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Level = Shared_TocHeading_Level;
 
-export type LibTocTreeifyTocItem = {
-  value: LibTocTreeifyTocItemValue;
-  id: LibTocTreeifyTocItemId;
-  level: LibTocTreeifyTocItemLevel;
-  children?: LibTocTreeifyTocItem[];
+export type Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Children = {
+  value: Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Value;
+  id: Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Id;
+  level: Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Level;
+  children?: Lib_Toc_TreeifyToc_Item_Children_Children_Children_Children_Children[];
 };
 
-export type LibTocTreeifyTocParentIndexByHeading = number[];
+export type Lib_Toc_TreeifyToc_ParentIndexByHeading = number[];
 
-export type LibTocTreeifyTocLastIndexAtLevel = number[];
+export type Lib_Toc_TreeifyToc_LastIndexAtLevel = number[];
 
-export type LibTocTreeifyTocParentIndexValue = number;
+export type Lib_Toc_TreeifyToc_ParentIndexValue = number;
 
-export type LibTocTreeifyTocHeading = SharedTocHeading;
+export type Lib_Toc_TreeifyToc_Heading = Shared_TocHeading;
 
-export type LibTocTreeifyTocCurrentIndex = number;
+export type Lib_Toc_TreeifyToc_CurrentIndex = number;
 
-export type LibTocTreeifyTocAncestorLevelIndexes = number[];
+export type Lib_Toc_TreeifyToc_AncestorLevelIndexes = number[];
 
-export type LibTocTreeifyTocMaxAncestorIndex = number;
+export type Lib_Toc_TreeifyToc_MaxAncestorIndex = number;
 
-export type LibTocTreeifyTocRoots = SharedTocHeading[];
+export type Lib_Toc_TreeifyToc_Roots = Shared_TocHeading[];
 
-export type LibTocTreeifyTocParent = SharedTocHeading;
+export type Lib_Toc_TreeifyToc_Parent = Shared_TocHeading;

@@ -3,26 +3,26 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierContext,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierCurrentScope,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierDef,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierDefNode,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierDefs,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierDefType,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierFound,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierName,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierNode,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierOptions,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierParent,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierReturns,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierScope,
-  RulesEslintPatternsNoUseBeforeDefineCheckIdentifierVariable,
-  RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsClasses,
-  RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsFunctions,
-  RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsIgnoreFiles,
-  RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsTypes,
-  RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsVariables,
-  RulesEslintPatternsNoUseBeforeDefineRuleOptions,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Context,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_CurrentScope,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Def,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_DefNode,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Defs,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_DefType,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Found,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Name,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Node,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Options,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Parent,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Returns,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Scope,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Variable,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsClasses,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsFunctions,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsTypes,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsVariables,
+  Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions,
 } from '../../../types/rules/eslint/patterns/no-use-before-define.d.ts';
 
 /**
@@ -33,7 +33,7 @@ import type {
  *
  * @since 0.15.0
  */
-export class RulesEslintPatternsNoUseBeforeDefine {
+export class Runner {
   /**
    * Rules - ESLint - Patterns - No Use Before Define - Rule.
    *
@@ -78,14 +78,14 @@ export class RulesEslintPatternsNoUseBeforeDefine {
       }],
     },
     defaultOptions: [{
-      classes: true as RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsClasses,
-      functions: true as RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsFunctions,
-      ignoreFiles: [] as RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsIgnoreFiles,
-      types: true as RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsTypes,
-      variables: true as RulesEslintPatternsNoUseBeforeDefineRuleDefaultOptionsVariables,
+      classes: true as Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsClasses,
+      functions: true as Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsFunctions,
+      ignoreFiles: [] as Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsIgnoreFiles,
+      types: true as Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsTypes,
+      variables: true as Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleDefaultOptionsVariables,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintPatternsNoUseBeforeDefineRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -94,7 +94,7 @@ export class RulesEslintPatternsNoUseBeforeDefine {
 
       return {
         Identifier(node) {
-          RulesEslintPatternsNoUseBeforeDefine.checkIdentifier(context, node, options);
+          Runner.checkIdentifier(context, node, options);
 
           return;
         },
@@ -111,20 +111,20 @@ export class RulesEslintPatternsNoUseBeforeDefine {
    *
    * @private
    *
-   * @param {RulesEslintPatternsNoUseBeforeDefineCheckIdentifierContext} context - Context.
-   * @param {RulesEslintPatternsNoUseBeforeDefineCheckIdentifierNode}    node    - Node.
-   * @param {RulesEslintPatternsNoUseBeforeDefineCheckIdentifierOptions} options - Options.
+   * @param {Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Context} context - Context.
+   * @param {Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Node}    node    - Node.
+   * @param {Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Options} options - Options.
    *
-   * @returns {RulesEslintPatternsNoUseBeforeDefineCheckIdentifierReturns}
+   * @returns {Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Returns}
    *
    * @since 0.15.0
    */
-  private static checkIdentifier(context: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierContext, node: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierNode, options: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierOptions): RulesEslintPatternsNoUseBeforeDefineCheckIdentifierReturns {
-    const scope: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierScope = context.sourceCode.getScope(node);
-    const name: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierName = node.name;
+  private static checkIdentifier(context: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Context, node: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Node, options: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Options): Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Returns {
+    const scope: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Scope = context.sourceCode.getScope(node);
+    const name: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Name = node.name;
 
     // Skip if this identifier is the definition itself.
-    const parent: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierParent = node.parent;
+    const parent: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Parent = node.parent;
 
     if (parent === undefined) {
       return;
@@ -187,11 +187,11 @@ export class RulesEslintPatternsNoUseBeforeDefine {
     }
 
     // Look up the variable in scope chain.
-    let currentScope: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierCurrentScope = scope;
-    let variable: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierVariable = undefined;
+    let currentScope: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_CurrentScope = scope;
+    let variable: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Variable = undefined;
 
     while (currentScope !== null) {
-      const found: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierFound = currentScope.set.get(name);
+      const found: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Found = currentScope.set.get(name);
 
       if (found !== undefined) {
         variable = found;
@@ -206,20 +206,20 @@ export class RulesEslintPatternsNoUseBeforeDefine {
       return;
     }
 
-    const defs: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierDefs = variable.defs;
+    const defs: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Defs = variable.defs;
 
     if (defs.length === 0) {
       return;
     }
 
-    const def: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierDef = defs[0];
+    const def: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_Def = defs[0];
 
     if (def === undefined) {
       return;
     }
 
-    const defNode: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierDefNode = def.node;
-    const defType: RulesEslintPatternsNoUseBeforeDefineCheckIdentifierDefType = def.type;
+    const defNode: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_DefNode = def.node;
+    const defType: Rules_Eslint_Patterns_NoUseBeforeDefine_Runner_CheckIdentifier_DefType = def.type;
 
     // Determine the category of the definition.
     if (defType === 'FunctionName') {

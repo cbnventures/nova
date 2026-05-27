@@ -5,110 +5,110 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocTagDocListPageDocTagDocListPageTagLabel = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Label = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageTagDescription = string | undefined;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Description = string | undefined;
 
-export type ThemeDocTagDocListPageDocTagDocListPageTagPermalink = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Permalink = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageTagCount = number;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Count = number;
 
-export type ThemeDocTagDocListPageDocTagDocListPageTagAllTagsPath = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_AllTagsPath = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageTagUnlisted = boolean | undefined;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Unlisted = boolean | undefined;
 
-export type ThemeDocTagDocListPageDocTagDocListPageTagItems = ThemeDocTagDocListPageDocTagDocListPageDoc[];
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Items = Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc[];
 
-export type ThemeDocTagDocListPageDocTagDocListPageTag = {
-  label: ThemeDocTagDocListPageDocTagDocListPageTagLabel;
-  description?: ThemeDocTagDocListPageDocTagDocListPageTagDescription;
-  permalink: ThemeDocTagDocListPageDocTagDocListPageTagPermalink;
-  count: ThemeDocTagDocListPageDocTagDocListPageTagCount;
-  allTagsPath: ThemeDocTagDocListPageDocTagDocListPageTagAllTagsPath;
-  unlisted?: ThemeDocTagDocListPageDocTagDocListPageTagUnlisted;
-  items: ThemeDocTagDocListPageDocTagDocListPageTagItems;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag = {
+  label: Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Label;
+  description?: Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Description;
+  permalink: Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Permalink;
+  count: Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Count;
+  allTagsPath: Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_AllTagsPath;
+  unlisted?: Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Unlisted;
+  items: Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag_Items;
   [key: string]: unknown;
 };
 
-export type ThemeDocTagDocListPageDocTagDocListPagePropsTag = ThemeDocTagDocListPageDocTagDocListPageTag;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Props_Tag = Theme_DocTagDocListPage_Index_DocTagDocListPage_Tag;
 
-export type ThemeDocTagDocListPageDocTagDocListPagePropsClassName = string | undefined;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Props_ClassName = string | undefined;
 
-export type ThemeDocTagDocListPageDocTagDocListPagePropsStyle = CSSProperties | undefined;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocTagDocListPageDocTagDocListPageProps = {
-  tag: ThemeDocTagDocListPageDocTagDocListPagePropsTag;
-  className?: ThemeDocTagDocListPageDocTagDocListPagePropsClassName;
-  style?: ThemeDocTagDocListPageDocTagDocListPagePropsStyle;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Props = {
+  tag: Theme_DocTagDocListPage_Index_DocTagDocListPage_Props_Tag;
+  className?: Theme_DocTagDocListPage_Index_DocTagDocListPage_Props_ClassName;
+  style?: Theme_DocTagDocListPage_Index_DocTagDocListPage_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocTagDocListPageDocTagDocListPageDocsTaggedPlural = ThemeDocTagDocListPageUseDocsTaggedPluralSelectMessage;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_DocsTaggedPlural = Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_SelectMessage;
 
-export type ThemeDocTagDocListPageDocTagDocListPageNDocsTagged = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_NDocsTagged = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageTitle = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Title = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageViewAllTags = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_ViewAllTags = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageReadDocLabel = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_ReadDocLabel = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageMetadataSpread = Record<string, unknown>;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_MetadataSpread = Record<string, unknown>;
 
-export type ThemeDocTagDocListPageDocTagDocListPageDocId = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Id = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageDocTitle = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Title = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageDocDescription = string | undefined;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Description = string | undefined;
 
-export type ThemeDocTagDocListPageDocTagDocListPageDocPermalink = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Permalink = string;
 
-export type ThemeDocTagDocListPageDocTagDocListPageDoc = {
-  id: ThemeDocTagDocListPageDocTagDocListPageDocId;
-  title: ThemeDocTagDocListPageDocTagDocListPageDocTitle;
-  description?: ThemeDocTagDocListPageDocTagDocListPageDocDescription;
-  permalink: ThemeDocTagDocListPageDocTagDocListPageDocPermalink;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc = {
+  id: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Id;
+  title: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Title;
+  description?: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Description;
+  permalink: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc_Permalink;
   [key: string]: unknown;
 };
 
-export type ThemeDocTagDocListPageDocTagDocListPageItemSectionLabel = string;
+export type Theme_DocTagDocListPage_Index_DocTagDocListPage_ItemSectionLabel = string;
 
 /**
  * Theme - Doc Tag Doc List Page - Format Doc Section.
  *
  * @since 0.18.0
  */
-export type ThemeDocTagDocListPageFormatDocSectionDocId = string;
+export type Theme_DocTagDocListPage_Index_FormatDocSection_DocId = string;
 
-export type ThemeDocTagDocListPageFormatDocSectionReturns = string;
+export type Theme_DocTagDocListPage_Index_FormatDocSection_Returns = string;
 
-export type ThemeDocTagDocListPageFormatDocSectionParts = string[];
+export type Theme_DocTagDocListPage_Index_FormatDocSection_Parts = string[];
 
-export type ThemeDocTagDocListPageFormatDocSectionParentParts = string[];
+export type Theme_DocTagDocListPage_Index_FormatDocSection_ParentParts = string[];
 
-export type ThemeDocTagDocListPageFormatDocSectionFormatted = string[];
+export type Theme_DocTagDocListPage_Index_FormatDocSection_Formatted = string[];
 
-export type ThemeDocTagDocListPageFormatDocSectionSegment = string;
+export type Theme_DocTagDocListPage_Index_FormatDocSection_Segment = string;
 
-export type ThemeDocTagDocListPageFormatDocSectionWords = string[];
+export type Theme_DocTagDocListPage_Index_FormatDocSection_Words = string[];
 
-export type ThemeDocTagDocListPageFormatDocSectionTitled = string[];
+export type Theme_DocTagDocListPage_Index_FormatDocSection_Titled = string[];
 
-export type ThemeDocTagDocListPageFormatDocSectionWord = string;
+export type Theme_DocTagDocListPage_Index_FormatDocSection_Word = string;
 
 /**
  * Theme - Doc Tag Doc List Page - Use Docs Tagged Plural.
  *
  * @since 0.18.0
  */
-export type ThemeDocTagDocListPageUseDocsTaggedPluralSelectMessage = (count: number) => string;
+export type Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_SelectMessage = (count: number) => string;
 
-export type ThemeDocTagDocListPageUseDocsTaggedPluralPluralFormSelectMessage = (count: number, message: string) => string;
+export type Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_PluralForm_SelectMessage = (count: number, message: string) => string;
 
-export type ThemeDocTagDocListPageUseDocsTaggedPluralPluralForm = {
-  selectMessage: ThemeDocTagDocListPageUseDocsTaggedPluralPluralFormSelectMessage;
+export type Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_PluralForm = {
+  selectMessage: Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_PluralForm_SelectMessage;
 };
 
-export type ThemeDocTagDocListPageUseDocsTaggedPluralCount = number;
+export type Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_Count = number;
 
-export type ThemeDocTagDocListPageUseDocsTaggedPluralTranslated = string;
+export type Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_Translated = string;

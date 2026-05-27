@@ -3,36 +3,36 @@
  *
  * @since 0.22.0
  */
-export type TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockDebug = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Debug = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockDev = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Dev = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockInfo = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Info = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockWarn = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Warn = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockError = ReturnType<typeof import('vitest')['vi']['fn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Error = ReturnType<typeof import('vitest')['vi']['fn']>;
 
-export type TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMock = {
-  debug: TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockDebug;
-  dev: TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockDev;
-  info: TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockInfo;
-  warn: TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockWarn;
-  error: TestsCliRecipeGithubHandleGhFailureCustomizedLoggerMockError;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock = {
+  debug: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Debug;
+  dev: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Dev;
+  info: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Info;
+  warn: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Warn;
+  error: Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedLoggerMock_Error;
 };
 
-export type TestsCliRecipeGithubHandleGhFailureLoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeSpy = ReturnType<typeof import('vitest')['vi']['spyOn']>;
 
-export type TestsCliRecipeGithubHandleGhFailureLoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').ToolkitLoggerCustomizeReturns;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_LoggerCustomizeReturn = import('../../../../toolkit/logger.d.ts').Toolkit_Logger_Customize_Returns;
 
-export type TestsCliRecipeGithubHandleGhFailureCustomizedErrorCalls = unknown[][];
+export type Tests_Cli_Recipe_Github_HandleGhFailure_CustomizedErrorCalls = unknown[][];
 
-export type TestsCliRecipeGithubHandleGhFailureHasRateLimitError = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HasRateLimitError = boolean;
 
-export type TestsCliRecipeGithubHandleGhFailureHasResetsAt = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HasResetsAt = boolean;
 
-export type TestsCliRecipeGithubHandleGhFailureHasUnknownResetTime = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HasUnknownResetTime = boolean;
 
-export type TestsCliRecipeGithubHandleGhFailureHasGenericError = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HasGenericError = boolean;
 
-export type TestsCliRecipeGithubHandleGhFailureHasTextError = boolean;
+export type Tests_Cli_Recipe_Github_HandleGhFailure_HasTextError = boolean;

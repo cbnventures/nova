@@ -6,49 +6,49 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogPagesBlogAuthorsListPageAuthorImageUrl = string | undefined;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorImageUrl = string | undefined;
 
-export type ThemeBlogPagesBlogAuthorsListPageAuthorTitle = string | undefined;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorTitle = string | undefined;
 
-export type ThemeBlogPagesBlogAuthorsListPageAuthorPage = {
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorPage = {
   permalink: string;
   [key: string]: unknown;
 } | null | undefined;
 
-export type ThemeBlogPagesBlogAuthorsListPageAuthorPermalink = string | undefined;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorPermalink = string | undefined;
 
 /**
  * Theme - Blog - Pages - Blog Authors List Page - Blog Authors List Page.
  *
  * @since 0.15.0
  */
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsSidebar = BlogSidebar;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props_Sidebar = BlogSidebar;
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthorName = string | undefined;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_PropsAuthor_Name = string | undefined;
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthorKey = string;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_PropsAuthor_Key = string;
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthor = {
-  name: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthorName;
-  key: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthorKey;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_PropsAuthor = {
+  name: Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_PropsAuthor_Name;
+  key: Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_PropsAuthor_Key;
   [key: string]: unknown;
 };
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthors = ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthor[];
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props_Authors = Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_PropsAuthor[];
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsClassName = string | undefined;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props_ClassName = string | undefined;
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsStyle = CSSProperties | undefined;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageProps = {
-  sidebar: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsSidebar;
-  authors: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthors;
-  className?: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsClassName;
-  style?: ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsStyle;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props = {
+  sidebar: Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props_Sidebar;
+  authors: Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props_Authors;
+  className?: Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props_ClassName;
+  style?: Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Props_Style;
 };
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageHeading = string;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Heading = string;
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthor = ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPagePropsAuthor;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_Author = Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_PropsAuthor;
 
-export type ThemeBlogPagesBlogAuthorsListPageBlogAuthorsListPageAuthorCount = number | undefined;
+export type Theme_Blog_Pages_BlogAuthorsListPage_Index_BlogAuthorsListPage_AuthorCount = number | undefined;

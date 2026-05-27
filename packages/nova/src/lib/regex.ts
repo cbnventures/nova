@@ -129,6 +129,17 @@ export const LIB_REGEX_PATTERN_CASING_CAMEL_CASE = /^_?[a-z][a-zA-Z0-9]*$/;
 export const LIB_REGEX_PATTERN_CASING_PASCAL_CASE = /^[A-Z][a-zA-Z0-9]*$/;
 
 /**
+ * Lib - Regex - Pattern Casing Underscore Pascal Case.
+ *
+ * Validates identifiers shaped as one or more PascalCase chunks joined by single
+ * underscores (e.g. `Tests_TypeDeclarations_Foo_Bar`). Used by require-naming-convention
+ * for type aliases that follow the `{Path}_{Class}_{Method}_{Var}` form.
+ *
+ * @since 0.18.0
+ */
+export const LIB_REGEX_PATTERN_CASING_UNDERSCORE_PASCAL_CASE = /^[A-Z][A-Za-z0-9]*(?:_[A-Z][A-Za-z0-9]*)*$/;
+
+/**
  * Lib - Regex - Pattern Casing Upper Snake Case.
  *
  * Validates UPPER_SNAKE_CASE identifiers. Used by require-naming-convention to

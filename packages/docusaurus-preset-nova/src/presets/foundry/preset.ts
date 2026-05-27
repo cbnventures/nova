@@ -1,4 +1,4 @@
-import type { PresetsFoundryPresetFoundry } from '../../types/presets/foundry/preset.d.ts';
+import type { Presets_Foundry_Preset_Foundry } from '../../types/presets/foundry/preset.d.ts';
 
 /**
  * Presets - Foundry - Preset - Foundry.
@@ -9,7 +9,7 @@ import type { PresetsFoundryPresetFoundry } from '../../types/presets/foundry/pr
  *
  * @since 0.15.0
  */
-export const presetsFoundryPresetFoundry: PresetsFoundryPresetFoundry = {
+export const presetsFoundryPresetFoundry: Presets_Foundry_Preset_Foundry = {
   logo: {
     title: 'Foundry',
     alt: 'Foundry',

@@ -5,28 +5,28 @@ import type { useBlogPost } from '@docusaurus/plugin-content-blog/client';
  *
  * @since 0.18.0
  */
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataBlogPost = ReturnType<typeof useBlogPost>;
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_BlogPost = ReturnType<typeof useBlogPost>;
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataMetadata = ThemeBlogPostPageMetadataBlogPostPageMetadataBlogPost['metadata'];
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Metadata = Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_BlogPost['metadata'];
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataFrontMatter = ThemeBlogPostPageMetadataBlogPostPageMetadataMetadata['frontMatter'];
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_FrontMatter = Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Metadata['frontMatter'];
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataDescription = ThemeBlogPostPageMetadataBlogPostPageMetadataMetadata['description'];
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Description = Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Metadata['description'];
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataTitle = string;
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Title = string;
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataDate = string;
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Date = string;
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataSpread = {
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Spread = {
   description?: string;
   keywords?: readonly string[];
   image?: string;
 };
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataImage = string | undefined;
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_Image = string | undefined;
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataAuthorUrls = string[];
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_AuthorUrls = string[];
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataAuthorUrl = string | undefined;
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_AuthorUrl = string | undefined;
 
-export type ThemeBlogPostPageMetadataBlogPostPageMetadataTagLabels = string[];
+export type Theme_BlogPostPage_Metadata_Index_BlogPostPageMetadata_TagLabels = string[];

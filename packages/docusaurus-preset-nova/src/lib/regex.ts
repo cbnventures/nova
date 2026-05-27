@@ -210,19 +210,19 @@ export const LIB_REGEX_NOVA_THEME_CONFIG_TYPE_REFERENCE = /^(NovaThemeConfig\w*)
 /**
  * Lib - Regex - Shared Preset Name Type.
  *
- * Captures the right-hand side of the `SharedPresetName` type declaration so
+ * Captures the right-hand side of the `Shared_PresetName` type declaration so
  * the preset-list drift test can enumerate the union literals.
  *
  * @since 0.18.0
  */
-export const LIB_REGEX_SHARED_PRESET_NAME_TYPE = /export type SharedPresetName\s*=\s*([^;]+);/;
+export const LIB_REGEX_SHARED_PRESET_NAME_TYPE = /export type Shared_PresetName\s*=\s*([^;]+);/;
 
 /**
  * Lib - Regex - Single Quoted String.
  *
  * Captures the contents of a single-quoted string literal. Used by the
  * preset-list test to extract individual union members from the captured
- * `SharedPresetName` right-hand side.
+ * `Shared_PresetName` right-hand side.
  *
  * @since 0.18.0
  */

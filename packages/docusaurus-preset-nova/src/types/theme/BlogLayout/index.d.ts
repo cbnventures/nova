@@ -6,61 +6,61 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogLayoutSidebar = BlogSidebar;
+export type Theme_BlogLayout_Index_BlogLayout_Sidebar = BlogSidebar;
 
-export type ThemeBlogLayoutToc = ReactNode;
+export type Theme_BlogLayout_Index_BlogLayout_Toc = ReactNode;
 
-export type ThemeBlogLayoutChildren = ReactNode;
+export type Theme_BlogLayout_Index_BlogLayout_Children = ReactNode;
 
-export type ThemeBlogLayoutPropsSidebar = BlogSidebar;
+export type Theme_BlogLayout_Index_BlogLayout_Props_Sidebar = BlogSidebar;
 
-export type ThemeBlogLayoutPropsToc = ReactNode;
+export type Theme_BlogLayout_Index_BlogLayout_Props_Toc = ReactNode;
 
-export type ThemeBlogLayoutPropsChildren = ReactNode;
+export type Theme_BlogLayout_Index_BlogLayout_Props_Children = ReactNode;
 
-export type ThemeBlogLayoutPropsHeader = ReactNode;
+export type Theme_BlogLayout_Index_BlogLayout_Props_Header = ReactNode;
 
-export type ThemeBlogLayoutPropsShowHeader = boolean;
+export type Theme_BlogLayout_Index_BlogLayout_Props_ShowHeader = boolean;
 
-export type ThemeBlogLayoutPropsClassName = string | undefined;
+export type Theme_BlogLayout_Index_BlogLayout_Props_ClassName = string | undefined;
 
-export type ThemeBlogLayoutPropsStyle = CSSProperties | undefined;
+export type Theme_BlogLayout_Index_BlogLayout_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogLayoutProps = {
-  sidebar?: ThemeBlogLayoutPropsSidebar;
-  toc?: ThemeBlogLayoutPropsToc;
-  header?: ThemeBlogLayoutPropsHeader;
-  showHeader?: ThemeBlogLayoutPropsShowHeader;
-  children: ThemeBlogLayoutPropsChildren;
-  className?: ThemeBlogLayoutPropsClassName;
-  style?: ThemeBlogLayoutPropsStyle;
+export type Theme_BlogLayout_Index_BlogLayout_Props = {
+  sidebar?: Theme_BlogLayout_Index_BlogLayout_Props_Sidebar;
+  toc?: Theme_BlogLayout_Index_BlogLayout_Props_Toc;
+  header?: Theme_BlogLayout_Index_BlogLayout_Props_Header;
+  showHeader?: Theme_BlogLayout_Index_BlogLayout_Props_ShowHeader;
+  children: Theme_BlogLayout_Index_BlogLayout_Props_Children;
+  className?: Theme_BlogLayout_Index_BlogLayout_Props_ClassName;
+  style?: Theme_BlogLayout_Index_BlogLayout_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogLayoutThemeConfigCast = unknown;
+export type Theme_BlogLayout_Index_BlogLayout_ThemeConfigCast = unknown;
 
-export type ThemeBlogLayoutThemeConfig = Record<string, unknown>;
+export type Theme_BlogLayout_Index_BlogLayout_ThemeConfig = Record<string, unknown>;
 
-export type ThemeBlogLayoutBlogConfigLayout = ThemeBlogLayoutBlogLayout;
+export type Theme_BlogLayout_Index_BlogLayout_BlogConfig_Layout = Theme_BlogLayout_Index_BlogLayout;
 
-export type ThemeBlogLayoutBlogConfig = {
-  layout: ThemeBlogLayoutBlogConfigLayout;
+export type Theme_BlogLayout_Index_BlogLayout_BlogConfig = {
+  layout: Theme_BlogLayout_Index_BlogLayout_BlogConfig_Layout;
   [key: string]: unknown;
 };
 
-export type ThemeBlogLayoutBlogLayoutHeading = string;
+export type Theme_BlogLayout_Index_BlogLayout_Heading = string;
 
-export type ThemeBlogLayoutBlogLayoutDescription = string;
+export type Theme_BlogLayout_Index_BlogLayout_Description = string;
 
-export type ThemeBlogLayoutBlogLayout = {
-  heading: ThemeBlogLayoutBlogLayoutHeading;
-  description: ThemeBlogLayoutBlogLayoutDescription;
+export type Theme_BlogLayout_Index_BlogLayout = {
+  heading: Theme_BlogLayout_Index_BlogLayout_Heading;
+  description: Theme_BlogLayout_Index_BlogLayout_Description;
 };
 
-export type ThemeBlogLayoutHasSidebar = boolean;
+export type Theme_BlogLayout_Index_BlogLayout_HasSidebar = boolean;
 
-export type ThemeBlogLayoutHasToc = boolean;
+export type Theme_BlogLayout_Index_BlogLayout_HasToc = boolean;
 
-export type ThemeBlogLayoutShowHeader = boolean;
+export type Theme_BlogLayout_Index_BlogLayout_ShowHeader = boolean;
 
-export type ThemeBlogLayoutMainClassName = string;
+export type Theme_BlogLayout_Index_BlogLayout_MainClassName = string;

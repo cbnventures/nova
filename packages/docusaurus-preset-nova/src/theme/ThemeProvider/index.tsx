@@ -1,6 +1,6 @@
 import TitleFormatterProvider from '@theme/ThemeProvider/TitleFormatter';
 
-import type { ThemeThemeProviderThemeProviderProps } from '../../types/theme/ThemeProvider/index.d.ts';
+import type { Theme_ThemeProvider_Index_ThemeProvider_Props } from '../../types/theme/ThemeProvider/index.d.ts';
 
 /**
  * Theme - Theme Provider - Theme Provider.
@@ -9,13 +9,13 @@ import type { ThemeThemeProviderThemeProviderProps } from '../../types/theme/The
  * formatter provider required by the Docusaurus rendering
  * pipeline for document title management.
  *
- * @param {ThemeThemeProviderThemeProviderProps} props - Props.
+ * @param {Theme_ThemeProvider_Index_ThemeProvider_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function ThemeProvider(props: ThemeThemeProviderThemeProviderProps) {
+function ThemeProvider(props: Theme_ThemeProvider_Index_ThemeProvider_Props) {
   return (
     <TitleFormatterProvider>
       {props['children']}

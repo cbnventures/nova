@@ -3,38 +3,38 @@
  *
  * @since 0.15.0
  */
-export type TestsCliScaffoldAppWorkersRunOriginalCwd = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_OriginalCwd = string;
 
-export type TestsCliScaffoldAppWorkersRunTemporaryDirectory = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_TemporaryDirectory = string;
 
-export type TestsCliScaffoldAppWorkersRunTemporaryBase = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_TemporaryBase = string;
 
-export type TestsCliScaffoldAppWorkersRunSandboxRoot = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_SandboxRoot = string;
 
-export type TestsCliScaffoldAppWorkersRunRootDirectory = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RootDirectory = string;
 
-export type TestsCliScaffoldAppWorkersRunChildDirectory = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ChildDirectory = string;
 
-export type TestsCliScaffoldAppWorkersRunRootPackageJson = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RootPackageJson = string;
 
-export type TestsCliScaffoldAppWorkersRunRootPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_RootPackageJsonPath = string;
 
-export type TestsCliScaffoldAppWorkersRunChildPackageJson = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ChildPackageJson = string;
 
-export type TestsCliScaffoldAppWorkersRunChildPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ChildPackageJsonPath = string;
 
-export type TestsCliScaffoldAppWorkersRunProjectDirectory = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_ProjectDirectory = string;
 
-export type TestsCliScaffoldAppWorkersRunExists = boolean;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_Exists = boolean;
 
-export type TestsCliScaffoldAppWorkersRunDryRunOutputPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_DryRunOutputPath = string;
 
-export type TestsCliScaffoldAppWorkersRunWorkspacePackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_WorkspacePackageJsonPath = string;
 
-export type TestsCliScaffoldAppWorkersRunWranglerTomlPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_WranglerTomlPath = string;
 
-export type TestsCliScaffoldAppWorkersRunIndexTsPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_IndexTsPath = string;
 
-export type TestsCliScaffoldAppWorkersRunPackageJson = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_PackageJson = string;
 
-export type TestsCliScaffoldAppWorkersRunPackageJsonPath = string;
+export type Tests_Cli_Scaffold_App_Workers_CliScaffoldAppWorkersRun_PackageJsonPath = string;

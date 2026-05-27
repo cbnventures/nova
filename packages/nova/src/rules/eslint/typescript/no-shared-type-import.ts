@@ -3,18 +3,18 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintTypescriptNoSharedTypeImportCheckImportContext,
-  RulesEslintTypescriptNoSharedTypeImportCheckImportIsShared,
-  RulesEslintTypescriptNoSharedTypeImportCheckImportNode,
-  RulesEslintTypescriptNoSharedTypeImportCheckImportNormalizedSharedFile,
-  RulesEslintTypescriptNoSharedTypeImportCheckImportNormalizedSource,
-  RulesEslintTypescriptNoSharedTypeImportCheckImportReturns,
-  RulesEslintTypescriptNoSharedTypeImportCheckImportSharedFiles,
-  RulesEslintTypescriptNoSharedTypeImportCheckImportSource,
-  RulesEslintTypescriptNoSharedTypeImportRuleDefaultOptionsIgnoreFiles,
-  RulesEslintTypescriptNoSharedTypeImportRuleDefaultOptionsSharedFiles,
-  RulesEslintTypescriptNoSharedTypeImportRuleNormalizedFilename,
-  RulesEslintTypescriptNoSharedTypeImportRuleOptions,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Context,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_IsShared,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Node,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_NormalizedSharedFile,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_NormalizedSource,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Returns,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_SharedFiles,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Source,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsSharedFiles,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleNormalizedFilename,
+  Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/no-shared-type-import.d.ts';
 
 /**
@@ -25,7 +25,7 @@ import type {
  *
  * @since 0.14.0
  */
-export class RulesEslintTypescriptNoSharedTypeImport {
+export class Runner {
   /**
    * Rules - ESLint - TypeScript - No Shared Type Import - Rule.
    *
@@ -64,12 +64,12 @@ export class RulesEslintTypescriptNoSharedTypeImport {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintTypescriptNoSharedTypeImportRuleDefaultOptionsIgnoreFiles,
-      sharedFiles: [] as RulesEslintTypescriptNoSharedTypeImportRuleDefaultOptionsSharedFiles,
+      ignoreFiles: [] as Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsIgnoreFiles,
+      sharedFiles: [] as Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleDefaultOptionsSharedFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintTypescriptNoSharedTypeImportRuleOptions = defaultOptions[0];
-      const normalizedFilename: RulesEslintTypescriptNoSharedTypeImportRuleNormalizedFilename = context.filename.replaceAll('\\', '/');
+      const options: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleOptions = defaultOptions[0];
+      const normalizedFilename: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_RuleNormalizedFilename = context.filename.replaceAll('\\', '/');
 
       // Skip .d.ts files - they are allowed to import shared types.
       if (normalizedFilename.endsWith('.d.ts') === true) {
@@ -83,7 +83,7 @@ export class RulesEslintTypescriptNoSharedTypeImport {
 
       return {
         ImportDeclaration(node) {
-          RulesEslintTypescriptNoSharedTypeImport.checkImport(context, node, options['sharedFiles']);
+          Runner.checkImport(context, node, options['sharedFiles']);
 
           return;
         },
@@ -100,20 +100,20 @@ export class RulesEslintTypescriptNoSharedTypeImport {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptNoSharedTypeImportCheckImportContext}     context     - Context.
-   * @param {RulesEslintTypescriptNoSharedTypeImportCheckImportNode}        node        - Node.
-   * @param {RulesEslintTypescriptNoSharedTypeImportCheckImportSharedFiles} sharedFiles - Shared files.
+   * @param {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Context}     context     - Context.
+   * @param {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Node}        node        - Node.
+   * @param {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_SharedFiles} sharedFiles - Shared files.
    *
-   * @returns {RulesEslintTypescriptNoSharedTypeImportCheckImportReturns}
+   * @returns {Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Returns}
    *
    * @since 0.14.0
    */
-  private static checkImport(context: RulesEslintTypescriptNoSharedTypeImportCheckImportContext, node: RulesEslintTypescriptNoSharedTypeImportCheckImportNode, sharedFiles: RulesEslintTypescriptNoSharedTypeImportCheckImportSharedFiles): RulesEslintTypescriptNoSharedTypeImportCheckImportReturns {
-    const source: RulesEslintTypescriptNoSharedTypeImportCheckImportSource = node.source.value;
-    const normalizedSource: RulesEslintTypescriptNoSharedTypeImportCheckImportNormalizedSource = source.replaceAll('\\', '/');
+  private static checkImport(context: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Context, node: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Node, sharedFiles: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_SharedFiles): Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Returns {
+    const source: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_Source = node.source.value;
+    const normalizedSource: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_NormalizedSource = source.replaceAll('\\', '/');
 
-    const isShared: RulesEslintTypescriptNoSharedTypeImportCheckImportIsShared = sharedFiles.some((sharedFile) => {
-      const normalizedSharedFile: RulesEslintTypescriptNoSharedTypeImportCheckImportNormalizedSharedFile = sharedFile.replaceAll('\\', '/');
+    const isShared: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_IsShared = sharedFiles.some((sharedFile) => {
+      const normalizedSharedFile: Rules_Eslint_Typescript_NoSharedTypeImport_Runner_CheckImport_NormalizedSharedFile = sharedFile.replaceAll('\\', '/');
 
       return normalizedSource === normalizedSharedFile
         || normalizedSource.endsWith(`/${normalizedSharedFile}`);

@@ -1,100 +1,100 @@
 import type { Dispatch, SetStateAction } from 'react';
 
-import type { SharedSearchWorkerSearchHit } from '../../shared.d.ts';
+import type { Shared_SearchWorkerSearchHit } from '../../shared.d.ts';
 
 /**
  * Theme - Search Bar - Search Results - Search Results.
  *
  * @since 0.15.0
  */
-export type ThemeSearchBarSearchResultsProps = Record<string, unknown>;
+export type Theme_SearchBar_SearchResults_Props = Record<string, unknown>;
 
-export type ThemeSearchBarSearchResultsSearchContext = import('./search-context.d.ts').ThemeSearchBarSearchContextValue;
+export type Theme_SearchBar_SearchResults_SearchContext = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value;
 
-export type ThemeSearchBarSearchResultsIsOpen = boolean;
+export type Theme_SearchBar_SearchResults_IsOpen = boolean;
 
-export type ThemeSearchBarSearchResultsResults = SharedSearchWorkerSearchHit[];
+export type Theme_SearchBar_SearchResults_Results = Shared_SearchWorkerSearchHit[];
 
-export type ThemeSearchBarSearchResultsError = string | undefined;
+export type Theme_SearchBar_SearchResults_Error = string | undefined;
 
-export type ThemeSearchBarSearchResultsIsReady = boolean;
+export type Theme_SearchBar_SearchResults_IsReady = boolean;
 
-export type ThemeSearchBarSearchResultsQuery = string;
+export type Theme_SearchBar_SearchResults_Query = string;
 
-export type ThemeSearchBarSearchResultsSearchedQuery = string;
+export type Theme_SearchBar_SearchResults_SearchedQuery = string;
 
-export type ThemeSearchBarSearchResultsActiveIndex = number;
+export type Theme_SearchBar_SearchResults_ActiveIndex = number;
 
-export type ThemeSearchBarSearchResultsSetIsOpen = import('./search-context.d.ts').ThemeSearchBarSearchContextValueSetIsOpen;
+export type Theme_SearchBar_SearchResults_SetIsOpen = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_SetIsOpen;
 
-export type ThemeSearchBarSearchResultsInputRef = import('./search-context.d.ts').ThemeSearchBarSearchContextValueInputRef;
+export type Theme_SearchBar_SearchResults_InputRef = import('./search-context.d.ts').Theme_SearchBar_SearchContext_Value_InputRef;
 
-export type ThemeSearchBarSearchResultsDropdownRef = React.RefObject<HTMLDivElement | null>;
+export type Theme_SearchBar_SearchResults_DropdownRef = React.RefObject<HTMLDivElement | null>;
 
-export type ThemeSearchBarSearchResultsWasOpenRef = React.RefObject<boolean>;
+export type Theme_SearchBar_SearchResults_WasOpenRef = React.RefObject<boolean>;
 
-export type ThemeSearchBarSearchResultsIsClosingState = [ThemeSearchBarSearchResultsIsClosing, ThemeSearchBarSearchResultsSetIsClosing];
+export type Theme_SearchBar_SearchResults_IsClosingState = [Theme_SearchBar_SearchResults_IsClosing, Theme_SearchBar_SearchResults_SetIsClosing];
 
-export type ThemeSearchBarSearchResultsIsClosing = boolean;
+export type Theme_SearchBar_SearchResults_IsClosing = boolean;
 
-export type ThemeSearchBarSearchResultsSetIsClosing = Dispatch<SetStateAction<ThemeSearchBarSearchResultsIsClosing>>;
+export type Theme_SearchBar_SearchResults_SetIsClosing = Dispatch<SetStateAction<Theme_SearchBar_SearchResults_IsClosing>>;
 
-export type ThemeSearchBarSearchResultsIsMountedState = [ThemeSearchBarSearchResultsIsMounted, ThemeSearchBarSearchResultsSetIsMounted];
+export type Theme_SearchBar_SearchResults_IsMountedState = [Theme_SearchBar_SearchResults_IsMounted, Theme_SearchBar_SearchResults_SetIsMounted];
 
-export type ThemeSearchBarSearchResultsIsMounted = boolean;
+export type Theme_SearchBar_SearchResults_IsMounted = boolean;
 
-export type ThemeSearchBarSearchResultsSetIsMounted = Dispatch<SetStateAction<ThemeSearchBarSearchResultsIsMounted>>;
+export type Theme_SearchBar_SearchResults_SetIsMounted = Dispatch<SetStateAction<Theme_SearchBar_SearchResults_IsMounted>>;
 
-export type ThemeSearchBarSearchResultsIsTransitionToClose = boolean;
+export type Theme_SearchBar_SearchResults_IsTransitionToClose = boolean;
 
-export type ThemeSearchBarSearchResultsHandleClickOutsideFunction = (event: ThemeSearchBarSearchResultsMouseEvent) => void;
+export type Theme_SearchBar_SearchResults_HandleClickOutsideFunction = (event: Theme_SearchBar_SearchResults_MouseEvent) => void;
 
-export type ThemeSearchBarSearchResultsMouseEvent = MouseEvent;
+export type Theme_SearchBar_SearchResults_MouseEvent = MouseEvent;
 
-export type ThemeSearchBarSearchResultsMouseTarget = Node;
+export type Theme_SearchBar_SearchResults_MouseTarget = Node;
 
-export type ThemeSearchBarSearchResultsIsOutsideDropdown = boolean;
+export type Theme_SearchBar_SearchResults_IsOutsideDropdown = boolean;
 
-export type ThemeSearchBarSearchResultsIsOutsideInput = boolean;
+export type Theme_SearchBar_SearchResults_IsOutsideInput = boolean;
 
-export type ThemeSearchBarSearchResultsIsInsideMobileMenu = boolean;
+export type Theme_SearchBar_SearchResults_IsInsideMobileMenu = boolean;
 
-export type ThemeSearchBarSearchResultsAnimationFrameId = number;
+export type Theme_SearchBar_SearchResults_AnimationFrameId = number;
 
-export type ThemeSearchBarSearchResultsIsInMobileMenu = boolean;
+export type Theme_SearchBar_SearchResults_IsInMobileMenu = boolean;
 
-export type ThemeSearchBarSearchResultsTimer = ReturnType<typeof setTimeout>;
+export type Theme_SearchBar_SearchResults_Timer = ReturnType<typeof setTimeout>;
 
-export type ThemeSearchBarSearchResultsLoading = string;
+export type Theme_SearchBar_SearchResults_Loading = string;
 
-export type ThemeSearchBarSearchResultsNoResults = string;
+export type Theme_SearchBar_SearchResults_NoResults = string;
 
-export type ThemeSearchBarSearchResultsSearching = string;
+export type Theme_SearchBar_SearchResults_Searching = string;
 
-export type ThemeSearchBarSearchResultsResultCount = number;
+export type Theme_SearchBar_SearchResults_ResultCount = number;
 
-export type ThemeSearchBarSearchResultsResultsFound = string;
+export type Theme_SearchBar_SearchResults_ResultsFound = string;
 
-export type ThemeSearchBarSearchResultsDropdownClassName = string;
+export type Theme_SearchBar_SearchResults_DropdownClassName = string;
 
-export type ThemeSearchBarSearchResultsAnimationEvent = React.AnimationEvent<HTMLDivElement>;
+export type Theme_SearchBar_SearchResults_AnimationEvent = React.AnimationEvent<HTMLDivElement>;
 
-export type ThemeSearchBarSearchResultsDropdownElement = HTMLElement;
+export type Theme_SearchBar_SearchResults_DropdownElement = HTMLElement;
 
-export type ThemeSearchBarSearchResultsTransitionEvent = React.TransitionEvent<HTMLDivElement>;
+export type Theme_SearchBar_SearchResults_TransitionEvent = React.TransitionEvent<HTMLDivElement>;
 
-export type ThemeSearchBarSearchResultsResultItem = SharedSearchWorkerSearchHit;
+export type Theme_SearchBar_SearchResults_ResultItem = Shared_SearchWorkerSearchHit;
 
-export type ThemeSearchBarSearchResultsResultIndex = number;
+export type Theme_SearchBar_SearchResults_ResultIndex = number;
 
-export type ThemeSearchBarSearchResultsResultUrl = string;
+export type Theme_SearchBar_SearchResults_ResultUrl = string;
 
-export type ThemeSearchBarSearchResultsActiveClassName = string;
+export type Theme_SearchBar_SearchResults_ActiveClassName = string;
 
-export type ThemeSearchBarSearchResultsSnippetSegment = SharedSearchWorkerSearchHit['snippetSegments'][number];
+export type Theme_SearchBar_SearchResults_SnippetSegment = Shared_SearchWorkerSearchHit['snippetSegments'][number];
 
-export type ThemeSearchBarSearchResultsSnippetSegmentIndex = number;
+export type Theme_SearchBar_SearchResults_SnippetSegmentIndex = number;
 
-export type ThemeSearchBarSearchResultsNoResultsFound = string;
+export type Theme_SearchBar_SearchResults_NoResultsFound = string;
 
-export type ThemeSearchBarSearchResultsStatusAnnouncement = string;
+export type Theme_SearchBar_SearchResults_StatusAnnouncement = string;

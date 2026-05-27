@@ -6,27 +6,27 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationContext = Readonly<RuleContext<string, readonly unknown[]>>;
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Context = Readonly<RuleContext<string, readonly unknown[]>>;
 
-export type RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationNode = TSESTree.ExportDefaultDeclaration;
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Node = TSESTree.ExportDefaultDeclaration;
 
-export type RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationReturns = void;
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Returns = void;
 
-export type RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationName = string;
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_Name = string;
 
-export type RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationDeclarationText = string;
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_DeclarationText = string;
 
-export type RulesEslintConventionsNoDefaultExportDeclarationCheckExportDefaultDeclarationSourceCode = string;
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_CheckExportDefaultDeclaration_SourceCode = string;
 
 /**
  * Rules - ESLint - Conventions - No Default Export Declaration - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintConventionsNoDefaultExportDeclarationRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintConventionsNoDefaultExportDeclarationRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintConventionsNoDefaultExportDeclarationRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintConventionsNoDefaultExportDeclarationRuleOptionsIgnoreFiles;
+export type Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Conventions_NoDefaultExportDeclaration_Runner_RuleOptions_IgnoreFiles;
 }>;

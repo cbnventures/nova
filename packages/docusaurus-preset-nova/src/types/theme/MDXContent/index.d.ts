@@ -6,16 +6,16 @@ import type { CSSProperties, ReactNode } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeMdxContentMdxContentPropsChildren = ReactNode;
+export type Theme_MdxContent_Index_MdxContent_Props_Children = ReactNode;
 
-export type ThemeMdxContentMdxContentPropsClassName = string | undefined;
+export type Theme_MdxContent_Index_MdxContent_Props_ClassName = string | undefined;
 
-export type ThemeMdxContentMdxContentPropsStyle = CSSProperties | undefined;
+export type Theme_MdxContent_Index_MdxContent_Props_Style = CSSProperties | undefined;
 
-export type ThemeMdxContentMdxContentProps = {
-  children: ThemeMdxContentMdxContentPropsChildren;
-  className?: ThemeMdxContentMdxContentPropsClassName;
-  style?: ThemeMdxContentMdxContentPropsStyle;
+export type Theme_MdxContent_Index_MdxContent_Props = {
+  children: Theme_MdxContent_Index_MdxContent_Props_Children;
+  className?: Theme_MdxContent_Index_MdxContent_Props_ClassName;
+  style?: Theme_MdxContent_Index_MdxContent_Props_Style;
 };
 
-export type ThemeMdxContentMdxContentComponents = MDXComponents;
+export type Theme_MdxContent_Index_MdxContent_Components = MDXComponents;

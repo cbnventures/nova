@@ -1,4 +1,4 @@
-import type { ThemeCodeInlineCodeInlineProps } from '../../types/theme/CodeInline/index.d.ts';
+import type { Theme_CodeInline_Index_CodeInline_Props } from '../../types/theme/CodeInline/index.d.ts';
 
 /**
  * Theme - Code Inline - Code Inline.
@@ -7,13 +7,13 @@ import type { ThemeCodeInlineCodeInlineProps } from '../../types/theme/CodeInlin
  * any syntax highlighting or framework-specific styling,
  * preserving semantic markup.
  *
- * @param {ThemeCodeInlineCodeInlineProps} props - Props.
+ * @param {Theme_CodeInline_Index_CodeInline_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function CodeInline(props: ThemeCodeInlineCodeInlineProps) {
+function CodeInline(props: Theme_CodeInline_Index_CodeInline_Props) {
   return (
     <code
       className={(props['className'] !== undefined) ? `nova-code-inline ${props['className']}` : 'nova-code-inline'}

@@ -6,71 +6,71 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogArchivePageBlogArchivePageArchiveBlogPost = PropBlogPostContent;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_ArchiveBlogPost = PropBlogPostContent;
 
-export type ThemeBlogArchivePageBlogArchivePageArchiveBlogPosts = readonly ThemeBlogArchivePageBlogArchivePageArchiveBlogPost[];
+export type Theme_BlogArchivePage_Index_BlogArchivePage_ArchiveBlogPosts = readonly Theme_BlogArchivePage_Index_BlogArchivePage_ArchiveBlogPost[];
 
-export type ThemeBlogArchivePageBlogArchivePagePropsArchiveBlogPosts = readonly ThemeBlogArchivePageBlogArchivePageArchiveBlogPost[];
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Props_Archive_BlogPosts = readonly Theme_BlogArchivePage_Index_BlogArchivePage_ArchiveBlogPost[];
 
-export type ThemeBlogArchivePageBlogArchivePagePropsArchive = {
-  blogPosts: ThemeBlogArchivePageBlogArchivePagePropsArchiveBlogPosts;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Props_Archive = {
+  blogPosts: Theme_BlogArchivePage_Index_BlogArchivePage_Props_Archive_BlogPosts;
   [key: string]: unknown;
 };
 
-export type ThemeBlogArchivePageBlogArchivePagePropsClassName = string | undefined;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Props_ClassName = string | undefined;
 
-export type ThemeBlogArchivePageBlogArchivePagePropsStyle = CSSProperties | undefined;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogArchivePageBlogArchivePageProps = {
-  archive: ThemeBlogArchivePageBlogArchivePagePropsArchive;
-  className?: ThemeBlogArchivePageBlogArchivePagePropsClassName;
-  style?: ThemeBlogArchivePageBlogArchivePagePropsStyle;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Props = {
+  archive: Theme_BlogArchivePage_Index_BlogArchivePage_Props_Archive;
+  className?: Theme_BlogArchivePage_Index_BlogArchivePage_Props_ClassName;
+  style?: Theme_BlogArchivePage_Index_BlogArchivePage_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogArchivePageBlogArchivePageDateTimeFormat = Intl.DateTimeFormat;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_DateTimeFormat = Intl.DateTimeFormat;
 
-export type ThemeBlogArchivePageYearGroups = ThemeBlogArchivePageYearGroup[];
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroups = Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup[];
 
-export type ThemeBlogArchivePageYearGroup = {
-  year: ThemeBlogArchivePageYear;
-  posts: ThemeBlogArchivePageYearPosts;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup = {
+  year: Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year;
+  posts: Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Posts;
 };
 
-export type ThemeBlogArchivePageYearPost = PropBlogPostContent;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPost = PropBlogPostContent;
 
-export type ThemeBlogArchivePageYearPostMetadataDate = string;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata_Date = string;
 
-export type ThemeBlogArchivePageYearPostMetadataPermalink = string;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata_Permalink = string;
 
-export type ThemeBlogArchivePageYearPostMetadataTitle = string;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata_Title = string;
 
-export type ThemeBlogArchivePageYearPostMetadata = {
-  date: ThemeBlogArchivePageYearPostMetadataDate;
-  permalink: ThemeBlogArchivePageYearPostMetadataPermalink;
-  title: ThemeBlogArchivePageYearPostMetadataTitle;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata = {
+  date: Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata_Date;
+  permalink: Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata_Permalink;
+  title: Theme_BlogArchivePage_Index_BlogArchivePage_YearPostMetadata_Title;
   [key: string]: unknown;
 };
 
-export type ThemeBlogArchivePageBlogArchivePageFormattedDate = string;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_FormattedDate = string;
 
-export type ThemeBlogArchivePageYearPosts = ThemeBlogArchivePageYearPost[];
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Posts = Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[];
 
-export type ThemeBlogArchivePageYear = string;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year = string;
 
 /**
  * Theme - Blog Archive Page - List Posts By Years.
  *
  * @since 0.15.0
  */
-export type ThemeBlogArchivePageBlogArchivePageHeading = string;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Heading = string;
 
-export type ThemeBlogArchivePageBlogArchivePageDescription = string;
+export type Theme_BlogArchivePage_Index_BlogArchivePage_Description = string;
 
-export type ThemeBlogArchivePageListPostsByYearsBlogPosts = readonly ThemeBlogArchivePageYearPost[];
+export type Theme_BlogArchivePage_Index_ListPostsByYears_BlogPosts = readonly Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[];
 
-export type ThemeBlogArchivePageListPostsByYearsPostsByYear = Map<ThemeBlogArchivePageYear, ThemeBlogArchivePageYearPost[]>;
+export type Theme_BlogArchivePage_Index_ListPostsByYears_PostsByYear = Map<Theme_BlogArchivePage_Index_BlogArchivePage_YearGroup_Year, Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[]>;
 
-export type ThemeBlogArchivePageListPostsByYearsYear = string;
+export type Theme_BlogArchivePage_Index_ListPostsByYears_Year = string;
 
-export type ThemeBlogArchivePageListPostsByYearsExistingPosts = ThemeBlogArchivePageYearPost[];
+export type Theme_BlogArchivePage_Index_ListPostsByYears_ExistingPosts = Theme_BlogArchivePage_Index_BlogArchivePage_YearPost[];

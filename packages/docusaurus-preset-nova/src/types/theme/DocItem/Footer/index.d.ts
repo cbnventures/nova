@@ -7,49 +7,49 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocItemFooterDocItemFooterPropsClassName = string | undefined;
+export type Theme_DocItem_Footer_Index_DocItemFooter_Props_ClassName = string | undefined;
 
-export type ThemeDocItemFooterDocItemFooterPropsStyle = CSSProperties | undefined;
+export type Theme_DocItem_Footer_Index_DocItemFooter_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocItemFooterDocItemFooterProps = {
-  className?: ThemeDocItemFooterDocItemFooterPropsClassName;
-  style?: ThemeDocItemFooterDocItemFooterPropsStyle;
+export type Theme_DocItem_Footer_Index_DocItemFooter_Props = {
+  className?: Theme_DocItem_Footer_Index_DocItemFooter_Props_ClassName;
+  style?: Theme_DocItem_Footer_Index_DocItemFooter_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocItemFooterDocItemFooterEditUrl = string | undefined;
+export type Theme_DocItem_Footer_Index_DocItemFooter_EditUrl = string | undefined;
 
-export type ThemeDocItemFooterDocItemFooterLastUpdatedAt = number | undefined;
+export type Theme_DocItem_Footer_Index_DocItemFooter_LastUpdatedAt = number | undefined;
 
-export type ThemeDocItemFooterDocItemFooterLastUpdatedBy = string | undefined;
+export type Theme_DocItem_Footer_Index_DocItemFooter_LastUpdatedBy = string | undefined;
 
-export type ThemeDocItemFooterDocItemFooterDoc = DocContextValue;
+export type Theme_DocItem_Footer_Index_DocItemFooter_Doc = DocContextValue;
 
-export type ThemeDocItemFooterDocItemFooterCanDisplayTagsRow = boolean;
+export type Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayTagsRow = boolean;
 
-export type ThemeDocItemFooterDocItemFooterCanDisplayEditMetaRow = boolean;
+export type Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayEditMetaRow = boolean;
 
-export type ThemeDocItemFooterDocItemFooterThemeConfig = {
-  blog?: ThemeDocItemFooterDocItemFooterBlogShareConfig;
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig = {
+  blog?: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog;
   [key: string]: unknown;
 };
 
-export type ThemeDocItemFooterDocItemFooterThemeConfigCast = unknown;
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfigCast = unknown;
 
-export type ThemeDocItemFooterDocItemFooterBlogShareConfig = {
-  share?: ThemeDocItemFooterDocItemFooterShareConfig;
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog = {
+  share?: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share;
   [key: string]: unknown;
 };
 
-export type ThemeDocItemFooterDocItemFooterShareConfig = {
-  platforms?: ThemeDocItemFooterDocItemFooterSharePlatforms;
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share = {
+  platforms?: Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share_Platforms;
   [key: string]: unknown;
 };
 
-export type ThemeDocItemFooterDocItemFooterSharePlatforms = string[];
+export type Theme_DocItem_Footer_Index_DocItemFooter_ThemeConfig_Blog_Share_Platforms = string[];
 
-export type ThemeDocItemFooterDocItemFooterShareUrl = string;
+export type Theme_DocItem_Footer_Index_DocItemFooter_ShareUrl = string;
 
-export type ThemeDocItemFooterDocItemFooterCanDisplayFooter = boolean;
+export type Theme_DocItem_Footer_Index_DocItemFooter_CanDisplayFooter = boolean;
 
-export type ThemeDocItemFooterDocItemFooterContentFooterSpread = Record<string, unknown>;
+export type Theme_DocItem_Footer_Index_DocItemFooter_ContentFooterSpread = Record<string, unknown>;

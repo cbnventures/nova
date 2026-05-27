@@ -8,9 +8,9 @@ import BlogPostItems from '@theme/BlogPostItems';
 import Heading from '@theme/Heading';
 
 import type {
-  ThemeBlogTagsPostsPageBlogTagsPostsPageProps,
-  ThemeBlogTagsPostsPageBlogTagsPostsPageTitle,
-  ThemeBlogTagsPostsPageBlogTagsPostsPageViewAllTags,
+  Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props,
+  Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Title,
+  Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_ViewAllTags,
 } from '../../types/theme/BlogTagsPostsPage/index.d.ts';
 
 /**
@@ -20,15 +20,15 @@ import type {
  * pagination and a link back to the full tags list, wrapped
  * inside the standard blog layout.
  *
- * @param {ThemeBlogTagsPostsPageBlogTagsPostsPageProps} props - Props.
+ * @param {Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogTagsPostsPage(props: ThemeBlogTagsPostsPageBlogTagsPostsPageProps) {
-  const title: ThemeBlogTagsPostsPageBlogTagsPostsPageTitle = useBlogTagsPostsPageTitle(props['tag']);
-  const viewAllTags: ThemeBlogTagsPostsPageBlogTagsPostsPageViewAllTags = translate({
+function BlogTagsPostsPage(props: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Props) {
+  const title: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_Title = useBlogTagsPostsPageTitle(props['tag']);
+  const viewAllTags: Theme_BlogTagsPostsPage_Index_BlogTagsPostsPage_ViewAllTags = translate({
     id: 'theme.blog.tagsPostsPage.viewAllTags',
     message: 'View All Tags',
     description: 'The label for the link to the full blog tags list',

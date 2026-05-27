@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { NoBooleanVarForIf } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintPatternsNoBooleanVarForIfRuleTester } from '../../../../types/tests/rules/eslint/patterns/no-boolean-var-for-if.test.d.ts';
+import type { Tests_Rules_Eslint_Patterns_NoBooleanVarForIf_RuleTester } from '../../../../types/tests/rules/eslint/patterns/no-boolean-var-for-if.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Patterns - No Boolean Var For If.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintPatternsNoBooleanVarForIfRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Patterns_NoBooleanVarForIf_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

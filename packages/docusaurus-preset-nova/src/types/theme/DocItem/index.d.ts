@@ -7,21 +7,21 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeDocItemDocItemContent = PropDocContent;
+export type Theme_DocItem_Index_DocItem_Content = PropDocContent;
 
-export type ThemeDocItemDocItemPropsContent = ThemeDocItemDocItemContent;
+export type Theme_DocItem_Index_DocItem_Props_Content = Theme_DocItem_Index_DocItem_Content;
 
-export type ThemeDocItemDocItemPropsClassName = string | undefined;
+export type Theme_DocItem_Index_DocItem_Props_ClassName = string | undefined;
 
-export type ThemeDocItemDocItemPropsStyle = CSSProperties | undefined;
+export type Theme_DocItem_Index_DocItem_Props_Style = CSSProperties | undefined;
 
-export type ThemeDocItemDocItemProps = {
-  content: ThemeDocItemDocItemPropsContent;
-  className?: ThemeDocItemDocItemPropsClassName;
-  style?: ThemeDocItemDocItemPropsStyle;
+export type Theme_DocItem_Index_DocItem_Props = {
+  content: Theme_DocItem_Index_DocItem_Props_Content;
+  className?: Theme_DocItem_Index_DocItem_Props_ClassName;
+  style?: Theme_DocItem_Index_DocItem_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeDocItemDocItemHtmlClassName = string;
+export type Theme_DocItem_Index_DocItem_HtmlClassName = string;
 
-export type ThemeDocItemDocItemMdxComponent = ThemeDocItemDocItemContent;
+export type Theme_DocItem_Index_DocItem_MdxComponent = Theme_DocItem_Index_DocItem_Content;

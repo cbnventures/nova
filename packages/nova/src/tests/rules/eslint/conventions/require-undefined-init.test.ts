@@ -3,7 +3,7 @@ import { afterAll, describe, it } from 'vitest';
 
 import { RequireUndefinedInit } from '../../../../rules/eslint/index.js';
 
-import type { TestsRulesEslintConventionsRequireUndefinedInitRuleTester } from '../../../../types/tests/rules/eslint/conventions/require-undefined-init.test.d.ts';
+import type { Tests_Rules_Eslint_Conventions_RequireUndefinedInit_RuleTester } from '../../../../types/tests/rules/eslint/conventions/require-undefined-init.test.d.ts';
 
 /**
  * Tests - Rules - ESLint - Conventions - Require Undefined Init.
@@ -14,7 +14,7 @@ RuleTester.afterAll = afterAll;
 RuleTester.describe = describe;
 RuleTester.it = it;
 
-const ruleTester: TestsRulesEslintConventionsRequireUndefinedInitRuleTester = new RuleTester({
+const ruleTester: Tests_Rules_Eslint_Conventions_RequireUndefinedInit_RuleTester = new RuleTester({
   languageOptions: {
     ecmaVersion: 2022,
     sourceType: 'module',

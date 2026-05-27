@@ -5,29 +5,29 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.18.0
  */
-export type ThemeContentFooterTagsPropsTags = ThemeContentFooterTagsTag[] | undefined;
+export type Theme_ContentFooter_Tags_Index_Tags_Props_Tags = Theme_ContentFooter_Tags_Index_Tags_Tag[] | undefined;
 
-export type ThemeContentFooterTagsPropsClassName = string | undefined;
+export type Theme_ContentFooter_Tags_Index_Tags_Props_ClassName = string | undefined;
 
-export type ThemeContentFooterTagsPropsStyle = CSSProperties | undefined;
+export type Theme_ContentFooter_Tags_Index_Tags_Props_Style = CSSProperties | undefined;
 
-export type ThemeContentFooterTagsProps = {
-  tags?: ThemeContentFooterTagsPropsTags;
-  className?: ThemeContentFooterTagsPropsClassName;
-  style?: ThemeContentFooterTagsPropsStyle;
+export type Theme_ContentFooter_Tags_Index_Tags_Props = {
+  tags?: Theme_ContentFooter_Tags_Index_Tags_Props_Tags;
+  className?: Theme_ContentFooter_Tags_Index_Tags_Props_ClassName;
+  style?: Theme_ContentFooter_Tags_Index_Tags_Props_Style;
 };
 
-export type ThemeContentFooterTagsLabel = string;
+export type Theme_ContentFooter_Tags_Index_Tags_Label = string;
 
-export type ThemeContentFooterTagsTagPermalink = string;
+export type Theme_ContentFooter_Tags_Index_Tags_Tag_Permalink = string;
 
-export type ThemeContentFooterTagsTagLabel = string;
+export type Theme_ContentFooter_Tags_Index_Tags_Tag_Label = string;
 
-export type ThemeContentFooterTagsTagDescription = string | undefined;
+export type Theme_ContentFooter_Tags_Index_Tags_Tag_Description = string | undefined;
 
-export type ThemeContentFooterTagsTag = {
-  permalink: ThemeContentFooterTagsTagPermalink;
-  label: ThemeContentFooterTagsTagLabel;
-  description: ThemeContentFooterTagsTagDescription;
+export type Theme_ContentFooter_Tags_Index_Tags_Tag = {
+  permalink: Theme_ContentFooter_Tags_Index_Tags_Tag_Permalink;
+  label: Theme_ContentFooter_Tags_Index_Tags_Tag_Label;
+  description: Theme_ContentFooter_Tags_Index_Tags_Tag_Description;
   [key: string]: unknown;
 };

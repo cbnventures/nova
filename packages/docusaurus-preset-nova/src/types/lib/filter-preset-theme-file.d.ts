@@ -3,10 +3,10 @@
  *
  * @since 0.15.0
  */
-export type LibFilterPresetThemeFileFilterPresetThemeFileFileName = string;
+export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_FileName = string;
 
-export type LibFilterPresetThemeFileFilterPresetThemeFileActiveNavbarPrefix = string;
+export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveNavbarPrefix = string;
 
-export type LibFilterPresetThemeFileFilterPresetThemeFileActiveFooterPrefix = string;
+export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_ActiveFooterPrefix = string;
 
-export type LibFilterPresetThemeFileFilterPresetThemeFileReturns = boolean;
+export type Lib_FilterPresetThemeFile_FilterPresetThemeFile_Returns = boolean;

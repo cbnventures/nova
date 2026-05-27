@@ -4,23 +4,23 @@ import { usePluginData } from '@docusaurus/useGlobalData';
 import { Icon } from '@iconify/react/offline';
 
 import type {
-  ThemeBlogPostPaginatorBlogPostPaginatorBlogPosts,
-  ThemeBlogPostPaginatorBlogPostPaginatorGlobalData,
-  ThemeBlogPostPaginatorBlogPostPaginatorHeading,
-  ThemeBlogPostPaginatorBlogPostPaginatorNavAriaLabel,
-  ThemeBlogPostPaginatorBlogPostPaginatorProps,
-  ThemeBlogPostPaginatorNextLinkAriaLabel,
-  ThemeBlogPostPaginatorNextLinkDescription,
-  ThemeBlogPostPaginatorNextLinkLabel,
-  ThemeBlogPostPaginatorNextLinkPermalink,
-  ThemeBlogPostPaginatorNextLinkPost,
-  ThemeBlogPostPaginatorNextLinkProps,
-  ThemeBlogPostPaginatorPrevLinkAriaLabel,
-  ThemeBlogPostPaginatorPrevLinkDescription,
-  ThemeBlogPostPaginatorPrevLinkLabel,
-  ThemeBlogPostPaginatorPrevLinkPermalink,
-  ThemeBlogPostPaginatorPrevLinkPost,
-  ThemeBlogPostPaginatorPrevLinkProps,
+  Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts,
+  Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData,
+  Theme_BlogPostPaginator_Index_BlogPostPaginator_Heading,
+  Theme_BlogPostPaginator_Index_BlogPostPaginator_NavAriaLabel,
+  Theme_BlogPostPaginator_Index_BlogPostPaginator_Props,
+  Theme_BlogPostPaginator_Index_NextLink_AriaLabel,
+  Theme_BlogPostPaginator_Index_NextLink_Description,
+  Theme_BlogPostPaginator_Index_NextLink_Label,
+  Theme_BlogPostPaginator_Index_NextLink_Permalink,
+  Theme_BlogPostPaginator_Index_NextLink_Post,
+  Theme_BlogPostPaginator_Index_NextLink_Props,
+  Theme_BlogPostPaginator_Index_PrevLink_AriaLabel,
+  Theme_BlogPostPaginator_Index_PrevLink_Description,
+  Theme_BlogPostPaginator_Index_PrevLink_Label,
+  Theme_BlogPostPaginator_Index_PrevLink_Permalink,
+  Theme_BlogPostPaginator_Index_PrevLink_Post,
+  Theme_BlogPostPaginator_Index_PrevLink_Props,
 } from '../../types/theme/BlogPostPaginator/index.d.ts';
 
 /**
@@ -30,19 +30,19 @@ import type {
  * left-arrow icon, and an optional description excerpt sourced
  * from the global plugin data.
  *
- * @param {ThemeBlogPostPaginatorPrevLinkProps} props - Props.
+ * @param {Theme_BlogPostPaginator_Index_PrevLink_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function PrevLink(props: ThemeBlogPostPaginatorPrevLinkProps) {
-  const label: ThemeBlogPostPaginatorPrevLinkLabel = translate({
+function PrevLink(props: Theme_BlogPostPaginator_Index_PrevLink_Props) {
+  const label: Theme_BlogPostPaginator_Index_PrevLink_Label = translate({
     id: 'theme.blog.post.paginator.goBackLabel',
     message: 'Go back',
     description: 'The label for the previous post link in the blog post paginator',
   });
-  const ariaLabel: ThemeBlogPostPaginatorPrevLinkAriaLabel = translate(
+  const ariaLabel: Theme_BlogPostPaginator_Index_PrevLink_AriaLabel = translate(
     {
       id: 'theme.blog.post.paginator.goBackAriaLabel',
       message: 'Go back: {title}',
@@ -50,9 +50,9 @@ function PrevLink(props: ThemeBlogPostPaginatorPrevLinkProps) {
     },
     { title: props['prevItem']['title'] },
   );
-  const permalink: ThemeBlogPostPaginatorPrevLinkPermalink = props['prevItem']['permalink'];
-  const post: ThemeBlogPostPaginatorPrevLinkPost = props['blogPosts'].find((blogPost) => blogPost['permalink'] === permalink);
-  const description: ThemeBlogPostPaginatorPrevLinkDescription = (post !== undefined) ? post['description'] : undefined;
+  const permalink: Theme_BlogPostPaginator_Index_PrevLink_Permalink = props['prevItem']['permalink'];
+  const post: Theme_BlogPostPaginator_Index_PrevLink_Post = props['blogPosts'].find((blogPost) => blogPost['permalink'] === permalink);
+  const description: Theme_BlogPostPaginator_Index_PrevLink_Description = (post !== undefined) ? post['description'] : undefined;
 
   return (
     <Link
@@ -81,19 +81,19 @@ function PrevLink(props: ThemeBlogPostPaginatorPrevLinkProps) {
  * right-arrow icon, and an optional description excerpt sourced
  * from the global plugin data.
  *
- * @param {ThemeBlogPostPaginatorNextLinkProps} props - Props.
+ * @param {Theme_BlogPostPaginator_Index_NextLink_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.18.0
  */
-function NextLink(props: ThemeBlogPostPaginatorNextLinkProps) {
-  const label: ThemeBlogPostPaginatorNextLinkLabel = translate({
+function NextLink(props: Theme_BlogPostPaginator_Index_NextLink_Props) {
+  const label: Theme_BlogPostPaginator_Index_NextLink_Label = translate({
     id: 'theme.blog.post.paginator.continueReadingLabel',
     message: 'Continue reading',
     description: 'The label for the next post link in the blog post paginator',
   });
-  const ariaLabel: ThemeBlogPostPaginatorNextLinkAriaLabel = translate(
+  const ariaLabel: Theme_BlogPostPaginator_Index_NextLink_AriaLabel = translate(
     {
       id: 'theme.blog.post.paginator.continueReadingAriaLabel',
       message: 'Continue reading: {title}',
@@ -101,9 +101,9 @@ function NextLink(props: ThemeBlogPostPaginatorNextLinkProps) {
     },
     { title: props['nextItem']['title'] },
   );
-  const permalink: ThemeBlogPostPaginatorNextLinkPermalink = props['nextItem']['permalink'];
-  const post: ThemeBlogPostPaginatorNextLinkPost = props['blogPosts'].find((blogPost) => blogPost['permalink'] === permalink);
-  const description: ThemeBlogPostPaginatorNextLinkDescription = (post !== undefined) ? post['description'] : undefined;
+  const permalink: Theme_BlogPostPaginator_Index_NextLink_Permalink = props['nextItem']['permalink'];
+  const post: Theme_BlogPostPaginator_Index_NextLink_Post = props['blogPosts'].find((blogPost) => blogPost['permalink'] === permalink);
+  const description: Theme_BlogPostPaginator_Index_NextLink_Description = (post !== undefined) ? post['description'] : undefined;
 
   return (
     <Link
@@ -133,26 +133,26 @@ function NextLink(props: ThemeBlogPostPaginatorNextLinkProps) {
  * page with previous and next navigation links delegated to the
  * `PrevLink` and `NextLink` sub-components.
  *
- * @param {ThemeBlogPostPaginatorBlogPostPaginatorProps} props - Props.
+ * @param {Theme_BlogPostPaginator_Index_BlogPostPaginator_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function BlogPostPaginator(props: ThemeBlogPostPaginatorBlogPostPaginatorProps) {
-  const globalData: ThemeBlogPostPaginatorBlogPostPaginatorGlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as ThemeBlogPostPaginatorBlogPostPaginatorGlobalData;
-  const blogPosts: ThemeBlogPostPaginatorBlogPostPaginatorBlogPosts = (globalData['blogPosts'] ?? []);
+function BlogPostPaginator(props: Theme_BlogPostPaginator_Index_BlogPostPaginator_Props) {
+  const globalData: Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData;
+  const blogPosts: Theme_BlogPostPaginator_Index_BlogPostPaginator_GlobalData_BlogPosts = (globalData['blogPosts'] ?? []);
 
   if (props['prevItem'] === undefined && props['nextItem'] === undefined) {
     return null;
   }
 
-  const navAriaLabel: ThemeBlogPostPaginatorBlogPostPaginatorNavAriaLabel = translate({
+  const navAriaLabel: Theme_BlogPostPaginator_Index_BlogPostPaginator_NavAriaLabel = translate({
     id: 'theme.blog.post.paginator.navAriaLabel',
     message: 'Blog post page navigation',
     description: 'The ARIA label for the blog post paginator navigation',
   });
-  const heading: ThemeBlogPostPaginatorBlogPostPaginatorHeading = translate({
+  const heading: Theme_BlogPostPaginator_Index_BlogPostPaginator_Heading = translate({
     id: 'theme.blog.post.paginator.heading',
     message: 'Keep reading',
     description: 'The heading shown above the blog post paginator links',

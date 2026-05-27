@@ -8,31 +8,31 @@ import { useSearchWorker } from '../../lib/search/use-search-worker.js';
 import { searchContext } from './search-context.js';
 
 import type {
-  ThemeSearchBarSearchProviderActiveIndex,
-  ThemeSearchBarSearchProviderActiveIndexState,
-  ThemeSearchBarSearchProviderBaseUrl,
-  ThemeSearchBarSearchProviderContextValue,
-  ThemeSearchBarSearchProviderDebounceTimerRef,
-  ThemeSearchBarSearchProviderDispatchedQueryRef,
-  ThemeSearchBarSearchProviderDocusaurusContext,
-  ThemeSearchBarSearchProviderHandleQueryChangeFunction,
-  ThemeSearchBarSearchProviderHandleQueryChangeValue,
-  ThemeSearchBarSearchProviderInputRef,
-  ThemeSearchBarSearchProviderIsOpen,
-  ThemeSearchBarSearchProviderIsOpenState,
-  ThemeSearchBarSearchProviderManifestUrl,
-  ThemeSearchBarSearchProviderProps,
-  ThemeSearchBarSearchProviderPropsChildren,
-  ThemeSearchBarSearchProviderQuery,
-  ThemeSearchBarSearchProviderQueryState,
-  ThemeSearchBarSearchProviderSearchedQuery,
-  ThemeSearchBarSearchProviderSearchedQueryState,
-  ThemeSearchBarSearchProviderSearchWorker,
-  ThemeSearchBarSearchProviderSetActiveIndex,
-  ThemeSearchBarSearchProviderSetIsOpen,
-  ThemeSearchBarSearchProviderSetQuery,
-  ThemeSearchBarSearchProviderSetSearchedQuery,
-  ThemeSearchBarSearchProviderWorkerUrl,
+  Theme_SearchBar_SearchProvider_ActiveIndex,
+  Theme_SearchBar_SearchProvider_ActiveIndexState,
+  Theme_SearchBar_SearchProvider_BaseUrl,
+  Theme_SearchBar_SearchProvider_ContextValue,
+  Theme_SearchBar_SearchProvider_DebounceTimerRef,
+  Theme_SearchBar_SearchProvider_DispatchedQueryRef,
+  Theme_SearchBar_SearchProvider_DocusaurusContext,
+  Theme_SearchBar_SearchProvider_HandleQueryChangeFunction,
+  Theme_SearchBar_SearchProvider_HandleQueryChangeValue,
+  Theme_SearchBar_SearchProvider_InputRef,
+  Theme_SearchBar_SearchProvider_IsOpen,
+  Theme_SearchBar_SearchProvider_IsOpenState,
+  Theme_SearchBar_SearchProvider_ManifestUrl,
+  Theme_SearchBar_SearchProvider_Props,
+  Theme_SearchBar_SearchProvider_Props_Children,
+  Theme_SearchBar_SearchProvider_Query,
+  Theme_SearchBar_SearchProvider_QueryState,
+  Theme_SearchBar_SearchProvider_SearchedQuery,
+  Theme_SearchBar_SearchProvider_SearchedQueryState,
+  Theme_SearchBar_SearchProvider_SearchWorker,
+  Theme_SearchBar_SearchProvider_SetActiveIndex,
+  Theme_SearchBar_SearchProvider_SetIsOpen,
+  Theme_SearchBar_SearchProvider_SetQuery,
+  Theme_SearchBar_SearchProvider_SetSearchedQuery,
+  Theme_SearchBar_SearchProvider_WorkerUrl,
 } from '../../types/theme/SearchBar/search-provider.d.ts';
 
 /**
@@ -42,46 +42,46 @@ import type {
  * provides the context value consumed by SearchInput and
  * SearchResults through the React context tree.
  *
- * @param {ThemeSearchBarSearchProviderProps} props - Props.
+ * @param {Theme_SearchBar_SearchProvider_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function SearchProvider(props: ThemeSearchBarSearchProviderProps) {
-  const children: ThemeSearchBarSearchProviderPropsChildren = props['children'];
+function SearchProvider(props: Theme_SearchBar_SearchProvider_Props) {
+  const children: Theme_SearchBar_SearchProvider_Props_Children = props['children'];
 
-  const docusaurusContext: ThemeSearchBarSearchProviderDocusaurusContext = useDocusaurusContext();
-  const baseUrl: ThemeSearchBarSearchProviderBaseUrl = docusaurusContext['siteConfig']['baseUrl'];
+  const docusaurusContext: Theme_SearchBar_SearchProvider_DocusaurusContext = useDocusaurusContext();
+  const baseUrl: Theme_SearchBar_SearchProvider_BaseUrl = docusaurusContext['siteConfig']['baseUrl'];
 
-  const workerUrl: ThemeSearchBarSearchProviderWorkerUrl = `${baseUrl}search-worker.js`;
-  const manifestUrl: ThemeSearchBarSearchProviderManifestUrl = `${baseUrl}search-manifest.json`;
+  const workerUrl: Theme_SearchBar_SearchProvider_WorkerUrl = `${baseUrl}search-worker.js`;
+  const manifestUrl: Theme_SearchBar_SearchProvider_ManifestUrl = `${baseUrl}search-manifest.json`;
 
-  const searchWorker: ThemeSearchBarSearchProviderSearchWorker = useSearchWorker({
+  const searchWorker: Theme_SearchBar_SearchProvider_SearchWorker = useSearchWorker({
     workerUrl, manifestUrl,
   });
 
-  const queryState: ThemeSearchBarSearchProviderQueryState = useState<ThemeSearchBarSearchProviderQuery>('');
-  const query: ThemeSearchBarSearchProviderQuery = queryState[0];
-  const setQuery: ThemeSearchBarSearchProviderSetQuery = queryState[1];
+  const queryState: Theme_SearchBar_SearchProvider_QueryState = useState<Theme_SearchBar_SearchProvider_Query>('');
+  const query: Theme_SearchBar_SearchProvider_Query = queryState[0];
+  const setQuery: Theme_SearchBar_SearchProvider_SetQuery = queryState[1];
 
-  const searchedQueryState: ThemeSearchBarSearchProviderSearchedQueryState = useState<ThemeSearchBarSearchProviderSearchedQuery>('');
-  const searchedQuery: ThemeSearchBarSearchProviderSearchedQuery = searchedQueryState[0];
-  const setSearchedQuery: ThemeSearchBarSearchProviderSetSearchedQuery = searchedQueryState[1];
+  const searchedQueryState: Theme_SearchBar_SearchProvider_SearchedQueryState = useState<Theme_SearchBar_SearchProvider_SearchedQuery>('');
+  const searchedQuery: Theme_SearchBar_SearchProvider_SearchedQuery = searchedQueryState[0];
+  const setSearchedQuery: Theme_SearchBar_SearchProvider_SetSearchedQuery = searchedQueryState[1];
 
-  const isOpenState: ThemeSearchBarSearchProviderIsOpenState = useState<ThemeSearchBarSearchProviderIsOpen>(false);
-  const isOpen: ThemeSearchBarSearchProviderIsOpen = isOpenState[0];
-  const setIsOpen: ThemeSearchBarSearchProviderSetIsOpen = isOpenState[1];
+  const isOpenState: Theme_SearchBar_SearchProvider_IsOpenState = useState<Theme_SearchBar_SearchProvider_IsOpen>(false);
+  const isOpen: Theme_SearchBar_SearchProvider_IsOpen = isOpenState[0];
+  const setIsOpen: Theme_SearchBar_SearchProvider_SetIsOpen = isOpenState[1];
 
-  const activeIndexState: ThemeSearchBarSearchProviderActiveIndexState = useState<ThemeSearchBarSearchProviderActiveIndex>(-1);
-  const activeIndex: ThemeSearchBarSearchProviderActiveIndex = activeIndexState[0];
-  const setActiveIndex: ThemeSearchBarSearchProviderSetActiveIndex = activeIndexState[1];
+  const activeIndexState: Theme_SearchBar_SearchProvider_ActiveIndexState = useState<Theme_SearchBar_SearchProvider_ActiveIndex>(-1);
+  const activeIndex: Theme_SearchBar_SearchProvider_ActiveIndex = activeIndexState[0];
+  const setActiveIndex: Theme_SearchBar_SearchProvider_SetActiveIndex = activeIndexState[1];
 
-  const inputRef: ThemeSearchBarSearchProviderInputRef = useRef<HTMLInputElement | null>(null);
-  const debounceTimerRef: ThemeSearchBarSearchProviderDebounceTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const dispatchedQueryRef: ThemeSearchBarSearchProviderDispatchedQueryRef = useRef<string>('');
+  const inputRef: Theme_SearchBar_SearchProvider_InputRef = useRef<HTMLInputElement | null>(null);
+  const debounceTimerRef: Theme_SearchBar_SearchProvider_DebounceTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const dispatchedQueryRef: Theme_SearchBar_SearchProvider_DispatchedQueryRef = useRef<string>('');
 
-  const handleQueryChange: ThemeSearchBarSearchProviderHandleQueryChangeFunction = useCallback((value: ThemeSearchBarSearchProviderHandleQueryChangeValue) => {
+  const handleQueryChange: Theme_SearchBar_SearchProvider_HandleQueryChangeFunction = useCallback((value: Theme_SearchBar_SearchProvider_HandleQueryChangeValue) => {
     setQuery(value);
 
     setActiveIndex(-1);
@@ -140,7 +140,7 @@ function SearchProvider(props: ThemeSearchBarSearchProviderProps) {
     searchWorker['error'],
   ]);
 
-  const contextValue: ThemeSearchBarSearchProviderContextValue = {
+  const contextValue: Theme_SearchBar_SearchProvider_ContextValue = {
     query,
     searchedQuery,
     results: searchWorker['results'],

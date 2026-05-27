@@ -1,8 +1,8 @@
 import type {
-  LibShikiThemesGetShikiThemesPresetName,
-  LibShikiThemesGetShikiThemesResult,
-  LibShikiThemesGetShikiThemesReturns,
-  LibShikiThemesShikiThemeMap,
+  Lib_ShikiThemes_GetShikiThemes_PresetName,
+  Lib_ShikiThemes_GetShikiThemes_Result,
+  Lib_ShikiThemes_GetShikiThemes_Returns,
+  Lib_ShikiThemes_ShikiThemeMap,
 } from '../types/lib/shiki-themes.d.ts';
 
 /**
@@ -14,7 +14,7 @@ import type {
  *
  * @since 0.15.0
  */
-const shikiThemeMap: LibShikiThemesShikiThemeMap = {
+const shikiThemeMap: Lib_ShikiThemes_ShikiThemeMap = {
   envoy: {
     light: 'catppuccin-latte',
     dark: 'catppuccin-mocha',
@@ -48,14 +48,14 @@ const shikiThemeMap: LibShikiThemesShikiThemeMap = {
  * visual preset name, throwing an error if the preset
  * is not recognized.
  *
- * @param {LibShikiThemesGetShikiThemesPresetName} presetName - Preset name.
+ * @param {Lib_ShikiThemes_GetShikiThemes_PresetName} presetName - Preset name.
  *
- * @returns {LibShikiThemesGetShikiThemesReturns}
+ * @returns {Lib_ShikiThemes_GetShikiThemes_Returns}
  *
  * @since 0.15.0
  */
-export function getShikiThemes(presetName: LibShikiThemesGetShikiThemesPresetName): LibShikiThemesGetShikiThemesReturns {
-  const result: LibShikiThemesGetShikiThemesResult = shikiThemeMap[presetName];
+export function getShikiThemes(presetName: Lib_ShikiThemes_GetShikiThemes_PresetName): Lib_ShikiThemes_GetShikiThemes_Returns {
+  const result: Lib_ShikiThemes_GetShikiThemes_Result = shikiThemeMap[presetName];
 
   if (result === undefined) {
     throw new Error(`Unknown preset name: ${presetName}`);

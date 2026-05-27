@@ -1,346 +1,346 @@
 import type { PromptObject } from 'prompts';
 
-import type { SharedGeneratorRunResult, SharedPromptWithCancelReject, SharedPromptWithCancelResolved } from '../../../shared.d.ts';
+import type { Shared_GeneratorRunResult as SharedGeneratorRunResult, Shared_PromptWithCancelReject as SharedPromptWithCancelReject, Shared_PromptWithCancelResolved as SharedPromptWithCancelResolved } from '../../../shared.d.ts';
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Add Pattern.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignoreAddPatternContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Content = string;
 
-export type CliGenerateMustHavesGitignoreAddPatternPattern = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Pattern = string;
 
-export type CliGenerateMustHavesGitignoreAddPatternReturns = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_Returns = string;
 
-export type CliGenerateMustHavesGitignoreAddPatternEndsWithNewline = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_AddPattern_EndsWithNewline = boolean;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Delete Pattern.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignoreDeletePatternContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Content = string;
 
-export type CliGenerateMustHavesGitignoreDeletePatternPattern = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Pattern = string;
 
-export type CliGenerateMustHavesGitignoreDeletePatternReturns = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Returns = string;
 
-export type CliGenerateMustHavesGitignoreDeletePatternLines = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Lines = string[];
 
-export type CliGenerateMustHavesGitignoreDeletePatternMarkerIndex = number;
+export type Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_MarkerIndex = number;
 
-export type CliGenerateMustHavesGitignoreDeletePatternLine = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_Line = string | undefined;
 
-export type CliGenerateMustHavesGitignoreDeletePatternSectionStart = number;
+export type Cli_Generate_MustHaves_Gitignore_Runner_DeletePattern_SectionStart = number;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Edit Pattern.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignoreEditPatternContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Content = string;
 
-export type CliGenerateMustHavesGitignoreEditPatternOldPattern = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_OldPattern = string;
 
-export type CliGenerateMustHavesGitignoreEditPatternNewPattern = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_NewPattern = string;
 
-export type CliGenerateMustHavesGitignoreEditPatternReturns = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Returns = string;
 
-export type CliGenerateMustHavesGitignoreEditPatternLines = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Lines = string[];
 
-export type CliGenerateMustHavesGitignoreEditPatternReplaced = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_EditPattern_Replaced = boolean;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Parse All Patterns.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignoreParseAllPatternsContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Content = string;
 
-export type CliGenerateMustHavesGitignoreParseAllPatternsReturns = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Returns = string[];
 
-export type CliGenerateMustHavesGitignoreParseAllPatternsTrimmed = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseAllPatterns_Trimmed = string;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Parse Project Excludes.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignoreParseProjectExcludesContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Content = string;
 
-export type CliGenerateMustHavesGitignoreParseProjectExcludesReturns = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Returns = string[];
 
-export type CliGenerateMustHavesGitignoreParseProjectExcludesLines = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Lines = string[];
 
-export type CliGenerateMustHavesGitignoreParseProjectExcludesMarkerIndex = number;
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_MarkerIndex = number;
 
-export type CliGenerateMustHavesGitignoreParseProjectExcludesLine = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Line = string | undefined;
 
-export type CliGenerateMustHavesGitignoreParseProjectExcludesStartIndex = number;
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_StartIndex = number;
 
-export type CliGenerateMustHavesGitignoreParseProjectExcludesTrimmed = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_ParseProjectExcludes_Trimmed = string;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Prompt Manage Menu.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignorePromptManageMenuOptionsTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options_TemplateDirectory = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuOptionsTargetPath = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options_TargetPath = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuOptionsIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options_IsDryRun = boolean;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuOptionsIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuOptions = {
-  templateDirectory: CliGenerateMustHavesGitignorePromptManageMenuOptionsTemplateDirectory;
-  targetPath: CliGenerateMustHavesGitignorePromptManageMenuOptionsTargetPath;
-  isDryRun: CliGenerateMustHavesGitignorePromptManageMenuOptionsIsDryRun;
-  isReplaceFile: CliGenerateMustHavesGitignorePromptManageMenuOptionsIsReplaceFile;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options = {
+  templateDirectory: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options_TemplateDirectory;
+  targetPath: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options_TargetPath;
+  isDryRun: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options_IsDryRun;
+  isReplaceFile: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Options_IsReplaceFile;
 };
 
-export type CliGenerateMustHavesGitignorePromptManageMenuReturns = Promise<'back' | 'exit'>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Returns = Promise<'back' | 'exit'>;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateDirectory = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuTargetPath = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TargetPath = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_IsDryRun = boolean;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuTemplateFilePath = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateFilePath = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuTemplateContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TemplateContent = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuReservedPatterns = Set<string>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ReservedPatterns = Set<string>;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuCurrentContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_CurrentContent = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuCurrentPatterns = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_CurrentPatterns = string[];
 
-export type CliGenerateMustHavesGitignorePromptManageMenuUserPatterns = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UserPatterns = string[];
 
-export type CliGenerateMustHavesGitignorePromptManageMenuReconstructed = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Reconstructed = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuHasPendingChanges = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_HasPendingChanges = boolean;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Content = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuAllPatterns = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AllPatterns = string[];
 
-export type CliGenerateMustHavesGitignorePromptManageMenuProjectExcludes = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ProjectExcludes = string[];
 
-export type CliGenerateMustHavesGitignorePromptManageMenuChoiceTitle = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choice_Title = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuChoiceDescription = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choice_Description = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuChoiceValue = 'add' | 'edit' | 'delete' | 'exit' | 'back';
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choice_Value = 'add' | 'edit' | 'delete' | 'exit' | 'back';
 
-export type CliGenerateMustHavesGitignorePromptManageMenuChoice = {
-  title: CliGenerateMustHavesGitignorePromptManageMenuChoiceTitle;
-  description: CliGenerateMustHavesGitignorePromptManageMenuChoiceDescription;
-  value: CliGenerateMustHavesGitignorePromptManageMenuChoiceValue;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choice = {
+  title: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choice_Title;
+  description: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choice_Description;
+  value: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choice_Value;
 };
 
-export type CliGenerateMustHavesGitignorePromptManageMenuChoices = CliGenerateMustHavesGitignorePromptManageMenuChoice[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choices = Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Choice[];
 
-export type CliGenerateMustHavesGitignorePromptManageMenuActionOutputKey = 'action';
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputKey = 'action';
 
-export type CliGenerateMustHavesGitignorePromptManageMenuActionOutputValue = 'add' | 'edit' | 'delete' | 'exit' | 'back' | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputValue = 'add' | 'edit' | 'delete' | 'exit' | 'back' | undefined;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuMenuOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesGitignorePromptManageMenuActionOutputKey, CliGenerateMustHavesGitignorePromptManageMenuActionOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_MenuOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuAction = CliGenerateMustHavesGitignorePromptManageMenuActionOutputValue;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_Action = Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ActionOutputValue;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuExistingPatterns = Set<string>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_ExistingPatterns = Set<string>;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuAddPatternOutputKey = 'pattern';
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputKey = 'pattern';
 
-export type CliGenerateMustHavesGitignorePromptManageMenuAddPatternOutputValue = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputValue = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuPatternOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesGitignorePromptManageMenuAddPatternOutputKey, CliGenerateMustHavesGitignorePromptManageMenuAddPatternOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuAddPatternValidateValue = unknown;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_AddPatternValidateValue = unknown;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuTrimmedValue = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedValue = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuPatternName = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_PatternName = string | undefined;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuTrimmedPatternName = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedPatternName = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuUpdatedContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_UpdatedContent = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditChoiceTitle = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoice_Title = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditChoiceValue = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoice_Value = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditChoice = {
-  title: CliGenerateMustHavesGitignorePromptManageMenuEditChoiceTitle;
-  value: CliGenerateMustHavesGitignorePromptManageMenuEditChoiceValue;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoice = {
+  title: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoice_Title;
+  value: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoice_Value;
 };
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditChoices = CliGenerateMustHavesGitignorePromptManageMenuEditChoice[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoices = Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditChoice[];
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputKey = 'pattern';
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey = 'pattern';
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputValue = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue = string | undefined;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuSelectOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputKey, CliGenerateMustHavesGitignorePromptManageMenuEditSelectOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditSelectOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuSelectedPattern = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_SelectedPattern = string | undefined;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditNewPatternOutputKey = 'newPattern';
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputKey = 'newPattern';
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditNewPatternOutputValue = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputValue = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuNewPatternOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesGitignorePromptManageMenuEditNewPatternOutputKey, CliGenerateMustHavesGitignorePromptManageMenuEditNewPatternOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPatternOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditNewPatternOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuEditPatternValidateValue = unknown;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_EditPatternValidateValue = unknown;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuNewPattern = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_NewPattern = string | undefined;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuTrimmedNewPattern = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_TrimmedNewPattern = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuDeleteChoiceTitle = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoice_Title = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuDeleteChoiceValue = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoice_Value = string;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuDeleteChoice = {
-  title: CliGenerateMustHavesGitignorePromptManageMenuDeleteChoiceTitle;
-  value: CliGenerateMustHavesGitignorePromptManageMenuDeleteChoiceValue;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoice = {
+  title: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoice_Title;
+  value: Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoice_Value;
 };
 
-export type CliGenerateMustHavesGitignorePromptManageMenuDeleteChoices = CliGenerateMustHavesGitignorePromptManageMenuDeleteChoice[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoices = Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteChoice[];
 
-export type CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutputKey = 'pattern';
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputKey = 'pattern';
 
-export type CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutputValue = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputValue = string | undefined;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutputKey, CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesGitignorePromptManageMenuDeleteSelectedPattern = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptManageMenu_DeleteSelectedPattern = string | undefined;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Prompt Regenerate.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignorePromptRegenerateOptionsTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options_TemplateDirectory = string;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateOptionsCurrentDirectory = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options_CurrentDirectory = string;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateOptionsIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options_IsDryRun = boolean;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateOptionsIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateOptions = {
-  templateDirectory: CliGenerateMustHavesGitignorePromptRegenerateOptionsTemplateDirectory;
-  currentDirectory: CliGenerateMustHavesGitignorePromptRegenerateOptionsCurrentDirectory;
-  isDryRun: CliGenerateMustHavesGitignorePromptRegenerateOptionsIsDryRun;
-  isReplaceFile: CliGenerateMustHavesGitignorePromptRegenerateOptionsIsReplaceFile;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options = {
+  templateDirectory: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options_TemplateDirectory;
+  currentDirectory: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options_CurrentDirectory;
+  isDryRun: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options_IsDryRun;
+  isReplaceFile: Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Options_IsReplaceFile;
 };
 
-export type CliGenerateMustHavesGitignorePromptRegenerateReturns = Promise<'completed' | 'cancelled'>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Returns = Promise<'completed' | 'cancelled'>;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TemplateDirectory = string;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateCurrentDirectory = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_CurrentDirectory = string;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_IsDryRun = boolean;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateCustomEntries = string[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_CustomEntries = string[];
 
-export type CliGenerateMustHavesGitignorePromptRegenerateAddMore = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_AddMore = boolean;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateCancelled = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Cancelled = boolean;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateEntryOutputKey = 'entry';
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputKey = 'entry';
 
-export type CliGenerateMustHavesGitignorePromptRegenerateEntryOutputValue = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputValue = string;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateEntryOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesGitignorePromptRegenerateEntryOutputKey, CliGenerateMustHavesGitignorePromptRegenerateEntryOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateEntryOutputResult = Record<CliGenerateMustHavesGitignorePromptRegenerateEntryOutputKey, CliGenerateMustHavesGitignorePromptRegenerateEntryOutputValue>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputResult = Record<Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_EntryOutputValue>;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateTrimmedEntry = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TrimmedEntry = string;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateTemplatePath = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TemplatePath = string;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateTargetPath = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_TargetPath = string;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateContent = string | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_Content = string | undefined;
 
-export type CliGenerateMustHavesGitignorePromptRegenerateFinalContent = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptRegenerate_FinalContent = string;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Prompt With Cancel.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignorePromptWithCancelQuestions<Keys extends string> = PromptObject<Keys> | PromptObject<Keys>[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Questions<Keys extends string> = PromptObject<Keys> | PromptObject<Keys>[];
 
-export type CliGenerateMustHavesGitignorePromptWithCancelReturns<Keys extends string, Result> = Promise<SharedPromptWithCancelResolved<Keys, Result> | SharedPromptWithCancelReject>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Returns<Keys extends string, Result> = Promise<SharedPromptWithCancelResolved<Keys, Result> | SharedPromptWithCancelReject>;
 
-export type CliGenerateMustHavesGitignorePromptWithCancelCancelled = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Cancelled = boolean;
 
-export type CliGenerateMustHavesGitignorePromptWithCancelResult<Keys extends string, Result = unknown> = Record<Keys, Result>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_PromptWithCancel_Result<Keys extends string, Result = unknown> = Record<Keys, Result>;
 
 /**
  * CLI - Generate - Must Haves - Gitignore - Run.
  *
  * @since 0.15.0
  */
-export type CliGenerateMustHavesGitignoreRunOptionsDryRun = true;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Options_DryRun = true;
 
-export type CliGenerateMustHavesGitignoreRunOptionsReplaceFile = true;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Options_ReplaceFile = true;
 
-export type CliGenerateMustHavesGitignoreRunOptions = {
-  dryRun?: CliGenerateMustHavesGitignoreRunOptionsDryRun;
-  replaceFile?: CliGenerateMustHavesGitignoreRunOptionsReplaceFile;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Options = {
+  dryRun?: Cli_Generate_MustHaves_Gitignore_Runner_Run_Options_DryRun;
+  replaceFile?: Cli_Generate_MustHaves_Gitignore_Runner_Run_Options_ReplaceFile;
 };
 
-export type CliGenerateMustHavesGitignoreRunReturns = Promise<SharedGeneratorRunResult>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Returns = Promise<SharedGeneratorRunResult>;
 
-export type CliGenerateMustHavesGitignoreRunCurrentDirectory = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_CurrentDirectory = string;
 
-export type CliGenerateMustHavesGitignoreRunIsAtProjectRoot = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_IsAtProjectRoot = boolean;
 
-export type CliGenerateMustHavesGitignoreRunIsDryRun = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_IsDryRun = boolean;
 
-export type CliGenerateMustHavesGitignoreRunIsReplaceFile = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_IsReplaceFile = boolean;
 
-export type CliGenerateMustHavesGitignoreRunReplaceFileNotice = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ReplaceFileNotice = string;
 
-export type CliGenerateMustHavesGitignoreRunTemplateDirectory = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_TemplateDirectory = string;
 
-export type CliGenerateMustHavesGitignoreRunTargetPath = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_TargetPath = string;
 
-export type CliGenerateMustHavesGitignoreRunFileExists = boolean;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_FileExists = boolean;
 
-export type CliGenerateMustHavesGitignoreRunModeChoiceTitle = string;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoice_Title = string;
 
-export type CliGenerateMustHavesGitignoreRunModeChoiceValue = 'manage' | 'regenerate';
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoice_Value = 'manage' | 'regenerate';
 
-export type CliGenerateMustHavesGitignoreRunModeChoice = {
-  title: CliGenerateMustHavesGitignoreRunModeChoiceTitle;
-  value: CliGenerateMustHavesGitignoreRunModeChoiceValue;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoice = {
+  title: Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoice_Title;
+  value: Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoice_Value;
 };
 
-export type CliGenerateMustHavesGitignoreRunModeChoices = CliGenerateMustHavesGitignoreRunModeChoice[];
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoices = Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeChoice[];
 
-export type CliGenerateMustHavesGitignoreRunModeOutputKey = 'mode';
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputKey = 'mode';
 
-export type CliGenerateMustHavesGitignoreRunModeOutputValue = 'manage' | 'regenerate' | undefined;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue = 'manage' | 'regenerate' | undefined;
 
-export type CliGenerateMustHavesGitignoreRunModeOutput = SharedPromptWithCancelResolved<CliGenerateMustHavesGitignoreRunModeOutputKey, CliGenerateMustHavesGitignoreRunModeOutputValue> | SharedPromptWithCancelReject;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutput = SharedPromptWithCancelResolved<Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue> | SharedPromptWithCancelReject;
 
-export type CliGenerateMustHavesGitignoreRunModeOutputResult = Record<CliGenerateMustHavesGitignoreRunModeOutputKey, CliGenerateMustHavesGitignoreRunModeOutputValue>;
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputResult = Record<Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputKey, Cli_Generate_MustHaves_Gitignore_Runner_Run_ModeOutputValue>;
 
-export type CliGenerateMustHavesGitignoreRunManageResult = 'back' | 'exit';
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_ManageResult = 'back' | 'exit';
 
-export type CliGenerateMustHavesGitignoreRunResult = 'completed' | 'cancelled';
+export type Cli_Generate_MustHaves_Gitignore_Runner_Run_Result = 'completed' | 'cancelled';

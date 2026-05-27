@@ -5,4 +5,4 @@ import type { RuleTester } from '@typescript-eslint/rule-tester';
  *
  * @since 0.14.0
  */
-export type TestsRulesEslintRegexNoRegexLiteralFlagsRuleTester = RuleTester;
+export type Tests_Rules_Eslint_Regex_NoRegexLiteralFlags_RuleTester = RuleTester;

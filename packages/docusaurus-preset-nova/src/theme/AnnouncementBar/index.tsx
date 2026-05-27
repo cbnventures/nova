@@ -4,21 +4,21 @@ import { Icon } from '@iconify/react/offline';
 import { useState } from 'react';
 
 import type {
-  ThemeAnnouncementBarBackgroundColor,
-  ThemeAnnouncementBarCloseAriaLabel,
-  ThemeAnnouncementBarConfig,
-  ThemeAnnouncementBarContent,
-  ThemeAnnouncementBarDismissStorageKey,
-  ThemeAnnouncementBarId,
-  ThemeAnnouncementBarInlineStyle,
-  ThemeAnnouncementBarIsCloseable,
-  ThemeAnnouncementBarIsDismissed,
-  ThemeAnnouncementBarIsDismissedState,
-  ThemeAnnouncementBarProps,
-  ThemeAnnouncementBarReturns,
-  ThemeAnnouncementBarSetIsDismissed,
-  ThemeAnnouncementBarTextColor,
-  ThemeAnnouncementBarThemeConfig,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor,
+  Theme_AnnouncementBar_Index_AnnouncementBar_CloseAriaLabel,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content,
+  Theme_AnnouncementBar_Index_AnnouncementBar_DismissStorageKey,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id,
+  Theme_AnnouncementBar_Index_AnnouncementBar_InlineStyle,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable,
+  Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed,
+  Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissedState,
+  Theme_AnnouncementBar_Index_AnnouncementBar_Props,
+  Theme_AnnouncementBar_Index_AnnouncementBar_Returns,
+  Theme_AnnouncementBar_Index_AnnouncementBar_SetIsDismissed,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor,
+  Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig,
 } from '../../types/theme/AnnouncementBar/index.d.ts';
 
 /**
@@ -32,22 +32,22 @@ import type {
  *
  * @since 0.15.0
  */
-function AnnouncementBar(props: ThemeAnnouncementBarProps): ThemeAnnouncementBarReturns {
-  const themeConfig: ThemeAnnouncementBarThemeConfig = useThemeConfig() as ThemeAnnouncementBarThemeConfig;
-  const config: ThemeAnnouncementBarConfig = themeConfig['announcementBar'];
+function AnnouncementBar(props: Theme_AnnouncementBar_Index_AnnouncementBar_Props): Theme_AnnouncementBar_Index_AnnouncementBar_Returns {
+  const themeConfig: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig = useThemeConfig() as Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig;
+  const config: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar = themeConfig['announcementBar'];
 
   if (config === undefined) {
     return null;
   }
 
-  const announcementId: ThemeAnnouncementBarId = config['id'];
-  const content: ThemeAnnouncementBarContent = config['content'];
-  const backgroundColor: ThemeAnnouncementBarBackgroundColor = config['backgroundColor'];
-  const textColor: ThemeAnnouncementBarTextColor = config['textColor'];
-  const isCloseable: ThemeAnnouncementBarIsCloseable = config['isCloseable'] ?? true;
+  const announcementId: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Id = config['id'];
+  const content: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_Content = config['content'];
+  const backgroundColor: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_BackgroundColor = config['backgroundColor'];
+  const textColor: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_TextColor = config['textColor'];
+  const isCloseable: Theme_AnnouncementBar_Index_AnnouncementBar_ThemeConfig_AnnouncementBar_IsCloseable = config['isCloseable'] ?? true;
 
-  const dismissStorageKey: ThemeAnnouncementBarDismissStorageKey = `docusaurus.announcement.dismiss.${announcementId}`;
-  const isDismissedState: ThemeAnnouncementBarIsDismissedState = useState<ThemeAnnouncementBarIsDismissed>(() => {
+  const dismissStorageKey: Theme_AnnouncementBar_Index_AnnouncementBar_DismissStorageKey = `docusaurus.announcement.dismiss.${announcementId}`;
+  const isDismissedState: Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissedState = useState<Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed>(() => {
     if (typeof window === 'undefined') {
       return false;
     }
@@ -58,20 +58,20 @@ function AnnouncementBar(props: ThemeAnnouncementBarProps): ThemeAnnouncementBar
       return false;
     }
   });
-  const isDismissed: ThemeAnnouncementBarIsDismissed = isDismissedState[0];
-  const setIsDismissed: ThemeAnnouncementBarSetIsDismissed = isDismissedState[1];
+  const isDismissed: Theme_AnnouncementBar_Index_AnnouncementBar_IsDismissed = isDismissedState[0];
+  const setIsDismissed: Theme_AnnouncementBar_Index_AnnouncementBar_SetIsDismissed = isDismissedState[1];
 
   if (isDismissed === true || content === '') {
     return null;
   }
 
-  const closeAriaLabel: ThemeAnnouncementBarCloseAriaLabel = translate({
+  const closeAriaLabel: Theme_AnnouncementBar_Index_AnnouncementBar_CloseAriaLabel = translate({
     id: 'theme.AnnouncementBar.closeButtonAriaLabel',
     message: 'Close announcement',
     description: 'The ARIA label for the button that closes the announcement bar',
   });
 
-  const inlineStyle: ThemeAnnouncementBarInlineStyle = {};
+  const inlineStyle: Theme_AnnouncementBar_Index_AnnouncementBar_InlineStyle = {};
 
   if (backgroundColor !== undefined) {
     Reflect.set(inlineStyle, 'backgroundColor', backgroundColor);

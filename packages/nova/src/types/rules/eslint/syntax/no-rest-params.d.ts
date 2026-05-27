@@ -6,73 +6,73 @@ import type { RuleContext } from '@typescript-eslint/utils/ts-eslint';
  *
  * @since 0.15.0
  */
-export type RulesEslintSyntaxNoRestParamsCheckFunctionContext = Readonly<RuleContext<string, unknown[]>>;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Context = Readonly<RuleContext<string, unknown[]>>;
 
-export type RulesEslintSyntaxNoRestParamsCheckFunctionNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Node = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
 
-export type RulesEslintSyntaxNoRestParamsCheckFunctionAllowPatterns = string[];
+export type Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_AllowPatterns = string[];
 
-export type RulesEslintSyntaxNoRestParamsCheckFunctionReturns = void;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_Returns = void;
 
-export type RulesEslintSyntaxNoRestParamsCheckFunctionFunctionName = string | undefined;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_CheckFunction_FunctionName = string | undefined;
 
 /**
  * Rules - ESLint - Syntax - No Rest Params - Get Function Name.
  *
  * @since 0.15.0
  */
-export type RulesEslintSyntaxNoRestParamsGetFunctionNameNode = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Node = TSESTree.FunctionDeclaration | TSESTree.FunctionExpression | TSESTree.ArrowFunctionExpression;
 
-export type RulesEslintSyntaxNoRestParamsGetFunctionNameReturns = string | undefined;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Returns = string | undefined;
 
-export type RulesEslintSyntaxNoRestParamsGetFunctionNameParent = TSESTree.Node | undefined;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_Parent = TSESTree.Node | undefined;
 
-export type RulesEslintSyntaxNoRestParamsGetFunctionNameClassNode = TSESTree.Node | undefined;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ClassNode = TSESTree.Node | undefined;
 
-export type RulesEslintSyntaxNoRestParamsGetFunctionNameObjectNode = TSESTree.Node | undefined;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ObjectNode = TSESTree.Node | undefined;
 
-export type RulesEslintSyntaxNoRestParamsGetFunctionNameParentName = string | undefined;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetFunctionName_ParentName = string | undefined;
 
 /**
  * Rules - ESLint - Syntax - No Rest Params - Get Parent Name.
  *
  * @since 0.15.0
  */
-export type RulesEslintSyntaxNoRestParamsGetParentNameNode = TSESTree.Node;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Node = TSESTree.Node;
 
-export type RulesEslintSyntaxNoRestParamsGetParentNameReturns = string | undefined;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_Returns = string | undefined;
 
-export type RulesEslintSyntaxNoRestParamsGetParentNameClassNode = TSESTree.Node | undefined;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_GetParentName_ClassNode = TSESTree.Node | undefined;
 
 /**
  * Rules - ESLint - Syntax - No Rest Params - Is Allowed.
  *
  * @since 0.15.0
  */
-export type RulesEslintSyntaxNoRestParamsIsAllowedName = string;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Name = string;
 
-export type RulesEslintSyntaxNoRestParamsIsAllowedPatterns = string[];
+export type Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Patterns = string[];
 
-export type RulesEslintSyntaxNoRestParamsIsAllowedReturns = boolean;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Returns = boolean;
 
-export type RulesEslintSyntaxNoRestParamsIsAllowedPrefix = string;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_IsAllowed_Prefix = string;
 
 /**
  * Rules - ESLint - Syntax - No Rest Params - Rule.
  *
  * @since 0.15.0
  */
-export type RulesEslintSyntaxNoRestParamsRuleDefaultOptionsAllow = string[];
+export type Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsAllow = string[];
 
-export type RulesEslintSyntaxNoRestParamsRuleDefaultOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Syntax_NoRestParams_Runner_RuleDefaultOptionsIgnoreFiles = string[];
 
-export type RulesEslintSyntaxNoRestParamsRuleOptionsIgnoreFiles = string[];
+export type Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions_IgnoreFiles = string[];
 
-export type RulesEslintSyntaxNoRestParamsRuleOptionsAllow = string[];
+export type Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions_Allow = string[];
 
-export type RulesEslintSyntaxNoRestParamsRuleOptions = Readonly<{
-  ignoreFiles: RulesEslintSyntaxNoRestParamsRuleOptionsIgnoreFiles;
-  allow: RulesEslintSyntaxNoRestParamsRuleOptionsAllow;
+export type Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions = Readonly<{
+  ignoreFiles: Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions_IgnoreFiles;
+  allow: Rules_Eslint_Syntax_NoRestParams_Runner_RuleOptions_Allow;
 }>;
 
-export type RulesEslintSyntaxNoRestParamsRuleAllowPatterns = string[];
+export type Rules_Eslint_Syntax_NoRestParams_Runner_RuleAllowPatterns = string[];

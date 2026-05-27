@@ -5,28 +5,28 @@ import { Icon } from '@iconify/react/offline';
 import Heading from '@theme/Heading';
 
 import type {
-  ThemeDocTagDocListPageDocTagDocListPageDoc,
-  ThemeDocTagDocListPageDocTagDocListPageDocsTaggedPlural,
-  ThemeDocTagDocListPageDocTagDocListPageItemSectionLabel,
-  ThemeDocTagDocListPageDocTagDocListPageMetadataSpread,
-  ThemeDocTagDocListPageDocTagDocListPageNDocsTagged,
-  ThemeDocTagDocListPageDocTagDocListPageProps,
-  ThemeDocTagDocListPageDocTagDocListPageReadDocLabel,
-  ThemeDocTagDocListPageDocTagDocListPageTitle,
-  ThemeDocTagDocListPageDocTagDocListPageViewAllTags,
-  ThemeDocTagDocListPageFormatDocSectionDocId,
-  ThemeDocTagDocListPageFormatDocSectionFormatted,
-  ThemeDocTagDocListPageFormatDocSectionParentParts,
-  ThemeDocTagDocListPageFormatDocSectionParts,
-  ThemeDocTagDocListPageFormatDocSectionReturns,
-  ThemeDocTagDocListPageFormatDocSectionSegment,
-  ThemeDocTagDocListPageFormatDocSectionTitled,
-  ThemeDocTagDocListPageFormatDocSectionWord,
-  ThemeDocTagDocListPageFormatDocSectionWords,
-  ThemeDocTagDocListPageUseDocsTaggedPluralCount,
-  ThemeDocTagDocListPageUseDocsTaggedPluralPluralForm,
-  ThemeDocTagDocListPageUseDocsTaggedPluralSelectMessage,
-  ThemeDocTagDocListPageUseDocsTaggedPluralTranslated,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_DocsTaggedPlural,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_ItemSectionLabel,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_MetadataSpread,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_NDocsTagged,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_Props,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_ReadDocLabel,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_Title,
+  Theme_DocTagDocListPage_Index_DocTagDocListPage_ViewAllTags,
+  Theme_DocTagDocListPage_Index_FormatDocSection_DocId,
+  Theme_DocTagDocListPage_Index_FormatDocSection_Formatted,
+  Theme_DocTagDocListPage_Index_FormatDocSection_ParentParts,
+  Theme_DocTagDocListPage_Index_FormatDocSection_Parts,
+  Theme_DocTagDocListPage_Index_FormatDocSection_Returns,
+  Theme_DocTagDocListPage_Index_FormatDocSection_Segment,
+  Theme_DocTagDocListPage_Index_FormatDocSection_Titled,
+  Theme_DocTagDocListPage_Index_FormatDocSection_Word,
+  Theme_DocTagDocListPage_Index_FormatDocSection_Words,
+  Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_Count,
+  Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_PluralForm,
+  Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_SelectMessage,
+  Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_Translated,
 } from '../../types/theme/DocTagDocListPage/index.d.ts';
 
 /**
@@ -35,18 +35,18 @@ import type {
  * Derives a human-readable section breadcrumb from a doc id, used as
  * kicker text above each card title to show where the doc lives.
  *
- * @param {ThemeDocTagDocListPageFormatDocSectionDocId} docId - Doc id.
+ * @param {Theme_DocTagDocListPage_Index_FormatDocSection_DocId} docId - Doc id.
  *
- * @returns {ThemeDocTagDocListPageFormatDocSectionReturns}
+ * @returns {Theme_DocTagDocListPage_Index_FormatDocSection_Returns}
  *
  * @since 0.18.0
  */
-function formatDocSection(docId: ThemeDocTagDocListPageFormatDocSectionDocId): ThemeDocTagDocListPageFormatDocSectionReturns {
-  const parts: ThemeDocTagDocListPageFormatDocSectionParts = docId.split('/');
-  const parentParts: ThemeDocTagDocListPageFormatDocSectionParentParts = parts.slice(0, -1);
-  const formatted: ThemeDocTagDocListPageFormatDocSectionFormatted = parentParts.map((segment: ThemeDocTagDocListPageFormatDocSectionSegment) => {
-    const words: ThemeDocTagDocListPageFormatDocSectionWords = segment.split('-');
-    const titled: ThemeDocTagDocListPageFormatDocSectionTitled = words.map((word: ThemeDocTagDocListPageFormatDocSectionWord) => word.charAt(0).toUpperCase() + word.slice(1));
+function formatDocSection(docId: Theme_DocTagDocListPage_Index_FormatDocSection_DocId): Theme_DocTagDocListPage_Index_FormatDocSection_Returns {
+  const parts: Theme_DocTagDocListPage_Index_FormatDocSection_Parts = docId.split('/');
+  const parentParts: Theme_DocTagDocListPage_Index_FormatDocSection_ParentParts = parts.slice(0, -1);
+  const formatted: Theme_DocTagDocListPage_Index_FormatDocSection_Formatted = parentParts.map((segment: Theme_DocTagDocListPage_Index_FormatDocSection_Segment) => {
+    const words: Theme_DocTagDocListPage_Index_FormatDocSection_Words = segment.split('-');
+    const titled: Theme_DocTagDocListPage_Index_FormatDocSection_Titled = words.map((word: Theme_DocTagDocListPage_Index_FormatDocSection_Word) => word.charAt(0).toUpperCase() + word.slice(1));
 
     return titled.join(' ');
   });
@@ -61,15 +61,15 @@ function formatDocSection(docId: ThemeDocTagDocListPageFormatDocSectionDocId): T
  * heading and metadata title, used as the variable portion of the
  * `'{nDocsTagged} with "{tagName}"'` title format.
  *
- * @returns {ThemeDocTagDocListPageUseDocsTaggedPluralSelectMessage}
+ * @returns {Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_SelectMessage}
  *
  * @since 0.18.0
  */
-function useDocsTaggedPlural(): ThemeDocTagDocListPageUseDocsTaggedPluralSelectMessage {
-  const pluralForm: ThemeDocTagDocListPageUseDocsTaggedPluralPluralForm = usePluralForm();
+function useDocsTaggedPlural(): Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_SelectMessage {
+  const pluralForm: Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_PluralForm = usePluralForm();
 
-  return (count: ThemeDocTagDocListPageUseDocsTaggedPluralCount) => {
-    const translated: ThemeDocTagDocListPageUseDocsTaggedPluralTranslated = translate(
+  return (count: Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_Count) => {
+    const translated: Theme_DocTagDocListPage_Index_UseDocsTaggedPlural_Translated = translate(
       {
         message: 'One doc tagged|{count} docs tagged',
         id: 'theme.docs.tagDocListPageTitle.nDocsTagged',
@@ -89,16 +89,16 @@ function useDocsTaggedPlural(): ThemeDocTagDocListPageUseDocsTaggedPluralSelectM
  * a heading with the tag name, an optional description, a link back
  * to all tags, and each tagged document.
  *
- * @param {ThemeDocTagDocListPageDocTagDocListPageProps} props - Props.
+ * @param {Theme_DocTagDocListPage_Index_DocTagDocListPage_Props} props - Props.
  *
  * @constructor
  *
  * @since 0.15.0
  */
-function DocTagDocListPage(props: ThemeDocTagDocListPageDocTagDocListPageProps) {
-  const docsTaggedPlural: ThemeDocTagDocListPageDocTagDocListPageDocsTaggedPlural = useDocsTaggedPlural();
-  const nDocsTagged: ThemeDocTagDocListPageDocTagDocListPageNDocsTagged = docsTaggedPlural(props['tag']['count']);
-  const title: ThemeDocTagDocListPageDocTagDocListPageTitle = translate(
+function DocTagDocListPage(props: Theme_DocTagDocListPage_Index_DocTagDocListPage_Props) {
+  const docsTaggedPlural: Theme_DocTagDocListPage_Index_DocTagDocListPage_DocsTaggedPlural = useDocsTaggedPlural();
+  const nDocsTagged: Theme_DocTagDocListPage_Index_DocTagDocListPage_NDocsTagged = docsTaggedPlural(props['tag']['count']);
+  const title: Theme_DocTagDocListPage_Index_DocTagDocListPage_Title = translate(
     {
       message: '{nDocsTagged} with "{tagName}"',
       id: 'theme.docs.tagDocListPageTitle',
@@ -109,17 +109,17 @@ function DocTagDocListPage(props: ThemeDocTagDocListPageDocTagDocListPageProps) 
       tagName: props['tag']['label'],
     },
   );
-  const viewAllTags: ThemeDocTagDocListPageDocTagDocListPageViewAllTags = translate({
+  const viewAllTags: Theme_DocTagDocListPage_Index_DocTagDocListPage_ViewAllTags = translate({
     id: 'theme.docs.tagDocListPage.viewAllTags',
     message: 'View all tags',
     description: 'The label for the link to the full doc tags list',
   });
-  const readDocLabel: ThemeDocTagDocListPageDocTagDocListPageReadDocLabel = translate({
+  const readDocLabel: Theme_DocTagDocListPage_Index_DocTagDocListPage_ReadDocLabel = translate({
     id: 'theme.docs.tagDocListPage.readDoc',
     message: 'Read article',
     description: 'The label on a tagged-doc card linking to the full doc',
   });
-  const metadataSpread: ThemeDocTagDocListPageDocTagDocListPageMetadataSpread = {};
+  const metadataSpread: Theme_DocTagDocListPage_Index_DocTagDocListPage_MetadataSpread = {};
 
   if (props['tag']['description'] !== undefined) {
     Reflect.set(metadataSpread, 'description', props['tag']['description']);
@@ -149,8 +149,8 @@ function DocTagDocListPage(props: ThemeDocTagDocListPageDocTagDocListPageProps) 
           </header>
           <section className="nova-grid nova-doc-tag-doc-list-page-items">
             {
-              props['tag']['items'].map((doc: ThemeDocTagDocListPageDocTagDocListPageDoc) => {
-                const sectionLabel: ThemeDocTagDocListPageDocTagDocListPageItemSectionLabel = formatDocSection(doc['id']);
+              props['tag']['items'].map((doc: Theme_DocTagDocListPage_Index_DocTagDocListPage_Doc) => {
+                const sectionLabel: Theme_DocTagDocListPage_Index_DocTagDocListPage_ItemSectionLabel = formatDocSection(doc['id']);
 
                 return (
                   <article className="nova-col-12" key={doc['id']}>

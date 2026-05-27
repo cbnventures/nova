@@ -6,80 +6,80 @@ import type { CSSProperties } from 'react';
  *
  * @since 0.15.0
  */
-export type ThemeBlogSidebarBlogSidebarPropsSidebar = BlogSidebar | undefined;
+export type Theme_BlogSidebar_Index_BlogSidebar_Props_Sidebar = BlogSidebar | undefined;
 
-export type ThemeBlogSidebarBlogSidebarPropsClassName = string | undefined;
+export type Theme_BlogSidebar_Index_BlogSidebar_Props_ClassName = string | undefined;
 
-export type ThemeBlogSidebarBlogSidebarPropsStyle = CSSProperties | undefined;
+export type Theme_BlogSidebar_Index_BlogSidebar_Props_Style = CSSProperties | undefined;
 
-export type ThemeBlogSidebarBlogSidebarProps = {
-  sidebar?: ThemeBlogSidebarBlogSidebarPropsSidebar;
-  className?: ThemeBlogSidebarBlogSidebarPropsClassName;
-  style?: ThemeBlogSidebarBlogSidebarPropsStyle;
+export type Theme_BlogSidebar_Index_BlogSidebar_Props = {
+  sidebar?: Theme_BlogSidebar_Index_BlogSidebar_Props_Sidebar;
+  className?: Theme_BlogSidebar_Index_BlogSidebar_Props_ClassName;
+  style?: Theme_BlogSidebar_Index_BlogSidebar_Props_Style;
   [key: string]: unknown;
 };
 
-export type ThemeBlogSidebarBlogSidebarThemeConfigCast = unknown;
+export type Theme_BlogSidebar_Index_BlogSidebar_ThemeConfigCast = unknown;
 
-export type ThemeBlogSidebarBlogSidebarThemeConfig = Record<string, unknown>;
+export type Theme_BlogSidebar_Index_BlogSidebar_ThemeConfig = Record<string, unknown>;
 
-export type ThemeBlogSidebarBlogSidebarBlogConfigSidebar = ThemeBlogSidebarBlogSidebarSidebarConfig;
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogConfig_Sidebar = Theme_BlogSidebar_Index_BlogSidebar_SidebarConfig;
 
-export type ThemeBlogSidebarBlogSidebarBlogConfig = {
-  sidebar: ThemeBlogSidebarBlogSidebarBlogConfigSidebar;
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogConfig = {
+  sidebar: Theme_BlogSidebar_Index_BlogSidebar_BlogConfig_Sidebar;
   [key: string]: unknown;
 };
 
-export type ThemeBlogSidebarBlogSidebarSidebarConfigGroupByYear = boolean;
+export type Theme_BlogSidebar_Index_BlogSidebar_SidebarConfig_GroupByYear = boolean;
 
-export type ThemeBlogSidebarBlogSidebarSidebarConfig = {
-  groupByYear: ThemeBlogSidebarBlogSidebarSidebarConfigGroupByYear;
+export type Theme_BlogSidebar_Index_BlogSidebar_SidebarConfig = {
+  groupByYear: Theme_BlogSidebar_Index_BlogSidebar_SidebarConfig_GroupByYear;
   [key: string]: unknown;
 };
 
-export type ThemeBlogSidebarBlogSidebarGroupByYear = boolean;
+export type Theme_BlogSidebar_Index_BlogSidebar_GroupByYear = boolean;
 
-export type ThemeBlogSidebarBlogSidebarGlobalData = Record<string, unknown>;
+export type Theme_BlogSidebar_Index_BlogSidebar_GlobalData = Record<string, unknown>;
 
-export type ThemeBlogSidebarBlogSidebarBlogAuthors = ThemeBlogSidebarBlogSidebarBlogAuthor[];
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthors = Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor[];
 
-export type ThemeBlogSidebarBlogSidebarAriaLabel = string;
+export type Theme_BlogSidebar_Index_BlogSidebar_AriaLabel = string;
 
-export type ThemeBlogSidebarBlogSidebarAuthorsLabel = string;
+export type Theme_BlogSidebar_Index_BlogSidebar_AuthorsLabel = string;
 
-export type ThemeBlogSidebarBlogSidebarSubscribeLabel = string;
+export type Theme_BlogSidebar_Index_BlogSidebar_SubscribeLabel = string;
 
-export type ThemeBlogSidebarBlogSidebarFeedUrl = string;
+export type Theme_BlogSidebar_Index_BlogSidebar_FeedUrl = string;
 
-export type ThemeBlogSidebarBlogSidebarCurrentYear = string;
+export type Theme_BlogSidebar_Index_BlogSidebar_CurrentYear = string;
 
-export type ThemeBlogSidebarBlogSidebarSidebar = BlogSidebar;
+export type Theme_BlogSidebar_Index_BlogSidebar_Sidebar = BlogSidebar;
 
-export type ThemeBlogSidebarBlogSidebarTitle = string;
+export type Theme_BlogSidebar_Index_BlogSidebar_Title = string;
 
-export type ThemeBlogSidebarBlogSidebarItems = BlogSidebarItem[];
+export type Theme_BlogSidebar_Index_BlogSidebar_Items = BlogSidebarItem[];
 
-export type ThemeBlogSidebarBlogSidebarItem = BlogSidebarItem;
+export type Theme_BlogSidebar_Index_BlogSidebar_Item = BlogSidebarItem;
 
-export type ThemeBlogSidebarBlogSidebarItemDate = Date;
+export type Theme_BlogSidebar_Index_BlogSidebar_ItemDate = Date;
 
-export type ThemeBlogSidebarBlogSidebarItemFullYear = number;
+export type Theme_BlogSidebar_Index_BlogSidebar_ItemFullYear = number;
 
-export type ThemeBlogSidebarBlogSidebarItemYear = string;
+export type Theme_BlogSidebar_Index_BlogSidebar_ItemYear = string;
 
-export type ThemeBlogSidebarBlogSidebarShowYearHeading = boolean;
+export type Theme_BlogSidebar_Index_BlogSidebar_ShowYearHeading = boolean;
 
-export type ThemeBlogSidebarBlogSidebarBlogAuthorImageUrl = string | undefined;
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_ImageURL = string | undefined;
 
-export type ThemeBlogSidebarBlogSidebarBlogAuthorKey = string;
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Key = string;
 
-export type ThemeBlogSidebarBlogSidebarBlogAuthorName = string | undefined;
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Name = string | undefined;
 
-export type ThemeBlogSidebarBlogSidebarBlogAuthorPermalink = string | undefined;
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Permalink = string | undefined;
 
-export type ThemeBlogSidebarBlogSidebarBlogAuthor = {
-  imageURL: ThemeBlogSidebarBlogSidebarBlogAuthorImageUrl;
-  key: ThemeBlogSidebarBlogSidebarBlogAuthorKey;
-  name: ThemeBlogSidebarBlogSidebarBlogAuthorName;
-  permalink: ThemeBlogSidebarBlogSidebarBlogAuthorPermalink;
+export type Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor = {
+  imageURL: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_ImageURL;
+  key: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Key;
+  name: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Name;
+  permalink: Theme_BlogSidebar_Index_BlogSidebar_BlogAuthor_Permalink;
 };

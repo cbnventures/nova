@@ -20,76 +20,76 @@ import Monolith from './Monolith/index.js';
 import MonolithMobileMenu from './Monolith/mobile-menu.js';
 
 import type {
-  ThemeNavbarColorModeChoice,
-  ThemeNavbarColorModeLabel,
-  ThemeNavbarColorModeState,
-  ThemeNavbarIndexActionItemType,
-  ThemeNavbarIndexActionItemTypes,
-  ThemeNavbarIndexAllDocsData,
-  ThemeNavbarIndexCurrentScrollPosition,
-  ThemeNavbarIndexGlobalData,
-  ThemeNavbarIndexHamburgerLabel,
-  ThemeNavbarIndexHideOnScroll,
-  ThemeNavbarIndexIsMenuOpen,
-  ThemeNavbarIndexIsMenuOpenState,
-  ThemeNavbarIndexIsScrollingDown,
-  ThemeNavbarIndexLastScrollPositionRef,
-  ThemeNavbarIndexMediaQuery,
-  ThemeNavbarIndexNavbarClassName,
-  ThemeNavbarIndexNavbarHidden,
-  ThemeNavbarIndexNavbarHiddenState,
-  ThemeNavbarIndexNavbarVariant,
-  ThemeNavbarIndexPluginData,
-  ThemeNavbarIndexPresetLogo,
-  ThemeNavbarIndexPresetLogoAlt,
-  ThemeNavbarIndexPresetLogoSrc,
-  ThemeNavbarIndexPresetLogoTitle,
-  ThemeNavbarIndexResolvedItem,
-  ThemeNavbarIndexResolvedItemAllDocs,
-  ThemeNavbarIndexResolvedItemDocCandidate,
-  ThemeNavbarIndexResolvedItemDocId,
-  ThemeNavbarIndexResolvedItemMatchedDoc,
-  ThemeNavbarIndexResolvedItemMatchedVersion,
-  ThemeNavbarIndexResolvedItemPluginData,
-  ThemeNavbarIndexResolvedItemPluginId,
-  ThemeNavbarIndexResolvedItems,
-  ThemeNavbarIndexResolvedItemSidebar,
-  ThemeNavbarIndexResolvedItemSidebarId,
-  ThemeNavbarIndexResolvedItemSidebarLink,
-  ThemeNavbarIndexResolvedItemType,
-  ThemeNavbarIndexResolvedItemVersion,
-  ThemeNavbarIndexResolvedItemVersionSidebars,
-  ThemeNavbarIndexResolvedItemVersionSidebarsOrUndefined,
-  ThemeNavbarIndexSetIsMenuOpen,
-  ThemeNavbarIndexSetNavbarHidden,
-  ThemeNavbarIndexSiteLogo,
-  ThemeNavbarIndexSiteLogoSrc,
-  ThemeNavbarIndexSvgFilterDefinition,
-  ThemeNavbarIndexSystemColorMode,
-  ThemeNavbarIndexThemeChoice,
-  ThemeNavbarIndexUserLogo,
-  ThemeNavbarIndexUserLogoAlt,
-  ThemeNavbarIndexUserLogoAriaLabel,
-  ThemeNavbarIndexUserLogoHref,
-  ThemeNavbarIndexUserLogoRel,
-  ThemeNavbarIndexUserLogoSrc,
-  ThemeNavbarIndexUserLogoTarget,
-  ThemeNavbarIndexUserLogoTitle,
-  ThemeNavbarIndexUserLogoWordmark,
-  ThemeNavbarIndexVariantProps,
-  ThemeNavbarIndexVariantPropsActiveItemLabel,
-  ThemeNavbarItem,
-  ThemeNavbarItems,
-  ThemeNavbarNavbarColorModeDarkLabel,
-  ThemeNavbarNavbarColorModeLightLabel,
-  ThemeNavbarNavbarColorModeSystemLabel,
-  ThemeNavbarNavbarConfig,
-  ThemeNavbarNavbarMenuButtonLabel,
-  ThemeNavbarProps,
-  ThemeNavbarSetColorMode,
-  ThemeNavbarSiteConfig,
-  ThemeNavbarThemeConfig,
-  ThemeNavbarThemeConfigCast,
+  Theme_Navbar_Index_ActionItemType,
+  Theme_Navbar_Index_ActionItemTypes,
+  Theme_Navbar_Index_AllDocsData,
+  Theme_Navbar_Index_CurrentScrollPosition,
+  Theme_Navbar_Index_GlobalData,
+  Theme_Navbar_Index_HamburgerLabel,
+  Theme_Navbar_Index_HideOnScroll,
+  Theme_Navbar_Index_IsMenuOpen,
+  Theme_Navbar_Index_IsMenuOpenState,
+  Theme_Navbar_Index_IsScrollingDown,
+  Theme_Navbar_Index_LastScrollPositionRef,
+  Theme_Navbar_Index_MediaQuery,
+  Theme_Navbar_Index_Navbar_ClassName,
+  Theme_Navbar_Index_Navbar_ColorModeChoice,
+  Theme_Navbar_Index_Navbar_ColorModeDarkLabel,
+  Theme_Navbar_Index_Navbar_ColorModeLabel,
+  Theme_Navbar_Index_Navbar_ColorModeLightLabel,
+  Theme_Navbar_Index_Navbar_ColorModeState,
+  Theme_Navbar_Index_Navbar_ColorModeSystemLabel,
+  Theme_Navbar_Index_Navbar_Config,
+  Theme_Navbar_Index_Navbar_Hidden,
+  Theme_Navbar_Index_Navbar_HiddenState,
+  Theme_Navbar_Index_Navbar_Item,
+  Theme_Navbar_Index_Navbar_Items,
+  Theme_Navbar_Index_Navbar_MenuButtonLabel,
+  Theme_Navbar_Index_Navbar_Props,
+  Theme_Navbar_Index_Navbar_SetColorMode,
+  Theme_Navbar_Index_Navbar_SiteConfig,
+  Theme_Navbar_Index_Navbar_ThemeConfig,
+  Theme_Navbar_Index_Navbar_ThemeConfigCast,
+  Theme_Navbar_Index_Navbar_Variant,
+  Theme_Navbar_Index_PluginData,
+  Theme_Navbar_Index_PresetLogo,
+  Theme_Navbar_Index_PresetLogoAlt,
+  Theme_Navbar_Index_PresetLogoSrc,
+  Theme_Navbar_Index_PresetLogoTitle,
+  Theme_Navbar_Index_ResolvedItem,
+  Theme_Navbar_Index_ResolvedItemAllDocs,
+  Theme_Navbar_Index_ResolvedItemDocCandidate,
+  Theme_Navbar_Index_ResolvedItemDocId,
+  Theme_Navbar_Index_ResolvedItemMatchedDoc,
+  Theme_Navbar_Index_ResolvedItemMatchedVersion,
+  Theme_Navbar_Index_ResolvedItemPluginData,
+  Theme_Navbar_Index_ResolvedItemPluginId,
+  Theme_Navbar_Index_ResolvedItems,
+  Theme_Navbar_Index_ResolvedItemSidebar,
+  Theme_Navbar_Index_ResolvedItemSidebarId,
+  Theme_Navbar_Index_ResolvedItemSidebarLink,
+  Theme_Navbar_Index_ResolvedItemType,
+  Theme_Navbar_Index_ResolvedItemVersion,
+  Theme_Navbar_Index_ResolvedItemVersionSidebars,
+  Theme_Navbar_Index_ResolvedItemVersionSidebarsOrUndefined,
+  Theme_Navbar_Index_SetIsMenuOpen,
+  Theme_Navbar_Index_SetNavbarHidden,
+  Theme_Navbar_Index_SiteLogo,
+  Theme_Navbar_Index_SiteLogo_Src,
+  Theme_Navbar_Index_SvgFilterDefinition,
+  Theme_Navbar_Index_SystemColorMode,
+  Theme_Navbar_Index_ThemeChoice,
+  Theme_Navbar_Index_UserLogo,
+  Theme_Navbar_Index_UserLogoAlt,
+  Theme_Navbar_Index_UserLogoAriaLabel,
+  Theme_Navbar_Index_UserLogoHref,
+  Theme_Navbar_Index_UserLogoRel,
+  Theme_Navbar_Index_UserLogoSrc,
+  Theme_Navbar_Index_UserLogoTarget,
+  Theme_Navbar_Index_UserLogoTitle,
+  Theme_Navbar_Index_UserLogoWordmark,
+  Theme_Navbar_Index_VariantProps,
+  Theme_Navbar_Index_VariantProps_ActiveItemLabel,
 } from '../../types/theme/Navbar/index.d.ts';
 
 /**
@@ -103,30 +103,30 @@ import type {
  *
  * @since 0.15.0
  */
-function Navbar(props: ThemeNavbarProps) {
-  const themeConfig: ThemeNavbarThemeConfig = useThemeConfig() as ThemeNavbarThemeConfigCast as ThemeNavbarThemeConfig;
-  const siteConfig: ThemeNavbarSiteConfig = themeConfig['site'] as ThemeNavbarSiteConfig;
-  const navbarConfig: ThemeNavbarNavbarConfig = themeConfig['navbar'] as ThemeNavbarNavbarConfig;
-  const colorModeState: ThemeNavbarColorModeState = useColorMode();
-  const colorModeChoice: ThemeNavbarColorModeChoice = colorModeState['colorModeChoice'];
-  const setColorMode: ThemeNavbarSetColorMode = colorModeState['setColorMode'];
-  const novaPluginData: ThemeNavbarIndexPluginData = usePluginData('docusaurus-theme-nova') as ThemeNavbarIndexPluginData;
-  const presetLogo: ThemeNavbarIndexPresetLogo = novaPluginData['presetLogo'] as ThemeNavbarIndexPresetLogo;
-  const userLogo: ThemeNavbarIndexUserLogo = siteConfig['logo'] as ThemeNavbarIndexUserLogo;
+function Navbar(props: Theme_Navbar_Index_Navbar_Props) {
+  const themeConfig: Theme_Navbar_Index_Navbar_ThemeConfig = useThemeConfig() as Theme_Navbar_Index_Navbar_ThemeConfigCast as Theme_Navbar_Index_Navbar_ThemeConfig;
+  const siteConfig: Theme_Navbar_Index_Navbar_SiteConfig = themeConfig['site'] as Theme_Navbar_Index_Navbar_SiteConfig;
+  const navbarConfig: Theme_Navbar_Index_Navbar_Config = themeConfig['navbar'] as Theme_Navbar_Index_Navbar_Config;
+  const colorModeState: Theme_Navbar_Index_Navbar_ColorModeState = useColorMode();
+  const colorModeChoice: Theme_Navbar_Index_Navbar_ColorModeChoice = colorModeState['colorModeChoice'];
+  const setColorMode: Theme_Navbar_Index_Navbar_SetColorMode = colorModeState['setColorMode'];
+  const novaPluginData: Theme_Navbar_Index_PluginData = usePluginData('docusaurus-theme-nova') as Theme_Navbar_Index_PluginData;
+  const presetLogo: Theme_Navbar_Index_PresetLogo = novaPluginData['presetLogo'] as Theme_Navbar_Index_PresetLogo;
+  const userLogo: Theme_Navbar_Index_UserLogo = siteConfig['logo'] as Theme_Navbar_Index_UserLogo;
 
-  const userLogoSrc: ThemeNavbarIndexUserLogoSrc = (userLogo !== undefined) ? userLogo['src'] as ThemeNavbarIndexUserLogoSrc : undefined;
-  const userLogoWordmark: ThemeNavbarIndexUserLogoWordmark = (userLogo !== undefined) ? userLogo['wordmark'] as ThemeNavbarIndexUserLogoWordmark : undefined;
-  const userLogoTitle: ThemeNavbarIndexUserLogoTitle = (userLogo !== undefined) ? userLogo['title'] as ThemeNavbarIndexUserLogoTitle : undefined;
-  const userLogoAlt: ThemeNavbarIndexUserLogoAlt = (userLogo !== undefined) ? userLogo['alt'] as ThemeNavbarIndexUserLogoAlt : undefined;
-  const userLogoHref: ThemeNavbarIndexUserLogoHref = (userLogo !== undefined) ? userLogo['href'] as ThemeNavbarIndexUserLogoHref : undefined;
-  const userLogoTarget: ThemeNavbarIndexUserLogoTarget = (userLogo !== undefined) ? userLogo['target'] as ThemeNavbarIndexUserLogoTarget : undefined;
-  const userLogoRel: ThemeNavbarIndexUserLogoRel = (userLogo !== undefined) ? userLogo['rel'] as ThemeNavbarIndexUserLogoRel : undefined;
-  const userLogoAriaLabel: ThemeNavbarIndexUserLogoAriaLabel = (userLogo !== undefined) ? userLogo['ariaLabel'] as ThemeNavbarIndexUserLogoAriaLabel : undefined;
-  const presetLogoSrc: ThemeNavbarIndexPresetLogoSrc = (presetLogo !== undefined) ? presetLogo['src'] : undefined;
-  const presetLogoTitle: ThemeNavbarIndexPresetLogoTitle = (presetLogo !== undefined) ? presetLogo['title'] : undefined;
-  const presetLogoAlt: ThemeNavbarIndexPresetLogoAlt = (presetLogo !== undefined) ? presetLogo['alt'] : undefined;
+  const userLogoSrc: Theme_Navbar_Index_UserLogoSrc = (userLogo !== undefined) ? userLogo['src'] as Theme_Navbar_Index_UserLogoSrc : undefined;
+  const userLogoWordmark: Theme_Navbar_Index_UserLogoWordmark = (userLogo !== undefined) ? userLogo['wordmark'] as Theme_Navbar_Index_UserLogoWordmark : undefined;
+  const userLogoTitle: Theme_Navbar_Index_UserLogoTitle = (userLogo !== undefined) ? userLogo['title'] as Theme_Navbar_Index_UserLogoTitle : undefined;
+  const userLogoAlt: Theme_Navbar_Index_UserLogoAlt = (userLogo !== undefined) ? userLogo['alt'] as Theme_Navbar_Index_UserLogoAlt : undefined;
+  const userLogoHref: Theme_Navbar_Index_UserLogoHref = (userLogo !== undefined) ? userLogo['href'] as Theme_Navbar_Index_UserLogoHref : undefined;
+  const userLogoTarget: Theme_Navbar_Index_UserLogoTarget = (userLogo !== undefined) ? userLogo['target'] as Theme_Navbar_Index_UserLogoTarget : undefined;
+  const userLogoRel: Theme_Navbar_Index_UserLogoRel = (userLogo !== undefined) ? userLogo['rel'] as Theme_Navbar_Index_UserLogoRel : undefined;
+  const userLogoAriaLabel: Theme_Navbar_Index_UserLogoAriaLabel = (userLogo !== undefined) ? userLogo['ariaLabel'] as Theme_Navbar_Index_UserLogoAriaLabel : undefined;
+  const presetLogoSrc: Theme_Navbar_Index_PresetLogoSrc = (presetLogo !== undefined) ? presetLogo['src'] : undefined;
+  const presetLogoTitle: Theme_Navbar_Index_PresetLogoTitle = (presetLogo !== undefined) ? presetLogo['title'] : undefined;
+  const presetLogoAlt: Theme_Navbar_Index_PresetLogoAlt = (presetLogo !== undefined) ? presetLogo['alt'] : undefined;
 
-  let resolvedSiteLogoSrc: ThemeNavbarIndexSiteLogoSrc = undefined;
+  let resolvedSiteLogoSrc: Theme_Navbar_Index_SiteLogo_Src = undefined;
 
   if (userLogoSrc !== undefined) {
     resolvedSiteLogoSrc = userLogoSrc;
@@ -137,7 +137,7 @@ function Navbar(props: ThemeNavbarProps) {
     };
   }
 
-  const siteLogo: ThemeNavbarIndexSiteLogo = {
+  const siteLogo: Theme_Navbar_Index_SiteLogo = {
     src: resolvedSiteLogoSrc,
     wordmark: userLogoWordmark,
     title: userLogoTitle ?? presetLogoTitle,
@@ -149,42 +149,42 @@ function Navbar(props: ThemeNavbarProps) {
     rel: userLogoRel,
     ariaLabel: userLogoAriaLabel,
   };
-  const hideOnScrollValue: ThemeNavbarIndexHideOnScroll = (navbarConfig['hideOnScroll'] ?? false) as ThemeNavbarIndexHideOnScroll;
-  const allItems: ThemeNavbarItems = (navbarConfig['items'] ?? []) as ThemeNavbarItems;
+  const hideOnScrollValue: Theme_Navbar_Index_HideOnScroll = (navbarConfig['hideOnScroll'] ?? false) as Theme_Navbar_Index_HideOnScroll;
+  const allItems: Theme_Navbar_Index_Navbar_Items = (navbarConfig['items'] ?? []) as Theme_Navbar_Index_Navbar_Items;
 
   // Split items by type - utility dropdowns (locale, etc.) route to the
   // navbar `actions` slot rather than the menu-link slot.
-  const actionItemTypes: ThemeNavbarIndexActionItemTypes = new Set(['localeDropdown']);
-  const items: ThemeNavbarItems = allItems.filter(
-    (item: ThemeNavbarItem) => actionItemTypes.has(item['type'] as ThemeNavbarIndexActionItemType) === false,
+  const actionItemTypes: Theme_Navbar_Index_ActionItemTypes = new Set(['localeDropdown']);
+  const items: Theme_Navbar_Index_Navbar_Items = allItems.filter(
+    (item: Theme_Navbar_Index_Navbar_Item) => actionItemTypes.has(item['type'] as Theme_Navbar_Index_ActionItemType) === false,
   );
-  const actionItems: ThemeNavbarItems = allItems.filter(
-    (item: ThemeNavbarItem) => actionItemTypes.has(item['type'] as ThemeNavbarIndexActionItemType),
+  const actionItems: Theme_Navbar_Index_Navbar_Items = allItems.filter(
+    (item: Theme_Navbar_Index_Navbar_Item) => actionItemTypes.has(item['type'] as Theme_Navbar_Index_ActionItemType),
   );
 
   // Resolve doc-type navbar items for mobile menus (desktop NavbarItem resolves its own).
-  const allDocsData: ThemeNavbarIndexAllDocsData = useAllDocsData();
-  const resolvedItems: ThemeNavbarIndexResolvedItems = items.map((item: ThemeNavbarItem) => {
-    const itemType: ThemeNavbarIndexResolvedItemType = item['type'] as ThemeNavbarIndexResolvedItemType;
+  const allDocsData: Theme_Navbar_Index_AllDocsData = useAllDocsData();
+  const resolvedItems: Theme_Navbar_Index_ResolvedItems = items.map((item: Theme_Navbar_Index_Navbar_Item) => {
+    const itemType: Theme_Navbar_Index_ResolvedItemType = item['type'] as Theme_Navbar_Index_ResolvedItemType;
 
     if (itemType !== 'doc' && itemType !== 'docSidebar') {
       return item;
     }
 
-    const pluginId: ThemeNavbarIndexResolvedItemPluginId = ((item['docsPluginId'] as ThemeNavbarIndexResolvedItemPluginId) ?? 'default');
-    const pluginData: ThemeNavbarIndexResolvedItemPluginData = allDocsData[pluginId];
+    const pluginId: Theme_Navbar_Index_ResolvedItemPluginId = ((item['docsPluginId'] as Theme_Navbar_Index_ResolvedItemPluginId) ?? 'default');
+    const pluginData: Theme_Navbar_Index_ResolvedItemPluginData = allDocsData[pluginId];
 
     if (pluginData === undefined) {
       return item;
     }
 
     if (itemType === 'doc') {
-      const docId: ThemeNavbarIndexResolvedItemDocId = item['docId'] as ThemeNavbarIndexResolvedItemDocId;
-      const allDocs: ThemeNavbarIndexResolvedItemAllDocs = pluginData['versions'].flatMap(
-        (version: ThemeNavbarIndexResolvedItemVersion) => version['docs'],
+      const docId: Theme_Navbar_Index_ResolvedItemDocId = item['docId'] as Theme_Navbar_Index_ResolvedItemDocId;
+      const allDocs: Theme_Navbar_Index_ResolvedItemAllDocs = pluginData['versions'].flatMap(
+        (version: Theme_Navbar_Index_ResolvedItemVersion) => version['docs'],
       );
-      const matchedDoc: ThemeNavbarIndexResolvedItemMatchedDoc = allDocs.find(
-        (candidate: ThemeNavbarIndexResolvedItemDocCandidate) => candidate['id'] === docId,
+      const matchedDoc: Theme_Navbar_Index_ResolvedItemMatchedDoc = allDocs.find(
+        (candidate: Theme_Navbar_Index_ResolvedItemDocCandidate) => candidate['id'] === docId,
       );
 
       if (matchedDoc !== undefined) {
@@ -192,38 +192,38 @@ function Navbar(props: ThemeNavbarProps) {
           ...item,
           to: matchedDoc['path'],
           claimBase: pluginData['path'],
-        } as ThemeNavbarIndexResolvedItem;
+        } as Theme_Navbar_Index_ResolvedItem;
       }
     }
 
     if (itemType === 'docSidebar') {
-      const sidebarId: ThemeNavbarIndexResolvedItemSidebarId = item['sidebarId'] as ThemeNavbarIndexResolvedItemSidebarId;
-      const matchedVersion: ThemeNavbarIndexResolvedItemMatchedVersion = pluginData['versions'].find(
-        (version: ThemeNavbarIndexResolvedItemVersion) => {
-          const sidebars: ThemeNavbarIndexResolvedItemVersionSidebarsOrUndefined = version['sidebars'];
+      const sidebarId: Theme_Navbar_Index_ResolvedItemSidebarId = item['sidebarId'] as Theme_Navbar_Index_ResolvedItemSidebarId;
+      const matchedVersion: Theme_Navbar_Index_ResolvedItemMatchedVersion = pluginData['versions'].find(
+        (version: Theme_Navbar_Index_ResolvedItemVersion) => {
+          const sidebars: Theme_Navbar_Index_ResolvedItemVersionSidebarsOrUndefined = version['sidebars'];
 
           if (sidebars === undefined) {
             return false;
           }
 
-          const sidebar: ThemeNavbarIndexResolvedItemSidebar = sidebars[sidebarId];
+          const sidebar: Theme_Navbar_Index_ResolvedItemSidebar = sidebars[sidebarId];
 
           return sidebar !== undefined && sidebar['link'] !== undefined;
         },
       );
 
       if (matchedVersion !== undefined && matchedVersion['sidebars'] !== undefined) {
-        const sidebars: ThemeNavbarIndexResolvedItemVersionSidebars = matchedVersion['sidebars'] as ThemeNavbarIndexResolvedItemVersionSidebars;
-        const sidebar: ThemeNavbarIndexResolvedItemSidebar = sidebars[sidebarId];
+        const sidebars: Theme_Navbar_Index_ResolvedItemVersionSidebars = matchedVersion['sidebars'] as Theme_Navbar_Index_ResolvedItemVersionSidebars;
+        const sidebar: Theme_Navbar_Index_ResolvedItemSidebar = sidebars[sidebarId];
 
         if (sidebar !== undefined) {
-          const sidebarLink: ThemeNavbarIndexResolvedItemSidebarLink = sidebar['link'];
+          const sidebarLink: Theme_Navbar_Index_ResolvedItemSidebarLink = sidebar['link'];
 
           if (sidebarLink !== undefined) {
             return {
               ...item,
               to: sidebarLink['path'],
-            } as ThemeNavbarIndexResolvedItem;
+            } as Theme_Navbar_Index_ResolvedItem;
           }
         }
       }
@@ -236,20 +236,20 @@ function Navbar(props: ThemeNavbarProps) {
   // Most-specific is decided by claim length (regex match or prefix). Doc
   // items broaden their claim to the docs plugin base via `claimBase`, so
   // a per-section sibling with a deeper prefix always wins specificity.
-  const activeItemLabel: ThemeNavbarIndexVariantPropsActiveItemLabel = useNavbarActiveItem(resolvedItems);
+  const activeItemLabel: Theme_Navbar_Index_VariantProps_ActiveItemLabel = useNavbarActiveItem(resolvedItems);
 
   // Read navbar variant from build-time global data (no hydration mismatch).
-  const globalData: ThemeNavbarIndexGlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as ThemeNavbarIndexGlobalData;
-  const navbarVariant: ThemeNavbarIndexNavbarVariant = (globalData['navbarVariant'] ?? 'bridge') as ThemeNavbarIndexNavbarVariant;
+  const globalData: Theme_Navbar_Index_GlobalData = (usePluginData('docusaurus-theme-nova') ?? {}) as Theme_Navbar_Index_GlobalData;
+  const navbarVariant: Theme_Navbar_Index_Navbar_Variant = (globalData['navbarVariant'] ?? 'bridge') as Theme_Navbar_Index_Navbar_Variant;
 
-  const navbarHiddenState: ThemeNavbarIndexNavbarHiddenState = useState<ThemeNavbarIndexNavbarHidden>(false);
-  const navbarHidden: ThemeNavbarIndexNavbarHidden = navbarHiddenState[0];
-  const setNavbarHidden: ThemeNavbarIndexSetNavbarHidden = navbarHiddenState[1];
+  const navbarHiddenState: Theme_Navbar_Index_Navbar_HiddenState = useState<Theme_Navbar_Index_Navbar_Hidden>(false);
+  const navbarHidden: Theme_Navbar_Index_Navbar_Hidden = navbarHiddenState[0];
+  const setNavbarHidden: Theme_Navbar_Index_SetNavbarHidden = navbarHiddenState[1];
 
-  const lastScrollPositionRef: ThemeNavbarIndexLastScrollPositionRef = useRef<number>(0);
-  const isMenuOpenState: ThemeNavbarIndexIsMenuOpenState = useState<ThemeNavbarIndexIsMenuOpen>(false);
-  const isMenuOpen: ThemeNavbarIndexIsMenuOpen = isMenuOpenState[0];
-  const setIsMenuOpen: ThemeNavbarIndexSetIsMenuOpen = isMenuOpenState[1];
+  const lastScrollPositionRef: Theme_Navbar_Index_LastScrollPositionRef = useRef<number>(0);
+  const isMenuOpenState: Theme_Navbar_Index_IsMenuOpenState = useState<Theme_Navbar_Index_IsMenuOpen>(false);
+  const isMenuOpen: Theme_Navbar_Index_IsMenuOpen = isMenuOpenState[0];
+  const setIsMenuOpen: Theme_Navbar_Index_SetIsMenuOpen = isMenuOpenState[1];
 
   /**
    * Theme - Navbar - Navbar.
@@ -273,8 +273,8 @@ function Navbar(props: ThemeNavbarProps) {
      * @since 0.15.0
      */
     function handleScroll() {
-      const currentScrollPosition: ThemeNavbarIndexCurrentScrollPosition = window.scrollY;
-      const isScrollingDown: ThemeNavbarIndexIsScrollingDown = currentScrollPosition > lastScrollPositionRef.current;
+      const currentScrollPosition: Theme_Navbar_Index_CurrentScrollPosition = window.scrollY;
+      const isScrollingDown: Theme_Navbar_Index_IsScrollingDown = currentScrollPosition > lastScrollPositionRef.current;
 
       if (isScrollingDown === true && currentScrollPosition > 60) {
         setNavbarHidden(true);
@@ -303,7 +303,7 @@ function Navbar(props: ThemeNavbarProps) {
    * the init script), preventing false triggers during hydration.
    */
   useEffect(() => {
-    const themeChoice: ThemeNavbarIndexThemeChoice = document.documentElement.getAttribute('data-theme-choice');
+    const themeChoice: Theme_Navbar_Index_ThemeChoice = document.documentElement.getAttribute('data-theme-choice');
 
     if (themeChoice !== 'system') {
       return undefined;
@@ -319,7 +319,7 @@ function Navbar(props: ThemeNavbarProps) {
      * @since 0.15.0
      */
     function applySystemMode() {
-      const systemColorMode: ThemeNavbarIndexSystemColorMode = (window.matchMedia('(prefers-color-scheme: dark)').matches === true) ? 'dark' : 'light';
+      const systemColorMode: Theme_Navbar_Index_SystemColorMode = (window.matchMedia('(prefers-color-scheme: dark)').matches === true) ? 'dark' : 'light';
 
       document.documentElement.setAttribute('data-theme', systemColorMode);
 
@@ -328,7 +328,7 @@ function Navbar(props: ThemeNavbarProps) {
 
     applySystemMode();
 
-    const mediaQuery: ThemeNavbarIndexMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery: Theme_Navbar_Index_MediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
     mediaQuery.addEventListener('change', applySystemMode);
 
@@ -340,7 +340,7 @@ function Navbar(props: ThemeNavbarProps) {
   }, [colorModeChoice]);
 
   // Cycle: light -> dark -> system (null) -> light.
-  let nextColorMode: ThemeNavbarColorModeChoice = 'light';
+  let nextColorMode: Theme_Navbar_Index_Navbar_ColorModeChoice = 'light';
 
   if (colorModeChoice === 'light') {
     nextColorMode = 'dark';
@@ -348,28 +348,28 @@ function Navbar(props: ThemeNavbarProps) {
     nextColorMode = null;
   }
 
-  const colorModeSystemLabel: ThemeNavbarNavbarColorModeSystemLabel = translate({
+  const colorModeSystemLabel: Theme_Navbar_Index_Navbar_ColorModeSystemLabel = translate({
     id: 'theme.colorMode.system',
     message: 'System',
     description: 'The screen reader label for system color mode',
   });
-  const colorModeLightLabel: ThemeNavbarNavbarColorModeLightLabel = translate({
+  const colorModeLightLabel: Theme_Navbar_Index_Navbar_ColorModeLightLabel = translate({
     id: 'theme.colorMode.light',
     message: 'Light',
     description: 'The screen reader label for light color mode',
   });
-  const colorModeDarkLabel: ThemeNavbarNavbarColorModeDarkLabel = translate({
+  const colorModeDarkLabel: Theme_Navbar_Index_Navbar_ColorModeDarkLabel = translate({
     id: 'theme.colorMode.dark',
     message: 'Dark',
     description: 'The screen reader label for dark color mode',
   });
-  const menuButtonLabel: ThemeNavbarNavbarMenuButtonLabel = translate({
+  const menuButtonLabel: Theme_Navbar_Index_Navbar_MenuButtonLabel = translate({
     id: 'theme.navbar.menuButtonLabel',
     message: 'Menu',
     description: 'The screen reader label for the mobile menu hamburger button',
   });
 
-  let colorModeLabel: ThemeNavbarColorModeLabel = (
+  let colorModeLabel: Theme_Navbar_Index_Navbar_ColorModeLabel = (
     <>
       <Icon icon="lucide:monitor" width="16" height="16" />
       <span className="nova-sr-only">{colorModeSystemLabel}</span>
@@ -392,17 +392,17 @@ function Navbar(props: ThemeNavbarProps) {
     );
   }
 
-  const hamburgerLabel: ThemeNavbarIndexHamburgerLabel = (
+  const hamburgerLabel: Theme_Navbar_Index_HamburgerLabel = (
     <>
       <Icon icon="lucide:menu" width="16" height="16" />
       <span className="nova-sr-only">{menuButtonLabel}</span>
     </>
   );
 
-  const navbarBaseClassName: ThemeNavbarIndexNavbarClassName = (navbarHidden === true) ? 'navbar nova-navbar-hidden' : 'navbar';
-  const navbarClassName: ThemeNavbarIndexNavbarClassName = (props['className'] !== undefined) ? `${navbarBaseClassName} ${props['className']}` : navbarBaseClassName;
+  const navbarBaseClassName: Theme_Navbar_Index_Navbar_ClassName = (navbarHidden === true) ? 'navbar nova-navbar-hidden' : 'navbar';
+  const navbarClassName: Theme_Navbar_Index_Navbar_ClassName = (props['className'] !== undefined) ? `${navbarBaseClassName} ${props['className']}` : navbarBaseClassName;
 
-  const variantProps: ThemeNavbarIndexVariantProps = {
+  const variantProps: Theme_Navbar_Index_VariantProps = {
     siteLogo,
     items,
     actionItems,
@@ -421,7 +421,7 @@ function Navbar(props: ThemeNavbarProps) {
     activeItemLabel,
   };
 
-  const svgFilterDefinition: ThemeNavbarIndexSvgFilterDefinition = (
+  const svgFilterDefinition: Theme_Navbar_Index_SvgFilterDefinition = (
     <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" style={{ position: 'absolute' }}>
       <filter id="nova-pixelate">
         <feFlood x="0" y="0" width="1" height="1" />

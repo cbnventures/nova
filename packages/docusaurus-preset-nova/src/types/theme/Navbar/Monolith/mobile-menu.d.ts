@@ -1,87 +1,87 @@
-import type { ThemeNavbarItem } from '../index.d.ts';
+import type { Theme_Navbar_Index_Navbar_Item } from '../index.d.ts';
 
 /**
  * Theme - Navbar - Monolith - Mobile Menu.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarMonolithMobileMenuMobileMenuPropsIsOpen = boolean;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props_IsOpen = boolean;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuPropsOnClose = () => void;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props_OnClose = () => void;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuPropsItems = ThemeNavbarItem[];
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuPropsActiveItemLabel = string | null;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props_ActiveItemLabel = string | null;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuProps = {
-  isOpen: ThemeNavbarMonolithMobileMenuMobileMenuPropsIsOpen;
-  onClose: ThemeNavbarMonolithMobileMenuMobileMenuPropsOnClose;
-  items: ThemeNavbarMonolithMobileMenuMobileMenuPropsItems;
-  activeItemLabel: ThemeNavbarMonolithMobileMenuMobileMenuPropsActiveItemLabel;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props = {
+  isOpen: Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props_IsOpen;
+  onClose: Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props_OnClose;
+  items: Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props_Items;
+  activeItemLabel: Theme_Navbar_Monolith_MobileMenu_MobileMenu_Props_ActiveItemLabel;
 };
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuReturns = React.JSX.Element | null;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Returns = React.JSX.Element | null;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuIsOpen = boolean;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsOpen = boolean;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuOnClose = () => void;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_OnClose = () => void;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuItems = ThemeNavbarItem[];
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_Items = Theme_Navbar_Index_Navbar_Item[];
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuActiveItemLabel = string | null;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ActiveItemLabel = string | null;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuPanelRef = React.RefObject<HTMLDivElement | null>;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_PanelRef = React.RefObject<HTMLDivElement | null>;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuIsClosing = boolean;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosing = boolean;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuIsClosingState = [ThemeNavbarMonolithMobileMenuMobileMenuIsClosing, ThemeNavbarMonolithMobileMenuMobileMenuSetIsClosing];
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosingState = [Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosing, Theme_Navbar_Monolith_MobileMenu_MobileMenu_SetIsClosing];
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuSetIsClosing = React.Dispatch<React.SetStateAction<ThemeNavbarMonolithMobileMenuMobileMenuIsClosing>>;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_SetIsClosing = React.Dispatch<React.SetStateAction<Theme_Navbar_Monolith_MobileMenu_MobileMenu_IsClosing>>;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuAriaLabel = string;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_AriaLabel = string;
 
-export type ThemeNavbarMonolithMobileMenuCloseMenuAriaLabel = string;
+export type Theme_Navbar_Monolith_MobileMenu_CloseMenuAriaLabel = string;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuOverlayClassName = string;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_OverlayClassName = string;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuAnimationEvent = React.AnimationEvent<HTMLDivElement>;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_AnimationEvent = React.AnimationEvent<HTMLDivElement>;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuItemIndex = number;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIndex = number;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuItemIcon = string | undefined;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIcon = string | undefined;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuDefaultIcon = string;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_DefaultIcon = string;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuItemStyle = React.CSSProperties;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemStyle = React.CSSProperties;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuItemTo = string;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemTo = string;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuItemHref = string;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemHref = string;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuLinkProps = Record<string, string>;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkProps = Record<string, string>;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuItemIsActive = boolean;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_ItemIsActive = boolean;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuLinkSpread = Record<string, string>;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_LinkSpread = Record<string, string>;
 
 /**
  * Theme - Navbar - Monolith - Mobile Menu - Mobile Menu - Handle Click Outside.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideFunction = (event: ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideMouseEvent) => void;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideFunction = (event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent) => void;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideMouseEvent = React.MouseEvent<HTMLDivElement>;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseEvent = React.MouseEvent<HTMLDivElement>;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuHandleClickOutsideMouseTarget = EventTarget | null;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleClickOutsideMouseTarget = EventTarget | null;
 
 /**
  * Theme - Navbar - Monolith - Mobile Menu - Mobile Menu - Handle Escape.
  *
  * @since 0.15.0
  */
-export type ThemeNavbarMonolithMobileMenuMobileMenuHandleEscapeFunction = (event: ThemeNavbarMonolithMobileMenuMobileMenuHandleEscapeKeyboardEvent) => void;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeFunction = (event: Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent) => void;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuHandleEscapeKeyboardEvent = KeyboardEvent;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_HandleEscapeKeyboardEvent = KeyboardEvent;
 
-export type ThemeNavbarMonolithMobileMenuMobileMenuFocusTarget = HTMLButtonElement | null;
+export type Theme_Navbar_Monolith_MobileMenu_MobileMenu_FocusTarget = HTMLButtonElement | null;

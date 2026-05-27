@@ -3,13 +3,13 @@ import { ESLintUtils } from '@typescript-eslint/utils';
 import { isIgnoredFile } from '../../../lib/utility.js';
 
 import type {
-  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseContext,
-  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseNode,
-  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseParam,
-  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseReturns,
-  RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseTypeAnnotation,
-  RulesEslintTypescriptNoCatchUnknownAnnotationRuleDefaultOptionsIgnoreFiles,
-  RulesEslintTypescriptNoCatchUnknownAnnotationRuleOptions,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Context,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Node,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Param,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Returns,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_TypeAnnotation,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_RuleDefaultOptionsIgnoreFiles,
+  Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_RuleOptions,
 } from '../../../types/rules/eslint/typescript/no-catch-unknown-annotation.d.ts';
 
 /**
@@ -20,7 +20,7 @@ import type {
  *
  * @since 0.14.0
  */
-export class RulesEslintTypescriptNoCatchUnknownAnnotation {
+export class Runner {
   /**
    * Rules - ESLint - TypeScript - No Catch Unknown Annotation - Rule.
    *
@@ -54,10 +54,10 @@ export class RulesEslintTypescriptNoCatchUnknownAnnotation {
       }],
     },
     defaultOptions: [{
-      ignoreFiles: [] as RulesEslintTypescriptNoCatchUnknownAnnotationRuleDefaultOptionsIgnoreFiles,
+      ignoreFiles: [] as Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_RuleDefaultOptionsIgnoreFiles,
     }],
     create(context, defaultOptions) {
-      const options: RulesEslintTypescriptNoCatchUnknownAnnotationRuleOptions = defaultOptions[0];
+      const options: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_RuleOptions = defaultOptions[0];
 
       // Skip ignored files.
       if (isIgnoredFile(context.filename, options['ignoreFiles']) === true) {
@@ -66,7 +66,7 @@ export class RulesEslintTypescriptNoCatchUnknownAnnotation {
 
       return {
         CatchClause(node) {
-          RulesEslintTypescriptNoCatchUnknownAnnotation.checkCatchClause(context, node);
+          Runner.checkCatchClause(context, node);
 
           return;
         },
@@ -83,21 +83,21 @@ export class RulesEslintTypescriptNoCatchUnknownAnnotation {
    *
    * @private
    *
-   * @param {RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseContext} context - Context.
-   * @param {RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseNode}    node    - Node.
+   * @param {Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Context} context - Context.
+   * @param {Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Node}    node    - Node.
    *
-   * @returns {RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseReturns}
+   * @returns {Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Returns}
    *
    * @since 0.14.0
    */
-  private static checkCatchClause(context: RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseContext, node: RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseNode): RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseReturns {
-    const param: RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseParam = node.param;
+  private static checkCatchClause(context: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Context, node: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Node): Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Returns {
+    const param: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_Param = node.param;
 
     if (param === undefined || param === null) {
       return;
     }
 
-    const typeAnnotation: RulesEslintTypescriptNoCatchUnknownAnnotationCheckCatchClauseTypeAnnotation = param.typeAnnotation;
+    const typeAnnotation: Rules_Eslint_Typescript_NoCatchUnknownAnnotation_Runner_CheckCatchClause_TypeAnnotation = param.typeAnnotation;
 
     if (typeAnnotation === undefined) {
       return;

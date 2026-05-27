@@ -1,6 +1,6 @@
 import type {
-  SharedMermaidConfig,
-  SharedMermaidRenderOutput,
+  Shared_MermaidConfig,
+  Shared_MermaidRenderOutput,
 } from '../shared.d.ts';
 
 /**
@@ -8,78 +8,78 @@ import type {
  *
  * @since 0.15.0
  */
-export type LibMermaidContainerClassName = string;
+export type Lib_Mermaid_ContainerClassName = string;
 
 /**
  * Lib - Mermaid - Get Resolved Color.
  *
  * @since 0.15.0
  */
-export type LibMermaidGetCssVariableName = string;
+export type Lib_Mermaid_GetCssVariableName = string;
 
-export type LibMermaidGetCssVariableReturns = string;
+export type Lib_Mermaid_GetCssVariableReturns = string;
 
-export type LibMermaidGetCssVariableComputedStyle = CSSStyleDeclaration;
+export type Lib_Mermaid_GetCssVariableComputedStyle = CSSStyleDeclaration;
 
-export type LibMermaidGetCssVariableProbe = HTMLSpanElement;
+export type Lib_Mermaid_GetCssVariableProbe = HTMLSpanElement;
 
-export type LibMermaidGetCssVariableResolved = string;
+export type Lib_Mermaid_GetCssVariableResolved = string;
 
-export type LibMermaidGetCssVariableCanvas = HTMLCanvasElement;
+export type Lib_Mermaid_GetCssVariableCanvas = HTMLCanvasElement;
 
-export type LibMermaidGetCssVariableContext = CanvasRenderingContext2D | null;
+export type Lib_Mermaid_GetCssVariableContext = CanvasRenderingContext2D | null;
 
-export type LibMermaidGetCssVariableData = Uint8ClampedArray;
+export type Lib_Mermaid_GetCssVariableData = Uint8ClampedArray;
 
-export type LibMermaidGetCssVariableRed = number | undefined;
+export type Lib_Mermaid_GetCssVariableRed = number | undefined;
 
-export type LibMermaidGetCssVariableGreen = number | undefined;
+export type Lib_Mermaid_GetCssVariableGreen = number | undefined;
 
-export type LibMermaidGetCssVariableBlue = number | undefined;
+export type Lib_Mermaid_GetCssVariableBlue = number | undefined;
 
-export type LibMermaidGetCssVariableAlpha = number | undefined;
+export type Lib_Mermaid_GetCssVariableAlpha = number | undefined;
 
 /**
  * Lib - Mermaid - Load Mermaid.
  *
  * @since 0.15.0
  */
-export type LibMermaidLoadMermaidReturns = Promise<LibMermaidLoadMermaidModule>;
+export type Lib_Mermaid_LoadMermaid_Returns = Promise<Lib_Mermaid_LoadMermaid_Module>;
 
-export type LibMermaidLoadMermaidModule = typeof import('mermaid');
+export type Lib_Mermaid_LoadMermaid_Module = typeof import('mermaid');
 
 /**
  * Lib - Mermaid - Promise.
  *
  * @since 0.15.0
  */
-export type LibMermaidPromise = Promise<LibMermaidPromiseModule> | undefined;
+export type Lib_Mermaid_Promise = Promise<Lib_Mermaid_PromiseModule> | undefined;
 
-export type LibMermaidPromiseModule = typeof import('mermaid');
+export type Lib_Mermaid_PromiseModule = typeof import('mermaid');
 
 /**
  * Lib - Mermaid - Use Mermaid Config.
  *
  * @since 0.15.0
  */
-export type LibMermaidUseMermaidConfigReturns = LibMermaidUseMermaidConfigConfig;
+export type Lib_Mermaid_UseMermaidConfig_Returns = Lib_Mermaid_UseMermaidConfig_Config;
 
-export type LibMermaidUseMermaidConfigColorMode = string;
+export type Lib_Mermaid_UseMermaidConfig_ColorMode = string;
 
-export type LibMermaidUseMermaidConfigIsDark = boolean;
+export type Lib_Mermaid_UseMermaidConfig_IsDark = boolean;
 
-export type LibMermaidUseMermaidConfigFontFamily = string;
+export type Lib_Mermaid_UseMermaidConfig_FontFamily = string;
 
-export type LibMermaidUseMermaidConfigConfigStartOnLoad = boolean;
+export type Lib_Mermaid_UseMermaidConfig_Config_StartOnLoad = boolean;
 
-export type LibMermaidUseMermaidConfigConfigTheme = string;
+export type Lib_Mermaid_UseMermaidConfig_Config_Theme = string;
 
-export type LibMermaidUseMermaidConfigConfigColorMode = string;
+export type Lib_Mermaid_UseMermaidConfig_Config_ColorMode = string;
 
-export type LibMermaidUseMermaidConfigConfig = {
-  startOnLoad: LibMermaidUseMermaidConfigConfigStartOnLoad;
-  theme: LibMermaidUseMermaidConfigConfigTheme;
-  colorMode: LibMermaidUseMermaidConfigConfigColorMode;
+export type Lib_Mermaid_UseMermaidConfig_Config = {
+  startOnLoad: Lib_Mermaid_UseMermaidConfig_Config_StartOnLoad;
+  theme: Lib_Mermaid_UseMermaidConfig_Config_Theme;
+  colorMode: Lib_Mermaid_UseMermaidConfig_Config_ColorMode;
   [key: string]: unknown;
 };
 
@@ -88,30 +88,30 @@ export type LibMermaidUseMermaidConfigConfig = {
  *
  * @since 0.15.0
  */
-export type LibMermaidUseMermaidRenderResultOptionsText = string;
+export type Lib_Mermaid_UseMermaidRenderResult_Options_Text = string;
 
-export type LibMermaidUseMermaidRenderResultOptions = {
-  text: LibMermaidUseMermaidRenderResultOptionsText;
+export type Lib_Mermaid_UseMermaidRenderResult_Options = {
+  text: Lib_Mermaid_UseMermaidRenderResult_Options_Text;
 };
 
-export type LibMermaidUseMermaidRenderResultReturns = SharedMermaidRenderOutput | null;
+export type Lib_Mermaid_UseMermaidRenderResult_Returns = Shared_MermaidRenderOutput | null;
 
-export type LibMermaidUseMermaidRenderResultState = [LibMermaidUseMermaidRenderResultReturns, LibMermaidUseMermaidRenderResultSetResult];
+export type Lib_Mermaid_UseMermaidRenderResult_State = [Lib_Mermaid_UseMermaidRenderResult_Returns, Lib_Mermaid_UseMermaidRenderResult_SetResult];
 
-export type LibMermaidUseMermaidRenderResultSetResult = React.Dispatch<React.SetStateAction<LibMermaidUseMermaidRenderResultReturns>>;
+export type Lib_Mermaid_UseMermaidRenderResult_SetResult = React.Dispatch<React.SetStateAction<Lib_Mermaid_UseMermaidRenderResult_Returns>>;
 
-export type LibMermaidUseMermaidRenderResultConfig = SharedMermaidConfig;
+export type Lib_Mermaid_UseMermaidRenderResult_Config = Shared_MermaidConfig;
 
-export type LibMermaidUseMermaidRenderResultId = string;
+export type Lib_Mermaid_UseMermaidRenderResult_Id = string;
 
-export type LibMermaidUseMermaidRenderResultCancelled = boolean;
+export type Lib_Mermaid_UseMermaidRenderResult_Cancelled = boolean;
 
-export type LibMermaidUseMermaidRenderResultMermaidModuleType = typeof import('mermaid');
+export type Lib_Mermaid_UseMermaidRenderResult_MermaidModuleType = typeof import('mermaid');
 
-export type LibMermaidUseMermaidRenderResultMermaidModule = LibMermaidUseMermaidRenderResultMermaidModuleType;
+export type Lib_Mermaid_UseMermaidRenderResult_MermaidModule = Lib_Mermaid_UseMermaidRenderResult_MermaidModuleType;
 
-export type LibMermaidUseMermaidRenderResultMermaidDefault = LibMermaidUseMermaidRenderResultMermaidModuleType['default'];
+export type Lib_Mermaid_UseMermaidRenderResult_MermaidDefault = Lib_Mermaid_UseMermaidRenderResult_MermaidModuleType['default'];
 
-export type LibMermaidUseMermaidRenderResultInitializeConfig = Parameters<LibMermaidUseMermaidRenderResultMermaidDefault['initialize']>[0];
+export type Lib_Mermaid_UseMermaidRenderResult_InitializeConfig = Parameters<Lib_Mermaid_UseMermaidRenderResult_MermaidDefault['initialize']>[0];
 
-export type LibMermaidUseMermaidRenderResultRenderOutput = SharedMermaidRenderOutput;
+export type Lib_Mermaid_UseMermaidRenderResult_RenderOutput = Shared_MermaidRenderOutput;
